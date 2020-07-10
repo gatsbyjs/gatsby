@@ -13,7 +13,6 @@ const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
-
 const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
@@ -425,11 +424,36 @@ module.exports = async (
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      // force to use es modules when importing internals of @reach.router
-      // for browser bundles
-      resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
-        `es`
+      const noOp = directoryPath(`.cache/polyfills/no-op.js`)
+      const objectAssignStub = directoryPath(
+        `.cache/polyfills/object-assign.js`
+      )
+      const fetchStub = directoryPath(`.cache/polyfills/fetch.js`)
+      const whatwgFetchStub = directoryPath(`.cache/polyfills/whatwg-fetch.js`)
+      resolve.alias = Object.assign(
+        {},
+        {
+          // force to use es modules when importing internals of @reach.router
+          // for browser bundles
+          "@reach/router": path.join(
+            path.dirname(require.resolve(`@reach/router/package.json`)),
+            `es`
+          ),
+
+          // These files are already polyfilled so these should return in a no-op
+          // Stub Package: object.assign & object-assign
+          "object.assign": objectAssignStub,
+          "object-assign$": objectAssignStub,
+          "@babel/runtime/helpers/extends.js$": objectAssignStub,
+          // Stub package: fetch
+          unfetch$: fetchStub,
+          "unfetch/polyfill$": noOp,
+          "isomorphic-unfetch$": fetchStub,
+          "whatwg-fetch$": whatwgFetchStub,
+          // Stub package: url-polyfill
+          "url-polyfill$": noOp,
+        },
+        resolve.alias
       )
     }
 

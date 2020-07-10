@@ -12,7 +12,7 @@ tags:
 
 Today I'm excited to share with you a release we've been working on for the past few months. When we first released Gatsby themes we had ideas of what the community might build, but in the time since then you've really blown away our expectations.
 
-Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, `gatsby-theme-blog`.
+Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog).
 
 With new features and even more options to customize your theme, you can completely change the look of your site with only a few options!
 
