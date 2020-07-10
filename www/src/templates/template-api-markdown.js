@@ -66,7 +66,7 @@ const mergeFunctions = (data, context) => {
 export default function APITemplate({ data, location, pageContext }) {
   const { docPage } = data
   const { prev, next } = pageContext
-  const heading = page.contentsHeading || `APIs`
+  const heading = docPage.contentsHeading || `APIs`
   const headingId = `apis`
 
   // Cleanup graphql data for usage with API rendering components
