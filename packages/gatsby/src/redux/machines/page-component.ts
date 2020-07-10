@@ -81,6 +81,9 @@ export const componentMachine = machine<IContext, IState, IEvent>(
           { target: `inactiveWhileBootstrapping`, cond: `isBootstrapping` },
           { target: `idle`, cond: `isNotBootstrapping` },
         ],
+        on: {
+          QUERY_CHANGED: `runningPageQueries`,
+        },
       },
       inactiveWhileBootstrapping: {
         on: {
@@ -88,7 +91,6 @@ export const componentMachine = machine<IContext, IState, IEvent>(
             target: `idle`,
             actions: `setBootstrapFinished`,
           },
-          QUERY_CHANGED: `runningPageQueries`,
         },
       },
       queryExtractionGraphQLError: {
@@ -108,11 +110,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
           QUERIES_COMPLETE: `idle`,
         },
       },
-      idle: {
-        on: {
-          QUERY_CHANGED: `runningPageQueries`,
-        },
-      },
+      idle: {},
     },
   },
   {
@@ -171,7 +169,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
           return ctx.pages
         },
       }),
-      setBootstrapFinished: assign<IContext>({
+      setBootstrapFinished: assign({
         isInBootstrap: false,
       }),
     },
