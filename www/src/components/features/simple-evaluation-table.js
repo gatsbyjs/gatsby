@@ -5,6 +5,19 @@ import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import { renderCell } from "./evaluation-cell"
 
+const tdStyles = {
+  display: `table-cell`,
+  "&:hover": {
+    cursor: `pointer`,
+  },
+  minWidth: 40,
+  px: 0,
+  textAlign: `left`,
+  verticalAlign: `middle`,
+  fontSize: 1,
+  lineHeight: `solid`,
+}
+
 export default function SimpleEvaluationTable(props) {
   const { title, headers, data } = props
   const [featureCell, setFeatureCell] = useState({})
@@ -23,18 +36,11 @@ export default function SimpleEvaluationTable(props) {
                   <td
                     key={`feature-cell-${idx}-${i}`}
                     sx={{
-                      display: `table-cell`,
-                      "&:hover": {
-                        cursor: `pointer`,
-                      },
-                      borderColor: `ui.border`,
-                      borderBottom: !showTooltip(idx) ? 1 : `none`,
-                      minWidth: 40,
-                      px: 0,
-                      textAlign: `left`,
-                      verticalAlign: `middle`,
-                      fontSize: 1,
-                      lineHeight: `solid`,
+                      ...tdStyles,
+                      borderBottom: t =>
+                        !showTooltip(idx)
+                          ? `1px solid ${t.colors.ui.border}`
+                          : `none`,
                     }}
                     onClick={() => {
                       setFeatureCell({
@@ -49,7 +55,7 @@ export default function SimpleEvaluationTable(props) {
               </tr>,
               // table row containing details of each feature
               <tr
-                style={{
+                sx={{
                   display: showTooltip(idx) ? `table-row` : `none`,
                 }}
                 key={`feature-second-row-${idx}`}

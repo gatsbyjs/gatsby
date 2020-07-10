@@ -25,7 +25,7 @@ There were two main symptoms experienced by users of large Gatsby sites.
 The central problem was that Gatsby generates a file for each build called `pages-manifest.json` (also called `data.json`) that must be loaded by the browser before users can navigate to other pages. It contains metadata about every page on the site, including:
 
 - **componentChunkName**: The logical name of the React component for the page
-- **dataPath**: The path to the file that contains the page's graphql query result, and any other page context.
+- **dataPath**: The path to the file that contains the page's GraphQL query result, and any other page context.
 
 When a user clicks a link to another page, Gatsby first looks up the manifest for the page's component and query result file. Gatsby then downloads them (if they haven't already been prefetched), and then passes the loaded query results to the page's component and renders it. Since `pages-manifest` contains the list of all pages on the site, Gatsby can also immediately show a 404 if necessary if the page is not able to be located.
 
@@ -38,10 +38,10 @@ Even after the manifest had been loaded, the manifest had to be searched for the
 The solution seems abundantly obvious at this point. We needed to introduce a manifest file per page, instead of a global pages-manifest. We called this `page-data.json`. It includes:
 
 - **componentChunkName**: The logical name of the React component for the page
-- **result**: The full graphql query result and page context
+- **result**: The full GraphQL query result and page context
 - **webpackCompilationHash**: Unique hash output by webpack any time user's `src` code content changes
 
-This is very similar to each entry in the pages manifest. The major difference being that the graphql query result is inlined instead of being contained in a separate file.
+This is very similar to each entry in the pages manifest. The major difference being that the GraphQL query result is inlined instead of being contained in a separate file.
 
 Now, when a page navigation occurs, Gatsby makes a request directly to the server for the `page-data.json`, instead of checking the global manifest (which doesn't exist anymore).
 
@@ -70,7 +70,7 @@ However, this is only true if a page hasn't already been prefetched. We have som
 
 ### Netlify builds faster
 
-The old graphql static query results were content-hashed. Which meant that any change to any data resulted in a change to the pages-manifest. Hosting sites such as Netlify look at the changed files and use that to figure out what files can be shared between builds. Since the pages-manifest depends on all query result files, which are all content-hashed, then any data change resulted in a change to the pages-manifest, which could be 10+ MB in size.
+The old GraphQL static query results were content-hashed. Which meant that any change to any data resulted in a change to the pages-manifest. Hosting sites such as Netlify look at the changed files and use that to figure out what files can be shared between builds. Since the pages-manifest depends on all query result files, which are all content-hashed, then any data change resulted in a change to the pages-manifest, which could be 10+ MB in size.
 
 With the latest changes, if you only make a change one page's data, then Netlify will only have to copy that file when it rebuilds.
 

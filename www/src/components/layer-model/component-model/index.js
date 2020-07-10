@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+
 import LayerModel from "../layer-model"
-import {
-  ContentLayerContent,
-  BuildLayerContent,
-  DataLayerContent,
-  ViewLayerContent,
-  AppLayerContent,
-} from "./component-content-sections"
+import CodeWrapper from "../code-wrapper"
+
+import ContentLayer from "./text-content/ContentLayer.md"
+import BuildLayer from "./text-content/BuildLayer.md"
+import DataLayer from "./text-content/DataLayer.md"
+import ViewLayer from "./text-content/ViewLayer.md"
+import AppLayer from "./text-content/AppLayer.md"
+
 import {
   AbstractSymbol,
   AtomicSymbol,
@@ -16,41 +18,79 @@ import {
   AppWindow,
 } from "../../../assets/icons/layer-icons"
 
+import ContentSource from "./content-source"
+import AppLayerExample from "./app-layer-example"
+
 const layers = [
   {
     title: `Content`,
-    icon: <AbstractSymbol />,
     baseColor: `orange`,
-    component: ContentLayerContent,
+    icon: <AbstractSymbol />,
+    text: <ContentLayer />,
+    example: <ContentSource />,
   },
   {
     title: `Build`,
     icon: <AtomicSymbol />,
     baseColor: `green`,
-    component: BuildLayerContent,
+    text: <BuildLayer />,
+    example: (
+      <CodeWrapper title="src/pages/homepage.js" language="javascript">
+        {`const query = graphql\`
+  query HomePageQuery {
+    site {
+      title
+      description
+    }
+  }
+\`
+`}
+      </CodeWrapper>
+    ),
   },
   {
     title: `Data`,
     icon: <GraphqlLogo />,
     baseColor: `magenta`,
-    component: DataLayerContent,
+    text: <DataLayer />,
+    example: (
+      <CodeWrapper title="GraphQL Response" language="json">
+        {`data: {
+  site: {
+    title: "Home"
+    description: "Gatsby tips"
+  }
+}
+`}
+      </CodeWrapper>
+    ),
   },
   {
     title: `View`,
     icon: <ReactLogo />,
     baseColor: `blue`,
-    component: ViewLayerContent,
+    text: <ViewLayer />,
+    example: (
+      <CodeWrapper title="src/pages/homepage.js" language="jsx">
+        {`export ({ data }) => (
+  <div>
+    <h1>{data.site.title}</h1>
+    {data.site.description}
+  </div>
+)
+`}
+      </CodeWrapper>
+    ),
   },
   {
     title: `App`,
     icon: <AppWindow />,
     baseColor: `yellow`,
-    component: AppLayerContent,
+    text: <AppLayer />,
+    example: <AppLayerExample />,
   },
 ]
 
-const ComponentModel = ({ initialLayer, ...props }) => (
-  <LayerModel layers={layers} initialLayer={initialLayer} {...props} />
-)
-
-export default ComponentModel
+export default function ComponentModel({ initialLayer }) {
+  return <LayerModel layers={layers} initialLayer={initialLayer} />
+}

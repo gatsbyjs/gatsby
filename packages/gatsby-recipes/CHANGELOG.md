@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.50...gatsby-recipes@0.1.51) (2020-07-09)
+
+### Features
+
+- **gatsby-recipes:** add GatsbyPage provider ([#25248](https://github.com/gatsbyjs/gatsby/issues/25248)) ([9c58ee1](https://github.com/gatsbyjs/gatsby/commit/9c58ee1))
+
 ## [0.1.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.49...gatsby-recipes@0.1.50) (2020-07-07)
 
 **Note:** Version bump only for package gatsby-recipes
