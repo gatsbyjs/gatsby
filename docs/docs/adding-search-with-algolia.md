@@ -540,7 +540,7 @@ export default styled(SearchResult)`
 
 ## Usage
 
-The search widget is now ready for use. It only needs to be placed somewhere in your project's layout. The obvious place is the `Header` component:
+The search widget is now ready for use. It needs to be placed somewhere in your project's layout. The most common place is the `Header` component:
 
 ```jsx:title=src/components/header.js
 ...
