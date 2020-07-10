@@ -1,50 +1,6 @@
-const _ = require(`lodash`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
-
-const { loadYaml } = require(`../load-yaml`)
-const navLinks = {
-  docs: loadYaml(`src/data/sidebars/doc-links.yaml`),
-  tutorial: loadYaml(`src/data/sidebars/tutorial-links.yaml`),
-  contributing: loadYaml(`src/data/sidebars/contributing-links.yaml`),
-}
-
-function* flattenList(itemList, parents = []) {
-  for (const item of itemList) {
-    yield {
-      ...item,
-      items: item.items ? item.items.map(child => child.link) : null,
-      parents,
-    }
-    if (item.items) {
-      yield* flattenList(item.items, [item.link, ...parents])
-    }
-  }
-}
-
-function normalize(slug) {
-  return slug.endsWith(`/`) ? slug : `${slug}/`
-}
-
-const flattenedNavs = _.mapValues(navLinks, navList => [
-  ...flattenList(navList[0].items),
-])
-
-const prevNextBySlug = _.mapValues(flattenedNavs, navList => {
-  // ignore items without links and hashes when counting indices
-  const filteredNavSlugs = navList
-    .filter(item => item.link && !item.link.includes(`#`))
-    .map(item => normalize(item.link))
-  return Object.fromEntries(
-    filteredNavSlugs.map((slug, index) => [
-      slug,
-      {
-        prev: filteredNavSlugs[index - 1],
-        next: filteredNavSlugs[index + 1],
-      },
-    ])
-  )
-})
+const { navItems } = require(`../nav-items`)
 
 function mdxResolverPassthrough(fieldName) {
   return async (source, args, context, info) => {
@@ -124,20 +80,14 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
+// Create a node for each navigation item found in the sidebar files
 async function createNavItemNode(
-  section,
   navItem,
   { actions, createNodeId, createContentDigest }
 ) {
-  const { createNode } = actions
-  const navItemId = createNodeId(
-    `navItem-${section}-${navItem.link || navItem.title}`
-  )
-  await createNode({
-    id: navItemId,
-    section,
+  await actions.createNode({
+    id: createNodeId(`navItem-${JSON.stringify(navItem)}`),
     ...navItem,
-    ...prevNextBySlug[section][normalize(navItem.link || ``)],
     docPage: navItem.link,
     children: [],
     internal: {
@@ -149,17 +99,9 @@ async function createNavItemNode(
   })
 }
 
-async function createNavItemNodes(section, navItems, helpers) {
-  await Promise.all(
-    navItems.map(navItem => createNavItemNode(section, navItem, helpers))
-  )
-}
-
 exports.sourceNodes = async helpers => {
   await Promise.all(
-    _.map(flattenedNavs, (navList, section) =>
-      createNavItemNodes(section, navList, helpers)
-    )
+    navItems.map(navItem => createNavItemNode(navItem, helpers))
   )
 }
 
