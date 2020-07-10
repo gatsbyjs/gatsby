@@ -35,7 +35,7 @@ export default function DocsMarkdownPage({
   const [urlSegment] = page.slug.split(`/`).slice(1)
   const description = page.description || page.excerpt
   const isTOCVisible =
-    !page.disableTableOfContents && page.tableOfContents?.items?.length > 0
+    !page.disableTableOfContents && page.tableOfContents?.items?.length
 
   return (
     <PageWithSidebar
