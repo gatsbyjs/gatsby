@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.1...gatsby@2.24.2) (2020-07-10)
+
+### Bug Fixes
+
+- **gatsby:** fix setting total in progress activities created by plugins ([#25648](https://github.com/gatsbyjs/gatsby/issues/25648)) ([4fe0a2e](https://github.com/gatsbyjs/gatsby/commit/4fe0a2e))
+
 ## [2.24.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.0...gatsby@2.24.1) (2020-07-09)
 
 ### Bug Fixes
