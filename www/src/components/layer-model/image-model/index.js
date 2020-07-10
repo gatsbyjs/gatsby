@@ -1,12 +1,12 @@
 import React from "react"
 
 import LayerModel from "../layer-model"
-import {
-  InstallLayerContent,
-  ConfigLayerContent,
-  QueryLayerContent,
-  DisplayLayerContent,
-} from "./image-content-sections"
+
+import InstallLayer from "./text-content/InstallLayer"
+import ConfigLayer from "./text-content/ConfigLayer"
+import QueryLayer from "./text-content/QueryLayer"
+import DisplayLayer from "./text-content/DisplayLayer"
+
 import {
   AbstractSymbol,
   AtomicSymbol,
@@ -14,40 +14,88 @@ import {
   ReactLogo,
 } from "../../../assets/icons/layer-icons"
 
+import CodeWrapper from "../code-wrapper"
+
 const layers = [
   {
     title: `Install`,
-    icon: <AbstractSymbol />,
     baseColor: `orange`,
-    component: InstallLayerContent,
+    icon: <AbstractSymbol />,
+    text: <InstallLayer />,
+    example: (
+      <CodeWrapper title="shell" language="shell">
+        {`npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image`}
+      </CodeWrapper>
+    ),
   },
   {
     title: `Config`,
-    icon: <AtomicSymbol />,
     baseColor: `green`,
-    component: ConfigLayerContent,
+    icon: <AtomicSymbol />,
+    text: <ConfigLayer />,
+    example: (
+      <CodeWrapper title="gatsby-config.js" language="javascript">
+        {`plugins: [
+  \`gatsby-transformer-sharp\`,
+  \`gatsby-plugin-sharp\`,
+  {
+    resolve: \`gatsby-source-filesystem\`,
+    options: {
+      path: \`\${__dirname}/src/images\`,
+    },
+  },
+  ...
+]`}
+      </CodeWrapper>
+    ),
   },
   {
     title: `Query`,
-    icon: <GraphqlLogo />,
     baseColor: `magenta`,
-    component: QueryLayerContent,
+    icon: <GraphqlLogo />,
+    text: <QueryLayer />,
+    example: (
+      <CodeWrapper title="src/pages/index.js" language="graphql">
+        {`const query = graphql\`
+  query {
+    file(relativePath: { eq: "images/gatsby-logo.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+\`
+`}
+      </CodeWrapper>
+    ),
   },
   {
     title: `Display`,
-    icon: <ReactLogo />,
     baseColor: `blue`,
-    component: DisplayLayerContent,
+    icon: <ReactLogo />,
+    text: <DisplayLayer />,
+    example: (
+      <CodeWrapper title="src/pages/index.js" language="jsx">
+        {`import Img from "gatsby-image"
+export ({ data }) => (
+  <div>
+    <Img fluid={data.file.childImageSharp.fluid} alt="Gatsby logo" />
+  </div>
+)
+`}
+      </CodeWrapper>
+    ),
   },
 ]
 
-const ImageModel = ({ initialLayer, ...props }) => (
-  <LayerModel
-    layers={layers}
-    initialLayer={initialLayer}
-    displayCodeFullWidth={true}
-    {...props}
-  />
-)
-
-export default ImageModel
+export default function ImageModel({ initialLayer }) {
+  return (
+    <LayerModel
+      layers={layers}
+      initialLayer={initialLayer}
+      displayCodeFullWidth
+    />
+  )
+}

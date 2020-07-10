@@ -9,7 +9,7 @@ This page outlines how to get set up to contribute to Gatsby core and its ecosys
 
 ## Using Yarn
 
-Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
+Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/). While npm is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
 
 ```json:title=package.json
 {
@@ -75,6 +75,12 @@ git checkout package.json; yarn --force
 
   - To run tests for a single package you can run: `yarn jest <package-name>`.
   - To run a single test file you can run: `yarn jest <file-path>`.
+
+If you're adding e2e tests and want to run them against local changes:
+
+- In the root of the monorepo, run `yarn lerna run build --scope=<package-name>` where `package-name` is the directory containing the changes you're testing.
+- Run `gatsby-dev` inside your specific e2e test directory, for example `e2e-tests/themes/development-runtime`.
+- While the previous step is running, open a new terminal window and run `yarn test` in that same e2e test directory.
 
 ### Commits and pull requests
 
