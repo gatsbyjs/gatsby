@@ -116,8 +116,8 @@ export default function DocsMarkdownPage({
               <MarkdownPageFooter path={page.relativePath} />
               <PrevAndNext
                 sx={{ mt: 9 }}
-                prev={page.nav.prev}
-                next={page.nav.next}
+                prev={page.nav?.prev}
+                next={page.nav?.next}
               />
             </div>
           </div>
