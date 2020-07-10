@@ -18,7 +18,7 @@ There are two stages to providing search functionality: indexing your pages and 
 
 The [Gatsby Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia) handles the indexing. It sends your pages to Algolia for indexing every time you run `gatsby build`. You use GraphQL to customize which pages and what information to index.
 
-To build the user interface for searching, this tutorial will use [React InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react/), which is a library provided by Algolia with ready-made React components. This is the quickest way to get up and running, but you could also build your own custom user interface.
+To build the user interface for searching, this guide will use [React InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react/), which is a library provided by Algolia with ready-made React components. This is the quickest way to get up and running, but you could also build your own custom user interface.
 
 > Note: If you want to build a search for technical documentation, Algolia provides a product called [DocSearch](https://docsearch.algolia.com/) that simplifies the process further and eliminates the need for manual indexing. This is the preferred approach for documentation sites.
 
@@ -29,7 +29,7 @@ This guide will show you how to set up a search based on the [Gatsby starter](/s
 Create a new site using
 
 ```shell
-gatsby new gatsby-algolia-tutorial
+gatsby new gatsby-algolia-guide
 ```
 
 If you don't already have pages in your project, you should add some so you can test the search. To add some Markdown pages (see "[Adding Markdown pages](/docs/adding-markdown-pages/)"), first add the Remark plugin:
@@ -69,7 +69,7 @@ Note that the three frontmatter fields `title`, `excerpt` and `slug` will be ref
 
 Now that your site has pages, you can proceed to indexing them in Algolia.
 
-Start by adding the [Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia). We're also adding [dotenv](https://www.npmjs.com/package/dotenv) that allows you to handle the configuration in a clean way:
+Start by adding the [Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia). You'll also add the [dotenv](https://www.npmjs.com/package/dotenv) package, which allows you to handle the configuration in a clean way:
 
 ```shell
 npm install --save gatsby-plugin-algolia dotenv
@@ -85,7 +85,7 @@ Then, go to [the 'API Keys' section of your Algolia profile](https://www.algolia
 
 ![The API Keys section of the Algolia profile](./images/algolia-api-keys.png)
 
-Copy out the Application ID, Search-Only API Key, and Admin API Key and create a file called `.env` in the root of the project (`gatsby-algolia-tutorial` if created as described above). This file contains your [project environment variables](/docs/environment-variables). Replace the placeholders with the copied values:
+Copy out the Application ID, Search-Only API Key, and Admin API Key from Algolia and create a file called `.env` in the root of your project (`gatsby-algolia-guide` if created as described above). This file contains your [project environment variables](/docs/environment-variables). Replace the placeholders with your copied values:
 
 ```text:title=.env
 GATSBY_ALGOLIA_APP_ID=<App ID>
@@ -124,9 +124,9 @@ Then add the configuration for `gatsby-plugin-algolia` to the list of `plugin`s 
 
 ### Query the pages for indexing
 
-You still need to supply `queries` configuration. Queries tell the Algolia plugin what data is to be indexed. They perform GraphQL queries for the relevant pages and convert the response into a set of Algolia records. These contain key/value pairs with the data to be indexed.
+You still need to supply a `queries` configuration. Queries tell the Algolia plugin what data is to be indexed. They perform GraphQL queries for the relevant pages and convert the response into a set of Algolia records. These contain key/value pairs with the data to be indexed.
 
-This could have been entered straight into the `gatsby-config.js`, but to avoid clutter the configuration above loads it from the file `src/utils/algolia-queries.js`.
+This could have been entered straight into the `gatsby-config.js`, but to avoid clutter the configuration above loads it from a new file `src/utils/algolia-queries.js`. Create this page in your project:
 
 ```js:title=src/utils/algolia-queries.js
 const pagePath = "src/markdown-pages"
@@ -140,7 +140,7 @@ const pageQuery = `{
   ) {
     edges {
       node {
-        id
+        objectID: id
         frontmatter {
           title
           slug
@@ -171,15 +171,15 @@ const queries = [
 module.exports = queries
 ```
 
-The file exports a list of queries. Each query defines a single index. You can build [multiple indices](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/in-depth/choosing-between-one-or-more-indices/) with Algolia but this tutorial will only use a single one.
+The file exports a list of queries. Each query defines a single index. You can build [multiple indices](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/in-depth/choosing-between-one-or-more-indices/) with Algolia but this guide will only use a single one.
 
 Each index requires a GraphQL query that retrieves the pages and data to be indexed. A `transformer` transforms the GraphQL data to an Algolia record.
 
 Note that each record must have an ID in the key `objectID`. The Algolia documentation provides more information on [how to structure data into records](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/#attributes---what-to-put-in-your-record).
 
-Here, only the frontmatter field `title` and the field `excerpt` are indexed. We will display both fields in the search results. To index more fields, just add them to `pageQuery`.
+Here, only the frontmatter field `title` and the field `excerpt` are indexed. It will display both fields in the search results. To index more fields, add them to `pageQuery` with GraphQL.
 
-Each query has optional [settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). The code above tells Algolia we will want to generate "snippets" of context around our hits in the `excerpt` attribute.
+Each query has optional [settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). The code above tells Algolia you will want to generate "snippets" of context around your hits in the `excerpt` attribute.
 
 ### Test your indexing
 
@@ -208,16 +208,16 @@ Algolia has an upper bound of 10KB for an index entry. If you get the error `Alg
 
 ## Adding the user interface
 
-Now that there is data in the index, it is time to build the user interface for searching. It will display as a magnifying glass icon that, when clicked, expands into an input field. Search results will appear in a popover below the input field as the user types.
+Now that there is data in the index, it is time to build the user interface for searching. It will display as a magnifying glass icon button that, when clicked, expands into a form field. Search results will appear in a popover below the input field as the user types.
 
-The tutorial will use the following frameworks:
+The guide will use the following frameworks:
 
 - [React InstantSearch](https://community.algolia.com/react-instantsearch), a component library provided by Algolia for easily building search interfaces.
 - [Algolia Search](https://www.npmjs.com/package/algoliasearch) provides the API client for calling Algolia.
 - [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/packages/gatsby-plugin-styled-components/).
-- [Styled Icons](https://styled-icons.js.org/) provides the magnifying glass icon for our search bar.
+- [Styled Icons](https://styled-icons.js.org/) provides the magnifying glass icon for the search bar.
 
-Styled components can of course be replaced by any other CSS solution you prefer.
+Styled Components can also be replaced by any other CSS solution you prefer.
 
 Install these frameworks by running the following command:
 
@@ -322,7 +322,7 @@ If you're using Algolia's free tier, they ask you to acknowledge the use of thei
 
 ### Tying the search widget together
 
-That was essentially it! We now only need to hook up the two components to each other and perform the actual search:
+You now need to hook up the two components to each other and perform the actual search:
 
 ```jsx:title=src/components/search/index.js
 import algoliasearch from "algoliasearch/lite"
@@ -373,7 +373,7 @@ export default function Search({ indices }) {
 
 The `ThemeProvider` exports variables for the CSS to use (this is the [theming](https://styled-components.com/docs/advanced#theming) functionality of `styled-components`). If you are using `styled-components` elsewhere in your project you probably want to place it at the root of your widget hierarchy rather than in the search widget itself.
 
-The `hasFocus` variable tracks whether the search box is currently in focus. When it is, it should display the input field (if not, only the search icon is visible).
+The `hasFocus` variable tracks whether the search box is currently in focus. When it is, it should display the input field (if not, only the search icon button is visible).
 
 `StyledSearchRoot` is the root of the whole component. The React hook `useClickOutside` provides a callback if the user clicks anywhere else on the page, in which case it should close.
 
@@ -381,7 +381,7 @@ The `hasFocus` variable tracks whether the search box is currently in focus. Whe
 
 ### Supporting files
 
-Almost done! Only some supporting files left. We need to add the implementation of the `useClickOutside` hook:
+Almost done! Only some supporting files left. You need to add the implementation of the `useClickOutside` hook:
 
 ```jsx:title=src/components/search/use-click-outside.js
 import { useEffect } from "react"
@@ -409,7 +409,7 @@ export default (ref, onClickOutside) => {
 }
 ```
 
-And finally we should also add some CSS. The `Styled` components wrap the components we wrote earlier to add styling to them. If you wish to use a different CSS framework, you can skip these. In that case, replace `StyledSearchBox` with `SearchBox`, `StyledSearchResult` with `SearchResult` and `StyledSearchRoot` with `<div>` in `index.js`.
+And finally, you should also add some CSS. The `Styled` components wrap the components you wrote earlier to add styling to them. If you wish to use a different CSS framework, you can skip these. In that case, replace `StyledSearchBox` with `SearchBox`, `StyledSearchResult` with `SearchResult` and `StyledSearchRoot` with `<div>` in `index.js`.
 
 ```jsx:title=src/components/search/styled-search-root.js
 import styled from "styled-components"
@@ -587,7 +587,7 @@ const Header = ({ siteTitle }) => (
 )
 ```
 
-If you started from a different project your header file will look different; the highlighted lines show which lines need to be added.
+If you started from a different project your header file may look different; the highlighted lines show which lines need to be added.
 
 Note that this is where you define the search indices you wish to search. They are passed as a property to `Search`.
 
