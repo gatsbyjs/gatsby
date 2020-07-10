@@ -5,8 +5,8 @@ import logo from "../../assets/monogram.svg"
 import logoDictionary from "./logo-dictionary"
 
 const tdStyles = {
-  background: t => t.colors.background,
-  borderColor: t => t.colors.ui.light,
+  backgroundColor: `background`,
+  borderColor: `ui.light`,
   display: `table-cell`,
   fontFamily: `heading`,
   lineHeight: `dense`,

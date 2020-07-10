@@ -16,6 +16,7 @@ const tdStyles = {
   verticalAlign: `middle`,
   fontSize: 1,
   lineHeight: `solid`,
+  borderColor: `ui.border`,
 }
 
 export default function SimpleEvaluationTable(props) {
@@ -37,10 +38,7 @@ export default function SimpleEvaluationTable(props) {
                     key={`feature-cell-${idx}-${i}`}
                     sx={{
                       ...tdStyles,
-                      borderBottom: t =>
-                        !showTooltip(idx)
-                          ? `1px solid ${t.colors.ui.border}`
-                          : `none`,
+                      borderBottom: !showTooltip(idx) ? 1 : `none`,
                     }}
                     onClick={() => {
                       setFeatureCell({

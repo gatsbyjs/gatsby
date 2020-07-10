@@ -25,7 +25,8 @@ export default function BlogPostsIndex({ data, pageContext }) {
             ...pullIntoGutter,
             display: `flex`,
             justifyContent: `space-between`,
-            borderBottom: t => `1px solid ${t.colors.ui.border}`,
+            borderBottom: 1,
+            borderColor: `ui.border`,
             mb: 6,
             pb: 6,
             [breakpointGutter]: {
