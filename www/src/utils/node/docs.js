@@ -166,31 +166,35 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
-async function createNavItemNodes(
+async function createNavItemNode(
   section,
-  navItems,
-  { actions, createNodeId, createContentDigest }
+  navItem,
+  { actions, createNodeId, createCntentDigest }
 ) {
   const { createNode } = actions
-  for (const navItem of navItems) {
-    const navItemId = createNodeId(
-      `navItem-${section}-${navItem.link || navItem.title}`
-    )
-    await createNode({
-      id: navItemId,
-      section,
-      ...navItem,
-      ...prevNextBySlug[section][normalize(navItem.link || ``)],
-      docPage: navItem.link,
-      children: [],
-      internal: {
-        type: `NavItem`,
-        contentDigest: createContentDigest(navItem),
-        content: JSON.stringify(navItem),
-        description: `A navigation item`,
-      },
-    })
-  }
+  const navItemId = createNodeId(
+    `navItem-${section}-${navItem.link || navItem.title}`
+  )
+  await createNode({
+    id: navItemId,
+    section,
+    ...navItem,
+    ...prevNextBySlug[section][normalize(navItem.link || ``)],
+    docPage: navItem.link,
+    children: [],
+    internal: {
+      type: `NavItem`,
+      contentDigest: createContentDigest(navItem),
+      content: JSON.stringify(navItem),
+      description: `A navigation item`,
+    },
+  })
+}
+
+async function createNavItemNodes(section, navItems, helpers) {
+  await Promise.all(
+    navItems.map(navItem => createNavItemNode(section, navItem, helpers))
+  )
 }
 
 exports.sourceNodes = async helpers => {
