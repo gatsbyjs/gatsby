@@ -6840,6 +6840,17 @@
     - Landing Page
     - Google Analytics
     - PaperCSS style
+- url: https://gatsby-typescript-app-starter.netlify.app/
+  repo: https://github.com/MeridjaNassim/gatsby-typescript-app-starter
+  description: Minimal starter configuration for PWA using typescript with both static routes and client side routes.
+  tags:
+    - PWA
+    - Language:TypeScript
+  features:
+    - PWA configuration
+    - Client side App configuration , with client side routing
+    - JSON data layer included
+    - Minimal CSS GRID
 - url: https://gatsby-three-ts-plus.netlify.app/
   repo: https://github.com/shunp/gatsby-three-ts-plus
   description: 3D web starter kit with Three.js and TypeScript

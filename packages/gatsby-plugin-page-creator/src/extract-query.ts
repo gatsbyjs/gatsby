@@ -1,6 +1,5 @@
 import _ from "lodash"
 import path from "path"
-import { handleUnstable } from "./handle-unstable"
 
 // Input queryStringParent could be:
 //   Product
@@ -11,7 +10,7 @@ export function generateQueryFromString(
   queryStringParent: string,
   fileAbsolutePath: string
 ): string {
-  const fields = extractUrlParamsForQuery(handleUnstable(fileAbsolutePath))
+  const fields = extractUrlParamsForQuery(fileAbsolutePath)
   if (queryStringParent.includes(`...CollectionPagesQueryFragment`)) {
     return fragmentInterpolator(queryStringParent, fields)
   }

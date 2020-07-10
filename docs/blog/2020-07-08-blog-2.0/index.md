@@ -12,7 +12,7 @@ tags:
 
 Today I'm excited to share with you a release we've been working on for the past few months. When we first released Gatsby themes we had ideas of what the community might build, but in the time since then you've really blown away our expectations.
 
-Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, `gatsby-theme-blog`.
+Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog).
 
 With new features and even more options to customize your theme, you can completely change the look of your site with only a few options!
 
@@ -84,7 +84,7 @@ If you'd rather not use any preset and set everything locally yourself, you can 
 
 Another option for presets are prism highlighting. Theme UI comes with a number of built-in [prism presets](https://theme-ui.com/packages/prism#syntax-themes) that you can reference directly by name and the theme will do the rest for you.
 
-```
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -107,7 +107,7 @@ This gives you more tools than ever before to use this theme as an add-on for si
 
 ## `gatsby-theme-blog-darkmode`
 
-Another change is the darkmode toggle that's long been a staple of the blog theme. In order to make styling a bit more fun and remove the need for a darkmode out of the box, this is now a separate theme!
+Another change is the dark mode toggle that's long been a staple of the blog theme. In order to make styling a bit more fun and remove the need for a dark mode out of the box, this is now a separate theme!
 
 Use it in combination with `gatsby-theme-blog` and take advantage of the same functionality you've come to expect!
 

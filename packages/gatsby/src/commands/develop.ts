@@ -9,6 +9,7 @@ import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
 import getSslCert from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
@@ -193,18 +194,31 @@ module.exports = async (program: IProgram): Promise<void> => {
     cmd(args);
   `)
 
-  let unlock
+  let unlocks: Array<UnlockFn> = []
   if (!isCI()) {
-    unlock = await createServiceLock(program.directory, `developstatusserver`, {
-      port: statusServerPort,
-    })
+    const statusUnlock = await createServiceLock(
+      program.directory,
+      `developstatusserver`,
+      {
+        port: statusServerPort,
+      }
+    )
+    const developUnlock = await createServiceLock(
+      program.directory,
+      `developproxy`,
+      {
+        port: proxyPort,
+      }
+    )
 
-    if (!unlock) {
+    if (!statusUnlock || !developUnlock) {
       console.error(
         `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
       )
       process.exit(1)
     }
+
+    unlocks = unlocks.concat([statusUnlock, developUnlock])
   }
 
   const statusServer = http.createServer().listen(statusServerPort)
@@ -303,7 +317,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   process.on(`beforeExit`, async () => {
     await Promise.all([
       watcher?.close(),
-      unlock?.(),
+      ...unlocks.map(unlock => unlock()),
       new Promise(resolve => {
         statusServer.close(resolve)
       }),

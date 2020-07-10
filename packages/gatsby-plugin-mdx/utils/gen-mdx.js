@@ -155,7 +155,7 @@ ${code}`
           require(`@babel/preset-env`),
           {
             useBuiltIns: `entry`,
-            corejs: 2,
+            corejs: 3,
             modules: false,
           },
         ],

@@ -37,12 +37,25 @@ export function createPage(
 
   // If the page has a function call to unstable_createPagesFromData markers in it, then we create it as a collection builder
   if (pathIsCollectionBuilder(absolutePath)) {
+    if (!process.env.GATSBY_NEW_ROUTING_APIS) {
+      console.error(
+        `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_NEW_ROUTING_APIS=1\` to enable.`
+      )
+      console.log(`Skipping creating pages for ${absolutePath}`)
+      return
+    }
     createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
     return
   }
 
   // If the path includes a `[]` in it, then we create it as a client only route
   if (pathIsClientOnlyRoute(absolutePath)) {
+    if (!process.env.GATSBY_NEW_ROUTING_APIS) {
+      console.error(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_NEW_ROUTING_APIS=1\` to enable.
+             Skipping creating pages for ${absolutePath}
+        `)
+      return
+    }
     createClientOnlyPage(filePath, absolutePath, actions)
     return
   }

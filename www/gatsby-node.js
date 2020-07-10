@@ -18,11 +18,7 @@ const sections = [docs, blog, showcase, starters, creators, packages, features]
 // Run the provided API on all defined sections of the site
 async function runApiForSections(api, helpers) {
   await Promise.all(
-    sections.map(section => {
-      if (section[api]) {
-        section[api](helpers)
-      }
-    })
+    sections.map(section => section[api] && section[api](helpers))
   )
 }
 

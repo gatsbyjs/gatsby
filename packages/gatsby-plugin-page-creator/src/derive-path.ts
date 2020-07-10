@@ -1,5 +1,4 @@
 import _ from "lodash"
-import { handleUnstable } from "./handle-unstable"
 import slugify from "slugify"
 
 // Generates the path for the page from the file path
@@ -8,7 +7,7 @@ import slugify from "slugify"
 // src/pages/blog/{parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
 export function derivePath(path: string, node: Record<string, any>): string {
   // 1.  Remove the extension
-  let pathWithoutExtension = handleUnstable(path.replace(/\.[a-z]+$/, ``))
+  let pathWithoutExtension = path.replace(/\.[a-z]+$/, ``)
 
   // 2.  Pull out the slug parts that are within { } brackets.
   const slugParts = /(\{.*\})/g.exec(pathWithoutExtension)
