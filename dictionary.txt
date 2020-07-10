@@ -1,13 +1,3 @@
-.env
-.html
-.jpg
-.js
-.md
-.mdx
-.png
-.scss
-.tsx
-.yaml
 ½
 ⅓
 1000px
