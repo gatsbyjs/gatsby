@@ -494,8 +494,10 @@ const TRANSLATIONS = new Map([
 const propsKeysVisitor = {
   ObjectProperty(node) {
     if (TRANSLATIONS.has(node.node.key.extra.rawValue)) {
-      node.node.key.value =
-        TRANSLATIONS.get(node.node.key.value) ?? node.node.key.value
+      const translated = TRANSLATIONS.get(node.node.key.value)
+      if (translated) {
+        node.node.key.value = translated
+      }
     }
   },
 }
