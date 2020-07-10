@@ -9,7 +9,7 @@ export { parsePath }
 
 const isAbsolutePath = path => path?.startsWith(`/`)
 
-export function withPrefix(path, prefix = __BASE_PATH__) {
+export function withPrefix(path, prefix = getGlobalBasePrefix()) {
   if (!isLocalLink(path)) {
     return path
   }
@@ -17,12 +17,27 @@ export function withPrefix(path, prefix = __BASE_PATH__) {
   if (path.startsWith(`./`) || path.startsWith(`../`)) {
     return path
   }
-  const base = prefix ?? __PATH_PREFIX__ ?? `/`
+  const base = prefix ?? getGlobalPathPrefix() ?? `/`
 
   return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${
     path.startsWith(`/`) ? path : `/${path}`
   }`
 }
+
+// These global values are wrapped in typeof clauses to ensure the values exist.
+// This is especially problematic in unit testing of this component.
+const getGlobalPathPrefix = () =>
+  process.env.NODE_ENV !== `production`
+    ? typeof __PATH_PREFIX__ !== `undefined`
+      ? __PATH_PREFIX__
+      : undefined
+    : __PATH_PREFIX__
+const getGlobalBasePrefix = () =>
+  process.env.NODE_ENV !== `production`
+    ? typeof __BASE_PATH__ !== `undefined`
+      ? __BASE_PATH__
+      : undefined
+    : __BASE_PATH__
 
 const isLocalLink = path =>
   path &&
@@ -31,7 +46,7 @@ const isLocalLink = path =>
   !path.startsWith(`//`)
 
 export function withAssetPrefix(path) {
-  return withPrefix(path, __PATH_PREFIX__)
+  return withPrefix(path, getGlobalPathPrefix())
 }
 
 function absolutify(path, current) {
