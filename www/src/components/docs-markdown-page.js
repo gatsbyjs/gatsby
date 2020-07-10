@@ -115,6 +115,11 @@ export default function DocsMarkdownPage({
             <div>
               <MDXRenderer slug={page.slug}>{page.body}</MDXRenderer>
               {children}
+              {page.issue && (
+                <a href={page.issue} target="_blank" rel="noopener noreferrer">
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
               <MarkdownPageFooter path={page.relativePath} />
               <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
             </div>
@@ -139,5 +144,6 @@ export const docPageContentFragment = graphql`
     description
     disableTableOfContents
     tableOfContentsDepth
+    issue
   }
 `
