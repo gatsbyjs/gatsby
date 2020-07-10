@@ -169,7 +169,7 @@ exports.createResolvers = ({ createResolvers }) => {
 async function createNavItemNode(
   section,
   navItem,
-  { actions, createNodeId, createCntentDigest }
+  { actions, createNodeId, createContentDigest }
 ) {
   const { createNode } = actions
   const navItemId = createNodeId(
