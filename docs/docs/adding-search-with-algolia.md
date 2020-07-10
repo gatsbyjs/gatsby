@@ -8,7 +8,7 @@ This guide will run you through the process of setting up a custom search experi
 
 Algolia is a hosted search API that provides you with the components you need to build powerful search functionality without setting up your own server.
 
-Algolia will host the search index for you. Send the information that you want to search to Algolia for inclusion in the index. You can then use their APIs to perform a search using the index.
+Algolia will host the search index. You tell it what pages you have, where they are and how to navigate them, and the Algolia API will return those results to the user based on whatever search terms they use.
 
 Algolia provides a free tier that offers a limited number of monthly searches. A paid plan is required for higher volumes.
 
