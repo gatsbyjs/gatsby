@@ -64,7 +64,7 @@ ALGOLIA_ADMIN_KEY=<Admin API Key>
 
 Note that the value of the Admin Key must be kept secret, since it allows write access to your index. It must therefore not be included in any code you ship.
 
-It is also best practice not to check in the `.env` file for this reason. Instead, add it to `.gitignore`. Consider creating an `.env.example` without the values to git instead. This way, if someone forks your repo, they know what configuration they need to supply but don't have access to your private values.
+It is also best practice not to check in the `.env` file for this reason. Consider creating an `.env.example` without the values to git instead. This way, if someone else sets up the project, they know what configuration they need to supply but don't have access to your private values.
 
 Next, modify `gatsby-config.js` to read the configuration and add the `gatsby-plugin-algolia` plugin.
 
