@@ -166,7 +166,7 @@ Algolia: query 0: graphql resulted in 3 records
 Algolia: query 0: splitting in 1 jobs
 ```
 
-Check that "graphql resulted in" is followed by the number of pages in your project. If the number is wrong, there is something wrong with your query.
+Check that `graphql resulted in` is followed by the number of pages in your project. If the number is wrong, there is something wrong with your query.
 
 Log in to your Algolia account, go to "Indices" and then select the "Page" index and you should see your indexed page data.
 
