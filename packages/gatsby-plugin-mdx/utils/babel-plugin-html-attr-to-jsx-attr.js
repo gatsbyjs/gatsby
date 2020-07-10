@@ -501,20 +501,22 @@ const propsKeysVisitor = {
 }
 var jsxAttributeFromHTMLAttributeVisitor = {
   JSXAttribute: function (node) {
-    const translated = TRANSLATIONS.get(node.node.name.name)
+    const nameNode = node.node.name
+    const name = nameNode.name
+    const translated = TRANSLATIONS.get(name)
     if (translated) {
-      node.node.name.name = translated
-    } else if (node.node.name.name === `props`) {
+      nameNode.name = translated
+    } else if (name === `props`) {
       node.traverse(propsKeysVisitor)
     } else if (
-      node.node.name.name.includes(`-`) &&
-      !node.node.name.name.startsWith(`data`) &&
-      !node.node.name.name.startsWith(`aria`)
+      name.includes(`-`) &&
+      !name.startsWith(`data`) &&
+      !name.startsWith(`aria`)
     ) {
-      node.node.name.name = camelCase(node.node.name.name)
+      nameNode.name = camelCase(name)
     }
     if (
-      node.node.name.name === `style` &&
+      nameNode.name === `style` &&
       node.node.value.type === `StringLiteral`
       //      node.node.value.type !== "JSXExpressionContainer"
     ) {
