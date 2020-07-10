@@ -27,7 +27,7 @@ We've made it easier to use [Gatsby Cloud](https://gatsbyjs.com) with three amaz
 
 1. [Kentico Kontent](https://www.gatsbyjs.com/guides/kentico-kontent/)
 2. [Flotiq](https://www.gatsbyjs.com/guides/flotiq/)
-3. [AgilityCMS](https://www.gatsbyjs.com/guides/agility-cms/).
+3. [Agility CMS](https://www.gatsbyjs.com/guides/agility-cms/).
 
 Plus - Gatsby Cloud also has [an improved Drupal integration](https://youtu.be/Mm6wrDr2DBE) (Check it out [here](https://www.drupal.org/project/gatsby).)
 
