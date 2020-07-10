@@ -23,7 +23,7 @@ export default function PageComponent() {
 }
 ```
 
-This is an example of using the (deprecated) ScrollContainer component with the same code.
+This is an example of using the (deprecated) `ScrollContainer` component with the same code.
 
 ```jsx
 import { ScrollContainer } from "gatsby-react-router-scroll";
