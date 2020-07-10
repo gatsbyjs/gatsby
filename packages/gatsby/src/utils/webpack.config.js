@@ -93,7 +93,7 @@ module.exports = async (
         return acc
       },
       {
-        "process.env": JSON.stringify({}),
+        "process.env": `({})`,
       }
     )
   }
