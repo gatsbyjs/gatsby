@@ -24,55 +24,24 @@ To build the user interface for searching, this guide will use [React InstantSea
 
 ## Setting up the project
 
-This guide will show you how to set up a search based on the [Gatsby starter](/starters/gatsbyjs/gatsby-starter-default/). You can of course base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
+This guide will set up a search based on the [Gatsby starter blog](/starters/gatsbyjs/gatsby-starter-blog/). You can of course base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
 
 Create a new site using
 
 ```shell
-gatsby new gatsby-algolia-guide
+gatsby new gatsby-algolia-guide https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-If you don't already have pages in your project, you should add some so you can test the search. To add some Markdown pages (see "[Adding Markdown pages](/docs/adding-markdown-pages/)"), first add the Remark plugin:
-
-```shell
-npm install --save gatsby-transformer-remark
-```
-
-Configure where the pages are located and add the Remark plugin by adding the following to `gatsby-config.js`.
-
-```js
-   {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `markdown-pages`,
-        path: `${__dirname}/src/markdown-pages`,
-      },
-    },
-    `gatsby-transformer-remark`,
-```
-
-Now, create a few Markdown files, for example:
-
-```markdown:title=src/markdown-pages/my-page.md
----
-title: "My first page"
-excerpt: This page should be read first.
-slug: "/first-page"
----
-
-Someone really should write a page about this.
-```
-
-Note that the three frontmatter fields `title`, `excerpt` and `slug` will be referenced later when configuring the Algolia query. If you call them something else, the query needs to be modified.
+The starter blog contains the pages you will index in the directory `content/blog`. These are Markdown files that have the [frontmatter field](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) `title`. It is referenced when configuring the Algolia query. If you call this field something else, the query needs to be modified.
 
 ## Indexing
 
-Now that your site has pages, you can proceed to indexing them in Algolia.
+Now that you have a project set up you can proceed to indexing your pages in Algolia.
 
-Start by adding the [Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia). You'll also add the [dotenv](https://www.npmjs.com/package/dotenv) package, which allows you to handle the configuration in a clean way:
+Start by adding the [Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia):
 
 ```shell
-npm install --save gatsby-plugin-algolia dotenv
+npm install --save gatsby-plugin-algolia
 ```
 
 ### Configuring the Algolia plugin
@@ -126,12 +95,9 @@ Then add the configuration for `gatsby-plugin-algolia` to the list of `plugin`s 
 
 You still need to supply a `queries` configuration. Queries tell the Algolia plugin what data is to be indexed. They perform GraphQL queries for the relevant pages and convert the response into a set of Algolia records. These contain key/value pairs with the data to be indexed.
 
-This could have been entered straight into the `gatsby-config.js`, but to avoid clutter the configuration above loads it from a new file `src/utils/algolia-queries.js`. Create this page in your project:
+The configuration could have been entered straight into the `gatsby-config.js`, but the configuration above loads it from a new file `src/utils/algolia-queries.js` to avoid clutter. Create this page in your project:
 
 ```js:title=src/utils/algolia-queries.js
-const pagePath = "src/markdown-pages"
-const indexName = "Pages"
-
 const pageQuery = `{
   pages: allMarkdownRemark(
     filter: {
@@ -140,9 +106,11 @@ const pageQuery = `{
   ) {
     edges {
       node {
-        objectID: id
+        id
         frontmatter {
           title
+        }
+        fields {
           slug
         }
         excerpt(pruneLength: 5000)
@@ -151,10 +119,11 @@ const pageQuery = `{
   }
 }`
 
-function pageToAlgoliaRecord({ node: { id, frontmatter, ...rest } }) {
+function pageToAlgoliaRecord({ node: { id, frontmatter, fields, ...rest } }) {
   return {
     objectID: id,
     ...frontmatter,
+    ...fields,
     ...rest,
   }
 }
@@ -171,13 +140,17 @@ const queries = [
 module.exports = queries
 ```
 
+If you did not start from the Gatsby start blog, you might need to modify the `pagePath` to match where your content is kept.
+
 The file exports a list of queries. Each query defines a single index. You can build [multiple indices](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/in-depth/choosing-between-one-or-more-indices/) with Algolia but this guide will only use a single one.
 
 Each index requires a GraphQL query that retrieves the pages and data to be indexed. A `transformer` transforms the GraphQL data to an Algolia record.
 
+Each index has a name that identifies it. If the index does not exist, it will be created automatically during indexing.
+
 Note that each record must have an ID in the key `objectID`. The Algolia documentation provides more information on [how to structure data into records](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/#attributes---what-to-put-in-your-record).
 
-Here, only the frontmatter field `title` and the field `excerpt` are indexed. It will display both fields in the search results. To index more fields, add them to `pageQuery` with GraphQL.
+Here, only the field `excerpt` and the frontmatter field `title` are indexed. It will display both fields in the search results. To index more fields, add them to `pageQuery` with GraphQL.
 
 Each query has optional [settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). The code above tells Algolia you will want to generate "snippets" of context around your hits in the `excerpt` attribute.
 
@@ -189,12 +162,11 @@ This should complete the indexing setup. Now run `gatsby build`. If all goes wel
 success Building static HTML for pages - 7.610s - 5/5 0.66/s
 Algolia: 1 queries to index
 Algolia: query 0: executing query
-Algolia: query 0: graphql resulted in 1 records
+Algolia: query 0: graphql resulted in 3 records
 Algolia: query 0: splitting in 1 jobs
-Algolia: query 0: moving copied index to main index
 ```
 
-Check that "graphql resulted in" is followed by the number of pages you created. If the number is wrong, there is something wrong with your query.
+Check that "graphql resulted in" is followed by the number of pages in your project. If the number is wrong, there is something wrong with your query.
 
 Log in to your Algolia account, go to "Indices" and then select the "Page" index and you should see your indexed page data.
 
@@ -202,7 +174,7 @@ Log in to your Algolia account, go to "Indices" and then select the "Page" index
 
 ### Troubleshooting
 
-If you get the error `GraphQLError: Field "fileAbsolutePath" is not defined by type MarkdownRemarkFilterInput` it means that no pages were found in your project. Check the path configured for `gatsby-source-filesystem` and the query.
+If you get the error `GraphQLError: Field "fileAbsolutePath" is not defined by type MarkdownRemarkFilterInput` it means that no pages were found in your project. Check the path configured for `gatsby-source-filesystem` and the query (particularly `pagePath`).
 
 Algolia has an upper bound of 10KB for an index entry. If you get the error `AlgoliaSearchError: Record at the position XX objectID=xx-xx-xx-xx-xx is too big size=xxxx bytes` it means you exceeded that limit. Note how the excerpts are pruned to 5000 characters in the query. Make sure you prune long fields and don't index unnecessary data.
 
@@ -232,7 +204,7 @@ The first step is to create the input field where the user enters the search que
 ```jsx:title=src/components/search/search-box.js
 import React from "react"
 import { connectSearchBox } from "react-instantsearch-dom"
-import { Search as SearchIcon } from "styled-icons/fa-solid"
+import { Search as SearchIcon } from "@styled-icons/fa-solid"
 
 export default connectSearchBox(
   ({ refine, currentRefinement, className, onFocus }) => (
@@ -450,7 +422,7 @@ export default styled(SearchBox)`
 
   .SearchInput {
     outline: none;
-    border: none;
+    border: ${({ hasFocus }) => (hasFocus ? "auto" : "none")};
     font-size: 1em;
     transition: 100ms;
     border-radius: 2px;
@@ -464,8 +436,7 @@ export default styled(SearchBox)`
   .SearchIcon {
     width: 1em;
     margin: 0.3em;
-    color: ${({ theme, hasFocus }) =>
-      hasFocus ? theme.foreground : theme.background};
+    color: ${({ theme }) => theme.foreground};
     pointer-events: none;
   }
 `
@@ -540,54 +511,50 @@ export default styled(SearchResult)`
 
 ## Usage
 
-The search widget is now ready for use. It needs to be placed somewhere in your project's layout. The most common place is the `Header` component:
+The search widget is now ready for use. It needs to be placed somewhere in your project's layout. If you start from Gatsby starter block, you can use the `layout` component:
 
-```jsx:title=src/components/header.js
+```jsx:title=src/components/layout.js
 ...
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
+import { Link } from "gatsby"
+import { rhythm, scale } from "../utils/typography"
 // highlight-start
 import Search from "./search"
 
-const searchIndices = [
-  { name: `Pages`, title: `Pages` },
-]
+const searchIndices = [{ name: `Pages`, title: `Pages` }]
 // highlight-end
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
+
+const Layout = ({ location, title, children }) => {
+  // ...
+
+  return (
     <div
       style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
+        marginLeft: `auto`,
+        marginRight: `auto`,
+        maxWidth: rhythm(24),
+        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-
-      // highlight-next-line
-      <Search indices={searchIndices} />
+      <header>
+// highlight-next-line
+        <Search indices={searchIndices} />
+        {header}
+      </header>
+      <main>{children}</main>
+      <footer>
+        © {new Date().getFullYear()}, Built with
+        {` `}
+        <a href="https://www.gatsbyjs.org">Gatsby</a>
+      </footer>
     </div>
-  </header>
-)
+  )
+}
+
+export default Layout
 ```
 
-If you started from a different project your header file may look different; the highlighted lines show which lines need to be added.
+If you started from a different project your layout may look different; the highlighted lines show which lines need to be added.
 
 Note that this is where you define the search indices you wish to search. They are passed as a property to `Search`.
 
