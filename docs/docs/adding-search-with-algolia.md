@@ -593,7 +593,7 @@ Note that this is where you define the search indices you wish to search. They a
 
 ## Running
 
-That's it! Running `gatsby develop` should now give you a working search that looks something like this:
+Running `gatsby develop` should now give you a working search that looks something like this:
 
 ![Search widget displaying search results](./images/algolia-final-search.png)
 
