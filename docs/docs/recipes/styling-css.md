@@ -270,7 +270,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 ### Additional resources
 
-- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Difference between `.sass` and `.scss`](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
 - [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
 
@@ -284,10 +284,6 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 ### Directions
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
-
-```text
-src/fonts/fontname.woff2
-```
 
 2. Import the font asset into a CSS file to bundle it into your Gatsby site:
 

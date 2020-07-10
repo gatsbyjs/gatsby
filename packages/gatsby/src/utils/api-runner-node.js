@@ -179,36 +179,44 @@ const runAPI = async (plugin, api, args, activity) => {
       activityTimer: (...args) => {
         const activity = reporter.activityTimer.apply(reporter, args)
 
-        return {
-          ...activity,
-          start: () => {
-            activity.start()
-            runningActivities.add(activity)
-          },
-          end: () => {
-            activity.end()
-            runningActivities.delete(activity)
-          },
+        const originalStart = activity.start
+        const originalEnd = activity.end
+
+        activity.start = () => {
+          originalStart.apply(activity)
+          runningActivities.add(activity)
         }
+
+        activity.end = () => {
+          originalEnd.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        return activity
       },
       createProgress: (...args) => {
         const activity = reporter.createProgress.apply(reporter, args)
 
-        return {
-          ...activity,
-          start: () => {
-            activity.start()
-            runningActivities.add(activity)
-          },
-          end: () => {
-            activity.end()
-            runningActivities.delete(activity)
-          },
-          done: () => {
-            activity.done()
-            runningActivities.delete(activity)
-          },
+        const originalStart = activity.start
+        const originalEnd = activity.end
+        const originalDone = activity.done
+
+        activity.start = () => {
+          originalStart.apply(activity)
+          runningActivities.add(activity)
         }
+
+        activity.end = () => {
+          originalEnd.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        activity.done = () => {
+          originalDone.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        return activity
       },
     }
 

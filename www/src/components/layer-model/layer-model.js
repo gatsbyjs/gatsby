@@ -1,73 +1,53 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { useState, useEffect, useRef } from "react"
-import hex2rgba from "hex2rgba"
 
-import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import LayerTab from "./layer-tab"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
-  const { baseColor, title, icon } = layer
+const LayerContentWrapper = ({
+  index,
+  displayCodeFullWidth = false,
+  children,
+}) => (
+  <div
+    id={`tabpanel${index}`}
+    aria-labelledby={`tab${index}`}
+    role="tabpanel"
+    sx={{
+      pt: 4,
+      px: 0,
+      display: `grid`,
+      gridTemplateRows: `repeat(2, auto)`,
+      gridTemplateAreas: `"content" "example"`,
+      gridGap: 2,
+      [mediaQueries.lg]: {
+        gridTemplateRows: displayCodeFullWidth ? `repeat(2, auto)` : `1fr`,
+        gridTemplateColumns: displayCodeFullWidth ? `auto` : `repeat(2, 1fr)`,
+        gridTemplateAreas: displayCodeFullWidth
+          ? `"content" "example"`
+          : `"example content"`,
+        gridGap: 6,
+      },
+      "& p:last-child": {
+        mb: 0,
+      },
+    }}
+  >
+    {children}
+  </div>
+)
 
-  return (
-    <button
-      key={`button${index}`}
-      id={`tab${index}`}
-      ref={buttonRef}
-      tabIndex={selected ? 0 : -1}
-      role="tab"
-      aria-controls={`tabpanel${index}`}
-      aria-selected={selected}
-      onClick={onClick}
-      sx={{
-        bg: `ui.background`,
-        border: selected
-          ? t => `2px ${t.colors[baseColor][60]} solid`
-          : `2px transparent solid`,
-        borderRadius: 3,
-        color: `textMuted`,
-        cursor: `pointer`,
-        fontWeight: selected ? `bold` : `body`,
-        p: 2,
-        ":focus": {
-          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
-          outline: 0,
-        },
-        ":hover": {
-          borderColor: t => t.colors[baseColor][60],
-        },
-      }}
-    >
-      <span
-        sx={{
-          display: `flex`,
-          flexDirection: `column`,
-          p: 2,
-        }}
-      >
-        <span
-          sx={{
-            height: 40,
-            color: selected ? colors[baseColor][70] : colors.grey[50],
-          }}
-        >
-          {icon}
-        </span>
-        <span>{title}</span>
-      </span>
-    </button>
-  )
-}
-
-const LayerModel = ({
+export default function LayerModel({
   layers,
   displayCodeFullWidth = false,
-  initialLayer = `Content`,
-}) => {
+  initialLayer = layers[0].title,
+}) {
   const [selected, setSelected] = useState(initialLayer)
-  const [sourceIndex, setSourceIndex] = useState(0)
   const refs = useRef(layers.map(() => React.createRef()))
+  const currentIndex = layers.findIndex(layer => layer.title === selected)
+
   function downHandler({ key }) {
-    const currentIndex = layers.findIndex(layer => layer.title === selected)
     if (key === `ArrowLeft` && currentIndex !== 0) {
       const targetIndex = currentIndex - 1
       setSelected(layers[targetIndex].title)
@@ -79,27 +59,26 @@ const LayerModel = ({
       refs.current[targetIndex].current.focus()
     }
   }
+
   useEffect(() => {
     window.addEventListener(`keydown`, downHandler)
     return () => {
       window.removeEventListener(`keydown`, downHandler)
     }
   }, [selected])
+
+  const { example, text } = layers[currentIndex]
+
   return (
     <div
       sx={{
         borderRadius: 3,
         border: t => `1px solid ${t.colors.ui.border}`,
         padding: 2,
-        marginBottom: 6,
+        mb: 6,
       }}
     >
-      <div
-        sx={{
-          borderRadius: 3,
-          backgroundColor: `ui.background`,
-        }}
-      >
+      <div sx={{ borderRadius: 3, backgroundColor: `ui.background` }}>
         <div
           role="tablist"
           sx={{
@@ -110,31 +89,26 @@ const LayerModel = ({
           }}
         >
           {layers.map((layer, index) => (
-            <Layer
+            <LayerTab
               key={index}
-              buttonRef={refs.current[index]}
+              ref={refs.current[index]}
               index={index}
               layer={layer}
-              onClick={() => {
-                setSelected(layer.title)
-              }}
+              onClick={() => setSelected(layer.title)}
               selected={selected === layer.title}
             />
           ))}
         </div>
       </div>
-      {layers.map(
-        (layer, index) =>
-          selected === layer.title &&
-          layer.component({
-            sourceIndex,
-            setSourceIndex,
-            index,
-            displayCodeFullWidth,
-          })
-      )}
+      <LayerContentWrapper
+        index={currentIndex}
+        displayCodeFullWidth={displayCodeFullWidth}
+      >
+        <div sx={{ gridArea: `example`, borderRadius: 2, overflow: `auto` }}>
+          {example}
+        </div>
+        <div>{text}</div>
+      </LayerContentWrapper>
     </div>
   )
 }
-
-export default LayerModel
