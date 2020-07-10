@@ -897,8 +897,6 @@ Graf
 Grande
 Graph_i_QL
 GraphCMS
-Graphiql
-GraphiQl
 GraphiQL
 graphiql-code-exporter
 graphiql-filesystem
