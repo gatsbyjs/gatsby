@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import "@babel/polyfill"
 import os from "os"
 import util from "util"
 import { createCli } from "./create-cli"

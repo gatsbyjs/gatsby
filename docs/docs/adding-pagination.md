@@ -123,7 +123,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-The code above will create an amount of pages that is based on the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
+The code above will create a number of pages based on the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
 The path for the first page is `/blog`, following pages will have a path of the form: `/blog/2`, `/blog/3`, etc.
 
 ## Other resources

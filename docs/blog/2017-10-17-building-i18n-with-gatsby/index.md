@@ -283,7 +283,7 @@ Hooray! 🎉
 
 ## SSR
 
-To let it render the content into html, you need to load i18n namespaces (using `i18n.loadNamespaces`) before render
+To let it render the content into HTML, you need to load i18n namespaces (using `i18n.loadNamespaces`) before render
 
 ### With redux
 
@@ -328,7 +328,7 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
 }
 ```
 
-> `translate` hoc from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
+> `translate` HOC from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
 
 ## Finishing up
 
