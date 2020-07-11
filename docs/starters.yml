@@ -6954,3 +6954,15 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-opinionated-starter.netlify.app/
+  repo: https://github.com/datacrafts-io/gatsby-opinionated-starter
+  description: Opinionated full-fledged TypeScript dev environment starter. Includes Storybook, jest, testing-library, GitHub Actions CI, SCSS Modules with TS support, Husky, lint-staged, ESLint both for JS and TS, stylelint, remark-lint, Renovate, netlify deploy config and more.
+  tags:
+    - Styling:SCSS
+    - Styling:Other
+    - Testing
+    - Language:TypeScript
+    - Linting
+    - Storybook
+  features:
+    - It is simply Gatsby default starter, but with many development environment integrations
