@@ -3,7 +3,7 @@
 exports[`<Image /> should have a transition-delay of 1sec 1`] = `
 <div>
   <div
-    class="fixedImage  gatsby-image-wrapper"
+    class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
@@ -52,7 +52,7 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
 exports[`<Image /> should render fixed size images 1`] = `
 <div>
   <div
-    class="fixedImage  gatsby-image-wrapper"
+    class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
@@ -101,7 +101,7 @@ exports[`<Image /> should render fixed size images 1`] = `
 exports[`<Image /> should render fluid images 1`] = `
 <div>
   <div
-    class="fixedImage  gatsby-image-wrapper"
+    class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline;"
   >
     <div
@@ -155,7 +155,7 @@ exports[`<Image /> should render fluid images 1`] = `
 exports[`<Image /> should render multiple fixed image variants 1`] = `
 <div>
   <div
-    class="fixedImage  gatsby-image-wrapper"
+    class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
@@ -221,7 +221,7 @@ exports[`<Image /> should render multiple fixed image variants 1`] = `
 exports[`<Image /> should render multiple fluid image variants 1`] = `
 <div>
   <div
-    class="fixedImage  gatsby-image-wrapper"
+    class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline;"
   >
     <div

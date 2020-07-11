@@ -18,9 +18,11 @@ const logDeprecationNotice = (prop, replacement) => {
   }
 }
 
-// DJB2 is a simple and fast hash, reduces input to 32-bit value (hash)
-function djb2_xor(str) {
-  let h = 5381
+// DJB2a (XOR variant) is a simple hashing function, reduces input to 32-bits
+const SEED = 5381
+function djb2a(str) {
+  let h = SEED
+
   for (let i = 0; i < str.length; i++) {
     h = (h * 33) ^ str.charCodeAt(i)
   }
@@ -29,8 +31,9 @@ function djb2_xor(str) {
   return h >>> 0
 }
 
-// Converts number to base 36 string (a-z,0-9)
-const getShortKey = input => `_` + djb2_xor(input).toString(36)
+// Converts string input to a 32-bit base36 string (0-9, a-z)
+// '_' prefix to prevent invalid first chars for CSS class names
+const getShortKey = input => `_` + djb2a(input).toString(36)
 
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
@@ -518,7 +521,7 @@ class Image extends React.Component {
 
     let uniqueKey
     if (!isBrowser && imageVariants.length > 1) {
-      uniqueKey = getShortKey(imageVariants.map(x => x.srcSet).join())
+      uniqueKey = getShortKey(imageVariants.map(v => v.srcSet).join(``))
     }
 
     // Avoid render logic on client until mounted (hydration complete)
@@ -527,8 +530,8 @@ class Image extends React.Component {
       if (fluid) {
         return (
           <Tag
-            className={`${className ? className : ``} ${
-              uniqueKey ? uniqueKey : ``
+            className={`${
+              (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
             } gatsby-image-wrapper`}
             style={{
               position: `relative`,
@@ -653,8 +656,8 @@ class Image extends React.Component {
 
         return (
           <Tag
-            className={`${className ? className : ``} ${
-              uniqueKey ? uniqueKey : ``
+            className={`${
+              (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
             } gatsby-image-wrapper`}
             style={divStyle}
             ref={this.handleRef}
