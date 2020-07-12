@@ -483,6 +483,12 @@ class Image extends React.Component {
       draggable,
     } = convertProps(this.props)
 
+    // Avoid render logic on client until mounted (hydration complete)
+    // Prevents invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
+    if (isBrowser && !this.state.isHydrated) {
+      return null
+    }
+
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
@@ -519,236 +525,232 @@ class Image extends React.Component {
 
     const activeVariant = getShortKey(image.srcSet)
 
-    let uniqueKey
-    if (!isBrowser && imageVariants.length > 1) {
-      uniqueKey = getShortKey(imageVariants.map(v => v.srcSet).join(``))
-    }
+    const uniqueKey =
+      !isBrowser &&
+      hasArtDirectionSupport(imageVariants) &&
+      getShortKey(imageVariants.map(v => v.srcSet).join(``))
 
-    // Avoid render logic on client until mounted (hydration complete)
-    // Prevents invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
-    if (!isBrowser || this.state.isHydrated) {
-      if (fluid) {
-        return (
+    if (fluid) {
+      return (
+        <Tag
+          className={`${
+            (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
+          } gatsby-image-wrapper`}
+          style={{
+            position: `relative`,
+            overflow: `hidden`,
+            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
+            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
+            ...style,
+          }}
+          ref={this.handleRef}
+          key={activeVariant}
+        >
+          {uniqueKey && (
+            <ResponsiveQueries
+              imageVariants={imageVariants}
+              selectorClass={uniqueKey}
+            />
+          )}
+          {/* Preserve the aspect ratio. */}
           <Tag
-            className={`${
-              (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
-            } gatsby-image-wrapper`}
+            aria-hidden
             style={{
-              position: `relative`,
-              overflow: `hidden`,
-              maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
-              maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
-              ...style,
+              width: `100%`,
+              paddingBottom: `${100 / image.aspectRatio}%`,
             }}
-            ref={this.handleRef}
-            key={activeVariant}
-          >
-            {uniqueKey && (
-              <ResponsiveQueries
-                imageVariants={imageVariants}
-                selectorClass={uniqueKey}
-              />
-            )}
-            {/* Preserve the aspect ratio. */}
+          />
+
+          {/* Show a solid background color. */}
+          {bgColor && (
             <Tag
               aria-hidden
+              title={title}
               style={{
-                width: `100%`,
-                paddingBottom: `${100 / image.aspectRatio}%`,
+                backgroundColor: bgColor,
+                position: `absolute`,
+                top: 0,
+                bottom: 0,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                right: 0,
+                left: 0,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
+          )}
 
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                aria-hidden
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Placeholder
+              ariaHidden
+              ref={this.placeholderRef}
+              src={image.base64}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateBase64Sources}
+            />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Placeholder
+              ariaHidden
+              ref={this.placeholderRef}
+              src={image.tracedSVG}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateTracedSVGSources}
+            />
+          )}
+
+          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
+          {this.state.isVisible && (
+            <picture>
+              {generateImageSources(imageVariants)}
+              <Img
+                alt={alt}
                 title={title}
-                style={{
-                  backgroundColor: bgColor,
-                  position: `absolute`,
-                  top: 0,
-                  bottom: 0,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  right: 0,
-                  left: 0,
-                  ...(shouldFadeIn && delayHideStyle),
-                }}
+                sizes={image.sizes}
+                src={image.src}
+                crossOrigin={this.props.crossOrigin}
+                srcSet={image.srcSet}
+                style={imageStyle}
+                ref={this.imageRef}
+                onLoad={this.handleImageLoaded}
+                onError={this.props.onError}
+                itemProp={itemProp}
+                loading={loading}
+                draggable={draggable}
               />
-            )}
+            </picture>
+          )}
 
-            {/* Show the blurry base64 image. */}
-            {image.base64 && (
-              <Placeholder
-                ariaHidden
-                ref={this.placeholderRef}
-                src={image.base64}
-                spreadProps={placeholderImageProps}
-                imageVariants={imageVariants}
-                generateSources={generateBase64Sources}
-              />
-            )}
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          {this.addNoScript && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  loading,
+                  ...image,
+                  imageVariants,
+                }),
+              }}
+            />
+          )}
+        </Tag>
+      )
+    }
 
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Placeholder
-                ariaHidden
-                ref={this.placeholderRef}
-                src={image.tracedSVG}
-                spreadProps={placeholderImageProps}
-                imageVariants={imageVariants}
-                generateSources={generateTracedSVGSources}
-              />
-            )}
-
-            {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
-            {this.state.isVisible && (
-              <picture>
-                {generateImageSources(imageVariants)}
-                <Img
-                  alt={alt}
-                  title={title}
-                  sizes={image.sizes}
-                  src={image.src}
-                  crossOrigin={this.props.crossOrigin}
-                  srcSet={image.srcSet}
-                  style={imageStyle}
-                  ref={this.imageRef}
-                  onLoad={this.handleImageLoaded}
-                  onError={this.props.onError}
-                  itemProp={itemProp}
-                  loading={loading}
-                  draggable={draggable}
-                />
-              </picture>
-            )}
-
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {this.addNoScript && (
-              <noscript
-                dangerouslySetInnerHTML={{
-                  __html: noscriptImg({
-                    alt,
-                    title,
-                    loading,
-                    ...image,
-                    imageVariants,
-                  }),
-                }}
-              />
-            )}
-          </Tag>
-        )
+    if (fixed) {
+      const divStyle = {
+        position: `relative`,
+        overflow: `hidden`,
+        display: `inline-block`,
+        width: image.width,
+        height: image.height,
+        ...style,
       }
 
-      if (fixed) {
-        const divStyle = {
-          position: `relative`,
-          overflow: `hidden`,
-          display: `inline-block`,
-          width: image.width,
-          height: image.height,
-          ...style,
-        }
-
-        if (style.display === `inherit`) {
-          delete divStyle.display
-        }
-
-        return (
-          <Tag
-            className={`${
-              (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
-            } gatsby-image-wrapper`}
-            style={divStyle}
-            ref={this.handleRef}
-            key={activeVariant}
-          >
-            {uniqueKey && (
-              <ResponsiveQueries
-                imageVariants={imageVariants}
-                selectorClass={uniqueKey}
-              />
-            )}
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                aria-hidden
-                title={title}
-                style={{
-                  backgroundColor: bgColor,
-                  width: image.width,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  height: image.height,
-                  ...(shouldFadeIn && delayHideStyle),
-                }}
-              />
-            )}
-
-            {/* Show the blurry base64 image. */}
-            {image.base64 && (
-              <Placeholder
-                ariaHidden
-                ref={this.placeholderRef}
-                src={image.base64}
-                spreadProps={placeholderImageProps}
-                imageVariants={imageVariants}
-                generateSources={generateBase64Sources}
-              />
-            )}
-
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Placeholder
-                ariaHidden
-                ref={this.placeholderRef}
-                src={image.tracedSVG}
-                spreadProps={placeholderImageProps}
-                imageVariants={imageVariants}
-                generateSources={generateTracedSVGSources}
-              />
-            )}
-
-            {/* Once the image is visible, start downloading the image */}
-            {this.state.isVisible && (
-              <picture>
-                {generateImageSources(imageVariants)}
-                <Img
-                  alt={alt}
-                  title={title}
-                  width={image.width}
-                  height={image.height}
-                  sizes={image.sizes}
-                  src={image.src}
-                  crossOrigin={this.props.crossOrigin}
-                  srcSet={image.srcSet}
-                  style={imageStyle}
-                  ref={this.imageRef}
-                  onLoad={this.handleImageLoaded}
-                  onError={this.props.onError}
-                  itemProp={itemProp}
-                  loading={loading}
-                  draggable={draggable}
-                />
-              </picture>
-            )}
-
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {this.addNoScript && (
-              <noscript
-                dangerouslySetInnerHTML={{
-                  __html: noscriptImg({
-                    alt,
-                    title,
-                    loading,
-                    ...image,
-                    imageVariants,
-                  }),
-                }}
-              />
-            )}
-          </Tag>
-        )
+      if (style.display === `inherit`) {
+        delete divStyle.display
       }
+
+      return (
+        <Tag
+          className={`${
+            (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
+          } gatsby-image-wrapper`}
+          style={divStyle}
+          ref={this.handleRef}
+          key={activeVariant}
+        >
+          {uniqueKey && (
+            <ResponsiveQueries
+              imageVariants={imageVariants}
+              selectorClass={uniqueKey}
+            />
+          )}
+          {/* Show a solid background color. */}
+          {bgColor && (
+            <Tag
+              aria-hidden
+              title={title}
+              style={{
+                backgroundColor: bgColor,
+                width: image.width,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                height: image.height,
+                ...(shouldFadeIn && delayHideStyle),
+              }}
+            />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Placeholder
+              ariaHidden
+              ref={this.placeholderRef}
+              src={image.base64}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateBase64Sources}
+            />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Placeholder
+              ariaHidden
+              ref={this.placeholderRef}
+              src={image.tracedSVG}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateTracedSVGSources}
+            />
+          )}
+
+          {/* Once the image is visible, start downloading the image */}
+          {this.state.isVisible && (
+            <picture>
+              {generateImageSources(imageVariants)}
+              <Img
+                alt={alt}
+                title={title}
+                width={image.width}
+                height={image.height}
+                sizes={image.sizes}
+                src={image.src}
+                crossOrigin={this.props.crossOrigin}
+                srcSet={image.srcSet}
+                style={imageStyle}
+                ref={this.imageRef}
+                onLoad={this.handleImageLoaded}
+                onError={this.props.onError}
+                itemProp={itemProp}
+                loading={loading}
+                draggable={draggable}
+              />
+            </picture>
+          )}
+
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          {this.addNoScript && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  loading,
+                  ...image,
+                  imageVariants,
+                }),
+              }}
+            />
+          )}
+        </Tag>
+      )
     }
 
     return null
