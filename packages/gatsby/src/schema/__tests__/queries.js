@@ -3,7 +3,6 @@ const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -117,10 +116,10 @@ describe(`Query schema`, () => {
                     query: {
                       filter: {
                         frontmatter: {
-                          authors: { email: { eq: source.email } },
-                          // authors: {
-                          //   elemMatch: { email: { eq: source.email } },
-                          // },
+                          // authors: { email: { eq: source.email } },
+                          authors: {
+                            elemMatch: { email: { eq: source.email } },
+                          },
                         },
                       },
                     },

@@ -1,20 +1,6 @@
-const algoliasearch = require(`algoliasearch`)
 const got = require(`got`)
 const url = require(`url`)
-
-const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
-var index = client.initIndex(`npm-search`)
-
-function browse({ index, ...params }) {
-  let hits = []
-  const browser = index.browseAll(params)
-
-  return new Promise((resolve, reject) => {
-    browser.on(`result`, content => (hits = hits.concat(content.hits)))
-    browser.on(`end`, () => resolve(hits))
-    browser.on(`error`, err => reject(err))
-  })
-}
+const { browse } = require(`./search`)
 
 exports.sourceNodes = async (
   { boundActionCreators, createNodeId, createContentDigest },
@@ -25,7 +11,6 @@ exports.sourceNodes = async (
   const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 
   const hits = await browse({
-    index,
     filters: `(${buildFilter.join(` OR `)})`,
     hitsPerPage: 1000,
   })

@@ -51,7 +51,7 @@ Gatsby provides us with a superior DX and a fast site. This includes:
 
 Gatsby provides conveniences around data fetching. The “Content Mesh” is a mesh of different content sources stitched into a single data layer. You can query this layer using GraphQL. Our “Content Mesh” consists of Prismic, Shopify, and Yotpo. You can see how those data sources make up the Homepage below:
 
-![Strivectin content mesh.](./images/content-mesh.png)
+![StriVectin content mesh.](./images/content-mesh.png)
 
 ### Leaving the server behind
 
@@ -118,8 +118,6 @@ Felicity Sissener, the Chief Digital Officer at StriVectin had this to say about
 We confidently ship code to production many times per day. At the time of writing this, we have not had a single site outage.
 
 StriVectin’s hosting costs have gone from \$2,000/month to just a few dollars per day. The servers will be decommissioned very soon.
-
-https://giphy.com/gifs/DC4g3SGNJpC
 
 Feature development and maintenance is much simpler. The codebase was around 20,000 files on Magento and went down to around 300.
 

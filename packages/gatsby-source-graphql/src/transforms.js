@@ -1,10 +1,10 @@
 const { GraphQLObjectType, GraphQLNonNull } = require(`gatsby/graphql`)
 const {
-  VisitSchemaKind,
-  cloneType,
-  healSchema,
-  visitSchema,
-} = require(`graphql-tools-fork`)
+  mapSchema,
+  MapperKind,
+  addTypes,
+  modifyObjectFields,
+} = require(`@graphql-tools/utils`)
 
 class NamespaceUnderFieldTransform {
   constructor({ typeName, fieldName, resolver }) {
@@ -14,42 +14,46 @@ class NamespaceUnderFieldTransform {
   }
 
   transformSchema(schema) {
-    const query = schema.getQueryType()
+    const queryConfig = schema.getQueryType().toConfig()
 
-    const nestedType = new cloneType(query)
-    nestedType.name = this.typeName
+    const nestedQuery = new GraphQLObjectType({
+      ...queryConfig,
+      name: this.typeName,
+    })
 
-    const typeMap = schema.getTypeMap()
-    typeMap[this.typeName] = nestedType
+    let newSchema = addTypes(schema, [nestedQuery])
 
-    const newQuery = new GraphQLObjectType({
-      name: query.name,
-      fields: {
-        [this.fieldName]: {
-          type: new GraphQLNonNull(nestedType),
-          resolve: (parent, args, context, info) => {
-            if (this.resolver) {
-              return this.resolver(parent, args, context, info)
-            } else {
-              return {}
-            }
-          },
+    const newRootFieldConfigMap = {
+      [this.fieldName]: {
+        type: new GraphQLNonNull(nestedQuery),
+        resolve: (parent, args, context, info) => {
+          if (this.resolver != null) {
+            return this.resolver(parent, args, context, info)
+          }
+
+          return {}
         },
       },
-    })
-    typeMap[query.name] = newQuery
+    }
 
-    return healSchema(schema)
+    ;[newSchema] = modifyObjectFields(
+      newSchema,
+      queryConfig.name,
+      () => true,
+      newRootFieldConfigMap
+    )
+
+    return newSchema
   }
 }
 
 class StripNonQueryTransform {
   transformSchema(schema) {
-    return visitSchema(schema, {
-      [VisitSchemaKind.MUTATION]() {
+    return mapSchema(schema, {
+      [MapperKind.MUTATION]() {
         return null
       },
-      [VisitSchemaKind.SUBSCRIPTION]() {
+      [MapperKind.SUBSCRIPTION]() {
         return null
       },
     })

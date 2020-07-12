@@ -4,7 +4,7 @@
  */
 import signalExit from "signal-exit"
 import { getStore } from "./redux"
-import reporterActions from "./redux/actions"
+import { createPendingActivity } from "./redux/actions"
 import { ActivityStatuses } from "./constants"
 import { reporter } from "./reporter"
 
@@ -25,7 +25,7 @@ export const prematureEnd = (): void => {
   // hack so at least one activity is surely failed, so
   // we are guaranteed to generate FAILED status
   // if none of activity did explicitly fail
-  reporterActions.createPendingActivity({
+  createPendingActivity({
     id: `panic`,
     status: ActivityStatuses.Failed,
   })

@@ -3,10 +3,12 @@ starter:
   - AMP
   - Authentication
   - AWS
+  - Azure
   - Blog
   - Client-side App
   - CMS:Agility CMS
-  - CMS:Cosmic JS
+  - CMS:Cosmic
+  - CMS:Ghost
   - CMS:Headless
   - CMS:Contentful
   - CMS:DatoCMS
@@ -21,6 +23,7 @@ starter:
   - CMS:Other
   - Disqus
   - Documentation
+  - Donations
   - E-commerce
   - Firebase
   - Gallery
@@ -60,7 +63,6 @@ starter:
   - Styling:SCSS
   - Styling:Tailwind
   - Styling:Theme-UI
-  - Styling:Milligram
   - Styling:Other
   - Styling:None
   - Testing
@@ -71,6 +73,7 @@ site:
   - Agency
   - App
   - Blog
+  - Books
   - Business
   - Community
   - Conference
@@ -90,6 +93,7 @@ site:
   - Food
   - Freelance
   - Gallery
+  - Ghost
   - Government
   - Healthcare
   - Human Resources

@@ -20,9 +20,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.loadPageSync(pathname)
-
-      if (pageResources != null) {
+      if (!loader.isPageNotFound(pathname)) {
         console.error(
           `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
         )
@@ -49,6 +47,14 @@ const onRouteUpdate = (location, prevLocation) => {
 }
 
 const navigate = (to, options = {}) => {
+  // Support forward/backward navigation with numbers
+  // navigate(-2) (jumps back 2 history steps)
+  // navigate(2)  (jumps forward 2 history steps)
+  if (typeof to === `number`) {
+    globalHistory.navigate(to)
+    return
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -171,16 +177,16 @@ class RouteAnnouncer extends React.Component {
       if (document.title) {
         pageName = document.title
       }
-      const pageHeadings = document
-        .getElementById(`gatsby-focus-wrapper`)
-        .getElementsByTagName(`h1`)
+      const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
       if (pageHeadings && pageHeadings.length) {
         pageName = pageHeadings[0].textContent
       }
       const newAnnouncement = `Navigated to ${pageName}`
-      const oldAnnouncement = this.announcementRef.current.innerText
-      if (oldAnnouncement !== newAnnouncement) {
-        this.announcementRef.current.innerText = newAnnouncement
+      if (this.announcementRef.current) {
+        const oldAnnouncement = this.announcementRef.current.innerText
+        if (oldAnnouncement !== newAnnouncement) {
+          this.announcementRef.current.innerText = newAnnouncement
+        }
       }
     })
   }

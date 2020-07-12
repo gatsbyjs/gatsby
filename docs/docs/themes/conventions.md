@@ -46,7 +46,9 @@ import { graphql } from "gatsby"
 
 import PostList from "../components/PostList"
 
-export default props => <PostList posts={props.allMdx.edges} />
+export default function MyPostsList(props) {
+  return <PostList posts={props.allMdx.edges} />
+}
 
 export const query = graphql`
   query {
@@ -128,7 +130,7 @@ your theme you can create a StaticQuery to access it:
 ```js:title=src/hooks/use-site-metadata.js
 import { graphql, useStaticQuery } from "gatsby"
 
-export default () => {
+export default function useSiteMetadata() {
   const data = useStaticQuery(graphql`
     {
       site {
@@ -156,7 +158,7 @@ import { Link } from "gatsby"
 
 import useSiteMetadata from "../hooks/use-site-metadata"
 
-export default () => {
+export default function Header() {
   const { title, social } = useSiteMetadata()
 
   return (
@@ -221,7 +223,7 @@ for performing a theme upgrade.
   - Renaming a directory
 - **Removing or changing the props a component accepts** since it will affect component extending.
 - **Changing queries** since a user could be using the original data in shadowed components.
-- **Removing or changing the behaviour** of your theme's configuration.
+- **Removing or changing the behavior** of your theme's configuration.
 - **Removing attributes in schema definitions** because it can break end user queries.
 - **Removing default data** this could change your generated schema and break a user's site if they
   depend on some part of that generated schema.

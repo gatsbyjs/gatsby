@@ -88,7 +88,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function(content) {
+module.exports = async function (content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,

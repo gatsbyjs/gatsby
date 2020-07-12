@@ -25,11 +25,11 @@ You can sign up for the following accounts now or as you need to use each of the
 - [Snipcart](https://snipcart.com/): add a shopping cart to your site
 - [Netlify](https://www.netlify.com/): host your site and register a domain
 
-To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
+To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
 
-- [node](https://nodejs.org): run JavaScript on your computer
+- [Node.js](https://nodejs.org): run JavaScript on your computer
 - [Git](https://git-scm.com/downloads): track changes to your code
-- [Gatsby command line interface (CLI)](https://www.gatsbyjs.org/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
+- [Gatsby command line interface (CLI)](/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
 
 ## Provisioning Your Site on Gatsby Cloud
 
@@ -53,16 +53,16 @@ Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site
 
 > This automatic provisioning of your website is one of Gatsby Cloud's strengths. Integrations with content management systems like this make it possible for you to spin up and begin publishing content to new sites without ever touching any code.
 
-![celebratory screen titled successfully set up Gatsby provisioned Snipcart!](/images/successfully-set-up.png)
+![Celebratory screen titled successfully set up Gatsby provisioned Snipcart!](/images/successfully-set-up.png)
 
 ## Exploring the DatoCMS Project
 
-After sucessfully linking the DatoCMS you can click on "Start my site" and
+After successfully linking the DatoCMS you can click on "Start my site" and
 follow the link in Gatsby Cloud to go straight to your project in DatoCMS.
 
 Click on "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
 
-![edit product screen featuring a single sock product called street faces](/images/edit-product.png)
+![Edit product screen featuring a single sock product called street faces](/images/edit-product.png)
 
 ### Editing models in DatoCMS
 
@@ -70,7 +70,7 @@ Clicking on "Settings" in the primary navigation menu reveals the "Models" menu 
 
 Maybe you also want each product to have a description or a release date. You can edit this model to be whatever you want it to be by adding and customizing fields. DatoCMS provides a wide variety of options that you can tweak to fit your needs.
 
-![choose a field type menu featuring options for text, modular content, media, data and timeline, number, boolean, location, color, SEO, links, and JSON](/images/choose-field-type.png)
+![Choose a field type menu featuring options for text, modular content, media, data and timeline, number, boolean, location, color, SEO, links, and JSON](/images/choose-field-type.png)
 
 If you already have items you know you want to sell, replace the sample products with a few of your own to get a feel for the interface. If not, you can continue on without making any changes in the CMS for now.
 
@@ -84,7 +84,7 @@ Even if you've never used Git/GitHub, there's no need to fear. You can edit indi
 
 You can make small changes to the code from your browser by editing files directly in GitHub. Say, for example, that you always want to display prices in some other currency besides euros. To switch the symbols, head to your repository's page on GitHub and navigate to `src/pages/index.js`.
 
-![github menu shows the current branch and file location as well as the first few lines of code in this file. Also includes view options raw, blame, and history](/images/github-menu.png)
+![GitHub menu shows the current branch and file location as well as the first few lines of code in this file. Also includes view options raw, blame, and history](/images/github-menu.png)
 
 Select "Edit this file" (the pencil icon) from the menu. Where `product.price` is being displayed, you'll need to update the currency symbol.
 
@@ -94,7 +94,7 @@ Select "Edit this file" (the pencil icon) from the menu. Where `product.price` i
 
 Once you've made your change, you'll need to commit that change. A commit is like a snapshot in time or a save point in a video game. Add a message that concisely describes the changes you've made and then commit those changes.
 
-![commit changes menu with message 'Euro to dollar'. Email address is blurred and there's a big, green 'Commit changes' button](/images/commit-change.png)
+![Commit changes menu with message 'Euro to dollar'. Email address is blurred and there's a big, green 'Commit changes' button](/images/commit-change.png)
 
 You've made a change to your master branch, which means Gatsby will build a new version of your site!
 
@@ -104,7 +104,7 @@ The rest of this process is described in the context of using a text editor to m
 
 You can edit your site's code locally by following these steps:
 
-- Clone the project by Selecting the "Clone or download" button on your repository's main page, which will display a link for you to copy.
+- Clone the project by selecting the "Clone or download" button on your repository's main page, which will display a link for you to copy.
 
 - Copy the project to your computer and install its dependencies, other JavaScript projects that your site relies on to work.
 
@@ -120,7 +120,7 @@ You'll need to make one change before you try to run the site. The version that 
 
 In `gatsby-config.js`, you'll find an array of plugins already installed on your site, including `gatsby-source-datocms`. That section references a variable `process.env.DATO_API_TOKEN`. `process.env` refers to the _environment_ in which you're running your code and `DATO_API_TOKEN` is the name of the particular variable in question.
 
-```jsx:title=gatsby-config.js
+```js:title=gatsby-config.js
 {
   resolve: `gatsby-source-datocms`,
   options: { apiToken: process.env.DATO_API_TOKEN },
@@ -131,13 +131,13 @@ In order to set this variable's value, create a new file in your project's root 
 
 Add your DatoCMS API Token environment variable to this file. You can find your API token in Gatsby under Site Settings > Environment variables. Opening the "Edit" menu will allow you to copy the full token. Set that as the value in `.env.development`.
 
-```
+```text
 DATO_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Now you should be able to run `gatsby develop` to run your site. If you're using Visual Studio Code, you can open a terminal within the text editor (control + `) and keep everything in one window. Navigate to [localhost:8000](http://localhost:8000/) in your browser to see the example site. It should include whatever products you created in DatoCMS.
+Now you should be able to run `gatsby develop` to run your site. If you're using Visual Studio Code, you can open a terminal within the text editor (control + \`) and keep everything in one window. Navigate to `http://locahost:8000/` in your browser to see the example site. It should include whatever products you created in DatoCMS.
 
-![sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
+![Sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
 
 ## Modifying styles
 
@@ -145,7 +145,7 @@ Chances are you'll want to apply your own branding to this site, so try making s
 
 If you're not sure where to look for the code you'll need to change, search for the term "background" and see what comes up! In this case, you'll find one entry in the results that _also_ says something about a gradient...
 
-![searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](/images/background.png)
+![Searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](/images/background.png)
 
 Remove the following CSS from `src/style/reset.scss`. The result should be a plain white background for your store.
 
@@ -339,7 +339,7 @@ render={data => (
                   data-item-price={product.price}
                   data-item-image={product.image.url}
                   data-item-name={product.name}
-                  data-item-url={`https://determined-easley-e806d0.netlify.com/`}
+                  data-item-url={`https://determined-easley-e806d0.netlify.app/`}
                 >
                   Add to cart
                 </button>
@@ -395,7 +395,7 @@ Back in your Gatsby dashboard, head over to Site Settings > Integrations > Hosti
 
 That whimsical domain you generated earlier is probably not where you want to send your customers. Netlify will help you get set up with a shiny new custom domain.
 
-If you already have one, that's awesome! You'll need to point it to the code you just hosted on Netlify. The specifics of _how_ to do that will vary slightly and depend on the registrar you went with. Try googling something like "[registrar] netlify custom domain" to find instructions for your situation. For more information, check out [Netlify's guide on assigning a domain to a site](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
+If you already have one, that's awesome! You'll need to point it to the code you just hosted on Netlify. The specifics of _how_ to do that will vary slightly and depend on the registrar you went with. Try googling something like "[registrar] Netlify custom domain" to find instructions for your situation. For more information, check out [Netlify's guide on assigning a domain to a site](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
 
 Paying for your domain through Netlify is a little more straightforward. They'll take care of any necessary provisioning for you!
 
@@ -408,7 +408,7 @@ You've already done most of the work needed to launch your new online store. All
 - update the value of `data-item-url` in your product HTML
 - use your live Snipcart API key
 
-The `data-item-url` attribute needs to match the live page where the products can be bought, which Snipcart crawls to verify the the order. In testing, a slash is fine. To get your site ready to go live, you'll need to replace the slash with the actual URL.
+The `data-item-url` attribute needs to match the live page where the products can be bought, which Snipcart crawls to verify the order. In testing, a slash is fine. To get your site ready to go live, you'll need to replace the slash with the actual URL.
 
 ```jsx:title=index.js
 data-item-url={`URL of your live product page`}

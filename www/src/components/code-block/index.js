@@ -9,13 +9,7 @@ import LazyHighlight from "../lazy-highlight"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)
-  return [
-    lang
-      .split(`language-`)
-      .pop()
-      .split(`{`)
-      .shift(),
-  ].concat(
+  return [lang.split(`language-`).pop().split(`{`).shift()].concat(
     params.split(`&`).reduce((merged, param) => {
       const [key, value] = param.split(`=`)
       merged[key] = value
@@ -58,8 +52,8 @@ const CodeBlock = ({
                   fileName={title}
                   sx={{
                     position: `absolute`,
-                    right: t => t.space[1],
-                    top: t => t.space[1],
+                    right: 1,
+                    top: 1,
                     borderRadius: 2,
                   }}
                   content={content}

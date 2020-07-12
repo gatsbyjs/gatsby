@@ -1,6 +1,6 @@
-jest.mock(`graphql-tools-fork`, () => {
+jest.mock(`@graphql-tools/wrap`, () => {
   return {
-    transformSchema: jest.fn(),
+    wrapSchema: jest.fn(),
     introspectSchema: jest.fn(),
     RenameTypes: jest.fn(),
   }

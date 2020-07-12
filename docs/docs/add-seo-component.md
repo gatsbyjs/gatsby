@@ -28,7 +28,7 @@ module.exports = {
 
 First create a new component with this initial boilerplate.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
@@ -60,7 +60,7 @@ As the SEO component should also be usable in other files, e.g. a template file,
 
 Now define the query and pass it to `useStaticQuery`. You can also alias query items, so `title` gets renamed to `defaultTitle`.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
   const { location } = useLocation()
   const { site } = useStaticQuery(query)
@@ -88,7 +88,7 @@ const query = graphql`
 
 The next step is to destructure the data from the query and create an object that checks if the props were used. If not, the default values are applied. Aliasing the properties comes in handy here to avoid name collisions.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
   const { pathname } = useLocation()
   const { site } = useStaticQuery(query)
@@ -117,7 +117,7 @@ export default SEO
 
 The last step is to return this data with the help of `Helmet`. Your complete SEO component should look like this.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"

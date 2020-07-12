@@ -40,8 +40,8 @@ Gatsby is great for static sites and for truly maximizing performance, while als
 One of the central ideas of Gatsby is that we statically generate our HTML content--using React DOM server-side APIs. A less-often illustrated feature is that this static HTML content can then be _enhanced_ with client-side JavaScript via React hydration. The general approach is as follows:
 
 1. Build and render static HTML, creating content and pages with data injected at build time
-1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
-1. Transfer rendering to the [React reconciler][reconciler]
+2. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
+3. Transfer rendering to the [React reconciler][reconciler]
 
 _This process is spelled out in more detail in the ["Understanding React Hydration" guide](/docs/react-hydration)_
 

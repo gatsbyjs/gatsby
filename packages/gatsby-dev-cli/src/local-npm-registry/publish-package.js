@@ -27,6 +27,7 @@ const adjustPackageJson = ({
   versionPostFix,
   packagesToPublish,
   ignorePackageJSONChanges,
+  root,
 }) => {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
@@ -44,8 +45,19 @@ const adjustPackageJson = ({
       monorepoPKGjson.dependencies &&
       monorepoPKGjson.dependencies[packageThatWillBePublished]
     ) {
-      // change to "gatsby-dev" dist tag
-      monorepoPKGjson.dependencies[packageThatWillBePublished] = `gatsby-dev`
+      const currentVersion = JSON.parse(
+        fs.readFileSync(
+          getMonorepoPackageJsonPath({
+            packageName: packageThatWillBePublished,
+            root,
+          }),
+          `utf-8`
+        )
+      ).version
+
+      monorepoPKGjson.dependencies[
+        packageThatWillBePublished
+      ] = `${currentVersion}-dev-${versionPostFix}`
     }
   })
 
@@ -127,12 +139,15 @@ const publishPackage = async ({
     console.log(
       `Published ${packageName}@${newPackageVersion} to local registry`
     )
-  } catch {
-    console.error(`Failed to publish ${packageName}@${newPackageVersion}`)
+  } catch (e) {
+    console.error(`Failed to publish ${packageName}@${newPackageVersion}`, e)
+    process.exit(1)
   }
 
   uncreateTemporaryNPMRC()
   unadjustPackageJson()
+
+  return newPackageVersion
 }
 
 exports.publishPackage = publishPackage

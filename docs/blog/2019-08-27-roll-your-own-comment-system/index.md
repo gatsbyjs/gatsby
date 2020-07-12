@@ -9,7 +9,7 @@ tags:
 canonicalLink: https://www.taniarascia.com/add-comments-to-static-site/
 ---
 
-A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
+A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious BuzzFeed-esque ads embedded between all the comments. I decided it immediately had to go.
 
 I had no comments for a bit, but I felt like I had no idea what the reception of my articles was without having any place for people to leave comments. Occasionally people will leave useful critiques or tips on tutorials that can help future visitors as well, so I wanted to try adding something very simple back in.
 
@@ -17,7 +17,7 @@ I looked at all the options, but I really didn't want to invest in setting up so
 
 Here's some pros and cons to rolling your own comment system:
 
-#### Pros
+## Pros
 
 - Free
 - No ads
@@ -27,7 +27,7 @@ Here's some pros and cons to rolling your own comment system:
 - Little to no spam because spambots aren't set up to spam your custom content
 - Easy to migrate - it all exists in one Heroku + Postgres server
 
-#### Cons
+## Cons
 
 - More work to set up
 - Less features
@@ -75,7 +75,7 @@ VALUES
   ('Bogus', 'Testing the comments API', 'how-to-bake-a-cake', null);
 ```
 
-You could probably get more fancy with it and add website, email, upvotes and other features, but I just wanted it to be simple. I'm not adding in any login or 0Auth/user authentication either, which makes it even more simple, but comes with the drawbacks of an anonymous online system.
+You could probably get more fancy with it and add website, email, upvotes and other features, but I just wanted it to be simple. I'm not adding in any login or OAuth/user authentication either, which makes it even more simple, but comes with the drawbacks of an anonymous online system.
 
 ## API
 
@@ -363,7 +363,7 @@ render() {
   const { submitting, success, error, comments, newComment: { name, text } } = this.state
 ```
 
-I made some simple error or success messages to show after submnitting the form.
+I made some simple error or success messages to show after submitting the form.
 
 ```jsx:title=components/comments.js
 const showError = () =>

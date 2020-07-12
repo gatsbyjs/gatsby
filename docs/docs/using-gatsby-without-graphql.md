@@ -42,27 +42,29 @@ On the highlighted lines, the data is being supplied to the page template, where
 
 ```jsx:title=/src/templates/pokemon.js
 // highlight-next-line
-export default ({ pageContext: { pokemon } }) => (
-  <div style={{ width: 960, margin: "4rem auto" }}>
-    {/* highlight-start */}
-    <h1>{pokemon.name}</h1>
-    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-    {/* highlight-end */}
-    <h2>Abilities</h2>
-    <ul>
+export default function Pokemon({ pageContext: { pokemon } }) {
+  return (
+    <div style={{ width: 960, margin: "4rem auto" }}>
       {/* highlight-start */}
-      {pokemon.abilities.map(ability => (
-        <li key={ability.name}>
-          <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
-            {ability.name}
-            {/* highlight-end */}
-          </Link>
-        </li>
-      ))}
-    </ul>
-    <Link to="/">Back to all Pokémon</Link>
-  </div>
-)
+      <h1>{pokemon.name}</h1>
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      {/* highlight-end */}
+      <h2>Abilities</h2>
+      <ul>
+        {/* highlight-start */}
+        {pokemon.abilities.map(ability => (
+          <li key={ability.name}>
+            <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
+              {ability.name}
+              {/* highlight-end */}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <Link to="/">Back to all Pokémon</Link>
+    </div>
+  )
+}
 ```
 
 ## When might using "unstructured data" make sense?
@@ -83,7 +85,7 @@ Using Gatsby's data layer provides the following benefits:
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries
 - It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
-- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
+- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other Pokémon" section to the Pokémon detail view, you would need to change your `gatsby-node.js` to pass all Pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
 > Learn more about [GraphQL in Gatsby](/docs/graphql/).
 
@@ -99,8 +101,8 @@ Another difficulty added when working with unstructured data is that your data f
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
+1. Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2. If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ## Further reading
 

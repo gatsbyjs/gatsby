@@ -3,7 +3,7 @@ const kebabCase = require(`lodash.kebabcase`)
 exports.onCreateNode = ({ actions, node }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === 'node__article') {
+  if (node.internal.type === "node__article") {
     createNodeField({ node, name: "slug", value: kebabCase(node.title) })
   }
 }
@@ -33,7 +33,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       component: require.resolve(`./src/templates/article.js`),
       context: {
         slug: article.fields.slug,
-      }
+      },
     })
   })
 }

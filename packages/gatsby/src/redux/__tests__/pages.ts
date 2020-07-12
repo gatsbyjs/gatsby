@@ -1,3 +1,5 @@
+import { readFile } from "fs-extra"
+
 jest.mock(`fs-extra`, () => {
   return {
     readFile: jest.fn(() => `contents`),
@@ -7,7 +9,6 @@ import glob from "glob"
 
 import { pagesReducer as reducer } from "../reducers/pages"
 import { actions } from "../actions"
-import { readFile } from "fs-extra"
 
 afterEach(() => {
   ;(readFile as jest.MockedFunction<typeof readFile>).mockClear()
@@ -174,7 +175,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
     const action2 = actions.deletePage({ path: `/hi/` })
 

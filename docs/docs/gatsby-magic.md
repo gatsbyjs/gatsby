@@ -76,6 +76,6 @@ Gatsby Cloud is a new product offering from the same team that brought you the G
 
 Features include real-time Preview, simplifying content collaboration, and Automatic Provisioning that empowers new and non-technical users to get started easily with a CMS, sample content, and a connected Gatsby starter.
 
-To learn more about Gatsby Cloud and its evolving feature set, visit [https://www.gatsbyjs.com/cloud](https://www.gatsbyjs.com/cloud).
+To learn more about Gatsby Cloud and its evolving feature set, visit https://www.gatsbyjs.com/cloud.
 
 <!-- Docs to Markdown version 1.0β17 -->

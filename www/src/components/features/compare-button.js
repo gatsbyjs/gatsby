@@ -32,7 +32,7 @@ const CompareButton = ({ children, optionKey, selected, setSelected }) => (
       borderColor: selected ? `purple.60` : `ui.border`,
       color: selected ? `white` : `textMuted`,
     }}
-    onClick={e => setSelected({ [optionKey]: !selected })}
+    onClick={() => setSelected({ [optionKey]: !selected })}
   >
     <img
       sx={{

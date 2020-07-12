@@ -34,8 +34,13 @@ export const onRenderBody = (
   // Lighthouse recommends pre-connecting to google analytics
   setHeadComponents([
     <link
-      rel="preconnect dns-prefetch"
+      rel="preconnect"
       key="preconnect-google-analytics"
+      href="https://www.google-analytics.com"
+    />,
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-analytics"
       href="https://www.google-analytics.com"
     />,
   ])
@@ -83,7 +88,9 @@ export const onRenderBody = (
   }) {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    m=s.getElementsByTagName(o)[0];${
+      pluginOptions.defer ? `a.defer=1;` : `a.async=1;`
+    }a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   }
   if (typeof ga === "function") {

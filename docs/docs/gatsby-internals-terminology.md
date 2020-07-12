@@ -53,11 +53,11 @@ It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=net
 
 ### jsonName
 
-The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
+The logical name for the page's query JSON result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
-The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
+The actual JSON file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
 
 ### component
 
@@ -83,7 +83,7 @@ Mapping from `component` (path on disk) to its [Page object](#page-object). It i
 }
 ```
 
-Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
+Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
 
 ### componentChunkName
 
@@ -105,7 +105,7 @@ Created as part of page, but currently unused.
 
 ### page.context
 
-This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.js#L79) and then is [passed to graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.js#L28) queries as the `context` parameter.
+This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L79) and then is [passed to GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L36) queries as the `context` parameter.
 
 ## Query
 
@@ -189,7 +189,7 @@ export const pageQuery = graphql`
 `
 ```
 
-## Webpack stuff
+## webpack stuff
 
 ### /.cache/async-requires.js
 
