@@ -42,7 +42,7 @@ describe(`CoreJSResolver`, () => {
     ).toEqual(expect.stringContaining(`core-js/modules/es.array.split.js`))
   })
 
-  it(`should convert es6.regexp.replace to its corejs@3 equivalent`, async () => {
+  it(`should convert es6.regexp.replace to it's corejs@3 equivalent`, async () => {
     const resolver = new CoreJSResolver()
 
     const doResolve = jest.fn((_, request, __, ___, callback) =>

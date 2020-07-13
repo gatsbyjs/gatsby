@@ -94,8 +94,8 @@ describe(`<Link />`, () => {
   })
 
   it(`does not fail with missing __BASE_PATH__`, () => {
-    global.__PATH_PREFIX__ = ``
-    global.__BASE_PATH__ = undefined
+    delete global.__PATH_PREFIX__
+    delete global.__BASE_PATH__
 
     const source = createMemorySource(`/active`)
 
