@@ -4,6 +4,7 @@ import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
+import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -66,33 +67,35 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return (
         <EnsureResources location={location}>
           {({ pageResources, location }) => (
-            <RouteUpdates location={location}>
-              <ScrollContext
-                location={location}
-                shouldUpdateScroll={shouldUpdateScroll}
-              >
-                <Router
-                  basepath={__BASE_PATH__}
+            <StaticQueryContext.Provider value={pageResources.staticQueryData}>
+              <RouteUpdates location={location}>
+                <ScrollContext
                   location={location}
-                  id="gatsby-focus-wrapper"
+                  shouldUpdateScroll={shouldUpdateScroll}
                 >
-                  <RouteHandler
-                    path={
-                      pageResources.page.path === `/404.html`
-                        ? stripPrefix(location.pathname, __BASE_PATH__)
-                        : encodeURI(
-                            pageResources.page.matchPath ||
-                              pageResources.page.path
-                          )
-                    }
-                    {...this.props}
+                  <Router
+                    basepath={__BASE_PATH__}
                     location={location}
-                    pageResources={pageResources}
-                    {...pageResources.json}
-                  />
-                </Router>
-              </ScrollContext>
-            </RouteUpdates>
+                    id="gatsby-focus-wrapper"
+                  >
+                    <RouteHandler
+                      path={
+                        pageResources.page.path === `/404.html`
+                          ? stripPrefix(location.pathname, __BASE_PATH__)
+                          : encodeURI(
+                              pageResources.page.matchPath ||
+                                pageResources.page.path
+                            )
+                      }
+                      {...this.props}
+                      location={location}
+                      pageResources={pageResources}
+                      {...pageResources.json}
+                    />
+                  </Router>
+                </ScrollContext>
+              </RouteUpdates>
+            </StaticQueryContext.Provider>
           )}
         </EnsureResources>
       )
