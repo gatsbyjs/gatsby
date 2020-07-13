@@ -517,7 +517,6 @@ export default styled(SearchResult)`
 The search widget is now ready for use. It needs to be placed somewhere in your project's layout. If you start from Gatsby starter block, you can use the `layout` component:
 
 ```jsx:title=src/components/layout.js
-...
 import React from "react"
 import { Link } from "gatsby"
 import { rhythm, scale } from "../utils/typography"
@@ -540,7 +539,7 @@ const Layout = ({ location, title, children }) => {
       }}
     >
       <header>
-// highlight-next-line
+        // highlight-next-line
         <Search indices={searchIndices} />
         {header}
       </header>
