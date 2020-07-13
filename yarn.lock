@@ -3323,6 +3323,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/better-queue@^3.8.2":
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/@types/better-queue/-/better-queue-3.8.2.tgz#911a86863c1dd89a42308e03ee8d25ab7f6bafa7"
+  integrity sha512-KMFFgojmy10+npJiw/XkY2i+UD96NZmo4L0xuw8DRfEXB4a70rS6YHzqpb7Xgh1+TwWFsIHbsK8fFkvMTxEASA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/bluebird@^3.5.30":
   version "3.5.30"
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.30.tgz#ee034a0eeea8b84ed868b1aa60d690b08a6cfbc5"

@@ -1,5 +1,5 @@
-const MemoryStoreWithPriorityBuckets = require(`../better-queue-custom-store`)
-const pify = require(`pify`)
+import { memoryStoreWithPriorityBuckets } from "../better-queue-custom-store"
+import pify from "pify"
 
 // those are tests copied from https://github.com/diamondio/better-queue-store-test/blob/master/tester.js
 // and converted from mocha to jest + used pify to make it nicer to read than callback chain
@@ -18,7 +18,7 @@ describe(`Custom better-queue memory store`, () => {
     `releaseLock`,
   ]
   beforeEach(() => {
-    store = MemoryStoreWithPriorityBuckets()
+    store = memoryStoreWithPriorityBuckets()
     functions.forEach(fnName => {
       if (store[fnName]) {
         store[fnName] = pify(store[fnName])
@@ -51,10 +51,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task2`, { value: `secret 2` }, 1)
     await store.putTask(`task3`, { value: `secret 3` }, 1)
 
-    let lockId, tasks
-
-    lockId = await store.takeLastN(2)
-    tasks = await store.getLock(lockId)
+    let lockId: string = await store.takeLastN(2)
+    let tasks: any = await store.getLock(lockId)
 
     // should get the third task
     expect(tasks.task3.value).toBe(`secret 3`)
@@ -80,10 +78,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task2`, { value: `secret 2` }, 1)
     await store.putTask(`task3`, { value: `secret 3` }, 1)
 
-    let lockId, tasks
-
-    lockId = await store.takeFirstN(2)
-    tasks = await store.getLock(lockId)
+    let lockId = await store.takeFirstN(2)
+    let tasks = await store.getLock(lockId)
 
     // should get the first task
     expect(tasks.task1.value).toBe(`secret 1`)
@@ -109,12 +105,10 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task2`, { value: `secret 2` }, 1)
     await store.putTask(`task3`, { value: `secret 3` }, 1)
 
-    const lock1 = await store.takeFirstN(1)
-    const lock2 = await store.takeLastN(1)
+    const lock1: string = await store.takeFirstN(1)
+    const lock2: string = await store.takeLastN(1)
 
-    let workers
-
-    workers = await store.getRunningTasks()
+    let workers = await store.getRunningTasks()
 
     // should have first lock
     expect(workers[lock1]).toBeDefined()
@@ -151,7 +145,7 @@ describe(`Custom better-queue memory store`, () => {
     await store.deleteTask(`task2`)
 
     // take 2
-    const lockId = await store.takeFirstN(2)
+    const lockId: string = await store.takeFirstN(2)
     const tasks = await store.getLock(lockId)
 
     // should get the first task
@@ -173,9 +167,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task4`, { value: `secret 4` }, 2)
 
     // take first 2
-    let lockId, tasks
-    lockId = await store.takeFirstN(2)
-    tasks = await store.getLock(lockId)
+    let lockId: string = await store.takeFirstN(2)
+    let tasks = await store.getLock(lockId)
 
     // should get the third task
     expect(tasks.task3.value).toBe(`secret 3`)
