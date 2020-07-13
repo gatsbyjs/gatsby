@@ -1,50 +1,48 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import styled from "@emotion/styled"
 
 import logo from "../../assets/monogram.svg"
 import logoDictionary from "./logo-dictionary"
 
-const Td = styled.td`
-  background: ${t => t.theme.colors.background};
-  border-color: ${t => t.theme.colors.ui.light};
-  display: table-cell;
-  font-family: ${t => t.theme.fonts.heading};
-  font-weight: 600;
-  line-height: ${t => t.theme.lineHeights.dense};
-  padding: ${t => t.theme.space[3]};
-  text-align: left;
-  vertical-align: middle;
-`
+const tdStyles = {
+  background: t => t.colors.background,
+  borderColor: t => t.colors.ui.light,
+  display: `table-cell`,
+  fontFamily: `heading`,
+  lineHeight: `dense`,
+  fontWeight: 600,
+  textAlign: `left`,
+  verticalAlign: `middle`,
+  p: 3,
+}
 
 const subHeaderTitleStyles = {
   display: `block`,
   height: t => [t.space[6], t.space[7]],
-  margin: `auto`,
-  marginBottom: 0,
+  m: `auto`,
+  mb: 0,
 }
 
-const renderSubHeader = props => (
-  <tr
-    key="subhead"
-    style={{
-      display: !props.display ? `none` : `table-row`,
-    }}
-  >
-    <Td>{props.category}</Td>
-    <Td>
-      <img src={logo} sx={subHeaderTitleStyles} alt="Gatsby logo" />
-    </Td>
-    {props.options.map((option, i) => (
-      <Td key={i}>
-        <img
-          src={logoDictionary[option.key]}
-          sx={subHeaderTitleStyles}
-          alt={`${option.display} Logo`}
-        />
-      </Td>
-    ))}
-  </tr>
-)
+const Td = ({ children }) => <td sx={tdStyles}>{children}</td>
 
-export default renderSubHeader
+export default function HeaderBottom({ display, category, options }) {
+  return (
+    <tr
+      sx={{
+        display: !display ? `none` : `table-row`,
+      }}
+    >
+      <Td>{category}</Td>
+      <Td>{<img src={logo} sx={subHeaderTitleStyles} alt="Gatsby logo" />}</Td>
+      {options.map((option, i) => (
+        <Td key={i}>
+          <img
+            src={logoDictionary[option.key]}
+            sx={subHeaderTitleStyles}
+            alt={`${option.display} Logo`}
+          />
+        </Td>
+      ))}
+    </tr>
+  )
+}
