@@ -408,6 +408,27 @@ class Image extends React.Component {
     if (isUsingArtDirection(imageVariants)) {
       this.uniqueKey =
         !isBrowser && getShortKey(imageVariants.map(v => v.srcSet).join(``))
+
+      // When image variant changes, adapt via render immediately instead of delaying
+      // until new image request triggers 'onload' event.
+      // Can be verified on 'slow 3G' with no initial cache.
+      if (isBrowser) {
+        this.handleVariantChange = this.handleVariantChange.bind(this)
+        const base = imageVariants.find(v => !v.media)
+
+        this.mq = { base }
+        this.mq.queries = imageVariants.filter(v => v.media)
+        this.mq.queries.forEach(v => {
+          this.mq[v.media] = v
+          const mql = window.matchMedia(v.media)
+          if (mql.addEventListener) {
+            mql.addEventListener(`change`, this.handleVariantChange)
+          } else {
+            // Deprecated 'MediaQueryList' API, <Safari 14, IE, <Edge 16
+            mql.addListener(this.handleVariantChange)
+          }
+        })
+      }
     }
   }
 
@@ -468,11 +489,29 @@ class Image extends React.Component {
   handleImageLoaded() {
     activateCacheForImage(this.props)
 
-    this.setState({ imgLoaded: true })
+    if (!this.state.imgLoaded) {
+      this.setState({ imgLoaded: true })
+    }
 
     if (this.props.onLoad) {
       this.props.onLoad()
     }
+  }
+
+  // 'window.matchMedia()' events on image variants media conditions.
+  // If variant is not in image cache when triggered, resets the image
+  // loading state so that the placeholder is visible instead of blank.
+  handleVariantChange(e) {
+    const match =
+      (e.matches && this.mq[e.media]) ||
+      this.mq.queries.find(matchesMedia) ||
+      this.mq.base
+
+    this.seenBefore = imageCache[match.src]
+    this.setState({
+      fadeIn: !this.seenBefore && this.state.fadeIn,
+      imgLoaded: false,
+    })
   }
 
   render() {
