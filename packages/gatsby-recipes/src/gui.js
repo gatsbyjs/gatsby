@@ -5,6 +5,7 @@ const React = require(`react`)
 const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
 const remove = require(`unist-util-remove`)
+const { Global } = require('@emotion/core')
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
 import MDX from "./components/mdx"
@@ -15,7 +16,6 @@ const {
   getTheme,
   BaseAnchor,
   Heading,
-  InProgressIcon,
   SuccessIcon,
 } = require(`gatsby-interface`)
 const {
@@ -52,8 +52,8 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT = `/Users/kylemathews/programs/gatsby-contentful-blog`
-// `/Users/johno-mini/c/gatsby/starters/blog`
+const PROJECT_ROOT = `/Users/kylemathews/programs/gatsby-contentful-blog` &&
+  `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
@@ -203,7 +203,7 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `./testing-contentful.mdx`
+const recipe = `./test.mdx`
 // recipe = `jest.mdx`,
 // recipe,
 const graphqlPort = 4000
@@ -250,6 +250,7 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
       <Styled.pre
         sx={{
           background: theme => theme.tones.BRAND.superLight,
+          borderRadius: 2,
           border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
           padding: 4,
           mb: isLastPlan ? 0 : 6,
@@ -293,10 +294,31 @@ const Step = ({ state, step, i }) => {
     <div
       key={`step-${i}`}
       sx={{
+        position: 'relative',
+        borderRadius: 2,
         border: theme => `1px solid ${theme.tones.BRAND.light}`,
         marginBottom: 7,
       }}
     >
+      <div
+        sx={{
+          position: 'absolute',
+          backgroundColor: 'white',
+          color: theme => theme.tones.BRAND.dark,
+          right: '8px',
+          top: '8px',
+          border: theme => `1px solid ${theme.tones.BRAND.light}`,
+          borderRadius: 9999,
+          height: 40,
+          width: 40,
+          display: 'flex',
+          alignContent: 'center',
+          justifyContent: 'center',
+          lineHeight: '34px'
+        }}
+      >
+        {i + 1}
+      </div>
       <div
         sx={{
           display: `flex`,
@@ -304,6 +326,9 @@ const Step = ({ state, step, i }) => {
           "& > *": {
             marginY: 0,
           },
+          borderTopLeftRadius: 2,
+          borderTopRightRadius: 2,
+          borderBottom: theme => `1px solid ${theme.tones.BRAND.light}`,
           background: theme => theme.tones.BRAND.lighter,
           padding: 4,
         }}
@@ -318,7 +343,9 @@ const Step = ({ state, step, i }) => {
         >
           <MDX
             key="DOC"
-            components={components}
+            components={{
+              ...components,
+            }}
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
@@ -675,14 +702,14 @@ const RecipeInterpreter = () => {
             </div>
             <div sx={{ marginBottom: 8 }}>
               <Heading sx={{ marginBottom: 6 }}>
-                Changes
+                {plansWithoutInputs?.length}
                 {` `}
-                {plansWithoutInputs && `(${plansWithoutInputs?.length})`}
+                Changes
               </Heading>
               {Object.entries(groupedPlans).map(([resourceName, plans]) => (
                 <div key={`key-${resourceName}`}>
                   <Heading
-                    as="h4"
+                    as="h3"
                     sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
                   >
                     {resourceName}
@@ -710,7 +737,7 @@ const RecipeInterpreter = () => {
             </div>
 
             <Heading sx={{ mb: 6 }}>
-              Steps ({state.context.steps.length - 1})
+              {state.context.steps.length - 1} Steps
             </Heading>
             {state.context.steps.slice(1).map((step, i) => (
               <Step state={state} step={step} key={`step-${i}`} i={i} />
@@ -789,17 +816,36 @@ const WithProviders = ({ children }) => {
       },
     },
   }
+
   return (
     <UrqlProvider value={client}>
       <ThemeUIProvider theme={theme}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <main>{children}</main>
+        </ThemeProvider>
       </ThemeUIProvider>
     </UrqlProvider>
   )
 }
 
+const GlobalStyles = () => {
+  return (
+  <Global
+    styles={{
+      body: {
+        fontFamily: '-apple-system, system-ui, sans-serif'
+      },
+      h1: {
+        fontWeight: 700,
+        fontFamily: 'Futura PT,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif!'
+      }
+    }}
+  />)
+}
+
 export default () => (
   <WithProviders>
+    <GlobalStyles />
     <RecipeInterpreter />
   </WithProviders>
 )

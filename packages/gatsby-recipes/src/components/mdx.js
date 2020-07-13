@@ -3,7 +3,6 @@ import { transform } from "@babel/standalone"
 import mdx from "@mdx-js/mdx"
 import { mdx as createElement, MDXProvider } from "@mdx-js/react"
 import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
-import babelPluginRemoveExportKeywords from "babel-plugin-remove-export-keywords"
 const babelPluginCopyKeyProp = require(`../renderer/babel-plugin-copy-key-prop`)
 const babelPluginMoveExportKeywords = require(`../renderer/babel-plugin-move-export-keywords`)
 const { useInputByKey } = require(`../renderer/input-provider`)
