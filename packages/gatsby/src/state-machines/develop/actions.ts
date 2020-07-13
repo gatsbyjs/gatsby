@@ -109,5 +109,5 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   markQueryFilesDirty,
   assignWebhookBody,
   clearWebhookBody,
-  finishBootstrapSpan: finishParentSpan,
+  finishParentSpan,
 }

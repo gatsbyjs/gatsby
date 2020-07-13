@@ -1,5 +1,4 @@
 import { MachineConfig, AnyEventObject, forwardTo, Machine } from "xstate"
-import { runMutationAndMarkDirty } from "../shared-transition-configs"
 import { IDataLayerContext } from "../data-layer/types"
 import { IQueryRunningContext } from "../query-running/types"
 import { IWaitingContext } from "../waiting/types"
@@ -31,7 +30,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     initializingDataLayer: {
       on: {
-        ADD_NODE_MUTATION: runMutationAndMarkDirty,
+        ADD_NODE_MUTATION: {
+          actions: [`markNodesDirty`, `callApi`],
+        },
         // Ignore, because we're about to extract them anyway
         QUERY_FILE_CHANGED: undefined,
       },
@@ -57,7 +58,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `clearWebhookBody`,
             `finishParentSpan`,
           ],
-          target: `finishingBootstrap`,
+          target: `runningQueries`,
         },
       },
     },
