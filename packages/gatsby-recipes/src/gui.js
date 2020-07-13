@@ -198,9 +198,7 @@ log(
 )
 
 const removeJsx = () => tree => {
-  remove(tree, `mdxBlockElement`, node => node.name === `File`)
-
-  remove(tree, `export`, node => true)
+  remove(tree, `export`, () => true)
   return tree
 }
 
@@ -323,7 +321,6 @@ const Step = ({ state, step, i }) => {
       <div
         sx={{
           display: `flex`,
-          // justifyContent: `space-between`,
           "& > *": {
             marginY: 0,
           },
@@ -344,9 +341,7 @@ const Step = ({ state, step, i }) => {
         >
           <MDX
             key="DOC"
-            components={{
-              ...components,
-            }}
+            components={components}
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
@@ -508,11 +503,11 @@ const ResourceChildren = ({ resourceChildren, state }) => {
   }
 
   return (
-    <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+    <Styled.ul sx={{ ml: 0, mt: 0, pl: 0 }}>
       {resourceChildren.map(resource => (
         <Styled.li
           sx={{
-            listStyleType: `none`,
+            listStyleType: `none`
           }}
           key={resource._uuid}
         >
@@ -815,6 +810,7 @@ const WithProviders = ({ children }) => {
         mb: 2,
         fontFamily: `body`,
         fontWeight: `body`,
+        lineHeight: 1.6
       },
     },
   }
