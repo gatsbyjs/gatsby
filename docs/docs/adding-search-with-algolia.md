@@ -104,7 +104,7 @@ const indexName = `Pages`
 const pageQuery = `{
   pages: allMarkdownRemark(
     filter: {
-      fileAbsolutePath: { regex: "/${pagePath.replace("/", "/")}/" },
+      fileAbsolutePath: { regex: "/${pagePath.replace("/", "\\/")}/" },
     }
   ) {
     edges {
