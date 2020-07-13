@@ -7,11 +7,11 @@ import {
   DoneEventObject,
 } from "xstate"
 import { Store } from "redux"
-import { IBuildContext, IMutationAction } from "../services"
-import { actions } from "../redux/actions"
-import { listenForMutations } from "../services/listen-for-mutations"
-import { DataLayerResult } from "./data-layer"
-import { assertStore } from "../utils/assert-store"
+import { IBuildContext, IMutationAction } from "../../services"
+import { actions } from "../../redux/actions"
+import { listenForMutations } from "../../services/listen-for-mutations"
+import { DataLayerResult } from "../data-layer"
+import { assertStore } from "../../utils/assert-store"
 import reporter from "gatsby-cli/lib/reporter"
 
 export const callRealApi = (event: IMutationAction, store?: Store): void => {
