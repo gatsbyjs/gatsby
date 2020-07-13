@@ -41,7 +41,7 @@ Now that you have a project set up you can proceed to indexing your pages in Alg
 Start by adding the [Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia):
 
 ```shell
-npm install --save gatsby-plugin-algolia
+npm install gatsby-plugin-algolia
 ```
 
 ### Configuring the Algolia plugin
@@ -197,7 +197,7 @@ Styled Components can also be replaced by any other CSS solution you prefer.
 Install these frameworks by running the following command:
 
 ```shell
-npm install --save react-instantsearch-dom algoliasearch styled-components gatsby-plugin-styled-components @styled-icons/fa-solid
+npm install react-instantsearch-dom algoliasearch styled-components gatsby-plugin-styled-components @styled-icons/fa-solid
 ```
 
 ### Search box
