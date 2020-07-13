@@ -27,24 +27,24 @@ This is a non-exhaustive list of issues I most commonly read and heard. Feel fre
 
 1. **Generating separate pages for each locale requires greater effort and knowledge from the user than usual.** Passing around the necessary information via `pageContext`, creating new pages from existing ones, and creating some sort of config to control that is complicated. There are some pitfalls when using the `onCreatePage` API and `pageContext` that might lead to unexpected errors or performance degradation.
 
-1. **Using information from non-local files (e.g. headless CMS) in certain parts of Gatsby is (nearly) impossible.** Developers and creators typically want to define everything in the CMS -- design system tokens, language strings, other language settings -- and any other information that would go into `gatsby-config.js` or every created page. Problems that arise include trying to use the language strings from the CMS in your application without bloating the page context with every translated string.
+2. **Using information from non-local files (e.g. headless CMS) in certain parts of Gatsby is (nearly) impossible.** Developers and creators typically want to define everything in the CMS -- design system tokens, language strings, other language settings -- and any other information that would go into `gatsby-config.js` or every created page. Problems that arise include trying to use the language strings from the CMS in your application without bloating the page context with every translated string.
    Also, friction can occur when sourcing from remote repositories due to problems with relative paths.
 
-1. **Integrating i18n into an existing Gatsby site.** Gatsby has powerful APIs to create and modify pages and enables plugins to use those. Sometimes a combination of certain plugins or patterns can lead to unexpected problems.
+3. **Integrating i18n into an existing Gatsby site.** Gatsby has powerful APIs to create and modify pages and enables plugins to use those. Sometimes a combination of certain plugins or patterns can lead to unexpected problems.
 
-1. **Some i18n/i10n libraries have poor or complicated SSR support.** Due to Gatsby's nature, libraries that do not guard against SSR usage can cause problems.
+4. **Some i18n/i10n libraries have poor or complicated SSR support.** Due to Gatsby's nature, libraries that do not guard against SSR usage can cause problems.
 
-1. **Modifying `gatsby-link` is necessary.** To keep the benefits of using `gatsby-link` you have to wrap the component with your own implementation of accessing the current locale and adapting the path accordingly.
+5. **Modifying `gatsby-link` is necessary.** To keep the benefits of using `gatsby-link` you have to wrap the component with your own implementation of accessing the current locale and adapting the path accordingly.
 
-1. **Localization of GraphQL queries.** When querying for things like dates you need to have access to the correct `dateFormat` for the current locale.
+6. **Localization of GraphQL queries.** When querying for things like dates you need to have access to the correct `dateFormat` for the current locale.
 
-1. **Lack of support for multiple builds from one run of the `gatsby build` command.** The use case here is that, from one source, multiple sites need to be deployed to `en.domain.tld`, `de.domain.tld`, etc. Also, sometimes those sites themselves contain multiple languages (e.g. `de.domain.tld` has English and German options).
+7. **Lack of support for multiple builds from one run of the `gatsby build` command.** The use case here is that, from one source, multiple sites need to be deployed to `en.domain.tld`, `de.domain.tld`, etc. Also, sometimes those sites themselves contain multiple languages (e.g. `de.domain.tld` has English and German options).
 
-1. **SEO needs to be handled manually.** The correct meta tags and redirects need to be set in the head; options for different titles/URLs for each page are missing.
+8. **SEO needs to be handled manually.** The correct meta tags and redirects need to be set in the head; options for different titles/URLs for each page are missing.
 
-1. **Right-to-left support has to be added manually.** Adapting the styles has currently no happy path.
+9. **Right-to-left support has to be added manually.** Adapting the styles has currently no happy path.
 
-1. **Difficult to integrate SaaS localization platforms.** There are not many plugins that deal with localization platforms such as Crowdin and Transifex, meaning you have to handle the integration yourself. This can be difficult.
+10. **Difficult to integrate SaaS localization platforms.** There are not many plugins that deal with localization platforms such as Crowdin and transifex, meaning you have to handle the integration yourself. This can be difficult.
 
 ## What this means for future development
 
