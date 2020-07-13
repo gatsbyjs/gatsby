@@ -228,7 +228,7 @@ module.exports = async (program: IProgram): Promise<void> => {
             })
             queryWatcher.startWatchDeletePage()
 
-            await startWebpackServer({ program, app, workerPool })
+            await startWebpackServer({ program, app, workerPool, store })
           },
           onDone: {
             actions: assign<IBuildContext, any>({ firstRun: false }),
