@@ -28,7 +28,7 @@ Plugins [extend Gatsby's functionality](/docs/what-is-a-plugin/), because they i
 
 If you encounter a webpack error that says `Generating SSR bundle failed` after installing a plugin and trying to run `gatsby develop` or `gatsby build`, it's possible you haven't yet installed all the packages you need.
 
-For some plugins like emotion, styled-components, or SASS, it won't be enough to only install the plugin, you also need to install libraries they rely on. The official installation instructions should guide you to install all needed libraries when you install the plugin, but some tutorials or blog posts you find at other sources may not.
+For some plugins like emotion, styled-components, or Sass, it won't be enough to only install the plugin, you also need to install libraries they rely on. The official installation instructions should guide you to install all needed libraries when you install the plugin, but some tutorials or blog posts you find at other sources may not.
 
 Here are some examples of plugins that require you to install more than just the plugin:
 
@@ -38,7 +38,7 @@ Here are some examples of plugins that require you to install more than just the
 - [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/): `@material-ui/styles`
 - [gatsby-image](/packages/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
-Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of SASS.
+Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of Sass.
 
 To resolve these errors, identify the packages that haven't been installed, the error message might look like this:
 

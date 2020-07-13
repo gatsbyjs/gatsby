@@ -1,13 +1,3 @@
-.env
-.html
-.jpg
-.js
-.md
-.mdx
-.png
-.scss
-.tsx
-.yaml
 ½
 ⅓
 1000px
@@ -52,6 +42,7 @@
 200px
 20K
 20x
+21YunBox
 250px
 2a
 2am
@@ -216,6 +207,7 @@ Bazaarvoice
 Bazel
 Behance
 BEM
+Bemis
 benchmarking
 Benedicte
 Benedikt
@@ -553,6 +545,7 @@ dnf
 DNS
 DNVBs
 DocSearch
+Doctocat
 Docz
 Dodds
 Doggo
@@ -797,6 +790,7 @@ gatsby-source-shopify
 gatsby-source-stripe
 gatsby-source-tmdb
 gatsby-source-wordpress
+gatsby-source-wordpress-experimental
 gatsby-source-x-cms
 gatsby-ssr
 gatsby-starter-blog
@@ -863,6 +857,7 @@ Gienow
 gif
 GIFs
 Gitalk
+Gitee
 GitLab
 Gitpod
 Gitter
@@ -892,12 +887,9 @@ Graf
 Grande
 Graph_i_QL
 GraphCMS
-Graphiql
-GraphiQl
 GraphiQL
 graphiql-code-exporter
 graphiql-filesystem
-graphql
 GraphQL
 GraphQL-based
 graphql-compose
@@ -1341,7 +1333,7 @@ Novela
 Novia
 Novikov
 npm
-NPM
+*NPM
 npm-check
 npm-force-resolutions
 npx
@@ -1357,6 +1349,7 @@ NYU
 OAuth
 Obinna
 observability
+Octocat
 Oduye
 oEmbed
 ok
@@ -1708,6 +1701,9 @@ runtimes
 Ruzicka
 S3
 S3-compliant
+Sass
+*sass
+*SASS
 SaaS
 Saccone
 Sacha
@@ -2000,6 +1996,7 @@ unserious
 Unsplash
 unstyled
 untracked
+untriaged
 untrusted
 unvisited
 updatedAt
@@ -2078,6 +2075,8 @@ WeakMap
 WebAIM
 webapps
 Webby
+webfont
+webfonts
 WebGL
 webhook
 webhooks

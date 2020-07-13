@@ -51,7 +51,7 @@ const module = typeof window !== `undefined` ? require("module") : null
 
 ## Fixing third-party modules
 
-So, the worst has happened and you're using an NPM module that expects `window`
+So, the worst has happened and you're using an npm module that expects `window`
 to be defined. You may be able to file an issue and get the module patched, but
 what to do in the mean time?
 

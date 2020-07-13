@@ -46,12 +46,6 @@ Object.defineProperty(window, `matchMedia`, {
   }),
 })
 
-const tableOfContentsItems = [
-  {
-    url: `#section`,
-    title: `section`,
-  },
-]
 const page = {
   excerpt: `excerpt`,
   timeToRead: 1,
@@ -60,7 +54,7 @@ const page = {
   title: `title`,
   description: `description`,
   tableOfContents: {
-    items: tableOfContentsItems,
+    items: [{ url: `#section`, title: `section` }],
   },
   parent: {},
 }
@@ -92,8 +86,12 @@ it(`should display table of content if there are items and is not disabled`, () 
 })
 
 it(`should not display table of content if there are no items`, () => {
-  const tableOfContentsItems = []
-  const { queryByText } = setup({ tableOfContentsItems })
+  const { queryByText } = setup({
+    page: {
+      ...page,
+      tableOfContents: { items: [] },
+    },
+  })
 
   expect(queryByText(`Table of Contents`)).toBeNull()
 })
