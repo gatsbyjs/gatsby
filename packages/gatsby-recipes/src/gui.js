@@ -306,16 +306,16 @@ const Step = ({ state, step, i }) => {
           position: `absolute`,
           backgroundColor: `white`,
           color: theme => theme.tones.BRAND.dark,
-          right: `8px`,
-          top: `8px`,
+          right: `6px`,
+          top: `6px`,
           border: theme => `1px solid ${theme.tones.BRAND.light}`,
           borderRadius: 9999,
-          height: 40,
-          width: 40,
+          height: 30,
+          width: 30,
           display: `flex`,
           alignContent: `center`,
           justifyContent: `center`,
-          lineHeight: `34px`,
+          lineHeight: `28px`,
         }}
       >
         {i + 1}
