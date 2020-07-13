@@ -210,27 +210,31 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without]
 }
 
-// ArtDirection - SSR + Initial load, removed upon hydration
-// Ensures correct CSS styles based on viewport width and media conditions
-function generateMediaQueries(imageVariants, selectorClass) {
-  const inlineStyleOverride = ({ width, height, aspectRatio }) =>
-    aspectRatio
+// For ArtDirection - SSR + Initial load, removed upon rehydration
+// Ensures correct CSS for image variants is applied
+const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
+  const variantRule = ({ width, height, aspectRatio }) => {
+    // '!important' required due to overriding inline styles
+    // 'aspectRatio' == fluid data
+    const styleOverride = aspectRatio
       ? `padding-bottom: ${100 / aspectRatio}% !important;`
       : `width: ${width}px !important; height: ${height}px !important;`
-  const selector = v => `.${selectorClass} { ${inlineStyleOverride(v)} }`
 
-  const base = selector(imageVariants.find(v => !v.media))
-  const queries = imageVariants
-    .filter(v => v.media)
-    .map(v => `@media ${v.media} { ${selector(v)} }`)
-    .join(`\n`)
+    return `.${selectorClass} { ${styleOverride} }`
+  }
 
-  return `${base}\n${queries}`
+  const base = variantRule(imageVariants.find(v => !v.media))
+  return (
+    <>
+      {base && <style>{base}</style>}
+      {imageVariants
+        .filter(v => v.media)
+        .map(v => (
+          <style media={v.media}>{variantRule(v)}</style>
+        ))}
+    </>
+  )
 }
-
-const ResponsiveQueries = ({ imageVariants, selectorClass }) => (
-  <style>{generateMediaQueries(imageVariants, selectorClass)}</style>
-)
 
 function generateTracedSVGSources(imageVariants) {
   return imageVariants.map(({ src, media, tracedSVG }) => (
