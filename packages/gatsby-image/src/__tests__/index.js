@@ -1,3 +1,4 @@
+import MatchMediaMock from "jest-matchmedia-mock"
 import React from "react"
 import { render, cleanup, fireEvent } from "@testing-library/react"
 import Image from "../"
@@ -117,22 +118,13 @@ const setupImages = (
   return container
 }
 
+let matchMedia
 describe(`<Image />`, () => {
-  const OLD_MATCH_MEDIA = window.matchMedia
-  beforeEach(() => {
-    // None of the media conditions above match.
-    window.matchMedia = jest.fn(media =>
-      media === `only screen and (min-width: 1024px)`
-        ? {
-            matches: true,
-          }
-        : {
-            matches: false,
-          }
-    )
+  beforeAll(() => {
+    matchMedia = new MatchMediaMock()
   })
   afterEach(() => {
-    window.matchMedia = OLD_MATCH_MEDIA
+    matchMedia.clear()
   })
 
   it(`should render fixed size images`, () => {
@@ -221,6 +213,9 @@ describe(`<Image />`, () => {
   })
 
   it(`should select the correct mocked image of fluid variants provided.`, () => {
+    const mediaQuery = `only screen and (min-width: 1024px)`
+    matchMedia.useMediaQuery(mediaQuery)
+
     const tripleFluidImageShapeMock = fluidImagesShapeMock.concat({
       aspectRatio: 5,
       src: `test_image_4.jpg`,
@@ -251,6 +246,9 @@ describe(`<Image />`, () => {
   })
 
   it(`should select the correct mocked image of fixed variants provided.`, () => {
+    const mediaQuery = `only screen and (min-width: 1024px)`
+    matchMedia.useMediaQuery(mediaQuery)
+
     const tripleFixedImageShapeMock = fixedImagesShapeMock.concat({
       width: 1024,
       height: 768,
