@@ -36,14 +36,14 @@ export default function HeaderTop({ columnHeaders }) {
   return (
     <tr>
       {columnHeaders.map((header, i) => (
-        <td
+        <th
           key={i}
           sx={{
             ...tdStyles,
           }}
         >
           <span>{header}</span>
-        </td>
+        </th>
       ))}
     </tr>
   )
