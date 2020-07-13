@@ -5,7 +5,7 @@ const React = require(`react`)
 const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
 const remove = require(`unist-util-remove`)
-const { Global } = require('@emotion/core')
+const { Global } = require(`@emotion/core`)
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
 import MDX from "./components/mdx"
@@ -52,7 +52,8 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT = `/Users/kylemathews/programs/gatsby-contentful-blog` &&
+const PROJECT_ROOT =
+  `/Users/kylemathews/programs/gatsby-contentful-blog` &&
   `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
@@ -294,7 +295,7 @@ const Step = ({ state, step, i }) => {
     <div
       key={`step-${i}`}
       sx={{
-        position: 'relative',
+        position: `relative`,
         borderRadius: 2,
         border: theme => `1px solid ${theme.tones.BRAND.light}`,
         marginBottom: 7,
@@ -302,19 +303,19 @@ const Step = ({ state, step, i }) => {
     >
       <div
         sx={{
-          position: 'absolute',
-          backgroundColor: 'white',
+          position: `absolute`,
+          backgroundColor: `white`,
           color: theme => theme.tones.BRAND.dark,
-          right: '8px',
-          top: '8px',
+          right: `8px`,
+          top: `8px`,
           border: theme => `1px solid ${theme.tones.BRAND.light}`,
           borderRadius: 9999,
           height: 40,
           width: 40,
-          display: 'flex',
-          alignContent: 'center',
-          justifyContent: 'center',
-          lineHeight: '34px'
+          display: `flex`,
+          alignContent: `center`,
+          justifyContent: `center`,
+          lineHeight: `34px`,
         }}
       >
         {i + 1}
@@ -355,12 +356,12 @@ const Step = ({ state, step, i }) => {
       </div>
       {stepResources?.length > 0 && (
         <div>
-          <div sx={{ padding: 6 }}>
+          <div sx={{ px: 6, pt: 3 }}>
             {stepResources?.map((res, i) => {
               if (res.resourceName === `Input`) {
                 if (res.type === `textarea`) {
                   return (
-                    <div>
+                    <div sx={{ pt: 3 }}>
                       <div>
                         <label>{res.label}</label>
                       </div>
@@ -378,7 +379,7 @@ const Step = ({ state, step, i }) => {
                   )
                 }
                 return (
-                  <div>
+                  <div sx={{ pt: 3 }}>
                     <div>
                       <label>{res.label}</label>
                     </div>
@@ -401,7 +402,8 @@ const Step = ({ state, step, i }) => {
           <div sx={{ padding: 6 }}>
             <Heading
               sx={{
-                marginBottom: 4,
+                mb: 4,
+                mt: 0,
                 color: theme => theme.tones.NEUTRAL.darker,
                 fontWeight: 500,
               }}
@@ -828,20 +830,19 @@ const WithProviders = ({ children }) => {
   )
 }
 
-const GlobalStyles = () => {
-  return (
+const GlobalStyles = () => (
   <Global
     styles={{
       body: {
-        fontFamily: '-apple-system, system-ui, sans-serif'
+        fontFamily: `-apple-system, system-ui, sans-serif`,
       },
       h1: {
         fontWeight: 700,
-        fontFamily: 'Futura PT,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif!'
-      }
+        fontFamily: `Futura PT,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif!`,
+      },
     }}
-  />)
-}
+  />
+)
 
 export default () => (
   <WithProviders>
