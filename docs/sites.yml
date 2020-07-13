@@ -11437,3 +11437,14 @@
   built_by: Jeff Jadulco
   built_by_url: https://jeffjadulco.com
   featured: false
+- title: Glee
+  main_url: https://glee.traction.one/
+  url: https://glee.traction.one/
+  description: Whether you're a startup, a developer, an artist, a creator, or just a handful of friends building a great product or creating interesting content, Glee makes it easy to collect, track and manage feedback from your users.
+  featured: false
+  categories:
+    - App
+    - Technology
+    - Productivity
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
