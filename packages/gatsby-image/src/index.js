@@ -71,7 +71,7 @@ const convertProps = props => {
  * @param currentData  {{media?: string}[]}   The props to check for images.
  * @return {boolean}
  */
-const hasArtDirectionSupport = currentData =>
+const isUsingArtDirection = currentData =>
   !!currentData &&
   Array.isArray(currentData) &&
   currentData.some(image => typeof image.media !== `undefined`)
@@ -102,7 +102,7 @@ const getImageSrcKey = ({ fluid, fixed }) => {
  * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
 const getCurrentSrcData = currentData => {
-  if (isBrowser && hasArtDirectionSupport(currentData)) {
+  if (isBrowser && isUsingArtDirection(currentData)) {
     // Do we have an image for the current Viewport?
     const foundMedia = currentData.findIndex(matchesMedia)
     if (foundMedia !== -1) {
@@ -402,6 +402,13 @@ class Image extends React.Component {
     this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
+
+    // Supports Art Direction feature to correctly render image variants
+    const imageVariants = props.fluid || props.fixed
+    if (isUsingArtDirection(imageVariants)) {
+      this.uniqueKey =
+        !isBrowser && getShortKey(imageVariants.map(v => v.srcSet).join(``))
+    }
   }
 
   componentDidMount() {
@@ -487,8 +494,8 @@ class Image extends React.Component {
       draggable,
     } = convertProps(this.props)
 
-    // Avoid render logic on client until mounted (hydration complete)
-    // Prevents invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
+    // Avoid render logic on client until component mounts (hydration complete)
+    // Prevents using mismatched initial state from the hydration phase
     if (isBrowser && !this.state.isHydrated) {
       return null
     }
@@ -528,11 +535,7 @@ class Image extends React.Component {
     const image = getCurrentSrcData(imageVariants)
 
     const activeVariant = getShortKey(image.srcSet)
-
-    const uniqueKey =
-      !isBrowser &&
-      hasArtDirectionSupport(imageVariants) &&
-      getShortKey(imageVariants.map(v => v.srcSet).join(``))
+    const uniqueKey = this.uniqueKey
 
     if (fluid) {
       return (
