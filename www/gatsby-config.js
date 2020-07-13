@@ -79,13 +79,6 @@ module.exports = {
     twitter: `@gatsbyjs`,
   },
   plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/../testdocs/`,
-      },
-    },
     `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-alias-imports`,
