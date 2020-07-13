@@ -7,7 +7,7 @@ tags:
   - i18n
 ---
 
-During Gatsby Days Reconfigured last month [we previewed quite a few exciting projects](/blog/2020-06-23-Reconfiguring-Gatsby-Days/) to be released soon. These launches will help developers transition their CMSs into the Headless CMS era and enable content creators to use Gatsby more easily and intuitively, all while improving the developer experience for our current and future users. One of these exciting new announcements actually ties all three of these areas together: the sneak-peak at the development of our own [i18n theme](/blog/2020-06-23-Reconfiguring-Gatsby-Days/#i18n-theme). It's the first step towards having internationalization in Gatsby as a first-class citizen, and we are looking to launch by the end of the month.
+During Gatsby Days Reconfigured last month [we previewed quite a few exciting projects](/blog/2020-06-23-Reconfiguring-Gatsby-Days/) to be released soon. These launches are aimed at helping developers transition their CMSs into the headless CMS era; enabling content creators to use Gatsby more easily and intuitively; and, simultaneously, improving the developer experience for our current and future users. One of these exciting new announcements actually ties all three of these goals together: a sneak peek at the development of our own [i18n theme](/blog/2020-06-23-Reconfiguring-Gatsby-Days/#i18n-theme). It's the first step towards having internationalization in Gatsby as a first-class citizen, and we are looking to launch by the end of the month.
 
 First, though, we’d like to share the research process we’ve followed in developing the i18n theme, and the pain points we sought to solve. The goal in sharing these findings is to start an open discussion and invite your feedback. If you’re interested in contributing, please join the [Gatsby Discord channel](https://discord.gg/cQ2MPUz) and add your voice to the conversation!
 
@@ -48,14 +48,14 @@ This is a non-exhaustive list of issues I most commonly read and heard. Feel fre
 
 ## What this means for future development
 
-As the list above clearly shows, i18n (and by extension i10n) is a topic with a wide variety of problems. Both specific usage problems like issues with Gatsby's APIs and integrations with third-party libraries, and general topics like SEO or styling adaptations.
+As the list above clearly shows, i18n (and by extension i10n) is a topic presenting a wide variety of challenges. Both specific usage problems like issues with Gatsby's APIs and integrations with third-party libraries, and general topics like SEO or styling adaptations.
 
 While some of those things can be packaged and abstracted into a theme (as with `gatsby-theme-i18n`) not all pain points can be solved with a plugin. Changes to Gatsby's core or third-party libraries such as Theme UI are necessary to fix some things. Building child themes for i18n libraries or creating happy path boilerplates for certain common types of projects can also give a better experience for users.
 
-Most importantly the great variety of responses I read showed that our users are passionate about this topic and have a strong desire to see it solved in Gatsby so that they can keep on using it -- which is exciting!
+Most importantly the great variety of responses received thus far showed that our users are passionate about this topic and have a strong desire to see it solved in Gatsby so that they can keep on using it -- which is exciting!
 
 ## What's next?
 
-The alpha of gatsby-theme-i18n and its child themes will be released soon. Until then and in the future you can join the [Discord channel](https://discord.gg/cQ2MPUz) to chat as more details on how to contribute will follow. Also, keep an eye out for the announcement post.
+The alpha of gatsby-theme-i18n and its child themes will be released very soon. Until then (and in the future, as well) you can join the [Discord channel](https://discord.gg/cQ2MPUz) to chat as more details on how to contribute will follow. Also, keep an eye out for the announcement post.
 
 I encourage all interested parties to try out the theme when it's ready and get involved in the process of refining it. And then show us the awesome things you build!
