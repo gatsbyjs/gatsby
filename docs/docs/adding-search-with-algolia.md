@@ -98,6 +98,9 @@ You still need to supply a `queries` configuration. Queries tell the Algolia plu
 The configuration could have been entered straight into the `gatsby-config.js`, but the configuration above loads it from a new file `src/utils/algolia-queries.js` to avoid clutter. Create this page in your project:
 
 ```js:title=src/utils/algolia-queries.js
+const pagePath = `src/markdown-pages`
+const indexName = `Pages`
+
 const pageQuery = `{
   pages: allMarkdownRemark(
     filter: {
