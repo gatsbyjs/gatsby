@@ -432,4 +432,5 @@ export {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  murmurhash,
 }
