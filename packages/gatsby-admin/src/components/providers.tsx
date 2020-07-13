@@ -17,6 +17,7 @@ const theme = {
     "500": 500,
   },
   borders: {
+    none: `none`,
     default: `1px solid ${baseTheme.colors.whiteFade[20]}`,
     sixtywhite: `1px solid ${baseTheme.colors.whiteFade[40]}`,
     white: `1px solid ${baseTheme.colors.white}`,
