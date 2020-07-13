@@ -22,6 +22,11 @@ import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
 
+export interface IGraphQLRunnerOptions {
+  collectStats?: boolean
+  graphqlTracing?: boolean
+}
+
 export class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
 
@@ -38,13 +43,7 @@ export class GraphQLRunner {
 
   constructor(
     protected store: Store<IGatsbyState>,
-    {
-      collectStats,
-      graphqlTracing,
-    }: {
-      collectStats?: boolean
-      graphqlTracing?: boolean
-    } = {}
+    { collectStats, graphqlTracing }: IGraphQLRunnerOptions = {}
   ) {
     const { schema, schemaCustomization } = this.store.getState()
 

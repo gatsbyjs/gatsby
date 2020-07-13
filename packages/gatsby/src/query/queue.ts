@@ -3,7 +3,7 @@ import { store } from "../redux"
 import { memoryStoreWithPriorityBuckets } from "../query/better-queue-custom-store"
 import { queryRunner } from "../query/query-runner"
 import { websocketManager } from "../utils/websocket-manager"
-import { GraphQLRunner } from "./graphql-runner"
+import { GraphQLRunner, IGraphQLRunnerOptions } from "./graphql-runner"
 import BetterQueue from "better-queue"
 import { ProgressActivityTracker } from "../.."
 
@@ -22,7 +22,7 @@ const createBaseOptions = (): Pick<
 
 const createBuildQueue = (
   graphqlRunner: GraphQLRunner,
-  runnerOptions = {}
+  runnerOptions: IGraphQLRunnerOptions = {}
 ): Queue => {
   if (!graphqlRunner) {
     graphqlRunner = new GraphQLRunner(store, runnerOptions)
@@ -74,6 +74,19 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
   }
 
   return new Queue(queueOptions)
+}
+
+const createAppropriateQueue = (
+  graphqlRunner: GraphQLRunner,
+  runnerOptions: IGraphQLRunnerOptions = {}
+): Queue => {
+  if (process.env.NODE_ENV === `production`) {
+    return createBuildQueue(graphqlRunner, runnerOptions)
+  }
+  if (!graphqlRunner) {
+    graphqlRunner = new GraphQLRunner(store, runnerOptions)
+  }
+  return createDevelopQueue(() => graphqlRunner)
 }
 
 /**
@@ -139,4 +152,9 @@ const processBatch = async (
   })
 }
 
-export { createBuildQueue, createDevelopQueue, processBatch }
+export {
+  createBuildQueue,
+  createDevelopQueue,
+  processBatch,
+  createAppropriateQueue,
+}
