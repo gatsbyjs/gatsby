@@ -2,7 +2,7 @@
 title: Using a Plugin in Your Site
 ---
 
-Gatsby plugins are Node.js packages, so you can install them like other packages in node using NPM.
+Gatsby plugins are Node.js packages, so you can install them like other packages in node using npm.
 
 For example, `gatsby-transformer-json` is a package that adds support for JSON files to the Gatsby data layer.
 

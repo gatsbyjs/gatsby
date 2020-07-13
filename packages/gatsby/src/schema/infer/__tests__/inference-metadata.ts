@@ -1145,9 +1145,10 @@ describe(`Type change detection`, () => {
     // add/delete to such fields as mutations
     let metadata = addOne({ relatedNode___NODE: `added` })
     expect(metadata.dirty).toEqual(true)
-    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
     metadata.dirty = false
 
+    // Deleting is expected to restore initial metadata state
     metadata = deleteOne({ relatedNode___NODE: `added` }, metadata)
     expect(metadata.dirty).toEqual(true)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
@@ -1162,9 +1163,10 @@ describe(`Type change detection`, () => {
   it(`detects on any change of the relatedNodeList field`, () => {
     let metadata = addOne({ relatedNodeList___NODE: [`added`] })
     expect(metadata.dirty).toEqual(true)
-    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
     metadata.dirty = false
 
+    // Deleting is expected to restore initial metadata state
     metadata = deleteOne({ relatedNodeList___NODE: [`added`] }, metadata)
     expect(metadata.dirty).toEqual(true)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)

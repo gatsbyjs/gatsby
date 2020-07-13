@@ -12,8 +12,9 @@ import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import { getConfigFile } from "../bootstrap/get-config-file"
-import preferDefault from "../bootstrap/prefer-default"
+import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
+import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 
 interface IMatchPath {
   path: string
@@ -105,7 +106,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
-  router.use(express.static(`public`))
+  router.use(express.static(`public`, { dotfiles: `allow` }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
@@ -128,13 +129,37 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   })
   app.use(pathPrefix, router)
 
+  function printInstructions(appName: string, urls: IPreparedUrls): void {
+    console.log()
+    console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
+    console.log()
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}`)
+    }
+  }
+
   const startListening = (): void => {
     app.listen(port, host, () => {
-      const openUrlString = `http://${host}:${port}${pathPrefix}`
-      report.info(`gatsby serve running at: ${chalk.bold(openUrlString)}`)
+      const urls = prepareUrls(
+        program.ssl ? `https` : `http`,
+        program.host,
+        port
+      )
+      printInstructions(
+        program.sitePackageJson.name || `(Unnamed package)`,
+        urls
+      )
       if (open) {
         report.info(`Opening browser...`)
-        Promise.resolve(openurl(openUrlString)).catch(() =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
           report.warn(`Browser not opened because no browser was found`)
         )
       }

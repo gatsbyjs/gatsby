@@ -6,7 +6,7 @@ description: Learn what the Yarn package manager is, how to use it, and how it f
 
 Learn what the _Yarn_ package manager is, how to use it, and how it fits in to the Gatsby ecosystem.
 
-## What is yarn?
+## What is Yarn?
 
 Yarn is a package manager for the [Node.js](/docs/glossary/node) JavaScript runtime. It's an alternative to Node's standard package manager, [npm](/docs/glossary/npm). [Contributing](/contributing/setting-up-your-local-dev-environment/) to Gatsby core requires Yarn. Gatsby core uses Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature to manage dependencies. Gatsby [theme development](/tutorial/building-a-theme/) also uses Yarn workspaces. For Gatsby site development, you can use Yarn or npm.
 
@@ -41,7 +41,7 @@ You can also install Gatsby locally using `yarn add gatsby-cli`. If you use this
 
 ### Using Yarn as your Gatsby package manager
 
-When you run `gatsby new` for the first time, you'll be prompted to choose npm or Yarn as your default package manager. You can choose Yarn then, or change it at a later time. To switch from npm to Yarn, edit the Gatsby CLI configuration file available at ``~/.config/gatsby/config.json` to add the following lines.
+When you run `gatsby new` for the first time, you'll be prompted to choose npm or Yarn as your default package manager. You can choose Yarn then, or change it at a later time. To switch from npm to Yarn, edit the Gatsby CLI configuration file available at `~/.config/gatsby/config.json` to add the following lines.
 
 ```shell
 {
@@ -55,10 +55,10 @@ Gatsby will use Yarn as the package manager for new projects. You can also insta
 
 Using Yarn to install packages generates a `yarn.lock` file. The `yarn.lock` tracks the exact version that you installed with `yarn add`, similar to `package-lock.json`. Commit `yarn.lock` to your project's repository. Doing so keeps your dependencies consistent across team members and computers.
 
-### Learn more about yarn
+### Learn more about Yarn
 
-- [yarn](https://yarnpkg.com/) official website
-- [The package.json guide](https://nodejs.dev/the-package-json-guide) from Nodejs.dev
+- [The package.json guide](https://nodejs.dev/learn/the-package-json-guide) from Nodejs.dev
+- [Yarn](https://yarnpkg.com/) official website
 - [Building a Theme](/tutorial/building-a-theme/)
 - [Gatsby Theme Authoring](https://egghead.io/courses/gatsby-theme-authoring) from egghead.io
 - [How to change your default package manager for your next project?](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) from the Gatsby CLI docs

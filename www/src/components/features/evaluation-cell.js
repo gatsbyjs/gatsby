@@ -79,7 +79,7 @@ const basicStyling = {
   height: t => t.space[5],
   width: t => t.space[5],
   borderRadius: `50%`,
-  margin: `0 auto`,
+  m: `0 auto`,
 }
 
 const EvaluationCell = ({ num, style }) => (

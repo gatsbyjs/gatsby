@@ -272,11 +272,13 @@ import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/author"
 import Card from "../components/card"
 
-export default props => (
-  <Card>
-    <Author {...props} />
-  </Card>
-)
+export default function MyAuthor(props) {
+  return (
+    <Card>
+      <Author {...props} />
+    </Card>
+  )
+}
 ```
 
 [Learn more about extending components](/blog/2019-07-02-extending-components/)
@@ -341,11 +343,13 @@ import React from "react"
 import Box from "gatsby-theme-tomato/src/box"
 import Card from "../components/card"
 
-export default props => (
-  <div style={{ padding: "20px", backgroundColor: "rebeccapurple" }}>
-    <Box {...props} />
-  </div>
-)
+export default function MyBox(props) {
+  return (
+    <div style={{ padding: "20px", backgroundColor: "rebeccapurple" }}>
+      <Box {...props} />
+    </div>
+  )
+}
 ```
 
 Now, all usages of the Box in `gatsby-theme-tomato` will be also wrapped in a purple box.

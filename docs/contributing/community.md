@@ -2,7 +2,9 @@
 title: Community
 ---
 
-As of December 2019, the Gatsby community is comprised of over 2,800 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+import EmailCaptureForm from "@components/email-capture-form"
+
+As of June 2020, the Gatsby community is comprised of over 3,300 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
 
 Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 

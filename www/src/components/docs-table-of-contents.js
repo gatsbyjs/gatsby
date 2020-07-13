@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "./localized-link"
-import { Trans } from "@lingui/macro"
 import {
   mediaQueries,
   breakpoints,
@@ -139,7 +138,7 @@ function TableOfContents({ items, depth, location }) {
           textTransform: `uppercase`,
         }}
       >
-        <Trans>Table of Contents</Trans>
+        Table of Contents
       </h2>
       <ul
         sx={{

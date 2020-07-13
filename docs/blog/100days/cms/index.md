@@ -30,7 +30,7 @@ Today we challenge you to add an external data source (or two) to your Gatsby pr
 
 1. ["What is a headless CMS?"](/docs/headless-cms/) is a solid place to get started. It also lists specific CMS’s that have Gatsby “source” plugins you can install..
 
-2. If you’re not sure which CMS to choose, many Gatsby users have had success with [Contentful](/docs/sourcing-from-contentful/), [Cosmic JS](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/), and [DatoCMS](/docs/recipes/sourcing-data/). If you want to use an [open source and free CMS](/blog/2019-10-15-free-headless-cms/), try WordPress, Ghost, Netlify CMS, and Drupal.
+2. If you’re not sure which CMS to choose, many Gatsby users have had success with [Contentful](/docs/sourcing-from-contentful/), [Cosmic](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/), and [DatoCMS](/docs/recipes/sourcing-data/). If you want to use an [open source and free CMS](/blog/2019-10-15-free-headless-cms/), try WordPress, Ghost, Netlify CMS, and Drupal.
 
 3. If you’d like to learn from fully baked examples, [auto-provision a site from Gatsby Cloud](https://www.gatsbyjs.com/get-started). Examine and experiment with the gatsby-node.js API file and any additional plugins the CMS developers decided to add. Use the patterns you discover in your own project.
 

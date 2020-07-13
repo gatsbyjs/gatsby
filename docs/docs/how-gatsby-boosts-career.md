@@ -6,7 +6,7 @@ If you're a developer, and you've come to this section looking for tips about sp
 
 One, unintended, side effect: this is also good for your career.
 
-As you ship Gatsby sites and get [other developers](/docs/winning-over-developers), [engineering leaders](/docs/winning-over-engineering-leaders), [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives), and [clients](/docs/winning-over-clients) excited about Gatsby, you'll notice that you gain visibility, a reputation for driving results and business value.
+As you ship Gatsby sites and get [other developers](/docs/winning-over-developers/), [engineering leaders](/docs/winning-over-engineering-leaders/), [marketers](/docs/winning-over-marketers/) and [executives](/docs/winning-over-executives/), and [clients](/docs/winning-over-clients/) excited about Gatsby, you'll notice that you gain visibility, a reputation for driving results and business value.
 
 > Some insight on driving results forward from prominent React developer, Ryan Florence: https://twitter.com/ryanflorence/status/1104060348363988992
 
@@ -14,6 +14,6 @@ In general, great engineering career opportunities often lie in developing exper
 
 For an inspiring story on how Gatsby has already transformed someone's career, read our [interview with Ahmed Alahmady](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career/) on the Gatsby blog.
 
---
+---
 
 **Note:** do you have more ideas on how Gatsby can boost your career? We welcome contributions to this page. Find out [how to contribute](/contributing/docs-contributions/).

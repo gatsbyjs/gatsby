@@ -1,71 +1,46 @@
-import React, { Component } from "react"
+import React from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 
 import { EcosystemIcon } from "../assets/icons"
-import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
 
-class EcosystemPage extends Component {
-  render() {
-    const {
-      location,
-      data: {
-        allStartersYaml: { nodes: startersData },
-        allNpmPackage: { nodes: pluginsData },
-      },
-    } = this.props
+export default function EcosystemPage({ location, data }) {
+  const startersData = data.allStartersYaml.nodes
+  const pluginsData = data.allNpmPackage.nodes
 
-    const starters = startersData.map(item => {
-      const {
-        fields: {
-          starterShowcase: { slug, name, description, stars },
-        },
-        childScreenshot: {
-          screenshotFile: {
-            childImageSharp: { fixed: thumbnail },
-          },
-        },
-      } = item
+  const starters = startersData.map(item => {
+    const { slug, name, description, stars } = item.fields.starterShowcase
+    const thumbnail = item.childScreenshot.screenshotFile.childImageSharp.fixed
 
-      return {
-        slug: `/starters${slug}`,
-        name,
-        description,
-        stars,
-        thumbnail,
-      }
-    })
+    return {
+      slug: `/starters${slug}`,
+      name,
+      description,
+      stars,
+      thumbnail,
+    }
+  })
 
-    const plugins = pluginsData
+  const plugins = pluginsData
 
-    const pageTitle = `Ecosystem`
-    const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
+  const pageTitle = `Ecosystem`
 
-    return (
-      <Layout
-        location={location}
-        pageTitle={pageTitle}
-        pageIcon={EcosystemIcon}
-      >
-        <Helmet>
-          <title>Ecosystem</title>
-        </Helmet>
-        <EcosystemBoard
-          icons={boardIcons}
-          starters={starters}
-          plugins={plugins}
-        />
-        <FooterLinks />
-      </Layout>
-    )
-  }
+  return (
+    <Layout
+      location={location}
+      pageTitle={pageTitle}
+      pageIcon={<EcosystemIcon />}
+    >
+      <PageMetadata title="Ecosystem" />
+      <EcosystemBoard starters={starters} plugins={plugins} />
+      <FooterLinks />
+    </Layout>
+  )
 }
-
-export default EcosystemPage
 
 export const ecosystemQuery = graphql`
   query EcosystemQuery {

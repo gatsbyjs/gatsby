@@ -8,7 +8,7 @@ Pages can be created in three ways:
 
 - In your site's gatsby-node.js by implementing the API
   [`createPages`](/docs/node-apis/#createPages)
-- Gatsby core automatically turns React components in `src/pages` into pages
+- Gatsby core automatically turns React components in `src/pages/*` into pages. Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
 - Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
@@ -17,8 +17,8 @@ to modify pages created in core or plugins or to create [client-only routes](/do
 ## Debugging help
 
 To see what pages are being created by your code or plugins, you can query for
-page information while developing in Graph*i*QL. Paste the following query in
-the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
+page information while developing in Graph<em>i</em>QL. Paste the following query in
+the Graph<em>i</em>QL IDE for your site. The Graph<em>i</em>QL IDE is available when running
 your sites development server at `HOST:PORT/___graphql` e.g.
 `http://localhost:8000/___graphql`.
 
@@ -39,7 +39,7 @@ your sites development server at `HOST:PORT/___graphql` e.g.
 }
 ```
 
-The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+The `context` property accepts an object, and you can pass in any data you want the page to be able to access.
 
 You can also query for any `context` data you or plugins added to pages.
 
@@ -143,7 +143,7 @@ exports.createPages = async ({ graphql, actions }) => {
       component: productTemplate,
       context: {
         // This time the entire product is passed down as context
-        product
+        product: node
       }
     });
   });
@@ -159,11 +159,12 @@ Your template file would look like this:
 
 ```javascript:title=src/templates/product.js
 function Product({ pageContext }) {
+  const { product } = pageContext
   return (
     <div>
-      Name: {pageContext.name}
-      Price: {pageContext.price}
-      Description: {pageContext.description}
+      Name: {product.name}
+      Price: {product.price}
+      Description: {product.description}
     </div>
   )
 }
@@ -219,7 +220,7 @@ exports.onCreatePage = ({ page, actions }) => {
   // Remove trailing slash unless page is /
   page.path = replacePath(page.path)
   if (page.path !== oldPage.path) {
-    // Replace new page with old page
+    // Replace old page with new page
     deletePage(oldPage)
     createPage(page)
   }
@@ -258,7 +259,7 @@ const Page = ({ pageContext }) => {
 export default Page
 ```
 
-Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.
+Page context is serialized before being passed to pages. This means it can't be used to pass functions into components and `Date` objects will be serialized into strings.
 
 ## Creating Client-only routes
 

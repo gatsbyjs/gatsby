@@ -13,7 +13,7 @@ I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/)—
 JavaScript library that shows & hides headers as you scroll up & down a site.
 
 After a day or two of working through the niceties of writing a React component
-and publishing it to NPM, I started writing the documentation and realized…
+and publishing it to npm, I started writing the documentation and realized…
 there was almost nothing to write.
 
 Using [react-headroom](https://github.com/KyleAMathews/react-headroom) is so
@@ -24,11 +24,13 @@ using it would look like this:
 import React from "react"
 import Headroom from "react-headroom"
 
-export default () => (
-  <Headroom>
-    <h1>You can put anything you'd like inside the Headroom Component</h1>
-  </Headroom>
-)
+export default function Header() {
+  return (
+    <Headroom>
+      <h1>You can put anything you'd like inside the Headroom Component</h1>
+    </Headroom>
+  )
+}
 ```
 
 Having coming from years of building things with Backbone.js and jQuery where
@@ -38,24 +40,24 @@ and use it like an HTML element?
 
 Compare this with the minimum code necessary for the original headroom.js.
 
-#### HTML
+## HTML
 
 ```html
 <header class="headroom"><h1>header content</h1></header>
 ```
 
-#### JavaScript
+## JavaScript
 
 ```js
 // grab the element
 var myElement = document.querySelector("header")
 // construct an instance of Headroom, passing the element
 var headroom = new Headroom(myElement)
-// initialise
+// initialize
 headroom.init()
 ```
 
-#### CSS
+## CSS
 
 ```css
 .headroom {
@@ -80,7 +82,7 @@ CSS, and JavaScript are all neatly encapsulated.
 ## What makes technology fun?
 
 This is a complex philosophical question and I'm writing this on a Saturday
-afternoon so I'll cheat a bit and just cut the gordian knot by saying
+afternoon so I'll cheat a bit and just cut the Gordian knot by saying
 "simplicity is fun" and conversely, "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and
@@ -204,15 +206,17 @@ like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default function Page({ data }) {
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 ```
 
-So this is all very nice and it's far better to be able to use this from NPM vs.
+So this is all very nice and it's far better to be able to use this from npm vs.
 implementing it yourself or cobbling together several standalone libraries.
 
 But if this was all gatsby-image did, it'd be a nice new component to have
@@ -225,12 +229,12 @@ before we get to actually coding the frontend.
 
 For example, how does a single image typically get on a website?
 
-1.  A page is designed
-2.  Specific images are chosen
-3.  The images are resized (with ideally multiple thumbnails to fit different
-    devices)
-4.  And finally, the image(s) are included in the HTML/CSS/JS (or React
-    component) for the page.
+1. A page is designed
+2. Specific images are chosen
+3. The images are resized (with ideally multiple thumbnails to fit different
+   devices)
+4. And finally, the image(s) are included in the HTML/CSS/JS (or React
+   component) for the page.
 
 What makes gatsby-image really interesting is it's _seamlessly integrated into
 Gatsby's data layer_ which has native image processing capabilities.
@@ -250,12 +254,14 @@ would look like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default function Image({ data }) {
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
@@ -276,10 +282,10 @@ export const query = graphql`
 So instead of a long pipeline of tasks to setup optimized images for your site,
 the steps now are:
 
-1.  Install gatsby-image
-2.  Decide what size of image you need (125x125 in the example above)
-3.  Add your query and the gatsby-image component to your page
-4.  And… that's it!
+1. Install gatsby-image
+2. Decide what size of image you need (125x125 in the example above)
+3. Add your query and the gatsby-image component to your page
+4. And… that's it!
 
 Now playing with images is fun! Want to tweak your design? No problem, just
 change your query a bit and see how the page updates. By eliminating the

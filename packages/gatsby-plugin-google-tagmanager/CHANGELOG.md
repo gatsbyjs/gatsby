@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.10...gatsby-plugin-google-tagmanager@2.3.11) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.9...gatsby-plugin-google-tagmanager@2.3.10) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.8...gatsby-plugin-google-tagmanager@2.3.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.7...gatsby-plugin-google-tagmanager@2.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.6...gatsby-plugin-google-tagmanager@2.3.7) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.5...gatsby-plugin-google-tagmanager@2.3.6) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.4...gatsby-plugin-google-tagmanager@2.3.5) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.3...gatsby-plugin-google-tagmanager@2.3.4) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.2...gatsby-plugin-google-tagmanager@2.3.3) (2020-05-20)
+
+### Features
+
+- **tagmanager:** add configurable event names ([#21362](https://github.com/gatsbyjs/gatsby/issues/21362)) ([#24076](https://github.com/gatsbyjs/gatsby/issues/24076)) ([81a3181](https://github.com/gatsbyjs/gatsby/commit/81a3181))
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.1...gatsby-plugin-google-tagmanager@2.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.0...gatsby-plugin-google-tagmanager@2.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
 # [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.2.4...gatsby-plugin-google-tagmanager@2.3.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-plugin-google-tagmanager
