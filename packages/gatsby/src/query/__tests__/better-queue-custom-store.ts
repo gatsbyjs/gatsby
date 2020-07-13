@@ -78,11 +78,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task2`, { value: `secret 2` }, 1)
     await store.putTask(`task3`, { value: `secret 3` }, 1)
 
-    let lockId
-    let tasks
-
-    lockId = await store.takeFirstN(2)
-    tasks = await store.getLock(lockId)
+    let lockId = await store.takeFirstN(2)
+    let tasks = await store.getLock(lockId)
 
     // should get the first task
     expect(tasks.task1.value).toBe(`secret 1`)
@@ -111,9 +108,7 @@ describe(`Custom better-queue memory store`, () => {
     const lock1: string = await store.takeFirstN(1)
     const lock2: string = await store.takeLastN(1)
 
-    let workers
-
-    workers = await store.getRunningTasks()
+    let workers = await store.getRunningTasks()
 
     // should have first lock
     expect(workers[lock1]).toBeDefined()
