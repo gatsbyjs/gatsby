@@ -12,5 +12,6 @@ Object {
     "path": "/mypage/",
     "webpackCompilationHash": "123",
   },
+  "staticQueryResults": Object {},
 }
 `;
