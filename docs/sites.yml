@@ -11459,3 +11459,15 @@
     - Productivity
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one
+- title: Paths.io
+  url: https://paths.io/
+  main_url: https://paths.io/
+  description: >
+    Paths enables a new type of career discovery, in addition to being a better way to find work.
+  categories:
+    - Data
+    - Technology
+    - Landing Page
+  built_by: HiringSolved
+  built_by_url: https://hiringsolved.com/home/
+  featured: false
