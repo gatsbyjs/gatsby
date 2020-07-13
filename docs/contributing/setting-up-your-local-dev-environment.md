@@ -17,7 +17,7 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 }
 ```
 
-## Gatsby repo install instructions
+## Gatsby repo instructions
 
 ### Install Node and Yarn
 
@@ -32,14 +32,14 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 - Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-
-### Docs only changes
-
-- See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) for docs-only changes.
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
 
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package, run `yarn run watch --scope=gatsby`.
+
+### Docs only changes
+
+- See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) for docs-only changes.
 
 ### Gatsby functional changes
 
@@ -82,12 +82,22 @@ If you're adding e2e tests and want to run them against local changes:
 - Run `gatsby-dev` inside your specific e2e test directory, for example `e2e-tests/themes/development-runtime`.
 - While the previous step is running, open a new terminal window and run `yarn test` in that same e2e test directory.
 
+### Troubleshooting
+
+At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
+
+- When you went through the initial setup some time ago and now want to contribute something new, you should make sure to [sync your fork](#sync-your-fork) with the latest changes from the primary branch on [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby). Otherwise, you might run into issues where files are not found as they were renamed, moved, or deleted.
+- After syncing your fork, run `yarn run bootstrap` to compile all packages. When files or tests depend on the build output (files in `/dist` directories) they might fail otherwise.
+- Make sure to run `yarn run watch` on the packages' source code you're changing.
+
+## Additional information
+
 ### Commits and pull requests
 
-- Commit and push to your fork.
-- Create a pull request from your branch.
+- GitHub Help Page: [Using Git](https://docs.github.com/en/github/using-git)
+- GitHub Help Page: [Proposing changes to your work with pull requests](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/proposing-changes-to-your-work-with-pull-requests)
 
 ### Sync your fork
 
-- GitHub Help Page [Syncing a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
-- GitHub Help Page [Merging an upstream repository into your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-an-upstream-repository-into-your-fork)
+- GitHub Help Page: [Syncing a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
+- GitHub Help Page: [Merging an upstream repository into your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-an-upstream-repository-into-your-fork)
