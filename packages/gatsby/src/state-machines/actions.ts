@@ -83,6 +83,9 @@ export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: undefined,
 })
 
+export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
+  parentSpan?.finish()
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle
@@ -106,4 +109,5 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   markQueryFilesDirty,
   assignWebhookBody,
   clearWebhookBody,
+  finishBootstrapSpan: finishParentSpan,
 }

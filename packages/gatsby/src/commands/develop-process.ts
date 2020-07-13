@@ -4,26 +4,16 @@ import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
 import { initTracer } from "../utils/tracer"
-import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { startRedirectListener } from "../bootstrap/redirects-writer"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram } from "./types"
-import {
-  IBuildContext,
-  initialize,
-  rebuildSchemaWithSitePage,
-  writeOutRedirects,
-  startWebpackServer,
-} from "../services"
-import { boundActionCreators } from "../redux/actions"
-import { ProgramStatus } from "../redux/types"
+import { IBuildContext, initialize, startWebpackServer } from "../services"
 import {
   MachineConfig,
   AnyEventObject,
@@ -168,30 +158,12 @@ module.exports = async (program: IProgram): Promise<void> => {
             }
           },
           onDone: {
-            actions: [`assignServiceResult`, `clearWebhookBody`],
+            actions: [
+              `assignServiceResult`,
+              `clearWebhookBody`,
+              `finishParentSpan`,
+            ],
             target: `finishingBootstrap`,
-          },
-        },
-      },
-      finishingBootstrap: {
-        on: {
-          ADD_NODE_MUTATION: runMutationAndMarkDirty,
-          // Ignore, because we're about to extract them anyway
-          QUERY_FILE_CHANGED: undefined,
-        },
-        invoke: {
-          src: async (): Promise<void> => {
-            // These were previously in `bootstrap()` but are now
-            // in part of the state machine that hasn't been added yet
-            await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
-
-            await writeOutRedirects({ parentSpan: bootstrapSpan })
-
-            startRedirectListener()
-            bootstrapSpan.finish()
-          },
-          onDone: {
-            target: `runningQueries`,
           },
         },
       },
@@ -222,24 +194,6 @@ module.exports = async (program: IProgram): Promise<void> => {
               graphqlRunner,
               websocketManager,
             }
-          },
-          onDone: {
-            target: `doingEverythingElse`,
-          },
-        },
-      },
-      doingEverythingElse: {
-        invoke: {
-          src: async (): Promise<void> => {
-            // All the stuff that's not in the state machine yet
-
-            boundActionCreators.setProgramStatus(
-              ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
-            )
-
-            await db.saveState()
-
-            db.startAutosave()
           },
           onDone: [
             {

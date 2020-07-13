@@ -75,6 +75,20 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         },
       },
     },
+    finishingUp: {
+      on: {
+        always: [
+          {
+            target: `done`,
+            actions: `finishUpQueries`,
+            cond: ({ firstRun }): boolean => !!firstRun,
+          },
+          {
+            target: `done`,
+          },
+        ],
+      },
+    },
     done: {
       type: `final`,
     },
