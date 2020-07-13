@@ -13,6 +13,11 @@ import MDX from "./components/mdx"
 const {
   Button,
   ThemeProvider,
+  InputField,
+  TextAreaField,
+  TextAreaFieldControl,
+  InputFieldControl,
+  InputFieldLabel,
   getTheme,
   BaseAnchor,
   Heading,
@@ -356,12 +361,12 @@ const Step = ({ state, step, i }) => {
               if (res.resourceName === `Input`) {
                 if (res.type === `textarea`) {
                   return (
-                    <div sx={{ pt: 3 }}>
+                    <div sx={{ pt: 3, width: '30%', maxWidth: '100%' }}>
+                    <TextAreaField>
                       <div>
-                        <label>{res.label}</label>
+                        <InputFieldLabel>{res.label}</InputFieldLabel>
                       </div>
-                      <textarea
-                        sx={{ border: `1px solid` }}
+                      <TextAreaFieldControl
                         onInput={e => {
                           sendInputEvent({
                             uuid: res._uuid,
@@ -370,16 +375,17 @@ const Step = ({ state, step, i }) => {
                           })
                         }}
                       />
+                    </TextAreaField>
                     </div>
                   )
                 }
                 return (
-                  <div sx={{ pt: 3 }}>
+                  <div sx={{ pt: 3, width: '30%', maxWidth: '100%' }}>
+                  <InputField sx={{ pt: 3 }}>
                     <div>
-                      <label>{res.label}</label>
+                      <InputFieldLabel>{res.label}</InputFieldLabel>
                     </div>
-                    <input
-                      sx={{ border: `1px solid` }}
+                    <InputFieldControl
                       type={res.type}
                       onInput={e => {
                         sendInputEvent({
@@ -389,6 +395,7 @@ const Step = ({ state, step, i }) => {
                         })
                       }}
                     />
+                  </InputField>
                   </div>
                 )
               }
