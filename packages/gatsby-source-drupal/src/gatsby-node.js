@@ -31,6 +31,7 @@ exports.sourceNodes = async (
     createContentDigest,
     getCache,
     getNode,
+    getNodes,
     parentSpan,
     reporter,
     webhookBody,
@@ -47,8 +48,9 @@ exports.sourceNodes = async (
     concurrentFileRequests,
     disallowedLinkTypes,
     skipFileDownloads,
+    fastBuilds,
   } = pluginOptions
-  const { createNode } = actions
+  const { createNode, setPluginStatus, touchNode } = actions
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -102,7 +104,92 @@ exports.sourceNodes = async (
     return
   }
 
-  const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
+  fastBuilds = fastBuilds || false
+  if (fastBuilds) {
+    let lastFetched =
+      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
+      0
+
+    const drupalFetchIncrementalActivity = reporter.activityTimer(
+      `Fetch incremental changes from Drupal`
+    )
+    let requireFullRebuild = false
+
+    drupalFetchIncrementalActivity.start()
+
+    try {
+      // Hit fastbuilds endpoint with the lastFetched date.
+      const data = await axios.get(
+        `${baseUrl}/gatsby-fastbuilds/sync/${lastFetched}`,
+        {
+          auth: basicAuth,
+          headers,
+          params,
+        }
+      )
+
+      if (data.data.status === -1) {
+        // The incremental data is expired or this is the first fetch.
+        reporter.info(`Unable to pull incremental data changes from Drupal`)
+        setPluginStatus({ lastFetched: data.data.timestamp })
+        requireFullRebuild = true
+      } else {
+        // Touch nodes so they are not garbage collected by Gatsby.
+        getNodes().forEach(node => {
+          if (node.internal.owner === `gatsby-source-drupal`) {
+            touchNode({ nodeId: node.id })
+          }
+        })
+
+        // Process sync data from Drupal.
+        let nodesToSync = data.data.entities
+        for (const nodeSyncData of nodesToSync) {
+          if (nodeSyncData.action === `delete`) {
+            actions.deleteNode({ node: getNode(createNodeId(nodeSyncData.id)) })
+          } else {
+            // The data could be a single Drupal entity or an array of Drupal
+            // entities to update.
+            let nodesToUpdate = nodeSyncData.data
+            if (!Array.isArray(nodeSyncData.data)) {
+              nodesToUpdate = [nodeSyncData.data]
+            }
+
+            for (const nodeToUpdate of nodesToUpdate) {
+              await handleWebhookUpdate(
+                {
+                  nodeToUpdate,
+                  actions,
+                  cache,
+                  createNodeId,
+                  createContentDigest,
+                  getCache,
+                  getNode,
+                  reporter,
+                  store,
+                },
+                pluginOptions
+              )
+            }
+          }
+        }
+
+        setPluginStatus({ lastFetched: data.data.timestamp })
+      }
+    } catch (e) {
+      gracefullyRethrow(drupalFetchIncrementalActivity, e)
+      return
+    }
+
+    drupalFetchIncrementalActivity.end()
+
+    if (!requireFullRebuild) {
+      return
+    }
+  }
+
+  const drupalFetchActivity = reporter.activityTimer(
+    `Fetch all data from Drupal`
+  )
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
@@ -116,24 +203,8 @@ exports.sourceNodes = async (
   // Default skipFileDownloads to false.
   skipFileDownloads = skipFileDownloads || false
 
-  // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
-  // _.values(store.getState().nodes)
-  // .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
-  // .forEach(n => touchNode({ nodeId: n.id }))
-
   // Fetch articles.
-  // console.time(`fetch Drupal data`)
-  reporter.info(`Starting to fetch data from Drupal`)
-
-  // TODO restore this
-  // let lastFetched
-  // if (
-  // store.getState().status.plugins &&
-  // store.getState().status.plugins[`gatsby-source-drupal`]
-  // ) {
-  // lastFetched = store.getState().status.plugins[`gatsby-source-drupal`].status
-  // .lastFetched
-  // }
+  reporter.info(`Starting to fetch all data from Drupal`)
 
   drupalFetchActivity.start()
 

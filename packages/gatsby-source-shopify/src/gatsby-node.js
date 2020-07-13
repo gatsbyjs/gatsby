@@ -53,9 +53,21 @@ export const sourceNodes = async (
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
+    shopifyQueries = {},
   }
 ) => {
   const client = createClient(shopName, accessToken, apiVersion)
+
+  const defaultQueries = {
+    articles: ARTICLES_QUERY,
+    blogs: BLOGS_QUERY,
+    collections: COLLECTIONS_QUERY,
+    products: PRODUCTS_QUERY,
+    shopPolicies: SHOP_POLICIES_QUERY,
+    pages: PAGES_QUERY,
+  }
+
+  const queries = { ...defaultQueries, ...shopifyQueries }
 
   // Convenience function to namespace console messages.
   const formatMsg = msg =>
@@ -84,6 +96,7 @@ export const sourceNodes = async (
       verbose,
       imageArgs,
       paginationSize,
+      queries,
     }
 
     // Message printed when fetching is complete.
@@ -92,8 +105,8 @@ export const sourceNodes = async (
     let promises = []
     if (includeCollections.includes(SHOP)) {
       promises = promises.concat([
-        createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
-        createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
+        createNodes(COLLECTION, queries.collections, CollectionNode, args),
+        createNodes(PRODUCT, queries.products, ProductNode, args, async x => {
           if (x.variants)
             await forEach(x.variants.edges, async edge => {
               const v = edge.node
@@ -121,14 +134,14 @@ export const sourceNodes = async (
     }
     if (includeCollections.includes(CONTENT)) {
       promises = promises.concat([
-        createNodes(BLOG, BLOGS_QUERY, BlogNode, args),
-        createNodes(ARTICLE, ARTICLES_QUERY, ArticleNode, args, async x => {
+        createNodes(BLOG, queries.blogs, BlogNode, args),
+        createNodes(ARTICLE, queries.articles, ArticleNode, args, async x => {
           if (x.comments)
             await forEach(x.comments.edges, async edge =>
               createNode(await CommentNode(imageArgs)(edge.node))
             )
         }),
-        createPageNodes(PAGE, PAGES_QUERY, PageNode, args),
+        createPageNodes(PAGE, queries.pages, PageNode, args),
       ])
     }
 
@@ -183,12 +196,13 @@ const createShopPolicies = async ({
   createNode,
   formatMsg,
   verbose,
+  queries,
 }) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${SHOP_POLICY} nodes`)
 
   if (verbose) console.time(msg)
-  const { shop: policies } = await queryOnce(client, SHOP_POLICIES_QUERY)
+  const { shop: policies } = await queryOnce(client, queries.shopPolicies)
   Object.entries(policies)
     .filter(([_, policy]) => Boolean(policy))
     .forEach(

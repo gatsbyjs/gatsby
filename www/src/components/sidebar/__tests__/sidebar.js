@@ -93,13 +93,13 @@ describe(`sidebar`, () => {
   describe(`toggle section`, () => {
     it(`opens the section if it is not open`, () => {
       const { queryByText, getByLabelText } = renderSidebar(`/plot-summary/`)
-      fireEvent.click(getByLabelText(`Motifs expand`))
+      fireEvent.click(getByLabelText(`Motifs toggle`))
       expect(queryByText(`The Green Light`)).toBeInTheDocument()
     })
 
     it(`closes the section if it is already opened`, () => {
       const { queryByText, getByLabelText } = renderSidebar(`/motifs/`)
-      fireEvent.click(getByLabelText(`Motifs collapse`))
+      fireEvent.click(getByLabelText(`Motifs toggle`))
       expect(queryByText(`The Green Light`)).not.toBeInTheDocument()
     })
   })
