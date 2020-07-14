@@ -15,4 +15,9 @@ describe(`Pages`, () => {
         cy.visit(`/`).waitForRouteChange()
         cy.getTestElement(`external`).contains(`Now an external import`)
     })
+
+    it (`generates slug`, () => {
+        cy.visit(`/list`).waitForRouteChange()
+        cy.getTestElement(`slug`)
+    })
 })
