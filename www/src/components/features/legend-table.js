@@ -75,7 +75,19 @@ const legendText = [
 
 export default function LegendTable() {
   return (
-    <div>
+    <table>
+      <caption
+        id="legend"
+        sx={{
+          fontWeight: `body`,
+          letterSpacing: `tracked`,
+          textTransform: `uppercase`,
+          textAlign: `left`,
+          marginBottom: `1.5rem`,
+        }}
+      >
+        Legend
+      </caption>
       <div
         sx={{
           display: [`none`, null, `table`],
@@ -99,6 +111,6 @@ export default function LegendTable() {
           </div>
         ))}
       </div>
-    </div>
+    </table>
   )
 }

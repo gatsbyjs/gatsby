@@ -86,16 +86,6 @@ const FeaturesHeader = () => (
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
     </p>
-    <h6
-      id="legend"
-      sx={{
-        fontWeight: `body`,
-        letterSpacing: `tracked`,
-        textTransform: `uppercase`,
-      }}
-    >
-      Legend
-    </h6>
     <LegendTable />
   </section>
 )
