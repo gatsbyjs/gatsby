@@ -98,13 +98,15 @@ You still need to supply a `queries` configuration. Queries tell the Algolia plu
 The configuration could have been entered straight into the `gatsby-config.js`, but the configuration above loads it from a new file `src/utils/algolia-queries.js` to avoid clutter. Create this page in your project:
 
 ```js:title=src/utils/algolia-queries.js
+const escapeStringRegexp = require("escape-string-regexp")
+
 const pagePath = `content`
 const indexName = `Pages`
 
 const pageQuery = `{
   pages: allMarkdownRemark(
     filter: {
-      fileAbsolutePath: { regex: "/${pagePath.replace("/", "\\/")}/" },
+      fileAbsolutePath: { regex: "/${escapeStringRegexp(pagePath)}/" },
     }
   ) {
     edges {
