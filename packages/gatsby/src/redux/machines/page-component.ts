@@ -170,7 +170,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         },
       }),
       setBootstrapFinished: assign({
-        isInBootstrap: false,
+        isInBootstrap: () => false,
       }),
     },
   }

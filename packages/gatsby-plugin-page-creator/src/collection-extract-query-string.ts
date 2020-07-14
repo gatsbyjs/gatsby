@@ -8,6 +8,7 @@ import * as t from "@babel/types"
 // TODO: Ive tried to make TS happy here, but any changes I make to get TS
 // to work actually make the code fail. This code works. So maybe we can figure
 // this out later.
+// @eslint-disable-next-line @typescript-eslint/camelcase
 function isunstable_createPagesFromData(path): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
