@@ -10,23 +10,13 @@ Imagine for a moment the perfect website framework. One that produces really fas
 
 This framework would have to be:
 
-- **universal**, work for all types of sites from simple brochureware to complex
-  web-apps.
-- **simple**, not requiring any setup to start using and with thoughtful APIs to
-  extend the framework.
-- **fast**, doesn't lose customers to slow page loads. Takes advantage of
-  HTTP/2, browser caching, service workers, inlined critical CSS, and code
-  splitting so your site always loads incredibly fast—no matter what you build.
-- **JavaScript-driven**, the web is huge and intensely competitive. Sites that
-  win are fast and richly interactive. Your framework must make it trivial to
-  use advanced JavaScript.
-- **team ready**, use industry standard collaboration tools like npm, Git, and
-  continuous deployment, so your team is always on the same page and shipping
-  new features is easy.
-- **modular**, allows for cleanly separated features so fixing bugs and adding
-  new features is easy and complexity is contained.
-- **internet scale**, launch your site to millions without crashing your site
-  (or your wallet).
+- **universal**, work for all types of sites from simple brochureware to complex web-apps.
+- **simple**, not requiring any setup to start using and with thoughtful APIs to extend the framework.
+- **fast**, doesn't lose customers to slow page loads. Takes advantage of HTTP/2, browser caching, service workers, inlined critical CSS, and code splitting so your site always loads incredibly fast—no matter what you build.
+- **JavaScript-driven**, the web is huge and intensely competitive. Sites that win are fast and richly interactive. Your framework must make it trivial to use advanced JavaScript.
+- **team ready**, use industry standard collaboration tools like npm, Git, and continuous deployment, so your team is always on the same page and shipping new features is easy.
+- **modular**, allows for cleanly separated features so fixing bugs and adding new features is easy and complexity is contained.
+- **internet scale**, launch your site to millions without crashing your site (or your wallet).
 - **secure**, doesn't put your users' data at risk of hacking.
 
 I believe that Gatsby fulfills these requirements. After several years of working on the project and seeing it used successfully by many people on a wide variety of sites, I'm confident that Gatsby works.
@@ -113,10 +103,7 @@ This is particularly helpful for teams of people collaborating on a site with pa
 
 One client I'm working with on Gatsby 1.0 (a stealth startup in San Francisco) is using Gatsby to build both their marketing site _and_ SaaS app within the _same Gatsby codebase_.
 
-The marketing pages of their site are built using markdown and React components
-along with a modern CSS-in-JS library
-[Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
-uses [Redux](http://redux.js.org/) to communicate with their Django API.
+The marketing pages of their site are built using markdown and React components along with a modern CSS-in-JS library [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion uses [Redux](http://redux.js.org/) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a potential customer goes to sign-up for the app, there's no _awkward jump from the marketing website to the web app_—just a simple page change which seamlessly loads in the needed JavaScript. The _team is sharing components and styles across the site_ without stepping on each others shoes as they rapidly iterate on features.
 
@@ -130,9 +117,7 @@ Gatsby 1.0 will be adding plugin and theme support.
 
 The plugin system will let you hook into lifecycle APIs from events during the bootstrap and build processes and in the browser.
 
-There are a [number of official Gatsby plugins](/docs/plugins/) already
-built—all distributed as separate npm packages. It'll be easy to create your own
-plugins for internal projects and as open source projects published on npm.
+There are a [number of official Gatsby plugins](/docs/plugins/) already built—all distributed as separate npm packages. It'll be easy to create your own plugins for internal projects and as open source projects published on npm.
 
 Plugins can:
 
@@ -146,8 +131,7 @@ Plugins also drive the new GraphQL data processing layer.
 
 The final pieces for theme support are coming soon. Gatsby's theme system will have some unique properties. You'll be able to add multiple themes to a site. So you could start a site with a "blog" theme and later add on a "portfolio" theme. Themes will also be able to _compose_ other themes. So a large organization could have a standard "base" theme and then individual departments could extend the base theme to meet their specific requirements.
 
-Themes (like plugins) will be published on npm. So soon, starting a new Gatsby
-blog will be as simple as:
+Themes (like plugins) will be published on npm. So soon, starting a new Gatsby blog will be as simple as:
 
 ```shell
 npm install --save gatsby-super-cool-theme

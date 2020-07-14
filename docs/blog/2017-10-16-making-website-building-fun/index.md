@@ -10,9 +10,7 @@ I still remember the first non-trivial React component I built in 2014—not lon
 
 I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/)—a JavaScript library that shows & hides headers as you scroll up & down a site.
 
-After a day or two of working through the niceties of writing a React component
-and publishing it to npm, I started writing the documentation and realized…
-there was almost nothing to write.
+After a day or two of working through the niceties of writing a React component and publishing it to npm, I started writing the documentation and realized… there was almost nothing to write.
 
 Using [react-headroom](https://github.com/KyleAMathews/react-headroom) is so simple I realized you almost don't need documentation. A React header component using it would look like this:
 
@@ -71,9 +69,7 @@ The React version of headroom.js is far simpler and _safer_ to use as the HTML, 
 
 ## What makes technology fun?
 
-This is a complex philosophical question and I'm writing this on a Saturday
-afternoon so I'll cheat a bit and just cut the Gordian knot by saying
-"simplicity is fun" and conversely, "complexity is not fun".
+This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the Gordian knot by saying "simplicity is fun" and conversely, "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and experiment and reliably get something done. The more complex the project, the more things seem to break, the more time gets wasted on various yak shaves, and critically, the gap between thinking up an idea and being able to try it grows larger and larger.
 
@@ -157,8 +153,7 @@ export default function Page({ data }) {
 }
 ```
 
-So this is all very nice and it's far better to be able to use this from npm vs.
-implementing it yourself or cobbling together several standalone libraries.
+So this is all very nice and it's far better to be able to use this from npm vs. implementing it yourself or cobbling together several standalone libraries.
 
 But if this was all gatsby-image did, it'd be a nice new component to have around, but it wouldn't be anything special.
 

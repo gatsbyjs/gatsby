@@ -23,10 +23,7 @@ Static websites aren't a great fit for everything. Full webapps behind login can
 
 Sprinkling JavaScript on a static website can be tricky, but Gatsby does this so well with React that you don't have to think about it at all—it just works. I used to tweak my configuration all the time to achieve better performance, but Gatsby allows me to outsource the configuration and optimization and get a super fast website with zero work.
 
-I’ll also mention [next.js](https://github.com/vercel/next.js/) which is quite
-similar and supports both SSR for dynamic content and exporting to static pages.
-And don't forget [Netlify](https://www.netlify.com) who is doing an amazing job
-at building and hosting static websites.
+I’ll also mention [next.js](https://github.com/vercel/next.js/) which is quite similar and supports both SSR for dynamic content and exporting to static pages. And don't forget [Netlify](https://www.netlify.com) who is doing an amazing job at building and hosting static websites.
 
 It is so much easier and fun to code for the web today. I would have saved a lot of development/devops hours at my previous startup just by using Gatsby. And the most fun fact about Gatsby is these aren’t modern ideas at all - it's just static websites done right.
 

@@ -70,41 +70,17 @@ Our documentation exists in 40 different parent topics and numerous articles in 
 
 ![Roll Call Docs](rollcall-docs.png)
 
-Gatsby’s data handling makes these problems easy to manage by simplifying how
-you get data to your site from external sources. It’s not _entirely_ unique from
-other static site generators in that regard — other generators utilize plugins
-for grabbing content as well, but how you deal with actually pulling it into
-your React components/pages with GraphQL is beautiful.
+Gatsby’s data handling makes these problems easy to manage by simplifying how you get data to your site from external sources. It’s not _entirely_ unique from other static site generators in that regard — other generators utilize plugins for grabbing content as well, but how you deal with actually pulling it into your React components/pages with GraphQL is beautiful.
 
-After you install the `gatsby-source-contentful`
-[plugin](/packages/gatsby-source-contentful/) with npm
-and add your Contentful API credentials to the gatsby-config file, the fun
-begins.
+After you install the `gatsby-source-contentful` [plugin](/packages/gatsby-source-contentful/) with npm and add your Contentful API credentials to the gatsby-config file, the fun begins.
 
-Every time you run Gatsby with the `develop` command or do a new build with the
-`build` command, the plugin fetches any new content from the Contentful API. All
-this data is then available and ready to query locally in your development
-environment. This means you can start pulling in Contentful assets and content
-(assets = images/media, content = pages/articles/text/markdown, etc.) using
-GraphQL queries right inside the template files.
+Every time you run Gatsby with the `develop` command or do a new build with the `build` command, the plugin fetches any new content from the Contentful API. All this data is then available and ready to query locally in your development environment. This means you can start pulling in Contentful assets and content (assets = images/media, content = pages/articles/text/markdown, etc.) using GraphQL queries right inside the template files.
 
-> Sidenote: I had created a blog for my wife with Gatsby prior to this doc site,
-> so I had a little experience with the Gatsby APIs. But I still consider myself
-> a complete newbie when it comes to GraphQL. Lucky for me, Gatsby’s tutorials
-> and community are awesome at answering questions or handling general usage
-> issues.
+> Sidenote: I had created a blog for my wife with Gatsby prior to this doc site, so I had a little experience with the Gatsby APIs. But I still consider myself a complete newbie when it comes to GraphQL. Lucky for me, Gatsby’s tutorials and community are awesome at answering questions or handling general usage issues.
 
-In a single GraphQL query I was able to pull in all the topics and related
-article titles set up in my Contentful Content Model for navigation. By
-leveraging React and some GraphQL, I was able to create a dynamically generated
-sidebar menu based off the content that got pulled in from Contentful. I have to
-say, it feels so freeing being about to create static content with dynamic data
-like this.
+In a single GraphQL query I was able to pull in all the topics and related article titles set up in my Contentful Content Model for navigation. By leveraging React and some GraphQL, I was able to create a dynamically generated sidebar menu based off the content that got pulled in from Contentful. I have to say, it feels so freeing being about to create static content with dynamic data like this.
 
-The articles themselves are written in markdown in the Contentful editor. They
-get converted to HTML via a transformer plugin within Gatsby. The markdown
-editing in Contentful is quite practical with standard WYSIWYG-like editor
-features. I haven’t heard any complaints from my co-workers.
+The articles themselves are written in markdown in the Contentful editor. They get converted to HTML via a transformer plugin within Gatsby. The markdown editing in Contentful is quite practical with standard WYSIWYG-like editor features. I haven’t heard any complaints from my co-workers.
 
 ## Searching for a Search Solution
 
@@ -150,9 +126,7 @@ Luckily I already knew the answers to these questions because I had already disc
 
 ## Solution: Netlify + Gatsby
 
-Plugging any static site into the Netlify workflow is a no-brainer, but after I
-found Gatsby, I knew there was no other option for me. These two pair so well
-together!
+Plugging any static site into the Netlify workflow is a no-brainer, but after I found Gatsby, I knew there was no other option for me. These two pair so well together!
 
 Netlify recently changed [their pricing](https://www.netlify.com/pricing/) to improve what was already an awesome hosting per dollar value. I can’t get through this section without a bullet list of why Netlify is so fantastic.
 

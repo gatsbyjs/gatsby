@@ -103,12 +103,7 @@ But then Gatsby.js hit the 1.0 release, and everything changed...
 
 ## Meeting Gatsby.js
 
-My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook
-team behind the [React](https://reactjs.org/) documentation site. They decided to
-migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0.
-I, as the good React fanboy that I am, jumped at the first chance I had to
-submit a PR to help fix a couple of bugs on the site, and was even given the
-opportunity of setting up the [RSS feed](https://reactjs.org/feed.xml)!
+My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook team behind the [React](https://reactjs.org/) documentation site. They decided to migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0. I, as the good React fanboy that I am, jumped at the first chance I had to submit a PR to help fix a couple of bugs on the site, and was even given the opportunity of setting up the [RSS feed](https://reactjs.org/feed.xml)!
 
 In the process, I learned what the 1.0 release of Gatsby was all about, and I was completely mindblown.
 

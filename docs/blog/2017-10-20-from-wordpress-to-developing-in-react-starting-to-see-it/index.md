@@ -5,24 +5,11 @@ author: "Benjamin Read"
 tags: ["react", "getting-started", "wordpress"]
 ---
 
-As a frontend designer I've always prided myself on being an HTML and CSS
-specialist. My use of JavaScript has been limited to animations and DOM
-manipulation. However, at
-[Indigo Tree](https://indigotree.co.uk)
-we're branching out from our staple of WordPress and trying different methods of
-creating websites with functionality that our clients require, whilst maximizing
-their budget.
+As a frontend designer I've always prided myself on being an HTML and CSS specialist. My use of JavaScript has been limited to animations and DOM manipulation. However, at [Indigo Tree](https://indigotree.co.uk) we're branching out from our staple of WordPress and trying different methods of creating websites with functionality that our clients require, whilst maximizing their budget.
 
-We're also bracing ourselves for what we’re anticipating to be the stormfront of
-[Gutenberg](https://wordpress.org/plugins/gutenberg/)
-for our WordPress projects. Once it's included in the WordPress Core, writing
-components in JavaScript for the Gutenberg editor will be necessary for every
-developer on a project.
+We're also bracing ourselves for what we’re anticipating to be the stormfront of [Gutenberg](https://wordpress.org/plugins/gutenberg/) for our WordPress projects. Once it's included in the WordPress Core, writing components in JavaScript for the Gutenberg editor will be necessary for every developer on a project.
 
-So I decided to dive into learning React with a few courses and some
-experimentation. I had the aim of building a site in
-[Gatsby.js](/)
-as a test for doing projects built entirely in React.
+So I decided to dive into learning React with a few courses and some experimentation. I had the aim of building a site in [Gatsby.js](/) as a test for doing projects built entirely in React.
 
 ## Letting Go
 
@@ -106,31 +93,12 @@ Be warned: the tutorial isn’t quite finished yet, you might be better off star
 
 ## The Way Forward?
 
-My initial concerns around using a JavaScript framework such as React seem to
-have all been allayed. With server-side React, we no longer have a dependency on
-frontend JavaScript, so progressive enhancement is not just a possibility but a
-standard. There's momentum towards better accessibility, and for me as a
-developer, the tools are there (such as Babel, Chrome Dev Tools React extension,
-and others) for a faster, more efficient development experience.
+My initial concerns around using a JavaScript framework such as React seem to have all been allayed. With server-side React, we no longer have a dependency on frontend JavaScript, so progressive enhancement is not just a possibility but a standard. There's momentum towards better accessibility, and for me as a developer, the tools are there (such as Babel, Chrome Dev Tools React extension, and others) for a faster, more efficient development experience.
 
-I'm glad to say I'm sold on the idea and methods of developing with JavaScript,
-and React in particular. The site I've re-built from WordPress into Gatsby.js is
-now live at
-https://freebabylon5.com.
+I'm glad to say I'm sold on the idea and methods of developing with JavaScript, and React in particular. The site I've re-built from WordPress into Gatsby.js is now live at https://freebabylon5.com.
 
-Together with my colleagues at
-[Indigo Tree](https://indigotree.co.uk)
-we’re now looking at using WordPress as a backend, where clients can edit their
-content without the worries of insecure plugins or other methods of being
-hacked.
+Together with my colleagues at [Indigo Tree](https://indigotree.co.uk) we’re now looking at using WordPress as a backend, where clients can edit their content without the worries of insecure plugins or other methods of being hacked.
 
-Using GatsbyJS with its “Bring Your Own Data” strategy makes perfect sense, and
-we’re about to start building our first Gatsby client site using the plugin
-[`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/)
-to pull in our data and build a totally secure website with some pretty
-impressive gains on loading time. We’ll also sleep better at night knowing
-insecurities in WordPress are no longer putting our clients at risk.
+Using GatsbyJS with its “Bring Your Own Data” strategy makes perfect sense, and we’re about to start building our first Gatsby client site using the plugin [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/) to pull in our data and build a totally secure website with some pretty impressive gains on loading time. We’ll also sleep better at night knowing insecurities in WordPress are no longer putting our clients at risk.
 
-The web is always changing. And the way forward isn't always easy to see. Now,
-with GatsbyJS, we're beginning to feel like we can visualize where things are
-going.
+The web is always changing. And the way forward isn't always easy to see. Now, with GatsbyJS, we're beginning to feel like we can visualize where things are going.

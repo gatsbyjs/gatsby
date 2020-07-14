@@ -282,10 +282,7 @@ This is a simplified example, but there are a few things going on that might not
 - If no error are found we render a link for each item in the array: `this.props.data.allMarkdownRemark.edges`
 - We export a `pageQuery` variable that is constructed using the magic `graphql` global
 
-The error handling is pretty straightforward, if a bit verbose, as long as you
-know what GraphQL responses look like. In case you didn't know, if you get an
-error in a GraphQL query the response will contain the `errors` array. We check
-for this array and handle it accordingly.
+The error handling is pretty straightforward, if a bit verbose, as long as you know what GraphQL responses look like. In case you didn't know, if you get an error in a GraphQL query the response will contain the `errors` array. We check for this array and handle it accordingly.
 
 Now let's looks specifically at where we render a link for each blog post:
 
@@ -439,9 +436,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
 
 If you've worked with GraphQL before this should look very familiar. In fact, as you can see the string type is imported directly from GraphQL and not from Gatsby.
 
-You check the type of node and if it's a type you're interested in you
-resolve with some fields. Fields in GraphQL require a `type` and a way to
-`resolve` the value.
+You check the type of node and if it's a type you're interested in you resolve with some fields. Fields in GraphQL require a `type` and a way to `resolve` the value.
 
 I've omitted the implementation of `getURL` here, but you can see the [source code here](https://github.com/iansinnott/iansinnott.github.io/blob/gatsby-migration/gatsby-node.js#L17) (NOTE: in the source it's called `getSlug` instead of `getURL`).
 
