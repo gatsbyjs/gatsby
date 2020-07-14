@@ -13,14 +13,14 @@ export type DataLayerResult = Pick<
 
 const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
   initial: `start`,
+  id: `dataLayerMachine`,
   context: {},
   states: {
     start: {
       always: [
         {
           target: `buildingSchema`,
-          cond: ({ skipSourcing }: IDataLayerContext): boolean =>
-            !!skipSourcing,
+          cond: `shouldSkipSourcing`,
         },
         {
           target: `customizingSchema`,
@@ -65,10 +65,10 @@ const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
           {
             target: `creatingPagesStatefully`,
             actions: `assignChangedPages`,
-            cond: (context): boolean => !!context.firstRun,
+            cond: `firstRun`,
           },
           {
-            target: `done`,
+            target: `rebuildingSchemaWithSitePage`,
             actions: `assignChangedPages`,
           },
         ],
@@ -78,6 +78,28 @@ const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
       invoke: {
         src: `createPagesStatefully`,
         id: `creating-pages-statefully`,
+        onDone: {
+          target: `rebuildingSchemaWithSitePage`,
+        },
+      },
+    },
+    rebuildingSchemaWithSitePage: {
+      invoke: {
+        src: `rebuildSchemaWithSitePage`,
+        onDone: [
+          {
+            target: `writingOutRedirects`,
+            cond: `firstRun`,
+          },
+          {
+            target: `done`,
+          },
+        ],
+      },
+    },
+    writingOutRedirects: {
+      invoke: {
+        src: `writeOutRedirects`,
         onDone: {
           target: `done`,
         },
@@ -105,4 +127,9 @@ const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
 export const dataLayerMachine = Machine(dataLayerStates, {
   actions: dataLayerActions,
   services: dataLayerServices,
+  guards: {
+    firstRun: ({ firstRun }: IDataLayerContext): boolean => !!firstRun,
+    shouldSkipSourcing: ({ skipSourcing }: IDataLayerContext): boolean =>
+      !!skipSourcing,
+  },
 })

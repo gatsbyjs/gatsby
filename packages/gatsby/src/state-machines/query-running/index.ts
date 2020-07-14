@@ -10,6 +10,7 @@ const extractQueriesIfFilesAreDirty = {
 
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
+  id: `queryRunningMachine`,
   context: {},
   states: {
     extractingQueries: {
@@ -73,6 +74,20 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `done`,
         },
+      },
+    },
+    finishingUp: {
+      on: {
+        always: [
+          {
+            target: `done`,
+            actions: `finishUpQueries`,
+            cond: ({ firstRun }): boolean => !!firstRun,
+          },
+          {
+            target: `done`,
+          },
+        ],
       },
     },
     done: {

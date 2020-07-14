@@ -4,45 +4,19 @@ import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
 import { initTracer } from "../utils/tracer"
-import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { startRedirectListener } from "../bootstrap/redirects-writer"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram } from "./types"
-import {
-  IBuildContext,
-  initialize,
-  rebuildSchemaWithSitePage,
-  writeOutRedirects,
-  startWebpackServer,
-} from "../services"
-import { boundActionCreators } from "../redux/actions"
-import { ProgramStatus } from "../redux/types"
-import {
-  MachineConfig,
-  AnyEventObject,
-  Machine,
-  interpret,
-  Actor,
-  Interpreter,
-  forwardTo,
-  State,
-} from "xstate"
-import { dataLayerMachine } from "../state-machines/data-layer"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { IBuildContext } from "../services"
+import { AnyEventObject, interpret, Actor, Interpreter, State } from "xstate"
 import { globalTracer } from "opentracing"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
-import { queryRunningMachine } from "../state-machines/query-running"
-import { IWaitingContext } from "../state-machines/waiting/types"
-import { runMutationAndMarkDirty } from "../state-machines/shared-transition-configs"
-import { buildActions } from "../state-machines/actions"
-import { waitingMachine } from "../state-machines/waiting"
+import { developMachine } from "../state-machines/develop"
 
 const tracer = globalTracer()
 
@@ -81,7 +55,6 @@ process.on(`message`, msg => {
 
 module.exports = async (program: IProgram): Promise<void> => {
   reporter.setVerbose(program.verbose)
-  const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
@@ -125,207 +98,14 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   const app = express()
+  const parentSpan = tracer.startSpan(`bootstrap`)
 
-  const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
-    id: `build`,
-    initial: `initializing`,
-    states: {
-      initializing: {
-        on: {
-          // Ignore mutation events because we'll be running everything anyway
-          ADD_NODE_MUTATION: undefined,
-          QUERY_FILE_CHANGED: undefined,
-          WEBHOOK_RECEIVED: undefined,
-        },
-        invoke: {
-          src: `initialize`,
-          onDone: {
-            target: `initializingDataLayer`,
-            actions: [`assignStoreAndWorkerPool`, `spawnMutationListener`],
-          },
-        },
-      },
-      initializingDataLayer: {
-        on: {
-          ADD_NODE_MUTATION: runMutationAndMarkDirty,
-          // Ignore, because we're about to extract them anyway
-          QUERY_FILE_CHANGED: undefined,
-        },
-        invoke: {
-          src: `initializeDataLayer`,
-          data: ({
-            parentSpan,
-            store,
-            firstRun,
-            webhookBody,
-          }: IBuildContext): IDataLayerContext => {
-            return {
-              parentSpan,
-              store,
-              firstRun,
-              deferNodeMutation: true,
-              webhookBody,
-            }
-          },
-          onDone: {
-            actions: [`assignServiceResult`, `clearWebhookBody`],
-            target: `finishingBootstrap`,
-          },
-        },
-      },
-      finishingBootstrap: {
-        on: {
-          ADD_NODE_MUTATION: runMutationAndMarkDirty,
-          // Ignore, because we're about to extract them anyway
-          QUERY_FILE_CHANGED: undefined,
-        },
-        invoke: {
-          src: async (): Promise<void> => {
-            // These were previously in `bootstrap()` but are now
-            // in part of the state machine that hasn't been added yet
-            await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
-
-            await writeOutRedirects({ parentSpan: bootstrapSpan })
-
-            startRedirectListener()
-            bootstrapSpan.finish()
-          },
-          onDone: {
-            target: `runningQueries`,
-          },
-        },
-      },
-      runningQueries: {
-        on: {
-          QUERY_FILE_CHANGED: {
-            actions: forwardTo(`run-queries`),
-          },
-        },
-        invoke: {
-          id: `run-queries`,
-          src: `runQueries`,
-          data: ({
-            program,
-            store,
-            parentSpan,
-            gatsbyNodeGraphQLFunction,
-            graphqlRunner,
-            websocketManager,
-            firstRun,
-          }: IBuildContext): IQueryRunningContext => {
-            return {
-              firstRun,
-              program,
-              store,
-              parentSpan,
-              gatsbyNodeGraphQLFunction,
-              graphqlRunner,
-              websocketManager,
-            }
-          },
-          onDone: {
-            target: `doingEverythingElse`,
-          },
-        },
-      },
-      doingEverythingElse: {
-        invoke: {
-          src: async (): Promise<void> => {
-            // All the stuff that's not in the state machine yet
-
-            boundActionCreators.setProgramStatus(
-              ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
-            )
-
-            await db.saveState()
-
-            db.startAutosave()
-          },
-          onDone: [
-            {
-              target: `startingDevServers`,
-              cond: ({ compiler }: IBuildContext): boolean => !compiler,
-            },
-            {
-              target: `waiting`,
-            },
-          ],
-        },
-      },
-      startingDevServers: {
-        invoke: {
-          src: `startWebpackServer`,
-          onDone: {
-            target: `waiting`,
-            actions: `assignServers`,
-          },
-        },
-      },
-      waiting: {
-        on: {
-          ADD_NODE_MUTATION: {
-            actions: forwardTo(`waiting`),
-          },
-          QUERY_FILE_CHANGED: {
-            actions: forwardTo(`waiting`),
-          },
-          EXTRACT_QUERIES_NOW: {
-            target: `runningQueries`,
-          },
-        },
-        invoke: {
-          id: `waiting`,
-          src: `waitForMutations`,
-          data: ({
-            store,
-            nodeMutationBatch = [],
-          }: IBuildContext): IWaitingContext => {
-            return { store, nodeMutationBatch, runningBatch: [] }
-          },
-          onDone: {
-            actions: `assignServiceResult`,
-            target: `rebuildingPages`,
-          },
-        },
-      },
-      rebuildingPages: {
-        invoke: {
-          src: `initializeDataLayer`,
-          data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-            return { parentSpan, store, firstRun: false, skipSourcing: true }
-          },
-          onDone: {
-            actions: `assignServiceResult`,
-            target: `runningQueries`,
-          },
-        },
-      },
-    },
-    // Transitions shared by all states, except where overridden
-    on: {
-      ADD_NODE_MUTATION: {
-        actions: `addNodeMutation`,
-      },
-      QUERY_FILE_CHANGED: {
-        actions: `markQueryFilesDirty`,
-      },
-      WEBHOOK_RECEIVED: {
-        target: `initializingDataLayer`,
-        actions: `assignWebhookBody`,
-      },
-    },
-  }
-
-  const machine = Machine(developConfig, {
-    services: {
-      initializeDataLayer: dataLayerMachine,
-      initialize,
-      runQueries: queryRunningMachine,
-      waitForMutations: waitingMachine,
-      startWebpackServer: startWebpackServer,
-    },
-    actions: buildActions,
-  }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
+  const machine = developMachine.withContext({
+    program,
+    parentSpan,
+    app,
+    firstRun: true,
+  })
 
   const service = interpret(machine)
 

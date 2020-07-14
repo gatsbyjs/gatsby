@@ -9,6 +9,7 @@ const NODE_MUTATION_BATCH_TIMEOUT = 1000
 export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
+  id: `waitingMachine`,
   initial: `idle`,
   context: {
     nodeMutationBatch: [],
