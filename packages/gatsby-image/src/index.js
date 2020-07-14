@@ -210,7 +210,7 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without]
 }
 
-// For ArtDirection - SSR + Initial load, removed upon rehydration
+// For Art Direction: SSR + Initial load, removed upon rehydration
 // Ensures correct CSS for image variants is applied
 const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
   const variantRule = ({ width, height, aspectRatio }) => {
