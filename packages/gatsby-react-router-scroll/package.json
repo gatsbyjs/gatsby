@@ -14,7 +14,8 @@
     "@babel/core": "^7.10.3",
     "babel-plugin-dev-expression": "^0.2.2",
     "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "cross-env": "^5.2.1",
+    "history": "^4.7.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll#readme",
   "keywords": [
