@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 
 import EvaluationCell from "./evaluation-cell"
-import { h4, h3 } from "../../utils/styles/global"
+import { h4 } from "../../utils/styles/global"
 
 const legendTableCaptionStyle = {
   fontWeight: `body`,
