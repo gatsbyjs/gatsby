@@ -515,79 +515,79 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result).not.toEqual(result3)
     })
 
-    // Uses 'generateBase64()` directly to avoid `base64()` caching affecting results.
-    it(`should have configurable width (base64Width)`, async () => {
-      const result = await generateBase64({
-        file,
-        args: { base64Width: 42 },
+    describe(`base64Width option`, () => {
+      // Uses 'generateBase64()` directly to avoid `base64()` caching affecting results.
+      it(`should support a configurable width`, async () => {
+        const result = await generateBase64({
+          file,
+          args: { base64Width: 42 },
+        })
+
+        expect(result.width).toEqual(42)
       })
 
-      expect(result.width).toEqual(42)
+      it(`should support a configurable default width`, async () => {
+        setPluginOptions({ base64Width: 32 })
+
+        const result = await generateBase64({
+          file,
+          args,
+        })
+
+        expect(result.width).toEqual(32)
+        setPluginOptions(getPluginOptionsDefaults())
+      })
+
+      it(`should prioritize a configurable width via arg over a configured default width`, async () => {
+        setPluginOptions({ base64Width: 32 })
+
+        const result = await generateBase64({
+          file,
+          args: { base64Width: 42 },
+        })
+
+        expect(result.width).toEqual(42)
+        setPluginOptions(getPluginOptionsDefaults())
+      })
     })
 
-    it(`should support a different image format (toFormatBase64)`, async () => {
-      const result = await generateBase64({
-        file,
-        args: { toFormatBase64: `webp` },
+    describe(`toFormatBase64 & forceBase64Format options`, () => {
+      it(`should support a different image format for base64`, async () => {
+        const result = await generateBase64({
+          file,
+          args: { toFormatBase64: `webp` },
+        })
+
+        expect(result.src).toEqual(
+          expect.stringMatching(/^data:image\/webp;base64/)
+        )
       })
 
-      expect(result.src).toEqual(
-        expect.stringMatching(/^data:image\/webp;base64/)
-      )
-    })
+      it(`should support a configurable default base64 image format`, async () => {
+        setPluginOptions({ forceBase64Format: `webp` })
+        const result = await generateBase64({
+          file,
+          args,
+        })
 
-    // Testing similar base64 functionality, but via `gatsby-config.js` settings
-    // changing defaults instead of overrides via user args.
-    // Reset default options afterwards to avoid affecting other tests.
-    it(`should have configurable default width (base64Width)`, async () => {
-      setPluginOptions({ base64Width: 32 })
-
-      const result = await generateBase64({
-        file,
-        args,
+        expect(result.src).toEqual(
+          expect.stringMatching(/^data:image\/webp;base64/)
+        )
+        setPluginOptions(getPluginOptionsDefaults())
       })
 
-      expect(result.width).toEqual(32)
-      setPluginOptions(getPluginOptionsDefaults())
-    })
+      it(`should prioritize a different base64 image format via arg over a configured default base64 image format`, async () => {
+        setPluginOptions({ forceBase64Format: `png` })
+        const result = await generateBase64({
+          file,
+          args: { toFormatBase64: `webp` },
+        })
 
-    it(`should support a different default image format (forceBase64Format)`, async () => {
-      setPluginOptions({ forceBase64Format: `webp` })
-      const result = await generateBase64({
-        file,
-        args,
+        expect(result.src).toEqual(
+          expect.stringMatching(/^data:image\/webp;base64/)
+        )
+        setPluginOptions(getPluginOptionsDefaults())
       })
-
-      expect(result.src).toEqual(
-        expect.stringMatching(/^data:image\/webp;base64/)
-      )
-      setPluginOptions(getPluginOptionsDefaults())
-    })
-
-    // Args should have priority over configured defaults
-    it(`should have configurable width (base64Width) prioritized over default option`, async () => {
-      setPluginOptions({ base64Width: 32 })
-
-      const result = await generateBase64({
-        file,
-        args: { base64Width: 42 },
-      })
-
-      expect(result.width).toEqual(42)
-      setPluginOptions(getPluginOptionsDefaults())
-    })
-
-    it(`should support a different image format (forceBase64Format) prioritized over default option`, async () => {
-      setPluginOptions({ forceBase64Format: `png` })
-      const result = await generateBase64({
-        file,
-        args: { toFormatBase64: `webp` },
-      })
-
-      expect(result.src).toEqual(
-        expect.stringMatching(/^data:image\/webp;base64/)
-      )
-      setPluginOptions(getPluginOptionsDefaults())
     })
   })
 
