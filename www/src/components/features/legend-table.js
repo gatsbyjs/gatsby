@@ -2,6 +2,16 @@
 import { jsx } from "theme-ui"
 
 import EvaluationCell from "./evaluation-cell"
+import { h4, h3 } from "../../utils/styles/global"
+
+const legendTableCaptionStyle = {
+  fontWeight: `body`,
+  letterSpacing: `tracked`,
+  textTransform: `uppercase`,
+  textAlign: `left`,
+  marginBottom: `1.5rem`,
+  lineHeight: `1.5rem`,
+}
 
 const legendBallStyle = {
   float: `none`,
@@ -10,8 +20,8 @@ const legendBallStyle = {
 }
 
 const baseCellStyle = {
-  verticalAlign: `middle`,
-  textAlign: `center`,
+  verticalAlign: `baseline`,
+  textAlign: `left`,
   p: 3,
 }
 
@@ -36,6 +46,14 @@ const legendExplanationCellStyle = {
   borderColor: `ui.border`,
 }
 
+const legendHeaderStyle = {
+  ...baseCellStyle,
+  borderLeft: 1,
+  borderColor: `ui.border`,
+  ...h4,
+  m: 0,
+}
+
 const balls = [
   <td sx={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
     <EvaluationCell num="3" style={legendBallStyle} />
@@ -55,7 +73,10 @@ const legendText = [
   <td sx={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
     Excellent (fully available)
   </td>,
-  <td sx={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
+  <td
+    sx={legendExplanationCellStyle}
+    key={`legendExplanalegendBallCellStyletionCell-3`}
+  >
     Good (partially available, e.g. plugins)
   </td>,
   <td sx={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
@@ -68,42 +89,30 @@ const legendText = [
 
 export default function LegendTable() {
   return (
-    <table sx={{ ...legendTableContainerStyle, width: `100%` }}>
-      <caption
-        id="legend"
-        sx={{
-          fontWeight: `body`,
-          letterSpacing: `tracked`,
-          textTransform: `uppercase`,
-          textAlign: `left`,
-          marginBottom: `1.5rem`,
-          lineHeight: `1.5rem`,
-        }}
-      >
-        Legend
-      </caption>
+    <table sx={{ ...legendTableContainerStyle, width: `100%` }} id="legend">
+      <caption sx={{ ...legendTableCaptionStyle }}>Legend</caption>
       <tbody
         sx={{
           display: [`none`, null, `table`],
         }}
       >
-        <tr sx={{ display: `table-row` }}>
+        <tr>
           <th
-            sx={legendBallCellStyle}
+            sx={{ ...legendBallCellStyle, ...legendHeaderStyle }}
             key={`${legendBallCellStyle}-1`}
             scope="row"
           >
-            <h4 sx={{ m: 0 }}>Icon</h4>
+            Icon
           </th>
           {balls}
         </tr>
-        <tr sx={{ display: `table-row` }}>
+        <tr>
           <th
-            sx={legendExplanationCellStyle}
+            sx={{ ...legendExplanationCellStyle, ...legendHeaderStyle }}
             key={`legendExplanationCell-1`}
             scope="row"
           >
-            <h4 sx={{ m: 0 }}>Feature Availability</h4>
+            Feature Availability
           </th>
           {legendText}
         </tr>
@@ -116,14 +125,14 @@ export default function LegendTable() {
       >
         <tr>
           <th
-            sx={legendBallCellStyle}
+            sx={{ ...legendBallCellStyle, ...legendHeaderStyle }}
             key={`${legendBallCellStyle}-1`}
             scope="col"
           >
             <h4 sx={{ m: 0 }}>Icon</h4>
           </th>
           <th
-            sx={legendExplanationCellStyle}
+            sx={{ ...legendExplanationCellStyle, ...legendHeaderStyle }}
             key={`legendExplanationCell-1`}
             scope="col"
           >
@@ -131,7 +140,7 @@ export default function LegendTable() {
           </th>
         </tr>
         {[0, 1, 2, 3, 4].map(i => (
-          <tr sx={{ display: `table-row` }} key={i}>
+          <tr key={i}>
             {balls[i]}
             {legendText[i]}
           </tr>
