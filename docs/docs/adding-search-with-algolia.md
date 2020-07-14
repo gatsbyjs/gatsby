@@ -76,6 +76,8 @@ require("dotenv").config()
 
 Then add the configuration for `gatsby-plugin-algolia` to the list of `plugin`s in the `gatsby-config.js`. `dotenv` has made the configuration values available as keys in `process.env`.
 
+You're also adding `gatsby-plugin-styled-components` since this tutorial uses it for styling.
+
 ```js:title=gatsby-config.js
   plugins: [
     ... // your existing plugins here
@@ -198,6 +200,16 @@ Install these frameworks by running the following command:
 
 ```shell
 npm install react-instantsearch-dom algoliasearch styled-components gatsby-plugin-styled-components @styled-icons/fa-solid
+```
+
+Add the `gatsby-plugin-styled-components` to your `gatsby-config`:
+
+```js:title=gatsby-config.js
+  plugins: [
+    ... // your existing plugins here
+    `gatsby-plugin-styled-components`,
+  ],
+}
 ```
 
 ### Search box
