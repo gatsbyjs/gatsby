@@ -286,7 +286,9 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
 async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: pluginOptions.base64Width,
+    // Should already be set to base64Width by `fluid()`/`fixed()` methods
+    // calling `generateBase64()`. Useful in Jest tests still.
+    width: args.base64Width || pluginOptions.base64Width,
   })
   let pipeline
   try {
@@ -766,6 +768,7 @@ function toArray(buf) {
 exports.queueImageResizing = queueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
+exports.generateBase64 = generateBase64
 exports.traceSVG = traceSVG
 exports.sizes = fluid
 exports.resolutions = fixed

@@ -38,6 +38,7 @@ exports.setPluginOptions = opts => {
 }
 
 exports.getPluginOptions = () => pluginOptions
+exports.getPluginOptionsDefaults = () => pluginDefaults
 
 /**
  * Creates a transform object
@@ -70,7 +71,7 @@ exports.createTransformObject = args => {
 }
 
 exports.healOptions = (
-  { defaultQuality: quality },
+  { defaultQuality: quality, base64Width },
   args,
   fileExtension = ``,
   defaultArgs = {}
@@ -81,6 +82,7 @@ exports.healOptions = (
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
   options.toFormatBase64 = options.toFormatBase64.toLowerCase()
+  options.base64Width = options.base64Width || base64Width
 
   // when toFormat is not set we set it based on fileExtension
   if (options.toFormat === ``) {
