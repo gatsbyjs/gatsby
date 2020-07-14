@@ -249,7 +249,10 @@ export const pageQuery = graphql`
 `
 ```
 
-At the bottom of the file you'll notice the graphql query. This is how pages and templates in Gatsby v1 get their data. In v0, wrapper components had little control over what data they got. In v1, templates and pages can query for exactly the data they need.
+At the bottom of the file you'll notice the GraphQL query. This is how pages and
+templates in Gatsby v1 get their data. In v0, wrapper components had little
+control over what data they got. In v1, templates and pages can query for
+exactly the data they need.
 
 There will be a more in-depth tutorial and GraphQL-specific documentation soon but in the meantime, check out https://graphql.org/ and play around on Gatsby's built-in GraphQL IDE (Graph_i_QL) which can be reached when you start the development server.
 

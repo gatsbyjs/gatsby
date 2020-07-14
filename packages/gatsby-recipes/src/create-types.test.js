@@ -4,6 +4,15 @@ test(`create-types`, () => {
   const result = createTypes()
   expect(result.mutationTypes).toMatchInlineSnapshot(`
     Object {
+      "createDirectory": Object {
+        "args": Object {
+          "directory": Object {
+            "type": "DirectoryInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
+      },
       "createFile": Object {
         "args": Object {
           "file": Object {
@@ -12,6 +21,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "File",
+      },
+      "createGatsbyPage": Object {
+        "args": Object {
+          "gatsbyPage": Object {
+            "type": "GatsbyPageInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
       },
       "createGatsbyPlugin": Object {
         "args": Object {
@@ -67,6 +85,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "NPMScript",
       },
+      "destroyDirectory": Object {
+        "args": Object {
+          "directory": Object {
+            "type": "DirectoryInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
+      },
       "destroyFile": Object {
         "args": Object {
           "file": Object {
@@ -75,6 +102,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "File",
+      },
+      "destroyGatsbyPage": Object {
+        "args": Object {
+          "gatsbyPage": Object {
+            "type": "GatsbyPageInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
       },
       "destroyGatsbyPlugin": Object {
         "args": Object {
@@ -130,6 +166,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "NPMScript",
       },
+      "updateDirectory": Object {
+        "args": Object {
+          "directory": Object {
+            "type": "DirectoryInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
+      },
       "updateFile": Object {
         "args": Object {
           "file": Object {
@@ -138,6 +183,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "File",
+      },
+      "updateGatsbyPage": Object {
+        "args": Object {
+          "gatsbyPage": Object {
+            "type": "GatsbyPageInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
       },
       "updateGatsbyPlugin": Object {
         "args": Object {
@@ -197,6 +251,10 @@ test(`create-types`, () => {
   `)
   expect(result.queryTypes).toMatchInlineSnapshot(`
     Object {
+      "allGatsbyPage": Object {
+        "resolve": [Function],
+        "type": "GatsbyPageConnection",
+      },
       "allGatsbyPlugin": Object {
         "resolve": [Function],
         "type": "GatsbyPluginConnection",
@@ -213,6 +271,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "NPMScriptConnection",
       },
+      "directory": Object {
+        "args": Object {
+          "id": Object {
+            "type": "String",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
+      },
       "file": Object {
         "args": Object {
           "id": Object {
@@ -221,6 +288,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "File",
+      },
+      "gatsbyPage": Object {
+        "args": Object {
+          "id": Object {
+            "type": "String",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
       },
       "gatsbyPlugin": Object {
         "args": Object {

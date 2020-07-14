@@ -155,6 +155,66 @@ Note that you don't need to explicitly provide the Node interface fields (`id`, 
 
 > If you wonder about the exclamation marks - those allow [specifying nullability](https://graphql.org/learn/schema/#lists-and-non-null) in GraphQL, i.e. if a field value is allowed to be `null` or not.
 
+#### Defining media types
+
+You can specify the media types handled by a node type using the `@mimeTypes` extension:
+
+```graphql
+type Markdown implements Node
+  @mimeTypes(types: ["text/markdown", "text/x-markdown"]) {
+  id: ID!
+}
+```
+
+The types passed in are used to determine child relations of the node.
+
+#### Defining child relations
+
+The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` or `children[MyType]` as a field on the parent.
+
+The `types` argument takes an array of strings and determines what node types the node is a child of:
+
+```graphql
+# Adds `childMdx` as a field of `File` and `Markdown` nodes
+type Mdx implements Node @childOf(types: ["File", "Markdown"]) {
+  id: ID!
+}
+```
+
+The `mimeTypes` argument takes an array of strings and determines what media types the node is a child of:
+
+```graphql
+# Adds `childMdx` as a child of any node type with the `@mimeTypes` set to "text/markdown" or "text/x-markdown"
+type Mdx implements Node
+  @childOf(mimeTypes: ["text/markdown", "text/x-markdown"]) {
+  id: ID!
+}
+```
+
+The `mimeTypes` and `types` arguments can be combined as follows:
+
+```graphql
+# Adds `childMdx` as a child to `File` nodes *and* nodes with `@mimeTypes` set to "text/markdown" or "text/x-markdown"
+type Mdx implements Node
+  @childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
+  id: ID!
+}
+```
+
+If `many: true` is set, then instead of creating a single child field on the parent, it will create multiple:
+
+```graphql
+# Adds `childMdx1` with type `Mdx1` to `File`.
+type Mdx1 implements Node @childOf(types: ["File"]) {
+  id: ID!
+}
+
+# Adds `childrenMdx2` with type `[Mdx2]` as a field of `File`.
+type Mdx2 implements Node @childOf(types: ["File"], many: true) {
+  id: ID!
+}
+```
+
 #### Nested types
 
 So far, the example project has only been dealing with scalar values (`String` and `Date`; GraphQL also knows `ID`, `Int`, `Float`, `Boolean` and `JSON`). Fields can however also contain complex object values. To target those fields in GraphQL SDL, you can provide a full type definition for the nested type, which can be arbitrarily named (as long as the name is unique in the schema). In the example project, the `frontmatter` field on the `MarkdownRemark` node type is a good example. Say you want to ensure that `frontmatter.tags` will always be an array of strings.
@@ -301,7 +361,12 @@ type AuthorJson implements Node {
 
 You provide a `@link` directive on a field and Gatsby will internally add a resolver that is quite similar to the one written manually above. If no argument is provided, Gatsby will use the `id` field as the foreign-key, otherwise the foreign-key has to be provided with the `by` argument. The optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`. In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
 
-> Note that when using `createTypes` to fix type inference for a foreign-key field created by a plugin, the underlying data will probably live on a field with a `___NODE` suffix. Use the `from` argument to point the `link` extension to the correct field name. For example: `author: [AuthorJson] @link(from: "author___NODE")`.
+Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/schema-customization/#createresolvers-api).
+
+> Note that when using `createTypes` to fix type inference for a foreign-key field
+> created by a plugin, the underlying data will probably live on a field with
+> a `___NODE` suffix. Use the `from` argument to point the `link` extension to
+> the correct field name. For example: `author: [AuthorJson] @link(from: "author___NODE")`.
 
 #### Extensions and directives
 
@@ -441,7 +506,9 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-This approach becomes a lot more powerful when plugins provide custom field extensions. A _very_ basic markdown transformer plugin could for example provide an extension to convert markdown strings into html:
+This approach becomes a lot more powerful when plugins provide custom field
+extensions. A _very_ basic markdown transformer plugin could for example provide
+an extension to convert markdown strings into HTML:
 
 ```js:title=gatsby-transformer-basic-md/src/gatsby-node.js
 const remark = require(`remark`)
@@ -522,7 +589,7 @@ extend(options, prevFieldConfig) {
 
 If multiple field extensions are added to a field, resolvers are processed in this order: first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field extension resolvers execute from left to right.
 
-Finally, note that in order to get the current fieldValue, you use `context.defaultFieldResolver`.
+Finally, note that in order to get the current `fieldValue`, you use `context.defaultFieldResolver`.
 
 ## createResolvers API
 

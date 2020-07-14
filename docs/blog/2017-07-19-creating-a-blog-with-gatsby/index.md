@@ -45,7 +45,7 @@ For this particular blog post, you will make a single page app-like feel (withou
 
 with the following command:
 
-```bash
+```shell
 yarn add gatsby-plugin-catch-links gatsby-plugin-react-helmet
 ```
 
@@ -73,7 +73,7 @@ Source plugins create _nodes_ which can then be transformed into a usable format
 
 Since the bulk of the blog's content and each article will be authored in Markdown, let's add that [`gatsby-source-filesystem`][gatsby-source-filesystem] plugin. Similarly to the previous step, install the plugin and then inject into your `gatsby-config.js`, like so:
 
-```bash
+```shell
 yarn add gatsby-source-filesystem
 ```
 
@@ -105,11 +105,16 @@ As mentioned, a transformer plugin takes some underlying data format that is not
 You only need one transformer plugin (for Markdown), so let's get that installed.
 
 - [gatsby-transformer-remark][gatsby-transformer-remark]
-  - Uses the [remark][remark] Markdown parser to transform .md files on disk into HTML; additionally, this transformer can optionally take plugins to further extend functionality--e.g. add syntax highlighting with `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative files specified in markdown, `gatsby-remark-images` to compress images and add responsive images with `srcset`, etc.
+  - Uses the [remark][remark] Markdown parser to transform `.md` files on disk
+    into HTML; additionally, this transformer can optionally take plugins to
+    further extend functionality--e.g. add syntax highlighting with
+    `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative
+    files specified in markdown, `gatsby-remark-images` to compress images and
+    add responsive images with `srcset`, etc.
 
 The process should be familiar by now, install and then add to config.
 
-```bash
+```shell
 yarn add gatsby-transformer-remark
 ```
 

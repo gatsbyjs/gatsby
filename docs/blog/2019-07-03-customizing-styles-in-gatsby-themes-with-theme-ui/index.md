@@ -12,7 +12,13 @@ With Gatsby themes we want to make the experience of building a site as flexible
 
 ## Say hello to our official Gatsby themes
 
-Today, we're releasing two official themes: a blog theme inspired by Dan Abromov's [overreacted.io][], and our notes theme, which is intended for freeform, non-linear content and inspired by Tom Critchlow's concept of a _[Digital Garden][]_. Both themes include their own styles so that you can build and publish a blog without starting from scratch. In order to make these themes truly _themeable_, the values used for typography, color, layout, and other design tokens can be customized by editing part or all of a `theme` configuration object. This also means you can create and publish your own theme based on the official one, with custom typography and colors, by editing an object instead of recreating entire components.
+Today, we're releasing two official themes: a blog theme inspired by Dan Abramov's [overreacted.io][], and our notes theme,
+which is intended for freeform, non-linear content and inspired by Tom Critchlow's concept of a _[Digital Garden][]_.
+Both themes include their own styles so that you can build and publish a blog without starting from scratch.
+In order to make these themes truly _themeable_, the values used for typography, color, layout, and other design tokens
+can be customized by editing part or all of a `theme` configuration object.
+This also means you can create and publish your own theme based on the official one,
+with custom typography and colors, by editing an object instead of recreating entire components.
 
 For sites that have multiple themes installed, and to help ensure a consistent look and feel, you can choose which theme's styles take precedence based on their order in your Gatsby configuration. The styles provided by each theme are only applied to the pages it generates, giving you complete control of your site's styles.
 

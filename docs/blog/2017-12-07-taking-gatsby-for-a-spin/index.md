@@ -23,7 +23,7 @@ GatsbyJS is based on React which means that you'll be writing almost everything 
 
 Gatsby was my first introduction to [GraphQL](https://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph_i_QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
 
-![Screenshot of GraphiQl](./grahiql_screenshot.png "GraphiQL")
+![Screenshot of GraphiQL](./grahiql_screenshot.png "GraphiQL")
 
 ### Progressive Web App and PRPL Pattern (Blazing fast)
 
@@ -45,7 +45,7 @@ Some other thoughts I had while working with Gatsby:
 
 ### It's fast
 
-Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work miracles. I tried browsing the [list of sites made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) with network throttling set to 'slow 3g' in Google Chrome and the performance of these sites is still impressive.
+Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work miracles. I tried browsing the [list of sites made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) with network throttling set to 'slow 3G' in Google Chrome and the performance of these sites is still impressive.
 
 ### GraphQL is amazing
 
@@ -103,4 +103,4 @@ You can use anything to style your Gatsby site; CSS, SCSS, Styled Components, CS
 
 I like Gatsby and I like the ideas that it promotes. The sites created with Gatsby are blazing fast, as promised. The development environment is one big party and GraphQL makes me rethink my life. I am really looking forward to develop more sites with Gatsby and I'm hoping to find an opportunity to replace a traditional WordPress install with a Gatsby site that pulls in the WP data. When that time comes, I'll report back of course.
 
-If you have any questions based on this post, don't hesitate to contact me on [Twitter](http://twitter.com/ardennl) or via [mail](mailto:a.de.raaij@gmail.com). Thanks for reading!
+If you have any questions based on this post, don't hesitate to contact me on [Twitter](https://twitter.com/ardennl) or via [mail](mailto:a.de.raaij@gmail.com). Thanks for reading!

@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.8...gatsby-plugin-preact@4.0.9) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.7...gatsby-plugin-preact@4.0.8) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.6...gatsby-plugin-preact@4.0.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.5...gatsby-plugin-preact@4.0.6) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.4...gatsby-plugin-preact@4.0.5) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.3...gatsby-plugin-preact@4.0.4) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.2...gatsby-plugin-preact@4.0.3) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.1...gatsby-plugin-preact@4.0.2) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [4.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.0...gatsby-plugin-preact@4.0.1) (2020-06-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-preact:** add preact to framework bundle ([#24154](https://github.com/gatsbyjs/gatsby/issues/24154)) ([0772801](https://github.com/gatsbyjs/gatsby/commit/0772801))
+
 # [4.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@3.3.2...gatsby-plugin-preact@4.0.0) (2020-05-20)
 
 ### Features

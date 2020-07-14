@@ -71,6 +71,17 @@ If you're following closely you may have already seen [a blog post by Mikhail No
 
 ## The Future
 
-There are a number of directions we can go from here to give a better user experience to developing and using themes for experienced Gatsby contributors and new users alike. Building out potential UX improvements to shadowing for more complex multi-theme authoring use cases, defining patterns for sharing design tokens and data abstractions across themes, and building a cohesive set of themable components for a set of official Gatsby themes are all directions you may see us together with the community work on in the future.
+There are a number of directions we can go from here to give a better user
+experience to developing and using themes for experienced Gatsby contributors
+and new users alike. Building out potential UX improvements to shadowing for
+more complex multi-theme authoring use cases, defining patterns for sharing
+design tokens and data abstractions across themes, and building a cohesive set
+of themeable components for a set of official Gatsby themes are all directions
+you may see us together with the community work on in the future.
 
-That's a peek inside where themes is going. Get started building your own themes today and let us know what you build! Be sure to check back in on the Gatsby blog this month as we have theming related posts from [@jlengstorf](https://twitter.com/jlengstorf), [@4lpine](https://twitter.com/4lpine), and [@jxnblk](https://twitter.com/jxnblk) coming shortly.
+That's a peek inside where themes is going. Get started building your own themes
+today and let us know what you build! Be sure to check back in on the Gatsby
+blog this month as we have theming related posts from
+[@jlengstorf](https://twitter.com/jlengstorf),
+[@4lpine](https://twitter.com/4lpine), and [@jxnblk](https://twitter.com/jxnblk)
+coming shortly.

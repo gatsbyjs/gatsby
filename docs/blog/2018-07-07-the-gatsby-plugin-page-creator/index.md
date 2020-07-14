@@ -37,7 +37,7 @@ If you need to designate another location for auto page creation, add another en
 
 ## Community reception
 
-![NPM stats for gatsby plugin page creator](npm-stats.png)
+![npm stats for gatsby plugin page creator](npm-stats.png)
 
 This plugin has by far been the most impactful open source contribution I have made to date. As of writing, the newly published Gatsby plugin has been [downloaded more than 50k+ times](https://npm-stat.com/charts.html?package=gatsby-plugin-page-creator&from=2018-06-01&to=2018-07-18) in less than a month!
 

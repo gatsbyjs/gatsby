@@ -29,7 +29,12 @@ When I stumbled onto Gatsby, I found the golden goose. I already worked with Rea
 
 Once settled on Gatsby, I started working on my personal website. Within 2 hours I wanted to prototype with different design elements because I found inspiration from [html5up](https://html5up.net/) templates. However I did not want to discard my work so far.
 
-I decided to make a new directory to store my outdated work, like a true digital hoarder. A few more hours passed and I found myself yarning for my original design choice because the new design was too complex. I knew this situation would occur again (sometimes I can be indecisive 😅) so I decided to build a small cli tool to switch between themes easily. But first I needed a name, and Jay seemed the most clever since I was working with Gatsby.
+I decided to make a new directory to store my outdated work, like a true digital
+hoarder. A few more hours passed and I found myself yearning for
+my original design choice because the new design was too complex. I knew this
+situation would occur again (sometimes I can be indecisive 😅) so I decided to build
+a small cli tool to switch between themes easily. But first I needed a name, and
+Jay seemed the most clever since I was working with Gatsby.
 
 As I was debugging code one day, I stumbled onto a feature request for a [theme system](https://github.com/gatsbyjs/gatsby/issues/2662). At that moment, I decided I was going to build a theme solution for the community. Five months later, Gatsby Manor was born.
 

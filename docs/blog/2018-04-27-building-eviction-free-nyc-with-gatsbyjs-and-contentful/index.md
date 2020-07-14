@@ -92,6 +92,14 @@ The best feature of Netlify is its ability to utilize build hooks. This allows u
 
 ## In Conclusion
 
-The technical process for building the site went by incredibly fast — this all came together in a little over a month! Despite the frenzied speed, we created a valuable new service that also acts as a launching pad for future feature development and refinement. **It’s already been used by over 1,000 people in the past few weeks!** We’re really excited for this site to grow and develop as tenants take advantage of this historic new right.
+The technical process for building the site went by incredibly fast — this all
+came together in a little over a month! Despite the frenzied speed, we created a
+valuable new service that also acts as a launching pad for future feature
+development and refinement. **It’s already been used by over 1,000 people in the
+past few weeks!** We’re really excited for this site to grow and develop as
+tenants take advantage of this historic new right.
 
-**Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org/) is open source! [Click here](https://github.com/JustFixNYC/eviction-free-nyc) to view the code on github.**
+**Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org/) is
+open source! [Click
+here](https://github.com/JustFixNYC/eviction-free-nyc) to view the code on
+GitHub.**

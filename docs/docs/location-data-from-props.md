@@ -4,7 +4,7 @@ title: Location Data from Props
 
 ## What is location data
 
-Sometimes it can be helpful to know exactly what your app's browser URL is at any given stage. Because Gatsby uses [@reach/router](https://github.com/reach/router) for [client-side](/docs/glossary#client-side) routing, the `location` prop is passed to any component and represents where the app is currently, where you'd like it to go, and other helpful information. The `location` object is never mutated but `reach@router` makes it helpful to determine when navigation happens. Here is a sample `props.location`:
+Sometimes it can be helpful to know exactly what your app's browser URL is at any given stage. Because Gatsby uses [@reach/router](https://github.com/reach/router) for [client-side](/docs/glossary#client-side) routing, the `location` prop is passed to any page component and represents where the app is currently, where you'd like it to go, and other helpful information. The `location` object is never mutated but `reach@router` makes it helpful to determine when navigation happens. Here is a sample `props.location`:
 
 ```js
 {

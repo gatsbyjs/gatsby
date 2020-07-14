@@ -73,15 +73,39 @@ Gatsby came with client side routing out of the box and an extensive API that yo
 
 ## What exactly am I looking at?
 
-First, if you navigate around my blog (or around this site!), you will notice that the browser doesn't fully re-render the site. Gatsby will generate a JSON file for each route, so the browser can request only that file and React.js will render only the appropriate components.
+First, if you navigate around my blog (or around this site!), you will notice
+that the browser doesn't fully re-render the site. Gatsby will generate a JSON
+file for each route, so the browser can request only that file and React.js will
+render only the appropriate components.
 
-(Previously to do this required a lot of customization -- I was using a technique called [pjax](https://github.com/kbariotis/kostasbariotis.com__ghost-theme/blob/master/src/js/app.js#L11) to create the same effect. While it looked the same, it was more hack-ish; Gatsby provides this out of the box)
+(Previously to do this required a lot of customization -- I was using a
+technique called
+[pjax](https://github.com/kbariotis/kostasbariotis.com__ghost-theme/blob/master/src/js/app.js#L11)
+to create the same effect. While it looked the same, it was more hack-ish;
+Gatsby provides this out of the box)
 
-Second, you can take a look at the [source code](https://github.com/kbariotis/kostasbariotis.com). Let me give you a sense of how this site is being generated. You can find all my blog posts and the main pages(`/`, `/about`, `/drafts`) of this site at [`/src/pages`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/pages). Common components can be found at [`/src/components`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/components). At [`/gatsby-node.js`](https://github.com/kbariotis/kostasbariotis.com/tree/master/gatsby-node.js) you can find the route it takes in order to render the site. First, it loads all posts using the GraphQL api which queries all `.md` files. Then it creates a page for each one, using the [`/src/templates/blog-post.js`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/templates/blog-post.js) template and before that it creates a page, with pagination, for all posts and tags again using the appropriate template file.
+Second, you can take a look at the
+[source code](https://github.com/kbariotis/kostasbariotis.com). Let me give you
+a sense of how this site is being generated. You can find all my blog posts and
+the main pages(`/`, `/about`, `/drafts`) of this site at
+[`/src/pages`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/pages).
+Common components can be found at
+[`/src/components`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/components).
+At
+[`/gatsby-node.js`](https://github.com/kbariotis/kostasbariotis.com/tree/master/gatsby-node.js)
+you can find the route it takes in order to render the site. First, it loads all
+posts using the GraphQL API which queries all `.md` files. Then it creates a
+page for each one, using the
+[`/src/templates/blog-post.js`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/templates/blog-post.js)
+template and before that it creates a page, with pagination, for all posts and
+tags again using the appropriate template file.
 
-During development, Gatsby will generate all of these in memory and fire up a development server that I can use to preview my site.
+During development, Gatsby will generate all of these in memory and fire up a
+development server that I can use to preview my site.
 
-You can try it yourself by cloning the [source code](https://github.com/kbariotis/kostasbariotis.com) and after installing dependencies, run:
+You can try it yourself by cloning the
+[source code](https://github.com/kbariotis/kostasbariotis.com) and after
+installing dependencies, run:
 
 - `npm run develop` to fire up the development server
 - `npm run build` to build the site (check the `/public` folder after it’s done)

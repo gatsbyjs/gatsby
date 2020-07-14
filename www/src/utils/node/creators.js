@@ -1,40 +1,26 @@
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
+const { getTemplate } = require(`../get-template`)
 
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type CreatorsYaml implements Node {
+      name: String!
+      type: String!
+      description: String!
+      location: String
+      website: String
+      github: String
+      image: File @fileByRelativePath
+      for_hire: Boolean
+      hiring: Boolean
+      portfolio: Boolean
+      fields: CreatorsYamlFields!
+    }
 
-  const creatorPageTemplate = path.resolve(
-    `src/templates/template-creator-details.js`
-  )
-
-  const { data, errors } = await graphql(`
-    query {
-      allCreatorsYaml {
-        nodes {
-          name
-          fields {
-            slug
-          }
-        }
-      }
+    type CreatorsYamlFields @dontInfer {
+      slug: String!
     }
   `)
-  if (errors) throw errors
-
-  data.allCreatorsYaml.nodes.forEach(node => {
-    if (!node.fields) return
-    if (!node.fields.slug) return
-    createPage({
-      path: `${node.fields.slug}`,
-      component: slash(creatorPageTemplate),
-      context: {
-        slug: node.fields.slug,
-        name: node.name,
-      },
-    })
-  })
 }
 
 exports.onCreateNode = ({ node, actions }) => {
@@ -58,4 +44,37 @@ exports.onCreateNode = ({ node, actions }) => {
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const creatorPageTemplate = getTemplate(`template-creator-details`)
+
+  const { data, errors } = await graphql(/* GraphQL */ `
+    query {
+      allCreatorsYaml {
+        nodes {
+          name
+          fields {
+            slug
+          }
+        }
+      }
+    }
+  `)
+  if (errors) throw errors
+
+  data.allCreatorsYaml.nodes.forEach(node => {
+    if (!node.fields) return
+    if (!node.fields.slug) return
+    createPage({
+      path: `${node.fields.slug}`,
+      component: creatorPageTemplate,
+      context: {
+        slug: node.fields.slug,
+        name: node.name,
+      },
+    })
+  })
 }

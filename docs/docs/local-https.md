@@ -130,9 +130,9 @@ You may find that you need a custom key and certificate file for HTTPS if you us
 
 If you need to use a custom HTTPS setup, you can pass the `--https`, `--key-file`, `--cert-file`, and `--ca-file` flags to `npm run develop`.
 
-- `--cert-file` [relative/absolute path to ssl certificate file]
-- `--key-file` [relative/absolute path to ssl key file]
-- `--ca-file` [relative/absolute path to ssl certificate authority file]
+- `--cert-file` [relative/absolute path to SSL certificate file]
+- `--key-file` [relative/absolute path to SSL key file]
+- `--ca-file` [relative/absolute path to SSL certificate authority file]
 
 ### Using `npm run develop`
 

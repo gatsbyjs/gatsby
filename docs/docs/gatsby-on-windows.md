@@ -58,7 +58,7 @@ If that still doesn't work, refer to the [`node-gyp` npm package homepage](https
 
 ## gatsby-plugin-sharp requires Node x64
 
-Some plugins which depend on native NPM dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
+Some plugins which depend on native npm dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
 
 ## gatsby-plugin-sharp requires libvips
 

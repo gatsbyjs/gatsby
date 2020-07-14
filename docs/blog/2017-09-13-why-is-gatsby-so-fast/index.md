@@ -58,7 +58,9 @@ Let's discuss two key website performance metrics that summarize the most import
 
 Let's dive into some tests I ran on webpagetest.org and see the Speed Index score for some well-known sites.
 
-Each test uses webpagetest's "Simple Testing" mode and the "Mobile - Regular 3G" test configuration. This loads a website from a real phone in Virginia USA (Motorola G gen 4) on a simulated 3G connection.
+Each test uses WebPagetest's "Simple Testing" mode and the "Mobile - Regular 3G"
+test configuration. This loads a website from a real phone in Virginia USA
+(Motorola G gen 4) on a simulated 3G connection.
 
 ![reactnext-gatsby-performance.022](reactnext-gatsby-performance.022.png)
 

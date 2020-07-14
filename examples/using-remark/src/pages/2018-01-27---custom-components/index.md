@@ -69,7 +69,7 @@ In order to display this component within a Markdown file, you'll need to add a 
 
 1.  Install `rehype-react` as a dependency
 
-    ```bash
+    ```shell
     # If you use Yarn
     yarn add rehype-react
 

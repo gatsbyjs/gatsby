@@ -188,9 +188,9 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
-### [Infrastructure As Code](/docs/glossary/infrastructure-as-code/)
+### [Infrastructure as Code](/docs/glossary/infrastructure-as-code/)
 
-Infrastructure As Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
+Infrastructure as Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
 
 ## J
 
@@ -212,7 +212,7 @@ JSX is an extension to JavaScript that allows developers to write HTML and custo
 
 ### Linting
 
-Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io/) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-jsx-plugin-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
+Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io/) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
 
 ## M
 
@@ -244,7 +244,7 @@ A program that lets you run [JavaScript](#javascript) on your computer. Gatsby i
 
 ### Package
 
-A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [NPM](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
+A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [npm](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
 
 ### Page
 
@@ -376,6 +376,6 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ### [Yarn](/docs/glossary/yarn/)
 
-A [package](#package) manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
+A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
 ## Z

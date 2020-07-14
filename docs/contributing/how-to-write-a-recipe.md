@@ -69,7 +69,7 @@ Prerequisites example:
 
 ### Directions
 
-The steps should list each part of the task in detail (omitting unrelated boilerplate or installation steps), and not skip or gloss over necessary details. Typically these steps are included with an ordered list. It's subjective whether to include a code snippet for each step, and will require your best judgement (ask for help in a PR if you're not sure). For some recipes, listing each individual step in text and including a single code snippet for the recipe makes sense to keep it short.
+The steps should list each part of the task in detail (omitting unrelated boilerplate or installation steps), and not skip or gloss over necessary details. Typically these steps are included with an ordered list. It's subjective whether to include a code snippet for each step, and will require your best judgment (ask for help in a PR if you're not sure). For some recipes, listing each individual step in text and including a single code snippet for the recipe makes sense to keep it short.
 
 If a recipe issue recommends a live example such as a CodeSandbox embed, the recipe steps are the best place to include it.
 

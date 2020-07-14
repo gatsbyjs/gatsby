@@ -15,7 +15,8 @@ I focused on the process, looking for ways to make site building more generic an
 
 - Content migration
 - Programmatic page creation in Gatsby
-- Manage styles with [`Typography.js`](http://kyleamathews.github.io/typography.js/)
+- Manage styles with
+  [`Typography.js`](https://kyleamathews.github.io/typography.js/)
 - Automatic pagination
 - Tag pages
 - Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
@@ -109,7 +110,11 @@ The display of the data is handled by a React component acting as a template. My
 
 ### Adding styles
 
-Now that the system displays the content, it's time to style it. I decided to go for the [`typography.js` route](/tutorial/part-two/#typographyjs). The approach is well documented and you can also see [previews of the themes online](http://kyleamathews.github.io/typography.js/).
+Now that the system displays the content, it's time to style it. I decided to go
+for the
+[`typography.js` route](/tutorial/part-two/#typographyjs).
+The approach is well documented and you can also see
+[previews of the themes online](https://kyleamathews.github.io/typography.js/).
 
 Steps were:
 
