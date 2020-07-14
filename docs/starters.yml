@@ -6954,3 +6954,27 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://github.com/MK-IT/gatsby-starter-essentials
+  repo: https://github.com/MK-IT/gatsby-starter-essentials
+  description: Gatsby default starter extended with tools to help you boost your development experience.
+  tags:
+    - Landing Page
+    - E-commerce
+    - Portfolio
+    - Blog
+    - Documentation
+    - SEO
+    - Linting
+    - Client-side App
+  features:
+    - 💪 Latest JS support
+    - 💎 ReactJS & PropTypes
+    - ⚡️ ESLint, Prettier, EditorConfig
+    - 🛠 `.env` configuration
+    - 📂 Clean folder structure
+    - 🚦 Pre-commit hooks
+    - 🤝 Commit message linting
+    - :🧗🏻‍♂️: Built-in `semver` automation
+    - 🚀 Production ready
+    - Many pre-installed plugins to help UX, SEO, analytics, bundling, and others
+    - Layout, Header, Footer, SEO components
