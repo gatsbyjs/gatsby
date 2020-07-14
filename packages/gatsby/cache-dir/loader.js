@@ -114,7 +114,11 @@ const doesConnectionSupportPrefetch = () => {
   return true
 }
 
-const toPageResources = (pageData, component = null) => {
+const toPageResources = (
+  pageData,
+  component = null,
+  staticQueryHashes = []
+) => {
   const page = {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
@@ -126,6 +130,7 @@ const toPageResources = (pageData, component = null) => {
     component,
     json: pageData.result,
     page,
+    staticQueryHashes,
   }
 }
 
@@ -145,13 +150,24 @@ export class BaseLoader {
     //   }
     // }
     this.pageDb = new Map()
-    this.staticQueryDb = new Map()
     this.inFlightDb = new Map()
+
+    this.staticQueryDb = new Map()
+
+    this.inFlightPromisesByUrlDb = new Map()
+
     this.pageDataDb = new Map()
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
     this.loadComponent = loadComponent
     setMatchPaths(matchPaths)
+  }
+
+  memoizedGet(url) {
+    if (!this.inFlightPromisesByUrlDb.has(url)) {
+      this.inFlightPromisesByUrlDb.set(url, doFetch(url, `GET`))
+    }
+    return this.inFlightPromisesByUrlDb.get(url)
   }
 
   setApiRunner(apiRunner) {
@@ -219,7 +235,11 @@ export class BaseLoader {
                 ? allData[0].webpackCompilationHash
                 : ``,
             })
-            pageResources = toPageResources(pageData, component)
+            pageResources = toPageResources(
+              pageData,
+              component,
+              staticQueryHashes
+            )
             finalResult.payload = pageResources
             emitter.emit(`onPostLoadPageResources`, {
               page: pageResources,
@@ -233,39 +253,27 @@ export class BaseLoader {
 
         const staticQueryBatchPromise = Promise.all(
           staticQueryHashes.map(staticQueryHash => {
-            console.log(
-              `${pagePath} needs a static query with hash ${staticQueryHash}`
-            )
-
-            // TODO: Get from cache
-
-            // TODO: Get in flight Promise
-
-            return doFetch(`/static/d/${staticQueryHash}.json`).then(req => {
-              const jsonPayload = JSON.parse(req.responseText)
-              console.log(
-                `Static query with hash ${staticQueryHash} was fetched`,
-                jsonPayload
-              )
-              // this.staticQueryDb.set(staticQueryHash, jsonPayload)
+            // Check for cache in case this static query result has already been loaded
+            if (this.staticQueryDb.has(staticQueryHash)) {
+              const jsonPayload = this.staticQueryDb.get(staticQueryHash)
               return { staticQueryHash, jsonPayload }
-            })
+            }
+
+            return this.memoizedGet(`/static/d/${staticQueryHash}.json`).then(
+              req => {
+                const jsonPayload = JSON.parse(req.responseText)
+                return { staticQueryHash, jsonPayload }
+              }
+            )
           })
         ).then(staticQueryResults => {
-          console.log({
-            staticQueryResults,
+          const staticQueryResultsMap = {}
+
+          staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
+            staticQueryResultsMap[staticQueryHash] = jsonPayload
+            this.staticQueryDb.set(staticQueryHash, jsonPayload)
           })
-          const staticQueryResultsMap = staticQueryResults.reduce(
-            (map, { staticQueryHash, jsonPayload }) => {
-              map[staticQueryHash] = jsonPayload
-              return map
-            },
-            {}
-          )
-          // emitter.emit(`onPostLoadStaticQueryResults`, {
-          //   staticQueryResultsMap,
-          // })
-          this.staticQueryDb.set(pagePath, staticQueryResultsMap)
+
           return staticQueryResultsMap
         })
 
@@ -296,9 +304,13 @@ export class BaseLoader {
   // returns undefined if loading page ran into errors
   loadPageSync(rawPath) {
     const pagePath = findPath(rawPath)
-    if (this.pageDb.has(pagePath) && this.staticQueryDb.has(pagePath)) {
+    if (this.pageDb.has(pagePath)) {
       const pageData = this.pageDb.get(pagePath).payload
-      const staticQueryData = this.staticQueryDb.get(pagePath)
+      const staticQueryData = {}
+
+      pageData.staticQueryHashes.forEach(hash => {
+        staticQueryData[hash] = this.staticQueryDb.get(hash)
+      })
       return {
         ...pageData,
         staticQueryData,

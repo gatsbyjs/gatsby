@@ -328,7 +328,12 @@ describe(`Dev loader`, () => {
 
       const expectation = await devLoader.loadPage(`/mypage/`)
       expect(expectation).toMatchSnapshot()
-      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
+      expect(Object.keys(expectation)).toEqual([
+        `component`,
+        `json`,
+        `page`,
+        `staticQueryResults`,
+      ])
       expect(devLoader.pageDb.get(`/mypage`)).toEqual(
         expect.objectContaining({
           payload: expectation,
