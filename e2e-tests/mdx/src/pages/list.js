@@ -4,7 +4,7 @@ import { graphql } from 'gatsby'
 const ListPage = ({ data }) => {
   const anotherPage = data.another.nodes[0]
   const blogPage = data.blog.nodes[0]
-  const aboutPage = data.blog.nodes[0]
+  const aboutPage = data.complex.nodes[0]
 
   return (
     <div>
@@ -27,7 +27,7 @@ export const query = graphql`
         slug
       }
     }
-    comples: allMdx(filter: {slug: {eq: "about"}}) {
+    complex: allMdx(filter: {slug: {eq: "about"}}) {
       nodes {
         slug
       }
