@@ -10,7 +10,7 @@ const ListPage = ({ data }) => {
 
 export const query = graphql`
 {
-    allMdx(filter: {slug: {eq: "src-pages-another"}}) {
+    allMdx(filter: {slug: {eq: "another"}}) {
       nodes {
         slug
       }

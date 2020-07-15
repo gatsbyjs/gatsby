@@ -137,27 +137,26 @@ module.exports = (
       frontmatter: { type: `MdxFrontmatter` },
       slug: {
         type: `String`,
-        async resolve(mdxNode) {
-          if (mdxNode.fileAbsolutePath) {
-            const absolutePath = mdxNode.fileAbsolutePath
-            let fileRelativePath = absolutePath.replace(
-              path.resolve(`.`) + `/`, // we need to get rid of the slash for slugification anyway
-              ``
+        async resolve(mdxNode, args, context) {
+          try{
+            const parentNode = context.nodeModel.findRootNodeAncestor(
+              mdxNode,
+              (node) => node.internal && node.internal.type === `File`
             )
-
+            let fileRelativePath = parentNode.relativePath
             const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
             for (const postfix of postfixesToRemove) {
               if (fileRelativePath.endsWith(postfix)) {
                 fileRelativePath = fileRelativePath.replace(postfix, ``)
               }
             }
-
             fileRelativePath = fileRelativePath.replace(/\//g, `-`)
-            return slugify(fileRelativePath)
-          }
+            return slugify(fileRelativePath)           
+          }catch{
           reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
             \nAs a result there will be no slug available.`)
           return null
+          }
         },
       },
       body: {
