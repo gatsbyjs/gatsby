@@ -15,7 +15,7 @@ const addInferredFields = ({
   typeComposer,
   exampleValue,
   typeMapping,
-  parentSpan
+  parentSpan,
 }) => {
   const config = getInferenceConfig({
     typeComposer,
@@ -23,8 +23,8 @@ const addInferredFields = ({
       shouldAddFields: true,
       shouldAddDefaultResolvers: typeComposer.hasExtension(`infer`)
         ? false
-        : true
-    }
+        : true,
+    },
   })
   addInferredFieldsImpl({
     schemaComposer,
@@ -33,12 +33,12 @@ const addInferredFields = ({
     prefix: typeComposer.getTypeName(),
     unsanitizedFieldPath: [typeComposer.getTypeName()],
     typeMapping,
-    config
+    config,
   })
 }
 
 module.exports = {
-  addInferredFields
+  addInferredFields,
 }
 
 const addInferredFieldsImpl = ({
@@ -48,7 +48,7 @@ const addInferredFieldsImpl = ({
   typeMapping,
   prefix,
   unsanitizedFieldPath,
-  config
+  config,
 }) => {
   const fields = []
   Object.keys(exampleObject).forEach(unsanitizedKey => {
@@ -56,7 +56,7 @@ const addInferredFieldsImpl = ({
     fields.push({
       key,
       unsanitizedKey,
-      exampleValue: exampleObject[unsanitizedKey]
+      exampleValue: exampleObject[unsanitizedKey],
     })
   })
 
@@ -85,7 +85,7 @@ const addInferredFieldsImpl = ({
       prefix,
       unsanitizedFieldPath,
       typeMapping,
-      config
+      config,
     })
 
     if (!fieldConfig) return
@@ -146,7 +146,7 @@ const getFieldConfig = ({
   unsanitizedKey,
   unsanitizedFieldPath,
   typeMapping,
-  config
+  config,
 }) => {
   const selector = `${prefix}.${key}`
   unsanitizedFieldPath.push(unsanitizedKey)
@@ -167,7 +167,7 @@ const getFieldConfig = ({
     fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
       value: exampleValue,
-      key: unsanitizedKey
+      key: unsanitizedKey,
     })
     arrays = arrays + (value.multiple ? 1 : 0)
   } else {
@@ -180,7 +180,7 @@ const getFieldConfig = ({
       unsanitizedFieldPath,
       typeMapping,
       config,
-      arrays
+      arrays,
     })
   }
 
@@ -193,8 +193,8 @@ const getFieldConfig = ({
       ...fieldConfig,
       extensions: {
         ...(fieldConfig.extensions || {}),
-        proxy: { from: unsanitizedKey }
-      }
+        proxy: { from: unsanitizedKey },
+      },
     }
   }
 
@@ -236,8 +236,8 @@ const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
   return {
     type,
     extensions: {
-      link: { by: path.join(`.`) || `id` }
-    }
+      link: { by: path.join(`.`) || `id` },
+    },
   }
 }
 
@@ -245,7 +245,7 @@ const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
 const getFieldConfigFromFieldNameConvention = ({
   schemaComposer,
   value,
-  key
+  key,
 }) => {
   const path = key.split(`___NODE___`)[1]
   // Allow linking by nested fields, e.g. `author___NODE___contact___email`
@@ -287,8 +287,8 @@ const getFieldConfigFromFieldNameConvention = ({
   return {
     type,
     extensions: {
-      link: { by: foreignKey || `id`, from: key }
-    }
+      link: { by: foreignKey || `id`, from: key },
+    },
   }
 }
 
@@ -301,7 +301,7 @@ const getSimpleFieldConfig = ({
   unsanitizedFieldPath,
   typeMapping,
   config,
-  arrays
+  arrays,
 }) => {
   switch (typeof value) {
     case `boolean`:
@@ -367,7 +367,7 @@ const getSimpleFieldConfig = ({
             )
             addDerivedType({
               typeComposer,
-              derivedTypeName: fieldTypeComposer.getTypeName()
+              derivedTypeName: fieldTypeComposer.getTypeName(),
             })
           }
         }
@@ -376,7 +376,7 @@ const getSimpleFieldConfig = ({
         // with directive/extension, or inherited from the parent type.
         const inferenceConfig = getInferenceConfig({
           typeComposer: fieldTypeComposer,
-          defaults: config
+          defaults: config,
         })
 
         return {
@@ -387,8 +387,8 @@ const getSimpleFieldConfig = ({
             typeMapping,
             prefix: selector,
             unsanitizedFieldPath,
-            config: inferenceConfig
-          })
+            config: inferenceConfig,
+          }),
         }
       }
   }
@@ -397,10 +397,7 @@ const getSimpleFieldConfig = ({
 
 const createTypeName = selector => {
   const keys = selector.split(`.`)
-  const suffix = keys
-    .slice(1)
-    .map(_.upperFirst)
-    .join(``)
+  const suffix = keys.slice(1).map(_.upperFirst).join(``)
   return `${keys[0]}${suffix}`
 }
 
@@ -441,6 +438,6 @@ const getInferenceConfig = ({ typeComposer, defaults }) => {
       : defaults.shouldAddFields,
     shouldAddDefaultResolvers: typeComposer.hasExtension(`addDefaultResolvers`)
       ? typeComposer.getExtension(`addDefaultResolvers`)
-      : defaults.shouldAddDefaultResolvers
+      : defaults.shouldAddDefaultResolvers,
   }
 }
