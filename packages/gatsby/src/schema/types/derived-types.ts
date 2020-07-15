@@ -51,7 +51,7 @@ const getDerivedTypes = ({
   typeComposer,
 }: {
   typeComposer: AllTypeComposer
-}): any => typeComposer.getExtension(`derivedTypes`) || new Set()
+}): Set<string> => typeComposer.getExtension(`derivedTypes`) || new Set()
 
 export const clearDerivedTypes = ({
   schemaComposer,
