@@ -149,7 +149,6 @@ module.exports = (
                 fileRelativePath = fileRelativePath.replace(postfix, ``)
               }
             }
-            fileRelativePath = fileRelativePath.replace(/\//g, `-`)
             return slugify(fileRelativePath)
           } catch {
             reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
