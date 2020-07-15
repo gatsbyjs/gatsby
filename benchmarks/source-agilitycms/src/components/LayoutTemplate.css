@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,600&display=swap');
+
+:root {
+    --gray: #717171;
+    --gray-light: #cccccc;
+    --gray-dark: #494949;
+    --primary: #584b9f;
+    --secondary: #ffcd2d;
+  }
+
+/* =================================
+  Resets
+==================================== */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* =================================
+  Base Element Styles
+==================================== */
+
+* {
+	box-sizing: border-box;
+}
+html, body { height: 100%; }
+body {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--gray);
+	margin: 0;
+    font-size: 15px;
+    font-family: 'Nunito';
+}
+
+a {
+	text-decoration: none;
+	color: var(--primary);
+	cursor: pointer;
+}
+
+img { max-width: 100%; }
+p  { margin-bottom: 10px; }
+h1,h2,h3,h4,h5.h6 { font-family: 'Poppins'; font-weight: bold; color: var(--gray-dark); }
+h1 { font-size: 2.5em; line-height: 1.25em; margin-bottom: 30px; }
+h2 { font-size: 2em; line-height: 1.25em; margin-bottom: 25px; }
+h3 { font-size: 1.75em; line-height: 1.2em; margin-bottom: 20px; }
+h4 { font-size: 1.25em; line-height: .9em; margin-bottom: 15px; }
+h5 { font-size: 1em; line-height: .85em; margin-bottom: 10px; }
+
+
+/* ---- Re-usable Elements ---- */
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.row {
+  max-width: 1200px;
+  padding: 0 15px;
+}
+.content-section {
+  padding: 30px 0;
+}
+.flex-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.body-columns {
+  padding: 30px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.body-columns .main-column {
+  width: 70%;
+}
+.body-columns .side-column {
+  width: 25%;
+}
+/* Buttons */
+.btn {
+  color: #fff;
+  font-weight: 600;
+  background-color: var(--primary);
+  border-radius: 3px;
+  border: none;
+  border-bottom: 2px solid var(--primary-dark);
+  text-align: center;
+  cursor: pointer;
+  padding: 8px 15px;
+  font-size: .90em;
+  font-family: 'Poppins';
+}
+.btn:hover {
+  background-color: var(--primary-light);
+  color: #fff;
+}
+.btn i {
+  margin-right: 3px;
+}
+.btn-sec {
+  background-color: var(--gray-light);
+  color: var(--gray-dark);
+  border-bottom: 2px solid var(--gray-dark);
+}
+.btn-sec:hover {
+  background-color: #E5E5E5;
+  color: #110F24;
+}
+.btn-sm {
+  padding: 6px 10px;
+  font-size: .85em;
+}
+.btn-md {
+  padding: 8px 15px;
+  font-size: .90em;
+}
+.btn-lg {
+  padding: 15px 30px;
+  font-size: 1.1em;
+  font-weight: 800;
+}
+.btn-full {
+  margin-top: 20px;
+  width: 100%;
+}
+
+section {
+  margin-bottom: 1rem;
+}
+
+/* Medium Break */
+@media (max-width: 900px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .flex-items {
+    flex-wrap: wrap;
+  }
+
+}

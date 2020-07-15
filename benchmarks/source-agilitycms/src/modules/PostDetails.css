@@ -1,0 +1,14 @@
+.post-details {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.post-details .post img{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.post-details .post .author {
+    font-weight: 600;
+}
