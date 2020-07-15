@@ -37,6 +37,7 @@ Gatsby also improved site security. “The great part about Gatsby is that there
 [Gatsby Themes](https://www.gatsbyjs.org/docs/themes/), powerful plugins that abstract configuration content into installable packages, were a key reason why Smith’s team chose Gatsby. Little Caesars uses two core themes across all their sites, one for marketing and one for e-commerce. “The marketing theme handles the banners, the ads, and the website content. That's all in one section,” says Smith. “Then we have the ordering theme, which is the place for us to define routing for the application, with a series of npm packages to pull in data.” What that's allowed us to do is easily install ordering (e-commerce) capability on any Gatsby website that we want: Just pass a set of configurations into the ordering theme and then the site just has all the online ordering capabilities built right in.”
 
 Using themes with packages also dramatically streamlines site updates across the company’s 20+ global websites. “When we launch a new site in a different country, we can do an npm install on the ordering theme. We pop in some configuration and translation files, and we’re mostly ready to go, which is really cool,” says Smith. “Going forward, we can release a new update to the ordering theme and simply bump up the version on each site when we’re ready. That portability of packages is a big benefit.”
+
 <CloudCallout>
   Sites built with Gatsby are fast no matter where they run. But when a Gatsby
   site runs on Gatsby Cloud, it can make the Kessel run in less than 12 parsecs!
