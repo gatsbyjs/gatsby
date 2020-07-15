@@ -136,7 +136,7 @@ module.exports = (
       fileAbsolutePath: { type: `String!` },
       frontmatter: { type: `MdxFrontmatter` },
       slug: {
-        type: `String!`,
+        type: `String`,
         async resolve(mdxNode) {
           if (mdxNode.fileAbsolutePath) {
             const absolutePath = mdxNode.fileAbsolutePath
