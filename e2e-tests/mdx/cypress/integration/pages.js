@@ -16,8 +16,13 @@ describe(`Pages`, () => {
         cy.getTestElement(`external`).contains(`Now an external import`)
     })
 
-    it (`generates slug`, () => {
+    it (`generates slug for mdx in pages dir`, () => {
         cy.visit(`/list`).waitForRouteChange()
-        cy.getTestElement(`slug`).contains(`another`)
+        cy.getTestElement(`mdx-slug`).contains(`another`)
+    })
+
+    it (`generates complex slug with md extension`, () => {
+        cy.visit(`/list`).waitForRouteChange()
+        cy.getTestElement(`md-slug`).contains(`my-blog`)
     })
 })
