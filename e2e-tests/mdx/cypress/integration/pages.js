@@ -30,4 +30,9 @@ describe(`Pages`, () => {
         cy.visit(`/list`).waitForRouteChange()
         cy.getTestElement(`complex-slug`).contains(`about`)
     })
+
+    it (`generates a slug with a slash`, () => {
+        cy.visit(`/list`).waitForRouteChange()
+        cy.getTestElement(`embed-slug`).contains(`about/embedded`)
+    })
 })
