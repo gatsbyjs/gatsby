@@ -2947,5 +2947,17 @@ Object {
     ],
     "vendor": "Gatsby Swag",
   },
+  "Shopify__Shop__undefined": Object {
+    "children": Array [],
+    "description": "",
+    "id": "Shopify__Shop__undefined",
+    "internal": Object {
+      "contentDigest": "7e8bd622d5376313766d087914010149",
+      "type": "ShopifyShop",
+    },
+    "moneyFormat": "",
+    "name": "",
+    "parent": "__SOURCE__",
+  },
 }
 `;
