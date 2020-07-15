@@ -144,12 +144,18 @@ module.exports = (
             )
             let fileRelativePath = nodeWithContext.relativePath
 
-            const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
-            for (const postfix of postfixesToRemove) {
-              if (fileRelativePath.endsWith(postfix)) {
-                fileRelativePath = fileRelativePath.replace(postfix, ``)
+            const resolvableExtensions = defaultOptions(pluginOptions)
+              .extensions
+
+            for (const extension of resolvableExtensions) {
+              if (fileRelativePath.endsWith(extension)) {
+                fileRelativePath = fileRelativePath.replace(extension, ``)
               }
             }
+            if (fileRelativePath.endsWith(`/index`)) {
+              fileRelativePath = fileRelativePath.replace(`/index`, ``)
+            }
+
             return slugify(fileRelativePath)
           } catch {
             reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
