@@ -16,9 +16,10 @@ import reporter from "gatsby-cli/lib/reporter"
 
 export const callRealApi = (event: IMutationAction, store?: Store): void => {
   assertStore(store)
-  const { type, payload } = event
+  const { type, payload, resolve } = event
   if (type in actions) {
-    store.dispatch(actions[type](...payload))
+    const action = actions[type](...payload)
+    resolve(store.dispatch(action))
   } else {
     reporter.log(`Could not dispatch unknown action "${type}`)
   }

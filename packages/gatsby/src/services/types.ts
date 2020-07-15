@@ -18,6 +18,7 @@ export interface IGroupedQueryIds {
 export interface IMutationAction {
   type: string
   payload: unknown[]
+  resolve: (result: unknown) => void
 }
 export interface IBuildContext {
   firstRun?: boolean

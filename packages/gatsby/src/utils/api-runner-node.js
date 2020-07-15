@@ -80,12 +80,14 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => (...args) => {
-  emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-    type,
-    payload: args,
+const deferredAction = type => (...args) =>
+  new Promise(resolve => {
+    emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+      type,
+      payload: args,
+      resolve,
+    })
   })
-}
 
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
