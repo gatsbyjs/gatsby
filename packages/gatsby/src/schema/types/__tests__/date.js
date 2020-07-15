@@ -4,7 +4,6 @@ const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { defaultResolver } = require(`../../resolvers`)
 import { isDate, looksLikeADate } from "../date"
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -16,15 +15,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -57,7 +56,7 @@ describe(`isDate`, () => {
     `2010-01-30T00:00:00.000Z`,
     `1970-01-01T00:00:00.000001Z`,
     `2012-04-01T00:00:00-05:00`,
-    `2012-11-12T00:00:00+01:00`,
+    `2012-11-12T00:00:00+01:00`
   ])(`should return true for valid ISO 8601: %s`, dateString => {
     expect(isDate(dateString)).toBeTruthy()
   })
@@ -79,7 +78,7 @@ describe(`isDate`, () => {
     `1970-01-01 00:00:00 Z`,
     `1970-01-01 000000 Z`,
     `1970-01-01 00:00 Z`,
-    `1970-01-01 00 Z`,
+    `1970-01-01 00 Z`
   ])(`should return true for ISO 8601 (no T, extra space): %s`, dateString => {
     expect(isDate(dateString)).toBeTruthy()
   })
@@ -131,7 +130,7 @@ describe(`isDate`, () => {
     {},
     ``,
     ` `,
-    `2012-04-01T00:basketball`,
+    `2012-04-01T00:basketball`
   ])(`should return false for invalid ISO 8601: %s`, dateString => {
     expect(isDate(dateString)).toBeFalsy()
   })
@@ -164,7 +163,7 @@ describe(`looksLikeADate`, () => {
     `2010-01-30T00:00:00.000Z`,
     `1970-01-01T00:00:00.000001Z`,
     `2012-04-01T00:00:00-05:00`,
-    `2012-11-12T00:00:00+01:00`,
+    `2012-11-12T00:00:00+01:00`
   ])(`should return true for valid ISO 8601: %s`, dateString => {
     expect(looksLikeADate(dateString)).toBeTruthy()
   })
@@ -186,7 +185,7 @@ describe(`looksLikeADate`, () => {
     `1970-01-01 00:00:00 Z`,
     `1970-01-01 000000 Z`,
     `1970-01-01 00:00 Z`,
-    `1970-01-01 00 Z`,
+    `1970-01-01 00 Z`
   ])(`should return true for ISO 8601 (no T, extra space): %s`, dateString => {
     expect(looksLikeADate(dateString)).toBeTruthy()
   })
@@ -214,7 +213,7 @@ describe(`looksLikeADate`, () => {
     `2010-01-01T23:60`,
     `2010-01-01T23:59:60`,
     `2010-01-40T23:60+00:00`,
-    `2010-01-40T23:59:60+00:00`,
+    `2010-01-40T23:59:60+00:00`
   ])(`should return true for some valid ISO 8601: %s`, dateString => {
     expect(looksLikeADate(dateString)).toBeTruthy()
   })
@@ -236,7 +235,7 @@ describe(`looksLikeADate`, () => {
     {},
     ``,
     ` `,
-    `2012-04-01T00:basketball`,
+    `2012-04-01T00:basketball`
   ])(`should return false for invalid ISO 8601: %s`, dateString => {
     expect(looksLikeADate(dateString)).toBeFalsy()
   })
@@ -302,8 +301,8 @@ describe(`dateResolver`, () => {
         invalidDate14: ``,
         invalidDate15: ` `,
         invalidDate16: `2012-04-01T00:basketball`,
-        defaultFormatDate: `2010-01-30T23:59:59.999-07:00`,
-      },
+        defaultFormatDate: `2010-01-30T23:59:59.999-07:00`
+      }
     ]
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
@@ -404,7 +403,7 @@ describe(`dateResolver`, () => {
     `2018-01-29T23:25:16.019345Z`,
     // Seems to not require nanosecond definition to not fail
     `2018-01-29T23:25:16.019345123+02:00`,
-    `2018-01-29T23:25:16.019345123Z`,
+    `2018-01-29T23:25:16.019345123Z`
   ])(`should return "Jan 29, 2018": %s`, async dateString => {
     const schema = await buildTestSchema()
     const fields = schema.getType(`Test`).getFields()
@@ -414,7 +413,7 @@ describe(`dateResolver`, () => {
         { formatString: `MMM DD, YYYY` },
         withResolverContext({}, schema),
         {
-          fieldName: `date`,
+          fieldName: `date`
         }
       )
     ).toEqual(`Jan 29, 2018`)
@@ -427,7 +426,7 @@ describe(`dateResolver`, () => {
     `2010-01-01T24:01`,
     `2010-01-01T23:60`,
     `2010-01-01T23:59:60`,
-    `2010-01-40T23:59:59.9999`,
+    `2010-01-40T23:59:59.9999`
     // Combine with above statement once we figure out why it passes
     // `2018-08-31T23:25:16.01234567899993+02:00`,
   ])(`should return "Invalid Date": %s`, async dateString => {
@@ -439,7 +438,7 @@ describe(`dateResolver`, () => {
         { formatString: `MMM DD, YYYY` },
         withResolverContext({}, schema),
         {
-          fieldName: `date`,
+          fieldName: `date`
         }
       )
     ).toEqual(`Invalid date`)

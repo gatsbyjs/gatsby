@@ -2,6 +2,29 @@ import moment, { MomentInput, unitOfTime, LocaleSpecifier } from "moment"
 import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
 import { oneLine } from "common-tags"
 
+interface IFormatDateArgs {
+  date?: Date
+  fromNow?: boolean
+  formatString?: string
+  difference?: unitOfTime.Diff
+  locale?: LocaleSpecifier
+}
+interface IDateResolverOption {
+  locale?: string
+  formatString?: string
+  fromNow?: string
+  difference?: string
+  from?: string
+  fromNode?: { type: string; defaultValue: boolean }
+}
+type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
+type DateResolver = (
+  source: any,
+  args: any,
+  context: any,
+  info: any
+) => Promise<null | string | number | (string | number)[]>
+
 const ISO_8601_FORMAT = [
   `YYYY`,
   `YYYY-MM`,
@@ -76,7 +99,7 @@ const ISO_8601_FORMAT = [
   `YYYY-[W]WW-E`,
   `YYYY[W]WWE`,
   `YYYY-DDDD`,
-  `YYYYDDDD`,
+  `YYYYDDDD`
 ]
 
 export const GraphQLDate = new GraphQLScalarType({
@@ -88,7 +111,7 @@ export const GraphQLDate = new GraphQLScalarType({
   parseValue: String,
   parseLiteral(ast): string | undefined {
     return ast.kind === Kind.STRING ? ast.value : undefined
-  },
+  }
 })
 
 const momentFormattingTokens = /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
@@ -107,7 +130,7 @@ const momentFormattingRegexes = {
   WW: `\\d{2}`,
   "[W]": `W`,
   ".": `\\.`,
-  Z: `(Z|[+-]\\d\\d(?::?\\d\\d)?)`,
+  Z: `(Z|[+-]\\d\\d(?::?\\d\\d)?)`
 }
 const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format => {
   const matchedFormat = format.match(momentFormattingTokens)
@@ -132,7 +155,7 @@ const ISO_8601_FORMAT_LENGTHS = [
       // we add count of +01 & +01:00
       return acc.concat([val.length, val.length + 3, val.length + 5])
     }, [])
-  ),
+  )
 ]
 
 // lets imagine these formats: YYYY-MM-DDTHH & YYYY-MM-DD HHmmss.SSSSSS Z
@@ -185,19 +208,12 @@ export function isDate(value: MomentInput): boolean {
   return typeof value !== `number` && momentDate.isValid()
 }
 
-interface IFormatDateArgs {
-  date?: Date
-  fromNow?: boolean
-  formatString?: string
-  difference?: unitOfTime.Diff
-  locale?: LocaleSpecifier
-}
 const formatDate = ({
   date,
   fromNow,
   difference,
   formatString,
-  locale = `en`,
+  locale = `en`
 }: IFormatDateArgs): string | number => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
@@ -219,22 +235,6 @@ const formatDate = ({
   return normalizedDate
 }
 
-interface IDateResolverOption {
-  locale?: string
-  formatString?: string
-  fromNow?: string
-  difference?: string
-  from?: string
-  fromNode?: { type: string; defaultValue: boolean }
-}
-type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
-type DateResolver = (
-  source: any,
-  args: any,
-  context: any,
-  info: any
-) => Promise<null | string | number | (string | number)[]>
-
 export const getDateResolver = (
   options: IDateResolverOption = {},
   fieldConfig: DateResolverFieldConfig
@@ -250,13 +250,13 @@ export const getDateResolver = (
         \`date(formatString: "YYYY MMMM DD")\`.
         See https://momentjs.com/docs/#/displaying/format/
         for documentation for different tokens.`,
-        defaultValue: formatString,
+        defaultValue: formatString
       },
       fromNow: {
         type: `Boolean`,
         description: oneLine`
         Returns a string generated with Moment.js' \`fromNow\` function`,
-        defaultValue: fromNow,
+        defaultValue: fromNow
       },
       difference: {
         type: `String`,
@@ -265,27 +265,27 @@ export const getDateResolver = (
         Defaults to "milliseconds" but you can also pass in as the
         measurement "years", "months", "weeks", "days", "hours", "minutes",
         and "seconds".`,
-        defaultValue: difference,
+        defaultValue: difference
       },
       locale: {
         type: `String`,
         description: oneLine`
         Configures the locale Moment.js will use to format the date.`,
-        defaultValue: locale,
-      },
+        defaultValue: locale
+      }
     },
     async resolve(source, args, context, info): ReturnType<DateResolver> {
       const resolver = fieldConfig.resolve || context.defaultFieldResolver
       const date = await resolver(source, args, context, {
         ...info,
         from: options.from || info.from,
-        fromNode: options.from ? options.fromNode : info.fromNode,
+        fromNode: options.from ? options.fromNode : info.fromNode
       })
       if (date == null) return null
 
       return Array.isArray(date)
         ? date.map(d => formatDate({ date: d, ...args }))
         : formatDate({ date, ...args })
-    },
+    }
   }
 }
