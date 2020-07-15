@@ -9,6 +9,7 @@ tags:
   - building-sites-faster
 ---
 ![Actor Rainn Wilson as a Little Caesars employee delivering two pizzas](./little-caesars-delivery.jpg)
+
 Starting from a single, family-owned restaurant in 1959, Little Caesars has grown into the third-largest pizza chain in the world. Today the company has stores in all 50 U.S. states, plus and 26 additional countries and territories. Little Caesars runs more than 20 websites to support all of those stores with marketing content and easy online pizza ordering.
 
 The company's existing site architecture, however, was far from streamlined, and this impeded both performance and development. The Little Caesars technical team decided that the best approach for providing an outstanding customer experience across all those different sites would be a unified ordering platform with scalability built in.
@@ -48,7 +49,9 @@ https://www.youtube.com/watch?v=vnLBmYCHjZI
 
 ## Delivering responsive web performance -- and more pizzas
 The new site was able to handle the post-ad traffic without a hiccup. “Traffic spiked immediately after the Super Bowl ad aired, and we saw a high number of simultaneous uses. I remember watching and seeing we had 3,000 simultaneous users, then 10,000, then a few seconds later it was 15,000 -- and we just didn't have to worry,” says Smith. “Because we built with Gatsby, we knew we had the performance to handle the traffic without even thinking about it.”
+
 ![landing page for Little Caesars](./landing-page-little-caesars.png)
+
 The infrastructure team was particularly impressed. “By using Gatsby, we were able to accommodate all of that traffic without having to scale the infrastructure at all when migrating from the old site to the new site,” says Smith.
 
 Little Caesars new Gatsby-based architecture turned out to be a gift that keeps on giving. “We had an emergency request from the international business leadership to upgrade our Canada site to the latest e-commerce package -- and they needed it in a week,” Smith says. “Luckily, the Canada website was on Gatsby 2.0 so a quick version bump to support themes and an install of our ordering themes, and Canada had a brand new e-commerce app in less than a week.”
