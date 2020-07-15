@@ -9,7 +9,7 @@ tags:
   - building-sites-faster
 ---
 
-![A group of people eating Little Caesars pizza in an office](./little-caesars-busted.jpg)
+![A group of people eating Little Caesars pizza in an office](./little-caesars-busted.png)
 
 Starting from a single, family-owned restaurant in 1959, Little Caesars has grown into the third-largest pizza chain in the world. Today the company has stores in all 50 U.S. states, plus and 26 additional countries and territories. Little Caesars runs more than 20 websites to support all of those stores with marketing content and easy online pizza ordering.
 
