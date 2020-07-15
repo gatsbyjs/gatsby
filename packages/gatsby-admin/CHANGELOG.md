@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.92](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.91...gatsby-admin@0.1.92) (2020-07-15)
+
+### Features
+
+- **gatsby-admin:** move to dropdown for plugin/theme actions ([#25598](https://github.com/gatsbyjs/gatsby/issues/25598)) ([9f84f11](https://github.com/gatsbyjs/gatsby/commit/9f84f11))
+
 ## [0.1.91](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.90...gatsby-admin@0.1.91) (2020-07-10)
 
 **Note:** Version bump only for package gatsby-admin

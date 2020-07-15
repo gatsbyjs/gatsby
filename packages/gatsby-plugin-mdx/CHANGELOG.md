@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.25...gatsby-plugin-mdx@1.2.26) (2020-07-15)
+
+### Performance Improvements
+
+- **gatsby-plugin-mdx:** improve babel attr sub-plugin of mdx ([#25677](https://github.com/gatsbyjs/gatsby/issues/25677)) ([f2c0bd0](https://github.com/gatsbyjs/gatsby/commit/f2c0bd0))
+
 ## [1.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.24...gatsby-plugin-mdx@1.2.25) (2020-07-09)
 
 ### Bug Fixes
