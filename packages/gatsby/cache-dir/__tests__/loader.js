@@ -308,8 +308,6 @@ describe(`Production loader`, () => {
 
       const expectation = await prodLoader.loadPage(`/mypage`)
 
-      console.log({ expectation })
-
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
@@ -317,10 +315,6 @@ describe(`Production loader`, () => {
         `page`,
         `staticQueryResults`,
       ])
-
-      console.log({
-        prodLoader: prodLoader.pageDb.get(`/mypage`),
-      })
 
       expect(prodLoader.pageDb.get(`/mypage`)).toEqual(
         expect.objectContaining({
