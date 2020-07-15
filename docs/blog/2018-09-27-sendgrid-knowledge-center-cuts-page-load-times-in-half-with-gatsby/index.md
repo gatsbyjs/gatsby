@@ -23,7 +23,7 @@ The UI/UX team did a lot of research about how people wanted to find information
 
 ## Reasons for using Gatsby
 
-Justin didn’t want to work in Jekyll as it wasn’t as familiar to him and having GraphQL out of the box was very enticing. The Gatsby docs were super helpful and thorough, especially on how to get started- even some of the non-developer designers could use it. But the reason Justin went with Gatsby for this project was the support for Markdown (as the team was already comfortable using it) and node APIs, the plugin support was deep, and the community was very active. Also, SendGrid is a React shop so it seemed like a no brainer to give Gatsby a try. The team also knew node and JS. Justin looked at the API and decided it would be a big improvement to what they had.
+Justin didn’t want to work in Jekyll as it wasn’t as familiar to him and having GraphQL out of the box was very enticing. The Gatsby docs were super helpful and thorough, especially on how to get started- even some of the non-developer designers could use it. But the reason Justin went with Gatsby for this project was the support for Markdown (as the team was already comfortable using it) and node APIs, the plugin support was deep, and the community was very active. Also, SendGrid is a React shop so it seemed like a no-brainer to give Gatsby a try. The team also knew node and JS. Justin looked at the API and decided it would be a big improvement to what they had.
 
 They had a team of 3 working on the site, Justin, a designer, and a UI developer. One of the team members was a new hire who had never used Gatsby before but the tool was easy for him to jump in and learn quickly.
 

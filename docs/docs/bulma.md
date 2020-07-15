@@ -20,7 +20,7 @@ plugins: [`gatsby-plugin-sass`],
 
 ## File for styles
 
-Now is the time to create a scss-file that holds your simple style customisation and the import statement for bulma.
+Now is the time to create a SCSS file that holds your simple style customization and the import statement for Bulma.
 
 (To keep things simple, insert the file next to `index.js` in the pages-directory)
 
@@ -68,4 +68,4 @@ And that's all there is to it! Now you can use Bulma as you normally would.
 
 ## Resources
 
-- [Bulma documentation on how to use sass](https://bulma.io/documentation/customize/with-node-sass/)
+- [Bulma documentation on how to use Sass](https://bulma.io/documentation/customize/with-node-sass/)
