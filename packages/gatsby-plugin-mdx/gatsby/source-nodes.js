@@ -10,6 +10,7 @@ const toString = require(`mdast-util-to-string`)
 const generateTOC = require(`mdast-util-toc`)
 const prune = require(`underscore.string/prune`)
 const slugify = require(`slugify`)
+const path = require(`path`)
 
 const debug = require(`debug`)(`gatsby-plugin-mdx:extend-node-type`)
 const getTableOfContents = require(`../utils/get-table-of-content`)
@@ -137,12 +138,22 @@ module.exports = (
       slug: {
         type: `String!`,
         async resolve(mdxNode) {
-          if (mdxNode.fileAbsolutePath) {
-            return slugify(mdxNode.fileAbsolutePath)
-          }
-          reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
-          \nAs a result there will be no slug available.`)
-          return null
+            if (mdxNode.fileAbsolutePath) {
+              let fileRelativePath = mdxNode.fileAbsolutePath.replace(path.resolve(`.`) + `/`), ``) // we need to get rid of the slash for slugification anyway
+              
+              const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
+              for (const postfix of postfixesToRemove) {
+                if (fileRelativePath.endsWith(postfix)) {
+                  fileRelativePath = fileRelativePath.replace(postfix, ``)
+                }
+              }
+
+              fileRelativePath = fileRelativePath.replace(/\//g, `-`)
+              return slugify(fileRelativePath)
+            }
+            reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
+            \nAs a result there will be no slug available.`)
+            return null
         },
       },
       body: {

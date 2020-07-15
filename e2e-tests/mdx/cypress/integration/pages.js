@@ -18,6 +18,6 @@ describe(`Pages`, () => {
 
     it (`generates slug`, () => {
         cy.visit(`/list`).waitForRouteChange()
-        cy.getTestElement(`slug`)
+        cy.getTestElement(`slug`).contains(`src-pages-another`)
     })
 })
