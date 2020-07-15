@@ -25,4 +25,9 @@ describe(`Pages`, () => {
         cy.visit(`/list`).waitForRouteChange()
         cy.getTestElement(`md-slug`).contains(`my-blog`)
     })
+
+    it (`generates a slug with an index file`, () => {
+        cy.visit(`/list`).waitForRouteChange()
+        cy.getTestElement(`complex-slug`).contains(`about`)
+    })
 })
