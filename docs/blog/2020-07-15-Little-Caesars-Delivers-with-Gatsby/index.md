@@ -9,7 +9,7 @@ tags:
   - building-sites-faster
 ---
 
-![Actor Rainn Wilson as a Little Caesars employee delivering two pizzas](./little-caesars-delivery.jpg)
+![A group of people eating Little Caesars pizza in an office](./little-caesars-busted.jpg)
 
 Starting from a single, family-owned restaurant in 1959, Little Caesars has grown into the third-largest pizza chain in the world. Today the company has stores in all 50 U.S. states, plus and 26 additional countries and territories. Little Caesars runs more than 20 websites to support all of those stores with marketing content and easy online pizza ordering.
 
@@ -23,7 +23,7 @@ The Little Caesars team expected a massive surge in orders as soon as the ad hit
 
 In choosing a framework for the website relaunch, the Little Caesars team had a clear favorite: Gatsby.
 
-The existing website architecture used a create-react-app single-page app for the homepage, plus subsequent content pages completely decoupled from that app. While the Little Caesars team liked developing in React, the overlaid website architecture was difficult for developers to manage and could create a disjointed user experience. The team knew it needed to simplify. “We wanted to present a single, unified experience to our customers,” says Andrew Smith, Application Architect for Little Caesars.
+The existing website architecture used a `create-react-app` single-page app for the homepage, plus subsequent content pages completely decoupled from that app. While the Little Caesars team liked developing in React, the overlaid website architecture was difficult for developers to manage and could create a disjointed user experience. The team knew it needed to simplify. “We wanted to present a single, unified experience to our customers,” says Andrew Smith, Application Architect for Little Caesars.
 
 Meanwhile, the need to bolster security led the team to prioritize JAMStack and static pre-rendering over server-based frameworks. “Large companies like ours can be targets for malicious activity,” says Smith. “We knew that a static site would reduce risks by avoiding the vulnerabilities of database-driven approaches.”
 
