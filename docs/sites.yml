@@ -11471,3 +11471,27 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+  - title: PMQA non-for-profit
+
+  # this is the URL that is linked from the showcase
+  main_url: https://pmqa.ca
+
+  # this URL is used to generate a screenshot
+  url:  https://pmqa.ca
+
+  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
+  description: >
+    This site will publish the events , trainings , mentoring sessions conducted by PMQA not-for-profit. 
+
+  # You can list as many categories as you want here. Check list of Categories below in this doc!
+  # If you'd like to create a new category, simply list it here.
+  categories:
+    - Nonprofit
+    - Education
+
+  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
+  built_by: ReactImpact INC
+  built_by_url: https://reactimpact.ca
+
+  # leave as false, the Gatsby site review board will choose featured sites quarterly
+  featured: false
