@@ -143,6 +143,7 @@ module.exports = (
               node => node.internal && node.internal.type === `File`
             )
             let fileRelativePath = parentNode.relativePath
+
             const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
             for (const postfix of postfixesToRemove) {
               if (fileRelativePath.endsWith(postfix)) {
