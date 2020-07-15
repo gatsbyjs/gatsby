@@ -1,11 +1,12 @@
 import reporter from "gatsby-cli/lib/reporter"
-import { IBuildContext } from "./"
 import { emitter } from "../redux"
 import apiRunnerNode from "../utils/api-runner-node"
+import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { boundActionCreators } from "../redux/actions"
 
 export async function postBootstrap({
   parentSpan,
-}: Partial<IBuildContext>): Promise<void> {
+}: Partial<IDataLayerContext>): Promise<void> {
   const activity = reporter.activityTimer(`onPostBootstrap`, {
     parentSpan,
   })
@@ -17,7 +18,5 @@ export async function postBootstrap({
     bootstrap finished - ${process.uptime().toFixed(3)}s
   `)
   emitter.emit(`BOOTSTRAP_FINISHED`, {})
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_FINISHED`
-  )
+  boundActionCreators.setProgramStatus(`BOOTSTRAP_FINISHED`)
 }
