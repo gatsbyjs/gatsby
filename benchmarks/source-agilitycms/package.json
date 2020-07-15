@@ -11,8 +11,8 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
-	"setup": "NODE_ENV=development node bin/setup.js",
-	"update": "NODE_ENV=development node bin/update.js"
+    "setup": "NODE_ENV=development node bin/setup.js",
+    "data-update": "NODE_ENV=development node bin/update.js"
   },
   "dependencies": {
     "@agility/content-fetch": "^0.8.2",

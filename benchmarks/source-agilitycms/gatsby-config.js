@@ -5,9 +5,9 @@ require("dotenv").config({
 //configure your agility plugin with environment variables so that
 //your agility api credentials stay secure
 const agilityConfig = {
-  guid: process.env.AGILITY_GUID,
-  apiKey: process.env.AGILITY_API_KEY,
-  isPreview: process.env.AGILITY_API_ISPREVIEW
+  guid: process.env.BENCHMARK_AGILITY_GUID,
+  apiKey: process.env.BENCHMARK_AGILITY_API_KEY,
+  isPreview: process.env.BENCHMARK_AGILITY_API_ISPREVIEW
 }
 
 /**
@@ -26,15 +26,15 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     {
       //the name of the plugin
-      resolve: "@agility/gatsby-source-agilitycms", 
+      resolve: "@agility/gatsby-source-agilitycms",
       //the options for our plugin
       options: {
         //your Agility Content Fetch API Guid
-        guid: agilityConfig.guid, 
+        guid: agilityConfig.guid,
         //your Agility Content Fetch API Key
-        apiKey: agilityConfig.apiKey, 
+        apiKey: agilityConfig.apiKey,
         //set this to true if you are using the preview API Key
-        isPreview: agilityConfig.isPreview, 
+        isPreview: agilityConfig.isPreview,
         //set this to true to see expanded traces in the build logs
         debug: false,
         //the languages you want to source content for
@@ -42,10 +42,10 @@ module.exports = {
           // The name of the language code
           name: "English",
           // The actual language code set in Agility CMS
-          code: "en-us", 
+          code: "en-us",
           // The name to be used in the URL path that represents the current language
           path: "en"
-        }], 
+        }],
         // The channels you want to include
         channels: [{
           // The reference name for the website channel as it is defined in Agility CMS
@@ -57,7 +57,7 @@ module.exports = {
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
-    { 
+    {
       resolve: `gatsby-source-filesystem`,
       options: { name: `images`, path: `./src/img/` }
     },

@@ -1,11 +1,11 @@
 /*
 THIS UPDATES A POST IN THE WEBSITE
 	Requires the following variables to be set correctly:
-	env.AGILITY_WEBSITE_NAME
-	env.AGILITY_SECURITY_KEY
-	env.AGILITY_GUID
-	env.AGILITY_API_KEY
-	env.AGILITY_API_ISPREVIEW
+	env.BENCHMARK_AGILITY_WEBSITE_NAME
+	env.BENCHMARK_AGILITY_SECURITY_KEY
+	env.BENCHMARK_AGILITY_GUID
+	env.BENCHMARK_AGILITY_API_KEY
+	env.BENCHMARK_AGILITY_API_ISPREVIEW
 */
 
 require("dotenv").config({
@@ -18,11 +18,11 @@ const agilityFetch = require('@agility/content-fetch')
 
 const runUpdate = async () => {
 	try {
-		const websiteName = process.env.AGILITY_WEBSITE_NAME
-		const securityKey = process.env.AGILITY_SECURITY_KEY
-		const guid = process.env.AGILITY_GUID
-		const apiKey = process.env.AGILITY_API_KEY
-		const isPreview = process.env.AGILITY_API_ISPREVIEW
+		const websiteName = process.env.BENCHMARK_AGILITY_WEBSITE_NAME
+		const securityKey = process.env.BENCHMARK_AGILITY_SECURITY_KEY
+		const guid = process.env.BENCHMARK_AGILITY_GUID
+		const apiKey = process.env.BENCHMARK_AGILITY_API_KEY
+		const isPreview = process.env.BENCHMARK_AGILITY_API_ISPREVIEW
 
 		console.log(`*** STARTING UPDATE - ${websiteName}`)
 

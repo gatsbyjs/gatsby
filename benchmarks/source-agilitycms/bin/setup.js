@@ -1,8 +1,8 @@
 /*
 THIS RUNS THE INITIAL SETUP FOR THE SITE BASED ON the following variables:
 	env.DATA_PATH
-	env.AGILITY_WEBSITE_NAME
-	env.AGILITY_SECURITY_KEY
+	env.BENCHMARK_AGILITY_WEBSITE_NAME
+	env.BENCHMARK_AGILITY_SECURITY_KEY
 */
 
 require("dotenv").config({
@@ -18,8 +18,8 @@ const agilityMgmt = require('@agility/content-management')
 const runSetup = async () => {
 
 	const dataPath = process.env.DATA_PATH
-	const websiteName = process.env.AGILITY_WEBSITE_NAME
-	const securityKey = process.env.AGILITY_SECURITY_KEY
+	const websiteName = process.env.BENCHMARK_AGILITY_WEBSITE_NAME
+	const securityKey = process.env.BENCHMARK_AGILITY_SECURITY_KEY
 
 	console.log(`*** STARTING IMPORT ${websiteName}`)
 
