@@ -6,6 +6,7 @@
     "@babel/runtime": "^7.10.3",
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.1",
+    "@types/better-queue": "^3.8.2",
     "@types/bluebird": "^3.5.30",
     "@types/cache-manager": "^2.10.2",
     "@types/common-tags": "^1.8.0",

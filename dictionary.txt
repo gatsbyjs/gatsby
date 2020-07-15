@@ -236,6 +236,7 @@ Blogroll
 Bluehost
 Bo
 Bogdan
+boilerplates
 bois
 Bolda
 Bölüm
@@ -980,6 +981,7 @@ HubspotForm
 HyperCard
 hyperconnected
 hypermodern
+i10n
 i18n
 i18next
 IaC
@@ -1164,6 +1166,7 @@ LinkedIn
 Linsley
 linter
 linters
+LIV
 livechat
 livestream
 livestreamed
@@ -1583,6 +1586,7 @@ quickstart
 Quickstart
 Raae
 Rahić
+Rainn
 Rascia
 Razuvaev
 Re-engageable
@@ -1701,9 +1705,6 @@ runtimes
 Ruzicka
 S3
 S3-compliant
-Sass
-*sass
-*SASS
 SaaS
 Saccone
 Sacha
@@ -1713,6 +1714,9 @@ Salsify
 SameSite
 sanitize-html
 Santo
+*sass
+Sass
+*SASS
 Sathyan
 scaffolded
 scalable
@@ -1879,6 +1883,8 @@ Swartz
 Syfy
 symlink
 syntaxes
+Systemizing
+systemizing
 tachyons
 Tachyons
 Tada
@@ -1934,6 +1940,7 @@ trainings
 transactional
 transformational
 transformative
+transifex
 TransitionLink
 TransitionPortal
 TransitionState
