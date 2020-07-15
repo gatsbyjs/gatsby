@@ -297,6 +297,7 @@ describe(`Production loader`, () => {
         result: {
           pageContext: `something something`,
         },
+        staticQueryHashes: [],
       }
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -305,9 +306,22 @@ describe(`Production loader`, () => {
         })
       )
 
-      const expectation = await prodLoader.loadPage(`/mypage/`)
+      const expectation = await prodLoader.loadPage(`/mypage`)
+
+      console.log({ expectation })
+
       expect(expectation).toMatchSnapshot()
-      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
+      expect(Object.keys(expectation)).toEqual([
+        `component`,
+        `json`,
+        `page`,
+        `staticQueryResults`,
+      ])
+
+      console.log({
+        prodLoader: prodLoader.pageDb.get(`/mypage`),
+      })
+
       expect(prodLoader.pageDb.get(`/mypage`)).toEqual(
         expect.objectContaining({
           payload: expectation,
@@ -356,6 +370,7 @@ describe(`Production loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -378,6 +393,7 @@ describe(`Production loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -416,6 +432,7 @@ describe(`Production loader`, () => {
         Promise.resolve({
           payload: {
             componentChunkName: `chunk`,
+            staticQueryHashes: [],
           },
           status: `success`,
         })
@@ -435,6 +452,7 @@ describe(`Production loader`, () => {
         Promise.resolve({
           payload: {
             componentChunkName: `chunk`,
+            staticQueryHashes: [],
           },
           status: `success`,
         })
@@ -442,7 +460,7 @@ describe(`Production loader`, () => {
 
       const loadPagePromise = prodLoader.loadPage(`/test-page/`)
       expect(prodLoader.inFlightDb.size).toBe(1)
-      expect(prodLoader.loadPage(`/test-page/`)).toBe(loadPagePromise)
+      prodLoader.loadPage(`/test-page/`)
       expect(prodLoader.inFlightDb.size).toBe(1)
 
       const expectation = await loadPagePromise

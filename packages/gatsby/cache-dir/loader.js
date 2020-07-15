@@ -42,86 +42,6 @@ function doFetch(url, method = `GET`) {
   })
 }
 
-const inFlightPromisesByUrl = new Map()
-
-function memoizedGet(url) {
-  let inFlightPromise = inFlightPromisesByUrl.get(url)
-
-  if (!inFlightPromise) {
-    inFlightPromise = doFetch(url, `GET`)
-    inFlightPromisesByUrl.set(url, inFlightPromise)
-  }
-
-  // Prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
-  return inFlightPromise
-    .then(response => {
-      inFlightPromisesByUrl.delete(url)
-      return response
-    })
-    .catch(err => {
-      inFlightPromisesByUrl.delete(url)
-      throw err
-    })
-}
-
-const loadPageDataJson = loadObj => {
-  const { pagePath, retries = 0 } = loadObj
-  const url = createPageDataUrl(pagePath)
-  return memoizedGet(url).then(req => {
-    const { status, responseText } = req
-
-    // Handle 200
-    if (status === 200) {
-      try {
-        const jsonPayload = JSON.parse(responseText)
-        if (jsonPayload.path === undefined) {
-          throw new Error(`not a valid pageData response`)
-        }
-
-        return Object.assign(loadObj, {
-          status: PageResourceStatus.Success,
-          payload: jsonPayload,
-        })
-      } catch (err) {
-        // continue regardless of error
-      }
-    }
-
-    // Handle 404
-    if (status === 404 || status === 200) {
-      // If the request was for a 404 page and it doesn't exist, we're done
-      if (pagePath === `/404.html`) {
-        return Object.assign(loadObj, {
-          status: PageResourceStatus.Error,
-        })
-      }
-
-      // Need some code here to cache the 404 request. In case
-      // multiple loadPageDataJsons result in 404s
-      return loadPageDataJson(
-        Object.assign(loadObj, { pagePath: `/404.html`, notFound: true })
-      )
-    }
-
-    // handle 500 response (Unrecoverable)
-    if (status === 500) {
-      return Object.assign(loadObj, {
-        status: PageResourceStatus.Error,
-      })
-    }
-
-    // Handle everything else, including status === 0, and 503s. Should retry
-    if (retries < 3) {
-      return loadPageDataJson(Object.assign(loadObj, { retries: retries + 1 }))
-    }
-
-    // Retried 3 times already, result is an error.
-    return Object.assign(loadObj, {
-      status: PageResourceStatus.Error,
-    })
-  })
-}
-
 const doesConnectionSupportPrefetch = () => {
   if (
     `connection` in navigator &&
@@ -137,23 +57,19 @@ const doesConnectionSupportPrefetch = () => {
   return true
 }
 
-const toPageResources = (
-  pageData,
-  component = null,
-  staticQueryHashes = []
-) => {
+const toPageResources = (pageData, component = null) => {
   const page = {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
     webpackCompilationHash: pageData.webpackCompilationHash,
     matchPath: pageData.matchPath,
+    staticQueryHashes: pageData.staticQueryHashes,
   }
 
   return {
     component,
     json: pageData.result,
     page,
-    staticQueryHashes,
   }
 }
 
@@ -181,18 +97,99 @@ export class BaseLoader {
     setMatchPaths(matchPaths)
   }
 
+  inFlightDb = new Map()
+
+  memoizedGet(url) {
+    let inFlightPromise = this.inFlightDb.get(url)
+
+    if (!inFlightPromise) {
+      inFlightPromise = doFetch(url, `GET`)
+      this.inFlightDb.set(url, inFlightPromise)
+    }
+
+    // Prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
+    return inFlightPromise
+      .then(response => {
+        this.inFlightDb.delete(url)
+        return response
+      })
+      .catch(err => {
+        this.inFlightDb.delete(url)
+        throw err
+      })
+  }
+
   setApiRunner(apiRunner) {
     this.apiRunner = apiRunner
     this.prefetchDisabled = apiRunner(`disableCorePrefetching`).some(a => a)
   }
 
   loadPageDataJson(rawPath) {
+    const fetchPageDataJson = loadObj => {
+      const { pagePath, retries = 0 } = loadObj
+      const url = createPageDataUrl(pagePath)
+      return this.memoizedGet(url).then(req => {
+        const { status, responseText } = req
+
+        // Handle 200
+        if (status === 200) {
+          try {
+            const jsonPayload = JSON.parse(responseText)
+            if (jsonPayload.path === undefined) {
+              throw new Error(`not a valid pageData response`)
+            }
+
+            return Object.assign(loadObj, {
+              status: PageResourceStatus.Success,
+              payload: jsonPayload,
+            })
+          } catch (err) {
+            // continue regardless of error
+          }
+        }
+
+        // Handle 404
+        if (status === 404 || status === 200) {
+          // If the request was for a 404 page and it doesn't exist, we're done
+          if (pagePath === `/404.html`) {
+            return Object.assign(loadObj, {
+              status: PageResourceStatus.Error,
+            })
+          }
+
+          // Need some code here to cache the 404 request. In case
+          // multiple loadPageDataJsons result in 404s
+          return fetchPageDataJson(
+            Object.assign(loadObj, { pagePath: `/404.html`, notFound: true })
+          )
+        }
+
+        // handle 500 response (Unrecoverable)
+        if (status === 500) {
+          return Object.assign(loadObj, {
+            status: PageResourceStatus.Error,
+          })
+        }
+
+        // Handle everything else, including status === 0, and 503s. Should retry
+        if (retries < 3) {
+          return fetchPageDataJson(
+            Object.assign(loadObj, { retries: retries + 1 })
+          )
+        }
+
+        // Retried 3 times already, result is an error.
+        return Object.assign(loadObj, {
+          status: PageResourceStatus.Error,
+        })
+      })
+    }
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
 
-    return loadPageDataJson({ pagePath }).then(pageData => {
+    return fetchPageDataJson({ pagePath }).then(pageData => {
       this.pageDataDb.set(pagePath, pageData)
 
       return pageData
@@ -225,9 +222,11 @@ export class BaseLoader {
       let pageData = result.payload
       const { componentChunkName, staticQueryHashes = [] } = pageData
 
+      let finalResult = {}
+
       const componentChunkPromise = this.loadComponent(componentChunkName).then(
         component => {
-          const finalResult = { createdAt: new Date() }
+          finalResult.createdAt = new Date()
           let pageResources
           if (!component) {
             finalResult.status = PageResourceStatus.Error
@@ -241,18 +240,8 @@ export class BaseLoader {
                 ? allData[0].webpackCompilationHash
                 : ``,
             })
-            pageResources = toPageResources(
-              pageData,
-              component,
-              staticQueryHashes
-            )
-            finalResult.payload = pageResources
-            emitter.emit(`onPostLoadPageResources`, {
-              page: pageResources,
-              pageResources,
-            })
+            pageResources = toPageResources(pageData, component)
           }
-          this.pageDb.set(pagePath, finalResult)
           // undefined if final result is an error
           return pageResources
         }
@@ -266,10 +255,12 @@ export class BaseLoader {
             return { staticQueryHash, jsonPayload }
           }
 
-          return memoizedGet(`/static/d/${staticQueryHash}.json`).then(req => {
-            const jsonPayload = JSON.parse(req.responseText)
-            return { staticQueryHash, jsonPayload }
-          })
+          return this.memoizedGet(`/static/d/${staticQueryHash}.json`).then(
+            req => {
+              const jsonPayload = JSON.parse(req.responseText)
+              return { staticQueryHash, jsonPayload }
+            }
+          )
         })
       ).then(staticQueryResults => {
         const staticQueryResultsMap = {}
@@ -284,10 +275,18 @@ export class BaseLoader {
 
       return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
         ([pageResources, staticQueryResults]) => {
-          return {
-            ...pageResources,
-            staticQueryResults,
+          const payload = { ...pageResources, staticQueryResults }
+          if (pageResources) {
+            finalResult.payload = payload
+            emitter.emit(`onPostLoadPageResources`, {
+              page: payload,
+              pageResources: payload,
+            })
           }
+
+          this.pageDb.set(pagePath, finalResult)
+
+          return payload
         }
       )
     })
@@ -298,15 +297,7 @@ export class BaseLoader {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const pageData = this.pageDb.get(pagePath).payload
-      const staticQueryData = {}
-
-      pageData.staticQueryHashes.forEach(hash => {
-        staticQueryData[hash] = this.staticQueryDb.get(hash)
-      })
-      return {
-        ...pageData,
-        staticQueryData,
-      }
+      return pageData
     }
     return undefined
   }
@@ -385,7 +376,7 @@ export class BaseLoader {
   }
 
   loadAppData(retries = 0) {
-    return memoizedGet(`${__PATH_PREFIX__}/page-data/app-data.json`).then(
+    return this.memoizedGet(`${__PATH_PREFIX__}/page-data/app-data.json`).then(
       req => {
         const { status, responseText } = req
 

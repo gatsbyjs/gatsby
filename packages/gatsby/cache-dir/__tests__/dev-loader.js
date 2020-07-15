@@ -318,6 +318,7 @@ describe(`Dev loader`, () => {
         result: {
           pageContext: `something something`,
         },
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -382,6 +383,7 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -404,6 +406,7 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -446,6 +449,7 @@ describe(`Dev loader`, () => {
         Promise.resolve({
           payload: {
             componentChunkName: `chunk`,
+            staticQueryHashes: [],
           },
           status: `success`,
         })

@@ -10,6 +10,7 @@ Object {
     "componentChunkName": "chunk",
     "matchPath": undefined,
     "path": "/mypage/",
+    "staticQueryHashes": Array [],
     "webpackCompilationHash": "123",
   },
   "staticQueryResults": Object {},
