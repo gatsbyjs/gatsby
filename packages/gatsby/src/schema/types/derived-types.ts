@@ -29,9 +29,37 @@
  *   user explicitly defines `FooFields` type (via `createTypes` call) it won't be considered
  *   a derived type
  */
-const { ObjectTypeComposer, InterfaceTypeComposer } = require(`graphql-compose`)
+import {
+  ObjectTypeComposer,
+  InterfaceTypeComposer,
+  ScalarTypeComposer,
+  SchemaComposer,
+  InputTypeComposer,
+  EnumTypeComposer,
+  UnionTypeComposer,
+} from "graphql-compose"
 
-const clearDerivedTypes = ({ schemaComposer, typeComposer }) => {
+type AllTypeComposer =
+  | ObjectTypeComposer
+  | InputTypeComposer
+  | EnumTypeComposer
+  | InterfaceTypeComposer
+  | UnionTypeComposer
+  | ScalarTypeComposer
+
+const getDerivedTypes = ({
+  typeComposer,
+}: {
+  typeComposer: AllTypeComposer
+}): Set<string> => typeComposer.getExtension(`derivedTypes`) || new Set()
+
+export const clearDerivedTypes = ({
+  schemaComposer,
+  typeComposer,
+}: {
+  schemaComposer: SchemaComposer<any>
+  typeComposer: AllTypeComposer
+}): void => {
   const derivedTypes = getDerivedTypes({ typeComposer })
 
   for (const typeName of derivedTypes.values()) {
@@ -50,15 +78,13 @@ const clearDerivedTypes = ({ schemaComposer, typeComposer }) => {
   typeComposer.setExtension(`derivedTypes`, new Set())
 }
 
-const addDerivedType = ({ typeComposer, derivedTypeName }) => {
+export const addDerivedType = ({
+  typeComposer,
+  derivedTypeName,
+}: {
+  typeComposer: AllTypeComposer
+  derivedTypeName: string
+}): void => {
   const derivedTypes = getDerivedTypes({ typeComposer })
   typeComposer.setExtension(`derivedTypes`, derivedTypes.add(derivedTypeName))
-}
-
-const getDerivedTypes = ({ typeComposer }) =>
-  typeComposer.getExtension(`derivedTypes`) || new Set()
-
-module.exports = {
-  clearDerivedTypes,
-  addDerivedType,
 }

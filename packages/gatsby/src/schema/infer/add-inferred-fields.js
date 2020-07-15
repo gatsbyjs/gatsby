@@ -6,7 +6,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 import { isFile } from "./is-file"
 import { isDate } from "../types/date"
-const { addDerivedType } = require(`../types/derived-types`)
+import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { getNode, getNodes } = require(`../../redux/nodes`)
 

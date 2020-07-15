@@ -43,7 +43,7 @@ const {
   parseTypeDef,
   reportParsingError,
 } = require(`./types/type-defs`)
-const { clearDerivedTypes } = require(`./types/derived-types`)
+import { clearDerivedTypes } from "./types/derived-types"
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
