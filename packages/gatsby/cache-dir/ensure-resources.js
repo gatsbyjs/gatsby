@@ -6,10 +6,9 @@ class EnsureResources extends React.Component {
   constructor(props) {
     super()
     const { location, pageResources } = props
-    const loaderPageResources = loader.loadPageSync(location.pathname)
     this.state = {
       location: { ...location },
-      pageResources: pageResources || loaderPageResources,
+      pageResources: pageResources || loader.loadPageSync(location.pathname),
     }
   }
 
