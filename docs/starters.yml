@@ -6954,3 +6954,18 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://www.minimal-portfolio.openarchitex.dev/
+  repo: https://github.com/OpenArchitex/gatsby-starter-minimal-portfolio
+  description: A simple portfolio with About, Projects and Contact sections created using Theme UI and MDX
+  tags:
+    - Portfolio
+    - Markdown
+    - MDX
+    - Styling:Tailwind
+    - Styling:Theme-UI
+    - Onepage
+  features:
+    - Gatsby v2
+    - Simple portfolio with About, Projects and Contact sections
+    - Uses MDX and Theme UI for styling
+    - SEO enabled on each page with react-helmet
