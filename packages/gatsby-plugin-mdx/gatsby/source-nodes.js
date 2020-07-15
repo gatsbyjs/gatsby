@@ -138,22 +138,26 @@ module.exports = (
       slug: {
         type: `String!`,
         async resolve(mdxNode) {
-            if (mdxNode.fileAbsolutePath) {
-              let fileRelativePath = mdxNode.fileAbsolutePath.replace(path.resolve(`.`) + `/`), ``) // we need to get rid of the slash for slugification anyway
-              
-              const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
-              for (const postfix of postfixesToRemove) {
-                if (fileRelativePath.endsWith(postfix)) {
-                  fileRelativePath = fileRelativePath.replace(postfix, ``)
-                }
-              }
+          if (mdxNode.fileAbsolutePath) {
+            const absolutePath = mdxNode.fileAbsolutePath
+            let fileRelativePath = absolutePath.replace(
+              path.resolve(`.`) + `/`, // we need to get rid of the slash for slugification anyway
+              ``
+            )
 
-              fileRelativePath = fileRelativePath.replace(/\//g, `-`)
-              return slugify(fileRelativePath)
+            const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
+            for (const postfix of postfixesToRemove) {
+              if (fileRelativePath.endsWith(postfix)) {
+                fileRelativePath = fileRelativePath.replace(postfix, ``)
+              }
             }
-            reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
+
+            fileRelativePath = fileRelativePath.replace(/\//g, `-`)
+            return slugify(fileRelativePath)
+          }
+          reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
             \nAs a result there will be no slug available.`)
-            return null
+          return null
         },
       },
       body: {
