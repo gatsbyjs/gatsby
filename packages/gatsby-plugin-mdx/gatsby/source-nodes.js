@@ -138,11 +138,11 @@ module.exports = (
         type: `String`,
         async resolve(mdxNode, args, context) {
           try {
-            const parentNode = context.nodeModel.findRootNodeAncestor(
+            const nodeWithContext = context.nodeModel.findRootNodeAncestor(
               mdxNode,
               node => node.internal && node.internal.type === `File`
             )
-            let fileRelativePath = parentNode.relativePath
+            let fileRelativePath = nodeWithContext.relativePath
 
             const postfixesToRemove = [`/index.md`, `/index.mdx`, `.md`, `.mdx`]
             for (const postfix of postfixesToRemove) {
