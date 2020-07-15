@@ -29,8 +29,8 @@ const createPageDataUrl = path => {
   return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
 }
 
-const doFetch = (url, method = `GET`) =>
-  new Promise((resolve, reject) => {
+function doFetch(url, method = `GET`) {
+  return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
     req.onreadystatechange = () => {
@@ -40,11 +40,34 @@ const doFetch = (url, method = `GET`) =>
     }
     req.send(null)
   })
+}
+
+const inFlightPromisesByUrl = new Map()
+
+function memoizedGet(url) {
+  let inFlightPromise = inFlightPromisesByUrl.get(url)
+
+  if (!inFlightPromise) {
+    inFlightPromise = doFetch(url, `GET`)
+    inFlightPromisesByUrl.set(url, inFlightPromise)
+  }
+
+  // Prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
+  return inFlightPromise
+    .then(response => {
+      inFlightPromisesByUrl.delete(url)
+      return response
+    })
+    .catch(err => {
+      inFlightPromisesByUrl.delete(url)
+      throw err
+    })
+}
 
 const loadPageDataJson = loadObj => {
   const { pagePath, retries = 0 } = loadObj
   const url = createPageDataUrl(pagePath)
-  return doFetch(url).then(req => {
+  return memoizedGet(url).then(req => {
     const { status, responseText } = req
 
     // Handle 200
@@ -150,24 +173,12 @@ export class BaseLoader {
     //   }
     // }
     this.pageDb = new Map()
-    this.inFlightDb = new Map()
-
     this.staticQueryDb = new Map()
-
-    this.inFlightPromisesByUrlDb = new Map()
-
     this.pageDataDb = new Map()
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
     this.loadComponent = loadComponent
     setMatchPaths(matchPaths)
-  }
-
-  memoizedGet(url) {
-    if (!this.inFlightPromisesByUrlDb.has(url)) {
-      this.inFlightPromisesByUrlDb.set(url, doFetch(url, `GET`))
-    }
-    return this.inFlightPromisesByUrlDb.get(url)
   }
 
   setApiRunner(apiRunner) {
@@ -199,28 +210,23 @@ export class BaseLoader {
       const page = this.pageDb.get(pagePath)
       return Promise.resolve(page.payload)
     }
-    if (this.inFlightDb.has(pagePath)) {
-      return this.inFlightDb.get(pagePath)
-    }
 
-    const inFlight = Promise.all([
+    return Promise.all([
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
-    ])
-      .then(allData => {
-        const result = allData[1]
-        if (result.status === PageResourceStatus.Error) {
-          return {
-            status: PageResourceStatus.Error,
-          }
+    ]).then(allData => {
+      const result = allData[1]
+      if (result.status === PageResourceStatus.Error) {
+        return {
+          status: PageResourceStatus.Error,
         }
+      }
 
-        let pageData = result.payload
-        const { componentChunkName, staticQueryHashes = [] } = pageData
+      let pageData = result.payload
+      const { componentChunkName, staticQueryHashes = [] } = pageData
 
-        const componentChunkPromise = this.loadComponent(
-          componentChunkName
-        ).then(component => {
+      const componentChunkPromise = this.loadComponent(componentChunkName).then(
+        component => {
           const finalResult = { createdAt: new Date() }
           let pageResources
           if (!component) {
@@ -249,56 +255,42 @@ export class BaseLoader {
           this.pageDb.set(pagePath, finalResult)
           // undefined if final result is an error
           return pageResources
+        }
+      )
+
+      const staticQueryBatchPromise = Promise.all(
+        staticQueryHashes.map(staticQueryHash => {
+          // Check for cache in case this static query result has already been loaded
+          if (this.staticQueryDb.has(staticQueryHash)) {
+            const jsonPayload = this.staticQueryDb.get(staticQueryHash)
+            return { staticQueryHash, jsonPayload }
+          }
+
+          return memoizedGet(`/static/d/${staticQueryHash}.json`).then(req => {
+            const jsonPayload = JSON.parse(req.responseText)
+            return { staticQueryHash, jsonPayload }
+          })
+        })
+      ).then(staticQueryResults => {
+        const staticQueryResultsMap = {}
+
+        staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
+          staticQueryResultsMap[staticQueryHash] = jsonPayload
+          this.staticQueryDb.set(staticQueryHash, jsonPayload)
         })
 
-        const staticQueryBatchPromise = Promise.all(
-          staticQueryHashes.map(staticQueryHash => {
-            // Check for cache in case this static query result has already been loaded
-            if (this.staticQueryDb.has(staticQueryHash)) {
-              const jsonPayload = this.staticQueryDb.get(staticQueryHash)
-              return { staticQueryHash, jsonPayload }
-            }
+        return staticQueryResultsMap
+      })
 
-            return this.memoizedGet(`/static/d/${staticQueryHash}.json`).then(
-              req => {
-                const jsonPayload = JSON.parse(req.responseText)
-                return { staticQueryHash, jsonPayload }
-              }
-            )
-          })
-        ).then(staticQueryResults => {
-          const staticQueryResultsMap = {}
-
-          staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
-            staticQueryResultsMap[staticQueryHash] = jsonPayload
-            this.staticQueryDb.set(staticQueryHash, jsonPayload)
-          })
-
-          return staticQueryResultsMap
-        })
-
-        return Promise.all([
-          componentChunkPromise,
-          staticQueryBatchPromise,
-        ]).then(([pageResources, staticQueryResults]) => {
+      return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
+        ([pageResources, staticQueryResults]) => {
           return {
             ...pageResources,
             staticQueryResults,
           }
-        })
-      })
-      // prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
-      .then(response => {
-        this.inFlightDb.delete(pagePath)
-        return response
-      })
-      .catch(err => {
-        this.inFlightDb.delete(pagePath)
-        throw err
-      })
-
-    this.inFlightDb.set(pagePath, inFlight)
-    return inFlight
+        }
+      )
+    })
   }
 
   // returns undefined if loading page ran into errors
@@ -393,32 +385,34 @@ export class BaseLoader {
   }
 
   loadAppData(retries = 0) {
-    return doFetch(`${__PATH_PREFIX__}/page-data/app-data.json`).then(req => {
-      const { status, responseText } = req
+    return memoizedGet(`${__PATH_PREFIX__}/page-data/app-data.json`).then(
+      req => {
+        const { status, responseText } = req
 
-      let appData
+        let appData
 
-      if (status !== 200 && retries < 3) {
-        // Retry 3 times incase of non-200 responses
-        return this.loadAppData(retries + 1)
-      }
-
-      // Handle 200
-      if (status === 200) {
-        try {
-          const jsonPayload = JSON.parse(responseText)
-          if (jsonPayload.webpackCompilationHash === undefined) {
-            throw new Error(`not a valid app-data response`)
-          }
-
-          appData = jsonPayload
-        } catch (err) {
-          // continue regardless of error
+        if (status !== 200 && retries < 3) {
+          // Retry 3 times incase of non-200 responses
+          return this.loadAppData(retries + 1)
         }
-      }
 
-      return appData
-    })
+        // Handle 200
+        if (status === 200) {
+          try {
+            const jsonPayload = JSON.parse(responseText)
+            if (jsonPayload.webpackCompilationHash === undefined) {
+              throw new Error(`not a valid app-data response`)
+            }
+
+            appData = jsonPayload
+          } catch (err) {
+            // continue regardless of error
+          }
+        }
+
+        return appData
+      }
+    )
   }
 }
 
