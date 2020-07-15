@@ -143,7 +143,7 @@ module.exports = (
               mdxNode,
               node => node.internal && node.internal.type === `File`
             )
-            let fileRelativePath = nodeWithContext.relativePath
+            const fileRelativePath = nodeWithContext.relativePath
 
             const parsedPath = path.parse(fileRelativePath)
 
