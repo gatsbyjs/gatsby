@@ -8,16 +8,13 @@ import * as t from "@babel/types"
 // TODO: Ive tried to make TS happy here, but any changes I make to get TS
 // to work actually make the code fail. This code works. So maybe we can figure
 // this out later.
-// @eslint-disable-next-line @typescript-eslint/camelcase
+// eslint-disable-next-line @typescript-eslint/camelcase
 function isunstable_createPagesFromData(path): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `unstable_createPagesFromData` &&
-      // @ts-ignore
       path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
-    // @ts-ignore
     (path.node.callee.name === `unstable_createPagesFromData` &&
-      // @ts-ignore
       path.get(`callee`).referencesImport(`gatsby`))
   )
 }
