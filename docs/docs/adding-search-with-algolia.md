@@ -74,7 +74,7 @@ Add the following line at the top of `gatsby-config.js` to read the configuratio
 require("dotenv").config()
 ```
 
-Then add the configuration for `gatsby-plugin-algolia` to the list of `plugin`s in the `gatsby-config.js`. `dotenv` has made the configuration values available as keys in `process.env`.
+Then add the configuration for `gatsby-plugin-algolia` to the list of plugins in the `gatsby-config.js`. `dotenv` makes the configuration values available as keys in `process.env`.
 
 ```js:title=gatsby-config.js
   plugins: [
@@ -155,7 +155,7 @@ Each index has a name that identifies it. If the index does not exist, it will b
 
 Note that each record must have an ID in the key `objectID`. The Algolia documentation provides more information on [how to structure data into records](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/#attributes---what-to-put-in-your-record).
 
-Here, only the field `excerpt` and the frontmatter field `title` are indexed. It will display both fields in the search results. To index more fields, add them to `pageQuery` with GraphQL.
+In this guide, the slug, field `excerpt`, and frontmatter field `title` are indexed. It will display these fields in the search results. To index more fields, add them to `pageQuery` with GraphQL.
 
 Each query has optional [settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). The code above tells Algolia you will want to generate "snippets" of context around your hits in the `excerpt` attribute.
 
@@ -526,7 +526,7 @@ export default styled(SearchResult)`
 
 ## Usage
 
-The search widget is now ready for use. It needs to be placed somewhere in your project's layout. If you start from Gatsby starter block, you can use the `layout` component:
+The search widget is now ready for use. It needs to be placed somewhere in your project's layout. If you start from Gatsby starter blog, you can use the `layout` component:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
