@@ -405,7 +405,7 @@ module.exports = {
 }
 ```
 
-Then, the sharp plugins will automatically transform the File nodes created by `createRemoteFileNode` in `your-source-plugin` (which have supported image extensions like .jpg or .png). You can then query for the `remoteImage` field on your source type:
+Then, the sharp plugins will automatically transform the File nodes created by `createRemoteFileNode` in `your-source-plugin` (which have supported image extensions like `.jpg` or `.png`). You can then query for the `remoteImage` field on your source type:
 
 ```graphql
 query {

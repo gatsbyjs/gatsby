@@ -1,58 +1,50 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+const tdStyles = {
+  "&&": { p: 3 },
+  display: [`none`, `table-cell`],
+  fontSize: 0,
+  fontWeight: `body`,
+  lineHeight: `solid`,
+  textTransform: `uppercase`,
+  textAlign: `center`,
+  verticalAlign: `bottom`,
+  border: 0,
+  color: `textMuted`,
+  bg: `ui.background`,
+  "&:last-child": {
+    borderTopRightRadius: 2,
+  },
+  width: [`inherit`, 125, 150, 175],
+  "&:first-of-type": {
+    width: [120, 125, 150, 175],
+  },
+  span: {
+    WebkitHyphens: `auto`,
+    MsHyphens: `auto`,
+    hyphens: `auto`,
+    display: `inline-block`,
+    "&:first-of-type": {
+      borderTopLeftRadius: 2,
+      textAlign: `left`,
+    },
+  },
+}
 
-const superHeader = ({ columnHeaders }) => (
-  <tr>
-    {columnHeaders.map((header, i) => (
-      <td
-        key={i}
-        sx={{
-          "&&": { p: 3 },
-          display: `none`,
-          textTransform: `uppercase`,
-          fontSize: 0,
-          lineHeight: `solid`,
-          fontWeight: `body`,
-          textAlign: `center`,
-          verticalAlign: `bottom`,
-          width: i === 0 ? 120 : `inherit`,
-          border: 0,
-          color: `textMuted`,
-          bg: `ui.background`,
-          "span:first-of-type": {
-            borderTopLeftRadius: 2,
-            textAlign: `left`,
-          },
-          "&:last-child": {
-            borderTopRightRadius: 2,
-          },
-          [mediaQueries.xs]: {
-            display: `table-cell`,
-            width: 125,
-          },
-          [mediaQueries.md]: {
-            width: 150,
-          },
-          [mediaQueries.lg]: {
-            width: 175,
-          },
-        }}
-      >
-        <span
+export default function HeaderTop({ columnHeaders }) {
+  return (
+    <tr>
+      {columnHeaders.map((header, i) => (
+        <td
+          key={i}
           sx={{
-            WebkitHyphens: `auto`,
-            MsHyphens: `auto`,
-            hyphens: `auto`,
-            display: `inline-block`,
+            ...tdStyles,
           }}
         >
-          {header}
-        </span>
-      </td>
-    ))}
-  </tr>
-)
-
-export default superHeader
+          <span>{header}</span>
+        </td>
+      ))}
+    </tr>
+  )
+}

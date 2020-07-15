@@ -477,6 +477,8 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
+                - title: "Scroll Restoration"
+                  link: /docs/scroll-restoration/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation

@@ -1,13 +1,3 @@
-.env
-.html
-.jpg
-.js
-.md
-.mdx
-.png
-.scss
-.tsx
-.yaml
 ½
 ⅓
 1000px
@@ -246,6 +236,7 @@ Blogroll
 Bluehost
 Bo
 Bogdan
+boilerplates
 bois
 Bolda
 Bölüm
@@ -897,8 +888,6 @@ Graf
 Grande
 Graph_i_QL
 GraphCMS
-Graphiql
-GraphiQl
 GraphiQL
 graphiql-code-exporter
 graphiql-filesystem
@@ -992,6 +981,7 @@ HubspotForm
 HyperCard
 hyperconnected
 hypermodern
+i10n
 i18n
 i18next
 IaC
@@ -1722,6 +1712,9 @@ Salsify
 SameSite
 sanitize-html
 Santo
+*sass
+Sass
+*SASS
 Sathyan
 scaffolded
 scalable
@@ -1888,6 +1881,8 @@ Swartz
 Syfy
 symlink
 syntaxes
+Systemizing
+systemizing
 tachyons
 Tachyons
 Tada
@@ -1943,6 +1938,7 @@ trainings
 transactional
 transformational
 transformative
+transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -2005,6 +2001,7 @@ unserious
 Unsplash
 unstyled
 untracked
+untriaged
 untrusted
 unvisited
 updatedAt
