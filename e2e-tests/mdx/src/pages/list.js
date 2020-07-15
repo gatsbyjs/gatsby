@@ -5,7 +5,7 @@ const ListPage = ({ data }) => {
   const anotherPage = data.another.nodes[0]
   const blogPage = data.blog.nodes[0]
   const aboutPage = data.complex.nodes[0]
-  const embedPage = data.embded.nodes[0]
+  const embedPage = data.embed.nodes[0]
 
 
   return (
@@ -31,7 +31,7 @@ export const query = graphql`
         slug
       }
     }
-    complex: allMdx(filter: {slug: {eq: "about"}}) {
+    complex: allMdx(filter: {slug: {eq: "about/"}}) {
       nodes {
         slug
       }
