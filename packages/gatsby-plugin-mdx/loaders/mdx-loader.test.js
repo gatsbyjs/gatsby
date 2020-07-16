@@ -16,9 +16,9 @@ array: [1,2,3]
 )`,
     namedExports: `export const meta = {author: "chris"}`,
     body: `# Some title
-    
+
 a bit of a paragraph
-    
+
 some content`,
   }
 
@@ -67,12 +67,6 @@ describe(`mdx-loader`, () => {
     `snapshot with %s`,
     async (filename, fakeGatsbyNode, content) => {
       const loader = mdxLoader.bind({
-        async() {
-          return (err, result) => {
-            expect(err).toBeNull()
-            expect(result).toMatchSnapshot()
-          }
-        },
         query: {
           getNodes(_type) {
             return fixtures.map(([, node]) => node)
@@ -92,7 +86,9 @@ describe(`mdx-loader`, () => {
         },
         resourcePath: fakeGatsbyNode.absolutePath,
       })
-      await loader(content)
+      return loader(content).then(result => {
+        expect(result).toMatchSnapshot()
+      })
     }
   )
 })

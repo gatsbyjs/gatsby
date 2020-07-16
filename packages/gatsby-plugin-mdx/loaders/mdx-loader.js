@@ -89,6 +89,7 @@ const hasDefaultExport = (str, options) => {
 }
 
 module.exports = async function (content) {
+  // Note: the context for this function is passed on by webpack (or test env)
   const {
     getNode: rawGetNode,
     getNodes,
