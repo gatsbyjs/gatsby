@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 
 import EvaluationCell from "./evaluation-cell"
-import { h4 } from "../../utils/styles/global"
 
 const legendTableCaptionStyle = {
   fontWeight: `body`,
@@ -50,7 +49,10 @@ const legendHeaderStyle = {
   ...baseCellStyle,
   borderLeft: 1,
   borderColor: `ui.border`,
-  ...h4,
+  color: `heading`,
+  letterSpacing: `tight`,
+  fontSize: 3,
+  fontWeight: `body`,
   m: 0,
 }
 
@@ -124,7 +126,6 @@ export default function LegendTable() {
         }}
       >
         <tr>
-          sx={{ ...legendBallCellStyle, ...legendHeaderStyle }}
           <th
             sx={{ ...legendBallCellStyle, ...legendHeaderStyle }}
             key={`${legendBallCellStyle}-1`}
