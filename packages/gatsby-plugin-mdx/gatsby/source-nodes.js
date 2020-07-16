@@ -154,7 +154,7 @@ module.exports = (
               relevantPath = fileRelativePath.replace(parsedPath.ext, ``)
             }
             return slugify(relevantPath, {
-              remove: /[^\w\s$*_+~.()'"!\-:@/]/g,
+              remove: /[^\w\s$*_+~.()'"!\-:@/]/g, // this is the set of allowable characters
             })
           } catch {
             reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
