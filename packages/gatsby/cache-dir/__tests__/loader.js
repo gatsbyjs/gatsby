@@ -454,7 +454,7 @@ describe(`Production loader`, () => {
 
       const loadPagePromise = prodLoader.loadPage(`/test-page/`)
       expect(prodLoader.inFlightDb.size).toBe(1)
-      prodLoader.loadPage(`/test-page/`)
+      expect(prodLoader.loadPage(`/test-page/`)).toBe(loadPagePromise)
       expect(prodLoader.inFlightDb.size).toBe(1)
 
       const expectation = await loadPagePromise
