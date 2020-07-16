@@ -89,7 +89,6 @@ const hasDefaultExport = (str, options) => {
 }
 
 module.exports = async function (content) {
-  const callback = this.async()
   const {
     getNode: rawGetNode,
     getNodes,
@@ -118,16 +117,13 @@ module.exports = async function (content) {
 
   const source = fileNode && fileNode.sourceInstanceName
 
-  let mdxNode
-  try {
-    mdxNode = await createMDXNode({
-      id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
-      node: fileNode,
-      content,
-    })
-  } catch (e) {
-    return callback(e)
-  }
+  // This node attempts to break the chicken-egg problem, where parsing mdx
+  // allows for custom plugins, which can receive a mdx node, but we have none.
+  let mdxNode = await createMDXNode({
+    id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+    node: fileNode,
+    content,
+  })
 
   // get the default layout for the file source group, or if it doesn't
   // exist, the overall default layout
@@ -173,23 +169,15 @@ ${contentWithoutFrontmatter}`
     pathPrefix,
   })
 
-  try {
-    const result = babel.transform(rawMDXOutput, {
-      configFile: false,
-      plugins: [
-        requireFromMDX(`@babel/plugin-syntax-jsx`),
-        requireFromMDX(`@babel/plugin-syntax-object-rest-spread`),
-        require(`../utils/babel-plugin-html-attr-to-jsx-attr`),
-      ],
-    })
-    debugMore(`transformed code`, result.code)
-    return callback(
-      null,
-      `import * as React from 'react'
-  ${result.code}
-      `
-    )
-  } catch (e) {
-    return callback(e)
-  }
+  const result = babel.transform(rawMDXOutput, {
+    configFile: false,
+    plugins: [
+      requireFromMDX(`@babel/plugin-syntax-jsx`),
+      requireFromMDX(`@babel/plugin-syntax-object-rest-spread`),
+      require(`../utils/babel-plugin-html-attr-to-jsx-attr`),
+    ],
+  })
+  debugMore(`transformed code`, result.code)
+
+  return `import * as React from 'react'\n${result.code}\n`
 }
