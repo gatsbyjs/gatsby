@@ -13,11 +13,8 @@ import MDX from "./components/mdx"
 const {
   Button,
   ThemeProvider,
-  InputField,
   TextAreaField,
   TextAreaFieldControl,
-  InputFieldControl,
-  InputFieldLabel,
   getTheme,
   BaseAnchor,
   Heading,
@@ -48,7 +45,7 @@ import { useInputByKey, InputProvider } from "./renderer/input-provider"
 import { useResource, ResourceProvider } from "./renderer/resource-provider"
 
 const theme = getTheme()
-console.log({ GatsbyComponents, theme })
+console.log({ theme })
 
 ansi2HTML.setColors({
   red: theme.tones.DANGER.medium.slice(1),
@@ -146,9 +143,8 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT =
-  `/Users/kylemathews/programs/gatsby-contentful-blog` &&
-  `/Users/johno-mini/c/gatsby/starters/blog`
+const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test` // &&
+//  `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
