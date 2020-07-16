@@ -118,7 +118,7 @@ const schema = {
 }
 exports.schema = schema
 exports.validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  Joi.object(schema).validate(resource, { abortEarly: false })
 
 module.exports.exists = fileExists
 
