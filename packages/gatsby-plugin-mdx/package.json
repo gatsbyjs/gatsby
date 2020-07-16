@@ -14,8 +14,8 @@
     "directory": "packages/gatsby-plugin-mdx"
   },
   "peerDependencies": {
-    "@mdx-js/mdx": "^1.0.0",
-    "@mdx-js/react": "^1.0.0"
+    "@mdx-js/mdx": "^1.5.9",
+    "@mdx-js/react": "^1.5.9"
   },
   "dependencies": {
     "@babel/core": "^7.10.3",
