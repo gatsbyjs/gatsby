@@ -64,6 +64,67 @@ const PROJECT_ROOT =
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
 
+const DiffPre = ({ resourcePlan, ...props }) => (
+  <Styled.pre
+    {...props}
+    sx={{
+      background: theme => theme.tones.BRAND.superLight,
+      borderRadius: 2,
+      padding: 4,
+    }}
+    dangerouslySetInnerHTML={{
+      __html: ansi2HTML(resourcePlan.diff),
+    }}
+  />
+)
+
+const Diff = ({ resourcePlan, ...props }) => {
+  if (!resourcePlan.diff) {
+    return null
+  }
+
+  if (resourcePlan.resourceName === `File`) {
+    return (
+      <div
+        sx={{
+          background: theme => theme.tones.BRAND.superLight,
+          border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
+          borderRadius: 2,
+        }}
+      >
+        <Heading
+          as="h6"
+          sx={{
+            px: 4,
+            py: 3,
+            fontWeight: `normal`,
+            borderBottom: theme => `1px solid ${theme.tones.BRAND.lighter}`,
+          }}
+        >
+          {resourcePlan.resourceDefinitions.path}
+        </Heading>
+        <DiffPre
+          resourcePlan={resourcePlan}
+          sx={{
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+          }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <DiffPre
+      {...props}
+      resourcePlan={resourcePlan}
+      sx={{
+        border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
+      }}
+    />
+  )
+}
+
 const WelcomeMessage = () => (
   <div
     sx={{
@@ -250,20 +311,7 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
         {resourcePlan.describe}
       </Styled.p>
     </div>
-    {resourcePlan.diff && (
-      <Styled.pre
-        sx={{
-          background: theme => theme.tones.BRAND.superLight,
-          borderRadius: 2,
-          border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
-          padding: 4,
-          mb: isLastPlan ? 0 : 6,
-        }}
-        dangerouslySetInnerHTML={{
-          __html: ansi2HTML(resourcePlan.diff),
-        }}
-      />
-    )}
+    <Diff resourcePlan={resourcePlan} />
     {resourcePlan.resourceChildren
       ? resourcePlan.resourceChildren.map(resource => (
           <ResourcePlan key={resource._uuid} resourcePlan={resource} />
@@ -361,12 +409,32 @@ const Step = ({ state, step, i }) => {
               if (res.resourceName === `Input`) {
                 if (res.type === `textarea`) {
                   return (
-                    <div sx={{ pt: 3, width: '30%', maxWidth: '100%' }}>
-                    <TextAreaField>
+                    <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
+                      <TextAreaField>
+                        <div>
+                          <InputFieldLabel>{res.label}</InputFieldLabel>
+                        </div>
+                        <TextAreaFieldControl
+                          onInput={e => {
+                            sendInputEvent({
+                              uuid: res._uuid,
+                              key: res._key,
+                              value: e.target.value,
+                            })
+                          }}
+                        />
+                      </TextAreaField>
+                    </div>
+                  )
+                }
+                return (
+                  <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
+                    <InputField sx={{ pt: 3 }}>
                       <div>
                         <InputFieldLabel>{res.label}</InputFieldLabel>
                       </div>
-                      <TextAreaFieldControl
+                      <InputFieldControl
+                        type={res.type}
                         onInput={e => {
                           sendInputEvent({
                             uuid: res._uuid,
@@ -375,27 +443,7 @@ const Step = ({ state, step, i }) => {
                           })
                         }}
                       />
-                    </TextAreaField>
-                    </div>
-                  )
-                }
-                return (
-                  <div sx={{ pt: 3, width: '30%', maxWidth: '100%' }}>
-                  <InputField sx={{ pt: 3 }}>
-                    <div>
-                      <InputFieldLabel>{res.label}</InputFieldLabel>
-                    </div>
-                    <InputFieldControl
-                      type={res.type}
-                      onInput={e => {
-                        sendInputEvent({
-                          uuid: res._uuid,
-                          key: res._key,
-                          value: e.target.value,
-                        })
-                      }}
-                    />
-                  </InputField>
+                    </InputField>
                   </div>
                 )
               }
@@ -514,7 +562,7 @@ const ResourceChildren = ({ resourceChildren, state }) => {
       {resourceChildren.map(resource => (
         <Styled.li
           sx={{
-            listStyleType: `none`
+            listStyleType: `none`,
           }}
           key={resource._uuid}
         >
@@ -817,7 +865,7 @@ const WithProviders = ({ children }) => {
         mb: 2,
         fontFamily: `body`,
         fontWeight: `body`,
-        lineHeight: 1.6
+        lineHeight: 1.6,
       },
     },
   }
