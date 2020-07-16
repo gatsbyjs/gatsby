@@ -90,7 +90,7 @@ gatsby develop
 
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
 
-![Developer tool panel showing typography.js CSS styles](typography-styles.png)
+![Developer tool panel showing `typography.js` CSS styles](typography-styles.png)
 
 ### ✋ Make some content and style changes
 
