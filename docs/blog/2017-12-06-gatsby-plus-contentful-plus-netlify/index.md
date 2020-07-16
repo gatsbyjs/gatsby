@@ -130,7 +130,7 @@ for grabbing content as well, but how you deal with actually pulling it into
 your React components/pages with GraphQL is beautiful.
 
 After you install the `gatsby-source-contentful`
-[plugin](/packages/gatsby-source-contentful/) with NPM
+[plugin](/packages/gatsby-source-contentful/) with npm
 and add your Contentful API credentials to the gatsby-config file, the fun
 begins.
 

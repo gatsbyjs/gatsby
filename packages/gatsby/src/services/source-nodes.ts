@@ -1,6 +1,7 @@
-import { IBuildContext } from "./"
 import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
+import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { assertStore } from "../utils/assert-store"
 // import { findChangedPages } from "../utils/check-for-changed-pages"
 // import { IGatsbyPage } from "../redux/types"
 
@@ -8,10 +9,12 @@ export async function sourceNodes({
   parentSpan,
   webhookBody,
   store,
-}: Partial<IBuildContext>): Promise<void> {
-  if (!store) {
-    reporter.panic(`No redux store`)
-  }
+}: Partial<IDataLayerContext>): Promise<{
+  deletedPages: string[]
+  changedPages: string[]
+}> {
+  assertStore(store)
+
   const activity = reporter.activityTimer(`source and transform nodes`, {
     parentSpan,
   })
@@ -54,8 +57,8 @@ export async function sourceNodes({
   // tim.end()
 
   activity.end()
-  // return {
-  //   deletedPages,
-  //   changedPages,
-  // }
+  return {
+    deletedPages: [],
+    changedPages: [],
+  }
 }
