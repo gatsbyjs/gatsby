@@ -127,72 +127,73 @@ export class BaseLoader {
     this.prefetchDisabled = apiRunner(`disableCorePrefetching`).some(a => a)
   }
 
-  loadPageDataJson(rawPath) {
-    const fetchPageDataJson = loadObj => {
-      const { pagePath, retries = 0 } = loadObj
-      const url = createPageDataUrl(pagePath)
-      return this.memoizedGet(url).then(req => {
-        const { status, responseText } = req
+  fetchPageDataJson(loadObj) {
+    const { pagePath, retries = 0 } = loadObj
+    const url = createPageDataUrl(pagePath)
+    return this.memoizedGet(url).then(req => {
+      const { status, responseText } = req
 
-        // Handle 200
-        if (status === 200) {
-          try {
-            const jsonPayload = JSON.parse(responseText)
-            if (jsonPayload.path === undefined) {
-              throw new Error(`not a valid pageData response`)
-            }
-
-            return Object.assign(loadObj, {
-              status: PageResourceStatus.Success,
-              payload: jsonPayload,
-            })
-          } catch (err) {
-            // continue regardless of error
-          }
-        }
-
-        // Handle 404
-        if (status === 404 || status === 200) {
-          // If the request was for a 404 page and it doesn't exist, we're done
-          if (pagePath === `/404.html`) {
-            return Object.assign(loadObj, {
-              status: PageResourceStatus.Error,
-            })
+      // Handle 200
+      if (status === 200) {
+        try {
+          const jsonPayload = JSON.parse(responseText)
+          if (jsonPayload.path === undefined) {
+            throw new Error(`not a valid pageData response`)
           }
 
-          // Need some code here to cache the 404 request. In case
-          // multiple loadPageDataJsons result in 404s
-          return fetchPageDataJson(
-            Object.assign(loadObj, { pagePath: `/404.html`, notFound: true })
-          )
+          return Object.assign(loadObj, {
+            status: PageResourceStatus.Success,
+            payload: jsonPayload,
+          })
+        } catch (err) {
+          // continue regardless of error
         }
+      }
 
-        // handle 500 response (Unrecoverable)
-        if (status === 500) {
+      // Handle 404
+      if (status === 404 || status === 200) {
+        // If the request was for a 404 page and it doesn't exist, we're done
+        if (pagePath === `/404.html`) {
           return Object.assign(loadObj, {
             status: PageResourceStatus.Error,
           })
         }
 
-        // Handle everything else, including status === 0, and 503s. Should retry
-        if (retries < 3) {
-          return fetchPageDataJson(
-            Object.assign(loadObj, { retries: retries + 1 })
-          )
-        }
+        // Need some code here to cache the 404 request. In case
+        // multiple loadPageDataJsons result in 404s
+        return this.fetchPageDataJson(
+          Object.assign(loadObj, { pagePath: `/404.html`, notFound: true })
+        )
+      }
 
-        // Retried 3 times already, result is an error.
+      // handle 500 response (Unrecoverable)
+      if (status === 500) {
         return Object.assign(loadObj, {
           status: PageResourceStatus.Error,
         })
+      }
+
+      // Handle everything else, including status === 0, and 503s. Should retry
+      if (retries < 3) {
+        return this.fetchPageDataJson(
+          Object.assign(loadObj, { retries: retries + 1 })
+        )
+      }
+
+      // Retried 3 times already, result is an error.
+      return Object.assign(loadObj, {
+        status: PageResourceStatus.Error,
       })
-    }
+    })
+  }
+
+  loadPageDataJson(rawPath) {
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
 
-    return fetchPageDataJson({ pagePath }).then(pageData => {
+    return this.fetchPageDataJson({ pagePath }).then(pageData => {
       this.pageDataDb.set(pagePath, pageData)
 
       return pageData
