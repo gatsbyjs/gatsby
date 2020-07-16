@@ -6956,7 +6956,7 @@
     - Resume page generated using template Markdown files
 - url: https://gatsby-opinionated-starter.netlify.app/
   repo: https://github.com/datacrafts-io/gatsby-opinionated-starter
-  description: Opinionated full-fledged TypeScript dev environment starter. Includes Storybook, jest, testing-library, GitHub Actions CI, SCSS Modules with TS support, Husky, lint-staged, ESLint both for JS and TS, stylelint, remark-lint, Renovate, netlify deploy config and more.
+  description: Opinionated full-fledged TypeScript dev environment starter
   tags:
     - Styling:SCSS
     - Styling:Other
@@ -6965,4 +6965,15 @@
     - Linting
     - Storybook
   features:
-    - It is simply Gatsby default starter, but with many development environment integrations
+    - Storybook support
+    - SCSS + SCSS Modules support
+    - Jest + testing-library support
+    - TypeScript support
+    - ESLint support for both ES and TS
+    - remark-lint support for linting markdown files
+    - style-lint support for linting SCSS and SCSS Modules
+    - GitHub Actions CI optional support
+    - Renovate bot optional support
+    - Husky optional support
+    - Typography.js support
+    - Netlify deploy optional support
