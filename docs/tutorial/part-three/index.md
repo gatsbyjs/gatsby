@@ -135,7 +135,7 @@ export default function Home() {
 }
 ```
 
-![with-layout2](with-layout2.png)
+![Screenshot of a Gatsby page with a centered column of text](with-layout2.png)
 
 Sweet. You've installed and configured your very first Gatsby plugin!
 
@@ -218,7 +218,7 @@ export default function Home() {
 }
 ```
 
-![with-layout2](with-layout2.png)
+![Screenshot of a Gatsby page with a centered column of text](with-layout2.png)
 
 Sweet, the layout is working! The content of your index page is still centered.
 
