@@ -4,7 +4,7 @@ import { unstable_createPagesFromData, Link, graphql } from "gatsby"
 import Layout from "../../components/layout"
 import SEO from "../../components/seo"
 
-function BlogPost({ data: { post } }) {
+export default function BlogPost({ data: { post } }) {
   return (
     <Layout>
       <SEO title={post.frontmatter.title} description={post.excerpt} />
@@ -15,8 +15,6 @@ function BlogPost({ data: { post } }) {
     </Layout>
   )
 }
-
-export default unstable_createPagesFromData(BlogPost, `MarkdownRemark`)
 
 export const blogPostQuery = graphql`
   query GetBlogPostBySlugCollection($id: String!) {

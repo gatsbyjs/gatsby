@@ -98,13 +98,13 @@ function graphql() {
   )
 }
 
-function unstable_createPagesFromData(Component) {
-  return Component
+function unstable_collectionQuery() {
+  // TODO: Strip this out of the component and throw error if it gets called
+  return null
 }
 
 export {
   Link,
-  unstable_createPagesFromData,
   withAssetPrefix,
   withPrefix,
   graphql,
@@ -119,4 +119,6 @@ export {
   PageRenderer,
   useStaticQuery,
   prefetchPathname,
+  // Experimental API
+  unstable_collectionQuery,
 }

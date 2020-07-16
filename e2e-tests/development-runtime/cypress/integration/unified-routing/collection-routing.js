@@ -14,8 +14,9 @@ describe(`collection-routing`, () => {
           .first()
           .click()
           .waitForRouteChange()
-
-        cy.getTestElement(`slug`).invoke(`text`).should(`equal`, slug)
+          .getTestElement(`slug`)
+          .invoke(`text`)
+          .should(`equal`, slug)
       })
   })
 })

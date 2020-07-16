@@ -1,23 +1,8 @@
 import { babelParseToAst } from "gatsby/dist/utils/babel-parse-to-ast"
 import { generateQueryFromString } from "./extract-query"
+import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
 import traverse from "@babel/traverse"
-import generate from "@babel/generator"
-import * as t from "@babel/types"
-
-// TODO: Ive tried to make TS happy here, but any changes I make to get TS
-// to work actually make the code fail. This code works. So maybe we can figure
-// this out later.
-// eslint-disable-next-line @typescript-eslint/camelcase
-function isunstable_createPagesFromData(path): boolean {
-  return (
-    (path.node.callee.type === `MemberExpression` &&
-      path.node.callee.property.name === `unstable_createPagesFromData` &&
-      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
-    (path.node.callee.name === `unstable_createPagesFromData` &&
-      path.get(`callee`).referencesImport(`gatsby`))
-  )
-}
 
 // This Function opens up the actual collection file and extracts the queryString used in the
 // `unstable_createPagesFromData` macro.
@@ -25,8 +10,6 @@ export function collectionExtractQueryString(
   absolutePath: string
 ): string | null {
   let queryString: string | null = null
-  let callsiteExpression
-  let isExportedAsDefault
 
   // 1.  Convert the file to a babel ast
   const ast = babelParseToAst(
@@ -34,62 +17,38 @@ export function collectionExtractQueryString(
     absolutePath
   )
 
+  const modelType = /\{([a-zA-Z]+):/.exec(absolutePath)?.[1]
+
+  if (!modelType) {
+    throw new Error(`You screwed up`)
+  }
+
   // 2.  Traverse the AST to find the unstable_createPagesFromData macro
   traverse(ast, {
-    // The unstable_createPagesFromData is always a CallExpression
-    CallExpression(path) {
-      // 2.a.  But there are other callExpressions, so first we need to confirm that it is specifically
-      //       the unstable_createPagesFromData node that we are acting on.
-      if (!isunstable_createPagesFromData(path)) return
-
-      // We save the callsiteExpression just for better logging to the user.
-      callsiteExpression = generate(path.node).code
-
-      // 2.b  The query is always the second argument to the function
-      const [, queryAst] = path.node.arguments
-      let string = ``
-
-      // The query could be a template literal, e.g. backticks ``
-      if (t.isTemplateLiteral(queryAst)) {
-        string = queryAst.quasis[0].value.raw
+    ExportNamedDeclaration(path) {
+      if (path.node.source) {
+        return
       }
+      path.traverse({
+        TaggedTemplateExpression(path) {
+          const { text } = getGraphQLTag(path, `unstable_collectionGraphql`)
+          if (!text) return
 
-      // Or it could be a normal string
-      if (t.isStringLiteral(queryAst)) {
-        string = queryAst.value
-      }
+          if (text.includes(`...CollectionPagesQueryFragment`) === false) {
+            throw new Error(
+              `Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes`
+            )
+          }
 
-      // We want the convention to be that you export default the unstable_createPagesFromData builder,
-      // so this check ensures that if they haven't done that we prevent things from going on.
-      isExportedAsDefault = t.isExportDefaultDeclaration(path.container)
-
-      // 2.c  This is important, we get the string, but we have to create a full graphql
-      //      query from it. This generateQueryFromString call does all of that magic
-      queryString = generateQueryFromString(string, absolutePath)
+          queryString = text
+        },
+      })
     },
   })
 
-  // 3. log error and exit early if they did not export default unstable_createPagesFromData
-  if (isExportedAsDefault === false) {
-    console.error(`CollectionBuilderError:
-  The unstable_createPagesFromData call in ${
-    absolutePath.split(`src/pages`)[1]
-  } needs to be exported as default like this:
-
-export default ${callsiteExpression};
-`)
-    return null
-  }
-  // 4. If we couldnt find the queryString for any other reason, then we log that
-  else if (!queryString) {
-    console.error(
-      `CollectionBuilder: There was an error generating pages from your collection.
-
-FilePath: ${absolutePath.split(`src/pages`)[1]}
-Function: ${callsiteExpression}
-    `
-    )
-  }
+  // 3  This is important, we get the model or query, but we have to create a real graphql
+  //    query from it. This generateQueryFromString call does all of that magic
+  queryString = generateQueryFromString(queryString || modelType, absolutePath)
 
   return queryString
 }

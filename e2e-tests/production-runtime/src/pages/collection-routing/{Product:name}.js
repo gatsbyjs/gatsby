@@ -3,7 +3,7 @@ import { unstable_createPagesFromData, Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
 
-function BlogPost({ data: { product } }) {
+export default function BlogPost({ data: { product } }) {
   return (
     <Layout>
       <h1>{product.id}</h1>
@@ -12,8 +12,6 @@ function BlogPost({ data: { product } }) {
     </Layout>
   )
 }
-
-export default unstable_createPagesFromData(BlogPost, `Product`)
 
 export const blogPostQuery = graphql`
   query GetBlogPostBySlugCollection($name: String!) {

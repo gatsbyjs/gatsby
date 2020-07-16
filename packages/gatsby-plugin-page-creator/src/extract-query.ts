@@ -34,7 +34,7 @@ export function reverseLookupParams(
   }
 
   absolutePath.split(path.sep).forEach(part => {
-    const regex = /^\{([a-zA-Z_()]+)\}/.exec(part)
+    const regex = /^\{[a-zA-Z]+:([a-zA-Z_()]+)\}/.exec(part)
 
     if (regex === null) return
     const extracted = regex[1]
@@ -61,8 +61,8 @@ function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(path.sep)
 
   // always add `id` to queries
-  if (parts.some(s => s.includes(`{id}`)) === false) {
-    parts.push(`{id}`)
+  if (parts.some(s => s.includes(`:id}`)) === false) {
+    parts.push(`{Model:id}`)
   }
 
   return parts
@@ -70,7 +70,10 @@ function extractUrlParamsForQuery(createdPath: string): string {
       if (part.startsWith(`{`)) {
         return queryParts.concat(
           deriveNesting(
-            part.replace(`{`, ``).replace(`}`, ``).replace(`.js`, ``)
+            part
+              .replace(/\{[a-zA-Z]+:/, ``)
+              .replace(`}`, ``)
+              .replace(`.js`, ``)
           )
         )
       }

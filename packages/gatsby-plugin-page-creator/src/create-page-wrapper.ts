@@ -3,12 +3,9 @@ import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
 import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
-import fs from "fs-extra"
 
 function pathIsCollectionBuilder(path: string): boolean {
-  if (fs.existsSync(path) === false) return false
-  const js = fs.readFileSync(path).toString()
-  return js.includes(`unstable_createPagesFromData`)
+  return path.includes(`{`)
 }
 
 function pathIsClientOnlyRoute(path: string): boolean {

@@ -8,7 +8,7 @@ export default function Root(props) {
       {props.data.allProduct.nodes.map(node => {
         return (
           <Link
-            to={`/collection-routing/${node.name}`}
+            to={node.path}
             data-testid="collection-routing-blog"
             data-testproductname={node.name}
           >
@@ -24,6 +24,7 @@ export const query = graphql`
   query AllProducts {
     allProduct {
       nodes {
+        path(filePath: "collection-routing/{Product:name}")
         name
       }
     }

@@ -87,9 +87,9 @@ export const componentsReducer = (
           query: action.payload.query,
         })
       }
-
       state.set(action.payload.componentPath, {
         ...service.state.context,
+        ...action.payload,
       })
       return state
     }

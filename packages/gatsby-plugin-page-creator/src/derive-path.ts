@@ -2,9 +2,9 @@ import _ from "lodash"
 import slugify from "slugify"
 
 // Generates the path for the page from the file path
-// src/pages/product/{id}.js => /product/:id, pulls from nodes.id
-// src/pages/product/{sku__en} => product/:sku__en pulls from nodes.sku.en
-// src/pages/blog/{parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
+// product/{Product:id}.js => /product/:id, pulls from nodes.id
+// product/{Product:sku__en} => product/:sku__en pulls from nodes.sku.en
+// blog/{MarkdownRemark:parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
 export function derivePath(path: string, node: Record<string, any>): string {
   // 1.  Remove the extension
   let pathWithoutExtension = path.replace(/\.[a-z]+$/, ``)
@@ -25,6 +25,7 @@ export function derivePath(path: string, node: Record<string, any>): string {
     const __ = new RegExp(`__`, `g`)
     const key = slugPart
       .replace(/(\{|\})/g, ``)
+      .replace(/([a-zA-Z]+):/, ``)
       // Ignore union syntax
       .replace(/\(.*\)__/g, ``)
       // replace access by periods

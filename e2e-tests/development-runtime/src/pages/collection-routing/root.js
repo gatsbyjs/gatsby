@@ -27,7 +27,7 @@ export const query = graphql`
         frontmatter {
           title
         }
-        path(filePath: "collection-routing/{fields__slug}")
+        path(filePath: "collection-routing/{MarkdownRemark:fields__slug}")
       }
     }
   }

@@ -36,8 +36,8 @@ class GraphQLSyntaxError extends Error {
   }
 }
 
-const isGlobalIdentifier = tag =>
-  tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
+const isGlobalIdentifier = (tag, tagName = `graphql`) =>
+  tag.isIdentifier({ name: tagName }) && tag.scope.hasGlobal(tagName)
 
 export function followVariableDeclarations(binding) {
   const node = binding.path?.node
@@ -86,25 +86,25 @@ function getTagImport(tag) {
   return null
 }
 
-function isGraphqlTag(tag) {
+function isGraphqlTag(tag, tagName = `graphql`) {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
 
   const importPath = getTagImport(identifier)
-  if (!importPath) return isGlobalIdentifier(tag)
+  if (!importPath) return isGlobalIdentifier(tag, tagName)
 
   if (
     isExpression &&
     (importPath.isImportNamespaceSpecifier() || importPath.isIdentifier())
   ) {
-    return tag.get(`property`).node.name === `graphql`
+    return tag.get(`property`).node.name === tagName
   }
 
   if (importPath.isImportSpecifier())
-    return importPath.node.imported.name === `graphql`
+    return importPath.node.imported.name === tagName
 
   if (importPath.isObjectProperty())
-    return importPath.get(`key`).node.name === `graphql`
+    return importPath.get(`key`).node.name === tagName
 
   return false
 }
@@ -139,11 +139,11 @@ function removeImport(tag) {
   }
 }
 
-function getGraphQLTag(path) {
+function getGraphQLTag(path, tagName = `graphql`) {
   const tag = path.get(`tag`)
-  const isGlobal = isGlobalIdentifier(tag)
+  const isGlobal = isGlobalIdentifier(tag, tagName)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {}
+  if (!isGlobal && !isGraphqlTag(tag, tagName)) return {}
 
   const quasis = path.node.quasi.quasis
 
