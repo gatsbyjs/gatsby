@@ -29,6 +29,7 @@
 18F
 1920s
 1990s
+1GB
 1M
 1pm
 1px
@@ -66,6 +67,7 @@
 4g
 5-10X
 500M
+500mb
 500ms
 500px
 50k
@@ -1883,8 +1885,8 @@ Swartz
 Syfy
 symlink
 syntaxes
-Systemizing
 systemizing
+Systemizing
 tachyons
 Tachyons
 Tada

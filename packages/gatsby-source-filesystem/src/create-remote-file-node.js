@@ -55,11 +55,10 @@ let totalJobs = 0
  * @param  {Reporter} [options.reporter]
  */
 
-const STALL_RETRY_LIMIT = 3
-const STALL_TIMEOUT = 30000
+const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT || 3
+const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT || 30000
 
-const CONNECTION_RETRY_LIMIT = 5
-const CONNECTION_TIMEOUT = 30000
+const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
 
 /********************
  * Queue Management *
@@ -152,8 +151,9 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     }
     const responseStream = got.stream(url, {
       headers,
-      timeout: CONNECTION_TIMEOUT,
-      retries: CONNECTION_RETRY_LIMIT,
+      timeout: {
+        send: CONNECTION_TIMEOUT, // https://github.com/sindresorhus/got#timeout
+      },
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
