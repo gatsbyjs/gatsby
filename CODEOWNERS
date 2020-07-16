@@ -4,6 +4,7 @@
 # All docs must be reviewed by the docs team.
 /docs/                                          @gatsbyjs/learning
 **/README.md                                    @gatsbyjs/learning
+dictionary.txt                                  @gatsbyjs/learning
 
 # Benchmarks
 /benchmarks/                                    @duffn @pvdz @smthomas
