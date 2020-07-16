@@ -1,5 +1,4 @@
 import crypto from "crypto"
-import v8 from "v8"
 import { Span } from "opentracing"
 import {
   parse,
@@ -12,7 +11,6 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -23,6 +21,11 @@ import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
 import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
+
+export interface IGraphQLRunnerOptions {
+  collectStats?: boolean
+  graphqlTracing?: boolean
+}
 
 export class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
@@ -40,18 +43,11 @@ export class GraphQLRunner {
 
   constructor(
     protected store: Store<IGatsbyState>,
-    {
-      collectStats,
-      graphqlTracing,
-    }: {
-      collectStats?: boolean
-      graphqlTracing?: boolean
-    } = {}
+    { collectStats, graphqlTracing }: IGraphQLRunnerOptions = {}
   ) {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
-      nodeStore,
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
@@ -156,13 +152,6 @@ export class GraphQLRunner {
       if (typeof statsQuery !== `string`) {
         statsQuery = statsQuery.body
       }
-      this.stats.uniqueOperations.add(
-        crypto
-          .createHash(`sha1`)
-          .update(statsQuery)
-          .update(v8.serialize(context))
-          .digest(`hex`)
-      )
 
       this.stats.uniqueQueries.add(
         crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)

@@ -114,16 +114,16 @@ When building pages from files, you often want to create a URL from a file's pat
 createFilePath({
   // The node you'd like to convert to a path
   // e.g. from a markdown, JSON, YAML file, etc
-  node:
+  node,
   // Method used to get a node
   // The parameter from `onCreateNode` should be passed in here
-  getNode:
+  getNode,
   // The base path for your files.
   // Defaults to `src/pages`. For the example above, you'd use `src/content`.
-  basePath:
+  basePath,
   // Whether you want your file paths to contain a trailing `/` slash
   // Defaults to true
-  trailingSlash:
+  trailingSlash,
 })
 ```
 
@@ -342,5 +342,4 @@ In case that due to spotty network, or slow connection, some remote files fail t
 
 - `STALL_RETRY_LIMIT`, default: `3`
 - `STALL_TIMEOUT`, default: `30000`
-- `CONNECTION_RETRY_LIMIT`, default: `5`
 - `CONNECTION_TIMEOUT`, default: `30000`

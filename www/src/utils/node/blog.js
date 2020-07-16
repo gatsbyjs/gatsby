@@ -1,10 +1,57 @@
-const path = require(`path`)
 const _ = require(`lodash`)
 const slugify = require(`slugify`)
 const moment = require(`moment`)
 const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
+const { getTemplate } = require(`../get-template`)
+
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
+
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      seoTitle: String
+      draft: Boolean
+      date: Date @dateformat
+      canonicalLink: String
+      tags: [String!]
+      author: AuthorYaml @link
+      twittercard: String
+      publishedAt: String
+      # TODO this was only used for one blog post; maybe it can be replaced with Image?
+      cover: File @fileByRelativePath
+      image: File @fileByRelativePath
+      imageAuthor: String
+      imageAuthorLink: String
+      imageTitle: String
+      showImageInArticle: Boolean
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      section: String
+      released: Boolean
+      publishedAt: String
+      excerpt: String
+    }
+
+    type AuthorYaml implements Node @derivedTypes @dontInfer {
+      id: String!
+      bio: String
+      avatar: File @fileByRelativePath
+      twitter: String
+      fields: AuthorYamlFields!
+    }
+
+    type AuthorYamlFields @dontInfer {
+      slug: String!
+    }
+  `)
+}
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
@@ -52,14 +99,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-  const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
-  const tagTemplate = path.resolve(`src/templates/tags.js`)
-  const contributorPageTemplate = path.resolve(
-    `src/templates/template-contributor-page.js`
-  )
+  const blogPostTemplate = getTemplate(`template-blog-post`)
+  const blogListTemplate = getTemplate(`template-blog-list`)
+  const tagTemplate = getTemplate(`tags`)
+  const contributorPageTemplate = getTemplate(`template-contributor-page`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allAuthorYaml {
         nodes {
@@ -99,7 +144,7 @@ exports.createPages = async ({ graphql, actions }) => {
   data.allAuthorYaml.nodes.forEach(node => {
     createPage({
       path: `${node.fields.slug}`,
-      component: slash(contributorPageTemplate),
+      component: contributorPageTemplate,
       context: {
         authorId: node.id,
       },
@@ -121,7 +166,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }).forEach((_, i) => {
     createPage({
       path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
-      component: slash(blogListTemplate),
+      component: blogListTemplate,
       context: {
         limit: postsPerPage,
         skip: i * postsPerPage,
@@ -140,7 +185,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: `${node.fields.slug}`, // required
-      component: slash(blogPostTemplate),
+      component: blogPostTemplate,
       context: {
         slug: node.fields.slug,
         prev: prev && {

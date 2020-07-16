@@ -41,7 +41,7 @@ We'd transitioned some of our site already: we migrated our [explore data page](
 
 The homepage presented an exciting opportunity, as the redesign would feature monthly data for the first time on the site. Up until that point, we'd published only annual data. The addition of monthly data meant we needed a way to quickly and easily update the data. It became even more important that other team members – besides just our developer – could update the data.
 
-![homepage design of natural resources revenue data, featuring a map of the U.S., and charts for natural resources production, revenue, and disbursments on federal lands and waters](./full-homepage.jpg)
+![homepage design of natural resources revenue data, featuring a map of the U.S., and charts for natural resources production, revenue, and disbursements on federal lands and waters](./full-homepage.jpg)
 
 ## Rebuilding in Gatsby
 
