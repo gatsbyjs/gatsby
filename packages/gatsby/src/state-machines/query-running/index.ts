@@ -3,11 +3,6 @@ import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
 
-const extractQueriesIfFilesAreDirty = {
-  cond: (ctx): boolean => !!ctx.filesDirty,
-  target: `extractingQueries`,
-}
-
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
@@ -15,7 +10,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   states: {
     extractingQueries: {
       id: `extracting-queries`,
-      onEntry: `markFilesClean`,
       invoke: {
         id: `extracting-queries`,
         src: `extractQueries`,
@@ -25,7 +19,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     writingRequires: {
-      always: extractQueriesIfFilesAreDirty,
       invoke: {
         src: `writeOutRequires`,
         id: `writing-requires`,
@@ -35,7 +28,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     calculatingDirtyQueries: {
-      always: extractQueriesIfFilesAreDirty,
       invoke: {
         id: `calculating-dirty-queries`,
         src: `calculateDirtyQueries`,
@@ -46,7 +38,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     runningStaticQueries: {
-      always: extractQueriesIfFilesAreDirty,
       invoke: {
         src: `runStaticQueries`,
         id: `running-static-queries`,
@@ -56,7 +47,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     runningPageQueries: {
-      always: extractQueriesIfFilesAreDirty,
       invoke: {
         src: `runPageQueries`,
         id: `running-page-queries`,

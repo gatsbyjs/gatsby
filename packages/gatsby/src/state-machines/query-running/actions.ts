@@ -11,11 +11,6 @@ export const flushPageData = (): void => {
   enqueueFlush()
 }
 
-export const markFilesClean = assign<
-  IQueryRunningContext,
-  DoneInvokeEvent<any>
->({ filesDirty: false })
-
 export const assignDirtyQueries = assign<
   IQueryRunningContext,
   DoneInvokeEvent<any>
@@ -55,6 +50,5 @@ export const queryActions: ActionFunctionMap<
   resetGraphQLRunner,
   assignDirtyQueries,
   flushPageData,
-  markFilesClean,
   finishUpQueries,
 }
