@@ -3,6 +3,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
+import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
@@ -12,7 +13,7 @@ import {
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
-import { IProgram } from "./types"
+import { IProgram, IDebugInfo } from "./types"
 import { IBuildContext } from "../services"
 import { AnyEventObject, interpret, Actor, Interpreter, State } from "xstate"
 import { globalTracer } from "opentracing"
@@ -53,8 +54,24 @@ process.on(`message`, msg => {
   }
 })
 
-module.exports = async (program: IProgram): Promise<void> => {
-  reporter.setVerbose(program.verbose)
+interface IDevelopArgs extends IProgram {
+  debugInfo: IDebugInfo | null
+}
+
+const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (debugInfo.break) {
+    inspector.open(debugInfo.port, undefined, true)
+    // eslint-disable-next-line no-debugger
+    debugger
+  } else {
+    inspector.open(debugInfo.port)
+  }
+}
+
+module.exports = async (program: IDevelopArgs): Promise<void> => {
+  if (program.debugInfo) {
+    openDebuggerPort(program.debugInfo)
+  }
 
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user

@@ -11,7 +11,7 @@ tags:
 
 ![A group of people eating Little Caesars pizza in an office](./little-caesars-busted.png)
 
-Starting from a single, family-owned restaurant in 1959, Little Caesars has grown into the third-largest pizza chain in the world. Today the company has stores in all 50 U.S. states, plus and 26 additional countries and territories. Little Caesars runs more than 20 websites to support all of those stores with marketing content and easy online pizza ordering.
+Starting from a single, family-owned restaurant in 1959, Little Caesars has grown into the third-largest pizza chain in the world. Today the company has stores in all 50 U.S. states, plus 26 additional countries and territories. Little Caesars runs more than 20 websites to support all of those stores with marketing content and easy online pizza ordering.
 
 The company's existing site architecture, however, was far from streamlined, and this impeded both performance and development. The Little Caesars technical team decided that the best approach for providing an outstanding customer experience across all those different sites would be a unified ordering platform with scalability built in.
 
@@ -68,6 +68,6 @@ Little Caesars new Gatsby-based architecture turned out to be a gift that keeps 
 
 “That definitely contributed to our bottom line in Canada when the pandemic hit,” he continues, but there was another payoff that the team savored even more: “Leadership presented us with an impossible task, and we turned around and said ‘We’re already prepared for that, here you go!’”
 
-Customers now enjoy a single, unified, and responsive web experience that lets them find what they want quickly. But the move to a new website framework behind the scenes was pretty much invisible to customers. “We had some feedback about the site being speedy, but we had no major support issues — and that’s a very good thing,” says Smith.
+Customers now enjoy a single, unified, and responsive web experience that lets them find what they want quickly. But the move to a new website framework behind the scenes was pretty much invisible to customers. “We heard feedback about the site being speedy, but no major support issues — and that’s a very good thing,” says Smith.
 
 _Hungry for more? [Check out this webinar](https://www.gatsbyjs.com/gatsby-themes/) to learn how you can streamline development of your new site with Gatsby themes._

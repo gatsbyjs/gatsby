@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.2...gatsby@2.24.3) (2020-07-15)
+
+### Bug Fixes
+
+- **gatsby:** fix timing issue around marking webpack as pending due to requires-writer run ([#25759](https://github.com/gatsbyjs/gatsby/issues/25759)) ([fa3a7eb](https://github.com/gatsbyjs/gatsby/commit/fa3a7eb))
+- **gatsby:** Fixes process.env replacement for some packages ([#25684](https://github.com/gatsbyjs/gatsby/issues/25684)) ([d276917](https://github.com/gatsbyjs/gatsby/commit/d276917))
+- **gatsby:** Support numbers in navigate function ([#25611](https://github.com/gatsbyjs/gatsby/issues/25611)) ([83926c8](https://github.com/gatsbyjs/gatsby/commit/83926c8))
+
+### Features
+
+- **gatsby:** Track static queries by template ([#25549](https://github.com/gatsbyjs/gatsby/issues/25549)) ([e640c5b](https://github.com/gatsbyjs/gatsby/commit/e640c5b))
+
 ## [2.24.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.1...gatsby@2.24.2) (2020-07-10)
 
 ### Bug Fixes
