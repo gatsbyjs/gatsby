@@ -54,7 +54,7 @@ const schema = {
   ...resourceSchema,
 }
 const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  Joi.object(schema).validate(resource, { abortEarly: false })
 
 exports.schema = schema
 exports.validate = validate

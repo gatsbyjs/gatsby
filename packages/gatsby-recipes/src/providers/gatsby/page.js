@@ -97,7 +97,7 @@ const validate = resource => {
     }
   }
 
-  return Joi.validate(resource, schema, { abortEarly: false })
+  return Joi.object(schema).validate(resource, { abortEarly: false })
 }
 
 exports.schema = schema
