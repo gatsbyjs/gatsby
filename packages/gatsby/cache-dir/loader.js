@@ -86,9 +86,12 @@ export class BaseLoader {
     //     componentChunkName,
     //     path,
     //     webpackCompilationHash,
-    //   }
+    //     staticQueryHashes
+    //   },
+    //   staticQueryResults
     // }
     this.pageDb = new Map()
+    this.inFlightDb = new Map()
     this.staticQueryDb = new Map()
     this.pageDataDb = new Map()
     this.prefetchTriggered = new Set()
@@ -97,24 +100,24 @@ export class BaseLoader {
     setMatchPaths(matchPaths)
   }
 
-  inFlightDb = new Map()
+  inFlightNetworkRequests = new Map()
 
   memoizedGet(url) {
-    let inFlightPromise = this.inFlightDb.get(url)
+    let inFlightPromise = this.inFlightNetworkRequests.get(url)
 
     if (!inFlightPromise) {
       inFlightPromise = doFetch(url, `GET`)
-      this.inFlightDb.set(url, inFlightPromise)
+      this.inFlightNetworkRequests.set(url, inFlightPromise)
     }
 
     // Prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
     return inFlightPromise
       .then(response => {
-        this.inFlightDb.delete(url)
+        this.inFlightNetworkRequests.delete(url)
         return response
       })
       .catch(err => {
-        this.inFlightDb.delete(url)
+        this.inFlightNetworkRequests.delete(url)
         throw err
       })
   }
@@ -208,7 +211,11 @@ export class BaseLoader {
       return Promise.resolve(page.payload)
     }
 
-    return Promise.all([
+    if (this.inFlightDb.has(pagePath)) {
+      return this.inFlightDb.get(pagePath)
+    }
+
+    const inFlightPromise = Promise.all([
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
     ]).then(allData => {
@@ -290,6 +297,19 @@ export class BaseLoader {
         }
       )
     })
+
+    inFlightPromise
+      .then(response => {
+        this.inFlightDb.delete(pagePath)
+      })
+      .catch(error => {
+        this.inFlightDb.delete(pagePath)
+        throw error
+      })
+
+    this.inFlightDb.set(pagePath, inFlightPromise)
+
+    return inFlightPromise
   }
 
   // returns undefined if loading page ran into errors
