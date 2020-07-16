@@ -263,12 +263,12 @@ export class BaseLoader {
             return { staticQueryHash, jsonPayload }
           }
 
-          return this.memoizedGet(`/static/d/${staticQueryHash}.json`).then(
-            req => {
-              const jsonPayload = JSON.parse(req.responseText)
-              return { staticQueryHash, jsonPayload }
-            }
-          )
+          return this.memoizedGet(
+            `${__PATH_PREFIX__}/static/d/${staticQueryHash}.json`
+          ).then(req => {
+            const jsonPayload = JSON.parse(req.responseText)
+            return { staticQueryHash, jsonPayload }
+          })
         })
       ).then(staticQueryResults => {
         const staticQueryResultsMap = {}
