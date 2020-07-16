@@ -15,7 +15,7 @@
     "@babel/parser": "^7.10.3",
     "@babel/runtime": "^7.10.3",
     "@babel/traverse": "^7.10.3",
-    "@hapi/joi": "^15.1.1",
+    "@hapi/joi": "^17.1.1",
     "@mikaelkristiansson/domready": "^1.0.10",
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.3.3",
