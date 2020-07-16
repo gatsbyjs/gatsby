@@ -93,7 +93,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: [
           {
             target: `startingDevServers`,
-            cond: ({ compiler }: IBuildContext): boolean => !compiler,
+            cond: ({ firstRun }: IBuildContext): boolean => !!firstRun,
           },
           {
             target: `waiting`,

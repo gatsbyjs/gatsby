@@ -19,7 +19,10 @@ export const callRealApi = (event: IMutationAction, store?: Store): void => {
   const { type, payload, resolve } = event
   if (type in actions) {
     const action = actions[type](...payload)
-    resolve(store.dispatch(action))
+    const result = store.dispatch(action)
+    if (resolve) {
+      resolve(result)
+    }
   } else {
     reporter.log(`Could not dispatch unknown action "${type}`)
   }
