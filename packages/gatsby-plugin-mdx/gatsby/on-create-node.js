@@ -8,8 +8,6 @@ const createMDXNode = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
 const { findImports } = require(`../utils/gen-mdx`)
 
-const contentDigest = val => createContentDigest(val)
-
 module.exports = async (
   {
     node,
@@ -73,7 +71,6 @@ module.exports = async (
     cache,
     scopeIdentifiers,
     scopeImports,
-    createContentDigest: contentDigest,
     parentNode: node,
   })
 }
@@ -82,7 +79,6 @@ async function cacheScope({
   cache,
   scopeImports,
   scopeIdentifiers,
-  createContentDigest,
   parentNode,
 }) {
   // scope files are the imports from an MDX file pulled out and re-exported.
