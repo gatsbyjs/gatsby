@@ -103,7 +103,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   }
 
   if (plan.currentState !== plan.newState) {
-    plan.diff = await getDiff(plan.currentState, plan.newState)
+    plan.diff = getDiff(plan.currentState, plan.newState)
   }
 
   return plan

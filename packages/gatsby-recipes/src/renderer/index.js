@@ -1,51 +1,89 @@
 const React = require(`react`)
 const mdx = require(`@mdx-js/mdx`)
 const { transform } = require(`@babel/standalone`)
+const template = require(`@babel/template`).default
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
+const babelPluginRemoveExportKeywords = require(`babel-plugin-remove-export-keywords`)
+const babelChainingPlugin = require(`@babel/plugin-proposal-optional-chaining`)
 
 const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
 const { RecipeStep, RecipeIntroduction } = require(`./step-component`)
+const Input = require(`./input`).default
+const { useInputByKey } = require(`./input-provider`)
+const { useResource } = require(`./resource-provider`)
+const { useProvider } = require(`./provider-provider`)
+const babelPluginRemoveShortcodes = require(`./babel-plugin-remove-shortcodes`)
+const babelPluginCopyKeyProp = require(`./babel-plugin-copy-key-prop`)
+const babelPluginMoveExportKeywords = require(`./babel-plugin-move-export-keywords`)
 
 const scope = {
   React,
   RecipeStep,
   RecipeIntroduction,
+  Input,
+  useInputByKey,
+  useResource,
+  useProvider,
   Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
+  mdx: React.createElement,
+  MDXContent: React.createElement,
 }
 
-// We want to call the function constructor with our resulting
-// transformed JS so we need to turn it into a "function body"
 const transformCodeForEval = code => {
-  const newCode = code.replace(/;$/, ``)
+  // Remove the trailing semicolons so we can turn the component
+  // into a return statement.
+  let newCode = code.replace(/;\n;$/, ``)
 
-  return `return (${newCode})`
-}
+  newCode = newCode + `\nreturn React.createElement(MDXContent)`
 
-// TODO: Release MDX v2 canary so we can avoid the hacks
-const stripMdxLayout = str => {
-  const newJsx = str
-    .replace(/^.*mdxType="MDXLayout">/ms, ``)
-    .replace(/<\/MDXLayout>.*/ms, ``)
-
-  return `<doc>${newJsx}</doc>`
+  return newCode
 }
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
-    plugins: [[babelPluginTransformReactJsx, { useBuiltIns: true }]],
+    parserOpts: {
+      // We want to return outside of a function because the output from
+      // Babel will be evaluated inline as part of the render process.
+      allowReturnOutsideFunction: true,
+    },
+    plugins: [
+      babelPluginCopyKeyProp,
+      babelPluginMoveExportKeywords,
+      // babelPluginRemoveExportKeywords,
+      babelPluginRemoveShortcodes,
+      // TODO figure out how to use preset-env
+      babelChainingPlugin,
+      [babelPluginTransformReactJsx, { useBuiltIns: true }],
+    ],
   })
 
   return code
 }
 
+const mdxCache = new Map()
+const jsxCache = new Map()
+
 module.exports = (mdxSrc, cb, context, isApply) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
-  const jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
-  const srcCode = transformJsx(stripMdxLayout(jsxFromMdx))
+  let jsxFromMdx
+  if (mdxCache.has(mdxSrc)) {
+    jsxFromMdx = mdxCache.get(mdxSrc)
+  } else {
+    jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
+    mdxCache.set(mdxSrc, jsxFromMdx)
+  }
+
+  let srcCode
+  if (jsxCache.has(jsxFromMdx)) {
+    srcCode = jsxCache.get(jsxFromMdx)
+  } else {
+    srcCode = transformJsx(jsxFromMdx)
+    jsxCache.set(jsxFromMdx, srcCode)
+  }
 
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 

@@ -1,5 +1,6 @@
 const unified = require(`unified`)
 const remarkMdx = require(`remark-mdx`)
+const remarkMdxjs = require(`remark-mdxjs`)
 const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
 const fetch = require(`node-fetch`)
@@ -7,6 +8,7 @@ const fs = require(`fs-extra`)
 const isUrl = require(`is-url`)
 const path = require(`path`)
 const visit = require(`unist-util-visit`)
+const remove = require(`unist-util-remove`)
 
 const { uuid } = require(`./util`)
 
@@ -19,6 +21,17 @@ const asRoot = node => {
   }
 }
 
+const pluckExports = tree => {
+  let exports = []
+  visit(tree, `export`, node => {
+    exports.push(node)
+  })
+
+  remove(tree, `export`)
+
+  return exports
+}
+
 const applyUuid = tree => {
   visit(tree, `mdxBlockElement`, node => {
     if (!IGNORED_COMPONENTS.includes(node.name)) {
@@ -27,13 +40,22 @@ const applyUuid = tree => {
         name: `_uuid`,
         value: uuid(),
       })
+      node.attributes.push({
+        type: `mdxAttribute`,
+        name: `_type`,
+        value: node.name,
+      })
     }
   })
 
   return tree
 }
 
-const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
+const u = unified()
+  .use(remarkParse)
+  .use(remarkStringify)
+  .use(remarkMdx)
+  .use(remarkMdxjs)
 
 const partitionSteps = ast => {
   const steps = []
@@ -54,12 +76,15 @@ const partitionSteps = ast => {
 
 const toMdx = nodes => {
   const stepAst = applyUuid(asRoot(nodes))
-  return u.stringify(stepAst)
+  const mdxSrc = u.stringify(stepAst)
+
+  return mdxSrc
 }
 
 const parse = async src => {
   try {
     const ast = u.parse(src)
+    const exportNodes = pluckExports(ast)
     const [intro, ...resourceSteps] = partitionSteps(ast)
 
     const wrappedIntroStep = {
@@ -90,10 +115,13 @@ const parse = async src => {
     })
 
     const steps = [wrappedIntroStep, ...wrappedResourceSteps]
+    ast.children = [...exportNodes, ...ast.children]
 
     return {
       ast,
       steps,
+      exports: exportNodes,
+      exportsAsMdx: exportNodes.map(toMdx),
       stepsAsMdx: steps.map(toMdx),
     }
   } catch (e) {

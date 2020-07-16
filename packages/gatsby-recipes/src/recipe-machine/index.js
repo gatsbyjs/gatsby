@@ -1,4 +1,5 @@
-const { Machine, assign } = require(`xstate`)
+const { Machine, assign, send } = require(`xstate`)
+const _ = require(`lodash`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -6,6 +7,8 @@ const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
+const { setInput } = require(`../renderer`)
+const renderer = require(`../renderer/index`)
 
 const recipeMachine = Machine(
   {
@@ -16,10 +19,12 @@ const recipeMachine = Machine(
       projectRoot: null,
       currentStep: 0,
       steps: [],
+      exports: [],
       plan: [],
       commands: [],
       stepResources: [],
       stepsAsMdx: [],
+      exportsAsMdx: [],
       inputs: {},
     },
     states: {
@@ -70,6 +75,7 @@ const recipeMachine = Machine(
             target: `validateSteps`,
             actions: assign({
               steps: (context, event) => event.data.stepsAsMdx,
+              exports: (context, event) => event.data.exportsAsMdx,
             }),
           },
         },
@@ -131,17 +137,39 @@ const recipeMachine = Machine(
         },
       },
       presentPlan: {
+        invoke: {
+          id: `presentingPlan`,
+          src: (context, event) => (cb, onReceive) => {
+            console.log(`yo in the invoked presentingPlan`)
+            onReceive(async e => {
+              console.log(`onReceive`, e, setInput)
+              // const result = await setInput(e.data)
+              // console.log({ contextInputs: context.inputs })
+              context.inputs = context.inputs || {}
+              context.inputs[e.data.key] = e.data
+              // console.log(context.inputs)
+              const result = await createPlan(context, cb)
+              console.log({ result })
+              cb({ type: `onUpdatePlan`, data: result })
+            })
+
+            cb(`yo`)
+
+            return () => console.log(`done I guess`)
+          },
+        },
+        // entry: send(`YO`, { to: `presentingPlan` }),
         on: {
           CONTINUE: `applyingPlan`,
+          // INPUT_ADDED: (context, event) => {
+          // console.log(`in the callback`, { context, event })
+          // },
           INPUT_ADDED: {
-            target: `creatingPlan`,
+            actions: send((context, event) => event, { to: `presentingPlan` }),
+          },
+          onUpdatePlan: {
             actions: assign({
-              inputs: (context, event) => {
-                const inputs = context.inputs || {}
-                inputs[event.data.resourceUuid] = event.data.props
-
-                return inputs
-              },
+              plan: (context, event) => event.data,
             }),
           },
         },

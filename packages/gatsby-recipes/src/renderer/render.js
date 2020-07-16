@@ -1,19 +1,29 @@
-import React, { Suspense, useContext } from "react"
+import React, { Suspense, useContext, useState } from "react"
 import Queue from "p-queue"
+import lodash from "lodash"
 
 import resources from "../resources"
 
 import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"
 import transformToPlan from "./transform-to-plan-structure"
-import { ResourceProvider, useResourceContext } from "./resource-provider"
+import {
+  ParentResourceProvider,
+  useParentResourceContext,
+} from "./parent-resource-provider"
 import { useRecipeStep } from "./step-component"
-import { InputProvider, useInputByUuid } from "./input-provider"
+import { InputProvider, useInputByKey } from "./input-provider"
+import {
+  ResourceProvider,
+  setResources,
+  useResourceContext,
+} from "./resource-provider"
 
-const queue = new Queue({ concurrency: 1, autoStart: false })
+const queue = new Queue({ concurrency: 5, autoStart: false })
 
 let errors = []
-const cache = new Map()
+const resultCache = new Map()
+const inFlightCache = new Map()
 
 const ModeContext = React.createContext({})
 const useMode = () => useContext(ModeContext)
@@ -34,47 +44,74 @@ const getUserProps = props => {
   return userProps
 }
 
-const Wrapper = ({ children, inputs, isApply }) => (
-  <ErrorBoundary>
-    <ModeProvider value={{ mode: isApply ? `apply` : `plan` }}>
-      <InputProvider value={inputs}>
-        <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
-      </InputProvider>
-    </ModeProvider>
-  </ErrorBoundary>
-)
+const SetResourcesProvider = React.createContext()
+
+let resourcesCache
+
+const Wrapper = ({ children, inputs, isApply }) => {
+  const [resourcesList, setResources] = useState(resourcesCache || [])
+  resourcesCache = resourcesList
+
+  return (
+    <ErrorBoundary>
+      <ModeProvider value={{ mode: isApply ? `apply` : `plan` }}>
+        <SetResourcesProvider.Provider value={setResources}>
+          <ResourceProvider value={resourcesList}>
+            <InputProvider value={inputs}>
+              <Suspense fallback={<p>Loading recipe...</p>}>
+                {children}
+              </Suspense>
+            </InputProvider>
+          </ResourceProvider>
+        </SetResourcesProvider.Provider>
+      </ModeProvider>
+    </ErrorBoundary>
+  )
+}
 
 const ResourceComponent = ({
   _resourceName: Resource,
   _uuid,
+  _type,
   children,
   ...props
 }) => {
   const { mode } = useMode()
   const step = useRecipeStep()
-  const inputProps = useInputByUuid(_uuid)
-  const resourceContext = useResourceContext()
+  const inputProps = useInputByKey(_uuid)
+  const parentResourceContext = useParentResourceContext()
+  const allResources = useResourceContext()
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 
+  const setResources = useContext(SetResourcesProvider)
+  // TODO add provider onto context
   const resourceData = handleResource(
     Resource,
-    { ...resourceContext, root: process.cwd(), _uuid, mode },
-    allProps
+    {
+      ...parentResourceContext,
+      root: process.cwd(),
+      _uuid,
+      mode,
+    },
+    allProps,
+    allResources,
+    setResources
   )
 
   return (
-    <ResourceProvider data={{ [Resource]: resourceData }}>
+    <ParentResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>
         {JSON.stringify({
           ...resourceData,
-          _props: { ...userProps, ...inputProps },
+          _props: allProps,
           _stepMetadata: step,
           _uuid,
+          _type,
         })}
         {children}
       </Resource>
-    </ResourceProvider>
+    </ParentResourceProvider>
   )
 }
 
@@ -87,7 +124,13 @@ const validateResource = (resourceName, context, props) => {
   return error
 }
 
-const handleResource = (resourceName, context, props) => {
+const handleResource = (
+  resourceName,
+  context,
+  props,
+  allResources,
+  setResources
+) => {
   const error = validateResource(resourceName, context, props)
   if (error) {
     errors.push(error)
@@ -96,12 +139,45 @@ const handleResource = (resourceName, context, props) => {
 
   const { mode } = context
 
-  const key = JSON.stringify({ resourceName, ...props, mode })
+  let key
+  // Only run apply once per resource
+  if (mode === `apply`) {
+    key = mode + ` ` + resourceName + ` ` + props._key
+  } else {
+    key = JSON.stringify({ resourceName, ...props, mode })
+  }
 
-  const cachedResult = cache.get(key)
+  const updateResource = result => {
+    allResources = allResources.filter(a => a.resourceDefinitions._key)
+    const resourceMap = new Map()
+
+    allResources.forEach(r => resourceMap.set(r.resourceDefinitions._key, r))
+    const newResource = {
+      resourceName,
+      resourceDefinitions: props,
+      ...result,
+    }
+
+    if (
+      props._key &&
+      !lodash.isEqual(newResource, resourceMap.get(props._key))
+    ) {
+      resourceMap.set(props._key, newResource)
+      setResources([...resourceMap.values()])
+    }
+  }
+
+  const cachedResult = resultCache.get(key)
+  const inFlightPromise = inFlightCache.get(key)
 
   if (cachedResult) {
+    updateResource(cachedResult)
     return cachedResult
+  }
+
+  if (inFlightPromise) {
+    console.log(`already in flight`, key)
+    throw inFlightPromise
   }
 
   const fn = mode === `apply` ? `create` : `plan`
@@ -112,22 +188,34 @@ const handleResource = (resourceName, context, props) => {
       // Multiple of the same promises can be queued due to re-rendering
       // so this first checks for the cached result again before executing
       // the request.
-      const cachedValue = cache.get(key)
+      const cachedValue = resultCache.get(key)
       if (cachedValue) {
         resolve(cachedValue)
+        updateResource(cachedValue)
+      } else {
+        console.log(fn, { key, resourceName, context, props })
+        resources[resourceName][fn](context, props)
+          .then(result => {
+            updateResource(result)
+            inFlightCache.set(key, false)
+            return result
+          })
+          .then(result => resultCache.set(key, result))
+          .then(resolve)
+          .catch(e => {
+            console.log(e)
+            if (e.name === `MissingInfoError`) {
+              inFlightCache.delete(key)
+            }
+            reject(e)
+          })
       }
-
-      resources[resourceName][fn](context, props)
-        .then(result => cache.set(key, result))
-        .then(resolve)
-        .catch(e => {
-          console.log(e)
-          reject(e)
-        })
     })
   } catch (e) {
     throw e
   }
+
+  inFlightCache.set(key, promise)
 
   queue.add(() => promise)
 
@@ -158,11 +246,14 @@ const render = async (recipe, cb, inputs = {}, isApply) => {
       }
     }
 
+    console.log(`before check queue`, { size: queue.size })
+
     // If there aren't any new resources that need to be fetched, or errors, we're done!
     if (!queue.size && !errors.length) {
       return undefined
     }
 
+    console.log(`queue`, { size: queue.size })
     queue.start()
     await queue.onIdle()
     return await renderResources()

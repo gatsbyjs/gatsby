@@ -24,9 +24,8 @@ const SITE_ROOT = pkgDir.sync(process.cwd())
 const pubsub = new PubSub()
 const PORT = process.argv[2] || 4000
 
-const emitOperation = state => {
-  console.log(`!!! emitting operation`)
-  console.log(state)
+const emitUpdate = state => {
+  console.log(`emitting update. State:`, state.value)
   pubsub.publish(`operation`, {
     state: JSON.stringify(state),
   })
@@ -48,9 +47,6 @@ const applyPlan = ({ recipePath, projectRoot }) => {
     console.log(`===onTransition`, {
       event: state.event,
       state: state.value,
-      context: state.context,
-      stepResources: state.context.stepResources,
-      plan: state.context.plan,
     })
     if (state.changed) {
       console.log(`===state.changed`, {
@@ -58,8 +54,8 @@ const applyPlan = ({ recipePath, projectRoot }) => {
         currentStep: state.context.currentStep,
       })
       // Wait until plans are created before updating the UI
-      if (state.value !== `creatingPlan`) {
-        emitOperation({
+      if (state.value !== `creatingPlan` || state.value !== "validateSteps") {
+        emitUpdate({
           context: state.context,
           lastEvent: state.event,
           value: state.value,
@@ -102,7 +98,7 @@ const rootMutationType = new GraphQLObjectType({
           projectRoot: { type: GraphQLString },
         },
         resolve: (_data, args) => {
-          console.log(`received operation`, args.recipePath)
+          console.log(`received operation`, args)
           applyPlan(args)
         },
       },

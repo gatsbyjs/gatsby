@@ -1,17 +1,16 @@
 import React, { useContext } from "react"
 
-const ResourceContext = React.createContext({})
+const ResourceContext = React.createContext([])
 
 export const useResourceContext = () => {
   const context = useContext(ResourceContext)
   return context
 }
 
-export const ResourceProvider = ({ data: providedData, children }) => {
-  const parentData = useResourceContext()
-  const data = { ...parentData, ...providedData }
-
-  return (
-    <ResourceContext.Provider value={data}>{children}</ResourceContext.Provider>
-  )
+export const useResource = key => {
+  const context = useContext(ResourceContext)
+  const result = context.find(c => c.resourceDefinitions._key === key)
+  return result
 }
+
+export const ResourceProvider = ResourceContext.Provider

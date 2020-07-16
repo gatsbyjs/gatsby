@@ -1,22 +1,68 @@
 const providedResources = require(`../resources`)
+const flatted = require(`flatted`)
+
+const extractPlan = node => {
+  let text = {}
+  if (node.text) {
+    try {
+      text = JSON.parse(node.text)
+    } catch {
+      return null
+    }
+  }
+
+  const { _type: type, _props: props, ...plan } = text
+
+  if (type === `Input`) {
+    return {
+      resourceName: type,
+      resourceDefinitions: props,
+      ...plan,
+    }
+  }
+
+  if (!type || !providedResources[type]) {
+    return null
+  }
+
+  return {
+    resourceName: type,
+    resourceDefinitions: props,
+    ...plan,
+  }
+}
 
 const transform = (props = {}) => {
   if (!props.children) {
-    return []
+    const plan = extractPlan(props)
+    return plan ? [plan] : []
   }
 
-  const plan = props.children.reduce((acc, curr) => {
+  const plan = props.children.filter(Boolean).reduce((acc, curr) => {
     const childResourcePlans = transform(curr)
+
+    let currText = {}
+    if (curr.text) {
+      try {
+        currText = JSON.parse(curr.text)
+      } catch {}
+    }
+
+    if (curr._type === `Input`) {
+      currText.resourceName = `Input`
+      return [...acc, currText]
+    }
 
     if (!providedResources[curr.type]) {
       return [...acc, ...childResourcePlans]
     }
 
-    const [rawResource, ...resourceChildren] = curr.children
-    const { _props, ...plan } = JSON.parse(rawResource.text)
+    const [rawResource, ...resourceChildren] = curr.children || []
+    const { _props, _type, ...plan } = JSON.parse(rawResource.text)
 
     const resourcePlan = {
-      resourceName: curr.type,
+      // TODO figure out why do we have to use the mdxType for child components?
+      resourceName: _type || _props?.mdxType,
       resourceDefinitions: _props,
       ...plan,
     }
@@ -32,6 +78,7 @@ const transform = (props = {}) => {
 }
 
 module.exports = renderTree => {
+  // console.log(flatted.stringify(renderTree, null, 2))
   const [doc] = renderTree.children
 
   return transform(doc)

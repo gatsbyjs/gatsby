@@ -1,9 +1,11 @@
 import { createClient } from "contentful-management"
 
-let client = {}
+let client
 
-// const client = createClient({
-// accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-// })
+if (process.env.CONTENTFUL_ACCESS_TOKEN) {
+  client = createClient({
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  })
+}
 
 export default client

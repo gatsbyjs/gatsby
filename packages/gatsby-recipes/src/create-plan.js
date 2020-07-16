@@ -1,7 +1,7 @@
 const render = require(`./renderer`)
 
 module.exports = async (context, cb) => {
-  const stepAsMdx = context.steps.join(`\n`)
+  const stepAsMdx = [...context.steps, ...context.exports].join(`\n`)
 
   try {
     const result = await render(stepAsMdx, cb, context.inputs)

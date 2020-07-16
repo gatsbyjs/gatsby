@@ -1,27 +1,33 @@
 import Joi from "@hapi/joi"
 
-import client from "./client"
-import space from "./client"
 import resourceSchema from "../resource-schema"
-import getGraphqlFields from "../utils/get-graphql-fields"
+import client from "./client"
 const getDiff = require(`../utils/get-diff`)
 
-const GRAPHQL_FIELD_OPTIONS = {
-  metadata: [`type`, `name`],
-}
-
-const create = async (context, { schema }) => {
+const create = async (context, { fields }) => {
   const spaceId = context.ContentfulSpace.id
+  const contentTypeId = context.ContentfulType.id
   const space = await client.getSpace(spaceId)
 
-  const fields = getGraphqlFields(schema, GRAPHQL_FIELD_OPTIONS)[0]
-  const contentType = await space.createContentTypeWithId(fields.name, fields)
-  await contentType.publish()
+  const entry = await space.createEntryWithId(contentTypeId, `pizza-face`, {
+    fields: {
+      title: {
+        "en-US": fields.title,
+      },
+      body: {
+        "en-US": fields.body,
+      },
+    },
+  })
+
+  await entry.publish()
+
+  console.log(`new entry`, entry)
 
   return {
-    name: contentType.name,
-    id: contentType.sys.id,
-    _message: message(contentType),
+    ...entry,
+    id: entry.sys.id,
+    _message: message(entry),
   }
 }
 
@@ -32,25 +38,23 @@ const destroy = async (_context, id) => {}
 const all = async () => {}
 
 const schema = {
-  schema: Joi.string(),
+  fields: Joi.object(),
+  sys: Joi.object(),
   ...resourceSchema,
 }
 
 const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-const plan = async (context, { id, schema }) => {
-  const currentResource = await read(context, id)
-
-  const fields = getGraphqlFields(schema, GRAPHQL_FIELD_OPTIONS)[0]
-  console.log(`contentful type`, { currentResource, schema, id, fields })
+const plan = async (context, { id, fields }) => {
+  // const currentResource = await read(context, id)
+  let currentResource
+  console.log({ context })
 
   if (!currentResource) {
     return {
-      id: `(Known after install)`,
-      name: fields.name,
       currentState: ``,
-      describe: `Create Contentful type "${fields.name}"`,
+      describe: `Create Contentful entry for "${context.ContentfulType.name}"`,
       diff: getDiff({}, fields),
       // diffExists: true,
       // skipDiff: true,
@@ -64,7 +68,7 @@ const plan = async (context, { id, schema }) => {
   }
 }
 
-const message = resource => `Created Contentful type "${resource.name}"`
+const message = resource => `Created Contentful Entry "${resource.name}"`
 
 module.exports.schema = schema
 module.exports.validate = validate

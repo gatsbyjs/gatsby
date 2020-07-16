@@ -9,6 +9,7 @@ const gitIgnoreResource = require(`./providers/git/ignore`)
 const contentfulSpace = require(`./providers/contentful/space`)
 const contentfulEnvironment = require(`./providers/contentful/environment`)
 const contentfulType = require(`./providers/contentful/type`)
+const contentfulEntry = require(`./providers/contentful/entry`)
 
 const componentResourceMapping = {
   File: fileResource,
@@ -22,6 +23,7 @@ const componentResourceMapping = {
   ContentfulSpace: contentfulSpace,
   ContentfulEnvironment: contentfulEnvironment,
   ContentfulType: contentfulType,
+  ContentfulEntry: contentfulEntry,
 }
 
 module.exports = componentResourceMapping
