@@ -20,8 +20,8 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
         })
       )
       .allow(null),
-    level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
-    type: Joi.string().valid([`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`]),
+    level: Joi.string().valid(`ERROR`, `WARNING`, `INFO`, `DEBUG`),
+    type: Joi.string().valid(`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`),
     filePath: Joi.string(),
     location: Joi.object({
       start: Position.required(),
