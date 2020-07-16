@@ -61,43 +61,65 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     </BaseContext.Provider>
   )
 
+  const DataContext = React.createContext({})
+
+  class GatsbyRoot extends React.Component {
+    render() {
+      const { children } = this.props
+      return (
+        <Location>
+          {({ location }) => (
+            <EnsureResources location={location}>
+              {({ pageResources, location }) => (
+                <StaticQueryContext.Provider
+                  value={pageResources.staticQueryResults}
+                >
+                  <DataContext.Provider value={{ pageResources, location }}>
+                    {children}
+                  </DataContext.Provider>
+                </StaticQueryContext.Provider>
+              )}
+            </EnsureResources>
+          )}
+        </Location>
+      )
+    }
+  }
+
   class LocationHandler extends React.Component {
     render() {
-      const { location } = this.props
       return (
-        <EnsureResources location={location}>
+        <DataContext.Consumer>
           {({ pageResources, location }) => (
-            <StaticQueryContext.Provider value={pageResources.staticQueryData}>
-              <RouteUpdates location={location}>
-                <ScrollContext
+            <RouteUpdates location={location}>
+              <ScrollContext
+                location={location}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <Router
+                  basepath={__BASE_PATH__}
                   location={location}
-                  shouldUpdateScroll={shouldUpdateScroll}
+                  id="gatsby-focus-wrapper"
                 >
-                  <Router
-                    basepath={__BASE_PATH__}
+                  <RouteHandler
+                    path={
+                      pageResources.page.path === `/404.html`
+                        ? stripPrefix(location.pathname, __BASE_PATH__)
+                        : encodeURI(
+                            pageResources.page.matchPath ||
+                              pageResources.page.path
+                          )
+                    }
+                    {...this.props}
                     location={location}
-                    id="gatsby-focus-wrapper"
-                  >
-                    <RouteHandler
-                      path={
-                        pageResources.page.path === `/404.html`
-                          ? stripPrefix(location.pathname, __BASE_PATH__)
-                          : encodeURI(
-                              pageResources.page.matchPath ||
-                                pageResources.page.path
-                            )
-                      }
-                      {...this.props}
-                      location={location}
-                      pageResources={pageResources}
-                      {...pageResources.json}
-                    />
-                  </Router>
-                </ScrollContext>
-              </RouteUpdates>
-            </StaticQueryContext.Provider>
+                    pageResources={pageResources}
+                    {...pageResources.json}
+                  />
+                </Router>
+              </ScrollContext>
+            </RouteUpdates>
           )}
-        </EnsureResources>
+        </DataContext.Consumer>
       )
     }
   }
@@ -135,22 +157,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     window.___webpackCompilationHash = page.page.webpackCompilationHash
 
-    const Root = () => (
-      <Location>
-        {locationContext => <LocationHandler {...locationContext} />}
-      </Location>
-    )
-
-    const WrappedRoot = apiRunner(
+    const SiteRoot = apiRunner(
       `wrapRootElement`,
-      { element: <Root /> },
-      <Root />,
+      { element: <LocationHandler /> },
+      <LocationHandler />,
       ({ result }) => {
         return { element: result }
       }
     ).pop()
 
-    const NewRoot = () => WrappedRoot
+    const App = () => <GatsbyRoot>{SiteRoot}</GatsbyRoot>
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,
@@ -160,7 +176,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     domReady(() => {
       renderer(
-        <NewRoot />,
+        <App />,
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
           : void 0,
