@@ -2091,11 +2091,12 @@ webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest

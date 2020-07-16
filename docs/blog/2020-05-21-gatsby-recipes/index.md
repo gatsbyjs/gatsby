@@ -40,11 +40,11 @@ The reason this will cause Storybook to error is because the `<Link />` componen
 
 Storybook has anticipated this issue, fortunately, and so there is a method whereby you can write your own webpack config and pass it on to combine it with the default Storybook webpack config. This then aids in the transpiling of any ES6 code located in `node_modules` to CommonJS.
 
-If (like me) Webpack scares you a little bit, you’ll likely want to avoid writing any Webpack config and just get on with developing your UI. You could try not creating any `.stories` that include a `<Link />` component but this will only get you so far.
+If (like me) webpack scares you a little bit, you’ll likely want to avoid writing any webpack config and just get on with developing your UI. You could try not creating any `.stories` that include a `<Link />` component but this will only get you so far.
 
 You may at some point also wish to create a story for a component that contains a `useStaticQuery` hook, and if you do that you’ll again see Storybook errors but this time relating to GraphQL queries. The reason for this is because the Gatsby build processes remove any GraphQL queries when you run either of the build processes; `gatsby develop` or `gatsby build`.
 
-So, as mentioned before, when you spin up Storybook these Gatsby-specific build processes are simply not run. In order to to strip out GraphQL queries we need to use Webpack again and utilize a package called `babel-plugin-remove-graphql-queries`.
+So, as mentioned before, when you spin up Storybook these Gatsby-specific build processes are simply not run. In order to to strip out GraphQL queries we need to use webpack again and utilize a package called `babel-plugin-remove-graphql-queries`.
 
 And if (like me) Babel also scares you a little bit, you might be having a think about giving up using Storybook and Gatsby all together.
 
