@@ -124,19 +124,20 @@ export default function LegendTable() {
         }}
       >
         <tr>
+          sx={{ ...legendBallCellStyle, ...legendHeaderStyle }}
           <th
             sx={{ ...legendBallCellStyle, ...legendHeaderStyle }}
             key={`${legendBallCellStyle}-1`}
             scope="col"
           >
-            <h4 sx={{ m: 0 }}>Icon</h4>
+            Icon
           </th>
           <th
             sx={{ ...legendExplanationCellStyle, ...legendHeaderStyle }}
             key={`legendExplanationCell-1`}
             scope="col"
           >
-            <h4 sx={{ m: 0 }}>Feature Availability</h4>
+            Feature Availability
           </th>
         </tr>
         {[0, 1, 2, 3, 4].map(i => (
