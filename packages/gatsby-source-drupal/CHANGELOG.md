@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.21...gatsby-source-drupal@3.5.22) (2020-07-15)
+
+### Features
+
+- **gatsby-source-drupal:** Add Drupal Fastbuilds ([#25428](https://github.com/gatsbyjs/gatsby/issues/25428)) ([64685c3](https://github.com/gatsbyjs/gatsby/commit/64685c3))
+
 ## [3.5.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.20...gatsby-source-drupal@3.5.21) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-source-drupal

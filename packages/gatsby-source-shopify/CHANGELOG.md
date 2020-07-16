@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.20...gatsby-source-shopify@3.2.21) (2020-07-15)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** resource handle ([#24467](https://github.com/gatsbyjs/gatsby/issues/24467)) ([ee9319d](https://github.com/gatsbyjs/gatsby/commit/ee9319d))
+
 ## [3.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.19...gatsby-source-shopify@3.2.20) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-source-shopify

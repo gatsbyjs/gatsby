@@ -5,8 +5,8 @@ const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 import { isFile } from "./is-file"
-const { isDate } = require(`../types/date`)
-const { addDerivedType } = require(`../types/derived-types`)
+import { isDate } from "../types/date"
+import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { getNode, getNodes } = require(`../../redux/nodes`)
 
