@@ -41,13 +41,8 @@ describe(`contentful extend node type`, () => {
   }
 
   describe(`resolveFixed`, () => {
-    it(`generates responsive resolution data for images using width option`, async () => {
+    it(`generates responsive resolution data for images`, async () => {
       const resp = await resolveFixed(image, { width: 400 })
-      expect(resp.srcSet.length).toBeGreaterThan(1)
-      expect(resp).toMatchSnapshot()
-    })
-    it(`generates responsive resolution data for images using height option`, async () => {
-      const resp = await resolveFixed(image, { height: 400 })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
