@@ -24,6 +24,13 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
+export const useScrollRestoration: (
+  key: string
+) => {
+  ref: React.MutableRefObject<HTMLElement | undefined>
+  onScroll(): void
+}
+
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
@@ -41,7 +48,7 @@ export const prefetchPathname: (path: string) => void
  * export default (props: PageProps) => {
  *
  * @example
- * // When adding types for both pageContext (represended by LocaleLookUpInfo) 
+ * // When adding types for both pageContext (represented by LocaleLookUpInfo)
  * // and GraphQL query data (represented by IndexQueryProps)
  *
  * import {PageProps} from "gatsby"

@@ -92,12 +92,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-gitinfo`,
-      options: {
-        include: /mdx?$/i,
-      },
-    },
-    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
         // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword
@@ -248,16 +242,18 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
-    {
-      resolve: `gatsby-plugin-perf-metrics`,
-      options: {
-        appId: `1:216044356421:web:92185d5e24b3a2a1`,
-      },
-    },
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-react-svg`,
+      options: {
+        rule: {
+          include: /assets\/(guidelines|icons|ornaments)\/.*\.svg$/,
+        },
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
