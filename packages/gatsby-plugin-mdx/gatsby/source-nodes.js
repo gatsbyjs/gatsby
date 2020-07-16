@@ -138,29 +138,27 @@ module.exports = (
       slug: {
         type: `String`,
         async resolve(mdxNode, args, context) {
-          try {
-            const nodeWithContext = context.nodeModel.findRootNodeAncestor(
-              mdxNode,
-              node => node.internal && node.internal.type === `File`
-            )
-            const fileRelativePath = nodeWithContext.relativePath
+          const nodeWithContext = context.nodeModel.findRootNodeAncestor(
+            mdxNode,
+            node => node.internal && node.internal.type === `File`
+          )
 
-            const parsedPath = path.parse(fileRelativePath)
-
-            let relevantPath
-            if (parsedPath.name === `index`) {
-              relevantPath = fileRelativePath.replace(parsedPath.base, ``)
-            } else {
-              relevantPath = fileRelativePath.replace(parsedPath.ext, ``)
-            }
-            return slugify(relevantPath, {
-              remove: /[^\w\s$*_+~.()'"!\-:@/]/g, // this is the set of allowable characters
-            })
-          } catch {
-            reporter.warn(`gatsby-plugin-mdx: Your MDX files are not sourced from your local file system.
-            \nAs a result there will be no slug available.`)
+          if (!nodeWithContext) {
             return null
           }
+          const fileRelativePath = nodeWithContext.relativePath
+
+          const parsedPath = path.parse(fileRelativePath)
+
+          let relevantPath
+          if (parsedPath.name === `index`) {
+            relevantPath = fileRelativePath.replace(parsedPath.base, ``)
+          } else {
+            relevantPath = fileRelativePath.replace(parsedPath.ext, ``)
+          }
+          return slugify(relevantPath, {
+            remove: /[^\w\s$*_+~.()'"!\-:@/]/g, // this is the set of allowable characters
+          })
         },
       },
       body: {
