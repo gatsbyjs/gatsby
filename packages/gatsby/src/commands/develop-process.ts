@@ -14,10 +14,10 @@ import {
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram, IDebugInfo } from "./types"
-import { IBuildContext } from "../services"
-import { AnyEventObject, interpret, Actor, Interpreter, State } from "xstate"
+import { interpret } from "xstate"
 import { globalTracer } from "opentracing"
 import { developMachine } from "../state-machines/develop"
+import { logTransitions } from "../utils/state-machine-logging"
 
 const tracer = globalTracer()
 
@@ -69,6 +69,10 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  if (program.verbose) {
+    reporter.setVerbose(true)
+  }
+
   if (program.debugInfo) {
     openDebuggerPort(program.debugInfo)
   }
@@ -126,45 +130,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const service = interpret(machine)
 
-  const isInterpreter = <T>(
-    actor: Actor<T> | Interpreter<T>
-  ): actor is Interpreter<T> => `machine` in actor
+  if (program.verbose) {
+    logTransitions(service)
+  }
 
-  const listeners = new WeakSet()
-  let last: State<IBuildContext, AnyEventObject, any, any>
-
-  service.onTransition(state => {
-    if (!last) {
-      last = state
-    } else if (!state.changed || last.matches(state)) {
-      return
-    }
-    last = state
-    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
-    // eslint-disable-next-line no-unused-expressions
-    service.children?.forEach(child => {
-      // We want to ensure we don't attach a listener to the same
-      // actor. We don't need to worry about detaching the listener
-      // because xstate handles that for us when the actor is stopped.
-
-      if (isInterpreter(child) && !listeners.has(child)) {
-        let sublast = child.state
-        child.onTransition(substate => {
-          if (!sublast) {
-            sublast = substate
-          } else if (!substate.changed || sublast.matches(substate)) {
-            return
-          }
-          sublast = substate
-          reporter.verbose(
-            `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
-              substate.value
-            )}`
-          )
-        })
-        listeners.add(child)
-      }
-    })
-  })
   service.start()
 }
