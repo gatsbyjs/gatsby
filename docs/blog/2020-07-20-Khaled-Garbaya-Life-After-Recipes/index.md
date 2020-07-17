@@ -18,7 +18,7 @@ Instead, wouldn't it be nice if you could make the setup instructions more inter
 
 Enter: Gatsby Recipes
 
-Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recipes/) to help automate everyday tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more routine tasks. With the release of this new feature, which is run from the CLI, Gatsby has created [25+ official recipes ](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes)that you can explore, including ThemeUI, Sass, Cypress, animated page transitions, and persistent layout components. And since then, because they are so useful but also fun and easy to create, the community has also been busy contributing all kinds of other useful Recipes.
+Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recipes/) to help automate everyday tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more routine tasks. With the release of this new feature, which is run from the CLI, Gatsby has created [25+ official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes)that you can explore, including Theme UI, Sass, Cypress, animated page transitions, and persistent layout components. And since then, because they are so useful but also fun and easy to create, the community has also been busy contributing all kinds of other useful Recipes.
 
 ## Gatsby, Before Recipes: A long and winding workflow
 
