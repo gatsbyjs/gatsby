@@ -1,7 +1,6 @@
 /* global: reporter */
 
 import Joi from "@hapi/joi"
-import path from "path"
 import reporter from "gatsby-cli/lib/reporter"
 
 const defaultExcludes = [

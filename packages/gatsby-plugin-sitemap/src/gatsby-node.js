@@ -54,6 +54,8 @@ exports.onPostBuild = async (
         reporter.panic(
           `${reporterPrefix} filering pages failed. If you've customized your query or excludes you may need to customize the "filterPages" function.`
         )
+
+        return err
       }
     })
 
