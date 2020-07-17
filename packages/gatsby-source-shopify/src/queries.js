@@ -1,25 +1,3 @@
-export const PAGES_QUERY = `
-  query GetPages($first: Int!, $after: String) {
-    pages(first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          handle
-          title
-          body
-          bodySummary
-          updatedAt
-          url
-        }
-      }
-    }
-  }
-`
-
 export const defaultQueries = {
   articles: `
   query GetArticles($first: Int!, $after: String) {
@@ -277,5 +255,25 @@ export const defaultQueries = {
     }
   }
 `,
-  pages: PAGES_QUERY,
+  pages: `
+  query GetPages($first: Int!, $after: String) {
+    pages(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          handle
+          title
+          body
+          bodySummary
+          updatedAt
+          url
+        }
+      }
+    }
+  }
+`,
 }
