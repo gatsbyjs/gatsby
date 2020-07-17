@@ -46,7 +46,7 @@ npm install tailwindcss gatsby-plugin-postcss
 
 3. Create a `postcss.config.js` file and add the following snippet to it:
 
-```
+```javascript
 module.exports = {
   plugins: [require("tailwindcss"), require("autoprefixer")],
 }
