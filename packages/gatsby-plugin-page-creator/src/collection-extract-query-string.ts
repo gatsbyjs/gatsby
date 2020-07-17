@@ -17,13 +17,13 @@ export function collectionExtractQueryString(
     absolutePath
   )
 
-  const modelType = /\{([a-zA-Z]+):/.exec(absolutePath)?.[1]
+  const modelType = /\{([a-zA-Z]+)\./.exec(absolutePath)?.[1]
 
   if (!modelType) {
     throw new Error(`You screwed up`)
   }
 
-  // 2.  Traverse the AST to find the unstable_createPagesFromData macro
+  // 2.  Traverse the AST to find the unstable_collectionGraphql query
   traverse(ast, {
     ExportNamedDeclaration(path) {
       if (path.node.source) {

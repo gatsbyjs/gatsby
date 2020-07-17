@@ -2,9 +2,9 @@ import _ from "lodash"
 import slugify from "slugify"
 
 // Generates the path for the page from the file path
-// product/{Product:id}.js => /product/:id, pulls from nodes.id
-// product/{Product:sku__en} => product/:sku__en pulls from nodes.sku.en
-// blog/{MarkdownRemark:parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
+// product/{Product.id}.js => /product/:id, pulls from nodes.id
+// product/{Product.sku__en} => product/:sku__en pulls from nodes.sku.en
+// blog/{MarkdownRemark.parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
 export function derivePath(path: string, node: Record<string, any>): string {
   // 1.  Remove the extension
   let pathWithoutExtension = path.replace(/\.[a-z]+$/, ``)
@@ -23,13 +23,17 @@ export function derivePath(path: string, node: Record<string, any>): string {
   slugParts.forEach(slugPart => {
     // 3.a. this transforms foo__bar into foo.bar
     const __ = new RegExp(`__`, `g`)
+    const Model = /[a-zA-Z]+\./.exec(slugPart)![0]
     const key = slugPart
       .replace(/(\{|\})/g, ``)
-      .replace(/([a-zA-Z]+):/, ``)
+      // Remove Model
+      .replace(/^[a-zA-Z]+\./, ``)
       // Ignore union syntax
       .replace(/\(.*\)__/g, ``)
       // replace access by periods
       .replace(__, `.`)
+
+    console.log({ Model, key })
 
     // 3.b  We do node or node.nodes here because we support the special group
     //      graphql field, which then moves nodes in another depth
@@ -47,7 +51,7 @@ export function derivePath(path: string, node: Record<string, any>): string {
     }
 
     // 3.d  replace the part of the slug with the actual value
-    pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
+    pathWithoutExtension = pathWithoutExtension.replace(Model + slugPart, value)
   })
 
   return pathWithoutExtension

@@ -48,7 +48,7 @@ export function createPage(
   // If the path includes a `[]` in it, then we create it as a client only route
   if (pathIsClientOnlyRoute(absolutePath)) {
     if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-      console.error(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
+      throw new Error(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
              Skipping creating pages for ${absolutePath}
         `)
       return

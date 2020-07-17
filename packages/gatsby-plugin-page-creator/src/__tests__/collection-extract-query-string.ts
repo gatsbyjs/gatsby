@@ -16,7 +16,7 @@ describe(`collectionExtractQueryString`, () => {
       collectionExtractQueryString,
     } = require(`../collection-extract-query-string`)
 
-    const query = await collectionExtractQueryString(`src/pages/{Product:name}`)
+    const query = await collectionExtractQueryString(`src/pages/{Product.name}`)
 
     expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
   })
@@ -36,7 +36,7 @@ describe(`collectionExtractQueryString`, () => {
       collectionExtractQueryString,
     } = require(`../collection-extract-query-string`)
 
-    const query = await collectionExtractQueryString(`src/pages/{Things:bar}`)
+    const query = await collectionExtractQueryString(`src/pages/{Things.bar}`)
 
     expect(query).toMatchInlineSnapshot(
       `"{allThings(filter:{name:{nin:[\\"stuff\\"]}}){nodes{bar,id}}}"`
@@ -59,7 +59,7 @@ describe(`collectionExtractQueryString`, () => {
     } = require(`../collection-extract-query-string`)
 
     expect(() =>
-      collectionExtractQueryString(`src/pages/{Things:bar}`)
+      collectionExtractQueryString(`src/pages/{Things.bar}`)
     ).toThrow()
   })
 })

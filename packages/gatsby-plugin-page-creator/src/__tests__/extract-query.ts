@@ -31,7 +31,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `allThing(filter: { main_url: { nin: [] }})`,
-          compatiblePath(`/foo/bar/{Thing:id}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
       ).toBe(`{allThing(filter: { main_url: { nin: [] }}){nodes{id}}}`)
     })
@@ -44,7 +44,7 @@ describe(`extract query`, () => {
             ...CollectionPagesQueryFragment
         }
     }`,
-          compatiblePath(`/foo/bar/{MarkdownRemark:frontmatter__topic}.js`)
+          compatiblePath(`/foo/bar/{MarkdownRemark.frontmatter__topic}.js`)
         )
       ).toEqual(`allMarkdownRemark {
         group(field: frontmatter___topic) {
@@ -59,7 +59,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
-          compatiblePath(`/foo/bar/{Thing:id}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
       ).toBe(`{allThing{nodes{id}}}`)
     })
@@ -68,7 +68,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
-          compatiblePath(`/foo/bar/{Thing:baz}.js`)
+          compatiblePath(`/foo/bar/{Thing.baz}.js`)
         )
       ).toBe(`{allThing{nodes{baz,id}}}`)
     })
@@ -77,7 +77,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
-          compatiblePath(`/foo/bar/{Thing:id}/{Thing:name}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}/{Thing.name}.js`)
         )
       ).toBe(`{allThing{nodes{id,name}}}`)
     })
@@ -86,7 +86,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
-          compatiblePath(`/foo/bar/{Thing:id}/{Thing:fields__name}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name}.js`)
         )
       ).toBe(`{allThing{nodes{id,fields{name}}}}`)
     })
@@ -95,7 +95,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
-          compatiblePath(`/foo/bar/{Thing:id}/{Thing:fields__name__thing}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name__thing}.js`)
         )
       ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
     })
@@ -105,7 +105,7 @@ describe(`extract query`, () => {
         generateQueryFromString(
           `UnionQuery`,
           compatiblePath(
-            `/foo/bar/{UnionQuery:id}/{UnionQuery:parent__(File)__relativePath}.js`
+            `/foo/bar/{UnionQuery.id}/{UnionQuery.parent__(File)__relativePath}.js`
           )
         )
       ).toBe(`{allUnionQuery{nodes{id,parent{... on File{relativePath}}}}}`)
@@ -118,7 +118,7 @@ describe(`reverseLookupParams`, () => {
     expect(
       reverseLookupParams(
         { id: `foo`, otherProp: `bar` },
-        compatiblePath(`/{Model:id}.js`)
+        compatiblePath(`/{Model.id}.js`)
       )
     ).toEqual({
       id: `foo`,
@@ -129,7 +129,7 @@ describe(`reverseLookupParams`, () => {
     expect(
       reverseLookupParams(
         { fields: { name: `foo` } },
-        compatiblePath(`/{Model:fields__name}.js`)
+        compatiblePath(`/{Model.fields__name}.js`)
       )
     ).toEqual({
       fields__name: `foo`,
@@ -141,7 +141,7 @@ describe(`reverseLookupParams`, () => {
       reverseLookupParams(
         // Unions are not present in the resulting structure
         { parent: { relativePath: `foo` } },
-        compatiblePath(`/{Model:parent__(File)__relativePath}.js`)
+        compatiblePath(`/{Model.parent__(File)__relativePath}.js`)
       )
     ).toEqual({
       "parent__(File)__relativePath": `foo`,
