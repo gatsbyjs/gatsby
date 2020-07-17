@@ -27,7 +27,7 @@ One of the most common features of every site is navigation. People should be ab
 
 That's why every Gatsby site aims to have an accessible navigation experience by default. Thanks to [@reach/router](https://reach.tech/router), a routing library for React, Gatsby handles page announcements for screen readers on page change. We're actively making improvements to this experience, and we [welcome your feedback](/accessibility-statement/).
 
-Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites use `@reach/router` under the hood. While additional accessibility testing is always a good idea, the [Gatsby Link Component](/docs/gatsby-link/) wraps [@reach/router's Link component](https://reach.tech/router/api/Link) to improve accessibility without you having to think about it.
+Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites use `@reach/router` under the hood. While additional accessibility testing is always a good idea, the [Gatsby Link Component](/docs/gatsby-link/) wraps [@reach/router's Link component](https://reach.tech/router/api/Link) to improve accessibility without you having to think about it. `@reach/router` also supports [scroll restoration](/docs/scroll-restoration).
 
 ### Gatsby builds HTML pages by default
 
@@ -44,12 +44,12 @@ For more on supported rules, check out the docs for [`eslint-plugin-jsx-a11y`](h
   "extends": ["react-app", "plugin:jsx-a11y/recommended"],
   "plugins": ["jsx-a11y"],
   "rules": {
-    "jsx-a11y/rule-name": "warning"
+    "jsx-a11y/rule-name": "warn"
   }
 }
 ```
 
-Note: Including a local `.eslintrc` file will [override](/docs/eslint/#configuring-eslint) all of Gatsby's default linting and disable the built-in `eslint-loader`, meaning your tweaked rules won't make it to your browser's developer console or your terminal window but will still be displayed if you have ESLint plugins enabled in your IDE. If you would like to change this behavior and make sure the `eslint-loader` pulls in your customizations, you'll need to enable the loader yourself. One way to do this is by using the Community plugin [`gatsby-plugin-eslint`](https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/). Additionally, if you would still like to take advantage of some subset of the default [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js), you'll need to copy them manually to your local `.eslintrc` file.
+Note: Including a local `.eslintrc` file will [override](/docs/eslint/#configuring-eslint) all of Gatsby's default linting and disable the built-in `eslint-loader`, meaning your tweaked rules won't make it to your browser's developer console or your terminal window but will still be displayed if you have ESLint plugins enabled in your IDE. If you would like to change this behavior and make sure the `eslint-loader` pulls in your customizations, you'll need to enable the loader yourself. One way to do this is by using the Community plugin [`gatsby-plugin-eslint`](https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/). Additionally, if you would still like to take advantage of some subset of the default [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.ts), you'll need to copy them manually to your local `.eslintrc` file.
 
 This is a start to testing for accessibility: [further recommendations](#how-to-improve-accessibility) can be found below.
 

@@ -18,7 +18,7 @@ We interviewed 6 authors of and/or contributors to popular plugins:
 - [Christopher Biscardi](https://github.com/ChristopherBiscardi), who created [`gatsby-mdx`](https://github.com/ChristopherBiscardi/gatsby-mdx)
 - [Mike Allanson](https://github.com/m-allanson), who built proprietary plugins to pull data from a custom CMS for the [The State of European Tech 2018](http://2018.stateofeuropeantech.com/) and
   [The State of European Tech 2017](http://2017.stateofeuropeantech.com) sites
-- [Michal Piechowiak](https://github.com/pieh), who contributed to the [`gatsby-source-wordpress`](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=gatsby-source-wordpress) plugin
+- [Michał Piechowiak](https://github.com/pieh), who contributed to the [`gatsby-source-wordpress`](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=gatsby-source-wordpress) plugin
 - [Ali Mahmoud](https://github.com/babbins) who is well-acquainted with the challenges and joys of maintaining the [`gatsby-plugin-pointer-events`](https://www.gatsbyjs.org/packages/gatsby-plugin-pointer-events/?=gatsby-plugin-pointer) plugin, which was created by [Tim Brown](https://github.com/brimtown)
 
 Thanks to all for taking the time to give thoughtful interviews!
@@ -77,8 +77,8 @@ It'd be great to get help with any of the following:
 - Use [schema customization](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/) since this solves one of the biggest complaints of plugin authors!
 - Add your tips and tricks to the [maintaining a plugin docs page](https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 
-* Comment on this issue: [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
-* Comment on this issue: [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)
+- Comment on this issue: [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
+- Comment on this issue: [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)
 
 Read these ideas and create issues and/or PRs for ones that prove valuable!
 

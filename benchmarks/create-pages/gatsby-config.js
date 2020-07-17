@@ -4,7 +4,5 @@ module.exports = {
     description: `The createPages benchmark`,
     author: `@gatsbyjs`,
   },
-  plugins: [
-    `gatsby-plugin-benchmark-reporting`,
-  ],
+  plugins: [`gatsby-plugin-benchmark-reporting`],
 }

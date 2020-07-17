@@ -6,18 +6,7 @@ Part of what makes Gatsby sites so fast is its recommended approach to handling 
 
 > _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
 
-Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
-
-## In this doc
-
-- [Setting up Gatsby Image](#setting-up-gatsby-image)
-- [Types of images with gatsby-image](#types-of-images-with-gatsby-image)
-  - [Fixed images and parameters](#images-with-a-fixed-width-and-height)
-  - [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
-  - [Resized images](#resized-images)
-  - [Shared query parameters](#shared-query-parameters)
-- [Image query fragments](#image-query-fragments)
-- [Gatsby Image props](#gatsby-image-props)
+Demo: https://using-gatsby-image.gatsbyjs.org/
 
 ## Setting up Gatsby Image
 
@@ -25,7 +14,7 @@ To start working with Gatsby Image, install the `gatsby-image` package along wit
 
 A common way to source images is to install and use `gatsby-source-filesystem` to connect your local files, but other source plugins can be used as well, such as `gatsby-source-contentful`, `gatsby-source-datocms` and `gatsby-source-sanity`.
 
-```bash
+```shell
 npm install --save gatsby-image gatsby-plugin-sharp gatsby-transformer-sharp
 ```
 
@@ -70,7 +59,7 @@ Once you've queried for a `fixed` image to retrieve its data, you can pass that 
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export default () => {
+export default function Image() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "images/default.jpg" }) {
@@ -141,7 +130,7 @@ Once you've queried for a `fluid` image to retrieve its data, you can pass that 
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export default () => {
+export default function Image() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "images/default.jpg" }) {
@@ -176,7 +165,7 @@ In a query, you can specify options for fluid images.
 - `maxWidth` (int, default: 800)
 - `maxHeight`(int)
 - `quality` (int, default: 50)
-- `srcSetBreakpoints` (array of int, default: [])
+- `srcSetBreakpoints` (array of int, default: \[])
 - `background` (string, default: `rgba(0,0,0,1)`)
 
 #### Returns
@@ -342,7 +331,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-For more info on how these options work, check out the Gatsby Image demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+For more info on how these options work, check out the Gatsby Image demo: https://using-gatsby-image.gatsbyjs.org/
 
 #### Additional plugin fragments
 
@@ -382,7 +371,7 @@ Here are some usage examples:
 <Img
   fluid={data.file.childImageSharp.fluid}
   alt="Cat taking up an entire chair"
-  fadeIn="false"
+  fadeIn={false}
   className="customImg"
   placeholderStyle={{ `backgroundColor`: `black` }}
   onLoad={() => {

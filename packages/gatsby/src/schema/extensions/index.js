@@ -6,7 +6,7 @@ const {
 } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
-const { getDateResolver } = require(`../types/date`)
+import { getDateResolver } from "../types/date"
 
 import type { GraphQLFieldConfigArgumentMap, GraphQLFieldConfig } from "graphql"
 import type { ComposeFieldConfig, ComposeOutputType } from "graphql-compose"
@@ -92,7 +92,7 @@ const typeExtensions = {
 const builtInFieldExtensions = {
   dateformat: {
     name: `dateformat`,
-    description: `Add date formating options.`,
+    description: `Add date formatting options.`,
     args: {
       formatString: `String`,
       locale: `String`,

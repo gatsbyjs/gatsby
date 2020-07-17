@@ -13,7 +13,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 const fs = require(`fs`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const resolveModuleExports = require(`../resolve-module-exports`)
+const { resolveModuleExports } = require(`../resolve-module-exports`)
 let resolver
 
 describe(`Resolve module exports`, () => {
@@ -23,7 +23,7 @@ describe(`Resolve module exports`, () => {
     "/export/const": `export const fooConst = '';`,
     "/module/exports": `module.exports.barExports = '';`,
     "/multiple/export": `exports.bar = () => ''; exports.baz = {}; exports.foo = '';`,
-    "/import/with/export": `import React from 'react'; exports.baz = '';`,
+    "/import/with/export": `import * as React from 'react'; exports.baz = '';`,
     "/realistic/export": `
       /* eslint-disable react/prop-types */
       /* globals window CustomEvent */
@@ -51,7 +51,7 @@ describe(`Resolve module exports`, () => {
       class ReplaceComponentRenderer extends React.Component {
         constructor(props) {
           super(props)
-          this.state = { exiting: false, nextPageResources: {} }
+          this.state = { exiting: false, nextPageResources: {}}
           this.listenerHandler = this.listenerHandler.bind(this)
         }
 
@@ -79,14 +79,12 @@ describe(`Resolve module exports`, () => {
 
         render() {
           const transitionProps = {
-            timeout: {
-              enter: 0,
-              exit: timeout,
-            },
             appear: true,
             in: !this.state.exiting,
             key: this.props.location.key,
           }
+          transitionProps.timeout.enter = 0
+          transitionProps.timeout.exit = timeout
           return (
             <Transition {...transitionProps}>
             {
@@ -122,6 +120,11 @@ describe(`Resolve module exports`, () => {
     "/export/named/from": `export { Component } from 'react';`,
     "/export/named/as": `const foo = ''; export { foo as bar };`,
     "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
+    "/export/default": `export default () => {}`,
+    "/export/default/name": `const foo = () => {}; export default foo`,
+    "/export/default/function": `export default function() {}`,
+    "/export/default/function/name": `export default function foo() {}`,
+    "/export/function": `export function foo() {}`,
   }
 
   beforeEach(() => {
@@ -207,6 +210,35 @@ describe(`Resolve module exports`, () => {
   it(`Resolves multiple named exports`, () => {
     const result = resolveModuleExports(`/export/named/multiple`, { resolver })
     expect(result).toEqual([`foo`, `bar`, `baz`])
+  })
+
+  it(`Resolves default export`, () => {
+    const result = resolveModuleExports(`/export/default`, { resolver })
+    expect(result).toEqual([`export default`])
+  })
+
+  it(`Resolves default export with name`, () => {
+    const result = resolveModuleExports(`/export/default/name`, { resolver })
+    expect(result).toEqual([`export default foo`])
+  })
+
+  it(`Resolves default function`, () => {
+    const result = resolveModuleExports(`/export/default/function`, {
+      resolver,
+    })
+    expect(result).toEqual([`export default`])
+  })
+
+  it(`Resolves default function with name`, () => {
+    const result = resolveModuleExports(`/export/default/function/name`, {
+      resolver,
+    })
+    expect(result).toEqual([`export default foo`])
+  })
+
+  it(`Resolves function declaration`, () => {
+    const result = resolveModuleExports(`/export/function`, { resolver })
+    expect(result).toEqual([`foo`])
   })
 
   it(`Resolves exports when using require mode - simple case`, () => {

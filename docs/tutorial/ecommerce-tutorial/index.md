@@ -4,10 +4,10 @@ title: "Gatsby E-commerce Tutorial"
 
 In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
-- Demo running [on Netlify](https://gatsby-ecommerce-stripe.netlify.com/)
+- Demo running [on Netlify](https://gatsby-ecommerce-stripe.netlify.app/)
 - Code hosted [on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
 
-## Why use Gatsby for an e-commerce site?
+## Why use Gatsby for an E-commerce site?
 
 Benefits of using Gatsby for e-commerce sites include the following:
 
@@ -32,8 +32,8 @@ Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) tha
 Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
 ```shell
-gatsby new ecommerce-gatsby-tutorial
-cd ecommerce-gatsby-tutorial
+gatsby new e-commerce-gatsby-tutorial
+cd e-commerce-gatsby-tutorial
 ```
 
 ### See your site hot reload in the browser!
@@ -93,11 +93,11 @@ If you're selling a single product, like an eBook for example, you can create a 
 
 To sell your products, you need to create them in your Stripe account using the [Stripe Dashboard](https://dashboard.stripe.com/products) or the [Stripe API](https://stripe.com/docs/api/products/create). This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the correct amount for the selected product/SKU. Stripe requires every SKU used with Stripe Checkout to have a name: be sure to add one to all of your SKUs.
 
-You will need to create both test and live product SKUs separately in the Stripe Dashboard. Make sure you toggle to "Viewing test data", then create your products for local development.
+You will need to create both test and live product SKUs separately in the Stripe Dashboard. **Make sure you toggle to "Viewing test data", then create your products for local development.**
 
 #### Create a checkout component that loads Stripe.js and redirects to the checkout
 
-Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
+Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this, with `loadStripe` updated with your API key and `lineItems` with one of your product IDs from the Stripe dashboard:
 
 ```jsx:title=src/components/checkout.js
 import React from "react"
@@ -106,8 +106,7 @@ import { loadStripe } from "@stripe/stripe-js"
 const buttonStyles = {
   fontSize: "13px",
   textAlign: "center",
-  color: "#fff",
-  outline: "none",
+  color: "#000",
   padding: "12px 60px",
   boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
   backgroundColor: "rgb(255, 178, 56)",
@@ -121,7 +120,8 @@ const redirectToCheckout = async event => {
   event.preventDefault()
   const stripe = await stripePromise
   const { error } = await stripe.redirectToCheckout({
-    items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
+    lineItems: [{ price: "price_1GriHeAKu92npuros981EDUL", quantity: 1 }],
+    mode: "payment",
     successUrl: `http://localhost:8000/page-2/`,
     cancelUrl: `http://localhost:8000/`,
   })
@@ -140,6 +140,18 @@ const Checkout = () => {
 }
 
 export default Checkout
+```
+
+#### If you are using the deprecated Stripe Orders API
+
+Replace the invocation of `redirectToCheckout` with the following snippet and it will allow you to accept SKU type products.
+
+```jsx:title=src/components/checkout.js
+const { error } = await stripe.redirectToCheckout({
+  items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
+  successUrl: `http://localhost:8000/page-2/`,
+  cancelUrl: `http://localhost:8000/`,
+})
 ```
 
 #### What did you just do?
@@ -228,7 +240,7 @@ Now you can add the plugin configuration in your `gatsby-config` file:
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby e-commerce Starter`,
+    title: `Gatsby E-commerce Starter`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -278,33 +290,35 @@ In your components folder add a new `Products` folder. This folder will include 
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query SkusForProduct {
-        skus: allStripeSku {
-          edges {
-            node {
-              id
-              currency
-              price
-              attributes {
-                name
+export default function Skus(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query SkusForProduct {
+          skus: allStripeSku {
+            edges {
+              node {
+                id
+                currency
+                price
+                attributes {
+                  name
+                }
               }
             }
           }
         }
-      }
-    `}
-    render={({ skus }) => (
-      <div>
-        {skus.edges.map(({ node: sku }) => (
-          <p key={sku.id}>{sku.attributes.name}</p>
-        ))}
-      </div>
-    )}
-  />
-)
+      `}
+      render={({ skus }) => (
+        <div>
+          {skus.edges.map(({ node: sku }) => (
+            <p key={sku.id}>{sku.attributes.name}</p>
+          ))}
+        </div>
+      )}
+    />
+  )
+}
 ```
 
 You can validate your query and see what data is being returned in GraphiQL, which is available at `http://localhost:8000/___graphql` when running `gatsby develop`.

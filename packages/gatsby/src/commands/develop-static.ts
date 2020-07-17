@@ -9,7 +9,7 @@ export function developStatic(
 ): express.Handler {
   const expressStatic = express.static(root, options)
 
-  return function(
+  return function (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction

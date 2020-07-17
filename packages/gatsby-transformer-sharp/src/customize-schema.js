@@ -270,8 +270,8 @@ const fluidNodeType = ({
         sizes: { type: new GraphQLNonNull(GraphQLString) },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
-        presentationWidth: { type: GraphQLInt },
-        presentationHeight: { type: GraphQLInt },
+        presentationWidth: { type: new GraphQLNonNull(GraphQLInt) },
+        presentationHeight: { type: new GraphQLNonNull(GraphQLInt) },
       },
     }),
     args: {

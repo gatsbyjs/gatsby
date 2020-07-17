@@ -120,7 +120,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function(image, node) {
+  const generateImagesAndUpdateNode = function (image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -243,7 +243,7 @@ module.exports = (
       return (
         selection
           // extract the elements that have the attribute
-          .map(function() {
+          .map(function () {
             const element = $(this)
             const url = $(this).attr(attribute)
             if (url && isRelativeUrl(url)) {

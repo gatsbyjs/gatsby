@@ -2,11 +2,17 @@
 title: Using Gatsby Image to Prevent Image Bloat
 ---
 
+import ImageModel from "@components/layer-model/image-model"
+
+Using images in Gatsby components and pages requires four steps to take advantage of performance benefits.
+
+<ImageModel initialLayer="Install" />
+
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
 > _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
-[Demo](https://using-gatsby-image.gatsbyjs.org/)
+Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-image.gatsbyjs.org/)
 
 `gatsby-image` includes the tricks you’d expect from a modern image component. It:
 
@@ -29,7 +35,7 @@ But creating optimized images for websites has long been a thorny problem. Ideal
 - Use the “blur-up” technique or a “traced placeholder” SVG to show a preview of the image while it loads
 - Hold the image position so your page doesn’t jump while the images load
 
-Doing this consistently across a site feels like Sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
+Doing this consistently across a site feels like a task that can never be completed. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
 
 Most solutions involve a lot of manual labor and bookkeeping to ensure every image is optimized.
 
@@ -83,30 +89,31 @@ module.exports = {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby" // highlight-line
+import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default () => {
-  // highlight-start
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `)
-  // highlight-end
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
     </Layout>
   )
 }
+
+// highlight-start
+export const query = graphql`
+  query MyQuery {
+    file(relativePath: { eq: "images/corgi.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
+// highlight-end
 ```
 
 <EggheadEmbed
@@ -118,23 +125,11 @@ export default () => {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default () => {
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `)
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
@@ -147,6 +142,19 @@ export default () => {
     </Layout>
   )
 }
+
+export const query = graphql`
+  query MyQuery {
+    file(relativePath: { eq: "images/corgi.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
 ```
 
 <EggheadEmbed

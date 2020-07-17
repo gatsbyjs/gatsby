@@ -2,33 +2,34 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
-  Store,
   Middleware,
 } from "redux"
 import _ from "lodash"
 
-import mitt from "mitt"
-import thunk from "redux-thunk"
-import reducers from "./reducers"
+import { mett } from "../utils/mett"
+import thunk, { ThunkMiddleware } from "redux-thunk"
+import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IReduxState, ActionsUnion } from "./types"
+import { IGatsbyState, ActionsUnion } from "./types"
 
 // Create event emitter for actions
-export const emitter = mitt()
+export const emitter = mett()
 
 // Read old node data from cache.
-export const readState = (): IReduxState => {
+export const readState = (): IGatsbyState => {
   try {
-    const state = readFromCache() as IReduxState
+    const state = readFromCache() as IGatsbyState
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
       state.nodes.forEach(node => {
         const { type } = node.internal
-        if (!state.nodesByType!.has(type)) {
-          state.nodesByType!.set(type, new Map())
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
         }
-        state.nodesByType!.get(type).set(node.id, node)
+        // The `.has` and `.set` calls above make this safe
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        state.nodesByType.get(type)!.set(node.id, node)
       })
     }
 
@@ -42,25 +43,33 @@ export const readState = (): IReduxState => {
   }
   // BUG: Would this not cause downstream bugs? seems likely. Why wouldn't we just
   // throw and kill the program?
-  return {} as IReduxState
+  return {} as IGatsbyState
+}
+
+export interface IMultiDispatch {
+  <T extends ActionsUnion>(action: T[]): T[]
 }
 
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware = ({ dispatch }) => next => (
+const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
   action: ActionsUnion
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
+// We're using the inferred type here becauise manually typing it would be very complicated
+// and error-prone. Instead we'll make use of the createStore return value, and export that type.
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const configureStore = (initialState: IGatsbyState) =>
   createStore(
-    combineReducers<IReduxState>({ ...reducers }),
+    combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
-    applyMiddleware(thunk, multi)
+    applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
   )
 
-export const store = configureStore(readState())
+export type GatsbyReduxStore = ReturnType<typeof configureStore>
+export const store: GatsbyReduxStore = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {
@@ -76,6 +85,8 @@ export const saveState = (): void => {
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
     pageData: state.pageData,
+    pendingPageDataWrites: state.pendingPageDataWrites,
+    staticQueriesByTemplate: state.staticQueriesByTemplate,
   })
 }
 

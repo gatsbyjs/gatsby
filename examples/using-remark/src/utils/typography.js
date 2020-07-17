@@ -111,6 +111,10 @@ const options = {
         backgroundColor: `#fef9ec`,
         borderRadius: `2px`,
       },
+      // Inline code highlighting.
+      "body :not(pre) > code[class*='language-']": {
+        backgroundColor: `#fef9ec`,
+      },
       // Add space before and after code/tt elements.
       // @see https://github.com/KyleAMathews/typography.js/blob/66f78f0f4b8d2c5abf0262bcc1118610139c3b5f/packages/typography-plugin-code/src/index.js#L38-L46
       "code:before,code:after,tt:before,tt:after": {

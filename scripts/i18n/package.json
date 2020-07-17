@@ -4,6 +4,7 @@
   "description": "Scripts for gatsby internationalization",
   "scripts": {
     "create": "node ./create.js",
+    "run-all": "node ./run-all.js",
     "sync": "node ./sync.js",
     "update-source": "node ./update-source.js"
   },

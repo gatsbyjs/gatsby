@@ -1,0 +1,16 @@
+{
+  "name": "gatsby-starter-plugin",
+  "version": "1.0.0",
+  "description": "A minimal boilerplate for the essential files Gatsby looks for in a plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"No build script setup\""
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "author": "Kyle Gill <kyle.robert.gill@gmail.com>",
+  "license": "0BSD"
+}

@@ -1,13 +1,15 @@
 const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
-  transformSchema,
+  wrapSchema,
   introspectSchema,
   RenameTypes,
-} = require(`graphql-tools-fork`)
+} = require(`@graphql-tools/wrap`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
 const { createHttpLink } = require(`apollo-link-http`)
 const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+const { createDataloaderLink } = require(`./batching/dataloader-link`)
 
 const {
   NamespaceUnderFieldTransform,
@@ -29,6 +31,7 @@ exports.sourceNodes = async (
     createLink,
     createSchema,
     refetchInterval,
+    batch = false,
   } = options
 
   invariant(
@@ -48,12 +51,13 @@ exports.sourceNodes = async (
   if (createLink) {
     link = await createLink(options)
   } else {
-    link = createHttpLink({
+    const options = {
       uri: url,
       fetch,
       fetchOptions,
       headers: typeof headers === `function` ? await headers() : headers,
-    })
+    }
+    link = batch ? createDataloaderLink(options) : createHttpLink(options)
   }
 
   let introspectionSchema
@@ -65,7 +69,7 @@ exports.sourceNodes = async (
     let sdl = await cache.get(cacheKey)
 
     if (!sdl) {
-      introspectionSchema = await introspectSchema(link)
+      introspectionSchema = await introspectSchema(linkToExecutor(link))
       sdl = printSchema(introspectionSchema)
     } else {
       introspectionSchema = buildSchema(sdl)
@@ -91,10 +95,10 @@ exports.sourceNodes = async (
     return {}
   }
 
-  const schema = transformSchema(
+  const schema = wrapSchema(
     {
       schema: introspectionSchema,
-      link,
+      executor: linkToExecutor(link),
     },
     [
       new StripNonQueryTransform(),

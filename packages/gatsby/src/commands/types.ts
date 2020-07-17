@@ -1,17 +1,25 @@
 import { PackageJson, Reporter } from "gatsby"
+import { Store, AnyAction } from "redux"
+import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
-  keyPath: string
-  certPath: string
-  key: string
-  cert: string
+  key: Buffer
+  cert: Buffer
+}
+
+export interface IDebugInfo {
+  port: number
+  break: boolean
 }
 
 export interface IProgram {
+  _: `develop` | `build` | `clean` | `feedback` | `repl` | `serve`
+  status?: string // I think this type should not exist here. It seems to be added in the reducer, but not applicable to the caller site from gatsby-cli
   useYarn: boolean
   open: boolean
   openTracingConfigFile: string
   port: number
+  proxyPort: number
   host: string
   report: Reporter
   [`cert-file`]?: string
@@ -20,6 +28,10 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+  inspect?: number
+  inspectBrk?: number
+  graphqlTracing?: boolean
+  setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 
 // @deprecated

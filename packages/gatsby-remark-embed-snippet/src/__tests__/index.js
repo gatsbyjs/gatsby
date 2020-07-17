@@ -36,6 +36,146 @@ describe(`gatsby-remark-embed-snippet`, () => {
     )
   })
 
+  it(`should display a code block of a single line`, () => {
+    const codeBlockValue = `  console.log('hello world')`
+    fs.readFileSync.mockReturnValue(`function test() {
+${codeBlockValue}
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block of a range of lines`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+${codeBlockValue}
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2-4\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block of a range of non-consecutive lines`, () => {
+    const notInSnippet = `lineShouldNotBeInSnippet();`
+    fs.readFileSync.mockReturnValue(`function test() {
+  if (window.location.search.indexOf('query') > -1) {
+    console.log('The user is searching')
+  }
+}
+${notInSnippet}
+window.addEventListener('resize', () => {
+  test();
+})`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2-4,7-9\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).not.toContain(notInSnippet)
+  })
+
+  it(`should display a code block between start-snippet and end-snippet`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+// start-snippet{foo}
+${codeBlockValue}
+// end-snippet{foo}
+console.log('finish up')
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block from start-snippet to end of file`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+// start-snippet{foo}
+${codeBlockValue}
+`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block from the correct snippet`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+// start-snippet{bar}
+console.log('Do not stop here!')
+// end-snippet{bar}
+console.log('Or here')
+// start-snippet{foo}
+${codeBlockValue}
+// end-snippet{foo}
+`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should handle missing snippet name`, () => {
+    fs.readFileSync.mockReturnValue(`function test() {
+  // start-snippet{goo}
+  nothing_to_do();
+  // end-snippet{goo}
+  stuff();
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(``)
+  })
+
+  it(`should ignore improperly formatted embed options`, () => {
+    fs.readFileSync.mockReturnValue(`function test() {
+  // start-snippet{goo}
+  nothing_to_do();
+  // end-snippet{goo}
+  stuff();
+}`)
+
+    const optStr = `{snoopet: "foo"}`
+    const markdownAST = remark.parse(`\`embed:hello-world.js${optStr}\``)
+
+    expect(() => plugin({ markdownAST }, { directory: `examples` })).toThrow(
+      `Invalid snippet options specified: ${optStr}`
+    )
+  })
+
   it(`should error if an invalid file path is specified`, () => {
     fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
 
@@ -135,6 +275,20 @@ describe(`gatsby-remark-embed-snippet`, () => {
       fs.readFileSync.mockReturnValue(`name: Brian Vaughn`)
 
       const markdownAST = remark.parse(`\`embed:hello-world.yaml\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should set the correct Prism language for Rust files`, () => {
+      fs.readFileSync.mockReturnValue(`extern crate lazy_static;`)
+
+      const markdownAST = remark.parse(`\`embed:hello-world.rs\``)
       const transformed = plugin(
         { markdownAST },
         {

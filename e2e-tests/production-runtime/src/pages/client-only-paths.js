@@ -1,9 +1,9 @@
-import React from 'react'
-import { Router } from '@reach/router'
-import { Link } from 'gatsby'
+import * as React from "react"
+import { Router } from "@reach/router"
+import { Link } from "gatsby"
 
-import Layout from '../components/layout'
-import InstrumentPage from '../utils/instrument-page'
+import Layout from "../components/layout"
+import InstrumentPage from "../utils/instrument-page"
 
 const routes = [`/`, `/not-found`, `/page/profile`, `/nested`, `/nested/foo`]
 

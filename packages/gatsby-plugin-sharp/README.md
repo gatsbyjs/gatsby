@@ -252,7 +252,7 @@ quoting the Sharp documentation:
 #### tracedSVG
 
 Generates a traced SVG of the image (see [the original GitHub issue][9]) and
-returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It it used in
+returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It used in
 [gatsby-image](/packages/gatsby-image/) to provide an
 alternative to the default inline base64 placeholder image.
 

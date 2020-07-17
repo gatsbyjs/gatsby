@@ -3,6 +3,7 @@ import fs from "fs"
 import path from "path"
 import os from "os"
 import { ICert } from "../commands/types"
+import prompts from "prompts"
 
 const absoluteOrDirectory = (directory: string, filePath: string): string => {
   // Support absolute paths
@@ -12,10 +13,32 @@ const absoluteOrDirectory = (directory: string, filePath: string): string => {
   return path.join(directory, filePath)
 }
 
+const getWindowsEncryptionPassword = async () => {
+  report.info(
+    [
+      `A password is required to access the secure certificate authority key`,
+      `used for signing certificates.`,
+      ``,
+      `If this is the first time this has run, then this is to set the password`,
+      `for future use.  If any new certificates are signed later, you will need`,
+      `to use this same password.`,
+      ``,
+    ].join(`\n`)
+  )
+  const results = await prompts({
+    type: `password`,
+    name: `value`,
+    message: `Please enter the CA password`,
+    validate: input => input.length > 0 || `You must enter a password.`,
+  })
+  return results.value
+}
+
 interface IGetSslCertArgs {
   name: string
   certFile?: string
   keyFile?: string
+  caFile?: string
   directory: string
 }
 
@@ -23,6 +46,7 @@ export const getSslCert = async ({
   name,
   certFile,
   keyFile,
+  caFile,
   directory,
 }: IGetSslCertArgs): Promise<ICert | false> => {
   // check that cert file and key file are both true or both false, if they are both
@@ -38,15 +62,18 @@ export const getSslCert = async ({
     const keyPath = absoluteOrDirectory(directory, keyFile)
     const certPath = absoluteOrDirectory(directory, certFile)
 
+    process.env.NODE_EXTRA_CA_CERTS = caFile
+      ? absoluteOrDirectory(directory, caFile)
+      : certPath
     return {
-      keyPath,
-      certPath,
-      key: fs.readFileSync(keyPath, `utf-8`),
-      cert: fs.readFileSync(certPath, `utf-8`),
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
     }
   }
 
-  report.info(`setting up automatic SSL certificate (may require sudo)\n`)
+  report.info(
+    `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`
+  )
   try {
     if ([`linux`, `darwin`].includes(os.platform()) && !process.env.HOME) {
       // this is a total hack to ensure process.env.HOME is set on linux and mac
@@ -59,10 +86,21 @@ export const getSslCert = async ({
       const mkdtemp = fs.mkdtempSync(path.join(os.tmpdir(), `home-`))
       process.env.HOME = mkdtemp
     }
-    const certificateFor = require(`devcert`).certificateFor
-    return await certificateFor(name, {
-      installCertutil: true,
+    const getDevCert = require(`devcert`).certificateFor
+    const { caPath, key, cert } = await getDevCert(name, {
+      getCaPath: true,
+      skipCertutilInstall: false,
+      ui: {
+        getWindowsEncryptionPassword,
+      },
     })
+    if (caPath) {
+      process.env.NODE_EXTRA_CA_CERTS = caPath
+    }
+    return {
+      key,
+      cert,
+    }
   } catch (err) {
     report.panic({
       id: `11522`,

@@ -3,7 +3,7 @@ title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for c
 date: 2019-01-30
 author: Linda Watkins
 tags:
-  - ecommerce
+  - e-commerce
   - case-studies
   - marketing
 image: "./images/flamingo.png"
@@ -43,7 +43,7 @@ The manual process required to make the Harry’s website perform was what they 
   Gatsby takes care of this for us.
 </Pullquote>
 
-Since Gatsby simply serves html files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
+Since Gatsby simply serves HTML files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
 
 The Flamingo team also wanted to shake things up with content and image design by providing the fastest, most seamless shopping experience. Gatsby’s image handling helps reduce raw image sizes and speed up page load times, and serves the right resolution image depending on different screen sizes. This gave the frontend developers the ability to go beyond JS to focus on edge hosting and optimization. With a site driven by modern development tools, Gatsby’s out-of-the-box image support is the cherry on top for Flamingo. “We don’t have to write the code ourselves!” said Johnny.
 
@@ -79,7 +79,7 @@ Flamingo was able to achieve their sales and brand awareness goals with the new 
 
 **3) Seamless Integration with the CMS (Contentful):** The marketing leads and content creators are able to update most branded content (copy and images) on the site with zero developer involvement. This enables the team to work without interruption while giving their brand team the flexibility to make quick updates based on customer feedback.
 
-## Inspiring a New Frontier of e-commerce
+## Inspiring a New Frontier of E-commerce
 
 Harry’s had a website that was working, but the web team knew it could do better for Flamingo – it could move to the edge and head for a new frontier in e-commerce.
 

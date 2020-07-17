@@ -7,7 +7,7 @@ const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
-const { getRepositoryId: _getRepositoryId } = require(`./repository-id`)
+import { getRepositoryId as _getRepositoryId } from "./repository-id"
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -189,9 +189,14 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
+      dbEngine: this.getDbEngine(),
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
+  }
+
+  getDbEngine() {
+    return `redux`
   }
 
   getMachineId() {

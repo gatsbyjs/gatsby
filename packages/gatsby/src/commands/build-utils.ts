@@ -5,11 +5,14 @@ import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
 } from "../utils/page-html"
-import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
-import { IReduxState } from "../redux/types"
+import { removePageData, fixedPagePath } from "../utils/page-data"
+import { IGatsbyState } from "../redux/types"
+
+const checkFolderIsEmpty = (path: string): boolean =>
+  fs.existsSync(path) && !fs.readdirSync(path).length
 
 export const getChangedPageDataKeys = (
-  state: IReduxState,
+  state: IGatsbyState,
   cachedPageData: Map<string, string>
 ): string[] => {
   if (cachedPageData && state.pageData) {
@@ -31,7 +34,7 @@ export const getChangedPageDataKeys = (
 }
 
 export const collectRemovedPageData = (
-  state: IReduxState,
+  state: IGatsbyState,
   cachedPageData: Map<string, string>
 ): string[] => {
   if (cachedPageData && state.pageData) {
@@ -55,11 +58,11 @@ const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
     `page-data`,
     fixedPagePath(pagePath)
   )
-  const hasFiles = fs.readdirSync(pageHtmlDirectory)
-
-  // if page's html folder is empty also remove matching page-data folder
-  if (!hasFiles.length) {
+  // if page's folder is empty also remove matching page-data folder
+  if (checkFolderIsEmpty(pageHtmlDirectory)) {
     fs.removeSync(pageHtmlDirectory)
+  }
+  if (checkFolderIsEmpty(pageDataDirectory)) {
     fs.removeSync(pageDataDirectory)
   }
 }
@@ -79,11 +82,11 @@ export const removePageFiles = async (
     removePageHtmlFile({ publicDir }, pagePath)
   )
 
-  const removePageData = pageKeys.map(pagePath =>
-    removePageDataFile({ publicDir }, pagePath)
+  const removePageDataList = pageKeys.map(pagePath =>
+    removePageData(publicDir, pagePath)
   )
 
-  return Promise.all([...removePages, ...removePageData]).then(() => {
+  return Promise.all([...removePages, ...removePageDataList]).then(() => {
     // Sort removed pageKeys by nested directories and remove if empty.
     sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
       checkAndRemoveEmptyDir(publicDir, pagePath)

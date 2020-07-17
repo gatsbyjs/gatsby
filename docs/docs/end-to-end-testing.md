@@ -68,7 +68,7 @@ A good use case for writing automated end-to-end tests is asserting **accessibil
 
 To use cypress-axe, you have to install the `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core) packages. You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to select elements — see [best practices for selecting elements](https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements).
 
-```bash
+```shell
 npm install --save-dev cypress-axe axe-core @testing-library/cypress
 ```
 
@@ -106,9 +106,7 @@ Finally, inside the first test, you'll use the `checkA11y` command from `cypress
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/")
-      .get("main")
-      .injectAxe()
+    cy.visit("/").get("main").injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -131,9 +129,7 @@ The following test is for the [gatsby-default-starter](https://github.com/gatsby
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/")
-      .get("main")
-      .injectAxe()
+    cy.visit("/").get("main").injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -157,9 +153,7 @@ You'll now write another test for the `gatsby-default-starter` homepage. In this
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/")
-      .get("main")
-      .injectAxe()
+    cy.visit("/").get("main").injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()

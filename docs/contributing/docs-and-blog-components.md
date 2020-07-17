@@ -17,7 +17,7 @@ A variety of components have been written to help with formatting code and conte
 
 ### Guide List
 
-The `<GuideList />` is a component that renders an h2 heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
+The `<GuideList />` is a component that renders an `h2` heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
 
 #### Usage
 
@@ -124,13 +124,45 @@ Rendered, the component looks like this:
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
-### Layer Model
+### Gatsby Cloud Callout
 
-The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
+The `<CloudCallout />` component is used to call attention and link to Gatsby Cloud. It wraps a small call to action in styles that make content stand out.
 
 #### Usage
 
-The Layer Model component takes one prop:
+The Cloud Callout component takes one optional prop, and prepends the children it wraps to the general call to action:
+
+- `narrow` - styles the component by removing the left and right negative margins, keeping it inside the parent container. This prop is by default set to true since it's most commonly used in the docs where it's necessary to keep content from overlapping with other sections of the layout, such as the Table of Contents.
+
+It is used like this:
+
+```markdown:title=docs/deploying-to-storage-provider.md
+---
+title: Deploying to Storage Provider
+---
+
+<!-- highlight-start -->
+<CloudCallout>
+  Connect your Gatsby site to Storage Provider for automatic deployments.
+</CloudCallout>
+<!-- highlight-end -->
+```
+
+#### Sample
+
+Rendered, the component looks like this:
+
+<CloudCallout>
+  Connect your Gatsby site to Storage Provider for automatic deployments.
+</CloudCallout>
+
+### Component Model
+
+The `<ComponentModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
+
+#### Usage
+
+The Component Model component takes one prop:
 
 - `initialLayer` - defaults to `Content`, can be one of `Content`, `Build`, `Data`, `View`, `App` that correspond to the different layers
 
@@ -139,64 +171,29 @@ The Layer Model component takes one prop:
 title: GraphQL Concepts in Gatsby
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 To help understand how GraphQL works in Gatsby...
 
-<LayerModel initialLayer="Data" />
+<ComponentModel initialLayer="Data" />
 ```
 
-#### Sample
+## Importing other components
 
-When used, it looks like this:
+If you need to use a component that is not globally available, you can do by importing it using the special `@components` alias, which points to `www/src/components`:
 
-<LayerModel initialLayer="Data" />
+```mdx
+import EmailCaptureForm from "@components/email-capture-form"
 
-### Horizontal Navigation List
-
-The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format.
-
-#### Usage
-
-The Horizontal Nav List component takes two props:
-
-- `slug` - which is provided in the props of the page by default
-- `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
-
-The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-blog-components#guide-list`).
-
-<!-- prettier-ignore -->
-```markdown
----
-title: Glossary
----
-
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
-
-The glossary defines key vocabulary...
-
----
-
-<HorizontalNavList
-  slug={props.slug}
-  items={["guide-list", "egghead-embed", "pull-quote", "layer-model", "horizontal-navigation-list"]}
-/>
+<EmailCaptureForm />
 ```
 
-#### Sample
+**NOTE:** Do _not_ import a component using relative path directories:
 
-Rendered, it looks like this:
+```mdx
+// DO NOT DO THIS
+import EmailCaptureForm from "../../www/src/components/email-capture-form"
+```
 
-<HorizontalNavList
-  items={[
-    "guide-list",
-    "egghead-embed",
-    "pull-quote",
-    "layer-model",
-    "horizontal-navigation-list",
-  ]}
-  slug={props.slug}
-/>
+Doing so will break localized versions of the page, which are stored in other repos.
 
 ---
 
@@ -205,6 +202,93 @@ Rendered, it looks like this:
 New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
 
 You can read more about writing in Markdown in the [Markdown syntax guide](/docs/mdx/markdown-syntax).
+
+### Frontmatter
+
+[Frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) is a set of key-value pairs in your Markdown and MDX files that defines the metadata for a page. While authoring new docs and blog posts for the Gatsby site, it may be helpful to understand what frontmatter is available to you.
+
+#### General
+
+- `title` (string)
+
+  The title of the doc or blog post. Gatsby renders the value in `og:title`, `<title>` and `<h1>`.
+
+- `excerpt` (string)
+
+  The excerpt for the post. Gatsby renders the value in `description`, `og:description`, and `twitter:description`.
+
+#### Blog Posts
+
+- `seoTitle` (string)
+
+  If provided, this value will overwrite the `title` for the blog post's `og:title` and `<title>`. This is useful for SEO, as it lets us target specific relevant keywords, without needing to change the page's primary visible title.
+
+- `date` (string)
+
+  The blog post's date in the format of `YYYY-MM-DD`.
+
+- `canonicalLink` (string)
+
+  The URL to the original piece of content. This is useful for SEO attribution when cross-posting blog posts across domains. Google [offers an explanation](https://support.google.com/webmasters/answer/139066?hl=en) if you're interested in learning more.
+
+- `tags` (array)
+
+  The blog post's related tags. Gatsby renders the [YAML array/list](https://en.wikipedia.org/wiki/YAML#Basic_components) as links to tag archives and creates the archive if it doesn't exist.
+
+- `image` (string)
+
+  The relative path to the image.
+
+  - Facebook and `twitterCard: summary` support an aspect ratio of 1:1.
+  - LinkedIn supports an aspect ratio of 1.91:1 and `twitterCard: summary_large_image` supports an aspect ratio of 2:1
+  - Gatsby resizes the image to 1500x1500 and renders the URL in the `og:image` and `twitter:image` metadata.
+
+- `imageAuthor` (string)
+
+  The name of the image's author. Gatsby renders the value in an `<a>` tag only if `imageAuthorLink` is defined.
+
+- `imageAuthorLink` (string)
+
+  The link to the image's author. Gatsby renders the value in an `<a>` tag only if `imageAuthor` is defined.
+
+- `showImageInArticle` (boolean, default false)
+
+  Determines if the `image` is displayed as a hero in the blog post. Gatsby renders it as a fluid image with a width of 786px.
+
+- `twitterCard` (string)
+
+  A choice between: `summary` or `summary_large_image` that Gatsby renders in the `twitter:card` metadata.
+
+  - `summary` - displays the post as a snapshot that includes a thumbnail, title, and description to convey its content.
+  - `summary_large_image` - displays the post as a large, full-width image that conveys the visual aspect.
+
+- `author` (string)
+
+  The author's name, which is also the `id` in the `/docs/blog/author.yaml` file. Gatsby renders a link to the author's archive page.
+
+#### Documentation
+
+- `description` (string, default `excerpt`)
+
+  A description of the doc. Gatsby renders the value in the `description` and `og:description` metadata.
+
+- `issue` (string)
+
+  The issue URL relating to a stub on GitHub. Gatsby renders a link to the stub.
+
+- `disableTableOfContents` - (boolean)
+
+  Determines if the table of contents is output.
+
+- `tableOfContentsDepth` - (integer)
+
+  The number of levels to render the table of contents.
+
+#### Relevant Links
+
+- [About Twitter Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards)
+- [Facebook Sharing - Best Practices](https://developers.facebook.com/docs/sharing/best-practices#images)
+- [Making Your Website Shareable on LinkedIn](https://www.linkedin.com/help/linkedin/answer/46687/making-your-website-shareable-on-linkedin?lang=en)
 
 ### Code blocks
 
@@ -215,7 +299,7 @@ Code can be formatted using regular Markdown syntax, but the docs site has addit
 Code blocks are wrapped in 3 backticks. A language can be added immediately after the first set of back ticks to provide syntax highlighting for the language. A `title` of the file can be added after the language. Line highlighting can be included in the code block by commenting `highlight-line`, or `highlight-start` followed by a `highlight-end`.
 
 <!-- prettier-ignore -->
-````
+````markdown
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js
 plugins: [
@@ -233,7 +317,7 @@ plugins: [
 
 In order to demonstrate how to use code blocks in a doc without your triple backticks being styled and formatted automatically (just like the example above), you can wrap a set of triple backticks in quadruple backticks like this:
 
-`````
+`````markdown
 ````
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js

@@ -39,6 +39,7 @@ const nodes = [
     },
     frontmatter: {
       title: `Markdown File 1`,
+      tags: [],
       date: new Date(Date.UTC(2019, 0, 1)),
       authors: [`author2@example.com`, `author1@example.com`],
       reviewer___NODE: `author2`,
@@ -55,6 +56,7 @@ const nodes = [
     },
     frontmatter: {
       title: `Markdown File 2`,
+      tags: [`constructor`],
       published: false,
       authors: [`author1@example.com`],
       reviewer___NODE: null,

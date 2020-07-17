@@ -14,7 +14,8 @@ If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio
 
 You can inspect `gatsby-theme-blog`'s file structure to determine the file path for the file you want to shadow.
 
-```text:title="tree gatsby-theme-blog"
+```text:title=gatsby-theme-blog
+├── gatsby-browser.js
 ├── gatsby-config.js
 ├── gatsby-node.js
 └── src
@@ -22,24 +23,23 @@ You can inspect `gatsby-theme-blog`'s file structure to determine the file path 
     │   ├── bio-content.js
     │   ├── bio.js // highlight-line
     │   ├── header.js
-    │   ├── headings.js
     │   ├── home-footer.js
     │   ├── layout.js
+    │   ├── post-date.js
     │   ├── post-footer.js
+    │   ├── post-hero.js
+    │   ├── post-link.js
+    │   ├── post-list.js
+    │   ├── post-title.js
     │   ├── post.js
     │   ├── posts.js
-    │   ├── seo.js
-    │   └── switch.js
+    │   └── seo.js
     ├── gatsby-plugin-theme-ui
-    │   ├── colors.js
-    │   ├── components.js
-    │   ├── index.js
-    │   ├── prism.js
-    │   ├── styles.js
-    │   └── typography.js
-    └── templates
-        ├── post.js
-        └── posts.js
+    │   └── components.js
+    └── gatsby-theme-blog-core
+       └── components
+          ├── post.js
+          └── posts.js
 ```
 
 ### Customizing the `Bio` component
@@ -54,7 +54,9 @@ This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rend
 
 ```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
-export default () => <h1>My new bio component!</h1>
+export default function Bio() {
+  return <h1>My new bio component!</h1>
+}
 ```
 
 A successful shadow of the Bio component will result in the following directory tree:
@@ -67,25 +69,23 @@ user-site
             └── bio.js // highlight-line
 ```
 
-## Shadowing other themes
+## Shadowing other files
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. If you want to customize the implementation of any theme you can do so with shadowing.
+Some themes, including `gatsby-theme-blog`, install additional plugins. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` with the `gatsby-theme-ui-preset` preset. Shadowing is one way to customize the styling of a theme.
 
-For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`.
+For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`. The styles in this file will be automatically merged with those in `gatsby-theme-ui-preset`. For conflicting styles, your local shadowed settings take precedence.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
-import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/index"
-
 export default {
-  ...baseTheme,
   fontSizes: [12, 14, 16, 24, 32, 48, 64, 96, 128],
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   colors: {
-    ...baseTheme.colors,
     primary: `tomato`,
   },
 }
 ```
+
+> Note that any styles in shadowed files will automatically get deep-merged with your `preset` theme. Shadowed styles take precedence.
 
 Which will result in the following directory tree:
 
@@ -135,23 +135,25 @@ import React from "react"
 import { Avatar, MediaObject, Icon } from "gatsby-theme-blog"
 import Card from "../components/card"
 
-export default ({ name, bio, avatar, twitterUrl, githubUrl }) => (
-  <Card>
-    <MediaObject>
-      <Avatar {...avatar} />
-      <div>
-        <h3>{name}</h3>
-        <p>{bio}</p>
-        <a href={twitterUrl}>
-          <Icon name="twitter" />
-        </a>
-        <a href={githubUrl}>
-          <Icon name="github" />
-        </a>
-      </div>
-    </MediaObject>
-  </Card>
-)
+export default function Bio({ name, bio, avatar, twitterUrl, githubUrl }) {
+  return (
+    <Card>
+      <MediaObject>
+        <Avatar {...avatar} />
+        <div>
+          <h3>{name}</h3>
+          <p>{bio}</p>
+          <a href={twitterUrl}>
+            <Icon name="twitter" />
+          </a>
+          <a href={githubUrl}>
+            <Icon name="github" />
+          </a>
+        </div>
+      </MediaObject>
+    </Card>
+  )
+}
 ```
 
 This workflow isn’t too bad, especially since the component is relatively straightforward. However, it could be optimized in scenarios where you want to wrap a component or pass a different prop without having to worry about the component’s internals.
@@ -165,11 +167,13 @@ import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/bio"
 import Card from "../components/card"
 
-export default props => (
-  <Card>
-    <Author {...props} />
-  </Card>
-)
+export default function Bio(props) {
+  return (
+    <Card>
+      <Author {...props} />
+    </Card>
+  )
+}
 ```
 
 This is a quick and efficient way to customize rendering without needing to worry about the implementation details of the component you’re looking to customize. Importing the shadowed component means you can use composition, leveraging a great feature from React.
@@ -183,7 +187,9 @@ For example, if `NewsletterCTA` accepts a `variant` prop which changes the look 
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"
 
-export default props => <NewsletterCTA {...props} variant="link" />
+export default function CallToAction(props) {
+  return <NewsletterCTA {...props} variant="link" />
+}
 ```
 
 ## Using the CSS prop
@@ -193,28 +199,25 @@ In addition to passing a different prop to a component you’re extending, you m
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"
 
-export default props => (
-  <NewsletterCTA
-    css={{
-      backgroundColor: "rebeccapurple",
-      color: "white",
-      boxShadow: "none",
-    }}
-    {...props}
-  />
-)
+export default function CallToAction(props) {
+  return (
+    <NewsletterCTA
+      css={{
+        backgroundColor: "rebeccapurple",
+        color: "white",
+        boxShadow: "none",
+      }}
+      {...props}
+    />
+  )
+}
 ```
 
 **Note:** For this approach to work NewsletterCTA has to accept a `className` property to apply styles after the CSS prop is transformed by the Emotion babel plugin.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
-import theme from "gatsby-plugin-theme-ui/src"
-
-const { colors } = theme
 export default {
-  ...theme,
   colors: {
-    ...colors,
     primary: "tomato",
   },
 }

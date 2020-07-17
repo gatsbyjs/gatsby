@@ -1,4 +1,4 @@
 {
-    "baseUrl": "http://localhost:8888/",
-    "fileServerFolder": "./src"
-  }
+  "baseUrl": "http://localhost:8888/",
+  "fileServerFolder": "./src"
+}

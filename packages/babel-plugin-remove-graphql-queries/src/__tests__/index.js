@@ -13,7 +13,7 @@ it.todo(
   `Works correctly with the kitchen sink`
   // , () => {
   //   matchesSnapshot(`
-  //   import React from 'react'
+  //   import * as React from 'react'
   //   import { graphql, useStaticQuery, StaticQuery } from 'gatsby'
 
   //   export default () => {
@@ -38,7 +38,7 @@ it.todo(
 
 it(`Transforms queries in useStaticQuery`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
@@ -53,7 +53,7 @@ it(`Transforms queries in useStaticQuery`, () => {
 
 it(`Transforms exported queries in useStaticQuery`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
@@ -73,7 +73,7 @@ it(`Transforms exported queries in useStaticQuery`, () => {
 
 it(`Transforms queries defined in own variable in useStaticQuery`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
@@ -89,7 +89,7 @@ it(`Transforms queries defined in own variable in useStaticQuery`, () => {
 
 it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
@@ -105,7 +105,7 @@ it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
 
 it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
@@ -159,7 +159,7 @@ it(`Transforms only the call expression in useStaticQuery`, () => {
 
 it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql } from 'gatsby'
 
   export default () => {
@@ -175,7 +175,7 @@ it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
 
 it(`Allow alternative import of useStaticQuery`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import * as Gatsby from 'gatsby'
 
   export default () => {
@@ -191,7 +191,7 @@ it(`Allow alternative import of useStaticQuery`, () => {
 
 it(`Transforms queries in <StaticQuery>`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
   export default () => (
@@ -205,7 +205,7 @@ it(`Transforms queries in <StaticQuery>`, () => {
 
 it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
   const query = graphql\`{site { siteMetadata { title }}}\`
@@ -221,7 +221,7 @@ it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
 
 it(`transforms exported variable queries in <StaticQuery>`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
   export const query = graphql\`{site { siteMetadata { title }}}\`
@@ -354,7 +354,7 @@ it(`handles require alias`, () => {
 it(`Leaves other graphql tags alone`, () => {
   matchesSnapshot(
     `
-  import React from 'react'
+  import * as React from 'react'
   import { graphql } from 'relay'
 
   export default () => (
@@ -400,7 +400,7 @@ it(`Removes all gatsby queries`, () => {
 
 it(`Handles closing StaticQuery tag`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
   export default () => (
@@ -415,7 +415,7 @@ it(`Handles closing StaticQuery tag`, () => {
 
 it(`Doesn't add data import for non static queries`, () => {
   matchesSnapshot(`
-  import React from 'react'
+  import * as React from 'react'
   import { StaticQuery, graphql } from "gatsby"
 
   const Test = () => (

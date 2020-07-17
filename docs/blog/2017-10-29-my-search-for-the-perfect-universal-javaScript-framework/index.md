@@ -55,7 +55,7 @@ used to tweak my configuration all the time to achieve better performance, but
 Gatsby allows me to outsource the configuration and optimization and get a super
 fast website with zero work.
 
-I’ll also mention [next.js](https://github.com/zeit/next.js) which is quite
+I’ll also mention [next.js](https://github.com/vercel/next.js/) which is quite
 similar and supports both SSR for dynamic content and exporting to static pages.
 And don't forget [Netlify](https://www.netlify.com) who is doing an amazing job
 at building and hosting static websites.
