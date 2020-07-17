@@ -203,7 +203,7 @@ export default (pagePath, callback) => {
 
   const appDataUrl = getAppDataUrl()
 
-  const { componentChunkName, staticQueryHashes } = pageData
+  const { componentChunkName, staticQueryHashes = [] } = pageData
 
   const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
 

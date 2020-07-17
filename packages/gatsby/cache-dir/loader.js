@@ -290,11 +290,11 @@ export class BaseLoader {
               page: payload,
               pageResources: payload,
             })
-            this.pageDb.set(pagePath, finalResult)
-            return payload
           }
 
-          return undefined
+          this.pageDb.set(pagePath, finalResult)
+
+          return pageResources
         }
       )
     })
