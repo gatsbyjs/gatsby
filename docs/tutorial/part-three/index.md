@@ -90,7 +90,7 @@ gatsby develop
 
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
 
-![typography-styles](typography-styles.png)
+![Developer tool panel showing `typography.js` CSS styles](typography-styles.png)
 
 ### ✋ Make some content and style changes
 
@@ -114,7 +114,7 @@ export default function Home() {
 
 Your site should now look like this:
 
-![no-layout](no-layout.png)
+![Screenshot of site with no layout styling](no-layout.png)
 
 Let's make a quick improvement. Many sites have a single column of text centered in the middle of the page. To create this, add the following styles to the `<div>` in `src/pages/index.js`.
 
@@ -175,7 +175,7 @@ export default function Contact() {
 
 Let's see what the new about page looks like:
 
-![about-uncentered](about-uncentered.png)
+![About page with uncentered text](about-uncentered.png)
 
 Hmm. It would be nice if the content of the two new pages were centered like the index page. And it would be nice to have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
@@ -247,7 +247,7 @@ export default function Layout({ children }) {
 
 If you go to any of your three pages, you'll see the same title added, e.g. the `/about/` page:
 
-![with-title](with-title.png)
+![Formatted page showing site title](with-title.png)
 
 ### ✋ Add navigation links between pages
 
@@ -286,7 +286,7 @@ export default function Layout({ children }) {
 }
 ```
 
-![with-navigation2](with-navigation.png)
+![A Gatsby page showing navigation links](with-navigation.png)
 
 And there you have it! A three page site with basic global navigation.
 
