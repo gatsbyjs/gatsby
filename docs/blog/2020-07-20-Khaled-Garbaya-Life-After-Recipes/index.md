@@ -54,7 +54,7 @@ module.exports = {
 
 4. Create a `tailwind.config.js` file and add the following snippet to it:
 
-```
+```javascript
 module.exports = {
   purge: [
     './src/**/*.js',
