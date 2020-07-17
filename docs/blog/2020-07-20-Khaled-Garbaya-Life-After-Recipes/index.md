@@ -69,7 +69,7 @@ module.exports = {
 
 5. Create a `tailwind.css` file and add the following snippet to it:
 
-```
+```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
