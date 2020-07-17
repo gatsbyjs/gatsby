@@ -97,7 +97,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -1985,6 +1984,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
