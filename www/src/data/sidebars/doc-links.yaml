@@ -765,9 +765,9 @@
       link: /docs/partnering-with-gatsby/
       items:
         - title: Technology Partner Program
-          link: https://www.gatsbyjs.com/partner-technology
+          link: https://www.gatsbyjs.com/partner-technology/
         - title: Agency Partner Program
-          link: https://www.gatsbyjs.com/partner-agency
+          link: https://www.gatsbyjs.com/partner-agency/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet

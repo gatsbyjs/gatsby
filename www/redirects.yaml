@@ -156,3 +156,7 @@
   toPath: /docs/conditional-page-builds/
 - fromPath: /docs/contributing/translation/ui-messages/
   toPath: /docs/contributing/translation/
+- fromPath: /docs/gatsby-vendor-partnership/
+  toPath: https://www.gatsbyjs.com/partner-technology/
+- fromPath: /docs/gatsby-agency-partnership/
+  toPath: https://www.gatsbyjs.com/partner-agency/
