@@ -15,37 +15,6 @@ enum MESSAGE_TYPES {
   JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`,
 }
 
-let activityForJobs: ActivityTracker | null = null
-let activeJobs = 0
-let isListeningForMessages = false
-let hasShownIPCDisabledWarning = false
-
-const jobsInProcess: Map<
-  string,
-  { id: string; deferred: pDefer.DeferredPromise<object> }
-> = new Map()
-const externalJobsMap: Map<
-  string,
-  { job: InternalJob; deferred: pDefer.DeferredPromise<any> }
-> = new Map()
-
-/**
- * We want to use absolute paths to make sure they are on the filesystem
- */
-function convertPathsToAbsolute(filePath: string): string {
-  if (!path.isAbsolute(filePath)) {
-    throw new Error(`${filePath} should be an absolute path.`)
-  }
-
-  return slash(filePath)
-}
-/**
- * Get contenthash of a file
- */
-function createFileHash(path: string): string {
-  return hasha.fromFileSync(path, { algorithm: `sha1` })
-}
-
 interface IBaseJob {
   name: string
   outputDir: string
@@ -79,6 +48,37 @@ interface IInternalJob {
 export type JobResultInterface = Record<string, unknown>
 export type JobInput = IBaseJob & IJobInput
 export type InternalJob = IBaseJob & IInternalJob
+
+let activityForJobs: ActivityTracker | null = null
+let activeJobs = 0
+let isListeningForMessages = false
+let hasShownIPCDisabledWarning = false
+
+const jobsInProcess: Map<
+  string,
+  { id: string; deferred: pDefer.DeferredPromise<object> }
+> = new Map()
+const externalJobsMap: Map<
+  string,
+  { job: InternalJob; deferred: pDefer.DeferredPromise<any> }
+> = new Map()
+
+/**
+ * We want to use absolute paths to make sure they are on the filesystem
+ */
+function convertPathsToAbsolute(filePath: string): string {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} should be an absolute path.`)
+  }
+
+  return slash(filePath)
+}
+/**
+ * Get contenthash of a file
+ */
+function createFileHash(path: string): string {
+  return hasha.fromFileSync(path, { algorithm: `sha1` })
+}
 
 let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
 
