@@ -34,7 +34,7 @@ const getWindowsEncryptionPassword = async () => {
   return results.value
 }
 
-interface IGetSslCertArgs {
+export interface IGetSslCertArgs {
   name: string
   certFile?: string
   keyFile?: string
@@ -42,13 +42,13 @@ interface IGetSslCertArgs {
   directory: string
 }
 
-export const getSslCert = async ({
+export async function getSslCert({
   name,
   certFile,
   keyFile,
   caFile,
   directory,
-}: IGetSslCertArgs): Promise<ICert | false> => {
+}: IGetSslCertArgs): Promise<ICert | false> {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
