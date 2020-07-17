@@ -1,36 +1,3 @@
-export const COLLECTIONS_QUERY = `
-  query GetCollections($first: Int!, $after: String) {
-    collections(first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          description
-          descriptionHtml
-          handle
-          id
-          image {
-            altText
-            id
-            src
-          }
-          products(first: 250) {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-          title
-          updatedAt
-        }
-      }
-    }
-  }
-`
-
 export const PRODUCTS_QUERY = `
   query GetProducts($first: Int!, $after: String) {
     products(first: $first, after: $after) {
@@ -280,7 +247,38 @@ export const defaultQueries = {
     }
   }
 `,
-  collections: COLLECTIONS_QUERY,
+  collections: `
+  query GetCollections($first: Int!, $after: String) {
+    collections(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          description
+          descriptionHtml
+          handle
+          id
+          image {
+            altText
+            id
+            src
+          }
+          products(first: 250) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+          title
+          updatedAt
+        }
+      }
+    }
+  }
+`,
   products: PRODUCTS_QUERY,
   shopPolicies: SHOP_POLICIES_QUERY,
   pages: PAGES_QUERY,
