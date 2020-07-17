@@ -94,7 +94,6 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
   (_context, { data }) => {
     return {
       ...data,
-      firstRun: false,
     }
   }
 )

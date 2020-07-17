@@ -24,9 +24,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     QUERY_FILE_CHANGED: {
       actions: `markQueryFilesDirty`,
     },
-    // These are calls to the refresh endpoint. Also used by Gatsby Preview
+    // These are calls to the refresh endpoint. Also used by Gatsby Preview.
+    // Saves the webhook body from the event into context, then reloads data
     WEBHOOK_RECEIVED: {
-      target: `initializingDataLayer`,
+      target: `reloadingData`,
       actions: `assignWebhookBody`,
     },
   },
@@ -42,13 +43,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       invoke: {
         src: `initialize`,
         onDone: {
-          target: `initializingDataLayer`,
+          target: `initializingData`,
           actions: [`assignStoreAndWorkerPool`, `spawnMutationListener`],
         },
       },
     },
     // Sourcing nodes, customising and inferring schema, then running createPages
-    initializingDataLayer: {
+    initializingData: {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
@@ -58,19 +59,17 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         QUERY_FILE_CHANGED: undefined,
       },
       invoke: {
-        src: `initializeDataLayer`,
+        src: `initializeData`,
         data: ({
           parentSpan,
           store,
-          firstRun,
           webhookBody,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
-            firstRun,
-            deferNodeMutation: true,
             webhookBody,
+            deferNodeMutation: true,
           }
         },
         onDone: {
@@ -113,14 +112,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
         onDone: [
           {
-            // If this is first run, start webpack and websocket servers
+            // If we have no compiler (i.e. it's first run), then spin up the
+            // webpack and socket.io servers
             target: `startingDevServers`,
             actions: `setQueryRunningFinished`,
-            cond: ({ firstRun }: IBuildContext): boolean => !!firstRun,
+            cond: ({ compiler }: IBuildContext): boolean => !!compiler,
           },
           {
-            // ...otherwise just wait. xstate performs just the first transition
-            // that matches.
+            // ...otherwise just wait.
             target: `waiting`,
           },
         ],
@@ -166,17 +165,50 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         // "done" means we need to rebuild
         onDone: {
           actions: `assignServiceResult`,
-          target: `rebuildingPages`,
+          target: `recreatingPages`,
         },
       },
     },
-    // This is the same machine as initializingDataLayer, but sets the context to skip
-    // sourcing and jump straight to rebuilding pages
-    rebuildingPages: {
+    // Almost the same as initializing data, but skips various first-run stuff
+    reloadingData: {
+      on: {
+        // We need to run mutations immediately when in this state
+        ADD_NODE_MUTATION: {
+          actions: [`markNodesDirty`, `callApi`],
+        },
+        // Ignore, because we're about to extract them anyway
+        QUERY_FILE_CHANGED: undefined,
+      },
       invoke: {
-        src: `initializeDataLayer`,
+        src: `reloadData`,
+        data: ({
+          parentSpan,
+          store,
+          webhookBody,
+        }: IBuildContext): IDataLayerContext => {
+          return {
+            parentSpan,
+            store,
+            webhookBody,
+            deferNodeMutation: true,
+          }
+        },
+        onDone: {
+          actions: [
+            `assignServiceResult`,
+            `clearWebhookBody`,
+            `finishParentSpan`,
+          ],
+          target: `runningQueries`,
+        },
+      },
+    },
+    // Rebuild pages if a node has been mutated outside of sourceNodes
+    recreatingPages: {
+      invoke: {
+        src: `recreatePages`,
         data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-          return { parentSpan, store, firstRun: false, skipSourcing: true }
+          return { parentSpan, store, deferNodeMutation: true }
         },
         onDone: {
           actions: `assignServiceResult`,

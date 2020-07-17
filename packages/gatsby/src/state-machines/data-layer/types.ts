@@ -16,9 +16,7 @@ export interface IMutationAction {
 }
 export interface IDataLayerContext {
   deferNodeMutation?: boolean
-  skipSourcing?: boolean
   nodesMutatedDuringQueryRun?: boolean
-  firstRun?: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

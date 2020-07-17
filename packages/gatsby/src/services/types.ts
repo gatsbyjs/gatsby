@@ -21,7 +21,6 @@ export interface IMutationAction {
   resolve?: (result: unknown) => void
 }
 export interface IBuildContext {
-  firstRun?: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

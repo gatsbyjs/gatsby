@@ -9,7 +9,6 @@ export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
   store,
-  firstRun,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: string[]
   changedPages: string[]
@@ -26,7 +25,7 @@ export async function createPages({
     `createPages`,
     {
       graphql: gatsbyNodeGraphQLFunction,
-      traceId: firstRun ? `initial-createPages` : `createPages`,
+      traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
     },

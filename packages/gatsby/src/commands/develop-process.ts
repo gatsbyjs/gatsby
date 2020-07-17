@@ -125,7 +125,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     program,
     parentSpan,
     app,
-    firstRun: true,
   })
 
   const service = interpret(machine)
