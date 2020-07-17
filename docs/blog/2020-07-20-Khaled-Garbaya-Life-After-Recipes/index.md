@@ -77,7 +77,7 @@ module.exports = {
 
 6. Next in our stack comes Contentful. In order to add Contentful to your Gatsby project you first need to install `gatsby-source-plugin`:
 
-   ```
+   ```shell
    npm install gatsby-source-plugin
    ```
 
