@@ -13,7 +13,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
-          compatiblePath(`/foo/bar/{Thing:id}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
       ).toBe(`{allThing{nodes{id}}}`)
     })
@@ -22,7 +22,7 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(
           `allThing`,
-          compatiblePath(`/foo/bar/{Thing:id}.js`)
+          compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
       ).toBe(`{allThing{nodes{id}}}`)
     })
