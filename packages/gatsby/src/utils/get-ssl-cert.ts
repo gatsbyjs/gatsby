@@ -13,7 +13,7 @@ const absoluteOrDirectory = (directory: string, filePath: string): string => {
   return path.join(directory, filePath)
 }
 
-const getWindowsEncryptionPassword = async () => {
+const getWindowsEncryptionPassword = async (): string => {
   report.info(
     [
       `A password is required to access the secure certificate authority key`,
