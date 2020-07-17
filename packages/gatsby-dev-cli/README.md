@@ -78,4 +78,4 @@ Copy all modules/files in the gatsby source repo in packages/
 
 #### `--force-install`
 
-Force publish local packages and install them
+Disables copying files into node_modules and forces usage of local npm repository.
