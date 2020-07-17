@@ -30,7 +30,7 @@ Here's is the process for getting TailwindCSS working in your Gatsby project:
 
 1. Install TailwindCSS:
 
-```
+```shell
 npm install tailwindcss gatsby-plugin-postcss
 ```
 
