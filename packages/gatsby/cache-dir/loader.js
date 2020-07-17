@@ -230,7 +230,7 @@ export class BaseLoader {
       let pageData = result.payload
       const { componentChunkName, staticQueryHashes = [] } = pageData
 
-      let finalResult = {}
+      const finalResult = {}
 
       const componentChunkPromise = this.loadComponent(componentChunkName).then(
         component => {
@@ -283,18 +283,18 @@ export class BaseLoader {
 
       return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
         ([pageResources, staticQueryResults]) => {
-          const payload = { ...pageResources, staticQueryResults }
           if (pageResources) {
+            const payload = { ...pageResources, staticQueryResults }
             finalResult.payload = payload
             emitter.emit(`onPostLoadPageResources`, {
               page: payload,
               pageResources: payload,
             })
+            this.pageDb.set(pagePath, finalResult)
+            return payload
           }
 
-          this.pageDb.set(pagePath, finalResult)
-
-          return payload
+          return undefined
         }
       )
     })
