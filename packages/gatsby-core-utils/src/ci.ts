@@ -1,7 +1,7 @@
 import ci from "ci-info"
 
 const CI_DEFINITIONS = [
-  envFromCIandCIName,
+  envFromCIAndCIName,
   getEnvDetect({ key: `NOW_BUILDER_ANNOTATE`, name: `ZEIT Now` }),
   getEnvDetect({ key: `NOW_REGION`, name: `ZEIT Now v1` }),
   herokuDetect,
@@ -73,7 +73,7 @@ function herokuDetect(): false | "Heroku" {
   )
 }
 
-function envFromCIandCIName(): string | null {
+function envFromCIAndCIName(): string | null {
   if (process.env.CI_NAME && process.env.CI) {
     return process.env.CI_NAME
   }
