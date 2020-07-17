@@ -283,8 +283,9 @@ export class BaseLoader {
 
       return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
         ([pageResources, staticQueryResults]) => {
+          let payload
           if (pageResources) {
-            const payload = { ...pageResources, staticQueryResults }
+            payload = { ...pageResources, staticQueryResults }
             finalResult.payload = payload
             emitter.emit(`onPostLoadPageResources`, {
               page: payload,
@@ -294,7 +295,7 @@ export class BaseLoader {
 
           this.pageDb.set(pagePath, finalResult)
 
-          return pageResources
+          return payload
         }
       )
     })
