@@ -4,7 +4,8 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
-import * as mockQueries from "../default-queries"
+import { defaultQueries as mockQueries } from "../default-queries"
+
 jest.mock(`../create-client`, () => {
   return {
     createClient: jest.fn(() => {
@@ -15,12 +16,7 @@ jest.mock(`../create-client`, () => {
             const [queryName] = Object.entries(mockQueries).find(
               ([queryName, queryString]) => queryString === query
             )
-            const jsonFile = queryName
-              .split(`_`)
-              .map(el => el.toLowerCase())
-              .filter(el => el !== `query`)
-              .join(`-`)
-            return jsonFile + `.json`
+            return queryName + `.json`
           }
           const jsonFile = fixturePathFromQuery(query, mockQueries)
           return require(`./fixtures/${jsonFile}`)
