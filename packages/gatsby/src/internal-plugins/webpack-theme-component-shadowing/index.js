@@ -138,9 +138,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
       if (isExactPath) return possibleComponentPath
 
+      // if no exact path, search for extension
       const matchingExtension = this.extensions.find(ext =>
         existsDir.includes(path.basename(possibleComponentPath) + ext)
-      ) // find extension
+      )
       if (matchingExtension) return possibleComponentPath + matchingExtension // if extension matches, create path
     }
     return null
