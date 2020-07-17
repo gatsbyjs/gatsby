@@ -5,7 +5,7 @@ title: Visual Testing with Storybook
 Knowing your components look as intended in every permutation is not only a great way to test them visually, but also provides "living documentation" for them. This makes it easier for teams to:
 
 1. know what components are available to them in a given project and
-2. what props those components accept and what all of the states of that component are.
+2. what props those components accept and what all of the states of that components are.
 
 As your project grows over time having this information available will be invaluable. This is the function of the [Storybook](https://storybook.js.org/) library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 
@@ -19,13 +19,13 @@ To set up Storybook you need to install dependencies and do some custom configur
 npx -p @storybook/cli sb init
 ```
 
-This command adds a set of boilerplate files for Storybook in your project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so you don't get errors when trying to use Gatsby specific components inside of the stories.
+This command adds a set of boilerplate files for Storybook in your project. However, since this is for a Gatsby project, you will need to update the default Storybook configuration a bit so you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 ### Storybook version 5
 
 Storybook version 5.3 [brought a major change to how Storybook is configured](https://medium.com/storybookjs/declarative-storybook-configuration-49912f77b78).
 
-When you first install Storybook the only configuration file that will exist is `.storybook/main.js`, which will have the default stories location and default addons.
+When you first install Storybook the only configuration file that will exist is `.storybook/main.js`, which will have the default stories locations and default addons.
 
 ```js:title=.storybook/main.js
 module.exports = {
@@ -115,11 +115,11 @@ global.___loader = {
   hovering: () => {},
 }
 
-// __PATH_PREFIX__ is used inside gatsby-link an other various places. For storybook not to crash, you need to set it as well.
+// __PATH_PREFIX__ is used inside gatsby-link and other various places. For storybook not to crash, you need to set it as well.
 global.__PATH_PREFIX__ = ""
 
 // Navigating through a gatsby app using gatsby-link or any other gatsby component will use the `___navigate` method.
-// In Storybook it makes more sense to log an action than doing an actual navigate. Checkout the actions addon docs for more info: https://github.com/storybookjs/storybook/tree/master/addons/actions.
+// In Storybook it makes more sense to log an action than doing an actual navigate. Checkout the actions addons docs for more info: https://github.com/storybookjs/storybook/tree/master/addons/actions.
 
 window.___navigate = pathname => {
   action("NavigateTo:")(pathname)
