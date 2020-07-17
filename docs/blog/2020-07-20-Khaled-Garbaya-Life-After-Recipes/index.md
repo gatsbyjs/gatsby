@@ -95,6 +95,7 @@ Don't get me wrong -- starters are amazing. But they try to do too many jobs, se
 All those steps we just went through above? (Well, the ones we remembered, anyway). Now that Recipes are here, all that setup can be replaced with three little words: `gatsby recipe contentful`.
 
 https://twitter.com/kylemathews/status/1256258010717941760
+
 Recipes are written in MDX, which is a great choice. MDX makes Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to declare desired state.
 
 You can combine recipes in your Gatsby project at any stage of the project. And, since this can be a pure configuration, it won't affect your work in progress!
