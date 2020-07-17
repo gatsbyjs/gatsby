@@ -101,10 +101,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           gatsbyNodeGraphQLFunction,
           graphqlRunner,
           websocketManager,
-          firstRun,
         }: IBuildContext): IQueryRunningContext => {
           return {
-            firstRun,
             program,
             store,
             parentSpan,
@@ -117,6 +115,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           {
             // If this is first run, start webpack and websocket servers
             target: `startingDevServers`,
+            actions: `setQueryRunningFinished`,
             cond: ({ firstRun }: IBuildContext): boolean => !!firstRun,
           },
           {

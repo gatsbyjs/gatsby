@@ -70,22 +70,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         },
       },
     },
-    finishingUp: {
-      on: {
-        always: [
-          // If there's an array of transitions xstate only
-          // performs the first one that matches a guard condition
-          {
-            target: `done`,
-            actions: `finishUpQueries`,
-            cond: ({ firstRun }): boolean => !!firstRun,
-          },
-          {
-            target: `done`,
-          },
-        ],
-      },
-    },
     done: {
       type: `final`,
     },

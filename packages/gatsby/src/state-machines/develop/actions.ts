@@ -8,12 +8,13 @@ import {
 } from "xstate"
 import { Store } from "redux"
 import { IBuildContext, IMutationAction } from "../../services"
-import { actions } from "../../redux/actions"
+import { actions, boundActionCreators } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
 import { assertStore } from "../../utils/assert-store"
 import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
+import { ProgramStatus } from "../../redux/types"
 
 /**
  * These are the deferred redux actions sent from api-runner-node
@@ -67,6 +68,12 @@ export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
     }
   }
 )
+
+const setQueryRunningFinished = async (): Promise<void> => {
+  boundActionCreators.setProgramStatus(
+    ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
+  )
+}
 
 export const markQueryFilesDirty = assign<IBuildContext>({
   queryFilesDirty: true,
@@ -130,4 +137,5 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   clearWebhookBody,
   finishParentSpan,
   saveDbState,
+  setQueryRunningFinished,
 }
