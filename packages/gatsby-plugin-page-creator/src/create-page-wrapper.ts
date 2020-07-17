@@ -51,7 +51,6 @@ export function createPage(
       throw new Error(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
              Skipping creating pages for ${absolutePath}
         `)
-      return
     }
     createClientOnlyPage(filePath, absolutePath, actions)
     return
