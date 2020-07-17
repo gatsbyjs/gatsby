@@ -83,8 +83,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 11. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
 
-12. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
-
+12. **`package.json`**: A manifest file for Node.js projects,It holds metadata relevant to the project and it is used for managing the project's dependencies, scripts, version and a whole lot more.
 13. **`README.md`**: A text file containing useful reference information about your project.
 
 ## 🎓 Learning Gatsby
