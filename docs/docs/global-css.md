@@ -94,7 +94,7 @@ a {
 
 Then, include the stylesheet in your site's `gatsby-browser.js` file.
 
-> **NOTE:** This solution works when including css as those styles are extracted when building the JavaScript but not for css-in-js.
+> **NOTE:** This solution works when including CSS as those styles are extracted when building the JavaScript but not for CSS-in-JS.
 > Including styles in a layout component or a global-styles.js is your best bet for that.
 
 ```javascript:title=gatsby-browser.js
@@ -104,7 +104,7 @@ import "./src/styles/global.css"
 // require('./src/styles/global.css')
 ```
 
-> _Note: You can use Node.js require or import syntax. Additionally, the placement of the example css file in a `src/styles` folder is arbitrary._
+> _Note: You can use Node.js require or import syntax. Additionally, the placement of the example CSS file in a `src/styles` folder is arbitrary._
 
 You should see your global styles taking effect across your site:
 

@@ -27,7 +27,7 @@ Image optimization in Gatsby is provided by a plugin called `gatsby-image` which
 
 Start by using npm to install the `gatsby-image` plugin and its associated dependencies.
 
-```bash
+```shell
 npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
@@ -53,7 +53,7 @@ If you haven't already, make sure that your project is set up to see content ins
 
 1. Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
 
-```bash
+```shell
 npm install gatsby-source-filesystem
 ```
 
@@ -90,6 +90,8 @@ export const query = graphql`
   }
 `
 ```
+
+_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/packages/gatsby-image/#fragments)._
 
 There are a couple of things to note here.
 
@@ -343,7 +345,7 @@ And then like this to access the image using the alias name `banner`.
 <Img fluid={data.banner.childImageSharp.fluid} />
 ```
 
-These examples should handle a fair number of use cases. A couple bonus things:
+These examples should handle a fair number of use cases. A couple of bonus things:
 
 ## Aspect ratio
 

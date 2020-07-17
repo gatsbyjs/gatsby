@@ -1,7 +1,7 @@
 // NOTE: Previously `infer-graphql-input-from-fields-test.js`
 
 const { createSchemaComposer } = require(`../../schema-composer`)
-const { getFilterInput } = require(`../filter`)
+import { getFilterInput } from "../filter"
 const { getSortInput } = require(`../sort`)
 
 const {
@@ -18,7 +18,7 @@ const {
   GraphQLInputObjectType,
   Kind,
 } = require(`graphql`)
-const { GraphQLDate } = require(`../date`)
+import { GraphQLDate } from "../date"
 const { GraphQLJSON } = require(`graphql-compose`)
 
 const getInferredFields = fields => {

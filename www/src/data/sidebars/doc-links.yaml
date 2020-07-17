@@ -41,6 +41,8 @@
         - title: Preparing Your Environment
           link: /docs/preparing-your-environment/
           items:
+            - title: Basic Hardware & Software Requirements
+              link: /docs/basic-hardware-software-requirements/
             - title: Browser Support
               link: /docs/browser-support/
             - title: Gatsby on Windows
@@ -60,6 +62,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Gatsby Cloud
+              link: /docs/deploying-to-gatsby-cloud/
+              breadcrumbTitle: Gatsby Cloud
             - title: Deploying to Azure
               link: /docs/deploying-to-azure/
               breadcrumbTitle: Azure
@@ -105,12 +110,12 @@
             - title: Deploying to KintoHub
               link: /docs/deploying-to-kintohub/
               breadcrumbTitle: KintoHub Hosting
-            - title: Deploying to Gatsby Cloud
-              link: /docs/deploying-to-gatsby-cloud/
-              breadcrumbTitle: Gatsby Cloud
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
+            - title: Deploying to 21YunBox
+              link: /docs/deploying-to-21yunbox/
+              breadcrumbTitle: 21YunBox Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -344,7 +349,7 @@
                   link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
-                - title: Using TailwindCSS
+                - title: Using Tailwind CSS
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
@@ -367,6 +372,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Migrating Remark to MDX
+              link: /docs/mdx/migrate-remark-to-mdx/
             - title: Markdown Syntax
               link: /docs/mdx/markdown-syntax/
         - title: Adding Testing
@@ -472,6 +479,8 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
+                - title: "Scroll Restoration"
+                  link: /docs/scroll-restoration/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation

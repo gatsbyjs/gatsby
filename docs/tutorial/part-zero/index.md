@@ -214,7 +214,7 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-> 💡 What just happened?
+> 💡 What happened?
 >
 > - `new` is a gatsby command to create a new Gatsby project.
 > - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
@@ -261,7 +261,7 @@ A code editor is a program designed specifically for editing computer code. Ther
 
 ### Download VS Code
 
-Gatsby documentation sometimes includes screenshots that were taken in VS Code, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+Gatsby documentation sometimes includes screenshots that were taken in VS Code, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
 ### Install the Prettier plugin
 
@@ -306,11 +306,11 @@ For a comprehensive introduction to what a website is -- including an intro to H
 
 ### Learn more about the command line
 
-For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
+For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not how to interface with it.
 
 ### Learn more about npm
 
-npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
+npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you downloaded and installed Node.js, npm was installed with it!
 
 npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
 

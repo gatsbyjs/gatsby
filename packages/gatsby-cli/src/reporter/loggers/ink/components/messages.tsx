@@ -1,19 +1,8 @@
-import React, { FunctionComponent } from "react"
-import { Box, Color, ColorProps } from "ink"
+import React from "react"
+import { Box } from "ink"
+import { createLabel } from "./utils"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
-
-const ColorSwitcher: FunctionComponent<ColorProps> = ({
-  children,
-  ...props
-}) => <Color {...props}>{children}</Color>
-
-const createLabel = (
-  text: string,
-  color: string
-): FunctionComponent<ColorProps> => (...props): JSX.Element => (
-  <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
-)
 
 const getLabel = (
   level: ActivityLogLevels | LogLevels

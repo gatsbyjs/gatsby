@@ -11,19 +11,27 @@ const fs = require(`fs-extra`)
 const { getCache } = require(`./get-cache`)
 import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
-const {
+import {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
   buildEnumType,
   buildScalarType,
-} = require(`../schema/types/type-builders`)
+} from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
+const {
+  getNodes,
+  getNode,
+  getNodesByType,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+} = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
+const { loadNodeContent } = require(`../db/nodes`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -77,7 +85,7 @@ const getLocalReporter = (activity, reporter) =>
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
     : reporter
 
-const runAPI = (plugin, api, args, activity) => {
+const runAPI = async (plugin, api, args, activity) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -87,14 +95,6 @@ const runAPI = (plugin, api, args, activity) => {
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
 
-    const {
-      loadNodeContent,
-      getNodes,
-      getNode,
-      getNodesByType,
-      hasNodeChanged,
-      getNodeAndSavePathDependency,
-    } = require(`../db/nodes`)
     const {
       publicActions,
       restrictedActionsAvailableInAPI,
@@ -172,6 +172,58 @@ const runAPI = (plugin, api, args, activity) => {
     }
     const localReporter = getLocalReporter(activity, reporter)
 
+    const runningActivities = new Set()
+
+    const localReporterThatCleansUpAfterMisbehavingPlugins = {
+      ...localReporter,
+      activityTimer: (...args) => {
+        const activity = reporter.activityTimer.apply(reporter, args)
+
+        const originalStart = activity.start
+        const originalEnd = activity.end
+
+        activity.start = () => {
+          originalStart.apply(activity)
+          runningActivities.add(activity)
+        }
+
+        activity.end = () => {
+          originalEnd.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        return activity
+      },
+      createProgress: (...args) => {
+        const activity = reporter.createProgress.apply(reporter, args)
+
+        const originalStart = activity.start
+        const originalEnd = activity.end
+        const originalDone = activity.done
+
+        activity.start = () => {
+          originalStart.apply(activity)
+          runningActivities.add(activity)
+        }
+
+        activity.end = () => {
+          originalEnd.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        activity.done = () => {
+          originalDone.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        return activity
+      },
+    }
+
+    const endInProgressActivitiesCreatedByThisRun = () => {
+      runningActivities.forEach(activity => activity.end())
+    }
+
     const apiCallArgs = [
       {
         ...args,
@@ -187,7 +239,7 @@ const runAPI = (plugin, api, args, activity) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter: localReporter,
+        reporter: localReporterThatCleansUpAfterMisbehavingPlugins,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -211,8 +263,9 @@ const runAPI = (plugin, api, args, activity) => {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
-          callback(err, val)
           apiFinished = true
+          endInProgressActivitiesCreatedByThisRun()
+          callback(err, val)
         }
 
         try {
@@ -226,12 +279,13 @@ const runAPI = (plugin, api, args, activity) => {
         }
       })
     } else {
-      const result = gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
+      try {
+        return await gatsbyNode[api](...apiCallArgs)
+      } finally {
+        pluginSpan.finish()
         apiFinished = true
-        return res
-      })
+        endInProgressActivitiesCreatedByThisRun()
+      }
     }
   }
 

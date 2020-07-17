@@ -13,7 +13,7 @@ As with most websites, nothing is constant. Designs and even frameworks that com
 
 ## Creating the validator
 
-At its core, the validator is a script written in NodeJS that examines every site in the site showcase and first checks if the site is up. It then examines the HTML for key identifiers that point out that the site is written with Gatsby.
+At its core, the validator is a script written in Node.js that examines every site in the site showcase and first checks if the site is up. It then examines the HTML for key identifiers that point out that the site is written with Gatsby.
 
 All Gatsby sites by default have a container element with the `___gatsby` id as an attribute, which is where the React app will be mounted to when Gatsby rehydrates on client load.
 
