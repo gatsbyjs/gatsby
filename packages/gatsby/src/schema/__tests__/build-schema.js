@@ -13,11 +13,11 @@ jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
-const {
+import {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
-} = require(`../types/type-builders`)
+} from "../types/type-builders"
 const withResolverContext = require(`../context`)
 
 const nodes = require(`./fixtures/node-model`)
