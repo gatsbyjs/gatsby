@@ -1,31 +1,3 @@
-export const SHOP_POLICIES_QUERY = `
-  query GetPolicies {
-    shop {
-      privacyPolicy {
-        body
-        handle
-        id
-        title
-        url
-      }
-      refundPolicy {
-        body
-        handle
-        id
-        title
-        url
-      }
-      termsOfService {
-        body
-        handle
-        id
-        title
-        url
-      }
-    }
-  }
-`
-
 export const PAGES_QUERY = `
   query GetPages($first: Int!, $after: String) {
     pages(first: $first, after: $after) {
@@ -278,6 +250,32 @@ export const defaultQueries = {
     }
   }
 `,
-  shopPolicies: SHOP_POLICIES_QUERY,
+  shopPolicies: `
+  query GetPolicies {
+    shop {
+      privacyPolicy {
+        body
+        handle
+        id
+        title
+        url
+      }
+      refundPolicy {
+        body
+        handle
+        id
+        title
+        url
+      }
+      termsOfService {
+        body
+        handle
+        id
+        title
+        url
+      }
+    }
+  }
+`,
   pages: PAGES_QUERY,
 }
