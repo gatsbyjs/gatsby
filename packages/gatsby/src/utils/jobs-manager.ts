@@ -204,7 +204,7 @@ function runJob(job: InternalJob, forceLocal = false): Promise<object> {
 }
 
 function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
-  return (job as InternalJob).id !== undefined
+  return (job as InternalJob).id !== undefined && (job as InternalJob).contentDigest !== undefined
 }
 
 /**
