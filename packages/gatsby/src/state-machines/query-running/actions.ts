@@ -5,7 +5,6 @@ import { assertStore } from "../../utils/assert-store"
 import { enqueueFlush } from "../../utils/page-data"
 import { boundActionCreators } from "../../redux/actions"
 import { ProgramStatus } from "../../redux/types"
-import db from "../../db"
 
 export const flushPageData = (): void => {
   enqueueFlush()
@@ -38,9 +37,6 @@ const finishUpQueries = async (): Promise<void> => {
   boundActionCreators.setProgramStatus(
     ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
   )
-  await db.saveState()
-
-  db.startAutosave()
 }
 
 export const queryActions: ActionFunctionMap<

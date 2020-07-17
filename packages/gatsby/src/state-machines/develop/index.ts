@@ -111,6 +111,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       },
     },
     waiting: {
+      // We may want to save this is more places, but this should do for now
+      entry: `saveDbState`,
       on: {
         ADD_NODE_MUTATION: {
           actions: forwardTo(`waiting`),

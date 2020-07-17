@@ -12,6 +12,7 @@ import { actions } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
 import { assertStore } from "../../utils/assert-store"
+import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
 
 export const callRealApi = (event: IMutationAction, store?: Store): void => {
@@ -90,6 +91,8 @@ export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
 export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
   parentSpan?.finish()
 
+export const saveDbState = (): Promise<void> => saveState()
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle
@@ -114,4 +117,5 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   assignWebhookBody,
   clearWebhookBody,
   finishParentSpan,
+  saveDbState,
 }
