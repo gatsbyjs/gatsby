@@ -41,7 +41,7 @@ function renderRichText({ raw, references }, options = {}) {
     ],
     includes: {
       Entry: references
-        .filter(({ __typename }) => __typename === `ContentfulEntry`)
+        .filter(({ __typename }) => __typename !== `ContentfulAsset`)
         .map(reference => {
           return {
             ...reference,
