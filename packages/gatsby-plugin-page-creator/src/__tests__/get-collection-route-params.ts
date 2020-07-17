@@ -9,7 +9,7 @@ describe(`getCollectionRouteParams`, () => {
   })
 
   it(`gets multiple params out of url`, () => {
-    const filePath = `/{name}/{Product.id}.js`
+    const filePath = `/{Product.name}/{Product.id}.js`
     const urlPath = `/burger/1234`
 
     const params = getCollectionRouteParams(filePath, urlPath)
