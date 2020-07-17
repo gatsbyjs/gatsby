@@ -139,22 +139,22 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "- Original  - 1
-+ Modified  + 7
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 7[39m
 
-@@ -5,6 +5,12 @@
-   */
-  module.exports = {
-    /* Your site config here */
--   plugins: [],
-+   plugins: [
-+     {
-+       resolve: \\"gatsby-plugin-foo\\",
-+       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
-+     },
-+   ],
-  };
+[33m@@ -5,6 +5,12 @@[39m
+[2m   */[22m
+[2m  module.exports = {[22m
+[2m    /* Your site config here */[22m
+[31m-   plugins: [],[39m
+[32m+   plugins: [[39m
+[32m+     {[39m
+[32m+       resolve: \\"gatsby-plugin-foo\\",[39m
+[32m+       options: undefined,[39m
+[32m+       __key: \\"gatsby-plugin-foo\\",[39m
+[32m+     },[39m
+[32m+   ],[39m
+[2m  };[22m
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -201,23 +201,23 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "- Original  - 1
-+ Modified  + 8
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 8[39m
 
-@@ -5,6 +5,13 @@
-   */
-  module.exports = {
-    /* Your site config here */
--   plugins: [\\"gatsby-plugin-foo\\"],
-+   plugins: [
-+     \\"gatsby-plugin-foo\\",
-+     {
-+       resolve: \\"gatsby-plugin-foo\\",
-+       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
-+     },
-+   ],
-  };
+[33m@@ -5,6 +5,13 @@[39m
+[2m   */[22m
+[2m  module.exports = {[22m
+[2m    /* Your site config here */[22m
+[31m-   plugins: [\\"gatsby-plugin-foo\\"],[39m
+[32m+   plugins: [[39m
+[32m+     \\"gatsby-plugin-foo\\",[39m
+[32m+     {[39m
+[32m+       resolve: \\"gatsby-plugin-foo\\",[39m
+[32m+       options: undefined,[39m
+[32m+       __key: \\"gatsby-plugin-foo\\",[39m
+[32m+     },[39m
+[32m+   ],[39m
+[2m  };[22m
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -322,20 +322,20 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "- Original  - 0
-+ Modified  + 5
+  "diff": "[31m- Original  - 0[39m
+[32m+ Modified  + 5[39m
 
-@@ -64,6 +64,11 @@
-      },
-      \`gatsby-plugin-offline\`,
-      \`gatsby-plugin-react-helmet\`,
-+     {
-+       resolve: \\"gatsby-plugin-foo\\",
-+       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
-+     },
-    ],
-  };
+[33m@@ -64,6 +64,11 @@[39m
+[2m      },[22m
+[2m      \`gatsby-plugin-offline\`,[22m
+[2m      \`gatsby-plugin-react-helmet\`,[22m
+[32m+     {[39m
+[32m+       resolve: \\"gatsby-plugin-foo\\",[39m
+[32m+       options: undefined,[39m
+[32m+       __key: \\"gatsby-plugin-foo\\",[39m
+[32m+     },[39m
+[2m    ],[22m
+[2m  };[22m
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -500,20 +500,20 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "- Original  - 0
-+ Modified  + 5
+  "diff": "[31m- Original  - 0[39m
+[32m+ Modified  + 5[39m
 
-@@ -65,6 +65,11 @@
-      \`gatsby-plugin-offline\`,
-      \`gatsby-plugin-react-helmet\`,
-      \\"gatsby-plugin-foo\\",
-+     {
-+       resolve: \\"gatsby-plugin-foo\\",
-+       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
-+     },
-    ],
-  };
+[33m@@ -65,6 +65,11 @@[39m
+[2m      \`gatsby-plugin-offline\`,[22m
+[2m      \`gatsby-plugin-react-helmet\`,[22m
+[2m      \\"gatsby-plugin-foo\\",[22m
+[32m+     {[39m
+[32m+       resolve: \\"gatsby-plugin-foo\\",[39m
+[32m+       options: undefined,[39m
+[32m+       __key: \\"gatsby-plugin-foo\\",[39m
+[32m+     },[39m
+[2m    ],[22m
+[2m  };[22m
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",

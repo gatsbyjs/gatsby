@@ -13,10 +13,10 @@ exports[`file resource e2e file resource test: File create plan 1`] = `
 Object {
   "currentState": "",
   "describe": "Write file.txt",
-  "diff": "- Original  - 0
-+ Modified  + 1
+  "diff": "[31m- Original  - 0[39m
+[32m+ Modified  + 1[39m
 
-+ Hello, world!",
+[32m+ Hello, world![39m",
   "newState": "Hello, world!",
 }
 `;
@@ -43,11 +43,11 @@ exports[`file resource e2e file resource test: File update plan 1`] = `
 Object {
   "currentState": "Hello, world!",
   "describe": "Write file.txt",
-  "diff": "- Original  - 1
-+ Modified  + 1
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 1[39m
 
-- Hello, world!
-+ Hello, world!1",
+[31m- Hello, world![39m
+[32m+ Hello, world!1[39m",
   "newState": "Hello, world!1",
 }
 `;
@@ -88,33 +88,33 @@ exports[`file resource e2e remote file resource test: File create plan 1`] = `
 Object {
   "currentState": "",
   "describe": "Write file.txt",
-  "diff": "- Original  -  0
-+ Modified  + 24
+  "diff": "[31m- Original  -  0[39m
+[32m+ Modified  + 24[39m
 
-+ query {
-+   allGatsbyPlugin {
-+     nodes {
-+       name
-+       options
-+       resolvedOptions
-+       package {
-+         version
-+       }
-+       ... on GatsbyTheme {
-+         files {
-+           nodes {
-+             path
-+           }
-+         }
-+         shadowedFiles {
-+           nodes {
-+             path
-+           }
-+         }
-+       }
-+     }
-+   }  
-+ }",
+[32m+ query {[39m
+[32m+   allGatsbyPlugin {[39m
+[32m+     nodes {[39m
+[32m+       name[39m
+[32m+       options[39m
+[32m+       resolvedOptions[39m
+[32m+       package {[39m
+[32m+         version[39m
+[32m+       }[39m
+[32m+       ... on GatsbyTheme {[39m
+[32m+         files {[39m
+[32m+           nodes {[39m
+[32m+             path[39m
+[32m+           }[39m
+[32m+         }[39m
+[32m+         shadowedFiles {[39m
+[32m+           nodes {[39m
+[32m+             path[39m
+[32m+           }[39m
+[32m+         }[39m
+[32m+       }[39m
+[32m+     }[39m
+[32m+   }  [39m
+[32m+ }[39m",
   "newState": "query {
   allGatsbyPlugin {
     nodes {
@@ -187,36 +187,36 @@ Object {
   }  
 }",
   "describe": "Write file.txt",
-  "diff": "- Original  - 23
-+ Modified  +  3
+  "diff": "[31m- Original  - 23[39m
+[32m+ Modified  +  3[39m
 
-- query {
--   allGatsbyPlugin {
--     nodes {
--       name
--       options
--       resolvedOptions
--       package {
--         version
--       }
--       ... on GatsbyTheme {
--         files {
--           nodes {
--             path
--           }
--         }
--         shadowedFiles {
--           nodes {
--             path
--           }
--         }
--       }
--     }
--   }  
-+ const options = {
-+   key: process.env.WHATEVER
-+   
-  }",
+[31m- query {[39m
+[31m-   allGatsbyPlugin {[39m
+[31m-     nodes {[39m
+[31m-       name[39m
+[31m-       options[39m
+[31m-       resolvedOptions[39m
+[31m-       package {[39m
+[31m-         version[39m
+[31m-       }[39m
+[31m-       ... on GatsbyTheme {[39m
+[31m-         files {[39m
+[31m-           nodes {[39m
+[31m-             path[39m
+[31m-           }[39m
+[31m-         }[39m
+[31m-         shadowedFiles {[39m
+[31m-           nodes {[39m
+[31m-             path[39m
+[31m-           }[39m
+[31m-         }[39m
+[31m-       }[39m
+[31m-     }[39m
+[31m-   }  [39m
+[32m+ const options = {[39m
+[32m+   key: process.env.WHATEVER[39m
+[32m+   [39m
+[2m  }[22m",
   "newState": "const options = {
   key: process.env.WHATEVER
   

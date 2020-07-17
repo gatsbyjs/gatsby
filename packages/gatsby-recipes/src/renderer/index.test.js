@@ -15,26 +15,33 @@ export const fooContent = 'hiiiiii!'
 
 describe(`renderer`, () => {
   test(`handles MDX as input`, async () => {
-    const { stepsAsMdx } = await parse(mdxFixture)
-    const result = await render(stepsAsMdx.join(`\n`))
+    const { stepsAsMdx, exportsAsMdx } = await parse(mdxFixture)
+    const result = await render([...stepsAsMdx, ...exportsAsMdx].join(`\n`))
 
     // Gatsby latest version is ever changing so we use regex matcher for currentState property.
     // Unfortunately jest property matchers work weirdly on arrays so instead
     // of snapshotting entitre result array it's split into few pieces.
 
     expect(result.length).toEqual(3)
+    delete result[0]._uuid
+    delete result[1]._uuid
+    delete result[2]._uuid
     expect(result[0]).toMatchInlineSnapshot(`
       Object {
-        "_stepMetadata": Object {},
+        "_stepMetadata": Object {
+          "step": "1",
+          "totalSteps": "1",
+        },
         "currentState": "",
         "describe": "Write foo.js",
-        "diff": "- Original  - 0
-      + Modified  + 1
+        "diff": "[31m- Original  - 0[39m
+      [32m+ Modified  + 1[39m
 
-      + /** foo */",
-        "newState": "/** foo */",
+      [32m+ hiiiiii![39m",
+        "newState": "hiiiiii!",
         "resourceDefinitions": Object {
-          "content": "/** foo */",
+          "content": "hiiiiii!",
+          "mdxType": "File",
           "path": "foo.js",
         },
         "resourceName": "File",
@@ -42,38 +49,40 @@ describe(`renderer`, () => {
     `)
     expect(result[1]).toMatchInlineSnapshot(`
       Object {
-        "_stepMetadata": Object {},
+        "_stepMetadata": Object {
+          "step": "1",
+          "totalSteps": "1",
+        },
         "currentState": "",
         "describe": "Write foo2.js",
-        "diff": "- Original  - 0
-      + Modified  + 1
+        "diff": "[31m- Original  - 0[39m
+      [32m+ Modified  + 1[39m
 
-      + /** foo2 */",
+      [32m+ /** foo2 */[39m",
         "newState": "/** foo2 */",
         "resourceDefinitions": Object {
           "content": "/** foo2 */",
+          "mdxType": "File",
           "path": "foo2.js",
         },
         "resourceName": "File",
       }
     `)
-    expect(result[2]).toMatchInlineSnapshot(
-      {
-        currentState: expect.stringMatching(/gatsby@[0-9.]+/),
-      },
-      `
+    expect(result[2]).toMatchInlineSnapshot(`
       Object {
-        "_stepMetadata": Object {},
-        "currentState": StringMatching /gatsby@\\[0-9\\.\\]\\+/,
+        "_stepMetadata": Object {
+          "step": "1",
+          "totalSteps": "1",
+        },
         "describe": "Install gatsby@latest",
         "newState": "gatsby@latest",
         "resourceDefinitions": Object {
+          "mdxType": "NPMPackage",
           "name": "gatsby",
         },
         "resourceName": "NPMPackage",
       }
-    `
-    )
+    `)
   })
 
   test(`handles JSX with a single component`, async () => {
@@ -85,13 +94,14 @@ describe(`renderer`, () => {
           "_stepMetadata": Object {},
           "currentState": "",
           "describe": "Write hi.md",
-          "diff": "- Original  - 0
-      + Modified  + 1
+          "diff": "[31m- Original  - 0[39m
+      [32m+ Modified  + 1[39m
 
-      + hi",
+      [32m+ hi[39m",
           "newState": "hi",
           "resourceDefinitions": Object {
             "content": "hi",
+            "mdxType": "File",
             "path": "hi.md",
           },
           "resourceName": "File",
@@ -101,7 +111,7 @@ describe(`renderer`, () => {
   })
 
   test(`handles exports and allows them to be used as local variables`, async () => {
-    const { stepsAsMdx } = await parse(`
+    const { stepsAsMdx, exportsAsMdx } = await parse(`
 # Hello, world!
 
 ---
@@ -111,8 +121,8 @@ export const myVar = 'hi.mdx'
 <File path={myVar} content="hello" />
     `)
 
-    const parsedMdx = stepsAsMdx.join(`\n`)
-    const result = await render(parsedMdx)
+    const result = await render([...stepsAsMdx, ...exportsAsMdx].join(`\n`))
+    result.forEach(r => delete r._uuid)
 
     expect(result).toMatchInlineSnapshot(`
       Array [
@@ -121,16 +131,16 @@ export const myVar = 'hi.mdx'
             "step": "1",
             "totalSteps": "1",
           },
-          "_uuid": "27c4642c-7d64-44c1-98f0-f5853a45ec79",
           "currentState": "",
           "describe": "Write hi.mdx",
-          "diff": "- Original  - 0
-      + Modified  + 1
+          "diff": "[31m- Original  - 0[39m
+      [32m+ Modified  + 1[39m
 
-      + hello",
+      [32m+ hello[39m",
           "newState": "hello",
           "resourceDefinitions": Object {
             "content": "hello",
+            "mdxType": "File",
             "path": "hi.mdx",
           },
           "resourceName": "File",
@@ -151,13 +161,14 @@ export const myVar = 'hi.mdx'
           "_stepMetadata": Object {},
           "currentState": "",
           "describe": "Write foo.js",
-          "diff": "- Original  - 0
-      + Modified  + 1
+          "diff": "[31m- Original  - 0[39m
+      [32m+ Modified  + 1[39m
 
-      + /** foo */",
+      [32m+ /** foo */[39m",
           "newState": "/** foo */",
           "resourceDefinitions": Object {
             "content": "/** foo */",
+            "mdxType": "File",
             "path": "foo.js",
           },
           "resourceName": "File",

@@ -13,16 +13,16 @@ exports[`npm script resource e2e script resource test: NPMScript create plan 1`]
 Object {
   "currentState": "",
   "describe": "Add script \\"apple\\" to your package.json",
-  "diff": "- Original  - 1
-+ Modified  + 3
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 3[39m
 
-  Object {
-    \\"name\\": \\"test\\",
--   \\"scripts\\": Object {},
-+   \\"scripts\\": Object {
-+     \\"apple\\": \\"foot\\",
-+   },
-  }",
+[2m  Object {[22m
+[2m    \\"name\\": \\"test\\",[22m
+[31m-   \\"scripts\\": Object {},[39m
+[32m+   \\"scripts\\": Object {[39m
+[32m+     \\"apple\\": \\"foot\\",[39m
+[32m+   },[39m
+[2m  }[22m",
   "newState": "\\"apple\\": \\"foot\\"",
 }
 `;
@@ -42,16 +42,16 @@ exports[`npm script resource e2e script resource test: NPMScript update plan 1`]
 Object {
   "currentState": "\\"apple\\": \\"foot\\"",
   "describe": "Add script \\"apple\\" to your package.json",
-  "diff": "- Original  - 1
-+ Modified  + 1
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 1[39m
 
-  Object {
-    \\"name\\": \\"test\\",
-    \\"scripts\\": Object {
--     \\"apple\\": \\"foot\\",
-+     \\"apple\\": \\"foot2\\",
-    },
-  }",
+[2m  Object {[22m
+[2m    \\"name\\": \\"test\\",[22m
+[2m    \\"scripts\\": Object {[22m
+[31m-     \\"apple\\": \\"foot\\",[39m
+[32m+     \\"apple\\": \\"foot2\\",[39m
+[2m    },[22m
+[2m  }[22m",
   "newState": "\\"apple\\": \\"foot2\\"",
 }
 `;

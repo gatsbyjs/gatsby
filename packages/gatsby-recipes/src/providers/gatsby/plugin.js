@@ -151,7 +151,6 @@ const readConfigFile = async root => {
   try {
     src = await fs.readFile(getConfigPath(root), `utf8`)
   } catch (e) {
-    console.log(e)
     if (e.code === `ENOENT`) {
       src = defaultConfig
     } else {
