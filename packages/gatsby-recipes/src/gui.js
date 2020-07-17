@@ -45,7 +45,6 @@ import { useInputByKey, InputProvider } from "./renderer/input-provider"
 import { useResource, ResourceProvider } from "./renderer/resource-provider"
 
 const theme = getTheme()
-console.log({ theme })
 
 ansi2HTML.setColors({
   red: theme.tones.DANGER.medium.slice(1),
@@ -358,7 +357,8 @@ const recipe = `./test.mdx`
 const graphqlPort = 4000
 const projectRoot = PROJECT_ROOT
 
-const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
+const API_ENDPOINT = `http://localhost:${graphqlPort}`
+const GRAPHQL_ENDPOINT = `${API_ENDPOINT}/graphql`
 
 const subscriptionClient = new SubscriptionClient(
   `ws://localhost:${graphqlPort}/graphql`,
@@ -366,6 +366,23 @@ const subscriptionClient = new SubscriptionClient(
     reconnect: true,
   }
 )
+
+let isSubscriptionConnected = false
+let isRecipeStarted = false
+let sessionId
+subscriptionClient.connectionCallback = async () => {
+  isSubscriptionConnected = true
+}
+
+const checkServerSession = async () => {
+  const response = await fetch(`${API_ENDPOINT}/session`)
+  const newSessionId = await response.text()
+  if (!sessionId) {
+    sessionId = newSessionId
+  } else if (newSessionId !== sessionId) {
+    window.location.reload()
+  }
+}
 
 let showRecipesList = false
 
@@ -703,15 +720,30 @@ const RecipeInterpreter = () => {
     }
   }
 
-  subscriptionClient.connectionCallback = async () => {
+  const startRecipe = async () => {
     if (!showRecipesList) {
       log(`createOperation`)
-      try {
-        await createOperation({ recipePath: localRecipe, projectRoot })
-      } catch (e) {
-        log(`error creating operation`, e)
+      if (!isRecipeStarted) {
+        isRecipeStarted = true
+        try {
+          await createOperation({ recipePath: localRecipe, projectRoot })
+        } catch (e) {
+          log(`error creating operation`, e)
+          isRecipeStarted = false
+        }
       }
+
+      checkServerSession()
     }
+  }
+
+  subscriptionClient.connectionCallback = async () => {
+    checkServerSession()
+    startRecipe()
+  }
+
+  if (isSubscriptionConnected) {
+    startRecipe()
   }
 
   const state =

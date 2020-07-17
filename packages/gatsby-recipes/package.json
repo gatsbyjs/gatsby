@@ -25,6 +25,7 @@
     "acorn-jsx": "^5.2.0",
     "ansi-html": "^0.0.7",
     "babel-plugin-remove-export-keywords": "^1.6.5",
+    "chokidar": "3.4.0",
     "contentful-management": "^5.26.3",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
@@ -80,6 +81,7 @@
     "unist-util-remove": "^2.0.0",
     "unist-util-visit": "^2.0.2",
     "urql": "^1.9.7",
+    "uuid": "^8.2.0",
     "ws": "^7.3.0",
     "xstate": "^4.9.1",
     "yup": "^0.27.0"

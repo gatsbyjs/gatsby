@@ -1,7 +1,9 @@
 require(`dotenv`).config()
 
 const express = require(`express`)
+const chokidar = require(`chokidar`)
 const graphqlHTTP = require(`express-graphql`)
+const uuid = require(`uuid`)
 const {
   GraphQLSchema,
   GraphQLObjectType,
@@ -15,6 +17,10 @@ const { createServer } = require(`http`)
 const { interpret } = require(`xstate`)
 const pkgDir = require(`pkg-dir`)
 const cors = require(`cors`)
+
+// Create a session id — mostly useful to tell the client when the server
+// has restarted
+const sessionId = uuid()
 
 const recipeMachine = require(`../recipe-machine`)
 const createTypes = require(`../create-types`)
@@ -33,43 +39,53 @@ const emitUpdate = state => {
 
 // only one service can run at a time.
 let service
-const applyPlan = ({ recipePath, projectRoot }) => {
+const startRecipe = ({ recipePath, projectRoot }) => {
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
   }
 
-  // Interpret the machine, and add a listener for whenever a transition occurs.
-  service = interpret(
-    recipeMachine.withContext(initialState.context)
-  ).onTransition(state => {
-    // Don't emit again unless there's a state change.
-    console.log(`===onTransition`, {
-      event: state.event,
-      state: state.value,
-    })
-    if (state.changed) {
-      console.log(`===state.changed`, {
+  const startService = () => {
+    // Interpret the machine, and add a listener for whenever a transition occurs.
+    service = interpret(
+      recipeMachine.withContext(initialState.context)
+    ).onTransition(state => {
+      // Don't emit again unless there's a state change.
+      console.log(`===onTransition`, {
+        event: state.event,
         state: state.value,
-        currentStep: state.context.currentStep,
       })
-      // Wait until plans are created before updating the UI
-      if (state.value !== `creatingPlan` || state.value !== "validateSteps") {
-        emitUpdate({
-          context: state.context,
-          lastEvent: state.event,
-          value: state.value,
+      if (state.changed) {
+        console.log(`===state.changed`, {
+          state: state.value,
+          currentStep: state.context.currentStep,
         })
+        // Wait until plans are created before updating the UI
+        if (state.value !== `creatingPlan` || state.value !== "validateSteps") {
+          emitUpdate({
+            context: state.context,
+            lastEvent: state.event,
+            value: state.value,
+          })
+        }
       }
-    }
-  })
+    })
 
-  // Start the service
-  try {
-    service.start()
-  } catch (e) {
-    console.log(`recipe machine failed to start`, e)
+    // Start the service
+    try {
+      service.start()
+    } catch (e) {
+      console.log(`recipe machine failed to start`, e)
+    }
   }
+
+  chokidar
+    .watch(initialState.context.recipePath)
+    .on(`change`, (filename, stats) => {
+      startService()
+    })
+
+  startService()
 }
 
 const OperationType = new GraphQLObjectType({
@@ -99,7 +115,7 @@ const rootMutationType = new GraphQLObjectType({
         },
         resolve: (_data, args) => {
           console.log(`received operation`, args)
-          applyPlan(args)
+          startRecipe(args)
         },
       },
       sendEvent: {
@@ -154,6 +170,8 @@ app.use(
     context: { root: SITE_ROOT },
   })
 )
+
+app.use(`/session`, (req, res) => res.send(sessionId))
 
 server.listen(PORT, () => {
   new SubscriptionServer(
