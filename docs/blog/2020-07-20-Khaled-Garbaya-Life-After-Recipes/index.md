@@ -9,6 +9,7 @@ tags:
   - building-sites-faster
   - contentful
 ---
+
 The Gatsby ecosystem is prosperous with plugins and themes, which I love...But sometimes all this abundance can actually become a problem. For example, when trying to identify and assemble all the pieces needed to achieve your goal.
 
 Proper documentation helps to solve this but it is hard to keep docs always up to date. Also, this approach often means simply copy-pasting commands into your terminal without understanding what they do. The process becomes a bit tedious.
@@ -52,6 +53,7 @@ module.exports = {
 ```
 
 4.  Create a `tailwind.config.js` file and add the following snippet to it:
+
 ```
 module.exports = {
   purge: [
@@ -64,6 +66,7 @@ module.exports = {
   plugins: []
 }
 ```
+
 5.  Create a `tailwind.css` file and add the following snippet to it:
 
 ```
@@ -73,6 +76,7 @@ module.exports = {
 ```
 
 6.  Next in our stack comes Contentful. In order to add Contentful to your Gatsby project you first need to install `gatsby-source-plugin`:
+
     ```\
     npm install gatsby-source-plugin\
     ```
@@ -92,6 +96,7 @@ The project itself is excellent, but it still requires changing multiple files t
 Don't get me wrong -- starters are amazing. But they try to do too many jobs, setting up your Gatsby project while also acting as a demo for the setup. You can only use one starter in your project, so you also need to be lucky enough to find one that combines all the features you want -- without a whole bunch that you _don't_ want.
 
 ## Gatsby, After Recipes: Three little words
+
 All those steps we just went through above? (Well, the ones we remembered, anyway). Now that Recipes are here, all that setup can be replaced with three little words: `gatsby recipe contentful`.
 
 https://twitter.com/kylemathews/status/1256258010717941760
@@ -103,4 +108,5 @@ You can combine recipes in your Gatsby project at any stage of the project. And,
 Gatsby Recipes allow users like me to create even more advanced configuration, while at the same time keeping the entry-level barrier very low -- even for first-time users.
 
 ## Where to go from here
+
 If you want to get started with Gatsby Recipes, I created a [free 6 min egghead.io collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) to help you with that. Make sure to check out this helpful [Recipes blog post](/blog/2020-05-21-gatsby-recipes/) on the Gatsby site. If you're having fun with Recipes and would like to contribute, [visit the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to find out more.
