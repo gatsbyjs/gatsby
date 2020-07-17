@@ -28,7 +28,7 @@ import {
   SHOP_POLICY,
   PAGE,
 } from "./constants"
-import { defaultQueries } from "./queries"
+import { defaultQueries } from "./default-queries"
 
 export const sourceNodes = async (
   {

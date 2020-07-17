@@ -4,7 +4,7 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
-import * as mockQueries from "../queries"
+import * as mockQueries from "../default-queries"
 jest.mock(`../create-client`, () => {
   return {
     createClient: jest.fn(() => {
