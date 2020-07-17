@@ -15,7 +15,7 @@ interface IRepositoryData {
   name?: string
 }
 
-interface IRepositoryId {
+export interface IRepositoryId {
   repositoryId: string
   repositoryData?: IRepositoryData | null
 }

@@ -7,19 +7,60 @@ const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
-import { getRepositoryId as _getRepositoryId } from "./repository-id"
+const dbEngine = `redux`
+
+import {
+  getRepositoryId as _getRepositoryId,
+  IRepositoryId,
+} from "./repository-id"
+
+type UUID = string
+type SemVer = string | undefined
+
+interface IOSInfo {
+  nodeVersion: SemVer
+  platform: string
+  release: string
+  cpus: string
+  arch: string
+  ci: boolean | undefined
+  ciName?: string
+  docker: boolean | undefined
+}
+
+interface IAggregateStats {
+  count: number
+  min: number
+  max: number
+  sum: number
+  mean: number
+  median: number
+  stdDev: number
+  skewness: number
+}
+
 module.exports = class AnalyticsTracker {
+  store = new EventStorage()
+  debouncer = {}
+  metadataCache = {}
+  defaultTags = {}
+  osInfo?: IOSInfo // lazy
+  trackingEnabled?: boolean // lazy
+  componentVersion?: string
+  sessionId: string = this.getSessionId()
+  gatsbyCliVersion?: SemVer
+  installedGatsbyVersion?: SemVer
+  repositoryId?: IRepositoryId
+  machineId?: UUID
+
   constructor() {
-    this.store = new EventStorage()
-    this.debouncer = {}
-    this.metadataCache = {}
-    this.defaultTags = {}
-    this.sessionId = this.getSessionId()
     try {
       if (this.store.isTrackingDisabled()) {
         this.trackingEnabled = false
       }
+
       this.defaultTags = this.getTagsFromEnv()
+
       // These may throw and should be last
       this.componentVersion = require(`../package.json`).version
       this.gatsbyCliVersion = this.getGatsbyCliVersion()
@@ -28,21 +69,24 @@ module.exports = class AnalyticsTracker {
       // ignore
     }
   }
+
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
   // Hence we need to use process level globals that are not scoped to this module
-  getSessionId() {
+  getSessionId(): UUID {
     return (
       process.gatsbyTelemetrySessionId ||
       (process.gatsbyTelemetrySessionId = uuidv4())
     )
   }
-  getRepositoryId() {
+
+  getRepositoryId(): IRepositoryId {
     if (!this.repositoryId) {
       this.repositoryId = _getRepositoryId()
     }
     return this.repositoryId
   }
-  getTagsFromEnv() {
+
+  getTagsFromEnv(): Record<string, any> {
     if (process.env.GATSBY_TELEMETRY_TAGS) {
       try {
         return JSON.parse(process.env.GATSBY_TELEMETRY_TAGS)
@@ -52,7 +96,8 @@ module.exports = class AnalyticsTracker {
     }
     return {}
   }
-  getGatsbyVersion() {
+
+  getGatsbyVersion(): SemVer {
     const packageInfo = require(join(
       process.cwd(),
       `node_modules`,
@@ -66,7 +111,8 @@ module.exports = class AnalyticsTracker {
     }
     return undefined
   }
-  getGatsbyCliVersion() {
+
+  getGatsbyCliVersion(): SemVer {
     try {
       const jsonfile = join(
         require
@@ -83,7 +129,7 @@ module.exports = class AnalyticsTracker {
     }
     return undefined
   }
-  captureEvent(type = ``, tags = {}, opts = { debounce: false }) {
+  captureEvent(type = ``, tags = {}, opts = { debounce: false }): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -92,8 +138,10 @@ module.exports = class AnalyticsTracker {
       type = type.length > 2 ? type[2].toUpperCase() : ``
       baseEventType = `CLI_RAW_COMMAND`
     }
+
     const decoration = this.metadataCache[type]
     const eventType = `${baseEventType}_${type}`
+
     if (opts.debounce) {
       const debounceTime = 5 * 1000
       const now = Date.now()
@@ -104,28 +152,35 @@ module.exports = class AnalyticsTracker {
       }
       this.debouncer[debounceKey] = now
     }
+
     delete this.metadataCache[type]
     this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
-  captureError(type, tags = {}) {
+
+  captureError(type, tags = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
+
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
+
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
-  captureBuildError(type, tags = {}) {
+
+  captureBuildError(type, tags = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `BUILD_ERROR_${type}`
+
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
-  formatErrorAndStoreEvent(eventType, tags) {
+
+  formatErrorAndStoreEvent(eventType, tags): void {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
@@ -138,6 +193,7 @@ module.exports = class AnalyticsTracker {
         })
         return
       }
+
       tags.errorV2 = {
         // errorCode field was changed from `id` to `code`
         id: tags.error.code || tags.error.id,
@@ -148,15 +204,18 @@ module.exports = class AnalyticsTracker {
         stack: cleanPaths(tags.error?.error?.stack || ``),
         context: cleanPaths(JSON.stringify(tags.error?.context)),
       }
+
       delete tags.error
     }
+
     this.buildAndStoreEvent(eventType, tags)
   }
-  buildAndStoreEvent(eventType, tags) {
+
+  buildAndStoreEvent(eventType, tags): void {
     const event = {
       installedGatsbyVersion: this.installedGatsbyVersion,
       gatsbyCliVersion: this.gatsbyCliVersion,
-      ...lodash.merge({}, this.defaultTags, tags),
+      ...lodash.merge({}, this.defaultTags, tags), // The schema must include these
       eventType,
       sessionId: this.sessionId,
       time: new Date(),
@@ -164,15 +223,13 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
-      dbEngine: this.getDbEngine(),
+      dbEngine,
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
   }
-  getDbEngine() {
-    return `redux`
-  }
-  getMachineId() {
+
+  getMachineId(): UUID {
     // Cache the result
     if (this.machineId) {
       return this.machineId
@@ -185,7 +242,8 @@ module.exports = class AnalyticsTracker {
     this.machineId = machineId
     return machineId
   }
-  isTrackingEnabled() {
+
+  isTrackingEnabled(): boolean {
     // Cache the result
     if (this.trackingEnabled !== undefined) {
       return this.trackingEnabled
@@ -201,7 +259,8 @@ module.exports = class AnalyticsTracker {
     this.trackingEnabled = enabled
     return enabled
   }
-  getOsInfo() {
+
+  getOsInfo(): IOSInfo {
     if (this.osInfo) {
       return this.osInfo
     }
@@ -219,7 +278,8 @@ module.exports = class AnalyticsTracker {
     this.osInfo = osInfo
     return osInfo
   }
-  trackActivity(source) {
+
+  trackActivity(source): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -227,30 +287,36 @@ module.exports = class AnalyticsTracker {
     const now = Date.now()
     const last = this.debouncer[source] || 0
     const debounceTime = 5 * 1000 // 5 sec
+
     if (now - last > debounceTime) {
       this.captureEvent(source)
     }
     this.debouncer[source] = now
   }
-  decorateNextEvent(event, obj) {
+
+  decorateNextEvent(event, obj): void {
     const cached = this.metadataCache[event] || {}
     this.metadataCache[event] = Object.assign(cached, obj)
   }
-  addSiteMeasurement(event, obj) {
+
+  addSiteMeasurement(event, obj): void {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
     this.metadataCache[event] = Object.assign(cachedEvent, {
       siteMeasurements: Object.assign(cachedMeasurements, obj),
     })
   }
-  decorateAll(tags) {
+
+  decorateAll(tags): void {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
-  setTelemetryEnabled(enabled) {
+
+  setTelemetryEnabled(enabled: boolean): void {
     this.trackingEnabled = enabled
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
-  aggregateStats(data) {
+
+  aggregateStats(data): IAggregateStats {
     const sum = data.reduce((acc, x) => acc + x, 0)
     const mean = sum / data.length || 0
     const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
@@ -259,10 +325,12 @@ module.exports = class AnalyticsTracker {
         data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
           (data.length - 1)
       ) || 0
+
     const skewness =
       data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
       data.length /
       Math.pow(stdDev, 3)
+
     return {
       count: data.length,
       min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
@@ -274,10 +342,12 @@ module.exports = class AnalyticsTracker {
       skewness: !Number.isNaN(skewness) ? skewness : 0,
     }
   }
-  async sendEvents() {
+
+  async sendEvents(): Promise<boolean> {
     if (!this.isTrackingEnabled()) {
       return Promise.resolve(true)
     }
+
     return this.store.sendEvents()
   }
 }
