@@ -11471,3 +11471,15 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: PINKDROIDS web
+  main_url: https://www.pinkdroids.com
+  url: https://www.pinkdroids.com
+  description: >
+    This is the PINKDROIDS company website built on Gatsby with data powered by Contentful
+  categories:
+    - Agency website
+    - Blog
+    - Contentful CMS
+  built_by: PINKDROIDS
+  built_by_url: https://www.pinkdroids.com
+  featured: false
