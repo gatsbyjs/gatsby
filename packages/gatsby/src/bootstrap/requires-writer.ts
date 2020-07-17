@@ -9,7 +9,6 @@ import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
 import { writeModule } from "../utils/gatsby-webpack-virtual-modules"
-import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 interface IGatsbyPageComponent {
   component: string
@@ -264,11 +263,7 @@ const debouncedWriteAll = _.debounce(
       id: `requires-writer`,
     })
     activity.start()
-    const didRequiresChange = await writeAll(store.getState())
-    if (didRequiresChange) {
-      reporter.pendingActivity({ id: `webpack-develop` })
-      markWebpackStatusAsPending()
-    }
+    await writeAll(store.getState())
     activity.end()
   },
   500,

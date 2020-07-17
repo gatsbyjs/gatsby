@@ -8,20 +8,23 @@ The "node" is the center of Gatsby's data system. All data that's added to Gatsb
 
 The basic node data structure is as follows:
 
-```flow
-id: String,
-children: Array[String],
-parent: String,
-fields: Object,
-internal: {
-  contentDigest: String,
-  mediaType: String,
-  type: String,
-  owner: String,
-  fieldOwners: Object,
-  content: String,
+```ts
+interface Node {
+  id: string
+  children?: Array<string>
+  parent?: string
+  fields: object
+  internal: {
+    contentDigest: string
+    mediaType?: string
+    type: string
+    owner: string
+    fieldOwners: object
+    content?: string
+    description?: string
+  }
+  [key: string]: unknown // ...other fields specific to this type of node
 }
-...other fields specific to this type of node
 ```
 
 ### `parent`
@@ -53,6 +56,10 @@ Stores which plugins created which fields. This field is added by gatsby itself 
 ### `content`
 
 Optional field exposing the raw content for this node that transformer plugins can take and further process.
+
+### `description`
+
+Text description of the node.
 
 ## Source plugins
 

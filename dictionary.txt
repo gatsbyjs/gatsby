@@ -29,6 +29,7 @@
 18F
 1920s
 1990s
+1GB
 1M
 1pm
 1px
@@ -66,6 +67,7 @@
 4g
 5-10X
 500M
+500mb
 500ms
 500px
 50k
@@ -95,7 +97,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -1166,6 +1167,7 @@ LinkedIn
 Linsley
 linter
 linters
+LIV
 livechat
 livestream
 livestreamed
@@ -1585,6 +1587,7 @@ quickstart
 Quickstart
 Raae
 Rahić
+Rainn
 Rascia
 Razuvaev
 Re-engageable
@@ -1881,8 +1884,8 @@ Swartz
 Syfy
 symlink
 syntaxes
-Systemizing
 systemizing
+Systemizing
 tachyons
 Tachyons
 Tada
@@ -1981,6 +1984,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
@@ -2087,11 +2091,12 @@ webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest
@@ -2116,7 +2121,6 @@ wireframe-level
 Wirth
 Wiseman
 wishlist
-with-layout2
 with-navigation2
 Woah
 WooCommerce
