@@ -116,7 +116,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             // webpack and socket.io servers
             target: `startingDevServers`,
             actions: `setQueryRunningFinished`,
-            cond: ({ compiler }: IBuildContext): boolean => !!compiler,
+            cond: ({ compiler }: IBuildContext): boolean => !compiler,
           },
           {
             // ...otherwise just wait.
