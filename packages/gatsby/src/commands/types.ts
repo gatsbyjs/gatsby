@@ -3,8 +3,8 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
-  key: string
-  cert: string
+  key: Buffer
+  cert: Buffer
 }
 
 export interface IDebugInfo {
