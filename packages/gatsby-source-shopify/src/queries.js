@@ -1,23 +1,3 @@
-export const BLOGS_QUERY = `
-  query GetBlogs($first: Int!, $after: String) {
-    blogs(first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          handle
-          id
-          handle
-          title
-          url
-        }
-      }
-    }
-  }
-`
-
 export const COLLECTIONS_QUERY = `
   query GetCollections($first: Int!, $after: String) {
     collections(first: $first, after: $after) {
@@ -281,7 +261,25 @@ export const defaultQueries = {
     }
   }
 `,
-  blogs: BLOGS_QUERY,
+  blogs: `
+  query GetBlogs($first: Int!, $after: String) {
+    blogs(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          handle
+          id
+          handle
+          title
+          url
+        }
+      }
+    }
+  }
+`,
   collections: COLLECTIONS_QUERY,
   products: PRODUCTS_QUERY,
   shopPolicies: SHOP_POLICIES_QUERY,
