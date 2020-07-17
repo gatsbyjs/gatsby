@@ -16,7 +16,7 @@ jest.mock(`../create-client`, () => {
             const [queryName] = Object.entries(mockQueries).find(
               ([queryName, queryString]) => queryString === query
             )
-            return queryName + `.json`
+            return queryName.toLowerCase() + `.json`
           }
           const jsonFile = fixturePathFromQuery(query, mockQueries)
           return require(`./fixtures/${jsonFile}`)
