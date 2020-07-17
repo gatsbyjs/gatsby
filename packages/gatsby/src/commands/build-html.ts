@@ -92,6 +92,23 @@ const renderHTMLQueue = async (
   })
 }
 
+class BuildHTMLError extends Error {
+  codeFrame = ``
+  context?: {
+    path: string
+  }
+
+  constructor(error: Error) {
+    super(error.message)
+
+    // We must use getOwnProperty because keys like `stack` are not enumerable,
+    // but we want to copy over the entire error
+    Object.getOwnPropertyNames(error).forEach(key => {
+      this[key] = error[key]
+    })
+  }
+}
+
 const doBuildPages = async (
   rendererPath: string,
   pagePaths: string[],
@@ -109,8 +126,9 @@ const doBuildPages = async (
       error.stack,
       `${rendererPath}.map`
     )
-    prettyError.context = error.context
-    throw prettyError
+    const buildError = new BuildHTMLError(prettyError)
+    buildError.context = error.context
+    throw buildError
   }
 }
 

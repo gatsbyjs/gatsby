@@ -18,7 +18,7 @@ const {
   GraphQLInputObjectType,
   Kind,
 } = require(`graphql`)
-const { GraphQLDate } = require(`../date`)
+import { GraphQLDate } from "../date"
 const { GraphQLJSON } = require(`graphql-compose`)
 
 const getInferredFields = fields => {

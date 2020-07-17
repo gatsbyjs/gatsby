@@ -109,12 +109,15 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
     // Run action for each component
     const { components } = snapshot
-    components.forEach(c =>
+    components.forEach(c => {
+      const { isStaticQuery = false, text = `` } =
+        queries.get(c.componentPath) || {}
+
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
+        query: isStaticQuery ? `` : text,
       })
-    )
+    })
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -165,7 +168,7 @@ const clearInactiveComponents = () => {
 
   const activeTemplates = new Set()
   pages.forEach(page => {
-    // Set will guarantee uniqeness of entires
+    // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.component))
   })
 
@@ -175,7 +178,7 @@ const clearInactiveComponents = () => {
         `${component.componentPath} component was removed because it isn't used by any page`
       )
       store.dispatch({
-        type: `REMOVE_TEMPLATE_COMPONENT`,
+        type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`,
         payload: component,
       })
     }
@@ -192,6 +195,9 @@ exports.extractQueries = ({ parentSpan } = {}) => {
   return updateStateAndRunQueries(true, { parentSpan }).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
+
+    // TODO: move this into a spawned service, and emit events rather than
+    // directly triggering the compilation
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
@@ -249,7 +255,7 @@ exports.startWatchDeletePage = () => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
     let otherPageWithTemplateExists = false
-    for (let page of pages.values()) {
+    for (const page of pages.values()) {
       if (slash(page.component) === componentPath) {
         otherPageWithTemplateExists = true
         break
@@ -257,7 +263,7 @@ exports.startWatchDeletePage = () => {
     }
     if (!otherPageWithTemplateExists) {
       store.dispatch({
-        type: `REMOVE_TEMPLATE_COMPONENT`,
+        type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`,
         payload: {
           componentPath,
         },

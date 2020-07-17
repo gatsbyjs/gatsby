@@ -1,8 +1,15 @@
 import { PackageJson, Reporter } from "gatsby"
+import { Store, AnyAction } from "redux"
+import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
   key: string
   cert: string
+}
+
+export interface IDebugInfo {
+  port: number
+  break: boolean
 }
 
 export interface IProgram {
@@ -12,6 +19,7 @@ export interface IProgram {
   open: boolean
   openTracingConfigFile: string
   port: number
+  proxyPort: number
   host: string
   report: Reporter
   [`cert-file`]?: string
@@ -20,6 +28,10 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+  inspect?: number
+  inspectBrk?: number
+  graphqlTracing?: boolean
+  setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 
 // @deprecated

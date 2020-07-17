@@ -6,10 +6,10 @@ const {
   GraphQLList,
   isSpecifiedScalarType,
 } = require(`graphql`)
-const { addDerivedType } = require(`./derived-types`)
+import { addDerivedType } from "./derived-types"
 const { InputTypeComposer } = require(`graphql-compose`)
 const { GraphQLJSON } = require(`graphql-compose`)
-const { GraphQLDate } = require(`./date`)
+import { GraphQLDate } from "./date"
 
 const SEARCHABLE_ENUM = {
   SEARCHABLE: `SEARCHABLE`,

@@ -114,16 +114,16 @@ When building pages from files, you often want to create a URL from a file's pat
 createFilePath({
   // The node you'd like to convert to a path
   // e.g. from a markdown, JSON, YAML file, etc
-  node:
+  node,
   // Method used to get a node
   // The parameter from `onCreateNode` should be passed in here
-  getNode:
+  getNode,
   // The base path for your files.
   // Defaults to `src/pages`. For the example above, you'd use `src/content`.
-  basePath:
+  basePath,
   // Whether you want your file paths to contain a trailing `/` slash
   // Defaults to true
-  trailingSlash:
+  trailingSlash,
 })
 ```
 
@@ -335,3 +335,11 @@ function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
 
 module.exports = createMySqlNodes
 ```
+
+## Troubleshooting
+
+In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
+
+- `STALL_RETRY_LIMIT`, default: `3`
+- `STALL_TIMEOUT`, default: `30000`
+- `CONNECTION_TIMEOUT`, default: `30000`

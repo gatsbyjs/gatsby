@@ -9,13 +9,13 @@ function ScriptLoader({ async = true, children, src }) {
   useEffect(() => {
     if (
       ref.current.lastChild &&
-      ref.current.lastChild.getAttribute("src") === src
+      ref.current.lastChild.getAttribute(`src`) === src
     ) {
       return
     }
-    const script = document.createElement("script")
-    script.setAttribute("async", async)
-    script.setAttribute("src", src)
+    const script = document.createElement(`script`)
+    script.setAttribute(`async`, async)
+    script.setAttribute(`src`, src)
 
     ref.current.appendChild(script)
   }, [])

@@ -190,11 +190,11 @@ That would give us the best of both worlds, right?
 Well, a guy named [Kyle Mathews](https://github.com/KyleAMathews) already
 thought of that and created Gatsby.js.
 
-## Generating static websites with React and Webpack
+## Generating static websites with React and webpack
 
 A little disclaimer: I absolutely love React, so, when I first learned that
 there were some emerging Static Site Generators who leveraged only React and
-Webpack, I knew that I had to try at least one of them for the new upcoming blog
+webpack, I knew that I had to try at least one of them for the new upcoming blog
 I was planning to build. These projects were [Gatsby.js](https://gatsbyjs.org/)
 and [Phenomic](https://phenomic.io/), and both were still quite young back then,
 neither of them having reached the 1.0 release yet.
@@ -227,7 +227,7 @@ But then Gatsby.js hit the 1.0 release, and everything changed...
 ## Meeting Gatsby.js
 
 My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook
-team behind the [React](http://reactjs.org/) documentation site. They decided to
+team behind the [React](https://reactjs.org/) documentation site. They decided to
 migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0.
 I, as the good React fanboy that I am, jumped at the first chance I had to
 submit a PR to help fix a couple of bugs on the site, and was even given the
@@ -238,7 +238,7 @@ was completely mindblown.
 
 https://giphy.com/gifs/tim-and-eric-mind-blown-EldfH1VJdbrwY
 
-Not only did it have all the standard goodness of a typical React/Webpack static
+Not only did it have all the standard goodness of a typical React/webpack static
 site generator (CSS Modules, PostCSS, Hot Reloading, etc), but more importantly,
 it integrated an incredibly ingenious GraphQL layer which allowed the developer
 to query and fetch data from practically everywhere on the web!

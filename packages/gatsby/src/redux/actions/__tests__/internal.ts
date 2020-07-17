@@ -8,7 +8,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 beforeEach(() => {
-  reporter.panic.mockClear()
+  ;(reporter as any).panic.mockClear()
 })
 
 describe(`setSiteConfig`, () => {
@@ -84,5 +84,18 @@ describe(`setSiteConfig`, () => {
   it(`It sets the pathPrefix to an empty string if it's not set`, () => {
     const action = setSiteConfig({})
     expect(action.payload.pathPrefix).toBe(``)
+  })
+
+  it(`It warns with a suggestion when an invalid key is passed`, () => {
+    setSiteConfig({
+      plugin: [],
+    })
+
+    expect(reporter.panic).toBeCalledWith({
+      id: `10122`,
+      context: {
+        sourceMessage: `"plugin" is not allowed. Did you mean "plugins"?`,
+      },
+    })
   })
 })

@@ -16,7 +16,7 @@ test(`plan returns a description`, async () => {
   expect(result.describe).toEqual(expect.stringContaining(`Install glob`))
 })
 
-describe(`npm package resource`, () => {
+describe.skip(`npm package resource`, () => {
   test(`e2e npm package resource test`, async () => {
     await resourceTestHelper({
       resourceModule: pkg,
@@ -45,6 +45,7 @@ describe(`package manager client commands`, () => {
     expect(yarnInstall).toMatchSnapshot()
     expect(yarnDevInstall).toMatchSnapshot()
   })
+
   it(`generates the correct commands for npm`, () => {
     const yarnInstall = pkg.generateClientComands({
       packageManager: `npm`,

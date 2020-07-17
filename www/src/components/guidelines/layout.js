@@ -2,15 +2,20 @@
 import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import { Global } from "@emotion/core"
+import { Box } from "theme-ui"
 
 import { globalStyles } from "../../utils/styles/global"
-import { Box } from "./system"
 import Header from "./header"
 import PageMetadata from "../page-metadata"
 import Footer from "../shared/footer-links"
 
 const Layout = ({ children, background, pageTitle }) => (
-  <Box bg="background" position="relative">
+  <Box
+    sx={{
+      bg: `background`,
+      position: `relative`,
+    }}
+  >
     <Global
       styles={{
         ".ReactModal__Overlay": {

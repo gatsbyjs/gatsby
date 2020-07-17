@@ -14,7 +14,7 @@ To start working with Gatsby Image, install the `gatsby-image` package along wit
 
 A common way to source images is to install and use `gatsby-source-filesystem` to connect your local files, but other source plugins can be used as well, such as `gatsby-source-contentful`, `gatsby-source-datocms` and `gatsby-source-sanity`.
 
-```bash
+```shell
 npm install --save gatsby-image gatsby-plugin-sharp gatsby-transformer-sharp
 ```
 
@@ -371,7 +371,7 @@ Here are some usage examples:
 <Img
   fluid={data.file.childImageSharp.fluid}
   alt="Cat taking up an entire chair"
-  fadeIn="false"
+  fadeIn={false}
   className="customImg"
   placeholderStyle={{ `backgroundColor`: `black` }}
   onLoad={() => {

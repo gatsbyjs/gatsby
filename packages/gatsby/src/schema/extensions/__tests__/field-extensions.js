@@ -6,7 +6,6 @@ const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
 const { createFieldExtension, createTypes } = actions
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()

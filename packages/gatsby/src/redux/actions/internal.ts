@@ -19,6 +19,7 @@ import {
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
+import { didYouMean } from "../../utils/did-you-mean"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -233,6 +234,31 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
   const normalizedPayload: IGatsbyConfig = result.value
 
   if (result.error) {
+    const hasUnknownKeys = result.error.details.filter(
+      details => details.type === `object.allowUnknown`
+    )
+
+    if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {
+      const errorMessages = hasUnknownKeys.map(unknown => {
+        const { context, message } = unknown
+        const key = context?.key
+        const suggestion = key && didYouMean(key)
+
+        if (suggestion) {
+          return `${message}. ${suggestion}`
+        }
+
+        return message
+      })
+
+      reporter.panic({
+        id: `10122`,
+        context: {
+          sourceMessage: errorMessages.join(`\n`),
+        },
+      })
+    }
+
     reporter.panic({
       id: `10122`,
       context: {

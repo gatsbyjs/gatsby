@@ -1,11 +1,11 @@
-import { graphql } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 import * as React from "react"
 import Layout from "../components/layout"
 import Source from "../components/source"
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
-interface IndexPageProps {
+interface IndexPageProps extends PageProps {
   data: {
     site: {
       siteMetadata: {

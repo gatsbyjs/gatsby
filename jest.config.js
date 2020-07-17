@@ -40,19 +40,11 @@ module.exports = {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
   snapshotSerializers: [`jest-serializer-path`],
-  collectCoverage: useCoverage,
-  coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
-  coverageThreshold: {
-    global: {
-      lines: 45,
-      statements: 44,
-      functions: 42,
-      branches: 43,
-    },
-  },
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
-    ? [[`jest-silent-reporter`, { useDots: true }]]
+    ? [[`jest-silent-reporter`, { useDots: true }]].concat(
+        useCoverage ? `jest-junit` : []
+      )
     : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],

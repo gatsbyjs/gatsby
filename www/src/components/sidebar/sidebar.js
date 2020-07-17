@@ -1,27 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-
-// Access to global `localStorage` property must be guarded as it
-// fails under iOS private session mode.
-var hasLocalStorage = true
-var testKey = `gatsbyjs.sidebar.testKey`
-var ls
-try {
-  ls = global.localStorage
-  ls.setItem(testKey, `test`)
-  ls.removeItem(testKey)
-} catch (e) {
-  hasLocalStorage = false
-}
 
 function isItemInActiveTree(item, activeItem, activeItemParents) {
   return (
@@ -32,7 +17,7 @@ function isItemInActiveTree(item, activeItem, activeItemParents) {
 
 function getOpenItemHash(itemList, activeItem, activeItemParents) {
   let result = {}
-  for (let item of itemList) {
+  for (const item of itemList) {
     if (item.items) {
       result[item.title] = isItemInActiveTree(
         item,
@@ -48,29 +33,14 @@ function getOpenItemHash(itemList, activeItem, activeItemParents) {
   return result
 }
 
-function readLocalStorage(key) {
-  if (hasLocalStorage) {
-    return JSON.parse(localStorage.getItem(`gatsbyjs:sidebar:${key}`)) ?? {}
-  }
-  return {}
-}
-
-function writeLocalStorage(key, state) {
-  if (hasLocalStorage) {
-    localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
-  }
-}
-
 const SidebarContext = React.createContext({})
 
 export function useSidebarContext() {
   return React.useContext(SidebarContext)
 }
 
-export default withI18n()(function Sidebar({
-  i18n,
+export default function Sidebar({
   title,
-  sidebarKey,
   closeSidebar,
   itemList,
   location,
@@ -100,17 +70,7 @@ export default withI18n()(function Sidebar({
 
   // Get the hash where the only open items are
   // the hierarchy defined in props
-  const derivedHash = getOpenItemHash(itemList, activeItem, activeItemParents)
-
-  // Merge hash in local storage and the derived hash from props
-  // so that all sections open in either hash are open
-  const initialHash = (() => {
-    const { openSectionHash = {} } = readLocalStorage(sidebarKey)
-    for (const [key, isOpen] of Object.entries(derivedHash)) {
-      openSectionHash[key] = openSectionHash[key] || isOpen
-    }
-    return openSectionHash
-  })()
+  const initialHash = getOpenItemHash(itemList, activeItem, activeItemParents)
 
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
   const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
@@ -126,44 +86,41 @@ export default withI18n()(function Sidebar({
 
   function toggleExpandAll() {
     if (expandAll) {
-      setOpenSectionHash(derivedHash)
+      // Close everything except the initial open section
+      setOpenSectionHash(initialHash)
     } else {
       const newOpenSectionHash = {}
-      for (const key of Object.keys(derivedHash)) {
+      for (const key of Object.keys(initialHash)) {
         newOpenSectionHash[key] = true
       }
       setOpenSectionHash(newOpenSectionHash)
     }
   }
 
-  // Write to local storage whenever the open section hash changes
-  React.useEffect(() => {
-    writeLocalStorage(sidebarKey, { openSectionHash })
-  }, [openSectionHash])
-
   const getItemState = React.useCallback(
-    item => ({
-      isExpanded: openSectionHash[item.title] || disableAccordions,
-      isActive: item.title === activeItem.title,
-      inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
-    }),
+    item => {
+      return {
+        isExpanded: openSectionHash[item.title] || disableAccordions || false,
+        isActive: item.title === activeItem.title,
+        inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
+      }
+    },
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
   )
 
-  const context = React.useMemo(
-    () => ({
+  const context = React.useMemo(() => {
+    return {
       getItemState,
       disableAccordions,
       onLinkClick: closeSidebar,
       onSectionTitleClick: toggleSection,
-    }),
-    [getItemState, disableAccordions, closeSidebar, toggleSection]
-  )
+    }
+  }, [getItemState, disableAccordions, closeSidebar, toggleSection])
 
   return (
     <SidebarContext.Provider value={context}>
       <section
-        aria-label={i18n._(t`Secondary Navigation`)}
+        aria-label="Secondary Navigation"
         id="SecondaryNavigation"
         className="docSearch-sidebar"
         sx={{ height: `100%` }}
@@ -193,6 +150,7 @@ export default withI18n()(function Sidebar({
             border: 0,
             display: `block`,
             overflowY: `auto`,
+            overscrollBehavior: `contain`,
             transition: t =>
               `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             zIndex: 10,
@@ -246,4 +204,4 @@ export default withI18n()(function Sidebar({
       </section>
     </SidebarContext.Provider>
   )
-})
+}

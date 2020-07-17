@@ -47,6 +47,14 @@ const onRouteUpdate = (location, prevLocation) => {
 }
 
 const navigate = (to, options = {}) => {
+  // Support forward/backward navigation with numbers
+  // navigate(-2) (jumps back 2 history steps)
+  // navigate(2)  (jumps forward 2 history steps)
+  if (typeof to === `number`) {
+    globalHistory.navigate(to)
+    return
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -174,9 +182,11 @@ class RouteAnnouncer extends React.Component {
         pageName = pageHeadings[0].textContent
       }
       const newAnnouncement = `Navigated to ${pageName}`
-      const oldAnnouncement = this.announcementRef.current.innerText
-      if (oldAnnouncement !== newAnnouncement) {
-        this.announcementRef.current.innerText = newAnnouncement
+      if (this.announcementRef.current) {
+        const oldAnnouncement = this.announcementRef.current.innerText
+        if (oldAnnouncement !== newAnnouncement) {
+          this.announcementRef.current.innerText = newAnnouncement
+        }
       }
     })
   }

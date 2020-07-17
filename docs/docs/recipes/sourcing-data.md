@@ -41,7 +41,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 
    > _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
 
-3. Query the data (in GraphiQL or in your components).
+3. Query the data (in [GraphiQL](/docs/running-queries-with-graphiql/) or in your components).
 
 ```graphql
 query MyPokemonQuery {
@@ -59,7 +59,7 @@ query MyPokemonQuery {
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [Pixabay source plugin tutorial](/tutorial/pixabay-source-plugin-tutorial/)
+- Understand source plugins by building one in the [source plugin tutorial](/tutorial/source-plugin-tutorial/)
 - The createNode function [documentation](/docs/actions/#createNode)
 
 ## Sourcing Markdown data for blog posts and pages with GraphQL
@@ -403,7 +403,7 @@ plugins: [
 
 8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
-![the graphql interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
+![The GraphQL interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
 To query for Blog Post titles from Contentful, use the following GraphQL query:
 

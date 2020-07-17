@@ -48,7 +48,7 @@ Some of the commonly recommended solutions include (references at the end of thi
 - Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
 - Any combination of the above
 
-In Gatsby–which uses React.js for rendering–we’re currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router/). But similar to some of the [Reach demos](https://reach.tech/router), page content isn’t announced consistently in Safari and Voiceover or NVDA and Firefox–two critical combinations for users of assistive technology. We’re actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
+In Gatsby–which uses React.js for rendering–we’re currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router/). But similar to some of the [Reach demos](https://reach.tech/router), page content isn’t announced consistently in Safari and VoiceOver or NVDA and Firefox–two critical combinations for users of assistive technology. We’re actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
 
 By user testing a few variations of known routing techniques, we gained some valuable insight into how Gatsby and React can better support people with disabilities. We also uncovered some tips for improving usability of client-rendered apps in general, which we’ll cover below.
 
@@ -106,7 +106,7 @@ A big motivation to test with screen reader users was to confirm whether the rec
 
 **Focusing on a wrapper element for new content worked okay** with our test subjects: they were informed of the new content and moved into the right place. It was **very subtle compared to focusing on a heading**, and better than resetting the page to the top (think Gmail - it would be a pain to have to start over every time you click on a link). In general, we found that **resetting focus to the top of the app would be very overwhelming**, especially in large applications.
 
-**Focusing on a heading was found to be the best experience**, as it would save time and make it clear what happened. In NVDA, there was some duplicate reading of content and `<main>` was doing some extra announcements–seemed like an screen reader quirk more than a problem with the prototype.
+**Focusing on a heading was found to be the best experience**, as it would save time and make it clear what happened. In NVDA, there was some duplicate reading of content and `<main>` was doing some extra announcements–seemed like a screen reader quirk more than a problem with the prototype.
 
 **A back button would help** to use browser history (this was a limitation of the prototypes).
 

@@ -1,5 +1,7 @@
+import * as path from "path"
 import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
+import postcss from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
@@ -9,8 +11,9 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
 
-import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"
-import GatsbyWebpackEslintGraphqlSchemaReload from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
+import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { GatsbyWebpackVirtualModules } from "./gatsby-webpack-virtual-modules"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -44,7 +47,9 @@ interface ILoaderUtils {
   postcss: LoaderResolver<{
     browsers?: string[]
     overrideBrowserslist?: string[]
-    plugins?: Plugin[] | ((loader: Loader) => Plugin[])
+    plugins?:
+      | postcss.Plugin<any>[]
+      | ((loader: Loader) => postcss.Plugin<any>[])
   }>
 
   file: LoaderResolver
@@ -100,6 +105,7 @@ type PluginUtils = BuiltinPlugins & {
   minifyCss: PluginFactory
   fastRefresh: PluginFactory
   eslintGraphqlSchemaReload: PluginFactory
+  virtualModules: PluginFactory
 }
 
 /**
@@ -219,15 +225,19 @@ export const createWebpackUtils = (
         options: {
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): Plugin[] => {
+          plugins: (loader: Loader): postcss.Plugin<any>[] => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
-            return [
-              flexbugs,
-              autoprefixer({ overrideBrowserslist, flexbox: `no-2009` }),
-              ...plugins,
-            ]
+            const autoprefixerPlugin = autoprefixer({
+              overrideBrowserslist,
+              flexbox: `no-2009`,
+              ...((plugins.find(
+                plugin => plugin.postcssPlugin === `autoprefixer`
+              ) as autoprefixer.Autoprefixer)?.options ?? {}),
+            })
+
+            return [flexbugs, autoprefixerPlugin, ...plugins]
           },
           ...postcssOpts,
         },
@@ -250,6 +260,7 @@ export const createWebpackUtils = (
         options: {
           limit: 10000,
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          fallback: require.resolve(`file-loader`),
           ...options,
         },
       }
@@ -259,6 +270,13 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
           ...options,
         },
         loader: require.resolve(`./babel-loader`),
@@ -267,7 +285,16 @@ export const createWebpackUtils = (
 
     dependencies: options => {
       return {
-        options,
+        options: {
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
+          ...options,
+        },
         loader: require.resolve(`babel-loader`),
       }
     },
@@ -370,6 +397,37 @@ export const createWebpackUtils = (
         }`,
       }
 
+      // TODO REMOVE IN V3
+      // a list of vendors we know we shouldn't polyfill (we should have set core-js to entry but we didn't so we have to do this)
+      const VENDORS_TO_NOT_POLYFILL = [
+        `@babel[\\\\/]runtime`,
+        `@mikaelkristiansson[\\\\/]domready`,
+        `@reach[\\\\/]router`,
+        `babel-preset-gatsby`,
+        `core-js`,
+        `dom-helpers`,
+        `gatsby-legacy-polyfills`,
+        `gatsby-link`,
+        `gatsby-react-router-scroll`,
+        `invariant`,
+        `lodash`,
+        `mitt`,
+        `prop-types`,
+        `react-dom`,
+        `react`,
+        `regenerator-runtime`,
+        `scheduler`,
+        `scroll-behavior`,
+        `shallow-compare`,
+        `warning`,
+        `webpack`,
+      ]
+      const doNotPolyfillRegex = new RegExp(
+        `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+          `|`
+        )})[\\\\/]`
+      )
+
       return {
         test: /\.(js|mjs)$/,
         exclude: (modulePath: string): boolean => {
@@ -382,18 +440,8 @@ export const createWebpackUtils = (
             ) {
               return true
             }
-            // If dep is known library that doesn't need polyfilling, we don't.
-            // TODO this needs rework, this is buggy as hell
-            if (
-              /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
-                modulePath
-              )
-            ) {
-              return true
-            }
 
-            // If dep is in node_modules and none of the above, include
-            return false
+            return doNotPolyfillRegex.test(modulePath)
           }
 
           // If dep is user land code, exclude
@@ -533,7 +581,8 @@ export const createWebpackUtils = (
     ...options
   }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
-      cache: true,
+      // TODO add proper cache keys
+      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
       // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
       parallel: !isWsl,
@@ -627,7 +676,9 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      disableRefreshCheck: true,
+      overlay: {
+        sockIntegration: `whm`,
+      },
     })
 
   plugins.extractText = (options: any): Plugin =>
@@ -639,13 +690,14 @@ export const createWebpackUtils = (
 
   plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
 
-  plugins.extractStats = (options: any): GatsbyWebpackStatsExtractor =>
-    new GatsbyWebpackStatsExtractor(options)
+  plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
+    new GatsbyWebpackStatsExtractor()
 
-  plugins.eslintGraphqlSchemaReload = (
-    options
-  ): GatsbyWebpackEslintGraphqlSchemaReload =>
-    new GatsbyWebpackEslintGraphqlSchemaReload(options)
+  plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
+    new GatsbyWebpackEslintGraphqlSchemaReload()
+
+  plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
+    new GatsbyWebpackVirtualModules()
 
   return {
     loaders,

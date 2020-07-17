@@ -7,7 +7,7 @@ tags: ["themes", "getting-started"]
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
-### What is a Gatsby theme?
+## What is a Gatsby theme?
 
 <Pullquote cite="Jason Lengstorf">
   Gatsby themes allow you to focus only on the parts of the site and app
@@ -95,7 +95,7 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in the _them
 
 > MDX is markdown for the component era. It lets you write JSX embedded inside markdown. That's a great combination because it allows you to use markdown's often terse syntax (such as # heading) for the little things and JSX for more advanced components.
 
-Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.com/)
+Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.app/)
 
 In your _theme_ directory, add src/pages/index.mdx
 
