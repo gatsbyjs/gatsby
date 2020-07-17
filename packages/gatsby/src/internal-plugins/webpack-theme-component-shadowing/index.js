@@ -133,17 +133,15 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       const existsDir = dir.map(filepath => path.basename(filepath))
 
       const isExactPath = existsDir.includes(
-        path.basename(possibleComponentPath)
-      ) // find if there is an exact path match
+        path.basename(possibleComponentPath) // find if there is an exact path match
+      )
 
-      if (!isExactPath) {
-        const matchingExtension = this.extensions.find(ext =>
-          existsDir.includes(path.basename(possibleComponentPath) + ext)
-        ) // find extension
-        if (matchingExtension) return possibleComponentPath + matchingExtension // if extension matches, create path
-      } else {
-        return possibleComponentPath
-      }
+      if (isExactPath) return possibleComponentPath
+
+      const matchingExtension = this.extensions.find(ext =>
+        existsDir.includes(path.basename(possibleComponentPath) + ext)
+      ) // find extension
+      if (matchingExtension) return possibleComponentPath + matchingExtension // if extension matches, create path
     }
     return null
   }
