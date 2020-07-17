@@ -36,7 +36,7 @@ npm install tailwindcss gatsby-plugin-postcss
 
 2. Add `gatsby-plugin-postcss` to your `gatsby-config.js` file
 
-```
+```javascript
 {
   plugins:[
       `gatsby-plugin-postcss`
