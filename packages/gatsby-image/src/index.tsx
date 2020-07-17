@@ -16,8 +16,8 @@ interface IImageObject {
 }
 
 export interface IFixedObject {
-  width: number
-  height: number
+  width: IImageObject["width"]
+  height: IImageObject["height"]
   src: IImageObject["src"]
   srcSet: IImageObject["srcSet"]
   base64?: IImageObject["base64"]
@@ -94,7 +94,13 @@ interface IGatsbyImageState {
   fadeIn: boolean
 }
 
-type ConvertedProps = Omit<IGatsbyImageProps, "resolutions" | "sizes">
+type ConvertedProps = Omit<
+  IGatsbyImageProps,
+  "resolutions" | "sizes" | "fixed" | "fluid"
+> & {
+  fixed?: IFixedObject[]
+  fluid?: IFluidObject[]
+}
 
 interface IPlaceholderImageProps {
   title?: IGatsbyImageProps["title"]
@@ -155,6 +161,8 @@ const logDeprecationNotice = (prop: string, replacement: string): void => {
 const convertProps = (props: IGatsbyImageProps): ConvertedProps => {
   const convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
+  let newFluid: IFluidObject[] | undefined
+  let newFixed: IFixedObject[] | undefined
 
   if (resolutions) {
     convertedProps.fixed = resolutions
@@ -177,17 +185,21 @@ const convertProps = (props: IGatsbyImageProps): ConvertedProps => {
 
   // convert fluid & fixed to arrays so we only have to work with arrays
   if (convertedProps.fluid) {
-    convertedProps.fluid = groupByMedia(
-      ([] as IFluidObject[]).concat(convertedProps.fluid)
-    ) as IFluidObject[]
+    newFluid = groupByMedia(
+      Array.isArray(convertedProps.fluid)
+        ? convertedProps.fluid
+        : [convertedProps.fluid]
+    )
   }
   if (convertedProps.fixed) {
-    convertedProps.fixed = groupByMedia(
-      ([] as IFixedObject[]).concat(convertedProps.fixed)
-    ) as IFixedObject[]
+    newFixed = groupByMedia(
+      Array.isArray(convertedProps.fixed)
+        ? convertedProps.fixed
+        : [convertedProps.fixed]
+    )
   }
 
-  return convertedProps
+  return { ...convertedProps, fluid: newFluid, fixed: newFixed }
 }
 
 /**
@@ -197,7 +209,7 @@ const convertProps = (props: IGatsbyImageProps): ConvertedProps => {
  * @return {boolean}
  */
 const hasArtDirectionSupport = (currentData: ImageVariants[]): boolean =>
-  !!currentData && currentData.some(image => typeof image.media !== `undefined`)
+  currentData.some(image => typeof image.media !== `undefined`)
 
 const isBrowser = typeof window !== `undefined`
 
@@ -206,23 +218,16 @@ const isBrowser = typeof window !== `undefined`
  * @property media   {{media?: string}}  A media query string.
  * @return {boolean}
  */
-const matchesMedia = ({ media }: { media?: string }): boolean =>
-  media ? isBrowser && !!window.matchMedia(media).matches : false
+const matchesMedia = ({ media }: ImageVariants): boolean =>
+  media ? !!window.matchMedia(media).matches : false
 
 /**
  * Returns the current src - Preferably with art-direction support.
  * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
  * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
-const getCurrentSrcData = (
-  currentData: ImageVariants | ImageVariants[]
-): ImageVariants => {
-  if (
-    isBrowser &&
-    currentData &&
-    Array.isArray(currentData) &&
-    hasArtDirectionSupport(currentData)
-  ) {
+const getCurrentSrcData = <T extends ImageVariants>(currentData: T[]): T => {
+  if (isBrowser && hasArtDirectionSupport(currentData)) {
     // Do we have an image for the current Viewport?
     const foundMedia = currentData.findIndex(matchesMedia)
     if (foundMedia !== -1) {
@@ -244,37 +249,40 @@ const getCurrentSrcData = (
 /**
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
- * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string}
  */
 const getImageSrcKey = ({
   fluid,
   fixed,
-}: Pick<IGatsbyImageProps, "fluid" | "fixed">): string | undefined => {
-  const data = fluid
-    ? getCurrentSrcData(fluid)
-    : fixed
-    ? getCurrentSrcData(fixed)
-    : undefined
-
-  return data && data.src
+}: {
+  fluid?: IFluidObject[]
+  fixed?: IFixedObject[]
+}): string | undefined => {
+  if (fluid) {
+    return getCurrentSrcData(fluid)?.src
+  }
+  if (fixed) {
+    return getCurrentSrcData(fixed)?.src
+  }
+  return undefined
 }
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
-const imageCache: { [key: string]: boolean } = Object.create({})
+const imageCache: { [key: string]: true } = Object.create({})
 const inImageCache = (props: IGatsbyImageProps): boolean => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
-  return src && imageCache[src] ? imageCache[src] : false
+  return src && imageCache[src] ? true : false
 }
 
 const activateCacheForImage = (props: IGatsbyImageProps): void => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
-  if (src) imageCache[src] = true
+  if (src) {
+    imageCache[src] = true
+  }
 }
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -314,7 +322,9 @@ function getIO(): IntersectionObserver | undefined {
   return io
 }
 
-function generateImageSources(imageVariants: ImageVariants[]): JSX.Element[] {
+function generateImageSources<T extends ImageVariants>(
+  imageVariants: T[]
+): JSX.Element[] {
   return imageVariants.map(variant => (
     <React.Fragment key={variant.src}>
       {variant.srcSetWebp && (
@@ -336,9 +346,9 @@ function generateImageSources(imageVariants: ImageVariants[]): JSX.Element[] {
 
 // Return an array ordered by elements having a media prop, does not use
 // native sort, as a stable sort is not guaranteed by all browsers/versions
-function groupByMedia(imageVariants: ImageVariants[]): ImageVariants[] {
-  const withMedia: ImageVariants[] = []
-  const without: ImageVariants[] = []
+function groupByMedia<T extends ImageVariants>(imageVariants: T[]): T[] {
+  const withMedia: T[] = []
+  const without: T[] = []
   imageVariants.forEach(variant =>
     (variant.media ? withMedia : without).push(variant)
   )
@@ -457,7 +467,6 @@ const Placeholder = React.forwardRef(
 const Img = React.forwardRef(
   (props: IImgPropTypes, ref: React.Ref<HTMLImageElement>) => {
     const {
-      alt,
       sizes,
       srcSet,
       src,
@@ -473,7 +482,6 @@ const Img = React.forwardRef(
 
     return (
       <img
-        alt={alt}
         aria-hidden={ariaHidden}
         sizes={sizes}
         srcSet={srcSet}
@@ -667,8 +675,8 @@ export class Image extends React.Component<
     }
 
     if (fluid) {
-      const imageVariants = fluid as IFluidObject[]
-      const image = getCurrentSrcData(fluid) as IFluidObject
+      const imageVariants = fluid
+      const image = getCurrentSrcData(fluid)
 
       return (
         <Tag
@@ -676,8 +684,8 @@ export class Image extends React.Component<
           style={{
             position: `relative`,
             overflow: `hidden`,
-            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
-            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
+            maxWidth: image?.maxWidth ? `${image.maxWidth}px` : null,
+            maxHeight: image?.maxHeight ? `${image.maxHeight}px` : null,
             ...style,
           }}
           ref={this.handleRef}
@@ -775,8 +783,8 @@ export class Image extends React.Component<
     }
 
     if (fixed) {
-      const imageVariants = fixed as IFixedObject[]
-      const image = getCurrentSrcData(fixed) as IFixedObject
+      const imageVariants = fixed
+      const image = getCurrentSrcData(fixed)
 
       const divStyle: React.CSSProperties = {
         position: `relative`,
