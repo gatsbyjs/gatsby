@@ -128,7 +128,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         // TypeScript and alternate syntaxes
         dir = fs.readdirSync(path.dirname(possibleComponentPath))
       } catch (e) {
-        break
+        continue
       }
       const existsDir = dir.map(filepath => path.basename(filepath))
 
