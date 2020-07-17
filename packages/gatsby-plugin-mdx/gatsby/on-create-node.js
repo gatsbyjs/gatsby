@@ -1,12 +1,13 @@
 const fs = require(`fs`)
 const path = require(`path`)
-const babel = require(`@babel/core`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
 const createMDXNode = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
 const { findImports } = require(`../utils/gen-mdx`)
+
+const fileCache = new Set()
 
 module.exports = async (
   {
@@ -81,24 +82,29 @@ async function cacheScope({
   scopeIdentifiers,
   parentNode,
 }) {
-  // scope files are the imports from an MDX file pulled out and re-exported.
-  let scopeFileContent = `${scopeImports.join(`\n`)}
+  const scopeIdentList = scopeIdentifiers.join(`, `)
 
-export default { ${scopeIdentifiers.join(`, `)} }`
-
-  // if parent node is a file, convert relative imports to be
-  // relative to new .cache location
-  if (parentNode.internal.type === `File`) {
-    const instance = new BabelPluginTransformRelativeImports({
-      parentFilepath: parentNode.dir,
-      cache: cache,
-    })
-    const result = babel.transform(scopeFileContent, {
-      configFile: false,
-      plugins: [instance.plugin],
-    })
-    scopeFileContent = result.code
+  // It's (kinda micro) faster to check this fast digest than to compute the
+  // actual digest and do this check on scopeFileContent or filePath.
+  // Note: if your mdx files all import the same things as a template then
+  // this check should save you a bit on redundant writes.
+  const fastDigest = scopeImports.join(`\n`) + `\n` + scopeIdentList
+  if (fileCache.has(fastDigest)) {
+    return
   }
+  fileCache.add(fastDigest)
+
+  const fixedImports =
+    parentNode.internal.type === `File`
+      ? scopeImports.map(code => scrubLocalImportPaths(code, parentNode, cache))
+      : scopeImports
+
+  // scope files are the imports from an MDX file pulled out and re-exported.
+  const scopeFileContent = `
+    ${fixedImports.join(`\n`)}
+
+    export default { ${scopeIdentList} }
+  `
 
   const filePath = path.join(
     cache.directory,
@@ -109,32 +115,23 @@ export default { ${scopeIdentifiers.join(`, `)} }`
   fs.writeFileSync(filePath, scopeFileContent)
 }
 
-const declare = require(`@babel/helper-plugin-utils`).declare
-
-class BabelPluginTransformRelativeImports {
-  constructor({ parentFilepath, cache }) {
-    this.plugin = declare(api => {
-      api.assertVersion(7)
-
-      return {
-        visitor: {
-          StringLiteral({ node }) {
-            let split = node.value.split(`!`)
-            const nodePath = split.pop()
-            const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
-            if (nodePath.startsWith(`.`)) {
-              const valueAbsPath = path.resolve(parentFilepath, nodePath)
-              const replacementPath =
-                loaders +
-                path.relative(
-                  path.join(cache.directory, MDX_SCOPES_LOCATION),
-                  valueAbsPath
-                )
-              node.value = replacementPath
-            }
-          },
-        },
-      }
-    })
-  }
+function scrubLocalImportPaths(importCode, parentNode, cache) {
+  // All imports end with `from 'some/path'` so match on that and normalize
+  // the paths. They might be prefixed with `!`, a webpack feature,
+  return importCode.replace(/from\s*['"]([^'"]+?)['"]/g, (match, p) => {
+    let split = p.split(`!`)
+    const nodePath = split.pop()
+    if (nodePath.startsWith(`.`)) {
+      const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
+      const valueAbsPath = path.resolve(parentNode.dir, nodePath)
+      return (
+        loaders +
+        path.relative(
+          path.join(cache.directory, MDX_SCOPES_LOCATION),
+          valueAbsPath
+        )
+      )
+    }
+    return match
+  })
 }
