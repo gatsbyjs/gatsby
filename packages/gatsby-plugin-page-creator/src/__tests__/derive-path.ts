@@ -20,4 +20,12 @@ describe(`derive-path`, () => {
       })
     ).toEqual(`product/1`)
   })
+
+  it(`doesnt remove '/' from slug`, () => {
+    expect(
+      derivePath(`product/{Product.slug}.js`, {
+        slug: `bar/baz`,
+      })
+    ).toEqual(`product/bar/baz`)
+  })
 })

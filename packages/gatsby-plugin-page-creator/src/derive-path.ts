@@ -34,10 +34,10 @@ export function derivePath(path: string, node: Record<string, any>): string {
 
     // 3.b  We do node or node.nodes here because we support the special group
     //      graphql field, which then moves nodes in another depth
-    const value = slugify(_.get(node.nodes, `[0]${key}`) || _.get(node, key), {
+    const nodeValue = _.get(node.nodes, `[0]${key}`) || _.get(node, key)
+    const value = slugify(nodeValue.replace(/\//g, `(REPLACED)`), {
       lower: true,
-      strict: true,
-    })
+    }).replace(/\(REPLACED\)/gi, `/`)
 
     // 3.c  log error if the key does not exist on node
     if (!value) {
