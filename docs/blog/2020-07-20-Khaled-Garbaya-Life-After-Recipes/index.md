@@ -22,19 +22,19 @@ Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recip
 
 ## Gatsby, Before Recipes: A long and winding workflow
 
-For a few years now, my go-to stack when building apps has been Gatsby as my primary framework, [Tailwindcss](https://tailwindcss.com/) for styling, and Contentful as the data source. (I know that there are many other styling options out there, [styled-components](https://styled-components.com/) is a great one, but I personally like to keep my CSS as low level as possible).
+For a few years now, my go-to stack when building apps has been Gatsby as my primary framework, [TailwindCSS](https://tailwindcss.com/) for styling, and Contentful as the data source. (I know that there are many other styling options out there, [styled-components](https://styled-components.com/) is a great one, but I personally like to keep my CSS as low level as possible).
 
 Even if this setup looks straightforward, I always struggle the first 20 minutes fiddling around with config files and plugins to get TailwindCSS working properly. No matter how many times I've used this workflow, I still forget how I did it last time or manage to miss one small step.
 
 Here's is the process for getting TailwindCSS working in your Gatsby project:
 
-1.  Install TailwindCSS:
+1. Install TailwindCSS:
 
-```\
-npm install tailwindcss gatsby-plugin-postcss\
+```
+npm install tailwindcss gatsby-plugin-postcss
 ```
 
-2.  Add `gatsby-plugin-postcss` to your `gatsby-config.js` file
+2. Add `gatsby-plugin-postcss` to your `gatsby-config.js` file
 
 ```
 {
@@ -44,7 +44,7 @@ npm install tailwindcss gatsby-plugin-postcss\
 }
 ```
 
-3.  Create a `postcss.config.js` file and add the following snippet to it:
+3. Create a `postcss.config.js` file and add the following snippet to it:
 
 ```
 module.exports = {
@@ -52,7 +52,7 @@ module.exports = {
 }
 ```
 
-4.  Create a `tailwind.config.js` file and add the following snippet to it:
+4. Create a `tailwind.config.js` file and add the following snippet to it:
 
 ```
 module.exports = {
@@ -67,7 +67,7 @@ module.exports = {
 }
 ```
 
-5.  Create a `tailwind.css` file and add the following snippet to it:
+5. Create a `tailwind.css` file and add the following snippet to it:
 
 ```
 @tailwind base;
@@ -75,15 +75,15 @@ module.exports = {
 @tailwind utilities;
 ```
 
-6.  Next in our stack comes Contentful. In order to add Contentful to your Gatsby project you first need to install `gatsby-source-plugin`:
+6. Next in our stack comes Contentful. In order to add Contentful to your Gatsby project you first need to install `gatsby-source-plugin`:
 
-    ```\
-    npm install gatsby-source-plugin\
+    ```
+    npm install gatsby-source-plugin
     ```
 
-7.  Get the credentials from your Contentful space, and add the plugin in your `gatsby-config.js` file. (Excellent [guidance for setting up Contentful + Gatsby](https://www.gatsbyjs.com/guides/contentful/) is already detailed in the Gatsby docs, so we won't go into that here).
+7. Get the credentials from your Contentful space, and add the plugin in your `gatsby-config.js` file. (Excellent [guidance for setting up Contentful + Gatsby](https://www.gatsbyjs.com/guides/contentful/) is already detailed in the Gatsby docs, so we won't go into that here).
 
-8.  _Just kidding, there is no step eight. Seven steps is enough!_ I don't know about you, but there is no way I manage to get through this process each time without making a typo somewhere or forgetting one of the steps. I even forgot one small step when first typing out the above list, which is importing the tailwind.css file into your layout file.
+8. _Just kidding, there is no step eight. Seven steps is enough!_ I don't know about you, but there is no way I manage to get through this process each time without making a typo somewhere or forgetting one of the steps. I even forgot one small step when first typing out the above list, which is importing the tailwind.css file into your layout file.
 
 There are a few ways we could possibly avoid doing this manual process. One would be to create a boilerplate or a starter project and clone it with each new project. Unfortunately this then creates its own set of problems: first, it's a chore keeping starters up to date. Also, they only work well with fresh new projects. Even when they do work, starters can be very opinionated and force you to use extra stuff that you don't need.
 
