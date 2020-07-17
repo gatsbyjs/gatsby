@@ -13,9 +13,9 @@ const defaultExcludes = [
 
 const pluginOptions = Joi.object({
   plugins: Joi.array(),
-  output: Joi.string().default(`/sitemap.xml`),
+  output: Joi.string().default(`/`),
   createLinkInHead: Joi.boolean().default(true),
-  sitemapSize: Joi.number().default(45000), // default bassed on upstream "sitemap" plugin default, maybe need optimization
+  sitemapSize: Joi.number().default(45000), // default based on upstream "sitemap" plugin default, maybe need optimization
   query: Joi.string().default(`
   {
     site {
@@ -30,7 +30,7 @@ const pluginOptions = Joi.object({
       }
     }
   }`),
-  exclude: Joi.array()
+  excludes: Joi.array()
     .items(Joi.string(), Joi.object())
     .default(parent => {
       const configExclude = parent?.exclude

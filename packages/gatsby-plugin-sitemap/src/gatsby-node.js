@@ -22,7 +22,7 @@ exports.onPostBuild = async (
     output,
     sitemapSize,
     query,
-    exclude,
+    excludes,
     resolveSiteUrl,
     resolvePagePath,
     resolvePages,
@@ -40,16 +40,22 @@ exports.onPostBuild = async (
   const siteUrl = resolveSiteUrl(queryRecords)
 
   reporter.verbose(
-    `${reporterPrefix} Filtering ${allPages.length} pages based on ${exclude.length} excludes`
+    `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
   const filteredPages = allPages.filter(page => {
-    const result = !exclude.some(excluded =>
-      filterPages(page, excluded, {
-        minimatch,
-        withoutTrailingSlash,
-        resolvePagePath,
-      })
-    )
+    const result = !excludes.some(exclude => {
+      try {
+        return filterPages(page, exclude, {
+          minimatch,
+          withoutTrailingSlash,
+          resolvePagePath,
+        })
+      } catch (err) {
+        reporter.panic(
+          `${reporterPrefix} filering pages failed. If you've customized your query or excludes you may need to customize the "filterPages" function.`
+        )
+      }
+    })
 
     if (!result) {
       reporter.verbose(
