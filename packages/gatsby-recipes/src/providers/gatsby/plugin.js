@@ -166,7 +166,7 @@ const readConfigFile = async root => {
 }
 
 class MissingInfoError extends Error {
-  constructor(foo = "bar", ...params) {
+  constructor(foo = `bar`, ...params) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
     super(...params)
 
@@ -175,7 +175,7 @@ class MissingInfoError extends Error {
       Error.captureStackTrace(this, MissingInfoError)
     }
 
-    this.name = "MissingInfoError"
+    this.name = `MissingInfoError`
     // Custom debugging information
     this.foo = foo
     this.date = new Date()
@@ -184,7 +184,7 @@ class MissingInfoError extends Error {
 
 const create = async ({ root }, { name, options, key }) => {
   // TODO generalize this — it's for the demo.
-  if (options?.accessToken === "(Known after install)") {
+  if (options?.accessToken === `(Known after install)`) {
     throw new MissingInfoError({ name, options, key })
   }
   const configSrc = await readConfigFile(root)

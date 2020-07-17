@@ -1,6 +1,4 @@
 {
   "name": "test",
-  "scripts": {
-    "apple": "foot2"
-  }
+  "scripts": {}
 }

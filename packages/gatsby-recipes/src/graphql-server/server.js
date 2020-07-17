@@ -17,6 +17,7 @@ const { createServer } = require(`http`)
 const { interpret } = require(`xstate`)
 const pkgDir = require(`pkg-dir`)
 const cors = require(`cors`)
+const lodash = require(`lodash`)
 
 // Create a session id — mostly useful to tell the client when the server
 // has restarted
@@ -30,11 +31,16 @@ const SITE_ROOT = pkgDir.sync(process.cwd())
 const pubsub = new PubSub()
 const PORT = process.argv[2] || 4000
 
+let lastState = {}
 const emitUpdate = state => {
-  console.log(`emitting update. State:`, state.value)
-  pubsub.publish(`operation`, {
-    state: JSON.stringify(state),
-  })
+  const { lastEvent, ...cleanedState } = state
+  if (!lodash.isEqual(cleanedState, lastState)) {
+    pubsub.publish(`operation`, {
+      state: JSON.stringify(cleanedState),
+    })
+
+    lastState = cleanedState
+  }
 }
 
 // only one service can run at a time.
