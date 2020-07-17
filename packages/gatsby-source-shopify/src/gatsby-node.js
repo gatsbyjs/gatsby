@@ -28,14 +28,7 @@ import {
   SHOP_POLICY,
   PAGE,
 } from "./constants"
-import {
-  ARTICLES_QUERY,
-  BLOGS_QUERY,
-  COLLECTIONS_QUERY,
-  PRODUCTS_QUERY,
-  SHOP_POLICIES_QUERY,
-  PAGES_QUERY,
-} from "./queries"
+import { defaultQueries } from "./queries"
 
 export const sourceNodes = async (
   {
@@ -57,15 +50,6 @@ export const sourceNodes = async (
   }
 ) => {
   const client = createClient(shopName, accessToken, apiVersion)
-
-  const defaultQueries = {
-    articles: ARTICLES_QUERY,
-    blogs: BLOGS_QUERY,
-    collections: COLLECTIONS_QUERY,
-    products: PRODUCTS_QUERY,
-    shopPolicies: SHOP_POLICIES_QUERY,
-    pages: PAGES_QUERY,
-  }
 
   const queries = { ...defaultQueries, ...shopifyQueries }
 

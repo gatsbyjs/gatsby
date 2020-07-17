@@ -280,3 +280,12 @@ export const PAGES_QUERY = `
     }
   }
 `
+
+export const defaultQueries = {
+  articles: ARTICLES_QUERY,
+  blogs: BLOGS_QUERY,
+  collections: COLLECTIONS_QUERY,
+  products: PRODUCTS_QUERY,
+  shopPolicies: SHOP_POLICIES_QUERY,
+  pages: PAGES_QUERY,
+}
