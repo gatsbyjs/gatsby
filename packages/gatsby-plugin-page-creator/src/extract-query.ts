@@ -54,7 +54,7 @@ export function reverseLookupParams(
 }
 
 // Changes something like
-//   `/Users/site/src/pages/foo/{id}/{baz}`
+//   `/Users/site/src/pages/foo/{Model.id}/{Model.baz}`
 // to
 //   `id,baz`
 function extractUrlParamsForQuery(createdPath: string): string {
@@ -84,8 +84,8 @@ function extractUrlParamsForQuery(createdPath: string): string {
 }
 
 // pulls out nesting from file names with the special __ syntax
-// src/pages/{fields__baz}.js => `fields{baz}`
-// src/pages/{fields__(File)__baz}.js => `fields{... on File {baz}}`
+// src/pages/{Model.fields__baz}.js => `fields{baz}`
+// src/pages/{Model.fields__(File)__baz}.js => `fields{... on File {baz}}`
 function deriveNesting(part: string): string {
   if (part.includes(`__`)) {
     return part
