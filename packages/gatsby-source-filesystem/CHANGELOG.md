@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.19...gatsby-source-filesystem@2.3.20) (2020-07-17)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Removes erroneously added retries option ([#24899](https://github.com/gatsbyjs/gatsby/issues/24899)) ([63c9cfb](https://github.com/gatsbyjs/gatsby/commit/63c9cfb))
+- **gatsby-source-filesystem:** Support creating file nodes for paths containing folders ([#25687](https://github.com/gatsbyjs/gatsby/issues/25687)) ([4f8dab3](https://github.com/gatsbyjs/gatsby/commit/4f8dab3))
+
+### Features
+
+- **gatsby-source-filesystem:** allow adjusting `createRemoteFileNode` retry/timeout settings via env vars ([#24535](https://github.com/gatsbyjs/gatsby/issues/24535)) ([c08fa4a](https://github.com/gatsbyjs/gatsby/commit/c08fa4a))
+
 ## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.18...gatsby-source-filesystem@2.3.19) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-source-filesystem
