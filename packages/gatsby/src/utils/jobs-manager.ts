@@ -12,7 +12,7 @@ enum MESSAGE_TYPES {
   JOB_CREATED = `JOB_CREATED`,
   JOB_COMPLETED = `JOB_COMPLETED`,
   JOB_FAILED = `JOB_FAILED`,
-  JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`
+  JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`,
 }
 
 interface IBaseJob {
@@ -122,7 +122,7 @@ async function runLocalWorker<T>(
           workerFn({
             inputPaths: job.inputPaths,
             outputDir: job.outputDir,
-            args: job.args
+            args: job.args,
           } as InternalJob)
         )
       } catch (err) {
@@ -168,12 +168,12 @@ function runExternalWorker(job: InternalJob): Promise<any> {
 
   externalJobsMap.set(job.id, {
     job,
-    deferred
+    deferred,
   })
 
   process.send!({
     type: MESSAGE_TYPES.JOB_CREATED,
-    payload: job
+    payload: job,
   })
 
   return deferred.promise
@@ -245,7 +245,7 @@ export function createInternalJob(
   const inputPathsWithContentDigest = inputPaths.map((pth: string) => {
     return {
       path: convertPathsToAbsolute(pth),
-      contentDigest: createFileHash(pth)
+      contentDigest: createFileHash(pth),
     }
   })
 
@@ -260,8 +260,8 @@ export function createInternalJob(
       name: plugin.name,
       version: plugin.version,
       resolve: plugin.resolve,
-      isLocal: !plugin.resolve.includes(`/node_modules/`)
-    }
+      isLocal: !plugin.resolve.includes(`/node_modules/`),
+    },
   }
 
   // generate a contentDigest based on all parameters including file content
@@ -272,7 +272,7 @@ export function createInternalJob(
     ),
     outputDir: internalJob.outputDir,
     args: internalJob.args,
-    plugin: internalJob.plugin
+    plugin: internalJob.plugin,
   })
 
   return internalJob
@@ -302,7 +302,7 @@ export async function enqueueJob(job: InternalJob): Promise<object> {
   const deferred = pDefer<object>()
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
-    deferred
+    deferred,
   })
 
   try {
