@@ -8,6 +8,10 @@ const NODE_MUTATION_BATCH_TIMEOUT = 1000
 
 export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 
+/**
+ * This idle state also handles batching of node mutations and running of
+ * mutations when we first start it
+ */
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   id: `waitingMachine`,
   initial: `idle`,
@@ -46,6 +50,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       on: {
         // More mutations added to batch
         ADD_NODE_MUTATION: [
+          // You know the score: only run the first matching transition
           {
             // If this fills the batch then commit it
             actions: `addNodeMutation`,
@@ -54,7 +59,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
             target: `committingBatch`,
           },
           {
-            // otherwise just add it to the batch
+            // ...otherwise just add it to the batch
             actions: `addNodeMutation`,
           },
         ],
@@ -79,6 +84,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       },
       invoke: {
         src: `runMutationBatch`,
+        // When we're done, clear the running batch ready for next time
         onDone: {
           actions: assign<IWaitingContext, any>({
             runningBatch: [],
@@ -89,6 +95,8 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
     },
     rebuild: {
       type: `final`,
+      // This is returned to the parent. The batch includes
+      // any mutations that arrived while we were running the other batch
       data: ({ nodeMutationBatch }): WaitingResult => {
         return { nodeMutationBatch }
       },

@@ -15,12 +15,20 @@ import { assertStore } from "../../utils/assert-store"
 import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
 
+/**
+ * These are the deferred redux actions sent from api-runner-node
+ * They may include a `resolve` prop (if they are createNode actions).
+ * If so, we resolve the promise when we're done
+ */
 export const callRealApi = (event: IMutationAction, store?: Store): void => {
   assertStore(store)
   const { type, payload, resolve } = event
   if (type in actions) {
+    // If this is a createNode action then this will be a thunk.
+    // No worries, we just dispatch it like any other
     const action = actions[type](...payload)
     const result = store.dispatch(action)
+    // Somebody may be waiting for this
     if (resolve) {
       resolve(result)
     }
@@ -31,6 +39,7 @@ export const callRealApi = (event: IMutationAction, store?: Store): void => {
 
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
+ * Instead of queueing, we call it right away
  */
 export const callApi: ActionFunction<IBuildContext, AnyEventObject> = (
   { store },
@@ -67,6 +76,9 @@ export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
   (_context, { data }): DataLayerResult => data
 )
 
+/**
+ * This spawns the service that listens to the `emitter` for various mutation events
+ */
 export const spawnMutationListener = assign<IBuildContext>({
   mutationListener: () => spawn(listenForMutations, `listen-for-mutations`),
 })

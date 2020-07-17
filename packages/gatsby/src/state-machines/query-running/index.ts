@@ -3,6 +3,10 @@ import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
 
+/**
+ * This is a child state machine, spawned to perform the query running
+ */
+
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
@@ -56,7 +60,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         },
       },
     },
-
+    // This waits for the jobs API to finish
     waitingForJobs: {
       invoke: {
         src: `waitUntilAllJobsComplete`,
@@ -69,6 +73,8 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     finishingUp: {
       on: {
         always: [
+          // If there's an array of transitions xstate only
+          // performs the first one that matches a guard condition
           {
             target: `done`,
             actions: `finishUpQueries`,
