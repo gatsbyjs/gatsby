@@ -4,8 +4,8 @@ describe(`gatsby config`, () => {
   it(`returns empty pathPrefix when not set`, async () => {
     const config = {}
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const { value } = await gatsbyConfigSchema.validate(config)
+    expect(value).toEqual(
       expect.objectContaining({
         pathPrefix: ``,
       })
@@ -18,8 +18,8 @@ describe(`gatsby config`, () => {
       assetPrefix: `https://cdn.example.com/`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const { value } = await gatsbyConfigSchema.validate(config)
+    expect(value).toEqual(
       expect.objectContaining({
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,
@@ -32,8 +32,8 @@ describe(`gatsby config`, () => {
       assetPrefix: `https://cdn.example.com/`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const { value } = await gatsbyConfigSchema.validate(config)
+    expect(value).toEqual(
       expect.objectContaining({
         assetPrefix: `https://cdn.example.com`,
       })
@@ -45,8 +45,8 @@ describe(`gatsby config`, () => {
       assetPrefix: `https://cdn.example.com/some/nested/path`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(expect.objectContaining(config))
+    const { value } = await gatsbyConfigSchema.validate(config)
+    expect(value).toEqual(expect.objectContaining(config))
   })
 
   it(`allows relative paths for url fields`, async () => {
@@ -55,8 +55,8 @@ describe(`gatsby config`, () => {
       assetPrefix: `https://cdn.example.com`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(expect.objectContaining(config))
+    const { value } = await gatsbyConfigSchema.validate(config)
+    expect(value).toEqual(expect.objectContaining(config))
   })
 
   it(`strips trailing slash and add leading slash to pathPrefix`, async () => {
@@ -65,8 +65,8 @@ describe(`gatsby config`, () => {
       assetPrefix: `https://cdn.example.com/`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const { value } = await gatsbyConfigSchema.validate(config)
+    expect(value).toEqual(
       expect.objectContaining({
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,
@@ -80,11 +80,8 @@ describe(`gatsby config`, () => {
       pathPrefix: `https://google.com`,
     }
 
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (err) {
-      expect(err.message).toMatchSnapshot()
-    }
+    const { error } = await gatsbyConfigSchema.validate(config)
+    expect(error?.message).toMatchSnapshot()
   })
 
   it(`throws when relative path used for both assetPrefix and pathPrefix`, async () => {
@@ -94,11 +91,8 @@ describe(`gatsby config`, () => {
       pathPrefix: `/blog`,
     }
 
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (err) {
-      expect(err.message).toMatchSnapshot()
-    }
+    const { error } = await gatsbyConfigSchema.validate(config)
+    expect(error?.message).toMatchSnapshot()
   })
 })
 
