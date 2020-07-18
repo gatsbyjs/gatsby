@@ -559,3 +559,12 @@ export default publicLoader
 export function getStaticQueryResults() {
   return instance.staticQueryDb
 }
+
+// separate export so it gets tree-shaken in production build
+export function processHotPageDataUpdate(pageData) {
+  // We don't need to update `pageDB` or `pageDataDb` because modules
+  // are not stored in page resources. This function only triggers fetching
+  // and updating modules store.
+
+  return instance.fetchModuleDependencies(pageData.moduleDependencies)
+}
