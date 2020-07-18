@@ -1,6 +1,7 @@
 import io from "socket.io-client"
 import { reportError, clearError } from "./error-overlay-handler"
 import normalizePagePath from "./normalize-page-path"
+import { processHotPageDataUpdate } from "./loader"
 
 let socket = null
 
@@ -46,6 +47,7 @@ export default function socketIo() {
         })
 
         socket.on(`message`, msg => {
+          let shouldEmit = true
           if (msg.type === `staticQueryResult`) {
             if (didDataChange(msg, staticQueryData)) {
               staticQueryData = {
@@ -55,9 +57,26 @@ export default function socketIo() {
             }
           } else if (msg.type === `pageQueryResult`) {
             if (didDataChange(msg, pageQueryData)) {
-              pageQueryData = {
-                ...pageQueryData,
-                [normalizePagePath(msg.payload.id)]: msg.payload.result,
+              if (msg.payload.result) {
+                const currentEntry =
+                  pageQueryData[normalizePagePath(msg.payload.id)]
+
+                // run `processPageData` if modules changed
+                if (
+                  !currentEntry ||
+                  JSON.stringify(currentEntry.moduleDependencies) !==
+                    JSON.stringify(msg.payload.result.moduleDependencies)
+                ) {
+                  shouldEmit = false
+                  processHotPageDataUpdate(msg.payload.result).then(() => {
+                    pageQueryData = {
+                      ...pageQueryData,
+                      [normalizePagePath(msg.payload.id)]: msg.payload.result,
+                    }
+
+                    ___emitter.emit(msg.type, msg.payload)
+                  })
+                }
               }
             }
           } else if (msg.type === `overlayError`) {
@@ -68,7 +87,7 @@ export default function socketIo() {
             }
           }
 
-          if (msg.type && msg.payload) {
+          if (msg.type && msg.payload && shouldEmit) {
             ___emitter.emit(msg.type, msg.payload)
           }
         })
