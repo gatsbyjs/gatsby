@@ -66,6 +66,10 @@ export default [
     value: `cypress`,
   },
   {
+    label: `Add WebdriverIO testing`,
+    value: `webdriverio`,
+  },
+  {
     label: `Add animated page transition support`,
     value: `animated-page-transitions`,
   },

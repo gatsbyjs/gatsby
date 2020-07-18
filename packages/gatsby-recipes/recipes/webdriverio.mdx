@@ -1,0 +1,84 @@
+With WebdriverIO you can test your Gatsby app in your browser or on a mobile device locally or in the cloud. It works seamlessly with Gatsby and comes with everything you need for reporting and integration to 3rd party services.
+
+First, we'll want to install a basic WebdriverIO setup.
+
+---
+
+<NPMPackage name="webdriverio" dependencyType="development" />
+<NPMPackage name="@wdio/cli" dependencyType="development" />
+<NPMPackage name="@wdio/sync" dependencyType="development" />
+<NPMPackage name="@wdio/mocha-framework" dependencyType="development" />
+<NPMPackage name="@wdio/local-runner" dependencyType="development" />
+<NPMPackage name="@wdio/spec-reporter" dependencyType="development" />
+<NPMPackage name="wdio-chromedriver-service" dependencyType="development" />
+<NPMPackage name="chromedriver" dependencyType="development" />
+<NPMPackage name="start-server-and-test" dependencyType="development" />
+
+---
+
+Great! You can always add additional reporters and services straight from the wdio CLI. Next, let's scaffold some boilerplate test and page object files.
+
+---
+
+<File
+ path="e2e/wdio.conf.js"
+ content={`https://gist.githubusercontent.com/christian-bromann/ee289959575cc6c831e8087796f6b7ea/raw/c5e26a80c2780ac4a5d32f4e9771e3f86549937d/wdio.conf.js`}
+/>
+
+<File
+ path="e2e/pageobjects/home.page.js"
+ content={`https://gist.githubusercontent.com/christian-bromann/ee289959575cc6c831e8087796f6b7ea/raw/c5e26a80c2780ac4a5d32f4e9771e3f86549937d/home.page.js`}
+/>
+
+<File
+ path="e2e/pageobjects/page.js"
+ content={`https://gist.githubusercontent.com/christian-bromann/ee289959575cc6c831e8087796f6b7ea/raw/c5e26a80c2780ac4a5d32f4e9771e3f86549937d/page.js`}
+/>
+
+---
+
+Cool cool! So we created a local `e2e` folder with a WebdriverIO config file and some page objects for our Gatsby app.
+
+---
+
+<File
+ path="e2e/specs/gatsby.e2e.js"
+ content={`https://gist.githubusercontent.com/christian-bromann/ee289959575cc6c831e8087796f6b7ea/raw/c5e26a80c2780ac4a5d32f4e9771e3f86549937d/gatsby.e2e.js`}
+/>
+
+---
+
+Our first test! You'll notice it's failing. This is intentional -- we'd like you to run the test and fix it. This raises a question -- how do you run a WebdriverIO test? Easy peasy.
+
+---
+
+<NPMScript
+  name="develop"
+  command="gatsby develop"
+/>
+
+<NPMScript
+  name="wdio:run"
+  command="wdio run ./e2e/wdio.conf.js"
+/>
+
+<NPMScript
+  name="test:e2e"
+  command="start-server-and-test develop http://localhost:8000 wdio:run"
+/>
+
+---
+
+Nifty! We've added two scripts:
+
+- `start-server-and-test`: This spins up a local Gatsby development server and "waits" until it's live so we can then run our tests
+- `test:e2e`: This is the command you'll use to run your tests.
+
+Let's give it a try. Run the following command in your terminal.
+
+npm run test:e2e
+
+Awesome! You are now ready to test your Gatsby on all browser or mobile devices.
+If you have questions feel free to join the [WebdriverIO community](https://gitter.im/webdriverio/webdriverio) for support.
+
+Happy testing!
