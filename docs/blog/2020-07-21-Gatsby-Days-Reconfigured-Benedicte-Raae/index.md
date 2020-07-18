@@ -3,10 +3,8 @@ date: 2020-07-16
 author: Michelle Gienow
 excerpt: "After learning that many existing menstrual cycle tracker apps were sharing user data with third parties, Benedicte Raae decided to build her own. In her Gatsby Days Reconfigured presentation, the co-founder and senior developer of Lilly Labs, shows how to build a secure progressive web app with Gatsby and Userbase for end to end encryption."
 tags:
-
 - security
 - gatsby-days
-
 ---
 
 Co-founder, Senior Developer, and Mom of Lilly Labs Benedicte Raae decided to make her own encrypted menstrual cycle app after learning that some of the cycle tracker apps on the market were sharing user data with third parties. Since even the “good” apps still left user data at least somewhat accessible -- to the product developers for example -- Benedicte wanted to make an app where even she, as creator, wouldn’t be able to view her users’ highly personal data.
