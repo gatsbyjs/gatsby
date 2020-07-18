@@ -6922,3 +6922,40 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://chetanblog.netlify.app/
+  repo: https://github.com/Ckbhatia/Ck-gatsby-blog
+  description: An attractive and full of features gatsby blog starter with ck newsletter integration. 
+  tags:
+    - Starter
+    - Subscribe
+    - Newsletter
+    - Blog
+    - SEO
+    - Markdown
+    - Contentful-CMS
+    - MDX
+    - React-icons
+    - Styling:Styled-components
+    - Styling:SCSS
+    - Mobile-support
+    - Dark-mode
+  features:
+    - Attractive layout
+    - Dark Mode
+    - Beautiful typography
+    - Code highlighting
+    - Minimal page designs
+    - Styled-component support
+    - Dark mode
+    - SEO friendly
+    - Optimized image rendering with gatsby-image
+    - Subscribe option
+    - Ck newsletter service integration
+    - Beautiful icons
+    - Contentful CMS support
+    - Markdown support
+    - Metadata support
+    - Filter by topics ( upcoming )
+    - Search articles ( upcoming )
+    - Pagination support ( upcoming )
+    - Mobile-Support
