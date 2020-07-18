@@ -1,0 +1,25 @@
+{
+  "name": "using-filbert",
+  "private": true,
+  "description": "Gatsby example site using using-filbert",
+  "author": "Kuldeep Keshwar <kuldeepkeshwar@gmail.com>",
+  "dependencies": {
+    "@filbert-js/core": "^0.0.7",
+    "gatsby-plugin-filbert": "^0.0.7",
+    "gatsby": "^2.23.12",
+    "gatsby-plugin-google-analytics": "^2.3.6",
+    "gatsby-plugin-offline": "^2.2.10",
+    "gatsby-plugin-react-helmet": "^3.3.6",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "start": "npm run develop"
+  }
+}
