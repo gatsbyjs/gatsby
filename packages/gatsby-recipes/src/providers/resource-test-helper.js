@@ -21,7 +21,7 @@ module.exports = async ({
     ...resourceSchema,
   })
   const validateResult = schema.validate(createResponse)
-  expect(validateResult.error).toBeNull()
+  expect(validateResult.error).toBeUndefined()
   expect(createResponse).toMatchSnapshot(`${resourceName} create`)
 
   // Test reading the resource
