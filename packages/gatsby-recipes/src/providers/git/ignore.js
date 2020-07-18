@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const singleTrailingNewline = require(`single-trailing-newline`)
 
 const getDiff = require(`../utils/get-diff`)

@@ -1,6 +1,6 @@
 const execa = require(`execa`)
 const _ = require(`lodash`)
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)

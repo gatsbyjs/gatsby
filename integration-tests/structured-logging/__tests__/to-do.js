@@ -9,7 +9,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { first, last } = require(`lodash`)
 // const { groupBy, filter } = require(`lodash`)
-const joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 // const { inspect } = require(`util`)
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
