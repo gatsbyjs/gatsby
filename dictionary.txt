@@ -1965,6 +1965,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck
