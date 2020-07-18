@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi"
+import Joi from "joi"
 
 // TODO: make serialize required in next major version bump
 const feed = Joi.object({

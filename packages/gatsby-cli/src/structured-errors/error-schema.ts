@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import { ILocationPosition, IStructuredError } from "./types"
 
 export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({

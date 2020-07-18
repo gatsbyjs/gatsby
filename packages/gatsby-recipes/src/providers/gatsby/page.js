@@ -1,4 +1,4 @@
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 const { getService } = require(`gatsby-core-utils/dist/service-lock`)
 const fetch = require(`node-fetch`)
 

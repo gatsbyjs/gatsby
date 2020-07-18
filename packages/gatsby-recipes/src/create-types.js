@@ -1,5 +1,5 @@
 const Joi2GQL = require(`./joi-to-graphql`)
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 const { GraphQLString, GraphQLObjectType, GraphQLList } = require(`graphql`)
 const _ = require(`lodash`)
 const { ObjectTypeComposer, schemaComposer } = require(`graphql-compose`)

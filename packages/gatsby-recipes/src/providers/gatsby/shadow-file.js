@@ -1,6 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 
 const { slash } = require(`gatsby-core-utils`)
 

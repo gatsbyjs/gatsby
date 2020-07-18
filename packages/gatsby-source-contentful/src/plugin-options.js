@@ -1,4 +1,4 @@
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 const chalk = require(`chalk`)
 
 const _ = require(`lodash`)

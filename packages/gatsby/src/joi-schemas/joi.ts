@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>

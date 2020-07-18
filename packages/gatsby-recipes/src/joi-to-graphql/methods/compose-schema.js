@@ -2,7 +2,7 @@
 
 const { GraphQLObjectType, GraphQLSchema } = require(`graphql`)
 const Hoek = require(`@hapi/hoek`)
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 const { typeDictionary } = require(`../helpers`)
 const internals = {}
 

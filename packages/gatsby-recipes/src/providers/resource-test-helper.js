@@ -1,5 +1,5 @@
 const resourceSchema = require(`./resource-schema`)
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 
 module.exports = async ({
   resourceModule: resource,

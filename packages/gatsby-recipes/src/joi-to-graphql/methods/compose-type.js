@@ -1,7 +1,7 @@
 "use strict"
 
 const Hoek = require(`@hapi/hoek`)
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 const { joiToGraphql } = require(`../helpers`)
 
 const internals = {}
