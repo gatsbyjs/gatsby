@@ -16,10 +16,10 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
+    "@hapi/joi": "^17.1.1",
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
-    "joi": "^14.3.1",
     "node-fetch": "^2.6.0"
   }
 }
