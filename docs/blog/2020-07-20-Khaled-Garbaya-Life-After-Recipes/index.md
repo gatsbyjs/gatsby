@@ -10,7 +10,7 @@ tags:
   - contentful
 ---
 
-The Gatsby ecosystem is prosperous with plugins and themes, which I love...But sometimes all this abundance can actually become a problem. For example, when trying to identify and assemble all the pieces needed to achieve your goal.
+The Gatsby ecosystem is prosperous with plugins and themes, which I love...But sometimes all this abundance can actually become a problem. For example, when trying to identify and assemble all the pieces needed to achieve your goals for a new project.
 
 Proper documentation helps to solve this but it is hard to keep docs always up to date. Also, this approach often means simply copy-pasting commands into your terminal without understanding what they do. The process becomes a bit tedious.
 
