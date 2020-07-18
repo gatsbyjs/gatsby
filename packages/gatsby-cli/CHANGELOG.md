@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.61...gatsby-cli@2.12.62) (2020-07-17)
+
+### Bug Fixes
+
+- **gatsby-cli:** enable inspect-brk & inspect options ([#24693](https://github.com/gatsbyjs/gatsby/issues/24693)) ([ddfff2a](https://github.com/gatsbyjs/gatsby/commit/ddfff2a))
+
 ## [2.12.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.60...gatsby-cli@2.12.61) (2020-07-15)
 
 **Note:** Version bump only for package gatsby-cli
