@@ -9,7 +9,6 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "@contentful/rich-text-types": "^13.4.0",
-    "@hapi/joi": "^17.1.1",
     "axios": "^0.19.2",
     "base64-img": "^1.0.4",
     "bluebird": "^3.7.2",
@@ -21,6 +20,7 @@
     "gatsby-plugin-sharp": "^2.6.19",
     "gatsby-source-filesystem": "^2.3.19",
     "is-online": "^8.4.0",
+    "joi": "^17.1.1",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
     "qs": "^6.9.4"
