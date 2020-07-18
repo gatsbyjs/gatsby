@@ -1,4 +1,4 @@
-title: "Gatsby Days Video: Gatsby + Userbase = Encrypted Menstrual Journal"
+title: "Gatsby Days Video: Building an Encrypted PWA with Gatsby + Userbase"
 date: 2020-07-16
 author: Michelle Gienow
 excerpt: "After learning that many existing menstrual cycle tracker apps were sharing user data with third parties, Benedicte Raae decided to build her own. In her Gatsby Days Reconfigured presentation, the co-founder and senior developer of Lilly Labs, shows how to build a secure progressive web app with Gatsby and Userbase for end to end encryption."
