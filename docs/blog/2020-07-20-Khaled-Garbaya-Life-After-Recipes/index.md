@@ -38,9 +38,7 @@ npm install tailwindcss gatsby-plugin-postcss
 
 ```javascript
 {
-  plugins:[
-      `gatsby-plugin-postcss`
-  ]
+  plugins: [`gatsby-plugin-postcss`]
 }
 ```
 
@@ -56,14 +54,12 @@ module.exports = {
 
 ```javascript
 module.exports = {
-  purge: [
-    './src/**/*.js',
-  ],
+  purge: ["./src/**/*.js"],
   theme: {
-    extend: {}
+    extend: {},
   },
   variants: {},
-  plugins: []
+  plugins: [],
 }
 ```
 
