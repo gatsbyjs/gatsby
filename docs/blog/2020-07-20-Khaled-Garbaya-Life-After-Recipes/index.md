@@ -1,5 +1,5 @@
 ---
-title: "Life Before 🤯 and After 😁 Gatsby Recipes"
+title: "Life Before and After Gatsby Recipes"
 date: 2020-07-20
 author: Khaled Garbaya
 excerpt: "Recipes are designed to make life as a Gatsby developer even easier. Here's the receipts: Let's take a look at how setting up a Contentful blog with TailwindCSS on Gatsby goes from seven steps to just one, thanks to Recipes."
