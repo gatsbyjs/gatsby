@@ -1547,6 +1547,17 @@
     "@hapi/hoek" "8.x.x"
     "@hapi/topo" "3.x.x"
 
+"@hapi/joi@^17.1.1":
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/@hapi/joi/-/joi-17.1.1.tgz#9cc8d7e2c2213d1e46708c6260184b447c661350"
+  integrity sha512-p4DKeZAoeZW4g3u7ZeRo+vCDuSDgSvtsB/NpfjXEHTUjSeINAi/RrVOWiVQ1isaoLzMvFEhe8n5065mQq1AdQg==
+  dependencies:
+    "@hapi/address" "^4.0.1"
+    "@hapi/formula" "^2.0.0"
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/pinpoint" "^2.0.0"
+    "@hapi/topo" "^5.0.0"
+
 "@hapi/pinpoint@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/pinpoint/-/pinpoint-2.0.0.tgz#805b40d4dbec04fc116a73089494e00f073de8df"
@@ -13708,17 +13719,6 @@ jimp@^0.10.2:
     "@jimp/types" "^0.10.3"
     core-js "^3.4.1"
     regenerator-runtime "^0.13.3"
-
-joi@^17.1.1:
-  version "17.1.1"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-17.1.1.tgz#b7339e8a509510a04ce9cdeccb35a6e188080287"
-  integrity sha512-fww3Ae9cRyj6yHy90cpxvL2y39V5JCY2KaXV3KfALhoFfFcAuyQBPOq+2q6EZ2QNMn1FhkDy+eRkGVG7J+BvyA==
-  dependencies:
-    "@hapi/address" "^4.0.1"
-    "@hapi/formula" "^2.0.0"
-    "@hapi/hoek" "^9.0.0"
-    "@hapi/pinpoint" "^2.0.0"
-    "@hapi/topo" "^5.0.0"
 
 jpeg-js@^0.3.4:
   version "0.3.6"
