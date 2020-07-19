@@ -1941,7 +1941,7 @@ trainings
 transactional
 transformational
 transformative
-transifex
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
