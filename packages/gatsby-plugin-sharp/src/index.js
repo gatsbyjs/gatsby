@@ -564,6 +564,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -699,6 +700,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,

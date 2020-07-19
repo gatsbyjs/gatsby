@@ -515,7 +515,21 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result).not.toEqual(result3)
     })
 
-    describe(`base64Width option`, () => {
+    // Matches base64 string in snapshot, converts to jpg to force use of bg
+    // Testing pixel colour for a match would be better
+    it(`should support option: 'background'`, async () => {
+      const result = await generateBase64({
+        file: getFileObject(path.join(__dirname, `images/alphatest.png`)),
+        args: {
+          background: `#ff0000`,
+          toFormatBase64: `jpg`,
+        },
+      })
+
+      expect(result).toMatchSnapshot()
+    })
+
+    describe(`should support option: 'base64Width'`, () => {
       // Uses 'generateBase64()` directly to avoid `base64()` caching affecting results.
       it(`should support a configurable width`, async () => {
         const result = await generateBase64({
@@ -538,7 +552,7 @@ describe(`gatsby-plugin-sharp`, () => {
         setPluginOptions(getPluginOptionsDefaults())
       })
 
-      it(`should prioritize a configurable width via arg over a configured default width`, async () => {
+      it(`width via arg overrides global default`, async () => {
         setPluginOptions({ base64Width: 32 })
 
         const result = await generateBase64({
@@ -551,7 +565,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
     })
 
-    describe(`toFormatBase64 & forceBase64Format options`, () => {
+    describe(`should support options: 'toFormatBase64' and 'forceBase64Format'`, () => {
       it(`should support a different image format for base64`, async () => {
         const result = await generateBase64({
           file,
@@ -576,7 +590,7 @@ describe(`gatsby-plugin-sharp`, () => {
         setPluginOptions(getPluginOptionsDefaults())
       })
 
-      it(`should prioritize a different base64 image format via arg over a configured default base64 image format`, async () => {
+      it(`image format via arg overrides global default`, async () => {
         setPluginOptions({ forceBase64Format: `png` })
         const result = await generateBase64({
           file,
