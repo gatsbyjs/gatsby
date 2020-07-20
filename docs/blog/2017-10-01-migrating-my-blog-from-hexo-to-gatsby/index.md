@@ -110,7 +110,7 @@ should have a file structure that looks something like this:
 
 Now run the Gatsby dev server to make sure everything works:
 
-```bash
+```shell
 npm run develop
 ```
 
@@ -168,7 +168,7 @@ excellent tool.
 Visit `http://localhost:8000/___graphql` in the browser and you'll be greeted
 with this lovely dev tool:
 
-![Gatsby Graphiql](https://dropsinn.s3.amazonaws.com/Screen%20Shot%202017-08-26%20at%201.31.08%20PM.png)
+![Gatsby GraphiQL](https://dropsinn.s3.amazonaws.com/Screen%20Shot%202017-08-26%20at%201.31.08%20PM.png)
 
 I recommend getting to know this tool if you're not already familiar. You will
 be coming back to this often to find the right query to pull data for your
@@ -180,7 +180,7 @@ If you play around with GraphiQL you'll notice there's not that much there.
 Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
-```bash
+```shell
 npm i --save gatsby-source-filesystem
 ```
 
@@ -229,7 +229,7 @@ Being able to query files is a big win, and if you have a directory of HTML
 files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
-```bash
+```shell
 npm i --save gatsby-transformer-remark
 ```
 
@@ -343,8 +343,8 @@ be intuitive.
   global
 
 The error handling is pretty straightforward, if a bit verbose, as long as you
-know what graphql responses look like. In case you didn't know, if you get an
-error in a graphql query the response will contain the `errors` array. We check
+know what GraphQL responses look like. In case you didn't know, if you get an
+error in a GraphQL query the response will contain the `errors` array. We check
 for this array and handle it accordingly.
 
 Now let's looks specifically at where we render a link for each blog post:
@@ -525,7 +525,7 @@ If you've worked with GraphQL before this should look very familiar. In fact, as
 you can see the string type is imported directly from GraphQL and not from
 Gatsby.
 
-You check the type of node and if it's a type youʼre interested in you
+You check the type of node and if it's a type you're interested in you
 resolve with some fields. Fields in GraphQL require a `type` and a way to
 `resolve` the value.
 

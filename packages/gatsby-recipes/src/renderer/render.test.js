@@ -181,6 +181,7 @@ test(`renders to a plan`, async () => {
   expect(result[1]).toMatchInlineSnapshot(`
     Object {
       "_stepMetadata": Object {},
+      "currentState": "gatsby@2.24.7",
       "describe": "Install gatsby@latest",
       "newState": "gatsby@latest",
       "resourceDefinitions": Object {

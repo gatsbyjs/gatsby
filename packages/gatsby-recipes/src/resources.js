@@ -1,5 +1,6 @@
 const fileResource = require(`./providers/fs/file`)
 const directoryResource = require(`./providers/fs/directory`)
+const gatsbyPageResource = require(`./providers/gatsby/page`)
 const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
 const gatsbyShadowFileResource = require(`./providers/gatsby/shadow-file`)
 const npmPackageResource = require(`./providers/npm/package`)
@@ -14,6 +15,7 @@ const contentfulEntry = require(`./providers/contentful/entry`)
 const componentResourceMapping = {
   File: fileResource,
   Directory: directoryResource,
+  GatsbyPage: gatsbyPageResource,
   GatsbyPlugin: gatsbyPluginResource,
   GatsbyShadowFile: gatsbyShadowFileResource,
   NPMPackage: npmPackageResource,

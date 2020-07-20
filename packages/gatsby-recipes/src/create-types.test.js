@@ -58,6 +58,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "File",
       },
+      "createGatsbyPage": Object {
+        "args": Object {
+          "gatsbyPage": Object {
+            "type": "GatsbyPageInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
+      },
       "createGatsbyPlugin": Object {
         "args": Object {
           "gatsbyPlugin": Object {
@@ -165,6 +174,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "File",
+      },
+      "destroyGatsbyPage": Object {
+        "args": Object {
+          "gatsbyPage": Object {
+            "type": "GatsbyPageInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
       },
       "destroyGatsbyPlugin": Object {
         "args": Object {
@@ -274,6 +292,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "File",
       },
+      "updateGatsbyPage": Object {
+        "args": Object {
+          "gatsbyPage": Object {
+            "type": "GatsbyPageInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
+      },
       "updateGatsbyPlugin": Object {
         "args": Object {
           "gatsbyPlugin": Object {
@@ -348,6 +375,10 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "ContentfulTypeConnection",
       },
+      "allGatsbyPage": Object {
+        "resolve": [Function],
+        "type": "GatsbyPageConnection",
+      },
       "allGatsbyPlugin": Object {
         "resolve": [Function],
         "type": "GatsbyPluginConnection",
@@ -417,6 +448,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "File",
+      },
+      "gatsbyPage": Object {
+        "args": Object {
+          "id": Object {
+            "type": "String",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbyPage",
       },
       "gatsbyPlugin": Object {
         "args": Object {

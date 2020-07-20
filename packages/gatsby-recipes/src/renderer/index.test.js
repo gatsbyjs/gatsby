@@ -74,6 +74,7 @@ describe(`renderer`, () => {
           "step": "1",
           "totalSteps": "1",
         },
+        "currentState": "gatsby@2.24.7",
         "describe": "Install gatsby@latest",
         "newState": "gatsby@latest",
         "resourceDefinitions": Object {

@@ -65,7 +65,7 @@ When a copywriter edits a headline in their CMS, a designer draws a button in th
 
 ### Build a better web
 
-Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and fun to work on (or not).
+Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and be fun to work on (or not).
 
 We believe that these qualities should be baked into frameworks, so they are delivered _by default_ rather than implemented on a per-site basis.
 
@@ -119,7 +119,7 @@ Many of Gatsby's key features emerged from conversation between contributors. If
 
 Open source is great for developers. It lets you:
 
-- create a body of work and experience that looks great on a resumé or CV
+- create a body of work and experience that looks great on a résumé or CV
 - build a referral network for paid work
 - turn it into a sustainable source of income
 
@@ -127,7 +127,7 @@ Open source is great for developers. It lets you:
 
 However, there are significant barriers to getting started in open source.
 
-First, **getting started in open source is daunting**. OSS projects can be intimidating. They often have thousands of lines of code and tons of required context and history. Navigating GitHub can be confusing. And there can be awkward social dynamics: imposter syndrome and lack of support.
+First, **getting started in open source is daunting**. OSS projects can be intimidating. They often have thousands of lines of code and tons of required context and history. Navigating GitHub can be confusing. And there can be awkward social dynamics: impostor syndrome and lack of support.
 
 Second, **open source is an expense not everyone can afford**. Potential contributors may not have free time to work on open source, and their jobs may not support contributing as part of our workload.
 

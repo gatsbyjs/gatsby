@@ -140,6 +140,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-plugin-react-helmet.mdx`,
     },
     {
+      label: `Add GitHub Pages deployment with Travis CI`,
+      value: `travis-deploy-github-pages.mdx`,
+    },
+    {
       label: `Add Headless WordPress integration`,
       value: `wordpress.mdx`,
     },
@@ -152,12 +156,16 @@ const RecipesList = ({ setRecipe }) => {
       value: `storybook-ts.mdx`,
     },
     {
-      label: `Add Ava`,
+      label: `Add AVA`,
       value: `ava.mdx`,
     },
     {
       label: `Add Preact`,
       value: `preact.mdx`,
+    },
+    {
+      label: `Add GitLab CI/CD`,
+      value: `gitlab-ci-cd.mdx`,
     },
   ]
 

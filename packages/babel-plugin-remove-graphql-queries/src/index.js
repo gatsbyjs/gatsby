@@ -155,7 +155,9 @@ function getGraphQLTag(path) {
   }
 
   const text = quasis[0].value.raw
-  const hash = murmurhash(text, `abc`)
+  const normalizedText = graphql.stripIgnoredCharacters(text)
+
+  const hash = murmurhash(normalizedText, `abc`)
 
   try {
     const ast = graphql.parse(text)
@@ -163,7 +165,7 @@ function getGraphQLTag(path) {
     if (ast.definitions.length === 0) {
       throw new EmptyGraphQLTagError(quasis[0].loc)
     }
-    return { ast, text, hash, isGlobal }
+    return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
     throw new GraphQLSyntaxError(text, err, quasis[0].loc)
   }
@@ -186,7 +188,8 @@ export default function ({ types: t }) {
         const nestedJSXVistor = {
           JSXIdentifier(path2) {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `build-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`) &&
               path2.parent.type !== `JSXClosingElement`
@@ -225,7 +228,8 @@ export default function ({ types: t }) {
         const nestedHookVisitor = {
           CallExpression(path2) {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `build-html`) &&
               isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
@@ -430,4 +434,5 @@ export {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  murmurhash,
 }

@@ -29,7 +29,7 @@ const createTypes = require(`../create-types`)
 const SITE_ROOT = pkgDir.sync(process.cwd())
 
 const pubsub = new PubSub()
-const PORT = process.argv[2] || 4000
+const PORT = process.argv[2] || 50400
 
 let lastState = {}
 const emitUpdate = state => {

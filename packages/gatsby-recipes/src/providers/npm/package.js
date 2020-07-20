@@ -4,6 +4,7 @@ const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)
+const resolveCwd = require(`resolve-cwd`)
 
 const packageMangerConfigKey = `cli.packageManager`
 const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
@@ -119,10 +120,8 @@ const create = async ({ root }, resource) => {
 const read = async ({ root }, id) => {
   let packageJSON
   try {
-    // TODO is there a better way to grab this? Can the position of `node_modules`
-    // change?
     packageJSON = JSON.parse(
-      await fs.readFile(path.join(root, `node_modules`, id, `package.json`))
+      await fs.readFile(resolveCwd(path.join(id, `package.json`)))
     )
   } catch (e) {
     return undefined
@@ -131,6 +130,7 @@ const read = async ({ root }, id) => {
   return {
     id: packageJSON.name,
     name: packageJSON.name,
+    description: packageJSON.description,
     version: packageJSON.version,
     _message: `Installed NPM package ${packageJSON.name}@${packageJSON.version}`,
   }
@@ -143,6 +143,7 @@ const schema = {
     `dependency`,
     `defaults to regular dependency`
   ),
+  description: Joi.string(),
   ...resourceSchema,
 }
 

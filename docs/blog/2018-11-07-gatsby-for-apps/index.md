@@ -157,7 +157,7 @@ These performance optimizations aren't opt-in; they're enabled, by default. As n
 
 ### Plugins and the Gatsby Ecosystem
 
-One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
+One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform YAML data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
 
 Let's take a look at that image functionality provided by one of our components, `gatsby-image`, in slightly more detail.
 
@@ -245,6 +245,6 @@ We can't wait to see what you build.
 [gatsby-source-wordpress]: /packages/gatsby-source-wordpress/
 [gatsby-transformer-yaml]: /packages/gatsby-transformer-yaml/
 [gatsby-plugins]: /plugins
-[gatsby-mail-app]: https://gatsby-mail.netlify.com
+[gatsby-mail-app]: https://gatsby-mail.netlify.app
 [gatsby-mail-repo]: https://github.com/dschau/gatsby-mail
 [apollo-boost]: https://github.com/apollographql/apollo-client/tree/master/packages/apollo-boost
