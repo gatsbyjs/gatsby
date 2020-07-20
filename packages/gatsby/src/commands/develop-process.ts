@@ -3,6 +3,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
+import inspector from "inspector"
 import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { initTracer } from "../utils/tracer"
@@ -20,7 +21,7 @@ import {
 import { startRedirectListener } from "../bootstrap/redirects-writer"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
-import { IProgram } from "./types"
+import { IProgram, IDebugInfo } from "./types"
 import {
   startWebpackServer,
   writeOutRequires,
@@ -84,7 +85,25 @@ process.on(`message`, msg => {
   }
 })
 
-module.exports = async (program: IProgram): Promise<void> => {
+interface IDevelopArgs extends IProgram {
+  debugInfo: IDebugInfo | null
+}
+
+const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (debugInfo.break) {
+    inspector.open(debugInfo.port, undefined, true)
+    // eslint-disable-next-line no-debugger
+    debugger
+  } else {
+    inspector.open(debugInfo.port)
+  }
+}
+
+module.exports = async (program: IDevelopArgs): Promise<void> => {
+  if (program.debugInfo) {
+    openDebuggerPort(program.debugInfo)
+  }
+
   const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
   // We want to prompt the feedback request when users quit develop

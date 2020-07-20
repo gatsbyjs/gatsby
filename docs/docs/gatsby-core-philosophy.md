@@ -65,7 +65,7 @@ When a copywriter edits a headline in their CMS, a designer draws a button in th
 
 ### Build a better web
 
-Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and fun to work on (or not).
+Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and be fun to work on (or not).
 
 We believe that these qualities should be baked into frameworks, so they are delivered _by default_ rather than implemented on a per-site basis.
 
