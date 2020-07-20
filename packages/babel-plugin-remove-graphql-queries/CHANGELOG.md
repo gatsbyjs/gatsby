@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.15](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.14...babel-plugin-remove-graphql-queries@2.9.15) (2020-07-20)
+
+### Features
+
+- **gatsby:** Load static query results in Gatsby runtime ([#25723](https://github.com/gatsbyjs/gatsby/issues/25723)) ([b00c3df](https://github.com/gatsbyjs/gatsby/commit/b00c3df))
+
 ## [2.9.14](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.13...babel-plugin-remove-graphql-queries@2.9.14) (2020-07-15)
 
 ### Features
