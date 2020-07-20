@@ -4,6 +4,8 @@ const CI_DEFINITIONS = [
   envFromCIAndCIName,
   getEnvDetect({ key: `NOW_BUILDER_ANNOTATE`, name: `ZEIT Now` }),
   getEnvDetect({ key: `NOW_REGION`, name: `ZEIT Now v1` }),
+  getEnvDetect({ key: `VERCEL_URL`, name: `Vercel Now` }),
+  getEnvDetect({ key: `NOW_BUILDER`, name: `Vercel Now` }),
   herokuDetect,
   getEnvFromCIInfo,
   envFromCIWithNoName,
