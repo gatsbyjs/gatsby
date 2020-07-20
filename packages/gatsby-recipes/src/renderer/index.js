@@ -4,7 +4,7 @@ const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
 const { RecipeStep, RecipeIntroduction } = require(`./step-component`)
 const Input = require(`./input`).default
-const { useInputByKey } = require(`./input-provider`)
+const { useInput, useInputByKey } = require(`./input-provider`)
 const { useResource } = require(`./resource-provider`)
 const { useProvider } = require(`./provider-provider`)
 
@@ -15,6 +15,7 @@ const scope = {
   RecipeStep,
   RecipeIntroduction,
   Input,
+  useInput,
   useInputByKey,
   useResource,
   useProvider,

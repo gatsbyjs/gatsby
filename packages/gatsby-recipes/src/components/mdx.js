@@ -1,6 +1,6 @@
 import React from "react"
 import { mdx as createElement, MDXProvider } from "@mdx-js/react"
-const { useInputByKey } = require(`../renderer/input-provider`)
+const { useInput, useInputByKey } = require(`../renderer/input-provider`)
 const { useResource } = require(`../renderer/resource-provider`)
 const { useProvider } = require(`../renderer/provider-provider`)
 const transformRecipeMDX = require(`../transform-recipe-mdx`)
@@ -18,6 +18,7 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
     React,
     components,
     props,
+    useInput,
     useInputByKey,
     useResource,
     useProvider,

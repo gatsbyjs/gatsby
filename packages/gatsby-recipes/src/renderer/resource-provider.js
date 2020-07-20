@@ -10,7 +10,7 @@ export const useResourceContext = () => {
 export const useResource = key => {
   const context = useContext(ResourceContext)
   const result = context.find(c => c.resourceDefinitions._key === key)
-  return result
+  return result || {}
 }
 
 export const useResourceByUUID = uuid => {

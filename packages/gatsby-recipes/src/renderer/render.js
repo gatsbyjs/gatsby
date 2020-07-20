@@ -12,7 +12,7 @@ import {
   useParentResourceContext,
 } from "./parent-resource-provider"
 import { useRecipeStep } from "./step-component"
-import { InputProvider, useInputByKey } from "./input-provider"
+import { InputProvider } from "./input-provider"
 import {
   ResourceProvider,
   setResources,
@@ -78,11 +78,9 @@ const ResourceComponent = ({
 }) => {
   const { mode } = useMode()
   const step = useRecipeStep()
-  const inputProps = useInputByKey(_uuid)
   const parentResourceContext = useParentResourceContext()
   const allResources = useResourceContext()
   const userProps = getUserProps(props)
-  const allProps = { ...props, ...inputProps }
 
   const setResources = useContext(SetResourcesProvider)
   // TODO add provider onto context
@@ -94,7 +92,7 @@ const ResourceComponent = ({
       _uuid,
       mode,
     },
-    allProps,
+    props,
     allResources,
     setResources
   )
@@ -104,7 +102,7 @@ const ResourceComponent = ({
       <Resource>
         {JSON.stringify({
           ...resourceData,
-          _props: allProps,
+          _props: props,
           _stepMetadata: step,
           _uuid,
           _type,
@@ -176,7 +174,7 @@ const handleResource = (
   }
 
   if (inFlightPromise) {
-    console.log(`already in flight`, key)
+    //console.log(`already in flight`, key)
     throw inFlightPromise
   }
 
