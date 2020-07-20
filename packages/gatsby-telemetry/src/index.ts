@@ -11,9 +11,11 @@ process.on(`exit`, flush)
 //
 // The data is also sent on exit.
 
-const interval = Number.isFinite(+process.env.TELEMETRY_BUFFER_INTERVAL)
-  ? Math.max(Number(process.env.TELEMETRY_BUFFER_INTERVAL), 1000)
-  : 10 * 60 * 1000 // 10 min
+const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
+const interval =
+  intervalDuration && Number.isFinite(+intervalDuration)
+    ? Math.max(Number(intervalDuration), 1000)
+    : 10 * 60 * 1000 // 10 min
 
 function tick(): void {
   flush()
@@ -38,7 +40,11 @@ module.exports = {
   addSiteMeasurement: (event, obj): void =>
     instance.addSiteMeasurement(event, obj),
   expressMiddleware: function (source: string) {
-    return function (req: express.Request, res: express.Response, next): void {
+    return function (
+      _req: express.Request,
+      _res: express.Response,
+      next
+    ): void {
       try {
         instance.trackActivity(`${source}_ACTIVE`)
       } catch (e) {

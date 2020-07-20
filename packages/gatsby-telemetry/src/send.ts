@@ -2,7 +2,7 @@ import { AnalyticsTracker } from "./telemetry"
 const instance = new AnalyticsTracker()
 
 function flush(): void {
-  instance.sendEvents().catch(e => {
+  instance.sendEvents().catch(_e => {
     // ignore
   })
 }

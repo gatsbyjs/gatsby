@@ -25,10 +25,10 @@ interface IOSInfo {
   nodeVersion: SemVer
   platform: string
   release: string
-  cpus: string
+  cpus: string | undefined
   arch: string
   ci: boolean | undefined
-  ciName?: string
+  ciName: string | null
   docker: boolean | undefined
 }
 

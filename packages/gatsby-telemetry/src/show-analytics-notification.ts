@@ -1,10 +1,10 @@
-import boxen, { BorderStyle } from "boxen"
+import boxen from "boxen"
 
 const defaultConfig = {
   padding: 1,
   borderColor: `blue`,
   borderStyle: `double`,
-}
+} as boxen.Options
 
 const defaultMessage =
   `Gatsby collects anonymous usage analytics\n` +
