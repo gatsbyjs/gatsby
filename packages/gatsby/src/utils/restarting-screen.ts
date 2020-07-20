@@ -103,6 +103,13 @@ export default html`
               socket.on("develop:needs-restart", () => {
                 socket.emit("develop:restart")
               })
+
+              socket.on("disconnect", () => {
+                console.warn(
+                  "[socket.io] Disconnected. Unable to perform health-check."
+                )
+                socket.close()
+              })
             })
         </script>
       </div>
