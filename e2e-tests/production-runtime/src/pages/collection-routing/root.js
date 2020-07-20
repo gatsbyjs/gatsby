@@ -24,7 +24,7 @@ export const query = graphql`
   query AllProducts {
     allProduct {
       nodes {
-        path(filePath: "collection-routing/{Product:name}")
+        path(filePath: "collection-routing/{Product.name}")
         name
       }
     }
