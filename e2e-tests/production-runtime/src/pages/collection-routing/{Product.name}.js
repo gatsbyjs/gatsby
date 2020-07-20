@@ -1,5 +1,5 @@
 import React from "react"
-import { unstable_createPagesFromData, Link, graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
 
