@@ -3,7 +3,7 @@ import boxen, { BorderStyle } from "boxen"
 const defaultConfig = {
   padding: 1,
   borderColor: `blue`,
-  borderStyle: BorderStyle.Double,
+  borderStyle: `double`,
 }
 
 const defaultMessage =

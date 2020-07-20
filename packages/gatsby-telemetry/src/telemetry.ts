@@ -32,7 +32,7 @@ interface IOSInfo {
   docker: boolean | undefined
 }
 
-interface IAggregateStats {
+export interface IAggregateStats {
   count: number
   min: number
   max: number
