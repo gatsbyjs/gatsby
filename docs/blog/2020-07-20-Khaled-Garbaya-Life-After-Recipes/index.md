@@ -2,7 +2,7 @@
 title: "Life Before and After Gatsby Recipes"
 date: 2020-07-20
 author: Khaled Garbaya
-excerpt: "Recipes are designed to make life as a Gatsby developer even easier, and Khaled Garbaya shows exactly how much. He walks through setting up a Contentful blog with TailwindCSS before and after Gatsby Recipes -- taking us from seven steps to just one."
+excerpt: "Gatsby Recipes are designed to make life as a Gatsby developer even easier, and Khaled Garbaya shows exactly how much. He walks through setting up a Contentful blog with TailwindCSS before and after Gatsby Recipes -- taking us from seven steps to just one."
 tags:
   - gatsby-recipes
   - mdx
@@ -18,9 +18,9 @@ Instead, wouldn't it be nice if you could make the setup instructions more inter
 
 Enter: Gatsby Recipes
 
-Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recipes/) to help automate everyday tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more routine tasks. With the release of this new feature, which is run from the CLI, Gatsby has created [25+ official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes) that you can explore, including Theme UI, Sass, Cypress, animated page transitions, and persistent layout components. And since then, because they are so useful but also fun and easy to create, the community has also been busy contributing all kinds of other useful Recipes.
+Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recipes/) to help automate everyday tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more routine tasks. With the release of this new feature, which is run from the CLI, Gatsby has created [25+ official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes) that you can explore, including Theme UI, Sass, Cypress, animated page transitions, and persistent layout components. And since then, because they are so useful but also fun and easy to create, the community has also been busy contributing all kinds of other useful Gatsby Recipes.
 
-## Gatsby, Before Recipes: A long and winding workflow
+## Gatsby, Before Gatsby Recipes: A long and winding workflow
 
 For a few years now, my go-to stack when building apps has been Gatsby as my primary framework, [TailwindCSS](https://tailwindcss.com/) for styling, and Contentful as the data source. (I know that there are many other styling options out there, [styled-components](https://styled-components.com/) is a great one, but I personally like to keep my CSS as low level as possible).
 
@@ -91,13 +91,13 @@ The project itself is excellent, but it still requires changing multiple files t
 
 Don't get me wrong -- starters are amazing. But they try to do too many jobs, setting up your Gatsby project while also acting as a demo for the setup. You can only use one starter in your project, so you also need to be lucky enough to find one that combines all the features you want -- without a whole bunch that you _don't_ want.
 
-## Gatsby, After Recipes: Three little words
+## Gatsby, After Gatsby Recipes: Three little words
 
-All those steps we just went through above? (Well, the ones we remembered, anyway). Now that Recipes are here, all that setup can be replaced with three little words: `gatsby recipe tailwind`.
+All those steps we just went through above? (Well, the ones we remembered, anyway). Now that Gatsby Recipes are here, all that setup can be replaced with three little words: `gatsby recipe tailwind`.
 
 https://twitter.com/kylemathews/status/1256258010717941760
 
-Recipes are written in MDX, which is a great choice. MDX makes Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to declare desired state.
+Gatsby Recipes are written in MDX, which is a great choice. MDX makes Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to declare desired state.
 
 You can combine recipes in your Gatsby project at any stage of the project. And, since this can be a pure configuration, it won't affect your work in progress!
 
@@ -105,4 +105,4 @@ Gatsby Recipes allow users like me to create even more advanced configuration, w
 
 ## Where to go from here
 
-If you want to get started with Gatsby Recipes, I created a [free 6 min egghead.io collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) to help you with that. Make sure to check out this helpful [Recipes blog post](/blog/2020-05-21-gatsby-recipes/) on the Gatsby site. If you're having fun with Recipes and would like to contribute, [visit the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to find out more.
+If you want to get started with Gatsby Recipes, I created a [free 6 min egghead.io collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) to help you with that. Make sure to check out this helpful [Gatsby Recipes blog post](/blog/2020-05-21-gatsby-recipes/) on the Gatsby site. If you're having fun with Gatsby Recipes and would like to contribute, [visit the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to find out more.
