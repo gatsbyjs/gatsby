@@ -6,7 +6,7 @@ Find the latest hardware and software requirements for building with Gatsby. Not
 
 ## Operating Systems
 
-- Mac OSX Sierra or later (10.12)
+- macOS Sierra or later (10.12)
 - Windows 10 ([setup instructions](/docs/gatsby-on-windows/))
 - Linux ([multiple distributions](/docs/gatsby-on-linux/))
 
@@ -18,7 +18,7 @@ This will be variable depending on the size of your site. Gatsby sites have been
 
 To develop with Gatsby, you'll need to install:
 
-- Node 10.13.0 (LTS) or higher
+- Node.js 10.13.0 (LTS) or higher
 - [npm](https://www.npmjs.com/) or [Yarn 1](https://classic.yarnpkg.com/lang/en/) package manager to install the [Gatsby CLI](/docs/gatsby-cli/) and site dependencies.
   - npm is recommended for most developers.
   - Yarn is used for authoring Gatsby themes.
