@@ -1,9 +1,10 @@
 import { AnalyticsTracker, IAggregateStats } from "./telemetry"
 import * as express from "express"
+import { createFlush } from "./create-flush"
 
 const instance = new AnalyticsTracker()
 
-const flush = require(`./flush`)(instance.isTrackingEnabled())
+const flush = createFlush(instance.isTrackingEnabled())
 
 process.on(`exit`, flush)
 
