@@ -93,10 +93,17 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
-    "testPathIgnorePatterns": ["/.cache/", "dist"],
+    "testPathIgnorePatterns": [
+      "/.cache/",
+      "dist"
+    ],
     "testEnvironment": "node"
   },
-  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
+  "keywords": [
+    "gatsby",
+    "gatsby-recipes",
+    "mdx"
+  ],
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
@@ -110,7 +117,8 @@
     "@mdx-js/runtime": "^2.0.0-next.3",
     "graphql": "^14.6.0",
     "property-information": "5.5.0",
-    "remark-mdx": "^2.0.0-next.3"
+    "remark-mdx": "^2.0.0-next.3",
+    "remark-mdxjs": "^2.0.0-next.3"
   },
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
@@ -118,7 +126,6 @@
     "prebuild": "rimraf dist",
     "prepare": "npm run build",
     "prewatch": "rimraf dist",
-    "watch": "npm run build:watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "npm run build:watch"
