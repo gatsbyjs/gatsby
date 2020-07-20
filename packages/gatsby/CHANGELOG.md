@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.5...gatsby@2.24.6) (2020-07-20)
+
+### Bug Fixes
+
+- **docs:** change LeKoArts to LekoArts ([#25843](https://github.com/gatsbyjs/gatsby/issues/25843)) ([724d717](https://github.com/gatsbyjs/gatsby/commit/724d717))
+
 ## [2.24.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.4...gatsby@2.24.5) (2020-07-20)
 
 **Note:** Version bump only for package gatsby
