@@ -1,18 +1,22 @@
-const uuidv4 = require(`uuid/v4`)
-const EventStorage = require(`./event-storage`)
-const { cleanPaths } = require(`./error-helpers`)
-const { isCI, getCIName } = require(`gatsby-core-utils`)
-const os = require(`os`)
-const { join, sep } = require(`path`)
-const isDocker = require(`is-docker`)
-const showAnalyticsNotification = require(`./showAnalyticsNotification`)
-const lodash = require(`lodash`)
-const dbEngine = `redux`
+import uuidV4 from "uuid/v4"
+import { isCI, getCIName } from "gatsby-core-utils"
 
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
 } from "./repository-id"
+import os from "os"
+
+import { join, sep } from "path"
+import isDocker from "is-docker"
+import { showAnalyticsNotification } from "./show-analytics-notification"
+import lodash from "lodash"
+
+// TODO convert to TypeScript
+const EventStorage = require(`./event-storage`)
+const { cleanPaths } = require(`./error-helpers`)
+
+const dbEngine = `redux`
 
 type UUID = string
 type SemVer = string | undefined
@@ -39,7 +43,7 @@ interface IAggregateStats {
   skewness: number
 }
 
-module.exports = class AnalyticsTracker {
+export class AnalyticsTracker {
   store = new EventStorage()
   debouncer = {}
   metadataCache = {}
@@ -75,7 +79,7 @@ module.exports = class AnalyticsTracker {
   getSessionId(): UUID {
     return (
       process.gatsbyTelemetrySessionId ||
-      (process.gatsbyTelemetrySessionId = uuidv4())
+      (process.gatsbyTelemetrySessionId = uuidV4())
     )
   }
 
@@ -86,7 +90,7 @@ module.exports = class AnalyticsTracker {
     return this.repositoryId
   }
 
-  getTagsFromEnv(): Record<string, any> {
+  getTagsFromEnv(): Record<string, unknown> {
     if (process.env.GATSBY_TELEMETRY_TAGS) {
       try {
         return JSON.parse(process.env.GATSBY_TELEMETRY_TAGS)
@@ -236,7 +240,7 @@ module.exports = class AnalyticsTracker {
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (!machineId) {
-      machineId = uuidv4()
+      machineId = uuidV4()
       this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
