@@ -15,9 +15,11 @@ export function getCollectionRouteParams(
     if (!part.startsWith(`{`)) return
 
     const key = part
-      .replace(`{`, ``)
-      .replace(/([a-zA-Z]+)\./, ``)
-      .replace(`}`, ``)
+      .replace(`{`, ``) // remove opening character
+      .replace(/([a-zA-Z]+)\./, ``) // remove model
+      .replace(`}`, ``) // remove closing character
+      .replace(/\.[a-z]+$/, ``) // remove optional file extension
+
     params[key] = urlParts[i]
   })
 

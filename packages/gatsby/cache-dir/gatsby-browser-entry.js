@@ -98,7 +98,7 @@ function graphql() {
   )
 }
 
-function unstable_collectionQuery() {
+function unstable_collectionGraphql() {
   // TODO: Strip this out of the component and throw error if it gets called
   return null
 }
@@ -120,5 +120,5 @@ export {
   useStaticQuery,
   prefetchPathname,
   // Experimental API
-  unstable_collectionQuery,
+  unstable_collectionGraphql,
 }
