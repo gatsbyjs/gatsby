@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.4...gatsby@2.24.5) (2020-07-20)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.24.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.3...gatsby@2.24.4) (2020-07-17)
 
 ### Bug Fixes
@@ -4054,7 +4058,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Add support for extra connection string params in gatsby-source-mongodb (#5972) @lcostea
 - Add support for additional options supplied to gatsby-plugin-styled-components (#5240) @nihgwu
 - Add guide on debugging the Gatsby build process (#6369) @pieh
-- Add docs on unit testing, Cypress, react-testing-library and testing CSS-in-JS (#6678, #6708) @ascorbic, @LeKoArts
+- Add docs on unit testing, Cypress, react-testing-library and testing CSS-in-JS (#6678, #6708) @ascorbic, @LekoArts
 - Redesigned docs navigation and expanded docs topics (#6245, #6610) @shannonbux, @fk
 - Allow plugins to override core prefetching behavior (#5320) @KyleAMathews
 - Add gatsby-codemods package to assist v1 -> v2 transition (#6122) @jquense

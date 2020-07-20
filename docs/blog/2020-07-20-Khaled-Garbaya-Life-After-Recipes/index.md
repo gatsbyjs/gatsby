@@ -2,7 +2,7 @@
 title: "Life Before and After Gatsby Recipes"
 date: 2020-07-20
 author: Khaled Garbaya
-excerpt: "Recipes are designed to make life as a Gatsby developer even easier. Here's the receipts: Let's take a look at how setting up a Contentful blog with TailwindCSS on Gatsby goes from seven steps to just one, thanks to Recipes."
+excerpt: "Recipes are designed to make life as a Gatsby developer even easier, and Khaled Garbaya shows exactly how much. He walks through setting up a Contentful blog with TailwindCSS before and after Gatsby Recipes -- taking us from seven steps to just one."
 tags:
   - gatsby-recipes
   - mdx
@@ -18,7 +18,7 @@ Instead, wouldn't it be nice if you could make the setup instructions more inter
 
 Enter: Gatsby Recipes
 
-Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recipes/) to help automate everyday tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more routine tasks. With the release of this new feature, which is run from the CLI, Gatsby has created [25+ official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes)that you can explore, including Theme UI, Sass, Cypress, animated page transitions, and persistent layout components. And since then, because they are so useful but also fun and easy to create, the community has also been busy contributing all kinds of other useful Recipes.
+Gatsby Recipes [launched just recently](/blog/2020-04-15-announcing-gatsby-recipes/) to help automate everyday tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more routine tasks. With the release of this new feature, which is run from the CLI, Gatsby has created [25+ official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes) that you can explore, including Theme UI, Sass, Cypress, animated page transitions, and persistent layout components. And since then, because they are so useful but also fun and easy to create, the community has also been busy contributing all kinds of other useful Recipes.
 
 ## Gatsby, Before Recipes: A long and winding workflow
 
@@ -79,7 +79,7 @@ module.exports = {
 
 7. Get the credentials from your Contentful space, and add the plugin in your `gatsby-config.js` file. (Excellent [guidance for setting up Contentful + Gatsby](https://www.gatsbyjs.com/guides/contentful/) is already detailed in the Gatsby docs, so we won't go into that here).
 
-8. _Just kidding, there is no step eight. Seven steps is enough!_ I don't know about you, but there is no way I manage to get through this process each time without making a typo somewhere or forgetting one of the steps. I even forgot one small step when first typing out the above list, which is importing the tailwind.css file into your layout file.
+8. _Just kidding, there is no step eight. Seven steps is enough!_ I don't know about you, but there is no way I manage to get through this process each time without making a typo somewhere or forgetting one of the steps. I even forgot one small step when first typing out the above list, which is importing the `tailwind.css` file into your layout file.
 
 There are a few ways we could possibly avoid doing this manual process. One would be to create a boilerplate or a starter project and clone it with each new project. Unfortunately this then creates its own set of problems: first, it's a chore keeping starters up to date. Also, they only work well with fresh new projects. Even when they do work, starters can be very opinionated and force you to use extra stuff that you don't need.
 
@@ -93,7 +93,7 @@ Don't get me wrong -- starters are amazing. But they try to do too many jobs, se
 
 ## Gatsby, After Recipes: Three little words
 
-All those steps we just went through above? (Well, the ones we remembered, anyway). Now that Recipes are here, all that setup can be replaced with three little words: `gatsby recipe contentful`.
+All those steps we just went through above? (Well, the ones we remembered, anyway). Now that Recipes are here, all that setup can be replaced with three little words: `gatsby recipe tailwind`.
 
 https://twitter.com/kylemathews/status/1256258010717941760
 

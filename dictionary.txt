@@ -1199,7 +1199,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
@@ -1454,7 +1453,6 @@ PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
@@ -1941,7 +1939,7 @@ trainings
 transactional
 transformational
 transformative
-transifex
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -1965,6 +1963,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck

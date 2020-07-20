@@ -13,6 +13,7 @@ const knownOptions = {
     legacyCookieDomain: `string`,
     legacyHistoryImport: `boolean`,
     allowLinker: `boolean`,
+    storage: `string`,
   },
   general: {
     allowAdFeatures: `boolean`,
