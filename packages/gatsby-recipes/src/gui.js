@@ -6,6 +6,8 @@ const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
 const remove = require(`unist-util-remove`)
 const { Global } = require(`@emotion/core`)
+const ws = require(`ws`)
+const fetch = require(`isomorphic-fetch`)
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
 import MDX from "./components/mdx"
@@ -364,7 +366,8 @@ const subscriptionClient = new SubscriptionClient(
   `ws://localhost:${graphqlPort}/graphql`,
   {
     reconnect: true,
-  }
+  },
+  ws
 )
 
 let isSubscriptionConnected = false

@@ -18,9 +18,9 @@
     "@emotion/styled": "^10.0.14",
     "@hapi/hoek": "8.x.x",
     "@hapi/joi": "^15.1.1",
-    "@mdx-js/mdx": "^2.0.0-next.1",
-    "@mdx-js/react": "^2.0.0-next.1",
-    "@mdx-js/runtime": "^2.0.0-next.1",
+    "@mdx-js/mdx": "^2.0.0-next.3",
+    "@mdx-js/react": "^2.0.0-next.3",
+    "@mdx-js/runtime": "^2.0.0-next.3",
     "acorn": "^7.2.0",
     "acorn-jsx": "^5.2.0",
     "ansi-html": "^0.0.7",
@@ -68,8 +68,8 @@
     "react-circular-progressbar": "^2.0.0",
     "react-icons": "^3.0.1",
     "react-reconciler": "^0.25.1",
-    "remark-mdx": "^2.0.0-next.1",
-    "remark-mdxjs": "next",
+    "remark-mdx": "^2.0.0-next.3",
+    "remark-mdxjs": "^2.0.0-next.3",
     "remark-parse": "^6.0.3",
     "remark-stringify": "^8.0.0",
     "semver": "^7.3.2",
@@ -107,12 +107,12 @@
     "directory": "packages/gatsby-recipes"
   },
   "resolutions": {
-    "@mdx-js/mdx": "^2.0.0-next.1",
-    "@mdx-js/react": "^2.0.0-next.1",
-    "@mdx-js/runtime": "^2.0.0-next.1",
+    "@mdx-js/mdx": "^2.0.0-next.3",
+    "@mdx-js/react": "^2.0.0-next.3",
+    "@mdx-js/runtime": "^2.0.0-next.3",
     "graphql": "^14.6.0",
     "property-information": "5.5.0",
-    "remark-mdx": "^2.0.0-next.1"
+    "remark-mdx": "^2.0.0-next.3"
   },
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",

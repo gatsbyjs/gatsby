@@ -3,7 +3,7 @@ require(`dotenv`).config()
 const express = require(`express`)
 const chokidar = require(`chokidar`)
 const graphqlHTTP = require(`express-graphql`)
-const uuid = require(`uuid`)
+const { v4: uuidv4 } = require(`uuid`)
 const {
   GraphQLSchema,
   GraphQLObjectType,
@@ -21,7 +21,7 @@ const lodash = require(`lodash`)
 
 // Create a session id — mostly useful to tell the client when the server
 // has restarted
-const sessionId = uuid()
+const sessionId = uuidv4()
 
 const recipeMachine = require(`../recipe-machine`)
 const createTypes = require(`../create-types`)
