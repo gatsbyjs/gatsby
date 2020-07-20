@@ -17,25 +17,34 @@ jest.mock(`devcert`, () => {
   }
 })
 
-const getDevCert = require(`devcert`).certificateFor
-const reporter = require(`gatsby-cli/lib/reporter`)
-const getSslCert = require(`../get-ssl-cert`)
+import { certificateFor as getDevCert } from "devcert"
+import reporter from "gatsby-cli/lib/reporter"
+import { getSslCert, IGetSslCertArgs } from "../get-ssl-cert"
 
 describe(`gets ssl certs`, () => {
   beforeEach(() => {
+    // @ts-ignore
     reporter.panic.mockClear()
+    // @ts-ignore
     reporter.info.mockClear()
+    // @ts-ignore
     getDevCert.mockClear()
   })
+
   describe(`Custom SSL certificate`, () => {
-    it.each([[{ certFile: `foo` }], [{ keyFile: `bar` }]])(
+    it.each([
+      { name: ``, directory: ``, certFile: `foo` },
+      { name: ``, directory: ``, keyFile: `bar` },
+    ])(
       `panic if cert and key are not both included`,
-      args => {
+      (args: IGetSslCertArgs): void => {
         getSslCert(args)
 
+        // @ts-ignore
         expect(reporter.panic.mock.calls).toMatchSnapshot()
       }
     )
+
     it(`loads a cert relative to a directory`, () => {
       expect(
         getSslCert({
@@ -59,7 +68,7 @@ describe(`gets ssl certs`, () => {
   })
   describe(`automatic SSL certificate`, () => {
     it(`sets up dev cert`, () => {
-      getSslCert({ name: `mock-cert` })
+      getSslCert({ name: `mock-cert`, directory: `` })
       expect(getDevCert).toBeCalledWith(`mock-cert`, {
         getCaPath: true,
         skipCertutilInstall: false,
@@ -67,13 +76,17 @@ describe(`gets ssl certs`, () => {
           getWindowsEncryptionPassword: expect.any(Function),
         },
       })
+
+      // @ts-ignore
       expect(reporter.info.mock.calls).toMatchSnapshot()
     })
     it(`panics if certificate can't be created`, () => {
+      // @ts-ignore
       getDevCert.mockImplementation(() => {
         throw new Error(`mock error message`)
       })
-      getSslCert({ name: `mock-cert` })
+      getSslCert({ name: `mock-cert`, directory: `` })
+      // @ts-ignore
       expect(reporter.panic.mock.calls).toMatchSnapshot()
     })
   })

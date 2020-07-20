@@ -11,7 +11,7 @@ import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
-import getSslCert from "../utils/get-ssl-cert"
+import { getSslCert } from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
 
@@ -197,13 +197,17 @@ module.exports = async (program: IProgram): Promise<void> => {
       )
     }
 
-    program.ssl = await getSslCert({
+    const ssl = await getSslCert({
       name: sslHost,
       caFile: program[`ca-file`],
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
     })
+
+    if (ssl) {
+      program.ssl = ssl
+    }
   }
 
   // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure

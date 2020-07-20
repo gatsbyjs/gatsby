@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.26...gatsby-source-contentful@2.3.27) (2020-07-17)
+
+### Features
+
+- **gatsby-source-contentful:** Give "Asset" the same Sys fields as "Entry" ([#25030](https://github.com/gatsbyjs/gatsby/issues/25030)) ([067468a](https://github.com/gatsbyjs/gatsby/commit/067468a))
+
 ## [2.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.25...gatsby-source-contentful@2.3.26) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-source-contentful

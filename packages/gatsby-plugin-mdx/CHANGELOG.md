@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.26...gatsby-plugin-mdx@1.2.27) (2020-07-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Specify new minimum peerDep version for MDX ([#25798](https://github.com/gatsbyjs/gatsby/issues/25798)) ([ab5f80a](https://github.com/gatsbyjs/gatsby/commit/ab5f80a)), closes [#25437](https://github.com/gatsbyjs/gatsby/issues/25437) [#25691](https://github.com/gatsbyjs/gatsby/issues/25691)
+
+### Performance Improvements
+
+- **gatsby-plugin-mdx:** drop another babel step during sourcing ([#25757](https://github.com/gatsbyjs/gatsby/issues/25757)) ([6d0c791](https://github.com/gatsbyjs/gatsby/commit/6d0c791))
+
 ## [1.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.25...gatsby-plugin-mdx@1.2.26) (2020-07-15)
 
 ### Performance Improvements

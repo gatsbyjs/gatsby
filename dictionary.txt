@@ -97,7 +97,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -1985,6 +1984,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
@@ -2091,11 +2091,12 @@ webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest
@@ -2120,7 +2121,6 @@ wireframe-level
 Wirth
 Wiseman
 wishlist
-with-layout2
 with-navigation2
 Woah
 WooCommerce
