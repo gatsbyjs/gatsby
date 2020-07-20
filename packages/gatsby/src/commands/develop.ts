@@ -168,7 +168,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
   const [statusServerPort, developPort] = await Promise.all([
-    getRandomPort(),
+    getRandomPort(program.statusPort),
     getRandomPort(),
   ])
 
