@@ -3,7 +3,7 @@ require(`dotenv`).config()
 const express = require(`express`)
 const chokidar = require(`chokidar`)
 const graphqlHTTP = require(`express-graphql`)
-const { v4: uuidv4 } = require(`uuid`)
+const { v4: uuidv4 } = require("uuid")
 const {
   GraphQLSchema,
   GraphQLObjectType,

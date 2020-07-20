@@ -6,7 +6,7 @@ const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
 const remove = require(`unist-util-remove`)
 const { Global } = require(`@emotion/core`)
-const ws = require(`ws`)
+// const ws = require(`ws`)
 const fetch = require(`isomorphic-fetch`)
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
@@ -356,7 +356,7 @@ const removeJsx = () => tree => {
 const recipe = `./test.mdx`
 // recipe = `jest.mdx`,
 // recipe,
-const graphqlPort = 4000
+const graphqlPort = 50400
 const projectRoot = PROJECT_ROOT
 
 const API_ENDPOINT = `http://localhost:${graphqlPort}`
@@ -366,8 +366,8 @@ const subscriptionClient = new SubscriptionClient(
   `ws://localhost:${graphqlPort}/graphql`,
   {
     reconnect: true,
-  },
-  ws
+  }
+  // ws
 )
 
 let isSubscriptionConnected = false
