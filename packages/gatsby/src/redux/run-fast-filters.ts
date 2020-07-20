@@ -420,7 +420,7 @@ function convertAndApplyFastFilters(
   if (firstOnly) {
     return []
   }
-  return null
+  return []
 }
 
 function filterToStats(
