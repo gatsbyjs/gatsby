@@ -14,14 +14,15 @@ const lazyLoadQueue = []
 
 module.exports = constructor => {
   let target
-  const { name, args, resolve, description } = constructor._meta[0]
+  const joiDescription = constructor.describe()
+  const { name, args, resolve, description } = joiDescription.metas[0]
 
   Hoek.assert(
-    Hoek.reach(constructor, `_inner.children.length`) > 0,
+    Object.keys(joiDescription.keys).length > 0,
     `Joi object must have at least 1 key`
   )
 
-  const compiledFields = internals.buildFields(constructor._inner.children)
+  const compiledFields = internals.buildFields(joiDescription.keys)
 
   if (lazyLoadQueue.length) {
     target = new GraphQLObjectType({
