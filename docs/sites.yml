@@ -11471,3 +11471,14 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+  - title: https://claudio.dance/
+  url: https://claudio.dance/
+  main_url: https://claudio.dance/
+  description: Claudio is a Milan based Graphic Designer and Dancer.
+  categories:
+    - Agency
+    - Portfolio
+  built_by: mosne
+  built_by_url: https://mosne.it/
+  featured: false
+  
