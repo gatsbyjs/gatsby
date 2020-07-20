@@ -6938,6 +6938,7 @@
     - Show live Storybook components with a shortcode
     - Flexible code syntax highlighting using PrismJS
     - Theming using config-based Theme UI
+    - Support for modes - light/dark built-in
     - Image and file support in Markdown
     - Shortcodes for wrapping components and building tab links
     - Gatsby shadowing for Gatsby Theme Emulsify components
