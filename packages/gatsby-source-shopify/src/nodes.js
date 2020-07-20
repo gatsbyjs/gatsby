@@ -14,6 +14,7 @@ import {
   PRODUCT_METAFIELD,
   PRODUCT_VARIANT_METAFIELD,
   SHOP_POLICY,
+  SHOP_DETAILS,
   PAGE,
 } from "./constants"
 
@@ -173,5 +174,7 @@ export const ProductVariantMetafieldNode = _imageArgs =>
   createNodeFactory(PRODUCT_VARIANT_METAFIELD)
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
+
+export const ShopDetailsNode = createNodeFactory(SHOP_DETAILS)
 
 export const PageNode = createNodeFactory(PAGE)
