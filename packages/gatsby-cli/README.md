@@ -88,6 +88,8 @@ development server.
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
 
+`--status-port` or `env.STATUS_PORT` allows for setting the websocket port used for monitoring when the browser should prompt the user to restart the develop process. You only need to set this in environments where a randomized port is not feasible, for example when using Docker for development.
+
 ### `build`
 
 At the root of a Gatsby app run `gatsby build` to do a production build of a site.
