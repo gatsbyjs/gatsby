@@ -1454,7 +1454,6 @@ PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
