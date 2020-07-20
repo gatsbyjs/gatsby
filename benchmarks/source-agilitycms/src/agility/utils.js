@@ -1,9 +1,3 @@
-// const getDynamicPageItem = ({ contentID, agilityItem }) => {
-// 	if (contentID > 0 && agilityItem && agilityItem.itemJson) {
-// 		return JSON.parse(agilityItem.itemJson);
-// 	}
-// }
-
 const buildPageViewModel = ({ pageContext, data }) => {
 
 	const page = JSON.parse(data.agilitypage.pageJson);
