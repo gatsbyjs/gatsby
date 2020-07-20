@@ -1,10 +1,10 @@
-const boxen = require(`boxen`)
+import boxen from "boxen"
 
 const defaultConfig = {
   padding: 1,
   borderColor: `blue`,
   borderStyle: `double`,
-}
+} as boxen.Options
 
 const defaultMessage =
   `Gatsby collects anonymous usage analytics\n` +
@@ -15,14 +15,10 @@ const defaultMessage =
 
 /**
  * Analytics notice for the end-user
- * @param {Object} config - The configuration that boxen accepts. https://github.com/sindresorhus/boxen#api
- * @param {string} message - Message shown to the end-user
  */
-const showAnalyticsNotification = (
-  config = defaultConfig,
-  message = defaultMessage
-) => {
+export function showAnalyticsNotification(
+  config: boxen.Options = defaultConfig,
+  message: string = defaultMessage
+): void {
   console.log(boxen(message, config))
 }
-
-module.exports = showAnalyticsNotification
