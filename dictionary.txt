@@ -1199,7 +1199,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
