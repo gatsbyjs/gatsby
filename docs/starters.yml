@@ -6922,3 +6922,25 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://writershowcase.netlify.app/
+  repo: https://github.com/willjw3/gatsby-starter-writer-showcase
+  description: Writer Showcase is a Gatsby Starter blog template created with writers in mind, but really, anyone can use it.  
+  tags:
+    - Portfolio
+    - Blog
+    - SEO
+    - Markdown
+    - Styling:SCSS
+    - pagination
+    - NetlifyCMS
+  features:
+    - Ready to go - Blog author name, author image, etc,... can be easily added using a config file
+    - Includes Netlify CMS. Users can log in to an admin page and easily create a blog post with a nice, simple user interface
+    - Blog posts created as markdown files
+    - Gatsby v.2
+    - React v.16.12.
+    - Mobile responsive
+    - Pagination
+    - Minimalist design makes it highly modifiable
+    - SEO component for use in pages so search engines can find them
+    - Style with Sass (SCSS)
