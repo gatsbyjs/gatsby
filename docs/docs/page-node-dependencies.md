@@ -2,13 +2,13 @@
 title: Page -> Node Dependency Tracking
 ---
 
-Gatsby keeps a record of used nodes for each query result. This makes it possible to cache and reuse results from previous runs if used nodes didn't change and conversely is a mechanism used to determine which query results are stale and need to be rerun.
+Gatsby keeps a record of used nodes for each query result. This makes it possible to cache and reuse results from previous runs if used nodes didn't change and, conversely, is used to determine which query results are stale and need to be rerun.
 
 ## How dependencies are recorded
 
 ### `CREATE_COMPONENT_DEPENDENCY` action and `createPageAction` action creator
 
-Recording of Page -> Node dependencies are handled by the internal `CREATE_COMPONENT_DEPENDENCY` action. It takes the `path` (page path for page queries or internal id for static queries), and either a `nodeId`, or `connection`.
+The internal `CREATE_COMPONENT_DEPENDENCY` action handles the recording of Page -> Node dependencies. It takes the `path` (page path for page queries or internal id for static queries), and either a `nodeId`, or `connection`.
 
 Passing `nodeId` tells Gatsby that the page depends specifically on this node. So, if the node is changed, then the page's query needs to be re-executed.
 
@@ -20,11 +20,11 @@ Passing `nodeId` tells Gatsby that the page depends specifically on this node. S
 
 #### Node Model
 
-[Node Model](/docs/node-model/) is a API used in GraphQL resolvers used to retrieve nodes from the data store. It's used internally in resolvers provided by Gatsby core and it can be used in resolvers provided by plugins via `context.nodeModel`. It calls `createPageAction` under the hood because Node Model is aware of the path of the query as well as nodes that are being retrieved.
+[Node Model](/docs/node-model/) is an API used in GraphQL resolvers to retrieve nodes from the data store. It's used internally in resolvers provided by Gatsby core and it can be used in resolvers provided by plugins via `context.nodeModel`. It calls `createPageAction` under the hood because Node Model is aware of the path of the query as well as the nodes being retrieved.
 
 #### `getNodeAndSavePathDependency` helper
 
-[`getNodeAndSavePathDependency`](/docs/node-api-helpers/#getNodeAndSavePathDependency) is a convenience wrapper around `getNode` and `createPageDependency`. It is not used internally and it is legacy API for plugins to record data dependencies. It is equivalent to `nodeModel.getNodeById` and the Node Model variant should be used instead as it's API is less error prone (as Node Model is `path` aware and doesn't require you to pass it)
+[`getNodeAndSavePathDependency`](/docs/node-api-helpers/#getNodeAndSavePathDependency) is a convenience wrapper around `getNode` and `createPageDependency`. It is not used internally. It's a legacy API for plugins to record data dependencies and is equivalent to `nodeModel.getNodeById`. The Node Model variant should be used instead as its API is less error prone. (Node Model is `path` aware and doesn't require you to pass it.)
 
 ## How dependencies are stored
 
@@ -67,4 +67,4 @@ Page -> Node dependencies are tracked via the `componentDataDependencies` redux 
 
 ## How dependency information is used
 
-Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty" and to figure out which queries don't have any dependencies yet. "Dirty" nodes are used to determine which query results are stale and need to be re-executed. Finding queries without dependencies is used as heuristic to determine which queries didn't run yet and therefore need to run.
+Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty" and to figure out which queries don't have any dependencies yet. "Dirty" nodes are used to determine which query results are stale and need to be re-executed. Finding queries without dependencies is used as a heuristic to determine which queries haven't run yet and therefore need to run.
