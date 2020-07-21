@@ -2,6 +2,7 @@
 import React from "react"
 import { jsx, Flex, Grid } from "strict-ui"
 import { useQuery, useMutation } from "urql"
+import { useLocation } from "@reach/router"
 import {
   Heading,
   HeadingProps,
@@ -16,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuItems,
 } from "gatsby-interface"
+import PluginSearchBar from "../components/plugin-search"
 
 const SecondaryButton: React.FC<ButtonProps> = props => (
   <Button
@@ -50,6 +52,10 @@ const InstallInput: React.FC<{ for: string }> = props => {
       }
     }
   `)
+
+  const location = useLocation()
+
+  return <PluginSearchBar location={location} />
 
   return (
     <form
