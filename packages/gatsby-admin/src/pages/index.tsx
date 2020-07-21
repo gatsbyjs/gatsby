@@ -1,38 +1,18 @@
 /** @jsx jsx */
 import React from "react"
 import { jsx, Flex, Grid } from "strict-ui"
+import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
   Heading,
   HeadingProps,
   Text,
-  Button,
-  InputField,
-  InputFieldControl,
-  ButtonProps,
-  InputFieldLabel,
   DropdownMenu,
   DropdownMenuButton,
   DropdownMenuItem,
   DropdownMenuItems,
 } from "gatsby-interface"
 import PluginSearchBar from "../components/plugin-search"
-
-const SecondaryButton: React.FC<ButtonProps> = props => (
-  <Button
-    variant="SECONDARY"
-    size="S"
-    sx={{
-      paddingX: 6,
-      paddingY: 4,
-    }}
-    {...props}
-  ></Button>
-)
-
-const InstallInput: React.FC<{ for: string }> = props => {
-  return
-}
 
 const SectionHeading: React.FC<HeadingProps> = props => (
   <Heading as="h1" sx={{ fontWeight: `500`, fontSize: 5 }} {...props} />
@@ -121,7 +101,7 @@ const Index: React.FC<{}> = () => {
     `,
   })
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching) return <Spinner />
 
   if (error) return <p>Oops something went wrong.</p>
 
