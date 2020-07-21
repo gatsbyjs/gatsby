@@ -2,7 +2,6 @@
 import React from "react"
 import { jsx, Flex, Grid } from "strict-ui"
 import { useQuery, useMutation } from "urql"
-import { useLocation } from "@reach/router"
 import {
   Heading,
   HeadingProps,
@@ -32,67 +31,7 @@ const SecondaryButton: React.FC<ButtonProps> = props => (
 )
 
 const InstallInput: React.FC<{ for: string }> = props => {
-  const inputId = `install-${props.for}`
-  const [value, setValue] = React.useState(``)
-
-  const [{ fetching }, installGatbyPlugin] = useMutation(`
-    mutation installGatsbyPlugin($name: String!) {
-      createNpmPackage(npmPackage: {
-        name: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      createGatsbyPlugin(gatsbyPlugin: {
-        name: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
-  const location = useLocation()
-
-  return <PluginSearchBar location={location} />
-
-  return (
-    <form
-      onSubmit={(evt): void => {
-        evt.preventDefault()
-        if (value.indexOf(`gatsby-`) !== 0) return
-
-        installGatbyPlugin({
-          name: value,
-        })
-      }}
-    >
-      <InputField id={inputId}>
-        <Flex gap={2} flexDirection="column">
-          <InputFieldLabel>Install {props.for}:</InputFieldLabel>
-          <Flex gap={4} alignItems="center">
-            <InputFieldControl
-              placeholder={`gatsby-${props.for}-`}
-              disabled={fetching}
-              value={value}
-              onChange={(e): void => setValue(e.target.value)}
-              sx={{
-                width: `initial`,
-              }}
-            />
-            <SecondaryButton
-              disabled={!value.trim()}
-              loading={fetching}
-              loadingLabel="Installing"
-            >
-              Install
-            </SecondaryButton>
-          </Flex>
-        </Flex>
-      </InputField>
-    </form>
-  )
+  return
 }
 
 const SectionHeading: React.FC<HeadingProps> = props => (
@@ -188,7 +127,7 @@ const Index: React.FC<{}> = () => {
 
   return (
     <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
-      <SectionHeading>Plugins</SectionHeading>
+      <SectionHeading id="plugin-search-label">Plugins</SectionHeading>
       <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
@@ -196,7 +135,7 @@ const Index: React.FC<{}> = () => {
             <PluginCard key={plugin.id} plugin={plugin} />
           ))}
       </Grid>
-      <InstallInput for="plugin" />
+      <PluginSearchBar />
 
       <SectionHeading>Themes</SectionHeading>
       <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
@@ -206,8 +145,7 @@ const Index: React.FC<{}> = () => {
             <PluginCard key={plugin.id} plugin={plugin} />
           ))}
       </Grid>
-
-      <InstallInput for="theme" />
+      <PluginSearchBar />
     </Flex>
   )
 }
