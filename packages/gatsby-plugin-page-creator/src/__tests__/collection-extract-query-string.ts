@@ -1,3 +1,7 @@
+import sysPath from "path"
+// This makes the tests work on windows properly
+const createPath = (path: string): string => path.replace(/\//, sysPath.sep)
+
 describe(`collectionExtractQueryString`, () => {
   beforeEach(jest.resetModules)
 
@@ -16,7 +20,9 @@ describe(`collectionExtractQueryString`, () => {
       collectionExtractQueryString,
     } = require(`../collection-extract-query-string`)
 
-    const query = await collectionExtractQueryString(`src/pages/{Product.name}`)
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{Product.name}`)
+    )
 
     expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
   })
@@ -36,7 +42,9 @@ describe(`collectionExtractQueryString`, () => {
       collectionExtractQueryString,
     } = require(`../collection-extract-query-string`)
 
-    const query = await collectionExtractQueryString(`src/pages/{Things.bar}`)
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{Things.bar}`)
+    )
 
     expect(query).toMatchInlineSnapshot(
       `"{allThings(filter:{name:{nin:[\\"stuff\\"]}}){nodes{bar,id}}}"`
@@ -59,7 +67,7 @@ describe(`collectionExtractQueryString`, () => {
     } = require(`../collection-extract-query-string`)
 
     expect(() =>
-      collectionExtractQueryString(`src/pages/{Things.bar}`)
+      collectionExtractQueryString(createPath(`src/pages/{Things.bar}`))
     ).toThrow()
   })
 })

@@ -14,8 +14,8 @@ export default function BlogPost({ data: { product } }) {
 }
 
 export const blogPostQuery = graphql`
-  query GetBlogPostBySlugCollection($name: String!) {
-    product(name: { eq: $name }) {
+  query GetBlogPostBySlugCollection($id: String!) {
+    product(id: { eq: $id }) {
       id
       name
     }
