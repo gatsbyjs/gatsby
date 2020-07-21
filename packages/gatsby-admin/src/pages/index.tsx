@@ -111,7 +111,7 @@ const Index: React.FC<{}> = () => {
   if (error) return <p>Oops something went wrong.</p>
 
   return (
-    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}
+    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
       <SectionHeading>Pages</SectionHeading>
       <ul sx={{ pl: 0, listStyle: `none` }}>
         {data.allGatsbyPage.nodes
@@ -129,7 +129,9 @@ const Index: React.FC<{}> = () => {
           ))}
       </ul>
 
-      <SectionHeading id="plugin-search-label">Installed Plugins</SectionHeading>
+      <SectionHeading id="plugin-search-label">
+        Installed Plugins
+      </SectionHeading>
       <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes.map(plugin => (
           <PluginCard key={plugin.id} plugin={plugin} />
