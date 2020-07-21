@@ -118,8 +118,8 @@ We try to make sure that any RFC that we accept is accepted at the weekly team
 meeting. Every accepted feature should have a core team champion, who will
 represent the feature and its progress.
 
-**Gatsby's RFC process owes its inspiration to the [React RFC process], [Yarn
-RFC process], [Rust RFC process], and [Ember RFC process]**
+**Gatsby's RFC process owes its inspiration to the [react rfc process], 
+[yarn rfc process], [rust rfc process], and [ember rfc process]**
 
 [react rfc process]: https://github.com/reactjs/rfcs
 [yarn rfc process]: https://github.com/yarnpkg/rfcs
