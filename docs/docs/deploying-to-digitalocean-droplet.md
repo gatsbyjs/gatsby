@@ -76,6 +76,7 @@ git clone <your-github-repo-site>
 ```
 
 > Note: Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
+
 ```bash
 pwd
 ```
