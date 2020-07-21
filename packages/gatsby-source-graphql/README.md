@@ -150,6 +150,153 @@ module.exports = {
 }
 ```
 
+## Custom transform schema (advanced)
+
+It's possible to pass a custom transform to the schema, via a `transformSchema` option which customizes the default transform that the plugin creates before stitching the remote schema.
+
+To make it work it's basically needed to rewrite the schema transformation function, but that allows customization.
+
+```js
+// gatsby-config.js
+const transformSchema = require('./transform-schema');
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+        transformSchema,
+    },
+  ]
+}
+```
+
+The `transformSchema` function gets an object argument with the following fields:
+
+- schema (introspected remote schema)
+- link (default link)
+- resolver (default resolver)
+- defaultTransforms (an array with the default transforms)
+- options (plugin options)
+
+Example transform that adds a **`language`** argument to the root schema **swapi**. It adds an `__args` field to the resolver context, and then a custom link is able to read it and add an header based on that parameter.
+
+This basically allows to add custom arguments to the root remote schema and read them in the underlying http link, to further customize it.
+For example, when the remote grapqhl server expose some option by header but not by quary arguments.
+
+```js
+// transform-schema.js
+const { wrapSchema } = require(`@graphql-tools/wrap`)
+const { addTypes, modifyObjectFields } = require(`@graphql-tools/utils`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
+const { ApolloLink } = require(`apollo-link`)
+const {
+  GraphQLObjectType,
+  GraphQLNonNull,
+  GraphQLString,
+} = require(`gatsby/graphql`)
+
+class NamespaceUnderFieldTransform {
+  constructor({ typeName, fieldName, paramName, resolver }) {
+    this.typeName = typeName
+    this.fieldName = fieldName
+    this.paramName = paramName
+    this.resolver = resolver
+  }
+
+  transformSchema(schema) {
+    const queryConfig = schema.getQueryType().toConfig()
+
+    const nestedQuery = new GraphQLObjectType({
+      ...queryConfig,
+      name: this.typeName,
+    })
+
+    let newSchema = addTypes(schema, [nestedQuery])
+
+    const newRootFieldConfigMap = {
+      [this.fieldName]: {
+        args: {
+          [this.paramName]: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+        },
+        type: new GraphQLNonNull(nestedQuery),
+        resolve: (parent, args, context, info) => {
+          if (this.resolver != null) {
+            context.__args = args
+            return this.resolver(parent, args, context, info)
+          }
+
+          return {}
+        },
+      },
+    }
+
+    ;[newSchema] = modifyObjectFields(
+      newSchema,
+      queryConfig.name,
+      () => true,
+      newRootFieldConfigMap
+    )
+
+    return newSchema
+  }
+}
+
+const myHeadersLink = () => {
+  const paramToHeaders = {
+    en: { "Accept-Language": "en-US" },
+    it: { "Accept-Language": "it-IT" },
+  }
+  return new ApolloLink((operation, forward) => {
+    const args = operation.getContext().graphqlContext.__args
+    if (args && args.language) {
+      const paramValue = args.language
+      operation.setContext(({ headers }) => ({
+        headers: { ...headers, ...paramToHeaders[paramValue] },
+      }))
+    }
+    return forward(operation)
+  })
+}
+
+function createLink(link) {
+  return ApolloLink.from([myHeadersLink(), link])
+}
+
+const transformSchema = ({
+  schema,
+  link,
+  resolver,
+  defaultTransforms,
+  options,
+}) => {
+  const { typeName, fieldName } = options
+  const transforms = [defaultTransforms[0], defaultTransforms[1]]
+  return wrapSchema(
+    {
+      schema,
+      executor: linkToExecutor(createLink(link, options)),
+    },
+    [
+      ...transforms,
+      new NamespaceUnderFieldTransform({
+        typeName,
+        fieldName,
+        paramName: "language",
+        resolver,
+      }),
+    ]
+  )
+}
+
+module.exports = transformSchema
+```
+
 # Refetching data
 
 By default, `gatsby-source-graphql` will only refetch the data once the server is restarted. It's also possible to configure the plugin to periodically refetch the data. The option is called `refetchInterval` and specifies the timeout in seconds.

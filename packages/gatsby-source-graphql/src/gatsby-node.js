@@ -112,6 +112,7 @@ exports.sourceNodes = async (
         link,
         resolver,
         defaultTransforms,
+        options,
       })
     : wrapSchema(
         {
