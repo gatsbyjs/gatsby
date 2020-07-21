@@ -22,7 +22,7 @@ npm install -g gatsby-cli
 ### Create a new site
 
 ```shell
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world 
+gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 ### Change directories into site folder
