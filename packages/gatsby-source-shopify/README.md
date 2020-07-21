@@ -148,7 +148,7 @@ The following data types are available:
 | **ProductOption**  | Custom product property names.                                                                                        |
 | **ProductVariant** | Represents a different version of a product, such as differing sizes or differing colors.                             |
 | **ShopPolicy**     | Policy that a merchant has configured for their store, such as their refund or privacy policy.                        |
-| **ShopDetails**    | Name, Description and Currency that a merchant has configured for their store.                                        |
+| **ShopDetails**    | Name, description and money format that a merchant has configured for their store.                                    |
 
 For each data type listed above, `shopify${typeName}` and
 `allShopify${typeName}` is made available. Nodes that are closely related, such
