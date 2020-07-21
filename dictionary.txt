@@ -372,7 +372,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial

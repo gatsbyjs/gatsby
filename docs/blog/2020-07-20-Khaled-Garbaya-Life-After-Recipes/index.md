@@ -36,7 +36,7 @@ npm install tailwindcss gatsby-plugin-postcss
 
 2. Add `gatsby-plugin-postcss` to your `gatsby-config.js` file
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [`gatsby-plugin-postcss`]
 }
@@ -44,7 +44,7 @@ npm install tailwindcss gatsby-plugin-postcss
 
 3. Create a `postcss.config.js` file and add the following snippet to it:
 
-```javascript
+```javascript:title=postcss.config.js
 module.exports = {
   plugins: [require("tailwindcss"), require("autoprefixer")],
 }
@@ -52,7 +52,7 @@ module.exports = {
 
 4. Create a `tailwind.config.js` file and add the following snippet to it:
 
-```javascript
+```javascript:title=tailwind.config.js
 module.exports = {
   purge: ["./src/**/*.js"],
   theme: {
@@ -65,7 +65,7 @@ module.exports = {
 
 5. Create a `tailwind.css` file and add the following snippet to it:
 
-```css
+```css:title=tailwind.css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

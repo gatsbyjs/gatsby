@@ -88,6 +88,11 @@ const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
+        allGatsbyPage {
+          nodes {
+            path
+          }
+        }
         allGatsbyPlugin {
           nodes {
             name
@@ -106,24 +111,29 @@ const Index: React.FC<{}> = () => {
   if (error) return <p>Oops something went wrong.</p>
 
   return (
-    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
-      <SectionHeading id="plugin-search-label">Plugins</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
-          .map(plugin => (
-            <PluginCard key={plugin.id} plugin={plugin} />
+    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}
+      <SectionHeading>Pages</SectionHeading>
+      <ul sx={{ pl: 0, listStyle: `none` }}>
+        {data.allGatsbyPage.nodes
+          .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
+          .sort((a, b) => a.path.localeCompare(b.path))
+          .map(page => (
+            <li
+              key={page.path}
+              sx={{
+                py: 1,
+              }}
+            >
+              {page.path}
+            </li>
           ))}
-      </Grid>
-      <PluginSearchBar />
+      </ul>
 
-      <SectionHeading>Themes</SectionHeading>
+      <SectionHeading id="plugin-search-label">Installed Plugins</SectionHeading>
       <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
-          .map(plugin => (
-            <PluginCard key={plugin.id} plugin={plugin} />
-          ))}
+        {data.allGatsbyPlugin.nodes.map(plugin => (
+          <PluginCard key={plugin.id} plugin={plugin} />
+        ))}
       </Grid>
       <PluginSearchBar />
     </Flex>
