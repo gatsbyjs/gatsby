@@ -144,6 +144,7 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `legacyCookieDomain`: string
 - `legacyHistoryImport`: boolean
 - `allowLinker`: boolean
+- `storage`: string
 
 This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
 

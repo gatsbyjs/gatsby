@@ -4,6 +4,7 @@ module.exports = {
     author: `Sid Chatterjee`,
     twitter: `chatsidhartha`,
     github: `sidharthachatterjee`,
+    moreInfo: `Sid is amazing`,
   },
   plugins: [],
 }

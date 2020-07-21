@@ -576,7 +576,7 @@ export interface ISetPageDataAction {
 }
 
 export interface IRemoveTemplateComponentAction {
-  type: `REMOVE_TEMPLATE_COMPONENT`
+  type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
     componentPath: string
   }

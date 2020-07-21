@@ -5,7 +5,7 @@ export const staticQueriesByTemplateReducer = (
   action: ActionsUnion
 ): IGatsbyState["staticQueriesByTemplate"] => {
   switch (action.type) {
-    case `REMOVE_TEMPLATE_COMPONENT`:
+    case `REMOVE_STATIC_QUERIES_BY_TEMPLATE`:
       state.delete(action.payload.componentPath)
       return state
 

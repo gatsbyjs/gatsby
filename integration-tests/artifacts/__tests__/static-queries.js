@@ -40,13 +40,23 @@ const githubQuery = `
   }
 `
 
+const moreInfoQuery = `
+  {
+    site {
+      siteMetadata {
+        moreInfo
+      }
+    }
+  }
+`
+
 function hashQuery(query) {
   const text = stripIgnoredCharacters(query)
   const hash = murmurhash(text, `abc`)
   return String(hash)
 }
 
-const globalQueries = [githubQuery]
+const globalQueries = [githubQuery, moreInfoQuery]
 
 describe(`Static Queries`, () => {
   beforeAll(async done => {
@@ -153,21 +163,21 @@ describe(`Static Queries`, () => {
     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
   })
 
-  // test(`are written correctly when using wrapRootElement`, async () => {
-  //   const queries = [titleQuery]
-  //   const pagePath = `/dynamic-import/`
+  test("are written correctly with circular dependency", async () => {
+    const queries = [titleQuery, ...globalQueries]
+    const pagePath = `/circular-dep/`
 
-  //   const { staticQueryHashes } = await readPageData(publicDir, pagePath)
+    const { staticQueryHashes } = await readPageData(publicDir, pagePath)
 
-  //   expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  // })
+    expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+  })
 
-  // test(`are written correctly when using wrapPageElement`, async () => {
-  //   const queries = [titleQuery]
-  //   const pagePath = `/dynamic-import/`
+  test(`are written correctly when using gatsby-browser`, async () => {
+    const queries = [...globalQueries]
+    const pagePath = `/gatsby-browser/`
 
-  //   const { staticQueryHashes } = await readPageData(publicDir, pagePath)
+    const { staticQueryHashes } = await readPageData(publicDir, pagePath)
 
-  //   expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  // })
+    expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+  })
 })

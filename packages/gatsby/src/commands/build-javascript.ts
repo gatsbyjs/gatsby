@@ -5,7 +5,7 @@ import flatMap from "lodash/flatMap"
 
 import webpackConfig from "../utils/webpack.config"
 import { store } from "../redux"
-import { mapTemplatesToStaticQueryHashes } from "../utils/map-pages-to-static-query-hashes"
+import mapTemplatesToStaticQueryHashes from "../utils/map-templates-to-static-query-hashes"
 
 import { IProgram } from "./types"
 
@@ -41,7 +41,7 @@ export const buildProductionBundle = async (
             if (
               !isEqual(
                 state.staticQueriesByTemplate.get(componentPath),
-                staticQueryHashes.map(String)
+                staticQueryHashes
               )
             ) {
               store.dispatch({
