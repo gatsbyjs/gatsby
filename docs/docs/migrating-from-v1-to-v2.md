@@ -801,7 +801,7 @@ export default function Page(props) {
 }
 ```
 
-Furthermore you can remove the package from the `package.json`.
+Furthermore, you can remove the package from the `package.json`.
 
 ```diff:title=package.json
 "dependencies": {
