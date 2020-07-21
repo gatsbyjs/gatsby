@@ -41,6 +41,7 @@ const MOCK_FILE_INFO = {
     componentChunkName: `page-component---src-pages-test-js`,
     path: `/about/`,
     webpackCompilationHash: `1234567890abcdef1234`,
+    staticQueryHashes: [],
   }),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,

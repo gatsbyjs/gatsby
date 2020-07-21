@@ -231,6 +231,16 @@ export const PRODUCTS_QUERY = `
   }
 `
 
+export const SHOP_DETAILS_QUERY = `
+query GetShop {
+  shop {
+    description
+    moneyFormat
+    name
+  }
+}
+`
+
 export const SHOP_POLICIES_QUERY = `
   query GetPolicies {
     shop {
