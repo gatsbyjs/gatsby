@@ -75,7 +75,7 @@ The next step is to clone the repository containing your Gatsby app (Replace `<y
 git clone <your-github-repo-site>
 ```
 
-Incase of any warning related to Permission denied, check if <your non-root user> have sudo privileges or before cloning your repository, give permission to <your non-root user> to access the .config directory of under /home/gatsby/.
+In case of a warning related to "Permission denied", check if `<your non-root user>` has `sudo` privileges. Or before cloning your repository, [change permissions](https://help.ubuntu.com/community/FilePermissions) for `<your non-root user>` to access the `.config` directory of under `/home/gatsby/':
 
 ```bash
 cd ~/
