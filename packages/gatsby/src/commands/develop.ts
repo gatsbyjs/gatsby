@@ -163,6 +163,9 @@ let isRestarting
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
+  // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
+  // So we want to early just force it to a number to ensure we always act on a correct type.
+  program.port = parseInt(program.port + ``, 10)
   const developProcessPath = slash(require.resolve(`./develop-process`))
 
   try {
