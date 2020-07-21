@@ -24,7 +24,7 @@ const SearchCombobox: React.FC<{
     <ComboboxInput
       sx={{ width: `20em` }}
       aria-labelledby="plugin-search-label"
-      onChange={e => refine(e.target.value)}
+      onChange={(e): void => refine(e.target.value)}
       value={currentRefinement}
     />
     <ComboboxPopover>
@@ -72,7 +72,7 @@ const PluginSearchInput: React.FC<{}> = () => {
           <Configure analyticsTags={[`gatsby-plugins`]} />
           <RefinementList
             attribute="keywords"
-            transformItems={items =>
+            transformItems={(items: Array<any>): Array<any> =>
               items.map(({ count, ...item }) => {
                 return {
                   ...item,
@@ -93,7 +93,7 @@ const PluginSearchInput: React.FC<{}> = () => {
           <Spinner />
         ) : (
           <SearchCombobox
-            onSelect={value => {
+            onSelect={(value): void => {
               installGatbyPlugin({ name: value })
             }}
           />
