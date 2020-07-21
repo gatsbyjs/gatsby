@@ -182,91 +182,14 @@ The `transformSchema` function gets an object argument with the following fields
 - defaultTransforms (an array with the default transforms)
 - options (plugin options)
 
-Example transform that adds a **`language`** argument to the root schema **swapi**. It adds an `__args` field to the resolver context, and then a custom link is able to read it and add an header based on that parameter.
+The return value is expected to be the final schema used for stitching.
 
-This basically allows to add custom arguments to the root remote schema and read them in the underlying http link, to further customize it.
-For example, when the remote grapqhl server expose some option by header but not by quary arguments.
+The default internal implementation (equivalent to not using the `transformSchema` option at all) would be like this:
 
 ```js
 // transform-schema.js
 const { wrapSchema } = require(`@graphql-tools/wrap`)
-const { addTypes, modifyObjectFields } = require(`@graphql-tools/utils`)
 const { linkToExecutor } = require(`@graphql-tools/links`)
-const { ApolloLink } = require(`apollo-link`)
-const {
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLString,
-} = require(`gatsby/graphql`)
-
-class NamespaceUnderFieldTransform {
-  constructor({ typeName, fieldName, paramName, resolver }) {
-    this.typeName = typeName
-    this.fieldName = fieldName
-    this.paramName = paramName
-    this.resolver = resolver
-  }
-
-  transformSchema(schema) {
-    const queryConfig = schema.getQueryType().toConfig()
-
-    const nestedQuery = new GraphQLObjectType({
-      ...queryConfig,
-      name: this.typeName,
-    })
-
-    let newSchema = addTypes(schema, [nestedQuery])
-
-    const newRootFieldConfigMap = {
-      [this.fieldName]: {
-        args: {
-          [this.paramName]: {
-            type: new GraphQLNonNull(GraphQLString),
-          },
-        },
-        type: new GraphQLNonNull(nestedQuery),
-        resolve: (parent, args, context, info) => {
-          if (this.resolver != null) {
-            context.__args = args
-            return this.resolver(parent, args, context, info)
-          }
-
-          return {}
-        },
-      },
-    }
-
-    ;[newSchema] = modifyObjectFields(
-      newSchema,
-      queryConfig.name,
-      () => true,
-      newRootFieldConfigMap
-    )
-
-    return newSchema
-  }
-}
-
-const myHeadersLink = () => {
-  const paramToHeaders = {
-    en: { "Accept-Language": "en-US" },
-    it: { "Accept-Language": "it-IT" },
-  }
-  return new ApolloLink((operation, forward) => {
-    const args = operation.getContext().graphqlContext.__args
-    if (args && args.language) {
-      const paramValue = args.language
-      operation.setContext(({ headers }) => ({
-        headers: { ...headers, ...paramToHeaders[paramValue] },
-      }))
-    }
-    return forward(operation)
-  })
-}
-
-function createLink(link) {
-  return ApolloLink.from([myHeadersLink(), link])
-}
 
 const transformSchema = ({
   schema,
@@ -275,27 +198,21 @@ const transformSchema = ({
   defaultTransforms,
   options,
 }) => {
-  const { typeName, fieldName } = options
-  const transforms = [defaultTransforms[0], defaultTransforms[1]]
   return wrapSchema(
     {
       schema,
-      executor: linkToExecutor(createLink(link, options)),
+      executor: linkToExecutor(link),
     },
-    [
-      ...transforms,
-      new NamespaceUnderFieldTransform({
-        typeName,
-        fieldName,
-        paramName: "language",
-        resolver,
-      }),
-    ]
+    defaultTransforms
   )
 }
 
 module.exports = transformSchema
 ```
+
+To implement a custom transform, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https://www.graphql-tools.com/docs/schema-wrapping).
+
+An use case for this feature can be seen in [this issue](https://github.com/gatsbyjs/gatsby/issues/23552).
 
 # Refetching data
 
