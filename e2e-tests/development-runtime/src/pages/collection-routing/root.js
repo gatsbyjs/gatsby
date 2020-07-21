@@ -10,7 +10,7 @@ export default function Root(props) {
           <Link
             to={node.path}
             data-testid="collection-routing-blog"
-            data-testslug={node.path}
+            data-testslug={node.fields.slug}
           >
             {node.frontmatter.title}
           </Link>
@@ -26,6 +26,9 @@ export const query = graphql`
       nodes {
         frontmatter {
           title
+        }
+        fields {
+          slug
         }
         path(filePath: "/collection-routing/{MarkdownRemark.fields__slug}")
       }
