@@ -32,50 +32,50 @@ test(`handles nested rendering`, async () => {
         "_stepMetadata": Object {},
         "currentState": "",
         "describe": "Write red.js",
-        "diff": "[31m- Original  - 0[39m
-    [32m+ Modified  + 1[39m
+        "diff": "- Original  - 0
+    + Modified  + 1
 
-    [32m+ red![39m",
+    + red!",
         "newState": "red!",
         "resourceChildren": Array [
           Object {
             "_stepMetadata": Object {},
             "currentState": "",
             "describe": "Write blue.js",
-            "diff": "[31m- Original  - 0[39m
-    [32m+ Modified  + 1[39m
+            "diff": "- Original  - 0
+    + Modified  + 1
 
-    [32m+ blue![39m",
+    + blue!",
             "newState": "blue!",
             "resourceChildren": Array [
               Object {
                 "_stepMetadata": Object {},
                 "currentState": "",
                 "describe": "Write yellow.js",
-                "diff": "[31m- Original  - 0[39m
-    [32m+ Modified  + 1[39m
+                "diff": "- Original  - 0
+    + Modified  + 1
 
-    [32m+ yellow![39m",
+    + yellow!",
                 "newState": "yellow!",
                 "resourceDefinitions": Object {
                   "content": "yellow!",
                   "path": "yellow.js",
                 },
-                "resourceName": undefined,
+                "resourceName": "File",
               },
             ],
             "resourceDefinitions": Object {
               "content": "blue!",
               "path": "blue.js",
             },
-            "resourceName": undefined,
+            "resourceName": "File",
           },
         ],
         "resourceDefinitions": Object {
           "content": "red!",
           "path": "red.js",
         },
-        "resourceName": undefined,
+        "resourceName": "File",
       },
     ]
   `)
