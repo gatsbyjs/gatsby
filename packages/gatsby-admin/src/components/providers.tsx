@@ -28,6 +28,7 @@ const theme = {
     "100%": `100%`,
     "16px": `16px`,
     "15em": `15em`,
+    "20em": `20em`,
     initial: `initial`,
   },
 }
