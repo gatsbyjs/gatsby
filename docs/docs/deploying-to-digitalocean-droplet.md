@@ -75,18 +75,25 @@ The next step is to clone the repository containing your Gatsby app (Replace `<y
 git clone <your-github-repo-site>
 ```
 
-In case of a warning related to "Permission denied", check if `<your non-root user>` has `sudo` privileges. Or before cloning your repository, [change permissions](https://help.ubuntu.com/community/FilePermissions) for `<your non-root user>` to access the `.config` directory of under `/home/gatsby/':
+> Note: Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
+```bash
+pwd
+```
+
+In case of a warning related to "Permission denied", check if `<your non-root user>` has `sudo` privileges. Or before cloning your repository, [change permissions](https://help.ubuntu.com/community/FilePermissions) for `<your non-root user>` to access the `.config` directory of under `/home/<your non-root user>/`:
 
 ```bash
 cd ~/
 sudo chown -R $(whoami) .config
 ```
 
-> Note: this guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
+> Note: This guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
 
 ### Generate your Gatsby site for production
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
+
+> Note: Go to the path where <my-gatsby-app> is. You can used the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
 
 1. Install dependencies.
 
