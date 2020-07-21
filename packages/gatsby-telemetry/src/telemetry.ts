@@ -1,6 +1,5 @@
 import uuidV4 from "uuid/v4"
 import { isCI, getCIName } from "gatsby-core-utils"
-
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
