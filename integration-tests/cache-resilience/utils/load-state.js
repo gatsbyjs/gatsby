@@ -5,7 +5,7 @@ const path = require(`path`)
 const slash = require(`slash`)
 
 const sanitizePageCreatorPluginOptions = options => {
-  if (options && options.path) {
+  if (options?.path) {
     return {
       ...options,
       path: slash(path.relative(process.cwd(), options.path)),
@@ -16,7 +16,7 @@ const sanitizePageCreatorPluginOptions = options => {
 
 // TODO: Make this not mutate the passed in value
 const sanitiseNode = value => {
-  if (value && value.internal && value.internal.contentDigest) {
+  if (value?.internal?.contentDigest) {
     if (value.internal.type === `SiteBuildMetadata`) {
       delete value.buildTime
       delete value.internal.contentDigest
