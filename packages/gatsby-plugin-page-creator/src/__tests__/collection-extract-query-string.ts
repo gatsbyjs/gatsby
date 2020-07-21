@@ -1,24 +1,27 @@
 import sysPath from "path"
+import fs from "fs-extra"
+import { collectionExtractQueryString } from "../collection-extract-query-string"
 // This makes the tests work on windows properly
-const createPath = (path: string): string => path.replace(/\//, sysPath.sep)
+const createPath = (path: string): string => path.replace(/\//g, sysPath.sep)
+
+const originalReadFileSync = fs.readFileSync
+const patchReadFileSync = (string: string): void => {
+  // @ts-ignore
+  fs.readFileSync = () => string
+}
 
 describe(`collectionExtractQueryString`, () => {
-  beforeEach(jest.resetModules)
-
+  afterEach(() => {
+    fs.readFileSync = originalReadFileSync
+  })
   it(`will create a basic query from the route`, async () => {
-    jest.mock(`fs-extra`, () => {
-      return {
-        readFileSync: (): string => `
+    // @ts-ignore
+    patchReadFileSync(`
       import { graphql } from "gatsby"
       export const pageQuery = graphql\`  
         { allThings(filter: { name: { nin: ["stuff"] }}) { ...CollectionPagesQueryFragment } }
       \`
-      `,
-      }
-    })
-    const {
-      collectionExtractQueryString,
-    } = require(`../collection-extract-query-string`)
+      `)
 
     const query = await collectionExtractQueryString(
       createPath(`src/pages/{Product.name}`)
@@ -28,19 +31,12 @@ describe(`collectionExtractQueryString`, () => {
   })
 
   it(`uses unstable_collectionQuery if exported`, async () => {
-    jest.mock(`fs-extra`, () => {
-      return {
-        readFileSync: (): string => `
+    patchReadFileSync(`
       import { unstable_collectionGraphql } from "gatsby"
       export const collectionQuery = unstable_collectionGraphql\`  
         { allThings(filter: { name: { nin: ["stuff"] }}) { ...CollectionPagesQueryFragment } }
       \`
-      `,
-      }
-    })
-    const {
-      collectionExtractQueryString,
-    } = require(`../collection-extract-query-string`)
+      `)
 
     const query = await collectionExtractQueryString(
       createPath(`src/pages/{Things.bar}`)
@@ -52,19 +48,12 @@ describe(`collectionExtractQueryString`, () => {
   })
 
   it(`throws an error if you forget the fragment`, async () => {
-    jest.mock(`fs-extra`, () => {
-      return {
-        readFileSync: (): string => `
+    patchReadFileSync(`
       import { unstable_collectionGraphql } from "gatsby"
       export const collectionQuery = unstable_collectionGraphql\`  
         { allThings(filter: { name: { nin: ["stuff"] }}) { nodes { id } } }
       \`
-      `,
-      }
-    })
-    const {
-      collectionExtractQueryString,
-    } = require(`../collection-extract-query-string`)
+      `)
 
     expect(() =>
       collectionExtractQueryString(createPath(`src/pages/{Things.bar}`))
