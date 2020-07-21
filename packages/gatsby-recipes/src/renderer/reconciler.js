@@ -1,7 +1,10 @@
 const ReactReconciler = require(`react-reconciler`)
 const flatted = require(`flatted`)
 
-const debug = require(`debug`)(`recipes-reconciler`)
+const debugInner = require(`debug`)(`recipes-reconciler`)
+const debug = (title, data) => {
+  debugInner(title, JSON.stringify(data, null, 2))
+}
 
 const reconciler = ReactReconciler({
   finalizeInitialChildren(element, type, props) {},
@@ -39,6 +42,7 @@ const reconciler = ReactReconciler({
     return { text }
   },
   commitTextUpdate(textInstance, oldText, newText) {
+    debug(`updating text instance`, text)
     textInstance.text = newText
     return textInstance
   },
@@ -102,8 +106,6 @@ const RecipesRenderer = {
     debug(`rendering recipe`)
     let container = reconciler.createContainer(currState, false, false)
     reconciler.updateContainer(whatToRender, container, null, null)
-
-    //debug(`render result`, require('circular-json').stringify(currState, null, 2))
 
     return currState
   },

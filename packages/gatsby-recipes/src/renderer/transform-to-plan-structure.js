@@ -1,7 +1,13 @@
 const providedResources = require(`../resources`)
 const flatted = require(`flatted`)
 
-const extractPlan = node => {
+const isResource = type => type && (type === `Input` || providedResources[type])
+
+const extractPlan = (node, type) => {
+  if (!isResource(type)) {
+    return null
+  }
+
   let text = {}
   if (node.text) {
     try {
@@ -11,19 +17,7 @@ const extractPlan = node => {
     }
   }
 
-  const { _type: type, _props: props, ...plan } = text
-
-  if (type === `Input`) {
-    return {
-      resourceName: type,
-      resourceDefinitions: props,
-      ...plan,
-    }
-  }
-
-  if (!type || !providedResources[type]) {
-    return null
-  }
+  const { _props: props, ...plan } = text
 
   return {
     resourceName: type,
@@ -32,14 +26,14 @@ const extractPlan = node => {
   }
 }
 
-const transform = (props = {}) => {
+const transform = (props = {}, type) => {
   if (!props.children) {
-    const plan = extractPlan(props)
+    const plan = extractPlan(props, type)
     return plan ? [plan] : []
   }
 
   const plan = props.children.filter(Boolean).reduce((acc, curr) => {
-    const childResourcePlans = transform(curr)
+    const childType = curr.type || type
 
     let currText = {}
     if (curr.text) {
@@ -48,27 +42,29 @@ const transform = (props = {}) => {
       } catch {}
     }
 
-    if (curr._type === `Input`) {
+    if (childType === `Input`) {
       currText.resourceName = `Input`
       return [...acc, currText]
     }
 
-    if (!providedResources[curr.type]) {
-      return [...acc, ...childResourcePlans]
+    if (!providedResources[childType]) {
+      return [...acc, ...transform(curr, childType)]
     }
 
     const [rawResource, ...resourceChildren] = curr.children || []
-    const { _props, _type, ...plan } = JSON.parse(rawResource.text)
+    const { _props, ...plan } = JSON.parse(rawResource.text)
 
     const resourcePlan = {
-      // TODO figure out why do we have to use the mdxType for child components?
-      resourceName: _type || _props?.mdxType,
+      resourceName: childType,
       resourceDefinitions: _props,
       ...plan,
     }
 
     if (resourceChildren.length) {
-      resourcePlan.resourceChildren = transform({ children: resourceChildren })
+      resourcePlan.resourceChildren = transform(
+        { children: resourceChildren },
+        childType
+      )
     }
 
     return [...acc, resourcePlan]
@@ -78,7 +74,6 @@ const transform = (props = {}) => {
 }
 
 module.exports = renderTree => {
-  // console.log(flatted.stringify(renderTree, null, 2))
   const [doc] = renderTree.children
 
   return transform(doc)
