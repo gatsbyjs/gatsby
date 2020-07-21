@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-wordpress",
   "description": "Gatsby source plugin for building websites using the WordPress CMS as a data source.",
-  "version": "3.3.23",
+  "version": "3.3.24",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
     "bluebird": "^3.7.2",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
-    "gatsby-source-filesystem": "^2.3.20",
+    "gatsby-source-filesystem": "^2.3.21",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
     "minimatch": "^3.0.4",

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.97](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.96...gatsby-admin@0.1.97) (2020-07-21)
+
+### Features
+
+- **gatsby-admin:** list all pages of site ([#25744](https://github.com/gatsbyjs/gatsby/issues/25744)) ([a0c70d0](https://github.com/gatsbyjs/gatsby/commit/a0c70d0))
+- **gatsby-admin:** plugin search ([#25903](https://github.com/gatsbyjs/gatsby/issues/25903)) ([0506123](https://github.com/gatsbyjs/gatsby/commit/0506123))
+
 ## [0.1.96](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.95...gatsby-admin@0.1.96) (2020-07-20)
 
 **Note:** Version bump only for package gatsby-admin
