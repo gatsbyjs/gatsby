@@ -5,11 +5,11 @@ import prompts from "prompts"
 export const detectPortInUseAndPrompt = async (
   port: number
 ): Promise<number> => {
-  let foundPort = port
-  const detectedPort = await detectPort(port).catch((err: Error) =>
+  let foundPort = typeof port === `string` ? parseInt(port, 10) : port
+  const detectedPort = await detectPort(foundPort).catch((err: Error) =>
     report.panic(err)
   )
-  if (port !== detectedPort) {
+  if (foundPort !== detectedPort) {
     report.log(`\nSomething is already running at port ${port}`)
     const response = await prompts({
       type: `confirm`,
