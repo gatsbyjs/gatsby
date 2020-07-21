@@ -19,9 +19,10 @@ export function collectionExtractQueryString(
 
   const modelType = /\{([a-zA-Z]+)\./.exec(absolutePath)?.[1]
 
-  if (!modelType) {
-    throw new Error(`You screwed up`)
-  }
+  // This can happen if you have an invalid path and you are trying to query for that path
+  // our path graphql resolution logic does not validate the path before calling this
+  // so it can hit this case.
+  if (!modelType) return null
 
   // 2.  Traverse the AST to find the unstable_collectionGraphql query
   traverse(ast, {

@@ -7,6 +7,8 @@ import { getCollectionRouteParams } from "./get-collection-route-params"
 import { derivePath } from "./derive-path"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
+import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
+import reporter from "gatsby-cli/lib/reporter"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
@@ -15,6 +17,13 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"]
 ): Promise<void> {
+  if (isValidCollectionPathImplementation(absolutePath) === false) {
+    watchCollectionBuilder(absolutePath, ``, [], actions, () =>
+      createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+    )
+    return
+  }
+
   // 1. Query for the data for the collection to generate pages
   const queryString = collectionExtractQueryString(absolutePath)
 
@@ -32,9 +41,14 @@ export async function createPagesFromCollectionBuilder(
 
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
-    console.warn(`Tried to create pages from the collection builder found at ${filePath}.
-Unfortunately, the query came back empty. There may be an error in your query.`)
-    console.error(errors)
+    reporter.error(
+      `Tried to create pages from the collection builder.
+Unfortunately, the query came back empty. There may be an error in your query.
+
+file: ${absolutePath}
+
+${errors.map(error => error.message).join(`\n`)}`.trim()
+    )
 
     watchCollectionBuilder(absolutePath, queryString, [], actions, () =>
       createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
@@ -50,8 +64,7 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
   >
 
   if (nodes) {
-    console.info(`CollectionPageCreator:`)
-    console.info(`   Creating ${nodes.length} pages from ${filePath}`)
+    reporter.info(`   Creating ${nodes.length} pages from ${filePath}`)
   }
 
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
@@ -65,8 +78,6 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
     const nodeParams = reverseLookupParams(node, absolutePath)
     // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
     const matchPath = getMatchPath(path)
-
-    console.info(`   ${matchPath.matchPath || path}`)
 
     actions.createPage({
       path: path,

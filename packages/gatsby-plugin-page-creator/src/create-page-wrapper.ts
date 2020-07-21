@@ -35,11 +35,9 @@ export function createPage(
   // If the page has a function call to unstable_createPagesFromData markers in it, then we create it as a collection builder
   if (pathIsCollectionBuilder(absolutePath)) {
     if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-      console.error(
+      throw new Error(
         `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
       )
-      console.log(`Skipping creating pages for ${absolutePath}`)
-      return
     }
     createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
     return
