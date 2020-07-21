@@ -7,7 +7,7 @@ const createPath = (path: string): string => path.replace(/\//g, sysPath.sep)
 const originalReadFileSync = fs.readFileSync
 const patchReadFileSync = (string: string): void => {
   // @ts-ignore
-  fs.readFileSync = () => string
+  fs.readFileSync = (): string => string
 }
 
 describe(`collectionExtractQueryString`, () => {
