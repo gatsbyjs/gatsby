@@ -178,6 +178,10 @@ Typically this is:
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 
+### Who can close a PR?
+
+PRs can only be closed by members of the core team and Gatsbot. Maintainers please refrain from closing a PR.
+
 ### Who can merge a PR?
 
 PRs can only be merged by members of the core team and Gatsbot.
