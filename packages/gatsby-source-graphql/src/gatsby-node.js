@@ -32,7 +32,7 @@ exports.sourceNodes = async (
     createSchema,
     refetchInterval,
     batch = false,
-    transformSchema,
+    customWrapSchemaFn,
   } = options
 
   invariant(
@@ -106,8 +106,8 @@ exports.sourceNodes = async (
     }),
   ]
 
-  const schema = transformSchema
-    ? transformSchema({
+  const schema = customWrapSchemaFn
+    ? customWrapSchemaFn({
         schema: introspectionSchema,
         link,
         resolver,

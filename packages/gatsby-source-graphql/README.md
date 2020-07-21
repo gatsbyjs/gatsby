@@ -150,31 +150,11 @@ module.exports = {
 }
 ```
 
-## Custom transform schema (advanced)
+## Custom wrap schema function (advanced)
 
-It's possible to pass a custom transform to the schema, via a `transformSchema` option which customizes the default transform that the plugin creates before stitching the remote schema.
+It's possible to modify the remote schema, via a `customWrapSchemaFn` option which customizes the way the default schema is wrapped before it is merged on the Gatsby schema by the stitching process.
 
-To make it work it's basically needed to rewrite the schema transformation function, but that allows customization.
-
-```js
-// gatsby-config.js
-const transformSchema = require('./transform-schema');
-
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-source-graphql",
-      options: {
-        typeName: "SWAPI",
-        fieldName: "swapi",
-        url: "https://api.graphcms.com/simple/v1/swapi",
-        transformSchema,
-    },
-  ]
-}
-```
-
-The `transformSchema` function gets an object argument with the following fields:
+The `customWrapSchemaFn` function gets an object argument with the following fields:
 
 - schema (introspected remote schema)
 - link (default link)
@@ -184,33 +164,41 @@ The `transformSchema` function gets an object argument with the following fields
 
 The return value is expected to be the final schema used for stitching.
 
-The default internal implementation (equivalent to not using the `transformSchema` option at all) would be like this:
+Below an example configuration that uses the default implementation (equivalent to not using the `customWrapSchemaFn` option at all):
 
 ```js
-// transform-schema.js
 const { wrapSchema } = require(`@graphql-tools/wrap`)
 const { linkToExecutor } = require(`@graphql-tools/links`)
 
-const transformSchema = ({
-  schema,
-  link,
-  resolver,
-  defaultTransforms,
-  options,
-}) => {
-  return wrapSchema(
+module.exports = {
+  plugins: [
     {
-      schema,
-      executor: linkToExecutor(link),
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+        customWrapSchemaFn: ({
+          schema,
+          link,
+          resolver,
+          defaultTransforms,
+          options,
+        }) => {
+          return wrapSchema(
+            {
+              schema,
+              executor: linkToExecutor(link),
+            },
+            defaultTransforms
+          )
+        }
     },
-    defaultTransforms
-  )
+  ]
 }
-
-module.exports = transformSchema
 ```
 
-To implement a custom transform, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https://www.graphql-tools.com/docs/schema-wrapping).
+For details, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https://www.graphql-tools.com/docs/schema-wrapping).
 
 An use case for this feature can be seen in [this issue](https://github.com/gatsbyjs/gatsby/issues/23552).
 
