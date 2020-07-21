@@ -22,6 +22,8 @@ interface IGatsbyWebpackVirtualModulesContext {
 const fileContentLookup: Record<string, string> = {}
 const instances: IGatsbyWebpackVirtualModulesContext[] = []
 
+export const VIRTUAL_MODULES_BASE_PATH = `_this_is_virtual_fs_path_`
+
 export class GatsbyWebpackVirtualModules {
   apply(compiler): void {
     const virtualModules = new VirtualModulesPlugin(fileContentLookup)
@@ -33,7 +35,7 @@ export class GatsbyWebpackVirtualModules {
 }
 
 export function getAbsolutePathForVirtualModule(filePath: string): string {
-  return path.join(process.cwd(), `_this_is_virtual_fs_path_`, filePath)
+  return path.join(process.cwd(), VIRTUAL_MODULES_BASE_PATH, filePath)
 }
 
 export function writeModule(filePath: string, fileContents: string): void {
