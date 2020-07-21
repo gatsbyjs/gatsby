@@ -3,10 +3,10 @@ const lodash = require(`lodash`)
 const Boxen = require(`ink-box`)
 const React = require(`react`)
 const { useState } = require(`react`)
-const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
+const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
-const MDX = require(`@mdx-js/runtime`)
+const MDX = require(`./components/mdx`).default
 const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
 const {
@@ -22,6 +22,12 @@ const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const SelectInput = require(`ink-select-input`).default
 const semver = require(`semver`)
+const remove = require(`unist-util-remove`)
+
+const removeJsx = () => tree => {
+  remove(tree, `export`, () => true)
+  return tree
+}
 
 const MAX_UI_WIDTH = 67
 
@@ -174,13 +180,15 @@ const RecipesList = ({ setRecipe }) => {
       items={items}
       onSelect={setRecipe}
       indicatorComponent={item => (
-        <Color magentaBright>
+        <Text color="magentaBright">
           {item.isSelected ? `>>` : `  `}
           {item.label}
-        </Color>
+        </Text>
       )}
       itemComponent={props => (
-        <Color magentaBright={props.isSelected}>{props.label}</Color>
+        <Text color="magentaBright">
+          {props.isSelected}>{props.label}
+        </Text>
       )}
     />
   )
@@ -189,7 +197,8 @@ const RecipesList = ({ setRecipe }) => {
 let renderCount = 1
 
 const Div = props => {
-  const width = Math.min(process.stdout.columns, MAX_UI_WIDTH)
+  const width = Math.max(process.stdout.columns, MAX_UI_WIDTH)
+  // console.log(process.stdout, { width })
   return (
     <Box
       width={width}
@@ -220,6 +229,7 @@ function eliminateNewLines(children) {
 
 const components = {
   inlineCode: props => <Text {...props} />,
+  pre: props => <Div {...props} />,
   code: props => {
     // eslint-disable-next-line
     let language = "```"
@@ -230,6 +240,7 @@ const components = {
     const children = hicat(props.children.trim(), { lang: language })
 
     const ansi = `\`\`\`${language}\n${children.ansi}\n\`\`\``
+    console.log({ ansi, props })
 
     return (
       <Div marginBottom={1}>
@@ -237,11 +248,15 @@ const components = {
       </Div>
     )
   },
-  h1: props => (
-    <Div marginBottom={1}>
-      <Text bold underline {...props} />
-    </Div>
-  ),
+  h1: props => {
+    return (
+      <Div>
+        <Text bold underline>
+          {props.children}
+        </Text>
+      </Div>
+    )
+  },
   h2: props => (
     <Div>
       <Text bold {...props} />
@@ -288,8 +303,9 @@ const components = {
   Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
-  RecipeIntroduction: () => null,
-  RecipeStep: () => null,
+  RecipeIntroduction: props => <Div {...props} />,
+  RecipeStep: props => <Div {...props} />,
+  div: props => <Div {...props} />,
 }
 
 let logStream
@@ -481,7 +497,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         if (!isPlan || !isPresetPlanState) {
           return (
             <Div marginTop={1}>
-              <Color magentaBright>>> Press enter to continue</Color>
+              <Text color="magentaBright">>> Press enter to continue</Text>
             </Div>
           )
         }
@@ -507,7 +523,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
               </Div>
             ))}
             <Div marginTop={1}>
-              <Color magentaBright>>> Press enter to run this step</Color>
+              <Text color="magentaBright">>> Press enter to run this step</Text>
             </Div>
           </Div>
         )
@@ -543,9 +559,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       const Error = ({ state }) => {
         log(`errors`, state)
         if (state && state.context && state.context.error) {
-          return (
-            <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
-          )
+          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
         }
 
         return null
@@ -574,6 +588,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       })
 
       log(`staticMessages`, staticMessages)
+      log(`steps joined`, state.context.steps.join(`\n`))
 
       if (isDone) {
         process.nextTick(() => {
@@ -590,43 +605,51 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         // return null
       }
 
+      // <Div>
+      // <static>
+      // {object.keys(staticmessages).map((key, istep) =>
+      // staticmessages[key].map((r, i) => {
+      // if (r.type && r.type === `mdx`) {
+      // return (
+      // <div key={r.key}>
+      // {istep === 0 && <text underline>completed steps</text>}
+      // <div margintop={istep === 0 ? 0 : 1} marginbottom={1}>
+      // {istep !== 0 && `---`}
+      // </div>
+      // {istep !== 0 && <text>step {istep}</text>}
+      // <mdx components={components}>{r.value}</mdx>
+      // </div>
+      // )
+      // }
+      // return <Text key={r.key}>✅ {r.value}</Text>
+      // })
+      // )}
+      // </Static>
+      // </Div>
+      //
+      // <PresentStep state={state} />
+
+      // <MDX
+      // components={components}
+      // >{`<RecipeIntroduction># hi</RecipeIntroduction>` [> state.context.steps.join(`\n`) <]}</MDX>
+      // console.log(
+      // React.createElement(
+      // MDX,
+      // { key: "DOC", components, remarkPlugins: [removeJsx] },
+      // `# hi`
+      // )
+      // )
       return (
         <>
-          <Div>
-            <Static>
-              {Object.keys(staticMessages).map((key, iStep) =>
-                staticMessages[key].map((r, i) => {
-                  if (r.type && r.type === `mdx`) {
-                    return (
-                      <Div key={r.key}>
-                        {iStep === 0 && <Text underline>Completed Steps</Text>}
-                        <Div marginTop={iStep === 0 ? 0 : 1} marginBottom={1}>
-                          {iStep !== 0 && `---`}
-                        </Div>
-                        {iStep !== 0 && <Text>Step {iStep}</Text>}
-                        <MDX components={components}>{r.value}</MDX>
-                      </Div>
-                    )
-                  }
-                  return <Text key={r.key}>✅ {r.value}</Text>
-                })
-              )}
-            </Static>
+          <Div marginTop={7}>
+            <Text underline bold>
+              Step {state.context.currentStep} /{` `}
+              {state.context.steps.length - 1}
+            </Text>
           </Div>
-          {state.context.currentStep === 0 && <WelcomeMessage />}
-          {state.context.currentStep > 0 && !isDone && (
-            <Div marginTop={7}>
-              <Text underline bold>
-                Step {state.context.currentStep} /{` `}
-                {state.context.steps.length - 1}
-              </Text>
-            </Div>
-          )}
-          <MDX components={components}>
-            {state.context.steps[state.context.currentStep]}
+          <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
+            {state.context.steps.join(`\n`)}
           </MDX>
-          {!isDone && <PresentStep state={state} />}
-          {!isDone && <RunningStep state={state} />}
         </>
       )
     }

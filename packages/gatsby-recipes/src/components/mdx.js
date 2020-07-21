@@ -63,6 +63,7 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
   }
 
   const fn = new Function(...scopeKeys, transformCodeForEval(srcCode))
+  console.log(srcCode)
 
   return fn(...scopeValues)
 }
