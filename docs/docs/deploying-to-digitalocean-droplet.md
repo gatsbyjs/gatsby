@@ -15,22 +15,22 @@ A Droplet can be spun up in less than a minute for as little as \$5/month.
 ## Prerequisites
 
 - A Gatsby site living in a Git repository (GitHub, GitLab, or any Git cloud)
-- A [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/) with a non-root user configured with sudo group ([example: Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-sudo-enabled-user-on-ubuntu-18-04-quickstart))
+- A [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/) with a non-root user configured with `sudo` group ([example: Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-sudo-enabled-user-on-ubuntu-18-04-quickstart))
 - A custom domain name for your Gatsby site to help with configuring HTTPS
 
 ## How to deploy your Gatsby site to DigitalOcean
 
-### Install NodeJS, NPM and Gatsby-CLI onto your droplet
+### Install Node, npm and Gatsby-CLI onto your droplet
 
 Follow these instructions for installs on an Ubuntu droplet.
 
 1. Log in to your droplet as a non-root user.
 
-2. Install NodeJS
+2. Install Node
 
    ```bash
    sudo apt-get update
-   sudo apt-get install nodejs
+   sudo apt-get install node
    ```
 
 3. Install npm
@@ -69,7 +69,7 @@ Follow these instructions for installs on an Ubuntu droplet.
 
 ### Clone your repository to the droplet
 
-The next step is to clone the repository containing your Gatsby app (Replace `<your-github-repo-site>` with your Github repository link)
+The next step is to clone the repository containing your Gatsby app (Replace `<your-github-repo-site>` with your GitHub repository link)
 
 ```bash
 git clone <your-github-repo-site>
@@ -227,7 +227,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
    `Note`: You will be prompted to choose the option to redirect HTTP requests to HTTPS, which you may choose on your needs.
    (It is recommended to choose to redirect HTTP to HTTPS)
 
-5. Restart the nginx service.
+5. Restart the Nginx service.
 
    ```bash
    sudo systemctl restart nginx
@@ -247,7 +247,7 @@ Congratulations! You've deployed your Gatsby App on a DigitalOcean droplet along
 
 There's a lot more to learn about DigitalOcean's Droplets, Ubuntu configurations, and Nginx. Below are some links which could be useful in achieving the prerequisites of this post:
 
-- [Microblog - Create a new non-root user with sudo privileges on Ubuntu-based DigitalOcean Droplet configured with SSH](https://dev.to/mistryvatsal/microblog-create-a-new-non-root-user-with-sudo-privileges-on-ubuntu-based-digitalocean-droplet-configured-with-ssh-1l3)
+- [Microblog - Create a new non-root user with `sudo` privileges on Ubuntu-based DigitalOcean Droplet configured with SSH](https://dev.to/mistryvatsal/microblog-create-a-new-non-root-user-with-sudo-privileges-on-ubuntu-based-digitalocean-droplet-configured-with-ssh-1l3)
 - [Official DigitalOcean Docs](https://www.digitalocean.com/docs/)
 - [Official Nginx Docs](http://nginx.org/en/docs/)
 - [Configuring HTTPS Servers with Nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)
