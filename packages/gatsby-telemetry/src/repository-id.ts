@@ -92,11 +92,14 @@ function getRepositoryFromHerokuEnv(): IRepositoryId | null {
     return null
   }
 
+  // Parse repository metadata from /proc/*/environ. This is a naive glob approach to only
+  // look pids in procfs.
   const proc = readdirSync(`/proc`).filter(dir => Number.isFinite(Number(dir)))
   const len = proc.length
   for (let i = 0; i < len; i++) {
     const dir = proc[i]
     try {
+      // Piggyback on internal datastructures for control processes to see the git repo info
       const environData = readFileSync(path.join(`/proc`, dir, `environ`))
         ?.toString(`utf8`)
         ?.split(/\0/)
