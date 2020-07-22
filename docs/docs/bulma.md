@@ -68,4 +68,4 @@ And that's all there is to it! Now you can use Bulma as you normally would.
 
 ## Resources
 
-- [Bulma documentation on how to use sass](https://bulma.io/documentation/customize/with-node-sass/)
+- [Bulma documentation on how to use Sass](https://bulma.io/documentation/customize/with-node-sass/)

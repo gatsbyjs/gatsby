@@ -67,6 +67,11 @@ function getBruteForceCases() {
     import {import as x, y} from 'bar'
     import {x, import as y} from 'bar'
     import Events from "@components/events/events"
+    import {x, import as y} from 'bar';
+    import foo from 'bar' // commment
+    import foo from 'bar' // commment containing confusing from "chars"
+    import foo from 'bar' // import bad from 'imp'
+    import foo from 'bar'//next to it
   `
     .trim()
     .split(/\n/g)
@@ -99,19 +104,27 @@ describe(`regex import scanner`, () => {
           )
         ).toBe(true)
 
+        // For the next tests, don't mangle the comment and make sure it doesn't
+        // end up on a newline by itself. Test cases only have `//` for comment.
+        let commentStart = input.indexOf(`//`) - 1
+        if (commentStart < 0) commentStart = input.length
+        const commentLess = input.slice(0, commentStart)
+        const commentPart = input.slice(commentStart)
+
         // Confirm that the parser works when all spaces become newlines
-        const newlined = input.replace(/ /g, `\n`)
+        const newlined = commentLess.replace(/ /g, `\n`) + commentPart
         expect(parseImportBindings(newlined)).toEqual(bindings)
 
         // Confirm that the parser works with a minimal amount of spacing
-        const minified = input.replace(
-          /(?<=[_\w$]) (?![_\w$])|(?<![_\w$]) (?=[_\w$])|(?<![_\w$]) (?![_\w$])/g,
-          ``
-        )
+        const minified =
+          commentLess.replace(
+            /(?<=[_\w$]) (?![_\w$])|(?<![_\w$]) (?=[_\w$])|(?<![_\w$]) (?![_\w$])/g,
+            ``
+          ) + commentPart
         expect(parseImportBindings(minified)).toEqual(bindings)
 
         // Confirm that the parser works with an excessive amount of spacing
-        const blown = input.replace(/ /g, `   `)
+        const blown = commentLess.replace(/ /g, `   `) + commentPart
         expect(parseImportBindings(blown)).toEqual(bindings)
       })
     })

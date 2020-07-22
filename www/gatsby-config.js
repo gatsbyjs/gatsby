@@ -250,7 +250,7 @@ module.exports = {
       resolve: `gatsby-plugin-react-svg`,
       options: {
         rule: {
-          include: /assets\/(guidelines|icons|ornaments)\/.*.svg$/,
+          include: /assets\/(guidelines|icons|ornaments)\/.*\.svg$/,
         },
       },
     },
