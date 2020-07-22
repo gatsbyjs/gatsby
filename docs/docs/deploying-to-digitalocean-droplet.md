@@ -164,7 +164,7 @@ Change the root directory configuration of Nginx in the default server block fil
 
 3. Edit the file and make the following changes for below-mentioned fields, leave the rest of the fields as is. Your exact path may vary, but it may resemble `/home/<your non-root user>/<my-gatsby-app>/public`.
 
-   ```shell
+   ```bash
    server {
      root <path to my-gatsby-app>/public;
 
