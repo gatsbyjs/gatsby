@@ -219,7 +219,7 @@
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
-    "postbuild": "node scripts/output-api-file.js",
+    "postbuild": "node scripts/output-api-file.js && yarn workspace gatsby-admin build",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\"",
@@ -228,7 +228,6 @@
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "postinstall": "node scripts/postinstall.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "prepublishOnly": "yarn workspace gatsby-admin run build",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
