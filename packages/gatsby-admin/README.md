@@ -41,7 +41,7 @@ That's how the Admin frontend knows to connect to `localhost:50400/graphql` to c
 
 `gatsby-admin` cannot be used as a plugin, as that would enable users to override anything in the `src/` folder due to theme shadowing! Instead, `gatsby develop` statically serves the built files from the [develop parent proxy](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/develop-proxy.ts).
 
-Initially, @mxstbr thought this would be as simple as publishing `gatsby-admin` to npm and adding that as a dependency to `gatsby`. However, yarn and lerna do not handle circular dependencies well. Doing this breaks `lerna bootstrap` due to `gatsby-admin` trying to build (with `gatsby`!) before `gatsby` is built.
+Initially, @mxstbr published the built `gatsby-admin` files to npm and added it as a dependency to `gatsby`. However, yarn and lerna do not handle circular dependencies well. Doing this breaks `lerna bootstrap` due to `gatsby-admin` trying to build (with `gatsby`!) before `gatsby` is built.
 
 Instead, `gatsby-admin` copies its built files to `gatsby/gatsby-admin-public` which is then published to npm. While not an ideal solution, it fixes the issue and works relatively reliably.
 
