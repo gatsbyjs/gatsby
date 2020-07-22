@@ -294,6 +294,10 @@ module.exports = async (program: IProgram): Promise<void> => {
       proxy.serveSite()
       io.emit(`develop:started`)
     }
+
+    if (msg.type === `REFRESH` && msg.action === `FINISHED`) {
+      proxy.refreshEnded()
+    }
   }
 
   io.on(`connection`, socket => {

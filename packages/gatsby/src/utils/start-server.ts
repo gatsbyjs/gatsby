@@ -194,6 +194,13 @@ export async function startServer(
    **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
+    if (process.send) {
+      process.send({
+        type: `REFRESH`,
+        action: `STARTED`,
+      })
+    }
+
     stopSchemaHotReloader()
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
@@ -212,17 +219,17 @@ export async function startServer(
     await rebuildSchema({ parentSpan: activity })
     activity.end()
     startSchemaHotReloader()
+
+    if (process.send) {
+      process.send({
+        type: `REFRESH`,
+        action: `FINISHED`,
+      })
+    }
   }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
-    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
-    const authorizedRefresh =
-      !refreshToken || req.headers.authorization === refreshToken
-
-    if (enableRefresh && authorizedRefresh) {
-      refresh(req)
-    }
+    refresh(req)
     res.end()
   })
 
