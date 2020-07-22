@@ -11487,3 +11487,14 @@
     - Web Development
   built_by: MongoDB
   featured: false
+- title: Devnet
+  main_url: https://devnet.hr/
+  url: https://devnet.hr/
+  description: >
+    Business website for web development company.
+  categories:
+    - Web Development
+    - Agency
+  built_by: Devnet
+  built_by_url: https://devnet.hr
+  featured: false
