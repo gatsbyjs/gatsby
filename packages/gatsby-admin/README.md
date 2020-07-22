@@ -8,17 +8,17 @@ The Gatsby Admin interface (this package) is a standard Gatsby site.
 
 It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experimantal extension) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) for styling.
 
-It fetches its data from the [gatsby-recipes GraphQL server](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/src/graphql-server), which exposes all the information we need about the locally running Gatsby site, using [urql](https://github.com/FormidableLabs/urql).
+It fetches its data from the [gatsby-recipes GraphQL server](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/src/graphql-server), which exposes all the information Admin needs about the locally running Gatsby site, using [urql](https://github.com/FormidableLabs/urql).
 
-It also listens to the [`gatsby develop` status server](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/develop.ts), which exposes information about whether the developer changed the config files and needs to restart the develop process.
+It also listens to the [`gatsby develop` status server](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/develop.ts), which exposes information about whether you changed the config files and need to restart the develop process.
 
 ### Service Discovery
 
-We automatically start both the GraphQL and status server when developers run `gatsby develop`. However, they use random ports.
+`gatsby develop` automatically starts both the GraphQL and status server. However, both of these use random ports.
 
-To discover where they are (and whether they are already running), we added a service discovery mechanism to `gatsby-core-utils`. This stores the ports of the running Gatsby site(s) at `~/.config/gatsby/sites/<pathhash>/<server>.json`.
+To discover where they are (and whether they are already running) there is a service discovery mechanism in `gatsby-core-utils`. It stores the ports of the running Gatsby site(s) at `~/.config/gatsby/sites/<pathhash>/<servername>.json`.
 
-We can then fetch `localhost:8000/___services` (where `:8000` is the well-known port of the running site), which returns a list of all the random ports used by the site:
+Admin can then fetch `localhost:8000/___services` (where `:8000` is the well-known port of the running site), which returns a list of all the random ports used by the site:
 
 ```
 $ curl http://localhost:8000/___services | jq
@@ -39,7 +39,7 @@ That's how the Admin frontend knows to connect to `localhost:50400/graphql` to c
 
 ### Production Deployment
 
-We do not want developers to use `gatsby-admin` as a plugin, as that would enable them to override anything in our `src/` folder due to theme shadowing! Instead, we statically serve the built files from the [develop parent proxy](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/develop-proxy.ts).
+`gatsby-admin` cannot be used as a plugin, as that would enable users to override anything in the `src/` folder due to theme shadowing! Instead, `gatsby develop` statically serves the built files from the [develop parent proxy](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/develop-proxy.ts).
 
 Initially, @mxstbr thought this would be as simple as publishing `gatsby-admin` to npm and adding that as a dependency to `gatsby`. However, yarn and lerna do not handle circular dependencies well. Doing this breaks `lerna bootstrap` due to `gatsby-admin` trying to build (with `gatsby`!) before `gatsby` is built.
 
