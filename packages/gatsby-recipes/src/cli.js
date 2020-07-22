@@ -1,6 +1,5 @@
 const fs = require(`fs`)
 const lodash = require(`lodash`)
-const Boxen = require(`ink-box`)
 const React = require(`react`)
 const { useState, useEffect } = require(`react`)
 const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
@@ -35,14 +34,6 @@ const removeJsx = () => tree => {
 
 const MAX_UI_WIDTH = 67
 
-// TODO try this and write out success stuff & last message?
-// const enterAltScreenCommand = "\x1b[?1049h"
-// const leaveAltScreenCommand = "\x1b[?1049l"
-// process.stdout.write(enterAltScreenCommand)
-// process.on("exit", () => {
-// process.stdout.write(leaveAltScreenCommand)
-// })
-
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
   console.log(
@@ -52,19 +43,24 @@ if (semver.lt(React.version, `16.8.0`)) {
 
 const WelcomeMessage = () => (
   <>
-    <Boxen
+    <Box
       borderStyle="double"
       borderColor="magentaBright"
-      float="left"
       padding={1}
-      margin={{ bottom: 1, left: 2 }}
+      marginBottom={1}
+      marginLeft={2}
+      marginRight={2}
     >
-      Thank you for trying the experimental version of Gatsby Recipes!
-    </Boxen>
+      <Text>
+        Thank you for trying the experimental version of Gatsby Recipes!
+      </Text>
+    </Box>
     <Div marginBottom={2} alignItems="center">
-      Please ask questions, share your recipes, report bugs, and subscribe for
-      updates in our umbrella issue at
-      https://github.com/gatsbyjs/gatsby/issues/22991
+      <Text>
+        Please ask questions, share your recipes, report bugs, and subscribe for
+        updates in our umbrella issue at
+        https://github.com/gatsbyjs/gatsby/issues/22991
+      </Text>
     </Div>
   </>
 )
@@ -184,21 +180,21 @@ const RecipesList = ({ setRecipe }) => {
       items={items}
       onSelect={setRecipe}
       indicatorComponent={item => (
-        <Text color="magentaBright">
+        <Text color={item.isSelected ? `yellow` : `magentaBright`}>
           {item.isSelected ? `>>` : `  `}
           {item.label}
         </Text>
       )}
       itemComponent={props => (
         <Text color="magentaBright">
-          {props.isSelected}>{props.label}
+          {props.isSelected}
+          {` `}
+          {props.label}
         </Text>
       )}
     />
   )
 }
-
-let renderCount = 1
 
 const Div = props => {
   const width = Math.max(process.stdout.columns, MAX_UI_WIDTH)
@@ -222,17 +218,28 @@ function eliminateNewLines(children) {
   })
 }
 
+// TODO
+// * add a --dev command that keeps it running for hot reloading
+//    * tell user they're in dev mode & give instructions on how to quit
+//    * make it work with any empty mdx file
+// * add a --install command that actually runs the plan
+// * remove all the now unneeded code
+// * add back support for picking a recipe
+
 const ResourceComponent = props => {
   const resource = useResourceByUUID(props._uuid)
   return (
     <Div marginBottom={1}>
-      <Text>~~~</Text>
       <Text color="yellow" backgroundColor="black" bold underline>
         {props._type}:
       </Text>
       <Text color="green">{resource?.describe}</Text>
-      {resource?.diff ? <Text>{resource?.diff}"</Text> : null}
-      <Text>~~~</Text>
+      {resource?.diff ? (
+        <>
+          <Text>{` `}</Text>
+          <Text>{resource?.diff}"</Text>
+        </>
+      ) : null}
     </Div>
   )
 }
@@ -295,7 +302,7 @@ const components = {
         borderStyle="single"
         padding={1}
         flexDirection="column"
-        borderColor="gray"
+        borderColor="#8a4baf"
       >
         {props.children}
       </Box>
@@ -350,8 +357,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }),
       ],
     })
-    const Plan = ({ state }) => {
-      // console.log(state)
+    const Plan = ({ state, localRecipe }) => {
       const { exit } = useApp()
       // Exit the app after we render
       useEffect(() => {
@@ -365,13 +371,16 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
               state.context.plan?.filter(p => p.resourceName !== `Input`) || []
             }
           >
+            <WelcomeMessage />
             <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
               {state.context.steps.join(`\n`)}
             </MDX>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
             <Text>{` `}</Text>
-            <Text>{`  `}gatsby recipes ./test.mdx --install</Text>
+            <Text>
+              {`  `}gatsby recipes {localRecipe} --install
+            </Text>
             <Text>{` `}</Text>
           </ResourceProvider>
         </>
@@ -447,8 +456,6 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }
       })
 
-      log(`subscriptionResponse.data`, subscriptionResponse.data)
-
       if (showRecipesList) {
         return (
           <>
@@ -458,6 +465,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
             </Text>
             <RecipesList
               setRecipe={async recipeItem => {
+                setRecipe(recipeItem.value.slice(0, -4))
                 trackCli(`RECIPE_RUN`, { name: recipeItem.value })
                 showRecipesList = false
                 try {
@@ -482,18 +490,6 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
           </Text>
         )
       }
-
-      // if (state.value === `waitingForInput`) {
-      // return <Text>Input some stuff!</Text>
-      // }
-
-      /*
-       * TODOs
-       * Listen to "y" to continue (in addition to enter)
-       */
-
-      log(`render`, `${renderCount} ${new Date().toJSON()}`)
-      renderCount += 1
 
       const isDone = state.value === `done`
 
@@ -669,7 +665,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       // resources:
       // state.context.plan?.filter(p => p.resourceName !== `Input`) || [],
       // })
-      return <Plan state={state} />
+      return <Plan state={state} localRecipe={localRecipe} />
     }
 
     const Wrapper = () => (

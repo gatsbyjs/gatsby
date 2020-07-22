@@ -502,7 +502,7 @@ const Step = ({ state, step, i }) => {
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
-            {state.context.exports.join(`\n`) + `\n\n` + step}
+            {state.context.exports?.join(`\n`) + `\n\n` + step}
           </MDX>
         </div>
       </div>
@@ -857,7 +857,7 @@ const RecipeInterpreter = () => {
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
-                  {state.context.exports.join(`\n`) +
+                  {state.context.exports?.join(`\n`) +
                     `\n\n` +
                     state.context.steps[0]}
                 </MDX>
