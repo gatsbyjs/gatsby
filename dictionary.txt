@@ -303,6 +303,7 @@ CDN
 CDN-backed
 CDNs
 Cereda
+Certbot
 CFP
 Chakra
 changelog
@@ -372,7 +373,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial
@@ -985,6 +986,7 @@ hypermodern
 i10n
 i18n
 i18next
+IaaS
 IaC
 IAM
 iam_timsmith
@@ -1325,6 +1327,7 @@ nodeId
 nodeID
 NodeID
 nodemailer
+Node.js
 NodeSchool
 nodesPromise
 Nolen
@@ -1383,6 +1386,7 @@ OpenAI
 OpenAPI
 OpenCollective
 OpenGraph
+OpenSSH
 opentracing
 OpenTracing
 operandi
@@ -1471,6 +1475,7 @@ PostHog
 postprocessing
 Poumián
 PowerShell
+PPA
 pragma
 pragmas
 PRDs
@@ -2064,6 +2069,7 @@ voilà
 Vojtech
 Vojtěch
 VPs
+VPS
 VS2015
 VS201x
 VSCode
