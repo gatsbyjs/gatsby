@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.8...gatsby@2.24.9) (2020-07-22)
+
+### Bug Fixes
+
+- **gatsby:** don't place virtual modules in node_modules directory ([#25720](https://github.com/gatsbyjs/gatsby/issues/25720)) ([7b1a0f2](https://github.com/gatsbyjs/gatsby/commit/7b1a0f2))
+
+### Features
+
+- **gatsby:** Defer node mutation during querying ([#25479](https://github.com/gatsbyjs/gatsby/issues/25479)) ([cf14989](https://github.com/gatsbyjs/gatsby/commit/cf14989)), closes [#25716](https://github.com/gatsbyjs/gatsby/issues/25716)
+
 ## [2.24.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.7...gatsby@2.24.8) (2020-07-21)
 
 ### Bug Fixes
