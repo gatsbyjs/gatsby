@@ -40,7 +40,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build --prefix-paths",
+    "build": "node ../gatsby/dist/bin/gatsby.js build --prefix-paths",
     "postbuild": "ncp public ../gatsby/gatsby-admin-public",
     "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   }
