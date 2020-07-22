@@ -500,7 +500,7 @@ Lastly, you need to refactor your `Products` component to group the prices by th
 ```jsx:title=src/components/Products/Products.js
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
-import ProductCard from "./ProductCard"
+import ProductCard from "./ProductCard" //highlight-line
 
 const containerStyles = {
   display: "flex",
