@@ -42,7 +42,7 @@ Run `gatsby develop` in the terminal, which starts a development server and relo
 
 ### Loading Stripe.js
 
-Stripe provides a JavaScript library that allows you to securely redirect your customer to the Stripe hosted checkout page. Due to [PCI compliance requirements](https://stripe.com/docs/security), the Stripe.js library has to be loaded from Stripe's servers. Stripe provides a [loading wrapper](https://github.com/stripe/stripe-js) that allows you to import Stripe.js as an ES module. To improve your site's performance, you can hold off instantiating Stripe until your user hits the checkout button.
+Stripe provides a JavaScript library that allows you to securely redirect your customer to the Stripe hosted checkout page. Due to [PCI compliance requirements](https://stripe.com/docs/security), the Stripe.js library has to be loaded from Stripe's servers. Stripe provides a [loading wrapper](https://github.com/stripe/stripe-js) that allows you to import Stripe.js as an ES module. To improve your site's performance, you can hold off instantiating Stripe until your user hits the checkout button. `<YOUR STRIPE PUBLISHABLE KEY>` must be replaced with your own Stripe key.
 
 ```js
 import { loadStripe } from "@stripe/stripe-js"
