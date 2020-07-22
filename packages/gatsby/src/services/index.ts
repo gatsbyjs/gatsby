@@ -18,6 +18,7 @@ import { runStaticQueries } from "./run-static-queries"
 import { runPageQueries } from "./run-page-queries"
 
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+import { runMutationBatch } from "./run-mutation-batch"
 
 export * from "./types"
 
@@ -38,6 +39,7 @@ export {
   writeOutRedirects,
   startWebpackServer,
   rebuildSchemaWithSitePage,
+  runMutationBatch,
 }
 
 export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
