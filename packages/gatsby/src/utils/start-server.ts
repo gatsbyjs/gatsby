@@ -161,10 +161,12 @@ export async function startServer(
         return {
           schema,
           graphiql: false,
-          extensions: () => ({
-            enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
-            refreshToken: process.env.GATSBY_REFRESH_TOKEN
-          }),
+          extensions: () => {
+            return {
+              enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+              refreshToken: process.env.GATSBY_REFRESH_TOKEN,
+            }
+          },
           context: withResolverContext({
             schema,
             schemaComposer: schemaCustomization.composer,

@@ -313,7 +313,7 @@ class App extends React.Component {
         Authorization: this.state.refreshToken,
       }
     }
-    return fetch("/__refresh", options)
+    return fetch(`/__refresh`, options)
   }
 
   render() {
