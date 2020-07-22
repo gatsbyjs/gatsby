@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.28...gatsby-source-contentful@2.3.29) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.27...gatsby-source-contentful@2.3.28) (2020-07-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.26...gatsby-source-contentful@2.3.27) (2020-07-17)
+
+### Features
+
+- **gatsby-source-contentful:** Give "Asset" the same Sys fields as "Entry" ([#25030](https://github.com/gatsbyjs/gatsby/issues/25030)) ([067468a](https://github.com/gatsbyjs/gatsby/commit/067468a))
+
+## [2.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.25...gatsby-source-contentful@2.3.26) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.24...gatsby-source-contentful@2.3.25) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.23...gatsby-source-contentful@2.3.24) (2020-07-07)
+
+### Performance Improvements
+
+- **gatsby-plugin-contentful:** use internal cache to get nodes by type ([#25467](https://github.com/gatsbyjs/gatsby/issues/25467)) ([05a73b7](https://github.com/gatsbyjs/gatsby/commit/05a73b7))
+- **gatsby-source-contentful:** experimental flag to skip id normalization ([#25473](https://github.com/gatsbyjs/gatsby/issues/25473)) ([da38276](https://github.com/gatsbyjs/gatsby/commit/da38276))
+
+## [2.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.22...gatsby-source-contentful@2.3.23) (2020-07-06)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** dont ship fixtures when publishing ([#25472](https://github.com/gatsbyjs/gatsby/issues/25472)) ([0c5aea8](https://github.com/gatsbyjs/gatsby/commit/0c5aea8))
+
 ## [2.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.21...gatsby-source-contentful@2.3.22) (2020-07-02)
 
 **Note:** Version bump only for package gatsby-source-contentful

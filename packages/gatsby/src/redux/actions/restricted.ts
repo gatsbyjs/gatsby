@@ -204,8 +204,8 @@ export const actions = {
     types:
       | string
       | GraphQLOutputType
-      | GatsbyGraphQLType
-      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
+      | GatsbyGraphQLType<any, any>
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType<any, any>>,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateTypes => {

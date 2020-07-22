@@ -160,6 +160,9 @@ Array [
   Array [
     Array [
       "/path/to/module/babel-plugin-remove-graphql-queries",
+      Object {
+        "stage": "test",
+      },
     ],
     Object {
       "type": "plugin",
