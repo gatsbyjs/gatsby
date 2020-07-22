@@ -1,4 +1,7 @@
 import { isValidCollectionPathImplementation } from "../is-valid-collection-path-implementation"
+import reporter from "gatsby-cli/lib/reporter"
+
+jest.mock(`gatsby-cli/lib/reporter`)
 
 describe(`isValidCollectionPathImplementation`, () => {
   it(`works`, () => {
@@ -16,14 +19,9 @@ describe(`isValidCollectionPathImplementation`, () => {
   ])(`%o`, path => {
     const part = path.split(`/`)[2]
 
-    try {
-      isValidCollectionPathImplementation(path)
-      throw new Error(`test safety throw. This should not be hit`)
-    } catch (e) {
-      expect(e.message).toMatchInlineSnapshot(`
-        "Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-        filePath: ${path}"
-      `)
-    }
+    isValidCollectionPathImplementation(path)
+    expect(reporter.panicOnBuild)
+      .toBeCalledWith(`Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
+filePath: ${path}`)
   })
 })
