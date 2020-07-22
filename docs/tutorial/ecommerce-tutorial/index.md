@@ -128,7 +128,7 @@ const buttonDisabledStyles = {
 let stripePromise
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe("< YOUR STRIPE PUBLISHABLE KEY >")
+    stripePromise = loadStripe("<YOUR STRIPE PUBLISHABLE KEY>")
   }
   return stripePromise
 }
@@ -393,6 +393,27 @@ export default AdvancedExamplePage
 ```
 
 When navigating to `http://localhost:8000/advanced/` you should now see a list of paragraphs with your product names.
+
+#### Extract loading of Stripe.js into a utility function
+
+When using Stripe.js across multiple pages and components it is recommended to extract `loadStripe` into a utility function that exports a `getStripe` singleton:
+
+```js:title=src/utils/stripejs.js
+/**
+ * This is a singleton to ensure we only instantiate Stripe once.
+ */
+import { loadStripe } from "@stripe/stripe-js"
+
+let stripePromise
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
+  }
+  return stripePromise
+}
+
+export default getStripe
+```
 
 #### Create a component that represents a single product
 
