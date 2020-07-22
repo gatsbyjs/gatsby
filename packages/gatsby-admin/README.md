@@ -37,6 +37,14 @@ $ curl http://localhost:8000/___services | jq
 
 That's how the Admin frontend knows to connect to `localhost:50400/graphql` to connect to the GraphQL server, and `localhost:60731` to connect to the develop status server.
 
+### Production Deployment
+
+We do not want developers to use `gatsby-admin` as a plugin, as that would enable them to override anything in our `src/` folder due to theme shadowing! Instead, we statically serve the built files from the [develop parent proxy](../gatsby/src/utils/develop-proxy.ts).
+
+Initially, @mxstbr thought this would be as simple as publishing `gatsby-admin` to npm and adding that as a dependency to `gatsby`. However, yarn and lerna do not handle circular dependencies well. Doing this breaks `lerna bootstrap` due to `gatsby-admin` trying to build (with `gatsby`!) before `gatsby` is built.
+
+Instead, `gatsby-admin` copies its built files to `gatsby/gatsby-admin-public` which is then published to npm. While not an ideal solution, it fixes the issue and works relatively reliably.
+
 ## Development
 
 ### Running it locally
