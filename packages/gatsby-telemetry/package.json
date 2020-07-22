@@ -18,6 +18,7 @@
     "is-docker": "2.0.0",
     "lodash": "^4.17.15",
     "node-fetch": "2.6.0",
+    "@turist/time": "0.0.1",
     "uuid": "3.4.0"
   },
   "devDependencies": {

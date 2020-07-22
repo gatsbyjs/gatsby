@@ -4,6 +4,7 @@ import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
 } from "./repository-id"
+import { createFlush } from "./create-flush"
 import os from "os"
 
 import { join, sep } from "path"
@@ -15,6 +16,7 @@ import lodash from "lodash"
 const EventStorage = require(`./event-storage`)
 const { cleanPaths } = require(`./error-helpers`)
 
+const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
 
 type UUID = string
@@ -132,6 +134,7 @@ export class AnalyticsTracker {
     }
     return undefined
   }
+
   captureEvent(type = ``, tags = {}, opts = { debounce: false }): void {
     if (!this.isTrackingEnabled()) {
       return
@@ -158,6 +161,10 @@ export class AnalyticsTracker {
 
     delete this.metadataCache[type]
     this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  isFinalEvent(event: string): boolean {
+    return finalEventRegex.test(event)
   }
 
   captureError(type, tags = {}): void {
@@ -230,6 +237,11 @@ export class AnalyticsTracker {
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
+    if (this.isFinalEvent(eventType)) {
+      // call create flush
+      const flush = createFlush(this.isTrackingEnabled())
+      flush()
+    }
   }
 
   getMachineId(): UUID {
