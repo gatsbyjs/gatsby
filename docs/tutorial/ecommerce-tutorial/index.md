@@ -170,7 +170,7 @@ const Checkout = () => {
 export default Checkout
 ```
 
-**Note**: If you have an older Stripe account with SKU objects instead of prices, you can simply provide the SKU ID instead:
+**Note**: If you have an older Stripe account with SKU objects instead of prices, you can provide the SKU ID instead:
 
 ```jsx:title=src/components/checkout.js
 const { error } = await stripe.redirectToCheckout({
