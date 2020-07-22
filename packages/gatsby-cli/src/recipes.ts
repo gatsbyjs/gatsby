@@ -3,7 +3,8 @@ import runRecipe, { startGraphQLServer } from "gatsby-recipes"
 
 export async function recipesHandler(
   projectRoot: string,
-  recipe: string | undefined
+  recipe: string | undefined,
+  develop: boolean
 ): Promise<void> {
   trackCli(`RECIPE_RUN`, { name: recipe })
 
@@ -11,6 +12,7 @@ export async function recipesHandler(
 
   return runRecipe({
     recipe,
+    isDevelopMode: develop,
     graphqlPort: graphql.port,
     projectRoot,
   })

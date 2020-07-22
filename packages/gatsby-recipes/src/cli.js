@@ -219,12 +219,8 @@ function eliminateNewLines(children) {
 }
 
 // TODO
-// * add a --dev command that keeps it running for hot reloading
-//    * tell user they're in dev mode & give instructions on how to quit
-//    * make it work with any empty mdx file
 // * add a --install command that actually runs the plan
 // * remove all the now unneeded code
-// * add back support for picking a recipe
 
 const ResourceComponent = props => {
   const resource = useResourceByUUID(props._uuid)
@@ -302,7 +298,7 @@ const components = {
         borderStyle="single"
         padding={1}
         flexDirection="column"
-        borderColor="#8a4baf"
+        borderColor="magentaBright"
       >
         {props.children}
       </Box>
@@ -327,7 +323,12 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
+module.exports = async ({
+  recipe,
+  isDevelopMode,
+  graphqlPort,
+  projectRoot,
+}) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
@@ -357,11 +358,13 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }),
       ],
     })
-    const Plan = ({ state, localRecipe }) => {
+    const Plan = ({ state, localRecipe, isDevelopMode }) => {
       const { exit } = useApp()
       // Exit the app after we render
       useEffect(() => {
-        exit()
+        if (!isDevelopMode) {
+          exit()
+        }
       }, [])
 
       return (
@@ -665,7 +668,13 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       // resources:
       // state.context.plan?.filter(p => p.resourceName !== `Input`) || [],
       // })
-      return <Plan state={state} localRecipe={localRecipe} />
+      return (
+        <Plan
+          state={state}
+          localRecipe={localRecipe}
+          isDevelopMode={isDevelopMode}
+        />
+      )
     }
 
     const Wrapper = () => (
