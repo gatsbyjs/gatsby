@@ -4,8 +4,7 @@ import getStripe from "../utils/stripejs"
 const buttonStyles = {
   fontSize: "13px",
   textAlign: "center",
-  color: "#fff",
-  outline: "none",
+  color: "#000",
   padding: "12px 60px",
   boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
   backgroundColor: "rgb(255, 178, 56)",
