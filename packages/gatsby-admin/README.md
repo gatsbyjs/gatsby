@@ -2,11 +2,42 @@
 
 A visual interface to configure your Gatsby site.
 
+## Architecture
+
+The Gatsby Admin interface (this package) is a standard Gatsby site.
+
+It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experimantal extension) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) for styling.
+
+It fetches its data from the [gatsby-recipes GraphQL server](../gatsby-recipes/src/graphql-server/), which exposes all the information we need about the locally running Gatsby site, using [urql](https://github.com/FormidableLabs/urql).
+
+It also listens to the [`gatsby develop` status server](../gatsby/src/commands/develop.ts), which exposes information about whether the developer changed the config files and needs to restart the develop process.
+
+### Service Discovery
+
+We automatically start both the GraphQL and status server when developers run `gatsby develop`. However, they use random ports.
+
+To discover where they are (and whether they are already running), we added a service discovery mechanism to `gatsby-core-utils`. This stores the ports of the running Gatsby site(s) at `~/.config/gatsby/sites/<pathhash>/<server>.json`.
+
+We can then fetch `localhost:8000/___services` (where `:8000` is the well-known port of the running site), which returns a list of all the random ports used by the site:
+
+```
+$ curl http://localhost:8000/___services | jq
+{
+  "developproxy": {
+    "port": 8000
+  },
+  "developstatusserver": {
+    "port": 60731
+  },
+  "recipesgraphqlserver": {
+    "port": 50400
+  }
+}
+```
+
+That's how the Admin frontend knows to connect to `localhost:50400/graphql` to connect to the GraphQL server, and `localhost:60731` to connect to the develop status server.
+
 ## Development
-
-The Admin app itself is a standard Gatsby site. It fetches its data from the Recipes GraphQL server, which exposes all the information we need about the Gatsby site.
-
-It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experiment) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) to style the app and [urql](https://github.com/FormidableLabs/urql) to fetch the data from the GraphQL server.
 
 ### Running it locally
 
