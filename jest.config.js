@@ -11,12 +11,10 @@ const builtTestsDirs = pkgs
   .filter(p => fs.existsSync(path.join(p, `src`)))
   .map(p => path.join(p, `__tests__`))
 const distDirs = pkgs.map(p => path.join(p, `dist`))
-const cacheDirs = pkgs.map(p => path.join(p, `.cache`))
 const ignoreDirs = [`<rootDir>/packages/gatsby-dev-cli/verdaccio`].concat(
   gatsbyBuildDirs,
   builtTestsDirs,
-  distDirs,
-  cacheDirs
+  distDirs
 )
 
 const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
@@ -33,6 +31,7 @@ module.exports = {
     `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
+    `<rootDir>/packages/gatsby-admin/.cache/`,
     `__tests__/fixtures`,
   ],
   transform: {
