@@ -535,6 +535,7 @@ const Products = () => {
         }
       `}
       render={({ prices }) => {
+        // highlight-start
         // Group prices by product
         const products = {}
         for (const { node: price } of prices.edges) {
