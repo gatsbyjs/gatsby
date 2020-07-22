@@ -4,51 +4,20 @@ import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
 import inspector from "inspector"
-import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { initTracer } from "../utils/tracer"
-import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import * as requiresWriter from "../bootstrap/requires-writer"
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { startRedirectListener } from "../bootstrap/redirects-writer"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram, IDebugInfo } from "./types"
-import {
-  startWebpackServer,
-  writeOutRequires,
-  IBuildContext,
-  initialize,
-  postBootstrap,
-  rebuildSchemaWithSitePage,
-  writeOutRedirects,
-} from "../services"
-import { boundActionCreators } from "../redux/actions"
-import { ProgramStatus } from "../redux/types"
-import {
-  MachineConfig,
-  AnyEventObject,
-  assign,
-  Machine,
-  DoneEventObject,
-  interpret,
-  Actor,
-  Interpreter,
-  State,
-} from "xstate"
-import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { interpret } from "xstate"
 import { globalTracer } from "opentracing"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
-import { queryRunningMachine } from "../state-machines/query-running"
+import { developMachine } from "../state-machines/develop"
+import { logTransitions } from "../utils/state-machine-logging"
 
 const tracer = globalTracer()
 
@@ -100,11 +69,13 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  if (program.verbose) {
+    reporter.setVerbose(true)
+  }
+
   if (program.debugInfo) {
     openDebuggerPort(program.debugInfo)
   }
-
-  const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
@@ -148,178 +119,19 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   }
 
   const app = express()
+  const parentSpan = tracer.startSpan(`bootstrap`)
 
-  const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
-    id: `build`,
-    initial: `initializing`,
-    states: {
-      initializing: {
-        invoke: {
-          src: `initialize`,
-          onDone: {
-            target: `initializingDataLayer`,
-            actions: `assignStoreAndWorkerPool`,
-          },
-        },
-      },
-      initializingDataLayer: {
-        invoke: {
-          src: `initializeDataLayer`,
-          data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-            return { parentSpan, store, firstRun: true }
-          },
-          onDone: {
-            actions: `assignDataLayer`,
-            target: `finishingBootstrap`,
-          },
-        },
-      },
-      finishingBootstrap: {
-        invoke: {
-          src: async ({
-            gatsbyNodeGraphQLFunction,
-          }: IBuildContext): Promise<void> => {
-            // These were previously in `bootstrap()` but are now
-            // in part of the state machine that hasn't been added yet
-            await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
+  const machine = developMachine.withContext({
+    program,
+    parentSpan,
+    app,
+  })
 
-            await writeOutRedirects({ parentSpan: bootstrapSpan })
+  const service = interpret(machine)
 
-            startRedirectListener()
-            bootstrapSpan.finish()
-            await postBootstrap({ parentSpan: bootstrapSpan })
-
-            // These are the parts that weren't in bootstrap
-
-            // Start the createPages hot reloader.
-            bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
-
-            // Start the schema hot reloader.
-            bootstrapSchemaHotReloader()
-          },
-          onDone: {
-            target: `runningQueries`,
-          },
-        },
-      },
-      runningQueries: {
-        invoke: {
-          src: `runQueries`,
-          data: ({
-            program,
-            store,
-            parentSpan,
-            gatsbyNodeGraphQLFunction,
-            graphqlRunner,
-            firstRun,
-          }: IBuildContext): IQueryRunningContext => {
-            return {
-              firstRun,
-              program,
-              store,
-              parentSpan,
-              gatsbyNodeGraphQLFunction,
-              graphqlRunner,
-            }
-          },
-          onDone: {
-            target: `doingEverythingElse`,
-          },
-        },
-      },
-      doingEverythingElse: {
-        invoke: {
-          src: async ({ workerPool, store, app }): Promise<void> => {
-            // All the stuff that's not in the state machine yet
-
-            await writeOutRequires({ store })
-            boundActionCreators.setProgramStatus(
-              ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
-            )
-
-            await db.saveState()
-
-            await waitUntilAllJobsComplete()
-            requiresWriter.startListener()
-            db.startAutosave()
-            queryUtil.startListeningToDevelopQueue({
-              graphqlTracing: program.graphqlTracing,
-            })
-            queryWatcher.startWatchDeletePage()
-
-            await startWebpackServer({ program, app, workerPool, store })
-          },
-          onDone: {
-            actions: assign<IBuildContext, any>({ firstRun: false }),
-          },
-        },
-      },
-    },
+  if (program.verbose) {
+    logTransitions(service)
   }
 
-  const service = interpret(
-    Machine(developConfig, {
-      services: {
-        initializeDataLayer: dataLayerMachine,
-        initialize,
-        runQueries: queryRunningMachine,
-      },
-      actions: {
-        assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(
-          (_context, event) => {
-            const { store, workerPool } = event.data
-            return {
-              store,
-              workerPool,
-            }
-          }
-        ),
-        assignDataLayer: assign<IBuildContext, DoneEventObject>(
-          (_, { data }): DataLayerResult => data
-        ),
-      },
-    }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
-  )
-
-  const isInterpreter = <T>(
-    actor: Actor<T> | Interpreter<T>
-  ): actor is Interpreter<T> => `machine` in actor
-
-  const listeners = new WeakSet()
-  let last: State<IBuildContext, AnyEventObject, any, any>
-
-  service.onTransition(state => {
-    if (!last) {
-      last = state
-    } else if (!state.changed || last.matches(state)) {
-      return
-    }
-    last = state
-    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
-    // eslint-disable-next-line no-unused-expressions
-    service.children?.forEach(child => {
-      // We want to ensure we don't attach a listener to the same
-      // actor. We don't need to worry about detaching the listener
-      // because xstate handles that for us when the actor is stopped.
-
-      if (isInterpreter(child) && !listeners.has(child)) {
-        let sublast = child.state
-        child.onTransition(substate => {
-          if (!sublast) {
-            sublast = substate
-          } else if (!substate.changed || sublast.matches(substate)) {
-            return
-          }
-          sublast = substate
-          reporter.verbose(
-            `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
-              substate.value
-            )}`
-          )
-        })
-        listeners.add(child)
-      }
-    })
-  })
   service.start()
 }
