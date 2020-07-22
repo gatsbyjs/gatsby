@@ -1,34 +1,44 @@
-const os = require(`os`)
-const path = require(`path`)
-const Store = require(`./store`)
-const fetch = require(`node-fetch`)
-const Configstore = require(`configstore`)
-const { ensureDirSync } = require(`fs-extra`)
-
+import os from "os"
+import path from "path"
+import Configstore from "configstore"
+import createFetch from "@turist/fetch"
+import { Store } from "./store"
+import { ensureDirSync } from "fs-extra"
 import { isTruthy } from "./is-truthy"
+
+const fetch = createFetch()
 
 /* The events data collection is a spooled process that
  * buffers events to a local fs based buffer
  * which then is asynchronously flushed to the server.
- * This both increases the fault tolerancy and allows collection
+ * This both increases the fault tolerance and allows collection
  * to continue even when working offline.
  */
 module.exports = class EventStorage {
   analyticsApi =
     process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
+  // eslint-disable-line @typescript-eslint/no-explicit-any
+  config: Configstore | Record<string, any>
+  store: Store
+  verbose: boolean
+  debugEvents: boolean
+  disabled: boolean
+
   constructor() {
     try {
       this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
     } catch (e) {
       // This should never happen
-      this.config = {
-        get: key => this.config[key],
-        set: (key, value) => (this.config[key] = value),
-        all: this.config,
-        path: path.join(os.tmpdir(), `gatsby`),
-        "telemetry.enabled": true,
-        "telemetry.machineId": `not-a-machine-id`,
+      this.config = {} as Configstore
+      this.config.get = (key: string): any => this.config[key]
+      this.config.set = (key: string, value: any): any => {
+        this.config[key] = value
+        return value
       }
+      this.config.all = this.config
+      this.config.path = path.join(os.tmpdir(), `gatsby`)
+      this.config[`telemetry.enabled`] = true
+      this.config[`telemetry.machineId`] = `not-a-machine-id`
     }
 
     const baseDir = path.dirname(this.config.path)
@@ -45,11 +55,11 @@ module.exports = class EventStorage {
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
   }
 
-  isTrackingDisabled() {
+  isTrackingDisabled(): boolean {
     return this.disabled
   }
 
-  addEvent(event) {
+  addEvent(event: unknown): void {
     if (this.disabled) {
       return
     }
@@ -68,8 +78,8 @@ module.exports = class EventStorage {
     this.store.appendToBuffer(eventString + `\n`)
   }
 
-  async sendEvents() {
-    return this.store.startFlushEvents(async eventsData => {
+  async sendEvents(): Promise<void> {
+    return this.store.startFlushEvents(async (eventsData: string) => {
       const events = eventsData
         .split(`\n`)
         .filter(e => e && e.length > 2) // drop empty lines
@@ -79,7 +89,7 @@ module.exports = class EventStorage {
     })
   }
 
-  async submitEvents(events) {
+  async submitEvents(events: unknown): Promise<boolean> {
     try {
       const res = await fetch(this.analyticsApi, {
         method: `POST`,
@@ -95,7 +105,7 @@ module.exports = class EventStorage {
     }
   }
 
-  getUserAgent() {
+  getUserAgent(): string {
     try {
       const { name, version } = require(`../package.json`)
       return `${name}:${version}`
@@ -104,14 +114,15 @@ module.exports = class EventStorage {
     }
   }
 
-  getConfig(key) {
+  getConfig(key: string): string {
     if (key) {
       return this.config.get(key)
     }
     return this.config.all
   }
 
-  updateConfig(key, value) {
+  // eslint-disable-line @typescript-eslint/no-explicit-any
+  updateConfig(key: string, value: any): any {
     return this.config.set(key, value)
   }
 }

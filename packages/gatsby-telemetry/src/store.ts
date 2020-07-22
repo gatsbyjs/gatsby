@@ -8,7 +8,7 @@ import {
   unlinkSync,
 } from "fs"
 
-module.exports = class Store {
+export class Store {
   bufferFilePath: string
   baseDir: string
   eventsJsonFileName = `events.json`

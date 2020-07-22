@@ -19,13 +19,10 @@ export function createFlush(isTrackingEnabled: boolean): () => Promise<void> {
     // Submit events on background with out blocking the main process
     // nor relying on it's life cycle
     const forked = fork(join(__dirname, `send.js`), {
-      detached: false,
+      detached: true,
       stdio: `ignore`,
       execArgv: [],
     })
-    forked.on(`exit`, code => {
-      console.log(`child process exited with code ${code}`)
-    })
-    //forked.unref()
+    forked.unref()
   }
 }
