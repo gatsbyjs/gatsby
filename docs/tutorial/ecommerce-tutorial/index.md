@@ -467,14 +467,18 @@ const ProductCard = ({ product }) => {
   return (
     <div style={cardStyles}>
       <form onSubmit={handleSubmit}>
-        <h4>{product.name}</h4>
-        <select name="priceSelect">
+        <fieldset>
+            <legend><h4>{product.name}</h4></legend>
+        <label>
+            Price <select name="priceSelect">
           {product.prices.map(price => (
             <option key={price.id} value={price.id}>
               {formatPrice(price.unit_amount, price.currency)}
             </option>
           ))}
-        </select>
+            </select>
+         </label>
+      </fieldset>
         <button
           disabled={loading}
           style={
@@ -554,6 +558,7 @@ const Products = () => {
             ))}
           </div>
         )
+        // highlight-end
       }}
     />
   )
