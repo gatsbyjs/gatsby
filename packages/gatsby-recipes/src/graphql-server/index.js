@@ -34,6 +34,10 @@ exports.startGraphQLServer = async (programPath, forceStart) => {
       console.log(data.toString())
     })
 
+    subprocess.stdout?.on(`data`, data => {
+      console.log(data.toString())
+    })
+
     process.on(`exit`, () => {
       subprocess.kill(`SIGTERM`, {
         forceKillAfterTimeout: 2000,

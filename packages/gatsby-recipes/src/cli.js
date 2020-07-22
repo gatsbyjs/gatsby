@@ -2,13 +2,17 @@ const fs = require(`fs`)
 const lodash = require(`lodash`)
 const Boxen = require(`ink-box`)
 const React = require(`react`)
-const { useState } = require(`react`)
+const { useState, useEffect } = require(`react`)
 const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`./components/mdx`).default
 const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
+import {
+  useResourceByUUID,
+  ResourceProvider,
+} from "./renderer/resource-provider"
 const {
   createClient,
   useMutation,
@@ -198,16 +202,7 @@ let renderCount = 1
 
 const Div = props => {
   const width = Math.max(process.stdout.columns, MAX_UI_WIDTH)
-  // console.log(process.stdout, { width })
-  return (
-    <Box
-      width={width}
-      textWrap="wrap"
-      flexShrink={0}
-      flexDirection="column"
-      {...props}
-    />
-  )
+  return <Box textWrap="wrap" flexDirection="column" {...props} />
 }
 
 // Markdown ignores new lines and so do we.
@@ -227,6 +222,21 @@ function eliminateNewLines(children) {
   })
 }
 
+const ResourceComponent = props => {
+  const resource = useResourceByUUID(props._uuid)
+  return (
+    <Div marginBottom={1}>
+      <Text>~~~</Text>
+      <Text color="yellow" backgroundColor="black" bold underline>
+        {props._type}:
+      </Text>
+      <Text color="green">{resource?.describe}</Text>
+      {resource?.diff ? <Text>{resource?.diff}"</Text> : null}
+      <Text>~~~</Text>
+    </Div>
+  )
+}
+
 const components = {
   inlineCode: props => <Text {...props} />,
   pre: props => <Div {...props} />,
@@ -240,7 +250,6 @@ const components = {
     const children = hicat(props.children.trim(), { lang: language })
 
     const ansi = `\`\`\`${language}\n${children.ansi}\n\`\`\``
-    console.log({ ansi, props })
 
     return (
       <Div marginBottom={1}>
@@ -248,40 +257,16 @@ const components = {
       </Div>
     )
   },
-  h1: props => {
-    return (
-      <Div>
-        <Text bold underline>
-          {props.children}
-        </Text>
-      </Div>
-    )
-  },
-  h2: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
+  h1: props => (
+    <Box marginBottom={1}>
+      <Text bold underline {...props} />
+    </Box>
   ),
-  h3: props => (
-    <Div>
-      <Text bold italic {...props} />
-    </Div>
-  ),
-  h4: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
-  ),
-  h5: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
-  ),
-  h6: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
-  ),
+  h2: props => <Text bold {...props} />,
+  h3: props => <Text bold italic {...props} />,
+  h4: props => <Text bold {...props} />,
+  h5: props => <Text bold {...props} />,
+  h6: props => <Text bold {...props} />,
   a: ({ href, children }) => <Link url={href}>{children}</Link>,
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
@@ -296,15 +281,26 @@ const components = {
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
-  GatsbyPlugin: () => null,
-  NPMPackageJson: () => null,
-  NPMPackage: () => null,
-  File: () => null,
-  Directory: () => null,
+  GatsbyPlugin: props => <ResourceComponent {...props} />,
+  NPMPackageJson: props => <ResourceComponent {...props} />,
+  NPMPackage: props => <ResourceComponent {...props} />,
+  File: props => <ResourceComponent {...props} />,
+  Directory: props => <ResourceComponent {...props} />,
   GatsbyShadowFile: () => null,
-  NPMScript: () => null,
+  NPMScript: props => <ResourceComponent {...props} />,
   RecipeIntroduction: props => <Div {...props} />,
-  RecipeStep: props => <Div {...props} />,
+  RecipeStep: props => (
+    <Div>
+      <Box
+        borderStyle="single"
+        padding={1}
+        flexDirection="column"
+        borderColor="gray"
+      >
+        {props.children}
+      </Box>
+    </Div>
+  ),
   div: props => <Div {...props} />,
 }
 
@@ -354,6 +350,33 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }),
       ],
     })
+    const Plan = ({ state }) => {
+      // console.log(state)
+      const { exit } = useApp()
+      // Exit the app after we render
+      useEffect(() => {
+        exit()
+      }, [])
+
+      return (
+        <>
+          <ResourceProvider
+            value={
+              state.context.plan?.filter(p => p.resourceName !== `Input`) || []
+            }
+          >
+            <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
+              {state.context.steps.join(`\n`)}
+            </MDX>
+            <Text>{`\n------\n`}</Text>
+            <Text color="yellow">To install this recipe, run:</Text>
+            <Text>{` `}</Text>
+            <Text>{`  `}gatsby recipes ./test.mdx --install</Text>
+            <Text>{` `}</Text>
+          </ResourceProvider>
+        </>
+      )
+    }
 
     const RecipeInterpreter = () => {
       const { exit } = useApp()
@@ -451,7 +474,8 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         )
       }
 
-      if (!state) {
+      const isReady = state?.value === `presentPlan`
+      if (!isReady) {
         return (
           <Text>
             <Spinner /> Loading recipe
@@ -459,9 +483,9 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         )
       }
 
-      if (state.value === `waitingForInput`) {
-        return <Text>Input some stuff!</Text>
-      }
+      // if (state.value === `waitingForInput`) {
+      // return <Text>Input some stuff!</Text>
+      // }
 
       /*
        * TODOs
@@ -639,19 +663,13 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       // `# hi`
       // )
       // )
-      return (
-        <>
-          <Div marginTop={7}>
-            <Text underline bold>
-              Step {state.context.currentStep} /{` `}
-              {state.context.steps.length - 1}
-            </Text>
-          </Div>
-          <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-            {state.context.steps.join(`\n`)}
-          </MDX>
-        </>
-      )
+      // console.log({
+      // state: JSON.stringify(state, null, 4),
+      // plans: state.context.plan[0],
+      // resources:
+      // state.context.plan?.filter(p => p.resourceName !== `Input`) || [],
+      // })
+      return <Plan state={state} />
     }
 
     const Wrapper = () => (

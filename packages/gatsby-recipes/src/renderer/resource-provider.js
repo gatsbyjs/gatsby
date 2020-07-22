@@ -13,4 +13,10 @@ export const useResource = key => {
   return result
 }
 
+export const useResourceByUUID = uuid => {
+  const context = useContext(ResourceContext)
+  const result = context.find(c => c._uuid === uuid)
+  return result
+}
+
 export const ResourceProvider = ResourceContext.Provider

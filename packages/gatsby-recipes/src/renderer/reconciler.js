@@ -3,7 +3,7 @@ const flatted = require(`flatted`)
 
 const debugInner = require(`debug`)(`recipes-reconciler`)
 const debug = (title, data) => {
-  debugInner(title, JSON.stringify(data, null, 2))
+  // debugInner(title, JSON.stringify(data, null, 2))
 }
 
 const reconciler = ReactReconciler({

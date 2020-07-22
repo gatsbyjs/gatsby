@@ -353,7 +353,7 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `./test.mdx`
+const recipe = `./node_modules/gatsby-recipes/recipes/styled-components.mdx`
 // recipe = `jest.mdx`,
 // recipe,
 const graphqlPort = 50400
