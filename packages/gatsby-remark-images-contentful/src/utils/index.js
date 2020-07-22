@@ -1,7 +1,8 @@
+const { URL } = require(`url`)
 const axios = require(`axios`)
 
+// This should be replaced with the solution for https://github.com/gatsbyjs/gatsby/issues/24220
 const getBase64Img = async (url, reporter) => {
-  let base64Img
   try {
     const response = await axios({
       method: `GET`,
@@ -9,25 +10,24 @@ const getBase64Img = async (url, reporter) => {
       url: `${url}`,
     })
 
-    base64Img = `data:${response.headers[`content-type`]};base64,${new Buffer(
-      response.data
-    ).toString(`base64`)}`
+    const base64Img = `data:${
+      response.headers[`content-type`]
+    };base64,${new Buffer(response.data).toString(`base64`)}`
+
+    return base64Img
   } catch (err) {
     reporter.panic(`Failed downloading the base64 image for ${url}`, err)
+    return undefined
   }
-
-  return base64Img
 }
 
 const buildResponsiveSizes = async (
   { metadata, imageUrl, options = {} },
   reporter
 ) => {
-  // Remove search params from the image url
-  let formattedImgUrl = imageUrl
-  if (imageUrl.includes(`?`)) {
-    formattedImgUrl = imageUrl.split(`?`)[0]
-  }
+  const imageURL = new URL(
+    imageUrl.indexOf(`/`) === 0 ? `https:${imageUrl}` : imageUrl
+  )
 
   const { width, height, density } = metadata
   const { sizeByPixelDensity, maxWidth, sizes } = options
@@ -55,20 +55,22 @@ const buildResponsiveSizes = async (
 
   filteredSizes.push(width)
 
-  const base64Img = await getBase64Img(`${formattedImgUrl}?w=40`, reporter)
+  imageURL.searchParams.set(`w`, `40`)
 
-  const srcSet = filteredSizes
-    .map(
-      size => `${formattedImgUrl}?w=${Math.round(size)} ${Math.round(size)}w`
-    )
-    .join(`,\n`)
+  const base64Img = await getBase64Img(imageURL.href, reporter)
 
-  const webpSrcSet = filteredSizes
-    .map(
-      size =>
-        `${formattedImgUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
-    )
-    .join(`,\n`)
+  const getSrcSetUrl = size => {
+    imageURL.searchParams.set(`w`, `${Math.round(size)}`)
+    return `${imageURL.href} ${Math.round(size)}w`
+  }
+
+  const srcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
+
+  imageURL.searchParams.set(`fm`, `webp`)
+
+  const webpSrcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
+
+  console.log({ srcSet, webpSrcSet })
 
   // TODO think about a better structure to save srcset types instead of adding them to the root
   return {
@@ -76,7 +78,7 @@ const buildResponsiveSizes = async (
     aspectRatio,
     srcSet,
     webpSrcSet,
-    src: formattedImgUrl,
+    src: imageUrl,
     sizes: sizesQuery,
     density,
     presentationWidth,
