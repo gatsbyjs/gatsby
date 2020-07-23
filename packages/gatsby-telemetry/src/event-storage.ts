@@ -17,8 +17,7 @@ const fetch = createFetch()
 export class EventStorage {
   analyticsApi =
     process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
-  // eslint-disable-line @typescript-eslint/no-explicit-any
-  config: Configstore
+  config: Configstore | InMemoryConfigStore
   store: Store
   verbose: boolean
   debugEvents: boolean
@@ -68,7 +67,7 @@ export class EventStorage {
     this.store.appendToBuffer(eventString + `\n`)
   }
 
-  async sendEvents(): Promise<void> {
+  async sendEvents(): Promise<boolean> {
     return this.store.startFlushEvents(async (eventsData: string) => {
       const events = eventsData
         .split(`\n`)
@@ -104,7 +103,7 @@ export class EventStorage {
     }
   }
 
-  getConfig(key: string): string | Record<string, unknown> {
+  getConfig(key: string): string | boolean | UUID | Record<string, unknown> {
     if (key) {
       return this.config.get(key)
     }

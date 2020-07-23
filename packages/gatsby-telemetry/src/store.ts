@@ -57,7 +57,7 @@ export class Store {
     return true
   }
 
-  async startFlushEvents(flushOperation: Function): Promise<void> {
+  async startFlushEvents(flushOperation: Function): Promise<boolean> {
     try {
       await this.flushFile(this.bufferFilePath, flushOperation)
       const files = readdirSync(this.baseDir)
@@ -65,8 +65,10 @@ export class Store {
       for (const file of filtered) {
         await this.flushFile(path.join(this.baseDir, file), flushOperation)
       }
+      return true
     } catch (e) {
       // ignore
     }
+    return false
   }
 }

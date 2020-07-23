@@ -1,9 +1,10 @@
 import uuidV4 from "uuid/v4"
 import os from "os"
-import path from "path"
+import { join } from "path"
 
 export class InMemoryConfigStore {
   config: Record<string, unknown>
+  path = join(os.tmpdir(), `gatsby`)
 
   constructor() {
     this.config = this.createBaseConfig()
@@ -26,10 +27,6 @@ export class InMemoryConfigStore {
 
   all(): Record<string, unknown> {
     return this.config
-  }
-
-  path(): string {
-    return path.join(os.tmpdir(), `gatsby`)
   }
 
   size(): number {
