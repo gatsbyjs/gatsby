@@ -1,3 +1,4 @@
+import uuidV4 from "uuid/v4"
 import os from "os"
 import path from "path"
 import Configstore from "configstore"
@@ -38,7 +39,8 @@ module.exports = class EventStorage {
       this.config.all = this.config
       this.config.path = path.join(os.tmpdir(), `gatsby`)
       this.config[`telemetry.enabled`] = true
-      this.config[`telemetry.machineId`] = `not-a-machine-id`
+
+      this.config[`telemetry.machineId`] = `not-a-machine-id-${uuidV4()}`
     }
 
     const baseDir = path.dirname(this.config.path)
