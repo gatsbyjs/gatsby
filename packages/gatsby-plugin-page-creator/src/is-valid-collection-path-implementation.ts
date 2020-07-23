@@ -32,9 +32,10 @@ export function isValidCollectionPathImplementation(filePath: string): boolean {
   return passing
 }
 
-const errorMessage = (filePath: string, part: string): string =>
-  `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
+function errorMessage(filePath: string, part: string): string {
+  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
 filePath: ${filePath}`
+}
 
 function assert(part: string, matches: string | RegExp, message: string): void {
   const regexp = matches instanceof RegExp ? matches : new RegExp(matches)
