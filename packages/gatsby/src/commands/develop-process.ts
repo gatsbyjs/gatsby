@@ -1,53 +1,23 @@
 import { syncStaticDir } from "../utils/get-static-dir"
-import report from "gatsby-cli/lib/reporter"
+import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
-import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
+import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
-import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import * as requiresWriter from "../bootstrap/requires-writer"
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { startRedirectListener } from "../bootstrap/redirects-writer"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
-import { IProgram } from "./types"
-import {
-  calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
-  startWebpackServer,
-  writeOutRequires,
-  IBuildContext,
-  initialize,
-  postBootstrap,
-  extractQueries,
-  rebuildSchemaWithSitePage,
-  writeOutRedirects,
-} from "../services"
-import { boundActionCreators } from "../redux/actions"
-import { ProgramStatus } from "../redux/types"
-import {
-  MachineConfig,
-  AnyEventObject,
-  assign,
-  Machine,
-  DoneEventObject,
-  interpret,
-} from "xstate"
-import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { IProgram, IDebugInfo } from "./types"
+import { interpret } from "xstate"
 import { globalTracer } from "opentracing"
-import reporter from "gatsby-cli/lib/reporter"
+import { developMachine } from "../state-machines/develop"
+import { logTransitions } from "../utils/state-machine-logging"
 
 const tracer = globalTracer()
 
@@ -84,8 +54,26 @@ process.on(`message`, msg => {
   }
 })
 
-module.exports = async (program: IProgram): Promise<void> => {
-  const bootstrapSpan = tracer.startSpan(`bootstrap`)
+interface IDevelopArgs extends IProgram {
+  debugInfo: IDebugInfo | null
+}
+
+const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (debugInfo.break) {
+    inspector.open(debugInfo.port, undefined, true)
+    // eslint-disable-next-line no-debugger
+    debugger
+  } else {
+    inspector.open(debugInfo.port)
+  }
+}
+
+module.exports = async (program: IDevelopArgs): Promise<void> => {
+  reporter.setVerbose(program.verbose)
+
+  if (program.debugInfo) {
+    openDebuggerPort(program.debugInfo)
+  }
 
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
@@ -101,7 +89,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    report.panic(
+    reporter.panic(
       `The flag ${chalk.yellow(
         `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
       )} is not available with ${chalk.cyan(
@@ -111,7 +99,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()
-  report.pendingActivity({ id: `webpack-develop` })
+  reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -129,113 +117,19 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   const app = express()
+  const parentSpan = tracer.startSpan(`bootstrap`)
 
-  const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
-    id: `build`,
-    initial: `initializing`,
-    states: {
-      initializing: {
-        invoke: {
-          src: `initialize`,
-          onDone: {
-            target: `initializingDataLayer`,
-            actions: `assignStoreAndWorkerPool`,
-          },
-        },
-      },
-      initializingDataLayer: {
-        invoke: {
-          src: `initializeDataLayer`,
-          data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-            return { parentSpan, store, firstRun: true }
-          },
-          onDone: {
-            actions: `assignDataLayer`,
-            target: `doingEverythingElse`,
-          },
-        },
-      },
-      doingEverythingElse: {
-        invoke: {
-          src: async ({
-            gatsbyNodeGraphQLFunction,
-            graphqlRunner,
-            workerPool,
-            store,
-            app,
-          }): Promise<void> => {
-            // All the stuff that's not in the state machine yet
+  const machine = developMachine.withContext({
+    program,
+    parentSpan,
+    app,
+  })
 
-            // These were previously in `bootstrap()` but are now
-            // in part of the state machine that hasn't been added yet
-            await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
+  const service = interpret(machine)
 
-            await extractQueries({ parentSpan: bootstrapSpan })
-            await writeOutRedirects({ parentSpan: bootstrapSpan })
-
-            startRedirectListener()
-            bootstrapSpan.finish()
-            await postBootstrap({ parentSpan: bootstrapSpan })
-
-            // These are the parts that weren't in bootstrap
-
-            // Start the createPages hot reloader.
-            bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
-
-            // Start the schema hot reloader.
-            bootstrapSchemaHotReloader()
-
-            const { queryIds } = await calculateDirtyQueries({ store })
-
-            await runStaticQueries({ queryIds, store, program, graphqlRunner })
-            await runPageQueries({ queryIds, store, program, graphqlRunner })
-            await writeOutRequires({ store })
-            boundActionCreators.setProgramStatus(
-              ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
-            )
-
-            await db.saveState()
-
-            await waitUntilAllJobsComplete()
-            requiresWriter.startListener()
-            db.startAutosave()
-            queryUtil.startListeningToDevelopQueue({
-              graphqlTracing: program.graphqlTracing,
-            })
-            queryWatcher.startWatchDeletePage()
-
-            await startWebpackServer({ program, app, workerPool })
-          },
-        },
-      },
-    },
+  if (program.verbose) {
+    logTransitions(service)
   }
 
-  const service = interpret(
-    // eslint-disable-next-line new-cap
-    Machine(developConfig, {
-      services: {
-        initializeDataLayer: dataLayerMachine,
-        initialize,
-      },
-      actions: {
-        assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(
-          (_context, event) => {
-            const { store, workerPool } = event.data
-            return {
-              store,
-              workerPool,
-            }
-          }
-        ),
-        assignDataLayer: assign<IBuildContext, DoneEventObject>(
-          (_, { data }): DataLayerResult => data
-        ),
-      },
-    }).withContext({ program, parentSpan: bootstrapSpan, app })
-  )
-  service.onTransition(state => {
-    reporter.verbose(`transition to ${JSON.stringify(state.value)}`)
-  })
   service.start()
 }

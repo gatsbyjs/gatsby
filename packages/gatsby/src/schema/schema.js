@@ -36,14 +36,15 @@ const {
 } = require(`./extensions`)
 import { getPagination } from "./types/pagination"
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
-const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
-const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
+import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
+
 const {
   isASTDocument,
   parseTypeDef,
   reportParsingError,
 } = require(`./types/type-defs`)
-const { clearDerivedTypes } = require(`./types/derived-types`)
+import { clearDerivedTypes } from "./types/derived-types"
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
