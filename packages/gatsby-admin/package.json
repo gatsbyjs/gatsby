@@ -31,6 +31,7 @@
     "react-icons": "^3.10.0",
     "react-instantsearch-dom": "^5.7.0",
     "remove-markdown": "^0.3.0",
+    "rimraf": "^3.0.2",
     "strict-ui": "^0.1.3",
     "subscriptions-transport-ws": "^0.9.16",
     "theme-ui": "^0.4.0-alpha.3",
@@ -40,6 +41,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
+    "prebuild": "rimraf public",
     "build": "node ../gatsby/dist/bin/gatsby.js build --prefix-paths",
     "postbuild": "ncp public ../gatsby/gatsby-admin-public",
     "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
