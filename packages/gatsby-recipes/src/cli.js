@@ -218,10 +218,6 @@ function eliminateNewLines(children) {
   })
 }
 
-// TODO
-// * add a --install command that actually runs the plan
-// * remove all the now unneeded code
-
 const ResourceComponent = props => {
   const resource = useResourceByUUID(props._uuid)
   return (
@@ -306,22 +302,6 @@ const components = {
   ),
   div: props => <Div {...props} />,
 }
-
-let logStream
-const log = (label, textOrObj) => {
-  if (process.env.DEBUG) {
-    logStream =
-      logStream ?? fs.createWriteStream(`recipe-client.log`, { flags: `a` })
-    logStream.write(`[${label}]:\n`)
-    logStream.write(require(`util`).inspect(textOrObj))
-    logStream.write(`\n`)
-  }
-}
-
-log(
-  `started client`,
-  `======================================= ${new Date().toJSON()}`
-)
 
 module.exports = async ({
   recipe,
@@ -445,9 +425,7 @@ module.exports = async ({
       `)
 
       const sendEvent = ({ event, input }) => {
-        log(`sending event`, { event, input })
         if (input) {
-          log(`sending event`, input)
           _sendEvent({
             event,
             input: JSON.stringify(input),
@@ -459,16 +437,14 @@ module.exports = async ({
 
       subscriptionClient.connectionCallback = async () => {
         if (!showRecipesList) {
-          log(`createOperation`)
           try {
             await createOperation({ recipePath: localRecipe, projectRoot })
           } catch (e) {
-            log(`error creating operation`, e)
+            console.log(`error creating operation`, e)
           }
         }
       }
 
-      log(`subscriptionResponse`, subscriptionResponse)
       const state =
         subscriptionResponse.data &&
         JSON.parse(subscriptionResponse.data.operation.state)
@@ -500,12 +476,25 @@ module.exports = async ({
                     projectRoot,
                   })
                 } catch (e) {
-                  log(`error creating operation`, e)
+                  console.log(`error creating operation`, e)
                 }
               }}
             />
           </>
         )
+      }
+
+      const Error = ({ state }) => {
+        console.log(`errors`, state)
+        if (state && state.context && state.context.error) {
+          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
+        }
+
+        return null
+      }
+
+      if (state.value === `doneError`) {
+        return <Error width="100%" state={state} />
       }
 
       let isReady
@@ -541,90 +530,6 @@ module.exports = async ({
         process.nextTick(() => process.exit())
       }
 
-      if (process.env.DEBUG) {
-        log(`state`, state)
-        log(`plan`, state.context.plan)
-        log(`stepResources`, state.context.stepResources)
-      }
-
-      const PresentStep = ({ state }) => {
-        const isPlan = state.context.plan && state.context.plan.length > 0
-        const isPresetPlanState = state.value === `presentPlan`
-        const isRunningStep = state.value === `applyingPlan`
-
-        if (isRunningStep) {
-          return null
-        }
-
-        if (!isPlan || !isPresetPlanState) {
-          return (
-            <Div marginTop={1}>
-              <Text color="magentaBright">>> Press enter to continue</Text>
-            </Div>
-          )
-        }
-
-        return (
-          <Div>
-            <Div>
-              <Text bold italic marginBottom={2}>
-                Proposed changes
-              </Text>
-            </Div>
-            {state.context.plan.map((p, i) => (
-              <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text> * {p.describe}</Text>
-                {p.diff && p.diff !== `` && (
-                  <>
-                    <Text>---</Text>
-                    <Text>{p.diff}</Text>
-                    <Text>---</Text>
-                  </>
-                )}
-              </Div>
-            ))}
-            <Div marginTop={1}>
-              <Text color="magentaBright">>> Press enter to run this step</Text>
-            </Div>
-          </Div>
-        )
-      }
-
-      const Error = ({ state }) => {
-        log(`errors`, state)
-        if (state && state.context && state.context.error) {
-          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
-        }
-
-        return null
-      }
-
-      if (state.value === `doneError`) {
-        return <Error width="100%" state={state} />
-      }
-
-      const staticMessages = {}
-      for (let step = 0; step < state.context.currentStep; step++) {
-        staticMessages[step] = [
-          {
-            type: `mdx`,
-            key: `mdx-${step}`,
-            value: state.context.steps[step],
-          },
-        ]
-      }
-      lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-        staticMessages[res._currentStep].push({
-          type: `resource`,
-          key: `finished-stuff-${i}`,
-          value: res._message,
-        })
-      })
-
-      log(`staticMessages`, staticMessages)
-      log(`steps joined`, state.context.steps.join(`\n`))
-
       if (isDone) {
         process.nextTick(() => {
           subscriptionClient.close()
@@ -636,47 +541,6 @@ module.exports = async ({
         })
         // return null
       }
-
-      // <Div>
-      // <static>
-      // {object.keys(staticmessages).map((key, istep) =>
-      // staticmessages[key].map((r, i) => {
-      // if (r.type && r.type === `mdx`) {
-      // return (
-      // <div key={r.key}>
-      // {istep === 0 && <text underline>completed steps</text>}
-      // <div margintop={istep === 0 ? 0 : 1} marginbottom={1}>
-      // {istep !== 0 && `---`}
-      // </div>
-      // {istep !== 0 && <text>step {istep}</text>}
-      // <mdx components={components}>{r.value}</mdx>
-      // </div>
-      // )
-      // }
-      // return <Text key={r.key}>✅ {r.value}</Text>
-      // })
-      // )}
-      // </Static>
-      // </Div>
-      //
-      // <PresentStep state={state} />
-
-      // <MDX
-      // components={components}
-      // >{`<RecipeIntroduction># hi</RecipeIntroduction>` [> state.context.steps.join(`\n`) <]}</MDX>
-      // console.log(
-      // React.createElement(
-      // MDX,
-      // { key: "DOC", components, remarkPlugins: [removeJsx] },
-      // `# hi`
-      // )
-      // )
-      // console.log({
-      // state: JSON.stringify(state, null, 4),
-      // plans: state.context.plan[0],
-      // resources:
-      // state.context.plan?.filter(p => p.resourceName !== `Input`) || [],
-      // })
 
       if (isInstallMode) {
         return <Installing state={state} />
@@ -706,6 +570,6 @@ module.exports = async ({
     const { waitUntilExit } = render(<Recipe />, { experimental: true })
     await waitUntilExit()
   } catch (e) {
-    log(e)
+    console.log(e)
   }
 }
