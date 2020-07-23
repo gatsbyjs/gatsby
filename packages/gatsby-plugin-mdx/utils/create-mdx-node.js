@@ -2,7 +2,7 @@ const { createContentDigest } = require(`gatsby-core-utils`)
 
 const { findImportsExports } = require(`../utils/gen-mdx`)
 
-async function createMdxNode({ id, node, content, ...helpers }) {
+async function createMdxNodeWithScope({ id, node, content, ...helpers }) {
   const {
     frontmatter,
     scopeImports,
@@ -42,4 +42,8 @@ async function createMdxNode({ id, node, content, ...helpers }) {
   return { mdxNode, scopeIdentifiers, scopeImports }
 }
 
-module.exports = createMdxNode
+async function createMdxNode(data) {
+  return createMdxNodeWithScope(data).mdxNode
+}
+
+module.exports = { createMdxNode, createMdxNodeWithScope }
