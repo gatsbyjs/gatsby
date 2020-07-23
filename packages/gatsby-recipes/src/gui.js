@@ -22,12 +22,10 @@ const {
   Heading,
   SuccessIcon,
   InputField,
-  InputFieldControlProps,
   InputFieldLabel,
   InputFieldControl,
   InputFieldHint,
   InputFieldError,
-  WithFormFieldBlock,
   FormFieldContainer,
 } = require(`gatsby-interface`)
 const {
@@ -43,8 +41,8 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
-import { useInputByKey, InputProvider } from "./renderer/input-provider"
-import { useResource, ResourceProvider } from "./renderer/resource-provider"
+import { InputProvider } from "./renderer/input-provider"
+import { ResourceProvider } from "./renderer/resource-provider"
 
 const theme = getTheme()
 
@@ -57,7 +55,6 @@ ansi2HTML.setColors({
 const InputFieldBlock = React.forwardRef((props, ref) => {
   const {
     id,
-    key,
     label,
     labelSize,
     error,
@@ -147,7 +144,6 @@ let sendEvent
 const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test` // &&
 //  `/Users/johno-mini/c/gatsby/starters/blog`
 
-const Color = `span`
 const Spinner = () => <span>Loading...</span>
 
 const DiffPre = ({ resourcePlan, ...props }) => (
@@ -434,17 +430,6 @@ const Step = ({ state, step, i }) => {
   const stepResources = state.context?.plan?.filter(
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
-
-  const [complete, setComplete] = useState(false)
-  if (output.title !== `` && output.body !== ``) {
-    setTimeout(() => {
-      setComplete(true)
-    }, 0)
-  } else {
-    setTimeout(() => {
-      setComplete(false)
-    }, 0)
-  }
 
   return (
     <div

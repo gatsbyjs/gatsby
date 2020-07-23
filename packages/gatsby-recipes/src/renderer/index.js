@@ -1,8 +1,6 @@
 const React = require(`react`)
 const mdx = require(`@mdx-js/mdx`)
-const template = require(`@babel/template`).default
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
-const babelPluginRemoveExportKeywords = require(`babel-plugin-remove-export-keywords`)
 const babelChainingPlugin = require(`@babel/plugin-proposal-optional-chaining`)
 
 const { render } = require(`./render`)
@@ -52,7 +50,6 @@ const transformJsx = jsx => {
     plugins: [
       babelPluginCopyKeyProp,
       babelPluginMoveExportKeywords,
-      // babelPluginRemoveExportKeywords,
       babelPluginRemoveShortcodes,
       // TODO figure out how to use preset-env
       babelChainingPlugin,
