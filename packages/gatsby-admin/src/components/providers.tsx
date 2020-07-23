@@ -2,6 +2,7 @@ import React from "react"
 import { Provider, Client } from "urql"
 import { ThemeProvider, getTheme } from "gatsby-interface"
 import { ThemeProvider as StrictUIProvider } from "strict-ui"
+import { Spinner } from "theme-ui"
 import { createUrqlClient } from "../urql-client"
 
 const baseTheme = getTheme()
@@ -49,10 +50,15 @@ const GraphQLProvider: React.FC<{}> = ({ children }) => {
       })
   }, [])
 
-  if (status === `loading`) return <p>Loading...</p>
+  if (status === `loading`) return <Spinner />
 
   if (client === null)
-    return <p>It looks like no develop process is running.</p>
+    return (
+      <p>
+        Please start <code>gatsby develop</code> to show the data about your
+        site.
+      </p>
+    )
 
   return <Provider value={client}>{children}</Provider>
 }

@@ -108,7 +108,14 @@ const Index: React.FC<{}> = () => {
 
   if (fetching) return <Spinner />
 
-  if (error) return <p>Oops something went wrong.</p>
+  if (error) {
+    const errMsg =
+      (error.networkError && error.networkError.message) ||
+      (Array.isArray(error.graphQLErrors) &&
+        error.graphQLErrors.map(e => e.message).join(` | `))
+
+    return <p>Error: {errMsg}</p>
+  }
 
   return (
     <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
