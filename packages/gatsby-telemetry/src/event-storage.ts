@@ -14,7 +14,7 @@ const fetch = createFetch()
  * This both increases the fault tolerance and allows collection
  * to continue even when working offline.
  */
-module.exports = class EventStorage {
+export class EventStorage {
   analyticsApi =
     process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
   // eslint-disable-line @typescript-eslint/no-explicit-any
