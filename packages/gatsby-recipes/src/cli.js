@@ -285,7 +285,7 @@ const components = {
     const children = React.Children.toArray(props.children)
     const firstChild = children.shift()
     children.unshift(
-      <Box flexDirection="row">
+      <Box key="header" flexDirection="row">
         <Text>
           {props.step}){` `}
         </Text>
