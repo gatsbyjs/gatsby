@@ -1,6 +1,5 @@
 const React = require(`react`)
 const mdx = require(`@mdx-js/mdx`)
-const { transform } = require(`@babel/standalone`)
 const template = require(`@babel/template`).default
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 const babelPluginRemoveExportKeywords = require(`babel-plugin-remove-export-keywords`)
@@ -42,6 +41,8 @@ const transformCodeForEval = code => {
 }
 
 const transformJsx = jsx => {
+  delete require.cache[require.resolve(`@babel/standalone`)]
+  const { transform } = require(`@babel/standalone`)
   const { code } = transform(jsx, {
     parserOpts: {
       // We want to return outside of a function because the output from

@@ -370,7 +370,9 @@ module.exports = async ({
               </Box>
             ) : null}
             <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-              {state.context.steps.join(`\n`)}
+              {state.context.exports?.join(`\n`) +
+                `\n\n` +
+                state.context.steps.join(`\n`)}
             </MDX>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>

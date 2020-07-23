@@ -1,5 +1,4 @@
 import React from "react"
-import { transform } from "@babel/standalone"
 import mdx from "@mdx-js/mdx"
 import { mdx as createElement, MDXProvider } from "@mdx-js/react"
 import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
@@ -10,6 +9,8 @@ const { useResource } = require(`../renderer/resource-provider`)
 const { useProvider } = require(`../renderer/provider-provider`)
 
 const transformJsx = jsx => {
+  delete require.cache[require.resolve(`@babel/standalone`)]
+  const { transform } = require(`@babel/standalone`)
   const { code } = transform(jsx, {
     plugins: [
       // babelPluginRemoveExportKeywords,
