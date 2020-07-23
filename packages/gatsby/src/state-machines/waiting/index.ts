@@ -34,12 +34,33 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
         },
         // We only listen for this when idling because if we receive it at any
         // other point we're already going to create pages etc
-        QUERY_FILE_CHANGED: {
-          actions: `extractQueries`,
+        SOURCE_FILE_CHANGED: {
+          target: `aggregatingFileChanges`,
         },
       },
     },
-
+    aggregatingFileChanges: {
+      // Sigh. This is because webpack doesn't expose the Watchpack
+      // aggregated file invalidation events. If we compile immediately,
+      // we won't pick up the changed files
+      after: {
+        // The aggregation timeout
+        200: {
+          actions: `extractQueries`,
+          target: `idle`,
+        },
+      },
+      on: {
+        ADD_NODE_MUTATION: {
+          actions: `addNodeMutation`,
+        },
+        SOURCE_FILE_CHANGED: {
+          target: undefined,
+          // External self-transition reset the timer
+          internal: false,
+        },
+      },
+    },
     batchingNodeMutations: {
       // Check if the batch is already full on entry
       always: {
