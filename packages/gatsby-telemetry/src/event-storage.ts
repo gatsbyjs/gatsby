@@ -114,15 +114,14 @@ module.exports = class EventStorage {
     }
   }
 
-  getConfig(key: string): string {
+  getConfig(key: string): string | Record<string, any> {
     if (key) {
       return this.config.get(key)
     }
     return this.config.all
   }
 
-  // eslint-disable-line @typescript-eslint/no-explicit-any
-  updateConfig(key: string, value: any): any {
+  updateConfig(key: string, value: string | number | boolean | null): any {
     return this.config.set(key, value)
   }
 }
