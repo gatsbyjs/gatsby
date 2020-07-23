@@ -8,7 +8,6 @@
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
 
-const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
@@ -196,8 +195,7 @@ exports.extractQueries = ({ parentSpan } = {}) => {
     // During development start watching files to recompile & run
     // queries on the fly.
 
-    // TODO: move this into a spawned service, and emit events rather than
-    // directly triggering the compilation
+    // TODO: move this into a spawned service
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
@@ -222,10 +220,6 @@ const watchComponent = componentPath => {
   }
 }
 
-const debounceCompile = _.debounce(() => {
-  updateStateAndRunQueries()
-}, 100)
-
 const watch = async rootDir => {
   if (watcher) return
 
@@ -238,13 +232,18 @@ const watch = async rootDir => {
   })
 
   watcher = chokidar
-    .watch([
-      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
-      ...packagePaths,
-    ])
+    .watch(
+      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
+      { ignoreInitial: true }
+    )
     .on(`change`, path => {
-      report.pendingActivity({ id: `query-extraction` })
-      debounceCompile()
+      emitter.emit(`QUERY_FILE_CHANGED`, path)
+    })
+    .on(`add`, path => {
+      emitter.emit(`QUERY_FILE_CHANGED`, path)
+    })
+    .on(`unlink`, path => {
+      emitter.emit(`QUERY_FILE_CHANGED`, path)
     })
 
   filesToWatch.forEach(filePath => watcher.add(filePath))

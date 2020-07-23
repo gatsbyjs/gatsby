@@ -3,20 +3,23 @@ import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
 
+/**
+ * This is a child state machine, spawned to perform the query running
+ */
+
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
+  id: `queryRunningMachine`,
+  context: {},
   states: {
     extractingQueries: {
       id: `extracting-queries`,
       invoke: {
         id: `extracting-queries`,
         src: `extractQueries`,
-        onDone: [
-          {
-            actions: `resetGraphQLRunner`,
-            target: `writingRequires`,
-          },
-        ],
+        onDone: {
+          target: `writingRequires`,
+        },
       },
     },
     writingRequires: {
@@ -57,7 +60,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         },
       },
     },
-
+    // This waits for the jobs API to finish
     waitingForJobs: {
       invoke: {
         src: `waitUntilAllJobsComplete`,
