@@ -1,14 +1,16 @@
-const fs = require(`fs`)
-const lodash = require(`lodash`)
-const Boxen = require(`ink-box`)
 const React = require(`react`)
-const { useState } = require(`react`)
-const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
+const { useState, useEffect } = require(`react`)
+const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`./components/mdx`).default
 const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
+import {
+  useResource,
+  useResourceByUUID,
+  ResourceProvider,
+} from "./renderer/resource-provider"
 const {
   createClient,
   useMutation,
@@ -29,16 +31,6 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const MAX_UI_WIDTH = 67
-
-// TODO try this and write out success stuff & last message?
-// const enterAltScreenCommand = "\x1b[?1049h"
-// const leaveAltScreenCommand = "\x1b[?1049l"
-// process.stdout.write(enterAltScreenCommand)
-// process.on("exit", () => {
-// process.stdout.write(leaveAltScreenCommand)
-// })
-
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
   console.log(
@@ -48,19 +40,24 @@ if (semver.lt(React.version, `16.8.0`)) {
 
 const WelcomeMessage = () => (
   <>
-    <Boxen
+    <Box
       borderStyle="double"
       borderColor="magentaBright"
-      float="left"
       padding={1}
-      margin={{ bottom: 1, left: 2 }}
+      marginBottom={1}
+      marginLeft={2}
+      marginRight={2}
     >
-      Thank you for trying the experimental version of Gatsby Recipes!
-    </Boxen>
+      <Text>
+        Thank you for trying the experimental version of Gatsby Recipes!
+      </Text>
+    </Box>
     <Div marginBottom={2} alignItems="center">
-      Please ask questions, share your recipes, report bugs, and subscribe for
-      updates in our umbrella issue at
-      https://github.com/gatsbyjs/gatsby/issues/22991
+      <Text>
+        Please ask questions, share your recipes, report bugs, and subscribe for
+        updates in our umbrella issue at
+        https://github.com/gatsbyjs/gatsby/issues/22991
+      </Text>
     </Div>
   </>
 )
@@ -180,35 +177,23 @@ const RecipesList = ({ setRecipe }) => {
       items={items}
       onSelect={setRecipe}
       indicatorComponent={item => (
-        <Text color="magentaBright">
+        <Text color={item.isSelected ? `yellow` : `magentaBright`}>
           {item.isSelected ? `>>` : `  `}
           {item.label}
         </Text>
       )}
       itemComponent={props => (
         <Text color="magentaBright">
-          {props.isSelected}>{props.label}
+          {props.isSelected}
+          {` `}
+          {props.label}
         </Text>
       )}
     />
   )
 }
 
-let renderCount = 1
-
-const Div = props => {
-  const width = Math.max(process.stdout.columns, MAX_UI_WIDTH)
-  // console.log(process.stdout, { width })
-  return (
-    <Box
-      width={width}
-      textWrap="wrap"
-      flexShrink={0}
-      flexDirection="column"
-      {...props}
-    />
-  )
-}
+const Div = props => <Box textWrap="wrap" flexDirection="column" {...props} />
 
 // Markdown ignores new lines and so do we.
 function eliminateNewLines(children) {
@@ -227,6 +212,30 @@ function eliminateNewLines(children) {
   })
 }
 
+const ResourceComponent = props => {
+  let resource
+  if (props._key) {
+    resource = useResource(props._key)
+  } else {
+    resource = useResourceByUUID(props._uuid)
+  }
+
+  return (
+    <Div marginBottom={1}>
+      <Text color="yellow" backgroundColor="black" bold underline>
+        {resource.resourceName}:
+      </Text>
+      <Text color="green">{resource?.describe}</Text>
+      {resource?.diff ? (
+        <>
+          <Text>{` `}</Text>
+          <Text>{resource?.diff}"</Text>
+        </>
+      ) : null}
+    </Div>
+  )
+}
+
 const components = {
   inlineCode: props => <Text {...props} />,
   pre: props => <Div {...props} />,
@@ -240,7 +249,6 @@ const components = {
     const children = hicat(props.children.trim(), { lang: language })
 
     const ansi = `\`\`\`${language}\n${children.ansi}\n\`\`\``
-    console.log({ ansi, props })
 
     return (
       <Div marginBottom={1}>
@@ -248,40 +256,16 @@ const components = {
       </Div>
     )
   },
-  h1: props => {
-    return (
-      <Div>
-        <Text bold underline>
-          {props.children}
-        </Text>
-      </Div>
-    )
-  },
-  h2: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
+  h1: props => (
+    <Box marginBottom={1}>
+      <Text bold underline {...props} />
+    </Box>
   ),
-  h3: props => (
-    <Div>
-      <Text bold italic {...props} />
-    </Div>
-  ),
-  h4: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
-  ),
-  h5: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
-  ),
-  h6: props => (
-    <Div>
-      <Text bold {...props} />
-    </Div>
-  ),
+  h2: props => <Text bold {...props} />,
+  h3: props => <Text bold italic {...props} />,
+  h4: props => <Text bold {...props} />,
+  h5: props => <Text bold {...props} />,
+  h6: props => <Text bold {...props} />,
   a: ({ href, children }) => <Link url={href}>{children}</Link>,
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
@@ -296,35 +280,49 @@ const components = {
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
-  GatsbyPlugin: () => null,
-  NPMPackageJson: () => null,
-  NPMPackage: () => null,
-  File: () => null,
-  Directory: () => null,
+  GatsbyPlugin: props => <ResourceComponent {...props} />,
+  NPMPackageJson: props => <ResourceComponent {...props} />,
+  NPMPackage: props => <ResourceComponent {...props} />,
+  File: props => <ResourceComponent {...props} />,
+  Directory: props => <ResourceComponent {...props} />,
   GatsbyShadowFile: () => null,
-  NPMScript: () => null,
+  NPMScript: props => <ResourceComponent {...props} />,
   RecipeIntroduction: props => <Div {...props} />,
-  RecipeStep: props => <Div {...props} />,
+  RecipeStep: props => {
+    const children = React.Children.toArray(props.children)
+    const firstChild = children.shift()
+    children.unshift(
+      <Box key="header" flexDirection="row">
+        <Text>
+          {props.step}){` `}
+        </Text>
+        {firstChild}
+      </Box>
+    )
+
+    return (
+      <Div>
+        <Box
+          borderStyle="single"
+          padding={1}
+          flexDirection="column"
+          borderColor="magentaBright"
+        >
+          {children}
+        </Box>
+      </Div>
+    )
+  },
   div: props => <Div {...props} />,
 }
 
-let logStream
-const log = (label, textOrObj) => {
-  if (process.env.DEBUG) {
-    logStream =
-      logStream ?? fs.createWriteStream(`recipe-client.log`, { flags: `a` })
-    logStream.write(`[${label}]:\n`)
-    logStream.write(require(`util`).inspect(textOrObj))
-    logStream.write(`\n`)
-  }
-}
-
-log(
-  `started client`,
-  `======================================= ${new Date().toJSON()}`
-)
-
-module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
+module.exports = async ({
+  recipe,
+  isDevelopMode,
+  isInstallMode,
+  graphqlPort,
+  projectRoot,
+}) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
@@ -354,7 +352,68 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }),
       ],
     })
+    const Plan = ({ state, localRecipe, isDevelopMode }) => {
+      const { exit } = useApp()
+      // Exit the app after we render
+      useEffect(() => {
+        if (!isDevelopMode) {
+          exit()
+        }
+      }, [])
 
+      return (
+        <>
+          <ResourceProvider
+            value={
+              state.context.plan?.filter(p => p.resourceName !== `Input`) || []
+            }
+          >
+            <WelcomeMessage />
+            {isDevelopMode ? (
+              <Box flexDirection="column" marginBottom={2}>
+                <Text strong underline>
+                  DEVELOP MODE
+                </Text>
+              </Box>
+            ) : null}
+            <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
+              {state.context.exports?.join(`\n`) +
+                `\n\n` +
+                state.context.steps.join(`\n`)}
+            </MDX>
+            <Text>{`\n------\n`}</Text>
+            <Text color="yellow">To install this recipe, run:</Text>
+            <Text>{` `}</Text>
+            <Text>
+              {`  `}gatsby recipes {localRecipe} --install
+            </Text>
+            <Text>{` `}</Text>
+          </ResourceProvider>
+        </>
+      )
+    }
+
+    const Installing = ({ state }) => (
+      <Div>
+        {state.context.plan.map((p, i) => (
+          <Div key={`${p.resourceName}-${i}`}>
+            <Text italic>{p.resourceName}:</Text>
+            <Text>
+              {` `}
+              {p.isDone ? `✅ ` : <Spinner />}
+              {` `}
+              {p.isDone ? p._message : p.describe}
+              {` `}
+              {state.context.elapsed > 0 && (
+                <Text>({state.context.elapsed / 1000}s elapsed)</Text>
+              )}
+            </Text>
+          </Div>
+        ))}
+      </Div>
+    )
+
+    let sentContinue = false
     const RecipeInterpreter = () => {
       const { exit } = useApp()
       // eslint-disable-next-line
@@ -387,9 +446,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       `)
 
       const sendEvent = ({ event, input }) => {
-        log(`sending event`, { event, input })
         if (input) {
-          log(`sending event`, input)
           _sendEvent({
             event,
             input: JSON.stringify(input),
@@ -401,16 +458,14 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
 
       subscriptionClient.connectionCallback = async () => {
         if (!showRecipesList) {
-          log(`createOperation`)
           try {
             await createOperation({ recipePath: localRecipe, projectRoot })
           } catch (e) {
-            log(`error creating operation`, e)
+            console.log(`error creating operation`, e)
           }
         }
       }
 
-      log(`subscriptionResponse`, subscriptionResponse)
       const state =
         subscriptionResponse.data &&
         JSON.parse(subscriptionResponse.data.operation.state)
@@ -424,8 +479,6 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }
       })
 
-      log(`subscriptionResponse.data`, subscriptionResponse.data)
-
       if (showRecipesList) {
         return (
           <>
@@ -435,6 +488,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
             </Text>
             <RecipesList
               setRecipe={async recipeItem => {
+                setRecipe(recipeItem.value.slice(0, -4))
                 trackCli(`RECIPE_RUN`, { name: recipeItem.value })
                 showRecipesList = false
                 try {
@@ -443,7 +497,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
                     projectRoot,
                   })
                 } catch (e) {
-                  log(`error creating operation`, e)
+                  console.log(`error creating operation`, e)
                 }
               }}
             />
@@ -451,25 +505,42 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         )
       }
 
-      if (!state) {
+      const Error = ({ state }) => {
+        if (state && state.context && state.context.error) {
+          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
+        }
+
+        return null
+      }
+
+      if (state?.value === `doneError`) {
+        return <Error width="100%" state={state} />
+      }
+
+      let isReady
+
+      // If installing, continue from presentPlan to applyingPlan
+      if (state?.value === `presentPlan` && isInstallMode) {
+        if (!sentContinue) {
+          sendEvent({ event: `CONTINUE` })
+          sentContinue = true
+        }
+      }
+
+      // install mode
+      if (isInstallMode) {
+        isReady = state?.value === `applyingPlan` || state?.value === `done`
+      } else {
+        isReady = state?.value === `presentPlan`
+      }
+
+      if (!isReady) {
         return (
           <Text>
             <Spinner /> Loading recipe
           </Text>
         )
       }
-
-      if (state.value === `waitingForInput`) {
-        return <Text>Input some stuff!</Text>
-      }
-
-      /*
-       * TODOs
-       * Listen to "y" to continue (in addition to enter)
-       */
-
-      log(`render`, `${renderCount} ${new Date().toJSON()}`)
-      renderCount += 1
 
       const isDone = state.value === `done`
 
@@ -479,117 +550,6 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         process.nextTick(() => process.exit())
       }
 
-      if (process.env.DEBUG) {
-        log(`state`, state)
-        log(`plan`, state.context.plan)
-        log(`stepResources`, state.context.stepResources)
-      }
-
-      const PresentStep = ({ state }) => {
-        const isPlan = state.context.plan && state.context.plan.length > 0
-        const isPresetPlanState = state.value === `presentPlan`
-        const isRunningStep = state.value === `applyingPlan`
-
-        if (isRunningStep) {
-          return null
-        }
-
-        if (!isPlan || !isPresetPlanState) {
-          return (
-            <Div marginTop={1}>
-              <Text color="magentaBright">>> Press enter to continue</Text>
-            </Div>
-          )
-        }
-
-        return (
-          <Div>
-            <Div>
-              <Text bold italic marginBottom={2}>
-                Proposed changes
-              </Text>
-            </Div>
-            {state.context.plan.map((p, i) => (
-              <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text> * {p.describe}</Text>
-                {p.diff && p.diff !== `` && (
-                  <>
-                    <Text>---</Text>
-                    <Text>{p.diff}</Text>
-                    <Text>---</Text>
-                  </>
-                )}
-              </Div>
-            ))}
-            <Div marginTop={1}>
-              <Text color="magentaBright">>> Press enter to run this step</Text>
-            </Div>
-          </Div>
-        )
-      }
-
-      const RunningStep = ({ state }) => {
-        const isPlan = state.context.plan && state.context.plan.length > 0
-        const isRunningStep = state.value === `applyingPlan`
-
-        if (!isPlan || !isRunningStep) {
-          return null
-        }
-
-        return (
-          <Div>
-            {state.context.plan.map((p, i) => (
-              <Div key={`${p.resourceName}-${i}`}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text>
-                  {` `}
-                  <Spinner /> {p.describe}
-                  {` `}
-                  {state.context.elapsed > 0 && (
-                    <Text>({state.context.elapsed / 1000}s elapsed)</Text>
-                  )}
-                </Text>
-              </Div>
-            ))}
-          </Div>
-        )
-      }
-
-      const Error = ({ state }) => {
-        log(`errors`, state)
-        if (state && state.context && state.context.error) {
-          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
-        }
-
-        return null
-      }
-
-      if (state.value === `doneError`) {
-        return <Error width="100%" state={state} />
-      }
-
-      const staticMessages = {}
-      for (let step = 0; step < state.context.currentStep; step++) {
-        staticMessages[step] = [
-          {
-            type: `mdx`,
-            key: `mdx-${step}`,
-            value: state.context.steps[step],
-          },
-        ]
-      }
-      lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-        staticMessages[res._currentStep].push({
-          type: `resource`,
-          key: `finished-stuff-${i}`,
-          value: res._message,
-        })
-      })
-
-      log(`staticMessages`, staticMessages)
-      log(`steps joined`, state.context.steps.join(`\n`))
-
       if (isDone) {
         process.nextTick(() => {
           subscriptionClient.close()
@@ -597,61 +557,22 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
           process.stdout.write(
             `\n\n---\n\n\nThe recipe finished successfully!\n\n`
           )
-          lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-            process.stdout.write(`✅ ${res._message}\n`)
-          })
           process.exit()
         })
         // return null
       }
 
-      // <Div>
-      // <static>
-      // {object.keys(staticmessages).map((key, istep) =>
-      // staticmessages[key].map((r, i) => {
-      // if (r.type && r.type === `mdx`) {
-      // return (
-      // <div key={r.key}>
-      // {istep === 0 && <text underline>completed steps</text>}
-      // <div margintop={istep === 0 ? 0 : 1} marginbottom={1}>
-      // {istep !== 0 && `---`}
-      // </div>
-      // {istep !== 0 && <text>step {istep}</text>}
-      // <mdx components={components}>{r.value}</mdx>
-      // </div>
-      // )
-      // }
-      // return <Text key={r.key}>✅ {r.value}</Text>
-      // })
-      // )}
-      // </Static>
-      // </Div>
-      //
-      // <PresentStep state={state} />
-
-      // <MDX
-      // components={components}
-      // >{`<RecipeIntroduction># hi</RecipeIntroduction>` [> state.context.steps.join(`\n`) <]}</MDX>
-      // console.log(
-      // React.createElement(
-      // MDX,
-      // { key: "DOC", components, remarkPlugins: [removeJsx] },
-      // `# hi`
-      // )
-      // )
-      return (
-        <>
-          <Div marginTop={7}>
-            <Text underline bold>
-              Step {state.context.currentStep} /{` `}
-              {state.context.steps.length - 1}
-            </Text>
-          </Div>
-          <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-            {state.context.steps.join(`\n`)}
-          </MDX>
-        </>
-      )
+      if (isInstallMode) {
+        return <Installing state={state} />
+      } else {
+        return (
+          <Plan
+            state={state}
+            localRecipe={localRecipe}
+            isDevelopMode={isDevelopMode}
+          />
+        )
+      }
     }
 
     const Wrapper = () => (
@@ -669,6 +590,6 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
     const { waitUntilExit } = render(<Recipe />, { experimental: true })
     await waitUntilExit()
   } catch (e) {
-    log(e)
+    console.log(e)
   }
 }

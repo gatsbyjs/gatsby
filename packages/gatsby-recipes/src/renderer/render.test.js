@@ -120,16 +120,16 @@ test(`includes step metadata`, async () => {
         },
         "currentState": "",
         "describe": "Write red.js",
-        "diff": "[31m- Original  - 0[39m
-    [32m+ Modified  + 1[39m
+        "diff": "- Original  - 0
+    + Modified  + 1
 
-    [32m+ red![39m",
+    + red!",
         "newState": "red!",
         "resourceDefinitions": Object {
           "content": "red!",
           "path": "red.js",
         },
-        "resourceName": undefined,
+        "resourceName": "File",
       },
       Object {
         "_stepMetadata": Object {
@@ -138,16 +138,16 @@ test(`includes step metadata`, async () => {
         },
         "currentState": "",
         "describe": "Write blue.js",
-        "diff": "[31m- Original  - 0[39m
-    [32m+ Modified  + 1[39m
+        "diff": "- Original  - 0
+    + Modified  + 1
 
-    [32m+ blue![39m",
+    + blue!",
         "newState": "blue!",
         "resourceDefinitions": Object {
           "content": "blue!",
           "path": "blue.js",
         },
-        "resourceName": undefined,
+        "resourceName": "File",
       },
     ]
   `)
@@ -166,16 +166,16 @@ test(`renders to a plan`, async () => {
       "_stepMetadata": Object {},
       "currentState": "",
       "describe": "Write red.js",
-      "diff": "[31m- Original  - 0[39m
-    [32m+ Modified  + 1[39m
+      "diff": "- Original  - 0
+    + Modified  + 1
 
-    [32m+ red![39m",
+    + red!",
       "newState": "red!",
       "resourceDefinitions": Object {
         "content": "red!",
         "path": "red.js",
       },
-      "resourceName": undefined,
+      "resourceName": "File",
     }
   `)
   expect(result[1]).toMatchInlineSnapshot(`
@@ -187,7 +187,7 @@ test(`renders to a plan`, async () => {
       "resourceDefinitions": Object {
         "name": "gatsby",
       },
-      "resourceName": undefined,
+      "resourceName": "NPMPackage",
     }
   `)
 })

@@ -33,6 +33,7 @@ const PORT = process.argv[2] || 50400
 
 let lastState = {}
 const emitUpdate = state => {
+  // eslint-disable-next-line no-unused-vars
   const { lastEvent, ...cleanedState } = state
   if (!lodash.isEqual(cleanedState, lastState)) {
     pubsub.publish(`operation`, {

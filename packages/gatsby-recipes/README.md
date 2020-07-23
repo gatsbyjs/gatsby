@@ -241,6 +241,8 @@ DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
 
 Then, open up Chrome and click the node icon in dev tools.
 
+To see log output from the Recipes graphql server, run in a terminal `node node_modules/gatsby-recipes/dist/graphql-server/start-dev-cli-server.js`
+
 ### Official recipes
 
 MDX source for the official recipes lives at [https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes).

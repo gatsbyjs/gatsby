@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi"
 
 import client from "./client"
-import space from "./client"
 import resourceSchema from "../resource-schema"
 
 const create = async (context, { name }) => {

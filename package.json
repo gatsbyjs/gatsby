@@ -124,9 +124,7 @@
   "private": true,
   "resolutions": {
     "theme-ui": "0.4.0-alpha.3",
-    "csstype": "2.6.10",
-    "property-information": "5.5.0",
-    "remark-mdx": "^2.0.0-next.3"
+    "csstype": "2.6.10"
   },
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",

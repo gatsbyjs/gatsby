@@ -1,6 +1,4 @@
 const providedResources = require(`../resources`)
-const flatted = require(`flatted`)
-
 const isResource = type => type && (type === `Input` || providedResources[type])
 
 const extractPlan = (node, type) => {
@@ -39,7 +37,7 @@ const transform = (props = {}, type) => {
     if (curr.text) {
       try {
         currText = JSON.parse(curr.text)
-      } catch {}
+      } catch {} // eslint-disable-line
     }
 
     if (childType === `Input`) {

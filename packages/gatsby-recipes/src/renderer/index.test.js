@@ -32,12 +32,13 @@ describe(`renderer`, () => {
           "step": "1",
           "totalSteps": "1",
         },
+        "_type": "File",
         "currentState": "",
         "describe": "Write foo.js",
-        "diff": "[31m- Original  - 0[39m
-      [32m+ Modified  + 1[39m
+        "diff": "- Original  - 0
+      + Modified  + 1
 
-      [32m+ hiiiiii![39m",
+      + hiiiiii!",
         "newState": "hiiiiii!",
         "resourceDefinitions": Object {
           "content": "hiiiiii!",
@@ -53,12 +54,13 @@ describe(`renderer`, () => {
           "step": "1",
           "totalSteps": "1",
         },
+        "_type": "File",
         "currentState": "",
         "describe": "Write foo2.js",
-        "diff": "[31m- Original  - 0[39m
-      [32m+ Modified  + 1[39m
+        "diff": "- Original  - 0
+      + Modified  + 1
 
-      [32m+ /** foo2 */[39m",
+      + /** foo2 */",
         "newState": "/** foo2 */",
         "resourceDefinitions": Object {
           "content": "/** foo2 */",
@@ -74,6 +76,7 @@ describe(`renderer`, () => {
           "step": "1",
           "totalSteps": "1",
         },
+        "_type": "NPMPackage",
         "currentState": "gatsby@2.24.7",
         "describe": "Install gatsby@latest",
         "newState": "gatsby@latest",
@@ -95,10 +98,10 @@ describe(`renderer`, () => {
           "_stepMetadata": Object {},
           "currentState": "",
           "describe": "Write hi.md",
-          "diff": "[31m- Original  - 0[39m
-      [32m+ Modified  + 1[39m
+          "diff": "- Original  - 0
+      + Modified  + 1
 
-      [32m+ hi[39m",
+      + hi",
           "newState": "hi",
           "resourceDefinitions": Object {
             "content": "hi",
@@ -132,12 +135,13 @@ export const myVar = 'hi.mdx'
             "step": "1",
             "totalSteps": "1",
           },
+          "_type": "File",
           "currentState": "",
           "describe": "Write hi.mdx",
-          "diff": "[31m- Original  - 0[39m
-      [32m+ Modified  + 1[39m
+          "diff": "- Original  - 0
+      + Modified  + 1
 
-      [32m+ hello[39m",
+      + hello",
           "newState": "hello",
           "resourceDefinitions": Object {
             "content": "hello",
@@ -162,10 +166,10 @@ export const myVar = 'hi.mdx'
           "_stepMetadata": Object {},
           "currentState": "",
           "describe": "Write foo.js",
-          "diff": "[31m- Original  - 0[39m
-      [32m+ Modified  + 1[39m
+          "diff": "- Original  - 0
+      + Modified  + 1
 
-      [32m+ /** foo */[39m",
+      + /** foo */",
           "newState": "/** foo */",
           "resourceDefinitions": Object {
             "content": "/** foo */",

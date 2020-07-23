@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi"
 
 import client from "./client"
-import space from "./client"
 import resourceSchema from "../resource-schema"
 import getGraphqlFields from "../utils/get-graphql-fields"
 const getDiff = require(`../utils/get-diff`)

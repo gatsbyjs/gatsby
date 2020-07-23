@@ -22,12 +22,10 @@ const {
   Heading,
   SuccessIcon,
   InputField,
-  InputFieldControlProps,
   InputFieldLabel,
   InputFieldControl,
   InputFieldHint,
   InputFieldError,
-  WithFormFieldBlock,
   FormFieldContainer,
 } = require(`gatsby-interface`)
 const {
@@ -43,8 +41,8 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
-import { useInputByKey, InputProvider } from "./renderer/input-provider"
-import { useResource, ResourceProvider } from "./renderer/resource-provider"
+import { InputProvider } from "./renderer/input-provider"
+import { ResourceProvider } from "./renderer/resource-provider"
 
 const theme = getTheme()
 
@@ -57,7 +55,6 @@ ansi2HTML.setColors({
 const InputFieldBlock = React.forwardRef((props, ref) => {
   const {
     id,
-    key,
     label,
     labelSize,
     error,
@@ -144,11 +141,13 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test` // &&
-//  `/Users/johno-mini/c/gatsby/starters/blog`
+const PROJECT_ROOT =
+  `/Users/kylemathews/programs/recipes-test` &&
+  `/Users/johno-mini/c/gatsby/starters/blog`
 
-const Color = `span`
 const Spinner = () => <span>Loading...</span>
+
+const escapeTags = str => str.replace(/</g, `&lt;`)
 
 const DiffPre = ({ resourcePlan, ...props }) => (
   <Styled.pre
@@ -159,7 +158,7 @@ const DiffPre = ({ resourcePlan, ...props }) => (
       padding: 4,
     }}
     dangerouslySetInnerHTML={{
-      __html: ansi2HTML(resourcePlan.diff),
+      __html: ansi2HTML(escapeTags(resourcePlan.diff)),
     }}
   />
 )
@@ -353,7 +352,7 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `./test.mdx`
+const recipe = `styled-components.mdx`
 // recipe = `jest.mdx`,
 // recipe,
 const graphqlPort = 50400
@@ -435,17 +434,6 @@ const Step = ({ state, step, i }) => {
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
 
-  const [complete, setComplete] = useState(false)
-  if (output.title !== `` && output.body !== ``) {
-    setTimeout(() => {
-      setComplete(true)
-    }, 0)
-  } else {
-    setTimeout(() => {
-      setComplete(false)
-    }, 0)
-  }
-
   return (
     <div
       key={`step-${i}`}
@@ -502,7 +490,7 @@ const Step = ({ state, step, i }) => {
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
-            {state.context.exports.join(`\n`) + `\n\n` + step}
+            {state.context.exports?.join(`\n`) + `\n\n` + step}
           </MDX>
         </div>
       </div>
@@ -857,7 +845,7 @@ const RecipeInterpreter = () => {
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
-                  {state.context.exports.join(`\n`) +
+                  {state.context.exports?.join(`\n`) +
                     `\n\n` +
                     state.context.steps[0]}
                 </MDX>

@@ -13,12 +13,12 @@ Object {
   "currentState": "node_modules
 ",
   "describe": "Add .cache to gitignore",
-  "diff": "[31m- Original  - 1[39m
-[32m+ Modified  + 1[39m
+  "diff": "- Original  - 1
++ Modified  + 1
 
-[2m  node_modules[22m
-[31m-[39m
-[32m+ .cache[39m",
+  node_modules
+-
++ .cache",
   "newState": "node_modules
 .cache",
 }
