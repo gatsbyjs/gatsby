@@ -41,7 +41,7 @@ Please change this to: \\"/foo/{bar}/\\""
 
   it(`throws error if the file does not exist`, () => {
     expect(() => {
-      validatePathQuery(`/foo/{bar}`, [".js", ".ts", ".mjs"])
+      validatePathQuery(`/foo/{bar}`, [`.js`, `.ts`, `.mjs`])
     }).toThrowErrorMatchingInlineSnapshot(`
 "To query node \\"path\\" the \\"filePath\\" argument must represent a file that exists.
 Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
@@ -58,7 +58,7 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
     await fs.createFile(absolutePath)
 
     expect(() => {
-      validatePathQuery(filePath, [".js", ".ts", ".mjs"])
+      validatePathQuery(filePath, [`.js`, `.ts`, `.mjs`])
     }).not.toThrow()
 
     await fs.remove(systemPath.join(process.cwd(), `src`))

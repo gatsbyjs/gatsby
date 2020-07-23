@@ -31,6 +31,6 @@ describe(`isValidCollectionPathImplementation`, () => {
     isValidCollectionPathImplementation(compatiblePath(path))
     expect(reporter.panicOnBuild)
       .toBeCalledWith(`Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-filePath: ${path}`)
+filePath: ${compatiblePath(path)}`)
   })
 })
