@@ -65,14 +65,24 @@ apiRunnerAsync(`onClientEntry`).then(() => {
    * Let's warn if we find service workers in development.
    */
   if (`serviceWorker` in navigator) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      if (registrations.length > 0)
+    navigator.serviceWorker
+      .getRegistrations()
+      .then(registrations => {
+        if (registrations.length > 0)
+          console.warn(
+            `Warning: found one or more service workers present.`,
+            `If your site isn't behaving as expected, you might want to remove these.`,
+            registrations
+          )
+      })
+      .catch(err => {
         console.warn(
-          `Warning: found one or more service workers present.`,
-          `If your site isn't behaving as expected, you might want to remove these.`,
-          registrations
+          `Warning: there was a problem checking if service workers are present. ` +
+          `This is probably due to a (good) security setting and there's no need to change it. ` +
+          `If your site isn't behaving as expected, you might want remove any service workers.`,
+          err
         )
-    })
+      })
   }
 
   const rootElement = document.getElementById(`___gatsby`)
