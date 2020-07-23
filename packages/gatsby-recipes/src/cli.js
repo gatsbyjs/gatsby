@@ -282,7 +282,6 @@ const components = {
   NPMScript: props => <ResourceComponent {...props} />,
   RecipeIntroduction: props => <Div {...props} />,
   RecipeStep: props => {
-    console.log(props)
     const children = React.Children.toArray(props.children)
     const firstChild = children.shift()
     children.unshift(
