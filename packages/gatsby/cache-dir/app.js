@@ -77,8 +77,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       })
       .catch(err => {
         console.warn(
-          `Warning: there was a problem checking if service workers are present. ` +
-          `This is probably due to a (good) security setting and there's no need to change it. ` +
+          `Warning: there was a problem checking if service workers are present. `,
+          `This is probably due to a (good) security setting and there's no need to change it.`,
           `If your site isn't behaving as expected, you might want remove any service workers.`,
           err
         )
