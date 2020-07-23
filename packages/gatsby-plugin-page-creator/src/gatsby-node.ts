@@ -15,6 +15,7 @@ import { createPath, watchDirectory } from "gatsby-page-utils"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
+import { validatePathQuery } from "./validate-path-query"
 
 type GlobParameters = Parameters<typeof globCB>
 const glob = Bluebird.promisify<
@@ -110,10 +111,12 @@ async function createPagesStatefully(
 
 const knownCollections = new Map()
 
-function setFieldsOnGraphQLNodeType(
-  args: SetFieldsOnGraphQLNodeTypeArgs
-): object {
-  const collectionQuery = `all${args.type.name}`
+function setFieldsOnGraphQLNodeType({
+  type,
+  store,
+}: SetFieldsOnGraphQLNodeTypeArgs): object {
+  const extensions = store.getState().program.extensions
+  const collectionQuery = `all${type.name}`
   if (knownCollections.has(collectionQuery)) {
     return {
       path: {
@@ -123,8 +126,14 @@ function setFieldsOnGraphQLNodeType(
             type: GraphQLString,
           },
         },
-        resolve: (source: object, { filePath }: { filePath: string }): string =>
-          derivePath(filePath, source),
+        resolve: (
+          source: object,
+          { filePath }: { filePath: string }
+        ): string => {
+          validatePathQuery(filePath, extensions)
+
+          return derivePath(filePath, source)
+        },
       },
     }
   }

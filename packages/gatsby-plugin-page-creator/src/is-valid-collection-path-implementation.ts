@@ -1,10 +1,11 @@
 import sysPath from "path"
 import reporter from "gatsby-cli/lib/reporter"
 
-const errorMessage = (filePath: string, part: string): string =>
-  `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-filePath: ${filePath}`
-
+// This file is a helper for consumers. It's going to log an error to them if they
+// in any way have an incorrect filepath setup for us to predictably use collection
+// querying.
+//
+// Without this, users will can get mystic errors.
 export function isValidCollectionPathImplementation(filePath: string): boolean {
   const parts = filePath.split(sysPath.sep)
   let passing = true
@@ -30,6 +31,10 @@ export function isValidCollectionPathImplementation(filePath: string): boolean {
   })
   return passing
 }
+
+const errorMessage = (filePath: string, part: string): string =>
+  `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
+filePath: ${filePath}`
 
 function assert(part: string, matches: string | RegExp, message: string): void {
   const regexp = matches instanceof RegExp ? matches : new RegExp(matches)
