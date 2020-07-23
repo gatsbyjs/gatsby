@@ -64,40 +64,39 @@ const mergeFunctions = (data, context) => {
 }
 
 export default function APITemplate({ data, location, pageContext }) {
+  const { docPage } = data
   const { prev, next } = pageContext
-  const page = data.docPage
-  const heading = page.contentsHeading || `APIs`
+  const heading = docPage.contentsHeading || `APIs`
   const headingId = `apis`
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
 
-  // Generate table of content items for API entries
-  const items = page.tableOfContents.items || []
-  const tableOfContentsItems = [
-    ...items,
-    {
-      title: heading,
-      url: `#${headingId}`,
-      items: mergedFuncs.map(mergedFunc => {
-        return {
-          url: `#${mergedFunc.name}`,
-          title: mergedFunc.name,
-        }
-      }),
+  // Override the page with updates to the table of contents
+  const page = {
+    ...docPage,
+    tableOfContentsDepth: Math.max(docPage.tableOfContentsDepth, 2),
+    tableOfContents: {
+      ...docPage.tableOfContents,
+      // Generate table of content items for API entries
+      items: [
+        ...(docPage.tableOfContents.items || []),
+        {
+          title: heading,
+          url: `#${headingId}`,
+          items: mergedFuncs.map(mergedFunc => {
+            return {
+              url: `#${mergedFunc.name}`,
+              title: mergedFunc.name,
+            }
+          }),
+        },
+      ],
     },
-  ]
-  const tableOfContentsDepth = Math.max(page.tableOfContentsDepth, 2)
+  }
 
   return (
-    <DocsMarkdownPage
-      page={page}
-      location={location}
-      prev={prev}
-      next={next}
-      tableOfContentsItems={tableOfContentsItems}
-      tableOfContentsDepth={tableOfContentsDepth}
-    >
+    <DocsMarkdownPage page={page} location={location} prev={prev} next={next}>
       <h2 id={headingId}>{heading}</h2>
       <APIReference
         docs={mergedFuncs}

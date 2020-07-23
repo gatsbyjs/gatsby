@@ -15,7 +15,8 @@ export interface IMutationAction {
   payload: unknown[]
 }
 export interface IDataLayerContext {
-  firstRun?: boolean
+  deferNodeMutation?: boolean
+  nodesMutatedDuringQueryRun?: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

@@ -33,6 +33,14 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
+  it(`can navigate using numbers`, () => {
+    cy.getTestElement(`page-two`).click().waitForRouteChange()
+
+    cy.getTestElement(`back-by-number`).click()
+
+    cy.location(`pathname`).should(`equal`, `/`)
+  })
+
   describe(`relative links`, () => {
     it(`can navigate to a subdirectory`, () => {
       cy.getTestElement(`subdir-link`)

@@ -13,7 +13,10 @@ import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
-import { GatsbyWebpackVirtualModules } from "./gatsby-webpack-virtual-modules"
+import {
+  GatsbyWebpackVirtualModules,
+  VIRTUAL_MODULES_BASE_PATH,
+} from "./gatsby-webpack-virtual-modules"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -397,34 +400,55 @@ export const createWebpackUtils = (
         }`,
       }
 
+      // TODO REMOVE IN V3
+      // a list of vendors we know we shouldn't polyfill (we should have set core-js to entry but we didn't so we have to do this)
+      const VENDORS_TO_NOT_POLYFILL = [
+        `@babel[\\\\/]runtime`,
+        `@mikaelkristiansson[\\\\/]domready`,
+        `@reach[\\\\/]router`,
+        `babel-preset-gatsby`,
+        `core-js`,
+        `dom-helpers`,
+        `gatsby-legacy-polyfills`,
+        `gatsby-link`,
+        `gatsby-react-router-scroll`,
+        `invariant`,
+        `lodash`,
+        `mitt`,
+        `prop-types`,
+        `react-dom`,
+        `react`,
+        `regenerator-runtime`,
+        `scheduler`,
+        `scroll-behavior`,
+        `shallow-compare`,
+        `warning`,
+        `webpack`,
+      ]
+      const doNotPolyfillRegex = new RegExp(
+        `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+          `|`
+        )})[\\\\/]`
+      )
+
       return {
         test: /\.(js|mjs)$/,
         exclude: (modulePath: string): boolean => {
-          if (vendorRegex.test(modulePath)) {
-            // If dep uses Gatsby, exclude
-            if (
-              modulesThatUseGatsby.some(module =>
-                modulePath.includes(module.path)
-              )
-            ) {
-              return true
-            }
-            // If dep is known library that doesn't need polyfilling, we don't.
-            // TODO this needs rework, this is buggy as hell
-            if (
-              /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
-                modulePath
-              )
-            ) {
-              return true
-            }
-
-            // If dep is in node_modules and none of the above, include
-            return false
+          // If dep is user land code, exclude
+          if (!vendorRegex.test(modulePath)) {
+            return true
           }
 
-          // If dep is user land code, exclude
-          return true
+          // If dep uses Gatsby, exclude
+          if (
+            modulesThatUseGatsby.some(module =>
+              modulePath.includes(module.path)
+            )
+          ) {
+            return true
+          }
+
+          return doNotPolyfillRegex.test(modulePath)
         },
         type: `javascript/auto`,
         use: [loaders.dependencies(jsOptions)],
@@ -437,7 +461,9 @@ export const createWebpackUtils = (
     return {
       enforce: `pre`,
       test: /\.jsx?$/,
-      exclude: vendorRegex,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
       use: [loaders.eslint(schema)],
     }
   }

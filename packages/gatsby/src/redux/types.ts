@@ -120,7 +120,7 @@ export interface IPlugin {
   options: Record<string, any>
 }
 
-interface IBabelStage {
+export interface IBabelStage {
   plugins: IPlugin[]
   presets: IPlugin[]
   options: {
@@ -199,6 +199,7 @@ export interface IGatsbyState {
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
   >
+  staticQueriesByTemplate: Map<SystemPath, Identifier[]>
   pendingPageDataWrites: {
     pagePaths: Set<string>
     templatePaths: Set<SystemPath>
@@ -255,6 +256,7 @@ export interface ICachedReduxState {
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
   pageData: IGatsbyState["pageData"]
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
 }
 
@@ -304,6 +306,7 @@ export type ActionsUnion =
   | ICreateJobAction
   | ISetJobAction
   | IEndJobAction
+  | ISetStaticQueriesByTemplateAction
   | IAddPendingPageDataWriteAction
   | IAddPendingTemplateDataWriteAction
   | IClearPendingPageDataWritesAction
@@ -573,9 +576,17 @@ export interface ISetPageDataAction {
 }
 
 export interface IRemoveTemplateComponentAction {
-  type: `REMOVE_TEMPLATE_COMPONENT`
+  type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
     componentPath: string
+  }
+}
+
+export interface ISetStaticQueriesByTemplateAction {
+  type: `SET_STATIC_QUERIES_BY_TEMPLATE`
+  payload: {
+    componentPath: string
+    staticQueryHashes: Identifier[]
   }
 }
 
