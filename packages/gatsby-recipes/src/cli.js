@@ -497,7 +497,6 @@ module.exports = async ({
       }
 
       const Error = ({ state }) => {
-        console.log(`errors`, state)
         if (state && state.context && state.context.error) {
           return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
         }

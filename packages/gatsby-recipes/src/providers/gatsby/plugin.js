@@ -377,7 +377,10 @@ module.exports.all = async ({ root }) => {
 
 const schema = {
   name: Joi.string(),
-  description: Joi.string().optional().allow(null).allow(``),
+  description: Joi.string()
+    .optional()
+    .allow(null)
+    .allow(``),
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
@@ -385,7 +388,7 @@ const schema = {
 }
 
 const validate = resource => {
-  if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
+  if (REQUIRES_KEYS.includes(resource.name) && !resource._key) {
     return {
       error: `${resource.name} requires a key to be set`,
     }

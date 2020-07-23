@@ -63,6 +63,7 @@ const recipeMachine = Machine(
                   msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
+                  console.log(e)
                   return {
                     error: `Could not parse recipe ${context.recipePath}`,
                     e,
