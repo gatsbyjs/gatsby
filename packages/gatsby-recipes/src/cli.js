@@ -7,6 +7,7 @@ const MDX = require(`./components/mdx`).default
 const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
 import {
+  useResource,
   useResourceByUUID,
   ResourceProvider,
 } from "./renderer/resource-provider"
@@ -212,7 +213,13 @@ function eliminateNewLines(children) {
 }
 
 const ResourceComponent = props => {
-  const resource = useResourceByUUID(props._uuid)
+  let resource
+  if (props._key) {
+    resource = useResource(props._key)
+  } else {
+    resource = useResourceByUUID(props._uuid)
+  }
+
   return (
     <Div marginBottom={1}>
       <Text color="yellow" backgroundColor="black" bold underline>
