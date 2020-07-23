@@ -147,6 +147,8 @@ const PROJECT_ROOT =
 
 const Spinner = () => <span>Loading...</span>
 
+const escapeTags = str => str.replace(/</g, `&lt;`)
+
 const DiffPre = ({ resourcePlan, ...props }) => (
   <Styled.pre
     {...props}
@@ -156,7 +158,7 @@ const DiffPre = ({ resourcePlan, ...props }) => (
       padding: 4,
     }}
     dangerouslySetInnerHTML={{
-      __html: ansi2HTML(resourcePlan.diff),
+      __html: ansi2HTML(escapeTags(resourcePlan.diff)),
     }}
   />
 )
@@ -350,7 +352,7 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `./file-test.mdx`
+const recipe = `styled-components.mdx`
 // recipe = `jest.mdx`,
 // recipe,
 const graphqlPort = 50400
