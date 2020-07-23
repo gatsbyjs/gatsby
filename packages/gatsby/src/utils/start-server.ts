@@ -161,7 +161,7 @@ export async function startServer(
         return {
           schema,
           graphiql: false,
-          extensions: () => {
+          extensions(): { [key: string]: unknown } {
             return {
               enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
               refreshToken: process.env.GATSBY_REFRESH_TOKEN,
