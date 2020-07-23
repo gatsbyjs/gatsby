@@ -19,7 +19,7 @@ module.exports = class EventStorage {
   analyticsApi =
     process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
   // eslint-disable-line @typescript-eslint/no-explicit-any
-  config: Configstore | Record<string, any>
+  config: Configstore
   store: Store
   verbose: boolean
   debugEvents: boolean
@@ -32,9 +32,8 @@ module.exports = class EventStorage {
       // This should never happen
       this.config = {} as Configstore
       this.config.get = (key: string): any => this.config[key]
-      this.config.set = (key: string, value: any): any => {
+      this.config.set = (key: string, value: any): void => {
         this.config[key] = value
-        return value
       }
       this.config.all = this.config
       this.config.path = path.join(os.tmpdir(), `gatsby`)
@@ -116,14 +115,14 @@ module.exports = class EventStorage {
     }
   }
 
-  getConfig(key: string): string | Record<string, any> {
+  getConfig(key: string): string | Record<string, unknown> {
     if (key) {
       return this.config.get(key)
     }
     return this.config.all
   }
 
-  updateConfig(key: string, value: string | number | boolean | null): any {
+  updateConfig(key: string, value: string | number | boolean | null): void {
     return this.config.set(key, value)
   }
 }
