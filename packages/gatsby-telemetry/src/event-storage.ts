@@ -1,11 +1,10 @@
-import uuidV4 from "uuid/v4"
-import os from "os"
 import path from "path"
 import Configstore from "configstore"
 import createFetch from "@turist/fetch"
 import { Store } from "./store"
 import { ensureDirSync } from "fs-extra"
 import { isTruthy } from "./is-truthy"
+import { InMemoryConfigStore } from "./in-memory-store"
 
 const fetch = createFetch()
 
@@ -29,17 +28,7 @@ module.exports = class EventStorage {
     try {
       this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
     } catch (e) {
-      // This should never happen
-      this.config = {} as Configstore
-      this.config.get = (key: string): any => this.config[key]
-      this.config.set = (key: string, value: any): void => {
-        this.config[key] = value
-      }
-      this.config.all = this.config
-      this.config.path = path.join(os.tmpdir(), `gatsby`)
-      this.config[`telemetry.enabled`] = true
-
-      this.config[`telemetry.machineId`] = `not-a-machine-id-${uuidV4()}`
+      this.config = new InMemoryConfigStore()
     }
 
     const baseDir = path.dirname(this.config.path)
