@@ -191,7 +191,9 @@
     "graphql.js",
     "index.d.ts",
     "scripts/postinstall.js",
-    "utils.js"
+    "utils.js",
+    "internal.js",
+    "internal.d.ts"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
@@ -227,7 +229,8 @@
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "postinstall": "node scripts/postinstall.js",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepare": "npm run typegen && cross-env NODE_ENV=production npm run build",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
