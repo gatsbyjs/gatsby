@@ -505,8 +505,8 @@ describe(`Test plugin manifest options`, () => {
     await onPostBootstrap({ ...apiArgs }, specificOptions)
 
     expect(fs.copyFileSync).toHaveBeenCalledWith(
-      expect.stringMatching(icon),
-      expect.stringMatching(`public/favicon.svg`)
+      expect.stringContaining(`icon.svg`),
+      expect.stringContaining(`favicon.svg`)
     )
 
     expect(fs.copyFileSync).toHaveBeenCalledTimes(1)
