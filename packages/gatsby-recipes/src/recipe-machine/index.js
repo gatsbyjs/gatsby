@@ -1,5 +1,4 @@
 const { Machine, assign, send } = require(`xstate`)
-const _ = require(`lodash`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -8,7 +7,6 @@ const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const { setInput } = require(`../renderer`)
-const renderer = require(`../renderer/index`)
 
 const recipeMachine = Machine(
   {
@@ -266,7 +264,6 @@ const recipeMachine = Machine(
       }),
       addResourcesToContext: assign((context, event) => {
         if (event.data) {
-          const stepResources = context.stepResources || []
           let plan = context.plan || []
           plan = plan.map(p => {
             let changedResource = event.data.find(c => c._uuid === p._uuid)
