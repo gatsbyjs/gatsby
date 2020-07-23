@@ -28,6 +28,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
+    "react-icons": "^3.10.0",
     "react-instantsearch-dom": "^5.7.0",
     "remove-markdown": "^0.3.0",
     "strict-ui": "^0.1.3",
