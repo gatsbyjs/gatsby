@@ -41,6 +41,7 @@ const getGlobalBasePrefix = () =>
 
 const isLocalLink = path =>
   path &&
+  path.startsWith &&
   !path.startsWith(`http://`) &&
   !path.startsWith(`https://`) &&
   !path.startsWith(`//`)
