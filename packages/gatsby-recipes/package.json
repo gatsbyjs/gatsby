@@ -95,17 +95,10 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
-    "testPathIgnorePatterns": [
-      "/.cache/",
-      "dist"
-    ],
+    "testPathIgnorePatterns": ["/.cache/", "dist"],
     "testEnvironment": "node"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-recipes",
-    "mdx"
-  ],
+  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {

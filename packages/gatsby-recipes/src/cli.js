@@ -326,6 +326,7 @@ log(
 module.exports = async ({
   recipe,
   isDevelopMode,
+  isInstallMode,
   graphqlPort,
   projectRoot,
 }) => {
@@ -390,6 +391,28 @@ module.exports = async ({
       )
     }
 
+    const Installing = ({ state }) => {
+      return (
+        <Div>
+          {state.context.plan.map((p, i) => (
+            <Div key={`${p.resourceName}-${i}`}>
+              <Text italic>{p.resourceName}:</Text>
+              <Text>
+                {` `}
+                {p.isDone ? `✅ ` : <Spinner />}{" "}
+                {p.isDone ? p._message : p.describe}
+                {` `}
+                {state.context.elapsed > 0 && (
+                  <Text>({state.context.elapsed / 1000}s elapsed)</Text>
+                )}
+              </Text>
+            </Div>
+          ))}
+        </Div>
+      )
+    }
+
+    let sentContinue = false
     const RecipeInterpreter = () => {
       const { exit } = useApp()
       // eslint-disable-next-line
@@ -485,7 +508,23 @@ module.exports = async ({
         )
       }
 
-      const isReady = state?.value === `presentPlan`
+      let isReady
+
+      // If installing, continue from presentPlan to applyingPlan
+      if (state?.value === `presentPlan` && isInstallMode) {
+        if (!sentContinue) {
+          sendEvent({ event: `CONTINUE` })
+          sentContinue = true
+        }
+      }
+
+      // install mode
+      if (isInstallMode) {
+        isReady = state?.value === `applyingPlan` || state?.value === `done`
+      } else {
+        isReady = state?.value === `presentPlan`
+      }
+
       if (!isReady) {
         return (
           <Text>
@@ -552,33 +591,6 @@ module.exports = async ({
         )
       }
 
-      const RunningStep = ({ state }) => {
-        const isPlan = state.context.plan && state.context.plan.length > 0
-        const isRunningStep = state.value === `applyingPlan`
-
-        if (!isPlan || !isRunningStep) {
-          return null
-        }
-
-        return (
-          <Div>
-            {state.context.plan.map((p, i) => (
-              <Div key={`${p.resourceName}-${i}`}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text>
-                  {` `}
-                  <Spinner /> {p.describe}
-                  {` `}
-                  {state.context.elapsed > 0 && (
-                    <Text>({state.context.elapsed / 1000}s elapsed)</Text>
-                  )}
-                </Text>
-              </Div>
-            ))}
-          </Div>
-        )
-      }
-
       const Error = ({ state }) => {
         log(`errors`, state)
         if (state && state.context && state.context.error) {
@@ -620,9 +632,6 @@ module.exports = async ({
           process.stdout.write(
             `\n\n---\n\n\nThe recipe finished successfully!\n\n`
           )
-          lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-            process.stdout.write(`✅ ${res._message}\n`)
-          })
           process.exit()
         })
         // return null
@@ -668,13 +677,18 @@ module.exports = async ({
       // resources:
       // state.context.plan?.filter(p => p.resourceName !== `Input`) || [],
       // })
-      return (
-        <Plan
-          state={state}
-          localRecipe={localRecipe}
-          isDevelopMode={isDevelopMode}
-        />
-      )
+
+      if (isInstallMode) {
+        return <Installing state={state} />
+      } else {
+        return (
+          <Plan
+            state={state}
+            localRecipe={localRecipe}
+            isDevelopMode={isDevelopMode}
+          />
+        )
+      }
     }
 
     const Wrapper = () => (
