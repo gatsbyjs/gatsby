@@ -15,7 +15,8 @@ const onRenderBody = (args, pluginOptions) => {
 let headComponents
 const setHeadComponents = args => (headComponents = headComponents.concat(args))
 
-const defaultIcon = `pretend/this/exists.png`
+const defaultIcon = `pretend/this/exists.svg`
+
 const ssrArgs = {
   setHeadComponents,
   pathname: `/`,
@@ -276,7 +277,7 @@ describe(`gatsby-plugin-manifest`, () => {
     })
 
     it(`Does query cache busting if "cache_busting_mode" option is set to undefined`, () => {
-      onRenderBody(ssrArgs, { icon: true })
+      onRenderBody(ssrArgs, { icon: defaultIcon })
       expect(headComponents).toMatchSnapshot()
     })
   })
@@ -285,7 +286,7 @@ describe(`gatsby-plugin-manifest`, () => {
     it(`Adds link favicon tag if "include_favicon" is set to true`, () => {
       onRenderBody(ssrArgs, {
         icon: defaultIcon,
-        include_favicon: defaultIcon,
+        include_favicon: true,
         legacy: false,
         cache_busting_mode: `none`,
       })
