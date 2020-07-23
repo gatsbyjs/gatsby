@@ -216,7 +216,7 @@ const ResourceComponent = props => {
   return (
     <Div marginBottom={1}>
       <Text color="yellow" backgroundColor="black" bold underline>
-        {props._type}:
+        {resource.resourceName}:
       </Text>
       <Text color="green">{resource?.describe}</Text>
       {resource?.diff ? (
