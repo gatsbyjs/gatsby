@@ -326,22 +326,22 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
-  "diff": "[31m- Original  - 1[39m
-[32m+ Modified  + 7[39m
+  "diff": "- Original  - 1
++ Modified  + 7
 
-[33m@@ -5,6 +5,12 @@[39m
-[2m   */[22m
-[2m  module.exports = {[22m
-[2m    /* Your site config here */[22m
-[31m-   plugins: [],[39m
-[32m+   plugins: [[39m
-[32m+     {[39m
-[32m+       resolve: \\"gatsby-source-filesystem\\",[39m
-[32m+       options: undefined,[39m
-[32m+       __key: \\"gatsby-source-filesystem\\",[39m
-[32m+     },[39m
-[32m+   ],[39m
-[2m  };[22m
+@@ -5,6 +5,12 @@
+   */
+  module.exports = {
+    /* Your site config here */
+-   plugins: [],
++   plugins: [
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
++   ],
+  };
 ",
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
@@ -407,23 +407,23 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
-  "diff": "[31m- Original  - 1[39m
-[32m+ Modified  + 8[39m
+  "diff": "- Original  - 1
++ Modified  + 8
 
-[33m@@ -5,6 +5,13 @@[39m
-[2m   */[22m
-[2m  module.exports = {[22m
-[2m    /* Your site config here */[22m
-[31m-   plugins: [\\"gatsby-source-filesystem\\"],[39m
-[32m+   plugins: [[39m
-[32m+     \\"gatsby-source-filesystem\\",[39m
-[32m+     {[39m
-[32m+       resolve: \\"gatsby-source-filesystem\\",[39m
-[32m+       options: undefined,[39m
-[32m+       __key: \\"gatsby-source-filesystem\\",[39m
-[32m+     },[39m
-[32m+   ],[39m
-[2m  };[22m
+@@ -5,6 +5,13 @@
+   */
+  module.exports = {
+    /* Your site config here */
+-   plugins: [\\"gatsby-source-filesystem\\"],
++   plugins: [
++     \\"gatsby-source-filesystem\\",
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
++   ],
+  };
 ",
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
@@ -547,20 +547,20 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
-  "diff": "[31m- Original  - 0[39m
-[32m+ Modified  + 5[39m
+  "diff": "- Original  - 0
++ Modified  + 5
 
-[33m@@ -64,6 +64,11 @@[39m
-[2m      },[22m
-[2m      \`gatsby-plugin-offline\`,[22m
-[2m      \`gatsby-plugin-react-helmet\`,[22m
-[32m+     {[39m
-[32m+       resolve: \\"gatsby-source-filesystem\\",[39m
-[32m+       options: undefined,[39m
-[32m+       __key: \\"gatsby-source-filesystem\\",[39m
-[32m+     },[39m
-[2m    ],[22m
-[2m  };[22m
+@@ -64,6 +64,11 @@
+      },
+      \`gatsby-plugin-offline\`,
+      \`gatsby-plugin-react-helmet\`,
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ],
+  };
 ",
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
@@ -737,20 +737,20 @@ module.exports = {
 };
 ",
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
-  "diff": "[31m- Original  - 0[39m
-[32m+ Modified  + 5[39m
+  "diff": "- Original  - 0
++ Modified  + 5
 
-[33m@@ -58,6 +58,11 @@[39m
-[2m      },[22m
-[2m      \`gatsby-plugin-offline\`,[22m
-[2m      \`gatsby-plugin-react-helmet\`,[22m
-[32m+     {[39m
-[32m+       resolve: \\"gatsby-source-filesystem\\",[39m
-[32m+       options: undefined,[39m
-[32m+       __key: \\"gatsby-source-filesystem\\",[39m
-[32m+     },[39m
-[2m    ],[22m
-[2m  };[22m
+@@ -58,6 +58,11 @@
+      },
+      \`gatsby-plugin-offline\`,
+      \`gatsby-plugin-react-helmet\`,
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ],
+  };
 ",
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
