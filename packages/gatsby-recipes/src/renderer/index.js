@@ -1,7 +1,4 @@
 const React = require(`react`)
-const mdx = require(`@mdx-js/mdx`)
-const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
-const babelChainingPlugin = require(`@babel/plugin-proposal-optional-chaining`)
 
 const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
@@ -10,9 +7,8 @@ const Input = require(`./input`).default
 const { useInputByKey } = require(`./input-provider`)
 const { useResource } = require(`./resource-provider`)
 const { useProvider } = require(`./provider-provider`)
-const babelPluginRemoveShortcodes = require(`./babel-plugin-remove-shortcodes`)
-const babelPluginCopyKeyProp = require(`./babel-plugin-copy-key-prop`)
-const babelPluginMoveExportKeywords = require(`./babel-plugin-move-export-keywords`)
+
+const transformRecipeMDX = require(`../transform-recipe-mdx`)
 
 const scope = {
   React,
@@ -38,50 +34,11 @@ const transformCodeForEval = code => {
   return newCode
 }
 
-const transformJsx = jsx => {
-  delete require.cache[require.resolve(`@babel/standalone`)]
-  const { transform } = require(`@babel/standalone`)
-  const { code } = transform(jsx, {
-    parserOpts: {
-      // We want to return outside of a function because the output from
-      // Babel will be evaluated inline as part of the render process.
-      allowReturnOutsideFunction: true,
-    },
-    plugins: [
-      babelPluginCopyKeyProp,
-      babelPluginMoveExportKeywords,
-      babelPluginRemoveShortcodes,
-      // TODO figure out how to use preset-env
-      babelChainingPlugin,
-      [babelPluginTransformReactJsx, { useBuiltIns: true }],
-    ],
-  })
-
-  return code
-}
-
-const mdxCache = new Map()
-const jsxCache = new Map()
-
 module.exports = (mdxSrc, cb, context, isApply) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
-  let jsxFromMdx
-  if (mdxCache.has(mdxSrc)) {
-    jsxFromMdx = mdxCache.get(mdxSrc)
-  } else {
-    jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
-    mdxCache.set(mdxSrc, jsxFromMdx)
-  }
-
-  let srcCode
-  if (jsxCache.has(jsxFromMdx)) {
-    srcCode = jsxCache.get(jsxFromMdx)
-  } else {
-    srcCode = transformJsx(jsxFromMdx)
-    jsxCache.set(jsxFromMdx, srcCode)
-  }
+  const srcCode = transformRecipeMDX(mdxSrc, true)
 
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
