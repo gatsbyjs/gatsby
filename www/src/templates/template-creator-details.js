@@ -42,9 +42,9 @@ const MetaSection = ({ children, background, last, first }) => (
       background: background ? background : `ui.background`,
       mx: -6,
       p: 6,
-      borderColor: `ui.border`,
       borderTop: first ? 1 : null,
       borderBottom: last ? null : 1,
+      borderColor: `ui.border`,
       [breakpoint2Columns]: {
         background: `transparent`,
         px: 0,

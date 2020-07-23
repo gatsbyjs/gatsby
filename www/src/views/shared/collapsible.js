@@ -11,8 +11,8 @@ export default function Collapsible({ heading, fixed, children }) {
   return (
     <div
       sx={{
-        borderColor: `ui.border`,
         borderBottom: 1,
+        borderColor: `ui.border`,
         display: collapsed ? false : `flex`,
         flex: collapsed ? `0 0 auto` : `1 1 auto`,
         minHeight: fixed ? `${fixed}px` : `initial`,

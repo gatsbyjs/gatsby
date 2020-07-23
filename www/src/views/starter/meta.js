@@ -61,8 +61,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
 
     <div
       sx={{
-        borderColor: `ui.border`,
         borderBottom: 1,
+        borderColor: `ui.border`,
         display: `flex`,
         flexGrow: 1,
         flexWrap: `nowrap`,

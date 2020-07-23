@@ -73,8 +73,8 @@ export default function LayerModel({
     <div
       sx={{
         borderRadius: 3,
-        borderColor: `ui.border`,
         border: 1,
+        borderColor: `ui.border`,
         padding: 2,
         mb: 6,
       }}

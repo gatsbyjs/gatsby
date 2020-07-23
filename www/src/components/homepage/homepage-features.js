@@ -10,8 +10,8 @@ import FuturaParagraph from "../futura-paragraph"
 const HomepageFeatures = () => (
   <div
     sx={{
-      borderColor: `ui.border`,
       borderBottom: 1,
+      borderColor: `ui.border`,
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,

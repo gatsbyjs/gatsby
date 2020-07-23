@@ -117,8 +117,8 @@ function TableOfContents({ items, depth, location }) {
       sx={{
         mb: [8, null, null, null, null, 0],
         pb: [6, null, null, null, null, 0],
-        bordercolor: `ui.border`,
         borderBottom: [1, null, null, null, null, 0],
+        borderColor: `ui.border`,
       }}
     >
       <h2
