@@ -1,8 +1,6 @@
-const fs = require(`fs`)
-const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState, useEffect } = require(`react`)
-const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
+const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`./components/mdx`).default
@@ -31,8 +29,6 @@ const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
   return tree
 }
-
-const MAX_UI_WIDTH = 67
 
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
@@ -196,10 +192,7 @@ const RecipesList = ({ setRecipe }) => {
   )
 }
 
-const Div = props => {
-  const width = Math.max(process.stdout.columns, MAX_UI_WIDTH)
-  return <Box textWrap="wrap" flexDirection="column" {...props} />
-}
+const Div = props => <Box textWrap="wrap" flexDirection="column" {...props} />
 
 // Markdown ignores new lines and so do we.
 function eliminateNewLines(children) {
@@ -288,18 +281,32 @@ const components = {
   GatsbyShadowFile: () => null,
   NPMScript: props => <ResourceComponent {...props} />,
   RecipeIntroduction: props => <Div {...props} />,
-  RecipeStep: props => (
-    <Div>
-      <Box
-        borderStyle="single"
-        padding={1}
-        flexDirection="column"
-        borderColor="magentaBright"
-      >
-        {props.children}
+  RecipeStep: props => {
+    console.log(props)
+    const children = React.Children.toArray(props.children)
+    const firstChild = children.shift()
+    children.unshift(
+      <Box flexDirection="row">
+        <Text>
+          {props.step}){` `}
+        </Text>
+        {firstChild}
       </Box>
-    </Div>
-  ),
+    )
+
+    return (
+      <Div>
+        <Box
+          borderStyle="single"
+          padding={1}
+          flexDirection="column"
+          borderColor="magentaBright"
+        >
+          {children}
+        </Box>
+      </Div>
+    )
+  },
   div: props => <Div {...props} />,
 }
 
@@ -356,6 +363,13 @@ module.exports = async ({
             }
           >
             <WelcomeMessage />
+            {isDevelopMode ? (
+              <Box flexDirection="column" marginBottom={2}>
+                <Text strong underline>
+                  DEVELOP MODE
+                </Text>
+              </Box>
+            ) : null}
             <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
               {state.context.steps.join(`\n`)}
             </MDX>
@@ -371,26 +385,25 @@ module.exports = async ({
       )
     }
 
-    const Installing = ({ state }) => {
-      return (
-        <Div>
-          {state.context.plan.map((p, i) => (
-            <Div key={`${p.resourceName}-${i}`}>
-              <Text italic>{p.resourceName}:</Text>
-              <Text>
-                {` `}
-                {p.isDone ? `✅ ` : <Spinner />}{" "}
-                {p.isDone ? p._message : p.describe}
-                {` `}
-                {state.context.elapsed > 0 && (
-                  <Text>({state.context.elapsed / 1000}s elapsed)</Text>
-                )}
-              </Text>
-            </Div>
-          ))}
-        </Div>
-      )
-    }
+    const Installing = ({ state }) => (
+      <Div>
+        {state.context.plan.map((p, i) => (
+          <Div key={`${p.resourceName}-${i}`}>
+            <Text italic>{p.resourceName}:</Text>
+            <Text>
+              {` `}
+              {p.isDone ? `✅ ` : <Spinner />}
+              {` `}
+              {p.isDone ? p._message : p.describe}
+              {` `}
+              {state.context.elapsed > 0 && (
+                <Text>({state.context.elapsed / 1000}s elapsed)</Text>
+              )}
+            </Text>
+          </Div>
+        ))}
+      </Div>
+    )
 
     let sentContinue = false
     const RecipeInterpreter = () => {
@@ -493,7 +506,7 @@ module.exports = async ({
         return null
       }
 
-      if (state.value === `doneError`) {
+      if (state?.value === `doneError`) {
         return <Error width="100%" state={state} />
       }
 
