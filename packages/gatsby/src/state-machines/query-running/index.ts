@@ -10,6 +10,11 @@ import { queryActions } from "./actions"
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
+  on: {
+    SOURCE_FILE_CHANGED: {
+      target: `extractingQueries`,
+    },
+  },
   context: {},
   states: {
     extractingQueries: {

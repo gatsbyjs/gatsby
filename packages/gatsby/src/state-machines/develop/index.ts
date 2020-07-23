@@ -19,10 +19,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     ADD_NODE_MUTATION: {
       actions: `addNodeMutation`,
     },
-    // Sent by query watcher, these are chokidar file events. They mean we
-    // need to extract queries
-    QUERY_FILE_CHANGED: {
-      actions: `markQueryFilesDirty`,
+    // Sent when webpack or chokidar sees a changed file
+    SOURCE_FILE_CHANGED: {
+      actions: `markSourceFilesDirty`,
     },
     // These are calls to the refresh endpoint. Also used by Gatsby Preview.
     // Saves the webhook body from the event into context, then reloads data
@@ -37,7 +36,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // Ignore mutation events because we'll be running everything anyway
         ADD_NODE_MUTATION: undefined,
-        QUERY_FILE_CHANGED: undefined,
+        SOURCE_FILE_CHANGED: undefined,
         WEBHOOK_RECEIVED: undefined,
       },
       invoke: {
@@ -55,8 +54,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         ADD_NODE_MUTATION: {
           actions: [`markNodesDirty`, `callApi`],
         },
-        // Ignore, because we're about to extract them anyway
-        QUERY_FILE_CHANGED: undefined,
       },
       invoke: {
         src: `initializeData`,
@@ -85,8 +82,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     // Running page and static queries and generating the SSRed HTML and page data
     runningQueries: {
       on: {
-        QUERY_FILE_CHANGED: {
-          actions: forwardTo(`run-queries`),
+        SOURCE_FILE_CHANGED: {
+          actions: [forwardTo(`run-queries`), `markSourceFilesDirty`],
         },
       },
       invoke: {
@@ -119,10 +116,26 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             cond: ({ compiler }: IBuildContext): boolean => !compiler,
           },
           {
+            // If source files have changed, then recompile the JS bundle
+            target: `recompiling`,
+            cond: ({ sourceFilesDirty }: IBuildContext): boolean =>
+              !!sourceFilesDirty,
+          },
+          {
             // ...otherwise just wait.
             target: `waiting`,
           },
         ],
+      },
+    },
+    // Recompile the JS bundle
+    recompiling: {
+      invoke: {
+        src: `recompile`,
+        onDone: {
+          actions: `markSourceFilesClean`,
+          target: `waiting`,
+        },
       },
     },
     // Spin up webpack and socket.io
@@ -131,21 +144,24 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         src: `startWebpackServer`,
         onDone: {
           target: `waiting`,
-          actions: `assignServers`,
+          actions: [
+            `assignServers`,
+            `spawnWebpackListener`,
+            `markSourceFilesClean`,
+          ],
         },
       },
     },
     // Idle, waiting for events that make us rebuild
     waiting: {
-      // We may want to save this is more places, but this should do for now
       entry: `saveDbState`,
       on: {
         // Forward these events to the child machine, so it can handle batching
         ADD_NODE_MUTATION: {
           actions: forwardTo(`waiting`),
         },
-        QUERY_FILE_CHANGED: {
-          actions: forwardTo(`waiting`),
+        SOURCE_FILE_CHANGED: {
+          actions: [forwardTo(`waiting`), `markSourceFilesDirty`],
         },
         // This event is sent from the child
         EXTRACT_QUERIES_NOW: {
@@ -177,7 +193,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           actions: [`markNodesDirty`, `callApi`],
         },
         // Ignore, because we're about to extract them anyway
-        QUERY_FILE_CHANGED: undefined,
+        SOURCE_FILE_CHANGED: undefined,
       },
       invoke: {
         src: `reloadData`,
