@@ -495,6 +495,14 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
       })
+
+      it(`returns null when object's top-most ancestor doesn't match the provided predicate`, () => {
+        const node = nodeModel.getNodeById({ id: `post1` })
+        const obj = node.frontmatter.authors
+        const predicate = () => false
+        const result = nodeModel.findRootNodeAncestor(obj, predicate)
+        expect(result).toBe(null)
+      })
     })
 
     describe(`createPageDependency`, () => {

@@ -2,6 +2,12 @@
 title: "Adding Images to a WordPress Site"
 ---
 
+<mark>Warning:</mark>
+
+The version of `gatsby-source-wordpress` that this tutorial uses will soon be deprecated and replaced with a complete rewrite in the next major version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
+
+Please follow the tutorial on [creating a new site with `gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
+
 ## What this tutorial covers:
 
 In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.

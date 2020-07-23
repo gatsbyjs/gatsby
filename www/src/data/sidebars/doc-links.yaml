@@ -41,6 +41,8 @@
         - title: Preparing Your Environment
           link: /docs/preparing-your-environment/
           items:
+            - title: Basic Hardware & Software Requirements
+              link: /docs/basic-hardware-software-requirements/
             - title: Browser Support
               link: /docs/browser-support/
             - title: Gatsby on Windows
@@ -72,6 +74,9 @@
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
+            - title: Deploying to a DigitalOcean Droplet
+              link: /docs/deploying-to-digitalocean-droplet/
+              breadcrumbTitle: DigitalOcean
             - title: Deploying to S3 & CloudFront
               link: /docs/deploying-to-s3-cloudfront/
               breadcrumbTitle: S3 & CloudFront
@@ -111,6 +116,9 @@
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
+            - title: Deploying to 21YunBox
+              link: /docs/deploying-to-21yunbox/
+              breadcrumbTitle: 21YunBox Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -154,12 +162,12 @@
             - title: Using the Static Folder
               link: /docs/static-folder/
               breadcrumbTitle: Static Folder
+            - title: Working with Images in Gatsby
+              link: /docs/working-with-images/
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
             - title: Using Cloudinary Image service
               link: /docs/using-cloudinary-image-service/
-            - title: Working with Images in Gatsby
-              link: /docs/working-with-images/
               breadcrumbTitle: Images in Gatsby
             - title: Preoptimizing Your Images
               link: /docs/preoptimizing-images/
@@ -474,6 +482,8 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
+                - title: "Scroll Restoration"
+                  link: /docs/scroll-restoration/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation

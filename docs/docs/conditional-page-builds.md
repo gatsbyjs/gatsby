@@ -42,8 +42,6 @@ Done in 154.501 sec
   - `newPages.txt` will contain a list of new or changed paths
   - `deletedPages.txt` will contain a list of deleted paths
 
-If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
-
 ## More information
 
 - This feature works by comparing the page data from the previous build to the new page data. This creates a list of page directories that are passed to the static build process.

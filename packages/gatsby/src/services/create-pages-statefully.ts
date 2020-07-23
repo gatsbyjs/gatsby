@@ -1,12 +1,12 @@
-import { IBuildContext } from "./"
-
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunnerNode from "../utils/api-runner-node"
+import { IDataLayerContext } from "../state-machines/data-layer/types"
 
 export async function createPagesStatefully({
   parentSpan,
   gatsbyNodeGraphQLFunction,
-}: Partial<IBuildContext>): Promise<void> {
+  deferNodeMutation,
+}: Partial<IDataLayerContext>): Promise<void> {
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
@@ -22,7 +22,7 @@ export async function createPagesStatefully({
       traceId: `initial-createPagesStatefully`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
-      // deferNodeMutation: true, //later
+      deferNodeMutation,
     },
     {
       activity,

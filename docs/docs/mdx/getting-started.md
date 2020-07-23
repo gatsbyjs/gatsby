@@ -4,7 +4,7 @@ title: Getting Started with MDX
 
 The fastest way to get started with Gatsby + MDX is to use the [MDX
 starter](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic). This
-allows you to write .mdx files in `src/pages` in order to create new pages on
+allows you to write `.mdx` files in `src/pages` in order to create new pages on
 your site.
 
 ## 🚀 Quick start

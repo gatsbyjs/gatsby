@@ -41,6 +41,27 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
   }
 
+  if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
+    console.log()
+    console.log(
+      `View Admin, an in-browser app to manage your site's configuration`
+    )
+    console.log()
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${
+          urls.localUrlForTerminal
+        }___admin`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}___admin`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}___admin`)
+    }
+  }
+
   console.log()
   console.log(`Note that the development build is not optimized.`)
   console.log(
