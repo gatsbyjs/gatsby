@@ -129,6 +129,20 @@ export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
 
 export const saveDbState = (): Promise<void> => saveState()
 
+export const logError: ActionFunction<IBuildContext, AnyEventObject> = (
+  _context,
+  event
+) => {
+  reporter.error(event.data)
+}
+
+export const panic: ActionFunction<IBuildContext, AnyEventObject> = (
+  _context,
+  event
+) => {
+  reporter.panic(event.data)
+}
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle
@@ -158,4 +172,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   markSourceFilesClean,
   saveDbState,
   setQueryRunningFinished,
+  panic,
+  logError,
 }
