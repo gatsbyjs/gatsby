@@ -1,6 +1,16 @@
 const React = require(`react`)
 const { useState, useEffect } = require(`react`)
-const { render, Box, Text, useInput, useApp } = require(`ink`)
+// v2
+const {
+  render,
+  Box,
+  Text: PackageText,
+  Color: PackageColor,
+  useInput,
+  useApp,
+} = require(`ink`)
+// v3
+// const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`./components/mdx`).default
@@ -29,6 +39,22 @@ const remove = require(`unist-util-remove`)
 const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
   return tree
+}
+
+// Ink v2 compatability layer
+const Text = props => {
+  let colorProps = {}
+  if (props.color) {
+    colorProps[props.color] = true
+  }
+  if (props.backgroundColor) {
+    colorProps[props.backgroundColor] = true
+  }
+  return (
+    <PackageColor {...colorProps}>
+      <PackageText {...props} />
+    </PackageColor>
+  )
 }
 
 // Check for what version of React is loaded & warn if it's too low.

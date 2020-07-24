@@ -48,11 +48,10 @@
     "graphql-type-json": "^0.3.2",
     "hicat": "^0.7.0",
     "html-tag-names": "^1.1.5",
-    "ink": "next",
-    "ink-box": "^1.0.0",
+    "ink": "^2.0.0",
     "ink-link": "^1.1.0",
-    "ink-select-input": "^4.0.0",
-    "ink-spinner": "^4.0.0-0",
+    "ink-select-input": "^3.0.0",
+    "ink-spinner": "^3.0.0",
     "is-binary-path": "^2.1.0",
     "is-url": "^1.2.4",
     "isomorphic-fetch": "^2.1.0",
@@ -95,17 +94,10 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
-    "testPathIgnorePatterns": [
-      "/.cache/",
-      "dist"
-    ],
+    "testPathIgnorePatterns": ["/.cache/", "dist"],
     "testEnvironment": "node"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-recipes",
-    "mdx"
-  ],
+  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
