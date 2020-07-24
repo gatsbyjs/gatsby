@@ -297,10 +297,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   io.on(`connection`, socket => {
-    socket.on(`develop:restart`, async () => {
+    socket.on(`develop:restart`, async ackFn => {
       isRestarting = true
       proxy.serveRestartingScreen()
-      io.emit(`develop:is-starting`)
+      ackFn(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
       developProcess.onMessage(handleChildProcessIPC)

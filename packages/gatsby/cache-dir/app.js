@@ -44,13 +44,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
               `The develop process needs to be restarted for the changes to ${msg.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
             )
           ) {
-            parentSocket.once(`develop:is-starting`, msg => {
-              window.location.reload()
-            })
             parentSocket.once(`develop:started`, msg => {
               window.location.reload()
             })
-            parentSocket.emit(`develop:restart`)
+            parentSocket.emit(`develop:restart`, () => {
+              window.location.reload()
+            })
           }
         })
       }
