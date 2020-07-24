@@ -6,6 +6,7 @@ const { createContentDigest } = require(`gatsby-core-utils`)
 const defaultOptions = require(`../utils/default-options`)
 const createMDXNodeWithScope = require(`../utils/mdx-node-with-scope`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
+const { findImports } = require(`../utils/gen-mdx`)
 
 const contentDigest = val => createContentDigest(val)
 
@@ -17,7 +18,6 @@ module.exports = async (
     createNodeId,
     getNode,
     getNodes,
-    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -54,10 +54,8 @@ module.exports = async (
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
     content,
-
     getNode,
     getNodes,
-    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -71,7 +69,6 @@ module.exports = async (
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })
 
-  // write scope files into .cache for later consumption
   await cacheScope({
     cache,
     scopeIdentifiers,

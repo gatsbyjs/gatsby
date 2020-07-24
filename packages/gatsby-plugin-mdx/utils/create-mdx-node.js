@@ -9,4 +9,4 @@ async function createMdxNode(data) {
   return nodeWithScope.mdxNode
 }
 
-module.exports = { createMdxNode, createMdxNodeWithScope }
+module.exports = createMdxNode
