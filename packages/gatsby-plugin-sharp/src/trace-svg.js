@@ -130,7 +130,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
     }
 
-    const optionsSVG = _.defaults(args, defaultArgs)
+    const optionsSVG = _.defaults({}, args, defaultArgs)
 
     // `srcset` attribute rejects URIs with literal spaces
     const encodeSpaces = str => str.replace(/ /gi, `%20`)
