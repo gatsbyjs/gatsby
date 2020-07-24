@@ -3,6 +3,7 @@ import {
   startWebpackServer,
   initialize,
   recompile,
+  postBootstrap,
 } from "../../services"
 import {
   initializeDataMachine,
@@ -22,4 +23,5 @@ export const developServices: Record<string, ServiceConfig<IBuildContext>> = {
   waitForMutations: waitingMachine,
   startWebpackServer,
   recompile,
+  postBootstrap,
 }
