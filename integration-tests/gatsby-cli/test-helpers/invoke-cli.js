@@ -14,7 +14,7 @@ export const GatsbyCLI = {
             [].concat(args),
             {
               cwd: join(__dirname, `../`, `./${relativeCwd}`),
-              env: { NODE_ENV },
+              env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
             }
           )
 
@@ -37,7 +37,7 @@ export const GatsbyCLI = {
           [].concat(args),
           {
             cwd: join(__dirname, `../`, `./${relativeCwd}`),
-            env: { NODE_ENV },
+            env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
           }
         )
 
