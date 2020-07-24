@@ -96,12 +96,22 @@ export default html`
                   ":" +
                   services.developstatusserver.port
               )
-              socket.on("develop:started", () => {
-                window.location.reload()
-              })
+              socket.on("structured-log", msg => {
+                if (msg.type !== "LOG_ACTION") return
 
-              socket.on("develop:needs-restart", () => {
-                socket.emit("develop:restart")
+                if (
+                  msg.action.type === "SET_STATUS" &&
+                  msg.action.payload === "SUCCESS"
+                ) {
+                  window.location.reload()
+                }
+
+                if (
+                  msg.action.type === "DEVELOP" &&
+                  msg.action.payload === "RESTART_REQUIRED"
+                ) {
+                  socket.emit("develop:restart")
+                }
               })
             })
         </script>
