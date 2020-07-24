@@ -28,27 +28,27 @@ Follow these instructions for installs on an Ubuntu droplet.
 
 2. Install Node
 
-   ```bash
+   ```shell
    sudo apt-get update
    sudo apt-get install node
    ```
 
 3. Install npm
 
-   ```bash
+   ```shell
    sudo apt-get install npm
    ```
 
    To view the version of Node and npm installed, run,
 
-   ```bash
+   ```shell
    node -v
    npm -v
    ```
 
 4. To install the latest stable Node.js release using the `n` package (Required),
 
-   ```bash
+   ```shell
    sudo npm install -g n
    sudo n stable
    ```
@@ -56,14 +56,14 @@ Follow these instructions for installs on an Ubuntu droplet.
    `Note`: If you check the version now, you would see the older versions of node and npm from the cache.
    You can either exit and restart your terminal or refresh the cache by following commands,
 
-   ```bash
+   ```shell
    hash node
    hash npm
    ```
 
 5. Install the gatsby-cli now globally. This will be useful ahead in building the Gatsby site for production.
 
-   ```bash
+   ```shell
    sudo npm install -g gatsby-cli
    ```
 
@@ -71,19 +71,19 @@ Follow these instructions for installs on an Ubuntu droplet.
 
 The next step is to clone the repository containing your Gatsby app (Replace `<your-github-repo-site>` with your GitHub repository link)
 
-```bash
+```shell
 git clone <your-github-repo-site>
 ```
 
 > Note: Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
 
-```bash
+```shell
 pwd
 ```
 
 In case of a warning related to "Permission denied", check if `<your non-root user>` has `sudo` privileges. Or before cloning your repository, [change permissions](https://help.ubuntu.com/community/FilePermissions) for `<your non-root user>` to access the `.config` directory of under `/home/<your non-root user>/`:
 
-```bash
+```shell
 cd ~/
 sudo chown -R $(whoami) .config
 ```
@@ -98,14 +98,14 @@ The static files will be hosted publicly on the droplet. The `gatsby build` comm
 
 1. Install dependencies.
 
-```bash
+```shell
 cd <my-gatsby-app>
 sudo npm install
 ```
 
 2. Run build to generate static files.
 
-```bash
+```shell
 sudo gatsby build
 ```
 
@@ -117,32 +117,32 @@ Nginx is web-server. It provides the infrastructure code for handling client req
 
 1. Install Nginx.
 
-   ```bash
+   ```shell
    sudo apt-get install nginx
    ```
 
 2. Configure firewall settings of the droplet to listen to HTTP and HTTPS requests on port 80 and 443 respectively.
 
-   ```bash
+   ```shell
    sudo ufw allow 'Nginx HTTP'
    sudo ufw allow 'Nginx HTTPS'
    ```
 
 3. To check the access,
 
-   ```bash
+   ```shell
    sudo ufw app list
    ```
 
 4. If `ufw` status is disabled/inactive, you can enable it with the following command:
 
-   ```bash
+   ```shell
    sudo ufw enable
    ```
 
    Allow the OpenSSH if not already done, to not disconnect from your droplet.
 
-   ```bash
+   ```shell
    sudo ufw allow 'OpenSSH'
    ```
 
@@ -152,13 +152,13 @@ Change the root directory configuration of Nginx in the default server block fil
 
 1. Go to `/etc/nginx/sites-available/`
 
-   ```bash
+   ```shell
    cd /etc/nginx/sites-available/
    ```
 
 2. Open the file default in Vim ([shortcut cheat sheet](https://devhints.io/vim))
 
-   ```bash
+   ```shell
    sudo vim default
    ```
 
@@ -180,7 +180,7 @@ Change the root directory configuration of Nginx in the default server block fil
 
 4. Restart the Nginx service
 
-   ```bash
+   ```shell
    sudo systemctl restart nginx
    ```
 
@@ -198,7 +198,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
    You'll need to add the Certbot PPA (Personal Package Archives) to your list of repositories. To do so, run the following commands:
 
-   ```bash
+   ```shell
    sudo apt-get update
    sudo add-apt-repository ppa:certbot/certbot
    sudo apt-get update
@@ -206,7 +206,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
    Run the following commands to install Certbot.
 
-   ```bash
+   ```shell
    sudo apt-get install certbot python3-certbot-nginx
    ```
 
@@ -214,7 +214,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
    Run the following command:
 
-   ```bash
+   ```shell
    sudo certbot --nginx
    ```
 
@@ -229,7 +229,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
 5. Restart the Nginx service.
 
-   ```bash
+   ```shell
    sudo systemctl restart nginx
    ```
 
