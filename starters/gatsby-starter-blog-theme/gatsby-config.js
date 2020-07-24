@@ -7,9 +7,9 @@ module.exports = {
   ],
   // Customize your site metadata:
   siteMetadata: {
-    title: `Winnie the Pooh's Example Blog`,
-    author: `Winnie the Pooh`,
-    description: `Feel free to place your site's description here.`,
+    title: `My Blog Title`,
+    author: `My Name`,
+    description: `My site description...`,
     social: [
       {
         name: `twitter`,
