@@ -44,7 +44,7 @@ const removeJsx = () => tree => {
 
 // Ink v2 compatability layer
 const Text = props => {
-  let colorProps = {}
+  const colorProps = {}
   if (props.color) {
     colorProps[props.color] = true
   }
