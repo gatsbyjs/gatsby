@@ -75,8 +75,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `clearWebhookBody`,
             `finishParentSpan`,
           ],
-          target: `runningQueries`,
+          target: `runningPostBootstrap`,
         },
+      },
+    },
+    runningPostBootstrap: {
+      invoke: {
+        src: `postBootstrap`,
+        onDone: `runningQueries`,
       },
     },
     // Running page and static queries and generating the SSRed HTML and page data
