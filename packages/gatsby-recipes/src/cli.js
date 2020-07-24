@@ -9,7 +9,6 @@ const {
   useInput,
   useApp,
 } = require(`ink`)
-const BetterBox = require(`ink-box`)
 // v3
 // const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
@@ -58,13 +57,7 @@ const Text = props => {
   )
 }
 
-const Box = props => {
-  if (props.borderColor || props.borderStyle) {
-    return <BetterBox {...props} />
-  } else {
-    return <PackageBox {...props} />
-  }
-}
+const Box = props => <PackageBox {...props} />
 
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
