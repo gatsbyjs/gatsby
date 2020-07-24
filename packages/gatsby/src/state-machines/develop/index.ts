@@ -40,6 +40,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         WEBHOOK_RECEIVED: undefined,
       },
       invoke: {
+        id: `initialize`,
         src: `initialize`,
         onDone: {
           target: `initializingData`,
