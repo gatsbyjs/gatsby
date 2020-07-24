@@ -459,11 +459,10 @@ export default async ({
       subscriptionClient.connectionCallback = async () => {
         if (!showRecipesList) {
           try {
-            const result = await createOperation({
+            await createOperation({
               recipePath: localRecipe,
               projectRoot,
             })
-            console.log(result)
           } catch (e) {
             console.log(`error creating operation`, e)
           }
@@ -537,8 +536,6 @@ export default async ({
       } else {
         isReady = state?.value === `presentPlan`
       }
-
-      console.log(state?.value, { isReady })
 
       if (!isReady) {
         return (
