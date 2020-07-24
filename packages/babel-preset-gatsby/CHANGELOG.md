@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.5.3...babel-preset-gatsby@0.5.4) (2020-07-24)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** enable transformer-regenerator ([#25983](https://github.com/gatsbyjs/gatsby/issues/25983)) ([61d0f67](https://github.com/gatsbyjs/gatsby/commit/61d0f67))
+
 ## [0.5.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.5.2...babel-preset-gatsby@0.5.3) (2020-07-21)
 
 **Note:** Version bump only for package babel-preset-gatsby

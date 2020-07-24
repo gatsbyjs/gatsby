@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.100](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.99...gatsby-admin@0.1.100) (2020-07-24)
+
+### Bug Fixes
+
+- **gatsby-admin:** show error messages in the interface ([#25944](https://github.com/gatsbyjs/gatsby/issues/25944)) ([491197f](https://github.com/gatsbyjs/gatsby/commit/491197f))
+- **gatsby-admin:** small design tweaks ([#25971](https://github.com/gatsbyjs/gatsby/issues/25971)) ([e699564](https://github.com/gatsbyjs/gatsby/commit/e699564))
+
 ## [0.1.99](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.98...gatsby-admin@0.1.99) (2020-07-23)
 
 **Note:** Version bump only for package gatsby-admin
