@@ -6,7 +6,6 @@ const { createContentDigest } = require(`gatsby-core-utils`)
 const defaultOptions = require(`../utils/default-options`)
 const createMDXNodeWithScope = require(`../utils/mdx-node-with-scope`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
-const { findImports } = require(`../utils/gen-mdx`)
 
 const contentDigest = val => createContentDigest(val)
 
