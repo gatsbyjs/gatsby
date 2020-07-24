@@ -298,10 +298,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   io.on(`connection`, socket => {
-    socket.on(`develop:restart`, async ackFn => {
+    socket.on(`develop:restart`, async respond => {
       isRestarting = true
       proxy.serveRestartingScreen()
-      ackFn(`develop:is-starting`)
+      // respond() responds to the client, which in our case prompts it to reload the page to show the restarting screen
+      respond(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
       developProcess.onMessage(handleChildProcessIPC)
