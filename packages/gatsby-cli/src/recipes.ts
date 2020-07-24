@@ -1,5 +1,5 @@
 import { trackCli } from "gatsby-telemetry"
-import runRecipe, { startGraphQLServer } from "gatsby-recipes"
+import { startGraphQLServer, recipesHandler as runRecipe } from "gatsby-recipes"
 
 export async function recipesHandler(
   projectRoot: string,

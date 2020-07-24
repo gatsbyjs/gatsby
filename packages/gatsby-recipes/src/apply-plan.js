@@ -1,7 +1,7 @@
 const render = require(`./renderer`)
 
 module.exports = async (context, cb) => {
-  const stepAsMdx = context.steps.join(`\n`)
+  const stepAsMdx = [...context.steps, ...context.exports].join(`\n`)
 
   try {
     // XXX: Too many arguments to the render function

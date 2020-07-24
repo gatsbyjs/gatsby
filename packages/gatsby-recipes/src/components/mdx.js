@@ -1,9 +1,9 @@
 import React from "react"
 import { mdx as createElement, MDXProvider } from "@mdx-js/react"
-const { useInput, useInputByKey } = require(`../renderer/input-provider`)
-const { useResource } = require(`../renderer/resource-provider`)
-const { useProvider } = require(`../renderer/provider-provider`)
-const transformRecipeMDX = require(`../transform-recipe-mdx`)
+import { useInput, useInputByKey } from "../renderer/input-provider"
+import { useResource } from "../renderer/resource-provider"
+import { useProvider } from "../renderer/provider-provider"
+import transformRecipeMDX from "../transform-recipe-mdx"
 
 const transformCodeForEval = jsx => `${jsx}
 
@@ -30,7 +30,6 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
   const srcCode = transformRecipeMDX(mdxSrc)
 
   const fn = new Function(...scopeKeys, transformCodeForEval(srcCode))
-  // console.log(srcCode)
 
   return fn(...scopeValues)
 }

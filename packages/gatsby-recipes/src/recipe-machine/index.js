@@ -152,13 +152,8 @@ const recipeMachine = Machine(
               console.log({ result })
               cb({ type: `onUpdatePlan`, data: result })
             })
-
-            cb(`yo`)
-
-            return () => console.log(`done I guess`)
           },
         },
-        // entry: send(`YO`, { to: `presentingPlan` }),
         on: {
           CONTINUE: `applyingPlan`,
           // INPUT_ADDED: (context, event) => {
@@ -266,7 +261,7 @@ const recipeMachine = Machine(
         if (event.data) {
           let plan = context.plan || []
           plan = plan.map(p => {
-            let changedResource = event.data.find(c => c._uuid === p._uuid)
+            const changedResource = event.data.find(c => c._uuid === p._uuid)
             if (!changedResource) return p
             p._message = changedResource._message
             p.isDone = true

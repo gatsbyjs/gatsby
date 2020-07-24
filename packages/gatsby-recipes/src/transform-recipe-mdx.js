@@ -1,9 +1,9 @@
-const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
-const babelChainingPlugin = require(`@babel/plugin-proposal-optional-chaining`)
-const mdx = require(`@mdx-js/mdx`)
-const babelPluginRemoveShortcodes = require(`./renderer/babel-plugin-remove-shortcodes`)
-const babelPluginCopyKeyProp = require(`./renderer/babel-plugin-copy-key-prop`)
-const babelPluginMoveExportKeywords = require(`./renderer/babel-plugin-move-export-keywords`)
+import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
+import babelChainingPlugin from "@babel/plugin-proposal-optional-chaining"
+import mdx from "@mdx-js/mdx"
+import babelPluginRemoveShortcodes from "./renderer/babel-plugin-remove-shortcodes"
+import babelPluginCopyKeyProp from "./renderer/babel-plugin-copy-key-prop"
+import babelPluginMoveExportKeywords from "./renderer/babel-plugin-move-export-keywords"
 
 const mdxCache = new Map()
 const jsxCache = new Map()
@@ -35,7 +35,7 @@ const transformJsx = (jsx, isRenderer) => {
   return code
 }
 
-module.exports = (mdxSrc, isRenderer = false) => {
+export default (mdxSrc, isRenderer = false) => {
   let jsxFromMdx
   if (mdxCache.has(mdxSrc)) {
     jsxFromMdx = mdxCache.get(mdxSrc)

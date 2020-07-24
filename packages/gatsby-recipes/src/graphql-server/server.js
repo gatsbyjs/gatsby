@@ -46,11 +46,16 @@ const emitUpdate = state => {
 
 // only one service can run at a time.
 let service
+setInterval(() => {
+  console.log(service)
+}, 2000)
 const startRecipe = ({ recipePath, projectRoot }) => {
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
   }
+
+  console.log({ initialState })
 
   const startService = () => {
     // Interpret the machine, and add a listener for whenever a transition occurs.
@@ -68,13 +73,22 @@ const startRecipe = ({ recipePath, projectRoot }) => {
           currentStep: state.context.currentStep,
         })
         // Wait until plans are created before updating the UI
-        if (state.value !== `creatingPlan` || state.value !== `validateSteps`) {
+        if (
+          state.value === `presentPlan` ||
+          state.value === `done` ||
+          state.value === `doneError` ||
+          state.value === `applyingPlan`
+        ) {
           emitUpdate({
             context: state.context,
             lastEvent: state.event,
             value: state.value,
           })
         }
+      }
+
+      if (state.value === `done`) {
+        service.stop()
       }
     })
 
@@ -178,7 +192,14 @@ app.use(
   })
 )
 
-app.use(`/session`, (req, res) => res.send(sessionId))
+app.use(`/session`, (req, res) => {
+  res.send(sessionId)
+})
+
+// DEBUGGING
+app.use(`/service`, (req, res) => {
+  res.json(service)
+})
 
 server.listen(PORT, () => {
   new SubscriptionServer(

@@ -1,26 +1,17 @@
 const React = require(`react`)
 const { useState, useEffect } = require(`react`)
-// v2
-const {
-  render,
-  Box: PackageBox,
-  Text: PackageText,
-  Color: PackageColor,
-  useInput,
-  useApp,
-} = require(`ink`)
-// v3
-// const { render, Box, Text, useInput, useApp } = require(`ink`)
-const Spinner = require(`ink-spinner`).default
-const Link = require(`ink-link`)
-const MDX = require(`./components/mdx`).default
+import SelectInput from "ink-select-input"
+import { render, Box, Text, useInput, useApp } from "ink"
+import Spinner from "ink-spinner"
+import Link from "ink-link"
+import MDX from "../components/mdx"
 const hicat = require(`hicat`)
-import { trackCli } from "gatsby-telemetry"
+const { trackCli } = require(`gatsby-telemetry`)
 import {
   useResource,
   useResourceByUUID,
   ResourceProvider,
-} from "./renderer/resource-provider"
+} from "../renderer/resource-provider"
 const {
   createClient,
   useMutation,
@@ -32,7 +23,6 @@ const {
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
-const SelectInput = require(`ink-select-input`).default
 const semver = require(`semver`)
 const remove = require(`unist-util-remove`)
 
@@ -40,24 +30,6 @@ const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
   return tree
 }
-
-// Ink v2 compatability layer
-const Text = props => {
-  const colorProps = {}
-  if (props.color) {
-    colorProps[props.color] = true
-  }
-  if (props.backgroundColor) {
-    colorProps[props.backgroundColor] = true
-  }
-  return (
-    <PackageColor {...colorProps}>
-      <PackageText {...props} />
-    </PackageColor>
-  )
-}
-
-const Box = props => <PackageBox {...props} />
 
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
@@ -201,7 +173,7 @@ const RecipesList = ({ setRecipe }) => {
   ]
 
   return (
-    <SelectInput
+    <SelectInput.default
       items={items}
       onSelect={setRecipe}
       indicatorComponent={item => (
@@ -344,7 +316,7 @@ const components = {
   div: props => <Div {...props} />,
 }
 
-module.exports = async ({
+export default async ({
   recipe,
   isDevelopMode,
   isInstallMode,
@@ -428,7 +400,7 @@ module.exports = async ({
             <Text italic>{p.resourceName}:</Text>
             <Text>
               {` `}
-              {p.isDone ? `✅ ` : <Spinner />}
+              {p.isDone ? `✅ ` : <Spinner.default />}
               {` `}
               {p.isDone ? p._message : p.describe}
               {` `}
@@ -487,7 +459,11 @@ module.exports = async ({
       subscriptionClient.connectionCallback = async () => {
         if (!showRecipesList) {
           try {
-            await createOperation({ recipePath: localRecipe, projectRoot })
+            const result = await createOperation({
+              recipePath: localRecipe,
+              projectRoot,
+            })
+            console.log(result)
           } catch (e) {
             console.log(`error creating operation`, e)
           }
@@ -562,10 +538,12 @@ module.exports = async ({
         isReady = state?.value === `presentPlan`
       }
 
+      console.log(state?.value, { isReady })
+
       if (!isReady) {
         return (
           <Text>
-            <Spinner /> Loading recipe
+            <Spinner.default /> Loading recipe
           </Text>
         )
       }

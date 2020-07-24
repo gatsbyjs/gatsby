@@ -8,7 +8,7 @@ const { useInput, useInputByKey } = require(`./input-provider`)
 const { useResource } = require(`./resource-provider`)
 const { useProvider } = require(`./provider-provider`)
 
-const transformRecipeMDX = require(`../transform-recipe-mdx`)
+const transformRecipeMDX = require(`../transform-recipe-mdx`).default
 
 const scope = {
   React,
