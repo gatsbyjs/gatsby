@@ -44,6 +44,7 @@ describe(`gatsby develop`, () => {
     logs.should.contain(`success write out redirect data`)
     logs.should.contain(`success onPostBootstrap`)
     logs.should.contain(`info bootstrap finished`)
+    logs.should.contain(`success Building development bundle`)
     // These don't fire in CI. Need to figure out how to make it work. Might not be possible
     // logs.should.contain(
     //   `You can now view gatsby-starter-default in the browser.`
