@@ -18,7 +18,7 @@ describe(`gatsby develop`, () => {
     // 1. Start the `gatsby develop` command
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
       `develop`,
-      log => log.includes("To create a production build, use gatsby build")
+      log => log.includes(`Building development bundle`)
     )
 
     // 2. kill the `gatsby develop` command so we can get logs

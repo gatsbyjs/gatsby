@@ -11471,3 +11471,18 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: MongoDB Developer Hub
+  url: https://developer.mongodb.com
+  main_url: https://developer.mongodb.com
+  description: >
+    The MongoDB Developer Hub serves as the central location for all MongoDB developer content, programs, and resources.
+  categories:
+    - Blog
+    - Data
+    - Education
+    - Learning
+    - Programming
+    - Technology
+    - Web Development
+  built_by: MongoDB
+  featured: false

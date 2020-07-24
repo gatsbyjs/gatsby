@@ -366,6 +366,7 @@ const enqueueExtractedPageComponent = componentPath => {
 
 module.exports = {
   calcInitialDirtyQueryIds,
+  calcDirtyQueryIds,
   processPageQueries,
   processStaticQueries,
   groupQueryIds,

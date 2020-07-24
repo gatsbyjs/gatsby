@@ -43,7 +43,7 @@ Some changes do not require an RFC:
 - Rephrasing, reorganizing or refactoring addition or removal of warnings
 - Additions that strictly improve objective, numerical quality
   criteria (speedup, better browser support)
-- Additions only likely to be _noticed by_ other implementors-of-Gatsby,
+- Additions only likely to be _noticed by_ other implements-of-Gatsby,
   invisible to users-of-Gatsby.
 
 ## What the process is

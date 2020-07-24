@@ -267,7 +267,7 @@ jobs:
     executor: node
     steps:
       - e2e-test:
-          test_path: integration-tests/gatsby-pipeline
+          test_path: integration-tests/gatsby-cli
           trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
 
   integration_tests_structured_logging:
