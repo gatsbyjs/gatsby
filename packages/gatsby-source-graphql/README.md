@@ -150,11 +150,11 @@ module.exports = {
 }
 ```
 
-## Custom wrap schema function (advanced)
+## Custom transform schema function (advanced)
 
-It's possible to modify the remote schema, via a `customWrapSchemaFn` option which customizes the way the default schema is wrapped before it is merged on the Gatsby schema by the stitching process.
+It's possible to modify the remote schema, via a `transformSchema` option which customizes the way the default schema is transformed before it is merged on the Gatsby schema by the stitching process.
 
-The `customWrapSchemaFn` function gets an object argument with the following fields:
+The `transformSchema` function gets an object argument with the following fields:
 
 - schema (introspected remote schema)
 - link (default link)
@@ -164,7 +164,7 @@ The `customWrapSchemaFn` function gets an object argument with the following fie
 
 The return value is expected to be the final schema used for stitching.
 
-Below an example configuration that uses the default implementation (equivalent to not using the `customWrapSchemaFn` option at all):
+Below an example configuration that uses the default implementation (equivalent to not using the `transformSchema` option at all):
 
 ```js
 const { wrapSchema } = require(`@graphql-tools/wrap`)
@@ -178,7 +178,7 @@ module.exports = {
         typeName: "SWAPI",
         fieldName: "swapi",
         url: "https://api.graphcms.com/simple/v1/swapi",
-        customWrapSchemaFn: ({
+        transformSchema: ({
           schema,
           link,
           resolver,
