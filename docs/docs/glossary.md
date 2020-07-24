@@ -56,6 +56,10 @@ Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for 
 
 Client-side refers to operations that are performed by the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages/) that rely on objects in the [browser DOM](#dom), such as `window` or `navigator`. See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
 
+### Client-side rendering
+
+The practice of using JavaScript to render pages on the [client-side](#client-side), as opposed to [server-side rendering](/docs/glossary/server-side-rendering/) alone. Gatsby uses [React](#react) and the `@reach/router` library to enhance HTML pages compiled at [build time](#build) to navigate site pages in a web browser without traditional page reloads, enabling performance techniques like preloading and [pre-fetching](/docs/routing/#performance-and-prefetching), [intersection observer and responsive `srcset`](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#modern-apis-in-gatsby) for images, and more. See also: [routing](#routing), which is handled on the client-side in Gatsby by default.
+
 ### CMS
 
 Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later. Examples of Content Management Systems include WordPress, Drupal, Contentful, and Netlify CMS.
