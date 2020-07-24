@@ -46,16 +46,11 @@ const emitUpdate = state => {
 
 // only one service can run at a time.
 let service
-setInterval(() => {
-  console.log(service)
-}, 2000)
 const startRecipe = ({ recipePath, projectRoot }) => {
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
   }
-
-  console.log({ initialState })
 
   const startService = () => {
     // Interpret the machine, and add a listener for whenever a transition occurs.
