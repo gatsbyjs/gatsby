@@ -1,19 +1,20 @@
 const { createContentDigest } = require(`gatsby-core-utils`)
 
-const { findImportsExports } = require(`../utils/gen-mdx`)
+const mdx = require(`../utils/mdx`)
+const extractExports = require(`../utils/extract-exports`)
 
-async function createMdxNode({ id, node, content, ...helpers }) {
-  const {
-    frontmatter,
-    scopeImports,
-    scopeExports,
-    scopeIdentifiers,
-  } = await findImportsExports({
-    mdxNode: node,
-    rawInput: content,
-    absolutePath: node.absolutePath,
-    ...helpers,
-  })
+module.exports = async ({ id, node, content }) => {
+  let code
+  try {
+    code = await mdx(content)
+  } catch (e) {
+    // add the path of the file to simplify debugging error messages
+    e.message += `${node.absolutePath}: ${e.message}`
+    throw e
+  }
+
+  // extract all the exports
+  const { frontmatter, ...nodeExports } = extractExports(code)
 
   const mdxNode = {
     id,
@@ -23,14 +24,16 @@ async function createMdxNode({ id, node, content, ...helpers }) {
       content: content,
       type: `Mdx`,
     },
-    excerpt: frontmatter.excerpt,
-    exports: scopeExports,
-    rawBody: content,
-    frontmatter: {
-      title: ``, // always include a title
-      ...frontmatter,
-    },
   }
+
+  mdxNode.frontmatter = {
+    title: ``, // always include a title
+    ...frontmatter,
+  }
+
+  mdxNode.excerpt = frontmatter.excerpt
+  mdxNode.exports = nodeExports
+  mdxNode.rawBody = content
 
   // Add path to the markdown file path
   if (node.internal.type === `File`) {
@@ -39,7 +42,5 @@ async function createMdxNode({ id, node, content, ...helpers }) {
 
   mdxNode.internal.contentDigest = createContentDigest(mdxNode)
 
-  return { mdxNode, scopeIdentifiers, scopeImports }
+  return mdxNode
 }
-
-module.exports = createMdxNode
