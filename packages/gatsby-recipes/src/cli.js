@@ -3,12 +3,13 @@ const { useState, useEffect } = require(`react`)
 // v2
 const {
   render,
-  Box,
+  Box: PackageBox,
   Text: PackageText,
   Color: PackageColor,
   useInput,
   useApp,
 } = require(`ink`)
+const BetterBox = require(`ink-box`)
 // v3
 // const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
@@ -55,6 +56,14 @@ const Text = props => {
       <PackageText {...props} />
     </PackageColor>
   )
+}
+
+const Box = props => {
+  if (props.borderColor || props.borderStyle) {
+    return <BetterBox {...props} />
+  } else {
+    return <PackageBox {...props} />
+  }
 }
 
 // Check for what version of React is loaded & warn if it's too low.
