@@ -380,6 +380,6 @@ export const query = graphql`
 
 ### Advanced readings on GraphQL
 
-- [GraphQL specification](https://facebook.github.io/graphql/October2016/)
+- [GraphQL specification](https://spec.graphql.org/October2016/)
 - [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
 - [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
