@@ -64,7 +64,7 @@ An example:
 }
 ```
 
-Link paths are specially handed by this plugin. Since most files are processed
+Link paths are specially handled by this plugin. Since most files are processed
 and cache-busted through Gatsby (with a file hash), the plugin will transform
 any base file names to the hashed variants. If the file is not hashed, it will
 ensure the path is valid relative to the output `public` folder. You should be
