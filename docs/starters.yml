@@ -1,3 +1,28 @@
+-url: https://demo.websheets.co
+repo: https://github.com/tengkuhafidz/WebSheets-Listing-Page-Listing-Page
+description: A listing websites generator based on Google Sheets template.
+tags:
+  - Google Sheets
+  - Language:TypeScript
+  - Styling:Tailwind
+  - Styling:PostCSS
+  - Open Source
+  - PWA
+  - SEO
+  - Onepage
+  - Gallery
+  - Portfolio
+features:
+  - Google Sheets as data point
+  - Fast-loading static site
+  - Progressive web app with offline capabilities
+  - Customisable SEO and site metadata
+  - Social share
+  - Dark Mode
+  - Google Analytics
+  - Search functionality
+  - Responsive Design
+  - Preconfigured prettier, eslint, husky
 - url: https://gatsby-pod6.netlify.app/
   repo: https://github.com/zag/gatsby-starter-pod6
   description: A minimal, lightweight, and mobile-first starter for creating blogs with pod6 markup language.
