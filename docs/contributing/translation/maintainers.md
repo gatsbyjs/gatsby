@@ -20,7 +20,7 @@ As a maintainer, you are welcome to add a contributing doc written in your langu
 
 ### Set up a style guide and glossary
 
-Your language repo comes with a template [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) that you can use to put in style rules specific to your language. Refer to the [translation style guide](#translation-style-guide) section for more information.
+Your language repo comes with a template [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) that you can use to put in style rules specific to your language. Refer to the [translation style guide](/contributing/translation/style-guide/) for more information.
 
 ### Set up a review process
 

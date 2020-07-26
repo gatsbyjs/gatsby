@@ -222,7 +222,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
 4. Agree to the license agreement on prompt.
 
-   `Note`: You will be prompted to select the domain for which you want to generate the certificate. Select the domain configured in a [previous step](#configuring-nginx-to-point-to-your-gatsby-site's-`public`-directory-and-add-your-domain).
+   `Note`: You will be prompted to select the domain for which you want to generate the certificate. Select the domain configured in a [previous step](#configure-nginx-to-point-to-your-gatsby-sites-public-directory-and-add-your-domain).
 
    `Note`: You will be prompted to choose the option to redirect HTTP requests to HTTPS, which you may choose on your needs.
    (It is recommended to choose to redirect HTTP to HTTPS)
