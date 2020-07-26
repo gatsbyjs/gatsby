@@ -104,3 +104,13 @@ const requireUtil = createRequireFromPath("../src/utils/")
 requireUtil("./some-tool")
 // ...
 ```
+
+### createFilepathSlug
+
+Creates a valid slug from a filepath.
+
+```js
+const { createFilepathSlug } = require("gatsby-core-utils")
+
+const slug = createFilepathSlug("blog/myFirstPost.md")
+```
