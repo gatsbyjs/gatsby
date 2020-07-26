@@ -151,7 +151,7 @@ Gatsby is dedicated to building a welcoming, diverse, safe community. We expect 
 
 ## 🤝 How to Contribute
 
-Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
+Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as a part of the Gatsby community! :muscle::purple_heart:
 
 Check out our [**Contributing Guide**](https://gatsbyjs.org/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
