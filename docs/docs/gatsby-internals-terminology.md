@@ -28,6 +28,10 @@ The publicly accessible path in the web URL to access the page in question. E.g
 
 It is created when the page object is created (see [Page Creation](/docs/page-creation/))
 
+### updatedAt
+
+Last updated time.
+
 ### Redux `pages` namespace
 
 Contains a map of Page [path](#path) -> [Page object](#page-object).
