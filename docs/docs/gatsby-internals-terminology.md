@@ -20,17 +20,6 @@ Throughout the Gatsby code, you'll see the below object fields and variables men
 
 created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
-- [path](#path)
-- [matchPath](#matchpath)
-- [jsonName](#jsonname)
-- [component](#component)
-- [componentChunkName](#componentchunkname)
-- [internalComponentName](#internalcomponentname) (unused)
-- [context](#pagecontext)
-- updatedAt
-
-The above fields are explained below
-
 ### path
 
 The publicly accessible path in the web URL to access the page in question. E.g
