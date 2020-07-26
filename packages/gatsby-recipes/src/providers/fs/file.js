@@ -98,7 +98,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   const plan = {
     currentState: (currentResource && currentResource.content) || ``,
     newState,
-    describe: `Write ${filePath}`,
+    describe: `Write file "${filePath}"`,
     diff: ``,
   }
 
