@@ -4,7 +4,13 @@ Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
+**NPM**
+
 `npm install --save node-sass gatsby-plugin-sass`
+
+**Yarn**
+
+`yarn add node-sass gatsby-plugin-sass`
 
 ## How to use
 
