@@ -24,5 +24,6 @@ If you’ve contributed in other ways, such as giving talks about Gatsby, teachi
 - Not all items are eligible due to high cost to create the swag. We’ll make it clear which items are not eligible
 - There’s a limit of one free swag item per swag tier
 - Shipping is free worldwide
+- Additional details can be found in our [swag FAQs](https://github.com/gatsbyjs/store.gatsbyjs.org#frequently-asked-questions)
 
 > **NOTE:** Worldwide free shipping is a pilot program. If shipping costs get out of control, we may need to adjust this policy in the future.
