@@ -1,3 +1,5 @@
+const path = require(`path`)
+
 const isFirstRun = process.env.RUN_FOR_STALE_PAGE_ARTIFICATS !== `2`
 
 exports.createPages = ({ actions }) => {
@@ -21,4 +23,24 @@ exports.createPages = ({ actions }) => {
     // page exists only in second run
     createPageHelper(`only-in-second`)
   }
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    Query: {
+      queryModule: {
+        type: `String`,
+        args: {
+          moduleFileName: {
+            type: `String`,
+          },
+        },
+        resolve: (source, args, context) => {
+          return context.pageModel.setModule({
+            source: path.resolve(`./src/query-modules/${args.moduleFileName}`),
+          })
+        },
+      },
+    },
+  })
 }
