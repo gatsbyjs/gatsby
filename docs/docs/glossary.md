@@ -12,7 +12,6 @@ When you're new to Gatsby there can be a lot of words to learn. This glossary ai
   slug={props.slug}
 />
 
-
 ## A
 
 ### AST
