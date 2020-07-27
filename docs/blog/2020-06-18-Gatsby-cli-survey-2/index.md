@@ -15,7 +15,7 @@ Our second set of results from the Gatsby Command Line Survey have been collecte
 
 You may have seen this in the command line recently:![screen shot of command line survey first question in Mac text editor](./image1.png)
 
-See this previous blogpost, ["Gatsby's First Survey Goes Command Line (and here is what users have to say so far)"](https://www.gatsbyjs.org/blog/2020-04-17-gatsby-survey-goes-command-line/) for answers to the following questions:
+See this previous blogpost, ["Gatsby's First Survey Goes Command Line (and here is what users have to say so far)"](/blog/2020-04-17-gatsby-survey-goes-command-line/) for answers to the following questions:
 
 - How can I take this survey?
 - What are the survey questions?
@@ -71,6 +71,6 @@ Requests for incremental builds and complaints about slow builds have decreased 
 
 Thank you again to all who have responded to the survey so far; your responses help guide the focus of the community to answer real-world needs. If you haven't filled out the survey yet, you can run `gatsby feedback` at any time after upgrading your version of `gatsby` in a project's `package.json` file, and then rerunning dependency and install commands. We would love to hear from you!
 
-Otherwise, wait to see the survey appear in a CLI near you! The plan is to do this every 3 months, at the most, and then report results. (If you'd like to opt out, visit [https://www.gatsbyjs.org/docs/CLI-feedback/#how-to-opt-out](/docs/telemetry/#how-to-opt-out/)).
+Otherwise, wait to see the survey appear in a CLI near you! The plan is to do this every 3 months, at the most, and then report results. (If you'd like to opt out, see the [Telemetry Docs](/docs/telemetry/#how-to-opt-out)).
 
 If you haven't used Gatsby yet, try it out and let us know what you think! You can install the Gatsby CLI using `npm install -g gatsby-cli` ([see the Quickstart Guide for more details](/docs/quick-start/)).

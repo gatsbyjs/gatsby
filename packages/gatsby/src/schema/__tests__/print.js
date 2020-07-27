@@ -1,5 +1,5 @@
 const { build } = require(`..`)
-const { buildObjectType } = require(`../types/type-builders`)
+import { buildObjectType } from "../types/type-builders"
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions/restricted`)
 const { printTypeDefinitions } = actions

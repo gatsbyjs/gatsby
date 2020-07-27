@@ -17,7 +17,7 @@ plugins: [`gatsby-plugin-less`]
 ```
 
 If you need to pass options to the Less loader use the `loaderOptions` and to Less use `lessOptions` object;
-see [less-loader](https://github.com/webpack-contrib/less-loader) for all available options.
+see [`less-loader`](https://github.com/webpack-contrib/less-loader) for all available options.
 
 ```javascript
 // in gatsby-config.js

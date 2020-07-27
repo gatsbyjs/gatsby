@@ -54,7 +54,7 @@ What's even better is that images can be relative paths to files in your project
 
 ### Improved SEO
 
-And what about getting that amazing social sharing image to make your post pop on twitter or LinkedIn? You're good to go! Your featured image is automatically used for social sharing. And if you'd rather use a different image, for dimension reasons or otherwise, `socialImage` is available in your frontmatter as well.
+And what about getting that amazing social sharing image to make your post pop on Twitter or LinkedIn? You're good to go! Your featured image is automatically used for social sharing. And if you'd rather use a different image, for dimension reasons or otherwise, `socialImage` is available in your frontmatter as well.
 
 Don't have an image for this post? That's ok! The theme will revert to a social sharing card that doesn't leave a big file avatar.
 

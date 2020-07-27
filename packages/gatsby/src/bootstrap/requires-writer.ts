@@ -8,8 +8,10 @@ import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
-import { writeModule } from "../utils/gatsby-webpack-virtual-modules"
-import { markWebpackStatusAsPending } from "../utils/webpack-status"
+import {
+  writeModule,
+  getAbsolutePathForVirtualModule,
+} from "../utils/gatsby-webpack-virtual-modules"
 
 interface IGatsbyPageComponent {
   component: string
@@ -213,7 +215,7 @@ const preferDefault = m => m && m.default || m
     .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
-        path.join(program.directory, `node_modules`, `$virtual`),
+        getAbsolutePathForVirtualModule(`$virtual`),
         c.component
       )
 
@@ -264,11 +266,7 @@ const debouncedWriteAll = _.debounce(
       id: `requires-writer`,
     })
     activity.start()
-    const didRequiresChange = await writeAll(store.getState())
-    if (didRequiresChange) {
-      reporter.pendingActivity({ id: `webpack-develop` })
-      markWebpackStatusAsPending()
-    }
+    await writeAll(store.getState())
     activity.end()
   },
   500,

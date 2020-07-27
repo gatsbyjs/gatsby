@@ -1,60 +1,21 @@
-import { ServiceConfig } from "xstate"
-import { IBuildContext } from "./"
+export { startWebpackServer } from "./start-webpack-server"
+export { rebuildSchemaWithSitePage } from "./rebuild-schema-with-site-pages"
+export { extractQueries } from "./extract-queries"
+export { writeOutRedirects } from "./write-out-redirects"
+export { postBootstrap } from "./post-bootstrap"
+export { buildSchema } from "./build-schema"
+export { createPages } from "./create-pages"
+export { createPagesStatefully } from "./create-pages-statefully"
+export { customizeSchema } from "./customize-schema"
+export { initialize } from "./initialize"
+export { sourceNodes } from "./source-nodes"
+export { writeOutRequires } from "./write-out-requires"
+export { calculateDirtyQueries } from "./calculate-dirty-queries"
+export { runStaticQueries } from "./run-static-queries"
+export { runPageQueries } from "./run-page-queries"
 
-import { startWebpackServer } from "./start-webpack-server"
-import { rebuildSchemaWithSitePage } from "./rebuild-schema-with-site-pages"
-import { extractQueries } from "./extract-queries"
-import { writeOutRedirects } from "./write-out-redirects"
-import { postBootstrap } from "./post-bootstrap"
-import { buildSchema } from "./build-schema"
-import { createPages } from "./create-pages"
-import { createPagesStatefully } from "./create-pages-statefully"
-import { customizeSchema } from "./customize-schema"
-import { initialize } from "./initialize"
-import { sourceNodes } from "./source-nodes"
-import { writeOutRequires } from "./write-out-requires"
-import { calculateDirtyQueries } from "./calculate-dirty-queries"
-import { runStaticQueries } from "./run-static-queries"
-import { runPageQueries } from "./run-page-queries"
-
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+export { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+export { runMutationBatch } from "./run-mutation-batch"
+export { recompile } from "./recompile"
 
 export * from "./types"
-
-export {
-  customizeSchema,
-  sourceNodes,
-  createPages,
-  buildSchema,
-  createPagesStatefully,
-  extractQueries,
-  writeOutRequires,
-  calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
-  initialize,
-  waitUntilAllJobsComplete,
-  postBootstrap,
-  writeOutRedirects,
-  startWebpackServer,
-  rebuildSchemaWithSitePage,
-}
-
-export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
-  customizeSchema,
-  sourceNodes,
-  createPages,
-  buildSchema,
-  createPagesStatefully,
-  extractQueries,
-  writeOutRequires,
-  calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
-  initialize,
-  waitUntilAllJobsComplete,
-  postBootstrap,
-  writeOutRedirects,
-  startWebpackServer,
-  rebuildSchemaWithSitePage,
-}

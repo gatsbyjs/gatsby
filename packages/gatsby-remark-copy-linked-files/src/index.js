@@ -85,7 +85,7 @@ module.exports = (
   if (!validateDestinationDir(destinationDir))
     return Promise.reject(invalidDestinationDirMessage(destinationDir))
 
-  const options = _.defaults(pluginOptions, defaults)
+  const options = _.defaults({}, pluginOptions, defaults)
 
   const filesToCopy = new Map()
   // Copy linked files to the destination directory and modify the AST to point
