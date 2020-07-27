@@ -43,6 +43,7 @@
     "gatsby-plugin-offline": "^3.2.21",
     "gatsby-plugin-react-helmet": "^3.3.10",
     "gatsby-plugin-react-svg": "^3.0.0",
+    "gatsby-plugin-remove-serviceworker": "^1.0.0",
     "gatsby-plugin-sharp": "^2.6.22",
     "gatsby-plugin-sitemap": "^2.4.11",
     "gatsby-plugin-theme-ui": "^0.3.0",
