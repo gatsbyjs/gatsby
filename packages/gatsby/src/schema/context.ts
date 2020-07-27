@@ -48,11 +48,7 @@ export default function withResolverContext<TSource, TArgs>({
     importName?: string
   }): string => {
     if (!context?.path) {
-      throw new Error(`Adding modules doesn't work in gatsby-node`)
-    }
-
-    if (context.path.startsWith(`sq--`)) {
-      throw new Error(`Adding modules in static queries not implemented (yet)`)
+      throw new Error(`Adding modules doesn't work in gatsby-node or graphiql`)
     }
 
     // TO-DO: validation:

@@ -54,7 +54,11 @@ export default function mapTemplatesToStaticQueryHashes(
    * Note that this upward traversal is much shallower (and hence more performant)
    * than an equivalent downward one from an entry point.
    */
-  const { components, staticQueryComponents } = reduxState
+  const {
+    components,
+    staticQueryComponents,
+    modules: queryModules,
+  } = reduxState
   const { modules } = compilation
 
   /* We call the queries included above a page (via wrapRootElement or wrapPageElement APIs)
@@ -129,7 +133,7 @@ export default function mapTemplatesToStaticQueryHashes(
     return getDepsRec(mod, seen)
   }
 
-  const mapOfStaticQueryComponentsToDependants = new Map()
+  const mapOfStaticQueryComponentsToDependants = new Map<string, Set<string>>()
 
   // For every known static query, we get its dependents.
   staticQueryComponents.forEach(({ componentPath }) => {
@@ -141,7 +145,7 @@ export default function mapTemplatesToStaticQueryHashes(
     )
     const dependants = staticQueryComponentModule
       ? getDeps(staticQueryComponentModule)
-      : new Set()
+      : new Set<string>()
 
     mapOfStaticQueryComponentsToDependants.set(componentPath, dependants)
   })
@@ -189,6 +193,35 @@ export default function mapTemplatesToStaticQueryHashes(
 
     mapOfTemplatesToStaticQueryHashes.set(
       page.componentPath,
+      staticQueryHashes.sort().map(String)
+    )
+  })
+
+  queryModules.forEach(queryModule => {
+    const staticQueryHashes: Array<string> = []
+
+    // Does this module contain an inline static query?
+    if (mapOfComponentsToStaticQueryHashes.has(queryModule.source)) {
+      const hash = mapOfComponentsToStaticQueryHashes.get(queryModule.source)
+      if (hash) {
+        staticQueryHashes.push(hash)
+      }
+    }
+
+    // Check dependencies
+    mapOfStaticQueryComponentsToDependants.forEach(
+      (setOfDependants, moduleSource) => {
+        if (setOfDependants.has(queryModule.source)) {
+          const hash = mapOfComponentsToStaticQueryHashes.get(moduleSource)
+          if (hash) {
+            staticQueryHashes.push(hash)
+          }
+        }
+      }
+    )
+
+    mapOfTemplatesToStaticQueryHashes.set(
+      queryModule.source,
       staticQueryHashes.sort().map(String)
     )
   })

@@ -15,6 +15,11 @@ interface IPageData {
   staticQueryHashes: string[]
 }
 
+interface IPageDataResources {
+  staticQueryHashes: Set<string>
+  moduleDependencies: Set<string>
+}
+
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
 }
@@ -121,6 +126,8 @@ export async function flush(): Promise<void> {
     components,
     pages,
     program,
+    staticQueryComponents,
+    modules,
     staticQueriesByTemplate,
     queryModuleDependencies,
   } = store.getState()
@@ -138,6 +145,51 @@ export async function flush(): Promise<void> {
     new Set(pagePaths.values())
   )
 
+  const hashToStaticQueryId = new Map()
+  staticQueryComponents.forEach(({ id, hash }) => {
+    hashToStaticQueryId.set(String(hash), id)
+  })
+
+  function pickModulesFromStaticQuery(
+    staticQueryHash: string,
+    resources: IPageDataResources
+  ): void {
+    const staticQueryId = hashToStaticQueryId.get(staticQueryHash)
+
+    const modulesUsedByStaticQuery = queryModuleDependencies.get(staticQueryId)
+
+    if (modulesUsedByStaticQuery && modulesUsedByStaticQuery?.size > 0) {
+      modulesUsedByStaticQuery.forEach(moduleId => {
+        // if this hash was added, don't traverse this path again
+        if (!resources.moduleDependencies.has(staticQueryHash)) {
+          resources.moduleDependencies.add(moduleId)
+          pickStaticQueriesFromModule(moduleId, resources)
+        }
+      })
+    }
+  }
+
+  function pickStaticQueriesFromModule(
+    moduleId: string,
+    resources: IPageDataResources
+  ): void {
+    const source = modules.get(moduleId)?.source
+    if (!source) {
+      return
+    }
+
+    const staticQueriesUsedByModule = staticQueriesByTemplate.get(source)
+    if (staticQueriesUsedByModule && staticQueriesUsedByModule.length > 0) {
+      staticQueriesUsedByModule.forEach(staticQueryHash => {
+        // if this hash was added, don't traverse this path again
+        if (!resources.staticQueryHashes.has(staticQueryHash)) {
+          resources.staticQueryHashes.add(staticQueryHash)
+          pickModulesFromStaticQuery(staticQueryHash, resources)
+        }
+      })
+    }
+  }
+
   for (const pagePath of pagesToWrite) {
     const page = pages.get(pagePath)
 
@@ -148,11 +200,32 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      const staticQueryHashes =
-        staticQueriesByTemplate.get(page.componentPath) || []
-      const moduleDependencies = Array.from(
-        queryModuleDependencies.get(pagePath) || []
-      ).sort()
+      const resources: IPageDataResources = {
+        staticQueryHashes: new Set<string>(),
+        moduleDependencies: new Set<string>(),
+      }
+
+      const staticQueryForTemplate = staticQueriesByTemplate.get(
+        page.componentPath
+      )
+      const modulesForPage = queryModuleDependencies.get(pagePath)
+
+      if (staticQueryForTemplate) {
+        staticQueryForTemplate.forEach(staticQueryHash => {
+          resources.staticQueryHashes.add(staticQueryHash)
+          pickModulesFromStaticQuery(staticQueryHash, resources)
+        })
+      }
+
+      if (modulesForPage) {
+        modulesForPage.forEach(moduleId => {
+          resources.moduleDependencies.add(moduleId)
+          pickStaticQueriesFromModule(moduleId, resources)
+        })
+      }
+
+      const staticQueryHashes = Array.from(resources.staticQueryHashes)
+      const moduleDependencies = Array.from(resources.moduleDependencies)
 
       const result = await writePageData(
         path.join(program.directory, `public`),

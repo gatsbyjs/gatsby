@@ -54,6 +54,7 @@ describe(`map-templates-to-static-query-hashes`, () => {
       {
         components,
         staticQueryComponents,
+        modules: new Map(),
       },
       {
         modules: [
