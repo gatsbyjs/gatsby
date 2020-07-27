@@ -1,4 +1,4 @@
-const { spawn } = require(`child_process`)
+const { spawn, spawnSync } = require(`child_process`)
 const path = require(`path`)
 const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const { readPageData } = require(`gatsby/dist/utils/page-data`)
@@ -58,21 +58,25 @@ function hashQuery(query) {
 
 const globalQueries = [githubQuery, moreInfoQuery]
 
-describe(`Static Queries`, () => {
-  beforeAll(async done => {
-    const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-      env: {
-        ...process.env,
-        NODE_ENV: `production`,
-      },
-    })
-
-    gatsbyProcess.on(`exit`, exitCode => {
-      done()
-    })
+beforeAll(async done => {
+  spawnSync(gatsbyBin, [`clean`], {
+    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
   })
 
+  const gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+    env: {
+      ...process.env,
+      NODE_ENV: `production`,
+    },
+  })
+
+  gatsbyProcess.on(`exit`, exitCode => {
+    done()
+  })
+})
+
+describe(`Static Queries`, () => {
   test(`are written correctly when inline`, async () => {
     const queries = [titleQuery, ...globalQueries]
     const pagePath = `/inline/`
@@ -179,5 +183,19 @@ describe(`Static Queries`, () => {
     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
 
     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+  })
+})
+
+describe(`Modules`, () => {
+  test(`are written correctly when inline`, async () => {
+    const pagePath = `/page-query-modules/`
+
+    const { moduleDependencies } = await readPageData(publicDir, pagePath)
+
+    expect(moduleDependencies).toMatchInlineSnapshot(`
+      Array [
+        "module---src-query-modules-module-a-js-default-",
+      ]
+    `)
   })
 })
