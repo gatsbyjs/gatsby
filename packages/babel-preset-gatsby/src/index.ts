@@ -1,11 +1,12 @@
 import { Browserslist } from "browserslist"
+import { TransformOptions } from "@babel/core"
 
 const path = require(`path`)
 const {
   CORE_JS_POLYFILL_EXCLUDE_LIST: polyfillsToExclude,
 } = require(`gatsby-legacy-polyfills/dist/exclude`)
 
-const resolve = m => require.resolve(m)
+const resolve = (m: string): string => require.resolve(m)
 
 const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
@@ -36,7 +37,7 @@ interface IOptions {
   stage?: string
 }
 
-export default function preset(_, options: IOptions = {}) {
+export default function preset(_, options: IOptions = {}): TransformOptions {
   let { targets = null } = options
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
