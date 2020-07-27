@@ -11496,4 +11496,14 @@
     - Agency
   built_by: Devnet
   built_by_url: https://devnet.hr
+- title: Leanier.com
+  url: https://leanier.com
+  main_url: https://leanier.com
+  description: >
+    Enterprise SaaS Management for Modern IT
+  categories:
+    - Data
+    - Technology
+    - Business
+  built_by: leaniercode
   featured: false

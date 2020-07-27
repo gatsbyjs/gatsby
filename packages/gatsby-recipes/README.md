@@ -170,7 +170,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name**: name of the package(s) to install. Takes a string or an array of strings.
+- **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
 

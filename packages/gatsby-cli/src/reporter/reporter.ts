@@ -256,5 +256,5 @@ class Reporter {
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
   _setStage = (): void => {}
 }
-
+export type { Reporter }
 export const reporter = new Reporter()

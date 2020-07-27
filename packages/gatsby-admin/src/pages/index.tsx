@@ -44,7 +44,7 @@ const PluginCard: React.FC<{
   return (
     <Flex
       flexDirection="column"
-      gap={6}
+      gap={3}
       sx={{ backgroundColor: `ui.background`, padding: 5, borderRadius: 2 }}
     >
       <Flex justifyContent="space-between">
@@ -108,36 +108,42 @@ const Index: React.FC<{}> = () => {
 
   if (fetching) return <Spinner />
 
-  if (error) return <p>Oops something went wrong.</p>
+  if (error) {
+    const errMsg =
+      (error.networkError && error.networkError.message) ||
+      (Array.isArray(error.graphQLErrors) &&
+        error.graphQLErrors.map(e => e.message).join(` | `))
+
+    return <p>Error: {errMsg}</p>
+  }
 
   return (
-    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
-      <SectionHeading>Pages</SectionHeading>
-      <ul sx={{ pl: 0, listStyle: `none` }}>
-        {data.allGatsbyPage.nodes
-          .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
-          .sort((a, b) => a.path.localeCompare(b.path))
-          .map(page => (
-            <li
-              key={page.path}
-              sx={{
-                py: 1,
-              }}
-            >
-              {page.path}
-            </li>
-          ))}
-      </ul>
+    <Flex gap={8} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
+      <Flex gap={6} flexDirection="column">
+        <SectionHeading>Pages</SectionHeading>
+        <ul sx={{ pl: 0, listStyle: `none` }}>
+          {data.allGatsbyPage.nodes
+            .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
+            .sort((a, b) => a.path.localeCompare(b.path))
+            .map(page => (
+              <li key={page.path} sx={{ p: 0 }}>
+                {page.path}
+              </li>
+            ))}
+        </ul>
+      </Flex>
 
-      <SectionHeading id="plugin-search-label">
-        Installed Plugins
-      </SectionHeading>
-      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes.map(plugin => (
-          <PluginCard key={plugin.id} plugin={plugin} />
-        ))}
-      </Grid>
-      <PluginSearchBar />
+      <Flex gap={6} flexDirection="column">
+        <SectionHeading id="plugin-search-label">
+          Installed Plugins
+        </SectionHeading>
+        <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
+          {data.allGatsbyPlugin.nodes.map(plugin => (
+            <PluginCard key={plugin.id} plugin={plugin} />
+          ))}
+        </Grid>
+        <PluginSearchBar />
+      </Flex>
     </Flex>
   )
 }

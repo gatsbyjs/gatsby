@@ -15,6 +15,7 @@ import { assertStore } from "../../utils/assert-store"
 import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
 import { ProgramStatus } from "../../redux/types"
+import { createWebpackWatcher } from "../../services/listen-to-webpack"
 
 /**
  * These are the deferred redux actions sent from api-runner-node
@@ -79,6 +80,14 @@ export const markQueryFilesDirty = assign<IBuildContext>({
   queryFilesDirty: true,
 })
 
+export const markSourceFilesDirty = assign<IBuildContext>({
+  sourceFilesDirty: true,
+})
+
+export const markSourceFilesClean = assign<IBuildContext>({
+  sourceFilesDirty: false,
+})
+
 export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
   (_context, { data }): DataLayerResult => data
 )
@@ -97,6 +106,15 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
     }
   }
 )
+
+export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
+  webpackListener: ({ compiler }) => {
+    if (!compiler) {
+      return undefined
+    }
+    return spawn(createWebpackWatcher(compiler))
+  },
+})
 
 export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: (_context, { payload }) => payload?.webhookBody,
@@ -135,6 +153,9 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   assignWebhookBody,
   clearWebhookBody,
   finishParentSpan,
+  spawnWebpackListener,
+  markSourceFilesDirty,
+  markSourceFilesClean,
   saveDbState,
   setQueryRunningFinished,
 }

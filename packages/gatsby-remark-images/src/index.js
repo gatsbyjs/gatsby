@@ -35,7 +35,7 @@ module.exports = (
   },
   pluginOptions
 ) => {
-  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
+  const options = _.defaults({}, pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
