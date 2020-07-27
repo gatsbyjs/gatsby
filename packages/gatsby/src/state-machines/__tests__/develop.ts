@@ -9,6 +9,8 @@ const actions = {
   callApi: jest.fn(),
   finishParentSpan: jest.fn(),
   saveDbState: jest.fn(),
+  logError: jest.fn(),
+  panic: jest.fn(),
 }
 
 const services = {
@@ -22,6 +24,12 @@ const services = {
   recreatePages: jest.fn(),
 }
 
+const throwService = async (): Promise<void> => {
+  throw new Error(`fail`)
+}
+
+const rejectService = async (): Promise<void> => Promise.reject(`fail`)
+
 const machine = developMachine.withConfig(
   {
     actions,
@@ -32,6 +40,8 @@ const machine = developMachine.withConfig(
   }
 )
 
+const tick = (): Promise<void> => new Promise(resolve => setTimeout(resolve, 0))
+
 const resetMocks = (mocks: Record<string, jest.Mock>): void =>
   Object.values(mocks).forEach(mock => mock.mockReset())
 
@@ -40,7 +50,7 @@ const resetAllMocks = (): void => {
   resetMocks(actions)
 }
 
-describe(`the develop state machine`, () => {
+describe(`the top-level develop state machine`, () => {
   beforeEach(() => {
     resetAllMocks()
   })
@@ -167,9 +177,78 @@ describe(`the develop state machine`, () => {
     service.send(`EXTRACT_QUERIES_NOW`)
     expect(services.runQueries).toHaveBeenCalled()
   })
+
+  it(`panics on error during initialisation`, async () => {
+    const service = interpret(machine)
+    services.initialize.mockImplementationOnce(throwService)
+    service.start()
+    await tick()
+    expect(actions.panic).toHaveBeenCalled()
+  })
+
+  it(`panics on rejection during initialisation`, async () => {
+    const service = interpret(machine)
+    services.initialize.mockImplementationOnce(rejectService)
+    service.start()
+    await tick()
+    expect(actions.panic).toHaveBeenCalled()
+  })
+
+  it(`logs errors during sourcing and transitions to waiting`, async () => {
+    const service = interpret(machine)
+    services.initializeData.mockImplementationOnce(throwService)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    await tick()
+    expect(actions.logError).toHaveBeenCalled()
+    expect(service.state.value).toEqual(`waiting`)
+  })
+
+  it(`logs errors during query running and transitions to waiting`, async () => {
+    const service = interpret(machine)
+    services.runQueries.mockImplementationOnce(throwService)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    await tick()
+    expect(actions.logError).toHaveBeenCalled()
+    expect(service.state.value).toEqual(`waiting`)
+  })
+
+  it(`panics on errors when launching webpack`, async () => {
+    const service = interpret(machine)
+    services.startWebpackServer.mockImplementationOnce(throwService)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.run-queries`)
+    await tick()
+    expect(actions.panic).toHaveBeenCalled()
+  })
+
+  it(`logs errors during compilation and transitions to waiting`, async () => {
+    const service = interpret(machine)
+    services.recompile.mockImplementationOnce(throwService)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    service.state.context.compiler = {} as any
+    service.state.context.sourceFilesDirty = true
+    service.send(`done.invoke.run-queries`)
+    await tick()
+    expect(actions.logError).toHaveBeenCalled()
+    expect(service.state.value).toEqual(`waiting`)
+  })
+
+  it(`panics on errors while waiting`, async () => {
+    const service = interpret(machine)
+    services.waitForMutations.mockImplementationOnce(throwService)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    service.state.context.compiler = {} as any
+    service.send(`done.invoke.run-queries`)
+    await tick()
+    expect(actions.panic).toHaveBeenCalled()
+  })
 })
-
-// const transitionWatcher = jest.fn()
-// service.onTransition(transitionWatcher)
-
-// expect(transitionWatcher).toHaveBeenCalledWith({})

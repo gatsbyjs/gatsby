@@ -206,7 +206,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
         onError: {
           actions: `panic`,
-          target: `waiting`,
         },
       },
     },
