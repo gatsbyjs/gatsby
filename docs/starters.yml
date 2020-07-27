@@ -6922,3 +6922,20 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-dotdev.kennethwang.dev/
+  repo: https://github.com/KennethWangDotDev/gatsby-starter-dotdev
+  description: Personal site template for developers. Showcase your projects and writings.
+  tags:
+    - Portfolio
+    - Blog
+    - SEO
+    - Markdown
+    - MDX
+  features:
+    - Gatsby v2
+    - Tablet & mobile friendly
+    - SEO
+    - MDX
+    - Optimized images with gatsby-image
+    - Netlify deployment friendly
+    - Good Developer Experience (ESLint + Prettier + TypeScript, React functional components + hooks, styled-components, Webpack path alias)
