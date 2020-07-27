@@ -18,6 +18,15 @@ describe(`extract query`, () => {
       ).toBe(`{allThing{nodes{id}}}`)
     })
 
+    it(`works with different file extsnions`, () => {
+      expect(
+        generateQueryFromString(
+          `allThing`,
+          compatiblePath(`/foo/bar/{Thing.id}.tsx`)
+        )
+      ).toBe(`{allThing{nodes{id}}}`)
+    })
+
     it(`all example`, () => {
       expect(
         generateQueryFromString(

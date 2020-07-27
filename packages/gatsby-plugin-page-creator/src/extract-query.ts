@@ -73,7 +73,7 @@ function extractUrlParamsForQuery(createdPath: string): string {
             part
               .replace(/\{[a-zA-Z]+\./, ``)
               .replace(`}`, ``)
-              .replace(`.js`, ``)
+              .replace(/\.[a-z]+$/, ``)
           )
         )
       }
