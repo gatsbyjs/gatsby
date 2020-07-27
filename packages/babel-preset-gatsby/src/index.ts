@@ -31,12 +31,12 @@ export function loadCachedConfig(): { browserslist?: Browserslist } {
   return pluginBabelConfig
 }
 
-type Options = {
-  targets?: null | Browserslist | { node: `current` }
+interface IOptions {
+  targets?: Browserslist | { node: `current` } | string
   stage?: string
 }
 
-export default function preset(_, options: Options = {}) {
+export default function preset(_, options: IOptions = {}) {
   let { targets = null } = options
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
