@@ -1,10 +1,7 @@
 import { Browserslist } from "browserslist"
 import { TransformOptions, PluginItem } from "@babel/core"
-
-const path = require(`path`)
-const {
-  CORE_JS_POLYFILL_EXCLUDE_LIST: polyfillsToExclude,
-} = require(`gatsby-legacy-polyfills/dist/exclude`)
+import * as path from "path"
+import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude"
 
 const resolve = (m: string): string => require.resolve(m)
 
