@@ -155,7 +155,7 @@ A [cache](/docs/glossary#cache) is also used to detect changes to `gatsby-*.js` 
 
 ## What happens when you run `gatsby build`?
 
-To see the code where many of these processes are happening, refer to the code and comments in the [`build`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build.js) and [`bootstrap`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js) files of the repository.
+To see the code where many of these processes are happening, refer to the code and comments in the [`build`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build.ts) and [`bootstrap`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.ts) files of the repository.
 
 A Node.js server process powers things behind the scenes when you run the `gatsby build` command. The process of converting assets and pages into HTML that can be rendered in a browser by a [server-side](/docs/glossary#server-side) language like Node.js is referred to as server-side rendering, or SSR. Since Gatsby builds everything ahead of time, this creates an entire site with all of the data your pages need at once. When the site is deployed, it doesn't need to run with server-side processes because everything has been gathered up and compiled by Gatsby.
 
@@ -239,7 +239,7 @@ Imports the composed GraphQL schema and builds it.
 
 13. `createPages`
 
-Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
+Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programmatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
 
 Plugins can handle the [`onCreatePage` event](/docs/node-apis/#onCreatePage) at this point for use cases like manipulating the path of pages.
 

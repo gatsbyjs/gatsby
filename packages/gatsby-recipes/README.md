@@ -1,13 +1,13 @@
 # Gatsby Recipes
 
 Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpretor, perform common actions like installing
+files which, when run by our interpreter, perform common actions like installing
 NPM packages, installing plugins, creating pages, etc.
 
 It's designed to be extensible so new capabilities can be added which allow
 Recipes to automate more things.
 
-We chose MDX to allow for a literate programming style of writing recipes which
+We chose [MDX](https://mdxjs.com/) to allow for a literate programming style of writing recipes which
 enables us to port our dozens of recipes from
 https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
 tutorials.
@@ -32,7 +32,7 @@ To confirm that this worked, run `gatsby --help` in your terminal. The output sh
 
 ### Running an example recipe
 
-Now you can test out recipes! Start with a recipe for installing `emotion` by following these steps:
+Now you can test out recipes! Start with a recipe for installing [Emotion](https://emotion.sh/docs/introduction) by following these steps:
 
 1. Create a new Hello World Gatsby site:
 
@@ -40,7 +40,7 @@ Now you can test out recipes! Start with a recipe for installing `emotion` by fo
 gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-1. Navigate into that project directory:
+1. Go to the project directory you created:
 
 ```shell
 cd try-emotion
@@ -147,9 +147,9 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name** name of the plugin
-- **options** object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
-- **key** string used to distinguish between multiple plugin instances
+- **name**: name of the plugin
+- **options**: object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
+- **key**: string used to distinguish between multiple plugin instances
 
 ### `<GatsbyShadowFile>`
 
@@ -159,8 +159,8 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **theme** the name of the theme (or plugin) which provides the file you'd like to shadow
-- **path** the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
+- **theme**: the name of the theme (or plugin) which provides the file you'd like to shadow
+- **path**: the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
 
 ### `<NPMPackage>`
 
@@ -170,7 +170,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name**: name of the package(s) to install. Takes a string or an array of strings.
+- **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
 
@@ -182,8 +182,8 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name:** name of the command
-- **command** the command that's run when the script is called
+- **name**: name of the command
+- **command**: the command that's run when the script is called
 
 ### `<File>`
 
@@ -196,10 +196,20 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
-- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
+- **path**: path to the file that should be created. The path is local to the root of the Node.js project (where the `package.json` is)
+- **content**: URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
+
+### `<Directory>`
+
+```jsx
+<Directory path="test" />
+```
+
+#### props
+
+- **path**: path to the directory that should be created. The path is local to the root of the Node.js project (where the `package.json` is)
 
 ## How to set up your development environment to work on Gatsby Recipes core
 
@@ -241,7 +251,7 @@ When you add a new recipe, please also add it to the recipes list at [https://gi
 
 ## FAQ / common issues
 
-### Q) My recipe is combining steps instead of running them seperately!
+### Q) My recipe is combining steps instead of running them separately!
 
 We use the `---` break syntax from Markdown to separate steps.
 

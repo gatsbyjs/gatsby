@@ -8,7 +8,6 @@
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
 
-const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
@@ -109,12 +108,15 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
     // Run action for each component
     const { components } = snapshot
-    components.forEach(c =>
+    components.forEach(c => {
+      const { isStaticQuery = false, text = `` } =
+        queries.get(c.componentPath) || {}
+
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
+        query: isStaticQuery ? `` : text,
       })
-    )
+    })
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -165,7 +167,7 @@ const clearInactiveComponents = () => {
 
   const activeTemplates = new Set()
   pages.forEach(page => {
-    // Set will guarantee uniqeness of entires
+    // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.component))
   })
 
@@ -175,7 +177,7 @@ const clearInactiveComponents = () => {
         `${component.componentPath} component was removed because it isn't used by any page`
       )
       store.dispatch({
-        type: `REMOVE_TEMPLATE_COMPONENT`,
+        type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`,
         payload: component,
       })
     }
@@ -192,6 +194,8 @@ exports.extractQueries = ({ parentSpan } = {}) => {
   return updateStateAndRunQueries(true, { parentSpan }).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
+
+    // TODO: move this into a spawned service
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
@@ -216,10 +220,6 @@ const watchComponent = componentPath => {
   }
 }
 
-const debounceCompile = _.debounce(() => {
-  updateStateAndRunQueries()
-}, 100)
-
 const watch = async rootDir => {
   if (watcher) return
 
@@ -232,13 +232,18 @@ const watch = async rootDir => {
   })
 
   watcher = chokidar
-    .watch([
-      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
-      ...packagePaths,
-    ])
+    .watch(
+      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
+      { ignoreInitial: true }
+    )
     .on(`change`, path => {
-      report.pendingActivity({ id: `query-extraction` })
-      debounceCompile()
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
+    })
+    .on(`add`, path => {
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
+    })
+    .on(`unlink`, path => {
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
 
   filesToWatch.forEach(filePath => watcher.add(filePath))
@@ -249,7 +254,7 @@ exports.startWatchDeletePage = () => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
     let otherPageWithTemplateExists = false
-    for (let page of pages.values()) {
+    for (const page of pages.values()) {
       if (slash(page.component) === componentPath) {
         otherPageWithTemplateExists = true
         break
@@ -257,7 +262,7 @@ exports.startWatchDeletePage = () => {
     }
     if (!otherPageWithTemplateExists) {
       store.dispatch({
-        type: `REMOVE_TEMPLATE_COMPONENT`,
+        type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`,
         payload: {
           componentPath,
         },

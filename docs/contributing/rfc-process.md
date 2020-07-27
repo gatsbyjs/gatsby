@@ -13,7 +13,7 @@ a bit of a design process and produce a consensus among the Gatsby core team.
 The "RFC" (request for comments) process is intended to provide a consistent
 and controlled path for new features to enter the project.
 
-[Active RFC List](https://github.com/gatsbyjs/rfcs/pulls)
+[Active RFC List](https://github.com/gatsbyjs/gatsby/pulls?q=is%3Aopen+is%3Apr+label%3A%22type%3A+rfc%22)
 
 Gatsby is still **actively developing** this process, and it will still change
 as more features are implemented and the community settles on specific
@@ -47,7 +47,7 @@ Some changes do not require an RFC:
 - Rephrasing, reorganizing or refactoring addition or removal of warnings
 - Additions that strictly improve objective, numerical quality
   criteria (speedup, better browser support)
-- Additions only likely to be _noticed by_ other implementors-of-Gatsby,
+- Additions only likely to be _noticed by_ other implements-of-Gatsby,
   invisible to users-of-Gatsby.
 
 ## What the process is
@@ -57,7 +57,7 @@ RFC merged into the RFC repo as a markdown file. At that point the RFC is
 'active' and may be implemented with the goal of eventual inclusion into
 Gatsby.
 
-- Fork the RFC repo https://github.com/gatsbyjs/rfcs Copy `0000-template.md` to
+- Fork the Gatsby repo https://github.com/gatsbyjs/gatsby. Inside the RFC folder, copy `0000-template.md` to
 - `text/0000-my-feature.md` (where
   'my-feature' is descriptive. Don't assign an RFC number yet).
 - Fill in the RFC. Put care into the details: **RFCs that do not

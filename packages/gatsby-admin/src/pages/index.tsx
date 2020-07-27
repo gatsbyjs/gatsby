@@ -1,50 +1,26 @@
+/** @jsx jsx */
 import React from "react"
+import { jsx, Flex, Grid } from "strict-ui"
+import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
+import {
+  Heading,
+  HeadingProps,
+  Text,
+  DropdownMenu,
+  DropdownMenuButton,
+  DropdownMenuItem,
+  DropdownMenuItems,
+} from "gatsby-interface"
+import PluginSearchBar from "../components/plugin-search"
 
-const InstallInput: React.FC<{}> = () => {
-  const [value, setValue] = React.useState(``)
+const SectionHeading: React.FC<HeadingProps> = props => (
+  <Heading as="h1" sx={{ fontWeight: `500`, fontSize: 5 }} {...props} />
+)
 
-  const [, installGatbyPlugin] = useMutation(`
-    mutation installGatsbyPlugin($name: String!) {
-      createNpmPackage(npmPackage: {
-        name: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      createGatsbyPlugin(gatsbyPlugin: {
-        name: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
-  return (
-    <form
-      onSubmit={(evt): void => {
-        evt.preventDefault()
-        installGatbyPlugin({
-          name: value,
-        })
-      }}
-    >
-      <label>
-        Install:
-        <input
-          value={value}
-          onChange={(evt): void => setValue(evt.target.value)}
-          type="text"
-          placeholder="gatsby-plugin-cool"
-        />
-      </label>
-    </form>
-  )
-}
-
-const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
+const PluginCard: React.FC<{
+  plugin: { name: string; description?: string }
+}> = ({ plugin }) => {
   const [, deleteGatsbyPlugin] = useMutation(`
     mutation destroyGatsbyPlugin($name: String!) {
       destroyNpmPackage(npmPackage: {
@@ -66,14 +42,45 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   `)
 
   return (
-    <button
-      aria-label={`Delete ${name}`}
-      onClick={(): void => {
-        deleteGatsbyPlugin({ name })
-      }}
+    <Flex
+      flexDirection="column"
+      gap={3}
+      sx={{ backgroundColor: `ui.background`, padding: 5, borderRadius: 2 }}
     >
-      X
-    </button>
+      <Flex justifyContent="space-between">
+        <Heading as="h2" sx={{ fontWeight: `500`, fontSize: 3 }}>
+          {plugin.name}
+        </Heading>
+        <DropdownMenu>
+          <DropdownMenuButton
+            aria-label="Actions"
+            sx={{
+              border: `none`,
+              background: `transparent`,
+              color: `text.secondary`,
+            }}
+          >
+            ···
+          </DropdownMenuButton>
+          <DropdownMenuItems>
+            <DropdownMenuItem
+              onSelect={(): void => {
+                if (
+                  window.confirm(`Are you sure you want to uninstall ${name}?`)
+                ) {
+                  deleteGatsbyPlugin({ name })
+                }
+              }}
+            >
+              Uninstall
+            </DropdownMenuItem>
+          </DropdownMenuItems>
+        </DropdownMenu>
+      </Flex>
+      <Text sx={{ color: `text.secondary` }}>
+        {plugin.description || <em>No description.</em>}
+      </Text>
+    </Flex>
   )
 }
 
@@ -81,67 +88,63 @@ const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
+        allGatsbyPage {
+          nodes {
+            path
+          }
+        }
         allGatsbyPlugin {
           nodes {
             name
+            description
             id
             shadowedFiles
             shadowableFiles
           }
         }
-        npmPackageJson(id: "name") {
-          name
-          value
-        }
       }
     `,
   })
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching) return <Spinner />
 
-  if (error) return <p>Oops something went wrong.</p>
+  if (error) {
+    const errMsg =
+      (error.networkError && error.networkError.message) ||
+      (Array.isArray(error.graphQLErrors) &&
+        error.graphQLErrors.map(e => e.message).join(` | `))
+
+    return <p>Error: {errMsg}</p>
+  }
 
   return (
-    <>
-      <h1>{data.npmPackageJson.value.replace(/^"|"$/g, ``)}</h1>
-      <h2>Plugins</h2>
-      <ul>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
-          .map(plugin => (
-            <li key={plugin.id}>
-              {plugin.name} <DestroyButton name={plugin.name} />
-            </li>
-          ))}
-      </ul>
-      <InstallInput />
-      <h2>Themes</h2>
-      <ul>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
-          .map(plugin => (
-            <li key={plugin.id}>
-              <details>
-                <summary>
-                  {plugin.name} <DestroyButton name={plugin.name} />
-                </summary>
-                <ul>
-                  {plugin.shadowedFiles.map(file => (
-                    <li key={file} style={{ opacity: 0.6 }}>
-                      {file} (shadowed)
-                    </li>
-                  ))}
-                  {plugin.shadowableFiles.map(file => (
-                    <li key={file}>{file}</li>
-                  ))}
-                </ul>
-              </details>
-            </li>
-          ))}
-      </ul>
+    <Flex gap={8} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
+      <Flex gap={6} flexDirection="column">
+        <SectionHeading>Pages</SectionHeading>
+        <ul sx={{ pl: 0, listStyle: `none` }}>
+          {data.allGatsbyPage.nodes
+            .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
+            .sort((a, b) => a.path.localeCompare(b.path))
+            .map(page => (
+              <li key={page.path} sx={{ p: 0 }}>
+                {page.path}
+              </li>
+            ))}
+        </ul>
+      </Flex>
 
-      <InstallInput />
-    </>
+      <Flex gap={6} flexDirection="column">
+        <SectionHeading id="plugin-search-label">
+          Installed Plugins
+        </SectionHeading>
+        <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
+          {data.allGatsbyPlugin.nodes.map(plugin => (
+            <PluginCard key={plugin.id} plugin={plugin} />
+          ))}
+        </Grid>
+        <PluginSearchBar />
+      </Flex>
+    </Flex>
   )
 }
 

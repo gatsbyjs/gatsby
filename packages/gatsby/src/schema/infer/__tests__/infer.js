@@ -1,14 +1,13 @@
 // NOTE: Previously `infer-graphql-type-test.js`
 
 const { graphql } = require(`graphql`)
-const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
-const { buildObjectType } = require(`../../types/type-builders`)
+import { buildObjectType } from "../../types/type-builders"
 const { hasNodes } = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 const withResolverContext = require(`../../context`)
@@ -246,7 +245,6 @@ describe(`GraphQL type inference`, () => {
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: typeDefs || [],
       fieldExtensions,
       thirdPartySchemas: [],
@@ -1009,7 +1007,7 @@ Object {
         },
       ].concat(getFileNodes())
 
-      let result = await getQueryResult(
+      const result = await getQueryResult(
         nodes,
         `
           file {
@@ -1034,7 +1032,7 @@ Object {
         },
       ].concat(getFileNodes())
 
-      let result = await getQueryResult(
+      const result = await getQueryResult(
         nodes,
         `
           files {

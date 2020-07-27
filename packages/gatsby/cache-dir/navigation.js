@@ -47,6 +47,14 @@ const onRouteUpdate = (location, prevLocation) => {
 }
 
 const navigate = (to, options = {}) => {
+  // Support forward/backward navigation with numbers
+  // navigate(-2) (jumps back 2 history steps)
+  // navigate(2)  (jumps forward 2 history steps)
+  if (typeof to === `number`) {
+    globalHistory.navigate(to)
+    return
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 

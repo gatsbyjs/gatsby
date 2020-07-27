@@ -5,7 +5,6 @@ import prompts from "prompts"
 export const detectPortInUseAndPrompt = async (
   port: number
 ): Promise<number> => {
-  let foundPort = port
   const detectedPort = await detectPort(port).catch((err: Error) =>
     report.panic(err)
   )
@@ -18,11 +17,11 @@ export const detectPortInUseAndPrompt = async (
       initial: true,
     })
     if (response.newPort) {
-      foundPort = detectedPort
+      port = detectedPort
     } else {
       throw new Error(`USER_REJECTED`)
     }
   }
 
-  return foundPort
+  return port
 }

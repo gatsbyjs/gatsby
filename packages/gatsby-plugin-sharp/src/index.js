@@ -362,7 +362,8 @@ async function generateBase64({ file, args = {}, reporter }) {
   return base64output
 }
 
-const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) =>
+  `${file.internal.contentDigest}${JSON.stringify(args)}`
 
 const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
@@ -543,7 +544,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
 
     if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
-      arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
+      if (options.fit === sharp.fit.inside) {
+        arrrgs.height = Math.round(size * (maxHeight / maxWidth))
+      } else {
+        arrrgs.height = Math.round(
+          size * (options.maxHeight / options.maxWidth)
+        )
+      }
     }
 
     return arrrgs

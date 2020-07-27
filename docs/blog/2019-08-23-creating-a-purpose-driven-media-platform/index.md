@@ -52,7 +52,7 @@ We proposed a headless Content Management System (CMS) with server-side renderin
 
 Compared to more traditional approaches, we found that JAMstack offered faster site performance, improved security, more cost-effective hosting, a quicker and more focused developer experience, and more practical scalability. The key tools we used to build the site were [Contentful](https://www.contentful.com/) (as a [headless CMS](/docs/headless-cms/)) and the React-based web framework [Gatsby](/), with GraphQL to build the pages. The impressive performance benefits Gatsby brought us were immediately evident. These technologies were great to work with and fitted really well into our skillset.
 
-From the start, this was an incredibly ambitious project. Building a publishing platform from scratch is not as common a task as you might think. We took a breath at the start of the project to ask ourselves: What effort could we make now that would save us time in the long run, but at the same time deliver something really harmonious? Given the short time frame, how could we work smarter? How could we maximise our efficiency without cutting corners?
+From the start, this was an incredibly ambitious project. Building a publishing platform from scratch is not as common a task as you might think. We took a breath at the start of the project to ask ourselves: What effort could we make now that would save us time in the long run, but at the same time deliver something really harmonious? Given the short time frame, how could we work smarter? How could we maximize our efficiency without cutting corners?
 
 ![Change incorporated rendered on three mobile devices](change-inc-ui.jpg)
 
@@ -80,17 +80,17 @@ We designed for a minimum and a maximum viewport width, set a typographic scale 
 
 ## Running streams concurrently
 
-In order to meet our deadline, we kicked off all streams of work on day one. The excellent [Abstract](https://www.abstract.com/) version control tool for Sketch was our centralised design resource. With two visual designers and a handful of developers on the project at any time, this tool was invaluable for keeping everybody’s files up to date. Abstract also neatly handled commenting and some light design critique, and the change tracking proved immensely beneficial for the developers. Our systematic approach enabled us to deliver a full component library and the design language was pushed much further than we thought possible in the time available.
+In order to meet our deadline, we kicked off all streams of work on day one. The excellent [Abstract](https://www.abstract.com/) version control tool for Sketch was our centralized design resource. With two visual designers and a handful of developers on the project at any time, this tool was invaluable for keeping everybody’s files up to date. Abstract also neatly handled commenting and some light design critique, and the change tracking proved immensely beneficial for the developers. Our systematic approach enabled us to deliver a full component library and the design language was pushed much further than we thought possible in the time available.
 
 The tight deadlines forced us to begin development almost immediately. The challenge we faced was how to develop without specs, wireframes, or a complete information architecture. What we decided to do was start with the skeleton of a component library and a simplified app, so that we could iterate on both as the design progressed. Each iteration was focused on critical features and functionality.
 
-Initially we focused on the component library – our experience with building component libraries and design systems meant that we knew what baseline elements and configuration we would need. We set up a system of design tokens to allow global values like brand colours to be changed quickly and easily. The moving targets of design and UX meant that we sometimes had to redo work, but overall the iterative approach was truly agile.
+Initially we focused on the component library – our experience with building component libraries and design systems meant that we knew what baseline elements and configuration we would need. We set up a system of design tokens to allow global values like brand colors to be changed quickly and easily. The moving targets of design and UX meant that we sometimes had to redo work, but overall the iterative approach was truly agile.
 
 ![Abstract's version control listing the components within the Change incorporated sketch file](change-inc.jpg)
 
 ## Building longevity into an MVP
 
-In order to optimise the investment, we ensured we built a system that functioned as a publishing platform, but as the needs of Change Incorporated evolve and grow, the system can grow with them. Being decoupled from any presentational aspects, using Contentful will allow them to serve any theoretical endpoint down the road, such as native apps, digital magazines, serialised content, etc.
+In order to optimize the investment, we ensured we built a system that functioned as a publishing platform, but as the needs of Change Incorporated evolve and grow, the system can grow with them. Being decoupled from any presentational aspects, using Contentful will allow them to serve any theoretical endpoint down the road, such as native apps, digital magazines, serialized content, etc.
 
 This system means that in future, anything created within it should function as part of the system by default – inheriting the system’s responsiveness, the type hierarchy, the fonts, the fluid grid. It’s a very extensible approach; a solid modern foundation to take and grow as a publishing platform.
 

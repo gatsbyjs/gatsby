@@ -2,6 +2,31 @@ const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 const normalizeBaseUrl = require(`./normalize-base-url`)
 
+exports.onPreBootstrap = ({ reporter }, { minimizeDeprecationNotice }) => {
+  if (!minimizeDeprecationNotice) {
+    reporter.log(`\n`)
+    reporter.warn(`[gatsby-source-wordpress]\n\nThis version of \`gatsby-source-wordpress\` will be deprecated soon.\nThe next major version (v4) is a complete rewrite in order to take advantage of WPGraphQL.\nThis allows us to support features like Preview and incremental builds and provides a much more stable experience.\n\nPlease upgrade to the BETA of \`gatsby-source-wordpress@v4\` by installing \`gatsby-source-wordpress-experimental\`.\nThese two packages are currently published under separate names to allow activating them side-by-side.\nThis makes migration between the two simpler.\nOnce the new plugin is stable it will be merged back in and published as \`gatsby-source-wordpress\` going forward.
+
+Read this blog post for the beta announcement:\nhttps://www.gatsbyjs.org/blog/2020-07-07-wordpress-source-beta/
+
+Or get started with the new plugin here:\nhttps://github.com/gatsbyjs/gatsby-source-wordpress-experimental/#readme
+
+You can minimize this notice using the minimizeDeprecationNotice plugin option:
+
+{
+  resolve: "gatsby-source-wordpress",
+  options: {
+    minimizeDeprecationNotice: true
+  },
+},
+\n\n`)
+  } else {
+    reporter.warn(
+      `[gatsby-source-wordpress] This version of gatsby-source-wordpress will soon be deprecated.\n\thttps://www.gatsbyjs.org/blog/2020-07-07-wordpress-source-beta/`
+    )
+  }
+}
+
 const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
   post: `${typePrefix}POST`,

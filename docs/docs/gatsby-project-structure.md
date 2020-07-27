@@ -32,7 +32,7 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
   - **`/pages`** Components under src/pages become pages automatically with paths based on their file name. Check out the [pages recipes](/docs/recipes/pages-layouts) for more detail.
   - **`/templates`** Contains templates for programmatically creating pages. Check out the [templates docs](/docs/building-with-components/#page-template-components) for more detail.
-  - **`html.js`** For custom configuration of default .cache/default_html.js. Check out the [custom html docs](/docs/custom-html/) for more detail.
+  - **`html.js`** For custom configuration of default .cache/default_html.js. Check out the [custom HTML docs](/docs/custom-html/) for more detail.
 
 - **`/static`** If you put a file into the static folder, it will not be processed by webpack. Instead it will be copied into the public folder untouched. Check out the [assets docs](/docs/static-folder/#adding-assets-outside-of-the-module-system) for more detail.
 

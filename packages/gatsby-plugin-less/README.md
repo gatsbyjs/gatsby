@@ -4,7 +4,7 @@ Provides drop-in support for Less stylesheets
 
 ## Install
 
-`npm install --save less gatsby-plugin-less`
+`npm install --save gatsby-plugin-less`
 
 ## How to use
 
@@ -16,8 +16,8 @@ Provides drop-in support for Less stylesheets
 plugins: [`gatsby-plugin-less`]
 ```
 
-If you need to pass options to Less use the plugins options; see [less-loader](https://github.com/webpack-contrib/less-loader)
-for all available options.
+If you need to pass options to the Less loader use the `loaderOptions` and to Less use `lessOptions` object;
+see [`less-loader`](https://github.com/webpack-contrib/less-loader) for all available options.
 
 ```javascript
 // in gatsby-config.js
@@ -25,13 +25,20 @@ plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      strictMath: true,
+      loaderOptions: {
+        appendData: `@env: ${process.env.NODE_ENV};`,
+      },
+      lessOptions: {
+        strictMath: true,
+        plugins: [new CleanCSSPlugin({ advanced: true })],
+      },
     },
   },
 ]
 ```
 
-If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader)
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader/tree/version-1)
+**Note:** Gatsby is using `css-loader@1.0.1`.
 
 ```javascript
 // in gatsby-config.js
@@ -42,20 +49,6 @@ plugins: [
       cssLoaderOptions: {
         camelCase: false,
       },
-    },
-  },
-]
-```
-
-If you need to provide [Less plugins](https://github.com/less/less-docs/blob/master/content/usage/plugins.md), normally you would provide a `plugins` in the Less options, but this option attribute is already used by Gatsby. It has been remapped to `lessPlugins`
-
-```javascript
-// in gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-less`,
-    options: {
-      lessPlugins: [MyLessPlugin],
     },
   },
 ]
@@ -88,6 +81,11 @@ plugins: [
 ## Breaking changes history
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
+
+### v4.0.0
+
+- `less-loader` options now possible with the object `loaderOptions`.
+- `less` options moved to the object `lessOptions` because of api change on `less-loader` v6.
 
 ### v2.0.0
 

@@ -4,6 +4,7 @@ const grayMatter = require(`gray-matter`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 const {
   isImport,
@@ -158,6 +159,29 @@ ${contentWithoutFrontmatter}`
       return fileNode
     } else {
       return rawGetNode(id)
+    }
+  }
+
+  /**
+   * Support gatsby-remark parser plugins
+   */
+  for (let plugin of options.gatsbyRemarkPlugins) {
+    debug(`requiring`, plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
+    debug(`required`, plugin)
+    if (_.isFunction(requiredPlugin.setParserPlugins)) {
+      for (let parserPlugin of requiredPlugin.setParserPlugins(
+        plugin.options || {}
+      )) {
+        if (_.isArray(parserPlugin)) {
+          const [parser, parserPluginOptions] = parserPlugin
+          debug(`adding remarkPlugin with options`, plugin, parserPluginOptions)
+          options.remarkPlugins.push([parser, parserPluginOptions])
+        } else {
+          debug(`adding remarkPlugin`, plugin)
+          options.remarkPlugins.push(parserPlugin)
+        }
+      }
     }
   }
 

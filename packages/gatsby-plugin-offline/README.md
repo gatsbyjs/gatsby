@@ -1,8 +1,8 @@
 # gatsby-plugin-offline
 
 Adds drop-in support for making a Gatsby site work offline and more resistant to
-bad network connections. It creates a service worker for the site and loads the
-service worker into the client.
+bad network connections. It uses [Workbox Build](https://developers.google.com/web/tools/workbox/modules/workbox-build)
+to create a service worker for the site and loads the service worker into the client.
 
 If you're using this plugin with `gatsby-plugin-manifest` (recommended) this
 plugin should be listed _after_ that plugin so the manifest file can be included
@@ -172,7 +172,7 @@ If you want to remove `gatsby-plugin-offline` from your site at a later point,
 substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
 to safely remove the service worker. First, install the new package:
 
-```bash
+```shell
 npm install gatsby-plugin-remove-serviceworker
 npm uninstall gatsby-plugin-offline
 ```
@@ -233,7 +233,7 @@ In order to solve this, update your `gatsby-config.js` as follows:
    resolve: 'gatsby-plugin-offline',
    options: {
       workboxConfig: {
-         globPatterns: ['**/*']
+         globPatterns: ['**/icon-path*']
       }
    }
 }
@@ -241,3 +241,4 @@ In order to solve this, update your `gatsby-config.js` as follows:
 
 Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
 Adding the `globPatterns` makes sure that the offline plugin will cache everything.
+Note that you have to prefix your icon with `icon-path` or whatever you may call it
