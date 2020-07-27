@@ -1,5 +1,5 @@
 import { Browserslist } from "browserslist"
-import { TransformOptions } from "@babel/core"
+import { TransformOptions, PluginItem } from "@babel/core"
 
 const path = require(`path`)
 const {
@@ -132,6 +132,6 @@ export default function preset(_, options: IOptions = {}): TransformOptions {
           removeImport: true,
         },
       ],
-    ].filter(Boolean),
+    ].filter(Boolean) as PluginItem[],
   }
 }
