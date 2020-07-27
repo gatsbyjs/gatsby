@@ -57,6 +57,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
       },
       invoke: {
+        id: `initialize-data`,
         src: `initializeData`,
         data: ({
           parentSpan,
