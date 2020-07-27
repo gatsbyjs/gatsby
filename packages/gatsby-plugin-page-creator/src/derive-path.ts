@@ -35,17 +35,19 @@ export function derivePath(path: string, node: Record<string, any>): string {
     // 3.b  We do node or node.nodes here because we support the special group
     //      graphql field, which then moves nodes in another depth
     const nodeValue = _.get(node.nodes, `[0]${key}`) || _.get(node, key)
-    const value = slugify(nodeValue.replace(/\//g, `(REPLACED)`), {
-      lower: true,
-    }).replace(/\(REPLACED\)/gi, `/`)
 
     // 3.c  log error if the key does not exist on node
-    if (!value) {
+    if (!nodeValue) {
       console.error(
         `CollectionBuilderError: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
       )
       console.log(JSON.stringify(node, null, 4))
+      return
     }
+
+    const value = slugify(nodeValue.replace(/\//g, `(REPLACED)`), {
+      lower: true,
+    }).replace(/\(REPLACED\)/gi, `/`)
 
     // 3.d  replace the part of the slug with the actual value
     pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
