@@ -82,6 +82,7 @@ Run \`gatsby clean\` to remove any cached elements.`
       )
     }
 
+    console.log({ pageResources: this.state.pageResources })
     return this.props.children(this.state)
   }
 }

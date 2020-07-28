@@ -70,15 +70,20 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         <Location>
           {({ location }) => (
             <EnsureResources location={location}>
-              {({ pageResources, location }) => (
-                <StaticQueryContext.Provider
-                  value={pageResources.staticQueryResults}
-                >
-                  <DataContext.Provider value={{ pageResources, location }}>
-                    {children}
-                  </DataContext.Provider>
-                </StaticQueryContext.Provider>
-              )}
+              {({ pageResources, location }) => {
+                console.log({
+                  staticQueryResults: pageResources.staticQueryResults,
+                })
+                return (
+                  <StaticQueryContext.Provider
+                    value={pageResources.staticQueryResults}
+                  >
+                    <DataContext.Provider value={{ pageResources, location }}>
+                      {children}
+                    </DataContext.Provider>
+                  </StaticQueryContext.Provider>
+                )
+              }}
             </EnsureResources>
           )}
         </Location>

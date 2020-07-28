@@ -207,8 +207,10 @@ export class BaseLoader {
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
     const pagePath = findPath(rawPath)
+    console.log({ pageDb: this.pageDb })
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
+      console.log({ payload: page.payload })
       return Promise.resolve(page.payload)
     }
 
@@ -529,6 +531,7 @@ export const publicLoader = {
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),
+  getStaticQuery: hash => instance.staticQueryDb.get(hash),
 }
 
 export default publicLoader
