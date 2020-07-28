@@ -11550,3 +11550,19 @@
     - Business
   built_by: leaniercode
   featured: false
+Copydocs/sites.yml: copy code to clipboard
+- title: WebSheets Generator
+  url: https://my.websheets.co
+  main_url: https://demo.websheets.co
+  source_url: https://github.com/tengkuhafidz/websheets-generator
+  description: Generate websites with just Google Sheets
+  categories:
+    - Open Source
+    - Web Development
+    - Directory
+    - Gallery
+    - Portfolio
+    - Documentation
+  built_by: Tengku Hafidz
+  built_by_url: https://twitter.com/sohafidz
+  featured: false
