@@ -21,7 +21,7 @@ test(`renders to a plan`, async () => {
   expect(result[0]).toMatchInlineSnapshot(`
     Object {
       "currentState": "",
-      "describe": "Write red.js",
+      "describe": "Write file \\"red.js\\"",
       "diff": "- Original  - 0
     + Modified  + 1
 

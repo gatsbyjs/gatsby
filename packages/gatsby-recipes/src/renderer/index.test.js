@@ -20,7 +20,7 @@ describe(`renderer`, () => {
     expect(result[0]).toMatchInlineSnapshot(`
       Object {
         "currentState": "",
-        "describe": "Write foo.js",
+        "describe": "Write file \\"foo.js\\"",
         "diff": "- Original  - 0
       + Modified  + 1
 
@@ -36,7 +36,7 @@ describe(`renderer`, () => {
     expect(result[1]).toMatchInlineSnapshot(`
       Object {
         "currentState": "",
-        "describe": "Write foo2.js",
+        "describe": "Write file \\"foo2.js\\"",
         "diff": "- Original  - 0
       + Modified  + 1
 
@@ -74,7 +74,7 @@ describe(`renderer`, () => {
       Array [
         Object {
           "currentState": "",
-          "describe": "Write hi.md",
+          "describe": "Write file \\"hi.md\\"",
           "diff": "- Original  - 0
       + Modified  + 1
 
@@ -100,7 +100,7 @@ describe(`renderer`, () => {
       Array [
         Object {
           "currentState": "",
-          "describe": "Write foo.js",
+          "describe": "Write file \\"foo.js\\"",
           "diff": "- Original  - 0
       + Modified  + 1
 

@@ -12,7 +12,7 @@ Object {
 exports[`file resource e2e file resource test: File create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Write file.txt",
+  "describe": "Write file \\"file.txt\\"",
   "diff": "- Original  - 0
 + Modified  + 1
 
@@ -42,7 +42,7 @@ Object {
 exports[`file resource e2e file resource test: File update plan 1`] = `
 Object {
   "currentState": "Hello, world!",
-  "describe": "Write file.txt",
+  "describe": "Write file \\"file.txt\\"",
   "diff": "- Original  - 1
 + Modified  + 1
 
@@ -87,7 +87,7 @@ Object {
 exports[`file resource e2e remote file resource test: File create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Write file.txt",
+  "describe": "Write file \\"file.txt\\"",
   "diff": "- Original  -  0
 + Modified  + 24
 
@@ -186,7 +186,7 @@ Object {
     }
   }  
 }",
-  "describe": "Write file.txt",
+  "describe": "Write file \\"file.txt\\"",
   "diff": "- Original  - 23
 + Modified  +  3
 
