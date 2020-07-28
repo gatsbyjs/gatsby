@@ -1,10 +1,11 @@
-const report = require(`gatsby-cli/lib/reporter`)
-const fs = require(`fs`)
-const path = require(`path`)
-const os = require(`os`)
-const prompts = require(`prompts`)
+import report from "gatsby-cli/lib/reporter"
+import fs from "fs"
+import path from "path"
+import os from "os"
+import { ICert } from "../commands/types"
+import prompts from "prompts"
 
-const absoluteOrDirectory = (directory, filePath) => {
+const absoluteOrDirectory = (directory: string, filePath: string): string => {
   // Support absolute paths
   if (path.isAbsolute(filePath)) {
     return filePath
@@ -12,7 +13,7 @@ const absoluteOrDirectory = (directory, filePath) => {
   return path.join(directory, filePath)
 }
 
-const getWindowsEncryptionPassword = async () => {
+const getWindowsEncryptionPassword = async (): Promise<string> => {
   report.info(
     [
       `A password is required to access the secure certificate authority key`,
@@ -33,7 +34,21 @@ const getWindowsEncryptionPassword = async () => {
   return results.value
 }
 
-module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
+export interface IGetSslCertArgs {
+  name: string
+  certFile?: string
+  keyFile?: string
+  caFile?: string
+  directory: string
+}
+
+export async function getSslCert({
+  name,
+  certFile,
+  keyFile,
+  caFile,
+  directory,
+}: IGetSslCertArgs): Promise<ICert | false> {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
@@ -50,7 +65,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
     process.env.NODE_EXTRA_CA_CERTS = caFile
       ? absoluteOrDirectory(directory, caFile)
       : certPath
-    return await {
+    return {
       key: fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
     }

@@ -1,11 +1,11 @@
 jest.mock(`../event-storage`)
 const eventStore = require(`../event-storage`)
-const Telemetry = require(`../telemetry`)
+import { AnalyticsTracker } from "../telemetry"
 
 let telemetry
 beforeEach(() => {
   eventStore.mockReset()
-  telemetry = new Telemetry()
+  telemetry = new AnalyticsTracker()
 })
 
 describe(`Telemetry`, () => {

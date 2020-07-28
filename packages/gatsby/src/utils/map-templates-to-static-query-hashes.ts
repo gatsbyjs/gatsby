@@ -1,4 +1,6 @@
 import { uniqBy, List } from "lodash"
+import path from "path"
+import { slash } from "gatsby-core-utils"
 import { IGatsbyState } from "../redux/types"
 import { Stats } from "webpack"
 
@@ -107,11 +109,11 @@ export default function mapTemplatesToStaticQueryHashes(
 
       for (const uniqDependent of uniqDependents) {
         if (uniqDependent.resource) {
-          result.add(uniqDependent.resource)
+          result.add(slash(uniqDependent.resource))
           // Queries used in gatsby-browser are global and should be added to all pages
           if (isGatsbyBrowser(uniqDependent)) {
             if (staticQueryModuleComponentPath) {
-              globalStaticQueries.add(staticQueryModuleComponentPath)
+              globalStaticQueries.add(slash(staticQueryModuleComponentPath))
             }
           } else {
             seen.add(uniqDependent.resource)
@@ -131,10 +133,12 @@ export default function mapTemplatesToStaticQueryHashes(
 
   // For every known static query, we get its dependents.
   staticQueryComponents.forEach(({ componentPath }) => {
-    const staticQueryComponentModule = modules.find(
-      m => m.resource === componentPath
-    )
+    // componentPaths are slashed by gatsby-core-utils we undo it
+    const nonSlashedPath = path.resolve(componentPath)
 
+    const staticQueryComponentModule = modules.find(
+      m => m.resource === nonSlashedPath
+    )
     const dependants = staticQueryComponentModule
       ? getDeps(staticQueryComponentModule)
       : new Set()

@@ -29,6 +29,7 @@
 18F
 1920s
 1990s
+1GB
 1M
 1pm
 1px
@@ -66,6 +67,7 @@
 4g
 5-10X
 500M
+500mb
 500ms
 500px
 50k
@@ -95,7 +97,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -302,6 +303,7 @@ CDN
 CDN-backed
 CDNs
 Cereda
+Certbot
 CFP
 Chakra
 changelog
@@ -371,7 +373,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial
@@ -984,6 +986,7 @@ hypermodern
 i10n
 i18n
 i18next
+IaaS
 IaC
 IAM
 iam_timsmith
@@ -1004,7 +1007,6 @@ imho
 Imoh
 impactful
 implementers
-implementors-of-Gatsby
 incineratingly
 Indexability
 indexable
@@ -1166,6 +1168,7 @@ LinkedIn
 Linsley
 linter
 linters
+LIV
 livechat
 livestream
 livestreamed
@@ -1197,7 +1200,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
@@ -1324,6 +1326,7 @@ nodeId
 nodeID
 NodeID
 nodemailer
+Node.js
 NodeSchool
 nodesPromise
 Nolen
@@ -1382,6 +1385,7 @@ OpenAI
 OpenAPI
 OpenCollective
 OpenGraph
+OpenSSH
 opentracing
 OpenTracing
 operandi
@@ -1452,7 +1456,6 @@ PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
@@ -1471,6 +1474,7 @@ PostHog
 postprocessing
 Poumián
 PowerShell
+PPA
 pragma
 pragmas
 PRDs
@@ -1585,6 +1589,7 @@ quickstart
 Quickstart
 Raae
 Rahić
+Rainn
 Rascia
 Razuvaev
 Re-engageable
@@ -1881,8 +1886,8 @@ Swartz
 Syfy
 symlink
 syntaxes
-Systemizing
 systemizing
+Systemizing
 tachyons
 Tachyons
 Tada
@@ -1938,7 +1943,7 @@ trainings
 transactional
 transformational
 transformative
-transifex
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -1962,6 +1967,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck
@@ -1981,6 +1988,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
@@ -2060,6 +2068,7 @@ voilà
 Vojtech
 Vojtěch
 VPs
+VPS
 VS2015
 VS201x
 VSCode
@@ -2087,11 +2096,12 @@ webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest
@@ -2116,7 +2126,6 @@ wireframe-level
 Wirth
 Wiseman
 wishlist
-with-layout2
 with-navigation2
 Woah
 WooCommerce

@@ -120,7 +120,7 @@ export interface IPlugin {
   options: Record<string, any>
 }
 
-interface IBabelStage {
+export interface IBabelStage {
   plugins: IPlugin[]
   presets: IPlugin[]
   options: {

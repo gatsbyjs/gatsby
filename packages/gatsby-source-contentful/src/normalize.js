@@ -619,7 +619,10 @@ exports.createAssetNodes = ({
       contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
         ? assetItem.sys.id
         : assetItem.sys.contentful_id,
+      spaceId: space.sys.id,
       id: mId(space.sys.id, assetItem.sys.id),
+      createdAt: assetItem.sys.createdAt,
+      updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
       file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
@@ -631,6 +634,12 @@ exports.createAssetNodes = ({
       internal: {
         type: `${makeTypeName(`Asset`)}`,
       },
+      sys: {},
+    }
+
+    // Revision applies to entries, assets, and content types
+    if (assetItem.sys.revision) {
+      assetNode.sys.revision = assetItem.sys.revision
     }
 
     // Get content digest of node.

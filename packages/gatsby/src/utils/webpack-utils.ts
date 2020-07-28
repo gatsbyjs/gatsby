@@ -13,7 +13,10 @@ import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
-import { GatsbyWebpackVirtualModules } from "./gatsby-webpack-virtual-modules"
+import {
+  GatsbyWebpackVirtualModules,
+  VIRTUAL_MODULES_BASE_PATH,
+} from "./gatsby-webpack-virtual-modules"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -431,21 +434,21 @@ export const createWebpackUtils = (
       return {
         test: /\.(js|mjs)$/,
         exclude: (modulePath: string): boolean => {
-          if (vendorRegex.test(modulePath)) {
-            // If dep uses Gatsby, exclude
-            if (
-              modulesThatUseGatsby.some(module =>
-                modulePath.includes(module.path)
-              )
-            ) {
-              return true
-            }
-
-            return doNotPolyfillRegex.test(modulePath)
+          // If dep is user land code, exclude
+          if (!vendorRegex.test(modulePath)) {
+            return true
           }
 
-          // If dep is user land code, exclude
-          return true
+          // If dep uses Gatsby, exclude
+          if (
+            modulesThatUseGatsby.some(module =>
+              modulePath.includes(module.path)
+            )
+          ) {
+            return true
+          }
+
+          return doNotPolyfillRegex.test(modulePath)
         },
         type: `javascript/auto`,
         use: [loaders.dependencies(jsOptions)],
@@ -458,7 +461,9 @@ export const createWebpackUtils = (
     return {
       enforce: `pre`,
       test: /\.jsx?$/,
-      exclude: vendorRegex,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
       use: [loaders.eslint(schema)],
     }
   }
