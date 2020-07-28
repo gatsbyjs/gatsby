@@ -239,7 +239,7 @@ const ResourceComponent = props => {
 }
 
 const components = {
-  inlineCode: props => <Text {...props} />,
+  inlineCode: props => <Text>`{props.children}`</Text>,
   pre: props => <Div {...props} />,
   code: props => {
     // eslint-disable-next-line
