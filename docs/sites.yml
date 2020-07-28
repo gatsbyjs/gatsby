@@ -11435,6 +11435,16 @@
   built_by: Jeff Jadulco
   built_by_url: https://jeffjadulco.com
   featured: false
+- title: Château de Morey 🏰
+  main_url: https://chateaudemorey.fr
+  url: https://chateaudemorey.fr/en/
+  description: >
+    Website of Château de Morey. Built on the ruins of a Templar convent 🏰
+  categories:
+    - Travel
+    - Blog
+  built_by: Julien Karst
+  built_by_url: https://julienkarst.com
 - title: TRUE STORY
   main_url: https://custom.truestorysport.com/
   url: https://custom.truestorysport.com/
