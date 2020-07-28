@@ -2,7 +2,8 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+export { Reporter }
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -1273,8 +1274,6 @@ export interface Store {
   getState: Function
   replaceReducer: Function
 }
-
-export type Reporter = typeof reporter
 
 export type ActivityTracker = {
   start(): () => void

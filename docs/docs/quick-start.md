@@ -22,7 +22,7 @@ npm install -g gatsby-cli
 ### Create a new site
 
 ```shell
-gatsby new gatsby-site
+gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 ### Change directories into site folder
@@ -39,7 +39,7 @@ gatsby develop
 
 Gatsby will start a hot-reloading development environment accessible by default at `http://localhost:8000`.
 
-Try editing the JavaScript pages in `src/pages`. Saved changes will live reload in the browser.
+Try editing the home page in `src/pages/index.js`. Saved changes will live reload in the browser.
 
 ### Create a production build
 

@@ -7,7 +7,7 @@ NPM packages, installing plugins, creating pages, etc.
 It's designed to be extensible so new capabilities can be added which allow
 Recipes to automate more things.
 
-We chose MDX to allow for a literate programming style of writing recipes which
+We chose [MDX](https://mdxjs.com/) to allow for a literate programming style of writing recipes which
 enables us to port our dozens of recipes from
 https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
 tutorials.
@@ -170,7 +170,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name**: name of the package(s) to install. Takes a string or an array of strings.
+- **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
 

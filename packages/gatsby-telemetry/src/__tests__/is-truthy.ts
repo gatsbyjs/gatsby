@@ -1,4 +1,4 @@
-const isTruthy = require(`../is-truthy`)
+import { isTruthy } from "../is-truthy"
 
 describe(`isTruthy`, () => {
   it(`handles Booleans`, () => {

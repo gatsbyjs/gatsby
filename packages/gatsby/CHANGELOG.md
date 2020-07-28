@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.11...gatsby@2.24.12) (2020-07-28)
+
+### Bug Fixes
+
+- **gatsby:** Defer node mutation in more APIs ([#26067](https://github.com/gatsbyjs/gatsby/issues/26067)) ([5e5b413](https://github.com/gatsbyjs/gatsby/commit/5e5b413))
+- Enable CLI integration tests ([#25997](https://github.com/gatsbyjs/gatsby/issues/25997)) ([ffabe75](https://github.com/gatsbyjs/gatsby/commit/ffabe75))
+
+### Features
+
+- **gatsby:** Add top-level error handling to state machine ([#25995](https://github.com/gatsbyjs/gatsby/issues/25995)) ([b84ea14](https://github.com/gatsbyjs/gatsby/commit/b84ea14))
+
+## [2.24.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.10...gatsby@2.24.11) (2020-07-24)
+
+### Bug Fixes
+
+- **gatsby:** call predicate for the root ancestor in findRootNodeAncestor ([#25974](https://github.com/gatsbyjs/gatsby/issues/25974)) ([ac40874](https://github.com/gatsbyjs/gatsby/commit/ac40874))
+
+### Features
+
+- **gatsby:** Add internal types export ([#25921](https://github.com/gatsbyjs/gatsby/issues/25921)) ([08d2d70](https://github.com/gatsbyjs/gatsby/commit/08d2d70))
+
+## [2.24.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.9...gatsby@2.24.10) (2020-07-23)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.8...gatsby@2.24.9) (2020-07-22)
+
+### Bug Fixes
+
+- **gatsby:** don't place virtual modules in node_modules directory ([#25720](https://github.com/gatsbyjs/gatsby/issues/25720)) ([7b1a0f2](https://github.com/gatsbyjs/gatsby/commit/7b1a0f2))
+
+### Features
+
+- **gatsby:** Defer node mutation during querying ([#25479](https://github.com/gatsbyjs/gatsby/issues/25479)) ([cf14989](https://github.com/gatsbyjs/gatsby/commit/cf14989)), closes [#25716](https://github.com/gatsbyjs/gatsby/issues/25716)
+
+## [2.24.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.7...gatsby@2.24.8) (2020-07-21)
+
+### Bug Fixes
+
+- **gatsby:** Support symlinks in static directories ([#25894](https://github.com/gatsbyjs/gatsby/issues/25894)) ([42d342e](https://github.com/gatsbyjs/gatsby/commit/42d342e))
+- Restore CLI port in use prompt feature ([#25863](https://github.com/gatsbyjs/gatsby/issues/25863)) ([fc2f6f0](https://github.com/gatsbyjs/gatsby/commit/fc2f6f0))
+
+## [2.24.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.6...gatsby@2.24.7) (2020-07-20)
+
+### Features
+
+- **gatsby:** Load static query results in Gatsby runtime ([#25723](https://github.com/gatsbyjs/gatsby/issues/25723)) ([b00c3df](https://github.com/gatsbyjs/gatsby/commit/b00c3df))
+
+## [2.24.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.5...gatsby@2.24.6) (2020-07-20)
+
+### Bug Fixes
+
+- **docs:** change LeKoArts to LekoArts ([#25843](https://github.com/gatsbyjs/gatsby/issues/25843)) ([724d717](https://github.com/gatsbyjs/gatsby/commit/724d717))
+
 ## [2.24.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.4...gatsby@2.24.5) (2020-07-20)
 
 **Note:** Version bump only for package gatsby
@@ -152,6 +206,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - **gatsby:** allow amending autoprefixer options ([#24907](https://github.com/gatsbyjs/gatsby/issues/24907)) ([8e6e021](https://github.com/gatsbyjs/gatsby/commit/8e6e021))
+- **gatsby:** Several fixes for scroll handling and restoration ([#24306](https://github.com/gatsbyjs/gatsby/issues/24306)) ([4c0916b](https://github.com/gatsbyjs/gatsby/commit/4c0916b))
 
 ### Features
 

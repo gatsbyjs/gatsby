@@ -47,7 +47,6 @@ async function genMDX(
     options,
     getNode,
     getNodes,
-    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -115,7 +114,6 @@ export const _frontmatter = ${JSON.stringify(data)}`
       //          files,
       getNode,
       getNodes,
-      getNodesByType,
       reporter,
       cache,
       pathPrefix,
@@ -196,10 +194,8 @@ ${code}`
 module.exports = genMDX // Legacy API, drop in v3 in favor of named export
 module.exports.genMDX = genMDX
 
-async function findImportsExports({
-  mdxNode,
-  rawInput,
-  absolutePath = null,
+async function findImports({
+  node,
   options,
   getNode,
   getNodes,
@@ -209,12 +205,12 @@ async function findImportsExports({
   pathPrefix,
   ...helpers
 }) {
-  const { data: frontmatter, content } = grayMatter(rawInput)
+  const { content } = grayMatter(node.rawBody)
 
   const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
     {
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-      mdxNode,
+      mdxNode: node,
       getNode,
       getNodes,
       getNodesByType,
@@ -230,19 +226,18 @@ async function findImportsExports({
   )
 
   const compilerOptions = {
-    filepath: absolutePath,
+    filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: [
       ...options.remarkPlugins,
       ...gatsbyRemarkPluginsAsremarkPlugins,
     ],
   }
-
   const compiler = mdx.createCompiler(compilerOptions)
 
   const fileOpts = { contents: content }
-  if (absolutePath) {
-    fileOpts.path = absolutePath
+  if (node.fileAbsolutePath) {
+    fileOpts.path = node.fileAbsolutePath
   }
 
   const mdast = await compiler.parse(fileOpts)
@@ -251,19 +246,16 @@ async function findImportsExports({
   // we don't need to dedupe the symbols here.
   const identifiers = []
   const imports = []
-  const exports = []
 
   mdast.children.forEach(node => {
-    if (node.type === `import`) {
-      const importCode = node.value
+    if (node.type !== `import`) return
 
-      imports.push(importCode)
+    const importCode = node.value
 
-      const bindings = parseImportBindings(importCode)
-      identifiers.push(...bindings)
-    } else if (node.type === `export`) {
-      exports.push(node.value)
-    }
+    imports.push(importCode)
+
+    const bindings = parseImportBindings(importCode)
+    identifiers.push(...bindings)
   })
 
   if (!identifiers.includes(`React`)) {
@@ -272,11 +264,9 @@ async function findImportsExports({
   }
 
   return {
-    frontmatter,
     scopeImports: imports,
-    scopeExports: exports,
     scopeIdentifiers: identifiers,
   }
 }
 
-module.exports.findImportsExports = findImportsExports
+module.exports.findImports = findImports
