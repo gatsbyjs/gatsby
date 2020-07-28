@@ -1,106 +1,26 @@
 /** @jsx jsx */
 import React from "react"
 import { jsx, Flex, Grid } from "strict-ui"
+import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
   Heading,
   HeadingProps,
   Text,
-  Button,
-  InputField,
-  InputFieldControl,
-  ButtonProps,
+  DropdownMenu,
+  DropdownMenuButton,
+  DropdownMenuItem,
+  DropdownMenuItems,
 } from "gatsby-interface"
+import PluginSearchBar from "../components/plugin-search"
 
-const SecondaryButton: React.FC<ButtonProps> = props => (
-  <Button
-    variant="SECONDARY"
-    size="S"
-    sx={{
-      paddingX: 6,
-      paddingY: 4,
-      color: `whiteFade.80`,
-      border: `sixtywhite`,
-      "&:hover": {
-        color: `white`,
-        border: `white`,
-      },
-    }}
-    {...props}
-  ></Button>
+const SectionHeading: React.FC<HeadingProps> = props => (
+  <Heading as="h1" sx={{ fontWeight: `500`, fontSize: 5 }} {...props} />
 )
 
-const InstallInput: React.FC<{ for: string }> = props => {
-  const inputId = `install-${props.for}`
-  const [value, setValue] = React.useState(``)
-
-  const [{ fetching }, installGatbyPlugin] = useMutation(`
-    mutation installGatsbyPlugin($name: String!) {
-      createNpmPackage(npmPackage: {
-        name: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      createGatsbyPlugin(gatsbyPlugin: {
-        name: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
-  return (
-    <form
-      onSubmit={(evt): void => {
-        evt.preventDefault()
-        if (value.indexOf(`gatsby-`) !== 0) return
-
-        installGatbyPlugin({
-          name: value,
-        })
-      }}
-    >
-      <InputField id={inputId}>
-        <Flex gap={2} flexDirection="column">
-          <Text size="S" sx={{ color: `grey.40` }}>
-            <label htmlFor={inputId}>Install {props.for}:</label>
-          </Text>
-          <Flex gap={4} alignItems="center">
-            <InputFieldControl
-              placeholder={`gatsby-${props.for}-`}
-              disabled={fetching}
-              value={value}
-              onChange={(e): void => setValue(e.target.value)}
-              sx={{
-                backgroundColor: `background`,
-                borderColor: `grey.60`,
-                color: `white`,
-                width: `initial`,
-                "&:focus": {
-                  borderColor: `grey.40`,
-                  // TODO(@mxstbr): Fix this focus outline
-                  boxShadow: `none`,
-                },
-              }}
-            />
-            <SecondaryButton
-              disabled={!value.trim()}
-              loading={fetching}
-              loadingLabel="Installing"
-            >
-              Install
-            </SecondaryButton>
-          </Flex>
-        </Flex>
-      </InputField>
-    </form>
-  )
-}
-
-const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
+const PluginCard: React.FC<{
+  plugin: { name: string; description?: string }
+}> = ({ plugin }) => {
   const [, deleteGatsbyPlugin] = useMutation(`
     mutation destroyGatsbyPlugin($name: String!) {
       destroyNpmPackage(npmPackage: {
@@ -122,51 +42,57 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   `)
 
   return (
-    <SecondaryButton
-      onClick={(evt): void => {
-        evt.preventDefault()
-        if (window.confirm(`Are you sure you want to uninstall ${name}?`)) {
-          deleteGatsbyPlugin({ name })
-        }
-      }}
+    <Flex
+      flexDirection="column"
+      gap={3}
+      sx={{ backgroundColor: `ui.background`, padding: 5, borderRadius: 2 }}
     >
-      Uninstall
-    </SecondaryButton>
+      <Flex justifyContent="space-between">
+        <Heading as="h2" sx={{ fontWeight: `500`, fontSize: 3 }}>
+          {plugin.name}
+        </Heading>
+        <DropdownMenu>
+          <DropdownMenuButton
+            aria-label="Actions"
+            sx={{
+              border: `none`,
+              background: `transparent`,
+              color: `text.secondary`,
+            }}
+          >
+            ···
+          </DropdownMenuButton>
+          <DropdownMenuItems>
+            <DropdownMenuItem
+              onSelect={(): void => {
+                if (
+                  window.confirm(`Are you sure you want to uninstall ${name}?`)
+                ) {
+                  deleteGatsbyPlugin({ name })
+                }
+              }}
+            >
+              Uninstall
+            </DropdownMenuItem>
+          </DropdownMenuItems>
+        </DropdownMenu>
+      </Flex>
+      <Text sx={{ color: `text.secondary` }}>
+        {plugin.description || <em>No description.</em>}
+      </Text>
+    </Flex>
   )
 }
-
-const SectionHeading: React.FC<HeadingProps> = props => (
-  <Heading
-    as="h1"
-    sx={{ color: `white`, fontWeight: `500`, fontSize: 5 }}
-    {...props}
-  />
-)
-
-const PluginCard: React.FC<{
-  plugin: { name: string; description?: string }
-}> = ({ plugin }) => (
-  <Flex
-    flexDirection="column"
-    gap={6}
-    sx={{ backgroundColor: `grey.80`, padding: 5, borderRadius: 2 }}
-  >
-    <Heading as="h2" sx={{ color: `white`, fontWeight: `500`, fontSize: 3 }}>
-      {plugin.name}
-    </Heading>
-    <Text sx={{ color: `grey.40` }}>
-      {plugin.description || <em>No description.</em>}
-    </Text>
-    <Flex justifyContent="flex-end" sx={{ width: `100%` }}>
-      <DestroyButton name={plugin.name} />
-    </Flex>
-  </Flex>
-)
 
 const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
+        allGatsbyPage {
+          nodes {
+            path
+          }
+        }
         allGatsbyPlugin {
           nodes {
             name
@@ -180,32 +106,44 @@ const Index: React.FC<{}> = () => {
     `,
   })
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching) return <Spinner />
 
-  if (error) return <p>Oops something went wrong.</p>
+  if (error) {
+    const errMsg =
+      (error.networkError && error.networkError.message) ||
+      (Array.isArray(error.graphQLErrors) &&
+        error.graphQLErrors.map(e => e.message).join(` | `))
+
+    return <p>Error: {errMsg}</p>
+  }
 
   return (
-    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
-      <SectionHeading>Plugins</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
-          .map(plugin => (
+    <Flex gap={8} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
+      <Flex gap={6} flexDirection="column">
+        <SectionHeading>Pages</SectionHeading>
+        <ul sx={{ pl: 0, listStyle: `none` }}>
+          {data.allGatsbyPage.nodes
+            .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
+            .sort((a, b) => a.path.localeCompare(b.path))
+            .map(page => (
+              <li key={page.path} sx={{ p: 0 }}>
+                {page.path}
+              </li>
+            ))}
+        </ul>
+      </Flex>
+
+      <Flex gap={6} flexDirection="column">
+        <SectionHeading id="plugin-search-label">
+          Installed Plugins
+        </SectionHeading>
+        <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
+          {data.allGatsbyPlugin.nodes.map(plugin => (
             <PluginCard key={plugin.id} plugin={plugin} />
           ))}
-      </Grid>
-      <InstallInput for="plugin" />
-
-      <SectionHeading>Themes</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
-          .map(plugin => (
-            <PluginCard key={plugin.id} plugin={plugin} />
-          ))}
-      </Grid>
-
-      <InstallInput for="theme" />
+        </Grid>
+        <PluginSearchBar />
+      </Flex>
     </Flex>
   )
 }

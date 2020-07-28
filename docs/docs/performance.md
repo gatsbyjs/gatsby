@@ -1,6 +1,5 @@
 ---
 title: Performance
-overview: true
 ---
 
 While performance is already at the heart of Gatsby, it's important to ensure you are doing all you can to make your content available to your users as fast as possible. Not all users are enjoying high speed connections, or browsing from a desktop. It's important to make no assumptions and serve the smallest and fastest site possible, to provide an optimal experience for wherever your users might be coming from. Since Gatsby is already doing a lot of the heavy lifting for you there isn't a lot required out of the box to make your site blazing fast, but by following these guides you can ensure the best possible performance and delivery of your content to your users.

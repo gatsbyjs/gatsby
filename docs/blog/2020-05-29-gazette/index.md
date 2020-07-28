@@ -93,7 +93,7 @@ For current web professionals, Marcy livestreamed a session on making websites t
 
 ### Gatsby Community Kudos
 
-Thank you **Sethu Sathyan** for rapidly building [Startups vs Covid](https://www.startupsvscovid.com/) and for teaching others with your article, [“How to build a website using Gatsby & Airtable in 30 mins”](https://dev.to/sethu/how-to-build-a-website-using-gatsby-airtable-in-30-mins-42gm).
+Thank you **Sethu Sathyan** for rapidly building [Startups vs COVID-19](https://www.startupsvscovid.com/) and for teaching others with your article, [“How to build a website using Gatsby & Airtable in 30 mins”](https://dev.to/sethu/how-to-build-a-website-using-gatsby-airtable-in-30-mins-42gm).
 
 Thank you **Andres Alvarez** for choosing Gatsby for [your first open source PR](https://github.com/gatsbyjs/gatsby/pull/23537)! Your table of contents for the API reference pages will benefit thousands of readers. And thank you **Adam Millerchip** for making your first Gatsby PR and [fixing a common hiccup](https://github.com/gatsbyjs/gatsby/pull/23775) developers were having with our documentation.
 

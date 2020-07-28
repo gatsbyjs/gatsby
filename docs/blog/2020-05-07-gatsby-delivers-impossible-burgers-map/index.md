@@ -2,7 +2,7 @@
 title: "Mapping Your Closest Impossible Burger with Gatsby"
 date: 2020-05-07
 author: Sam Bhagwat
-excerpt: "Meat Analogues is a terrific punk band name. But it also describes one of the hottest current trends in food: plant-based protein products so realistic that they fool even hardcore carnivores, with a side of combatting climate change. Impossible Foods is one of the fastest growing alternative meat companies, particularly famous for their juicy and delicious Impossible Burgers. The company’s website wasn't helping hungry customers find their nearest Impossible Burger, though, so they turned to Gatsby to build an interactive mapping web app."
+excerpt: "Meat Analogues is a terrific punk band name. But it also describes one of the hottest current trends in food: plant-based protein products so realistic that they fool even hardcore carnivores, with a side of combatting climate change. Impossible Foods is one of the fastest growing alternative meat companies, particularly famous for their juicy and delicious Impossible Burgers. The company’s website wasn't helping hungry customers find their nearest Impossible Burger, though, so they turned to Gatsby to build an interactive store locator app."
 tags:
   - case-studies
   - performance
@@ -17,9 +17,9 @@ The company has been growing exponentially ever since, but unfortunately the ori
 
 As demand skyrocketed, hungry customers flocked to the company's website to find out where they could experience an Impossible Burger in their local area. The original website showed users a static list of all Impossible Food locations, grouped by state.
 
-This meant that users had to scan a long and ever-growing list of retailers and restaurants, sorted alphabetically rather than geographically. They then had to use external tools like Google Maps to figure out the location closest by. Rather than navigate through this complicated process, many users simply gave up. Impossible Foods was losing an untold number of excited potential customers.
+This meant that users had to scan a long and ever-growing list of retailers and restaurants, sorted alphabetically rather than geographically, and then leave the site for an external tool like Google Maps to figure out the nearest locations. Rather than navigate through this complicated process, many users simply gave up. Impossible Foods was losing an untold number of excited potential customers.
 
-"Our product would be in certain places, and people wouldn't know it was there," explains Ashley Geo, Head of Brand Marketing Communications for Impossible Foods. Alternatively, she adds, "It wouldn't be in other places, but people would guess that it was there" - only to leave empty-handed and disappointed.
+"Our product would be in certain places, and people wouldn't know it was there," explains Ashley Geo, Head of Brand Marketing Communications for Impossible Foods. There was also an equally serious reverse problem: "It wouldn't be in other places, but -- lacking info -- people would _guess_ that it was there" - resulting in empty-handed and disappointed customers.
 
 ![](https://lh5.googleusercontent.com/UpLDOJ5IvE0tDhK9qqDSa6qbr9gWdM-wPRTZkI0P6XBDBI6gvKZk33qvcUVH88rFC_Ylh8GxTgnpvGZDPPuRMADalLJygiOzmlEY6SyawoFR3AH0BkhhLRSLwrB7aRMZXrCwkdJ6)
 
@@ -99,7 +99,7 @@ Ultimately, Geo credits Impossible Foods' choice of technologies as the key that
 
 ## Still hungry for more?
 
-Check out this [webinar with Gatsby and Contentful](https://www.gatsbyjs.com/impossible-foods-webinar/) to hear Ashley Geo (Head of Brand Marketing-Communications at Impossible Foods) and David Fonnegra (Lead Technologist at Matter Supply) talk about delivering new features and content on impossiblefoods.com within often-impossible timeframes—and how they empowered the Impossible™ Digital team to increase customer engagement by more than 40%. Gatsby co-founder Kyle Mathews and Jim Ambras, Senior Technical Trainer at Contentful, join them.
+Check out this [webinar with Gatsby and Contentful](https://www.gatsbyjs.com/impossible-foods-webinar/) to hear Ashley Geo (Head of Brand Marketing-Communications at Impossible Foods) and David Fonnegra (Lead Technologist at Matter Supply) talk about delivering new features, like a store locator app, and content on impossiblefoods.com within often-impossible timeframes -— and how they empowered the Impossible™ Digital team to increase customer engagement by more than 40%. Gatsby co-founder Kyle Mathews and Jim Ambras, Senior Technical Trainer at Contentful, join them.
 
 <CloudCallout>
   Sites built with Gatsby are fast no matter where they run. But when a Gatsby

@@ -98,6 +98,36 @@ module.exports = {
 }
 ```
 
+### Fastbuilds
+
+You can use the `fastBuilds` option to enable fastbuilds. This requires the
+Gatsby Drupal module (called gatsby_fastbuilds) to be enabled. This will speed
+up your development and build process by only downloading content that has
+changed since you last ran `gatsby build` or `gatsby develop`.
+
+This will require authentication to your Drupal site and a Drupal user with the
+Drupal permission to `sync gatsby fastbuild log entities`.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        basicAuth: {
+          username: process.env.BASIC_AUTH_USERNAME,
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
+        fastBuilds: true,
+      },
+    },
+  ],
+}
+```
+
 ## Request Headers
 
 You can add optional request headers to the request using `headers` param.

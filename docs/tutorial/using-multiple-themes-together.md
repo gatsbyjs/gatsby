@@ -170,7 +170,7 @@ export default function BioContent() {
 }
 ```
 
-### Shadow Theme-UI
+### Shadow Theme UI
 
 `gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](/docs/theme-ui/) design tokens to manage their styling: colors, font sizes, spacing, etc. You can use component shadowing to gain control over these design tokens in the final site.
 
@@ -241,7 +241,7 @@ module.exports = {
 }
 ```
 
-3. Test it out by adding a Youtube video to one of your blog posts:
+3. Test it out by adding a YouTube video to one of your blog posts:
 
 ```mdx:title=content/posts/video-post.md
 ---

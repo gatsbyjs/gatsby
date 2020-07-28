@@ -1,6 +1,5 @@
 ---
 title: Preparing Your Environment
-overview: true
 ---
 
 To get started with Gatsby, you'll need to make sure you have the following software tools installed:

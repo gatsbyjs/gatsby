@@ -137,5 +137,5 @@ The first example results in a final ordering of `['gatsby-theme-parent', 'gatsb
 
 Once you have the final ordering of themes you merge them together using a reduce function. [This reduce function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/merge-gatsby-config.ts) specifies the way each key in `gatsby-config.js` will merge together. Unless otherwise specified below, the last value wins.
 
-- `siteMetadata` and `mapping` both merge deeply using lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
+- `siteMetadata` and `mapping` both merge deeply using Lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
 - `plugins` are normalized to remove duplicates, then concatenated together.

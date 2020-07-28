@@ -111,7 +111,7 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
 
 ### Selling digital products
 
-Snipcart enables the sale of digital goods such as e-books, photography, and other artwork. To sell a file you intend for download, you'll need to upload it to your Snipcart dashboard and then add the resulting guid as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
+Snipcart enables the sale of digital goods such as e-books, photography, and other artwork. To sell a file you intend for download, you'll need to upload it to your Snipcart dashboard and then add the resulting GUID as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
 
 ```jsx
 <section>
@@ -179,7 +179,7 @@ Once you're ready to receive payments, connect your chosen payment processor to 
 
 The following quote is from the Snipcart [payment gateway page](https://app.snipcart.com/dashboard/account/gateway):
 
-> Please note that you can select only one payment gateway. However, you can also enable Paypal Express Checkout on top of any gateway you choose.
+> Please note that you can select only one payment gateway. However, you can also enable PayPal Express Checkout on top of any gateway you choose.
 >
 > Also, you can switch from a gateway to another whenever you want.
 

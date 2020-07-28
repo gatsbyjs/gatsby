@@ -64,7 +64,6 @@ const ColorSwatch = ({ color, ...rest }) => {
 
   return (
     <BoxWithBorder
-      width={{ md: 1 / 3 }}
       py={4}
       px={2}
       bg={color.hex}

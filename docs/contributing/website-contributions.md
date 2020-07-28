@@ -14,7 +14,7 @@ Now you can make and preview your changes before raising a pull request!
 
 For full repo setup instructions, visit the [code contributions](/contributing/code-contributions/) page.
 
-## Styling components on Gatsbyjs.org with Theme-UI
+## Styling components on Gatsbyjs.org with Theme UI
 
 Styles on the site are applied using [Theme-UI](https://theme-ui.com/), which allows for theming across the site based on design tokens (also called variables).
 

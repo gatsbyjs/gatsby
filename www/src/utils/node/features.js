@@ -1,7 +1,7 @@
 const { generateComparisonPageSet } = require(`../generate-comparison-page-set`)
 const { getTemplate } = require(`../get-template`)
 
-exports.sourceNodes = ({ actions: { createTypes } }) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type GatsbyJamstackSpecsCsv implements Node @dontInfer {
       Category: String

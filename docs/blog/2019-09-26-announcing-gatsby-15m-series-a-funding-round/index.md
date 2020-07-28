@@ -12,13 +12,13 @@ Gatsby is a free and open-source web framework based on React that helps develop
 
 ## Why the excitement and growth?
 
-The answer is simple. Gatsby was founded around a big idea, and that idea is starting to go mainstream. We believe that the basic architecture of websites is being reinvented. The dominant web architecture, the LAMP stack, was founded at the dawn of the web before paradigm-shifting technologies were invented, like virtual machines, AWS, smartphones, Git, Node/NPM, React, and Serverless—elements of modern engineering we now take for granted.
+The answer is simple. Gatsby was founded around a big idea, and that idea is starting to go mainstream. We believe that the basic architecture of websites is being reinvented. The dominant web architecture, the LAMP stack, was founded at the dawn of the web before paradigm-shifting technologies were invented, like virtual machines, AWS, smartphones, Git, Node/npm, React, and Serverless—elements of modern engineering we now take for granted.
 
 With Gatsby, we’re reinventing website technology so people can create sites that are lightning fast, incredibly secure, and stable. Web developers can now take advantage of the most productive and powerful modern engineering technologies and practices including Git, React, GraphQL, and continuous deployment.
 
 Gatsby strips away much of the complexity that plagues website development. Teams tell us that they can build stunning sites 3-5x faster with Gatsby—and have a lot more fun in the process.
 
-The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create websites and apps that stand out](https://www.gatsbyjs.org/blog/tags/case-studies)[.](https://www.gatsbyjs.org/blog/tags/case-studies)
+The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create websites and apps that stand out.](https://www.gatsbyjs.org/blog/tags/case-studies)
 
 ## From the CMS to the content mesh
 

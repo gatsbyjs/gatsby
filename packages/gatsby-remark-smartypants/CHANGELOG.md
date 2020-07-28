@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-smartypants@2.3.9...gatsby-remark-smartypants@2.3.10) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-smartypants@2.3.8...gatsby-remark-smartypants@2.3.9) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-smartypants@2.3.7...gatsby-remark-smartypants@2.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-smartypants@2.3.6...gatsby-remark-smartypants@2.3.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-smartypants@2.3.5...gatsby-remark-smartypants@2.3.6) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
 ## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-smartypants@2.3.4...gatsby-remark-smartypants@2.3.5) (2020-06-22)
 
 **Note:** Version bump only for package gatsby-remark-smartypants
