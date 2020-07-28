@@ -193,7 +193,9 @@ const RecipesList = ({ setRecipe }) => {
   )
 }
 
-const Div = props => <Box textWrap="wrap" flexDirection="column" {...props} />
+const Div = props => (
+  <Box textWrap="wrap" flexDirection="column" marginBottom={1} {...props} />
+)
 
 // Markdown ignores new lines and so do we.
 function eliminateNewLines(children) {
@@ -272,9 +274,9 @@ const components = {
   p: props => {
     const children = eliminateNewLines(props.children)
     return (
-      <Box>
+      <Div>
         <Text>{children}</Text>
-      </Box>
+      </Div>
     )
   },
   // Don't use <Box> for li > p as that breaks Ink.
