@@ -44,7 +44,7 @@ export default {
       "ink",
       "ink-select-input",
       "ink-spinner",
-      "ink-link",
+      "terminal-link",
       "react-reconcilier",
     ]),
   ],

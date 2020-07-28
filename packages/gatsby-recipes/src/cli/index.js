@@ -1,9 +1,8 @@
 const React = require(`react`)
 const { useState, useEffect } = require(`react`)
 import SelectInput from "ink-select-input"
-import { render, Box, Text, useInput, useApp } from "ink"
+import { render, Box, Text, useInput, useApp, Transform } from "ink"
 import Spinner from "ink-spinner"
-import Link from "ink-link"
 import MDX from "../components/mdx"
 const hicat = require(`hicat`)
 const { trackCli } = require(`gatsby-telemetry`)
@@ -12,6 +11,8 @@ import {
   useResourceByUUID,
   ResourceProvider,
 } from "../renderer/resource-provider"
+import terminalLink from "terminal-link"
+import PropTypes from "prop-types"
 const {
   createClient,
   useMutation,
@@ -29,6 +30,31 @@ const remove = require(`unist-util-remove`)
 const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
   return tree
+}
+
+// Inline ink-link as it's not upgraded to v3 yet
+const Link = props => (
+  <Transform
+    transform={children =>
+      terminalLink(children, props.url, { fallback: props.fallback })
+    }
+  >
+    <Text>{props.children}</Text>
+  </Transform>
+)
+
+Link.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  url: PropTypes.string,
+  fallback: PropTypes.bool,
+}
+
+Link.defaultProps = {
+  url: ``,
+  fallback: true,
 }
 
 // Check for what version of React is loaded & warn if it's too low.
