@@ -11435,6 +11435,19 @@
   built_by: Jeff Jadulco
   built_by_url: https://jeffjadulco.com
   featured: false
+- title: Julien Karst Freelance
+  main_url: https://julienkarst.com
+  url: https://julienkarst.com
+  description: >
+    Personal website for Julien Karst, a Mobile / Web developer.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Programming
+    - Freelance
+  built_by: Julien Karst
+  built_by_url: https://twitter.com/JulienKarst
 - title: Chien Tai Co.
   main_url: https://www.chientai.com.tw
   url: https://www.chientai.com.tw
