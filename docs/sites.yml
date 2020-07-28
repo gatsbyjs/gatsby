@@ -11550,3 +11550,18 @@
     - Business
   built_by: leaniercode
   featured: false
+  - title: alexperronnet.com
+  url: https://alexperronnet.com
+  main_url: https://alexperronnet.com
+  source_url: https://github.com/alexperronnet/alexperronnet.com
+  description: >
+    I'm Alex Perronnet, a french freelance developer and designer. I'm also an open-source contributor and a content creator.
+  categories:
+    - Open Source
+    - Freelance
+    - Portfolio
+    - Web Development
+    - Landing Page
+  built_by: Alex Perronnet
+  built_by_url: https://alexperronnet.com
+  featured: false
