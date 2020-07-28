@@ -31,13 +31,13 @@ gatsby new i18n-theme https://github.com/LekoArts/gatsby-starter-theme-i18n
 
 This will scaffold a project already set up with `gatsby-theme-i18n` and MDX. The starter also shows you the usage of the mentioned React components like `LocalizedLink`. The different pages get created for `.js` files inside `src/pages` and in the `blog` directory.
 
-## Child themes for react-intl, react-i18next & lingui
+## Child themes for react-intl, react-i18next & Lingui
 
-`gatsby-theme-i18n` doesn't ship with a default localization library, so it is agnostic to all i18n libraries -- any library can be used. You have the choice of implementing those on your own, or choose one of currently three available dedicated child themes: [react-intl](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-i18n-react-intl), [react-i18next](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-i18n-react-i18next), and [lingui](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-i18n-lingui).
+`gatsby-theme-i18n` doesn't ship with a default localization library, so it is agnostic to all i18n libraries -- any library can be used. You have the choice of implementing those on your own, or choose one of currently three available dedicated child themes: [react-intl](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-i18n-react-intl), [react-i18next](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-i18n-react-i18next), and [Lingui](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-i18n-lingui).
 
 By installing those themes you get access to your translation files on every page as they wrap your application with the necessary context providers.
 
-Here's how to add gatsby-theme-i18n-react-intl to the project that was scaffolded above (with gatsby-starter-theme-i18n).
+Here's how to add `gatsby-theme-i18n-react-intl` to the project that was scaffolded above (with `gatsby-starter-theme-i18n`).
 
 First, install the necessary dependencies (theme & peer dependencies):
 
@@ -74,7 +74,7 @@ And `de.json` with:
 }
 ```
 
-Now you’re ready to localize content! Go to your `src/pages/index.js` file and reference the json files you just created. Import `useIntl` from `react-intl` and translate `Hello World`:
+Now you’re ready to localize content! Go to your `src/pages/index.js` file and reference the JSON files you just created. Import `useIntl` from `react-intl` and translate `Hello World`:
 
 ```diff:title=src/pages/index.js
 import * as React from "react"
@@ -132,7 +132,7 @@ Composability is a major consideration for “Themes” and it should probably b
 
 ### Can I use i18n library X with this theme?
 
-Again, `gatsby-theme-i18n` is agnostic, so any library can be used. We recommend sticking with these three libraries as we have created dedicated themes for them: [react-intl](https://www.npmjs.com/package/react-intl), [react-i18next](https://react.i18next.com/), and [lingui](https://lingui.js.org/).
+Again, `gatsby-theme-i18n` is agnostic, so any library can be used. We recommend sticking with these three libraries as we have created dedicated themes for them: [react-intl](https://www.npmjs.com/package/react-intl), [react-i18next](https://react.i18next.com/), and [Lingui](https://lingui.js.org/).
 
 ### How does the theme compare to existing community plugins?
 
@@ -144,6 +144,6 @@ As already stated, i18n is a hard topic to solve, especially in a more generic a
 
 We love our community and thus want to encourage all users to try the theme out. It’s super valuable for us to see how people want to use it and/or want to set up i18n on their site. It’ll break or things won’t work in the beginning, but we really see this as a collaborative effort.
 
-Since i18n is not only about the tooling but also processes we’re also interested in knowing how our users want to approach it from a organizational standpoint, e.g. wanting to create multiple sites or having everything in one project.
+Since i18n is not only about the tooling but also processes we’re also interested in knowing how our users want to approach it from an organizational standpoint, e.g. wanting to create multiple sites or having everything in one project.
 
 If you want to help us and give us direct feedback, you can join this [Discord channel](https://discord.gg/cQ2MPUz).
