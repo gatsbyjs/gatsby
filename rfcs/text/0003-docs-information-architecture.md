@@ -179,7 +179,7 @@ Contributing
   - PowerPoint presentations
   - Blogpost
   - Tutorial
-  - Plugin READme
+  - Plugin README
   - Site READme
 
 # Drawbacks
