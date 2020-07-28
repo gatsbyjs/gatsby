@@ -7,7 +7,8 @@ to enable inline-images in MDX and MD files.
 Based on https://www.gatsbyjs.org/docs/working-with-images-in-markdown/
 
 ---
-Install NPM Packages 
+
+Install NPM Packages
 
 <NPMPackage
   name="gatsby-source-filesystem"
@@ -21,8 +22,6 @@ Install NPM Packages
 <NPMPackage
   name="@mdx-js/react"
 />
-
----
 
 <NPMPackage
   name="gatsby-image"
@@ -38,6 +37,7 @@ Install NPM Packages
 />
 
 ---
+
 Install Gatsby Plugins
 
 First, add `gatsby-source-filesystem` to read images from the src/images
@@ -63,6 +63,7 @@ to handle image processing.
 <GatsbyPlugin
   name="gatsby-transformer-sharp"
 />
+
 ---
 
 Finally, configure `gatsby-plugin-mdx` to resolve images in MDX files.
@@ -84,3 +85,4 @@ Finally, configure `gatsby-plugin-mdx` to resolve images in MDX files.
 ---
 
 All set! You're ready to start adding images to MDX pages.
+
