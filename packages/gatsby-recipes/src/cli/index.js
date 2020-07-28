@@ -272,11 +272,17 @@ const components = {
   p: props => {
     const children = eliminateNewLines(props.children)
     return (
-      <Div marginBottom={1}>
+      <Box>
         <Text>{children}</Text>
-      </Div>
+      </Box>
     )
   },
+  // Don't use <Box> for li > p as that breaks Ink.
+  "li.p": props => {
+    const children = eliminateNewLines(props.children)
+    return <Text>{children}</Text>
+  },
+  // p: () => <Text>`hi`</Text>, // null,
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
