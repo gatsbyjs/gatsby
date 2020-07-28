@@ -6,7 +6,7 @@ If you have a large site, you may be able to improve build times for data update
 
 For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/overview-of-the-gatsby-build-process/).
 
-> ❗ Static queries are currently not stable to use with conditional page builds. Any query result differences will not trigger pages to rebuild.
+> ❗ Conditional page builds do not currently account for static queries. Any query result differences will not trigger pages to rebuild.
 
 ## How to use
 
