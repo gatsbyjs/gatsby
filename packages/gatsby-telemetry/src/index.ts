@@ -25,6 +25,7 @@ function tick(): void {
 }
 
 module.exports = {
+  setFeature: (name: string): void => instance.setFeature(name),
   trackCli: (input, tags, opts): void =>
     instance.captureEvent(input, tags, opts),
   trackError: (input, tags): void => instance.captureError(input, tags),
