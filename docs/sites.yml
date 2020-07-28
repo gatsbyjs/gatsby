@@ -11471,6 +11471,18 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: John Kavanagh Portfolio
+  url: https://johnkavanagh.co.uk/
+  main_url: https://johnkavanagh.co.uk/
+  description: >
+    Website and portfolio of John Kavanagh: a freelance front-end web developer in Brighton, UK.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
 - title: MongoDB Developer Hub
   url: https://developer.mongodb.com
   main_url: https://developer.mongodb.com
