@@ -40,6 +40,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         WEBHOOK_RECEIVED: undefined,
       },
       invoke: {
+        id: `initialize`,
         src: `initialize`,
         onDone: {
           target: `initializingData`,
@@ -59,6 +60,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
       },
       invoke: {
+        id: `initialize-data`,
         src: `initializeData`,
         data: ({
           parentSpan,
@@ -88,6 +90,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     runningPostBootstrap: {
       invoke: {
+        id: `post-bootstrap`,
         src: `postBootstrap`,
         onDone: `runningQueries`,
       },
@@ -210,7 +213,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
         onError: {
           actions: `panic`,
-          target: `waiting`,
         },
       },
     },
