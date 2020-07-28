@@ -6,7 +6,6 @@ const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
-const { setInput } = require(`../renderer`)
 
 const recipeMachine = Machine(
   {

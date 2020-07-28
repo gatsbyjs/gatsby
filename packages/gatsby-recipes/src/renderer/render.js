@@ -13,11 +13,7 @@ import {
 } from "./parent-resource-provider"
 import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
-import {
-  ResourceProvider,
-  setResources,
-  useResourceContext,
-} from "./resource-provider"
+import { ResourceProvider, useResourceContext } from "./resource-provider"
 
 const queue = new Queue({ concurrency: 5, autoStart: false })
 
@@ -80,7 +76,6 @@ const ResourceComponent = ({
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
   const allResources = useResourceContext()
-  const userProps = getUserProps(props)
 
   const setResources = useContext(SetResourcesProvider)
   // TODO add provider onto context
