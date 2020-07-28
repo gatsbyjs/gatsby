@@ -358,6 +358,8 @@
                   link: /docs/bulma/
                 - title: Using Theme UI
                   link: /docs/theme-ui/
+                - title: Other CSS Frameworks
+                  link: /docs/other-css-frameworks/
         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           breadcrumbTitle: MDX
