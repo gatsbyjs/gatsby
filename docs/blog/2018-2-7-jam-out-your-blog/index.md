@@ -94,7 +94,7 @@ https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic
 
 _**Yes, there’s more.**_
 
-Because Prose was built for Jekyll, it recognizes any headmatter you add to your .md files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
+Because Prose was built for Jekyll, it recognizes any headmatter you add to your `.md` files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
 
 I should also mention that Prose is an open source project that is available for download if you wish to self-host. Check out the [documentation on GitHub.](https://github.com/prose/prose)
 
@@ -154,7 +154,7 @@ With all of that said, this process has a few caveats related to working within 
 ![After image path change](after-post-title.png)
 
 3. You must commit a file by hitting the save icon or else the file is not saved. Posts cannot be saved as drafts in Prose. So, you will have to build the functionality within your headmatter and query posts based upon a draft/published state (if you need it).
-4. Whoever will be posting will need to manually add headmatter to each .md file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
+4. Whoever will be posting will need to manually add headmatter to each `.md` file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
 
 I hope you try playing around with this workflow yourself with a Gatsby starter and see if this works for you. Gatsby provides incredible tools that “just work” without sacrificing an exciting development environment. If you pair it with Netlify and Prose, you will cut overhead and manage content directly from a GitHub repository. Let this approach bring some order to the chaos.
 

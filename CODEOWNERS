@@ -4,6 +4,7 @@
 # All docs must be reviewed by the docs team.
 /docs/                                          @gatsbyjs/learning
 **/README.md                                    @gatsbyjs/learning
+dictionary.txt                                  @gatsbyjs/learning
 
 # Benchmarks
 /benchmarks/                                    @duffn @pvdz @smthomas
@@ -16,8 +17,6 @@
 
 # Themes
 
-/docs/docs/themes/                              @gatsbyjs/themes-core
-/themes/                                        @gatsbyjs/themes-core
 /packages/gatsby-plugin-mdx/                    @gatsbyjs/themes-core
 /packages/gatsby/src/bootstrap/load-themes      @gatsbyjs/themes-core
 /packages/gatsby-recipes/                       @gatsbyjs/themes-core

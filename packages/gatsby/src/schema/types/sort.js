@@ -6,7 +6,7 @@ const {
   GraphQLInputObjectType,
   GraphQLList,
 } = require(`graphql`)
-const { addDerivedType } = require(`./derived-types`)
+import { addDerivedType } from "./derived-types"
 
 const SORTABLE_ENUM = {
   SORTABLE: `SORTABLE`,

@@ -1,13 +1,3 @@
-.env
-.html
-.jpg
-.js
-.md
-.mdx
-.png
-.scss
-.tsx
-.yaml
 ½
 ⅓
 1000px
@@ -39,6 +29,7 @@
 18F
 1920s
 1990s
+1GB
 1M
 1pm
 1px
@@ -76,6 +67,7 @@
 4g
 5-10X
 500M
+500mb
 500ms
 500px
 50k
@@ -105,7 +97,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -217,6 +208,7 @@ Bazaarvoice
 Bazel
 Behance
 BEM
+Bemis
 benchmarking
 Benedicte
 Benedikt
@@ -245,6 +237,7 @@ Blogroll
 Bluehost
 Bo
 Bogdan
+boilerplates
 bois
 Bolda
 Bölüm
@@ -310,6 +303,7 @@ CDN
 CDN-backed
 CDNs
 Cereda
+Certbot
 CFP
 Chakra
 changelog
@@ -379,7 +373,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial
@@ -554,6 +548,7 @@ dnf
 DNS
 DNVBs
 DocSearch
+Doctocat
 Docz
 Dodds
 Doggo
@@ -895,8 +890,6 @@ Graf
 Grande
 Graph_i_QL
 GraphCMS
-Graphiql
-GraphiQl
 GraphiQL
 graphiql-code-exporter
 graphiql-filesystem
@@ -990,8 +983,10 @@ HubspotForm
 HyperCard
 hyperconnected
 hypermodern
+i10n
 i18n
 i18next
+IaaS
 IaC
 IAM
 iam_timsmith
@@ -1012,7 +1007,6 @@ imho
 Imoh
 impactful
 implementers
-implementors-of-Gatsby
 incineratingly
 Indexability
 indexable
@@ -1174,6 +1168,7 @@ LinkedIn
 Linsley
 linter
 linters
+LIV
 livechat
 livestream
 livestreamed
@@ -1205,7 +1200,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
@@ -1332,6 +1326,7 @@ nodeId
 nodeID
 NodeID
 nodemailer
+Node.js
 NodeSchool
 nodesPromise
 Nolen
@@ -1359,6 +1354,7 @@ NYU
 OAuth
 Obinna
 observability
+Octocat
 Oduye
 oEmbed
 ok
@@ -1389,6 +1385,7 @@ OpenAI
 OpenAPI
 OpenCollective
 OpenGraph
+OpenSSH
 opentracing
 OpenTracing
 operandi
@@ -1459,7 +1456,6 @@ PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
@@ -1478,6 +1474,7 @@ PostHog
 postprocessing
 Poumián
 PowerShell
+PPA
 pragma
 pragmas
 PRDs
@@ -1592,6 +1589,7 @@ quickstart
 Quickstart
 Raae
 Rahić
+Rainn
 Rascia
 Razuvaev
 Re-engageable
@@ -1719,6 +1717,9 @@ Salsify
 SameSite
 sanitize-html
 Santo
+*sass
+Sass
+*SASS
 Sathyan
 scaffolded
 scalable
@@ -1885,6 +1886,8 @@ Swartz
 Syfy
 symlink
 syntaxes
+systemizing
+Systemizing
 tachyons
 Tachyons
 Tada
@@ -1940,6 +1943,7 @@ trainings
 transactional
 transformational
 transformative
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -1963,6 +1967,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck
@@ -1982,6 +1988,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
@@ -2002,6 +2009,7 @@ unserious
 Unsplash
 unstyled
 untracked
+untriaged
 untrusted
 unvisited
 updatedAt
@@ -2060,6 +2068,7 @@ voilà
 Vojtech
 Vojtěch
 VPs
+VPS
 VS2015
 VS201x
 VSCode
@@ -2087,11 +2096,12 @@ webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest
@@ -2116,7 +2126,6 @@ wireframe-level
 Wirth
 Wiseman
 wishlist
-with-layout2
 with-navigation2
 Woah
 WooCommerce

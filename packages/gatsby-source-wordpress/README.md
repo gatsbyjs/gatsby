@@ -1,3 +1,15 @@
+<mark>Warning:</mark>
+**The current version of this plugin will soon be deprecated** and replaced with a complete rewrite in the next version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
+
+Please upgrade to the beta of \`gatsby-source-wordpress@v4\` by installing \`gatsby-source-wordpress-experimental\`.
+
+These two packages are currently published under separate names to allow activating them side-by-side.
+This makes migration between the two simpler. Once the new plugin is stable it will be merged back in and be published as `gatsby-source-wordpress`.
+
+[Read this blog post for the beta announcement](https://www.gatsbyjs.org/blog/2020-07-07-wordpress-source-beta/)
+
+[Or get started with the new plugin here](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/#readme)
+
 # gatsby-source-wordpress
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
