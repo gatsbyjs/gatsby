@@ -180,7 +180,7 @@ Contributing
   - Blogpost
   - Tutorial
   - Plugin READme
-  - Site READme
+  - Site README
 
 # Drawbacks
 
