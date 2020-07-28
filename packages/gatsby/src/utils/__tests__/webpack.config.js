@@ -90,7 +90,7 @@ describe(`environment variables`, () => {
 
     expect(DefinePlugin).toHaveBeenCalledWith(
       expect.objectContaining({
-        "process.env": `{}`,
+        "process.env": `({})`,
       })
     )
   })

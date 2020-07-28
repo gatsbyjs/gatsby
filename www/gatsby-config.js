@@ -241,7 +241,7 @@ module.exports = {
         icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
-    `gatsby-plugin-offline`,
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
@@ -250,7 +250,7 @@ module.exports = {
       resolve: `gatsby-plugin-react-svg`,
       options: {
         rule: {
-          include: /assets\/(guidelines|icons|ornaments)\/.*.svg$/,
+          include: /assets\/(guidelines|icons|ornaments)\/.*\.svg$/,
         },
       },
     },
