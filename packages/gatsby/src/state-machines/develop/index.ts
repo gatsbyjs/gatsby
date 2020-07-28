@@ -90,6 +90,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     runningPostBootstrap: {
       invoke: {
+        id: `post-bootstrap`,
         src: `postBootstrap`,
         onDone: `runningQueries`,
       },

@@ -110,6 +110,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     expect(service.state.context.nodeMutationBatch).toBeUndefined()
     service.send(`ADD_NODE_MUTATION`, { payload })
     expect(service.state.context.nodeMutationBatch).toEqual(
@@ -122,6 +123,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     expect(service.state.context.compiler).toBeUndefined()
     services.startWebpackServer.mockReset()
     service.send(`done.invoke.run-queries`)
@@ -133,8 +135,8 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`SOURCE_FILE_CHANGED`)
-
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     // So we don't start webpack instead
     service.state.context.compiler = {} as any
     services.recompile.mockReset()
@@ -148,6 +150,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     service.state.context.compiler = {} as any
     services.recompile.mockReset()
     service.send(`done.invoke.run-queries`)
@@ -160,6 +163,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     service.state.context.compiler = {} as any
     service.send(`done.invoke.run-queries`)
     service.send(`done.invoke.waiting`)
@@ -172,6 +176,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     service.state.context.compiler = {} as any
     service.send(`done.invoke.run-queries`)
     service.send(`EXTRACT_QUERIES_NOW`)
@@ -210,6 +215,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     await tick()
     expect(actions.logError).toHaveBeenCalled()
     expect(service.state.value).toEqual(`waiting`)
@@ -221,6 +227,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     service.send(`done.invoke.run-queries`)
     await tick()
     expect(actions.panic).toHaveBeenCalled()
@@ -232,6 +239,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     service.state.context.compiler = {} as any
     service.state.context.sourceFilesDirty = true
     service.send(`done.invoke.run-queries`)
@@ -246,6 +254,7 @@ describe(`the top-level develop state machine`, () => {
     service.start()
     service.send(`done.invoke.initialize`)
     service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
     service.state.context.compiler = {} as any
     service.send(`done.invoke.run-queries`)
     await tick()
