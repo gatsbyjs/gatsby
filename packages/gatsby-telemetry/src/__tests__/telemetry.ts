@@ -20,4 +20,16 @@ describe(`Telemetry`, () => {
     telemetry.trackActivity(`demo`)
     expect(eventStore.mock.instances[0].addEvent).not.toHaveBeenCalled()
   })
+
+  describe(`trackFeatureIsUsed`, () => {
+    it(`Attaches feature list to the events`, () => {
+      telemetry.trackFeatureIsUsed(`Foo:bar`)
+      telemetry.buildAndStoreEvent(`demo`, {})
+      expect(eventStore.mock.instances[0].addEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          features: [`Foo:bar`],
+        })
+      )
+    })
+  })
 })
