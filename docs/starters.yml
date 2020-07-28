@@ -6922,3 +6922,18 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://hungry-elion-3babd3.netlify.app/
+  repo: https://github.com/turq84/NeuVision-Gatsby-Template
+  description: Minimalistic in design, NeuVision is a Neumorphic Gatsby template that is AMP ready, out of the package.
+  tags:
+    - Landing Page
+    - AMP
+    - Blog
+    - Startup
+  features:
+    - Landing Page
+    - AMP
+    - Blog
+    - Startup
+    - Login form
+    - Newsletter form
