@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.32...gatsby-source-contentful@2.3.33) (2020-07-28)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.31...gatsby-source-contentful@2.3.32) (2020-07-24)
 
 **Note:** Version bump only for package gatsby-source-contentful
