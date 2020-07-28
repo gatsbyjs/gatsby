@@ -6671,7 +6671,7 @@
     Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
   categories:
     - E-commerce
-  built_by: BrikL
+  built_by: BRIKL
   built_by_url: https://github.com/Brikl
 - title: Cole Ruche
   main_url: https://coleruche.com
@@ -11435,6 +11435,15 @@
   built_by: Jeff Jadulco
   built_by_url: https://jeffjadulco.com
   featured: false
+- title: TRUE STORY
+  main_url: https://custom.truestorysport.com/
+  url: https://custom.truestorysport.com/
+  description: >
+    TRUE STORY is a contemporary sportswear brand offering custom products for orienteering.
+  categories:
+    - E-commerce
+  built_by: BRIKL
+  built_by_url: https://github.com/Brikl
 - title: Julien Karst Freelance
   main_url: https://julienkarst.com
   url: https://julienkarst.com
