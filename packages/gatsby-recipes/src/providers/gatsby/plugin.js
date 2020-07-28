@@ -385,13 +385,13 @@ const schema = {
 }
 
 const validate = resource => {
-  if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
+  if (REQUIRES_KEYS.includes(resource.name) && !resource._key) {
     return {
       error: `${resource.name} requires a key to be set`,
     }
   }
 
-  if (resource.key && resource.key === resource.name) {
+  if (resource._key && resource._key === resource.name) {
     return {
       error: `${resource.name} requires a key to be different than the plugin name`,
     }
@@ -422,6 +422,7 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     ...prettierConfig,
     parser: `babel`,
   })
+
   const diff = await getDiff(configSrc, newContents)
 
   return {
