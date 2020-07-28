@@ -6931,7 +6931,6 @@
     - Markdown
     - Styling:Tailwind
     - Styling:PostCSS
-    - Github actions
   features:
     - All gatsby-starter-blog (the official blog theme) features
     - Light/Dark mode
