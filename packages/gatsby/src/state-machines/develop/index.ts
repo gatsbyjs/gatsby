@@ -237,6 +237,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             parentSpan,
             store,
             webhookBody,
+            refresh: true,
             deferNodeMutation: true,
           }
         },
