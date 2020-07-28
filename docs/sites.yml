@@ -11501,6 +11501,17 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Meetup
+  url: https://meetup.com/
+  main_url: https://meetup.com/
+  description: >
+    Meetup is the leading social media platform dedicated to connecting people in person, or online during times of crisis.
+  categories:
+    - Accessibility
+    - App
+    - Community
+    - Event
+    - SEO
 - title: John Kavanagh Portfolio
   url: https://johnkavanagh.co.uk/
   main_url: https://johnkavanagh.co.uk/
