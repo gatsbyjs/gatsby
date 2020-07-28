@@ -173,6 +173,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
+    "typescript": "^3.9.5",
     "xhr-mock": "^2.5.1",
     "zipkin": "^0.19.2",
     "zipkin-javascript-opentracing": "^2.1.0",
