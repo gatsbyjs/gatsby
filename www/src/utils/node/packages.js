@@ -5,6 +5,23 @@ const { plugins: featuredPlugins } = loadYaml(
   `src/data/ecosystem/featured-items.yaml`
 )
 
+exports.onCreateNode = ({ node, actions }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `NPMPackage`) {
+    createNodeField({
+      node,
+      name: `featured`,
+      value: featuredPlugins.includes(node.name),
+    })
+
+    createNodeField({
+      node,
+      name: `official`,
+      value: isOfficialPackage(node),
+    })
+  }
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -35,21 +52,4 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
-}
-
-exports.onCreateNode = ({ node, actions }) => {
-  const { createNodeField } = actions
-  if (node.internal.type === `NPMPackage`) {
-    createNodeField({
-      node,
-      name: `featured`,
-      value: featuredPlugins.includes(node.name),
-    })
-
-    createNodeField({
-      node,
-      name: `official`,
-      value: isOfficialPackage(node),
-    })
-  }
 }

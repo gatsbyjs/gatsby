@@ -1,13 +1,13 @@
 # Gatsby Recipes
 
 Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpretor, perform common actions like installing
+files which, when run by our interpreter, perform common actions like installing
 NPM packages, installing plugins, creating pages, etc.
 
 It's designed to be extensible so new capabilities can be added which allow
 Recipes to automate more things.
 
-We chose MDX to allow for a literate programming style of writing recipes which
+We chose [MDX](https://mdxjs.com/) to allow for a literate programming style of writing recipes which
 enables us to port our dozens of recipes from
 https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
 tutorials.
@@ -32,7 +32,7 @@ To confirm that this worked, run `gatsby --help` in your terminal. The output sh
 
 ### Running an example recipe
 
-Now you can test out recipes! Start with a recipe for installing `emotion` by following these steps:
+Now you can test out recipes! Start with a recipe for installing [Emotion](https://emotion.sh/docs/introduction) by following these steps:
 
 1. Create a new Hello World Gatsby site:
 
@@ -40,7 +40,7 @@ Now you can test out recipes! Start with a recipe for installing `emotion` by fo
 gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-1. Navigate into that project directory:
+1. Go to the project directory you created:
 
 ```shell
 cd try-emotion
@@ -170,7 +170,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name**: name of the package(s) to install. Takes a string or an array of strings.
+- **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
 

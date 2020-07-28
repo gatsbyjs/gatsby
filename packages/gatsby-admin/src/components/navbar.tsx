@@ -20,7 +20,7 @@ const Navbar: React.FC<{}> = () => {
       justifyContent="space-between"
       alignItems="center"
       sx={{
-        backgroundColor: `grey.90`,
+        backgroundColor: `gatsby`,
         borderBottom: `default`,
         paddingX: 6,
         paddingY: 5,
@@ -33,7 +33,7 @@ const Navbar: React.FC<{}> = () => {
             sx={{
               width: `1px`,
               height: `16px`,
-              backgroundColor: `grey.40`,
+              backgroundColor: `whiteFade.50`,
             }}
           />
         )}

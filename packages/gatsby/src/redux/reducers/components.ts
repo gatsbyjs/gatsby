@@ -127,7 +127,7 @@ export const componentsReducer = (
       }
       return state
     }
-    case `REMOVE_TEMPLATE_COMPONENT`: {
+    case `REMOVE_STATIC_QUERIES_BY_TEMPLATE`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       state.delete(action.payload.componentPath)
       return state

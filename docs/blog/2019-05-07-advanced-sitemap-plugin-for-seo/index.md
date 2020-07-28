@@ -20,7 +20,7 @@ I wanted to recreate the default advanced sitemap structure that we use for all 
 
 ## Automatic, advanced sitemaps
 
-The plugin generates an organised sitemap that is accessible to both humans and robots and is also capable of generating single or multiple sitemaps with full XSL templates.
+The plugin generates an organized sitemap that is accessible to both humans and robots and is also capable of generating single or multiple sitemaps with full XSL templates.
 
 <figure>
   <img alt="Advanced sitemaps" src="./images/advanced_sitemaps.png" />
@@ -32,7 +32,7 @@ The plugin generates an organised sitemap that is accessible to both humans and 
   </figcaption>
 </figure>
 
-The plugin will work out of the box without any additional configuration, but also allows for individually organised sitemaps with a small amount of config work. Once in place, your Gatsby sitemap will be automatically updated and fully optimised for SEO performance.
+The plugin will work out of the box without any additional configuration, but also allows for individually organized sitemaps with a small amount of config work. Once in place, your Gatsby sitemap will be automatically updated and fully optimized for SEO performance.
 
 ## The results?
 

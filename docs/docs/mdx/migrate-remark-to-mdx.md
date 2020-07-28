@@ -34,7 +34,7 @@ In your `gatsby-config.js` file, replace `gatsby-transformer-remark` with `gatsb
 
 Where your Markdown files live, changing their individual file extensions from `.md` to `.mdx` will pick them up with the new configuration.
 
-Alternatively, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by adding the `extensions` option in your gatsby-config entry.
+Alternatively, you can tell `gatsby-plugin-mdx` to accept both `.md` and `.mdx` files by adding the `extensions` option in your `gatsby-config.js` entry.
 
 ```js:title=gatsby-config.js
   {
@@ -78,7 +78,7 @@ Similar to `gatsby-node.js`, wherever you use `allMarkdownRemark` in a GraphQL q
 
 Then in your blogpost template, to render the MDX, pull in the `MDXRenderer` React component from `gatsby-plugin-mdx`.
 
-```js:title=src/templates/blog-post.js
+```jsx:title=src/templates/blog-post.js
 import { MDXRenderer } from "gatsby-plugin-mdx"
 ```
 

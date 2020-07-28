@@ -2,7 +2,7 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const { getTemplate } = require(`../get-template`)
 
-exports.sourceNodes = ({ actions: { createTypes } }) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type SitesYaml implements Node {
       title: String!
@@ -28,6 +28,24 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       screenshotFile: File
     }
   `)
+}
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
+  let slug
+  if (node.internal.type === `SitesYaml` && node.main_url) {
+    const parsed = url.parse(node.main_url)
+    const cleaned = parsed.hostname + parsed.pathname
+    slug = `/showcase/${slugify(cleaned)}`
+    createNodeField({ node, name: `slug`, value: slug })
+
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+  }
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -67,22 +85,4 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
-}
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-  let slug
-  if (node.internal.type === `SitesYaml` && node.main_url) {
-    const parsed = url.parse(node.main_url)
-    const cleaned = parsed.hostname + parsed.pathname
-    slug = `/showcase/${slugify(cleaned)}`
-    createNodeField({ node, name: `slug`, value: slug })
-
-    // determine if screenshot is available
-    const screenshotNode = node.children
-      .map(childID => getNode(childID))
-      .find(node => node.internal.type === `Screenshot`)
-
-    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
-  }
 }

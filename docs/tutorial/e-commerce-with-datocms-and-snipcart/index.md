@@ -395,7 +395,7 @@ Back in your Gatsby dashboard, head over to Site Settings > Integrations > Hosti
 
 That whimsical domain you generated earlier is probably not where you want to send your customers. Netlify will help you get set up with a shiny new custom domain.
 
-If you already have one, that's awesome! You'll need to point it to the code you just hosted on Netlify. The specifics of _how_ to do that will vary slightly and depend on the registrar you went with. Try googling something like "[registrar] netlify custom domain" to find instructions for your situation. For more information, check out [Netlify's guide on assigning a domain to a site](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
+If you already have one, that's awesome! You'll need to point it to the code you just hosted on Netlify. The specifics of _how_ to do that will vary slightly and depend on the registrar you went with. Try googling something like "[registrar] Netlify custom domain" to find instructions for your situation. For more information, check out [Netlify's guide on assigning a domain to a site](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
 
 Paying for your domain through Netlify is a little more straightforward. They'll take care of any necessary provisioning for you!
 

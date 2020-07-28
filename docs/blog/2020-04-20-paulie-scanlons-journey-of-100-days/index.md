@@ -26,7 +26,7 @@ With Gatsby you get back all that good stuff we kind of lost when "Websites" bec
 
 When the [#100DaysOfGatsby](/blog/tags/100-days-of-gatsby/) challenge was first announced I thought, _Yes, please_. I'm totally up for getting involved, but it soon transpired that pretty much every challenge was something I'd already learnt myself. _No matter,_ I thought. I can still continue to develop my React, JavaScript and Gatsby skills and by using the [hashtag](https://twitter.com/hashtag/100DaysOfGatsby) I hoped to share what I'd learnt and to find other folks out there doing the same.
 
-So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby eco-system. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
+So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby ecosystem. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
 
 ![Screen shot of Skin UI, a Gatsby app by Paulie Scanlon](./skin-ui.jpg)
 
@@ -68,7 +68,7 @@ It's a pretty bare bones example of how to use the theme but it does demonstrate
 
 ## 4. gatsby-plugin-prop-shop
 
-I think perhaps this a unique concept that the masses just aren't ready for yet 🤔. With this plugin you can get an overview of all _PropTypes_ in your components, turns out that most developers building Gatsby sites don't use _PropTypes_. In fact i've been working on a much larger project where _PropTypes_ haven't be used at all...if you're doing this...then just stop it!
+I think perhaps this a unique concept that the masses just aren't ready for yet 🤔. With this plugin you can get an overview of all _PropTypes_ in your components, turns out that most developers building Gatsby sites don't use _PropTypes_. In fact I've been working on a much larger project where _PropTypes_ haven't be used at all...if you're doing this...then just stop it!
 
 I'm a massive TypeScript fan but when not using TypeScript, _PropTypes_ are the next best thing. And when building component libraries (which I've done a lot of) I have found it crucially important to provide a consistent API for props.
 
@@ -84,7 +84,7 @@ I've created a [PR](https://github.com/system-ui/theme-ui/pull/669) for Theme UI
 [GitHub](https://github.com/PaulieScanlon/gatsby-plugin-prop-shop) |
 [Blog post](https://paulie.dev/posts/2020/02/prop-shop/)
 
-![Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript](./theme-ui-components.jpg "Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript")
+![Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, converting package to TypeScript](./theme-ui-components.jpg "Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, converting package to TypeScript")
 
 ## 5. @theme-ui/components
 

@@ -13,7 +13,7 @@ I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/)—
 JavaScript library that shows & hides headers as you scroll up & down a site.
 
 After a day or two of working through the niceties of writing a React component
-and publishing it to NPM, I started writing the documentation and realized…
+and publishing it to npm, I started writing the documentation and realized…
 there was almost nothing to write.
 
 Using [react-headroom](https://github.com/KyleAMathews/react-headroom) is so
@@ -53,7 +53,7 @@ Compare this with the minimum code necessary for the original headroom.js.
 var myElement = document.querySelector("header")
 // construct an instance of Headroom, passing the element
 var headroom = new Headroom(myElement)
-// initialise
+// initialize
 headroom.init()
 ```
 
@@ -82,7 +82,7 @@ CSS, and JavaScript are all neatly encapsulated.
 ## What makes technology fun?
 
 This is a complex philosophical question and I'm writing this on a Saturday
-afternoon so I'll cheat a bit and just cut the gordian knot by saying
+afternoon so I'll cheat a bit and just cut the Gordian knot by saying
 "simplicity is fun" and conversely, "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and
@@ -216,7 +216,7 @@ export default function Page({ data }) {
 }
 ```
 
-So this is all very nice and it's far better to be able to use this from NPM vs.
+So this is all very nice and it's far better to be able to use this from npm vs.
 implementing it yourself or cobbling together several standalone libraries.
 
 But if this was all gatsby-image did, it'd be a nice new component to have

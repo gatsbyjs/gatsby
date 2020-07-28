@@ -129,7 +129,7 @@ Then populate your new page with content. In the next step, you'll call the Butt
 
 #### Integrate into your application
 
-With your homepage defined, the ButterCMS graphQL query will return some data that looks like this:
+With your homepage defined, the ButterCMS GraphQL query will return some data that looks like this:
 
 ```json
 {

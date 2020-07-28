@@ -57,7 +57,7 @@ When you have created your two variations, it's time to [deploy your site to Net
 
 After you have deployed your website, set up a [split test on Netlify](https://docs.netlify.com/site-deploys/split-testing/).
 
-When you are setting up your split test on Netlify, navigate to the homepage of your project. Scroll down to 'Active Split Test'. Choose 'Start a Split Test'. On the next page, pick which branches you would like to include in the split testand start the test.
+When you are setting up your split test on Netlify, navigate to the homepage of your project. Scroll down to 'Active Split Test'. Choose 'Start a Split Test'. On the next page, pick which branches you would like to include in the split test and start the test.
 
 ![Activate split test feature in Netlify](./images/start-split-test.gif)
 
