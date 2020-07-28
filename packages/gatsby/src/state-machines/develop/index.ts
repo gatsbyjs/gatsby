@@ -45,6 +45,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           target: `initializingData`,
           actions: [`assignStoreAndWorkerPool`, `spawnMutationListener`],
         },
+        onError: {
+          actions: `panic`,
+        },
       },
     },
     // Sourcing nodes, customising and inferring schema, then running createPages
@@ -76,6 +79,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `finishParentSpan`,
           ],
           target: `runningPostBootstrap`,
+        },
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
         },
       },
     },
@@ -132,6 +139,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `waiting`,
           },
         ],
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
+        },
       },
     },
     // Recompile the JS bundle
@@ -140,6 +151,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         src: `recompile`,
         onDone: {
           actions: `markSourceFilesClean`,
+          target: `waiting`,
+        },
+        onError: {
+          actions: `logError`,
           target: `waiting`,
         },
       },
@@ -155,6 +170,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `spawnWebpackListener`,
             `markSourceFilesClean`,
           ],
+        },
+        onError: {
+          actions: `panic`,
+          target: `waiting`,
         },
       },
     },
@@ -188,6 +207,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: {
           actions: `assignServiceResult`,
           target: `recreatingPages`,
+        },
+        onError: {
+          actions: `panic`,
+          target: `waiting`,
         },
       },
     },
@@ -223,6 +246,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           ],
           target: `runningQueries`,
         },
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
+        },
       },
     },
     // Rebuild pages if a node has been mutated outside of sourceNodes
@@ -235,6 +262,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: {
           actions: `assignServiceResult`,
           target: `runningQueries`,
+        },
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
         },
       },
     },
