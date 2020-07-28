@@ -531,7 +531,7 @@ export const publicLoader = {
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),
-  getStaticQuery: hash => instance.staticQueryDb.get(hash),
+  getStaticQueryDb: () => Object.fromEntries(instance.staticQueryDb),
 }
 
 export default publicLoader

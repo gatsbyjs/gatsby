@@ -71,13 +71,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           {({ location }) => (
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
+                const staticQueryResults = publicLoader.getStaticQueryDb()
+
                 console.log({
-                  staticQueryResults: pageResources.staticQueryResults,
+                  pageResources: pageResources.staticQueryResults,
+                  staticQueryResults,
                 })
+
                 return (
-                  <StaticQueryContext.Provider
-                    value={pageResources.staticQueryResults}
-                  >
+                  <StaticQueryContext.Provider value={staticQueryResults}>
                     <DataContext.Provider value={{ pageResources, location }}>
                       {children}
                     </DataContext.Provider>
