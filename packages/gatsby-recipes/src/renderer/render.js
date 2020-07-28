@@ -174,7 +174,6 @@ const handleResource = (
   }
 
   if (inFlightPromise) {
-    //console.log(`already in flight`, key)
     throw inFlightPromise
   }
 
@@ -191,7 +190,6 @@ const handleResource = (
         resolve(cachedValue)
         updateResource(cachedValue)
       } else {
-        console.log(fn, { key, resourceName, context, props })
         resources[resourceName][fn](context, props)
           .then(result => {
             updateResource(result)
@@ -244,14 +242,11 @@ const render = async (recipe, cb, inputs = {}, isApply) => {
       }
     }
 
-    console.log(`before check queue`, { size: queue.size })
-
     // If there aren't any new resources that need to be fetched, or errors, we're done!
     if (!queue.size && !errors.length) {
       return undefined
     }
 
-    console.log(`queue`, { size: queue.size })
     queue.start()
     await queue.onIdle()
     return await renderResources()

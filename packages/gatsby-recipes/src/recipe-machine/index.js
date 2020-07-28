@@ -140,25 +140,16 @@ const recipeMachine = Machine(
         invoke: {
           id: `presentingPlan`,
           src: (context, event) => (cb, onReceive) => {
-            console.log(`yo in the invoked presentingPlan`)
             onReceive(async e => {
-              console.log(`onReceive`, e, setInput)
-              // const result = await setInput(e.data)
-              // console.log({ contextInputs: context.inputs })
               context.inputs = context.inputs || {}
               context.inputs[e.data.key] = e.data
-              // console.log(context.inputs)
               const result = await createPlan(context, cb)
-              console.log({ result })
               cb({ type: `onUpdatePlan`, data: result })
             })
           },
         },
         on: {
           CONTINUE: `applyingPlan`,
-          // INPUT_ADDED: (context, event) => {
-          // console.log(`in the callback`, { context, event })
-          // },
           INPUT_ADDED: {
             actions: send((context, event) => event, { to: `presentingPlan` }),
           },
@@ -261,7 +252,13 @@ const recipeMachine = Machine(
         if (event.data) {
           let plan = context.plan || []
           plan = plan.map(p => {
-            const changedResource = event.data.find(c => c._uuid === p._uuid)
+            const changedResource = event.data.find(c => {
+              if (c._uuid) {
+                return c._uuid === p._uuid
+              } else {
+                return c.resourceDefinitions._key === p.resourceDefinitions._key
+              }
+            })
             if (!changedResource) return p
             p._message = changedResource._message
             p.isDone = true
