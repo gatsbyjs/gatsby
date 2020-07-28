@@ -6671,7 +6671,7 @@
     Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
   categories:
     - E-commerce
-  built_by: BrikL
+  built_by: BRIKL
   built_by_url: https://github.com/Brikl
 - title: Cole Ruche
   main_url: https://coleruche.com
@@ -11202,8 +11202,6 @@
     - Design
     - Portfolio
     - User Experience
-  built_by: Outer Studio
-  built_by_url: https://outer.studio
 - title: Inbound Latino
   url: https://inboundlatino.com/
   main_url: https://inboundlatino.com/
@@ -11437,6 +11435,38 @@
   built_by: Jeff Jadulco
   built_by_url: https://jeffjadulco.com
   featured: false
+- title: Château de Morey 🏰
+  main_url: https://chateaudemorey.fr
+  url: https://chateaudemorey.fr/en/
+  description: >
+    Website of Château de Morey. Built on the ruins of a Templar convent 🏰
+  categories:
+    - Travel
+    - Blog
+  built_by: Julien Karst
+  built_by_url: https://julienkarst.com
+- title: TRUE STORY
+  main_url: https://custom.truestorysport.com/
+  url: https://custom.truestorysport.com/
+  description: >
+    TRUE STORY is a contemporary sportswear brand offering custom products for orienteering.
+  categories:
+    - E-commerce
+  built_by: BRIKL
+  built_by_url: https://github.com/Brikl
+- title: Julien Karst Freelance
+  main_url: https://julienkarst.com
+  url: https://julienkarst.com
+  description: >
+    Personal website for Julien Karst, a Mobile / Web developer.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Programming
+    - Freelance
+  built_by: Julien Karst
+  built_by_url: https://twitter.com/JulienKarst
 - title: Chien Tai Co.
   main_url: https://www.chientai.com.tw
   url: https://www.chientai.com.tw
@@ -11482,6 +11512,18 @@
     - Community
     - Event
     - SEO
+- title: John Kavanagh Portfolio
+  url: https://johnkavanagh.co.uk/
+  main_url: https://johnkavanagh.co.uk/
+  description: >
+    Website and portfolio of John Kavanagh: a freelance front-end web developer in Brighton, UK.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
 - title: MongoDB Developer Hub
   url: https://developer.mongodb.com
   main_url: https://developer.mongodb.com

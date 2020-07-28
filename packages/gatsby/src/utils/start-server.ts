@@ -270,7 +270,7 @@ export async function startServer(
     }, cors())
   }
 
-  await apiRunnerNode(`onCreateDevServer`, { app })
+  await apiRunnerNode(`onCreateDevServer`, { app, deferNodeMutation: true })
 
   // In case nothing before handled hot-update - send 404.
   // This fixes "Unexpected token < in JSON at position 0" runtime
