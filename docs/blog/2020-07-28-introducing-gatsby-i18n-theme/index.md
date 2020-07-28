@@ -113,7 +113,7 @@ As i18n is a complex topic and a lot of things need to be considered, the theme 
 
 - Scoping out how opinionated (and in which way) things like the file structure for the content should be
 - Building a robust system around programmatically creating pages from the content
-- Creating reusable React components that can help with e.g. adding the necessary <head> tags.
+- Creating reusable React components that can help with e.g. adding the necessary `<head>` tags.
 - Building integrations with localization libraries
 
 ### What areas are we not solving initially?
