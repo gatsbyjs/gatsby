@@ -11560,15 +11560,16 @@
     - Business
   built_by: leaniercode
   featured: false
-- title: (required)
-  url: (required)
-  main_url: (required)
-  source_url: (optional - https://github.com/{username}/{titleofthesite})
+- title: Brian Chung's Portfolio
+  url: https://brianchung.co/
+  main_url: https://brianchung.co/
+  source_url: https://github.com/BrChung/ModernFolio
   description: >
-    (optional)
+    Portfolio for Los Angeles, CA based software engineer Brian Chung.
   categories:
-    - (required)
-  built_by: (optional)
-  built_by_url: (optional)
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Brian Chung
+  built_by_url: https://brianchung.co/
   featured: false
-  
