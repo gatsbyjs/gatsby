@@ -384,6 +384,23 @@ class Image extends React.Component {
     if (!ref) {
       return
     }
+
+    // If the image can be detected in the browser already,
+    // this will reveal it immediately and skip the placeholder transition.
+    const setCachedState = () => {
+      // 'img.currentSrc' may be a falsy value, empty string or undefined(IE).
+      // If image resides in the browser cache, this attribute is populated
+      // without waiting on a network request response to update it.
+      // Firefox does not behave in this way, no benefit there.
+      let isCached = this.imageRef.current && this.imageRef.current.currentSrc
+
+      if (isCached) {
+        this.setState({
+          imgLoaded: true,
+          imgCached: true,
+        })
+      }
+    }
     // 'isVisible' guard skips this for already loaded art directed images.
     if (this.useIOSupport && !this.state.isVisible) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
@@ -393,22 +410,21 @@ class Image extends React.Component {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        // imgCached and imgLoaded must update after isVisible,
-        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
-        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
-        // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () => {
+        // 'isVisible' enables loading the real image.
+        // If internally cached, reveal image immediately, skipping transition.
+        if (imageInCache) {
           this.setState({
-            imgLoaded: imageInCache,
-            // `currentSrc` should be a string, but can be `undefined` in IE,
-            // !! operator validates the value is not undefined/null/""
-            // for lazyloaded components this might be null
-            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
-            imgCached: !!(
-              this.imageRef.current && this.imageRef.current.currentSrc
-            ),
+            isVisible: true,
+            imgLoaded: true,
+            imgCached: true,
           })
-        })
+        } else {
+          // imgCached and imgLoaded must update after isVisible,
+          // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
+          // imgLoaded and imgCached are in a 2nd setState call to be changed together,
+          // avoiding initiating unnecessary animation frames from style changes.
+          this.setState({ isVisible: true }, setCachedState)
+        }
       })
     }
   }
