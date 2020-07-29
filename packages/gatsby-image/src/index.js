@@ -364,12 +364,6 @@ class Image extends React.Component {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
-    if (this.isCritical) {
-      const img = this.imageRef.current
-      if (img && img.complete) {
-        this.handleImageLoaded()
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -393,6 +387,11 @@ class Image extends React.Component {
       // without waiting on a network request response to update it.
       // Firefox does not behave in this way, no benefit there.
       let isCached = this.imageRef.current && this.imageRef.current.currentSrc
+
+      // For critical images 'img.complete' is more reliable
+      if (this.isCritical) {
+        isCached = this.imageRef.current.complete
+      }
 
       if (isCached) {
         this.setState({
