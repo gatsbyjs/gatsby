@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.13...gatsby@2.24.14) (2020-07-29)
+
+### Bug Fixes
+
+- **gatsby:** Load resources in ProdPageRenderer ([#26092](https://github.com/gatsbyjs/gatsby/issues/26092)) ([f8b7b35](https://github.com/gatsbyjs/gatsby/commit/f8b7b35))
+
 ## [2.24.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.12...gatsby@2.24.13) (2020-07-29)
 
 ### Bug Fixes
