@@ -23,7 +23,7 @@ If you're using Bootstrap v4 or older, many of the JavaScript components will re
 
 **Browser-support warning:** Bootstrap v5 also dropped Internet Explorer support.
 
-If you're interested in using Bootstrap and want to host the CSS and JS yourself, you can install the [Boostrap npm package](https://www.npmjs.com/package/bootstrap). Alternatively, if you'd rather not host the files yourself, you can source them using the [Boostrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
+If you're interested in using Bootstrap and want to host the CSS and JS files yourself, you can install the [Boostrap npm package](https://www.npmjs.com/package/bootstrap). Alternatively, if you'd rather not host the files yourself, you can source them using the [Boostrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
 
 * [Bootstrap documentation](https://getbootstrap.com/docs)
 * [Bootstrap repo on GitHub](https://github.com/twbs/bootstrap)
@@ -40,15 +40,15 @@ If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui
 
 ## Grommet
 
-Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components designed with a mobile-first approach. It also provides built-in support for the W3C Web Content Accessibility Guidelines (WCAG) 2.1 specification.
+Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components designed with a mobile-first approach. It also provides built-in support for the W3C [Web Content Accessibility Guidelines (WCAG) 2.1](http://www.w3.org/WAI/intro/wcag) specification.
 
 For designers, the [Grommet Design Kit](https://github.com/grommet/design-kit) provides sticker sheets and templates for a number of popular design tools, including Sketch, Figma, and Adobe XD.
 
 If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hewlett Packard Enterprise)](https://developer.hpe.com/blog/using-grommet-with-gatsby).
 
 * [Grommet component documentation](https://v2.grommet.io/components)
-* [Grommet component examples on Storybook](https://storybook.grommet.io/)
 * [Grommet repo on GitHub](https://github.com/grommet/grommet)
+* [Grommet component examples on Storybook](https://storybook.grommet.io/)
 
 ## Material UI
 
