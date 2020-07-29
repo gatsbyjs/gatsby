@@ -92,7 +92,7 @@ export class BaseLoader {
     // }
     this.pageDb = new Map()
     this.inFlightDb = new Map()
-    this.staticQueryDb = new Map()
+    this.staticQueryDb = {}
     this.pageDataDb = new Map()
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
@@ -207,10 +207,8 @@ export class BaseLoader {
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
     const pagePath = findPath(rawPath)
-    console.log({ pageDb: this.pageDb })
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
-      console.log({ payload: page.payload })
       return Promise.resolve(page.payload)
     }
 
@@ -260,8 +258,8 @@ export class BaseLoader {
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
           // Check for cache in case this static query result has already been loaded
-          if (this.staticQueryDb.has(staticQueryHash)) {
-            const jsonPayload = this.staticQueryDb.get(staticQueryHash)
+          if (this.staticQueryDb[staticQueryHash]) {
+            const jsonPayload = this.staticQueryDb[staticQueryHash]
             return { staticQueryHash, jsonPayload }
           }
 
@@ -277,7 +275,7 @@ export class BaseLoader {
 
         staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
           staticQueryResultsMap[staticQueryHash] = jsonPayload
-          this.staticQueryDb.set(staticQueryHash, jsonPayload)
+          this.staticQueryDb[staticQueryHash] = jsonPayload
         })
 
         return staticQueryResultsMap
@@ -531,7 +529,7 @@ export const publicLoader = {
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),
-  getStaticQueryDb: () => Object.fromEntries(instance.staticQueryDb),
+  getStaticQueryResults: () => instance.staticQueryDb,
 }
 
 export default publicLoader

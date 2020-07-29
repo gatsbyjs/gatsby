@@ -35,17 +35,14 @@ const StaticQuery = props => {
 
   return (
     <StaticQueryContext.Consumer>
-      {staticQueryData => {
-        console.log({ staticQueryData })
-        return (
-          <StaticQueryDataRenderer
-            data={data}
-            query={query}
-            render={render || children}
-            staticQueryData={staticQueryData}
-          />
-        )
-      }}
+      {staticQueryData => (
+        <StaticQueryDataRenderer
+          data={data}
+          query={query}
+          render={render || children}
+          staticQueryData={staticQueryData}
+        />
+      )}
     </StaticQueryContext.Consumer>
   )
 }
@@ -77,10 +74,6 @@ useStaticQuery(graphql\`${query}\`);
   if (context?.[query]?.data) {
     return context[query].data
   } else {
-    console.log({
-      context: context,
-      query: query,
-    })
     throw new Error(
       `The result of this StaticQuery could not be fetched.\n\n` +
         `This is likely a bug in Gatsby and if refreshing the page does not fix it, ` +
