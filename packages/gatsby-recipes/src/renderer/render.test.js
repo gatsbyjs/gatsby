@@ -3,7 +3,6 @@ import React from "react"
 import { render } from "./render"
 import { resourceComponents } from "./resource-components"
 import { RecipeStep } from "./step-component"
-import { InputProvider } from "./input-provider"
 
 const { File, NPMPackage } = resourceComponents
 

@@ -1,8 +1,8 @@
 const ReactReconciler = require(`react-reconciler`)
-const flatted = require(`flatted`)
 
-const debugInner = require(`debug`)(`recipes-reconciler`)
+// const debugInner = require(`debug`)(`recipes-reconciler`)
 const debug = (title, data) => {
+  console.log(title, data)
   // debugInner(title, JSON.stringify(data, null, 2))
 }
 
@@ -42,7 +42,7 @@ const reconciler = ReactReconciler({
     return { text }
   },
   commitTextUpdate(textInstance, oldText, newText) {
-    debug(`updating text instance`, text)
+    debug(`updating text instance`, newText)
     textInstance.text = newText
     return textInstance
   },

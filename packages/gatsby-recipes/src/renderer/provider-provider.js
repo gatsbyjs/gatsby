@@ -1,7 +1,6 @@
 // this file has the best name
-import React, { useContext } from "react"
-
-const ProviderContext = React.createContext([])
+// eslint-disable-next-line
+import React from "react"
 
 export const useProvider = provider => {
   // const context = useContext(ResourceContext)

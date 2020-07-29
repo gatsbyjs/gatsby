@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 const lodash = require(`lodash`)
+// eslint-disable-next-line
 const React = require(`react`)
 const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
@@ -24,9 +25,6 @@ const {
   InputField,
   InputFieldLabel,
   InputFieldControl,
-  InputFieldHint,
-  InputFieldError,
-  FormFieldContainer,
 } = require(`gatsby-interface`)
 const {
   createClient,
@@ -52,84 +50,84 @@ ansi2HTML.setColors({
   yellow: theme.tones.WARNING.medium.slice(1),
 })
 
-const InputFieldBlock = React.forwardRef((props, ref) => {
-  const {
-    id,
-    label,
-    labelSize,
-    error,
-    hint,
-    className,
-    validationMode,
-    layout,
-    ...rest
-  } = props
+// const InputFieldBlock = React.forwardRef((props, ref) => {
+// const {
+// id,
+// label,
+// labelSize,
+// error,
+// hint,
+// className,
+// validationMode,
+// layout,
+// ...rest
+// } = props
 
-  const hasError = false
+// const hasError = false
 
-  return (
-    <FormFieldContainer
-      layout={layout}
-      className={className}
-      sx={{ fontFamily: theme.fonts.body }}
-    >
-      <InputField id={id} hasError={!!error} hasHint={!!hint}>
-        <InputFieldLabel size={labelSize} isRequired={!!rest.required}>
-          {label}
-        </InputFieldLabel>
-        <input
-          type="text"
-          ref={ref}
-          {...rest}
-          sx={{
-            border: hasError
-              ? `1px solid ${theme.colors.red[60]}`
-              : `2px solid ${theme.tones.BRAND.dark}`,
-            background: theme.colors.white,
-            borderRadius: theme.radii[2],
-            color: theme.colors.grey[90],
-            fontFamily: theme.fonts.system,
-            fontSize: theme.fontSizes[2],
-            height: `2.25rem`,
-            padding: `0 ${theme.space[3]}`,
-            position: `relative`,
-            width: `66%`,
-            zIndex: 1,
-            WebkitAppearance: `none`,
+// return (
+// <FormFieldContainer
+// layout={layout}
+// className={className}
+// sx={{ fontFamily: theme.fonts.body }}
+// >
+// <InputField id={id} hasError={!!error} hasHint={!!hint}>
+// <InputFieldLabel size={labelSize} isRequired={!!rest.required}>
+// {label}
+// </InputFieldLabel>
+// <input
+// type="text"
+// ref={ref}
+// {...rest}
+// sx={{
+// border: hasError
+// ? `1px solid ${theme.colors.red[60]}`
+// : `2px solid ${theme.tones.BRAND.dark}`,
+// background: theme.colors.white,
+// borderRadius: theme.radii[2],
+// color: theme.colors.grey[90],
+// fontFamily: theme.fonts.system,
+// fontSize: theme.fontSizes[2],
+// height: `2.25rem`,
+// padding: `0 ${theme.space[3]}`,
+// position: `relative`,
+// width: `66%`,
+// zIndex: 1,
+// WebkitAppearance: `none`,
 
-            ":focus": {
-              outline: `0`,
-              transition: `box-shadow 0.15s ease-in-out`,
-              boxShadow: `0 0 0 3px ${
-                hasError ? theme.colors.red[10] : theme.colors.purple[20]
-              }`,
-              borderColor: hasError
-                ? theme.colors.red[30]
-                : theme.colors.purple[60],
-            },
+// ":focus": {
+// outline: `0`,
+// transition: `box-shadow 0.15s ease-in-out`,
+// boxShadow: `0 0 0 3px ${
+// hasError ? theme.colors.red[10] : theme.colors.purple[20]
+// }`,
+// borderColor: hasError
+// ? theme.colors.red[30]
+// : theme.colors.purple[60],
+// },
 
-            ":disabled": {
-              background: theme.colors.grey[10],
-              cursor: `not-allowed`,
-            },
+// ":disabled": {
+// background: theme.colors.grey[10],
+// cursor: `not-allowed`,
+// },
 
-            "&:disabled::placeholder": {
-              color: theme.colors.grey[40],
-            },
+// "&:disabled::placeholder": {
+// color: theme.colors.grey[40],
+// },
 
-            "&::placeholder": {
-              color: theme.colors.grey[50],
-            },
-          }}
-        />
-        <InputFieldHint>{hint}</InputFieldHint>
-        <InputFieldError validationMode={validationMode}>
-          {error}
-        </InputFieldError>
-      </InputField>
-    </FormFieldContainer>
-  )
-})
+// "&::placeholder": {
+// color: theme.colors.grey[50],
+// },
+// }}
+// />
+// <InputFieldHint>{hint}</InputFieldHint>
+// <InputFieldError validationMode={validationMode}>
+// {error}
+// </InputFieldError>
+// </InputField>
+// </FormFieldContainer>
+// )
+// })
 
 const makeResourceId = res => {
   if (!res.describe) {
@@ -424,12 +422,6 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
 )
 
 const Step = ({ state, step, i }) => {
-  const [output, setOutput] = useState({
-    title: ``,
-    body: ``,
-    date: new Date(),
-  })
-
   const stepResources = state.context?.plan?.filter(
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
@@ -539,6 +531,8 @@ const Step = ({ state, step, i }) => {
                   </div>
                 )
               }
+
+              return null
             })}
           </div>
           <div sx={{ padding: 6 }}>
@@ -563,6 +557,8 @@ const Step = ({ state, step, i }) => {
                   />
                 )
               }
+
+              return null
             })}
           </div>
         </div>
