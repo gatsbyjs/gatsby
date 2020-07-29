@@ -15,14 +15,18 @@ The following criteria were used to determine which frameworks to include in thi
 
 ## Bootstrap
 
+Bootstrap is a widely used CSS and JS framework that was created at Twitter in 2010. It gained popularity for its support of responsive and mobile-first design.
+
+Under the hood, Bootstrap uses [Sass](https://sass-lang.com/). Unlike other frameworks in this guide, Bootstrap does not provide React components directly. Instead, it provides a set of pre-built CSS class names like `"btn-primary"` or `"dropdown"` that you can use to style HTML elements.
+
+If you're using Bootstrap v4 or older, many of the JavaScript components will require you to also install jQuery to work correctly. However, as of [Bootstrap v5](https://blog.getbootstrap.com/2020/06/16/bootstrap-5-alpha/), the framework no longer depends on jQuery.
+
+**Browser-support warning:** Bootstrap v5 also dropped Internet Explorer support.
+
+If you're interested in using Bootstrap and want to host the CSS and JS yourself, you can install the [Boostrap npm package](https://www.npmjs.com/package/bootstrap). Alternatively, if you'd rather not host the files yourself, you can source them using the [Boostrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
+
 * [Bootstrap documentation](https://getbootstrap.com/docs)
 * [Bootstrap repo on GitHub](https://github.com/twbs/bootstrap)
-
-Bootstrap, created by Twitter, pioneered responsive, mobile-first design. 
-
-Supports SASS and LESS
-
-How to use the optional JS code which includes jQuery (https://getbootstrap.com/docs/4.5/getting-started/download/) (https://getbootstrap.com/docs/4.5/getting-started/javascript/)
 
 ## Chakra UI
 
@@ -36,7 +40,7 @@ If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui
 
 ## Grommet
 
-Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components built with a mobile-first approach. It also provides built-in support for the W3C Web Content Accessibility Guidelines (WCAG) 2.1 specification!
+Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components designed with a mobile-first approach. It also provides built-in support for the W3C Web Content Accessibility Guidelines (WCAG) 2.1 specification.
 
 For designers, the [Grommet Design Kit](https://github.com/grommet/design-kit) provides sticker sheets and templates for a number of popular design tools, including Sketch, Figma, and Adobe XD.
 
@@ -48,12 +52,10 @@ If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hew
 
 ## Material UI
 
-* [Material UI component documentation](https://material-ui.com/)
-* [Material UI repo on GitHub](https://github.com/mui-org/material-ui)
-* [Material UI example projects](https://material-ui.com/getting-started/example-projects/)
-
-Components designed with [Material design system](https://material.io/design/introduction) (Google's best practices design system)
-
-Responsive out of the box (can define breakpoints in the theme) Customizing the [default theme](https://material-ui.com/customization/default-theme/#default-theme)
+Material UI provides a library of components designed using Google's [Material Design guidelines](https://material.io/design/introduction). It also supports customizing theme elements like color, typography, and breakpoints.
 
 If you're interested in using Material UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui/?=material%20ui).
+
+* [Material UI documentation](https://material-ui.com/)
+* [Material UI repo on GitHub](https://github.com/mui-org/material-ui)
+* [Material UI example projects](https://material-ui.com/getting-started/example-projects/)
