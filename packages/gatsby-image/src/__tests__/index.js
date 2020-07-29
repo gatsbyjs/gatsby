@@ -220,6 +220,18 @@ describe(`<Image />`, () => {
     expect(console.warn).toBeCalled()
   })
 
+  it(`should warn if missing both fixed and fluid props`, () => {
+    jest.spyOn(global.console, `error`)
+
+    render(<Image fixed={null} />)
+
+    expect(console.error).toBeCalledWith(
+      expect.stringContaining(
+        `The prop \`fluid\` or \`fixed\` is marked as required`
+      )
+    )
+  })
+
   it(`should select the correct mocked image of fluid variants provided.`, () => {
     const tripleFluidImageShapeMock = fluidImagesShapeMock.concat({
       aspectRatio: 5,
