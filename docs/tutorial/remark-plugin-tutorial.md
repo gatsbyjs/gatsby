@@ -264,6 +264,40 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 
 A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) by Unified was used to extract the plain text of the inner nodes. This would remove links or other types of nodes inside the heading, but given you have full access to the markdown AST, you can modify it however you wish.
 
+## Using asynchronous behavior
+
+Gatsby supports the usage of asynchronous behavior in plugins, and gatsby-transformer-remark`uses [unified](https://github.com/unifiedjs/unified) under the hood, so in this case the`gatsby-remark-purple-headers`transformer can be converted to asynchronous by adding the`async` keyword to the function declaration.
+
+```js
+const visit = require("unist-util-visit")
+const toString = require("mdast-util-to-string")
+
+// highlight-next-line
+module.exports = async ({ markdownAST }, pluginOptions) => {
+  visit(markdownAST, "heading", node => {
+    let { depth } = node
+
+    // Skip if not an h1
+    if (depth !== 1) return
+
+    // Grab the innerText of the heading node
+    let text = toString(node)
+
+    const html = `
+        <h1 style="color: rebeccapurple">
+          ${text}
+        </h1>
+      `
+
+    node.type = "html"
+    node.children = undefined
+    node.value = html
+  })
+
+  return markdownAST
+}
+```
+
 ## Loading in changes and seeing effect
 
 At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
