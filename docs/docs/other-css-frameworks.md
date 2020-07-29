@@ -10,10 +10,11 @@ There's no one right answer for which framework you should use. Ultimately it's 
 
 Here are some things you might want to consider when choosing a styling framework:
 
-- Does it promote accessibility?
-- Does it use good UI patterns?
+- Is it [accessible](https://www.gatsbyjs.org/docs/making-your-site-accessible/)?
+- Is it responsive? How will it look on a mobile device?
 - Does it require additional dependencies?
 - Does it have good documentation?
+- Are there any browsers it doesn't support?
 
 ## Bootstrap
 
@@ -32,7 +33,7 @@ If you're interested in using Bootstrap and want to host the CSS and JS files yo
 
 ## Chakra UI
 
-Chakra UI is built on top of the [Emotion styling library](https://emotion.sh/docs/introduction). It uses [Styled System](https://styled-system.com/) style props to override individual CSS properties for a component. Chakra UI supports theme customization, provides a library of components, and comes with dark mode out of the box.
+Chakra UI is built on top of the [Emotion styling library](/docs/emotion/). It uses [Styled System](https://styled-system.com/) style props to override individual CSS properties for a component. Chakra UI supports theme customization, provides a library of components, and comes with dark mode out of the box.
 
 If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui` documentation](/packages/gatsby-plugin-chakra-ui/?=chakra).
 
@@ -42,7 +43,7 @@ If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui
 
 ## Grommet
 
-Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components designed with a mobile-first approach. It also has built-in support for the W3C [Web Content Accessibility Guidelines (WCAG) 2.1](http://www.w3.org/WAI/intro/wcag) specification.
+Grommet is built on [Styled Components](/docs/styled-components/) and provides a library of modular, responsive components designed with a mobile-first approach. It also has built-in support for the W3C [Web Content Accessibility Guidelines (WCAG) 2.1](http://www.w3.org/WAI/intro/wcag) specification.
 
 For designers, the [Grommet Design Kit](https://github.com/grommet/design-kit) provides sticker sheets and templates for some popular design tools, including Sketch, Figma, and Adobe XD.
 
