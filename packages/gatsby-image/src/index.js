@@ -358,6 +358,7 @@ class Image extends React.Component {
       imgLoaded: false,
       imgCached: false,
       fadeIn: !this.seenBefore && props.fadeIn,
+      isHydrated: false,
     }
 
     this.imageRef = React.createRef()
@@ -367,6 +368,10 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      isHydrated: isBrowser,
+    })
+
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
@@ -444,6 +449,12 @@ class Image extends React.Component {
       loading,
       draggable,
     } = convertProps(this.props)
+
+    // Avoid render logic on client until component mounts (hydration complete)
+    // Prevents using mismatched initial state from the hydration phase
+    if (isBrowser && !this.state.isHydrated) {
+      return null
+    }
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
