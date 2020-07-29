@@ -29,6 +29,11 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       target: `reloadingData`,
       actions: `assignWebhookBody`,
     },
+    TERMINATE: {
+      // So much more to stop, but this is a start
+      actions: ({ webpackWatching }: IBuildContext): void =>
+        webpackWatching?.close(() => console.log(`Stopped compiler`)),
+    },
   },
   states: {
     // Here we handle the initial bootstrap

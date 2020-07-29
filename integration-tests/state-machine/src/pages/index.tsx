@@ -1,3 +1,5 @@
 import React from "react"
 
-export default function App = () => <p>Hi</p>
+export default function App() {
+  return <p>Hi</p>
+}
