@@ -25,6 +25,11 @@ aliases:
     docker:
       - image: cypress/browsers:node10.16.0-chrome76
 
+  e2e-executor-win: &e2e-executor-win
+    executor:
+      name: win/default
+      shell: bash.exe
+
   restore_cache: &restore_cache
     restore_cache:
       name: Restore node_modules cache
@@ -116,6 +121,26 @@ aliases:
           skip_file_change_test: << parameters.nightly >>
       - notify-status:
           condition: << parameters.nightly >>
+
+  e2e_tests_development_runtime_windows:
+    <<: *e2e-executor-win
+    environment:
+      CYPRESS_PROJECT_ID: 9parq5
+      CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/development-runtime
+          test_command: yarn test
+
+  e2e_tests_production_runtime_windows:
+    <<: *e2e-executor-win
+    environment:
+      CYPRESS_PROJECT_ID: 9parq5
+      CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/production-runtime
+          test_command: yarn test
 
   e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
     <<: *e2e-executor
@@ -592,6 +617,10 @@ workflows:
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime_windows:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime_windows:
           <<: *e2e-test-workflow
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow
