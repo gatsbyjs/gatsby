@@ -21,7 +21,7 @@
     "dotenv": "^8.2.0",
     "email-validator": "^1.2.3",
     "fuse.js": "^3.6.1",
-    "gatsby": "^2.24.11",
+    "gatsby": "^2.24.14",
     "gatsby-alias-imports": "^1.0.4",
     "gatsby-core-utils": "^1.3.14",
     "gatsby-design-tokens": "^2.0.10",
