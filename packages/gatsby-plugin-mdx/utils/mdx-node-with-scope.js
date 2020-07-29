@@ -9,7 +9,7 @@ async function createMdxNodeWithScope({ id, node, content, ...helpers }) {
     scopeExports,
     scopeIdentifiers,
   } = await findImportsExports({
-    mdxNode: node,
+    node,
     rawInput: content,
     absolutePath: node.absolutePath,
     ...helpers,
@@ -20,7 +20,7 @@ async function createMdxNodeWithScope({ id, node, content, ...helpers }) {
     children: [],
     parent: node.id,
     internal: {
-      content: content,
+      content,
       type: `Mdx`,
     },
     excerpt: frontmatter.excerpt,
