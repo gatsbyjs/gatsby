@@ -17,7 +17,7 @@ The following criteria were used to determine which frameworks to include in thi
 
 Bootstrap is a widely used CSS and JS framework that was created at Twitter in 2010. It gained popularity for its support of responsive and mobile-first design.
 
-Under the hood, Bootstrap uses [Sass](https://sass-lang.com/). Unlike other frameworks in this guide, Bootstrap does not provide React components directly. Instead, it provides a set of pre-built CSS class names like `"btn-primary"` or `"dropdown"` that you can use to style HTML elements.
+Under the hood, Bootstrap uses [Sass](https://sass-lang.com/). Unlike other frameworks in this guide, Bootstrap does not provide React components directly. Instead, it provides a set of pre-built CSS class names like `btn-primary` or `dropdown` that you can use to style HTML elements.
 
 If you're using Bootstrap v4 or older, many of the JavaScript components will need you to also install jQuery to work correctly. As of [Bootstrap v5](https://blog.getbootstrap.com/2020/06/16/bootstrap-5-alpha/), the framework no longer depends on jQuery.
 
