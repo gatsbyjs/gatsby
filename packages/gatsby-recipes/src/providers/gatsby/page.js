@@ -88,7 +88,7 @@ const schema = {
   isCreatedByStatefulCreatePages: Joi.boolean(),
   pluginCreatorId: Joi.string(),
   componentPath: Joi.string(),
-  pluginCreator: Joi.Object({
+  pluginCreator: Joi.object({
     name: Joi.string(),
   }),
   ...resourceSchema,
