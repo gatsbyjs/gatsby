@@ -11550,3 +11550,17 @@
     - Business
   built_by: leaniercode
   featured: false
+Copydocs/sites.yml: copy code to clipboard
+- title: KuliahSG
+  url: https://kuliah.sg
+  main_url: https://kuliah.sg
+  description: Online Islamic content in Singapore
+  categories:
+    - Community
+    - Library
+    - Media
+    - Nonprofit
+    - SEO
+  built_by: TengkuHafidz
+  built_by_url: https://fidz.dev
+  featured: false
