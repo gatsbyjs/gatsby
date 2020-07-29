@@ -4,6 +4,7 @@ import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
+import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
 type SystemPath = string
 type Identifier = string
@@ -75,6 +76,7 @@ export interface IGatsbyNode {
   }
   __gatsby_resolved: any // TODO
   [key: string]: unknown
+  fields: string[]
 }
 
 export interface IGatsbyPlugin {
@@ -118,7 +120,7 @@ export interface IPlugin {
   options: Record<string, any>
 }
 
-interface IBabelStage {
+export interface IBabelStage {
   plugins: IPlugin[]
   presets: IPlugin[]
   options: {
@@ -134,8 +136,12 @@ type BabelStageKeys =
   | "build-html"
   | "build-javascript"
 
+export interface IStateProgram extends IProgram {
+  extensions: string[]
+}
+
 export interface IGatsbyState {
-  program: IProgram
+  program: IStateProgram
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
@@ -193,6 +199,11 @@ export interface IGatsbyState {
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
   >
+  staticQueriesByTemplate: Map<SystemPath, Identifier[]>
+  pendingPageDataWrites: {
+    pagePaths: Set<string>
+    templatePaths: Set<SystemPath>
+  }
   // @deprecated
   jobs: {
     active: any[] // TODO
@@ -211,24 +222,24 @@ export interface IGatsbyState {
     }
   }
   schemaCustomization: {
-    composer: SchemaComposer<any>
-    context: {} // TODO
-    fieldExtensions: {} // TODO
-    printConfig: any // TODO
-    thridPartySchemas: any[] // TODO
-    types: any[] // TODO
+    composer: null | SchemaComposer<any>
+    context: Record<string, any>
+    fieldExtensions: GraphQLFieldExtensionDefinition
+    printConfig: {
+      path?: string
+      include?: { types?: Array<string>; plugins?: Array<string> }
+      exclude?: { types?: Array<string>; plugins?: Array<string> }
+      withFieldTypes?: boolean
+    } | null
+    thirdPartySchemas: GraphQLSchema[]
+    types: (string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin })[]
   }
   themes: any // TODO
   logs: IGatsbyCLIState
   inferenceMetadata: {
     step: string // TODO make enum or union
     typeMap: {
-      [key: string]: {
-        ignoredFields: Set<string>
-        total: number
-        dirty: boolean
-        fieldMap: any // TODO
-      }
+      [key: string]: ITypeMetadata
     }
   }
   pageDataStats: Map<SystemPath, number>
@@ -245,6 +256,8 @@ export interface ICachedReduxState {
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
   pageData: IGatsbyState["pageData"]
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
 }
 
 export type ActionsUnion =
@@ -293,6 +306,18 @@ export type ActionsUnion =
   | ICreateJobAction
   | ISetJobAction
   | IEndJobAction
+  | ISetStaticQueriesByTemplateAction
+  | IAddPendingPageDataWriteAction
+  | IAddPendingTemplateDataWriteAction
+  | IClearPendingPageDataWritesAction
+  | ICreateResolverContext
+  | IClearSchemaCustomizationAction
+  | ISetSchemaComposerAction
+  | IStartIncrementalInferenceAction
+  | IBuildTypeMetadataAction
+  | IDisableTypeInferenceAction
+  | ISetProgramAction
+  | ISetProgramExtensions
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -505,6 +530,15 @@ export interface ICreateResolverContext {
     | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
 }
 
+interface IClearSchemaCustomizationAction {
+  type: `CLEAR_SCHEMA_CUSTOMIZATION`
+}
+
+interface ISetSchemaComposerAction {
+  type: `SET_SCHEMA_COMPOSER`
+  payload: SchemaComposer<any>
+}
+
 export interface ICreatePageAction {
   type: `CREATE_PAGE`
   payload: IGatsbyPage
@@ -542,10 +576,36 @@ export interface ISetPageDataAction {
 }
 
 export interface IRemoveTemplateComponentAction {
-  type: `REMOVE_TEMPLATE_COMPONENT`
+  type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
     componentPath: string
   }
+}
+
+export interface ISetStaticQueriesByTemplateAction {
+  type: `SET_STATIC_QUERIES_BY_TEMPLATE`
+  payload: {
+    componentPath: string
+    staticQueryHashes: Identifier[]
+  }
+}
+
+export interface IAddPendingPageDataWriteAction {
+  type: `ADD_PENDING_PAGE_DATA_WRITE`
+  payload: {
+    path: string
+  }
+}
+
+export interface IAddPendingTemplateDataWriteAction {
+  type: `ADD_PENDING_TEMPLATE_DATA_WRITE`
+  payload: {
+    componentPath: SystemPath
+  }
+}
+
+export interface IClearPendingPageDataWritesAction {
+  type: `CLEAR_PENDING_PAGE_DATA_WRITES`
 }
 
 export interface IDeletePageAction {
@@ -605,11 +665,13 @@ export interface ISetSiteConfig {
 export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
+  oldNode?: IGatsbyNode
 }
 
 export interface IAddFieldToNodeAction {
   type: `ADD_FIELD_TO_NODE`
   payload: IGatsbyNode
+  addedField: string
 }
 
 export interface IAddChildNodeToParentNodeAction {
@@ -625,6 +687,7 @@ export interface IDeleteNodeAction {
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   payload: Identifier[]
+  fullNodes: IGatsbyNode[]
 }
 
 export interface ISetSiteFlattenedPluginsAction {
@@ -651,4 +714,31 @@ export interface IAddPageDataStatsAction {
 export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   payload: Identifier
+}
+
+interface IStartIncrementalInferenceAction {
+  type: `START_INCREMENTAL_INFERENCE`
+}
+
+interface IBuildTypeMetadataAction {
+  type: `BUILD_TYPE_METADATA`
+  payload: {
+    nodes: IGatsbyNode[]
+    typeName: string
+  }
+}
+
+interface IDisableTypeInferenceAction {
+  type: `DISABLE_TYPE_INFERENCE`
+  payload: string[]
+}
+
+interface ISetProgramAction {
+  type: `SET_PROGRAM`
+  payload: IStateProgram
+}
+
+interface ISetProgramExtensions {
+  type: `SET_PROGRAM_EXTENSIONS`
+  payload: string[]
 }

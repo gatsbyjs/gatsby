@@ -30,7 +30,7 @@ const lockfileOptions = {
   stale: 5000,
 }
 
-type UnlockFn = () => Promise<void>
+export type UnlockFn = () => Promise<void>
 
 const memoryServices = {}
 export const createServiceLock = async (

@@ -7,11 +7,11 @@ Learn what <q>Infrastructure as Code</q> means, and how you can use code to stan
 
 ## What is <q>Infrastructure as Code?</q>
 
-_Infrastructure as Code_, or <abbr>IaC</abbr>, is the practice of managing your development, testing, and production environments using configuration files or scripts. Provisioning and configuring environments individually can introduce errors or inconsistencies. You may, for example, find yourself running different versions of Node.js on your laptop and your production servers. Infrastructure as Code minimizes this kind of drift and lets you automate the process of provisioning environments.
+_Infrastructure as Code_, or IaC, is the practice of managing your development, testing, and production environments using configuration files or scripts. Provisioning and configuring environments individually can introduce errors or inconsistencies. You may, for example, find yourself running different versions of Node.js on your laptop and your production servers. Infrastructure as Code minimizes this kind of drift and lets you automate the process of provisioning environments.
 
 Your configuration file describes what resources your project requires. If you're building an API, for example, you might create a configuration file that says, "Please install Node.js 12.16.2, npm 6.14.4, Express 4.17.1, and PostgreSQL 12.2 for Ubuntu Linux." For a Gatsby project, your configuration file may add plugins and themes.
 
-Configuration files, like other code files, are text. That means you can use version control software to store them and track changes to the environment. In short, <abbr>IaC</abbr>:
+Configuration files, like other code files, are text. That means you can use version control software to store them and track changes to the environment. In short, IaC:
 
 - Creates consistent environments.
 - Saves time that would otherwise be spent setting up environments.

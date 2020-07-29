@@ -13,7 +13,7 @@ For example, `gatsby-theme-blog` is the official Gatsby theme for creating a blo
 To install it, run in the root of your site:
 
 ```shell
-npm install --save gatsby-theme-blog
+npm install gatsby-theme-blog
 ```
 
 ## Theme options

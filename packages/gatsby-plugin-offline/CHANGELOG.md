@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.20...gatsby-plugin-offline@3.2.21) (2020-07-24)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.19...gatsby-plugin-offline@3.2.20) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.18...gatsby-plugin-offline@3.2.19) (2020-07-20)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.17...gatsby-plugin-offline@3.2.18) (2020-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.16...gatsby-plugin-offline@3.2.17) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.15...gatsby-plugin-offline@3.2.16) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.14...gatsby-plugin-offline@3.2.15) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.13...gatsby-plugin-offline@3.2.14) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.12...gatsby-plugin-offline@3.2.13) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.11...gatsby-plugin-offline@3.2.12) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
+## [3.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.10...gatsby-plugin-offline@3.2.11) (2020-06-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** versioned import of idb-keyval ([#24938](https://github.com/gatsbyjs/gatsby/issues/24938)) ([13aaa16](https://github.com/gatsbyjs/gatsby/commit/13aaa16))
+- **sw:** use NetworkFirst strategy for page-data ([#24940](https://github.com/gatsbyjs/gatsby/issues/24940)) ([d427663](https://github.com/gatsbyjs/gatsby/commit/d427663)), closes [#24930](https://github.com/gatsbyjs/gatsby/issues/24930)
+
+## [3.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.9...gatsby-plugin-offline@3.2.10) (2020-06-15)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [3.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.8...gatsby-plugin-offline@3.2.9) (2020-06-09)
 
 **Note:** Version bump only for package gatsby-plugin-offline

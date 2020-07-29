@@ -1,7 +1,5 @@
-const {
-  makeExecutableSchema,
-  SchemaDirectiveVisitor,
-} = require(`graphql-tools`)
+const { makeExecutableSchema } = require(`@graphql-tools/schema`)
+const { SchemaDirectiveVisitor } = require(`@graphql-tools/utils`)
 
 const gqlFieldsToObject = fields =>
   Object.entries(fields).reduce((acc, [key, value]) => {

@@ -72,7 +72,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
-            marginRight: t => t.space[4],
+            mr: 4,
           },
         }}
       >

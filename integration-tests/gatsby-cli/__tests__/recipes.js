@@ -9,7 +9,7 @@ describe(`gatsby recipes`, () => {
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
   afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
-  it(`begins running the jest recipe`, async () => {
+  xit(`begins running the jest recipe`, async () => {
     // 1. Start the `gatsby recipes` command
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
       [`recipes`, `jest`],

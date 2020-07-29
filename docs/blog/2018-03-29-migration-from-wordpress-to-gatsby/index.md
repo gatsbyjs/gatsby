@@ -30,7 +30,7 @@ Long story short, I decided to get rid of WordPress and replace it with a much m
 
 ## JAM Stack
 
-JAM is an acronym for **J**avascript **A**PI **M**arkup. What does it mean though? It is not a framework or a specific technology. It is more of an architectural approach. A modern way web content is built, managed and distributed.
+JAM is an acronym for **J**avaScript **A**PI **M**arkup. What does it mean though? It is not a framework or a specific technology. It is more of an architectural approach. A modern way web content is built, managed and distributed.
 
 Back in the day, the web was just static HTML pages, maybe with some CSS and JavaScript on the top. Perfect for static content. However, usually, you need your data to be more dynamic. Instead of static HTML sitting on the server served directly, HTML pages were built on-the-fly when a client requested them. The data dynamically provided from a database. While this is very flexible, it comes at a cost. It's slow. Way slower than just a static site. The application server executes code on demand, needs to contact a database, usually on a different machine, build the page and send it back. The scalability is hard and expensive. When the traffic rises, its more complicated to scale the solution. We're talking load balancing, session replication, distributed caching not to mention difficult RDS scalability. And it's vulnerable. With so many moving parts, the attack surface is extensive. Ranging from Cross-Site-Scripting, SQL Injection to exploiting [security vulnerabilities in your libraries](https://www.vojtechruzicka.com/snyk-detecting-dependencies-with-known-vulnerabilities/).
 

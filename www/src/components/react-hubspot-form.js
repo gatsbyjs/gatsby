@@ -90,7 +90,6 @@ class HubspotForm extends React.Component {
       this.findFormElement()
     }
   }
-  componentWillUnmount() {}
   render() {
     return (
       <div>

@@ -22,14 +22,14 @@ Now it’s May 22, 2020. Five years (and 9,820 closed issues) later, it is inter
 
 One of the original tenets of the Gatsby codex (“Codex” was actually my code name for the project when I first started pulling it together) came from Facebook engineering's "pit of success" slogan: Incredibly fast websites should be the default state, not some monumental engineering feat. So one of the foundational philosophies behind building Gatsby was, anything that prevents Gatsby from generating the fastest possible website is a bug. That understanding guided a lot of decisions along the way, like incorporating GraphQL (thanks again, Facebook!) to allow client code to specify data requirements. So that every page can specify exactly the data it needs so that -- and only that -- data gets loaded with each page. That was a key moment.
 
-Speaking of codex, here are original notes and sketches from Februrary 2015, a notebook where I was noodling on the tool that was to become Gatsbyjs, titled “Codex/transforming data into websites.” These notes included a list of “things it should be able to do, in no particular order.”
+Speaking of codex, here are original notes and sketches from February 2015, a notebook where I was noodling on the tool that was to become Gatsbyjs, titled “Codex/transforming data into websites.” These notes included a list of “things it should be able to do, in no particular order.”
 
 ![Notebook pages with written ideas for Gatsby](https://lh3.googleusercontent.com/1-cuk_N6BGpiSfkyasxdrAJz5kvyfJlKiMuRSyVSMialYlUfDgMktC4bWN0FxabBJ6UQjD3-VLO3Mak4jx2TKm8STra23TV6A5M2GBuB7XSa43XKgYmE44bEfustAmNtFzd2yOQS)
 
 So I set out to create a framework that would be:
 
 - Configuration/Convention driven but easily overridable with code.
-- No reload page transitions. The initial html page would load followed quickly by a js bundle with the content for the rest of the site.
+- No reload page transitions. The initial HTML page would load followed quickly by a JS bundle with the content for the rest of the site.
 - Smart code splitting
 - Themes that are installable separately
 - Support for Markdown/Asciidoctor/other text formats

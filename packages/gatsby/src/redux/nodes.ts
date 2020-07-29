@@ -4,7 +4,7 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp =
+export type FilterOp =  // TODO: merge with DbComparator ?
   | "$eq"
   | "$ne"
   | "$lt"
@@ -15,7 +15,7 @@ type FilterOp =
   | "$nin"
   | "$regex" // Note: this includes $glob
 // Note: `undefined` is an encoding for a property that does not exist
-type FilterValueNullable =
+export type FilterValueNullable =  // TODO: merge with DbComparatorValue
   | string
   | number
   | boolean
@@ -184,29 +184,6 @@ export const getResolvedNode = (
   return node
 }
 
-export const addResolvedNodes = (
-  typeName: string,
-  resolvedNodes: IGatsbyNode[] = []
-): IGatsbyNode[] => {
-  const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
-
-  if (!nodes) {
-    return []
-  }
-
-  const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
-
-  nodes.forEach(node => {
-    if (resolvedNodesFromCache) {
-      node.__gatsby_resolved = resolvedNodesFromCache.get(node.id)
-    }
-    resolvedNodes.push(node)
-  })
-
-  return resolvedNodes
-}
-
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
@@ -226,8 +203,8 @@ export function postIndexingMetaSetup(
 
 function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // Note: edge cases regarding `null` and `undefined`. Here `undefined` signals
-  // that the property did not exist as sift does not support actual `undefined`
-  // values.
+  // that the property did not exist as the filters do not support actual
+  // `undefined` values.
   // For $ne, `null` only returns nodes that actually have the property
   // and in that case the property cannot be `null` either. For any other value,
   // $ne will return all nodes where the value is not actually the needle,
@@ -561,7 +538,7 @@ function addNodeToBucketWithElemMatch(
   }
 
   if (path.length !== i) {
-    // Found undefined before the end of the path, so let Sift take over
+    // Found undefined before the end of the path
     return
   }
 
@@ -629,7 +606,7 @@ const binarySearchAsc = (
     pivot = min + Math.floor((max - min) / 2)
   }
 
-  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  // Shouldn't be reachable
   return undefined
 }
 const binarySearchDesc = (
@@ -664,7 +641,7 @@ const binarySearchDesc = (
     pivot = min + Math.floor((max - min) / 2)
   }
 
-  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  // Shouldn't be reachable
   return undefined
 }
 
@@ -686,7 +663,7 @@ export const getNodesFromCacheByValue = (
   filtersCache: FiltersCache,
   wasElemMatch
 ): Array<IGatsbyNode> | undefined => {
-  const filterCache = filtersCache?.get(filterCacheKey)
+  const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
     return undefined
   }
@@ -714,8 +691,6 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$in`) {
     if (!Array.isArray(filterValue)) {
-      // Sift assumes the value has an `indexOf` property. By this fluke,
-      // string args would work, but I don't think that's intentional/expected.
       throw new Error("The argument to the `in` comparator should be an array")
     }
     const filterValueArr: Array<FilterValueNullable> = filterValue
@@ -798,7 +773,7 @@ export const getNodesFromCacheByValue = (
     const arr: Array<IGatsbyNode> = []
     filterCache.byValue.forEach((nodes, value) => {
       // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
-      // Note: partial paths should also be included for regex (matching Sift behavior)
+      // Note: for legacy reasons partial paths should also be included for regex
       if (value !== undefined && regex.test(String(value))) {
         nodes.forEach(node => arr.push(node))
       }

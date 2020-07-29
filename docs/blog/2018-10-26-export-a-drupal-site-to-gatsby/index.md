@@ -88,7 +88,7 @@ if (image) {
 }
 ```
 
-And now that you have all the data you need, it is just a matter of creating a file with the metadata in yaml format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
+And now that you have all the data you need, it is just a matter of creating a file with the metadata in YAML format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
 
 ```javascript
   fs.mkdir(path, (err) => { });

@@ -32,25 +32,25 @@ In order to start working on the blog, we first have to set up the environment.
 
 First, install the Gatsby CLI:
 
-```bash
+```shell
 npm install --global gatsby-cli
 ```
 
 Create a new site based on the Gatsby Cosmic starter:
 
-```bash
+```shell
 gatsby new gatsby-blog-cosmicjs
 ```
 
 Enter in your project's folder:
 
-```bash
+```shell
 cd gatsby-blog-cosmicjs
 ```
 
 Start the server:
 
-```bash
+```shell
 npm run develop
 ```
 
@@ -68,13 +68,13 @@ In our case, we are using [Cosmic](https://cosmicjs.com). We need a source plugi
 
 Install the source plugin with the following command:
 
-```bash
+```shell
 npm install --save gatsby-source-cosmicjs
 ```
 
 We're going to use a couple other plugins later, so let's install them here:
 
-```bash
+```shell
 npm install --save gatsby-plugin-offline gatsby-source-filesystem
 ```
 

@@ -113,7 +113,7 @@ _.each(result.data.allWordpressPost.edges, edge => {
 })
 ```
 
-The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
+The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional GraphQL query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
 
 ## ... Take a step back to "templates"
 
@@ -125,7 +125,7 @@ A template is a page component we can loop over to dynamically create pages base
 
 So a template is a page component that we can use to programmatically create pages. Then what's a page component?
 
-> Page Component — React.js component that renders a page and can optionally specify a layout component and a graphql query. ([Source](/docs/api-specification/#concepts)).
+> Page Component — React.js component that renders a page and can optionally specify a layout component and a GraphQL query. ([Source](/docs/api-specification/#concepts)).
 
 React components living in `src/pages` automatically become pages. The file name of a page maps to its site path. My site in its current state only has one good example of this — `src/pages/index.js` maps to [amberley.blog](https://amberley.blog/). If I had an 'about' page, it would live at `src/pages/about.js`, and map to [amberley.blog/about](https://amberley.blog/about). (Since that doesn't exist, it will actually end up hitting the only other page currently defined in my site, which is `src/pages/404.js` — ([read about 404 pages](/docs/add-404-page/)).
 

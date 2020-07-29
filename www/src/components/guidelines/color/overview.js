@@ -10,7 +10,7 @@ import Swatch from "./swatch"
 import { getA11yLabel, getTextColor } from "../../../utils/guidelines/color"
 import { copyColumnGutter, CopyColumn } from "../containers"
 import palette from "../../../utils/guidelines/extend-palette-info"
-import { Box, Flex } from "../system"
+import { Box, Flex } from "theme-ui"
 
 // Color swatches
 const swatchWidth = 40
@@ -68,11 +68,10 @@ const Palette = ({ color, handler }) => {
       sx={{
         display: `flex`,
         flexDirection: `column`,
-        mb: 4,
+        mb: [4, null, null, 0],
         [mediaQueries.lg]: {
           flexDirection: `row`,
           alignItems: `center`,
-          mb: 0,
         },
       }}
     >
@@ -87,13 +86,11 @@ const Palette = ({ color, handler }) => {
       >
         <Box
           as="button"
-          bg="none"
-          p={0}
-          onClick={e => {
-            handler(e, node)
-          }}
+          onClick={e => handler(e, node)}
           sx={{
+            p: 0,
             background: `transparent`,
+            bg: `none`,
             border: 0,
             cursor: `pointer`,
             WebkitAppearance: `none`,
@@ -120,11 +117,25 @@ const Palette = ({ color, handler }) => {
           </SectionSubheading>
         </Box>
       </Box>
-      <Flex flexWrap="wrap">
-        <Flex flexDirection="row" alignItems="stretch">
+      <Flex
+        sx={{
+          flexWrap: `wrap`,
+        }}
+      >
+        <Flex
+          sx={{
+            flexDirection: `row`,
+            alignItems: `stretch`,
+          }}
+        >
           {range.range(0, 5).map(i => colores(node)[i])}
         </Flex>
-        <Flex flexDirection="row" alignItems="stretch">
+        <Flex
+          sx={{
+            flexDirection: `row`,
+            alignItems: `stretch`,
+          }}
+        >
           {range.range(5, 10).map(i => colores(node)[i])}
         </Flex>
       </Flex>

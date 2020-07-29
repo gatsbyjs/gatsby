@@ -35,16 +35,16 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     getProps={getProps}
     to={linkTo}
   >
-    <span dangerouslySetInnerHTML={{ __html: icon }} />
+    {icon}
     <div>{label}</div>
   </Link>
 )
 const navItems = [
-  { id: `docs`, text: `Docs`, icon: DocsIcon },
-  { id: `tutorial`, text: `Tutorials`, icon: TutorialIcon },
-  { id: `plugins`, text: `Plugins`, icon: PluginsIcon },
-  { id: `blog`, text: `Blog`, icon: BlogIcon },
-  { id: `showcase`, text: `Showcase`, icon: ShowcaseIcon },
+  { id: `docs`, text: `Docs`, icon: <DocsIcon /> },
+  { id: `tutorial`, text: `Tutorials`, icon: <TutorialIcon /> },
+  { id: `plugins`, text: `Plugins`, icon: <PluginsIcon /> },
+  { id: `blog`, text: `Blog`, icon: <BlogIcon /> },
+  { id: `showcase`, text: `Showcase`, icon: <ShowcaseIcon /> },
 ]
 
 const MobileNavigation = () => (

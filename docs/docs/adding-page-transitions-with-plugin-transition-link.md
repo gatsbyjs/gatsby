@@ -6,7 +6,7 @@ This guide will cover how to use `gatsby-plugin-transition-link` to animate tran
 
 ## Overview
 
-The `TransitionLink` component provides a way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose/), [gsap](https://greensock.com/), [animejs](https://animejs.com/), and many others.
+The `TransitionLink` component provides a way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose/), [GSAP](https://greensock.com/), [animejs](https://animejs.com/), and many others.
 
 Note that currently, as the plugin is based on link navigation, transitions when navigating with the browser buttons are not supported.
 
@@ -97,7 +97,7 @@ You can specify a `trigger` function that will handle the animation. This is use
 
 ### Using passed props
 
-The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `enter` props defined on the `TransitionLink`.
+The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `entry` props defined on the `TransitionLink`.
 
 ```jsx
 const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
@@ -121,10 +121,10 @@ const Box = posed.div({
 })
 
 <TransitionState>
-      {({ transitionStatus, exit, enter, mount }) => {
+      {({ transitionStatus, exit, entry, mount }) => {
         console.log("current page's transition status is", transitionStatus)
         console.log("exit object is", exit)
-        console.log("enter object is", enter)
+        console.log("entry object is", entry)
 
         return (
             <Box

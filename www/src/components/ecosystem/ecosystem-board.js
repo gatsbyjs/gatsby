@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import PropTypes from "prop-types"
 
 import EcosystemSection from "./ecosystem-section"
+import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   setupScrollersObserver,
@@ -16,11 +17,7 @@ export default function EcosystemBoard(props) {
     return () => unobserveScrollers()
   }, [])
 
-  const {
-    icons: { plugins: PluginsIcon, starters: StartersIcon },
-    starters,
-    plugins,
-  } = props
+  const { starters, plugins } = props
 
   return (
     <div
@@ -42,7 +39,7 @@ export default function EcosystemBoard(props) {
         title="Plugins"
         description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
         subTitle="Featured Plugins"
-        icon={PluginsIcon}
+        icon={<PluginsIcon />}
         links={[
           { label: `Browse Plugins`, to: `/plugins/` },
           {
@@ -58,7 +55,7 @@ export default function EcosystemBoard(props) {
         title="Starters"
         description="Starters are Gatsby sites that are preconfigured for different use cases to give you a head start for your project."
         subTitle="Featured Starters"
-        icon={StartersIcon}
+        icon={<StartersIcon />}
         links={[
           { label: `Browse Starters`, to: `/starters/` },
           { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
@@ -80,7 +77,6 @@ export default function EcosystemBoard(props) {
 }
 
 EcosystemBoard.propTypes = {
-  icons: PropTypes.object,
   starters: PropTypes.array,
   plugins: PropTypes.array,
 }
