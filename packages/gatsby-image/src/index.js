@@ -18,6 +18,23 @@ const logDeprecationNotice = (prop, replacement) => {
   }
 }
 
+// DJB2a (XOR variant) is a simple hashing function, reduces input to 32-bits
+const SEED = 5381
+function djb2a(str) {
+  let h = SEED
+
+  for (let i = 0; i < str.length; i++) {
+    h = (h * 33) ^ str.charCodeAt(i)
+  }
+
+  // Cast to 32-bit uint
+  return h >>> 0
+}
+
+// Converts string input to a 32-bit base36 string (0-9, a-z)
+// '_' prefix to prevent invalid first chars for CSS class names
+const getShortKey = input => `_` + djb2a(input).toString(36)
+
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
   let convertedProps = { ...props }
@@ -365,6 +382,13 @@ class Image extends React.Component {
     this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
+
+    // Supports Art Direction feature to correctly render image variants
+    const imageVariants = props.fluid || props.fixed
+    if (hasArtDirectionSupport(imageVariants)) {
+      this.uniqueKey =
+        !isBrowser && getShortKey(imageVariants.map(v => v.srcSet).join(``))
+    }
   }
 
   componentDidMount() {
@@ -494,10 +518,14 @@ class Image extends React.Component {
       ? imageVariants[0]
       : getCurrentSrcData(imageVariants)
 
+    const uniqueKey = this.uniqueKey
+
     if (fluid) {
       return (
         <Tag
-          className={`${className ? className : ``} gatsby-image-wrapper`}
+          className={`${
+            (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
+          } gatsby-image-wrapper`}
           style={{
             position: `relative`,
             overflow: `hidden`,
@@ -615,7 +643,9 @@ class Image extends React.Component {
 
       return (
         <Tag
-          className={`${className ? className : ``} gatsby-image-wrapper`}
+          className={`${
+            (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
+          } gatsby-image-wrapper`}
           style={divStyle}
           ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
