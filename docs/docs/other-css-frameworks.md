@@ -4,14 +4,16 @@ title: Other CSS Frameworks
 
 This guide introduces some other popular styling libraries that you might want to use in your project.
 
-## How these frameworks were chosen
+## How to choose a framework
 
-The following criteria were used to determine which frameworks to include in this guide:
+There's no one right answer for which framework you should use. Ultimately it's a matter of personal preference and what works best for your project.
 
-- It must work with React and Gatsby.
-- It must impact the styling of a Gatsby site.
-- It should be a commonly requested or searched in the Gatsby docs.
-- It must consider accessibility and not promote UI anti-patterns.
+Here are some things you might want to consider when choosing a styling framework:
+
+- Does it promote accessibility?
+- Does it use good UI patterns?
+- Does it require additional dependencies?
+- Does it have good documentation?
 
 ## Bootstrap
 
