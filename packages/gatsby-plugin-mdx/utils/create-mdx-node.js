@@ -2,15 +2,14 @@ const withDefaultOptions = require(`../utils/default-options`)
 const { getNodesByType } = require(`gatsby/dist/redux/nodes.js`)
 const createMdxNodeWithScope = require(`../utils/mdx-node-with-scope`)
 
-async function createMdxNodeLegacy({ id, node, content }) {
-  const data = {
+async function createMdxNodeLegacy({ id, node, content } = {}) {
+  const nodeWithScope = await createMdxNodeWithScope({
     id,
-    rawInput: content,
-    absolutePath: node.absolutePath,
+    node,
+    content,
     getNodesByType,
     options: withDefaultOptions({ plugins: [] }),
-  }
-  const nodeWithScope = await createMdxNodeWithScope(data)
+  })
   return nodeWithScope.mdxNode
 }
 
