@@ -426,13 +426,17 @@ class Image extends React.Component {
           this.setState({ isVisible: true }, setCachedState)
         }
       })
+    } else if (!this.state.imgCached) {
+      setCachedState()
     }
   }
 
   handleImageLoaded() {
     activateCacheForImage(this.props)
 
-    this.setState({ imgLoaded: true })
+    if (!this.state.imgLoaded) {
+      this.setState({ imgLoaded: true })
+    }
 
     if (this.props.onLoad) {
       this.props.onLoad()
