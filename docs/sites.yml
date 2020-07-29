@@ -11560,3 +11560,16 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: FatihaTV
+  url: https://fatihatv.com
+  main_url: https://fatihatv.com
+  description: A distaction-free platform to consume Islamic content from reputable Youtube Channels
+  categories:
+    - Community
+    - Library
+    - Media
+    - Nonprofit
+    - SEO
+  built_by: TengkuHafidz
+  built_by_url: https://twitter.com/sohafidz
+  featured: false
