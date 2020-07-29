@@ -9,6 +9,7 @@ function BannerContent() {
         color: `whiteFade.80`,
         fontFamily: `heading`,
         px: 6,
+        textAlign: `center`,
         whiteSpace: `nowrap`,
       }}
     >
@@ -31,6 +32,7 @@ function BannerContent() {
 
 const innerContainerStyles = {
   display: `flex`,
+  textAlign: `center`,
   alignItems: `center`,
   justifyContent: [`center`, null, `flex-start`],
   height: `100%`,
