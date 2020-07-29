@@ -395,7 +395,6 @@ class Image extends React.Component {
 
       if (isCached) {
         this.setState({
-          imgLoaded: true,
           imgCached: true,
         })
       }
@@ -417,7 +416,6 @@ class Image extends React.Component {
         if (imageInCache) {
           this.setState({
             isVisible: true,
-            imgLoaded: true,
             imgCached: true,
           })
         } else {
@@ -485,7 +483,7 @@ class Image extends React.Component {
     }
 
     const imagePlaceholderStyle = {
-      opacity: this.state.imgLoaded ? 0 : 1,
+      opacity: this.state.imgCached || this.state.imgLoaded ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
       ...placeholderStyle,
