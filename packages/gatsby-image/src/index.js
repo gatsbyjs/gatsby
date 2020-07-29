@@ -378,15 +378,18 @@ class Image extends React.Component {
     }
   }
 
-  // Specific to IntersectionObserver based lazy-load support
+  // Triggers when wrapper element mounts(has a ref) and after unmounting(null)
   handleRef(ref) {
-    if (this.useIOSupport && ref) {
+    // Ignore calls from unmounts
+    if (!ref) {
+      return
+    }
+    // 'isVisible' guard skips this for already loaded art directed images.
+    if (this.useIOSupport && !this.state.isVisible) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
-        if (
-          !this.state.isVisible &&
-          typeof this.props.onStartLoad === `function`
-        ) {
+
+        if (typeof this.props.onStartLoad === `function`) {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
