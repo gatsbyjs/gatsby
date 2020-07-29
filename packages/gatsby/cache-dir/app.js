@@ -44,18 +44,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             !isRestarting &&
             msg.type === `LOG_ACTION` &&
             msg.action.type === `DEVELOP` &&
-            msg.action.payload === `RESTART_REQUIRED`
+            msg.action.payload === `RESTART_REQUIRED` &&
+            window.confirm(
+              `The develop process needs to be restarted for the changes to ${msg.action.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
+            )
           ) {
-            if (
-              window.confirm(
-                `The develop process needs to be restarted for the changes to ${msg.action.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
-              )
-            ) {
-              isRestarting = true
-              parentSocket.emit(`develop:restart`, () => {
-                window.location.reload()
-              })
-            }
+            isRestarting = true
+            parentSocket.emit(`develop:restart`, () => {
+              window.location.reload()
+            })
           }
 
           if (
