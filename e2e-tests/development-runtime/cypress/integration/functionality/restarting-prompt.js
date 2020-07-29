@@ -16,7 +16,9 @@ describe(`gatsby-config.js`, () => {
     })
 
     cy.task(`changeGatsbyConfig`)
-    cy.get(`[data-cy="restarting-screen"]`).should(`be.visible`)
+    cy.get(`[data-cy="restarting-screen"]`, { timeout: 10000 }).should(
+      `be.visible`
+    )
     // Restarting gatsby develop can take a while
     cy.get(`[data-testid="page-component"]`, { timeout: 30000 }).should(
       `be.visible`
