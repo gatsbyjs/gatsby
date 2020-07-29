@@ -13,7 +13,18 @@ const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, blog, showcase, starters, creators, packages, features]
+const apiCalls = require(`./src/utils/node/api-calls.js`)
+
+const sections = [
+  docs,
+  blog,
+  showcase,
+  starters,
+  creators,
+  packages,
+  features,
+  apiCalls,
+]
 
 // Run the provided API on all defined sections of the site
 async function runApiForSections(api, helpers) {

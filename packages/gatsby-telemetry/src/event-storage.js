@@ -5,7 +5,7 @@ const fetch = require(`node-fetch`)
 const Configstore = require(`configstore`)
 const { ensureDirSync } = require(`fs-extra`)
 
-const isTruthy = require(`./is-truthy`)
+import { isTruthy } from "./is-truthy"
 
 /* The events data collection is a spooled process that
  * buffers events to a local fs based buffer

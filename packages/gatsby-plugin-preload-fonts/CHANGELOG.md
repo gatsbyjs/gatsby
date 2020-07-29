@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.17...gatsby-plugin-preload-fonts@1.2.18) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
 ## [1.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.16...gatsby-plugin-preload-fonts@1.2.17) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-plugin-preload-fonts

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.0.2...gatsby-plugin-less@4.0.3) (2020-07-20)
+
+### Bug Fixes
+
+- **readme:** gatsby-plugin-less - variable in code fences ([#25818](https://github.com/gatsbyjs/gatsby/issues/25818)) ([718d0fb](https://github.com/gatsbyjs/gatsby/commit/718d0fb))
+
 ## [4.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.0.1...gatsby-plugin-less@4.0.2) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-plugin-less

@@ -30,14 +30,12 @@ export default function DocsMarkdownPage({
   location,
   prev,
   next,
-  tableOfContentsItems = page.tableOfContents.items,
-  tableOfContentsDepth = page.tableOfContentsDepth,
   children,
 }) {
   const [urlSegment] = page.slug.split(`/`).slice(1)
   const description = page.description || page.excerpt
   const isTOCVisible =
-    !page.disableTableOfContents && tableOfContentsItems?.length > 0
+    !page.disableTableOfContents && page.tableOfContents?.items?.length
 
   return (
     <PageWithSidebar
@@ -98,8 +96,8 @@ export default function DocsMarkdownPage({
               }}
             >
               <TableOfContents
-                items={tableOfContentsItems}
-                depth={tableOfContentsDepth}
+                items={page.tableOfContents.items}
+                depth={page.tableOfContentsDepth}
                 location={location}
               />
             </div>
@@ -115,6 +113,11 @@ export default function DocsMarkdownPage({
             <div>
               <MDXRenderer slug={page.slug}>{page.body}</MDXRenderer>
               {children}
+              {page.issue && (
+                <a href={page.issue} target="_blank" rel="noopener noreferrer">
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
               <MarkdownPageFooter path={page.relativePath} />
               <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
             </div>
@@ -139,5 +142,6 @@ export const docPageContentFragment = graphql`
     description
     disableTableOfContents
     tableOfContentsDepth
+    issue
   }
 `

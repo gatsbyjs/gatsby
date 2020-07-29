@@ -13,7 +13,7 @@ import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
-import { store } from "../redux"
+import { store, emitter } from "../redux"
 import { buildHTML } from "../commands/build-html"
 import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
@@ -34,14 +34,6 @@ import { Express } from "express"
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 
-import {
-  startSchemaHotReloader,
-  stopSchemaHotReloader,
-} from "../bootstrap/schema-hot-reloader"
-
-import sourceNodes from "../utils/source-nodes"
-import { createSchemaCustomization } from "../utils/create-schema-customization"
-import { rebuild as rebuildSchema } from "../schema"
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
 interface IServer {
@@ -53,7 +45,7 @@ interface IServer {
   webpackWatching: IWebpackWatchingPauseResume
 }
 
-interface IWebpackWatchingPauseResume {
+export interface IWebpackWatchingPauseResume extends webpack.Watching {
   suspend: () => void
   resume: () => void
 }
@@ -63,7 +55,7 @@ interface IWebpackWatchingPauseResume {
 type PatchedWebpackDevMiddleware = WebpackDevMiddleware &
   express.RequestHandler & {
     context: {
-      watching: webpack.Watching & IWebpackWatchingPauseResume
+      watching: IWebpackWatchingPauseResume
     }
   }
 
@@ -187,31 +179,15 @@ export async function startServer(
   )
 
   /**
-   * This will be removed in state machine
    * Refresh external data sources.
    * This behavior is disabled by default, but the ENABLE_GATSBY_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
-    stopSchemaHotReloader()
-    let activity = report.activityTimer(`createSchemaCustomization`, {})
-    activity.start()
-    await createSchemaCustomization({
-      refresh: true,
-    })
-    activity.end()
-    activity = report.activityTimer(`Refreshing source data`, {})
-    activity.start()
-    await sourceNodes({
+    emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
     })
-    activity.end()
-    activity = report.activityTimer(`rebuild schema`)
-    activity.start()
-    await rebuildSchema({ parentSpan: activity })
-    activity.end()
-    startSchemaHotReloader()
   }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {

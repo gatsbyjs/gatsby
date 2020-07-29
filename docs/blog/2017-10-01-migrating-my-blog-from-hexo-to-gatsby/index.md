@@ -168,7 +168,7 @@ excellent tool.
 Visit `http://localhost:8000/___graphql` in the browser and you'll be greeted
 with this lovely dev tool:
 
-![Gatsby Graphiql](https://dropsinn.s3.amazonaws.com/Screen%20Shot%202017-08-26%20at%201.31.08%20PM.png)
+![Gatsby GraphiQL](https://dropsinn.s3.amazonaws.com/Screen%20Shot%202017-08-26%20at%201.31.08%20PM.png)
 
 I recommend getting to know this tool if you're not already familiar. You will
 be coming back to this often to find the right query to pull data for your

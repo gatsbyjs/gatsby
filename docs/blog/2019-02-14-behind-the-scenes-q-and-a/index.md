@@ -259,10 +259,10 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Following up on upgrade path question—how would you upgrade between version of 2.~?
 **Answer:** You can bump the version # in your package.json and then you're done.
 
-**Question:** If my `.htaccess` file is configured to read .html files without the extension in the url, can Gatsby compile the links to pages without the .html ending?
+**Question:** If my `.htaccess` file is configured to read `.html` files without the extension in the url, can Gatsby compile the links to pages without the `.html` ending?
 **Answer:** We haven't added support for this yet.
 
-**Question:** Follow up to the `.htaccess` question, how do you manage to hide .html from your url on gatsbyjs.com?
+**Question:** Follow up to the `.htaccess` question, how do you manage to hide `.html` from your url on gatsbyjs.com?
 **Answer:** Many servers can do this. Generally the feature is called "clean urls".
 
 **Question:** No concern of the additional request for the SVG??
