@@ -336,7 +336,7 @@ class Image extends React.Component {
 
     this.isCritical = props.loading === `eager` || props.critical
 
-    this.addNoScript = !(this.isCritical && !props.fadeIn)
+    this.addNoScript = !isBrowser && !(this.isCritical && !props.fadeIn)
     this.useIOSupport =
       !hasNativeLazyLoadSupport &&
       hasIOSupport &&
