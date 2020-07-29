@@ -470,7 +470,8 @@ class Image extends React.Component {
 
     // In a browser-cached scenario prevents rendering initial placeholder.
     // Instead renders a blank image container or backgroundColor placeholder.
-    const shouldRevealPlaceholder = !isBrowser || this.state.isVisible
+    const shouldRenderPlaceholder = !isBrowser || this.state.isVisible
+    const shouldHidePlaceholder = this.state.imgCached || this.state.imgLoaded
 
     const imageStyle = {
       opacity: shouldReveal ? 1 : 0,
@@ -486,7 +487,7 @@ class Image extends React.Component {
     }
 
     const imagePlaceholderStyle = {
-      opacity: this.state.imgCached || this.state.imgLoaded ? 0 : 1,
+      opacity: shouldHidePlaceholder ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
       ...placeholderStyle,
@@ -545,7 +546,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the blurry base64 image. */}
-          {shouldRevealPlaceholder && image.base64 && (
+          {shouldRenderPlaceholder && image.base64 && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
@@ -557,7 +558,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the traced SVG image. */}
-          {shouldRevealPlaceholder && image.tracedSVG && (
+          {shouldRenderPlaceholder && image.tracedSVG && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
@@ -648,7 +649,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the blurry base64 image. */}
-          {shouldRevealPlaceholder && image.base64 && (
+          {shouldRenderPlaceholder && image.base64 && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
@@ -660,7 +661,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the traced SVG image. */}
-          {shouldRevealPlaceholder && image.tracedSVG && (
+          {shouldRenderPlaceholder && image.tracedSVG && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
