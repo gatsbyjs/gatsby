@@ -464,6 +464,10 @@ class Image extends React.Component {
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
+    // In a browser-cached scenario prevents rendering initial placeholder.
+    // Instead renders a blank image container or backgroundColor placeholder.
+    const shouldRevealPlaceholder = !isBrowser || this.state.isVisible
+
     const imageStyle = {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
@@ -537,7 +541,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the blurry base64 image. */}
-          {image.base64 && (
+          {shouldRevealPlaceholder && image.base64 && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
@@ -549,7 +553,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
+          {shouldRevealPlaceholder && image.tracedSVG && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
@@ -640,7 +644,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the blurry base64 image. */}
-          {image.base64 && (
+          {shouldRevealPlaceholder && image.base64 && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
@@ -652,7 +656,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
+          {shouldRevealPlaceholder && image.tracedSVG && (
             <Placeholder
               ariaHidden
               ref={this.placeholderRef}
