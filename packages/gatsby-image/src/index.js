@@ -270,7 +270,7 @@ const Placeholder = React.forwardRef((props, ref) => {
   )
 
   return imageVariants.length > 1 ? (
-    <picture className={`gatsby-image-placeholder`}>
+    <picture>
       {generateSources(imageVariants)}
       {baseImage}
     </picture>
