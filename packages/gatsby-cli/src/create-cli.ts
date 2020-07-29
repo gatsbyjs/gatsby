@@ -370,8 +370,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       async ({
         recipe,
         develop,
-        install
-      }: yargs.Arguments<{ recipe: string | undefined, develop: boolean, install: boolean }>) => {
+        install,
+      }: yargs.Arguments<{
+        recipe: string | undefined
+        develop: boolean
+        install: boolean
+      }>) => {
         await recipesHandler(siteInfo.directory, recipe, develop, install)
       }
     ),
