@@ -1,6 +1,6 @@
 ---
 title: "The World's Sneakiest Route Change"
-date: 2020-07-29
+date: 2020-07-30
 author: Josh Comeau
 excerpt: "The story of how we added dynamic filtering to an entirely statically-built Gatsby site."
 tags:
