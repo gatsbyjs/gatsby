@@ -173,6 +173,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
+    "typescript": "^3.9.5",
     "xhr-mock": "^2.5.1",
     "zipkin": "^0.19.2",
     "zipkin-javascript-opentracing": "^2.1.0",
@@ -220,17 +221,17 @@
     "graphql": "^14.6.0"
   },
   "scripts": {
-    "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
+    "build": "npm run build:types && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
     "postbuild": "node scripts/output-api-file.js && yarn workspace gatsby-admin build",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\"",
     "build:src": "babel src --out-dir dist --source-maps --verbose --ignore \"**/gatsby-cli.js,src/internal-plugins/dev-404-page/raw_dev-404-page.js,**/__tests__\" --extensions \".ts,.js\"",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "postinstall": "node scripts/postinstall.js",
-    "prepare": "npm run typegen && cross-env NODE_ENV=production npm run build",
-    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
