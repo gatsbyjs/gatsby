@@ -268,6 +268,28 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           type: `boolean`,
           describe: `Open the site in your (default) browser for you.`,
         })
+        .option(`S`, {
+          alias: `https`,
+          type: `boolean`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+        })
+        .option(`c`, {
+          alias: `cert-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`k`, {
+          alias: `key-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`ca-file`, {
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
+        })
         .option(`prefix-paths`, {
           type: `boolean`,
           default:

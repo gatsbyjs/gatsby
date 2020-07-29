@@ -3,6 +3,7 @@ import openurl from "better-opn"
 import fs from "fs-extra"
 import compression from "compression"
 import express from "express"
+import { createServer as createSecureServer } from "https"
 import chalk from "chalk"
 import { match as reachMatch } from "@reach/router/lib/utils"
 import onExit from "signal-exit"
@@ -15,6 +16,7 @@ import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
+import { getSslCert } from "../utils/get-ssl-cert"
 
 interface IMatchPath {
   path: string
@@ -146,10 +148,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     }
   }
 
-  const startListening = (): void => {
-    app.listen(port, host, () => {
+  const startListening = async (): Promise<void> => {
+    const listeningListener = (): void => {
       const urls = prepareUrls(
-        program.ssl ? `https` : `http`,
+        program.https ? `https` : `http`,
         program.host,
         port
       )
@@ -163,12 +165,43 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           report.warn(`Browser not opened because no browser was found`)
         )
       }
-    })
+    }
+
+    if (program.https) {
+      // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+      // used together
+      if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+        report.error(
+          `for custom ssl --https, --cert-file, and --key-file must be used together`
+        )
+      }
+      const sslHost =
+        program.host === `0.0.0.0` || program.host === `::`
+          ? `localhost`
+          : program.host
+
+      const ssl = await getSslCert({
+        name: sslHost,
+        caFile: program[`ca-file`],
+        certFile: program[`cert-file`],
+        keyFile: program[`key-file`],
+        directory: program.directory,
+      })
+
+      if (ssl) {
+        const httpsServer = createSecureServer(ssl, app)
+        httpsServer.listen({ port, host }, listeningListener)
+      } else {
+        report.error(`error getting ssl certs`)
+      }
+    } else {
+      app.listen(port, host, listeningListener)
+    }
   }
 
   try {
     port = await detectPortInUseAndPrompt(port)
-    startListening()
+    await startListening()
   } catch (e) {
     if (e.message === `USER_REJECTED`) {
       return
