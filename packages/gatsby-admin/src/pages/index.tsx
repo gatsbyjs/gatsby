@@ -91,6 +91,9 @@ const Index: React.FC<{}> = () => {
         allGatsbyPage {
           nodes {
             path
+            pluginCreator {
+              name
+            }
           }
         }
         allGatsbyPlugin {
@@ -127,7 +130,20 @@ const Index: React.FC<{}> = () => {
             .sort((a, b) => a.path.localeCompare(b.path))
             .map(page => (
               <li key={page.path} sx={{ p: 0 }}>
-                {page.path}
+                <Flex
+                  flexDirection="column"
+                  gap={3}
+                  sx={{
+                    backgroundColor: `ui.background`,
+                    padding: 5,
+                    borderRadius: 2,
+                  }}
+                >
+                  <Heading as="h3">{page.path}</Heading>
+                  <Text sx={{ color: `text.secondary` }}>
+                    Source: {page.pluginCreator.name}
+                  </Text>
+                </Flex>
               </li>
             ))}
         </ul>
