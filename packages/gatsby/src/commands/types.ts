@@ -20,7 +20,6 @@ export interface IProgram {
   openTracingConfigFile: string
   port: number
   proxyPort: number
-  internalStatusPort?: number
   host: string
   report: Reporter
   [`cert-file`]?: string

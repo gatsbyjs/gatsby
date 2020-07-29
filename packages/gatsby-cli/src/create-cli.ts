@@ -181,13 +181,6 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           type: `number`,
           describe: `Opens a port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
           default: 9229,
-        })
-        .option(`internal-status-port`, {
-          type: `number`,
-          default: process.env.INTERNAL_STATUS_PORT,
-          describe: process.env.INTERNAL_STATUS_PORT
-            ? `Set the internal status port. Defaults to ${process.env.INTERNAL_STATUS_PORT} (set by env.INTERNAL_STATUS_PORT)`
-            : `Set the internal status port. Defaults to a random port, can alternatively be set by env.INTERNAL_STATUS_PORT `,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
