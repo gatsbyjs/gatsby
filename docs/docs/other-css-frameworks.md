@@ -2,9 +2,9 @@
 title: Other CSS Frameworks
 ---
 
-This guide provides a brief introduction and list of resources for some of the other popular styling libraries worth highlighting.
+This guide introduces some other popular styling libraries that you might want to use in your project.
 
-## How These Frameworks Were Chosen
+## How these frameworks were chosen
 
 The following criteria were used to determine which frameworks to include in this guide:
 
@@ -19,11 +19,11 @@ Bootstrap is a widely used CSS and JS framework that was created at Twitter in 2
 
 Under the hood, Bootstrap uses [Sass](https://sass-lang.com/). Unlike other frameworks in this guide, Bootstrap does not provide React components directly. Instead, it provides a set of pre-built CSS class names like `"btn-primary"` or `"dropdown"` that you can use to style HTML elements.
 
-If you're using Bootstrap v4 or older, many of the JavaScript components will require you to also install jQuery to work correctly. However, as of [Bootstrap v5](https://blog.getbootstrap.com/2020/06/16/bootstrap-5-alpha/), the framework no longer depends on jQuery.
+If you're using Bootstrap v4 or older, many of the JavaScript components will need you to also install jQuery to work correctly. As of [Bootstrap v5](https://blog.getbootstrap.com/2020/06/16/bootstrap-5-alpha/), the framework no longer depends on jQuery.
 
 **Browser-support warning:** Bootstrap v5 also dropped Internet Explorer support.
 
-If you're interested in using Bootstrap and want to host the CSS and JS files yourself, you can install the [Bootstrap npm package](https://www.npmjs.com/package/bootstrap). Alternatively, if you'd rather not host the files yourself, you can source them using the [Bootstrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
+If you're interested in using Bootstrap and want to host the CSS and JS files yourself, you can install the [Bootstrap npm package](https://www.npmjs.com/package/bootstrap). Or, if you'd rather not host the files yourself, you can source them using the [Bootstrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
 
 - [Bootstrap documentation](https://getbootstrap.com/docs)
 - [Bootstrap repo on GitHub](https://github.com/twbs/bootstrap)
@@ -40,9 +40,9 @@ If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui
 
 ## Grommet
 
-Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components designed with a mobile-first approach. It also provides built-in support for the W3C [Web Content Accessibility Guidelines (WCAG) 2.1](http://www.w3.org/WAI/intro/wcag) specification.
+Grommet is built on [Styled Components](https://styled-components.com/) and provides a library of modular, responsive components designed with a mobile-first approach. It also has built-in support for the W3C [Web Content Accessibility Guidelines (WCAG) 2.1](http://www.w3.org/WAI/intro/wcag) specification.
 
-For designers, the [Grommet Design Kit](https://github.com/grommet/design-kit) provides sticker sheets and templates for a number of popular design tools, including Sketch, Figma, and Adobe XD.
+For designers, the [Grommet Design Kit](https://github.com/grommet/design-kit) provides sticker sheets and templates for some popular design tools, including Sketch, Figma, and Adobe XD.
 
 If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hewlett Packard Enterprise)](https://developer.hpe.com/blog/using-grommet-with-gatsby).
 
