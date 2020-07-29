@@ -10,7 +10,7 @@ There's no one right answer for which framework you should use. Ultimately it's 
 
 Here are some things you might want to consider when choosing a styling framework:
 
-- Is it [accessible](https://www.gatsbyjs.org/docs/making-your-site-accessible/)?
+- Is it [accessible](/docs/making-your-site-accessible/)?
 - Is it responsive? How will it look on a mobile device?
 - Does it require additional dependencies?
 - Does it have good documentation?
