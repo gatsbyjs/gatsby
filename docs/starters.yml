@@ -6926,14 +6926,13 @@
   repo: https://github.com/turq84/NeuVision-Gatsby-Template
   description: Minimalistic in design, NeuVision is a Neumorphic Gatsby template that is AMP ready, out of the package.
   tags:
-    - Landing Page
     - AMP
     - Blog
-    - Startup
+    - Markdown
+    - Landing Page
   features:
-    - Landing Page
-    - AMP
-    - Blog
-    - Startup
-    - Login form
-    - Newsletter form
+    - Gatsby v2
+    - Main page & Blog page
+    - Newsletter section, ready for setup
+    - AMP enabled on each page
+    - Login form on home page
