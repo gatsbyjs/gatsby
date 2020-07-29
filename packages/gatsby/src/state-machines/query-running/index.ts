@@ -2,6 +2,13 @@ import { MachineConfig, Machine } from "xstate"
 import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
+import { getAbsolutePathForVirtualModule } from "../../utils/gatsby-webpack-virtual-modules"
+
+const internalModulesThatDontNeedToResetQueryRunningStateMachine: Array<string> = [
+  `$virtual/async-requires.js`,
+  `$virtual/sync-requires.js`,
+  `$virtual/match-paths.json`,
+].map(getAbsolutePathForVirtualModule)
 
 /**
  * This is a child state machine, spawned to perform the query running
@@ -13,6 +20,10 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   on: {
     SOURCE_FILE_CHANGED: {
       target: `extractingQueries`,
+      cond: (_, sourceFileChangeEvent): boolean =>
+        !internalModulesThatDontNeedToResetQueryRunningStateMachine.includes(
+          sourceFileChangeEvent.file
+        ),
     },
   },
   context: {},
@@ -22,15 +33,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       invoke: {
         id: `extracting-queries`,
         src: `extractQueries`,
-        onDone: {
-          target: `writingRequires`,
-        },
-      },
-    },
-    writingRequires: {
-      invoke: {
-        src: `writeOutRequires`,
-        id: `writing-requires`,
         onDone: {
           target: `calculatingDirtyQueries`,
         },
@@ -60,8 +62,17 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         src: `runPageQueries`,
         id: `running-page-queries`,
         onDone: {
-          target: `waitingForJobs`,
+          target: `writingRequires`,
           actions: `flushPageData`,
+        },
+      },
+    },
+    writingRequires: {
+      invoke: {
+        src: `writeOutRequires`,
+        id: `writing-requires`,
+        onDone: {
+          target: `waitingForJobs`,
         },
       },
     },
