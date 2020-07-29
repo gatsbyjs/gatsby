@@ -18,6 +18,7 @@ import {
   ProdLoader,
   publicLoader,
   PageResourceStatus,
+  getStaticQueryResults,
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
@@ -71,7 +72,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           {({ location }) => (
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
-                const staticQueryResults = publicLoader.getStaticQueryResults()
+                const staticQueryResults = getStaticQueryResults()
                 return (
                   <StaticQueryContext.Provider value={staticQueryResults}>
                     <DataContext.Provider value={{ pageResources, location }}>
