@@ -8,10 +8,10 @@ This guide provides a brief introduction and list of resources for some of the o
 
 The following criteria were used to determine which frameworks to include in this guide:
 
-* It must work with React and Gatsby.
-* It must impact the styling of a Gatsby site.
-* It should be a commonly requested or searched in the Gatsby docs.
-* It must consider accessibility and not promote UI anti-patterns.
+- It must work with React and Gatsby.
+- It must impact the styling of a Gatsby site.
+- It should be a commonly requested or searched in the Gatsby docs.
+- It must consider accessibility and not promote UI anti-patterns.
 
 ## Bootstrap
 
@@ -23,10 +23,10 @@ If you're using Bootstrap v4 or older, many of the JavaScript components will re
 
 **Browser-support warning:** Bootstrap v5 also dropped Internet Explorer support.
 
-If you're interested in using Bootstrap and want to host the CSS and JS files yourself, you can install the [Boostrap npm package](https://www.npmjs.com/package/bootstrap). Alternatively, if you'd rather not host the files yourself, you can source them using the [Boostrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
+If you're interested in using Bootstrap and want to host the CSS and JS files yourself, you can install the [Bootstrap npm package](https://www.npmjs.com/package/bootstrap). Alternatively, if you'd rather not host the files yourself, you can source them using the [Bootstrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
 
-* [Bootstrap documentation](https://getbootstrap.com/docs)
-* [Bootstrap repo on GitHub](https://github.com/twbs/bootstrap)
+- [Bootstrap documentation](https://getbootstrap.com/docs)
+- [Bootstrap repo on GitHub](https://github.com/twbs/bootstrap)
 
 ## Chakra UI
 
@@ -34,9 +34,9 @@ Chakra UI is built on top of the [Emotion styling library](https://emotion.sh/do
 
 If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui` documentation](/packages/gatsby-plugin-chakra-ui/?=chakra).
 
-* [Chakra UI documentation](https://chakra-ui.com/getting-started)
-* [Chakra UI repo on GitHub](https://github.com/chakra-ui/chakra-ui/)
-* [Setting Up Chakra UI in a GatsbyJS App (YouTube)](https://www.youtube.com/watch?v=PjQHqDWnzGw)
+- [Chakra UI documentation](https://chakra-ui.com/getting-started)
+- [Chakra UI repo on GitHub](https://github.com/chakra-ui/chakra-ui/)
+- [Setting Up Chakra UI in a GatsbyJS App (YouTube)](https://www.youtube.com/watch?v=PjQHqDWnzGw)
 
 ## Grommet
 
@@ -46,9 +46,9 @@ For designers, the [Grommet Design Kit](https://github.com/grommet/design-kit) p
 
 If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hewlett Packard Enterprise)](https://developer.hpe.com/blog/using-grommet-with-gatsby).
 
-* [Grommet component documentation](https://v2.grommet.io/components)
-* [Grommet repo on GitHub](https://github.com/grommet/grommet)
-* [Grommet component examples on Storybook](https://storybook.grommet.io/)
+- [Grommet component documentation](https://v2.grommet.io/components)
+- [Grommet repo on GitHub](https://github.com/grommet/grommet)
+- [Grommet component examples on Storybook](https://storybook.grommet.io/)
 
 ## Material UI
 
@@ -56,6 +56,6 @@ Material UI provides a library of components designed using Google's [Material D
 
 If you're interested in using Material UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui/?=material%20ui).
 
-* [Material UI documentation](https://material-ui.com/)
-* [Material UI repo on GitHub](https://github.com/mui-org/material-ui)
-* [Material UI example projects](https://material-ui.com/getting-started/example-projects/)
+- [Material UI documentation](https://material-ui.com/)
+- [Material UI repo on GitHub](https://github.com/mui-org/material-ui)
+- [Material UI example projects](https://material-ui.com/getting-started/example-projects/)
