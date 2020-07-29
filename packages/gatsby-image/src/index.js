@@ -383,10 +383,13 @@ class Image extends React.Component {
     // this will reveal it immediately and skip the placeholder transition.
     const setCachedState = () => {
       // 'img.currentSrc' may be a falsy value, empty string or undefined(IE).
+      if (!this.imageRef.current) {
+        return
+      }
       // If image resides in the browser cache, this attribute is populated
       // without waiting on a network request response to update it.
       // Firefox does not behave in this way, no benefit there.
-      let isCached = this.imageRef.current && this.imageRef.current.currentSrc
+      let isCached = this.imageRef.current.currentSrc
 
       // For critical images 'img.complete' is more reliable
       if (this.isCritical) {
