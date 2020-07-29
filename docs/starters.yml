@@ -6924,7 +6924,7 @@
     - Resume page generated using template Markdown files
 - url: https://demo.websheets.co
   repo: https://github.com/tengkuhafidz/WebSheets-Listing-Page
-  description: A listing website generator based on a standard Google Sheets template. Manage the design and data of the site by just updating the Google Sheets.
+  description: A listing website generator based on a standard Google Sheets template. Manage the branding, layout, and data of the site by just updating the Google Sheets.
   tags:
     - Google Sheets
     - Language:TypeScript
