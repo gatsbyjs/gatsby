@@ -363,6 +363,7 @@ jobs:
       CYPRESS_PROJECT_ID: 9parq5
       CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
+      - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       - e2e-test:
           test_path: e2e-tests/themes/development-runtime
           test_command: yarn test
