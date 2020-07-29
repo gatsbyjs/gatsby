@@ -509,8 +509,8 @@ class Image extends React.Component {
 
     this.seenBefore = imageCache[match.src]
     this.setState({
-      fadeIn: !this.seenBefore && this.state.fadeIn,
-      imgLoaded: false,
+      imgLoaded: this.seenBefore,
+      imgCached: this.seenBefore,
     })
   }
 
