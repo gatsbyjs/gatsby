@@ -400,6 +400,9 @@ class Image extends React.Component {
         })
       }
     }
+
+    // Newer instances(mounts) of this image may be cached, using a different
+    // render path than Intersection Observer ('useIOSupport').
     // 'isVisible' guard skips this for already loaded art directed images.
     if (this.useIOSupport && !this.state.isVisible) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
@@ -418,10 +421,10 @@ class Image extends React.Component {
             imgCached: true,
           })
         } else {
-          // imgCached and imgLoaded must update after isVisible,
-          // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
-          // imgLoaded and imgCached are in a 2nd setState call to be changed together,
-          // avoiding initiating unnecessary animation frames from style changes.
+          // Begin loading real image, then check if image is in browser cache.
+          // Must first render with 'isVisible==true', then 'imageRef' exists.
+          // 'imgCached' needs access to 'imageRef' to work.
+          // Paired with 'imgLoaded' to avoid redundant animation frames.
           this.setState({ isVisible: true }, setCachedState)
         }
       })
