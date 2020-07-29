@@ -302,7 +302,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       isRestarting = true
       proxy.serveRestartingScreen()
       // respond() responds to the client, which in our case prompts it to reload the page to show the restarting screen
-      respond(`develop:is-starting`)
+      if (respond) respond(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
       developProcess.onMessage(handleChildProcessIPC)
