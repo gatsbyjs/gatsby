@@ -54,7 +54,7 @@ If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hew
 
 Material UI provides a library of components designed using Google's [Material Design guidelines](https://material.io/design/introduction). It also supports customizing theme elements like color, typography, and breakpoints.
 
-If you're interested in using Material UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui/?=material%20ui).
+If you're interested in using Material UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui).
 
 - [Material UI documentation](https://material-ui.com/)
 - [Material UI repo on GitHub](https://github.com/mui-org/material-ui)
