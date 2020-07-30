@@ -33,7 +33,9 @@ If you're interested in using Bootstrap and want to host the CSS and JS files yo
 
 ## Chakra UI
 
-Chakra UI is built on top of the [Emotion styling library](/docs/emotion/). It uses [Styled System](https://styled-system.com/) style props to override individual CSS properties for a component. Chakra UI supports theme customization, provides a library of components, and comes with dark mode out of the box.
+Chakra UI is built on top of the [Emotion styling library](/docs/emotion/). It uses [Styled System](https://styled-system.com/) style props to override individual CSS properties for a component.
+
+Chakra UI provides a library of components, and it comes with dark mode out of the box. It also has a theme object which you can use to customize your site's color palette, typography, breakpoints, and more.
 
 If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui` documentation](/packages/gatsby-plugin-chakra-ui/?=chakra).
 
