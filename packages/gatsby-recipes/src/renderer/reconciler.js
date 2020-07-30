@@ -2,7 +2,9 @@ const ReactReconciler = require(`react-reconciler`)
 
 // const debugInner = require(`debug`)(`recipes-reconciler`)
 const debug = (title, data) => {
-  console.log(title, data)
+  if (process.env.DEBUG) {
+    console.log(title, data)
+  }
   // debugInner(title, JSON.stringify(data, null, 2))
 }
 
