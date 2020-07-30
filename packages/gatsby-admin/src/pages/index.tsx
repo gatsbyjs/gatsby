@@ -14,11 +14,14 @@ import {
   Text,
   Badge,
   Spacer,
-  CardSection,
 } from "gatsby-interface"
 // TODO: teach TypeScript about SVGs
 // @ts-ignore
 import skaterIllustration from "../skaterboi.svg"
+// @ts-ignore
+import boltIcon from "../bolt.svg"
+// @ts-ignore
+import sparklesIcon from "../sparkles.svg"
 import PluginSearchBar from "../components/plugin-search"
 
 const InstalledPluginListItem: React.FC<{
@@ -157,9 +160,15 @@ const Index: React.FC<{}> = () => {
             </Text>
           </Flex>
           <Flex gap={7} flexDirection="column">
-            <Subheading>
-              Installed plugins ({data.allGatsbyPlugin.nodes.length})
-            </Subheading>
+            <Flex alignItems="center" gap={3}>
+              <img src={boltIcon} />
+              <Subheading>
+                Installed plugins{` `}
+                <span sx={{ fontSize: 1, color: `grey.50`, fontWeight: `400` }}>
+                  ({data.allGatsbyPlugin.nodes.length})
+                </span>
+              </Subheading>
+            </Flex>
             <Flex
               as="ul"
               gap={3}
@@ -185,7 +194,10 @@ const Index: React.FC<{}> = () => {
           </Flex>
 
           <Flex flexDirection="column" gap={5}>
-            <Subheading>Recommended plugins</Subheading>
+            <Flex alignItems="center" gap={3}>
+              <img src={sparklesIcon} />
+              <Subheading>Recommended plugins</Subheading>
+            </Flex>
             <Card>
               <Flex sx={{ p: 9 }} justifyContent="center" alignItems="center">
                 <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
