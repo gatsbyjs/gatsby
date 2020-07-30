@@ -1,19 +1,21 @@
 /** @jsx jsx */
 import React from "react"
-import { jsx, Flex, Grid } from "strict-ui"
+import { jsx, Flex } from "strict-ui"
 import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
   Heading,
-  Text,
   DropdownMenu,
   DropdownMenuButton,
   DropdownMenuItem,
   DropdownMenuItems,
+  HeadingProps,
+  Text,
+  Badge,
 } from "gatsby-interface"
 import PluginSearchBar from "../components/plugin-search"
 
-const PluginCard: React.FC<{
+const InstalledPluginListItem: React.FC<{
   plugin: { name: string; description?: string }
 }> = ({ plugin }) => {
   const [, deleteGatsbyPlugin] = useMutation(`
@@ -38,46 +40,51 @@ const PluginCard: React.FC<{
 
   return (
     <Flex
-      flexDirection="column"
-      gap={3}
-      sx={{ backgroundColor: `ui.background`, padding: 5, borderRadius: 2 }}
+      as="li"
+      justifyContent="space-between"
+      alignItems="center"
+      sx={{
+        py: 3,
+        px: 5,
+        borderRadius: 2,
+        "&:hover": { backgroundColor: `grey.10` },
+      }}
     >
-      <Flex justifyContent="space-between">
-        <Heading as="h2" sx={{ fontWeight: `500`, fontSize: 3 }}>
-          {plugin.name}
-        </Heading>
-        <DropdownMenu>
-          <DropdownMenuButton
-            aria-label="Actions"
-            sx={{
-              border: `none`,
-              background: `transparent`,
-              color: `text.secondary`,
+      <Heading as="h2" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+        {plugin.name}
+      </Heading>
+      <DropdownMenu>
+        <DropdownMenuButton
+          aria-label="Actions"
+          sx={{
+            border: `none`,
+            background: `transparent`,
+            color: `text.secondary`,
+          }}
+        >
+          ···
+        </DropdownMenuButton>
+        <DropdownMenuItems>
+          <DropdownMenuItem
+            onSelect={(): void => {
+              if (
+                window.confirm(`Are you sure you want to uninstall ${name}?`)
+              ) {
+                deleteGatsbyPlugin({ name })
+              }
             }}
           >
-            ···
-          </DropdownMenuButton>
-          <DropdownMenuItems>
-            <DropdownMenuItem
-              onSelect={(): void => {
-                if (
-                  window.confirm(`Are you sure you want to uninstall ${name}?`)
-                ) {
-                  deleteGatsbyPlugin({ name })
-                }
-              }}
-            >
-              Uninstall
-            </DropdownMenuItem>
-          </DropdownMenuItems>
-        </DropdownMenu>
-      </Flex>
-      <Text sx={{ color: `text.secondary` }}>
-        {plugin.description || <em>No description.</em>}
-      </Text>
+            Uninstall
+          </DropdownMenuItem>
+        </DropdownMenuItems>
+      </DropdownMenu>
     </Flex>
   )
 }
+
+const Subheading: React.FC<HeadingProps> = props => (
+  <Heading as="h2" sx={{ fontWeight: `bold`, fontSize: 3 }} {...props} />
+)
 
 const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
@@ -86,10 +93,7 @@ const Index: React.FC<{}> = () => {
         allGatsbyPlugin {
           nodes {
             name
-            description
             id
-            shadowedFiles
-            shadowableFiles
           }
         }
       }
@@ -108,21 +112,60 @@ const Index: React.FC<{}> = () => {
   }
 
   return (
-    <Flex gap={8} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
-      <Flex gap={6} flexDirection="column">
-        <Heading
-          as="h1"
-          sx={{ fontWeight: `500`, fontSize: 5 }}
-          id="plugin-search-label"
-        >
-          Installed Plugins
-        </Heading>
-        <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-          {data.allGatsbyPlugin.nodes.map(plugin => (
-            <PluginCard key={plugin.id} plugin={plugin} />
-          ))}
-        </Grid>
-        <PluginSearchBar />
+    <Flex>
+      <Flex flexDirection="column" gap={13} flex="1">
+        <Flex gap={7} flexDirection="column" flex="1">
+          <Heading as="h1" sx={{ fontWeight: `800` }}>
+            <div
+              sx={{
+                color: `text.secondary`,
+                fontSize: 3,
+                fontWeight: `400`,
+                pb: 2,
+              }}
+            >
+              Welcome to
+            </div>
+            <Flex alignItems="center" gap={3}>
+              <span>Gatsby Admin</span>
+              <Badge tone="NEUTRAL">alpha</Badge>
+            </Flex>
+          </Heading>
+          <Text sx={{ color: `grey.80` }}>
+            Gatsby Admin is your user interface for managing and extending your
+            Gatsby site. Manage your installed plugins, themes, site metadata
+            and more without touching your code editor.
+          </Text>
+        </Flex>
+        <Flex gap={7} flexDirection="column" flex="1">
+          <Subheading>
+            Installed plugins ({data.allGatsbyPlugin.nodes.length})
+          </Subheading>
+          <Flex
+            as="ul"
+            gap={3}
+            flexDirection="column"
+            sx={{ p: 0, listStyle: `none` }}
+          >
+            {data.allGatsbyPlugin.nodes.map(plugin => (
+              <InstalledPluginListItem key={plugin.id} plugin={plugin} />
+            ))}
+          </Flex>
+        </Flex>
+      </Flex>
+      <Flex flexDirection="column" gap={13} flex="1">
+        <Flex flexDirection="column" gap={3} flex="1">
+          <Subheading id="plugin-search-label">Search all plugins</Subheading>
+          <Text sx={{ color: `grey.60` }}>
+            One of the best ways to add functionality to a Gatsby site is
+            through our plugin ecosystem. With 2000+ plugins, there’s probably
+            one that does what you need— from SEO to image optimization to data
+            sourcing and much more.
+          </Text>
+          <PluginSearchBar />
+        </Flex>
+
+        <Subheading>Recommended plugins</Subheading>
       </Flex>
     </Flex>
   )
