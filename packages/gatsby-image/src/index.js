@@ -449,7 +449,9 @@ class Image extends React.Component {
   handleImageLoaded() {
     activateCacheForImage(this.props)
 
-    this.setState({ imgLoaded: true })
+    if (!this.state.imgLoaded) {
+      this.setState({ imgLoaded: true })
+    }
 
     if (this.props.onLoad) {
       this.props.onLoad()
