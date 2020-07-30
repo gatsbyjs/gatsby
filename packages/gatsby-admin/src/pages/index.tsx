@@ -5,7 +5,6 @@ import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
   Card,
-  CardHeader,
   Heading,
   DropdownMenu,
   DropdownMenuButton,
@@ -17,6 +16,7 @@ import {
   Spacer,
   CardSection,
 } from "gatsby-interface"
+import skaterIllustration from "../skaterboi.svg"
 import PluginSearchBar from "../components/plugin-search"
 
 const InstalledPluginListItem: React.FC<{
@@ -127,22 +127,25 @@ const Index: React.FC<{}> = () => {
       <Flex gap={13}>
         <Flex flexDirection="column" gap={13} flex="1">
           <Flex gap={7} flexDirection="column">
-            <Heading as="h1" sx={{ fontWeight: `800` }}>
-              <div
-                sx={{
-                  color: `text.secondary`,
-                  fontSize: 2,
-                  fontWeight: `400`,
-                  pb: 2,
-                }}
-              >
-                Welcome to
-              </div>
-              <Flex alignItems="center" gap={3}>
-                <span>Gatsby Admin</span>
-                <Badge tone="NEUTRAL">alpha</Badge>
-              </Flex>
-            </Heading>
+            <Flex gap={6} alignItems="center">
+              <img src={skaterIllustration} />
+              <Heading as="h1" sx={{ fontWeight: `800` }}>
+                <div
+                  sx={{
+                    color: `text.secondary`,
+                    fontSize: 2,
+                    fontWeight: `400`,
+                    pb: 2,
+                  }}
+                >
+                  Welcome to
+                </div>
+                <Flex alignItems="center" gap={3}>
+                  <span>Gatsby Admin</span>
+                  <Badge tone="NEUTRAL">alpha</Badge>
+                </Flex>
+              </Heading>
+            </Flex>
             <Text sx={{ color: `grey.80` }}>
               Gatsby Admin is your user interface for managing and extending
               your Gatsby site. Manage your installed plugins, themes, site
