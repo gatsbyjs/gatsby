@@ -468,6 +468,11 @@ class Image extends React.Component {
       this.mq.base
 
     this.seenBefore = imageCache[match.src]
+
+    if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
+      this.props.onStartLoad({ wasCached: this.seenBefore })
+    }
+
     this.setState({
       imgLoaded: this.seenBefore,
       imgCached: this.seenBefore,
