@@ -24,7 +24,7 @@ Under the hood, Bootstrap uses [Sass](https://sass-lang.com/). Unlike other fram
 
 If you're using Bootstrap v4 or older, you'll also need to include jQuery to get many of the JavaScript components to work correctly. As of [Bootstrap v5](https://blog.getbootstrap.com/2020/06/16/bootstrap-5-alpha/), the framework no longer depends on jQuery.
 
-**Browser-support warning:** Bootstrap v5 also dropped Internet Explorer support.
+**Note:** Bootstrap v5 also dropped Internet Explorer support.
 
 If you're interested in using Bootstrap and want to host the CSS and JS files yourself, you can install the [Bootstrap npm package](https://www.npmjs.com/package/bootstrap). Or, if you'd rather not host the files yourself, you can source them using the [Bootstrap Content Delivery Network (CDN)](https://www.bootstrapcdn.com/).
 
