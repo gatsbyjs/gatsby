@@ -3,7 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { Text, BaseAnchor } from "gatsby-interface"
 import { useQuery } from "urql"
 
-const Navbar: React.FC<{}> = () => {
+function Navbar(): JSX.Element {
   const [{ data }] = useQuery({
     query: `
       {

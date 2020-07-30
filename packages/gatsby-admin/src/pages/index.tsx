@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 import { jsx, Flex } from "strict-ui"
 import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
@@ -15,18 +15,16 @@ import {
   Badge,
   Spacer,
 } from "gatsby-interface"
-// TODO: teach TypeScript about SVGs
-// @ts-ignore
 import skaterIllustration from "../skaterboi.svg"
-// @ts-ignore
 import boltIcon from "../bolt.svg"
-// @ts-ignore
 import sparklesIcon from "../sparkles.svg"
 import PluginSearchBar from "../components/plugin-search"
 
-const InstalledPluginListItem: React.FC<{
+function InstalledPluginListItem({
+  plugin,
+}: {
   plugin: { name: string; description?: string }
-}> = ({ plugin }) => {
+}): JSX.Element {
   const [, deleteGatsbyPlugin] = useMutation(`
     mutation destroyGatsbyPlugin($name: String!) {
       destroyNpmPackage(npmPackage: {
@@ -97,11 +95,11 @@ const InstalledPluginListItem: React.FC<{
   )
 }
 
-const Subheading: React.FC<HeadingProps> = props => (
-  <Heading as="h2" sx={{ fontWeight: `bold`, fontSize: 3 }} {...props} />
-)
+function Subheading(props: HeadingProps): JSX.Element {
+  return <Heading as="h2" sx={{ fontWeight: `bold`, fontSize: 3 }} {...props} />
+}
 
-const Index: React.FC<{}> = () => {
+function Index(): JSX.Element {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {

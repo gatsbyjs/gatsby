@@ -7,8 +7,6 @@ import { createUrqlClient } from "../urql-client"
 
 const baseTheme = getTheme()
 
-console.log(baseTheme)
-
 const theme = {
   ...baseTheme,
   colors: {
