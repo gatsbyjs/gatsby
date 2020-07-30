@@ -11501,6 +11501,17 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Reactive Resume
+  url: https://rxresu.me
+  main_url: https://rxresu.me
+  description: >
+    A free and open source resume builder.
+  categories:
+    - App
+    - Design
+    - Open Source
+  built_by: Amruth Pillai
+  built_by_url: https://amruthpillai.com
 - title: Meetup
   url: https://meetup.com/
   main_url: https://meetup.com/

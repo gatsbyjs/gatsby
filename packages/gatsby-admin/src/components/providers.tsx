@@ -13,9 +13,18 @@ const theme = {
     ...baseTheme.colors,
     background: baseTheme.colors.primaryBackground,
   },
+  fonts: {
+    ...baseTheme.fonts,
+    // We want to use inter for all text on the page, no more futura!
+    brand: baseTheme.fonts.sans,
+    heading: baseTheme.fonts.sans,
+    body: baseTheme.fonts.sans,
+  },
   fontWeights: {
     ...baseTheme.fontWeights,
-    "500": 500,
+    bold: 600,
+    400: 400,
+    800: 800,
   },
   borders: {
     none: `none`,
@@ -30,7 +39,13 @@ const theme = {
     "16px": `16px`,
     "15em": `15em`,
     "20em": `20em`,
+    "1.5em": `1.5em`,
     initial: `initial`,
+  },
+  styles: {
+    root: {
+      backgroundColor: `grey.5`,
+    },
   },
 }
 

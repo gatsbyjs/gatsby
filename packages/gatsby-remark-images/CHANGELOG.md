@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.22...gatsby-remark-images@3.3.23) (2020-07-30)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [3.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.21...gatsby-remark-images@3.3.22) (2020-07-28)
 
 ### Bug Fixes
