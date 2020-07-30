@@ -43,6 +43,11 @@ const theme = {
     "20em": `20em`,
     initial: `initial`,
   },
+  styles: {
+    root: {
+      backgroundColor: `grey.5`,
+    },
+  },
 }
 
 const GraphQLProvider: React.FC<{}> = ({ children }) => {

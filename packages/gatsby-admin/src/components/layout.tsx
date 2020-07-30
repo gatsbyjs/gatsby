@@ -16,10 +16,8 @@ const Layout: React.FC<{}> = ({ children }) => (
       flexDirection="column"
       sx={{
         maxWidth: `76rem`,
-        minHeight: `100vh`,
         margin: `0 auto`,
         px: 8,
-        backgroundColor: `grey.5`,
       }}
     >
       <Navbar />
