@@ -16,6 +16,8 @@ import {
   Spacer,
   CardSection,
 } from "gatsby-interface"
+// TODO: teach TypeScript about SVGs
+// @ts-ignore
 import skaterIllustration from "../skaterboi.svg"
 import PluginSearchBar from "../components/plugin-search"
 
