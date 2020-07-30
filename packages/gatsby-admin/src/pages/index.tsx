@@ -44,6 +44,12 @@ const InstalledPluginListItem: React.FC<{
       as="li"
       justifyContent="space-between"
       alignItems="center"
+      // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
+      // @ts-ignore
+      style={{
+        width: `calc(100% + 2rem)`,
+        marginLeft: `-1rem`,
+      }}
       sx={{
         py: 3,
         px: 5,
@@ -115,14 +121,14 @@ const Index: React.FC<{}> = () => {
   return (
     <Fragment>
       <Spacer size={9} />
-      <Flex>
+      <Flex gap={13}>
         <Flex flexDirection="column" gap={13} flex="1">
           <Flex gap={7} flexDirection="column">
             <Heading as="h1" sx={{ fontWeight: `800` }}>
               <div
                 sx={{
                   color: `text.secondary`,
-                  fontSize: 3,
+                  fontSize: 2,
                   fontWeight: `400`,
                   pb: 2,
                 }}
@@ -157,7 +163,7 @@ const Index: React.FC<{}> = () => {
           </Flex>
         </Flex>
         <Flex flexDirection="column" gap={13} flex="1">
-          <Flex flexDirection="column" gap={3}>
+          <Flex flexDirection="column" gap={5}>
             <Subheading id="plugin-search-label">Search all plugins</Subheading>
             <Text sx={{ color: `grey.60` }}>
               One of the best ways to add functionality to a Gatsby site is
