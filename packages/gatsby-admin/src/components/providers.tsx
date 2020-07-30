@@ -7,15 +7,26 @@ import { createUrqlClient } from "../urql-client"
 
 const baseTheme = getTheme()
 
+console.log(baseTheme)
+
 const theme = {
   ...baseTheme,
   colors: {
     ...baseTheme.colors,
     background: baseTheme.colors.primaryBackground,
   },
+  fonts: {
+    ...baseTheme.fonts,
+    // We want to use inter for all text on the page, no more futura!
+    brand: baseTheme.fonts.sans,
+    heading: baseTheme.fonts.sans,
+    body: baseTheme.fonts.sans,
+  },
   fontWeights: {
     ...baseTheme.fontWeights,
-    "500": 500,
+    bold: 600,
+    400: 400,
+    800: 800,
   },
   borders: {
     none: `none`,
