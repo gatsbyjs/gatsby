@@ -4,6 +4,8 @@ import { jsx, Flex } from "strict-ui"
 import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
+  Card,
+  CardHeader,
   Heading,
   DropdownMenu,
   DropdownMenuButton,
@@ -13,6 +15,7 @@ import {
   Text,
   Badge,
   Spacer,
+  CardSection,
 } from "gatsby-interface"
 import PluginSearchBar from "../components/plugin-search"
 
@@ -57,7 +60,7 @@ const InstalledPluginListItem: React.FC<{
         "&:hover": { backgroundColor: `grey.10` },
       }}
     >
-      <Heading as="h2" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+      <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
         {plugin.name}
       </Heading>
       <DropdownMenu>
@@ -174,7 +177,16 @@ const Index: React.FC<{}> = () => {
             <PluginSearchBar />
           </Flex>
 
-          <Subheading>Recommended plugins</Subheading>
+          <Flex flexDirection="column" gap={5}>
+            <Subheading>Recommended plugins</Subheading>
+            <Card>
+              <CardSection>
+                <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+                  Coming soon!
+                </Heading>
+              </CardSection>
+            </Card>
+          </Flex>
         </Flex>
       </Flex>
     </Fragment>

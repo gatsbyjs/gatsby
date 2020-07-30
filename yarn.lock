@@ -10453,10 +10453,10 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
-gatsby-interface@0.0.173:
-  version "0.0.173"
-  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.173.tgz#7c48abcf73c9d1633d958f15e39677d8ae5f9023"
-  integrity sha512-gcx9oCmIKjSlolnQ1OzIJzHF9rUgdNEG8dlQL1VTsaCb7VTDYmMkmo09ybHIkQ/nv9bQEFmOMGiC/jeL02GXLg==
+gatsby-interface@0.0.183:
+  version "0.0.183"
+  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.183.tgz#cc1c7a655edd623635458a632bbf39d0b11f0eb9"
+  integrity sha512-SXmmyCiTC4xDmDF0ChHywchF3kfoPv2IazWhopBZzEpYR0RP8BmMQVIdXVS+FoEgG5SI0YBRKF6BPf+gRMslnw==
   dependencies:
     "@mdx-js/react" "^1.5.2"
     "@reach/alert" "0.10.3"
