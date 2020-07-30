@@ -114,7 +114,7 @@ const Index: React.FC<{}> = () => {
   return (
     <Flex>
       <Flex flexDirection="column" gap={13} flex="1">
-        <Flex gap={7} flexDirection="column" flex="1">
+        <Flex gap={7} flexDirection="column">
           <Heading as="h1" sx={{ fontWeight: `800` }}>
             <div
               sx={{
@@ -137,7 +137,7 @@ const Index: React.FC<{}> = () => {
             and more without touching your code editor.
           </Text>
         </Flex>
-        <Flex gap={7} flexDirection="column" flex="1">
+        <Flex gap={7} flexDirection="column">
           <Subheading>
             Installed plugins ({data.allGatsbyPlugin.nodes.length})
           </Subheading>
@@ -154,7 +154,7 @@ const Index: React.FC<{}> = () => {
         </Flex>
       </Flex>
       <Flex flexDirection="column" gap={13} flex="1">
-        <Flex flexDirection="column" gap={3} flex="1">
+        <Flex flexDirection="column" gap={3}>
           <Subheading id="plugin-search-label">Search all plugins</Subheading>
           <Text sx={{ color: `grey.60` }}>
             One of the best ways to add functionality to a Gatsby site is
