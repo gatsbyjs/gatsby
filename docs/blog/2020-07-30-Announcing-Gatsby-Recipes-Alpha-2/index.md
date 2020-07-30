@@ -34,7 +34,7 @@ The initial version only supported "static" components — you couldn't write co
 
 The following is an example of what’s now possible. The Recipe defines data and loops over them to define GitHub project columns & labels for the project. For the moment the data must be hard coded but in future releases, we’ll support fetching that data from an API.
 
-```mdx
+```MDX
 export const labels = [
   { color: 'tomato', description: '1' },
   { color: 'tomato', description: '2' },
