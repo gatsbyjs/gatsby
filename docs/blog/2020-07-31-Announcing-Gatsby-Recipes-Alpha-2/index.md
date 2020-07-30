@@ -1,6 +1,6 @@
 ---
 title: "Announcing Gatsby Recipes Alpha 2"
-date: 2020-07-30
+date: 2020-07-31
 author: "Kyle Mathews"
 excerpt: "After first releasing Recipes in April, we learned a lot from early adopters, testers and community members creating and contribtuing their own Recipes (thanks!) for automating common Gatsby site building chores. In this second alpha release we applied these lessons as we completely rewrote many parts of Recipes to better fulfill our vision of making Gatsby super easy to use, even for beginners."
 tags: ["gatsby-inc", "releases", "gatsby-cloud"]
