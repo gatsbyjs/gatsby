@@ -57,7 +57,8 @@ export const projectColumns = [
   {labels.map((label) => (
     <GithubLabel key={label.description} {...label} />
   ))}
-</GithubRepo>
+</GithubRepo
+>
 ```
 
 Read [John Otander's blog post for a deeper dive on this change.](https://johno.com/recipes-interpreter/)
