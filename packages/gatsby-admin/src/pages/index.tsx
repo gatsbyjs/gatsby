@@ -187,11 +187,11 @@ const Index: React.FC<{}> = () => {
           <Flex flexDirection="column" gap={5}>
             <Subheading>Recommended plugins</Subheading>
             <Card>
-              <CardSection>
+              <Flex sx={{ p: 9 }} justifyContent="center" alignItems="center">
                 <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
                   Coming soon!
                 </Heading>
-              </CardSection>
+              </Flex>
             </Card>
           </Flex>
         </Flex>
