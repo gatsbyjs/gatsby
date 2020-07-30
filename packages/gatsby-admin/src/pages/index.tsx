@@ -133,7 +133,10 @@ const Index: React.FC<{}> = () => {
         <Flex flexDirection="column" gap={13} flex="1">
           <Flex gap={7} flexDirection="column">
             <Flex gap={6} alignItems="center">
-              <img src={skaterIllustration} />
+              <img
+                src={skaterIllustration}
+                alt="Skater illustration with a Gatsby flag"
+              />
               <Heading as="h1" sx={{ fontWeight: `800` }}>
                 <div
                   sx={{
@@ -161,7 +164,7 @@ const Index: React.FC<{}> = () => {
           </Flex>
           <Flex gap={7} flexDirection="column">
             <Flex alignItems="center" gap={3}>
-              <img src={boltIcon} />
+              <img src={boltIcon} alt="" />
               <Subheading>
                 Installed plugins{` `}
                 <span sx={{ fontSize: 1, color: `grey.50`, fontWeight: `400` }}>
@@ -195,7 +198,7 @@ const Index: React.FC<{}> = () => {
 
           <Flex flexDirection="column" gap={5}>
             <Flex alignItems="center" gap={3}>
-              <img src={sparklesIcon} />
+              <img src={sparklesIcon} alt="" />
               <Subheading>Recommended plugins</Subheading>
             </Flex>
             <Card>
