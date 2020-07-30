@@ -9,7 +9,7 @@ tags:
 
 During Gatsby Days Reconfigured last month [we previewed quite a few exciting projects](/blog/2020-06-23-Reconfiguring-Gatsby-Days/) to be released soon. These launches are aimed at helping developers transition their CMSs into the headless CMS era; enabling content creators to use Gatsby more easily and intuitively; and, simultaneously, improving the developer experience for our current and future users. One of these exciting new announcements actually ties all three of these goals together: a sneak peek at the development of our own [i18n theme](/blog/2020-06-23-Reconfiguring-Gatsby-Days/#i18n-theme). It's the first step towards having internationalization in Gatsby as a first-class citizen, and we are looking to launch by the end of the month.
 
-First, though, we’d like to share the research process we’ve followed in developing the i18n theme, and the pain points we sought to solve. The goal in sharing these findings is to start an open discussion and invite your feedback. If you’re interested in contributing, please join the [Gatsby Discord channel](https://gatsby.dev/discord) and add your voice to the conversation!
+First, though, we’d like to share the research process we’ve followed in developing the i18n theme, and the pain points we sought to solve. The goal in sharing these findings is to start an open discussion and invite your feedback. If you’re interested in contributing, please join the [Gatsby Discord channel](https://discord.gg/cQ2MPUz) and add your voice to the conversation!
 
 ## Why i18n?
 
@@ -23,7 +23,7 @@ As lead engineer on the Gatsby i18n initiative, I knew right from the start that
 
 Currently, high level pain points for our users are that they often have to choose between multiple plugins and then implement everything on their own. Scalability also presents a challenge, because having your site in two languages already doubles your page count. There are also numerous more specific issues affecting users seeking to implement i18n with their Gatsby sites or apps.
 
-This is a non-exhaustive list of issues I most commonly read and heard. Feel free to share any other problems with me (on [Discord](https://gatsby.dev/discord)) that you see as important to the overall development of Gatsby’s i18n strategy!
+This is a non-exhaustive list of issues I most commonly read and heard. Feel free to share any other problems with me (on [Discord](https://discord.gg/cQ2MPUz)) that you see as important to the overall development of Gatsby’s i18n strategy!
 
 1. **Generating separate pages for each locale requires greater effort and knowledge from the user than usual.** Passing around the necessary information via `pageContext`, creating new pages from existing ones, and creating some sort of config to control that is complicated. There are some pitfalls when using the `onCreatePage` API and `pageContext` that might lead to unexpected errors or performance degradation.
 
@@ -56,6 +56,6 @@ Most importantly the great variety of responses received thus far showed that ou
 
 ## What's next?
 
-The alpha of `gatsby-theme-i18n` and its child themes will be released very soon. Until then (and in the future, as well) you can join the [Discord channel](https://gatsby.dev/discord) to chat as more details on how to contribute will follow. Also, keep an eye out for the announcement post.
+The alpha of `gatsby-theme-i18n` and its child themes will be released very soon. Until then (and in the future, as well) you can join the [Discord channel](https://discord.gg/cQ2MPUz) to chat as more details on how to contribute will follow. Also, keep an eye out for the announcement post.
 
 I encourage all interested parties to try out the theme when it's ready and get involved in the process of refining it. And then show us the awesome things you build!
