@@ -554,3 +554,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Alex Perronnet
+  type: individual
+  image: images/alex-perronnet.jpg
+  description: >-
+    I'm Alex Perronnet, a french freelance developer and designer. I'm also an open-source contributor and a content creator.
+  location: Paris, France
+  website: https://alexperronnet.io
+  github: https://github.com/alexperronnet
+  for_hire: true
+  hiring: false
+  portfolio: true
