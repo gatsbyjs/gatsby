@@ -8,6 +8,7 @@ const Layout: React.FC<{}> = ({ children }) => (
   <Providers>
     <Helmet>
       <title>Gatsby Admin</title>
+      <link rel="icon" href="/favicon.ico" />
       <html lang="en" />
     </Helmet>
     <Flex gap={0} flexDirection="column">
