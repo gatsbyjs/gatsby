@@ -9,6 +9,9 @@
   "dependencies": {
     "@babel/code-frame": "^7.10.3",
     "@babel/runtime": "^7.10.3",
+    "@turist/fetch": "^7.1.6",
+    "@turist/time": "^0.0.1",
+    "async-retry-ng": "^2.0.1",
     "boxen": "^4.2.0",
     "configstore": "^5.0.1",
     "envinfo": "^7.5.1",
