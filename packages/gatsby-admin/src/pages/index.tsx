@@ -19,6 +19,7 @@ import skaterIllustration from "../skaterboi.svg"
 import boltIcon from "../bolt.svg"
 import sparklesIcon from "../sparkles.svg"
 import PluginSearchBar from "../components/plugin-search"
+import OptionsInput from "../components/options-input"
 
 function InstalledPluginListItem({
   plugin,
@@ -45,6 +46,29 @@ function InstalledPluginListItem({
     }
   `)
 
+  const [, setPluginOptions] = useMutation(`
+  mutation updateGatsbyPlugin(
+    $name: String!
+    $options: JSONObject) {
+    updateGatsbyPlugin(gatsbyPlugin: {
+      name: $name,
+      id: $name,
+      options: $options
+    }) {
+      id
+      name
+      options
+    }
+  }
+`)
+
+const test = "gatsby-plugin-test"
+const options = {extensions: [".md", ".mdx"]}
+
+const handleFormSubmit = (name: String, options: Object) => (event: React.FormEvent<HTMLFormElement>) => {
+  setPluginOptions({name, options})
+};
+
   return (
     <Flex
       as="li"
@@ -66,6 +90,14 @@ function InstalledPluginListItem({
       <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
         {plugin.name}
       </Heading>
+
+      <form onSubmit={handleFormSubmit(plugin.name, options)}>
+    <label>
+      Plugin Options:
+      {/* <textarea value={options}>json goes here</textarea> */}
+    </label>
+    <input type="submit" value="Submit" />
+  </form>
       <DropdownMenu>
         <DropdownMenuButton
           aria-label="Actions"
