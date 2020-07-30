@@ -40,7 +40,10 @@ export default (mdxSrc, isRenderer = false) => {
   if (mdxCache.has(mdxSrc)) {
     jsxFromMdx = mdxCache.get(mdxSrc)
   } else {
-    jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
+    jsxFromMdx = mdx.sync(mdxSrc, {
+      skipExport: true,
+      commonmark: true,
+    })
     mdxCache.set(mdxSrc, jsxFromMdx)
   }
 
