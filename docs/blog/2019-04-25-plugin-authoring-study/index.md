@@ -67,7 +67,8 @@ Examples of things that are confusing:
 - Most people don’t know how to write automated tests for plugins and mentioned building a site just to test the plugin, which they felt wasn't the most ideal way to test
 - Rebuilding for every change often “feels wrong” to people
 
-<!--lint disable no-duplicate-headings-->
+<!--lint disable no-duplicate-headings-in-section-->
+
 ## Solution
 
 [Redesigned the plugin docs](https://github.com/gatsbyjs/gatsby/pull/13261/files) to include a category called "Creating Plugins" where we can document answers to people's concerns; for example, ideas for how to test plugins and advice to use yarn workspaces to avoid yarn link inconsistencies.
