@@ -9,7 +9,7 @@ describe(`fluid`, () => {
     cy.getTestElement(fluidTestId)
       .find(`.gatsby-image-wrapper > div`)
       .should(`have.attr`, `style`)
-      .and(`match`, /width:100%;padding-bottom/)
+      .and(`match`, /width: 100%; padding-bottom/)
   })
 
   it(`renders sizes`, () => {
