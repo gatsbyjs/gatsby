@@ -216,6 +216,32 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without]
 }
 
+// For Art Direction: SSR + Initial load, removed upon rehydration
+// Ensures correct CSS for image variants is applied
+const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
+  const variantRule = ({ width, height, aspectRatio }) => {
+    // '!important' required due to overriding inline styles
+    // 'aspectRatio' == fluid data
+    const styleOverride = aspectRatio
+      ? `padding-bottom: ${100 / aspectRatio}% !important;`
+      : `width: ${width}px !important; height: ${height}px !important;`
+
+    return `.${selectorClass} { ${styleOverride} }`
+  }
+
+  const base = variantRule(imageVariants.find(v => !v.media))
+  return (
+    <>
+      {base && <style>{base}</style>}
+      {imageVariants
+        .filter(v => v.media)
+        .map(v => (
+          <style media={v.media}>{variantRule(v)}</style>
+        ))}
+    </>
+  )
+}
+
 function generateTracedSVGSources(imageVariants) {
   return imageVariants.map(({ src, media, tracedSVG }) => (
     <source key={src} media={media} srcSet={tracedSVG} />
@@ -536,6 +562,13 @@ class Image extends React.Component {
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
+          {uniqueKey && (
+            <ResponsiveQueries
+              imageVariants={imageVariants}
+              selectorClass={uniqueKey}
+            />
+          )}
+
           {/* Preserve the aspect ratio. */}
           <Tag
             aria-hidden
@@ -650,6 +683,13 @@ class Image extends React.Component {
           ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
+          {uniqueKey && (
+            <ResponsiveQueries
+              imageVariants={imageVariants}
+              selectorClass={uniqueKey}
+            />
+          )}
+
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
