@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.103...gatsby-admin@0.1.104) (2020-07-30)
+
+### Features
+
+- **gatsby-admin:** add favicon ([#26121](https://github.com/gatsbyjs/gatsby/issues/26121)) ([0211c05](https://github.com/gatsbyjs/gatsby/commit/0211c05))
+
 ## [0.1.103](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.102...gatsby-admin@0.1.103) (2020-07-29)
 
 **Note:** Version bump only for package gatsby-admin
