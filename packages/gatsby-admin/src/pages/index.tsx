@@ -1,106 +1,30 @@
 /** @jsx jsx */
-import React from "react"
-import { jsx, Flex, Grid } from "strict-ui"
+import { Fragment } from "react"
+import { jsx, Flex } from "strict-ui"
+import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
+  Card,
   Heading,
+  DropdownMenu,
+  DropdownMenuButton,
+  DropdownMenuItem,
+  DropdownMenuItems,
   HeadingProps,
   Text,
-  Button,
-  InputField,
-  InputFieldControl,
-  ButtonProps,
+  Badge,
+  Spacer,
 } from "gatsby-interface"
+import skaterIllustration from "../skaterboi.svg"
+import boltIcon from "../bolt.svg"
+import sparklesIcon from "../sparkles.svg"
+import PluginSearchBar from "../components/plugin-search"
 
-const SecondaryButton: React.FC<ButtonProps> = props => (
-  <Button
-    variant="SECONDARY"
-    size="S"
-    sx={{
-      paddingX: 6,
-      paddingY: 4,
-      color: `whiteFade.80`,
-      border: `sixtywhite`,
-      "&:hover": {
-        color: `white`,
-        border: `white`,
-      },
-    }}
-    {...props}
-  ></Button>
-)
-
-const InstallInput: React.FC<{ for: string }> = props => {
-  const inputId = `install-${props.for}`
-  const [value, setValue] = React.useState(``)
-
-  const [{ fetching }, installGatbyPlugin] = useMutation(`
-    mutation installGatsbyPlugin($name: String!) {
-      createNpmPackage(npmPackage: {
-        name: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      createGatsbyPlugin(gatsbyPlugin: {
-        name: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
-  return (
-    <form
-      onSubmit={(evt): void => {
-        evt.preventDefault()
-        if (value.indexOf(`gatsby-`) !== 0) return
-
-        installGatbyPlugin({
-          name: value,
-        })
-      }}
-    >
-      <InputField id={inputId}>
-        <Flex gap={2} flexDirection="column">
-          <Text size="S" sx={{ color: `grey.40` }}>
-            <label htmlFor={inputId}>Install {props.for}:</label>
-          </Text>
-          <Flex gap={4} alignItems="center">
-            <InputFieldControl
-              placeholder={`gatsby-${props.for}-`}
-              disabled={fetching}
-              value={value}
-              onChange={(e): void => setValue(e.target.value)}
-              sx={{
-                backgroundColor: `background`,
-                borderColor: `grey.60`,
-                color: `white`,
-                width: `initial`,
-                "&:focus": {
-                  borderColor: `grey.40`,
-                  // TODO(@mxstbr): Fix this focus outline
-                  boxShadow: `none`,
-                },
-              }}
-            />
-            <SecondaryButton
-              disabled={!value.trim()}
-              loading={fetching}
-              loadingLabel="Installing"
-            >
-              Install
-            </SecondaryButton>
-          </Flex>
-        </Flex>
-      </InputField>
-    </form>
-  )
-}
-
-const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
+function InstalledPluginListItem({
+  plugin,
+}: {
+  plugin: { name: string; description?: string }
+}): JSX.Element {
   const [, deleteGatsbyPlugin] = useMutation(`
     mutation destroyGatsbyPlugin($name: String!) {
       destroyNpmPackage(npmPackage: {
@@ -122,91 +46,170 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   `)
 
   return (
-    <SecondaryButton
-      onClick={(evt): void => {
-        evt.preventDefault()
-        if (window.confirm(`Are you sure you want to uninstall ${name}?`)) {
-          deleteGatsbyPlugin({ name })
-        }
+    <Flex
+      as="li"
+      justifyContent="space-between"
+      alignItems="center"
+      // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
+      // @ts-ignore
+      style={{
+        width: `calc(100% + 2rem)`,
+        marginLeft: `-1rem`,
+      }}
+      sx={{
+        py: 3,
+        px: 5,
+        borderRadius: 2,
+        "&:hover": { backgroundColor: `grey.10` },
       }}
     >
-      Uninstall
-    </SecondaryButton>
+      <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+        {plugin.name}
+      </Heading>
+      <DropdownMenu>
+        <DropdownMenuButton
+          aria-label="Actions"
+          sx={{
+            border: `none`,
+            background: `transparent`,
+            color: `grey.60`,
+          }}
+        >
+          ···
+        </DropdownMenuButton>
+        <DropdownMenuItems>
+          <DropdownMenuItem
+            onSelect={(): void => {
+              if (
+                window.confirm(`Are you sure you want to uninstall ${name}?`)
+              ) {
+                deleteGatsbyPlugin({ name })
+              }
+            }}
+          >
+            Uninstall
+          </DropdownMenuItem>
+        </DropdownMenuItems>
+      </DropdownMenu>
+    </Flex>
   )
 }
 
-const SectionHeading: React.FC<HeadingProps> = props => (
-  <Heading
-    as="h1"
-    sx={{ color: `white`, fontWeight: `500`, fontSize: 5 }}
-    {...props}
-  />
-)
+function Subheading(props: HeadingProps): JSX.Element {
+  return <Heading as="h2" sx={{ fontWeight: `bold`, fontSize: 3 }} {...props} />
+}
 
-const PluginCard: React.FC<{
-  plugin: { name: string; description?: string }
-}> = ({ plugin }) => (
-  <Flex
-    flexDirection="column"
-    gap={6}
-    sx={{ backgroundColor: `grey.80`, padding: 5, borderRadius: 2 }}
-  >
-    <Heading as="h2" sx={{ color: `white`, fontWeight: `500`, fontSize: 3 }}>
-      {plugin.name}
-    </Heading>
-    <Text sx={{ color: `grey.40` }}>
-      {plugin.description || <em>No description.</em>}
-    </Text>
-    <Flex justifyContent="flex-end" sx={{ width: `100%` }}>
-      <DestroyButton name={plugin.name} />
-    </Flex>
-  </Flex>
-)
-
-const Index: React.FC<{}> = () => {
+function Index(): JSX.Element {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
         allGatsbyPlugin {
           nodes {
             name
-            description
             id
-            shadowedFiles
-            shadowableFiles
           }
         }
       }
     `,
   })
 
-  if (fetching) return <p>Loading...</p>
+  if (fetching) return <Spinner />
 
-  if (error) return <p>Oops something went wrong.</p>
+  if (error) {
+    const errMsg =
+      (error.networkError && error.networkError.message) ||
+      (Array.isArray(error.graphQLErrors) &&
+        error.graphQLErrors.map(e => e.message).join(` | `))
+
+    return <p>Error: {errMsg}</p>
+  }
 
   return (
-    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
-      <SectionHeading>Plugins</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
-          .map(plugin => (
-            <PluginCard key={plugin.id} plugin={plugin} />
-          ))}
-      </Grid>
-      <InstallInput for="plugin" />
+    <Fragment>
+      <Spacer size={9} />
+      <Flex gap={13}>
+        <Flex flexDirection="column" gap={13} flex="1">
+          <Flex gap={7} flexDirection="column">
+            <Flex gap={6} alignItems="center">
+              <img
+                src={skaterIllustration}
+                alt="Skater illustration with a Gatsby flag"
+              />
+              <Heading as="h1" sx={{ fontWeight: `800` }}>
+                <div
+                  sx={{
+                    color: `grey.60`,
+                    fontSize: 2,
+                    fontWeight: `400`,
+                    pb: 2,
+                  }}
+                >
+                  Welcome to
+                </div>
+                <Flex alignItems="center" gap={3}>
+                  <span>Gatsby Admin</span>
+                  <Badge sx={{ backgroundColor: `blackFade.5` }} tone="NEUTRAL">
+                    alpha
+                  </Badge>
+                </Flex>
+              </Heading>
+            </Flex>
+            <Text sx={{ color: `grey.80` }}>
+              Gatsby Admin is your user interface for managing and extending
+              your Gatsby site. Manage your installed plugins, themes, site
+              metadata and more without touching your code editor.
+            </Text>
+          </Flex>
+          <Flex gap={7} flexDirection="column">
+            <Flex alignItems="center" gap={3}>
+              <img src={boltIcon} alt="" />
+              <Subheading>
+                Installed plugins{` `}
+                <span sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}>
+                  ({data.allGatsbyPlugin.nodes.length})
+                </span>
+              </Subheading>
+            </Flex>
+            <Flex
+              as="ul"
+              gap={3}
+              flexDirection="column"
+              sx={{ p: 0, listStyle: `none` }}
+            >
+              {data.allGatsbyPlugin.nodes.map(plugin => (
+                <InstalledPluginListItem key={plugin.id} plugin={plugin} />
+              ))}
+            </Flex>
+          </Flex>
+        </Flex>
+        <Flex flexDirection="column" gap={13} flex="1">
+          <Flex flexDirection="column" gap={5}>
+            <Subheading id="plugin-search-label">Search all plugins</Subheading>
+            <Text sx={{ color: `grey.60` }}>
+              One of the best ways to add functionality to a Gatsby site is
+              through our plugin ecosystem. With 2000+ plugins, there’s probably
+              one that does what you need— from SEO to image optimization to
+              data sourcing and much more.
+            </Text>
+            <PluginSearchBar />
+          </Flex>
 
-      <SectionHeading>Themes</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
-        {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
-          .map(plugin => (
-            <PluginCard key={plugin.id} plugin={plugin} />
-          ))}
-      </Grid>
-
-      <InstallInput for="theme" />
-    </Flex>
+          <Flex flexDirection="column" gap={5}>
+            <Flex alignItems="center" gap={3}>
+              <img src={sparklesIcon} alt="" />
+              <Subheading>Recommended plugins</Subheading>
+            </Flex>
+            <Card>
+              <Flex sx={{ p: 9 }} justifyContent="center" alignItems="center">
+                <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+                  Coming soon!
+                </Heading>
+              </Flex>
+            </Card>
+          </Flex>
+        </Flex>
+      </Flex>
+    </Fragment>
   )
 }
 

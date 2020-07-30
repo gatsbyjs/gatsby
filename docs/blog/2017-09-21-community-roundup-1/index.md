@@ -14,7 +14,7 @@ It's been a wild 77 days since Gatsby 1.0.0 was released into the world on July
 By the numbers we've seen:
 
 - 3150 new GitHub stars
-- ~380,000 new NPM downloads
+- ~380,000 new npm downloads
 - 110 new contributors (hey y'all!)
 - ~400 merged PRs
 - dozens of new plugins

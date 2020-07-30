@@ -1,4 +1,11 @@
 module.exports = {
-  plugins: [`gatsby-plugin-react-helmet`],
-  pathPrefix: `/___admin`
-};
+  plugins: [`gatsby-plugin-react-helmet`, {resolve: "gatsby-plugin-webfonts", options: {
+    fonts: {
+      google: [{
+        family: `Inter`,
+        variants: [`400`, `600`, `800`]
+      }]
+    }
+  }}],
+  pathPrefix: `/___admin`,
+}

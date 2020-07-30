@@ -1,5 +1,5 @@
 import Resolver from "enhanced-resolve/lib/Resolver"
-import * as path from "path"
+import path from "path"
 
 // Core-js uses es6, es7 & web prefixes, which we'll convert to core-js 3
 const coreJs2FileRegex = /\/modules\/(es6|es7|web)\.|\/es6\/|\/es7\//
@@ -32,8 +32,6 @@ interface IRequest {
  */
 export class CoreJSResolver {
   _coreJSNodeModulesPath: string
-  _resolver?: Resolver
-  _target?: string
 
   constructor() {
     // Get the nodemodules directory where core-js of gatsby lives
@@ -43,61 +41,60 @@ export class CoreJSResolver {
     )
   }
 
-  resolve(
-    request: IRequest,
-    resolveContext: unknown,
-    callback: (err?: Error | null, result?: unknown) => void
-  ): void {
-    const innerRequest = request.request || request.path
-
-    // we only care about core-js
-    if (!innerRequest || !innerRequest.startsWith(`core-js/`)) {
-      return void callback()
-    }
-
-    let coreJsRequest = innerRequest
-    let resolveMessage = `alias core-js@3 to gatsby's core-js package`
-
-    // preset-env adds packages from modules/ so we rewrite them to our gatsby package
-    if (coreJs2FileRegex.test(coreJsRequest)) {
-      replaceMap.forEach(([search, replace]) => {
-        coreJsRequest = coreJsRequest.replace(search, replace)
-      })
-
-      resolveMessage = `map core-js@2(${innerRequest}) to corejs@3(${coreJsRequest})`
-    }
-
-    return void this._resolver.doResolve(
-      this._target,
-      {
-        ...request,
-        request: path.resolve(this._coreJSNodeModulesPath, coreJsRequest),
-      },
-      resolveMessage,
-      resolveContext,
-      (err, result) => {
-        if (err) {
-          return callback(err)
-        }
-
-        // if a rename fails we try to load the original file
-        // this could error when our mapping isn't complete. I've tested this on a couple of sites
-        // and couldn't find anything but you never know.
-        if (result === undefined) {
-          return callback()
-        }
-
-        return callback(null, result)
-      }
-    )
-  }
-
   apply(resolver: Resolver): void {
-    this._target = resolver.ensureHook(`resolve`)
-    this._resolver = resolver
+    const target = resolver.ensureHook(`resolve`)
+    const coreJsModulePath = this._coreJSNodeModulesPath
 
-    resolver
-      .getHook(`described-resolve`)
-      .tapAsync(`CoreJSResolver`, this.resolve.bind(this))
+    function resolve(
+      request: IRequest,
+      resolveContext: unknown,
+      callback: (err?: Error | null, result?: unknown) => void
+    ): void {
+      const innerRequest = request.request || request.path
+
+      // we only care about core-js
+      if (!innerRequest || !innerRequest.startsWith(`core-js/`)) {
+        return void callback()
+      }
+
+      let coreJsRequest = innerRequest
+      let resolveMessage = `alias core-js@3 to gatsby's core-js package`
+
+      // preset-env adds packages from modules/ so we rewrite them to our gatsby package
+      if (coreJs2FileRegex.test(coreJsRequest)) {
+        replaceMap.forEach(([search, replace]) => {
+          coreJsRequest = coreJsRequest.replace(search, replace)
+        })
+
+        resolveMessage = `map core-js@2(${innerRequest}) to corejs@3(${coreJsRequest})`
+      }
+
+      return void resolver.doResolve(
+        target,
+        {
+          ...request,
+          request: path.resolve(coreJsModulePath, coreJsRequest),
+        },
+        resolveMessage,
+        resolveContext,
+        (err, result) => {
+          if (err) {
+            return callback(err)
+          }
+
+          // if a rename fails we try to load the original file
+          // this could error when our mapping isn't complete. I've tested this on a couple of sites
+          // and couldn't find anything but you never know.
+          if (result === undefined) {
+            return callback()
+          }
+
+          return callback(null, result)
+        }
+      )
+    }
+
+    resolver.getHook(`described-resolve`).tapAsync(`CoreJSResolver`, resolve)
+    resolver.getHook(`file`).tapAsync(`CoreJSResolver`, resolve)
   }
 }

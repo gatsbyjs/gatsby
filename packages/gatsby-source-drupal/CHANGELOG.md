@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.25...gatsby-source-drupal@3.5.26) (2020-07-24)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.24...gatsby-source-drupal@3.5.25) (2020-07-22)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.23...gatsby-source-drupal@3.5.24) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.22...gatsby-source-drupal@3.5.23) (2020-07-17)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.21...gatsby-source-drupal@3.5.22) (2020-07-15)
+
+### Features
+
+- **gatsby-source-drupal:** Add Drupal Fastbuilds ([#25428](https://github.com/gatsbyjs/gatsby/issues/25428)) ([64685c3](https://github.com/gatsbyjs/gatsby/commit/64685c3))
+
+## [3.5.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.20...gatsby-source-drupal@3.5.21) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.19...gatsby-source-drupal@3.5.20) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.18...gatsby-source-drupal@3.5.19) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.5.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.17...gatsby-source-drupal@3.5.18) (2020-07-02)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** end activities if errors are thrown ([#25447](https://github.com/gatsbyjs/gatsby/issues/25447)) ([fae19ac](https://github.com/gatsbyjs/gatsby/commit/fae19ac))
+
 ## [3.5.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.16...gatsby-source-drupal@3.5.17) (2020-07-01)
 
 **Note:** Version bump only for package gatsby-source-drupal

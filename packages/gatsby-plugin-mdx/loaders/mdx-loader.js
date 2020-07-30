@@ -4,6 +4,7 @@ const grayMatter = require(`gray-matter`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 const {
   isImport,
@@ -24,7 +25,7 @@ const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
 const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
-const createMDXNode = require(`../utils/create-mdx-node`)
+const createMDXNodeWithScope = require(`../utils/mdx-node-with-scope`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
 
 const DEFAULT_OPTIONS = {
@@ -93,6 +94,7 @@ module.exports = async function (content) {
   const {
     getNode: rawGetNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -120,11 +122,15 @@ module.exports = async function (content) {
 
   let mdxNode
   try {
-    mdxNode = await createMDXNode({
+    // This node attempts to break the chicken-egg problem, where parsing mdx
+    // allows for custom plugins, which can receive a mdx node
+    ;({ mdxNode } = await createMDXNodeWithScope({
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
       content,
-    })
+      options,
+      getNodesByType,
+    }))
   } catch (e) {
     return callback(e)
   }
@@ -161,6 +167,29 @@ ${contentWithoutFrontmatter}`
     }
   }
 
+  /**
+   * Support gatsby-remark parser plugins
+   */
+  for (let plugin of options.gatsbyRemarkPlugins) {
+    debug(`requiring`, plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
+    debug(`required`, plugin)
+    if (_.isFunction(requiredPlugin.setParserPlugins)) {
+      for (let parserPlugin of requiredPlugin.setParserPlugins(
+        plugin.options || {}
+      )) {
+        if (_.isArray(parserPlugin)) {
+          const [parser, parserPluginOptions] = parserPlugin
+          debug(`adding remarkPlugin with options`, plugin, parserPluginOptions)
+          options.remarkPlugins.push([parser, parserPluginOptions])
+        } else {
+          debug(`adding remarkPlugin`, plugin)
+          options.remarkPlugins.push(parserPlugin)
+        }
+      }
+    }
+  }
+
   const { rawMDXOutput } = await genMdx({
     ...helpers,
     isLoader: true,
@@ -168,6 +197,7 @@ ${contentWithoutFrontmatter}`
     node: { ...mdxNode, rawBody: code },
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,

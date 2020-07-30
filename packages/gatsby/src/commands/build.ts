@@ -315,23 +315,23 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `${program.directory}/.cache`,
       `newPages.txt`
     )
+    const createdFilesContent = pagePaths.length
+      ? `${pagePaths.join(`\n`)}\n`
+      : ``
+
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `deletedPages.txt`
     )
+    const deletedFilesContent = deletedPageKeys.length
+      ? `${deletedPageKeys.join(`\n`)}\n`
+      : ``
 
-    if (pagePaths.length) {
-      await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`.cache/newPages.txt created`)
-    }
-    if (deletedPageKeys.length) {
-      await fs.writeFile(
-        deletedFilesPath,
-        `${deletedPageKeys.join(`\n`)}\n`,
-        `utf8`
-      )
-      report.info(`.cache/deletedPages.txt created`)
-    }
+    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+    report.info(`.cache/newPages.txt created`)
+
+    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+    report.info(`.cache/deletedPages.txt created`)
   }
 
   if (await userPassesFeedbackRequestHeuristic()) {

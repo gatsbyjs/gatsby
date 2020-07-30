@@ -4,7 +4,7 @@ title: Managing Pull Requests
 
 If you'd like to help out managing PRs on the Gatsby repo on GitHub, this document is for you. We'll go over conventions the team prefers, what we check for on various types of pull requests, permissions, and guidelines on how to leave feedback.
 
-We have over 2,000 contributors and so much of what makes Gatsby great is contributed by folks like you.
+We have over 3,300 contributors and so much of what makes Gatsby great is contributed by folks like you.
 
 Needless to say, we get a lot of PRs and we've been merging over a [100 contributions](https://twitter.com/kylemathews/status/1111435640581689345) every week. Yes, _every week_.
 
@@ -24,7 +24,7 @@ Some general things to verify in a pull request are:
 
 > 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
-Note for Gatsby Core or Learning team members: if a PR has merge conflicts or needs a little help to push it across the finish line, contributing directly to a fork or branch can be a great way to resolve it. See notes on [pushing to a remote fork in Git](#pushing-changes-to-a-remote-fork).
+Note for Gatsby team members: if a PR has merge conflicts or needs a little help to push it across the finish line, contributing directly to a fork or branch can be a great way to resolve it. See notes on [pushing to a remote fork in Git](#pushing-changes-to-a-remote-fork).
 
 ### Type Specific Guidelines
 
@@ -161,7 +161,7 @@ Alternatively, you can manage forks and branches with [hub](https://github.com/g
 
 ### Who can review a PR?
 
-If you're a member of the [gatsbyjs](https://github.com/gatsbyjs) organization on GitHub, you can review **most** PRs. PRs with [`topic: internal`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+internal%22) are reserved for Core and Learning team members as they are typically part of an internal project or hiring process.
+If you're a member of the [gatsbyjs](https://github.com/gatsbyjs) organization on GitHub, you can review **most** PRs. PRs with [`topic: internal`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+internal%22) are reserved for Gatsby team members as they are typically part of an internal project or hiring process.
 
 > 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
 
@@ -171,8 +171,10 @@ Every PR opened in the repository needs to be approved before it can be merged. 
 
 Typically this is:
 
-- **gatsbyjs/core** for Code
-- **gatsbyjs/learning** for Documentation
+- **gatsbyjs/themes** for certain features like Themes, Recipes, and Admin
+- **gatsbyjs/learning** for documentation
+- **gatsbyjs/core** for any other code
+- **gatsbyjs/website** for anything related to GatsbyJS.org
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 
