@@ -5,7 +5,6 @@ import { Spinner } from "theme-ui"
 import { useQuery, useMutation } from "urql"
 import {
   Heading,
-  HeadingProps,
   Text,
   DropdownMenu,
   DropdownMenuButton,
@@ -13,10 +12,6 @@ import {
   DropdownMenuItems,
 } from "gatsby-interface"
 import PluginSearchBar from "../components/plugin-search"
-
-const SectionHeading: React.FC<HeadingProps> = props => (
-  <Heading as="h1" sx={{ fontWeight: `500`, fontSize: 5 }} {...props} />
-)
 
 const PluginCard: React.FC<{
   plugin: { name: string; description?: string }
@@ -88,14 +83,6 @@ const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
-        allGatsbyPage {
-          nodes {
-            path
-            pluginCreator {
-              name
-            }
-          }
-        }
         allGatsbyPlugin {
           nodes {
             name
@@ -123,36 +110,13 @@ const Index: React.FC<{}> = () => {
   return (
     <Flex gap={8} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
       <Flex gap={6} flexDirection="column">
-        <SectionHeading>Pages</SectionHeading>
-        <ul sx={{ pl: 0, listStyle: `none` }}>
-          {data.allGatsbyPage.nodes
-            .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
-            .sort((a, b) => a.path.localeCompare(b.path))
-            .map(page => (
-              <li key={page.path} sx={{ p: 0 }}>
-                <Flex
-                  flexDirection="column"
-                  gap={3}
-                  sx={{
-                    backgroundColor: `ui.background`,
-                    padding: 5,
-                    borderRadius: 2,
-                  }}
-                >
-                  <Heading as="h3">{page.path}</Heading>
-                  <Text sx={{ color: `text.secondary` }}>
-                    Source: {page.pluginCreator.name}
-                  </Text>
-                </Flex>
-              </li>
-            ))}
-        </ul>
-      </Flex>
-
-      <Flex gap={6} flexDirection="column">
-        <SectionHeading id="plugin-search-label">
+        <Heading
+          as="h1"
+          sx={{ fontWeight: `500`, fontSize: 5 }}
+          id="plugin-search-label"
+        >
           Installed Plugins
-        </SectionHeading>
+        </Heading>
         <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
           {data.allGatsbyPlugin.nodes.map(plugin => (
             <PluginCard key={plugin.id} plugin={plugin} />
