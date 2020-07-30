@@ -22,10 +22,10 @@ const SearchCombobox: React.FC<{
 }> = connectAutoComplete(({ hits, currentRefinement, refine, onSelect }) => (
   <Combobox onSelect={onSelect}>
     <ComboboxInput
-      sx={{ width: `20em` }}
       aria-labelledby="plugin-search-label"
       onChange={(e): void => refine(e.target.value)}
       value={currentRefinement}
+      placeholder="What are you looking for?"
     />
     <ComboboxPopover>
       <ComboboxList aria-labelledby="plugin-search-label">

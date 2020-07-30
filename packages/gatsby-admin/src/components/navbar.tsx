@@ -3,7 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { Text, BaseAnchor } from "gatsby-interface"
 import { useQuery } from "urql"
 
-const Navbar: React.FC<{}> = () => {
+function Navbar(): JSX.Element {
   const [{ data }] = useQuery({
     query: `
       {
@@ -20,25 +20,23 @@ const Navbar: React.FC<{}> = () => {
       justifyContent="space-between"
       alignItems="center"
       sx={{
-        backgroundColor: `gatsby`,
         borderBottom: `default`,
-        paddingX: 6,
         paddingY: 5,
       }}
     >
       <Flex gap={5} alignItems="center">
-        <Text sx={{ color: `white` }}>Gatsby Admin</Text>
+        <Text>Gatsby Admin</Text>
         {data && data.npmPackageJson && (
           <div
             sx={{
               width: `1px`,
               height: `16px`,
-              backgroundColor: `whiteFade.50`,
+              backgroundColor: `blackFade.50`,
             }}
           />
         )}
         {data && data.npmPackageJson && (
-          <Text sx={{ color: `teal.50` }}>
+          <Text sx={{ fontWeight: `bold`, color: `text.primary` }}>
             {data.npmPackageJson.value.replace(/^"|"$/g, ``)}
           </Text>
         )}
@@ -47,7 +45,7 @@ const Navbar: React.FC<{}> = () => {
         <BaseAnchor
           href={`/`}
           target="_blank"
-          sx={{ color: `whiteFade.60`, textDecoration: `none` }}
+          sx={{ color: `blackFade.60`, textDecoration: `none` }}
         >
           Visit site
         </BaseAnchor>
