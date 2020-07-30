@@ -62,12 +62,14 @@ function InstalledPluginListItem({
   }
 `)
 
-const test = "gatsby-plugin-test"
-const options = {extensions: [".md", ".mdx"]}
+  const test = `gatsby-plugin-test`
+  const options = { extensions: [`.md`, `.mdx`] }
 
-const handleFormSubmit = (name: String, options: Object) => (event: React.FormEvent<HTMLFormElement>) => {
-  setPluginOptions({name, options})
-};
+  const handleFormSubmit = (name: string, options: Record<string, any>) => (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
+    setPluginOptions({ name, options })
+  }
 
   return (
     <Flex
@@ -92,12 +94,12 @@ const handleFormSubmit = (name: String, options: Object) => (event: React.FormEv
       </Heading>
 
       <form onSubmit={handleFormSubmit(plugin.name, options)}>
-    <label>
-      Plugin Options:
-      {/* <textarea value={options}>json goes here</textarea> */}
-    </label>
-    <input type="submit" value="Submit" />
-  </form>
+        <label>
+          Plugin Options:
+          {/* <textarea value={options}>json goes here</textarea> */}
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
       <DropdownMenu>
         <DropdownMenuButton
           aria-label="Actions"
