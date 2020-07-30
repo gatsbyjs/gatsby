@@ -72,7 +72,7 @@ function InstalledPluginListItem({
           sx={{
             border: `none`,
             background: `transparent`,
-            color: `text.secondary`,
+            color: `grey.60`,
           }}
         >
           ···
@@ -138,7 +138,7 @@ function Index(): JSX.Element {
               <Heading as="h1" sx={{ fontWeight: `800` }}>
                 <div
                   sx={{
-                    color: `text.secondary`,
+                    color: `grey.60`,
                     fontSize: 2,
                     fontWeight: `400`,
                     pb: 2,
@@ -165,7 +165,7 @@ function Index(): JSX.Element {
               <img src={boltIcon} alt="" />
               <Subheading>
                 Installed plugins{` `}
-                <span sx={{ fontSize: 1, color: `grey.50`, fontWeight: `400` }}>
+                <span sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}>
                   ({data.allGatsbyPlugin.nodes.length})
                 </span>
               </Subheading>
