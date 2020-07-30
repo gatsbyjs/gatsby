@@ -64,7 +64,7 @@ Read [John Otander's blog post for a deeper dive on this change.](https://johno.
 
 ### 2. A `--develop` mode for writing recipes with hot reloading
 
-With the new version, when you run a recipe with the --develop flag, the recipe server will watch your recipe and hot reload the terminal output when you make edits.
+With the new version, when you run a recipe with the `--develop` flag, the recipe server will watch your recipe and hot reload the terminal output when you make edits.
 
 https://twitter.com/kylemathews/status/1286080826204020736
 
