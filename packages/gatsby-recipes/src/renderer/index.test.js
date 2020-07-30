@@ -77,7 +77,7 @@ describe(`renderer`, () => {
           "totalSteps": "1",
         },
         "_type": "NPMPackage",
-        "currentState": "gatsby@2.24.7",
+        "currentState": "gatsby@2.24.15",
         "describe": "Install gatsby@latest",
         "newState": "gatsby@latest",
         "resourceDefinitions": Object {
