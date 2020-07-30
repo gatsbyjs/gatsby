@@ -144,7 +144,9 @@ const Index: React.FC<{}> = () => {
                 </div>
                 <Flex alignItems="center" gap={3}>
                   <span>Gatsby Admin</span>
-                  <Badge tone="NEUTRAL">alpha</Badge>
+                  <Badge sx={{ backgroundColor: `blackFade.5` }} tone="NEUTRAL">
+                    alpha
+                  </Badge>
                 </Flex>
               </Heading>
             </Flex>
