@@ -1,15 +1,11 @@
 /** @jsx jsx */
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { jsx, Flex } from "strict-ui"
 import { Spinner } from "theme-ui"
-import { useQuery, useMutation } from "urql"
+import { useQuery } from "urql"
 import {
   Card,
   Heading,
-  DropdownMenu,
-  DropdownMenuButton,
-  DropdownMenuItem,
-  DropdownMenuItems,
   HeadingProps,
   Text,
   Badge,
@@ -19,79 +15,75 @@ import skaterIllustration from "../skaterboi.svg"
 import boltIcon from "../bolt.svg"
 import sparklesIcon from "../sparkles.svg"
 import PluginSearchBar from "../components/plugin-search"
+import ManagePluginModal from "../components/manage-plugin-modal"
 
 function InstalledPluginListItem({
   plugin,
 }: {
-  plugin: { name: string; description?: string }
+  plugin: { name: string; description?: string; options?: Record<string, any> }
 }): JSX.Element {
-  const [, deleteGatsbyPlugin] = useMutation(`
-    mutation destroyGatsbyPlugin($name: String!) {
-      destroyNpmPackage(npmPackage: {
-        name: $name,
-        id: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      destroyGatsbyPlugin(gatsbyPlugin: {
-        name: $name,
-        id: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <Flex
-      as="li"
-      justifyContent="space-between"
-      alignItems="center"
-      // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
-      // @ts-ignore
-      style={{
-        width: `calc(100% + 2rem)`,
-        marginLeft: `-1rem`,
-      }}
-      sx={{
-        py: 3,
-        px: 5,
-        borderRadius: 2,
-        "&:hover": { backgroundColor: `grey.10` },
-      }}
-    >
-      <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
-        {plugin.name}
-      </Heading>
-      <DropdownMenu>
-        <DropdownMenuButton
-          aria-label="Actions"
+    <Fragment>
+      <ManagePluginModal
+        plugin={plugin}
+        isOpen={isOpen}
+        onDismiss={(): void => setIsOpen(false)}
+      />
+      <Flex
+        as="li"
+        // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
+        // @ts-ignore
+        style={{
+          width: `calc(100% + 2rem)`,
+          marginLeft: `-1rem`,
+        }}
+      >
+        <Flex
+          as="button"
+          justifyContent="space-between"
+          alignItems="center"
           sx={{
+            background: `none`,
             border: `none`,
-            background: `transparent`,
-            color: `grey.60`,
+            borderRadius: 2,
+            transition: `background-color 100ms ease-out`,
+            "&:hover": {
+              backgroundColor: `grey.10`,
+              ".hover-move": {
+                transform: `translateX(0.1em)`,
+              },
+            },
+            width: `100%`,
+            py: 3,
+            px: 5,
+          }}
+          // NOTE(@mxstbr): TypeScript does not understand the as="" prop
+          // @ts-ignore
+          onClick={(): void => {
+            setIsOpen(true)
           }}
         >
-          ···
-        </DropdownMenuButton>
-        <DropdownMenuItems>
-          <DropdownMenuItem
-            onSelect={(): void => {
-              if (
-                window.confirm(`Are you sure you want to uninstall ${name}?`)
-              ) {
-                deleteGatsbyPlugin({ name })
-              }
-            }}
-          >
-            Uninstall
-          </DropdownMenuItem>
-        </DropdownMenuItems>
-      </DropdownMenu>
-    </Flex>
+          <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+            {plugin.name}
+          </Heading>
+          <Text sx={{ color: `gatsby` }}>
+            Manage{` `}
+            <span
+              className="hover-move"
+              style={{
+                display: `inline-block`,
+              }}
+              sx={{
+                transition: `transform 100ms ease-out`,
+              }}
+            >
+              -&gt;
+            </span>
+          </Text>
+        </Flex>
+      </Flex>
+    </Fragment>
   )
 }
 
@@ -105,6 +97,7 @@ function Index(): JSX.Element {
       {
         allGatsbyPlugin {
           nodes {
+            options
             name
             id
           }

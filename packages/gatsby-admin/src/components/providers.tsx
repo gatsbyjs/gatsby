@@ -19,6 +19,10 @@ const theme = {
     brand: baseTheme.fonts.sans,
     heading: baseTheme.fonts.sans,
     body: baseTheme.fonts.sans,
+    // NOTE(@mxstbr): This is really confusing, but unfortunately the gatsby-interface
+    // <Text /> component uses fontFamily: `system` instead of fontFamily: `body`.
+    // Once gatsby-inc/gatsby-interface#369 lands we can remove this hack
+    system: baseTheme.fonts.sans,
   },
   fontWeights: {
     ...baseTheme.fontWeights,
