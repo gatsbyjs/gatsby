@@ -12,6 +12,7 @@ import {
   TextAreaField,
   TextAreaFieldLabel,
   TextAreaFieldControl,
+  Text,
 } from "gatsby-interface"
 
 interface IProps {
@@ -67,6 +68,7 @@ export default function ManagePluginModal({
   const [options, setOptions] = useState(() =>
     JSON.stringify(plugin.options || {}, null, 2)
   )
+  const [error, setError] = useState<Error | null>(null)
 
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss}>
@@ -77,6 +79,7 @@ export default function ManagePluginModal({
         <form
           onSubmit={(evt: React.FormEvent): void => {
             evt.preventDefault()
+            setError(null)
             let json
             try {
               // NOTE(@mxstbr): I use eval() to support JS object notation (`{ bla: true }`) and
@@ -85,11 +88,14 @@ export default function ManagePluginModal({
               // Validate that options isn't any JavaScript but an object
               json = JSON.parse(JSON.stringify(js))
             } catch (err) {
+              setError(err)
               return
             }
             updateGatsbyPlugin({
               name: plugin.name,
               options: json,
+            }).catch(err => {
+              setError(err)
             })
           }}
         >
@@ -102,6 +108,11 @@ export default function ManagePluginModal({
                   value={options}
                   onChange={(evt): void => setOptions(evt.target.value)}
                 />
+                {error !== null && (
+                  <Text sx={{ color: `red.60`, fontSize: 0 }}>
+                    {error.message}
+                  </Text>
+                )}
               </TextAreaField>
             </div>
             <StyledModalActions>
