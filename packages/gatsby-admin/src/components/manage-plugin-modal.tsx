@@ -29,7 +29,7 @@ export default function ManagePluginModal({
   onDismiss,
   isOpen,
 }: IProps): JSX.Element {
-  const [, updateGatsbyPlugin] = useMutation(`
+  const [{ fetching: updatingGatsbyPlugin }, updateGatsbyPlugin] = useMutation(`
     mutation updateGatsbyPlugin(
       $name: String!
       $options: JSONObject) {
@@ -44,7 +44,7 @@ export default function ManagePluginModal({
       }
     }
   `)
-  const [, deleteGatsbyPlugin] = useMutation(`
+  const [{ fetching: deletingGatsbyPlugin }, deleteGatsbyPlugin] = useMutation(`
     mutation destroyGatsbyPlugin($name: String!) {
       destroyNpmPackage(npmPackage: {
         name: $name,
@@ -108,20 +108,28 @@ export default function ManagePluginModal({
               <Button
                 variant="GHOST"
                 tone="DANGER"
+                loading={deletingGatsbyPlugin}
                 onClick={(evt): void => {
                   evt.preventDefault()
                   if (
                     window.confirm(
-                      `Are you sure you want to uninstall ${name}?`
+                      `Are you sure you want to uninstall ${plugin.name}?`
                     )
                   ) {
-                    deleteGatsbyPlugin({ name })
+                    deleteGatsbyPlugin({ name: plugin.name }).then(() =>
+                      onDismiss()
+                    )
                   }
                 }}
               >
                 Uninstall
               </Button>
-              <Button variant="PRIMARY" tone="BRAND" type="submit">
+              <Button
+                variant="PRIMARY"
+                tone="BRAND"
+                type="submit"
+                loading={updatingGatsbyPlugin}
+              >
                 Save options
               </Button>
             </StyledModalActions>
