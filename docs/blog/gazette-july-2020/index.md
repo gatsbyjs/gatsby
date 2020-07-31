@@ -51,7 +51,9 @@ https://twitter.com/partycorgipod/status/1288087382504419335
 
 Arshad is back again with another Gatsby Theme added to his growing [ReflexJS](https://reflexjs.org/) collection. This new theme adds a video section to your site, and is optimized with SEO, OG and Twitter metatags. Reflex also comes with beautiful, [ready-to-use components](https://reflexjs.org/library/blocks) so you can customize the style and layout of your site quickly.
 
-Tktk - Reflex screeenshot
+![Reflex screenshot](./reflex.jpg)
+
+[Wojciech Kocjan](https://kocjan.net/)'s "Intro" theme crossed a major milestone with 1,000 downloads 🎉. If you need well-designed and simple resume and portfolio site, [spin up Intro](https://github.com/wkocjan/gatsby-theme-intro).
 
 
 ## 🪐 New from the Gatsby Ecosystem
@@ -59,7 +61,12 @@ Tktk - Reflex screeenshot
 ### Rewrite of GraphCMS’s source plugin
 We helped GraphCMS to build their new source plugin ([that uses our new GraphQL toolkit](http://github.com/vladar/gatsby-graphql-toolkitgithub.com/vladar/gatsby-graphql-toolkit)). Head to the repo, and [give it a try](https://github.com/GraphCMS/gatsby-source-graphcms/).
 
+### Strapi's Gatsby Blog Starter
+[Strapi released a gorgeous blog starter](https://strapi.io/blog/strapi-starter-gatsby-blog-v2) that you can use with their headless CMS with minimal setup. Watch the demo below.
+https://youtu.be/wsFuSebpv0I
 
+### Ink v3
+Ink, a project that enbales you to build command-line apps using React [released version 3](https://vadimdemedes.com/posts/ink-3), a major upgrade. We use Ink for Gatsby's CLI, so you will soon features from this update flow into our project. If you ever wanted to build a CLI yourself, and you know React, [give Ink a try](https://github.com/vadimdemedes/ink).
 
 ## 💫 Next from Gatsby
 
