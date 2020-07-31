@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.30...gatsby-plugin-mdx@1.2.31) (2020-07-31)
+
+### Performance Improvements
+
+- **gatsby-plugin-mdx:** performance changes ([#26004](https://github.com/gatsbyjs/gatsby/issues/26004)) ([9e02abe](https://github.com/gatsbyjs/gatsby/commit/9e02abe)), closes [#24595](https://github.com/gatsbyjs/gatsby/issues/24595)
+
 ## [1.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.29...gatsby-plugin-mdx@1.2.30) (2020-07-28)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
