@@ -6,7 +6,7 @@ This guide covers how to add web fonts to your Gatsby site.
 
 ## Web fonts and Gatsby
 
-Web fonts provide a variety of typography styling options for your site. Hosting your fonts within a Gastby project increases your site’s speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
+Web fonts provide a variety of typography styling options for your site. Hosting your fonts within a Gatsby project increases your site’s speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
 
 ## Prerequisites
 
