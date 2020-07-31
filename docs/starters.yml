@@ -6930,5 +6930,6 @@
     - Onepage
     - Styling:None
   features:
+    - Gatsby v2
     - Vanilla starter
     - Only essentials
