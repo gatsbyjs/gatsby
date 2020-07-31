@@ -56,6 +56,7 @@ export class AnalyticsTracker {
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
   features = new Set<string>()
+  machineId: UUID
 
   constructor() {
     try {
