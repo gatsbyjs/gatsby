@@ -237,13 +237,13 @@ const watch = async rootDir => {
       { ignoreInitial: true }
     )
     .on(`change`, path => {
-      emitter.emit(`QUERY_FILE_CHANGED`, path)
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
     .on(`add`, path => {
-      emitter.emit(`QUERY_FILE_CHANGED`, path)
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
     .on(`unlink`, path => {
-      emitter.emit(`QUERY_FILE_CHANGED`, path)
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
 
   filesToWatch.forEach(filePath => watcher.add(filePath))

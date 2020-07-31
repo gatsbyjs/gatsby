@@ -1,4 +1,10 @@
-import { IBuildContext, startWebpackServer, initialize } from "../../services"
+import {
+  IBuildContext,
+  startWebpackServer,
+  initialize,
+  recompile,
+  postBootstrap,
+} from "../../services"
 import {
   initializeDataMachine,
   reloadDataMachine,
@@ -15,5 +21,7 @@ export const developServices: Record<string, ServiceConfig<IBuildContext>> = {
   initialize: initialize,
   runQueries: queryRunningMachine,
   waitForMutations: waitingMachine,
-  startWebpackServer: startWebpackServer,
+  startWebpackServer,
+  recompile,
+  postBootstrap,
 }

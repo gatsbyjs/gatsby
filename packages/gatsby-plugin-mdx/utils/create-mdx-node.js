@@ -1,45 +1,17 @@
-const { createContentDigest } = require(`gatsby-core-utils`)
+const withDefaultOptions = require(`../utils/default-options`)
+const { getNodesByType } = require(`gatsby/dist/redux/nodes.js`)
+const createMdxNodeWithScope = require(`../utils/mdx-node-with-scope`)
 
-const { findImportsExports } = require(`../utils/gen-mdx`)
-
-async function createMdxNode({ id, node, content, ...helpers }) {
-  const {
-    frontmatter,
-    scopeImports,
-    scopeExports,
-    scopeIdentifiers,
-  } = await findImportsExports({
-    mdxNode: node,
-    rawInput: content,
-    absolutePath: node.absolutePath,
-    ...helpers,
-  })
-
-  const mdxNode = {
+async function createMdxNodeLegacy({ id, node, content } = {}) {
+  const nodeWithScope = await createMdxNodeWithScope({
     id,
-    children: [],
-    parent: node.id,
-    internal: {
-      content: content,
-      type: `Mdx`,
-    },
-    excerpt: frontmatter.excerpt,
-    exports: scopeExports,
-    rawBody: content,
-    frontmatter: {
-      title: ``, // always include a title
-      ...frontmatter,
-    },
-  }
-
-  // Add path to the markdown file path
-  if (node.internal.type === `File`) {
-    mdxNode.fileAbsolutePath = node.absolutePath
-  }
-
-  mdxNode.internal.contentDigest = createContentDigest(mdxNode)
-
-  return { mdxNode, scopeIdentifiers, scopeImports }
+    node,
+    content,
+    getNodesByType,
+    options: withDefaultOptions({ plugins: [] }),
+  })
+  return nodeWithScope.mdxNode
 }
 
-module.exports = createMdxNode
+// This function is deprecated in favor of createMDXNodeWithScope and slated to be dropped in v3
+module.exports = createMdxNodeLegacy

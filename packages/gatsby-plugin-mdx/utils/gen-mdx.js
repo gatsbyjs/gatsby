@@ -47,7 +47,6 @@ async function genMDX(
     options,
     getNode,
     getNodes,
-    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -115,7 +114,6 @@ export const _frontmatter = ${JSON.stringify(data)}`
       //          files,
       getNode,
       getNodes,
-      getNodesByType,
       reporter,
       cache,
       pathPrefix,
@@ -197,7 +195,7 @@ module.exports = genMDX // Legacy API, drop in v3 in favor of named export
 module.exports.genMDX = genMDX
 
 async function findImportsExports({
-  mdxNode,
+  node,
   rawInput,
   absolutePath = null,
   options,
@@ -214,7 +212,7 @@ async function findImportsExports({
   const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
     {
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-      mdxNode,
+      mdxNode: node,
       getNode,
       getNodes,
       getNodesByType,
@@ -237,7 +235,6 @@ async function findImportsExports({
       ...gatsbyRemarkPluginsAsremarkPlugins,
     ],
   }
-
   const compiler = mdx.createCompiler(compilerOptions)
 
   const fileOpts = { contents: content }
@@ -256,9 +253,7 @@ async function findImportsExports({
   mdast.children.forEach(node => {
     if (node.type === `import`) {
       const importCode = node.value
-
       imports.push(importCode)
-
       const bindings = parseImportBindings(importCode)
       identifiers.push(...bindings)
     } else if (node.type === `export`) {

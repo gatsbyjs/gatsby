@@ -35,7 +35,11 @@ export interface IProgram {
   setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 
-// @deprecated
+/**
+ * @deprecated
+ * Use `Stage` instead
+ */
+
 export enum BuildHTMLStage {
   DevelopHTML = `develop-html`,
   BuildHTML = `build-html`,
