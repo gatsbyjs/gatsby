@@ -15,7 +15,7 @@ describe(`gatsby-source-filesystem`, () => {
       {
         absolutePath: path.join(__dirname, `../index.js`),
       },
-      "windows-1251"
+      `windows-1251`
     )
 
     expect(content.length).toBeGreaterThan(0)
