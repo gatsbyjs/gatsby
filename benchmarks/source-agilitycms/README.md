@@ -21,7 +21,11 @@ For the first time setup only (this has been done by Agility CMS staff)
 ```shell
 npm run setup
 ```
+## Build
 
+```shell
+gatsby build
+```
 ## 🎉🤘💖🖖
 
 <a name="license"></a>
