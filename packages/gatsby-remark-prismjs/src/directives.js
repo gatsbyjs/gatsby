@@ -34,7 +34,7 @@ const END_DIRECTIVE = {
   hide: /hide-end/,
 }
 
-const PLAIN_TEXT_WITH_LF_TEST = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
+const MULTILINE_TOKEN_SPAN = /<span class="token ([^"]+)">[^<]*\n[^<]*<\/span>/g
 
 const stripComment = line =>
   /**
@@ -109,8 +109,8 @@ module.exports = function highlightLineRange(code, highlights = []) {
   if (highlights.length > 0 || HIGHLIGHT_DIRECTIVE.test(code)) {
     // HACK split plain-text spans with line separators inside into multiple plain-text spans
     // separated by line separator - this fixes line highlighting behaviour for jsx
-    code = code.replace(PLAIN_TEXT_WITH_LF_TEST, match =>
-      match.replace(/\n/g, `</span>\n<span class="token plain-text">`)
+    code = code.replace(MULTILINE_TOKEN_SPAN, (match, token) =>
+      match.replace(/\n/g, `</span>\n<span class="token ${token}">`)
     )
   }
 
