@@ -20,6 +20,14 @@ What are the facts you know about the topic of this guide?
 Keep paragraphs short (around 1-4 sentences). People are more likely to read
 several short paragraphs instead of a huge block of text.
 
+## Fonts and performance
+
+Hosting your fonts within a project means your site will load faster. This increases your site’s speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
+
+**NOTE:** The Gatsby default starter project adds default font styling in the `layout.css` file.
+
+[show code snippet of default sans-serif line highlighted]
+
 ## Example
 
 Readers will likely use doc articles as a quick reference to look up syntax.

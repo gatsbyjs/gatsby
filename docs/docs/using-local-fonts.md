@@ -2,48 +2,66 @@
 title: Using Local Fonts
 ---
 
-## Introductory paragraph
+If you have custom fonts hosted on your computer, Gatsby supports their use in your project. This guide covers how to add local fonts to your Gatsby site.
 
-The introductory paragraph should be a 1-2 sentence explanation of the main
-topic and answer the following question:
+## Prerequisites
 
-What is the purpose of this guide?
+This guide is using the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and a font file. Some common font file extensions are `.woff2`, `.ttf`, and `otf`.
 
-## Prerequisites (if any)
+## Using local fonts in Gatsby
 
-If applicable, list any prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
+Get started by using local fonts by adding them to your project. Copy the font file in your Gatsby project, for example, `src/fonts/fontname.woff2`.
 
-## The facts
+**NOTE:** It’s recommended to limit custom font usage to only the essential needed for performance.
 
-What are the facts you know about the topic of this guide?
+The Gatsby default starter project adds [browser safe font](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Fundamentals#Default_fonts) styling in the `layout.css` file.
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+```css:title=src/components/layout.css
+body {
+  color: hsla(0, 0%, 0%, 0.8);
+  // highlight-next-line
+  font-family: georgia, serif;
+  font-weight: normal;
+  word-wrap: break-word;
+  font-kerning: normal;
+  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
+  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
+  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
+  font-feature-settings: "kern", "liga", "clig", "calt";
+}
+```
 
-## Example
+You will need to create a new CSS rule to use your local font in your project. First, create a `typography.css` file and declare your `@font-face` selector.
 
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
+```css:title=src/css/typography.css
+@font-face {
+  font-family: "Font Name";
+  src: url("../fonts/fontname.woff2");
+}
+```
 
-Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
+Next, import the `typography.css` file into `layout.css`. Add the `font-family` value in the appropriate CSS rules to adjust the styling.
 
-    code snippet
+```css:title=src/components/layout.css
+// highlight-next-line
+@import "../css/typography.css";
 
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
+body {
+  color: hsla(0, 0%, 0%, 0.8);
+  // highlight-next-line
+  font-family: "Font Name", georgia, serif;
+  font-weight: normal;
+  word-wrap: break-word;
+  font-kerning: normal;
+  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
+  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
+  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
+  font-feature-settings: "kern", "liga", "clig", "calt";
+}
+```
 
-## Gatsby advantages
-
-Does Gatsby address this topic uniquely in some way? If so, state the unique advantages Gatsby provides to the user.
-
-If there are disadvantages Gatsby has, state those here as well and any known bugs or issues the Gatsby community is working on.
+**NOTE:** If fonts are not updating by following the above, add the `font-family` value in your CSS file as needed.
 
 ## Other resources
 
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
-
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
+- Check out the [Adding a Local Font](/docs/recipes/styling-css/#adding-a-local-font) Gatsby recipe.

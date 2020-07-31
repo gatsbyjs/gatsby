@@ -2,22 +2,8 @@
 title: Working with Fonts and Typography
 ---
 
-The section overview should include a 2-5 sentence explanation of the category and answer the following questions:
+In this section, you will learn Gatsby’s approach to fonts and typography. You will also learn how to use different fonts for styling text in your project. You can use local fonts, web fonts, and typography frameworks.
 
-- What is the main purpose of this section in the docs?
-
-## Prerequisites (if any)
-
-Assume the reader has basic programming knowledge such as the command line, code editors, and beginning familiarity with React and GraphQL concepts. Beyond that assumed knowledge, list any other prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
+Gatsby doesn’t have an opinion about which [styling approach](/docs/styling/) you choose. Most every possible option is supported through official and community plugins. (If there isn’t a plugin yet for your favorite option, consider [contributing](/docs/creating-plugins) one!)
 
 <GuideList slug={props.slug} />
-
-## Other resources
-
-- Link to a recipe
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
