@@ -343,7 +343,7 @@
                   link: /docs/emotion/
                 - title: Styled-Components
                   link: /docs/styled-components/
-            - title: Working with Fonts and Typography
+            - title: Working with Fonts & Typography
               link: /docs/working-with-fonts-and-typography/
               items:
                 - title: Using Local Fonts
