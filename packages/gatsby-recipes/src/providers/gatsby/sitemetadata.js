@@ -9,16 +9,14 @@ const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
 const isDefaultExport = require(`./utils/is-default-export`)
-const buildPluginNode = require(`./utils/build-plugin-node`)
 const getObjectFromNode = require(`./utils/get-object-from-node`)
 const { REQUIRES_KEYS } = require(`./utils/constants`)
+const template = require(`@babel/template`).default
 
-const addPluginToConfig = (src, { name, options, key }) => {
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name,
-    options,
-    shouldAdd: true,
-    key,
+const addFieldToSiteMetadata = (src, { name, value }) => {
+  const addPlugins = new BabelPluginSetSiteMetadataField({
+    key: name,
+    value,
   })
 
   const { code } = babel.transform(src, {
@@ -29,11 +27,10 @@ const addPluginToConfig = (src, { name, options, key }) => {
   return code
 }
 
-const removePluginFromConfig = (src, { id, name, key }) => {
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name || id,
-    key,
-    shouldAdd: false,
+const removeFieldFromSiteMetadata = (src, { name }) => {
+  const addPlugins = new BabelPluginSetSiteMetadataField({
+    key: name,
+    value: undefined,
   })
 
   const { code } = babel.transform(src, {
@@ -80,11 +77,11 @@ module.exports = {
   return src
 }
 
-const create = async ({ root }, { name, options, key }) => {
+const create = async ({ root }, { name, value, key }) => {
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
-  let code = addPluginToConfig(configSrc, { name, options, key })
+  let code = addFieldToSiteMetadata(configSrc, { name, value })
   code = prettier.format(code, { ...prettierConfig, parser: `babel` })
 
   await fs.writeFile(getConfigPath(root), code)
@@ -102,7 +99,7 @@ const read = async ({ root }, id) => {
 
     return {
       name: id,
-      value: siteMetadata[id],
+      value: JSON.stringify(siteMetadata[id]),
     }
   } catch (e) {
     console.log(e)
@@ -113,13 +110,13 @@ const read = async ({ root }, id) => {
 const destroy = async ({ root }, resource) => {
   const configSrc = await readConfigFile(root)
 
-  const newSrc = removePluginFromConfig(configSrc, resource)
+  const newSrc = removeFieldFromSiteMetadata(configSrc, resource)
 
   await fs.writeFile(getConfigPath(root), newSrc)
 }
 
-class BabelPluginAddPluginsToGatsbyConfig {
-  constructor({ pluginOrThemeName, shouldAdd, options, key }) {
+class BabelPluginSetSiteMetadataField {
+  constructor({ key, value }) {
     this.plugin = declare(api => {
       api.assertVersion(7)
 
@@ -133,62 +130,33 @@ class BabelPluginAddPluginsToGatsbyConfig {
               return
             }
 
-            const pluginNodes = right.properties.find(
-              p => p.key.name === `plugins`
+            const siteMetadata = right.properties.find(
+              p => p.key.name === `siteMetadata`
             )
 
-            if (shouldAdd) {
-              const plugins = pluginNodes.value.elements
-              const matches = plugins.filter(plugin => {
-                if (!key) {
-                  return plugin.name === pluginOrThemeName
-                }
+            if (!siteMetadata || !siteMetadata.value) return
 
-                return plugin.key === key
-              })
+            const siteMetadataObj = getObjectFromNode(siteMetadata.value)
 
-              if (!matches.length) {
-                const pluginNode = buildPluginNode({
-                  name: pluginOrThemeName,
-                  options,
-                  key,
-                })
-
-                pluginNodes.value.elements.push(pluginNode)
-              } else {
-                pluginNodes.value.elements = pluginNodes.value.elements.map(
-                  node => {
-                    const plugin = null
-
-                    if (plugin.key !== key) {
-                      return node
-                    }
-
-                    if (!plugin.key && plugin.name !== pluginOrThemeName) {
-                      return node
-                    }
-
-                    return buildPluginNode({
-                      name: pluginOrThemeName,
-                      options,
-                      key,
-                    })
-                  }
-                )
-              }
-            } else {
-              pluginNodes.value.elements = pluginNodes.value.elements.filter(
-                node => {
-                  const plugin = null
-
-                  if (key) {
-                    return plugin.key !== key
-                  }
-
-                  return plugin.name !== pluginOrThemeName
-                }
-              )
+            const newSiteMetadataObj = {
+              ...siteMetadataObj,
+              [key]: typeof value === `string` ? JSON.parse(value) : value,
             }
+
+            const newSiteMetadataTemplate = template(`
+              const foo = ${JSON.stringify(newSiteMetadataObj, null, 2)}
+            `)()
+
+            const newSiteMetadata = newSiteMetadataTemplate.declarations[0].init
+
+            right.properties = right.properties.map(p => {
+              if (p.key.name !== `siteMetadata`) return p
+
+              return {
+                ...p,
+                value: newSiteMetadata,
+              }
+            })
 
             path.stop()
           },
@@ -229,9 +197,9 @@ class BabelPluginGetSiteMetadataFromConfig {
   }
 }
 
-module.exports.addPluginToConfig = addPluginToConfig
+module.exports.addFieldToSiteMetadata = addFieldToSiteMetadata
 module.exports.getSiteMetdataFromConfig = getSiteMetdataFromConfig
-module.exports.removePluginFromConfig = removePluginFromConfig
+module.exports.removeFieldFromSiteMetadata = removeFieldFromSiteMetadata
 
 module.exports.create = create
 module.exports.update = create
@@ -276,7 +244,7 @@ const validate = resource => {
 exports.schema = schema
 exports.validate = validate
 
-module.exports.plan = async ({ root }, { id, key, name, options }) => {
+module.exports.plan = async ({ root }, { id, key, name, value }) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
@@ -285,11 +253,9 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     parser: `babel`,
   })
 
-  let newContents = addPluginToConfig(configSrc, {
-    id,
-    key: id || key,
+  let newContents = addFieldToSiteMetadata(configSrc, {
     name: fullName,
-    options,
+    value,
   })
   newContents = prettier.format(newContents, {
     ...prettierConfig,
@@ -303,6 +269,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     diff,
     currentState: configSrc,
     newState: newContents,
-    describe: `Install ${fullName} in gatsby-config.js`,
+    describe: `Add ${fullName}: ${value} to the siteMetadata`,
   }
 }
