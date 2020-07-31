@@ -35,7 +35,7 @@ A few weeks ago, my team at Gatsby launched [Will it Build](https://willit.build
 
 We built this site to answer a question we get a lot at Gatsby:
 
-> I have a [Wordpress] site with [8000] pages; how long would it take to build with Gatsby?
+> I have a [WordPress] site with [8000] pages; how long would it take to build with Gatsby?
 
 The details vary, but the story is the same: developers are worried that their build times will balloon if they have to build every page at compile-time.
 
@@ -44,11 +44,11 @@ It's a reasonable concern; historically, build times have been a sort of “Achi
 Thankfully, the picture has changed quite a bit over the last year. The Gatsby core / cloud teams have invested a ton of time and energy improving build performance; with [incremental builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/), even very large sites can build in less than a minute (with a warm cache).
 
 <img
-  alt="A screenshot showing the Will it Build calculator, showing that a Wordpress site with 8000 pages can rebuild in 15 seconds."
+  alt="A screenshot showing the Will it Build calculator, showing that a WordPress site with 8000 pages can rebuild in 15 seconds."
   src="./images/calculator-screenshot.png"
 />
 
-Will it Build runs dozens of benchmarks a day, ranging from 512 pages to over 32,000 pages, across 8 different content sources (including Wordpress, Drupal, Markdown/MDX, Contentful, and Sanity). You can play with this data yourself, using its [GraphQL API](https://willit.build/api-playground).
+Will it Build runs dozens of benchmarks a day, ranging from 512 pages to over 32,000 pages, across 8 different content sources (including WordPress, Drupal, Markdown/MDX, Contentful, and Sanity). You can play with this data yourself, using its [GraphQL API](https://willit.build/api-playground).
 
 The frontend of the Will it Build site is, naturally, built with Gatsby. And I'm pleased to say that it's _completely static_—it only fetches data from the API when we build the site.
 
