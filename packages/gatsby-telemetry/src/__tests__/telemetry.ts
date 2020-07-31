@@ -29,7 +29,9 @@ describe(`Telemetry`, () => {
     it(`Attaches feature list to the events`, () => {
       telemetry.trackFeatureIsUsed(`Foo:bar`)
       telemetry.buildAndStoreEvent(`demo`, {})
-      expect(eventStore.mock.instances[0].addEvent).toHaveBeenCalledWith(
+      expect(
+        (EventStorage as jest.Mock).mock.instances[0].addEvent
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
           features: [`Foo:bar`],
         })
