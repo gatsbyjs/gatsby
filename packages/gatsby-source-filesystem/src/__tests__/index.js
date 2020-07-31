@@ -10,6 +10,17 @@ describe(`gatsby-source-filesystem`, () => {
     expect(content.length).toBeGreaterThan(0)
   })
 
+  it(`support second encoding argument`, async () => {
+    const content = await loadNodeContent(
+      {
+        absolutePath: path.join(__dirname, `../index.js`),
+      },
+      "windows-1251"
+    )
+
+    expect(content.length).toBeGreaterThan(0)
+  })
+
   it(`rejects if file not found`, async () => {
     await loadNodeContent({
       absolutePath: path.join(__dirname, `haha-not-a-real-file.js`),

@@ -4,7 +4,7 @@ import { store } from "../redux"
 /**
  * Get content for a node from the plugin that created it.
  */
-export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
+export async function loadNodeContent(node: IGatsbyNode, encoding?: string): Promise<string> {
   if (typeof node.internal.content === `string`) {
     return node.internal.content
   }
@@ -28,7 +28,7 @@ export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
     )
   }
 
-  const content = await loadNodeContent(node)
+  const content = await loadNodeContent(node, encoding)
 
   node.internal.content = content
 
