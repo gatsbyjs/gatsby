@@ -6922,3 +6922,13 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-vanilla.netlify.app
+  repo: https://github.com/alexperronnet/gatsby-starter-vanilla
+  description: A clean vanilla starter with the essentials for Gatsby
+  tags:
+    - Landing Page
+    - Onepage
+    - Styling:None
+  features:
+    - Vanilla starter
+    - Only essentials
