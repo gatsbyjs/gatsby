@@ -11,7 +11,7 @@
 ## To Update Content from the CMS
 
 ```shell
-num run update
+npm run data-update
 ```
 
 ## Pull Content From Agility CMS
@@ -21,11 +21,13 @@ For the first time setup only (this has been done by Agility CMS staff)
 ```shell
 npm run setup
 ```
+
 ## Build
 
 ```shell
 gatsby build
 ```
+
 ## 🎉🤘💖🖖
 
 <a name="license"></a>
