@@ -139,7 +139,7 @@ const schema = new GraphQLSchema({
 const app = express()
 const server = createServer(app)
 
-console.log(`listening on localhost:4000`)
+console.log(`listening on localhost:${PORT}`)
 
 app.use(cors())
 
