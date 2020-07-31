@@ -3,7 +3,7 @@ import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
 import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
-import { setFeature } from "gatsby-telemetry"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 function pathIsCollectionBuilder(path: string): boolean {
   return path.includes(`{`)
@@ -40,7 +40,7 @@ export function createPage(
         `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
       )
     }
-    setFeature(`UnifiedRoutes:collection-page-builder`)
+    trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
     createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
     return
   }
@@ -52,7 +52,7 @@ export function createPage(
              Skipping creating pages for ${absolutePath}
         `)
     }
-    setFeature(`UnifiedRoutes:client-page-builder`)
+    trackFeatureIsUsed(`UnifiedRoutes:client-page-builder`)
     createClientOnlyPage(filePath, absolutePath, actions)
     return
   }

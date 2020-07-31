@@ -55,7 +55,6 @@ export class AnalyticsTracker {
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
   machineId?: UUID
-  features = new Set<string>()
 
   constructor() {
     try {
@@ -72,10 +71,6 @@ export class AnalyticsTracker {
     } catch (e) {
       // ignore
     }
-  }
-
-  setFeature(name: string) {
-    this.features.add(name)
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
@@ -232,7 +227,6 @@ export class AnalyticsTracker {
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
       dbEngine,
-      features: Array.from(this.features),
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
