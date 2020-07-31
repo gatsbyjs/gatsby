@@ -25,7 +25,7 @@ const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
 const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
-const createMDXNode = require(`../utils/create-mdx-node`)
+const createMDXNodeWithScope = require(`../utils/mdx-node-with-scope`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
 
 const DEFAULT_OPTIONS = {
@@ -94,6 +94,7 @@ module.exports = async function (content) {
   const {
     getNode: rawGetNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -121,11 +122,15 @@ module.exports = async function (content) {
 
   let mdxNode
   try {
-    mdxNode = await createMDXNode({
+    // This node attempts to break the chicken-egg problem, where parsing mdx
+    // allows for custom plugins, which can receive a mdx node
+    ;({ mdxNode } = await createMDXNodeWithScope({
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
       content,
-    })
+      options,
+      getNodesByType,
+    }))
   } catch (e) {
     return callback(e)
   }
@@ -192,6 +197,7 @@ ${contentWithoutFrontmatter}`
     node: { ...mdxNode, rawBody: code },
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,

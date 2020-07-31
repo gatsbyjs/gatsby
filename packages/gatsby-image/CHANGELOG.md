@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.13...gatsby-image@2.4.14) (2020-07-29)
+
+### Bug Fixes
+
+- **gatsby-image:** add required check for one of fluid or fixed ([#25371](https://github.com/gatsbyjs/gatsby/issues/25371)) ([ce7ba8a](https://github.com/gatsbyjs/gatsby/commit/ce7ba8a))
+
 ## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.12...gatsby-image@2.4.13) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-image
