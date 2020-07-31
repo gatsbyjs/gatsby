@@ -77,7 +77,7 @@ module.exports = {
   return src
 }
 
-const create = async ({ root }, { name, value, key }) => {
+const create = async ({ root }, { name, value }) => {
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
@@ -86,7 +86,7 @@ const create = async ({ root }, { name, value, key }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, key || name)
+  return await read({ root }, name)
 }
 
 const read = async ({ root }, id) => {
@@ -95,7 +95,7 @@ const read = async ({ root }, id) => {
 
     const siteMetadata = getSiteMetdataFromConfig(configSrc)
 
-    if (!siteMetadata || !siteMetadata[id]) return null
+    if (!siteMetadata || typeof siteMetadata[id] === undefined) return null
 
     return {
       name: id,
