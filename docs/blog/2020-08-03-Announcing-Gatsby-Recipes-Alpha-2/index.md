@@ -24,7 +24,7 @@ When designing Recipes, we've borrowed a lot of the ideas from the world of [Inf
 
 Like WordPress, **we want Gatsby to have its own famous 5 minute install**. Whatever combination of resources your site needs, from npm packages to Gatsby plugins to external cloud services, Recipes will provision and configure it for you, automatically, in a few short minutes.
 
-You'll can choose from official Recipes that are [part of Gatsby core](https://www.gatsbyjs.org/docs/recipes/#new-automated-recipes-available), or browse the abundance of community-written Recipes -- and choose different ones to develop your own cookbook to fit your organization's needs.
+You'll be able to choose from official Recipes that are [part of Gatsby core](https://www.gatsbyjs.org/docs/recipes/#new-automated-recipes-available), or browse the abundance of community-written Recipes -- and choose different ones to develop your own cookbook to fit your organization's needs.
 
 What did we focus on for this release?
 
