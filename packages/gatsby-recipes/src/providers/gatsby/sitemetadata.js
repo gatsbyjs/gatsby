@@ -52,9 +52,7 @@ const getSiteMetdataFromConfig = src => {
     configFile: false,
   })
 
-  return {
-    value: getSiteMetadata.state,
-  }
+  return getSiteMetadata.state
 }
 
 const getConfigPath = root => path.join(root, `gatsby-config.js`)
@@ -98,7 +96,14 @@ const read = async ({ root }, id) => {
   try {
     const configSrc = await readConfigFile(root)
 
-    return getSiteMetdataFromConfig(configSrc)
+    const siteMetadata = getSiteMetdataFromConfig(configSrc)
+
+    if (!siteMetadata || !siteMetadata[id]) return null
+
+    return {
+      name: id,
+      value: siteMetadata[id],
+    }
   } catch (e) {
     console.log(e)
     throw e
@@ -234,8 +239,21 @@ module.exports.read = read
 module.exports.destroy = destroy
 module.exports.config = {}
 
+module.exports.all = async ({ root }) => {
+  const configSrc = await readConfigFile(root)
+  const siteMetadata = getSiteMetdataFromConfig(configSrc)
+
+  return Object.keys(siteMetadata).map(key => {
+    return {
+      name: key,
+      value: JSON.stringify(siteMetadata[key]),
+    }
+  })
+}
+
 const schema = {
-  value: Joi.object(),
+  value: Joi.string(),
+  name: Joi.string(),
   ...resourceSchema,
 }
 
