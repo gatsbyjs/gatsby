@@ -187,7 +187,7 @@ class BabelPluginGetSiteMetadataFromConfig {
               p => p.key.name === `siteMetadata`
             )
 
-            if (!siteMetadata.value) return
+            if (!siteMetadata || !siteMetadata.value) return
 
             this.state = getObjectFromNode(siteMetadata.value)
           },
