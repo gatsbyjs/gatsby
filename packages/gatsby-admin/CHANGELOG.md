@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.105](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.104...gatsby-admin@0.1.105) (2020-07-31)
+
+### Features
+
+- **admin:** new dashboard design ([#26124](https://github.com/gatsbyjs/gatsby/issues/26124)) ([f1bfd53](https://github.com/gatsbyjs/gatsby/commit/f1bfd53))
+- **gatsby-admin:** add modal to manage plugin ([#26154](https://github.com/gatsbyjs/gatsby/issues/26154)) ([c1110b3](https://github.com/gatsbyjs/gatsby/commit/c1110b3))
+- **gatsby-admin:** new navbar design ([#26159](https://github.com/gatsbyjs/gatsby/issues/26159)) ([1c5d8e9](https://github.com/gatsbyjs/gatsby/commit/1c5d8e9))
+
 ## [0.1.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.103...gatsby-admin@0.1.104) (2020-07-30)
 
 ### Features
