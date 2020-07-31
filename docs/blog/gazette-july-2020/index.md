@@ -15,23 +15,23 @@ July was also a huge month for official Gatsby Themes. We [updated our popular B
 
 Also this month, we released a new official theme for adding [i18n support to your Gatsby site](https://www.gatsbyjs.org/blog/2020-07-28-introducing-gatsby-i18n-theme/)! This i18n theme gives you access to specialized React components that help with building a multilingual site. The lead developer on this theme, [Lennart Jörgens](/https://www.lekoarts.de/) also created 3 “child themes” for popular translation libraries. The i18n theme is great to use for any project that requires localization, but is also a solid example to study if you want to [build your own Gatsby Theme](/tutorial/building-a-theme/).
 
-
-
 ## 🚀 New in Gatsby and Gatsby Cloud!
 
 ### Gatsby Cloud Workspaces
+
 Also in July we shipped Workspaces, a major improvement to how you can use Gatsby Cloud. New sites can be added to a Workspace from any repository or organization in Github, not just your own. And now you can create new Workspaces with separate subscriptions, giving you the flexibility to organize your sites to match your needs (especially when you need to set up a client’s account for them). [Sign up to Gatsby Cloud for free](https://www.gatsbyjs.com/dashboard/signup) to give Workspaces a spin.
 
 ### Enhanced WordPress Integration with Gatsby Cloud
+
 Gatsby [released the BETA](/blog/2020-07-07-wordpress-source-beta/) of our new source plugin for WordPress, and it comes packed with lots of new features and improvements. Your Content Editors will love the integration with Gatsby Cloud, including Gatsby Preview and [near real-time builds](https://willit.build/details/type/blog/source/wordpress/page-count/512). Even if you haven’t built a website with WordPress before, we think this new source plugin will make the Gatsby / [headless WordPress](/docs/glossary/headless-wordpress/) stack a joy to experiment with.
 
 ### Faster Builds for Sites Using Static Queries
+
 Previously [static query](https://www.gatsbyjs.org/docs/static-query/) results in Gatsby were imported as JSON by webpack. This means that static query results were included in your site's JavaScript bundles. With this change static query results are instead loaded by the Gatsby runtime and now live outside of the webpack pipeline. The result? Much faster builds for your site, if it uses static queries.
 
 ### Improved Architecture for Gatsby
+
 [This change](https://github.com/gatsbyjs/gatsby/pull/25716) is a rewrite of the way the `develop` command runs a build. It coordinates the process, replacing lots of watchers and events spread throughout the codebase with one central state machine that handles the process. This new architecture prevents lots of race conditions and subtle bugs, and opens the door for many new possibilities 😉.
-
-
 
 ## 👩🏽‍🚀 New from the Gatsby Team
 
@@ -42,7 +42,6 @@ Previously [static query](https://www.gatsbyjs.org/docs/static-query/) results i
 [Shane Thomas](https://twitter.com/smthomas3) also spoke at DrupalCon about “Building a Compelling Content Experience with Gatsby & Drupal”. [See his slides](https://docs.google.com/presentation/d/1IWAlrTs3ODLVd0k2UMLA5_0fF_ukvDTrrEE43M65De8/edit#slide=id.g854bc15f1e_0_25).
 
 [Obinna Ekwuno](https://twitter.com/Obinnaspeaks) appeared on “That’s My JAMstack” and spoke about [how Incremental Builds with Gatsby Cloud](https://thatsmyjamstack.com/posts/obinna-ekwuno/) works.
-
 
 ## 🌍 New from the Gatsby Community
 
@@ -57,25 +56,28 @@ Arshad is back with another Gatsby Theme for to his growing [ReflexJS](https://r
 
 [Wojciech Kocjan](https://kocjan.net/)'s "Intro" theme crossed a major milestone in July with 1,000 downloads 🎉. If you need a well-designed and simple resume and portfolio site, [spin up Intro](https://github.com/wkocjan/gatsby-theme-intro).
 
-
 ## 🪐 New from the Gatsby Ecosystem
 
 ### Rewrite of GraphCMS’s source plugin
+
 We helped GraphCMS build their new source plugin ([using our new GraphQL toolkit](http://github.com/vladar/gatsby-graphql-toolkitgithub.com/vladar/gatsby-graphql-toolkit)). Head to the repo, and [give it a try](https://github.com/GraphCMS/gatsby-source-graphcms/).
 
 ### Strapi's Gatsby Blog Starter
+
 [Strapi released a gorgeous blog starter](https://strapi.io/blog/strapi-starter-gatsby-blog-v2) that you can use with their headless CMS with minimal setup. [Watch the demo on YouTube](https://youtu.be/wsFuSebpv0I).
 
-
 ### Ink v3
+
 Ink, a project that enbales you to build command-line apps using React [released version 3](https://vadimdemedes.com/posts/ink-3), a major upgrade. We use Ink for Gatsby's CLI, so you will soon features from this update flow into our project. If you ever wanted to build a CLI yourself, and you know React, [give Ink a try](https://github.com/vadimdemedes/ink).
 
 ## 💫 Next from Gatsby
 
 ### New alpha for Gatsby Recipes
+
 In the coming weeks look out for exciting updates to [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/), our new [infrastructure-as-code](docs/glossary/infrastructure-as-code/) project. You can follow along with our progress in our [public GitHub Project](https://github.com/gatsbyjs/gatsby/projects/20)
 
 ### MDX Mini-Conference
+
 The maintainers of MDX are throwing their first ever conference! It’s free, it will be streamed remotely (because covid…), and you’ll hear from Gatsby engineers like [Josh Comeau](https://joshwcomeau.com/) and [Laurie Barth](https://laurieontech.com/)
 
 If you want to be thr first to hear about new features from Gatsby, and updates from the Gatsby ecosystem, subscribe to our newsletter below!
