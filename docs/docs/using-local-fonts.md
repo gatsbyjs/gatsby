@@ -6,7 +6,7 @@ If you have custom fonts hosted on your computer, Gatsby supports their use in y
 
 ## Prerequisites
 
-This guide is using the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and a font file. Some common font file extensions are `.woff2`, `.ttf`, and `otf`.
+This guide uses the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and a font file. Some common font file extensions are `.woff2`, `.ttf`, and `otf`.
 
 ## Using local fonts in Gatsby
 
@@ -24,10 +24,6 @@ body {
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
-  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
-  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
-  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-  font-feature-settings: "kern", "liga", "clig", "calt";
 }
 ```
 
@@ -53,10 +49,6 @@ body {
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
-  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
-  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
-  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-  font-feature-settings: "kern", "liga", "clig", "calt";
 }
 ```
 

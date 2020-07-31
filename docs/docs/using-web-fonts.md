@@ -2,56 +2,110 @@
 title: Using Web Fonts
 ---
 
-## Introductory paragraph
+This guide covers how to add web fonts to your Gatsby site.
 
-The introductory paragraph should be a 1-2 sentence explanation of the main
-topic and answer the following question:
+## Web fonts and Gatsby
 
-What is the purpose of this guide?
+Web fonts provide a variety of typography styling options for your site. Hosting your fonts within a Gastby project increases your site’s speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
 
-## Prerequisites (if any)
+## Prerequisites
 
-If applicable, list any prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
+This guide uses the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
-## The facts
+## Adding web fonts
 
-What are the facts you know about the topic of this guide?
+Some examples of web font services include [Google Fonts](https://fonts.google.com/) and [Typekit Web Fonts](https://fonts.adobe.com/typekit).
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+### Using Google Fonts
 
-## Fonts and performance
+The fastest way to get started using Google Fonts is by choosing a font from [the typefaces project](https://github.com/KyleAMathews/typefaces). This example shows how you can add Open Sans to your project.
 
-Hosting your fonts within a project means your site will load faster. This increases your site’s speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
+First, install the typeface package with npm:
 
-**NOTE:** The Gatsby default starter project adds default font styling in the `layout.css` file.
+```bash
+npm install --save typeface-open-sans
+```
 
-[show code snippet of default sans-serif line highlighted]
+Or with yarn:
 
-## Example
+```bash
+yard add typeface-open-sans
+```
 
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
+In your `layout.js` file, import the typeface.
 
-Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
+```jsx:title=src/components/layout.js
+import "typeface-open-sans"
+```
 
-    code snippet
+Next, add the typeface name to the appropriate place in your CSS. In this case, you will override the `body` element's `font-family` default values.
 
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
+```css:title=src/components/layout.css
+// highlight-next-line
+@import "../css/typography.css";
 
-## Gatsby advantages
+body {
+  color: hsla(0, 0%, 0%, 0.8);
+  // highlight-next-line
+  font-family: "Open Sans", georgia, serif;
+  font-weight: normal;
+  word-wrap: break-word;
+  font-kerning: normal;
+}
+```
 
-Does Gatsby address this topic uniquely in some way? If so, state the unique advantages Gatsby provides to the user.
+### Using Typekit Web Fonts
 
-If there are disadvantages Gatsby has, state those here as well and any known bugs or issues the Gatsby community is working on.
+You can add Typekit Web Fonts to your project by using the [gatsby-plugin-web-font-loader](https://www.gatsbyjs.org/packages/gatsby-plugin-web-font-loader/?=font) and your [Adobe Fonts project id](https://fonts.adobe.com/my_fonts#web_projects-section). For example, this is how you can add Futura to your project.
+
+First, install the Gatsby plugin with npm:
+
+```bash
+npm install --save gatsby-plugin-web-font-loader
+```
+
+Or with yarn:
+
+```bash
+yard add gatsby-plugin-web-font-loader
+```
+
+Add this plugin to your `gatsby-config.js` file located in your root directory. Set your plugin configuration, passing in your `typekit id` options as an [environment variable](/docs/environment-variables/)
+
+```javascript:title=gatsby-config.js
+require("dotenv").config()
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-plugin-web-font-loader",
+      options: {
+        typekit: {
+          id: process.env.TYPEKIT_ID,
+        },
+      },
+    },
+  ],
+}
+```
+
+Next, add the typeface name to the appropriate `font-family` value in your CSS.
+
+```css:title=src/components/layout.css
+// highlight-next-line
+@import "../css/typography.css";
+
+body {
+  color: hsla(0, 0%, 0%, 0.8);
+  // highlight-next-line
+  font-family: "Futura", georgia, serif;
+  font-weight: normal;
+  word-wrap: break-word;
+  font-kerning: normal;
+}
+```
 
 ## Other resources
 
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
-
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
+- Check out the [Using Google Fonts](/docs/recipes/styling-css/#using-google-fonts) Gatsby recipe.
+- Here's a great article on why it's important to [keep your environment variables secret](https://medium.com/codait/environment-variables-or-keeping-your-secrets-secret-in-a-node-js-app-99019dfff716)
