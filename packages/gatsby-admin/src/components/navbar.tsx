@@ -45,7 +45,7 @@ function Navbar(): JSX.Element {
         <BaseAnchor
           href={`/`}
           target="_blank"
-          sx={{ color: `blackFade.60`, textDecoration: `none` }}
+          sx={{ color: `grey.60`, textDecoration: `none` }}
         >
           Visit site
         </BaseAnchor>
