@@ -56,7 +56,7 @@ function Navbar(): JSX.Element {
           target="_blank"
           variant="SECONDARY"
         >
-          GraphQL&nbsp;
+          GraphiQL&nbsp;
           <img src={graphqlIcon} />
         </AnchorButton>
         <AnchorButton size="S" href="/" target="_blank">
