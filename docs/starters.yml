@@ -6922,3 +6922,25 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://mixedblog.netlify.app
+  repo: https://github.com/mixedbitmedia/Mixedblog
+  description: A minimal, lightweight, and mobile-first starter for creating blog posts.
+  tags:
+    - Blog
+    - CMS:Netlify
+    - RSS
+    - Styling:SCSS
+    - prismjs
+    - PWA
+    - SEO
+  features:
+    - Mobile-First approach in development
+    - Sidebar menu
+    - Offline support
+    - Google Analytics support
+    - Searchbar intagration using JS Filter function
+    - PWA support
+    - Google Fonts
+    - react-spring support for fancy animations
+    - SEO file for simple SEO intergration
+    - Image slideshow support
