@@ -946,7 +946,7 @@ export interface NodePluginArgs {
   /**
    * Get content for a node from the plugin that created it.
    * Use second argument to set custom content encoding ('utf-8' is default).
-   * More details about supported encodings find in [`fs.readFile` documentation](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback) of Node.js 
+   * More details about supported encodings find in [`fs.readFile` documentation](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback) of Node.js and [`iconv-lite`](https://www.npmjs.com/package/iconv-lite) 
    * 
    * @example
    * module.exports = async function onCreateNode(
