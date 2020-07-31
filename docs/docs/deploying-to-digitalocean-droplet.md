@@ -54,14 +54,14 @@ Follow these instructions for installs on an Ubuntu droplet.
    ```
 
    > **Note:** If you check the version now, you would see the older versions of Node.js and npm from the cache.
-   > You can either exit and restart your terminal or refresh the cache by following commands,
+   > You can either exit and restart your terminal or refresh the cache by running the following commands:
 
    ```shell
    hash node
    hash npm
    ```
 
-5. Install the Gatsby-CLI now globally. This will be useful ahead in building the Gatsby site for production.
+5. Install the Gatsby CLI globally. This will be useful ahead in building the Gatsby site for production.
 
    ```shell
    sudo npm install -g gatsby-cli
