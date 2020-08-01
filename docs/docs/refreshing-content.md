@@ -6,7 +6,7 @@ During local development, it can be useful to refresh sourced content without re
 
 If set to `true`, this will expose a `/__refresh` webhook that can receive POST requests to refresh the sourced content. This exposed webhook can be triggered whenever remote data changes.
 
-You can trigger this endpoint locally, for example, on Unix-based operating systems (like Ubuntu and macOS) using curl -X POST http://localhost:8000/__refresh.
+You can trigger this endpoint locally, for example, on Unix-based operating systems (like Ubuntu and macOS) using `curl -X POST http://localhost:8000/__refresh`.
 
 Additionally, the sourced content can also be refreshed through the GraphiQL explorer.
 
