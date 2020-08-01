@@ -65,7 +65,7 @@ How do we do that with a static site?
 
 The URL structure for Will it Build is:
 
-> /source/:source/page-count/:numOfPages
+> `/source/:source/page-count/:numOfPages`
 
 We generate a distinct page for every combination of `source` and `numOfPages`.
 
