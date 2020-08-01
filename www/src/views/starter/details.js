@@ -61,11 +61,11 @@ const Details = ({
             // for that reason we are excluding it from our list of plugins
             /^gatsby-/.test(dep) && dep !== `gatsby-cypress` ? (
               <div key={dep}>
-                <Link to={`/packages/${dep}`}>{dep}</Link>
+                <Link to={`/packages/${dep}`} sx={styles.link}>{dep}</Link>
               </div>
             ) : (
               <div key={dep}>
-                <a href={`https://npm.im/${dep}`}>
+                <a href={`https://npm.im/${dep}`} sx={styles.link}>
                   {`${dep} `}
                   <MdLaunch />
                 </a>
@@ -113,4 +113,7 @@ const styles = {
       color: `white`,
     },
   },
+  link: {
+    color: `link.color`,
+  }
 }
