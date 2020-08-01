@@ -1,8 +1,8 @@
 ---
 title: Gatsby Gazette for July 2020 - This Website is Actually a Cake 🍰 Edition
-date: 2020-07-31
+date: 2020-08-03
 author: Hashim Warren
-excerpt: "Learn about July's product, community, and ecosystem updates. This includes new Gatsby Themes and an update to Incremental Builds"
+excerpt: "Learn about July's product, community, and ecosystem updates. This includes new Gatsby Themes, a new enhanced WordPress integration, and an update to Incremental Builds"
 seoTitle: Gatsby Product Updates for July 2020
 tags: ["gatsby-gazette"]
 ---
