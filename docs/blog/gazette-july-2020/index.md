@@ -19,7 +19,7 @@ Also this month, we released a new official theme for adding [i18n support to yo
 
 ### Gatsby Cloud Workspaces
 
-Also in July we shipped Workspaces, a major improvement to how you can use Gatsby Cloud. New sites can be added to a Workspace from any repository or organization in Github, not just your own. And now you can create new Workspaces with separate subscriptions, giving you the flexibility to organize your sites to match your needs (especially when you need to set up a client’s account for them). [Sign up to Gatsby Cloud for free](https://www.gatsbyjs.com/dashboard/signup) to give Workspaces a spin.
+Also in July we shipped Workspaces, a major improvement to how you can use Gatsby Cloud. New sites can be added to a Workspace from any repository or organization in GitHub, not just your own. And now you can create new Workspaces with separate subscriptions, giving you the flexibility to organize your sites to match your needs (especially when you need to set up a client’s account for them). [Sign up to Gatsby Cloud for free](https://www.gatsbyjs.com/dashboard/signup) to give Workspaces a spin.
 
 ### Enhanced WordPress Integration with Gatsby Cloud
 
@@ -68,7 +68,7 @@ We helped GraphCMS build their new source plugin ([using our new GraphQL toolkit
 
 ### Ink v3
 
-Ink, a project that enbales you to build command-line apps using React [released version 3](https://vadimdemedes.com/posts/ink-3), a major upgrade. We use Ink for Gatsby's CLI, so you will soon features from this update flow into our project. If you ever wanted to build a CLI yourself, and you know React, [give Ink a try](https://github.com/vadimdemedes/ink).
+Ink, a project that enables you to build command-line apps using React [released version 3](https://vadimdemedes.com/posts/ink-3), a major upgrade. We use Ink for Gatsby's CLI, so you will soon features from this update flow into our project. If you ever wanted to build a CLI yourself, and you know React, [give Ink a try](https://github.com/vadimdemedes/ink).
 
 ## 💫 Next from Gatsby
 
@@ -78,6 +78,6 @@ In the coming weeks look out for exciting updates to [Gatsby Recipes](/blog/2020
 
 ### MDX Mini-Conference
 
-The maintainers of MDX are throwing their [first ever conference](https://mdxjs.com/conf/)! It’s free, it will be streamed remotely (because covid…), and you’ll hear from Gatsby engineers like [Josh Comeau](https://joshwcomeau.com/) and [Laurie Barth](https://laurieontech.com/)
+The maintainers of MDX are throwing their [first ever conference](https://mdxjs.com/conf/)! It’s free, it will be streamed remotely (because COVID…), and you’ll hear from Gatsby engineers like [Josh Comeau](https://joshwcomeau.com/) and [Laurie Barth](https://laurieontech.com/)
 
-If you want to be thr first to hear about new features from Gatsby, and updates from the Gatsby ecosystem, subscribe to our newsletter below!
+If you want to be the first to hear about new features from Gatsby, and updates from the Gatsby ecosystem, subscribe to our newsletter below!
