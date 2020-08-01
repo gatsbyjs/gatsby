@@ -6922,3 +6922,23 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://simplicity-itself.planflow.dev/
+  repo: https://github.com/PlanFlowDev/Simplicity-Itself-Gatsby-Tailwind-Starter-Theme
+  description: A Simple, Free Gatsby/TailwindCSS Starter Theme For Business Websites
+  tags:
+    - Blog
+    - SEO
+    - Store
+    - Ecommerce
+    - Business
+    - Timeline
+    - Contact
+    - Testimonials
+    - Tailwind
+  features:
+    - Designed using Tailwind
+    - Features pages for Ecommerce store
+    - Features pages for Blog
+    - SEO enabled with React Helmet
+    - Responsive design
+    - Styling: Tailwind
