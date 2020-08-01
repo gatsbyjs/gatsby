@@ -78,6 +78,6 @@ In the coming weeks look out for exciting updates to [Gatsby Recipes](/blog/2020
 
 ### MDX Mini-Conference
 
-The maintainers of MDX are throwing their first ever conference! It’s free, it will be streamed remotely (because covid…), and you’ll hear from Gatsby engineers like [Josh Comeau](https://joshwcomeau.com/) and [Laurie Barth](https://laurieontech.com/)
+The maintainers of MDX are throwing their [first ever conference](https://mdxjs.com/conf/)! It’s free, it will be streamed remotely (because covid…), and you’ll hear from Gatsby engineers like [Josh Comeau](https://joshwcomeau.com/) and [Laurie Barth](https://laurieontech.com/)
 
 If you want to be thr first to hear about new features from Gatsby, and updates from the Gatsby ecosystem, subscribe to our newsletter below!
