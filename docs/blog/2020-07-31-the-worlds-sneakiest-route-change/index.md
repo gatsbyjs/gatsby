@@ -133,8 +133,7 @@ navigate(newPath, {
 
 Location state is similar in concept to query parameters, except it doesn't show up in the URL. On its own, this doesn't have any effect, but we can access this state in a special Gatsby browser API:
 
-```js
-// gatsby-browser.js
+```js:title=gatsby-browser.js
 export const shouldUpdateScroll = ({ routerProps }) => {
   const { disableScrollUpdate } = routerProps.location.state
 
@@ -154,8 +153,7 @@ In this case, we want to preserve focus on the dropdown element. It would be sur
 
 To manage this, we will use another Gatsby browser API, [`onRouteUpdate`](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate):
 
-```js
-// gatsby-browser.js
+```js:title=gatsby-browser.js
 export const onRouteUpdate = loc => {
   const { state } = loc.location
 
@@ -173,7 +171,7 @@ The `onRouteUpdate` method is called whenever the route changes, and allows us t
 
 This requires that every `select` has a unique ID:
 
-```js
+```jsx
 <select
   id="some-unique-id"
   onChange={(ev, newPath) => {
