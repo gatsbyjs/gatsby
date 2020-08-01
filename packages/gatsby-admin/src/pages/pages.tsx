@@ -3,9 +3,8 @@ import { jsx, Flex } from "strict-ui"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
 import { Heading, Text } from "gatsby-interface"
-import { FC } from "react"
 
-const Pages: FC<{}> = () => {
+function Pages(): JSX.Element {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {

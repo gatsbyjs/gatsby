@@ -55,6 +55,7 @@ export class AnalyticsTracker {
   gatsbyCliVersion?: SemVer
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
+  features = new Set<string>()
   machineId: UUID
 
   constructor() {
@@ -234,6 +235,7 @@ export class AnalyticsTracker {
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
       dbEngine,
+      features: Array.from(this.features),
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
@@ -364,5 +366,9 @@ export class AnalyticsTracker {
     }
 
     return this.store.sendEvents()
+  }
+
+  trackFeatureIsUsed(name: string): void {
+    this.features.add(name)
   }
 }

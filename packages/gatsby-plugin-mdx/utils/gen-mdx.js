@@ -194,8 +194,10 @@ ${code}`
 module.exports = genMDX // Legacy API, drop in v3 in favor of named export
 module.exports.genMDX = genMDX
 
-async function findImports({
+async function findImportsExports({
   node,
+  rawInput,
+  absolutePath = null,
   options,
   getNode,
   getNodes,
@@ -205,7 +207,7 @@ async function findImports({
   pathPrefix,
   ...helpers
 }) {
-  const { content } = grayMatter(node.rawBody)
+  const { data: frontmatter, content } = grayMatter(rawInput)
 
   const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
     {
@@ -226,7 +228,7 @@ async function findImports({
   )
 
   const compilerOptions = {
-    filepath: node.fileAbsolutePath,
+    filepath: absolutePath,
     ...options,
     remarkPlugins: [
       ...options.remarkPlugins,
@@ -236,8 +238,8 @@ async function findImports({
   const compiler = mdx.createCompiler(compilerOptions)
 
   const fileOpts = { contents: content }
-  if (node.fileAbsolutePath) {
-    fileOpts.path = node.fileAbsolutePath
+  if (absolutePath) {
+    fileOpts.path = absolutePath
   }
 
   const mdast = await compiler.parse(fileOpts)
@@ -246,16 +248,17 @@ async function findImports({
   // we don't need to dedupe the symbols here.
   const identifiers = []
   const imports = []
+  const exports = []
 
   mdast.children.forEach(node => {
-    if (node.type !== `import`) return
-
-    const importCode = node.value
-
-    imports.push(importCode)
-
-    const bindings = parseImportBindings(importCode)
-    identifiers.push(...bindings)
+    if (node.type === `import`) {
+      const importCode = node.value
+      imports.push(importCode)
+      const bindings = parseImportBindings(importCode)
+      identifiers.push(...bindings)
+    } else if (node.type === `export`) {
+      exports.push(node.value)
+    }
   })
 
   if (!identifiers.includes(`React`)) {
@@ -264,9 +267,11 @@ async function findImports({
   }
 
   return {
+    frontmatter,
     scopeImports: imports,
+    scopeExports: exports,
     scopeIdentifiers: identifiers,
   }
 }
 
-module.exports.findImports = findImports
+module.exports.findImportsExports = findImportsExports
