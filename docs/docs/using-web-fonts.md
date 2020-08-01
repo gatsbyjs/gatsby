@@ -70,7 +70,7 @@ Or with yarn:
 yard add gatsby-plugin-web-font-loader
 ```
 
-Add this plugin to your `gatsby-config.js` file located in your root directory. Set your plugin configuration, passing in your `typekit id` options as an [environment variable](/docs/environment-variables/)
+Add this plugin to your `gatsby-config.js` file located in your root directory. Set your plugin configuration, passing in your `typekit id` options as an [environment variable](/docs/environment-variables/).
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config()
@@ -108,4 +108,4 @@ body {
 ## Other resources
 
 - Check out the [Using Google Fonts](/docs/recipes/styling-css/#using-google-fonts) Gatsby recipe.
-- Here's a great article on why it's important to [keep your environment variables secret](https://medium.com/codait/environment-variables-or-keeping-your-secrets-secret-in-a-node-js-app-99019dfff716)
+- Here's a great article on why it's important to [keep your environment variables secret](https://medium.com/codait/environment-variables-or-keeping-your-secrets-secret-in-a-node-js-app-99019dfff716).
