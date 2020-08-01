@@ -61,7 +61,9 @@ const Details = ({
             // for that reason we are excluding it from our list of plugins
             /^gatsby-/.test(dep) && dep !== `gatsby-cypress` ? (
               <div key={dep}>
-                <Link to={`/packages/${dep}`} sx={styles.link}>{dep}</Link>
+                <Link to={`/packages/${dep}`} sx={styles.link}>
+                  {dep}
+                </Link>
               </div>
             ) : (
               <div key={dep}>
@@ -115,5 +117,5 @@ const styles = {
   },
   link: {
     color: `link.color`,
-  }
+  },
 }
