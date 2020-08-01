@@ -57,6 +57,7 @@
     "jest-diff": "^25.5.0",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
+    "node-fetch": "^2.5.0",
     "p-queue": "^6.4.0",
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.5",
