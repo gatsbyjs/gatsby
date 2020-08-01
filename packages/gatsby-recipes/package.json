@@ -83,6 +83,7 @@
     "uuid": "^8.2.0",
     "ws": "^7.3.0",
     "xstate": "^4.9.1",
+    "yoga-layout-prebuilt": "^1.9.6",
     "yup": "^0.27.0"
   },
   "devDependencies": {
