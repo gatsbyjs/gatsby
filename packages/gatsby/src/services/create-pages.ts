@@ -9,6 +9,7 @@ export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
   store,
+  deferNodeMutation,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: string[]
   changedPages: string[]
@@ -28,6 +29,7 @@ export async function createPages({
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
+      deferNodeMutation,
     },
     { activity }
   )

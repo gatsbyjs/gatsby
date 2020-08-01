@@ -2148,6 +2148,7 @@ WXR
 wysiwyg
 x64
 Xcode
+XD
 XSL
 XSS
 XState
