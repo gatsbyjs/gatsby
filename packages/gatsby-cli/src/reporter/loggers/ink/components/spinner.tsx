@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "ink"
+import { Box, Text } from "ink"
 import InkSpinner from "ink-spinner"
 
 interface ISpinnerProps {
@@ -14,7 +14,9 @@ export function Spinner({ text, statusText }: ISpinnerProps): JSX.Element {
 
   return (
     <Box>
-      <InkSpinner type="dots" /> {label}
+      <Text>
+        <InkSpinner type="dots" /> {label}
+      </Text>
     </Box>
   )
 }
