@@ -45,7 +45,7 @@ export const Message = React.memo<IMessageProps>(
     }
     if (!level || level === `LOG`) {
       return <Text>{message}</Text>
-    }   
+    }
 
     const TextLabel = getLabel(level)
 
