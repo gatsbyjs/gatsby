@@ -78,23 +78,23 @@ Save that and restart the gatsby development server. Then open up GraphiQL again
 
 In the explorer pane, you'll see `allFile` and `file` available as selections:
 
-![Screenshot of the GraphiQL IDE showing the new dropdown options provided by the `gatsby-source-filesystem` plugin](graphiql-filesystem.png)
+![The GraphiQL IDE showing the new dropdown options provided by the gatsby-source-filesystem plugin](graphiql-filesystem.png)
 
 Click the `allFile` dropdown. Position your cursor after `allFile` in the query area, and then type <kbd>Ctrl + Enter</kbd>. This will pre-fill a query for the `id` of each file. Press "Play" to run the query:
 
-![Screenshot of the GraphiQL IDE showing the results of a filesystem query](filesystem-query.png)
+![The GraphiQL IDE showing the results of a filesystem query](filesystem-query.png)
 
 In the Explorer pane, the `id` field has automatically been selected. Make selections for more fields by checking the field's corresponding checkbox. Press "Play" to run the query again, with the new fields:
 
-![Screenshot of the GraphiQL IDE showing the new fields in the `allFile` dropdown](filesystem-explorer-options.png)
+![The GraphiQL IDE showing the new fields in the allfile dropdown](filesystem-explorer-options.png)
 
 Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl + Space</kbd>). This will show queryable fields on the `File` nodes.
 
-![Screenshot of the GraphiQL IDE showing the `gatsby-source-filesystem` plugin's new autocomplete options](filesystem-autocomplete.png)
+![The GraphiQL IDE showing the gatsby-source-filesystem plugin's new autocomplete options](filesystem-autocomplete.png)
 
 Try adding a number of fields to your query, press <kbd>Ctrl + Enter</kbd> each time to re-run the query. You'll see the updated query results:
 
-![Screenshot of the GraphiQL IDE showing the `allFile` query](./images/allfile-query.png)
+![The GraphiQL IDE showing the allfile query](./images/allfile-query.png)
 
 The result is an array of `File` "nodes" (node is a fancy name for an object in a "graph"). Each `File` node object has the fields you queried for.
 
@@ -203,7 +203,7 @@ export const query = graphql`
 
 And now visit `http://localhost:8000/my-files`… 😲
 
-![Screenshot of a browser window showing a list of the files in the site](my-files-page.png)
+![A browser window showing a list of the files in the site](my-files-page.png)
 
 ## What's coming next?
 
