@@ -62,7 +62,7 @@ Space</kbd>).
 Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
 each time to re-run the query. You'll see something like this:
 
-![The GraphiQL IDE showing the allfile query](./images/allfile-query.png)
+![The GraphiQL IDE showing the results of the query](./images/allfile-query.png)
 
 The result is an array of File "nodes" (node is a fancy name for an object in a
 "graph"). Each File object has the fields you queried for.
