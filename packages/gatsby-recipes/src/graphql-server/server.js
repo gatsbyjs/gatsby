@@ -68,12 +68,7 @@ const startRecipe = ({ recipePath, projectRoot }) => {
           currentStep: state.context.currentStep,
         })
         // Wait until plans are created before updating the UI
-        if (
-          state.value === `presentPlan` ||
-          state.value === `done` ||
-          state.value === `doneError` ||
-          state.value === `applyingPlan`
-        ) {
+        if ([`presentPlan`, `done`, `doneError`, `applyingPlan`].includes(state.value)) {
           emitUpdate({
             context: state.context,
             lastEvent: state.event,
