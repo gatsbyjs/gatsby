@@ -1,4 +1,6 @@
-const { Machine, assign } = require(`xstate`)
+const { Machine, assign, send } = require(`xstate`)
+
+const debug = require(`debug`)(`recipes-machine`)
 
 const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
@@ -14,10 +16,13 @@ const recipeMachine = Machine(
       projectRoot: null,
       currentStep: 0,
       steps: [],
+      exports: [],
       plan: [],
       commands: [],
       stepResources: [],
       stepsAsMdx: [],
+      exportsAsMdx: [],
+      inputs: {},
     },
     states: {
       parsingRecipe: {
@@ -25,6 +30,8 @@ const recipeMachine = Machine(
           id: `parseRecipe`,
           src: async (context, _event) => {
             let parsed
+
+            debug(`parsingRecipe`)
 
             if (context.src) {
               parsed = await parser.parse(context.src)
@@ -38,17 +45,22 @@ const recipeMachine = Machine(
               )
             }
 
+            debug(`parsedRecipe`)
+
             return parsed
           },
           onError: {
             target: `doneError`,
             actions: assign({
               error: (context, event) => {
+                debug(`error parsing recipes`)
+
                 let msg
                 try {
                   msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
+                  console.log(e)
                   return {
                     error: `Could not parse recipe ${context.recipePath}`,
                     e,
@@ -61,6 +73,7 @@ const recipeMachine = Machine(
             target: `validateSteps`,
             actions: assign({
               steps: (context, event) => event.data.stepsAsMdx,
+              exports: (context, event) => event.data.exportsAsMdx,
             }),
           },
         },
@@ -69,8 +82,10 @@ const recipeMachine = Machine(
         invoke: {
           id: `validateSteps`,
           src: async (context, event) => {
+            debug(`validatingSteps`)
             const result = await validateSteps(context.steps)
             if (result.length > 0) {
+              debug(`errors found in validation`)
               throw new Error(JSON.stringify(result))
             }
 
@@ -89,11 +104,12 @@ const recipeMachine = Machine(
         entry: [`deleteOldPlan`],
         invoke: {
           id: `createPlan`,
-          src: async (context, event) => {
+          src: (context, event) => async (cb, onReceive) => {
             try {
-              const result = await createPlan(context)
+              const result = await createPlan(context, cb)
               return result
             } catch (e) {
+              console.log(e)
               throw e
             }
           },
@@ -106,14 +122,41 @@ const recipeMachine = Machine(
           onError: {
             target: `doneError`,
             actions: assign({
-              error: (context, event) => event.data.errors || event.data,
+              error: (context, event) => event.data?.errors || event.data,
+            }),
+          },
+        },
+        on: {
+          INVALID_PROPS: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, event) => event.data,
             }),
           },
         },
       },
       presentPlan: {
+        invoke: {
+          id: `presentingPlan`,
+          src: (context, event) => (cb, onReceive) => {
+            onReceive(async e => {
+              context.inputs = context.inputs || {}
+              context.inputs[e.data.key] = e.data
+              const result = await createPlan(context, cb)
+              cb({ type: `onUpdatePlan`, data: result })
+            })
+          },
+        },
         on: {
           CONTINUE: `applyingPlan`,
+          INPUT_ADDED: {
+            actions: send((context, event) => event, { to: `presentingPlan` }),
+          },
+          onUpdatePlan: {
+            actions: assign({
+              plan: (context, event) => event.data,
+            }),
+          },
         },
       },
       applyingPlan: {
@@ -122,6 +165,7 @@ const recipeMachine = Machine(
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {
+            debug(`applying plan`)
             cb(`RESET`)
             if (context.plan.length === 0) {
               return cb(`onDone`)
@@ -131,11 +175,16 @@ const recipeMachine = Machine(
               cb(`TICK`)
             }, 10000)
 
-            applyPlan(context.plan)
+            applyPlan(context, cb)
               .then(result => {
+                debug(`applied plan`)
                 cb({ type: `onDone`, data: result })
               })
-              .catch(error => cb({ type: `onError`, data: error }))
+              .catch(error => {
+                debug(`error applying plan`)
+                debug(error)
+                cb({ type: `onError`, data: error })
+              })
 
             return () => clearInterval(interval)
           },
@@ -200,25 +249,32 @@ const recipeMachine = Machine(
       }),
       addResourcesToContext: assign((context, event) => {
         if (event.data) {
-          const stepResources = context.stepResources || []
-          const messages = event.data.map(e => {
-            return {
-              _message: e._message,
-              _currentStep: context.currentStep,
-            }
+          let plan = context.plan || []
+          plan = plan.map(p => {
+            const changedResource = event.data.find(c => {
+              if (c._uuid) {
+                return c._uuid === p._uuid
+              } else {
+                return c.resourceDefinitions._key === p.resourceDefinitions._key
+              }
+            })
+            if (!changedResource) return p
+            p._message = changedResource._message
+            p.isDone = true
+            return p
           })
           return {
-            stepResources: stepResources.concat(messages),
+            plan,
           }
         }
         return undefined
       }),
     },
     guards: {
-      hasNextStep: (context, event) =>
-        context.currentStep < context.steps.length,
-      atLastStep: (context, event) =>
-        context.currentStep === context.steps.length,
+      hasNextStep: (context, event) => false,
+      // false || context.currentStep < context.steps.length,
+      atLastStep: (context, event) => true,
+      // true || context.currentStep === context.steps.length,
     },
   }
 )
