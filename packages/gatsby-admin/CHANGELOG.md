@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.113](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.112...gatsby-admin@0.1.113) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.112](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.110...gatsby-admin@0.1.112) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.111](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.110...gatsby-admin@0.1.111) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.110](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.109...gatsby-admin@0.1.110) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.109](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.108...gatsby-admin@0.1.109) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.108](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.107...gatsby-admin@0.1.108) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.107](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.106...gatsby-admin@0.1.107) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.106](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.105...gatsby-admin@0.1.106) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.105](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.104...gatsby-admin@0.1.105) (2020-07-31)
+
+### Features
+
+- **admin:** new dashboard design ([#26124](https://github.com/gatsbyjs/gatsby/issues/26124)) ([f1bfd53](https://github.com/gatsbyjs/gatsby/commit/f1bfd53))
+- **gatsby-admin:** add modal to manage plugin ([#26154](https://github.com/gatsbyjs/gatsby/issues/26154)) ([c1110b3](https://github.com/gatsbyjs/gatsby/commit/c1110b3))
+- **gatsby-admin:** new navbar design ([#26159](https://github.com/gatsbyjs/gatsby/issues/26159)) ([1c5d8e9](https://github.com/gatsbyjs/gatsby/commit/1c5d8e9))
+
 ## [0.1.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.103...gatsby-admin@0.1.104) (2020-07-30)
 
 ### Features

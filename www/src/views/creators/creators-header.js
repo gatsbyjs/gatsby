@@ -12,7 +12,8 @@ export default function CreatorsHeader({
       sx={{
         alignItems: `center`,
         backgroundColor: `navigation.background`,
-        borderBottom: t => `1px solid ${t.colors.ui.border}`,
+        borderBottom: 1,
+        borderColor: `ui.border`,
         display: `flex`,
         flexDirection: `row`,
         fontFamily: `heading`,
