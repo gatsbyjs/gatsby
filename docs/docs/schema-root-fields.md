@@ -12,9 +12,9 @@ While those fields can be used without any arguments, the additional power lies 
 
 ## Plural root fields
 
-Plural fields accept four arguments - `filter`, `sort`, `skip` and `limit`. `filter` allows filtering based on node field values (see Filter Types below), `sort` sorts the result (see Sorting types below). `skip` and `limit` offsets the result by `skip` nodes and limits it to `limit` items. Plural root fields return a Connection type (see Pagination Types below) for the returning type (eg `BlogPostConnection`).
+Plural fields accept four arguments - `filter`, `sort`, `skip` and `limit`. `filter` allows filtering based on node field values (see Filter Types below), `sort` sorts the result (see Sorting types below). `skip` and `limit` offsets the result by `skip` nodes and limits it to `limit` items. Plural root fields return a Connection type (see Pagination Types below) for the returning type (for example, `BlogPostConnection`).
 
-```
+```graphql
 {
   allBlogPost(filter: { date: { lt: "2020-01-01" }}, sort: {fields: [date], order: ASC) {
     nodes {
@@ -30,7 +30,7 @@ Singular root fields accept the same `filter` parameter as plural, but the `filt
 
 If no parameters are passed, they return a random node of that type (if any exist). That random node type is explicitly undefined and there is no guarantee that it will be stable (or unstable) between builds or rebuilds. If no node was found according to the filter, null is returned.
 
-```
+```graphql
 {
   blogPost(id: { slug: "graphql-is-the-best" }) {
     id
@@ -56,16 +56,16 @@ Gatsby uses a common pattern in GraphQL called [Connections](https://relay.dev/g
 
 ## Filter types
 
-For every Node type, a filter GraphQL input type is created. Gatsby has pre-created "operator types" for each scalar, like `StringQueryOperatorType`, that has keys as possible operators (eg`eq`,`ne`) and values as appropriate values for them. Then Gatsby looks at every field in the type and executes roughly the following algorithm.
+For every Node type, a filter GraphQL input type is created. Gatsby has pre-created "operator types" for each scalar, like `StringQueryOperatorType`, that has keys as possible operators (for example, `eq`, `ne`) and values as appropriate values for them. Then Gatsby looks at every field in the type and executes roughly the following algorithm.
 
 1. If field is a scalar
    1.1 Get a corresponding operator type for that scalar type
    1.2 Replace field with that type
-2. If field is not a scalar - recursively go throught the nested type's fields and then assign resulting input object type to the field.
+2. If field is not a scalar - recursively go through the nested type's fields and then assign resulting input object type to the field.
 
 Abridged resulting types:
 
-```
+```graphql
 input StringQueryOperatorInput {
   eq: String
   ne: String
@@ -86,7 +86,7 @@ input BlogFilterInput {
 
 For sort, GraphQL creates an enum of all fields (including up to 3 levels of nesting) for a particular type.
 
-```
+```graphql
 enum BlogFieldsEnum {
   id
   title
@@ -98,7 +98,7 @@ enum BlogFieldsEnum {
 
 This field is combined with enum that contains ordering (`ASC` or `DESC`) into a sort input type.
 
-```
+```graphql
 input BlogSortInput {
   fields: [BlogFieldsEnum]
   order: [SortOrderEnum] = [ASC]
