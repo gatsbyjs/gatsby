@@ -10,6 +10,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const normalize = require(`normalize-path`)
 const glob = require(`glob`)
+const fs = require(`fs`)
 
 const {
   validate,
@@ -76,12 +77,12 @@ export default async function compile({ parentSpan } = {}): Promise<
     addError,
     parentSpan,
   })
-
   const queries = processQueries({
     schema,
     parsedQueries,
     addError,
     parentSpan,
+    base: program.directory,
   })
 
   if (errors.length !== 0) {
@@ -165,12 +166,23 @@ export const processQueries = ({
   parsedQueries,
   addError,
   parentSpan,
+  base,
 }) => {
   const { definitionsByName, operations } = extractOperations(
     schema,
     parsedQueries,
     addError,
     parentSpan
+  )
+
+  const fragmentString = Array.from(definitionsByName.entries())
+    .filter(([_, def]) => def.isFragment)
+    .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
+    .join(`\n`)
+
+  fs.writeFileSync(
+    path.join(base, `.cache`, `fragments.graphql`),
+    fragmentString
   )
 
   return processDefinitions({

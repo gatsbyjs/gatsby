@@ -16,6 +16,8 @@ import { markWebpackStatusAsPending } from "../utils/webpack-status"
 import { IProgram, IDebugInfo } from "./types"
 import { interpret } from "xstate"
 import { globalTracer } from "opentracing"
+import { writeFileSync } from "fs"
+import * as path from "path"
 import { developMachine } from "../state-machines/develop"
 import { logTransitions } from "../utils/state-machine-logging"
 
@@ -130,6 +132,29 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   if (program.verbose) {
     logTransitions(service)
   }
+
+  const configJSONString = JSON.stringify(
+    {
+      schema: `./fullschema.graphql`,
+      documents: [`src/**/**.{ts,js,tsx,jsx,esm}`],
+      extensions: {
+        endpoints: {
+          default: {
+            url: `${program.https ? `https://` : `http://`}${program.host}:${
+              program.port
+            }/___graphql`,
+          },
+        },
+      },
+    },
+    null,
+    2
+  )
+
+  writeFileSync(
+    path.join(program.directory, `.cache`, `graphql-config.json`),
+    configJSONString
+  )
 
   service.start()
 }

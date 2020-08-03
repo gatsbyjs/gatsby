@@ -1,9 +1,11 @@
 /* @flow */
-
+const fs = require(`fs`)
+const path = require(`path`)
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
 const { getNodesByType, getTypes } = require(`../redux/nodes`)
 const { createSchemaComposer } = require(`./schema-composer`)
+const { printSchema } = require(`graphql`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
@@ -96,6 +98,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     schemaCustomization: { thirdPartySchemas, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
+    program,
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
@@ -124,7 +127,10 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     type: `SET_SCHEMA`,
     payload: schema,
   })
-
+  fs.writeFileSync(
+    path.join(program.directory, `.cache`, `fullschema.graphql`),
+    printSchema(schema)
+  )
   span.finish()
 }
 
