@@ -130,7 +130,7 @@ Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes 
 1. Run `yarn` in your terminal in the root of the repo.
 2. Still in the repo root run `yarn workspace <starter name> develop`.
 
-From there you can make changes in the theme and seem them reflected in the running site.
+From there, you can make changes in the theme and see them reflected in the running site.
 
 ## Feedback
 
