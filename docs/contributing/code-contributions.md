@@ -122,7 +122,7 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 
 ## Official theme development
 
-This section is for official theme development in Gatsby's monorepo. If you are looking
+This section is for official theme development. If you are looking
 to build your own theme, see [building themes](/docs/themes/building-themes/).
 
 Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes themselves live in the `packages` directory and starters using them are in the `starters` directory. In order to work on a theme, find the starter that uses it and do the following:
