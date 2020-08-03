@@ -17,7 +17,7 @@ export default function PageComponent() {
 
     return (
         <ul style={{ height: 200, overflow: `auto` }} {...ulScrollRestoration}>
-            {countryList.map(country => <li>{country}</li>)
+            {countryList.map(country => <li>{country}</li>)}
         </ul>
     );
 }
@@ -34,7 +34,7 @@ export default class PageComponent extends React.Component {
         return (
             <ScrollContainer key="page-component-ul-list">
                 <ul style={{ height: 200, overflow: `auto` }}>
-                    {countryList.map(country => <li>{country}</li>)
+                    {countryList.map(country => <li>{country}</li>)}
                 </ul>
             </ScrollContainer>
         );
