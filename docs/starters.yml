@@ -6929,16 +6929,16 @@
     - Blog
     - SEO
     - Store
-    - Ecommerce
+    - E-commerce
     - Business
-    - Timeline
-    - Contact
-    - Testimonials
-    - Tailwind
+    - Portfolio
+    - Presentation
+    - Gallery
+    - Styling: Tailwind
   features:
     - Designed using Tailwind
     - Features pages for Ecommerce store
     - Features pages for Blog
     - SEO enabled with React Helmet
     - Responsive design
-    - Styling: Tailwind
+    - TailwindCSS
