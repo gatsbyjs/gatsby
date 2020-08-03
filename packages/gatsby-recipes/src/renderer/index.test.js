@@ -70,14 +70,18 @@ describe(`renderer`, () => {
         "resourceName": "File",
       }
     `)
-    expect(result[2]).toMatchInlineSnapshot(`
+    expect(result[2]).toMatchInlineSnapshot(
+      {
+        currentState: expect.stringMatching(/gatsby@[0-9.]+/),
+      },
+      `
       Object {
         "_stepMetadata": Object {
           "step": "1",
           "totalSteps": "1",
         },
         "_type": "NPMPackage",
-        "currentState": "gatsby@2.24.15",
+        "currentState": StringMatching /gatsby@\\[0-9\\.\\]\\+/,
         "describe": "Install gatsby@latest",
         "newState": "gatsby@latest",
         "resourceDefinitions": Object {
@@ -86,7 +90,8 @@ describe(`renderer`, () => {
         },
         "resourceName": "NPMPackage",
       }
-    `)
+    `
+    )
   })
 
   test(`handles JSX with a single component`, async () => {
