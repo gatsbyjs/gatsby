@@ -128,7 +128,7 @@ to build your own theme, see [building themes](/docs/themes/building-themes/).
 Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes themselves live in the `packages` directory and starters using them are in the `starters` directory. In order to work on a theme, find the starter that uses it and do the following:
 
 1. Run `yarn` in your terminal in the root of the repo.
-2. Still in the repo root run `yarn workspace <starter name> develop`.
+2. Still in the repo root, run `yarn workspace <starter name> develop`.
 
 From there, you can make changes in the theme and see them reflected in the running site.
 
