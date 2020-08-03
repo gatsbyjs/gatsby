@@ -80,24 +80,6 @@ test(`handles nested rendering`, async () => {
   `)
 })
 
-// test(`overrides inputs when passed`, async () => {
-// const result = await render(
-// <InputProvider value={{ abc123: { path: `yellow.js` } }}>
-// <doc>
-// <RecipeStep step={1} totalSteps={2}>
-// <File path="red.js" content="red!" _uuid="abc123" />
-// </RecipeStep>
-// <RecipeStep step={2} totalSteps={2}>
-// <File path="blue.js" content="blue!" />
-// </RecipeStep>
-// </doc>
-// </InputProvider>
-// )
-
-// expect(result[0].describe).toEqual(`Write yellow.js`)
-// expect(result[1].describe).toEqual(`Write blue.js`)
-// })
-
 test(`includes step metadata`, async () => {
   const result = await render(
     <doc>
@@ -177,10 +159,15 @@ test(`renders to a plan`, async () => {
       "resourceName": "File",
     }
   `)
-  expect(result[1]).toMatchInlineSnapshot(`
+
+  expect(result[1]).toMatchInlineSnapshot(
+    {
+      currentState: expect.stringMatching(/gatsby@[0-9.]+/),
+    },
+    `
     Object {
       "_stepMetadata": Object {},
-      "currentState": "gatsby@2.24.15",
+      "currentState": StringMatching /gatsby@\\[0-9\\.\\]\\+/,
       "describe": "Install gatsby@latest",
       "newState": "gatsby@latest",
       "resourceDefinitions": Object {
@@ -188,5 +175,6 @@ test(`renders to a plan`, async () => {
       },
       "resourceName": "NPMPackage",
     }
-  `)
+  `
+  )
 })
