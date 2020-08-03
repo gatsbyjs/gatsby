@@ -6922,3 +6922,13 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-r3f-minimal.netlify.app/
+  repo: https://github.com/gatsby-starter-r3f-minimal
+  description: A barebones Gatsby starter with example React Three Fiber boilerplate.
+  tags:
+    - Onepage
+    - Landing Page
+  features:
+    - Basic setup for React Three Fiber
+    - Styled Components
+    - Desktop and mobile responsive layout
