@@ -18,8 +18,8 @@ It’s important to note that Gatsby’s governance model is a work in progress 
 
 The following groups are the primary categories of Gatsby OSS contributors.
 
-- [Maintainers](https://github.com/orgs/gatsbyjs/teams/maintainers) - The outstanding community of contributors who help make Gatsby awesome. These are people who’ve had a Gatsby pull request merged and adhere to the [Gatsby Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/).
-- [Admins](https://github.com/orgs/gatsbyjs/teams/admin/members) - The official team members of Gatsby, Inc. (sometimes referred to as the "inkteam") including the Gatsby Core Team who maintain Gatsby OSS.
+- __Outside Contributors__ - The outstanding community of contributors who help make Gatsby awesome. These are people who’ve had a Gatsby pull request merged and adhere to the [Gatsby Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/).
+- __[Admins](https://github.com/orgs/gatsbyjs/teams/admin/members)__ - The official team members of Gatsby, Inc. (sometimes referred to as the "inkteam") including the Gatsby Core Team who maintain Gatsby OSS.
 
 ### Decision-Making Process
 
