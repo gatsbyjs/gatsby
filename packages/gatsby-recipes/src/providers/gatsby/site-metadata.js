@@ -95,9 +95,12 @@ const read = async ({ root }, id) => {
 
     const siteMetadata = getSiteMetdataFromConfig(configSrc)
 
-    if (!siteMetadata || typeof siteMetadata[id] === undefined) return null
+    if (!siteMetadata || typeof siteMetadata[id] === `undefined`) {
+      return undefined
+    }
 
     return {
+      id,
       name: id,
       value: JSON.stringify(siteMetadata[id]),
     }
@@ -138,9 +141,12 @@ class BabelPluginSetSiteMetadataField {
 
             const siteMetadataObj = getObjectFromNode(siteMetadata.value)
 
+            const valueType = typeof value
+            const shouldParse =
+              valueType !== `string` && valueType !== `undefined`
             const newSiteMetadataObj = {
               ...siteMetadataObj,
-              [key]: typeof value === `string` ? JSON.parse(value) : value,
+              [key]: shouldParse ? JSON.parse(value) : value,
             }
 
             const newSiteMetadataTemplate = template(`

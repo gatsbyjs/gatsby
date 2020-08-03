@@ -49,6 +49,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "GatsbyShadowFile",
       },
+      "createGatsbySiteMetadata": Object {
+        "args": Object {
+          "gatsbySiteMetadata": Object {
+            "type": "GatsbySiteMetadataInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbySiteMetadata",
+      },
       "createGitIgnore": Object {
         "args": Object {
           "gitIgnore": Object {
@@ -129,6 +138,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "GatsbyShadowFile",
+      },
+      "destroyGatsbySiteMetadata": Object {
+        "args": Object {
+          "gatsbySiteMetadata": Object {
+            "type": "GatsbySiteMetadataInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbySiteMetadata",
       },
       "destroyGitIgnore": Object {
         "args": Object {
@@ -211,6 +229,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "GatsbyShadowFile",
       },
+      "updateGatsbySiteMetadata": Object {
+        "args": Object {
+          "gatsbySiteMetadata": Object {
+            "type": "GatsbySiteMetadataInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbySiteMetadata",
+      },
       "updateGitIgnore": Object {
         "args": Object {
           "gitIgnore": Object {
@@ -258,6 +285,10 @@ test(`create-types`, () => {
       "allGatsbyPlugin": Object {
         "resolve": [Function],
         "type": "GatsbyPluginConnection",
+      },
+      "allGatsbySiteMetadata": Object {
+        "resolve": [Function],
+        "type": "GatsbySiteMetadataConnection",
       },
       "allGitIgnore": Object {
         "resolve": [Function],
@@ -315,6 +346,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "GatsbyShadowFile",
+      },
+      "gatsbySiteMetadata": Object {
+        "args": Object {
+          "id": Object {
+            "type": "String",
+          },
+        },
+        "resolve": [Function],
+        "type": "GatsbySiteMetadata",
       },
       "gitIgnore": Object {
         "args": Object {
