@@ -3,12 +3,16 @@
 
 # Summary
 
-Our new API and conventions unifies routing within the pages directory. Previously only standalone pages like /about could be created there. Now you can create routes that build from a collection of data as well as client-only routes for apps. Common patterns like creating pages for each blog post or paginated index pages are much simpler. It's now much easier to see at a glance what routes your site has. Page components now have all the logic they need to query data, create routes, and render. This makes them very easy to reuse on multiple sites and distribute through Gatsby Themes.
+The file system is the definitive way to create routes with the `src/pages` directory. Previously only standalone and static pages like `/about` could be created there. This proposal is to enable client routes and collection routes to be created from the filesystem as well. Common patterns like creating pages for each blog post or paginated index pages are much simpler and now you can easily see your sites routes by looking at your file system. Page components now have all the logic they need to query data, create routes, and render. This makes them very easy to reuse on multiple sites and distribute through Gatsby Themes.
 
 
 # Basic example
 
-[Look at this gist.](https://gist.github.com/blainekasten/d05a8dc6a53ece8505516c1399cdd8df)
+- `/src/pages/products/{Product.name}.js`
+- `/src/pages/users/[id].js`
+
+The `{}` delimiter signifies a collection route. Where the first segment is the Model name, and the second segment is the field to use for the url part.
+The `[]` delimiter signifies a client side route. This will create a page at `users/:id`
 
 # Motivation
 
@@ -28,13 +32,13 @@ export default function PastOrder({ params }) {
 }
 ```
 
-Collection Builder:
+Collection routes:
 ```js
-// src/pages/product/{name}.js
-import { createPagesFromData, graphql } from 'gatsby';
+// src/pages/product/{Product.name}.js
+import { graphql } from 'gatsby';
 
 // data will be the values resolved from the query exported in this component.
-const Product = ({data}) => JSON.stringify(data)
+export default Product = ({data}) => JSON.stringify(data)
 
 export const query = graphql`
   # $name is the interpolated value from the url/file name
@@ -48,13 +52,9 @@ export const query = graphql`
     }
   }
 `;
-
-// This is a magic Gatsby macro that tells the build time to generate a Product page
-// for each product returned from `allProduct`.
-//
-// `allProduct` could be any of these options: `Product`, `allProduct`, `allProduct(filter: { name: { nin: ["Burger"] })`
-export default createPagesFromData(Product, `allProduct`);
 ```
+
+Collection routes are unique because they will generate `n` pages for the results of querying all nodes for the Model supplied by the routing structure.
 
 # Adoption strategy
 
@@ -75,9 +75,9 @@ Are there common use cases that this API does not support?
 We have a prerelease of this that you can test out. Install this:
 
 ```
-yarn add gatsby@unifiedroutes
+yarn add gatsby@unifiedroutes-v2
 
 // or
 
-npm install gatsby@unifiedroutes
+npm install gatsby@unifiedroutes-v2
 ```
