@@ -268,6 +268,15 @@ export async function initialize({
     store.dispatch({
       type: `DELETE_CACHE`,
     })
+
+    // in future this should show which plugin's caches are purged
+    // possibly should also have which plugins had caches
+    telemetry.decorateEvent(`BUILD_END`, {
+      pluginCachesPurged: [`*`],
+    })
+    telemetry.decorateEvent(`DEVELOP_STOP`, {
+      pluginCachesPurged: [`*`],
+    })
   }
 
   // Update the store with the new plugins hash.

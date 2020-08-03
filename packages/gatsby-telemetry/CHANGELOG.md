@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.24...gatsby-telemetry@1.3.25) (2020-08-03)
+
+### Features
+
+- **gatsby-telemetry:** Add API to track feature usage ([#26071](https://github.com/gatsbyjs/gatsby/issues/26071)) ([22196a1](https://github.com/gatsbyjs/gatsby/commit/22196a1))
+
+## [1.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.23...gatsby-telemetry@1.3.24) (2020-07-30)
+
+### Features
+
+- **telemetry:** Telemetry flush events fixes and covert more of telemetry to TypeScript ([#25956](https://github.com/gatsbyjs/gatsby/issues/25956)) ([12f124b](https://github.com/gatsbyjs/gatsby/commit/12f124b))
+
 ## [1.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.22...gatsby-telemetry@1.3.23) (2020-07-24)
 
 **Note:** Version bump only for package gatsby-telemetry

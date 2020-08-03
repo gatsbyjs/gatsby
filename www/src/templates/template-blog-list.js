@@ -25,7 +25,8 @@ export default function BlogPostsIndex({ data, pageContext }) {
             ...pullIntoGutter,
             display: `flex`,
             justifyContent: `space-between`,
-            borderBottom: t => `1px solid ${t.colors.ui.border}`,
+            borderBottom: 1,
+            borderColor: `ui.border`,
             mb: 6,
             pb: 6,
             [breakpointGutter]: {
@@ -48,8 +49,7 @@ export default function BlogPostsIndex({ data, pageContext }) {
             post={node}
             key={node.fields.slug}
             sx={{
-              borderBottomWidth: `1px`,
-              borderBottomStyle: `solid`,
+              borderBottom: 1,
               borderColor: `ui.border`,
               pb: 8,
               mb: index === posts.length - 1 ? 0 : 8,

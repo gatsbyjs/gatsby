@@ -16,9 +16,9 @@ array: [1,2,3]
 )`,
     namedExports: `export const meta = {author: "chris"}`,
     body: `# Some title
-    
+
 a bit of a paragraph
-    
+
 some content`,
   }
 

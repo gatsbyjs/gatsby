@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.23...gatsby@2.24.24) (2020-08-03)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.21...gatsby@2.24.23) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.21...gatsby@2.24.22) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.20...gatsby@2.24.21) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.19...gatsby@2.24.20) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.18...gatsby@2.24.19) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.17...gatsby@2.24.18) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.16...gatsby@2.24.17) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.15...gatsby@2.24.16) (2020-07-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.14...gatsby@2.24.15) (2020-07-30)
+
+### Bug Fixes
+
+- **gatsby:** Resolve node mutations in waiting state ([#26138](https://github.com/gatsbyjs/gatsby/issues/26138)) ([f9e12cc](https://github.com/gatsbyjs/gatsby/commit/f9e12cc))
+
+### Features
+
+- **gatsby-telemetry:** Track if cache was purged ([#26096](https://github.com/gatsbyjs/gatsby/issues/26096)) ([495fd73](https://github.com/gatsbyjs/gatsby/commit/495fd73))
+
+## [2.24.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.13...gatsby@2.24.14) (2020-07-29)
+
+### Bug Fixes
+
+- **gatsby:** Load resources in ProdPageRenderer ([#26092](https://github.com/gatsbyjs/gatsby/issues/26092)) ([f8b7b35](https://github.com/gatsbyjs/gatsby/commit/f8b7b35))
+
+## [2.24.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.12...gatsby@2.24.13) (2020-07-29)
+
+### Bug Fixes
+
+- **gatsby:** Delete babel and terser cache dirs ([#26053](https://github.com/gatsbyjs/gatsby/issues/26053)) ([9497c97](https://github.com/gatsbyjs/gatsby/commit/9497c97))
+- **gatsby:** Load static query results from its own Db ([#26077](https://github.com/gatsbyjs/gatsby/issues/26077)) ([5cf9687](https://github.com/gatsbyjs/gatsby/commit/5cf9687))
+
+## [2.24.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.11...gatsby@2.24.12) (2020-07-28)
+
+### Bug Fixes
+
+- **gatsby:** Defer node mutation in more APIs ([#26067](https://github.com/gatsbyjs/gatsby/issues/26067)) ([5e5b413](https://github.com/gatsbyjs/gatsby/commit/5e5b413))
+- Enable CLI integration tests ([#25997](https://github.com/gatsbyjs/gatsby/issues/25997)) ([ffabe75](https://github.com/gatsbyjs/gatsby/commit/ffabe75))
+
+### Features
+
+- **gatsby:** Add top-level error handling to state machine ([#25995](https://github.com/gatsbyjs/gatsby/issues/25995)) ([b84ea14](https://github.com/gatsbyjs/gatsby/commit/b84ea14))
+
 ## [2.24.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.10...gatsby@2.24.11) (2020-07-24)
 
 ### Bug Fixes

@@ -58,7 +58,7 @@ Client-side refers to operations that are performed by the user's browser in a [
 
 ### Client-side rendering
 
-The practice of using JavaScript to render pages on the [client-side](#client-side), as opposed to [server-side rendering](/docs/glossary/server-side-rendering/) alone. Gatsby uses [React](#react) and the `@reach/router` library to enhance HTML pages compiled at [build time](#build) to navigate site pages in a web browser without traditional page reloads, enabling performance techniques like preloading and [pre-fetching](/docs/routing/#performance-and-prefetching), [intersection observer and responsive `srcset`](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#modern-apis-in-gatsby) for images, and more. See also: [routing](#routing), which is handled on the client-side in Gatsby by default.
+The practice of using JavaScript to render pages on the [client-side](#client-side), as opposed to [server-side rendering](/docs/glossary/server-side-rendering/) alone. Gatsby uses [React](#react) and the [`@reach/router`](https://reach.tech/router/) library to enhance HTML pages compiled at [build time](#build) to navigate site pages in a web browser without traditional page reloads, enabling performance techniques like preloading and [pre-fetching](/docs/routing/#performance-and-prefetching), [intersection observer and responsive `srcset`](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#modern-apis-in-gatsby) for images, and more. See also: [routing](#routing), which is handled on the client-side in Gatsby by default.
 
 ### CMS
 
@@ -258,7 +258,7 @@ This also often refers to [components](#component) that live in `/src/pages/` an
 
 ### Plugin
 
-Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugins) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
+Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugin) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
 
 ### Production Environment
 
@@ -354,7 +354,7 @@ A [plugin](#plugin) that transforms one type of data to another. For example you
 
 ### Transpile
 
-The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compilation) process.
+The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compiler) process.
 
 ## U
 

@@ -154,9 +154,11 @@ ArchieML.org
 architected
 architecting
 Archlinux
+Arellano
 arg
 args
 Arkins
+Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
@@ -428,6 +430,7 @@ Costea
 Coughlan
 counterintuitive
 COVID-19
+COVID
 cowpaths
 Coyier
 CPG
@@ -953,8 +956,10 @@ headlessly
 headmatter
 headmouse
 headstart
+Hernández
 heroku
 heroku-buildpack-static
+Hetman
 Hexo
 hinzufügen
 HIPAA
@@ -1083,6 +1088,7 @@ jumbotron
 JWPlayer
 JWT
 Ka
+Kadlec
 Kalin
 Kasten
 Kategorien
@@ -1106,6 +1112,7 @@ Kirkham
 Kissling
 Knut
 KNW
+Kocjan
 Koelewijn
 Koenig
 Koerselman
@@ -1212,6 +1219,7 @@ materialisation
 Materialisation
 Mateusz
 MathJax
+Matías
 Matomo
 mccrodp
 MD5
@@ -1240,6 +1248,7 @@ metacompiler
 metadescription
 metafields
 Metalsmith
+metatags
 METROGLAM
 Meuleman
 Michał
@@ -1357,6 +1366,7 @@ observability
 Octocat
 Oduye
 oEmbed
+OG
 ok
 Ok
 OKRs
@@ -1425,6 +1435,7 @@ pathname
 pathnames
 pathPrefix
 Paulie
+Paulina
 Pavel
 PayPal
 PayPal-ers
@@ -1634,6 +1645,7 @@ redux
 Redux
 Reduxjs
 ReferenceError
+ReflexJS
 reformats
 reframe
 rehydrate
@@ -1814,6 +1826,7 @@ source-filesystem
 Sourcegraph
 sourceNodes
 SpaceX
+Spalato
 spambots
 spammy
 spelt
@@ -2128,6 +2141,7 @@ Wiseman
 wishlist
 with-navigation2
 Woah
+Wojciech
 WooCommerce
 Woodworth
 Workbox
@@ -2148,6 +2162,7 @@ WXR
 wysiwyg
 x64
 Xcode
+XD
 XSL
 XSS
 XState
