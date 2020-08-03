@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["@babel/env", { "modules": false, "targets": { "node": "current" } }],
+    ["@babel/env", { "modules": false, "targets": { "node": "10.13.0" } }],
     "@babel/preset-react"
   ],
   "plugins": ["@babel/plugin-transform-runtime"]
