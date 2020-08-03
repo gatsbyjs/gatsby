@@ -6923,7 +6923,7 @@
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
 - url: https://gatsby-starter-r3f-minimal.netlify.app/
-  repo: https://github.com/gatsby-starter-r3f-minimal
+  repo: https://github.com/WilliamOfSweden/gatsby-starter-r3f-minimal
   description: A barebones Gatsby starter with example React Three Fiber boilerplate.
   tags:
     - Onepage
