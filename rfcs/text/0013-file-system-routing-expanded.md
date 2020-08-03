@@ -5,7 +5,6 @@
 
 The file system is the definitive way to create routes with the `src/pages` directory. Previously only standalone and static pages like `/about` could be created there. This proposal is to enable client routes and collection routes to be created from the filesystem as well. Common patterns like creating pages for each blog post or paginated index pages are much simpler and now you can easily see your sites routes by looking at your file system. Page components now have all the logic they need to query data, create routes, and render. This makes them very easy to reuse on multiple sites and distribute through Gatsby Themes.
 
-
 # Basic example
 
 - `/src/pages/products/{Product.name}.js`
@@ -21,6 +20,7 @@ A core part of building a site is crafting the routing structure. What pages exi
 # Detailed design
 
 Client only routes:
+
 ```js
 // src/pages/past-order/[id].js
 
@@ -28,17 +28,18 @@ Client only routes:
 // the field will be passed to the component here.
 export default function PastOrder({ params }) {
   // if the user visits `/past-order/123`, then id here is `123`
-  const id = params.id;
+  const id = params.id
 }
 ```
 
 Collection routes:
+
 ```js
 // src/pages/product/{Product.name}.js
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby"
 
 // data will be the values resolved from the query exported in this component.
-export default Product = ({data}) => JSON.stringify(data)
+export default Product = ({ data }) => JSON.stringify(data)
 
 export const query = graphql`
   # $name is the interpolated value from the url/file name
@@ -51,7 +52,7 @@ export const query = graphql`
       sku
     }
   }
-`;
+`
 ```
 
 Collection routes are unique because they will generate `n` pages for the results of querying all nodes for the Model supplied by the routing structure.
