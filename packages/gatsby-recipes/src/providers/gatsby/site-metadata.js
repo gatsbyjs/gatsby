@@ -14,13 +14,13 @@ const { REQUIRES_KEYS } = require(`./utils/constants`)
 const template = require(`@babel/template`).default
 
 const addFieldToSiteMetadata = (src, { name, value }) => {
-  const addPlugins = new BabelPluginSetSiteMetadataField({
+  const setSiteMetadata = new BabelPluginSetSiteMetadataField({
     key: name,
     value,
   })
 
   const { code } = babel.transform(src, {
-    plugins: [addPlugins.plugin],
+    plugins: [setSiteMetadata.plugin],
     configFile: false,
   })
 
@@ -28,13 +28,13 @@ const addFieldToSiteMetadata = (src, { name, value }) => {
 }
 
 const removeFieldFromSiteMetadata = (src, { name }) => {
-  const addPlugins = new BabelPluginSetSiteMetadataField({
+  const setSiteMetadata = new BabelPluginSetSiteMetadataField({
     key: name,
     value: undefined,
   })
 
   const { code } = babel.transform(src, {
-    plugins: [addPlugins.plugin],
+    plugins: [setSiteMetadata.plugin],
     configFile: false,
   })
 
