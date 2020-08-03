@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.23...gatsby-remark-images@3.3.24) (2020-08-03)
+
+### Bug Fixes
+
+- **readme:** gatsby-remark-images -> put code in code fences ([#25854](https://github.com/gatsbyjs/gatsby/issues/25854)) ([96fdb6b](https://github.com/gatsbyjs/gatsby/commit/96fdb6b))
+
 ## [3.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.22...gatsby-remark-images@3.3.23) (2020-07-30)
 
 **Note:** Version bump only for package gatsby-remark-images
