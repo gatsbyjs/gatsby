@@ -5,6 +5,7 @@ import { useQuery } from "urql"
 import { FeedbackForm } from "feedback-fish"
 import externalLinkIcon from "../external-link.svg"
 import graphqlIcon from "../graphql.svg"
+import { Link } from "gatsby"
 
 function SendFeedbackButton(props): JSX.Element {
   return (
@@ -35,7 +36,14 @@ function Navbar(): JSX.Element {
         paddingY: 5,
       }}
     >
-      <Flex gap={5} alignItems="baseline">
+      <Flex
+        as={Link}
+        // @ts-ignore
+        to={process.env.NODE_ENV === `development` ? `/` : `/___admin`}
+        gap={5}
+        alignItems="baseline"
+        sx={{ textDecoration: `none` }}
+      >
         <Text sx={{ textTransform: `uppercase`, fontSize: 0 }}>
           Gatsby Admin
         </Text>
