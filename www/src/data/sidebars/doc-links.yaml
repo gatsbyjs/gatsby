@@ -358,6 +358,8 @@
                   link: /docs/bulma/
                 - title: Using Theme UI
                   link: /docs/theme-ui/
+                - title: Other CSS Frameworks
+                  link: /docs/other-css-frameworks/
         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           breadcrumbTitle: MDX
@@ -421,6 +423,7 @@
               link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
+          breadcrumbTitle: App and Website Functionality
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -510,6 +513,8 @@
                   link: /docs/sourcing-from-etsy/
                 - title: Sourcing from WooCommerce
                   link: /docs/sourcing-from-woocommerce/
+            - title: Adding a Redux Store
+              link: /docs/adding-redux-store/
         - title: Improving Performance
           link: /docs/performance/
           items:
