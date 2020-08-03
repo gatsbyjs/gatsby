@@ -1,24 +1,18 @@
 import _ from "lodash"
 import path from "path"
 
-// Input queryStringParent could be:
-//   Product
-//   allProduct
-//   allProduct(filter: thing)
+// Input queryStringParent could be a Modle or a full graphql query
 // End result should be something like { allProducts { nodes { id }}}
 export function generateQueryFromString(
-  queryStringParent: string,
+  queryOrModel: string,
   fileAbsolutePath: string
 ): string {
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
-  if (queryStringParent.includes(`...CollectionPagesQueryFragment`)) {
-    return fragmentInterpolator(queryStringParent, fields)
+  if (queryOrModel.includes(`...CollectionPagesQueryFragment`)) {
+    return fragmentInterpolator(queryOrModel, fields)
   }
-  const needsAllPrefix = queryStringParent.startsWith(`all`) === false
 
-  return `{${
-    needsAllPrefix ? `all` : ``
-  }${queryStringParent}{nodes{${fields}}}}`
+  return `{all${queryOrModel}{nodes{${fields}}}}`
 }
 
 // Takes a query result of something like `{ fields: { value: 'foo' }}` with a filepath of `/fields__value` and
@@ -93,7 +87,7 @@ function deriveNesting(part: string): string {
       .reverse()
       .reduce((path: string, part: string): string => {
         // This adds support for Unions
-        path = path.replace(`(`, `... on `).replace(`)`, ``)
+        path = path.replace(/\(/g, `... on `).replace(/\)/g, ``)
 
         if (path) {
           return `${part}{${path}}`

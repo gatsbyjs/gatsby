@@ -11,18 +11,18 @@ export function collectionExtractQueryString(
 ): string | null {
   let queryString: string | null = null
 
-  // 1.  Convert the file to a babel ast
-  const ast = babelParseToAst(
-    fs.readFileSync(absolutePath).toString(),
-    absolutePath
-  )
-
   const modelType = /\{([a-zA-Z]+)\./.exec(absolutePath)?.[1]
 
   // This can happen if you have an invalid path and you are trying to query for that path
   // our path graphql resolution logic does not validate the path before calling this
   // so it can hit this case.
   if (!modelType) return null
+
+  // 1.  Convert the file to a babel ast
+  const ast = babelParseToAst(
+    fs.readFileSync(absolutePath).toString(),
+    absolutePath
+  )
 
   // 2.  Traverse the AST to find the unstable_collectionGraphql query
   traverse(ast, {

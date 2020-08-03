@@ -21,44 +21,35 @@ describe(`extract query`, () => {
     it(`works with different file extsnions`, () => {
       expect(
         generateQueryFromString(
-          `allThing`,
+          `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}.tsx`)
         )
       ).toBe(`{allThing{nodes{id}}}`)
     })
 
-    it(`all example`, () => {
+    it(`works with arguments arguments`, () => {
       expect(
         generateQueryFromString(
-          `allThing`,
+          `{ allThing(filter: { main_url: { nin: [] }}) { ...CollectionPagesQueryFragment } }`,
           compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
-      ).toBe(`{allThing{nodes{id}}}`)
-    })
-
-    it(`all example with arguments`, () => {
-      expect(
-        generateQueryFromString(
-          `allThing(filter: { main_url: { nin: [] }})`,
-          compatiblePath(`/foo/bar/{Thing.id}.js`)
-        )
-      ).toBe(`{allThing(filter: { main_url: { nin: [] }}){nodes{id}}}`)
+      ).toBe(`{ allThing(filter: { main_url: { nin: [] }}) { nodes{id} } }`)
     })
 
     it(`supports a special fragment`, () => {
       expect(
         generateQueryFromString(
-          `allMarkdownRemark {
+          `{ allMarkdownRemark {
         group(field: frontmatter___topic) {
             ...CollectionPagesQueryFragment
-        }
+        }}
     }`,
           compatiblePath(`/foo/bar/{MarkdownRemark.frontmatter__topic}.js`)
         )
-      ).toEqual(`allMarkdownRemark {
+      ).toEqual(`{ allMarkdownRemark {
         group(field: frontmatter___topic) {
             nodes{frontmatter{topic},id}
-        }
+        }}
     }`)
     })
   })
@@ -110,6 +101,17 @@ describe(`extract query`, () => {
     })
 
     it(`supports graphql unions`, () => {
+      expect(
+        generateQueryFromString(
+          `UnionQuery`,
+          compatiblePath(
+            `/foo/bar/{UnionQuery.id}/{UnionQuery.parent__(File)__relativePath}.js`
+          )
+        )
+      ).toBe(`{allUnionQuery{nodes{id,parent{... on File{relativePath}}}}}`)
+    })
+
+    it(`supports nested graphql unions`, () => {
       expect(
         generateQueryFromString(
           `UnionQuery`,

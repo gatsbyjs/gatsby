@@ -19,7 +19,7 @@ describe(`collectionExtractQueryString`, () => {
     patchReadFileSync(`
       import { graphql } from "gatsby"
       export const pageQuery = graphql\`  
-        { allThings(filter: { name: { nin: ["stuff"] }}) { ...CollectionPagesQueryFragment } }
+        { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
       \`
       `)
 
@@ -30,7 +30,7 @@ describe(`collectionExtractQueryString`, () => {
     expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
   })
 
-  it(`uses unstable_collectionQuery if exported`, async () => {
+  it(`uses unstable_collectionGraphql if exported`, async () => {
     patchReadFileSync(`
       import { unstable_collectionGraphql } from "gatsby"
       export const collectionQuery = unstable_collectionGraphql\`  
