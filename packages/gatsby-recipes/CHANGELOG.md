@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.1...gatsby-recipes@0.2.2) (2020-08-04)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Update snapshot to reflect latest recipe text ([#26219](https://github.com/gatsbyjs/gatsby/issues/26219)) ([93e1ebd](https://github.com/gatsbyjs/gatsby/commit/93e1ebd))
+
+### Features
+
+- **gatsby-recipes:** add sitemetadata provider ([#26160](https://github.com/gatsbyjs/gatsby/issues/26160)) ([0053d24](https://github.com/gatsbyjs/gatsby/commit/0053d24))
+
 ## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.0...gatsby-recipes@0.2.1) (2020-08-03)
 
 **Note:** Version bump only for package gatsby-recipes
