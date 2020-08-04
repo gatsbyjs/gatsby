@@ -6,7 +6,7 @@ This doc is a rough documentation of the new APIs and conventions usable with th
 
 For now, these features are marked as experimental and require a flag to utilize. Start gatsby with the following flag:
 
-```
+```bash
 GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop
 ```
 
@@ -49,7 +49,7 @@ Developers can create multiple pages from a Model based on the collection of nod
 - `/src/pages/products/{Product.fields__sku}.js => /products/001923`
 - `/src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js => /blog/learning-gatsby`
 
-We use the content within the `{}` to generate graphql queries to retrieve the nodes that should be built for a given collection. For example:
+We use the content within the `{}` to generate `graphql` queries to retrieve the nodes that should be built for a given collection. For example:
 
 This path: `/src/pages/products/{Product.name}.js`
 Generates this query:
@@ -132,7 +132,7 @@ export const query = graphql`
 
 ## Routing & Linking
 
-We slugify every route that is created from collection pages. When you want to link to one of those pages it might be hard to know how to construct the url from scratch. So we’ve automatically included a `path` field on every model that is used by Collection pages. The path field must take an argument of the filePath it is trying to resolve. This is necessary because it’s possible that one model is used in multiple collection pages. Here is an example of how this works.
+We `slugify` every route that is created from collection pages. When you want to link to one of those pages it might be hard to know how to construct the url from scratch. So we’ve automatically included a `path` field on every model that is used by Collection pages. The path field must take an argument of the filePath it is trying to resolve. This is necessary because it’s possible that one model is used in multiple collection pages. Here is an example of how this works.
 
 Let’s assume that a Product model is used in two pages:
 
@@ -165,7 +165,7 @@ export const query = graphql`
 
 ### Collection Route + Fallback
 
-By using a combination of a collection route with a client only route, we are able to create a great experience when a user tries to visit a url from the collection route that doesn’t exist for the collection item. Let’s take these two file paths:
+By using a combination of a collection route with a client only route, we are able to create a great experience when a user tries to visit an url from the collection route that doesn’t exist for the collection item. Let’s take these two file paths:
 
 - `/src/pages/products/{Product.name}.js`
 - `/src/pages/products/[name].js`
