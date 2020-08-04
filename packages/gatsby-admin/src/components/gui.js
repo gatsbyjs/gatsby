@@ -314,21 +314,22 @@ if (!recipe) {
   showRecipesList = true
 }
 
-const client = () => { 
-  if (typeof window !== 'undefined') { 
+const client = () => {
+  if (typeof window !== `undefined`) {
     return createClient({
       fetch,
       url: GRAPHQL_ENDPOINT,
       exchanges: [
-      ...defaultExchanges,
-      subscriptionExchange({
-        forwardSubscription(operation) {
-          return subscriptionClient.request(operation)
-        },
-      }),
-    ],
+        ...defaultExchanges,
+        subscriptionExchange({
+          forwardSubscription(operation) {
+            return subscriptionClient.request(operation)
+          },
+        }),
+      ],
     })
   }
+  return null
 }
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
