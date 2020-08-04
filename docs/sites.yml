@@ -11571,3 +11571,12 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: Fast Golf Scores
+  description: >
+    Tour scores delivered in milliseconds
+  main_url: https://fastgolfscores.com
+  url: https://fastgolfscores.com
+  categories:
+    - App
+    - Sports
+  featured: false
