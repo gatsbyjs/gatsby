@@ -158,7 +158,7 @@ class ControllableScript {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(msg: any): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process started`)
+      throw new Error(`Trying to send a message before process started`)
     }
 
     this.process.send(msg)
