@@ -6922,3 +6922,15 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://cocky-williams-9d49bd.netlify.app/
+  repo: https://github.com/peterdurham/gatsby-starter-blog-boost
+  description: A Netlify CMS powered blog starter to jumpstart your personal or company's development.
+  tags:
+    - Blog
+    - Markdown
+    - CMS:Netlify
+  features:
+    - Articles (Blog Post) CMS Model
+    - Topics pages
+    - Tag Pages
+    - Mobile ready
