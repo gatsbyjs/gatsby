@@ -82,7 +82,7 @@ You will still be able to...
 
 - Fork the Gatsby repo
 
-- Include "Gatsby contributor" on your resumé and LinkedIn profile
+- Include "Gatsby contributor" on your résumé and LinkedIn profile
 
 These are the overwhelming majority of actions performed by community contributors.
 
