@@ -1,5 +1,11 @@
 /** @jsx jsx */
 import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
+import { MdRefresh, MdBrightness1 } from "react-icons/md"
+import { keyframes } from "@emotion/core"
+import MDX from "gatsby-recipes/src/components/mdx"
+import recipesList from "gatsby-recipes/src/recipes-list"
+import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
+import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
 const lodash = require(`lodash`)
 // eslint-disable-next-line
 const React = require(`react`)
@@ -9,9 +15,6 @@ const remove = require(`unist-util-remove`)
 const { Global } = require(`@emotion/core`)
 // const ws = require(`ws`)
 const fetch = require(`isomorphic-fetch`)
-import { MdRefresh, MdBrightness1 } from "react-icons/md"
-import { keyframes } from "@emotion/core"
-import MDX from "./components/mdx"
 
 const {
   Button,
@@ -38,9 +41,6 @@ const UrqlProvider = Provider
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
-
-import { InputProvider } from "./renderer/input-provider"
-import { ResourceProvider } from "./renderer/resource-provider"
 
 const theme = getTheme()
 
@@ -139,9 +139,7 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT =
-  `/Users/kylemathews/programs/recipes-test` &&
-  `/Users/johno-mini/c/gatsby/starters/blog`
+const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
 
 const Spinner = () => <span>Loading...</span>
 
@@ -232,81 +230,7 @@ const WelcomeMessage = () => (
 )
 
 const RecipesList = ({ setRecipe }) => {
-  const items = [
-    {
-      label: `Add a custom ESLint config`,
-      value: `eslint.mdx`,
-    },
-    {
-      label: `Add Jest`,
-      value: `jest.mdx`,
-    },
-    {
-      label: `Add Gatsby Theme Blog`,
-      value: `gatsby-theme-blog`,
-    },
-    {
-      label: `Add persistent layout component with gatsby-plugin-layout`,
-      value: `gatsby-plugin-layout`,
-    },
-    {
-      label: `Add Theme UI`,
-      value: `theme-ui.mdx`,
-    },
-    {
-      label: `Add Emotion`,
-      value: `emotion.mdx`,
-    },
-    {
-      label: `Add support for MDX Pages`,
-      value: `mdx-pages.mdx`,
-    },
-    {
-      label: `Add support for MDX Pages with images`,
-      value: `mdx-images.mdx`,
-    },
-    {
-      label: `Add Styled Components`,
-      value: `styled-components.mdx`,
-    },
-    {
-      label: `Add Tailwind`,
-      value: `tailwindcss.mdx`,
-    },
-    {
-      label: `Add Sass`,
-      value: `sass.mdx`,
-    },
-    {
-      label: `Add Typescript`,
-      value: `typescript.mdx`,
-    },
-    {
-      label: `Add Cypress testing`,
-      value: `cypress.mdx`,
-    },
-    {
-      label: `Add animated page transition support`,
-      value: `animated-page-transitions.mdx`,
-    },
-    {
-      label: `Add plugins to make site a PWA`,
-      value: `pwa.mdx`,
-    },
-    {
-      label: `Add React Helmet`,
-      value: `gatsby-plugin-react-helmet.mdx`,
-    },
-    {
-      label: `Add Storybook - JavaScript`,
-      value: `storybook-js.mdx`,
-    },
-    {
-      label: `Add Storybook - TypeScript`,
-      value: `storybook-ts.mdx`,
-    },
-    // TODO remaining recipes
-  ]
+  const items = recipesList
 
   return (
     <select onChange={e => setRecipe(e.target.value)}>
@@ -390,18 +314,22 @@ if (!recipe) {
   showRecipesList = true
 }
 
-const client = createClient({
-  fetch,
-  url: GRAPHQL_ENDPOINT,
-  exchanges: [
-    ...defaultExchanges,
-    subscriptionExchange({
-      forwardSubscription(operation) {
-        return subscriptionClient.request(operation)
-      },
-    }),
-  ],
-})
+const client = () => { 
+  if (typeof window !== 'undefined') { 
+    return createClient({
+      fetch,
+      url: GRAPHQL_ENDPOINT,
+      exchanges: [
+      ...defaultExchanges,
+      subscriptionExchange({
+        forwardSubscription(operation) {
+          return subscriptionClient.request(operation)
+        },
+      }),
+    ],
+    })
+  }
+}
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   <div id={makeResourceId(resourcePlan)} sx={{}}>
