@@ -155,6 +155,14 @@ class ControllableScript {
     }
     this.process.on(`exit`, callback)
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send(msg: any): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach exit handler before process starter`)
+    }
+
+    this.process.send(msg)
+  }
 }
 
 let isRestarting
@@ -368,6 +376,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       })
     })
   }
+
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
+  })
 
   process.on(`beforeExit`, async () => {
     await Promise.all([
