@@ -183,7 +183,17 @@ class RouteAnnouncer extends React.Component {
   componentDidUpdate(prevProps, nextProps) {
     requestAnimationFrame(() => {
       let pageName = `new page at ${this.props.location.pathname}`
-      let announcementText
+      let announcementText, routeAnnouncement, useTitle
+      const routeAnnouncements = document.querySelectorAll(
+        `[data-gatsby-route-announcement]`
+      )
+      //if there are multiple announcers, snag the most specific one
+      //e.g. could put announcer on layout and then override in specific page
+      if (routeAnnouncements && routeAnnouncements.length) {
+        routeAnnouncement = routeAnnouncements[routeAnnouncements.length - 1]
+        useTitle = routeAnnouncement.dataset["gatsbyRouteAnnouncementUseTitle"]
+      }
+
       if (document.title) {
         pageName = document.title
       }
@@ -191,11 +201,12 @@ class RouteAnnouncer extends React.Component {
       if (pageHeadings && pageHeadings.length) {
         pageName = pageHeadings[0].innerText
       }
-      const routeAnnouncement = document.querySelectorAll(
-        `[data-gatsby-route-announcement]`
-      )
-      if (routeAnnouncement && routeAnnouncement.length) {
-        announcementText = routeAnnouncement[0].innerText
+
+      if (routeAnnouncement) {
+        announcementText =
+          useTitle === "true" && document.title
+            ? document.title
+            : routeAnnouncement.innerText
       }
       const newAnnouncement = announcementText
         ? announcementText
