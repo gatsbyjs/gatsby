@@ -1,6 +1,6 @@
 ---
 title: "Announcing Gatsby Recipes Alpha 2"
-date: 2020-07-31
+date: 2020-08-04
 author: "Kyle Mathews"
 excerpt: "After first releasing Recipes in April, we learned a lot from early adopters, testers and community members creating and contribtuing their own Recipes (thanks!) for automating common Gatsby site building chores. In this second alpha release we applied these lessons as we completely rewrote many parts of Recipes to better fulfill our vision of making Gatsby super easy to use, even for beginners."
 tags: ["gatsby-inc", "releases", "gatsby-cloud"]
@@ -8,7 +8,7 @@ tags: ["gatsby-inc", "releases", "gatsby-cloud"]
 
 I'm excited to announce the second alpha of Gatsby Recipes!
 
-In [April we released our first alpha](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/) version of Recipes, a new command line tool for automating common site building tasks. We learned a lot from all the early adopters and testers (thanks!), plus those contributing their own home-cooked Gatsby Recipes. In this second alpha release we have incorporated these lessons as we completely rewrote many parts of Recipes to better fulfill our vision.
+In [April we released our first alpha](/blog/2020-04-15-announcing-gatsby-recipes/) version of Recipes, a new command line tool for automating common site building tasks. We learned a lot from all the early adopters and testers (thanks!), plus those contributing their own home-cooked Gatsby Recipes. In this second alpha release we have incorporated these lessons as we completely rewrote many parts of Recipes to better fulfill our vision.
 
 This is fitting because, ultimately, Recipes are about wish fulfillment. People turn to Gatsby with requests like:
 
@@ -20,11 +20,11 @@ Recipes are the way to easily grant such wishes by automating all the setup behi
 
 ## Our vision
 
-When designing Recipes, we've borrowed a lot of the ideas from the world of [Infrastructure as Code](https://www.gatsbyjs.org/docs/glossary/infrastructure-as-code/). Like today's cloud native applications, websites are now modular: assembled from a collection of cloud services like headless CMS, e-commerce, auth, build, function, and CDN infrastructure. Recipes let you define and manage your infrastructure through normal React code patterns you're familiar with -- but in an interactive and automated way.
+When designing Recipes, we've borrowed a lot of the ideas from the world of [Infrastructure as Code](/docs/glossary/infrastructure-as-code/). Like today's cloud native applications, websites are now modular: assembled from a collection of cloud services like headless CMS, e-commerce, auth, build, function, and CDN infrastructure. Recipes let you define and manage your infrastructure through normal React code patterns you're familiar with -- but in an interactive and automated way.
 
 Like WordPress, **we want Gatsby to have its own famous 5 minute install**. Whatever combination of resources your site needs, from npm packages to Gatsby plugins to external cloud services, Recipes will provision and configure it for you, automatically, in a few short minutes.
 
-You'll be able to choose from official Recipes that are [part of Gatsby core](https://www.gatsbyjs.org/docs/recipes/#new-automated-recipes-available), or browse the abundance of community-written Recipes -- and choose different ones to develop your own cookbook to fit your organization's needs.
+You'll be able to choose from official Recipes that are [part of Gatsby core](/docs/recipes/#new-automated-recipes-available), or browse the abundance of community-written Recipes -- and choose different ones to develop your own cookbook to fit your organization's needs.
 
 What did we focus on for this release?
 
