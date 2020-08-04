@@ -13,7 +13,7 @@ It’s been a year since we unveiled [Gatsby Themes](/docs/themes/what-are-gatsb
 
 July was also a huge month for official Gatsby Themes. We [updated our popular Blog Theme to 2.0](/blog/2020-07-08-blog-2.0/) and introduced better image support, search engine optimization, webfont configuration, and more. We also made it easier to swap styles for your blog, using Theme-UI presets. Don’t be fooled by the name “blog” though. This theme is the perfect add-on for any site that needs to continually publish content. The lead engineer on the theme, [Laurie Barth](https://laurieontech.com/) also revamped [the step-by-step Gatsby Blog Theme tutorial](https://www.gatsbyjs.org/tutorial/using-a-theme/), so you can get started customizing this theme quickly.
 
-Also this month, we released a new official theme for adding [i18n support to your Gatsby site](https://www.gatsbyjs.org/blog/2020-07-28-introducing-gatsby-i18n-theme/)! This i18n theme gives you access to specialized React components that help with building a multilingual site. The lead developer on this theme, [Lennart Jörgens](/https://www.lekoarts.de/) also created 3 “child themes” for popular translation libraries. The i18n theme is great to use for any project that requires localization, but is also a solid example to study if you want to [build your own Gatsby Theme](/tutorial/building-a-theme/).
+Also this month, we released a new official theme for adding [i18n support to your Gatsby site](https://www.gatsbyjs.org/blog/2020-07-28-introducing-gatsby-i18n-theme/)! This i18n theme gives you access to specialized React components that help with building a multilingual site. The lead developer on this theme, [Lennart Jörgens](https://www.lekoarts.de/) also created 3 “child themes” for popular translation libraries. The i18n theme is great to use for any project that requires localization, but is also a solid example to study if you want to [build your own Gatsby Theme](/tutorial/building-a-theme/).
 
 ## 🚀 New in Gatsby and Gatsby Cloud!
 
@@ -60,7 +60,7 @@ Arshad is back with another Gatsby Theme for to his growing [ReflexJS](https://r
 
 ### Rewrite of GraphCMS’s source plugin
 
-We helped GraphCMS build their new source plugin ([using our new GraphQL toolkit](http://github.com/vladar/gatsby-graphql-toolkitgithub.com/vladar/gatsby-graphql-toolkit)). Head to the repo, and [give it a try](https://github.com/GraphCMS/gatsby-source-graphcms/).
+We helped GraphCMS build their new source plugin ([using our new GraphQL toolkit](http://github.com/vladar/gatsby-graphql-toolkit)). Head to the repo, and [give it a try](https://github.com/GraphCMS/gatsby-source-graphcms/).
 
 ### Strapi's Gatsby Blog Starter
 
@@ -74,7 +74,7 @@ Ink, a project that enables you to build command-line apps using React [released
 
 ### New alpha for Gatsby Recipes
 
-In the coming weeks look out for exciting updates to [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/), our new [infrastructure-as-code](docs/glossary/infrastructure-as-code/) project. You can follow along with our progress in our [public GitHub Project](https://github.com/gatsbyjs/gatsby/projects/20)
+In the coming weeks look out for exciting updates to [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/), our new [infrastructure-as-code](/docs/glossary/infrastructure-as-code/) project. You can follow along with our progress in our [public GitHub Project](https://github.com/gatsbyjs/gatsby/projects/20)
 
 ### MDX Mini-Conference
 
