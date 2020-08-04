@@ -439,7 +439,7 @@ export class BaseLoader {
     )
   }
 
-  fetchModuleDependencies(moduleDependencies) {
+  fetchModuleDependencies(moduleDependencies = []) {
     return Promise.all(
       moduleDependencies.map(moduleId =>
         // webpack runtime handles in-flight and loaded modules cache

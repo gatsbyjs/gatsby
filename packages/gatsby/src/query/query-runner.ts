@@ -2,7 +2,7 @@ import { Span } from "opentracing"
 import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
-import crypto from "crypto"
+import { createContentDigest } from "gatsby-core-utils"
 import { ExecutionResult } from "graphql"
 
 import path from "path"
@@ -127,6 +127,10 @@ export const queryRunner = async (
   // Add the page context onto the results.
   if (queryJob && queryJob.isPage) {
     result[`pageContext`] = Object.assign({}, queryJob.context)
+  } else {
+    result[`moduleDependencies`] = Array.from(
+      queryJob.context.__INTERNAL_DO_NOT_USE__moduleDependencies || new Set()
+    )
   }
 
   // Delete internal data from pageContext
@@ -144,10 +148,7 @@ export const queryRunner = async (
   }
 
   const resultJSON = JSON.stringify(result)
-  const resultHash = crypto
-    .createHash(`sha1`)
-    .update(resultJSON)
-    .digest(`base64`)
+  const resultHash = createContentDigest(resultJSON)
 
   if (
     resultHash !== resultHashes.get(queryJob.id) ||
@@ -182,6 +183,29 @@ export const queryRunner = async (
         `${queryJob.hash}.json`
       )
       await fs.outputFile(resultPath, resultJSON)
+
+      // check if modules changed
+      // and add static query to `page-data` pending flush
+      const { current, previous } = store.getState().queryModuleDependencies
+
+      const staticQueryId = queryJob.context.path
+      const previousModules = previous.get(staticQueryId)
+      const newModules = current.get(staticQueryId)
+
+      // if modules for this static query changed in any way, mark it as needed handling when flushing
+      if (
+        createContentDigest(
+          (previousModules ? Array.from(previousModules) : []).sort()
+        ) !==
+        createContentDigest((newModules ? Array.from(newModules) : []).sort())
+      ) {
+        store.dispatch({
+          type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+          payload: {
+            componentPath: queryJob.componentPath,
+          },
+        })
+      }
     }
   }
 

@@ -64,7 +64,7 @@ export const deleteComponentsDependencies = (
 
   const addModule = modules.add.bind(modules)
   paths.forEach(path => {
-    const deps = queryModuleDependencies.get(path)
+    const deps = queryModuleDependencies.current.get(path)
     if (deps) {
       deps.forEach(addModule)
     }

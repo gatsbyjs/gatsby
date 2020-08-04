@@ -76,10 +76,16 @@ export default function withResolverContext<TSource, TArgs>({
       })
     )
 
+    if (!context.__INTERNAL_DO_NOT_USE__moduleDependencies) {
+      context.__INTERNAL_DO_NOT_USE__moduleDependencies = new Set()
+    }
+
+    context.__INTERNAL_DO_NOT_USE__moduleDependencies.add(moduleID)
+
     return moduleID
   }
 
-  return {
+  const graphqlContext: IGatsbyResolverContext<TSource, TArgs> = {
     ...(context || {}),
     ...(customContext || {}),
     defaultFieldResolver,
@@ -92,6 +98,8 @@ export default function withResolverContext<TSource, TArgs>({
       setModule: addModuleDependency,
     },
   }
+
+  return graphqlContext
 }
 
 module.exports = withResolverContext

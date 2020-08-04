@@ -59,7 +59,10 @@ Object {
     "pagePaths": Set {},
     "templatePaths": Set {},
   },
-  "queryModuleDependencies": Map {},
+  "queryModuleDependencies": Object {
+    "current": Map {},
+    "previous": Map {},
+  },
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
