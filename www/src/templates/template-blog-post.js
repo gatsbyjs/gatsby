@@ -80,7 +80,8 @@ export default function BlogPostTemplate({ pageContext, data }) {
                   >
                     <span
                       sx={{
-                        borderBottom: t => `1px solid ${t.colors.link.border}`,
+                        borderBottom: 1,
+                        borderColor: `link.border`,
                         transition: t =>
                           `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
                         "&:hover": { borderColor: `link.hoverBorder` },
@@ -155,7 +156,8 @@ export default function BlogPostTemplate({ pageContext, data }) {
       </Container>
       <div
         sx={{
-          borderTop: t => `1px solid ${t.colors.ui.border}`,
+          borderTop: 1,
+          borderColor: `ui.border`,
           mt: 9,
           [mediaQueries.md]: { pt: 5 },
           [mediaQueries.lg]: { pt: 7 },

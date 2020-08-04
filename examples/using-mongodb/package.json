@@ -4,10 +4,10 @@
   "description": "Gatsby example site using gatsby-source-mongodb",
   "author": "jhermans85@hotmail.com",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-plugin-react-helmet": "^3.3.6",
-    "gatsby-source-mongodb": "^2.3.6",
-    "gatsby-transformer-remark": "^2.8.20",
+    "gatsby": "^2.24.26",
+    "gatsby-plugin-react-helmet": "^3.3.10",
+    "gatsby-source-mongodb": "^2.3.10",
+    "gatsby-transformer-remark": "^2.8.27",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.1"

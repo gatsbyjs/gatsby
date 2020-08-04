@@ -10,7 +10,8 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
     sx={{
       display: `flex`,
-      borderTop: t => `1px solid ${t.colors.ui.border}`,
+      borderTop: 1,
+      borderColor: `ui.border`,
       fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
