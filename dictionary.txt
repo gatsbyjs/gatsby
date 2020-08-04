@@ -683,6 +683,7 @@ focusable
 FOMO
 Fonegra
 Fonnegra
+Forem
 FormatJS
 formatter
 Formik
@@ -1463,6 +1464,7 @@ pixelated
 pjax
 pleaaase
 pluggable
+pm
 PNG
 POC
 podcasters
