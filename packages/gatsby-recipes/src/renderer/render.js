@@ -107,12 +107,14 @@ const handleResource = (resourceName, context, props) => {
   // Initialize
   const { mode } = context
 
-  let key
+  const trueKey = props._key ? props._key : context._uuid
+
+  let cacheKey
   // Only run apply once per resource
   if (mode === `apply`) {
-    key = mode + ` ` + resourceName + ` ` + props._key
+    cacheKey = mode + ` ` + resourceName + ` ` + trueKey
   } else {
-    key = JSON.stringify({ resourceName, ...props, mode })
+    cacheKey = JSON.stringify({ resourceName, ...props, mode })
   }
 
   // update global context when results come in.
@@ -127,11 +129,10 @@ const handleResource = (resourceName, context, props) => {
       ...result,
     }
 
-    const trueKey = props._key ? props._key : context._uuid
-
     if (!lodash.isEqual(newResource, resourceMap.get(trueKey))) {
       resourceMap.set(trueKey, newResource)
-      setResources([...resourceMap.values()])
+      // TODO Do we need this? It's causing infinite loops
+      // setResources([...resourceMap.values()])
     }
   }
 
@@ -143,12 +144,12 @@ const handleResource = (resourceName, context, props) => {
       error: `Validation error: ${error.details[0].message}`,
     }
     updateResource(result)
-    resultCache.set(key, result)
+    resultCache.set(cacheKey, result)
     return result
   }
 
-  const cachedResult = resultCache.get(key)
-  const inFlightPromise = inFlightCache.get(key)
+  const cachedResult = resultCache.get(cacheKey)
+  const inFlightPromise = inFlightCache.get(cacheKey)
 
   if (cachedResult) {
     updateResource(cachedResult)
@@ -167,7 +168,7 @@ const handleResource = (resourceName, context, props) => {
       // Multiple of the same promises can be queued due to re-rendering
       // so this first checks for the cached result again before executing
       // the request.
-      const cachedValue = resultCache.get(key)
+      const cachedValue = resultCache.get(cacheKey)
       if (cachedValue) {
         resolve(cachedValue)
         updateResource(cachedValue)
@@ -175,15 +176,15 @@ const handleResource = (resourceName, context, props) => {
         resources[resourceName][fn](context, props)
           .then(result => {
             updateResource(result)
-            inFlightCache.set(key, false)
+            inFlightCache.set(cacheKey, false)
             return result
           })
-          .then(result => resultCache.set(key, result))
+          .then(result => resultCache.set(cacheKey, result))
           .then(resolve)
           .catch(e => {
             console.log(e)
             if (e.name === `MissingInfoError`) {
-              inFlightCache.delete(key)
+              inFlightCache.delete(cacheKey)
             }
             reject(e)
           })
@@ -193,7 +194,7 @@ const handleResource = (resourceName, context, props) => {
     throw e
   }
 
-  inFlightCache.set(key, promise)
+  inFlightCache.set(cacheKey, promise)
 
   queue.add(() => promise)
 
