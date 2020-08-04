@@ -6,6 +6,7 @@ import MDX from "gatsby-recipes/src/components/mdx"
 import recipesList from "gatsby-recipes/src/recipes-list"
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
+import { createUrqlClient } from "../urql-client"
 const lodash = require(`lodash`)
 // eslint-disable-next-line
 const React = require(`react`)
@@ -29,16 +30,7 @@ const {
   InputFieldLabel,
   InputFieldControl,
 } = require(`gatsby-interface`)
-const {
-  createClient,
-  useMutation,
-  useSubscription,
-  Provider,
-  defaultExchanges,
-  subscriptionExchange,
-} = require(`urql`)
-const UrqlProvider = Provider
-const { SubscriptionClient } = require(`subscriptions-transport-ws`)
+const { useMutation, useSubscription } = require(`urql`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
@@ -49,85 +41,6 @@ ansi2HTML.setColors({
   green: theme.tones.SUCCESS.medium.slice(1),
   yellow: theme.tones.WARNING.medium.slice(1),
 })
-
-// const InputFieldBlock = React.forwardRef((props, ref) => {
-// const {
-// id,
-// label,
-// labelSize,
-// error,
-// hint,
-// className,
-// validationMode,
-// layout,
-// ...rest
-// } = props
-
-// const hasError = false
-
-// return (
-// <FormFieldContainer
-// layout={layout}
-// className={className}
-// sx={{ fontFamily: theme.fonts.body }}
-// >
-// <InputField id={id} hasError={!!error} hasHint={!!hint}>
-// <InputFieldLabel size={labelSize} isRequired={!!rest.required}>
-// {label}
-// </InputFieldLabel>
-// <input
-// type="text"
-// ref={ref}
-// {...rest}
-// sx={{
-// border: hasError
-// ? `1px solid ${theme.colors.red[60]}`
-// : `2px solid ${theme.tones.BRAND.dark}`,
-// background: theme.colors.white,
-// borderRadius: theme.radii[2],
-// color: theme.colors.grey[90],
-// fontFamily: theme.fonts.system,
-// fontSize: theme.fontSizes[2],
-// height: `2.25rem`,
-// padding: `0 ${theme.space[3]}`,
-// position: `relative`,
-// width: `66%`,
-// zIndex: 1,
-// WebkitAppearance: `none`,
-
-// ":focus": {
-// outline: `0`,
-// transition: `box-shadow 0.15s ease-in-out`,
-// boxShadow: `0 0 0 3px ${
-// hasError ? theme.colors.red[10] : theme.colors.purple[20]
-// }`,
-// borderColor: hasError
-// ? theme.colors.red[30]
-// : theme.colors.purple[60],
-// },
-
-// ":disabled": {
-// background: theme.colors.grey[10],
-// cursor: `not-allowed`,
-// },
-
-// "&:disabled::placeholder": {
-// color: theme.colors.grey[40],
-// },
-
-// "&::placeholder": {
-// color: theme.colors.grey[50],
-// },
-// }}
-// />
-// <InputFieldHint>{hint}</InputFieldHint>
-// <InputFieldError validationMode={validationMode}>
-// {error}
-// </InputFieldError>
-// </InputField>
-// </FormFieldContainer>
-// )
-// })
 
 const makeResourceId = res => {
   if (!res.describe) {
@@ -281,22 +194,10 @@ const graphqlPort = 50400
 const projectRoot = PROJECT_ROOT
 
 const API_ENDPOINT = `http://localhost:${graphqlPort}`
-const GRAPHQL_ENDPOINT = `${API_ENDPOINT}/graphql`
-
-const subscriptionClient = new SubscriptionClient(
-  `ws://localhost:${graphqlPort}/graphql`,
-  {
-    reconnect: true,
-  }
-  // ws
-)
 
 let isSubscriptionConnected = false
 let isRecipeStarted = false
 let sessionId
-subscriptionClient.connectionCallback = async () => {
-  isSubscriptionConnected = true
-}
 
 const checkServerSession = async () => {
   const response = await fetch(`${API_ENDPOINT}/session`)
@@ -312,24 +213,6 @@ let showRecipesList = false
 
 if (!recipe) {
   showRecipesList = true
-}
-
-const client = () => {
-  if (typeof window !== `undefined`) {
-    return createClient({
-      fetch,
-      url: GRAPHQL_ENDPOINT,
-      exchanges: [
-        ...defaultExchanges,
-        subscriptionExchange({
-          forwardSubscription(operation) {
-            return subscriptionClient.request(operation)
-          },
-        }),
-      ],
-    })
-  }
-  return null
 }
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
@@ -599,6 +482,24 @@ function Wrapper({ children }) {
 }
 
 const RecipeInterpreter = () => {
+  const [client, setClient] = useState(null)
+
+  React.useEffect(() => {
+    fetch(`/___services`)
+      .then(res => res.json())
+      .then(json => {
+        if (json.recipesgraphqlserver) {
+          const newClient = createUrqlClient({
+            port: json.recipesgraphqlserver.port,
+          })
+          setClient(newClient)
+          newClient.connectionCallback = async () => {
+            checkServerSession()
+            startRecipe()
+          }
+        }
+      })
+  }, [])
   // eslint-disable-next-line
   const [localRecipe, setRecipe] = useState(recipe)
 
@@ -651,11 +552,6 @@ const RecipeInterpreter = () => {
 
       checkServerSession()
     }
-  }
-
-  subscriptionClient.connectionCallback = async () => {
-    checkServerSession()
-    startRecipe()
   }
 
   if (isSubscriptionConnected) {
@@ -729,7 +625,7 @@ const RecipeInterpreter = () => {
 
   if (isDone) {
     process.nextTick(() => {
-      subscriptionClient.close()
+      client.close()
       log(`The recipe finished successfully`)
       lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
         log(`✅ ${res._message}\n`)
@@ -912,13 +808,11 @@ const WithProviders = ({ children }) => {
   }
 
   return (
-    <UrqlProvider value={client}>
-      <ThemeUIProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-          <main>{children}</main>
-        </ThemeProvider>
-      </ThemeUIProvider>
-    </UrqlProvider>
+    <ThemeUIProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <main>{children}</main>
+      </ThemeProvider>
+    </ThemeUIProvider>
   )
 }
 
