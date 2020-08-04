@@ -14,7 +14,7 @@ test(`fetches a recipe from unpkg when official short form`, async () => {
   const result = await parser(`theme-ui`)
 
   expect(result.stepsAsMdx[0]).toMatch(`# Setup Theme UI`)
-  expect(result.stepsAsMdx[1]).toMatch(`Install packages`)
+  expect(result.stepsAsMdx[1]).toMatch(`Installs packages`)
   expect(result.stepsAsMdx[1]).toMatch(`<NPMPackage`)
   expect(result.stepsAsMdx[1]).toMatch(`_uuid="`)
 })
