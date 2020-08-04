@@ -143,7 +143,7 @@ class ControllableScript {
   }
   onMessage(callback: (msg: any) => void): void {
     if (!this.process) {
-      throw new Error(`Trying to attach message handler before process starter`)
+      throw new Error(`Trying to attach message handler before process started`)
     }
     this.process.on(`message`, callback)
   }
@@ -151,14 +151,14 @@ class ControllableScript {
     callback: (code: number | null, signal: NodeJS.Signals | null) => void
   ): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process starter`)
+      throw new Error(`Trying to attach exit handler before process started`)
     }
     this.process.on(`exit`, callback)
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(msg: any): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process starter`)
+      throw new Error(`Trying to attach exit handler before process started`)
     }
 
     this.process.send(msg)
