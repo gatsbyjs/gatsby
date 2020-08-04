@@ -48,7 +48,7 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
           <Copy
             fileName="Install command"
             content={content}
-            sx={{ borderRadius: 1 }}
+            sx={{ borderRadius: 1, position: `relative` }}
           />
         </code>
       </pre>
