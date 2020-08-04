@@ -136,7 +136,7 @@ export async function startWebpackServer({
           (staticQueryHashes, componentPath) => {
             if (
               !isEqual(
-                state.staticQueriesByTemplate.get(componentPath),
+                state.staticQueriesByTemplate.get(componentPath) || [],
                 staticQueryHashes
               )
             ) {

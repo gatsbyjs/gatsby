@@ -34,19 +34,40 @@ export default function socketIo() {
         socket.on(`message`, msg => {
           let shouldEmit = true
           if (msg.type === `staticQueryResult`) {
-            if (didDataChange(msg, staticQueryData)) {
-              staticQueryData = {
-                ...staticQueryData,
-                [msg.payload.id]: msg.payload.result,
+            if (msg.payload.result) {
+              if (didDataChange(msg, staticQueryData)) {
+                const currentEntry = staticQueryData[msg.payload.id]
+
+                // run `processHotPageDataUpdate` if modules changed
+                if (
+                  !currentEntry ||
+                  JSON.stringify(currentEntry.moduleDependencies) !==
+                    JSON.stringify(msg.payload.result.moduleDependencies)
+                ) {
+                  shouldEmit = false
+                  processHotPageDataUpdate(msg.payload.result).then(() => {
+                    staticQueryData = {
+                      ...staticQueryData,
+                      [msg.payload.id]: msg.payload.result,
+                    }
+
+                    ___emitter.emit(msg.type, msg.payload)
+                  })
+                } else {
+                  staticQueryData = {
+                    ...staticQueryData,
+                    [msg.payload.id]: msg.payload.result,
+                  }
+                }
               }
             }
           } else if (msg.type === `pageQueryResult`) {
-            if (didDataChange(msg, pageQueryData)) {
-              if (msg.payload.result) {
+            if (msg.payload.result) {
+              if (didDataChange(msg, pageQueryData)) {
                 const currentEntry =
                   pageQueryData[normalizePagePath(msg.payload.id)]
 
-                // run `processPageData` if modules changed
+                // run `processHotPageDataUpdate` if modules changed
                 if (
                   !currentEntry ||
                   JSON.stringify(currentEntry.moduleDependencies) !==
@@ -61,6 +82,11 @@ export default function socketIo() {
 
                     ___emitter.emit(msg.type, msg.payload)
                   })
+                } else {
+                  pageQueryData = {
+                    ...pageQueryData,
+                    [normalizePagePath(msg.payload.id)]: msg.payload.result,
+                  }
                 }
               }
             }

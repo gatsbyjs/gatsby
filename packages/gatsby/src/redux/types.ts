@@ -253,7 +253,10 @@ export interface IGatsbyState {
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
   modules: Map<string, IDependencyModule>
-  queryModuleDependencies: Map<string, Set<string>>
+  queryModuleDependencies: {
+    current: Map<string, Set<string>>
+    previous: Map<string, Set<string>>
+  }
 }
 
 export interface ICachedReduxState {
