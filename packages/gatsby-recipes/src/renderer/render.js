@@ -17,22 +17,12 @@ import { ResourceProvider, useResourceContext } from "./resource-provider"
 
 const queue = new Queue({ concurrency: 5, autoStart: false })
 
-let errors = []
 const resultCache = new Map()
 const inFlightCache = new Map()
 
 const ModeContext = React.createContext({})
 const useMode = () => useContext(ModeContext)
 const ModeProvider = ModeContext.Provider
-
-const getInvalidProps = errors => {
-  const invalidProps = errors.filter(e => {
-    const details = e.details
-    const unknownProp = details.find(e => e.type === `object.allowUnknown`)
-    return unknownProp
-  })
-  return invalidProps
-}
 
 const getUserProps = props => {
   // eslint-disable-next-line
@@ -75,9 +65,7 @@ const ResourceComponent = ({
   const { mode } = useMode()
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
-  const allResources = useResourceContext()
 
-  const setResources = useContext(SetResourcesProvider)
   // TODO add provider onto context
   const resourceData = handleResource(
     Resource,
@@ -87,9 +75,7 @@ const ResourceComponent = ({
       _uuid,
       mode,
     },
-    props,
-    allResources,
-    setResources
+    props
   )
 
   return (
@@ -117,19 +103,8 @@ const validateResource = (resourceName, context, props) => {
   return error
 }
 
-const handleResource = (
-  resourceName,
-  context,
-  props,
-  allResources,
-  setResources
-) => {
-  const error = validateResource(resourceName, context, props)
-  if (error) {
-    errors.push(error)
-    return null
-  }
-
+const handleResource = (resourceName, context, props) => {
+  // Initialize
   const { mode } = context
 
   let key
@@ -140,6 +115,7 @@ const handleResource = (
     key = JSON.stringify({ resourceName, ...props, mode })
   }
 
+  // update global context when results come in.
   const updateResource = result => {
     allResources = allResources.filter(a => a.resourceDefinitions._key)
     const resourceMap = new Map()
@@ -151,13 +127,24 @@ const handleResource = (
       ...result,
     }
 
-    if (
-      props._key &&
-      !lodash.isEqual(newResource, resourceMap.get(props._key))
-    ) {
-      resourceMap.set(props._key, newResource)
+    const trueKey = props._key ? props._key : context._uuid
+
+    if (!lodash.isEqual(newResource, resourceMap.get(trueKey))) {
+      resourceMap.set(trueKey, newResource)
       setResources([...resourceMap.values()])
     }
+  }
+
+  const setResources = useContext(SetResourcesProvider)
+  let allResources = useResourceContext()
+  const error = validateResource(resourceName, context, props)
+  if (error) {
+    const result = {
+      error: `Validation error: ${error.details[0].message}`,
+    }
+    updateResource(result)
+    resultCache.set(key, result)
+    return result
   }
 
   const cachedResult = resultCache.get(key)
@@ -227,18 +214,7 @@ const render = async (recipe, cb, inputs = {}, isApply) => {
 
     RecipesReconciler.render(recipeWithWrapper, plan)
 
-    if (errors.length) {
-      const invalidProps = getInvalidProps(errors)
-
-      if (invalidProps.length) {
-        return cb({ type: `INVALID_PROPS`, data: invalidProps })
-      } else {
-        errors = []
-      }
-    }
-
-    // If there aren't any new resources that need to be fetched, or errors, we're done!
-    if (!queue.size && !errors.length) {
+    if (!queue.size) {
       return undefined
     }
 
@@ -250,12 +226,6 @@ const render = async (recipe, cb, inputs = {}, isApply) => {
   try {
     // Begin the "render loop" until there are no more resources being queued.
     await renderResources()
-
-    if (errors.length) {
-      // We found errors that were emitted back to the state machine, so
-      // we don't need to re-render
-      return null
-    }
 
     // Rerender with the resources and resolve the data from the cache
     const result = RecipesReconciler.render(recipeWithWrapper, plan)

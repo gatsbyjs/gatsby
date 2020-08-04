@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
+const getDiff = require(`../utils/get-diff`)
 
 const resourceSchema = require(`../resource-schema`)
 
@@ -48,7 +49,7 @@ const destroy = async ({ root }, { id }) => {
 
 const schema = {
   name: Joi.string(),
-  value: Joi.string(),
+  value: Joi.object(),
   ...resourceSchema,
 }
 const validate = resource =>
@@ -58,10 +59,12 @@ exports.schema = schema
 exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, name, value }) => {
+  // let parsedValue = value
   const parsedValue = typeof value === `string` ? JSON.parse(value) : value
   const key = id || name
   const currentState = readPackageJson(root)
   const newState = { ...currentState, [key]: parsedValue }
+  const diff = await getDiff(currentState, newState)
 
   return {
     id: key,
@@ -69,7 +72,7 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
     currentState: JSON.stringify(currentState, null, 2),
     newState: JSON.stringify(newState, null, 2),
     describe: `Add ${key} to package.json`,
-    diff: ``, // TODO: Make diff
+    diff,
   }
 }
 

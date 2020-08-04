@@ -257,7 +257,15 @@ const ResourceComponent = props => {
       {resource?.diff ? (
         <>
           <Text>{` `}</Text>
-          <Text>{resource?.diff}"</Text>
+          <Text>{resource?.diff}</Text>
+        </>
+      ) : null}
+      {resource?.error ? (
+        <>
+          <Text>{` `}</Text>
+          <Text backgroundColor="#C41E3A" color="white">
+            {resource?.error}
+          </Text>
         </>
       ) : null}
     </Div>

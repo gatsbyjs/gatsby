@@ -241,7 +241,7 @@ DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
 
 Then, open up Chrome and click the node icon in dev tools.
 
-To see log output from the Recipes graphql server, run in a terminal `node node_modules/gatsby-recipes/dist/graphql-server/start-dev-cli-server.js`
+To see log output from the Recipes graphql server, start the Recipes API in one terminal `node node_modules/gatsby-recipes/dist/graphql-server/server.js` and then in another terminal run your recipe with `RECIPES_DEV_MODE=true` set as an env variable.
 
 ### Official recipes
 
