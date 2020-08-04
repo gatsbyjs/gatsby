@@ -26,13 +26,13 @@ There are changes coming to community permissions and access to the Gatsby open 
 
 ## What changes are being made?
 
-**These changes will take effect on Wednesday, August 12th by 12pm ET/9am PT.**
+**These changes will take effect on Wednesday, August 12th by 12 pm ET/9am PT.**
 
-1.  The Maintainers team in the GatsbyJS organization on GitHub will be removed.
+1. The Maintainers team in the GatsbyJS organization on GitHub will be removed.
 
-2.  Members of the Maintainers team will have their status changed to "[Outside Collaborator](https://docs.github.com/en/github/getting-started-with-github/github-glossary#outside-collaborator)" and will no longer be part of the GatsbyJS organization in GitHub. Their [repository access level](https://docs.github.com/en/github/setting-up-and-managing-organizations-and-teams/repository-permission-levels-for-an-organization#repository-access-for-each-permission-level) will, in turn, change from "Write" to "Read".
+2. Members of the Maintainers team will have their status changed to "[Outside Collaborator](https://docs.github.com/en/github/getting-started-with-github/github-glossary#outside-collaborator)" and will no longer be part of the GatsbyJS organization in GitHub. Their [repository access level](https://docs.github.com/en/github/setting-up-and-managing-organizations-and-teams/repository-permission-levels-for-an-organization#repository-access-for-each-permission-level) will, in turn, change from "Write" to "Read".
 
-3.  Future community contributors will also be given Outside Collaborator status with Read access.
+3. Future community contributors will also be given Outside Collaborator status with Read access.
 
 **These changes are not as scary as they sound, we promise!** Read more details about the actual effects of this status change, and the reasons why it is being done to greatly improve everyone's contributor experience, in the community impact section below.
 
@@ -44,7 +44,7 @@ There are a few reasons we need to make these changes, including scalability, se
 
 As the Gatsby community has grown, the Gatsby core team and open source project have also grown in size and complexity. Managing Gatsby open source in a sustainable and scalable way now requires more sophisticated processes and tools, which in turn require clearly defined roles and delegation of tasks.
 
-The current permissions structure has resulted in the Gatsby Core Team receiving an unmanageable number of notifications from GitHub, mislabelled issues and PRs. It has also been a barrier to adopting tools that help automate issue triage and other tasks.
+The current permissions structure has resulted in the Gatsby Core Team receiving an unmanageable number of notifications from GitHub, mislabeled issues and PRs. It has also been a barrier to adopting tools that help automate issue triage and other tasks.
 
 ### Community Experience
 
@@ -54,7 +54,7 @@ As things currently stand, anyone and everyone who contributes to Gatsby open so
 
 - Deleting other contributors' issues and pull requests
 
-- Creating and cancelling workflows
+- Creating and canceling workflows
 
 - Plus other capabilities that would typically be reserved for an open source project's core team
 
@@ -96,7 +96,7 @@ Most of the actions that will no longer be available are rarely used by communit
 
 The fact that these capabilities are currently available to all community contributors is extremely unusual for an open source project of Gatsby's size -- and furthermore introduces a great deal of risk to the security, integrity, and inclusiveness of our open source tools.
 
-The good news is labelling will now be automated with Gatsbot, and with the status change there will be fewer barriers and distractions to get in the way of improving our PR process.
+The good news is labeling will now be automated with Gatsbot, and with the status change there will be fewer barriers and distractions to get in the way of improving our PR process.
 
 ### Maintainer Status
 
@@ -104,7 +104,7 @@ Unfortunately, one of the consequences of this change is that you will no longer
 
 **If you have any questions or concerns, please do not hesitate to reach out to us on [Twitter](https://twitter.com/AskGatsbyJS), [Discord](https://gatsby.dev/discord), and [GitHub](https://github.com/gatsbyjs/gatsby).**
 
-All of that said, we didn't want to take anything away without offering new ways for our amazing contributors to be appeciated and recognized. So we have some exciting new plans and opportunities for the community to announce!
+All of that said, we didn't want to take anything away without offering new ways for our amazing contributors to be recognized and appreciated. So we have some exciting new plans and opportunities for the community to announce.
 
 ## What's next for the community?
 
@@ -120,4 +120,4 @@ Later in the fall, we will officially launch our Gatsby Ambassador program and o
 
 ### Office Hours on Twitch
 
-We will also continue to offer weekly office hours sessions on [the Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs) on Thursdays at 2pm ET/11am PT. We encourage you to join us, bring your questions, and let us know what you'd like to see us cover in future office hours sessions.
+We will also continue to offer weekly office hours sessions on [the Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs) on Thursdays at 2 pm ET/11 am PT. We encourage you to join us, bring your questions, and let us know what you'd like to see us cover in future office hours sessions.
