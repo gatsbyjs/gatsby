@@ -7,12 +7,7 @@ import resolveResponse from "contentful-resolve-response"
 const prepareIdsForResolving = obj => {
   for (let k in obj) {
     const value = obj[k]
-    if (
-      value &&
-      value.sys &&
-      value.sys.type === `Link` &&
-      value.sys.contentful_id
-    ) {
+    if (value?.sys?.type === `Link` && value.sys.contentful_id) {
       value.sys.id = value.sys.contentful_id
       delete value.sys.contentful_id
     } else if (value && typeof value === `object`) {
@@ -31,7 +26,8 @@ function renderRichText({ raw, references }, options = {}) {
 
   prepareIdsForResolving(richText)
 
-  // Create dummy response so we can use official libraries for resolving the entries
+  // Reconstruct the Contentful API response pattern to use the official
+  // contentful-resolve-response module to resolve references
   const dummyResponse = {
     items: [
       {
