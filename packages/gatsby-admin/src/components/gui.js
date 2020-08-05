@@ -470,7 +470,7 @@ const RecipeInterpreter = ({ recipe }) => {
             connectionCallback: async () => {
               checkServerSession()
               startRecipe(recipe)
-            }
+            },
           })
           setClient(newClient)
         }
@@ -513,20 +513,20 @@ const RecipeInterpreter = ({ recipe }) => {
     }
   }
 
-  const startRecipe = async ( recipe ) => {
-      log(`createOperation`)
-      if (!isRecipeStarted) {
-        isRecipeStarted = true
-        try {
-          await createOperation({ recipePath: recipe, projectRoot })
-        } catch (e) {
-          log(`error creating operation`, e)
-          isRecipeStarted = false
-        }
+  const startRecipe = async recipe => {
+    log(`createOperation`)
+    if (!isRecipeStarted) {
+      isRecipeStarted = true
+      try {
+        await createOperation({ recipePath: recipe, projectRoot })
+      } catch (e) {
+        log(`error creating operation`, e)
+        isRecipeStarted = false
       }
-
-      checkServerSession()
     }
+
+    checkServerSession()
+  }
 
   if (isSubscriptionConnected) {
     startRecipe()

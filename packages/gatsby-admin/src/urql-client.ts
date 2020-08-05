@@ -13,7 +13,7 @@ interface ICreateUrqlClientOptions {
 
 export const createUrqlClient = ({
   port,
-  connectionCallback = () => {}
+  connectionCallback = () => {},
 }: ICreateUrqlClientOptions): Client => {
   const subscriptionClient = new SubscriptionClient(
     `ws://localhost:${port}/graphql`,
