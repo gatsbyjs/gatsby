@@ -150,12 +150,11 @@ const recipeMachine = Machine(
         on: {
           CONTINUE: [
             {
-              target: `applyingPlan`,
-              cond: `hasNoErrors`,
-            },
-            {
               target: `doneError`,
               cond: `hasErrors`,
+            },
+            {
+              target: `applyingPlan`,
             },
           ],
           INPUT_ADDED: {
@@ -284,7 +283,6 @@ const recipeMachine = Machine(
       // false || context.currentStep < context.steps.length,
       atLastStep: (context, event) => true,
       // true || context.currentStep === context.steps.length,
-      hasNoErrors: context => !context.plan.some(p => p.error),
       hasErrors: context => context.plan.some(p => p.error),
     },
   }

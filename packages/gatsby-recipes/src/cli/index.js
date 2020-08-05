@@ -406,6 +406,11 @@ export default async ({
       return (
         <>
           <ResourceProvider
+            // Exclude inputs as they are components (so "plans" currrently
+            // (we need to cleanup our names) too like resources which is why we
+            // exclude them. The input from the inputs (haha) are ignored unless
+            // they're passed as props into a resource component in which case
+            // they're validated like normal.
             value={
               state.context.plan?.filter(p => p.resourceName !== `Input`) || []
             }
@@ -559,7 +564,7 @@ export default async ({
             }
           >
             <Text bold>
-              Your recipe didn't validate. Please fix the following errors:
+              The recipe didn't validate. Please fix the following errors:
             </Text>
             <Text>{`\n`}</Text>
             {state.context.plan

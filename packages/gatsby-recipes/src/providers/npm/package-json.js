@@ -59,10 +59,9 @@ exports.schema = schema
 exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, name, value }) => {
-  const parsedValue = typeof value === `string` ? JSON.parse(value) : value
   const key = id || name
   const currentState = readPackageJson(root)
-  const newState = { ...currentState, [key]: parsedValue }
+  const newState = { ...currentState, [key]: value }
   const diff = await getDiff(currentState, newState)
 
   return {
