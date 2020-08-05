@@ -3,17 +3,22 @@ const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
-const { getDurationInSeconds } = require(`./helpers`)
 
 module.exports = async function contentfulFetch({
   syncToken,
   reporter,
   pluginConfig,
+  parentSpan,
 }) {
-  const fetchStartDate = new Date()
+  const fetchActivity = reporter.activityTimer(
+    `fetching data from Contentful`,
+    {
+      parentSpan,
+    }
+  )
+  fetchActivity.start()
 
   // Fetch articles.
-  reporter.info(`Connecting to Contentful`)
 
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
@@ -34,7 +39,7 @@ module.exports = async function contentfulFetch({
   let locales
   let defaultLocale = `en-US`
   try {
-    reporter.info(`Fetching default locale`)
+    reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
@@ -49,7 +54,7 @@ module.exports = async function contentfulFetch({
         )}' were found but were filtered down to none.`
       )
     }
-    reporter.info(`Default locale is: ${defaultLocale}`)
+    reporter.verbose(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
@@ -111,7 +116,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   } catch (e) {
     reporter.panic(`Error fetching content types`, e)
   }
-  reporter.info(`Content types fetched ${contentTypes.items.length}`)
+  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
@@ -139,9 +144,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     space,
   }
 
-  reporter.success(
-    `Fetched Contentful data in ${getDurationInSeconds(fetchStartDate)}s`
-  )
+  fetchActivity.end()
 
   return result
 }
