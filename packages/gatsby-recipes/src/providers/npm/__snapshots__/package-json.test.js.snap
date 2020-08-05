@@ -19,16 +19,14 @@ Object {
 
 - Promise {}
 + Object {
-+   \\"husky\\": Object {
-+     \\"hooks\\": Object {},
-+   },
++   \\"husky\\": \\"{
++   /\\"hooks/\\": {}
++ }\\",
 + }",
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": {
-    \\"hooks\\": {}
-  }
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
 }
 `;
@@ -56,20 +54,16 @@ Object {
 
 - Promise {}
 + Object {
-+   \\"husky\\": Object {
-+     \\"hooks\\": Object {
-+       \\"pre-commit\\": \\"lint-staged\\",
-+     },
-+   },
++   \\"husky\\": \\"{
++   /\\"hooks/\\": {
++     /\\"pre-commit/\\": /\\"lint-staged/\\"
++   }
++ }\\",
 + }",
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": {
-    \\"hooks\\": {
-      \\"pre-commit\\": \\"lint-staged\\"
-    }
-  }
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"
 }",
 }
 `;
