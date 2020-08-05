@@ -1,7 +1,7 @@
 # Gatsby Recipes
 
 Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpreter, perform common actions like installing
+files which, when run by our custom React renderer, perform common actions like installing
 NPM packages, installing plugins, creating pages, etc.
 
 It's designed to be extensible so new capabilities can be added which allow
