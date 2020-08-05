@@ -14,7 +14,6 @@ const recipeMachine = Machine(
     context: {
       recipePath: null,
       projectRoot: null,
-      currentStep: 0,
       steps: [],
       exports: [],
       plan: [],
@@ -209,7 +208,7 @@ const recipeMachine = Machine(
             }),
           },
           onDone: {
-            target: `hasAnotherStep`,
+            target: `done`,
             actions: [`addResourcesToContext`],
           },
           onError: {
@@ -217,23 +216,6 @@ const recipeMachine = Machine(
             actions: assign({ error: (context, event) => event.data }),
           },
         },
-      },
-      hasAnotherStep: {
-        entry: [`incrementStep`],
-        always: [
-          {
-            target: `creatingPlan`,
-            // The 'searchValid' guard implementation details are
-            // specified in the machine config
-            cond: `hasNextStep`,
-          },
-          {
-            target: `done`,
-            // The 'searchValid' guard implementation details are
-            // specified in the machine config
-            cond: `atLastStep`,
-          },
-        ],
       },
       done: {
         type: `final`,
@@ -245,11 +227,6 @@ const recipeMachine = Machine(
   },
   {
     actions: {
-      incrementStep: assign((context, event) => {
-        return {
-          currentStep: context.currentStep + 1,
-        }
-      }),
       deleteOldPlan: assign((context, event) => {
         return {
           plan: [],
@@ -279,10 +256,6 @@ const recipeMachine = Machine(
       }),
     },
     guards: {
-      hasNextStep: (context, event) => false,
-      // false || context.currentStep < context.steps.length,
-      atLastStep: (context, event) => true,
-      // true || context.currentStep === context.steps.length,
       hasErrors: context => context.plan.some(p => p.error),
     },
   }
