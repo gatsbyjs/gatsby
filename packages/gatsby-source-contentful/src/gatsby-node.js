@@ -55,10 +55,6 @@ exports.sourceNodes = async (
   pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode, createTypes } = actions
-  const client = createClient({
-    space: `none`,
-    accessToken: `fake-access-token`,
-  })
   const online = await isOnline()
 
   // If the user knows they are offline, serve them cached result
@@ -194,7 +190,10 @@ exports.sourceNodes = async (
   const currentSyncDataRaw = _.cloneDeep(currentSyncData)
 
   // Use the JS-SDK to resolve the entries and assets
-  const res = client.parseEntries({
+  const res = createClient({
+    space: `none`,
+    accessToken: `fake-access-token`,
+  }).parseEntries({
     items: currentSyncData.entries,
     includes: {
       assets: currentSyncData.assets,

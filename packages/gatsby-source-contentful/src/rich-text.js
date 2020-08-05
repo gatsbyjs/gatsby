@@ -7,12 +7,7 @@ import resolveResponse from "contentful-resolve-response"
 const prepareIdsForResolving = obj => {
   for (let k in obj) {
     const value = obj[k]
-    if (
-      value &&
-      value.sys &&
-      value.sys.type === `Link` &&
-      value.sys.contentful_id
-    ) {
+    if (value?.sys?.type === `Link` && value.sys.contentful_id) {
       value.sys.id = value.sys.contentful_id
       delete value.sys.contentful_id
     } else if (value && typeof value === `object`) {
