@@ -195,8 +195,7 @@ function removeImport(tag: NodePath<Expression>): void {
   if (importPath.isImportSpecifier()) {
     if ((parent as NodePath<ImportDeclaration>).node.specifiers.length === 1) {
       parent.remove()
-    }
-    else importPath.remove()
+    } else importPath.remove()
   }
   if (importPath.isObjectProperty()) {
     if ((parent as NodePath<ObjectExpression>).node.properties.length === 1) {
