@@ -1,6 +1,6 @@
 /* @jsx jsx */
 import { jsx, Flex } from "strict-ui"
-import { Heading, Text } from "gatsby-interface"
+import { Heading } from "gatsby-interface"
 import recipesList from "gatsby-recipes/src/recipes-list"
 import { Link } from "gatsby"
 import GUI from "../components/gui"
@@ -12,31 +12,24 @@ function Recipes(): JSX.Element {
         <Heading as="h1">Recipes</Heading>
         <GUI />
         <ul sx={{ pl: 0, listStyle: `none` }}>
-          {recipesList.map(recipe => {
-            // we can remove this when we're consistent with our naming
-            const recipeName = recipe.value.includes(`.mdx`)
-              ? recipe.value.split(`.`)[0]
-              : recipe.value
-            return (
-              <li>
-                <Flex
-                  flexDirection="column"
-                  gap={3}
-                  sx={{
-                    backgroundColor: `ui.background`,
-                    padding: 5,
-                    borderRadius: 2,
-                  }}
-                >
-                  <Heading as="h3"> {recipe.label}</Heading>
-                  <Text sx={{ color: `text.secondary` }}>{recipe.value}</Text>
-                  <Link to={`/recipe`} state={{ name: recipeName }}>
-                    Recipe
-                  </Link>
-                </Flex>
-              </li>
-            )
-          })}
+          {recipesList.map(recipe => (
+            <li key={recipe.value}>
+              <Flex
+                flexDirection="column"
+                gap={3}
+                sx={{
+                  backgroundColor: `ui.background`,
+                  padding: 5,
+                  borderRadius: 2,
+                }}
+              >
+                <Heading as="h3"> {recipe.label}</Heading>
+                <Link to={`/recipe`} state={{ name: recipe.value }}>
+                  Recipe GUI for {recipe.value}
+                </Link>
+              </Flex>
+            </li>
+          ))}
         </ul>
       </Flex>
     </Flex>
