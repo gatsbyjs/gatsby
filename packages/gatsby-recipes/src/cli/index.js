@@ -555,6 +555,24 @@ export default async ({
         )
       }
 
+      const ValidationErrors = state => {
+        if (state.context.plan) {
+          return (
+            <>
+              <Text bold>
+                The recipe didn't validate. Please fix the following errors:
+              </Text>
+              <Text>{`\n`}</Text>
+              {state.context.plan
+                .filter(p => p.error)
+                .map((p, i) => (
+                  <ResourceComponent key={i} {...p} />
+                ))}
+            </>
+          )
+        } else return null
+      }
+
       if (state?.value === `doneError`) {
         process.nextTick(() => process.exit())
         return (
@@ -563,15 +581,7 @@ export default async ({
               state.context.plan?.filter(p => p.resourceName !== `Input`) || []
             }
           >
-            <Text bold>
-              The recipe didn't validate. Please fix the following errors:
-            </Text>
-            <Text>{`\n`}</Text>
-            {state.context.plan
-              .filter(p => p.error)
-              .map((p, i) => (
-                <ResourceComponent key={i} {...p} />
-              ))}
+            <ValidationErrors />
           </ResourceProvider>
         )
       }

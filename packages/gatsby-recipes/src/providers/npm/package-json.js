@@ -49,18 +49,22 @@ const destroy = async ({ root }, { id }) => {
 
 const schema = {
   name: Joi.string(),
-  value: Joi.object(),
+  value: Joi.string(),
   ...resourceSchema,
 }
-const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+const validate = resource => {
+  // value can be both a string or an object. Internally we
+  // always just treat it as a string to simplify handling it.
+  resource.value = JSON.stringify(resource.value)
+  return Joi.validate(resource, schema, { abortEarly: false })
+}
 
 exports.schema = schema
 exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, name, value }) => {
   const key = id || name
-  const currentState = readPackageJson(root)
+  const currentState = await readPackageJson(root)
   const newState = { ...currentState, [key]: value }
   const diff = await getDiff(currentState, newState)
 
