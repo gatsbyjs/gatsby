@@ -340,7 +340,7 @@ describe(`Second run`, () => {
 })
 
 describe(`Modules`, () => {
-  test(`are written correctly when inline`, async () => {
+  test(`are written when added via page query`, async () => {
     const pagePath = `/page-query-modules/`
 
     const { moduleDependencies } = await readPageData(publicDir, pagePath)
@@ -348,6 +348,17 @@ describe(`Modules`, () => {
     expect(moduleDependencies).toMatchInlineSnapshot(`
       Array [
         "module---src-query-modules-module-a-js-default-",
+      ]
+    `)
+  })
+  test(`are written when added via static query`, async () => {
+    const pagePath = `/static-query-modules/`
+
+    const { moduleDependencies } = await readPageData(publicDir, pagePath)
+
+    expect(moduleDependencies).toMatchInlineSnapshot(`
+      Array [
+        "module---src-query-modules-module-b-js-default-",
       ]
     `)
   })
