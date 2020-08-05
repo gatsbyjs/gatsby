@@ -47,21 +47,9 @@ interface INestedHookVisitor {
   templatePaath: NodePath<TaggedTemplateExpression>
 }
 
-interface IOpts {
-  filename: string
-}
-
-interface IFile {
-  opts: IOpts
-}
-
-interface IState {
-  file: IFile
-}
-
 class StringInterpolationNotAllowedError extends Error {
-  interpolationStart: ISourcePosition
-  interpolationEnd: ISourcePosition
+  interpolationStart: ISourcePosition | undefined
+  interpolationEnd: ISourcePosition | undefined
 
   constructor(
     interpolationStart: ISourcePosition | undefined,
