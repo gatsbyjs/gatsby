@@ -3,16 +3,17 @@ const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
+const { getDurationInSeconds } = require(`./helpers`)
 
 module.exports = async function contentfulFetch({
   syncToken,
   reporter,
   pluginConfig,
 }) {
-  // Fetch articles.
-  console.time(`Fetch Contentful data`)
+  const fetchStartDate = new Date()
 
-  console.log(`Starting to fetch data from Contentful`)
+  // Fetch articles.
+  reporter.info(`Connecting to Contentful`)
 
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
@@ -138,7 +139,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     space,
   }
 
-  console.timeEnd(`Fetch Contentful data`)
+  reporter.success(
+    `Fetched Contentful data in ${getDurationInSeconds(fetchStartDate)}s`
+  )
 
   return result
 }

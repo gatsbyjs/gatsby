@@ -2,11 +2,14 @@ const path = require(`path`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
+const { createClient } = require(`contentful`)
+
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
-const { createClient } = require(`contentful`)
+const { getDurationInSeconds } = require(`./helpers`)
+
 const conflictFieldPrefix = `contentful`
 
 const CACHE_SYNC_KEY = `previousSyncData`
@@ -156,7 +159,7 @@ exports.sourceNodes = async (
   )
   createTypes(gqlTypes)
 
-  console.time(`Process Contentful data`)
+  const processingStartDate = new Date()
 
   // Remove deleted entries and assets from cached sync data set
   previousSyncData.entries = previousSyncData.entries.filter(
@@ -341,8 +344,10 @@ exports.sourceNodes = async (
       }
     })
 
-  console.timeEnd(`Process Contentful data`)
-  console.time(`Create Contentful nodes`)
+  reporter.success(
+    `Processed Contentful data in ${getDurationInSeconds(processingStartDate)}s`
+  )
+  const creationStartDate = new Date()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
@@ -393,7 +398,9 @@ exports.sourceNodes = async (
     )
   }
 
-  console.timeEnd(`Create Contentful nodes`)
+  reporter.success(
+    `Created Contentful nodes in ${getDurationInSeconds(creationStartDate)}s`
+  )
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
