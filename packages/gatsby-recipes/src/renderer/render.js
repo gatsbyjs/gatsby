@@ -35,6 +35,7 @@ const SetResourcesProvider = React.createContext()
 let resourcesCache
 
 const Wrapper = ({ children, inputs, isApply }) => {
+  // eslint-disable-next-line
   const [resourcesList, setResources] = useState(resourcesCache || [])
   resourcesCache = resourcesList
 
