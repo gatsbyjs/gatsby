@@ -550,16 +550,25 @@ export default async ({
         )
       }
 
-      const Error = ({ state }) => {
-        if (state && state.context && state.context.error) {
-          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
-        }
-
-        return null
-      }
-
       if (state?.value === `doneError`) {
-        return <Error width="100%" state={state} />
+        process.nextTick(() => process.exit())
+        return (
+          <ResourceProvider
+            value={
+              state.context.plan?.filter(p => p.resourceName !== `Input`) || []
+            }
+          >
+            <Text bold>
+              Your recipe didn't validate. Please fix the following errors:
+            </Text>
+            <Text>{`\n`}</Text>
+            {state.context.plan
+              .filter(p => p.error)
+              .map((p, i) => (
+                <ResourceComponent key={i} {...p} />
+              ))}
+          </ResourceProvider>
+        )
       }
 
       let isReady
@@ -588,12 +597,6 @@ export default async ({
       }
 
       const isDone = state.value === `done`
-
-      // If we're done with an error, render out error (happens below)
-      // then exit.
-      if (state.value === `doneError`) {
-        process.nextTick(() => process.exit())
-      }
 
       if (isDone) {
         process.nextTick(() => {
