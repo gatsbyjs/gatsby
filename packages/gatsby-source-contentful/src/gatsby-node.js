@@ -2,11 +2,13 @@ const path = require(`path`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
+const { createClient } = require(`contentful`)
+
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
-const { createClient } = require(`contentful`)
+
 const conflictFieldPrefix = `contentful`
 
 const CACHE_SYNC_KEY = `previousSyncData`
@@ -47,14 +49,12 @@ exports.sourceNodes = async (
     cache,
     getCache,
     reporter,
+    schema,
+    parentSpan,
   },
   pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode } = actions
-  const client = createClient({
-    space: `none`,
-    accessToken: `fake-access-token`,
-  })
   const online = await isOnline()
 
   // If the user knows they are offline, serve them cached result
@@ -116,9 +116,13 @@ exports.sourceNodes = async (
     syncToken,
     reporter,
     pluginConfig,
+    parentSpan,
   })
 
-  console.time(`Process Contentful data`)
+  const processingActivity = reporter.activityTimer(`process Contentful data`, {
+    parentSpan,
+  })
+  processingActivity.start()
 
   // Remove deleted entries and assets from cached sync data set
   previousSyncData.entries = previousSyncData.entries.filter(
@@ -153,7 +157,10 @@ exports.sourceNodes = async (
   const currentSyncDataRaw = _.cloneDeep(currentSyncData)
 
   // Use the JS-SDK to resolve the entries and assets
-  const res = client.parseEntries({
+  const res = createClient({
+    space: `none`,
+    accessToken: `fake-access-token`,
+  }).parseEntries({
     items: currentSyncData.entries,
     includes: {
       assets: currentSyncData.assets,
@@ -222,7 +229,7 @@ exports.sourceNodes = async (
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
 
-  reporter.info(`Building Contentful reference map`)
+  reporter.verbose(`Building Contentful reference map`)
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
@@ -246,7 +253,7 @@ exports.sourceNodes = async (
     useNameForId: pluginConfig.get(`useNameForId`),
   })
 
-  reporter.info(`Resolving Contentful references`)
+  reporter.verbose(`Resolving Contentful references`)
 
   const newOrUpdatedEntries = []
   entryList.forEach(entries => {
@@ -278,8 +285,12 @@ exports.sourceNodes = async (
       }
     })
 
-  console.timeEnd(`Process Contentful data`)
-  console.time(`Create Contentful nodes`)
+  processingActivity.end()
+
+  const creationActivity = reporter.activityTimer(`create Contentful nodes`, {
+    parentSpan,
+  })
+  creationActivity.start()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
@@ -331,7 +342,7 @@ exports.sourceNodes = async (
     )
   }
 
-  console.timeEnd(`Create Contentful nodes`)
+  creationActivity.end()
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
