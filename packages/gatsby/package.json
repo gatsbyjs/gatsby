@@ -105,7 +105,7 @@
     "mkdirp": "^0.5.1",
     "moment": "^2.27.0",
     "name-all-modules-plugin": "^1.0.1",
-    "normalize-path": "^2.1.1",
+    "normalize-path": "^3.0.0",
     "null-loader": "^3.0.0",
     "opentracing": "^0.14.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
