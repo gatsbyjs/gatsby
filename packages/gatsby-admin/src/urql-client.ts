@@ -8,10 +8,12 @@ import { SubscriptionClient } from "subscriptions-transport-ws"
 
 interface ICreateUrqlClientOptions {
   port: number
+  connectionCallback: any
 }
 
 export const createUrqlClient = ({
   port,
+  connectionCallback = () => {}
 }: ICreateUrqlClientOptions): Client => {
   const subscriptionClient = new SubscriptionClient(
     `ws://localhost:${port}/graphql`,
@@ -32,6 +34,8 @@ export const createUrqlClient = ({
       }),
     ],
   })
+
+  subscriptionClient.connectionCallback = connectionCallback
 
   return client
 }

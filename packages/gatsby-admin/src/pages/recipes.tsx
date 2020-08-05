@@ -2,6 +2,7 @@
 import { jsx, Flex } from "strict-ui"
 import { Heading, Text } from "gatsby-interface"
 import recipesList from "gatsby-recipes/src/recipes-list"
+import {Link} from "gatsby"
 import GUI from "../components/gui"
 
 function Recipes(): JSX.Element {
@@ -11,7 +12,9 @@ function Recipes(): JSX.Element {
         <Heading as="h1">Recipes</Heading>
         <GUI />
         <ul sx={{ pl: 0, listStyle: `none` }}>
-          {recipesList.map(recipe => (
+          {recipesList.map(recipe => {
+            const recipeName = recipe.value.includes(`.mdx`) ? recipe.value.split('.')[0] : recipe.value
+            return (
             <li>
               <Flex
                 flexDirection="column"
@@ -24,9 +27,10 @@ function Recipes(): JSX.Element {
               >
                 <Heading as="h3"> {recipe.label}</Heading>
                 <Text sx={{ color: `text.secondary` }}>{recipe.value}</Text>
+                <Link to={"/recipe?name=" + recipeName}>Recipe</Link>
               </Flex>
             </li>
-          ))}
+          )})}
         </ul>
       </Flex>
     </Flex>

@@ -3,21 +3,19 @@ import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
 import MDX from "gatsby-recipes/src/components/mdx"
-import recipesList from "gatsby-recipes/src/recipes-list"
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
 import { createUrqlClient } from "../urql-client"
-const lodash = require(`lodash`)
-// eslint-disable-next-line
-const React = require(`react`)
-const { useState } = require(`react`)
-const ansi2HTML = require(`ansi-html`)
-const remove = require(`unist-util-remove`)
-const { Global } = require(`@emotion/core`)
-// const ws = require(`ws`)
-const fetch = require(`isomorphic-fetch`)
+import lodash from "lodash"
+import React from "react"
+import { useState } from "react"
+import ansi2HTML from "ansi-html"
+import remove from "unist-util-remove"
+import { Global } from "@emotion/core"
 
-const {
+import fetch from "isomorphic-fetch"
+
+import {
   Button,
   ThemeProvider,
   TextAreaField,
@@ -29,10 +27,10 @@ const {
   InputField,
   InputFieldLabel,
   InputFieldControl,
-} = require(`gatsby-interface`)
-const { useMutation, useSubscription } = require(`urql`)
-const slugify = require(`slugify`)
-require(`normalize.css`)
+} from "gatsby-interface"
+import { useMutation, useSubscription } from "urql"
+import slugify from "slugify"
+import "normalize.css"
 
 const theme = getTheme()
 
@@ -52,6 +50,7 @@ const makeResourceId = res => {
 
 let sendEvent
 
+//TODO: We need to be able to grab this dynamically
 const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
 
 const Spinner = () => <span>Loading...</span>
@@ -142,20 +141,6 @@ const WelcomeMessage = () => (
   </div>
 )
 
-const RecipesList = ({ setRecipe }) => {
-  const items = recipesList
-
-  return (
-    <select onChange={e => setRecipe(e.target.value)}>
-      {items.map(item => (
-        <option key={item.value} value={item.value}>
-          {item.label}
-        </option>
-      ))}
-    </select>
-  )
-}
-
 const components = {
   Config: () => null,
   GatsbyPlugin: () => null,
@@ -187,9 +172,6 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `styled-components.mdx`
-// recipe = `jest.mdx`,
-// recipe,
 const graphqlPort = 50400
 const projectRoot = PROJECT_ROOT
 
@@ -207,12 +189,6 @@ const checkServerSession = async () => {
   } else if (newSessionId !== sessionId) {
     window.location.reload()
   }
-}
-
-let showRecipesList = false
-
-if (!recipe) {
-  showRecipesList = true
 }
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
@@ -481,7 +457,7 @@ function Wrapper({ children }) {
   return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
 }
 
-const RecipeInterpreter = () => {
+const RecipeInterpreter = ({ recipe }) => {
   const [client, setClient] = useState(null)
 
   React.useEffect(() => {
@@ -491,12 +467,12 @@ const RecipeInterpreter = () => {
         if (json.recipesgraphqlserver) {
           const newClient = createUrqlClient({
             port: json.recipesgraphqlserver.port,
+            connectionCallback: async () => {
+              checkServerSession()
+              startRecipe(recipe)
+            }
           })
           setClient(newClient)
-          newClient.connectionCallback = async () => {
-            checkServerSession()
-            startRecipe()
-          }
         }
       })
   }, [])
@@ -537,13 +513,12 @@ const RecipeInterpreter = () => {
     }
   }
 
-  const startRecipe = async () => {
-    if (!showRecipesList) {
+  const startRecipe = async ( recipe ) => {
       log(`createOperation`)
       if (!isRecipeStarted) {
         isRecipeStarted = true
         try {
-          await createOperation({ recipePath: localRecipe, projectRoot })
+          await createOperation({ recipePath: recipe, projectRoot })
         } catch (e) {
           log(`error creating operation`, e)
           isRecipeStarted = false
@@ -552,7 +527,6 @@ const RecipeInterpreter = () => {
 
       checkServerSession()
     }
-  }
 
   if (isSubscriptionConnected) {
     startRecipe()
@@ -561,28 +535,6 @@ const RecipeInterpreter = () => {
   const state =
     subscriptionResponse.data &&
     JSON.parse(subscriptionResponse.data.operation.state)
-
-  if (showRecipesList) {
-    return (
-      <Wrapper>
-        <WelcomeMessage />
-        <Styled.p>Select a recipe to run</Styled.p>
-        <RecipesList
-          setRecipe={async recipeItem => {
-            showRecipesList = false
-            try {
-              await createOperation({
-                recipePath: recipeItem,
-                projectRoot,
-              })
-            } catch (e) {
-              log(`error creating operation`, e)
-            }
-          }}
-        />
-      </Wrapper>
-    )
-  }
 
   if (!state) {
     return (
@@ -830,9 +782,9 @@ const GlobalStyles = () => (
   />
 )
 
-export default () => (
+export default ({ recipe }) => (
   <WithProviders>
     <GlobalStyles />
-    <RecipeInterpreter />
+    <RecipeInterpreter recipe={recipe} />
   </WithProviders>
 )
