@@ -59,7 +59,6 @@ exports.schema = schema
 exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, name, value }) => {
-  // let parsedValue = value
   const parsedValue = typeof value === `string` ? JSON.parse(value) : value
   const key = id || name
   const currentState = readPackageJson(root)
