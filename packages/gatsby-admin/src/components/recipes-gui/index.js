@@ -1,19 +1,22 @@
 /** @jsx jsx */
+import React from "react"
+import { useState } from "react"
+
 import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
-import { keyframes } from "@emotion/core"
-import MDX from "gatsby-recipes/src/components/mdx"
+import { Global, keyframes } from "@emotion/core"
+import "normalize.css"
+
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
 import { createUrqlClient } from "../../urql-client"
+import { useMutation, useSubscription } from "urql"
+
 import lodash from "lodash"
-import React from "react"
-import { useState } from "react"
 import ansi2HTML from "ansi-html"
 import remove from "unist-util-remove"
-import { Global } from "@emotion/core"
-
 import fetch from "isomorphic-fetch"
+import slugify from "slugify"
 
 import WelcomeMessage from "./welcome-message"
 import {
@@ -29,9 +32,7 @@ import {
   InputFieldLabel,
   InputFieldControl,
 } from "gatsby-interface"
-import { useMutation, useSubscription } from "urql"
-import slugify from "slugify"
-import "normalize.css"
+import MDX from "gatsby-recipes/src/components/mdx"
 
 const theme = getTheme()
 
