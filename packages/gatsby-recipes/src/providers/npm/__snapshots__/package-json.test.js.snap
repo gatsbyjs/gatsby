@@ -14,13 +14,19 @@ exports[`packageJson resource e2e package resource test: PackageJson create plan
 Object {
   "currentState": "{}",
   "describe": "Add husky to package.json",
-  "diff": "",
+  "diff": "- Original  - 1
++ Modified  + 5
+
+- Promise {}
++ Object {
++   \\"husky\\": \\"{
++   /\\"hooks/\\": {}
++ }\\",
++ }",
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": {
-    \\"hooks\\": {}
-  }
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
 }
 `;
@@ -43,15 +49,21 @@ exports[`packageJson resource e2e package resource test: PackageJson update plan
 Object {
   "currentState": "{}",
   "describe": "Add husky to package.json",
-  "diff": "",
+  "diff": "- Original  - 1
++ Modified  + 7
+
+- Promise {}
++ Object {
++   \\"husky\\": \\"{
++   /\\"hooks/\\": {
++     /\\"pre-commit/\\": /\\"lint-staged/\\"
++   }
++ }\\",
++ }",
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": {
-    \\"hooks\\": {
-      \\"pre-commit\\": \\"lint-staged\\"
-    }
-  }
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"
 }",
 }
 `;

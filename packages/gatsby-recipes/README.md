@@ -1,7 +1,7 @@
 # Gatsby Recipes
 
 Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpreter, perform common actions like installing
+files which, when run by our custom React renderer, perform common actions like installing
 NPM packages, installing plugins, creating pages, etc.
 
 It's designed to be extensible so new capabilities can be added which allow
@@ -241,7 +241,7 @@ DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
 
 Then, open up Chrome and click the node icon in dev tools.
 
-To see log output from the Recipes graphql server, run in a terminal `node node_modules/gatsby-recipes/dist/graphql-server/start-dev-cli-server.js`
+To see log output from the Recipes graphql server, start the Recipes API in one terminal `node node_modules/gatsby-recipes/dist/graphql-server/server.js` and then in another terminal run your recipe with `RECIPES_DEV_MODE=true` set as an env variable.
 
 ### Official recipes
 

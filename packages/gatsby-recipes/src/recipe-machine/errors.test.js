@@ -18,7 +18,12 @@ describe(`recipe-machine errors`, () => {
       recipeMachine.withContext(initialContext)
     ).onTransition(state => {
       if (state.value === `doneError`) {
-        expect(state.context.error).toBeTruthy()
+        expect(
+          state.context.plan
+            .filter(p => p.error)
+            .map(p => p.error)
+            .join(``)
+        ).toBeTruthy()
         service.stop()
         done()
       } else if (state.value === `presentPlan`) {
