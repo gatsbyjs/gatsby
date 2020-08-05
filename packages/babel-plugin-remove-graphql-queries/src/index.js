@@ -196,7 +196,8 @@ export default function ({ types: t }) {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const staticQueryDir = state.opts.staticQueryDir || `static/d`
+              const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
               // Add query
               path2.parent.attributes.push(
@@ -234,7 +235,8 @@ export default function ({ types: t }) {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const staticQueryDir = state.opts.staticQueryDir || `static/d`
+              const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
 
               // only remove the import if its like:
