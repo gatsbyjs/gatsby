@@ -193,8 +193,9 @@ function removeImport(tag: NodePath<Expression>): void {
   const parent = importPath.parentPath
 
   if (importPath.isImportSpecifier()) {
-    if ((parent as NodePath<ImportDeclaration>).node.specifiers.length === 1)
+    if ((parent as NodePath<ImportDeclaration>).node.specifiers.length === 1) {
       parent.remove()
+    }
     else importPath.remove()
   }
   if (importPath.isObjectProperty()) {
