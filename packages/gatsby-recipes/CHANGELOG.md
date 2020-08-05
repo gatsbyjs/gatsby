@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.4...gatsby-recipes@0.2.5) (2020-08-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Handle string values in NPMPackageJSON + more robust showing of validation errors on install ([#26252](https://github.com/gatsbyjs/gatsby/issues/26252)) ([3a5d46d](https://github.com/gatsbyjs/gatsby/commit/3a5d46d))
+
 ## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.3...gatsby-recipes@0.2.4) (2020-08-05)
 
 ### Bug Fixes
