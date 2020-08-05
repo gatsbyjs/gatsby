@@ -119,8 +119,6 @@ const Diff = ({ resourcePlan, ...props }) => {
   )
 }
 
-
-
 const components = {
   Config: () => null,
   GatsbyPlugin: () => null,
