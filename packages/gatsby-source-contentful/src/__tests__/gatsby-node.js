@@ -29,6 +29,10 @@ describe(`gatsby-node`, () => {
   const getCache = jest.fn()
   const reporter = {
     info: jest.fn(),
+    verbose: jest.fn(),
+    activityTimer: () => {
+      return { start: jest.fn(), end: jest.fn() }
+    },
   }
   const createNodeId = jest.fn(value => value)
   let currentNodeMap
