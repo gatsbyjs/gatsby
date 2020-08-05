@@ -6922,3 +6922,13 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://varunagrawal.github.io/gatsby-bootstrap-template/
+  repo: https://github.com/varunagrawal/gatsby-bootstrap-template
+  description: A minimalistic Gatsby starter template with Bootstrap 4 included. Great for getting started with Gatsby without worrying out styling.
+  tags:
+    - Bootstrap
+    - Minimalist
+  features:
+    - Minimalistic, so nothing extra other than the barebones.
+    - Boostrap 4 support out of the box.
+    - Comes with React Helmet for adding site meta tags.
