@@ -137,7 +137,6 @@ const handleResource = (resourceName, context, props) => {
     }
   }
 
-  const setResources = useContext(SetResourcesProvider)
   let allResources = useResourceContext()
   const error = validateResource(resourceName, context, props)
   if (error) {
