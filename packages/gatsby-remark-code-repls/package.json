@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "lz-string": "^1.4.4",
-    "normalize-path": "^2.1.1",
+    "normalize-path": "^3.0.0",
     "npm-package-arg": "^6.1.1",
     "recursive-readdir": "^2.2.2",
     "unist-util-map": "^1.0.5",
