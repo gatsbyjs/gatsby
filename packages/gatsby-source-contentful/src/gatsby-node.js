@@ -297,7 +297,11 @@ exports.sourceNodes = async (
 
     if (entryList[i].length) {
       reporter.info(
-        `Creating ${entryList[i].length} Contentful ${contentTypeItem.name} nodes`
+        `Creating ${entryList[i].length} Contentful ${
+          pluginConfig.get(`useNameForId`)
+            ? contentTypeItem.name
+            : contentTypeItem.sys.id
+        } nodes`
       )
     }
 
