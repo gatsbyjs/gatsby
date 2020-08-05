@@ -10,6 +10,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
@@ -26,7 +27,9 @@
   },
   "files": [
     "dist/",
-    "dist/index.d.ts"
+    "dist/index.d.ts",
+    "node.js",
+    "node.d.ts"
   ],
   "dependencies": {
     "ci-info": "2.0.0",

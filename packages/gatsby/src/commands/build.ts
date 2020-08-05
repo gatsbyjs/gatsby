@@ -36,7 +36,7 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import { updateSiteMetadata } from "gatsby-core-utils/node"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -64,11 +64,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  await createServiceLock(program.directory, `metadata`, {
+  await updateSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
     lastRun: Date.now(),
-  }).then(unlock => unlock?.())
+    pid: process.pid,
+  })
 
   markWebpackStatusAsPending()
 

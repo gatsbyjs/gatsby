@@ -12,7 +12,8 @@ import { isCI, slash } from "gatsby-core-utils"
 import {
   createServiceLock,
   getService,
-} from "gatsby-core-utils/dist/service-lock"
+  updateSiteMetadata,
+} from "gatsby-core-utils/node"
 import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
@@ -283,13 +284,12 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
-    // We don't need to keep a lock on this, as it's just site metadata
-    await createServiceLock(program.directory, `metadata`, {
+    await updateSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
       pid: process.pid,
       lastRun: Date.now(),
-    }).then(unlock => unlock?.())
+    })
 
     if (!statusUnlock || !developUnlock) {
       const data = await getService(program.directory, `developproxy`)

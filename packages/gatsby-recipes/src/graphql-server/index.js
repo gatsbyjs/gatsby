@@ -2,10 +2,7 @@ const execa = require(`execa`)
 const path = require(`path`)
 const fs = require(`fs`)
 const detectPort = require(`detect-port`)
-const {
-  getService,
-  createServiceLock,
-} = require(`gatsby-core-utils/dist/service-lock`)
+const { getService, createServiceLock } = require(`gatsby-core-utils/node`)
 
 // NOTE(@mxstbr): The forceStart boolean enforces us to start the recipes graphql server
 // even if another instance might already be running. This is necessary to ensure the gatsby
