@@ -6926,8 +6926,9 @@
   repo: https://github.com/varunagrawal/gatsby-bootstrap-template
   description: A minimalistic Gatsby starter template with Bootstrap 4 included. Great for getting started with Gatsby without worrying out styling.
   tags:
-    - Bootstrap
-    - Minimalist
+    - Styling:Bootstrap
+    - Client-side App
+    - Landing Page
   features:
     - Minimalistic, so nothing extra other than the barebones.
     - Boostrap 4 support out of the box.
