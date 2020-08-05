@@ -3,6 +3,234 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.72](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.71...gatsby-cli@2.12.72) (2020-08-04)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.70...gatsby-cli@2.12.71) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.69...gatsby-cli@2.12.70) (2020-08-03)
+
+### Features
+
+- **gatsby-recipes:** add recipes gui ([#24595](https://github.com/gatsbyjs/gatsby/issues/24595)) ([07085fa](https://github.com/gatsbyjs/gatsby/commit/07085fa)), closes [#24655](https://github.com/gatsbyjs/gatsby/issues/24655) [#25133](https://github.com/gatsbyjs/gatsby/issues/25133) [#25930](https://github.com/gatsbyjs/gatsby/issues/25930) [#25939](https://github.com/gatsbyjs/gatsby/issues/25939) [#26009](https://github.com/gatsbyjs/gatsby/issues/26009) [#26085](https://github.com/gatsbyjs/gatsby/issues/26085) [#26115](https://github.com/gatsbyjs/gatsby/issues/26115) [#25763](https://github.com/gatsbyjs/gatsby/issues/25763) [#25812](https://github.com/gatsbyjs/gatsby/issues/25812) [#24306](https://github.com/gatsbyjs/gatsby/issues/24306) [#25884](https://github.com/gatsbyjs/gatsby/issues/25884) [#25883](https://github.com/gatsbyjs/gatsby/issues/25883) [#25886](https://github.com/gatsbyjs/gatsby/issues/25886) [#25316](https://github.com/gatsbyjs/gatsby/issues/25316) [#25874](https://github.com/gatsbyjs/gatsby/issues/25874) [#25606](https://github.com/gatsbyjs/gatsby/issues/25606) [#25891](https://github.com/gatsbyjs/gatsby/issues/25891) [#25896](https://github.com/gatsbyjs/gatsby/issues/25896) [#25894](https://github.com/gatsbyjs/gatsby/issues/25894) [#25905](https://github.com/gatsbyjs/gatsby/issues/25905) [#25902](https://github.com/gatsbyjs/gatsby/issues/25902) [#25907](https://github.com/gatsbyjs/gatsby/issues/25907) [#25882](https://github.com/gatsbyjs/gatsby/issues/25882) [#25892](https://github.com/gatsbyjs/gatsby/issues/25892) [#25879](https://github.com/gatsbyjs/gatsby/issues/25879) [#25875](https://github.com/gatsbyjs/gatsby/issues/25875) [#25744](https://github.com/gatsbyjs/gatsby/issues/25744) [#25903](https://github.com/gatsbyjs/gatsby/issues/25903) [#25863](https://github.com/gatsbyjs/gatsby/issues/25863) [#25915](https://github.com/gatsbyjs/gatsby/issues/25915) [#25910](https://github.com/gatsbyjs/gatsby/issues/25910) [#25912](https://github.com/gatsbyjs/gatsby/issues/25912) [#25901](https://github.com/gatsbyjs/gatsby/issues/25901) [#25643](https://github.com/gatsbyjs/gatsby/issues/25643) [#25720](https://github.com/gatsbyjs/gatsby/issues/25720) [#24652](https://github.com/gatsbyjs/gatsby/issues/24652) [#24549](https://github.com/gatsbyjs/gatsby/issues/24549) [#24549](https://github.com/gatsbyjs/gatsby/issues/24549) [#11](https://github.com/gatsbyjs/gatsby/issues/11) [#25832](https://github.com/gatsbyjs/gatsby/issues/25832) [#25936](https://github.com/gatsbyjs/gatsby/issues/25936) [#25344](https://github.com/gatsbyjs/gatsby/issues/25344) [#25721](https://github.com/gatsbyjs/gatsby/issues/25721) [#25943](https://github.com/gatsbyjs/gatsby/issues/25943) [#25479](https://github.com/gatsbyjs/gatsby/issues/25479) [#25716](https://github.com/gatsbyjs/gatsby/issues/25716) [#25946](https://github.com/gatsbyjs/gatsby/issues/25946) [#25940](https://github.com/gatsbyjs/gatsby/issues/25940) [#25954](https://github.com/gatsbyjs/gatsby/issues/25954) [#25464](https://github.com/gatsbyjs/gatsby/issues/25464) [#25914](https://github.com/gatsbyjs/gatsby/issues/25914) [#25970](https://github.com/gatsbyjs/gatsby/issues/25970) [#25972](https://github.com/gatsbyjs/gatsby/issues/25972) [#25815](https://github.com/gatsbyjs/gatsby/issues/25815) [#25944](https://github.com/gatsbyjs/gatsby/issues/25944) [#25941](https://github.com/gatsbyjs/gatsby/issues/25941) [#25974](https://github.com/gatsbyjs/gatsby/issues/25974) [#25971](https://github.com/gatsbyjs/gatsby/issues/25971) [#25921](https://github.com/gatsbyjs/gatsby/issues/25921) [#25276](https://github.com/gatsbyjs/gatsby/issues/25276) [#25463](https://github.com/gatsbyjs/gatsby/issues/25463) [#25980](https://github.com/gatsbyjs/gatsby/issues/25980) [#25965](https://github.com/gatsbyjs/gatsby/issues/25965) [#25926](https://github.com/gatsbyjs/gatsby/issues/25926) [#25983](https://github.com/gatsbyjs/gatsby/issues/25983) [#25958](https://github.com/gatsbyjs/gatsby/issues/25958) [#25978](https://github.com/gatsbyjs/gatsby/issues/25978) [#25998](https://github.com/gatsbyjs/gatsby/issues/25998) [#26002](https://github.com/gatsbyjs/gatsby/issues/26002) [#25997](https://github.com/gatsbyjs/gatsby/issues/25997) [#25984](https://github.com/gatsbyjs/gatsby/issues/25984) [#26006](https://github.com/gatsbyjs/gatsby/issues/26006) [#26043](https://github.com/gatsbyjs/gatsby/issues/26043) [#26030](https://github.com/gatsbyjs/gatsby/issues/26030) [#26016](https://github.com/gatsbyjs/gatsby/issues/26016) [#25960](https://github.com/gatsbyjs/gatsby/issues/25960) [#26054](https://github.com/gatsbyjs/gatsby/issues/26054) [#25929](https://github.com/gatsbyjs/gatsby/issues/25929) [#25995](https://github.com/gatsbyjs/gatsby/issues/25995) [#26068](https://github.com/gatsbyjs/gatsby/issues/26068) [#26051](https://github.com/gatsbyjs/gatsby/issues/26051) [#25747](https://github.com/gatsbyjs/gatsby/issues/25747) [#25613](https://github.com/gatsbyjs/gatsby/issues/25613) [#26067](https://github.com/gatsbyjs/gatsby/issues/26067) [#25682](https://github.com/gatsbyjs/gatsby/issues/25682) [#25631](https://github.com/gatsbyjs/gatsby/issues/25631) [#26065](https://github.com/gatsbyjs/gatsby/issues/26065) [#25683](https://github.com/gatsbyjs/gatsby/issues/25683) [#25792](https://github.com/gatsbyjs/gatsby/issues/25792) [#26078](https://github.com/gatsbyjs/gatsby/issues/26078) [#26053](https://github.com/gatsbyjs/gatsby/issues/26053) [#26077](https://github.com/gatsbyjs/gatsby/issues/26077) [#25371](https://github.com/gatsbyjs/gatsby/issues/25371) [#26092](https://github.com/gatsbyjs/gatsby/issues/26092) [#26101](https://github.com/gatsbyjs/gatsby/issues/26101) [#25952](https://github.com/gatsbyjs/gatsby/issues/25952) [#26104](https://github.com/gatsbyjs/gatsby/issues/26104) [#25776](https://github.com/gatsbyjs/gatsby/issues/25776) [#26109](https://github.com/gatsbyjs/gatsby/issues/26109)
+
+## [2.12.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.68...gatsby-cli@2.12.69) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.67...gatsby-cli@2.12.68) (2020-07-30)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.67](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.66...gatsby-cli@2.12.67) (2020-07-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.66](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.65...gatsby-cli@2.12.66) (2020-07-24)
+
+### Features
+
+- **gatsby:** Add internal types export ([#25921](https://github.com/gatsbyjs/gatsby/issues/25921)) ([08d2d70](https://github.com/gatsbyjs/gatsby/commit/08d2d70))
+
+## [2.12.65](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.64...gatsby-cli@2.12.65) (2020-07-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.64](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.63...gatsby-cli@2.12.64) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.63](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.62...gatsby-cli@2.12.63) (2020-07-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.61...gatsby-cli@2.12.62) (2020-07-17)
+
+### Bug Fixes
+
+- **gatsby-cli:** enable inspect-brk & inspect options ([#24693](https://github.com/gatsbyjs/gatsby/issues/24693)) ([ddfff2a](https://github.com/gatsbyjs/gatsby/commit/ddfff2a))
+
+## [2.12.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.60...gatsby-cli@2.12.61) (2020-07-15)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.59...gatsby-cli@2.12.60) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.58...gatsby-cli@2.12.59) (2020-07-07)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.57...gatsby-cli@2.12.58) (2020-07-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.56...gatsby-cli@2.12.57) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.55...gatsby-cli@2.12.56) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.54...gatsby-cli@2.12.55) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.53...gatsby-cli@2.12.54) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.52...gatsby-cli@2.12.53) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.51...gatsby-cli@2.12.52) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby:** fix build-html error stacktrace ([#25385](https://github.com/gatsbyjs/gatsby/issues/25385)) ([eac89cb](https://github.com/gatsbyjs/gatsby/commit/eac89cb))
+
+## [2.12.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.50...gatsby-cli@2.12.51) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.49...gatsby-cli@2.12.50) (2020-06-23)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.48...gatsby-cli@2.12.49) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
+## [2.12.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.47...gatsby-cli@2.12.48) (2020-06-20)
+
+### Bug Fixes
+
+- **bin:** point bin to always existing files ([#25121](https://github.com/gatsbyjs/gatsby/issues/25121)) ([eba033e](https://github.com/gatsbyjs/gatsby/commit/eba033e))
+
+## [2.12.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.46...gatsby-cli@2.12.47) (2020-06-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.45...gatsby-cli@2.12.46) (2020-06-15)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.44...gatsby-cli@2.12.45) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.43...gatsby-cli@2.12.44) (2020-06-05)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.42...gatsby-cli@2.12.43) (2020-06-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.41...gatsby-cli@2.12.42) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.40...gatsby-cli@2.12.41) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.39...gatsby-cli@2.12.40) (2020-05-31)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.38...gatsby-cli@2.12.39) (2020-05-31)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.37...gatsby-cli@2.12.38) (2020-05-30)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.36...gatsby-cli@2.12.37) (2020-05-28)
+
+### Bug Fixes
+
+- **gatsby-cli:** build properly in CI ([#24511](https://github.com/gatsbyjs/gatsby/issues/24511)) ([4156005](https://github.com/gatsbyjs/gatsby/commit/4156005))
+- **gatsby-cli:** Improve bottom status bar ([#24532](https://github.com/gatsbyjs/gatsby/issues/24532)) ([3d50161](https://github.com/gatsbyjs/gatsby/commit/3d50161))
+- **gatsby-cli:** Move ink to dependencies instead of optionalDependencies ([#24542](https://github.com/gatsbyjs/gatsby/issues/24542)) ([6a3f762](https://github.com/gatsbyjs/gatsby/commit/6a3f762))
+
+## [2.12.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.35...gatsby-cli@2.12.36) (2020-05-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.34...gatsby-cli@2.12.35) (2020-05-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.33...gatsby-cli@2.12.34) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.32...gatsby-cli@2.12.33) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.31...gatsby-cli@2.12.32) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.30...gatsby-cli@2.12.31) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.29...gatsby-cli@2.12.30) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.28...gatsby-cli@2.12.29) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.27...gatsby-cli@2.12.28) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.26...gatsby-cli@2.12.27) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.25...gatsby-cli@2.12.26) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.24...gatsby-cli@2.12.25) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.23...gatsby-cli@2.12.24) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix recipes cli invocation ([#24201](https://github.com/gatsbyjs/gatsby/issues/24201)) ([e6e7463](https://github.com/gatsbyjs/gatsby/commit/e6e7463))
+
+## [2.12.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.22...gatsby-cli@2.12.23) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.21...gatsby-cli@2.12.22) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Improve wording for 98124 error message ([#24186](https://github.com/gatsbyjs/gatsby/issues/24186)) ([0d68336](https://github.com/gatsbyjs/gatsby/commit/0d68336))
+
+## [2.12.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.20...gatsby-cli@2.12.21) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.12.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.19...gatsby-cli@2.12.20) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-cli

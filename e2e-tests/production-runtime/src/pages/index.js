@@ -27,6 +27,11 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
+        <Link to="/long-page#áccentuated" data-testid="long-page-id">
+          To long page (at id)
+        </Link>
+      </li>
+      <li>
         <Link to="/duplicated/" data-testid="duplicated">
           Another page using Index template
         </Link>
@@ -59,6 +64,11 @@ const IndexPage = ({ pageContext }) => (
       <li>
         <Link to="/안녕" data-testid="page-with-unicode-path">
           Go to page with unicode path
+        </Link>
+      </li>
+      <li>
+        <Link to="subdirectory/page-1" data-testid="subdir-link">
+          Go to subdirectory
         </Link>
       </li>
     </ul>

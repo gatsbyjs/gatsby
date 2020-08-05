@@ -1,5 +1,5 @@
 import crypto from "crypto"
-import v8 from "v8"
+import { Span } from "opentracing"
 import {
   parse,
   validate,
@@ -11,8 +11,6 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import { IActivityArgs } from "gatsby-cli/lib/reporter"
-import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -24,7 +22,12 @@ import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
 
-export default class GraphQLRunner {
+export interface IGraphQLRunnerOptions {
+  collectStats?: boolean
+  graphqlTracing?: boolean
+}
+
+export class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,18 +43,11 @@ export default class GraphQLRunner {
 
   constructor(
     protected store: Store<IGatsbyState>,
-    {
-      collectStats,
-      graphqlTracing,
-    }: {
-      collectStats?: boolean
-      graphqlTracing?: boolean
-    } = {}
+    { collectStats, graphqlTracing }: IGraphQLRunnerOptions = {}
   ) {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
-      nodeStore,
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
@@ -135,11 +131,13 @@ export default class GraphQLRunner {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query(
     query: Query,
-    context: Record<string, any>,
-    { parentSpan, queryName }: IActivityArgs & { queryName: string }
+    context: Record<string, unknown>,
+    {
+      parentSpan,
+      queryName,
+    }: { parentSpan: Span | undefined; queryName: string }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -154,13 +152,6 @@ export default class GraphQLRunner {
       if (typeof statsQuery !== `string`) {
         statsQuery = statsQuery.body
       }
-      this.stats.uniqueOperations.add(
-        crypto
-          .createHash(`sha1`)
-          .update(statsQuery)
-          .update(v8.serialize(context))
-          .digest(`hex`)
-      )
 
       this.stats.uniqueQueries.add(
         crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)

@@ -22,6 +22,7 @@ export const getPageInfo = <TContext = any>({
       itemCount: `Int!`,
       pageCount: `Int!`,
       perPage: `Int`,
+      totalCount: `Int!`,
     })
   })
 

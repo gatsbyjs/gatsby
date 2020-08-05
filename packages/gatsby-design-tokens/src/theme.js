@@ -1,6 +1,7 @@
 import {
   breakpointsArray as breakpoints,
   colors as colorsTokens,
+  borders,
   fonts,
   fontSizes,
   fontWeights,
@@ -46,22 +47,24 @@ const c = {
 }
 
 export const theme = {
-  breakpoints: breakpoints,
+  borders,
+  breakpoints,
   colors: c,
-  fonts: fonts,
-  fontSizes: fontSizes,
-  fontWeights: fontWeights,
-  letterSpacings: letterSpacings,
-  lineHeights: lineHeights,
-  mediaQueries: mediaQueries,
-  radii: radii,
-  shadows: shadows,
-  space: space,
-  transition: transition,
+  fonts,
+  fontSizes,
+  fontWeights,
+  letterSpacings,
+  lineHeights,
+  mediaQueries,
+  radii,
+  shadows,
+  space,
+  transition,
 }
 
 export {
   c as colors,
+  borders,
   breakpoints,
   fonts,
   fontSizes,

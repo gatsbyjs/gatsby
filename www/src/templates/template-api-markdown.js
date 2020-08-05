@@ -64,44 +64,43 @@ const mergeFunctions = (data, context) => {
 }
 
 export default function APITemplate({ data, location, pageContext }) {
+  const { docPage } = data
   const { prev, next } = pageContext
-  const page = data.mdx
-  const { frontmatter, tableOfContents } = page
-  const heading = frontmatter.contentsHeading || "APIs"
-  const headingId = "apis"
+  const heading = docPage.contentsHeading || `APIs`
+  const headingId = `apis`
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
 
-  // Generate table of content items for API entries
-  const items = tableOfContents.items || []
-  const tableOfContentsItems = [
-    ...items,
-    {
-      title: heading,
-      url: `#${headingId}`,
-      items: mergedFuncs.map(mergedFunc => ({
-        url: `#${mergedFunc.name}`,
-        title: mergedFunc.name,
-      })),
+  // Override the page with updates to the table of contents
+  const page = {
+    ...docPage,
+    tableOfContentsDepth: Math.max(docPage.tableOfContentsDepth, 2),
+    tableOfContents: {
+      ...docPage.tableOfContents,
+      // Generate table of content items for API entries
+      items: [
+        ...(docPage.tableOfContents.items || []),
+        {
+          title: heading,
+          url: `#${headingId}`,
+          items: mergedFuncs.map(mergedFunc => {
+            return {
+              url: `#${mergedFunc.name}`,
+              title: mergedFunc.name,
+            }
+          }),
+        },
+      ],
     },
-  ]
-  const { tableOfContentsDepth: depth = 0 } = frontmatter
-  const tableOfContentsDepth = Math.max(depth, 2)
+  }
 
   return (
-    <DocsMarkdownPage
-      page={page}
-      location={location}
-      prev={prev}
-      next={next}
-      tableOfContentsItems={tableOfContentsItems}
-      tableOfContentsDepth={tableOfContentsDepth}
-    >
+    <DocsMarkdownPage page={page} location={location} prev={prev} next={next}>
       <h2 id={headingId}>{heading}</h2>
       <APIReference
         docs={mergedFuncs}
-        showTopLevelSignatures={frontmatter.showTopLevelSignatures}
+        showTopLevelSignatures={page.showTopLevelSignatures}
       />
     </DocsMarkdownPage>
   )
@@ -109,24 +108,10 @@ export default function APITemplate({ data, location, pageContext }) {
 
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
-    mdx(fields: { slug: { eq: $path } }) {
-      body
-      excerpt
-      timeToRead
-      tableOfContents
-      fields {
-        slug
-        anchor
-      }
-      frontmatter {
-        title
-        description
-        contentsHeading
-        showTopLevelSignatures
-        disableTableOfContents
-        tableOfContentsDepth
-      }
-      ...MarkdownPageFooterMdx
+    docPage(slug: { eq: $path }) {
+      ...DocPageContent
+      contentsHeading
+      showTopLevelSignatures
     }
     jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
       nodes {

@@ -1,15 +1,17 @@
 import stackTrace from "stack-trace"
+import { Span } from "opentracing"
 import { ExecutionResultDataDefault } from "graphql/execution/execute"
 import { Store } from "redux"
 
-import GraphQLRunner from "../query/graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
 import { emitter } from "../redux"
 import { Reporter } from "../.."
 import { ExecutionResult, Source } from "../../graphql"
 import { IGatsbyState } from "../redux/types"
+import { IMatch } from "../types"
 
-type Runner = (
+export type Runner = (
   query: string | Source,
   context: Record<string, any>
 ) => Promise<ExecutionResult<ExecutionResultDataDefault>>
@@ -17,10 +19,18 @@ type Runner = (
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
   reporter: Reporter,
-  { parentSpan, graphqlTracing } = { parentSpan: null, graphqlTracing: false }
+  {
+    parentSpan,
+    graphqlTracing,
+  }: { parentSpan: Span | undefined; graphqlTracing?: boolean } = {
+    parentSpan: undefined,
+    graphqlTracing: false,
+  }
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
-  let runner = new GraphQLRunner(store, { graphqlTracing })
+  let runner: GraphQLRunner | undefined = new GraphQLRunner(store, {
+    graphqlTracing,
+  })
 
   const eventTypes: string[] = [
     `DELETE_CACHE`,
@@ -35,12 +45,17 @@ export const createGraphQLRunner = (
 
   eventTypes.forEach(type => {
     emitter.on(type, () => {
-      runner = new GraphQLRunner(store)
+      runner = undefined
     })
   })
 
-  return (query, context): ReturnType<Runner> =>
-    runner
+  return (query, context): ReturnType<Runner> => {
+    if (!runner) {
+      runner = new GraphQLRunner(store, {
+        graphqlTracing,
+      })
+    }
+    return runner
       .query(query, context, {
         queryName: `gatsby-node query`,
         parentSpan,
@@ -74,7 +89,7 @@ export const createGraphQLRunner = (
 
               return null
             })
-            .filter(Boolean)
+            .filter((Boolean as unknown) as (match) => match is IMatch)
 
           if (structuredErrors.length) {
             // panic on build exits the process
@@ -84,4 +99,5 @@ export const createGraphQLRunner = (
 
         return result
       })
+  }
 }

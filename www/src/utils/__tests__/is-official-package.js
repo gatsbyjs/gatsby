@@ -4,7 +4,7 @@ describe(`isOfficialPackage`, () => {
   it(`returns true when repository is gatsby`, () => {
     expect(
       isOfficialPackage({
-        name: "gatsby",
+        name: `gatsby`,
         repository: {
           url: `https://github.com/gatsbyjs/gatsby`,
         },
@@ -15,7 +15,7 @@ describe(`isOfficialPackage`, () => {
   it(`returns false when the package is name scoped`, () => {
     expect(
       isOfficialPackage({
-        name: "@kyleamathews/gatsby",
+        name: `@kyleamathews/gatsby`,
         repository: {
           url: `https://github.com/gatsbyjs/gatsby`,
         },
@@ -26,7 +26,7 @@ describe(`isOfficialPackage`, () => {
   it(`returns false when the package has no repository`, () => {
     expect(
       isOfficialPackage({
-        name: "gatsby-theme-fake",
+        name: `gatsby-theme-fake`,
       })
     ).toBeFalsy()
   })
@@ -34,7 +34,7 @@ describe(`isOfficialPackage`, () => {
   it(`returns false when the repo is not gatsby`, () => {
     expect(
       isOfficialPackage({
-        name: "gatsby-theme-my-blog",
+        name: `gatsby-theme-my-blog`,
         repository: {
           url: `https://github.com/kyelamathews/gatsby-theme-my-blog`,
         },

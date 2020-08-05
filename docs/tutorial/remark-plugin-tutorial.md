@@ -272,7 +272,7 @@ At this point, our plugin is now ready to be used. To see the resulting function
 
 ## Publishing the plugin
 
-To share this plugin with others, you can extract the plugin to its own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
+To share this plugin with others, you can extract the plugin to its own directory outside of this site and then publish it to npm so it can be accessed both on npm and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
 
 ## Summary
 
@@ -280,4 +280,4 @@ You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transforme
 
 ## What's next?
 
-If you wish to see other plugins that manipulate the Remark AST, search for `gatsby-remark-` in the [plugin library](/plugins).
+If you wish to see other plugins that manipulate the Remark AST, you can find them in the [plugin library](/plugins/?=gatsby-remark-).

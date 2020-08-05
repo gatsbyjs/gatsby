@@ -2,22 +2,24 @@
 import { jsx } from "theme-ui"
 import { keyframes } from "@emotion/core"
 
-export default ({ items, color }) => (
-  <span
-    css={{
-      "& span": {
-        animation: `${topToBottom} 5s linear infinite 0s`,
-        opacity: 0,
-      },
-    }}
-  >
-    {items.map(item => (
-      <span key={item} sx={{ color: color }}>
-        {item}
-      </span>
-    ))}
-  </span>
-)
+export default function Slider({ items, color }) {
+  return (
+    <span
+      sx={{
+        "& span": {
+          animation: `${topToBottom} 5s linear infinite 0s`,
+          opacity: 0,
+        },
+      }}
+    >
+      {items.map(item => (
+        <span key={item} sx={{ color: color }}>
+          {item}
+        </span>
+      ))}
+    </span>
+  )
+}
 
 const topToBottom = keyframes({
   "0%": {

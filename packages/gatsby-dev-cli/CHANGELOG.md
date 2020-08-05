@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.15...gatsby-dev-cli@2.7.16) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.14...gatsby-dev-cli@2.7.15) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.13...gatsby-dev-cli@2.7.14) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.12...gatsby-dev-cli@2.7.13) (2020-07-01)
+
+### Bug Fixes
+
+- update packages ([#25381](https://github.com/gatsbyjs/gatsby/issues/25381)) ([622e3c1](https://github.com/gatsbyjs/gatsby/commit/622e3c1))
+
+## [2.7.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.11...gatsby-dev-cli@2.7.12) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.10...gatsby-dev-cli@2.7.11) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.9...gatsby-dev-cli@2.7.10) (2020-06-22)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** chmod new bin files ([#25194](https://github.com/gatsbyjs/gatsby/issues/25194)) ([e288131](https://github.com/gatsbyjs/gatsby/commit/e288131))
+
+## [2.7.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.8...gatsby-dev-cli@2.7.9) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.7...gatsby-dev-cli@2.7.8) (2020-06-02)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** support workspaces in yarn@1.22 ([#24608](https://github.com/gatsbyjs/gatsby/issues/24608)) ([40d241b](https://github.com/gatsbyjs/gatsby/commit/40d241b))
+
+## [2.7.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.6...gatsby-dev-cli@2.7.7) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.5...gatsby-dev-cli@2.7.6) (2020-05-30)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** show spawned processes output unless `--quiet` is used ([#24607](https://github.com/gatsbyjs/gatsby/issues/24607)) ([69383a8](https://github.com/gatsbyjs/gatsby/commit/69383a8))
+
+## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.4...gatsby-dev-cli@2.7.5) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 ## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.3...gatsby-dev-cli@2.7.4) (2020-05-08)
 
 ### Bug Fixes

@@ -66,7 +66,7 @@ const url = joinPath(BASEPATH, pathname)
 
 ### isCI
 
-A utility that enhances `isCI` from 'ci-info` with support for ZEIT's Now and Heroku detection
+A utility that enhances `isCI` from 'ci-info` with support for Vercel and Heroku detection
 
 ```js
 const { isCI } = require("gatsby-core-utils")

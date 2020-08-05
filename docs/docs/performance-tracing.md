@@ -72,7 +72,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
 
    See [Jaeger getting started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
 
-3. Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.js) that will send tracing spans to your local Docker instance over HTTP. E.g
+3. Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.ts) that will send tracing spans to your local Docker instance over HTTP. E.g
 
    ```shell
    gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js

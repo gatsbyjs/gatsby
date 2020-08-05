@@ -11,7 +11,7 @@ What this section will cover:
 - Pulling the data into a component using StaticQuery
 - Dynamically rendering your navigation
 
-You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
+You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through GraphQL when generating your static pages.
 
 This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default`.
 
@@ -192,6 +192,8 @@ Locate the `header.js` file inside `src/components` and remove everything so onl
 ```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
+import PropTypes from "prop-types"
+
 const Header = ({ siteTitle, menuLinks }) => (
   <header
     style={{

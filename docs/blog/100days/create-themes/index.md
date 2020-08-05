@@ -16,7 +16,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 This week you'll learn how to create a Gatsby Theme! Themes are a neat way to wrap your site development work into a package that can be used by others on your team, or the open source community.
 
-The resources below will help you to creat your first theme, and learn from themes that the Gatsby community has published.
+The resources below will help you to create your first theme, and learn from themes that the Gatsby community has published.
 
 ### Gatsby Theme Creation Resources
 

@@ -5,6 +5,7 @@ import { IActivityArgs } from "gatsby-cli/src/reporter/reporter"
 import { IPhantomReporter } from "gatsby-cli/src/reporter/reporter-phantom"
 
 import { IGraphQLSpanTracer } from "../schema/type-definitions"
+import { pathToArray } from "./utils"
 
 /**
  * Tracks and knows how to get a parent span for a particular
@@ -71,14 +72,4 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
     const path = pathToArray(gqlPath)
     this.activities.set(path.join(`.`), activity)
   }
-}
-
-function pathToArray(path: Path | undefined): Array<string | number> {
-  const flattened: Array<string | number> = []
-  let curr: Path | undefined = path
-  while (curr) {
-    flattened.push(curr.key)
-    curr = curr.prev
-  }
-  return flattened.reverse()
 }

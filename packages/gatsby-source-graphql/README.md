@@ -2,7 +2,7 @@
 
 Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas are stitched together by declaring an arbitrary type name that wraps the remote schema Query type (`typeName` below), and putting the remote schema under a field of the Gatsby GraphQL query (`fieldName` below).
 
-- [Example website](https://using-gatsby-source-graphql.netlify.com/)
+- [Example website](https://using-gatsby-source-graphql.netlify.app/)
 - [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
 ## Install
@@ -26,7 +26,7 @@ module.exports = {
         // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
-        url: "https://swapi-graphql.netlify.com/.netlify/functions/index",
+        url: "https://swapi-graphql.netlify.app/.netlify/functions/index",
       },
     },
 

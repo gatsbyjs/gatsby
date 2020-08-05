@@ -235,7 +235,9 @@ function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
   }
 
   const text: string = quasis[0].value.raw
-  const hash: number = murmurhash(text, 0)
+  const normalizedText: string = graphql.stripIgnoredCharacters(text)
+
+  const hash: number = murmurhash(normalizedText, 0)
 
   try {
     const ast = graphql.parse(text)
@@ -243,7 +245,7 @@ function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
     if (ast.definitions.length === 0) {
       throw new EmptyGraphQLTagError(quasis[0].loc)
     }
-    return { ast, text, hash, isGlobal }
+    return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
     throw new GraphQLSyntaxError(text, err, quasis[0].loc)
   }
@@ -265,11 +267,12 @@ function isUseStaticQuery(path: NodePath<CallExpression>): boolean {
 export default function ({ types: t }): PluginObj {
   return {
     visitor: {
-      Program(path: NodePath<Program>, state: {}): void {
+      Program(path: NodePath<Program>, state: any): void {
         const nestedJSXVistor = {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
+              (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `build-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`, ``) &&
               path2.parent.type !== `JSXClosingElement`
@@ -309,7 +312,8 @@ export default function ({ types: t }): PluginObj {
         const nestedHookVisitor = {
           CallExpression(path2: NodePath<CallExpression>): void {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
+              (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `build-html`) &&
               isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
@@ -530,4 +534,5 @@ export {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  murmurhash,
 }

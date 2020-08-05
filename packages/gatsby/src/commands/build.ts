@@ -6,15 +6,15 @@ import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
-import GraphQLRunner from "../query/graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
 import { store, readState } from "../redux"
-import queryUtil from "../query"
 import * as appDataUtil from "../utils/app-data"
+import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
@@ -26,6 +26,16 @@ import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
+import {
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+  writeOutRequires,
+} from "../services"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -53,6 +63,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
+  markWebpackStatusAsPending()
+
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
   const buildActivity = report.phantomActivity(`build`)
@@ -66,8 +78,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
-    ...program,
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+    program,
     parentSpan: buildSpan,
   })
 
@@ -76,18 +88,29 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlTracing: program.graphqlTracing,
   })
 
-  const {
-    processPageQueries,
-    processStaticQueries,
-  } = queryUtil.getInitialQueryProcessors({
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  await runStaticQueries({
+    queryIds,
     parentSpan: buildSpan,
+    store,
     graphqlRunner,
   })
 
-  await processStaticQueries()
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
+  })
 
   await apiRunnerNode(`onPreBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -95,18 +118,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  let activity = report.activityTimer(
+  const buildActivityTimer = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
-  activity.start()
+  buildActivityTimer.start()
   let stats
   try {
-    stats = await buildProductionBundle(program, activity.span)
+    stats = await buildProductionBundle(program, buildActivityTimer.span)
   } catch (err) {
-    activity.panic(structureWebpackErrors(Stage.BuildJavascript, err))
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
-    activity.end()
+    buildActivityTimer.end()
   }
 
   const workerPool = WorkerPool.create()
@@ -121,17 +144,21 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       payload: webpackCompilationHash,
     })
 
-    activity = report.activityTimer(`Rewriting compilation hashes`, {
-      parentSpan: buildSpan,
-    })
-    activity.start()
+    const rewriteActivityTimer = report.activityTimer(
+      `Rewriting compilation hashes`,
+      {
+        parentSpan: buildSpan,
+      }
+    )
+    rewriteActivityTimer.start()
 
     await appDataUtil.write(publicDir, webpackCompilationHash)
 
-    activity.end()
+    rewriteActivityTimer.end()
   }
 
-  await processPageQueries()
+  await flushPendingPageDataWrites()
+  markWebpackStatusAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
@@ -184,7 +211,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  activity = report.createProgress(
+  const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
     0,
@@ -192,13 +219,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       parentSpan: buildSpan,
     }
   )
-  activity.start()
+  buildHTMLActivityProgress.start()
   try {
     await buildHTML({
       program,
       stage: Stage.BuildHTML,
       pagePaths,
-      activity,
+      activity: buildHTMLActivityProgress,
       workerPool,
     })
   } catch (err) {
@@ -216,34 +243,38 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       context.ref = match[1]
     }
 
-    activity.panic({
+    buildHTMLActivityProgress.panic({
       id,
       context,
       error: err,
     })
   }
-  activity.done()
+  buildHTMLActivityProgress.end()
 
   let deletedPageKeys: string[] = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    activity = report.activityTimer(`Delete previous page data`)
-    activity.start()
+    const deletePageDataActivityTimer = report.activityTimer(
+      `Delete previous page data`
+    )
+    deletePageDataActivityTimer.start()
     deletedPageKeys = buildUtils.collectRemovedPageData(
       store.getState(),
       cachedPageData
     )
     await buildUtils.removePageFiles(publicDir, deletedPageKeys)
 
-    activity.end()
+    deletePageDataActivityTimer.end()
   }
 
-  activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
-  activity.start()
-  await apiRunnerNode(`onPostBuild`, {
-    graphql: bootstrapGraphQLRunner,
+  const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,
   })
-  activity.end()
+  postBuildActivityTimer.start()
+  await apiRunnerNode(`onPostBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: buildSpan,
+  })
+  postBuildActivityTimer.end()
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
@@ -284,23 +315,23 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `${program.directory}/.cache`,
       `newPages.txt`
     )
+    const createdFilesContent = pagePaths.length
+      ? `${pagePaths.join(`\n`)}\n`
+      : ``
+
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `deletedPages.txt`
     )
+    const deletedFilesContent = deletedPageKeys.length
+      ? `${deletedPageKeys.join(`\n`)}\n`
+      : ``
 
-    if (pagePaths.length) {
-      await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`.cache/newPages.txt created`)
-    }
-    if (deletedPageKeys.length) {
-      await fs.writeFile(
-        deletedFilesPath,
-        `${deletedPageKeys.join(`\n`)}\n`,
-        `utf8`
-      )
-      report.info(`.cache/deletedPages.txt created`)
-    }
+    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+    report.info(`.cache/newPages.txt created`)
+
+    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+    report.info(`.cache/deletedPages.txt created`)
   }
 
   if (await userPassesFeedbackRequestHeuristic()) {

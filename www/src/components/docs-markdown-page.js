@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
+import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
@@ -25,31 +25,28 @@ const containerStyles = {
   px: 9,
 }
 
-function DocsMarkdownPage({
+export default function DocsMarkdownPage({
   page,
   location,
   prev,
   next,
-  tableOfContentsItems = page.tableOfContents.items,
-  tableOfContentsDepth = page.frontmatter.tableOfContentsDepth,
   children,
 }) {
-  const { frontmatter, excerpt, timeToRead, fields, body } = page
-  const [urlSegment] = fields.slug.split(`/`).slice(1)
-  const description = frontmatter.description || excerpt
+  const [urlSegment] = page.slug.split(`/`).slice(1)
+  const description = page.description || page.excerpt
   const isTOCVisible =
-    !frontmatter.disableTableOfContents && tableOfContentsItems?.length > 0
+    !page.disableTableOfContents && page.tableOfContents?.items?.length
 
   return (
     <PageWithSidebar
       location={location}
-      enableScrollSync={urlSegment === "tutorial"}
+      enableScrollSync={urlSegment === `tutorial`}
     >
       <PageMetadata
-        title={frontmatter.title}
+        title={page.title}
         description={description}
         type="article"
-        timeToRead={timeToRead}
+        timeToRead={page.timeToRead}
       />
       <DocSearchContent>
         <Container
@@ -64,8 +61,8 @@ function DocsMarkdownPage({
           }}
         >
           <Breadcrumb location={location} />
-          <h1 id={fields.anchor} sx={{ mt: 0 }}>
-            {frontmatter.title}
+          <h1 id={page.anchor} sx={{ mt: 0 }}>
+            {page.title}
           </h1>
         </Container>
         <Container
@@ -99,8 +96,8 @@ function DocsMarkdownPage({
               }}
             >
               <TableOfContents
-                items={tableOfContentsItems}
-                depth={tableOfContentsDepth}
+                items={page.tableOfContents.items}
+                depth={page.tableOfContentsDepth}
                 location={location}
               />
             </div>
@@ -114,9 +111,14 @@ function DocsMarkdownPage({
             }}
           >
             <div>
-              <MDXRenderer slug={fields.slug}>{body}</MDXRenderer>
+              <MDXRenderer slug={page.slug}>{page.body}</MDXRenderer>
               {children}
-              <MarkdownPageFooter page={page} />
+              {page.issue && (
+                <a href={page.issue} target="_blank" rel="noopener noreferrer">
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
+              <MarkdownPageFooter path={page.relativePath} />
               <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
             </div>
           </div>
@@ -127,4 +129,19 @@ function DocsMarkdownPage({
   )
 }
 
-export default DocsMarkdownPage
+export const docPageContentFragment = graphql`
+  fragment DocPageContent on DocPage {
+    relativePath
+    slug
+    body
+    excerpt
+    timeToRead
+    tableOfContents
+    anchor
+    title
+    description
+    disableTableOfContents
+    tableOfContentsDepth
+    issue
+  }
+`

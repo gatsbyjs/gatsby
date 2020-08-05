@@ -367,10 +367,11 @@ async function runDataUpdate() {
     limit: 1
   })
 
-  const entry = entries.items[0]
+  let entry = entries.items[0]
   const title = entry.fields.title[locale]
   entry.fields.title[locale] = `${title.substring(0, title.lastIndexOf(` `))} ${Date.now()}`
 
-  await entry.update()
+  entry = await entry.update()
+  await entry.publish()
   console.log(`Updated ${chalk.green(entry.sys.id)}`)
 }

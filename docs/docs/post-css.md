@@ -75,4 +75,4 @@ module.exports = () => ({
 
 ## Other resources
 
-- [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
+- [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)

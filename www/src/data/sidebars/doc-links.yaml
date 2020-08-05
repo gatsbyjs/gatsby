@@ -41,6 +41,8 @@
         - title: Preparing Your Environment
           link: /docs/preparing-your-environment/
           items:
+            - title: Basic Hardware & Software Requirements
+              link: /docs/basic-hardware-software-requirements/
             - title: Browser Support
               link: /docs/browser-support/
             - title: Gatsby on Windows
@@ -60,12 +62,21 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Gatsby Cloud
+              link: /docs/deploying-to-gatsby-cloud/
+              breadcrumbTitle: Gatsby Cloud
+            - title: Deploying to Azure
+              link: /docs/deploying-to-azure/
+              breadcrumbTitle: Azure
             - title: Deploying to Netlify
               link: /docs/deploying-to-netlify/
               breadcrumbTitle: Netlify
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
+            - title: Deploying to a DigitalOcean Droplet
+              link: /docs/deploying-to-digitalocean-droplet/
+              breadcrumbTitle: DigitalOcean
             - title: Deploying to S3 & CloudFront
               link: /docs/deploying-to-s3-cloudfront/
               breadcrumbTitle: S3 & CloudFront
@@ -102,12 +113,12 @@
             - title: Deploying to KintoHub
               link: /docs/deploying-to-kintohub/
               breadcrumbTitle: KintoHub Hosting
-            - title: Deploying to Gatsby Cloud
-              link: /docs/deploying-to-gatsby-cloud/
-              breadcrumbTitle: Gatsby Cloud
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
+            - title: Deploying to 21YunBox
+              link: /docs/deploying-to-21yunbox/
+              breadcrumbTitle: 21YunBox Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -126,9 +137,9 @@
             - title: Using Babel Plugin Macros
               link: /docs/babel-plugin-macros/
               breadcrumbTitle: Babel Plugin Macros
-            - title: Adding a Custom Webpack Config
+            - title: Adding a Custom webpack Config
               link: /docs/add-custom-webpack-config/
-              breadcrumbTitle: Webpack Config
+              breadcrumbTitle: webpack Config
             - title: Customizing html.js
               link: /docs/custom-html/
               breadcrumbTitle: html.js
@@ -151,12 +162,12 @@
             - title: Using the Static Folder
               link: /docs/static-folder/
               breadcrumbTitle: Static Folder
+            - title: Working with Images in Gatsby
+              link: /docs/working-with-images/
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
             - title: Using Cloudinary Image service
               link: /docs/using-cloudinary-image-service/
-            - title: Working with Images in Gatsby
-              link: /docs/working-with-images/
               breadcrumbTitle: Images in Gatsby
             - title: Preoptimizing Your Images
               link: /docs/preoptimizing-images/
@@ -341,12 +352,14 @@
                   link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
-                - title: Using TailwindCSS
+                - title: Using Tailwind CSS
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
                 - title: Using Theme UI
                   link: /docs/theme-ui/
+                - title: Other CSS Frameworks
+                  link: /docs/other-css-frameworks/
         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           breadcrumbTitle: MDX
@@ -364,6 +377,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Migrating Remark to MDX
+              link: /docs/mdx/migrate-remark-to-mdx/
             - title: Markdown Syntax
               link: /docs/mdx/markdown-syntax/
         - title: Adding Testing
@@ -408,6 +423,7 @@
               link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
+          breadcrumbTitle: App and Website Functionality
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -469,6 +485,8 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
+                - title: "Scroll Restoration"
+                  link: /docs/scroll-restoration/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation
@@ -495,6 +513,8 @@
                   link: /docs/sourcing-from-etsy/
                 - title: Sourcing from WooCommerce
                   link: /docs/sourcing-from-woocommerce/
+            - title: Adding a Redux Store
+              link: /docs/adding-redux-store/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -525,8 +545,8 @@
               breadcrumbTitle: React Profiler
             - title: Scaling Issues
               link: /docs/scaling-issues/
-            - title: Experimental Page Build Optimizations for Incremental Data Changes
-              link: /docs/page-build-optimizations-for-incremental-data-changes/
+            - title: Conditional Page Builds
+              link: /docs/conditional-page-builds/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
@@ -663,7 +683,7 @@
               link: /docs/static-vs-normal-queries/
         - title: Write out Pages
           link: /docs/write-pages/
-        - title: Webpack & SSR
+        - title: webpack & SSR
           link: /docs/webpack-and-ssr/
           items:
             - title: Building the JavaScript App
@@ -781,10 +801,12 @@
           link: /docs/glossary/headless-wordpress/
         - title: Hydration
           link: /docs/glossary/hydration/
-        - title: JAMStack
-          link: /docs/glossary/jamstack/
         - title: Infrastructure as Code
           link: /docs/glossary/infrastructure-as-code/
+        - title: JAMStack
+          link: /docs/glossary/jamstack/
+        - title: JSX
+          link: /docs/glossary/jsx/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX

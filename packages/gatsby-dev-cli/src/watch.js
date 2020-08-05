@@ -8,7 +8,10 @@ const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
-const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
+const {
+  setDefaultSpawnStdio,
+  promisifiedSpawn,
+} = require(`./utils/promisified-spawn`)
 const { traversePackagesDeps } = require(`./utils/traverse-package-deps`)
 
 let numCopied = 0
@@ -29,6 +32,7 @@ async function watch(
   packages,
   { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
+  setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
   // as current logic of copying files will not work correctly.
   const yarnWorkspaceRoot = findWorkspaceRoot()
@@ -62,7 +66,11 @@ async function watch(
       // This fixes the issue where after running gatsby-dev, running `yarn gatsby develop`
       // fails with a permission issue.
       // @fixes https://github.com/gatsbyjs/gatsby/issues/18809
-      if (/bin\/gatsby.js$/.test(newPath)) {
+      // Binary files we target:
+      // - gatsby/bin/gatsby.js
+      //  -gatsby/cli.js
+      //  -gatsby-cli/cli.js
+      if (/(bin\/gatsby.js|gatsby(-cli)?\/cli.js)$/.test(newPath)) {
         fs.chmodSync(newPath, `0755`)
       }
 

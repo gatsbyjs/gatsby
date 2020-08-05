@@ -33,8 +33,6 @@
           link: /contributing/translation/new-translations/
         - title: Contributing to a Translation
           link: /contributing/translation/translators/
-        - title: Translating UI Messages
-          link: /contributing/translation/ui-messages/
         - title: Keeping Translations Up-to-date
           link: /contributing/translation/sync-guide/
         - title: Translation Maintainer Guide
@@ -87,11 +85,11 @@
           link: /contributing/blog-contributions/
         - title: Code Contributions
           link: /contributing/code-contributions/
-        - title: Website Contributions
-          link: /contributing/website-contributions/
           items:
             - title: Setting Up Your Local Dev Environment
               link: /contributing/setting-up-your-local-dev-environment/
+        - title: Website Contributions
+          link: /contributing/website-contributions/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:

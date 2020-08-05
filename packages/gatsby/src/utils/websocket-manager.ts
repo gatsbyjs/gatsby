@@ -1,23 +1,24 @@
+/* eslint-disable no-invalid-this */
 import path from "path"
 import { store } from "../redux"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
 import fs from "fs"
-import pageDataUtil from "../utils/page-data"
+import { readPageData, IPageDataWithQueryResult } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
 import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
 import socketIO from "socket.io"
 
-interface IPageQueryResult {
+export interface IPageQueryResult {
   id: string
-  result: any // TODO: Improve this once we understand what the type is
+  result?: IPageDataWithQueryResult
 }
 
-interface IStaticQueryResult {
+export interface IStaticQueryResult {
   id: string
-  result: any // TODO: Improve this once we understand what the type is
+  result: unknown // TODO: Improve this once we understand what the type is
 }
 
 type PageResultsMap = Map<string, IPageQueryResult>
@@ -34,10 +35,13 @@ const getCachedPageData = async (
   const publicDir = path.join(program.directory, `public`)
   if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
     try {
-      const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+      const pageData: IPageDataWithQueryResult = await readPageData(
+        publicDir,
+        pagePath
+      )
 
       return {
-        result: pageData.result,
+        result: pageData,
         id: pagePath,
       }
     } catch (err) {
@@ -103,7 +107,7 @@ const getCachedStaticQueryResults = (
 
 const getRoomNameFromPath = (path: string): string => `path-${path}`
 
-class WebsocketManager {
+export class WebsocketManager {
   activePaths: Set<string> = new Set()
   connectedClients = 0
   errors: Map<string, string> = new Map()

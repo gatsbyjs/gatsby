@@ -134,7 +134,7 @@ Remember, keep it **secret**, keep it **safe** 🧙🏼‍! Do not store API key
 
 Now go make awesome Gatsby sites that are completely secure! For more information on web security checkout these resources:
 
-- **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
+- **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is an excellent resource for security.
 
 - **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
 

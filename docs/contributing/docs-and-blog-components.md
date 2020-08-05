@@ -17,7 +17,7 @@ A variety of components have been written to help with formatting code and conte
 
 ### Guide List
 
-The `<GuideList />` is a component that renders an h2 heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
+The `<GuideList />` is a component that renders an `h2` heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
 
 #### Usage
 
@@ -143,7 +143,7 @@ title: Deploying to Storage Provider
 
 <!-- highlight-start -->
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
+  Connect your Gatsby site to Storage Provider for automatic deployments.
 </CloudCallout>
 <!-- highlight-end -->
 ```
@@ -153,8 +153,8 @@ title: Deploying to Storage Provider
 Rendered, the component looks like this:
 
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
-</CloudCallout>{" "}
+  Connect your Gatsby site to Storage Provider for automatic deployments.
+</CloudCallout>
 
 ### Component Model
 

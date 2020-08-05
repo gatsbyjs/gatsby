@@ -8,7 +8,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 beforeEach(() => {
-  reporter.panic.mockClear()
+  ;(reporter as any).panic.mockClear()
 })
 
 describe(`setSiteConfig`, () => {

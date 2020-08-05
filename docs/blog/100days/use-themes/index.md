@@ -18,7 +18,7 @@ For the final two challenges you will explore using and creating Gatsby Themes!
 
 So far you’ve created a Gatsby site from scratch, and added features for usage on a single site. Gatsby Themes opens up the possibility to leverage good ideas from the Gatsby ecosystem, and share your own configurations and designs. You can think of Gatsby Themes as handy website kits that can be shared, customized, and stacked together.
 
-Before you dive into creating a theme, our resources below will point you to the philosophy behind Gatsby Themes and common use cases. Then we’ll show you how to use a theme in your poject. And next week you'll explore creating your own theme!
+Before you dive into creating a theme, our resources below will point you to the philosophy behind Gatsby Themes and common use cases. Then we’ll show you how to use a theme in your project. And next week you'll explore creating your own theme!
 
 ### Gatsby Theme Usage Resources
 

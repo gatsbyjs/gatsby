@@ -27,8 +27,8 @@ wrangler init --site
 You'll notice your project structure should now look something like:
 
 ```diff
-+ ├── workers-site
-+ └── wrangler.toml
++ ├── wrangler.toml
++ └── workers-site
 + │   ├── index.js
 + │   ├── package-lock.json
 + │   └── package.json

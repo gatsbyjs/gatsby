@@ -1,6 +1,6 @@
 const { createRequireFromPath } = require(`gatsby-core-utils`)
 const path = require(`path`)
-const mergeGatsbyConfig = require(`../../utils/merge-gatsby-config`)
+import { mergeGatsbyConfig } from "../../utils/merge-gatsby-config"
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)

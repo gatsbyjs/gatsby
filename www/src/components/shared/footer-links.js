@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "../localized-link"
-import { t, Trans } from "@lingui/macro"
 
 const links = [
-  { to: `/accessibility-statement/`, text: t`Accessibility Statement` },
-  { to: `/contributing/code-of-conduct/`, text: t`Code of Conduct` },
-  { to: `/guidelines/logo/`, text: t`Logo & Assets` },
+  { to: `/accessibility-statement/`, text: `Accessibility Statement` },
+  { to: `/contributing/code-of-conduct/`, text: `Code of Conduct` },
+  { to: `/guidelines/logo/`, text: `Logo & Assets` },
 ]
 
-const FooterLinks = props => (
+const FooterLinks = () => (
   <footer>
     <ul
       sx={{
@@ -49,9 +48,7 @@ const FooterLinks = props => (
     >
       {links.map(({ to, text }) => (
         <li key={to}>
-          <Link to={to}>
-            <Trans id={text} />
-          </Link>
+          <Link to={to}>{text}</Link>
         </li>
       ))}
       <li>

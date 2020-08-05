@@ -1,5 +1,5 @@
 ---
-title: "Adding a Custom Webpack Config"
+title: "Adding a Custom webpack Config"
 ---
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby plugin already built that handles your use case in the [plugins section](/docs/plugins/). If there's not yet one and your use case is a general one, it is highly encouraged you to contribute back your plugin to the Gatsby Plugin Library so it's available to others (including your future self)._
@@ -73,7 +73,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 }
 ```
 
-You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
+You can always find more information on _resolve_ and other options in the official [webpack docs](https://webpack.js.org/concepts/).
 
 ### Importing non-webpack tools using `yarn`
 

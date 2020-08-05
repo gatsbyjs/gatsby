@@ -45,7 +45,7 @@ Using [MDX](/docs/mdx/), we’re able to write rich documentation by including R
 
 ![Rendering components in MDX](./images/mdx-components.png)
 
-`gatsby-plugin-mdx` also allows us to replace Markdown elements with custom React components using the [`components` prop on the `MDXProvider` component](https://gatsby-mdx.netlify.com/api-reference/mdx-provider). We use this feature to enhance our code blocks with copy buttons, filenames, and multiple language options.
+`gatsby-plugin-mdx` also allows us to replace Markdown elements with custom React components using the [`components` prop on the `MDXProvider` component](https://gatsby-mdx.netlify.app/api-reference/mdx-provider). We use this feature to enhance our code blocks with copy buttons, filenames, and multiple language options.
 
 ![Enhanced code blocks](./images/code-blocks.gif)
 

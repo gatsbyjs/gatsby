@@ -68,7 +68,7 @@ There may be other locations where you will need to update the path resolution l
 
 ## Sourcing pages
 
-Gatsby by default sources pages relative from `src/pages`, like a regular Gatsby site does. However, if you would like to source pages from a different directory you'll have to setup `gatsby-plugin-page-creator`.
+Gatsby by default sources pages relative from `src/pages`, like a regular Gatsby site does. However, if you would like to source pages from a different directory you'll have to setup [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
 
 ```shell
 npm install --save gatsby-plugin-page-creator

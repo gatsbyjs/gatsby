@@ -1,18 +1,18 @@
 {
   "name": "gatsby-plugin-canonical-urls",
   "description": "Add canonical links to HTML pages Gatsby generates.",
-  "version": "2.3.1",
+  "version": "2.3.10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.9.6"
+    "@babel/runtime": "^7.10.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "babel-preset-gatsby-package": "^0.4.1",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "babel-preset-gatsby-package": "^0.5.2",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls#readme",

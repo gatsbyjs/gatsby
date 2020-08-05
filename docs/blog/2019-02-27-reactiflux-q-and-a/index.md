@@ -13,7 +13,7 @@ Date of interview: December 13 2018
 
 **Q:** How do you see the future of Browser-apps/PWA in comparison to "old2 executables" on windows? — spYro
 
-**A:** I think the future of browser apps is bright :smiley: more and more software (particularly business software) is delivered over the web (or Electron for desktop apps). Web developer tooling and browsers get an incredible amounts of investment and most people find building with html/css/js much nicer than the equivalent native UI toolkits. So I expect the strong trend to deliver applications over the internet or through Electron-like solutions to continue.
+**A:** I think the future of browser apps is bright :smiley: more and more software (particularly business software) is delivered over the web (or Electron for desktop apps). Web developer tooling and browsers get an incredible amounts of investment and most people find building with HTML/CSS/JS much nicer than the equivalent native UI toolkits. So I expect the strong trend to deliver applications over the internet or through Electron-like solutions to continue.
 
 — kylemathews
 
@@ -35,7 +35,7 @@ Date of interview: December 13 2018
 
 ---
 
-**Q:** When would I choose gatsby over next js — f_youngblood
+**Q:** When would I choose gatsby over NextJS — f_youngblood
 
 **A:** Gatsby and Next are similar in many respects, but Gatsby is hyper-focused on baking performance in by default and in the ecosystem with approaches like the offline-plugin, etc. Personally I'd default to starting with gatsby and move to next only if I couldn't find a way to prerender my SEO critical applications.
 
@@ -117,7 +117,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** As a jaded javascripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
+**Q:** As a jaded JavaScripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
 
 **A:** From a technical perspective, Gatsby has a powerful approach to managing data and a performance sensitive mindset. This means that you get to spend less time "making sure the site is performant" and more time building your product.
 
@@ -139,7 +139,7 @@ While it's inevitable that bugs come with any platform you choose to build on, G
 
 **A:** Yeah — this is a top priority — we've been a bit overwhelmed post v2 launch handling issues/PRs but our we've thought a lot about this problem and next steps are a) [make it possible to export your schema and directly control it](https://github.com/gatsbyjs/gatsby/issues/4261).
 
-We're also very excited that more and more services are offering native GraphQL APIs which gets us out of having to dynamically create the schema. We added [support for stitching in graphql schemas](/blog/2018-09-25-announcing-graphql-stitching-support/) earlier this year and have a lot more plans to make schema stitching more powerful e.g. [add support for transforming data from 3rd party schemas](https://github.com/gatsbyjs/rfcs/pull/11).
+We're also very excited that more and more services are offering native GraphQL APIs which gets us out of having to dynamically create the schema. We added [support for stitching in GraphQL schemas](/blog/2018-09-25-announcing-graphql-stitching-support/) earlier this year and have a lot more plans to make schema stitching more powerful e.g. [add support for transforming data from 3rd party schemas](https://github.com/gatsbyjs/rfcs/pull/11).
 
 — kylemathews
 
@@ -189,7 +189,7 @@ A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by cr
 
 **Q:** I have found developing plugins that create nodes or interact with the gatsby-api to be a big hassle in comparison to how pages and other content is developed. Is there any plans on making something like "hot-reload" nodes or generation during development without having to stop and start gatsby? — Everspace
 
-**A:** Source and transformer plugins can "hot reload" data during development. Support for this is baked into Gatsby's data layer. It's a bit complicated to explain in a Q&A but basically a source plugin can watch for data to change and re-emit nodes. Gatsby will then notice this and automatically re-run graphql queries for pages affected by the changing data. gatsby-source-filesystem is the most prominent example of this. It watches for file changes and re-emits File nodes as the data changes. [This is what drives Ludicrous Mode™️](https://twitter.com/gatsbyjs/status/974507205121617920?lang=en) You can see the code for this [here](https://github.com/gatsbyjs/gatsby/blob/d4d33467bcff60ad3c740244d7585227d7e117ee/packages/gatsby-source-filesystem/src/gatsby-node.js#L129-L136).
+**A:** Source and transformer plugins can "hot reload" data during development. Support for this is baked into Gatsby's data layer. It's a bit complicated to explain in a Q&A but basically a source plugin can watch for data to change and re-emit nodes. Gatsby will then notice this and automatically re-run GraphQL queries for pages affected by the changing data. gatsby-source-filesystem is the most prominent example of this. It watches for file changes and re-emits File nodes as the data changes. [This is what drives Ludicrous Mode™️](https://twitter.com/gatsbyjs/status/974507205121617920?lang=en) You can see the code for this [here](https://github.com/gatsbyjs/gatsby/blob/d4d33467bcff60ad3c740244d7585227d7e117ee/packages/gatsby-source-filesystem/src/gatsby-node.js#L129-L136).
 
 — kylemathews
 

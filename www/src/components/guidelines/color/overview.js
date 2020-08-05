@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import range from "range"
-
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SectionHeading, SectionSubheading } from "../typography"
 
 import Swatch from "./swatch"
@@ -10,7 +10,7 @@ import Swatch from "./swatch"
 import { getA11yLabel, getTextColor } from "../../../utils/guidelines/color"
 import { copyColumnGutter, CopyColumn } from "../containers"
 import palette from "../../../utils/guidelines/extend-palette-info"
-import { Box, Flex } from "../system"
+import { Box, Flex } from "theme-ui"
 
 // Color swatches
 const swatchWidth = 40
@@ -65,24 +65,32 @@ const Palette = ({ color, handler }) => {
   return (
     <Box
       key={node}
-      display={{ xxs: `block`, lg: `flex` }}
-      mb={{ xxs: 4, md: 0 }}
-      css={{ alignItems: `center` }}
+      sx={{
+        display: `flex`,
+        flexDirection: `column`,
+        mb: [4, null, null, 0],
+        [mediaQueries.lg]: {
+          flexDirection: `row`,
+          alignItems: `center`,
+        },
+      }}
     >
       <Box
-        textAlign={{ lg: `right` }}
-        width={{ lg: `8rem` }}
-        mr={{ lg: copyColumnGutter }}
+        sx={{
+          [mediaQueries.lg]: {
+            textAlign: `right`,
+            width: `8rem`,
+            mr: copyColumnGutter,
+          },
+        }}
       >
         <Box
           as="button"
-          bg="none"
-          p={0}
-          onClick={e => {
-            handler(e, node)
-          }}
+          onClick={e => handler(e, node)}
           sx={{
+            p: 0,
             background: `transparent`,
+            bg: `none`,
             border: 0,
             cursor: `pointer`,
             WebkitAppearance: `none`,
@@ -100,20 +108,32 @@ const Palette = ({ color, handler }) => {
             mb={0}
             fontSize={4}
             color="link.color"
-            sx={{
-              borderBottom: t => `1px solid ${t.colors.link.border}`,
-            }}
+            sx={{ borderColor: `link.border`, borderBottom: 1 }}
             title={`Open “${name}” color modal`}
           >
             {name}
           </SectionSubheading>
         </Box>
       </Box>
-      <Flex flexWrap="wrap">
-        <Flex flexDirection="row" alignItems="stretch">
+      <Flex
+        sx={{
+          flexWrap: `wrap`,
+        }}
+      >
+        <Flex
+          sx={{
+            flexDirection: `row`,
+            alignItems: `stretch`,
+          }}
+        >
           {range.range(0, 5).map(i => colores(node)[i])}
         </Flex>
-        <Flex flexDirection="row" alignItems="stretch">
+        <Flex
+          sx={{
+            flexDirection: `row`,
+            alignItems: `stretch`,
+          }}
+        >
           {range.range(5, 10).map(i => colores(node)[i])}
         </Flex>
       </Flex>
@@ -126,8 +146,13 @@ const Overview = ({ handler }) => (
     <Flex>
       <CopyColumn />
       <Box
-        alignItems={{ lg: `flex-end` }}
-        display={{ xxs: `none`, lg: `flex` }}
+        sx={{
+          display: `none`,
+          [mediaQueries.lg]: {
+            display: `flex`,
+            alignItems: `flex-end`,
+          },
+        }}
       >
         <div sx={colorNumber}>90</div>
         <div sx={colorNumber}>80</div>
@@ -141,15 +166,43 @@ const Overview = ({ handler }) => (
         <div sx={colorNumber}>5</div>
       </Box>
     </Flex>
-    <Box display={{ lg: `flex` }}>
-      <SectionHeading width={{ lg: `12rem` }}>Primary</SectionHeading>
+    <Box
+      sx={{
+        [mediaQueries.lg]: {
+          display: `flex`,
+        },
+      }}
+    >
+      <SectionHeading
+        sx={{
+          [mediaQueries.lg]: {
+            width: `12rem`,
+          },
+        }}
+      >
+        Primary
+      </SectionHeading>
       <Box>
         <Palette color="purple" handler={handler} />
         <Palette color="orange" handler={handler} />
       </Box>
     </Box>
-    <Box display={{ lg: `flex` }}>
-      <SectionHeading width={{ lg: `12rem` }}>Secondary</SectionHeading>
+    <Box
+      sx={{
+        [mediaQueries.lg]: {
+          display: `flex`,
+        },
+      }}
+    >
+      <SectionHeading
+        sx={{
+          [mediaQueries.lg]: {
+            width: `12rem`,
+          },
+        }}
+      >
+        Secondary
+      </SectionHeading>
       <Box>
         <Palette color="magenta" handler={handler} />
         <Palette color="blue" handler={handler} />
@@ -159,8 +212,22 @@ const Overview = ({ handler }) => (
         <Palette color="green" handler={handler} />
       </Box>
     </Box>
-    <Box display={{ lg: `flex` }}>
-      <SectionHeading width={{ lg: `12rem` }}>Neutral</SectionHeading>
+    <Box
+      sx={{
+        [mediaQueries.lg]: {
+          display: `flex`,
+        },
+      }}
+    >
+      <SectionHeading
+        sx={{
+          [mediaQueries.lg]: {
+            width: `12rem`,
+          },
+        }}
+      >
+        Neutral
+      </SectionHeading>
       <Box>
         <Palette color="grey" handler={handler} />
         {/* <Palette color="blackFade" handler={handler} />

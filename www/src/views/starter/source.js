@@ -10,7 +10,8 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
     sx={{
       display: `flex`,
-      borderTop: t => `1px solid ${t.colors.ui.border}`,
+      borderTop: 1,
+      borderColor: `ui.border`,
       fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
@@ -72,12 +73,13 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
-            marginRight: t => t.space[4],
+            mr: 4,
           },
         }}
       >
         <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
-      </a>{" "}
+      </a>
+      {` `}
       &nbsp;
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}

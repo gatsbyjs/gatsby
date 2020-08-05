@@ -28,7 +28,7 @@ https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow
 ### Like Josh’s requirements, my list includes:
 
 - **Speed** - this includes development, website performance, and deployment
-- **Development Experience** - I want to use React and Webpack
+- **Development Experience** - I want to use React and webpack
 - **Maintainability** - ease with which anyone can create, update and delete posts
 - **Scalability** - need to make sure that performance is not hindered by a growing needs
 - **Lean** - simplify the tools and services use to a bare minimum
@@ -94,7 +94,7 @@ https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic
 
 _**Yes, there’s more.**_
 
-Because Prose was built for Jekyll, it recognizes any headmatter you add to your .md files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
+Because Prose was built for Jekyll, it recognizes any headmatter you add to your `.md` files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
 
 I should also mention that Prose is an open source project that is available for download if you wish to self-host. Check out the [documentation on GitHub.](https://github.com/prose/prose)
 
@@ -111,7 +111,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 
 [x] Speed - this includes development, website performance, and deployment
 
-[x] Development Experience - I want to use React and Webpack
+[x] Development Experience - I want to use React and webpack
 
 [x] Maintainability - ease with which anyone can create, update and delete posts
 
@@ -122,7 +122,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 [x] NO WordPress - similarly, I don’t want to deal with updates, themes, hacks...etc
 ```
 
-When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
+When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no-brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
 
 With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
@@ -145,16 +145,16 @@ With all of that said, this process has a few caveats related to working within 
 1. If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
 2. Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
 
-#### Default
+### Default
 
 ![Default Prose image path](before-post-title.png)
 
-#### After (this will work)
+### After (this will work)
 
 ![After image path change](after-post-title.png)
 
 3. You must commit a file by hitting the save icon or else the file is not saved. Posts cannot be saved as drafts in Prose. So, you will have to build the functionality within your headmatter and query posts based upon a draft/published state (if you need it).
-4. Whoever will be posting will need to manually add headmatter to each .md file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
+4. Whoever will be posting will need to manually add headmatter to each `.md` file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
 
 I hope you try playing around with this workflow yourself with a Gatsby starter and see if this works for you. Gatsby provides incredible tools that “just work” without sacrificing an exciting development environment. If you pair it with Netlify and Prose, you will cut overhead and manage content directly from a GitHub repository. Let this approach bring some order to the chaos.
 

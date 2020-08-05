@@ -11,27 +11,37 @@ const fs = require(`fs-extra`)
 const { getCache } = require(`./get-cache`)
 import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
-const {
+import {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
   buildEnumType,
   buildScalarType,
-} = require(`../schema/types/type-builders`)
+} from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
+const {
+  getNodes,
+  getNode,
+  getNodesByType,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+} = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
+const { loadNodeContent } = require(`../db/nodes`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
 const boundPluginActionCreators = {}
 const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
-  const { traceId } = actionOptions
-  if (boundPluginActionCreators[plugin.name + api + traceId]) {
-    return boundPluginActionCreators[plugin.name + api + traceId]
+  const { traceId, deferNodeMutation } = actionOptions
+  const defer = deferNodeMutation ? `defer-node-mutation` : ``
+  const actionKey = plugin.name + api + traceId + defer
+  if (boundPluginActionCreators[actionKey]) {
+    return boundPluginActionCreators[actionKey]
   } else {
     const keys = Object.keys(boundActionCreators)
     const doubleBoundActionCreators = {}
@@ -51,9 +61,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
         }
       }
     }
-    boundPluginActionCreators[
-      plugin.name + api + traceId
-    ] = doubleBoundActionCreators
+    boundPluginActionCreators[actionKey] = doubleBoundActionCreators
     return doubleBoundActionCreators
   }
 }
@@ -72,13 +80,55 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
+const deferredAction = type => (...args) => {
+  // Regular createNode returns a Promise, but when deferred we need
+  // to wrap it in another which we resolve when it's actually called
+  if (type === `createNode`) {
+    return new Promise(resolve => {
+      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+        type,
+        payload: args,
+        resolve,
+      })
+    })
+  }
+  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+    type,
+    payload: args,
+  })
+}
+
+const NODE_MUTATION_ACTIONS = [
+  `createNode`,
+  `deleteNode`,
+  `deleteNodes`,
+  `touchNode`,
+  `createParentChildLink`,
+  `createNodeField`,
+]
+
+const deferActions = actions => {
+  const deferred = { ...actions }
+  NODE_MUTATION_ACTIONS.forEach(action => {
+    deferred[action] = deferredAction(action)
+  })
+  return deferred
+}
+
 const getLocalReporter = (activity, reporter) =>
   activity
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
     : reporter
 
-const runAPI = (plugin, api, args, activity) => {
-  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+const pluginNodeCache = new Map()
+
+const runAPI = async (plugin, api, args, activity) => {
+  let gatsbyNode = pluginNodeCache.get(plugin.name)
+  if (!gatsbyNode) {
+    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+    pluginNodeCache.set(plugin.name, gatsbyNode)
+  }
+
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
@@ -88,14 +138,6 @@ const runAPI = (plugin, api, args, activity) => {
     pluginSpan.setTag(`plugin`, plugin.name)
 
     const {
-      loadNodeContent,
-      getNodes,
-      getNode,
-      getNodesByType,
-      hasNodeChanged,
-      getNodeAndSavePathDependency,
-    } = require(`../db/nodes`)
-    const {
       publicActions,
       restrictedActionsAvailableInAPI,
     } = require(`../redux/actions`)
@@ -103,10 +145,15 @@ const runAPI = (plugin, api, args, activity) => {
       ...publicActions,
       ...(restrictedActionsAvailableInAPI[api] || {}),
     }
-    const boundActionCreators = bindActionCreators(
+    let boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch
     )
+
+    if (args.deferNodeMutation) {
+      boundActionCreators = deferActions(boundActionCreators)
+    }
+
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,
@@ -172,6 +219,58 @@ const runAPI = (plugin, api, args, activity) => {
     }
     const localReporter = getLocalReporter(activity, reporter)
 
+    const runningActivities = new Set()
+
+    const localReporterThatCleansUpAfterMisbehavingPlugins = {
+      ...localReporter,
+      activityTimer: (...args) => {
+        const activity = reporter.activityTimer.apply(reporter, args)
+
+        const originalStart = activity.start
+        const originalEnd = activity.end
+
+        activity.start = () => {
+          originalStart.apply(activity)
+          runningActivities.add(activity)
+        }
+
+        activity.end = () => {
+          originalEnd.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        return activity
+      },
+      createProgress: (...args) => {
+        const activity = reporter.createProgress.apply(reporter, args)
+
+        const originalStart = activity.start
+        const originalEnd = activity.end
+        const originalDone = activity.done
+
+        activity.start = () => {
+          originalStart.apply(activity)
+          runningActivities.add(activity)
+        }
+
+        activity.end = () => {
+          originalEnd.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        activity.done = () => {
+          originalDone.apply(activity)
+          runningActivities.delete(activity)
+        }
+
+        return activity
+      },
+    }
+
+    const endInProgressActivitiesCreatedByThisRun = () => {
+      runningActivities.forEach(activity => activity.end())
+    }
+
     const apiCallArgs = [
       {
         ...args,
@@ -187,7 +286,7 @@ const runAPI = (plugin, api, args, activity) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter: localReporter,
+        reporter: localReporterThatCleansUpAfterMisbehavingPlugins,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -211,8 +310,9 @@ const runAPI = (plugin, api, args, activity) => {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
-          callback(err, val)
           apiFinished = true
+          endInProgressActivitiesCreatedByThisRun()
+          callback(err, val)
         }
 
         try {
@@ -226,12 +326,13 @@ const runAPI = (plugin, api, args, activity) => {
         }
       })
     } else {
-      const result = gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
+      try {
+        return await gatsbyNode[api](...apiCallArgs)
+      } finally {
+        pluginSpan.finish()
         apiFinished = true
-        return res
-      })
+        endInProgressActivitiesCreatedByThisRun()
+      }
     }
   }
 

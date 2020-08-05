@@ -21,7 +21,7 @@ For more information on how to customize the Babel configuration of your Gatsby 
 
 Install `babel-preset-gatsby` and add a `.babelrc` file with the following content to the root of your project:
 
-```bash
+```shell
 npm install --dev babel-preset-gatsby
 ```
 

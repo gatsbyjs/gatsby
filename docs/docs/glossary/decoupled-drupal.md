@@ -13,7 +13,7 @@ In a tightly coupled Drupal architecture, themes control your site's appearance.
 
 When a visitor requests a URL, Drupal retrieves the requested content from the database and merges it with the appropriate template to create an HTML response. The downside of such an architecture is that your site's content is only available as HTML. HTML limits where and how your content can be used.
 
-In a decoupled architecture, Drupal's only responsibility is content. Rather than returning HTML documents, Drupal returns JSON from its [REST](https://www.drupal.org/docs/8/api/restful-web-services-api/restful-web-services-api-overview) or [JSON:API](https://www.drupal.org/docs/8/modules/jsonapi/api-overview) interfaces. Or you can use [GraphQL](/docs/glossary/graphql) by installing the [GraphQL module](https://www.drupal.org/docs/8/modules/graphql).
+In a decoupled architecture, Drupal's only responsibility is content. Rather than returning HTML documents, Drupal returns JSON from its [REST](https://www.drupal.org/docs/8/api/restful-web-services-api/restful-web-services-api-overview) or [JSON:API](https://www.drupal.org/docs/8/modules/jsonapi/api-overview) interfaces. Or you can use [GraphQL](/docs/glossary/graphql/) by installing the [GraphQL module](https://www.drupal.org/docs/8/modules/graphql).
 
 A decoupled Drupal architecture offers two key advantages over a tightly coupled one.
 
