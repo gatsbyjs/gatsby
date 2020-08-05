@@ -5,7 +5,7 @@ import { keyframes } from "@emotion/core"
 import MDX from "gatsby-recipes/src/components/mdx"
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
-import { createUrqlClient } from "../urql-client"
+import { createUrqlClient } from "../../urql-client"
 import lodash from "lodash"
 import React from "react"
 import { useState } from "react"
@@ -161,11 +161,6 @@ const components = {
 const log = (label, textOrObj) => {
   console.log(label, textOrObj)
 }
-
-log(
-  `started client`,
-  `======================================= ${new Date().toJSON()}`
-)
 
 const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
