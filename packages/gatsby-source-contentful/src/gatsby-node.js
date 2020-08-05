@@ -146,7 +146,15 @@ exports.sourceNodes = async (
 
   const gqlTypes = contentTypeItems.map(contentTypeItem =>
     schema.buildObjectType({
-      name: _.upperFirst(_.camelCase(`Contentful ${contentTypeItem.name}`)),
+      name: _.upperFirst(
+        _.camelCase(
+          `Contentful ${
+            pluginConfig.get(`useNameForId`)
+              ? contentTypeItem.name
+              : contentTypeItem.sys.id
+          }`
+        )
+      ),
       fields: {
         contentful_id: { type: `String!` },
         id: { type: `ID!` },
@@ -359,7 +367,11 @@ exports.sourceNodes = async (
 
     if (entryList[i].length) {
       reporter.info(
-        `Creating ${entryList[i].length} Contentful ${contentTypeItem.name} nodes`
+        `Creating ${entryList[i].length} Contentful ${
+          pluginConfig.get(`useNameForId`)
+            ? contentTypeItem.name
+            : contentTypeItem.sys.id
+        } nodes`
       )
     }
 
