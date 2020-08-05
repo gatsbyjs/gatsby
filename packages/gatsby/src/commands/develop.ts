@@ -146,7 +146,7 @@ class ControllableScript {
   }
   onMessage(callback: (msg: any) => void): void {
     if (!this.process) {
-      throw new Error(`Trying to attach message handler before process starter`)
+      throw new Error(`Trying to attach message handler before process started`)
     }
     this.process.on(`message`, callback)
   }
@@ -154,9 +154,17 @@ class ControllableScript {
     callback: (code: number | null, signal: NodeJS.Signals | null) => void
   ): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process starter`)
+      throw new Error(`Trying to attach exit handler before process started`)
     }
     this.process.on(`exit`, callback)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send(msg: any): void {
+    if (!this.process) {
+      throw new Error(`Trying to send a message before process started`)
+    }
+
+    this.process.send(msg)
   }
 }
 
@@ -380,6 +388,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       })
     })
   }
+
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
+  })
 
   process.on(`beforeExit`, async () => {
     await Promise.all([
