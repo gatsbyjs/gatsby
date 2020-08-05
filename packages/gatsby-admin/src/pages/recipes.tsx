@@ -13,6 +13,7 @@ function Recipes(): JSX.Element {
         <GUI />
         <ul sx={{ pl: 0, listStyle: `none` }}>
           {recipesList.map(recipe => {
+            // we can remove this when we're consistent with our naming
             const recipeName = recipe.value.includes(`.mdx`)
               ? recipe.value.split(`.`)[0]
               : recipe.value
@@ -29,7 +30,9 @@ function Recipes(): JSX.Element {
                 >
                   <Heading as="h3"> {recipe.label}</Heading>
                   <Text sx={{ color: `text.secondary` }}>{recipe.value}</Text>
-                  <Link to={`/recipe?name=` + recipeName}>Recipe</Link>
+                  <Link to={`/recipe`} state={{ name: recipeName }}>
+                    Recipe
+                  </Link>
                 </Flex>
               </li>
             )
