@@ -70,8 +70,6 @@ const buildResponsiveSizes = async (
 
   const webpSrcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
 
-  console.log({ srcSet, webpSrcSet })
-
   // TODO think about a better structure to save srcset types instead of adding them to the root
   return {
     base64: base64Img,
