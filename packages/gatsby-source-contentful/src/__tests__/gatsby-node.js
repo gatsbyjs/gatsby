@@ -7,7 +7,6 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-const _ = require(`lodash`)
 const gatsbyNode = require(`../gatsby-node`)
 const fetch = require(`../fetch`)
 const normalize = require(`../normalize`)
@@ -265,9 +264,7 @@ describe(`gatsby-node`, () => {
   it(`should create nodes from initial payload`, async () => {
     cache.get.mockClear()
     cache.set.mockClear()
-    fetch.mockImplementationOnce(() =>
-      _.cloneDeep(startersBlogFixture.initialSync)
-    )
+    fetch.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
     await gatsbyNode.sourceNodes({
@@ -282,14 +279,14 @@ describe(`gatsby-node`, () => {
       schema,
     })
 
-    testIfContentTypesExists(startersBlogFixture.initialSync.contentTypeItems)
+    testIfContentTypesExists(startersBlogFixture.initialSync().contentTypeItems)
     testIfEntriesExists(
-      startersBlogFixture.initialSync.currentSyncData.entries,
-      startersBlogFixture.initialSync.contentTypeItems,
+      startersBlogFixture.initialSync().currentSyncData.entries,
+      startersBlogFixture.initialSync().contentTypeItems,
       locales
     )
     testIfAssetsExistsAndMatch(
-      startersBlogFixture.initialSync.currentSyncData.assets,
+      startersBlogFixture.initialSync().currentSyncData.assets,
       locales
     )
 
@@ -301,11 +298,11 @@ describe(`gatsby-node`, () => {
     // Stores sync token and raw/unparsed data to the cache
     expect(cache.set).toHaveBeenCalledWith(
       `syncToken`,
-      startersBlogFixture.initialSync.currentSyncData.nextSyncToken
+      startersBlogFixture.initialSync().currentSyncData.nextSyncToken
     )
     expect(cache.set).toHaveBeenCalledWith(
       `previousSyncData`,
-      startersBlogFixture.initialSync.currentSyncData
+      startersBlogFixture.initialSync().currentSyncData
     )
     expect(cache.set.mock.calls.length).toBe(2)
   })
@@ -314,11 +311,11 @@ describe(`gatsby-node`, () => {
     const locales = [`en-US`, `nl`]
 
     fetch
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.initialSync))
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.createBlogPost))
+      .mockImplementationOnce(startersBlogFixture.initialSync)
+      .mockImplementationOnce(startersBlogFixture.createBlogPost)
 
-    const createdBlogEntry =
-      startersBlogFixture.createBlogPost.currentSyncData.entries[0]
+    const createdBlogEntry = startersBlogFixture.createBlogPost()
+      .currentSyncData.entries[0]
     const createdBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: createdBlogEntry.sys.space.sys.id,
@@ -360,15 +357,15 @@ describe(`gatsby-node`, () => {
       schema,
     })
     testIfContentTypesExists(
-      startersBlogFixture.createBlogPost.contentTypeItems
+      startersBlogFixture.createBlogPost().contentTypeItems
     )
     testIfEntriesExists(
-      startersBlogFixture.createBlogPost.currentSyncData.entries,
-      startersBlogFixture.createBlogPost.contentTypeItems,
+      startersBlogFixture.createBlogPost().currentSyncData.entries,
+      startersBlogFixture.createBlogPost().contentTypeItems,
       locales
     )
     testIfAssetsExistsAndMatch(
-      startersBlogFixture.createBlogPost.currentSyncData.assets,
+      startersBlogFixture.createBlogPost().currentSyncData.assets,
       locales
     )
 
@@ -382,12 +379,12 @@ describe(`gatsby-node`, () => {
   it(`should update a blogpost`, async () => {
     const locales = [`en-US`, `nl`]
     fetch
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.initialSync))
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.createBlogPost))
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.updateBlogPost))
+      .mockImplementationOnce(startersBlogFixture.initialSync)
+      .mockImplementationOnce(startersBlogFixture.createBlogPost)
+      .mockImplementationOnce(startersBlogFixture.updateBlogPost)
 
-    const updatedBlogEntry =
-      startersBlogFixture.updateBlogPost.currentSyncData.entries[0]
+    const updatedBlogEntry = startersBlogFixture.updateBlogPost()
+      .currentSyncData.entries[0]
     const updatedBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: updatedBlogEntry.sys.space.sys.id,
@@ -442,15 +439,15 @@ describe(`gatsby-node`, () => {
     })
 
     testIfContentTypesExists(
-      startersBlogFixture.updateBlogPost.contentTypeItems
+      startersBlogFixture.updateBlogPost().contentTypeItems
     )
     testIfEntriesExists(
-      startersBlogFixture.updateBlogPost.currentSyncData.entries,
-      startersBlogFixture.updateBlogPost.contentTypeItems,
+      startersBlogFixture.updateBlogPost().currentSyncData.entries,
+      startersBlogFixture.updateBlogPost().contentTypeItems,
       locales
     )
     testIfAssetsExistsAndMatch(
-      startersBlogFixture.updateBlogPost.currentSyncData.assets,
+      startersBlogFixture.updateBlogPost().currentSyncData.assets,
       locales
     )
 
@@ -465,12 +462,12 @@ describe(`gatsby-node`, () => {
   it(`should remove a blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
     fetch
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.initialSync))
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.createBlogPost))
-      .mockReturnValueOnce(_.cloneDeep(startersBlogFixture.removeBlogPost))
+      .mockImplementationOnce(startersBlogFixture.initialSync)
+      .mockImplementationOnce(startersBlogFixture.createBlogPost)
+      .mockImplementationOnce(startersBlogFixture.removeBlogPost)
 
-    const removedBlogEntry =
-      startersBlogFixture.removeBlogPost.currentSyncData.deletedEntries[0]
+    const removedBlogEntry = startersBlogFixture.removeBlogPost()
+      .currentSyncData.deletedEntries[0]
     const normalizedType = removedBlogEntry.sys.type.startsWith(`Deleted`)
       ? removedBlogEntry.sys.type.substring(`Deleted`.length)
       : removedBlogEntry.sys.type
@@ -532,10 +529,10 @@ describe(`gatsby-node`, () => {
     })
 
     testIfContentTypesExists(
-      startersBlogFixture.removeBlogPost.contentTypeItems
+      startersBlogFixture.removeBlogPost().contentTypeItems
     )
     testIfEntriesDeleted(
-      startersBlogFixture.removeBlogPost.currentSyncData.assets,
+      startersBlogFixture.removeBlogPost().currentSyncData.assets,
       locales
     )
 
@@ -549,12 +546,12 @@ describe(`gatsby-node`, () => {
     const locales = [`en-US`, `nl`]
 
     fetch
-      .mockReturnValueOnce(startersBlogFixture.initialSync)
-      .mockReturnValueOnce(startersBlogFixture.createBlogPost)
-      .mockReturnValueOnce(startersBlogFixture.removeAsset)
+      .mockImplementationOnce(startersBlogFixture.initialSync)
+      .mockImplementationOnce(startersBlogFixture.createBlogPost)
+      .mockImplementationOnce(startersBlogFixture.removeAsset)
 
-    const removedAssetEntry =
-      startersBlogFixture.createBlogPost.currentSyncData.entries[0]
+    const removedAssetEntry = startersBlogFixture.createBlogPost()
+      .currentSyncData.entries[0]
     const removedAssetEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: removedAssetEntry.sys.space.sys.id,
@@ -598,7 +595,7 @@ describe(`gatsby-node`, () => {
 
     // check if assets exists
     testIfAssetsExists(
-      startersBlogFixture.removeAsset.currentSyncData.deletedAssets,
+      startersBlogFixture.removeAsset().currentSyncData.deletedAssets,
       locales
     )
 
@@ -615,14 +612,14 @@ describe(`gatsby-node`, () => {
       schema,
     })
 
-    testIfContentTypesExists(startersBlogFixture.removeAsset.contentTypeItems)
+    testIfContentTypesExists(startersBlogFixture.removeAsset().contentTypeItems)
     testIfEntriesExists(
-      startersBlogFixture.removeAsset.currentSyncData.entries,
-      startersBlogFixture.removeAsset.contentTypeItems,
+      startersBlogFixture.removeAsset().currentSyncData.entries,
+      startersBlogFixture.removeAsset().contentTypeItems,
       locales
     )
     testIfAssetsDeleted(
-      startersBlogFixture.removeAsset.currentSyncData.deletedAssets,
+      startersBlogFixture.removeAsset().currentSyncData.deletedAssets,
       locales
     )
   })
