@@ -39,7 +39,7 @@ const legendExplanationCellStyle = {
 
 const balls = [
   <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
-    <h4 sx={{ m: 0 }}>Icon</h4>
+    <span sx={{ m: 0, fontSize: `1.125rem`, fontWeight: `bold` }}>Icon</span>
   </div>,
   <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
     <EvaluationCell num="3" style={legendBallStyle} />
@@ -57,7 +57,9 @@ const balls = [
 
 const legendText = [
   <div sx={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
-    <h5 sx={{ m: 0 }}>Feature Availability</h5>
+    <span sx={{ m: 0, fontSize: `1.125rem`, fontWeight: `400` }}>
+      Feature Availability
+    </span>
   </div>,
   <div sx={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
     Excellent (fully available)
