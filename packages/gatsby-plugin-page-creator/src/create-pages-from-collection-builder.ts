@@ -72,7 +72,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
   const paths = nodes.map((node: Record<string, object>) => {
     // URL path for the component and node
     const path = createPath(derivePath(filePath, node))
-    // Params is supplied to the FE compoent on props.params
+    // Params is supplied to the FE component on props.params
     const params = getCollectionRouteParams(createPath(filePath), path)
     // nodeParams is fed to the graphql query for the component
     const nodeParams = reverseLookupParams(node, absolutePath)
