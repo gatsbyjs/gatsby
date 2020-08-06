@@ -69,6 +69,15 @@ export function expressMiddleware(source: string) {
   }
 }
 
+// Internal
+export function setDefaultComponentId(componentId): void {
+  instance.componentId = componentId
+}
+
+export function setGatsbyCliVersion(version): void {
+  instance.gatsbyCliVersion = version
+}
+
 module.exports = {
   trackFeatureIsUsed,
   trackCli,
