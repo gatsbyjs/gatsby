@@ -27,8 +27,6 @@ const recipeMachine = Machine(
         invoke: {
           id: `parseRecipe`,
           src: async (context, _event) => {
-            let parsed
-
             debug(`parsingRecipe`)
 
             let result
