@@ -211,7 +211,9 @@ function Search({ pathname, query }) {
         }}
       >
         <Global styles={searchBoxStyles} />
-        <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
+        <label aria-label="Search Gatsby Library">
+          <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
+        </label>
         <div css={{ display: `none` }}>
           <Configure analyticsTags={[`gatsby-plugins`]} />
           <RefinementList
