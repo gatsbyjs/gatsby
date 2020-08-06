@@ -3,10 +3,7 @@ import React from "react"
 import { useState } from "react"
 
 import { jsx, Styled } from "theme-ui"
-import { MdRefresh, MdBrightness1 } from "react-icons/md"
-import { keyframes } from "@emotion/core"
 import "normalize.css"
-// import Layout from "../layout"
 
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
@@ -16,11 +13,12 @@ import { useMutation, useSubscription } from "urql"
 import lodash from "lodash"
 import fetch from "isomorphic-fetch"
 
+import { Button, Heading } from "gatsby-interface"
+import MDX from "gatsby-recipes/src/components/mdx"
 import WelcomeMessage from "./welcome-message"
 import Step from "./recipe-step"
-import { Button, BaseAnchor, Heading, SuccessIcon } from "gatsby-interface"
-import MDX from "gatsby-recipes/src/components/mdx"
-import { components, removeJsx, makeResourceId, log } from "./utils"
+import { components, removeJsx, log } from "./utils"
+import ResourceMessage from "./resource-message"
 
 //TODO: We need to be able to grab this dynamically
 const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
@@ -52,69 +50,10 @@ const sendInputEvent = event => {
   })
 }
 
-const ResourceMessage = ({ state, resource }) => {
-  let icon = (
-    <MdBrightness1
-      sx={{ height: `10px`, width: `15px`, display: `inline-block` }}
-    />
-  )
-  let message = resource.describe
-
-  if (state.value === `applyingPlan` && resource.isDone) {
-    icon = <SuccessIcon />
-  } else if (state.value === `applyingPlan`) {
-    const keyframe = keyframes`
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`
-    icon = (
-      <MdRefresh
-        sx={{
-          display: `inline-block`,
-          animation: `${keyframe} 1s linear infinite`,
-          height: `15px`,
-          width: `15px`,
-          top: `3px`,
-          position: `relative`,
-        }}
-      />
-    )
-    message = resource.describe
-  } else if (state.value === `done`) {
-    icon = <SuccessIcon height="15px" width="15px" />
-    message = resource._message
-  }
-
-  return (
-    <>
-      {icon}
-      {` `}
-      <BaseAnchor
-        href={`#${makeResourceId(resource)}`}
-        onClick={e => {
-          e.preventDefault()
-          const target = document.getElementById(e.currentTarget.hash.slice(1))
-          target.scrollIntoView({
-            behavior: `smooth`, // smooth scroll
-            block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
-          })
-        }}
-      >
-        {message}
-      </BaseAnchor>
-    </>
-  )
-}
-
 const ButtonText = state => {
   if (state.value === `done`) {
     return `Refresh State`
   }
-
   return `Install Recipe`
 }
 

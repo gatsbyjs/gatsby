@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { jsx, Styled } from "theme-ui"
 import {
   TextAreaField,
   TextAreaFieldControl,
@@ -9,7 +10,6 @@ import {
 } from "gatsby-interface"
 import MDX from "gatsby-recipes/src/components/mdx"
 import CodeDiff from "./code-diff"
-import { jsx, Styled } from "theme-ui"
 import { components, removeJsx, makeResourceId } from "./utils"
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
