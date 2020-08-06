@@ -5,6 +5,7 @@ import { useState } from "react"
 import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { Global, keyframes } from "@emotion/core"
+import theme from "./theme"
 import "normalize.css"
 
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
@@ -13,34 +14,20 @@ import { createUrqlClient } from "../../urql-client"
 import { useMutation, useSubscription } from "urql"
 
 import lodash from "lodash"
-import remove from "unist-util-remove"
 import fetch from "isomorphic-fetch"
 import slugify from "slugify"
 
 import WelcomeMessage from "./welcome-message"
-import CodeDiff from "./code-diff"
+import Step from "./recipe-step"
 import {
   Button,
   ThemeProvider,
-  TextAreaField,
-  TextAreaFieldControl,
-  getTheme,
   BaseAnchor,
   Heading,
   SuccessIcon,
-  InputField,
-  InputFieldLabel,
-  InputFieldControl,
 } from "gatsby-interface"
 import MDX from "gatsby-recipes/src/components/mdx"
-
-const makeResourceId = res => {
-  if (!res.describe) {
-    res.describe = ``
-  }
-  const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
-  return id
-}
+import { components, removeJsx } from "./utils"
 
 let sendEvent
 
@@ -49,30 +36,8 @@ const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
 
 const Spinner = () => <span>Loading...</span>
 
-const components = {
-  Config: () => null,
-  GatsbyPlugin: () => null,
-  NPMPackageJson: () => null,
-  NPMPackage: () => null,
-  File: () => null,
-  Input: () => null,
-  Directory: () => null,
-  GatsbyShadowFile: () => null,
-  NPMScript: () => null,
-  RecipeIntroduction: props => <div>{props.children}</div>,
-  RecipeStep: props => <div>{props.children}</div>,
-  ContentfulSpace: () => null,
-  ContentfulEnvironment: () => null,
-  ContentfulType: () => null,
-}
-
 const log = (label, textOrObj) => {
   console.log(label, textOrObj)
-}
-
-const removeJsx = () => tree => {
-  remove(tree, `export`, () => true)
-  return tree
 }
 
 const graphqlPort = 50400
@@ -94,169 +59,14 @@ const checkServerSession = async () => {
   }
 }
 
-const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
-  <div id={makeResourceId(resourcePlan)} sx={{}}>
-    <div>
-      <Styled.p sx={{ mb: resourcePlan.diff ? 6 : 0 }}>
-        <Styled.em>{resourcePlan.resourceName}</Styled.em>
-        {` `}—{` `}
-        {resourcePlan.describe}
-      </Styled.p>
-    </div>
-    <CodeDiff resourcePlan={resourcePlan} />
-    {resourcePlan.resourceChildren
-      ? resourcePlan.resourceChildren.map(resource => (
-          <ResourcePlan key={resource._uuid} resourcePlan={resource} />
-        ))
-      : null}
-  </div>
-)
-
-const Step = ({ state, step, i }) => {
-  const stepResources = state.context?.plan?.filter(
-    p => parseInt(p._stepMetadata.step, 10) === i + 1
-  )
-
-  return (
-    <div
-      key={`step-${i}`}
-      sx={{
-        position: `relative`,
-        borderRadius: 2,
-        border: theme => `1px solid ${theme.tones.BRAND.light}`,
-        marginBottom: 7,
-      }}
-    >
-      <div
-        sx={{
-          position: `absolute`,
-          backgroundColor: `white`,
-          color: theme => theme.tones.BRAND.dark,
-          right: `6px`,
-          top: `6px`,
-          border: theme => `1px solid ${theme.tones.BRAND.light}`,
-          borderRadius: 9999,
-          height: 30,
-          width: 30,
-          display: `flex`,
-          alignContent: `center`,
-          justifyContent: `center`,
-          lineHeight: `28px`,
-        }}
-      >
-        {i + 1}
-      </div>
-      <div
-        sx={{
-          display: `flex`,
-          "& > *": {
-            marginY: 0,
-          },
-          borderTopLeftRadius: 2,
-          borderTopRightRadius: 2,
-          borderBottom: theme => `1px solid ${theme.tones.BRAND.light}`,
-          background: theme => theme.tones.BRAND.lighter,
-          padding: 4,
-        }}
-      >
-        <div
-          sx={{
-            // marginTop: 2,
-            "p:last-child": {
-              margin: 0,
-            },
-          }}
-        >
-          <MDX
-            key="DOC"
-            components={components}
-            scope={{ sendEvent }}
-            remarkPlugins={[removeJsx]}
-          >
-            {state.context.exports?.join(`\n`) + `\n\n` + step}
-          </MDX>
-        </div>
-      </div>
-      {stepResources?.length > 0 && (
-        <div>
-          <div sx={{ px: 6, pt: 3 }}>
-            {stepResources?.map((res, i) => {
-              if (res.resourceName === `Input`) {
-                if (res.type === `textarea`) {
-                  return (
-                    <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
-                      <TextAreaField>
-                        <div>
-                          <InputFieldLabel>{res.label}</InputFieldLabel>
-                        </div>
-                        <TextAreaFieldControl
-                          onInput={e => {
-                            sendInputEvent({
-                              uuid: res._uuid,
-                              key: res._key,
-                              value: e.target.value,
-                            })
-                          }}
-                        />
-                      </TextAreaField>
-                    </div>
-                  )
-                }
-                return (
-                  <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
-                    <InputField sx={{ pt: 3 }}>
-                      <div>
-                        <InputFieldLabel>{res.label}</InputFieldLabel>
-                      </div>
-                      <InputFieldControl
-                        type={res.type}
-                        onInput={e => {
-                          sendInputEvent({
-                            uuid: res._uuid,
-                            key: res._key,
-                            value: e.target.value,
-                          })
-                        }}
-                      />
-                    </InputField>
-                  </div>
-                )
-              }
-
-              return null
-            })}
-          </div>
-          <div sx={{ padding: 6 }}>
-            <Heading
-              sx={{
-                mb: 4,
-                mt: 0,
-                color: theme => theme.tones.NEUTRAL.darker,
-                fontWeight: 500,
-              }}
-              as={`h3`}
-            >
-              Proposed changes
-            </Heading>
-            {stepResources?.map((res, i) => {
-              if (res.resourceName !== `Input`) {
-                return (
-                  <ResourcePlan
-                    key={`res-plan-${i}`}
-                    resourcePlan={res}
-                    isLastPlan={i === stepResources.length - 1}
-                  />
-                )
-              }
-
-              return null
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  )
+const makeResourceId = res => {
+  if (!res.describe) {
+    res.describe = ``
+  }
+  const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
+  return id
 }
+
 
 const sendInputEvent = event => {
   sendEvent({
@@ -575,7 +385,14 @@ const RecipeInterpreter = ({ recipe }) => {
               {state.context.steps.length - 1} Steps
             </Heading>
             {state.context.steps.slice(1).map((step, i) => (
-              <Step state={state} step={step} key={`step-${i}`} i={i} />
+              <Step
+                sendInputEvent={sendInputEvent}
+                sendEvent={sendEvent}
+                state={state}
+                step={step}
+                key={`step-${i}`}
+                i={i}
+              />
             ))}
           </Wrapper>
         </InputProvider>
@@ -585,83 +402,6 @@ const RecipeInterpreter = ({ recipe }) => {
 }
 
 const WithProviders = ({ children }) => {
-  const baseTheme = getTheme()
-
-  const theme = {
-    ...baseTheme,
-    colors: {
-      ...baseTheme.colors,
-      background: `white`,
-    },
-    fontWeights: {
-      ...baseTheme.fontWeights,
-    },
-    styles: {
-      h1: {
-        fontSize: 6,
-        fontFamily: `heading`,
-        fontWeight: `heading`,
-        mt: 0,
-        mb: 4,
-      },
-      h2: {
-        fontSize: 5,
-        fontFamily: `heading`,
-        fontWeight: `heading`,
-        mt: 0,
-        mb: 4,
-      },
-      p: {
-        color: baseTheme.tones.NEUTRAL.dark,
-        fontSize: 2,
-        fontFamily: `body`,
-        fontWeight: `body`,
-        mt: 0,
-        mb: 4,
-        lineHeight: 1.45,
-      },
-      pre: {
-        fontFamily: baseTheme.fonts.monospace,
-        fontSize: 0,
-        lineHeight: 1.45,
-        mt: 0,
-        mb: 6,
-        whiteSpace: `pre-wrap`,
-      },
-      inlineCode: {
-        backgroundColor: `hsla(0,0%,0%,0.06)`,
-        color: baseTheme.tones.NEUTRAL.darker,
-        borderRadius: `3px`,
-        py: `0.2em`,
-        px: `0.2em`,
-        fontSize: `90%`,
-      },
-      ol: {
-        color: baseTheme.tones.NEUTRAL.dark,
-        paddingLeft: 8,
-        mt: 0,
-        mb: 6,
-        fontFamily: `body`,
-        fontWeight: `body`,
-      },
-      ul: {
-        color: baseTheme.tones.NEUTRAL.dark,
-        paddingLeft: 8,
-        mt: 0,
-        mb: 6,
-        fontFamily: `body`,
-        fontWeight: `body`,
-      },
-      li: {
-        color: baseTheme.tones.NEUTRAL.dark,
-        mb: 2,
-        fontFamily: `body`,
-        fontWeight: `body`,
-        lineHeight: 1.6,
-      },
-    },
-  }
-
   return (
     <ThemeUIProvider theme={theme}>
       <ThemeProvider theme={theme}>
