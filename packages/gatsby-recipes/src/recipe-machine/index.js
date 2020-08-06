@@ -14,13 +14,12 @@ const recipeMachine = Machine(
     context: {
       recipePath: null,
       projectRoot: null,
-      steps: [],
+      recipe: ``,
+      stepsAsMdx: [],
       exports: [],
       plan: [],
       commands: [],
       stepResources: [],
-      stepsAsMdx: [],
-      exportsAsMdx: [],
       inputs: {},
     },
     states: {
@@ -32,10 +31,11 @@ const recipeMachine = Machine(
 
             debug(`parsingRecipe`)
 
+            let result
             if (context.src) {
-              parsed = await parser.parse(context.src)
+              result = await parser.parse(context.src)
             } else if (context.recipePath && context.projectRoot) {
-              parsed = await parser(context.recipePath, context.projectRoot)
+              result = await parser(context.recipePath, context.projectRoot)
             } else {
               throw new Error(
                 JSON.stringify({
@@ -46,7 +46,7 @@ const recipeMachine = Machine(
 
             debug(`parsedRecipe`)
 
-            return parsed
+            return result
           },
           onError: {
             target: `doneError`,
@@ -71,8 +71,9 @@ const recipeMachine = Machine(
           onDone: {
             target: `validateSteps`,
             actions: assign({
-              steps: (context, event) => event.data.stepsAsMdx,
-              exports: (context, event) => event.data.exportsAsMdx,
+              recipe: (context, event) => event.data.recipe,
+              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              exports: (context, event) => event.data.exports,
             }),
           },
         },
@@ -82,7 +83,7 @@ const recipeMachine = Machine(
           id: `validateSteps`,
           src: async (context, event) => {
             debug(`validatingSteps`)
-            const result = await validateSteps(context.steps)
+            const result = await validateSteps(context.stepsAsMdx)
             if (result.length > 0) {
               debug(`errors found in validation`)
               throw new Error(JSON.stringify(result))
