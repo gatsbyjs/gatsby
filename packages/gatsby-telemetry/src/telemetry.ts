@@ -14,7 +14,7 @@ import { join, sep } from "path"
 import isDocker from "is-docker"
 import lodash from "lodash"
 
-const typedUUIDv4 = uuidV4 as () => UUID
+const typedUUIDv4 = uuidV4 as () => string
 
 const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
@@ -62,7 +62,7 @@ export class AnalyticsTracker {
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
   features = new Set<string>()
-  machineId: UUID
+  machineId: string
 
   constructor({
     componentId,
