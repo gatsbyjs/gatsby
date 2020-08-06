@@ -6,15 +6,17 @@ const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
+const resolveRecipe = require(`../resolve-recipe`)
 
 const recipeMachine = Machine(
   {
     id: `recipe`,
-    initial: `parsingRecipe`,
+    initial: `resolvingRecipe`,
     context: {
       recipePath: null,
       projectRoot: null,
       recipe: ``,
+      recipeSrc: ``,
       stepsAsMdx: [],
       exports: [],
       plan: [],
@@ -23,28 +25,50 @@ const recipeMachine = Machine(
       inputs: {},
     },
     states: {
+      resolvingRecipe: {
+        invoke: {
+          id: `resolveRecipe`,
+          src: async (context, _event) => {
+            if (context.src) {
+              return context.src
+            } else if (context.recipePath && context.projectRoot) {
+              const recipe = await resolveRecipe(
+                context.recipePath,
+                context.projectRoot
+              )
+              return recipe
+            } else {
+              throw new Error(`A recipe must be specified`)
+            }
+          },
+          onError: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, _event) => {
+                debug(`error resolving recipe`)
+                return {
+                  error: `Could not resolve recipe "${context.recipePath}"`,
+                }
+              },
+            }),
+          },
+          onDone: {
+            target: `parsingRecipe`,
+            actions: assign({
+              recipeSrc: (_context, event) => event.data,
+            }),
+          },
+        },
+      },
       parsingRecipe: {
         invoke: {
           id: `parseRecipe`,
           src: async (context, _event) => {
             debug(`parsingRecipe`)
-
-            let result
-            if (context.src) {
-              result = await parser.parse(context.src)
-            } else if (context.recipePath && context.projectRoot) {
-              result = await parser(context.recipePath, context.projectRoot)
-            } else {
-              throw new Error(
-                JSON.stringify({
-                  validationError: `A recipe must be specified`,
-                })
-              )
-            }
-
+            const parsed = await parser.parse(context.recipeSrc)
             debug(`parsedRecipe`)
 
-            return result
+            return parsed
           },
           onError: {
             target: `doneError`,
