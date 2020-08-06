@@ -148,7 +148,6 @@ exports.onPreInit = async function onPreInit(
   _args: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
-  systemPath.resolve(process.cwd(), pagesPath)
   const pagesGlob = `**/\\{*\\}**`
 
   const files = await glob(pagesGlob, { cwd: pagesPath })
