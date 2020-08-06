@@ -46,7 +46,7 @@ Developers can create multiple pages from a model based on the collection of nod
 - `/src/pages/products/{Product.fields__sku}.js => /products/001923`
 - `/src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js => /blog/learning-gatsby`
 
-We use the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. For example:
+Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. For example:
 
 `/src/pages/products/{Product.name}.js` generates the following query:
 
@@ -125,7 +125,7 @@ export const query = graphql`
 
 ## Routing and linking
 
-We "slugify" every route that is created from collection pages. When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
+Gatsby "slugifies" every route that gets created from collection pages. When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
 
 To address this issue, Gatsby automatically includes a `path` field on every model used by collection pages. The `path` field must take an argument of the `filePath` it is trying to resolve. This is necessary because it’s possible that one model is used in multiple collection pages. Here is an example of how this works:
 
