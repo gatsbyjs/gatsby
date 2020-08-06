@@ -117,12 +117,16 @@ const parse = async src => {
     const steps = [wrappedIntroStep, ...wrappedResourceSteps]
     ast.children = [...exportNodes, ...ast.children]
 
+    const exportsAsMdx = exportNodes.map(toMdx)
+    const stepsAsMdx = steps.map(toMdx)
+
     return {
       ast,
       steps,
       exports: exportNodes,
-      exportsAsMdx: exportNodes.map(toMdx),
-      stepsAsMdx: steps.map(toMdx),
+      exportsAsMdx,
+      stepsAsMdx,
+      recipe: exportsAsMdx.join(`\n`) + `\n\n` + stepsAsMdx.join(`\n`),
     }
   } catch (e) {
     throw e

@@ -14,14 +14,12 @@ const recipeMachine = Machine(
     context: {
       recipePath: null,
       projectRoot: null,
-      currentStep: 0,
-      steps: [],
+      recipe: ``,
+      stepsAsMdx: [],
       exports: [],
       plan: [],
       commands: [],
       stepResources: [],
-      stepsAsMdx: [],
-      exportsAsMdx: [],
       inputs: {},
     },
     states: {
@@ -29,14 +27,13 @@ const recipeMachine = Machine(
         invoke: {
           id: `parseRecipe`,
           src: async (context, _event) => {
-            let parsed
-
             debug(`parsingRecipe`)
 
+            let result
             if (context.src) {
-              parsed = await parser.parse(context.src)
+              result = await parser.parse(context.src)
             } else if (context.recipePath && context.projectRoot) {
-              parsed = await parser(context.recipePath, context.projectRoot)
+              result = await parser(context.recipePath, context.projectRoot)
             } else {
               throw new Error(
                 JSON.stringify({
@@ -47,7 +44,7 @@ const recipeMachine = Machine(
 
             debug(`parsedRecipe`)
 
-            return parsed
+            return result
           },
           onError: {
             target: `doneError`,
@@ -72,8 +69,9 @@ const recipeMachine = Machine(
           onDone: {
             target: `validateSteps`,
             actions: assign({
-              steps: (context, event) => event.data.stepsAsMdx,
-              exports: (context, event) => event.data.exportsAsMdx,
+              recipe: (context, event) => event.data.recipe,
+              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              exports: (context, event) => event.data.exports,
             }),
           },
         },
@@ -83,7 +81,7 @@ const recipeMachine = Machine(
           id: `validateSteps`,
           src: async (context, event) => {
             debug(`validatingSteps`)
-            const result = await validateSteps(context.steps)
+            const result = await validateSteps(context.stepsAsMdx)
             if (result.length > 0) {
               debug(`errors found in validation`)
               throw new Error(JSON.stringify(result))
@@ -209,7 +207,7 @@ const recipeMachine = Machine(
             }),
           },
           onDone: {
-            target: `hasAnotherStep`,
+            target: `done`,
             actions: [`addResourcesToContext`],
           },
           onError: {
@@ -217,23 +215,6 @@ const recipeMachine = Machine(
             actions: assign({ error: (context, event) => event.data }),
           },
         },
-      },
-      hasAnotherStep: {
-        entry: [`incrementStep`],
-        always: [
-          {
-            target: `creatingPlan`,
-            // The 'searchValid' guard implementation details are
-            // specified in the machine config
-            cond: `hasNextStep`,
-          },
-          {
-            target: `done`,
-            // The 'searchValid' guard implementation details are
-            // specified in the machine config
-            cond: `atLastStep`,
-          },
-        ],
       },
       done: {
         type: `final`,
@@ -245,11 +226,6 @@ const recipeMachine = Machine(
   },
   {
     actions: {
-      incrementStep: assign((context, event) => {
-        return {
-          currentStep: context.currentStep + 1,
-        }
-      }),
       deleteOldPlan: assign((context, event) => {
         return {
           plan: [],
@@ -279,10 +255,6 @@ const recipeMachine = Machine(
       }),
     },
     guards: {
-      hasNextStep: (context, event) => false,
-      // false || context.currentStep < context.steps.length,
-      atLastStep: (context, event) => true,
-      // true || context.currentStep === context.steps.length,
       hasErrors: context => context.plan.some(p => p.error),
     },
   }

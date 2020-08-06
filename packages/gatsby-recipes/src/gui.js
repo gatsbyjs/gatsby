@@ -783,7 +783,7 @@ const RecipeInterpreter = () => {
       {
         type: `mdx`,
         key: `mdx-${step}`,
-        value: state.context.steps[step],
+        value: state.context.stepsAsMdx[step],
       },
     ]
   }
@@ -841,9 +841,7 @@ const RecipeInterpreter = () => {
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
-                  {state.context.exports?.join(`\n`) +
-                    `\n\n` +
-                    state.context.steps[0]}
+                  {state.context.recipe}
                 </MDX>
               </div>
               <Button
@@ -892,9 +890,9 @@ const RecipeInterpreter = () => {
             </div>
 
             <Heading sx={{ mb: 6 }}>
-              {state.context.steps.length - 1} Steps
+              {state.context.stepsAsMdx.length - 1} Steps
             </Heading>
-            {state.context.steps.slice(1).map((step, i) => (
+            {state.context.stepsAsMdx.slice(1).map((step, i) => (
               <Step state={state} step={step} key={`step-${i}`} i={i} />
             ))}
           </Wrapper>
