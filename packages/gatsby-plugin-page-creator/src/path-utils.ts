@@ -79,6 +79,6 @@ export function convertUnionSyntaxToGraphql(filePart: string): string {
 export function compose(
   ...functions: Array<(filePart: string) => string>
 ): (filePart: string) => string {
-  return (filePart: string) =>
+  return (filePart: string): string =>
     functions.reduce((value, fn) => fn(value), filePart)
 }
