@@ -1,6 +1,6 @@
 /* global: reporter */
 
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import reporter from "gatsby-cli/lib/reporter"
 
 const defaultExcludes = [
@@ -10,8 +10,8 @@ const defaultExcludes = [
   `/offline-plugin-app-shell-fallback`,
 ]
 
-const pluginOptions = Joi.object({
-  plugins: Joi.array(),
+const defaultPluginOptions = Joi.object({
+  plugins: Joi.array().strip(),
   output: Joi.string().default(`/`),
   createLinkInHead: Joi.boolean().default(true),
   sitemapSize: Joi.number().default(45000), // default based on upstream "sitemap" plugin default, maybe need optimization
@@ -47,8 +47,17 @@ const pluginOptions = Joi.object({
   serialize: Joi.function().default(() => serialize),
 })
 
-export async function validateOptions(options) {
-  return pluginOptions.validateAsync(options)
+const ssrPluginOptions = Joi.object({
+  output: defaultPluginOptions.extract([`output`]),
+  createLinkInHead: defaultPluginOptions.extract([`createLinkInHead`]),
+})
+
+export async function validateOptions(pluginOptions) {
+  return defaultPluginOptions.validateAsync(pluginOptions)
+}
+
+export function validateSsrOptions(pluginOptions) {
+  return defaultPluginOptions.validate(pluginOptions)
 }
 
 /**

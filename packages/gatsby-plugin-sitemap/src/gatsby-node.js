@@ -8,8 +8,12 @@ const publicPath = `./public`
 const reporterPrefix = `[plugin-sitemap]:`
 
 exports.onPreInit = async ({ reporter }, pluginOptions) => {
-  await validateOptions(pluginOptions).catch(err => reporter.panic(err))
-  reporter.verbose(`${reporterPrefix} Plugin options valid`)
+  try {
+    await validateOptions(pluginOptions)
+    reporter.verbose(`${reporterPrefix} Plugin options passed validation.`)
+  } catch (err) {
+    reporter.panic(err)
+  }
 }
 
 exports.onPostBuild = async (
@@ -28,12 +32,14 @@ exports.onPostBuild = async (
     resolvePages,
     filterPages,
     serialize,
-  } = await validateOptions(pluginOptions).catch(err => reporter.panic(err))
-  console.log(`PathPrefix: `, pathPrefix)
+  } = await validateOptions(pluginOptions).catch(err => {
+    reporter.panic(err)
+  })
+
   const { data: queryRecords } = await graphql(query)
 
   reporter.verbose(
-    `${reporterPrefix}Query Results` + JSON.stringify(queryRecords, null, 2)
+    `${reporterPrefix} Query Results` + JSON.stringify(queryRecords, null, 2)
   )
 
   const allPages = resolvePages(queryRecords)
@@ -69,7 +75,7 @@ exports.onPostBuild = async (
   })
 
   reporter.verbose(
-    `${reporterPrefix} pages remainig after filtering ${filteredPages.length} pages`
+    `${reporterPrefix} ${filteredPages.length} pages remain after filtering`
   )
 
   const serializedPages = filteredPages.map(page => {

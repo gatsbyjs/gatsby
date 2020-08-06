@@ -1547,17 +1547,6 @@
     "@hapi/hoek" "8.x.x"
     "@hapi/topo" "3.x.x"
 
-"@hapi/joi@^17.1.1":
-  version "17.1.1"
-  resolved "https://registry.yarnpkg.com/@hapi/joi/-/joi-17.1.1.tgz#9cc8d7e2c2213d1e46708c6260184b447c661350"
-  integrity sha512-p4DKeZAoeZW4g3u7ZeRo+vCDuSDgSvtsB/NpfjXEHTUjSeINAi/RrVOWiVQ1isaoLzMvFEhe8n5065mQq1AdQg==
-  dependencies:
-    "@hapi/address" "^4.0.1"
-    "@hapi/formula" "^2.0.0"
-    "@hapi/hoek" "^9.0.0"
-    "@hapi/pinpoint" "^2.0.0"
-    "@hapi/topo" "^5.0.0"
-
 "@hapi/pinpoint@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/pinpoint/-/pinpoint-2.0.0.tgz#805b40d4dbec04fc116a73089494e00f073de8df"
@@ -7046,11 +7035,12 @@ content-type@^1.0.4, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
-contentful-resolve-response@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/contentful-resolve-response/-/contentful-resolve-response-1.1.4.tgz#9eb656876eecb2cd00444f0adf26bd91a5ec1992"
+contentful-resolve-response@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/contentful-resolve-response/-/contentful-resolve-response-1.2.2.tgz#3f83a5f4742854de740e250a11020b4fb646da91"
+  integrity sha512-KyRz05f2YFJDSFs/L5jtsptbL5Fk3+ukSjRF94zFXq0FOtYoaxyCbqKgHhK2+3hlipxVQ+KGRus/tSaD6PoPMg==
   dependencies:
-    lodash "^4.17.4"
+    lodash "^4.17.15"
 
 contentful-sdk-core@^6.4.5:
   version "6.4.5"
@@ -7060,13 +7050,13 @@ contentful-sdk-core@^6.4.5:
     lodash "^4.17.10"
     qs "^6.5.2"
 
-contentful@^7.14.5:
-  version "7.14.5"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-7.14.5.tgz#ca8ff1301b1278b88bf475cfc87ee9ba9f196034"
-  integrity sha512-Ou3L6xcVXV2TjC9uaw9w5OGp4hHGeQ9wCwsuROKpPEhb53GdcY962zxVzMZ7YTt/WmKkMrZRFsGMWCi3yS6p9g==
+contentful@^7.14.6:
+  version "7.14.6"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-7.14.6.tgz#da692d68f361ceec14045c6114425579cddbfab9"
+  integrity sha512-7/Xqw/UT0/zW9DeVGAwtW4twGbThIc6rbLATrhUn7AXt/xTCFzgPiJxHgRU9gmr733q/Wckv663B51abDMS9Nw==
   dependencies:
     axios "^0.19.1"
-    contentful-resolve-response "^1.1.4"
+    contentful-resolve-response "^1.2.2"
     contentful-sdk-core "^6.4.5"
     json-stringify-safe "^5.0.1"
     lodash "^4.17.11"
@@ -13819,6 +13809,17 @@ joi@^14.3.1:
     hoek "6.x.x"
     isemail "3.x.x"
     topo "3.x.x"
+
+joi@^17.1.1:
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-17.1.1.tgz#b7339e8a509510a04ce9cdeccb35a6e188080287"
+  integrity sha512-fww3Ae9cRyj6yHy90cpxvL2y39V5JCY2KaXV3KfALhoFfFcAuyQBPOq+2q6EZ2QNMn1FhkDy+eRkGVG7J+BvyA==
+  dependencies:
+    "@hapi/address" "^4.0.1"
+    "@hapi/formula" "^2.0.0"
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/pinpoint" "^2.0.0"
+    "@hapi/topo" "^5.0.0"
 
 jpeg-js@^0.3.4:
   version "0.3.6"
