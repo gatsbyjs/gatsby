@@ -40,7 +40,7 @@
     "react": "^16.8.0",
     "redux": "^4.0.5",
     "resolve-cwd": "^3.0.0",
-    "semver": "^6.3.0",
+    "semver": "^7.3.2",
     "signal-exit": "^3.0.3",
     "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
