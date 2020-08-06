@@ -77,4 +77,23 @@ describe(`recipe-machine`, () => {
 
     service.start()
   })
+
+  it(`fetches official recipes from unpkg`, done => {
+    const initialContext = {
+      recipePath: `theme-ui`,
+      projectRoot: `/Users/fake`,
+      currentStep: 0,
+    }
+    const service = interpret(
+      recipeMachine.withContext(initialContext)
+    ).onTransition(state => {
+      if (state.value === `presentPlan`) {
+        expect(state.context.plan.length).toBeGreaterThan(1)
+        service.stop()
+        done()
+      }
+    })
+
+    service.start()
+  })
 })
