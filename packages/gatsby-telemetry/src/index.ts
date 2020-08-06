@@ -2,6 +2,8 @@ import { AnalyticsTracker, IAggregateStats } from "./telemetry"
 import * as express from "express"
 import { createFlush } from "./create-flush"
 
+export { AnalyticsTracker }
+
 const instance = new AnalyticsTracker()
 
 const flush = createFlush(instance.isTrackingEnabled())

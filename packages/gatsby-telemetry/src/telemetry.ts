@@ -43,8 +43,14 @@ export interface IAggregateStats {
   skewness: number
 }
 
+interface IAnalyticsTrackerConstructorParameters {
+  componentId?: SemVer
+  gatsbyCliVersion?: SemVer
+}
+
 export class AnalyticsTracker {
   store = new EventStorage()
+  componentId: string
   debouncer = {}
   metadataCache = {}
   defaultTags = {}
@@ -58,7 +64,11 @@ export class AnalyticsTracker {
   features = new Set<string>()
   machineId: UUID
 
-  constructor() {
+  constructor({
+    componentId,
+    gatsbyCliVersion,
+  }: IAnalyticsTrackerConstructorParameters = {}) {
+    this.componentId = componentId || `gatsby-cli`
     try {
       if (this.store.isTrackingDisabled()) {
         this.trackingEnabled = false
@@ -68,7 +78,7 @@ export class AnalyticsTracker {
 
       // These may throw and should be last
       this.componentVersion = require(`../package.json`).version
-      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.gatsbyCliVersion = gatsbyCliVersion || this.getGatsbyCliVersion()
       this.installedGatsbyVersion = this.getGatsbyVersion()
     } catch (e) {
       // ignore
@@ -231,7 +241,7 @@ export class AnalyticsTracker {
       sessionId: this.sessionId,
       time: new Date(),
       machineId: this.getMachineId(),
-      componentId: `gatsby-cli`,
+      componentId: this.componentId,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
       dbEngine,
