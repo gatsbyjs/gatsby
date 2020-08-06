@@ -36,6 +36,7 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
+import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -62,6 +63,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
+
+  await createServiceLock(program.directory, `metadata`, {
+    name: program.sitePackageJson.name,
+    sitePath: program.directory,
+    lastRun: Date.now(),
+  }).then(unlock => unlock?.())
 
   markWebpackStatusAsPending()
 

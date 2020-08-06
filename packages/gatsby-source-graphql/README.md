@@ -150,6 +150,58 @@ module.exports = {
 }
 ```
 
+## Custom transform schema function (advanced)
+
+It's possible to modify the remote schema, via a `transformSchema` option which customizes the way the default schema is transformed before it is merged on the Gatsby schema by the stitching process.
+
+The `transformSchema` function gets an object argument with the following fields:
+
+- schema (introspected remote schema)
+- link (default link)
+- resolver (default resolver)
+- defaultTransforms (an array with the default transforms)
+- options (plugin options)
+
+The return value is expected to be the final schema used for stitching.
+
+Below an example configuration that uses the default implementation (equivalent to not using the `transformSchema` option at all):
+
+```js
+const { wrapSchema } = require(`@graphql-tools/wrap`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+        transformSchema: ({
+          schema,
+          link,
+          resolver,
+          defaultTransforms,
+          options,
+        }) => {
+          return wrapSchema(
+            {
+              schema,
+              executor: linkToExecutor(link),
+            },
+            defaultTransforms
+          )
+        }
+    },
+  ]
+}
+```
+
+For details, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https://www.graphql-tools.com/docs/schema-wrapping).
+
+An use case for this feature can be seen in [this issue](https://github.com/gatsbyjs/gatsby/issues/23552).
+
 # Refetching data
 
 By default, `gatsby-source-graphql` will only refetch the data once the server is restarted. It's also possible to configure the plugin to periodically refetch the data. The option is called `refetchInterval` and specifies the timeout in seconds.

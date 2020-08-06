@@ -55,12 +55,12 @@ If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hew
 - [Grommet repo on GitHub](https://github.com/grommet/grommet)
 - [Grommet component examples on Storybook](https://storybook.grommet.io/)
 
-## Material UI
+## Material-UI
 
-Material UI provides a library of components designed using Google's [Material Design guidelines](https://material.io/design/introduction). It also supports customizing theme elements like color, typography, and breakpoints.
+Material-UI provides a library of components designed using Google's [Material Design guidelines](https://material.io/design/introduction). It also supports customizing theme elements like color, typography, and breakpoints.
 
-If you're interested in using Material UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui).
+If you're interested in using Material-UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui).
 
-- [Material UI documentation](https://material-ui.com/)
-- [Material UI repo on GitHub](https://github.com/mui-org/material-ui)
-- [Material UI example projects](https://material-ui.com/getting-started/example-projects/)
+- [Material-UI documentation](https://material-ui.com/)
+- [Material-UI repo on GitHub](https://github.com/mui-org/material-ui)
+- [Material-UI example projects](https://material-ui.com/getting-started/example-projects/)
