@@ -176,6 +176,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 ### `<NPMPackageJson>`
 
+<!-- prettier-ignore-start -->
 ```jsx
 <NPMPackageJson
   name="lint-staged"
@@ -186,11 +187,12 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
   }}
 />
 ```
+<!-- prettier-ignore-end -->
 
 #### props
-- **name**: name of the property to add to the package.json
-- **value**: the value assigned to the property.  can be an object or a string.
 
+- **name**: name of the property to add to the package.json
+- **value**: the value assigned to the property. can be an object or a string.
 
 ### `<NPMScript>`
 
