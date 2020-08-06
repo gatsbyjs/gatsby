@@ -19,7 +19,7 @@ const typedUUIDv4 = uuidV4 as () => UUID
 const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
 
-type SemVer = string
+export type SemVer = string
 
 interface IOSInfo {
   nodeVersion: SemVer
@@ -88,11 +88,12 @@ export class AnalyticsTracker {
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
   // Hence we need to use process level globals that are not scoped to this module
-  getSessionId(): UUID {
-    return (
-      process.gatsbyTelemetrySessionId ||
-      (process.gatsbyTelemetrySessionId = uuidV4())
-    )
+  getSessionId(): string {
+    const p = process as any
+    if (!p.gatsbyTelemetrySessionId) {
+      p.gatsbyTelemetrySessionId = uuidV4()
+    }
+    return p.gatsbyTelemetrySessionId
   }
 
   getRepositoryId(): IRepositoryId {
@@ -256,7 +257,7 @@ export class AnalyticsTracker {
     }
   }
 
-  getMachineId(): UUID {
+  getMachineId(): string {
     // Cache the result
     if (this.machineId) {
       return this.machineId
