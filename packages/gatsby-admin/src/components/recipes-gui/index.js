@@ -13,12 +13,12 @@ import { createUrqlClient } from "../../urql-client"
 import { useMutation, useSubscription } from "urql"
 
 import lodash from "lodash"
-import ansi2HTML from "ansi-html"
 import remove from "unist-util-remove"
 import fetch from "isomorphic-fetch"
 import slugify from "slugify"
 
 import WelcomeMessage from "./welcome-message"
+import CodeDiff from "./code-diff"
 import {
   Button,
   ThemeProvider,
@@ -34,14 +34,6 @@ import {
 } from "gatsby-interface"
 import MDX from "gatsby-recipes/src/components/mdx"
 
-const theme = getTheme()
-
-ansi2HTML.setColors({
-  red: theme.tones.DANGER.medium.slice(1),
-  green: theme.tones.SUCCESS.medium.slice(1),
-  yellow: theme.tones.WARNING.medium.slice(1),
-})
-
 const makeResourceId = res => {
   if (!res.describe) {
     res.describe = ``
@@ -56,69 +48,6 @@ let sendEvent
 const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
 
 const Spinner = () => <span>Loading...</span>
-
-const escapeTags = str => str.replace(/</g, `&lt;`)
-
-const DiffPre = ({ resourcePlan, ...props }) => (
-  <Styled.pre
-    {...props}
-    sx={{
-      background: theme => theme.tones.BRAND.superLight,
-      borderRadius: 2,
-      padding: 4,
-    }}
-    dangerouslySetInnerHTML={{
-      __html: ansi2HTML(escapeTags(resourcePlan.diff)),
-    }}
-  />
-)
-
-const Diff = ({ resourcePlan, ...props }) => {
-  if (!resourcePlan.diff) {
-    return null
-  }
-
-  if (resourcePlan.resourceName === `File`) {
-    return (
-      <div
-        sx={{
-          background: theme => theme.tones.BRAND.superLight,
-          border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
-          borderRadius: 2,
-        }}
-      >
-        <Heading
-          as="h6"
-          sx={{
-            px: 4,
-            py: 3,
-            fontWeight: `normal`,
-            borderBottom: theme => `1px solid ${theme.tones.BRAND.lighter}`,
-          }}
-        >
-          {resourcePlan.resourceDefinitions.path}
-        </Heading>
-        <DiffPre
-          resourcePlan={resourcePlan}
-          sx={{
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-          }}
-        />
-      </div>
-    )
-  }
-
-  return (
-    <DiffPre
-      {...props}
-      resourcePlan={resourcePlan}
-      sx={{
-        border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
-      }}
-    />
-  )
-}
 
 const components = {
   Config: () => null,
@@ -174,7 +103,7 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
         {resourcePlan.describe}
       </Styled.p>
     </div>
-    <Diff resourcePlan={resourcePlan} />
+    <CodeDiff resourcePlan={resourcePlan} />
     {resourcePlan.resourceChildren
       ? resourcePlan.resourceChildren.map(resource => (
           <ResourcePlan key={resource._uuid} resourcePlan={resource} />
