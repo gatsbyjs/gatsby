@@ -2,11 +2,11 @@
 import React from "react"
 import { useState } from "react"
 
-import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
+import { jsx, Styled } from "theme-ui"
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
-import { Global, keyframes } from "@emotion/core"
-import theme from "./theme"
+import { keyframes } from "@emotion/core"
 import "normalize.css"
+// import Layout from "../layout"
 
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
@@ -15,30 +15,15 @@ import { useMutation, useSubscription } from "urql"
 
 import lodash from "lodash"
 import fetch from "isomorphic-fetch"
-import slugify from "slugify"
 
 import WelcomeMessage from "./welcome-message"
 import Step from "./recipe-step"
-import {
-  Button,
-  ThemeProvider,
-  BaseAnchor,
-  Heading,
-  SuccessIcon,
-} from "gatsby-interface"
+import { Button, BaseAnchor, Heading, SuccessIcon } from "gatsby-interface"
 import MDX from "gatsby-recipes/src/components/mdx"
-import { components, removeJsx } from "./utils"
-
-let sendEvent
+import { components, removeJsx, makeResourceId, log } from "./utils"
 
 //TODO: We need to be able to grab this dynamically
 const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
-
-const Spinner = () => <span>Loading...</span>
-
-const log = (label, textOrObj) => {
-  console.log(label, textOrObj)
-}
 
 const graphqlPort = 50400
 const projectRoot = PROJECT_ROOT
@@ -48,6 +33,7 @@ const API_ENDPOINT = `http://localhost:${graphqlPort}`
 let isSubscriptionConnected = false
 let isRecipeStarted = false
 let sessionId
+let sendEvent
 
 const checkServerSession = async () => {
   const response = await fetch(`${API_ENDPOINT}/session`)
@@ -58,15 +44,6 @@ const checkServerSession = async () => {
     window.location.reload()
   }
 }
-
-const makeResourceId = res => {
-  if (!res.describe) {
-    res.describe = ``
-  }
-  const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
-  return id
-}
-
 
 const sendInputEvent = event => {
   sendEvent({
@@ -166,6 +143,8 @@ const ResourceChildren = ({ resourceChildren, state }) => {
   )
 }
 
+const Spinner = () => <span>Loading...</span>
+
 function Wrapper({ children }) {
   return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
 }
@@ -189,8 +168,6 @@ const RecipeInterpreter = ({ recipe }) => {
         }
       })
   }, [])
-  // eslint-disable-next-line
-  const [localRecipe, setRecipe] = useState(recipe)
 
   const [subscriptionResponse] = useSubscription(
     {
@@ -286,7 +263,6 @@ const RecipeInterpreter = ({ recipe }) => {
   })
 
   log(`staticMessages`, staticMessages)
-  log(`renderTime`, new Date())
 
   if (isDone) {
     process.nextTick(() => {
@@ -401,33 +377,4 @@ const RecipeInterpreter = ({ recipe }) => {
   )
 }
 
-const WithProviders = ({ children }) => {
-  return (
-    <ThemeUIProvider theme={theme}>
-      <ThemeProvider theme={theme}>
-        <main>{children}</main>
-      </ThemeProvider>
-    </ThemeUIProvider>
-  )
-}
-
-const GlobalStyles = () => (
-  <Global
-    styles={{
-      body: {
-        fontFamily: `-apple-system, system-ui, sans-serif`,
-      },
-      h1: {
-        fontWeight: 700,
-        fontFamily: `Futura PT,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif!`,
-      },
-    }}
-  />
-)
-
-export default ({ recipe }) => (
-  <WithProviders>
-    <GlobalStyles />
-    <RecipeInterpreter recipe={recipe} />
-  </WithProviders>
-)
+export default ({ recipe }) => <RecipeInterpreter recipe={recipe} />

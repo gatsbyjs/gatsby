@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import React from "react"
 import ansi2HTML from "ansi-html"
 import { getTheme, Heading } from "gatsby-interface"
 import { jsx, Styled } from "theme-ui"
