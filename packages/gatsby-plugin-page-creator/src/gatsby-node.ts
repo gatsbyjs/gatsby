@@ -47,24 +47,18 @@ export async function createPagesStatefully(
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
   if (!pagesPath) {
-    reporter.panic(
-      reporter.stripIndent`
-      "path" is a required option for gatsby-plugin-page-creator
+    reporter.panic(`"path" is a required option for gatsby-plugin-page-creator
 
-      See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/
-      `
-    )
+See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`)
   }
 
   // Validate that the path exists.
   if (pathCheck && !existsSync(pagesPath)) {
-    reporter.panic(reporter.stripIndent`
-      The path passed to gatsby-plugin-page-creator does not exist on your file system:
+    reporter.panic(`The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
-      ${pagesPath}
+${pagesPath}
 
-      Please pick a path to an existing directory.
-      `)
+Please pick a path to an existing directory.`)
   }
 
   const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)

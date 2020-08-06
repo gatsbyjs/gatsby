@@ -1,5 +1,13 @@
 import _ from "lodash"
 import path from "path"
+import {
+  compose,
+  convertUnionSyntaxToGraphql,
+  extractField,
+  extractFieldWithoutUnion,
+  removeFileExtension,
+  switchToPeriodDelimiters,
+} from "./path-utils"
 
 // Input queryStringParent could be a Modle or a full graphql query
 // End result should be something like { allProducts { nodes { id }}}
@@ -28,18 +36,15 @@ export function reverseLookupParams(
   }
 
   absolutePath.split(path.sep).forEach(part => {
-    const regex = /^\{[a-zA-Z]+\.([a-zA-Z_()]+)\}/.exec(part)
-
-    if (regex === null) return
-    const extracted = regex[1]
+    const extracted = compose(
+      removeFileExtension,
+      extractFieldWithoutUnion
+    )(part)
 
     const results = _.get(
       queryResults.nodes ? queryResults.nodes[0] : queryResults,
-      extracted
-        // ignore union syntax for value lookup (unions does not show up in queryResults)
-        .replace(/\(.*\)__/g, ``)
-        // replace __ with accessors '.'
-        .replace(/__/g, `.`)
+      // replace __ with accessors '.'
+      switchToPeriodDelimiters(extracted)
     )
     reversedParams[extracted] = results
   })
@@ -63,12 +68,7 @@ function extractUrlParamsForQuery(createdPath: string): string {
     .reduce<string[]>((queryParts: string[], part: string): string[] => {
       if (part.startsWith(`{`)) {
         return queryParts.concat(
-          deriveNesting(
-            part
-              .replace(/\{[a-zA-Z]+\./, ``)
-              .replace(`}`, ``)
-              .replace(/\.[a-z]+$/, ``)
-          )
+          deriveNesting(compose(removeFileExtension, extractField)(part))
         )
       }
 
@@ -87,7 +87,7 @@ function deriveNesting(part: string): string {
       .reverse()
       .reduce((path: string, part: string): string => {
         // This adds support for Unions
-        path = path.replace(/\(/g, `... on `).replace(/\)/g, ``)
+        path = convertUnionSyntaxToGraphql(path)
 
         if (path) {
           return `${part}{${path}}`

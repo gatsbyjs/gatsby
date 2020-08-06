@@ -1,6 +1,5 @@
 import _ from "lodash"
 import systemPath from "path"
-import reporter from "gatsby-cli/lib/reporter"
 
 export function validatePathQuery(
   filePath: string,
@@ -8,33 +7,27 @@ export function validatePathQuery(
 ): void {
   // Paths must start with /
   if (filePath.startsWith(`/`) !== true) {
-    throw new Error(
-      reporter.stripIndent`To query node "path" the "filePath" argument must be an absolute path, starting with a /
-      Please change this to: "/${filePath}"`
-    )
+    throw new Error(`To query node "path" the "filePath" argument must be an absolute path, starting with a /
+Please change this to: "/${filePath}"`)
   }
 
   // Paths must not include file extension
   if (/\.[a-z]+$/i.test(filePath)) {
-    throw new Error(
-      reporter.stripIndent`To query node "path" the "filePath" argument must omit the file extension
-      Please change this to: "${filePath.replace(/\.[a-z]+$/i, ``)}"`
-    )
+    throw new Error(`To query node "path" the "filePath" argument must omit the file extension
+Please change this to: "${filePath.replace(/\.[a-z]+$/i, ``)}"`)
   }
 
   // Paths must not utilize src/pages
   if (filePath.includes(`src/pages`)) {
-    throw new Error(
-      reporter.stripIndent`To query node "path" the "filePath" argument must omit the src/pages prefix.
-      Please change this to: "${filePath.replace(/\/?src\/pages\//, ``)}"`
-    )
+    throw new Error(`To query node "path" the "filePath" argument must omit the src/pages prefix.
+Please change this to: "${filePath.replace(/\/?src\/pages\//, ``)}"`)
   }
 
   // Paths must not include index
   if (/index$/.test(filePath)) {
     throw new Error(
-      reporter.stripIndent`To query node "path" the "filePath" argument must omit index.
-      Please change this to: "${filePath.replace(/index$/, ``)}"`
+      `To query node "path" the "filePath" argument must omit index.
+Please change this to: "${filePath.replace(/index$/, ``)}"`
     )
   }
 
@@ -54,8 +47,8 @@ export function validatePathQuery(
 
   if (file.length === 0 || file[0].length === 0) {
     throw new Error(
-      reporter.stripIndent`To query node "path" the "filePath" argument must represent a file that exists.
-      Unable to find a file at: "${absolutePath}"`
+      `To query node "path" the "filePath" argument must represent a file that exists.
+Unable to find a file at: "${absolutePath}"`
     )
   }
 }

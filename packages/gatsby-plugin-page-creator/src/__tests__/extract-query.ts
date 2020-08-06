@@ -155,7 +155,7 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{Model.parent__(File)__relativePath}.js`)
       )
     ).toEqual({
-      "parent__(File)__relativePath": `foo`,
+      parent__relativePath: `foo`,
     })
   })
 })
