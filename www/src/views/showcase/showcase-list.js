@@ -113,7 +113,8 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     to={`/showcase/?${qs.stringify({
                       filters: `Featured`,
                     })}`}
-                    className="featured-site"
+                    className="featured-site sdfsdf"
+                    aria-label="Featured Site"
                   >
                     <FeaturedSitesIcon />
                   </Link>
