@@ -44,7 +44,7 @@ const Section = styled(EcosystemSection)`
   }
 `
 
-const SubTitle = styled(`h3`)`
+const SubTitle = styled(`h2`)`
   font-size: ${p => p.theme.fontSizes[3]};
   margin-bottom: ${p => p.theme.space[1]};
   margin-top: ${p => p.theme.space[7]};
