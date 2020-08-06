@@ -20,7 +20,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog articles pages.
-  const ArticleTemplate = require.resolve('./src/templates/article')
+  const ArticleTemplate = require.resolve('./src/templates/article.js')
   const articles = result.data.articles.edges
 
   articles.forEach((article, index) => {
