@@ -61,7 +61,8 @@ const getPageDataUrl = pagePath => {
   return `${__PATH_PREFIX__}/${pageDataPath}`
 }
 
-const getStaticQueryUrl = hash => `${__PATH_PREFIX__}/static/d/${hash}.json`
+const getStaticQueryUrl = hash =>
+  `${__PATH_PREFIX__}/page-data/sq/d/${hash}.json`
 
 const getPageData = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)
