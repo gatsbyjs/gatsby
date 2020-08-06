@@ -92,6 +92,7 @@ const read = async ({ root }, id) => {
     id,
     name: id,
     value: JSON.stringify(pkg[id], null, 2),
+    _message: `Wrote key "${id}" to package.json`,
   }
 }
 
