@@ -4,6 +4,7 @@ import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
+import reporter from "gatsby-cli/lib/reporter"
 
 function pathIsCollectionBuilder(path: string): boolean {
   return path.includes(`{`)
@@ -33,7 +34,7 @@ export function createPage(
 
   const absolutePath = systemPath.join(pagesDirectory, filePath)
 
-  // If the page has a function call to unstable_createPagesFromData markers in it, then we create it as a collection builder
+  // If the page includes a `{}` in it, then we create it as a collection builder
   if (pathIsCollectionBuilder(absolutePath)) {
     trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
     if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
@@ -49,7 +50,7 @@ export function createPage(
   if (pathIsClientOnlyRoute(absolutePath)) {
     trackFeatureIsUsed(`UnifiedRoutes:client-page-builder`)
     if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-      throw new Error(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
+      throw new Error(reporter.stripIndent`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
              Skipping creating pages for ${absolutePath}
         `)
     }

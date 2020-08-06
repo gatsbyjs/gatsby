@@ -33,8 +33,10 @@ export function isValidCollectionPathImplementation(filePath: string): boolean {
 }
 
 function errorMessage(filePath: string, part: string): string {
-  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-filePath: ${filePath}`
+  return reporter.stripIndent`
+    Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
+    filePath: ${filePath}
+  `
 }
 
 function assert(part: string, matches: string | RegExp, message: string): void {

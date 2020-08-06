@@ -15,7 +15,7 @@ export function createClientOnlyPage(
 
   actions.createPage({
     path,
-    ...getMatchPath(path),
+    matchPath: getMatchPath(path),
     component: absolutePath,
     context: {},
   })

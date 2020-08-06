@@ -3,9 +3,12 @@ import chokidar from "chokidar"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 
 /*
- * When a user is developing, they may want to mess around with the unstable_createPagesFromData
- * query, this function watches the file and if the query strings change, we delete the old
+ * When a user is developing, they may want to mess around with the collectionQuery or renaming
+ * the file, this function watches the file and if the query strings change, we delete the old
  * pages and then re-run the collection builder.
+ *
+ * TODO: Can we reuse the watcher from gatsby-node to avoid creating new watchers? or use a different
+ *       library that is _better_ at watching files with a single global internal watcher, like watchpack.
  */
 export function watchCollectionBuilder(
   absolutePath: string,

@@ -54,7 +54,7 @@ async function createPagesStatefully(
 
   if (!pagesPath) {
     reporter.panic(
-      `
+      reporter.stripIndent`
       "path" is a required option for gatsby-plugin-page-creator
 
       See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/
@@ -64,15 +64,13 @@ async function createPagesStatefully(
 
   // Validate that the path exists.
   if (pathCheck && !existsSync(pagesPath)) {
-    reporter.panic(
-      `
+    reporter.panic(reporter.stripIndent`
       The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
       ${pagesPath}
 
       Please pick a path to an existing directory.
-      `
-    )
+      `)
   }
 
   const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)

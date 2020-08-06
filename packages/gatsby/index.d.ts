@@ -38,11 +38,6 @@ export const parsePath: (path: string) => WindowLocation
 
 export const prefetchPathname: (path: string) => void
 
-export const unstable_createPagesFromData: <T>(
-  component: React.ComponentType<PageProps<T>>,
-  query: string
-) => React.ComponentType<PageProps<T>>
-
 /**
  * A props object for adding type safety to your Gatsby pages, can be
  * extended with both the query response shape, and the page context.
@@ -176,6 +171,15 @@ export class StaticQuery<T = any> extends React.Component<
  * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
  */
 export const graphql: (query: TemplateStringsArray) => void
+
+/**
+ * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+ *
+ * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+ *
+ * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ */
+export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
 
 /**
  * Gatsby configuration API.

@@ -5,7 +5,6 @@ import fs from "fs-extra"
 import traverse from "@babel/traverse"
 
 // This Function opens up the actual collection file and extracts the queryString used in the
-// `unstable_createPagesFromData` macro.
 export function collectionExtractQueryString(
   absolutePath: string
 ): string | null {

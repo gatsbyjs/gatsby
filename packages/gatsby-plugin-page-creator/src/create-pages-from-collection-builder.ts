@@ -42,12 +42,12 @@ export async function createPagesFromCollectionBuilder(
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     reporter.error(
-      `Tried to create pages from the collection builder.
-Unfortunately, the query came back empty. There may be an error in your query.
+      reporter.stripIndent`Tried to create pages from the collection builder.
+      Unfortunately, the query came back empty. There may be an error in your query.
 
-file: ${absolutePath}
+      file: ${absolutePath}
 
-${errors.map(error => error.message).join(`\n`)}`.trim()
+      ${errors.map(error => error.message).join(`\n`)}`.trim()
     )
 
     watchCollectionBuilder(absolutePath, queryString, [], actions, () =>
@@ -81,7 +81,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
 
     actions.createPage({
       path: path,
-      ...matchPath,
+      matchPath,
       component: absolutePath,
       context: {
         ...nodeParams,
