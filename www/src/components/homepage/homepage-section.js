@@ -19,7 +19,7 @@ export const Header = styled(`header`)`
   }
 `
 
-export const Name = styled(`h3`)`
+export const Name = styled(`h1`)`
   align-items: center;
   color: ${p => p.theme.colors.textMuted};
   display: flex;
@@ -49,7 +49,7 @@ const Icon = styled(`span`)`
   }
 `
 
-export const Title = styled(`h1`)`
+export const Title = styled(`h2`)`
   color: ${p => p.theme.colors.heading};
   font-size: ${p => p.theme.fontSizes[6]};
   font-weight: ${p => p.theme.fontWeights.heading};
