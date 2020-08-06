@@ -60,7 +60,7 @@ const recipeMachine = Machine(
                   msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
-                  console.log(e)
+                  // console.log(e)
                   return {
                     error: `Could not parse recipe ${context.recipePath}`,
                     e,
@@ -148,7 +148,15 @@ const recipeMachine = Machine(
           },
         },
         on: {
-          CONTINUE: `applyingPlan`,
+          CONTINUE: [
+            {
+              target: `doneError`,
+              cond: `hasErrors`,
+            },
+            {
+              target: `applyingPlan`,
+            },
+          ],
           INPUT_ADDED: {
             actions: send((context, event) => event, { to: `presentingPlan` }),
           },
@@ -275,6 +283,7 @@ const recipeMachine = Machine(
       // false || context.currentStep < context.steps.length,
       atLastStep: (context, event) => true,
       // true || context.currentStep === context.steps.length,
+      hasErrors: context => context.plan.some(p => p.error),
     },
   }
 )
