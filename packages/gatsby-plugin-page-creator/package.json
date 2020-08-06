@@ -25,10 +25,9 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
     "@babel/traverse": "^7.10.2",
-    "bluebird": "^3.7.2",
     "fs-exists-cached": "^1.0.0",
     "gatsby-page-utils": "^0.2.19",
-    "glob": "^7.1.6",
+    "globby": "^11.0.1",
     "graphql": "^14.6.0",
     "lodash": "^4.17.15",
     "slugify": "^1.4.4"

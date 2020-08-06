@@ -1,5 +1,4 @@
-import globCB from "glob"
-import Bluebird from "bluebird"
+import glob from "globby"
 import _ from "lodash"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
@@ -17,25 +16,20 @@ import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 
-type GlobParameters = Parameters<typeof globCB>
-const glob = Bluebird.promisify<
-  Array<string>,
-  GlobParameters[0],
-  GlobParameters[1]
->(globCB)
-
 interface IOptions extends PluginOptions {
   path: string
   pathCheck: boolean
   ignore: Array<string>
 }
 
+const knownCollections = new Map()
+
 // Path creator.
 // Auto-create pages.
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-async function createPagesStatefully(
+export async function createPagesStatefully(
   {
     store,
     actions,
@@ -107,9 +101,7 @@ async function createPagesStatefully(
   ).then(() => doneCb(null, null))
 }
 
-const knownCollections = new Map()
-
-function setFieldsOnGraphQLNodeType({
+export function setFieldsOnGraphQLNodeType({
   type,
   store,
 }: SetFieldsOnGraphQLNodeTypeArgs): object {
@@ -117,7 +109,7 @@ function setFieldsOnGraphQLNodeType({
   const collectionQuery = `all${type.name}`
   if (knownCollections.has(collectionQuery)) {
     return {
-      path: {
+      gatsbyPath: {
         type: GraphQLString,
         args: {
           filePath: {
@@ -139,10 +131,7 @@ function setFieldsOnGraphQLNodeType({
   return {}
 }
 
-exports.createPagesStatefully = createPagesStatefully
-exports.setFieldsOnGraphQLNodeType = setFieldsOnGraphQLNodeType
-
-exports.onPreInit = async function onPreInit(
+export async function onPreInit(
   _args: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
@@ -150,17 +139,19 @@ exports.onPreInit = async function onPreInit(
 
   const files = await glob(pagesGlob, { cwd: pagesPath })
 
-  await Bluebird.map(files, async relativePath => {
-    const absolutePath = require.resolve(
-      systemPath.join(pagesPath, relativePath)
-    )
-    const queryString = await collectionExtractQueryString(absolutePath)
-    if (!queryString) return
-    const ast = parse(queryString)
-    knownCollections.set(
-      // @ts-ignore
-      ast.definitions[0].selectionSet.selections[0].name.value,
-      relativePath
-    )
-  })
+  await Promise.all(
+    files.map(async relativePath => {
+      const absolutePath = require.resolve(
+        systemPath.join(pagesPath, relativePath)
+      )
+      const queryString = await collectionExtractQueryString(absolutePath)
+      if (!queryString) return
+      const ast = parse(queryString)
+      knownCollections.set(
+        // @ts-ignore
+        ast.definitions[0].selectionSet.selections[0].name.value,
+        relativePath
+      )
+    })
+  )
 }

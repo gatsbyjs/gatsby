@@ -45,7 +45,7 @@ export function derivePath(path: string, node: Record<string, any>): string {
       return
     }
 
-    const value = slugify(nodeValue.replace(/\//g, `(REPLACED)`), {
+    const value = slugify((nodeValue + ``).replace(/\//g, `(REPLACED)`), {
       lower: true,
     }).replace(/\(REPLACED\)/gi, `/`)
 
