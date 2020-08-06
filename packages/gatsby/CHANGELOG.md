@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.32...gatsby@2.24.33) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby:** Move static queries to page data dir ([#26242](https://github.com/gatsbyjs/gatsby/issues/26242)) ([de979d3](https://github.com/gatsbyjs/gatsby/commit/de979d3))
+
 ## [2.24.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.31...gatsby@2.24.32) (2020-08-06)
 
 **Note:** Version bump only for package gatsby
