@@ -556,7 +556,7 @@ export default async ({
       }
 
       const ValidationErrors = state => {
-        if (state.context.plan) {
+        if (state.context?.plan) {
           return (
             <>
               <Text bold>
@@ -573,6 +573,20 @@ export default async ({
         } else return null
       }
 
+      const GeneralError = ({ state }) => {
+        if (state.context?.error?.error) {
+          return (
+            <>
+              <Text bold>The recipe has an error:</Text>
+              <Text>{`\n`}</Text>
+              <Text backgroundColor="#C41E3A" color="white">
+                {state.context.error.error}
+              </Text>
+            </>
+          )
+        } else return null
+      }
+
       if (state?.value === `doneError`) {
         process.nextTick(() => process.exit())
         return (
@@ -582,6 +596,7 @@ export default async ({
             }
           >
             <ValidationErrors />
+            <GeneralError state={state} />
           </ResourceProvider>
         )
       }
