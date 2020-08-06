@@ -11,7 +11,7 @@ const tdStyles = {
   textAlign: `center`,
   verticalAlign: `bottom`,
   border: 0,
-  color: `textMuted`,
+  color: `text`,
   bg: `ui.background`,
   "&:last-child": {
     borderTopRightRadius: 2,
