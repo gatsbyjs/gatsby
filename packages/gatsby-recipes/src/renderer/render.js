@@ -173,8 +173,14 @@ const handleResource = (resourceName, context, props) => {
         resolve(cachedValue)
         updateResource(cachedValue)
       } else {
+        // if (fn == `create`) {
+        // console.log(`start creating resource:`, { context, props })
+        // }
         resources[resourceName][fn](context, props)
           .then(result => {
+            // if (fn == `create`) {
+            // console.log(`finish creating resource:`, { props })
+            // }
             updateResource(result)
             inFlightCache.set(cacheKey, false)
             return result
