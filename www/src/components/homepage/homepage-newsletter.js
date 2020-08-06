@@ -86,8 +86,8 @@ export default function HomepageNewsletter() {
           }}
         />
         <header>
-          <h3 sx={nameStyles}>The Gatsby Newsletter</h3>
-          <h1 sx={titleStyles}>Keep up with the latest things Gatsby!</h1>
+          <h1 sx={nameStyles}>The Gatsby Newsletter</h1>
+          <h2 sx={titleStyles}>Keep up with the latest things Gatsby!</h2>
         </header>
         <EmailCaptureForm
           isHomepage
