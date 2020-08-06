@@ -167,7 +167,7 @@ export default function Sidebar({
             },
           }}
         >
-          <h3
+          <h1
             sx={{
               color: `textMuted`,
               px: 6,
@@ -180,7 +180,7 @@ export default function Sidebar({
             }}
           >
             {title}
-          </h3>
+          </h1>
           <ul
             sx={{
               m: 0,
