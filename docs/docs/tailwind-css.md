@@ -191,7 +191,7 @@ From v1.4.0 onwards PurgeCSS is built into Tailwind CSS, but the approaches need
 
 **1.4.0 and above**
 
-In 1.4.0 you can purge your CSS directly from your Tailwind config. You simply need to provide an array of strings telling it which files to process.
+In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to provide an array of strings telling it which files to process.
 
 ```js:title=tailwind.config.js
 module.exports = {

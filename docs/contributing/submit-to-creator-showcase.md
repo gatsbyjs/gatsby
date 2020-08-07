@@ -70,4 +70,4 @@ By default, all edits submitted to the Creator Showcase will be reviewed through
 
 ### Change your mind / need to edit your submission?
 
-If you want to edit anything in your site submission later, simply edit the `creators.yml` file by submitting another PR.
+If you want to edit anything in your site submission later, edit the `creators.yml` file by submitting another PR.
