@@ -4,7 +4,7 @@
 
 Gatsby.js is an [open source](https://opensource.org/) project supported by [Gatsby, Inc.](https://www.gatsbyjs.com/about/) employees and an active community of contributors.
 
-[Gatsby’s community and corporate values](https://www.gatsbyjs.org/docs/gatsby-core-philosophy/#gatsbys-community-philosophy) include working in the open and setting and managing clear expectations. Establishing a governance model helps us live those values and will help support active and productive communication within the Gatsby community and between the community and the company.
+[Gatsby’s community and corporate values](/docs/gatsby-core-philosophy/#gatsbys-community-philosophy) include working in the open and setting and managing clear expectations. Establishing a governance model helps us live those values and will help support active and productive communication within the Gatsby community and between the community and the company.
 
 Our objectives for this document are to provide current information about the management and maintenance of Gatsby open source software (OSS) and present a variety of resources and avenues of communication between Gatsby’s leadership and community.
 
