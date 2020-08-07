@@ -47,3 +47,7 @@ const debouncedWriteRedirects = _.debounce(() => {
 emitter.on(`CREATE_REDIRECT`, () => {
   debouncedWriteRedirects()
 })
+
+emitter.on(`DELETE_REDIRECT`, () => {
+  debouncedWriteRedirects()
+})

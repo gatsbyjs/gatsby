@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { IGatsbyState, IRedirect, ICreateRedirectAction } from "../types"
+import { IGatsbyState, IRedirect, ActionsUnion } from "../types"
 
 const redirects = new Map<string, IRedirect[]>()
 
@@ -24,7 +24,7 @@ function add(redirect: IRedirect): void {
 
 export const redirectsReducer = (
   state: IGatsbyState["redirects"] = [],
-  action: ICreateRedirectAction
+  action: ActionsUnion
 ): IGatsbyState["redirects"] => {
   switch (action.type) {
     case `CREATE_REDIRECT`: {
@@ -38,6 +38,20 @@ export const redirectsReducer = (
       }
 
       return state
+    }
+
+    case `DELETE_REDIRECT`: {
+      const r = state.filter(
+        redirect =>
+          redirect.fromPath !== action.payload.fromPath &&
+          redirect.toPath !== action.payload.toPath &&
+          redirect.isPermanent !== action.payload.isPermanent &&
+          redirect.redirectInBrowser !== action.payload.redirectInBrowser
+      )
+
+      redirects.delete(action.payload.fromPath)
+
+      return r
     }
 
     default:

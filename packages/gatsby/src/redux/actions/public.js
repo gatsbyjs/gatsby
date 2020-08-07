@@ -1333,6 +1333,30 @@ actions.createRedirect = ({
   }
 }
 
+actions.deleteRedirect = ({
+  fromPath,
+  isPermanent = false,
+  redirectInBrowser = false,
+  toPath,
+  ...rest
+}) => {
+  let pathPrefix = ``
+  if (store.getState().program.prefixPaths) {
+    pathPrefix = store.getState().config.pathPrefix
+  }
+
+  return {
+    type: `DELETE_REDIRECT`,
+    payload: {
+      fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
+      isPermanent,
+      redirectInBrowser,
+      toPath: maybeAddPathPrefix(toPath, pathPrefix),
+      ...rest,
+    },
+  }
+}
+
 /**
  * Create a dependency between a page and data.
  *

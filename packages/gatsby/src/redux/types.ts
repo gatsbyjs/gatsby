@@ -269,6 +269,8 @@ export type ActionsUnion =
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
+  | ICreateRedirectAction
+  | IDeleteRedirectsAction
   | IDeleteCacheAction
   | IDeleteNodeAction
   | IDeleteNodesAction
@@ -548,6 +550,11 @@ export interface ICreatePageAction {
 
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
+  payload: IRedirect
+}
+
+export interface IDeleteRedirectsAction {
+  type: `DELETE_REDIRECT`
   payload: IRedirect
 }
 

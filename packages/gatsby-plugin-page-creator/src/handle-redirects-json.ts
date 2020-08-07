@@ -2,12 +2,25 @@ import { Actions } from "gatsby"
 import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
+import chokidar from "chokidar"
+
+interface IRedirect {
+  fromPath: string
+  isPermanent?: boolean
+  toPath: string
+  redirectInBrowser?: boolean
+  force?: boolean
+  statusCode?: number
+  [key: string]: unknown
+}
+
+let previousRedirectsRun: IRedirect[] = []
 
 export async function handleRedirectsFromJSONFile(
   pagesDirectory: string,
   actions: Actions
-) {
-  const absolutePath = path.join(pagesDirectory, "..", "redirects.json")
+): Promise<void> {
+  const absolutePath = path.join(pagesDirectory, `..`, `redirects.json`)
 
   // 1. Only execute this logic if the user has a redirects.json
   if ((await fs.pathExists(absolutePath)) === false) return
@@ -19,22 +32,60 @@ export async function handleRedirectsFromJSONFile(
     )
   }
 
-  // 3. Load the file and convert to string
-  const json = (await fs.readFile(absolutePath)).toString()
+  // 3. Get the redirects
+  const redirects = await getRedirects(absolutePath)
 
-  try {
-    // 4. Parse the JSON
-    const redirects = JSON.parse(json)
+  previousRedirectsRun = redirects
+
+  reporter.info(
+    `   Creating ${redirects.length} redirect${
+      redirects.length === 1 ? `` : `s`
+    } from src/redirect.json`
+  )
+
+  // 4. Loop through each node and create a redirect from it
+  redirects.forEach(redirect => {
+    actions.createRedirect(redirect)
+  })
+
+  watchFileForChanges(absolutePath, actions)
+}
+
+function watchFileForChanges(absolutePath: string, actions: Actions): void {
+  chokidar.watch(absolutePath).on(`change`, async () => {
+    previousRedirectsRun.forEach(redirect => {
+      // @ts-ignore unlisted action
+      actions.deleteRedirect(redirect)
+    })
+
+    const redirects = await getRedirects(absolutePath)
+
+    previousRedirectsRun = redirects
+
     reporter.info(
       `   Creating ${redirects.length} redirect${
         redirects.length === 1 ? `` : `s`
       } from src/redirect.json`
     )
 
-    // 5. Loop through each node and create a redirect from it
+    // 4. Loop through each node and create a redirect from it
     redirects.forEach(redirect => {
       actions.createRedirect(redirect)
     })
+  })
+}
+
+async function getRedirects(absolutePath: string): Promise<Array<IRedirect>> {
+  // 3. Load the file and convert to string
+  const json = (await fs.readFile(absolutePath)).toString()
+
+  try {
+    // 4. Parse the JSON
+    const redirects = JSON.parse(json)
+
+    if (Array.isArray(redirects) === false) throw new Error()
+
+    return redirects
   } catch (e) {
     throw new Error(
       `An error occurred parsing the json from src/redirects.json, make sure the JSON is valid syntax and it is an array of redirect objects`
