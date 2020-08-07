@@ -173,12 +173,11 @@ export const queryRunner = async (
         },
       })
     } else {
-      // The babel plugin is hard-coded to load static queries from
-      // public/static/d/
       const resultPath = path.join(
         program.directory,
         `public`,
-        `static`,
+        `page-data`,
+        `sq`,
         `d`,
         `${queryJob.hash}.json`
       )

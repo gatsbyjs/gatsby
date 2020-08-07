@@ -151,7 +151,15 @@ const ResourceComponent = props => {
       {resource?.diff ? (
         <>
           <Text>{` `}</Text>
-          <Text>{resource?.diff}"</Text>
+          <Text>{resource?.diff}</Text>
+        </>
+      ) : null}
+      {resource?.error ? (
+        <>
+          <Text>{` `}</Text>
+          <Text backgroundColor="#C41E3A" color="white">
+            {resource?.error}
+          </Text>
         </>
       ) : null}
     </Div>
@@ -292,6 +300,11 @@ export default async ({
       return (
         <>
           <ResourceProvider
+            // Exclude inputs as they are components (so "plans" currrently
+            // (we need to cleanup our names) too like resources which is why we
+            // exclude them. The input from the inputs (haha) are ignored unless
+            // they're passed as props into a resource component in which case
+            // they're validated like normal.
             value={
               state.context.plan?.filter(p => p.resourceName !== `Input`) || []
             }
@@ -305,9 +318,7 @@ export default async ({
               </Box>
             ) : null}
             <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-              {state.context.exports?.join(`\n`) +
-                `\n\n` +
-                state.context.steps.join(`\n`)}
+              {state.context.recipe}
             </MDX>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
@@ -436,16 +447,50 @@ export default async ({
         )
       }
 
-      const Error = ({ state }) => {
-        if (state && state.context && state.context.error) {
-          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
-        }
+      const ValidationErrors = state => {
+        if (state.context?.plan) {
+          return (
+            <>
+              <Text bold>
+                The recipe didn't validate. Please fix the following errors:
+              </Text>
+              <Text>{`\n`}</Text>
+              {state.context.plan
+                .filter(p => p.error)
+                .map((p, i) => (
+                  <ResourceComponent key={i} {...p} />
+                ))}
+            </>
+          )
+        } else return null
+      }
 
-        return null
+      const GeneralError = ({ state }) => {
+        if (state.context?.error?.error) {
+          return (
+            <>
+              <Text bold>The recipe has an error:</Text>
+              <Text>{`\n`}</Text>
+              <Text backgroundColor="#C41E3A" color="white">
+                {state.context.error.error}
+              </Text>
+            </>
+          )
+        } else return null
       }
 
       if (state?.value === `doneError`) {
-        return <Error width="100%" state={state} />
+        process.nextTick(() => process.exit())
+        return (
+          <ResourceProvider
+            value={
+              state.context.plan?.filter(p => p.resourceName !== `Input`) || []
+            }
+          >
+            <ValidationErrors />
+            <GeneralError state={state} />
+          </ResourceProvider>
+        )
       }
 
       let isReady
@@ -474,12 +519,6 @@ export default async ({
       }
 
       const isDone = state.value === `done`
-
-      // If we're done with an error, render out error (happens below)
-      // then exit.
-      if (state.value === `doneError`) {
-        process.nextTick(() => process.exit())
-      }
 
       if (isDone) {
         process.nextTick(() => {
