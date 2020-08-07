@@ -48,6 +48,41 @@ interface IAnalyticsTrackerConstructorParameters {
   gatsbyCliVersion?: SemVer
 }
 
+export interface ITelemetryTagsPayload {
+  name?: string
+  starterName?: string
+  pluginName?: string
+  exitCode?: number
+  duration?: number
+  uiSource?: string
+  valid?: boolean
+  plugins?: string[]
+  pathname?: string
+  error?: {
+    id?: string
+    code?: string
+    text: string
+    level?: string
+    type?: string
+    stack?: string
+    context?: string
+    error?: {
+      stack?: string
+    }
+  }
+  cacheStatus?: string
+  pluginCachePurged?: string
+  siteMeasurements?: {
+    pagesCount?: number
+    clientsCount?: number
+    paths?: string[]
+    bundleStats?: unknown
+    pageDataStats?: unknown
+    queryStats?: unknown
+  }
+  errorV2?: unknown
+}
+
 export class AnalyticsTracker {
   store = new EventStorage()
   componentId: string
@@ -147,7 +182,11 @@ export class AnalyticsTracker {
     return `-0.0.0`
   }
 
-  captureEvent(type = ``, tags = {}, opts = { debounce: false }): void {
+  captureEvent(
+    type: string | string[] = ``,
+    tags: ITelemetryTagsPayload = {},
+    opts = { debounce: false }
+  ): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -179,7 +218,7 @@ export class AnalyticsTracker {
     return finalEventRegex.test(event)
   }
 
-  captureError(type, tags = {}): void {
+  captureError(type: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -191,7 +230,7 @@ export class AnalyticsTracker {
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
-  captureBuildError(type, tags = {}): void {
+  captureBuildError(type: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -202,7 +241,10 @@ export class AnalyticsTracker {
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
-  formatErrorAndStoreEvent(eventType, tags): void {
+  formatErrorAndStoreEvent(
+    eventType: string,
+    tags: ITelemetryTagsPayload
+  ): void {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
@@ -233,7 +275,7 @@ export class AnalyticsTracker {
     this.buildAndStoreEvent(eventType, tags)
   }
 
-  buildAndStoreEvent(eventType, tags): void {
+  buildAndStoreEvent(eventType: string, tags: ITelemetryTagsPayload): void {
     const event = {
       installedGatsbyVersion: this.installedGatsbyVersion,
       gatsbyCliVersion: this.gatsbyCliVersion,
@@ -307,7 +349,7 @@ export class AnalyticsTracker {
     return osInfo
   }
 
-  trackActivity(source): void {
+  trackActivity(source: string): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -322,12 +364,12 @@ export class AnalyticsTracker {
     this.debouncer[source] = now
   }
 
-  decorateNextEvent(event, obj): void {
+  decorateNextEvent(event: string, obj): void {
     const cached = this.metadataCache[event] || {}
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  addSiteMeasurement(event, obj): void {
+  addSiteMeasurement(event: string, obj): void {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
     this.metadataCache[event] = Object.assign(cachedEvent, {
@@ -335,7 +377,7 @@ export class AnalyticsTracker {
     })
   }
 
-  decorateAll(tags): void {
+  decorateAll(tags: ITelemetryTagsPayload): void {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
 
