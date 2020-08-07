@@ -43,18 +43,18 @@ If you have any questions about an issue or PR, you can add a comment to the iss
 
 In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-[Read the full code of conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/)
+[Read the full code of conduct](/docs/contributing/code-of-conduct/)
 
 ## Guidance and documentation for contributors
 
 Here are some relevant docs and resources for contributors:
 
-- [Contributing to Gatsby.js](https://www.gatsbyjs.org/contributing/)
-- [How to contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/)
-- [How to file an issue](https://www.gatsbyjs.org/contributing/how-to-file-an-issue/)
-- [Request-for-comment (RFC) process](https://www.gatsbyjs.org/contributing/rfc-process/)
-- [Community Maintainers Meeting](https://www.gatsbyjs.org/contributing/community/#community-maintainers-meeting)
-- [Pair programming sessions](https://www.gatsbyjs.org/contributing/pair-programming/)
+- [Contributing to Gatsby.js](/docs/contributing)
+- [How to contribute](/docs/contributing/how-to-contribute/)
+- [How to file an issue](/docs/contributing/how-to-file-an-issue/)
+- [Request-for-comment (RFC) process](/docs/contributing/rfc-process/)
+- [Community Maintainers Meeting](/docs/contributing/community/#community-maintainers-meeting)
+- [Pair programming sessions](/docs/contributing/pair-programming/)
 
 ## Engage with the Gatsby team
 
