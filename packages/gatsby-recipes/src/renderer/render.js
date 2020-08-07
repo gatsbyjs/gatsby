@@ -16,17 +16,6 @@ import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
 
-const queue = new Queue(
-  async (job, cb) => {
-    const result = await job
-    cb(null, result)
-  },
-  { concurrent: 5 }
-)
-
-const resultCache = new Map()
-const inFlightCache = new Map()
-
 const ModeContext = React.createContext({})
 const useMode = () => useContext(ModeContext)
 const ModeProvider = ModeContext.Provider
@@ -41,14 +30,28 @@ const SetResourcesProvider = React.createContext()
 
 let resourcesCache
 
-const Wrapper = ({ children, inputs, isApply }) => {
+const Wrapper = ({
+  children,
+  inputs,
+  isApply,
+  resultCache,
+  inFlightCache,
+  queue,
+}) => {
   // eslint-disable-next-line
   const [resourcesList, setResources] = useState(resourcesCache || [])
   resourcesCache = resourcesList
 
   return (
     <ErrorBoundary>
-      <ModeProvider value={{ mode: isApply ? `apply` : `plan` }}>
+      <ModeProvider
+        value={{
+          mode: isApply ? `apply` : `plan`,
+          resultCache,
+          inFlightCache,
+          queue,
+        }}
+      >
         <SetResourcesProvider.Provider value={setResources}>
           <ResourceProvider value={resourcesList}>
             <InputProvider value={inputs}>
@@ -70,7 +73,7 @@ const ResourceComponent = ({
   children,
   ...props
 }) => {
-  const { mode } = useMode()
+  const { mode, resultCache, inFlightCache, queue } = useMode()
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
 
@@ -82,6 +85,9 @@ const ResourceComponent = ({
       root: process.cwd(),
       _uuid,
       mode,
+      resultCache,
+      inFlightCache,
+      queue,
     },
     props
   )
@@ -113,7 +119,7 @@ const validateResource = (resourceName, context, props) => {
 
 const handleResource = (resourceName, context, props) => {
   // Initialize
-  const { mode } = context
+  const { mode, resultCache, inFlightCache, queue } = context
 
   const trueKey = props._key ? props._key : context._uuid
 
@@ -213,25 +219,44 @@ const handleResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = (recipe, cb, inputs = {}, isApply) => {
+const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const emitter = mitt()
   const plan = {}
+
+  const queue = new Queue(
+    async (job, cb) => {
+      const result = await job
+      cb(null, result)
+    },
+    { concurrent: 5 }
+  )
+
+  queue.push(new Promise(resolve => resolve()))
+
+  const resultCache = new Map()
+  const inFlightCache = new Map()
 
   let result
 
   const recipeWithWrapper = (
-    <Wrapper inputs={inputs} isApply={isApply}>
+    <Wrapper
+      inputs={inputs}
+      isApply={isApply}
+      resultCache={resultCache}
+      inFlightCache={inFlightCache}
+      queue={queue}
+    >
       {recipe}
     </Wrapper>
   )
 
   // Keep calling render until there's remaining resources to render.
   // This let's resources that depend on other resources to pause until one finishes.
-  const renderResources = () => {
-    result = RecipesReconciler.render(recipeWithWrapper, plan)
+  const renderResources = isDrained => {
+    result = RecipesReconciler.render(recipeWithWrapper, plan, name)
 
     // If there's still nothing on the queue that means we're done.
-    if (queue.length === 0) {
+    if (isDrained && queue.length === 0) {
       // Rerender with the resources and resolve the data from the cache
       result = RecipesReconciler.render(recipeWithWrapper, plan)
       const resources = transformToPlan(result)
@@ -251,12 +276,25 @@ const render = (recipe, cb, inputs = {}, isApply) => {
   })
 
   queue.on(`drain`, () => {
-    renderResources()
+    renderResources(true)
   })
 
   renderResources()
 
-  return emitter
+  if (isStream) {
+    return emitter
+  } else {
+    return new Promise((resolve, reject) => {
+      emitter.on(`*`, (type, e) => {
+        if (type === `done`) {
+          resolve(e)
+        }
+        if (type === `error`) {
+          reject(e)
+        }
+      })
+    })
+  }
 }
 
 module.exports.render = render

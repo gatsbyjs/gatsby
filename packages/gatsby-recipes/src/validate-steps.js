@@ -12,11 +12,7 @@ module.exports = async steps => {
   })
 
   try {
-    const renderPromise = new Promise(resolve => {
-      render(steps[0]).on(`done`, result => resolve(result))
-    })
-
-    const firstStepPlan = await renderPromise()
+    const firstStepPlan = await render(steps[0])
     if (firstStepPlan.length) {
       errors.push({
         step: 0,
