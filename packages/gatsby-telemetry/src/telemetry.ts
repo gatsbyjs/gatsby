@@ -83,6 +83,10 @@ export interface ITelemetryTagsPayload {
   errorV2?: unknown
 }
 
+export interface ITelemetryOptsPayload {
+  debounce?: boolean
+}
+
 export class AnalyticsTracker {
   store = new EventStorage()
   componentId: string
@@ -185,7 +189,7 @@ export class AnalyticsTracker {
   captureEvent(
     type: string | string[] = ``,
     tags: ITelemetryTagsPayload = {},
-    opts = { debounce: false }
+    opts: ITelemetryOptsPayload = { debounce: false }
   ): void {
     if (!this.isTrackingEnabled()) {
       return
