@@ -20,7 +20,7 @@
     "feedback-fish": "^0.1.12",
     "formik": "^2.1.4",
     "gatsby": "^2.24.34",
-    "gatsby-interface": "0.0.166",
+    "gatsby-interface": "0.0.183",
     "gatsby-plugin-typescript": "^2.4.17",
     "gatsby-plugin-webfonts": "^1.1.3",
     "gatsby-source-graphql": "^2.7.0",
