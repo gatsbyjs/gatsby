@@ -48,6 +48,7 @@ exports.onPostBuild = async (
   reporter.verbose(
     `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
+  //TODO: Seperate custom filter and required page filtering so user doesnt't have to merge systems when customizing the filter.
   const filteredPages = allPages.filter(page => {
     const result = !excludes.some(exclude => {
       try {

@@ -90,7 +90,7 @@ export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
  * @name resolveSiteUrl
  *
  * @param {Object} data - results of the GraphQL query
- * @returns {string}
+ * @returns {string} - site URL, this can come from thegraphql query or another scope
  */
 function resolveSiteUrl(data) {
   return data.site.siteMetadata.siteUrl
@@ -101,8 +101,8 @@ function resolveSiteUrl(data) {
  * if you don't want to place the URI in "path" then resolvePagePath
  * are needed.
  *
- * @param {Object|string} page - Array Item returned from reolvePages
- * @returns {string}
+ * @param {Object|string} page - Array Item returned from resolvePages
+ * @returns {string} - uri of the page without domain or protocol
  */
 
 function resolvePagePath(page) {
@@ -116,7 +116,7 @@ function resolvePagePath(page) {
  * a single array if needed.
  *
  * @param {Object} data - results of the GraphQL query
- * @returns {Array}
+ * @returns {Array} - Array of Objects representing each page
  */
 function resolvePages(data) {
   return data.allSitePage.nodes
