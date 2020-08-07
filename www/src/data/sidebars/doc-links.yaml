@@ -771,6 +771,8 @@
           link: /contributing/community/
         - title: How to Contribute
           link: /contributing/how-to-contribute/
+        - title: Governance
+          link: /contributing/governance/
     - title: Partnering With Gatsby
       link: /docs/partnering-with-gatsby/
       items:
