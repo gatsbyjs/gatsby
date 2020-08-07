@@ -25,7 +25,7 @@ The following groups are the primary categories of Gatsby OSS contributors.
 
 Decisions about Gatsby open-source software are ultimately made by Gatsby, Inc. leadership and the Core Team. We believe that founding organizations built around open source software have a responsibility to build strong businesses to sustain those open source tools and the community that depends on them, which will sometimes require us to reserve high-demand tools and features for Gatsby commercial products. That said, we take our responsibility to the community very seriously and carefully consider community needs and concerns when determining our product roadmaps.
 
-_If you’d like to learn more about how we approach the relationship between our commercial and open source work, check out this blog post by Gatsby co-founder Sam Bhagwat: [Founding Organizations: Creating a Company That Sustains Our Open-Source Community](https://www.gatsbyjs.org/blog/2020-02-11-founding-organizations/#reach-skip-nav)._
+_If you’d like to learn more about how we approach the relationship between our commercial and open source work, check out this blog post by Gatsby co-founder Sam Bhagwat: [Founding Organizations: Creating a Company That Sustains Our Open-Source Community](/blog/2020-02-11-founding-organizations/#reach-skip-nav)._
 
 ### Feature Requests
 
