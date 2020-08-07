@@ -255,7 +255,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const renderResources = isDrained => {
     result = RecipesReconciler.render(recipeWithWrapper, plan, name)
 
-    // If there's still nothing on the queue that means we're done.
+    // If there's still nothing on the queue and we've drained the queue, that means we're done.
     if (isDrained && queue.length === 0) {
       // Rerender with the resources and resolve the data from the cache.
       result = RecipesReconciler.render(recipeWithWrapper, plan)
