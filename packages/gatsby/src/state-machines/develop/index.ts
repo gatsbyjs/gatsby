@@ -40,10 +40,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         WEBHOOK_RECEIVED: undefined,
       },
       invoke: {
+        id: `initialize`,
         src: `initialize`,
         onDone: {
           target: `initializingData`,
           actions: [`assignStoreAndWorkerPool`, `spawnMutationListener`],
+        },
+        onError: {
+          actions: `panic`,
         },
       },
     },
@@ -56,6 +60,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
       },
       invoke: {
+        id: `initialize-data`,
         src: `initializeData`,
         data: ({
           parentSpan,
@@ -75,8 +80,19 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `clearWebhookBody`,
             `finishParentSpan`,
           ],
-          target: `runningQueries`,
+          target: `runningPostBootstrap`,
         },
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
+        },
+      },
+    },
+    runningPostBootstrap: {
+      invoke: {
+        id: `post-bootstrap`,
+        src: `postBootstrap`,
+        onDone: `runningQueries`,
       },
     },
     // Running page and static queries and generating the SSRed HTML and page data
@@ -126,6 +142,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `waiting`,
           },
         ],
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
+        },
       },
     },
     // Recompile the JS bundle
@@ -134,6 +154,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         src: `recompile`,
         onDone: {
           actions: `markSourceFilesClean`,
+          target: `waiting`,
+        },
+        onError: {
+          actions: `logError`,
           target: `waiting`,
         },
       },
@@ -149,6 +173,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `spawnWebpackListener`,
             `markSourceFilesClean`,
           ],
+        },
+        onError: {
+          actions: `panic`,
+          target: `waiting`,
         },
       },
     },
@@ -183,6 +211,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           actions: `assignServiceResult`,
           target: `recreatingPages`,
         },
+        onError: {
+          actions: `panic`,
+        },
       },
     },
     // Almost the same as initializing data, but skips various first-run stuff
@@ -206,6 +237,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             parentSpan,
             store,
             webhookBody,
+            refresh: true,
             deferNodeMutation: true,
           }
         },
@@ -216,6 +248,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `finishParentSpan`,
           ],
           target: `runningQueries`,
+        },
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
         },
       },
     },
@@ -229,6 +265,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: {
           actions: `assignServiceResult`,
           target: `runningQueries`,
+        },
+        onError: {
+          actions: `logError`,
+          target: `waiting`,
         },
       },
     },

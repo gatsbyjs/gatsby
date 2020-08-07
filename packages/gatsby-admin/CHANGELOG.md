@@ -3,6 +3,111 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.123](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.122...gatsby-admin@0.1.123) (2020-08-06)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.122](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.121...gatsby-admin@0.1.122) (2020-08-06)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.121](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.120...gatsby-admin@0.1.121) (2020-08-06)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.120](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.119...gatsby-admin@0.1.120) (2020-08-06)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.119](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.118...gatsby-admin@0.1.119) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.118](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.117...gatsby-admin@0.1.118) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.117](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.116...gatsby-admin@0.1.117) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.116](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.115...gatsby-admin@0.1.116) (2020-08-04)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.115](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.114...gatsby-admin@0.1.115) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.114](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.113...gatsby-admin@0.1.114) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.113](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.112...gatsby-admin@0.1.113) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.112](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.110...gatsby-admin@0.1.112) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.111](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.110...gatsby-admin@0.1.111) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.110](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.109...gatsby-admin@0.1.110) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.109](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.108...gatsby-admin@0.1.109) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.108](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.107...gatsby-admin@0.1.108) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.107](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.106...gatsby-admin@0.1.107) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.106](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.105...gatsby-admin@0.1.106) (2020-07-31)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.105](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.104...gatsby-admin@0.1.105) (2020-07-31)
+
+### Features
+
+- **admin:** new dashboard design ([#26124](https://github.com/gatsbyjs/gatsby/issues/26124)) ([f1bfd53](https://github.com/gatsbyjs/gatsby/commit/f1bfd53))
+- **gatsby-admin:** add modal to manage plugin ([#26154](https://github.com/gatsbyjs/gatsby/issues/26154)) ([c1110b3](https://github.com/gatsbyjs/gatsby/commit/c1110b3))
+- **gatsby-admin:** new navbar design ([#26159](https://github.com/gatsbyjs/gatsby/issues/26159)) ([1c5d8e9](https://github.com/gatsbyjs/gatsby/commit/1c5d8e9))
+
+## [0.1.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.103...gatsby-admin@0.1.104) (2020-07-30)
+
+### Features
+
+- **gatsby-admin:** add favicon ([#26121](https://github.com/gatsbyjs/gatsby/issues/26121)) ([0211c05](https://github.com/gatsbyjs/gatsby/commit/0211c05))
+
+## [0.1.103](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.102...gatsby-admin@0.1.103) (2020-07-29)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.102](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.101...gatsby-admin@0.1.102) (2020-07-29)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.101](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.100...gatsby-admin@0.1.101) (2020-07-28)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.100](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.99...gatsby-admin@0.1.100) (2020-07-24)
+
+### Bug Fixes
+
+- **gatsby-admin:** show error messages in the interface ([#25944](https://github.com/gatsbyjs/gatsby/issues/25944)) ([491197f](https://github.com/gatsbyjs/gatsby/commit/491197f))
+- **gatsby-admin:** small design tweaks ([#25971](https://github.com/gatsbyjs/gatsby/issues/25971)) ([e699564](https://github.com/gatsbyjs/gatsby/commit/e699564))
+
 ## [0.1.99](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.98...gatsby-admin@0.1.99) (2020-07-23)
 
 **Note:** Version bump only for package gatsby-admin
