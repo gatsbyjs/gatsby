@@ -16,9 +16,9 @@ import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
 
-const ModeContext = React.createContext({})
-const useMode = () => useContext(ModeContext)
-const ModeProvider = ModeContext.Provider
+const GlobalsContext = React.createContext({})
+const useGlobals = () => useContext(GlobalsContext)
+const GlobalsProvider = GlobalsContext.Provider
 
 const getUserProps = props => {
   // eslint-disable-next-line
@@ -44,7 +44,7 @@ const Wrapper = ({
 
   return (
     <ErrorBoundary>
-      <ModeProvider
+      <GlobalsProvider
         value={{
           mode: isApply ? `apply` : `plan`,
           resultCache,
@@ -61,7 +61,7 @@ const Wrapper = ({
             </InputProvider>
           </ResourceProvider>
         </SetResourcesProvider.Provider>
-      </ModeProvider>
+      </GlobalsProvider>
     </ErrorBoundary>
   )
 }
@@ -73,7 +73,7 @@ const ResourceComponent = ({
   children,
   ...props
 }) => {
-  const { mode, resultCache, inFlightCache, queue } = useMode()
+  const { mode, resultCache, inFlightCache, queue } = useGlobals()
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
 
@@ -186,9 +186,6 @@ const handleResource = (resourceName, context, props) => {
         resolve(cachedValue)
         updateResource(cachedValue)
       } else {
-        // if (fn == `create`) {
-        // console.log(`start creating resource:`, { context, props })
-        // }
         resources[resourceName][fn](context, props)
           .then(result => {
             if (fn === `create`) {
