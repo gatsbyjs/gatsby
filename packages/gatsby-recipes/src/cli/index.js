@@ -335,11 +335,15 @@ export default async ({
     const Installing = ({ state }) => (
       <Div>
         {state.context.plan.map((p, i) => (
-          <Div key={`${p.resourceName}-${i}`}>
-            <Text italic>{p.resourceName}:</Text>
+          <Box
+            textWrap="wrap"
+            flexDirection="column"
+            key={`${p.resourceName}-${i}`}
+          >
             <Text>
+              {p.isDone ? `✔ ` : <Spinner.default />}
               {` `}
-              {p.isDone ? `✅ ` : <Spinner.default />}
+              <Text italic>{p.resourceName}:</Text>
               {` `}
               {p.isDone ? p._message : p.describe}
               {` `}
@@ -347,7 +351,7 @@ export default async ({
                 <Text>({state.context.elapsed / 1000}s elapsed)</Text>
               )}
             </Text>
-          </Div>
+          </Box>
         ))}
       </Div>
     )
