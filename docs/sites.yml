@@ -11571,3 +11571,14 @@
     - Business
   built_by: leaniercode
   featured: false
+  - title: silkroadBites
+  url: https://silkroadbites.com
+  main_url: https://silkroadbites.com
+  description: >
+    Website for Bay Area online restaurant
+  categories:
+    - Food
+    - Business
+  built_by: Ulan Rakymzhanov
+  built_by_url: https://ulan13.me
+  featured: false
