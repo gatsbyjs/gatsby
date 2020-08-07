@@ -95,53 +95,6 @@ const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
       </div>
       {stepResources?.length > 0 && (
         <div>
-          <div sx={{ px: 6, pt: 3 }}>
-            {stepResources?.map((res, i) => {
-              if (res.resourceName === `Input`) {
-                if (res.type === `textarea`) {
-                  return (
-                    <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
-                      <TextAreaField>
-                        <div>
-                          <InputFieldLabel>{res.label}</InputFieldLabel>
-                        </div>
-                        <TextAreaFieldControl
-                          onInput={e => {
-                            sendInputEvent({
-                              uuid: res._uuid,
-                              key: res._key,
-                              value: e.target.value,
-                            })
-                          }}
-                        />
-                      </TextAreaField>
-                    </div>
-                  )
-                }
-                return (
-                  <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
-                    <InputField sx={{ pt: 3 }}>
-                      <div>
-                        <InputFieldLabel>{res.label}</InputFieldLabel>
-                      </div>
-                      <InputFieldControl
-                        type={res.type}
-                        onInput={e => {
-                          sendInputEvent({
-                            uuid: res._uuid,
-                            key: res._key,
-                            value: e.target.value,
-                          })
-                        }}
-                      />
-                    </InputField>
-                  </div>
-                )
-              }
-
-              return null
-            })}
-          </div>
           <div sx={{ padding: 6 }}>
             <Heading
               sx={{
@@ -154,18 +107,14 @@ const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
             >
               Proposed changes
             </Heading>
-            {stepResources?.map((res, i) => {
-              if (res.resourceName !== `Input`) {
+            {stepResources.map((res, i) => {
                 return (
                   <ResourcePlan
                     key={`res-plan-${i}`}
-                    resourcePlan={res}
+                  resourcePlan={res}
                     isLastPlan={i === stepResources.length - 1}
                   />
                 )
-              }
-
-              return null
             })}
           </div>
         </div>
