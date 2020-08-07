@@ -35,7 +35,7 @@ If you’d like to request or propose a Gatsby feature (or a change to an existi
 
 Issues submitted by the community go through our Triage Process. You can learn more about this process in our [Triaging GitHub Issues doc](/docs/contributing/triaging-github-issues/).
 
-Our pull request review process is outlined in our [Managing Pull Requests doc](https://www.gatsbyjs.org/contributing/managing-pull-requests/).
+Our pull request review process is outlined in our [Managing Pull Requests doc](/docs/contributing/managing-pull-requests/).
 
 If you have any questions about an issue or PR, you can add a comment to the issue/PR on GitHub or reach out to us via one of the options in the "Engage with the Gatsby Team" section below.
 
