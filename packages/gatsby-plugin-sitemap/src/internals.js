@@ -56,8 +56,12 @@ export async function validateOptions(pluginOptions) {
   return defaultPluginOptions.validateAsync(pluginOptions)
 }
 
-export function validateSsrOptions(pluginOptions) {
-  return defaultPluginOptions.validate(pluginOptions)
+export function validateOptionsSsr(pluginOptions) {
+  const { value } = ssrPluginOptions.validate(pluginOptions, {
+    stripUnknown: true,
+    allowUnknown: true,
+  })
+  return value
 }
 
 /**
