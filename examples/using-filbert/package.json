@@ -4,8 +4,8 @@
   "description": "Gatsby example site using using-filbert",
   "author": "Kuldeep Keshwar <kuldeepkeshwar@gmail.com>",
   "dependencies": {
-    "@filbert-js/core": "^0.0.7",
-    "gatsby-plugin-filbert": "^0.0.7",
+    "@filbert-js/core": "latest",
+    "gatsby-plugin-filbert": "latest",
     "gatsby": "^2.23.12",
     "gatsby-plugin-google-analytics": "^2.3.6",
     "gatsby-plugin-offline": "^2.2.10",
