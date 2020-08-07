@@ -21,11 +21,10 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   </div>
 )
 
-const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
+const Step = ({ sendEvent, state, step, i }) => {
   const stepResources = state.context?.plan?.filter(
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
-
   return (
     <div
       key={`step-${i}`}

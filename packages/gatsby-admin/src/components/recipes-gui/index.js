@@ -43,13 +43,6 @@ const checkServerSession = async () => {
   }
 }
 
-const sendInputEvent = event => {
-  sendEvent({
-    event: `INPUT_ADDED`,
-    input: event,
-  })
-}
-
 const ButtonText = state => {
   if (state.value === `done`) {
     return `Refresh State`
@@ -205,7 +198,11 @@ const RecipeInterpreter = ({ recipe }) => {
 
   if (isDone) {
     process.nextTick(() => {
-      client.close()
+      try {
+        client.close()
+      } catch {
+        // do nothing here, this is throwing a type error despite running and being essential for this code
+      }
       log(`The recipe finished successfully`)
       lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
         log(`✅ ${res._message}\n`)
@@ -301,7 +298,6 @@ const RecipeInterpreter = ({ recipe }) => {
             </Heading>
             {state.context.steps.slice(1).map((step, i) => (
               <Step
-                sendInputEvent={sendInputEvent}
                 sendEvent={sendEvent}
                 state={state}
                 step={step}
