@@ -1,6 +1,7 @@
 import React, { Suspense, useContext, useState } from "react"
-import Queue from "p-queue"
+import Queue from "better-queue"
 import lodash from "lodash"
+import mitt from "mitt"
 
 import resources from "../resources"
 
@@ -15,7 +16,13 @@ import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
 
-const queue = new Queue({ concurrency: 5, autoStart: false })
+const queue = new Queue(
+  async (job, cb) => {
+    const result = await job
+    cb(null, result)
+  },
+  { concurrent: 5 }
+)
 
 const resultCache = new Map()
 const inFlightCache = new Map()
@@ -175,14 +182,19 @@ const handleResource = (resourceName, context, props) => {
       } else {
         resources[resourceName][fn](context, props)
           .then(result => {
+            if (fn === `create`) {
+              result.isDone = true
+            }
             updateResource(result)
             inFlightCache.set(cacheKey, false)
             return result
           })
-          .then(result => resultCache.set(cacheKey, result))
+          .then(result => {
+            resultCache.set(cacheKey, result)
+            return result
+          })
           .then(resolve)
           .catch(e => {
-            console.log(e)
             if (e.name === `MissingInfoError`) {
               inFlightCache.delete(cacheKey)
             }
@@ -196,13 +208,16 @@ const handleResource = (resourceName, context, props) => {
 
   inFlightCache.set(cacheKey, promise)
 
-  queue.add(() => promise)
+  queue.push(promise)
 
   throw promise
 }
 
-const render = async (recipe, cb, inputs = {}, isApply) => {
+const render = (recipe, cb, inputs = {}, isApply) => {
+  const emitter = mitt()
   const plan = {}
+
+  let result
 
   const recipeWithWrapper = (
     <Wrapper inputs={inputs} isApply={isApply}>
@@ -210,30 +225,38 @@ const render = async (recipe, cb, inputs = {}, isApply) => {
     </Wrapper>
   )
 
-  const renderResources = async () => {
-    queue.pause()
+  // Keep calling render until there's remaining resources to render.
+  // This let's resources that depend on other resources to pause until one finishes.
+  const renderResources = () => {
+    result = RecipesReconciler.render(recipeWithWrapper, plan)
 
-    RecipesReconciler.render(recipeWithWrapper, plan)
-
-    if (!queue.size) {
-      return undefined
+    // If there's still nothing on the queue that means we're done.
+    if (queue.length === 0) {
+      // Rerender with the resources and resolve the data from the cache
+      result = RecipesReconciler.render(recipeWithWrapper, plan)
+      const resources = transformToPlan(result)
+      emitter.emit(`done`, resources)
     }
-
-    queue.start()
-    await queue.onIdle()
-    return await renderResources()
   }
 
-  try {
-    // Begin the "render loop" until there are no more resources being queued.
-    await renderResources()
+  const throttledRenderResources = lodash.throttle(renderResources, 30, {
+    trailing: false,
+  })
 
-    // Rerender with the resources and resolve the data from the cache
-    const result = RecipesReconciler.render(recipeWithWrapper, plan)
-    return transformToPlan(result)
-  } catch (e) {
-    throw e
-  }
+  queue.on(`task_finish`, function (taskId, r, stats) {
+    throttledRenderResources()
+
+    const resources = transformToPlan(result)
+    emitter.emit(`update`, resources)
+  })
+
+  queue.on(`drain`, () => {
+    renderResources()
+  })
+
+  renderResources()
+
+  return emitter
 }
 
 module.exports.render = render

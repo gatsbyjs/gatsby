@@ -28,6 +28,7 @@
     "acorn-jsx": "^5.2.0",
     "ansi-html": "^0.0.7",
     "babel-plugin-remove-export-keywords": "^1.6.5",
+    "better-queue": "^3.8.10",
     "chokidar": "3.4.0",
     "concurrently": "^5.0.0",
     "contentful-management": "^5.26.3",
@@ -56,10 +57,10 @@
     "isomorphic-fetch": "^2.1.0",
     "jest-diff": "^25.5.0",
     "lodash": "^4.17.15",
+    "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.5.0",
     "normalize.css": "^8.0.1",
-    "p-queue": "^6.4.0",
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.5",
     "prop-types": "^15.6.1",
@@ -87,9 +88,6 @@
     "xstate": "^4.9.1",
     "yoga-layout-prebuilt": "^1.9.6",
     "yup": "^0.27.0"
-  },
-  "peerDependencies": {
-    "react": "^16.12.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
@@ -124,6 +122,9 @@
   ],
   "license": "MIT",
   "main": "dist/index.js",
+  "peerDependencies": {
+    "react": "^16.12.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
