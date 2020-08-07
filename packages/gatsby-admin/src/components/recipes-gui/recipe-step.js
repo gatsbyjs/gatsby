@@ -1,13 +1,6 @@
 /** @jsx jsx */
 import { jsx, Styled } from "theme-ui"
-import {
-  TextAreaField,
-  TextAreaFieldControl,
-  Heading,
-  InputField,
-  InputFieldLabel,
-  InputFieldControl,
-} from "gatsby-interface"
+import { Heading } from "gatsby-interface"
 import MDX from "gatsby-recipes/src/components/mdx"
 import CodeDiff from "./code-diff"
 import { components, removeJsx, makeResourceId } from "./utils"
@@ -107,15 +100,13 @@ const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
             >
               Proposed changes
             </Heading>
-            {stepResources.map((res, i) => {
-                return (
-                  <ResourcePlan
-                    key={`res-plan-${i}`}
-                  resourcePlan={res}
-                    isLastPlan={i === stepResources.length - 1}
-                  />
-                )
-            })}
+            {stepResources.map((res, i) => (
+              <ResourcePlan
+                key={`res-plan-${i}`}
+                resourcePlan={res}
+                isLastPlan={i === stepResources.length - 1}
+              />
+            ))}
           </div>
         </div>
       )}
