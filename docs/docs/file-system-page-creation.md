@@ -12,13 +12,19 @@ GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop
 
 ## Creating client-only routes
 
-Client-only routes can be created by using square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL. While Gatsby creates predictable routes for static pages, the same expectations apply to client side routes. Here are some examples:
+Client-only routes are pages that would be used if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations you usually create a route with dynamic segment(s) in which you use to query data from a server to render your page. 
+
+For example, if you are editing a user you might want a route like `/user/:id` to then fetch the data for whatever `id` is passed in to the URL. Client only pages are now quite simple to create with a new file system convention. Use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL. 
 
 - `/src/pages/users/[id].js => /users/:id`
-- `/src/pages/products/[...splat].js => /users/*splat`
-- `/src/pages/app/[...].js => /app/*`
+- `/src/pages/users/[id]/group/[groupId].js => /users/:id/group/:groupId`
 
-The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
+We also support _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use-cases. One example might be that you are rendering images from s3, and the url is actually the key to the asset in aws. Here is how you might create your file:
+
+- `/src/pages/image/[...awsKey].js => /users/*awsKey`
+- `/src/pages/image/[...].js => /app/*`
+
+Three periods `...` mark a page as a splat route. You can optionally name the splat as well, which has the benefit of naming the key of the property that your component recieves. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
 ```js:title=/src/pages/users/[id].js
 function UserPage(props) {
@@ -26,13 +32,13 @@ function UserPage(props) {
 }
 ```
 
-```js:title=/src/pages/products/[...splat].js
+```js:title=/src/pages/image/[...awsKey].js
 function ProductsPage(props) {
-  const splat = props.params.splat
+  const splat = props.params.awsKey
 }
 ```
 
-```js:title=/src/pages/app/[...].js
+```js:title=/src/pages/image/[...].js
 function AppPage(props) {
   const splat = props.params[‘*’]
 }
@@ -127,7 +133,7 @@ export const query = graphql`
 
 Gatsby "slugifies" every route that gets created from collection pages. When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
 
-To address this issue, Gatsby automatically includes a `path` field on every model used by collection pages. The `path` field must take an argument of the `filePath` it is trying to resolve. This is necessary because it’s possible that one model is used in multiple collection pages. Here is an example of how this works:
+To address this issue, Gatsby automatically includes a `gatsbyPath` field on every model used by collection pages. The `gatsbyPath` field must take an argument of the `filePath` it is trying to resolve. This is necessary because it’s possible that one model is used in multiple collection pages. Here is an example of how this works:
 
 Assume that a `Product` model is used in two pages:
 
@@ -149,7 +155,7 @@ export const query = graphql`
   query ($id: String) {
     allProducts {
       name
-      path(filePath: "/products/{Product:name}")
+      gatsbyPath(filePath: "/products/{Product:name}")
     }
   }
 }
