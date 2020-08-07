@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { Global, css, jsx, styled } from "@filbert-js/core"
+
+import { Global, css, styled } from "@filbert-js/core"
 
 import { Helmet } from "react-helmet"
 import React from "react"
