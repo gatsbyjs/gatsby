@@ -268,10 +268,18 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
       } else if (isDrained && queue.length === 0) {
         return true
+        // If there's one resource & it fails validation, it doesn't go into the queue
+        // so we check if inFlightCache is empty & all resources have an error.
+      } else if (
+        !resources.some(r => !r.error) &&
+        ![...inFlightCache.values()].some(a => a)
+      ) {
+        return true
       }
 
       return false
     }
+
     if (isDone()) {
       // Rerender with the resources and resolve the data from the cache.
       emitter.emit(`done`, resources)
