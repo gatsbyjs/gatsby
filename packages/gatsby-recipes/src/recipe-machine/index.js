@@ -130,7 +130,6 @@ const recipeMachine = Machine(
               const result = await createPlan(context, cb)
               return result
             } catch (e) {
-              console.log(e)
               throw e
             }
           },

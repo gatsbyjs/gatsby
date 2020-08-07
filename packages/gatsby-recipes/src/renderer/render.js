@@ -253,11 +253,27 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const renderResources = isDrained => {
     result = RecipesReconciler.render(recipeWithWrapper, plan, name)
 
-    // If there's still nothing on the queue and we've drained the queue, that means we're done.
-    if (isDrained && queue.length === 0) {
+    const resources = transformToPlan(result)
+
+    const isDone = () => {
+      // Mostly for validation stage that checks that there's no resources
+      // in the initial step — this done condition says no resources were found
+      // and there's no inflight resource work (resources will be empty until the
+      // first resource returns).
+      //
+      // We use "inFlightCache" because the queue doesn't immediately show up
+      // as having things in it.
+      if (resources.length === 0 && ![...inFlightCache.values()].some(a => a)) {
+        return true
+        // If there's still nothing on the queue and we've drained the queue, that means we're done.
+      } else if (isDrained && queue.length === 0) {
+        return true
+      }
+
+      return false
+    }
+    if (isDone()) {
       // Rerender with the resources and resolve the data from the cache.
-      result = RecipesReconciler.render(recipeWithWrapper, plan)
-      const resources = transformToPlan(result)
       emitter.emit(`done`, resources)
     }
   }
@@ -266,7 +282,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     trailing: false,
   })
 
-  queue.on(`task_finish`, function(taskId, r, stats) {
+  queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
 
     const resources = transformToPlan(result)
@@ -277,7 +293,9 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     renderResources(true)
   })
 
-  renderResources()
+  // When there's no resources, renderResources finishes synchronously
+  // so wait for the next tick so the emitter listners can be setup first.
+  process.nextTick(() => renderResources())
 
   if (isStream) {
     return emitter

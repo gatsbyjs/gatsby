@@ -36,8 +36,11 @@ let lastDone = 0
 
 const compareState = (oldState, newState) => {
   // isEqual doesn't handle values on objects in arrays 🤷‍♀️
-  const newDone = cleanedState.context.plan.filter(r => r.isDone).length
-  return !lodash.isEqual(cleanedState, lastState) || lastDone !== newDone
+  const newDone = newState.context.plan.filter(r => r.isDone).length
+  const comparison = !lodash.isEqual(newState, oldState) || lastDone !== newDone
+  lastDone = newDone
+
+  return comparison
 }
 
 const emitUpdate = state => {
@@ -50,7 +53,6 @@ const emitUpdate = state => {
     })
 
     lastState = cleanedState
-    lastDone = newDone
   }
 }
 
@@ -69,8 +71,8 @@ const startRecipe = ({ recipePath, projectRoot }) => {
     ).onTransition(state => {
       // Don't emit again unless there's a state change.
       console.log(`===onTransition`, {
-        event: state.event,
         state: state.value,
+        event: state.event.type,
       })
       if (state.changed) {
         console.log(`===state.changed`, {
