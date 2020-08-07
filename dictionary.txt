@@ -162,7 +162,6 @@ Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
-ASKGatsbyJS
 Asko
 aspirational
 AST
