@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.8...gatsby-recipes@0.2.9) (2020-08-07)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix for when recipes have multiple NPMPackageJSON resources ([#26281](https://github.com/gatsbyjs/gatsby/issues/26281)) ([1e74b7c](https://github.com/gatsbyjs/gatsby/commit/1e74b7c))
+
 ## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.7...gatsby-recipes@0.2.8) (2020-08-06)
 
 ### Bug Fixes
