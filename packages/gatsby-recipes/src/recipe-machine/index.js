@@ -6,45 +6,66 @@ const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
+const resolveRecipe = require(`../resolve-recipe`)
 
 const recipeMachine = Machine(
   {
     id: `recipe`,
-    initial: `parsingRecipe`,
+    initial: `resolvingRecipe`,
     context: {
       recipePath: null,
       projectRoot: null,
-      currentStep: 0,
-      steps: [],
+      recipe: ``,
+      recipeSrc: ``,
+      stepsAsMdx: [],
       exports: [],
       plan: [],
       commands: [],
       stepResources: [],
-      stepsAsMdx: [],
-      exportsAsMdx: [],
       inputs: {},
     },
     states: {
+      resolvingRecipe: {
+        invoke: {
+          id: `resolveRecipe`,
+          src: async (context, _event) => {
+            if (context.src) {
+              return context.src
+            } else if (context.recipePath && context.projectRoot) {
+              const recipe = await resolveRecipe(
+                context.recipePath,
+                context.projectRoot
+              )
+              return recipe
+            } else {
+              throw new Error(`A recipe must be specified`)
+            }
+          },
+          onError: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, _event) => {
+                debug(`error resolving recipe`)
+                return {
+                  error: `Could not resolve recipe "${context.recipePath}"`,
+                }
+              },
+            }),
+          },
+          onDone: {
+            target: `parsingRecipe`,
+            actions: assign({
+              recipeSrc: (_context, event) => event.data,
+            }),
+          },
+        },
+      },
       parsingRecipe: {
         invoke: {
           id: `parseRecipe`,
           src: async (context, _event) => {
-            let parsed
-
             debug(`parsingRecipe`)
-
-            if (context.src) {
-              parsed = await parser.parse(context.src)
-            } else if (context.recipePath && context.projectRoot) {
-              parsed = await parser(context.recipePath, context.projectRoot)
-            } else {
-              throw new Error(
-                JSON.stringify({
-                  validationError: `A recipe must be specified`,
-                })
-              )
-            }
-
+            const parsed = await parser.parse(context.recipeSrc)
             debug(`parsedRecipe`)
 
             return parsed
@@ -72,8 +93,9 @@ const recipeMachine = Machine(
           onDone: {
             target: `validateSteps`,
             actions: assign({
-              steps: (context, event) => event.data.stepsAsMdx,
-              exports: (context, event) => event.data.exportsAsMdx,
+              recipe: (context, event) => event.data.recipe,
+              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              exports: (context, event) => event.data.exports,
             }),
           },
         },
@@ -83,7 +105,7 @@ const recipeMachine = Machine(
           id: `validateSteps`,
           src: async (context, event) => {
             debug(`validatingSteps`)
-            const result = await validateSteps(context.steps)
+            const result = await validateSteps(context.stepsAsMdx)
             if (result.length > 0) {
               debug(`errors found in validation`)
               throw new Error(JSON.stringify(result))
@@ -209,7 +231,7 @@ const recipeMachine = Machine(
             }),
           },
           onDone: {
-            target: `hasAnotherStep`,
+            target: `done`,
             actions: [`addResourcesToContext`],
           },
           onError: {
@@ -217,23 +239,6 @@ const recipeMachine = Machine(
             actions: assign({ error: (context, event) => event.data }),
           },
         },
-      },
-      hasAnotherStep: {
-        entry: [`incrementStep`],
-        always: [
-          {
-            target: `creatingPlan`,
-            // The 'searchValid' guard implementation details are
-            // specified in the machine config
-            cond: `hasNextStep`,
-          },
-          {
-            target: `done`,
-            // The 'searchValid' guard implementation details are
-            // specified in the machine config
-            cond: `atLastStep`,
-          },
-        ],
       },
       done: {
         type: `final`,
@@ -245,11 +250,6 @@ const recipeMachine = Machine(
   },
   {
     actions: {
-      incrementStep: assign((context, event) => {
-        return {
-          currentStep: context.currentStep + 1,
-        }
-      }),
       deleteOldPlan: assign((context, event) => {
         return {
           plan: [],
@@ -279,10 +279,6 @@ const recipeMachine = Machine(
       }),
     },
     guards: {
-      hasNextStep: (context, event) => false,
-      // false || context.currentStep < context.steps.length,
-      atLastStep: (context, event) => true,
-      // true || context.currentStep === context.steps.length,
       hasErrors: context => context.plan.some(p => p.error),
     },
   }

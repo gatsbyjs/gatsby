@@ -424,9 +424,7 @@ export default async ({
               </Box>
             ) : null}
             <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-              {state.context.exports?.join(`\n`) +
-                `\n\n` +
-                state.context.steps.join(`\n`)}
+              {state.context.recipe}
             </MDX>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
