@@ -12,19 +12,19 @@ GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop
 
 ## Creating client-only routes
 
-Client-only routes are pages that would be used if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations you usually create a route with dynamic segment(s) in which you use to query data from a server to render your page. 
+Client-only routes are pages that would be used if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations you usually create a route with dynamic segment(s) in which you use to query data from a server to render your page.
 
-For example, if you are editing a user you might want a route like `/user/:id` to then fetch the data for whatever `id` is passed in to the URL. Client only pages are now quite simple to create with a new file system convention. Use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL. 
+For example, if you are editing a user you might want a route like `/user/:id` to then fetch the data for whatever `id` is passed in to the URL. Client only pages are now quite simple to create with a new file system convention. Use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL.
 
 - `/src/pages/users/[id].js => /users/:id`
 - `/src/pages/users/[id]/group/[groupId].js => /users/:id/group/:groupId`
 
-We also support _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use-cases. One example might be that you are rendering images from s3, and the url is actually the key to the asset in aws. Here is how you might create your file:
+We also support _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use-cases. One example might be that you are rendering images from S3, and the url is actually the key to the asset in AWS. Here is how you might create your file:
 
 - `/src/pages/image/[...awsKey].js => /users/*awsKey`
 - `/src/pages/image/[...].js => /app/*`
 
-Three periods `...` mark a page as a splat route. You can optionally name the splat as well, which has the benefit of naming the key of the property that your component recieves. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
+Three periods `...` mark a page as a splat route. You can optionally name the splat as well, which has the benefit of naming the key of the property that your component receives. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
 ```js:title=/src/pages/users/[id].js
 function UserPage(props) {
