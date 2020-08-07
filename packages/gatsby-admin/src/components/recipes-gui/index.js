@@ -43,6 +43,12 @@ const checkServerSession = async () => {
   }
 }
 
+const Spinner = () => <span>Loading...</span>
+
+function Wrapper({ children }) {
+  return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
+}
+
 const ButtonText = state => {
   if (state.value === `done`) {
     return `Refresh State`
@@ -50,6 +56,7 @@ const ButtonText = state => {
   return `Install Recipe`
 }
 
+// recursive component, will continuously display children until there are none
 const ResourceChildren = ({ resourceChildren, state }) => {
   if (!resourceChildren || !resourceChildren.length) {
     return null
@@ -73,12 +80,6 @@ const ResourceChildren = ({ resourceChildren, state }) => {
       ))}
     </Styled.ul>
   )
-}
-
-const Spinner = () => <span>Loading...</span>
-
-function Wrapper({ children }) {
-  return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
 }
 
 const RecipeInterpreter = ({ recipe }) => {
@@ -146,7 +147,6 @@ const RecipeInterpreter = ({ recipe }) => {
         isRecipeStarted = false
       }
     }
-
     checkServerSession()
   }
 
@@ -161,7 +161,7 @@ const RecipeInterpreter = ({ recipe }) => {
   if (!state) {
     return (
       <Wrapper>
-        <Spinner /> Loading recipe
+        <Spinner /> {recipe}
       </Wrapper>
     )
   }
@@ -176,26 +176,6 @@ const RecipeInterpreter = ({ recipe }) => {
   log(`plan`, state.context.plan)
   log(`stepResources`, state.context.stepResources)
 
-  const staticMessages = {}
-  for (let step = 0; step < state.context.currentStep; step++) {
-    staticMessages[step] = [
-      {
-        type: `mdx`,
-        key: `mdx-${step}`,
-        value: state.context.steps[step],
-      },
-    ]
-  }
-  lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-    staticMessages[res._currentStep].push({
-      type: `resource`,
-      key: `finished-stuff-${i}`,
-      value: res._message,
-    })
-  })
-
-  log(`staticMessages`, staticMessages)
-
   if (isDone) {
     process.nextTick(() => {
       try {
@@ -203,30 +183,21 @@ const RecipeInterpreter = ({ recipe }) => {
       } catch {
         // do nothing here, this is throwing a type error despite running and being essential for this code
       }
-      log(`The recipe finished successfully`)
-      lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-        log(`✅ ${res._message}\n`)
-      })
+      log(`${recipe} finished successfully`)
     })
   }
 
-  const plansWithoutInputs = state.context.plan?.filter(
-    p => p.resourceName !== `Input`
-  )
+  const { plan, steps, exports } = state.context
 
-  const groupedPlans = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
+  const groupedPlansByResource = lodash.groupBy(plan, p => p.resourceName)
 
   return (
     <>
       <Styled.p>{` `}</Styled.p>
       <ResourceProvider
-        value={
-          state.context.plan?.filter(
-            p => p.resourceName !== `Input` && p.resourceDefinitions?._key
-          ) || []
-        }
+        value={plan?.filter(p => p.resourceDefinitions?._key) || []}
       >
-        <InputProvider value={state.context.inputs || {}}>
+        <InputProvider value={{}}>
           <Wrapper>
             <WelcomeMessage />
             <div
@@ -243,9 +214,7 @@ const RecipeInterpreter = ({ recipe }) => {
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
-                  {state.context.exports?.join(`\n`) +
-                    `\n\n` +
-                    state.context.steps[0]}
+                  {exports?.join(`\n`) + `\n\n` + steps[0]}
                 </MDX>
               </div>
               <Button
@@ -259,44 +228,44 @@ const RecipeInterpreter = ({ recipe }) => {
             </div>
             <div sx={{ marginBottom: 14 }}>
               <Heading sx={{ marginBottom: 6 }}>
-                {plansWithoutInputs?.length}
+                {plan?.length}
                 {` `}
                 Changes
               </Heading>
-              {Object.entries(groupedPlans).map(([resourceName, plans]) => (
-                <div key={`key-${resourceName}`}>
-                  <Heading
-                    as="h3"
-                    sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
-                  >
-                    {resourceName}
-                  </Heading>
-                  <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
-                    {plans
-                      .filter(p => p.resourceName !== `Input`)
-                      .map((p, i) => (
-                        <Styled.li
-                          sx={{
-                            listStyleType: `none`,
-                          }}
-                          key={`${resourceName}-plan-${i}`}
-                        >
-                          <ResourceMessage state={state} resource={p} />
-                          <ResourceChildren
-                            state={state}
-                            resourceChildren={p.resourceChildren}
-                          />
-                        </Styled.li>
-                      ))}
-                  </Styled.ul>
-                </div>
-              ))}
+              {Object.entries(groupedPlansByResource).map(
+                ([resourceName, plans]) => (
+                  <div key={`key-${resourceName}`}>
+                    <Heading
+                      as="h3"
+                      sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
+                    >
+                      {resourceName}
+                    </Heading>
+                    <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+                      {plans
+                        .filter(p => p.resourceName !== `Input`)
+                        .map((p, i) => (
+                          <Styled.li
+                            sx={{
+                              listStyleType: `none`,
+                            }}
+                            key={`${resourceName}-plan-${i}`}
+                          >
+                            <ResourceMessage state={state} resource={p} />
+                            <ResourceChildren
+                              state={state}
+                              resourceChildren={p.resourceChildren}
+                            />
+                          </Styled.li>
+                        ))}
+                    </Styled.ul>
+                  </div>
+                )
+              )}
             </div>
 
-            <Heading sx={{ mb: 6 }}>
-              {state.context.steps.length - 1} Steps
-            </Heading>
-            {state.context.steps.slice(1).map((step, i) => (
+            <Heading sx={{ mb: 6 }}>{steps.length - 1} Steps</Heading>
+            {steps.slice(1).map((step, i) => (
               <Step
                 sendEvent={sendEvent}
                 state={state}
