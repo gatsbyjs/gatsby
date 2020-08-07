@@ -33,12 +33,18 @@ const PORT = process.argv[2] || 50400
 
 let lastState = {}
 let lastDone = 0
+
+const compareState = (oldState, newState) => {
+  // isEqual doesn't handle values on objects in arrays 🤷‍♀️
+  const newDone = cleanedState.context.plan.filter(r => r.isDone).length
+  return !lodash.isEqual(cleanedState, lastState) || lastDone !== newDone
+}
+
 const emitUpdate = state => {
   // eslint-disable-next-line no-unused-vars
   const { lastEvent, ...cleanedState } = state
   // isEqual doesn't handle values on objects in arrays 🤷‍♀️
-  const newDone = cleanedState.context.plan.filter(r => r.isDone).length
-  if (!lodash.isEqual(cleanedState, lastState) || lastDone !== newDone) {
+  if (compareState(lastState, cleanedState)) {
     pubsub.publish(`operation`, {
       state: JSON.stringify(cleanedState),
     })

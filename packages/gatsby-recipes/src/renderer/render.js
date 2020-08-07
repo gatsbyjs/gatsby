@@ -231,8 +231,6 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     { concurrent: 5 }
   )
 
-  queue.push(new Promise(resolve => resolve()))
-
   const resultCache = new Map()
   const inFlightCache = new Map()
 
@@ -268,7 +266,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     trailing: false,
   })
 
-  queue.on(`task_finish`, function (taskId, r, stats) {
+  queue.on(`task_finish`, function(taskId, r, stats) {
     throttledRenderResources()
 
     const resources = transformToPlan(result)
