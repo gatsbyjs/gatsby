@@ -15,6 +15,7 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
+import { handleRedirectsFromJSONFile } from "./handle-redirects-json"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -69,6 +70,8 @@ Please pick a path to an existing directory.`)
   files.forEach(file => {
     createPage(file, pagesDirectory, actions, ignore, graphql)
   })
+
+  await handleRedirectsFromJSONFile(pagesDirectory, actions)
 
   watchDirectory(
     pagesPath,
