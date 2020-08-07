@@ -9,7 +9,7 @@ import {
   switchToPeriodDelimiters,
 } from "./path-utils"
 
-// Input queryStringParent could be a Modle or a full graphql query
+// Input queryStringParent could be a Model or a full graphql query
 // End result should be something like { allProducts { nodes { id }}}
 export function generateQueryFromString(
   queryOrModel: string,

@@ -8,7 +8,7 @@ export default function Root(props) {
       {props.data.allMarkdownRemark.nodes.map(node => {
         return (
           <Link
-            to={node.path}
+            to={node.gatsbyPath}
             data-testid="collection-routing-blog"
             data-testslug={node.fields.slug}
           >
@@ -30,7 +30,9 @@ export const query = graphql`
         fields {
           slug
         }
-        path(filePath: "/collection-routing/{MarkdownRemark.fields__slug}")
+        gatsbyPath(
+          filePath: "/collection-routing/{MarkdownRemark.fields__slug}"
+        )
       }
     }
   }

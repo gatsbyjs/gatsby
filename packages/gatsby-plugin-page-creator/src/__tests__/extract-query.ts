@@ -116,10 +116,12 @@ describe(`extract query`, () => {
         generateQueryFromString(
           `UnionQuery`,
           compatiblePath(
-            `/foo/bar/{UnionQuery.id}/{UnionQuery.parent__(File)__relativePath}.js`
+            `/foo/bar/{UnionQuery.id}/{UnionQuery.parent__(File)__parent__(Bar)__relativePath}.js`
           )
         )
-      ).toBe(`{allUnionQuery{nodes{id,parent{... on File{relativePath}}}}}`)
+      ).toBe(
+        `{allUnionQuery{nodes{id,parent{... on File{parent{... on Bar{relativePath}}}}}}}`
+      )
     })
   })
 })
