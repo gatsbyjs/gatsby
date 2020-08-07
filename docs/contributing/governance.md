@@ -33,7 +33,7 @@ If you’d like to request or propose a Gatsby feature (or a change to an existi
 
 ### Community PR and Issue Review Process
 
-Issues submitted by the community go through our Triage Process. You can learn more about this process in our [Triaging GitHub Issues doc](https://www.gatsbyjs.org/contributing/triaging-github-issues/).
+Issues submitted by the community go through our Triage Process. You can learn more about this process in our [Triaging GitHub Issues doc](/docs/contributing/triaging-github-issues/).
 
 Our pull request review process is outlined in our [Managing Pull Requests doc](https://www.gatsbyjs.org/contributing/managing-pull-requests/).
 
