@@ -22,11 +22,9 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
       </Styled.p>
     </div>
     <CodeDiff resourcePlan={resourcePlan} />
-    {resourcePlan.resourceChildren
-      ? resourcePlan.resourceChildren.map(resource => (
-          <ResourcePlan key={resource._uuid} resourcePlan={resource} />
-        ))
-      : null}
+    {resourcePlan?.resourceChildren?.map(resource => (
+      <ResourcePlan key={resource._uuid} resourcePlan={resource} />
+    ))}
   </div>
 )
 
