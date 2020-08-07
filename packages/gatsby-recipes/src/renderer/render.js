@@ -257,7 +257,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
 
     // If there's still nothing on the queue that means we're done.
     if (isDrained && queue.length === 0) {
-      // Rerender with the resources and resolve the data from the cache
+      // Rerender with the resources and resolve the data from the cache.
       result = RecipesReconciler.render(recipeWithWrapper, plan)
       const resources = transformToPlan(result)
       emitter.emit(`done`, resources)
