@@ -258,6 +258,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     const resources = transformToPlan(result)
 
     const isDone = () => {
+      let result
       // Mostly for validation stage that checks that there's no resources
       // in the initial step — this done condition says no resources were found
       // and there's no inflight resource work (resources will be empty until the
@@ -266,20 +267,22 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
       // We use "inFlightCache" because the queue doesn't immediately show up
       // as having things in it.
       if (resources.length === 0 && ![...inFlightCache.values()].some(a => a)) {
-        return true
+        result = true
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
       } else if (isDrained && queue.length === 0) {
-        return true
+        result = true
         // If there's one resource & it fails validation, it doesn't go into the queue
         // so we check if inFlightCache is empty & all resources have an error.
       } else if (
         !resources.some(r => !r.error) &&
         ![...inFlightCache.values()].some(a => a)
       ) {
-        return true
+        result = true
+      } else {
+        result = false
       }
 
-      return false
+      return result
     }
 
     if (isDone()) {
@@ -288,14 +291,13 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     }
   }
 
-  const throttledRenderResources = lodash.throttle(renderResources, 30, {
+  const throttledRenderResources = lodash.throttle(renderResources, 100, {
     trailing: false,
   })
 
   queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
 
-    const resources = transformToPlan(result)
     emitter.emit(`update`, resources)
   })
 
@@ -313,6 +315,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     return new Promise((resolve, reject) => {
       emitter.on(`*`, (type, e) => {
         if (type === `done`) {
+          // timer.flush()
           resolve(e)
         }
         if (type === `error`) {
