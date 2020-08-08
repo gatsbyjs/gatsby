@@ -7,6 +7,7 @@ const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const resolveRecipe = require(`../resolve-recipe`)
+const lodash = require(`lodash`)
 
 const recipeMachine = Machine(
   {
@@ -261,10 +262,10 @@ const recipeMachine = Machine(
         }
       }),
       addResourcesToContext: assign((context, event) => {
-        if (event.data) {
+        if (lodash.isArray(event.data) && event.data.length > 0) {
           let plan = context.plan || []
           plan = plan.map(p => {
-            const changedResource = event.data.find(c => {
+            const changedResource = event.data?.find(c => {
               if (c._uuid) {
                 return c._uuid === p._uuid
               } else {
