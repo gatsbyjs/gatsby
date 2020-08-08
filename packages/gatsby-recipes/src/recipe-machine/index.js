@@ -265,7 +265,7 @@ const recipeMachine = Machine(
         if (lodash.isArray(event.data) && event.data.length > 0) {
           let plan = context.plan || []
           plan = plan.map(p => {
-            const changedResource = event.data?.find(c => {
+            const changedResource = event.data.find(c => {
               if (c._uuid) {
                 return c._uuid === p._uuid
               } else {
