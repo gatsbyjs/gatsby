@@ -49,6 +49,12 @@ There are two main steps to using a plugin: Installing and configuring.
 npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
+> Note: If you chose to use yarn (instead of npm), you will need to replace each npm shell command with "yarn", as well as replacing any "npm install" with "yarn add":
+
+```shell
+yarn add
+```
+
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
 
 2. Edit the file `gatsby-config.js` at the root of your project to the following:
