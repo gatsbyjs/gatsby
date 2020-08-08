@@ -16,6 +16,8 @@ import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
 
+const errorCache = new Map()
+
 const GlobalsContext = React.createContext({})
 const useGlobals = () => useContext(GlobalsContext)
 const GlobalsProvider = GlobalsContext.Provider
@@ -151,14 +153,17 @@ const handleResource = (resourceName, context, props) => {
   }
 
   let allResources = useResourceContext()
-  const error = validateResource(resourceName, context, props)
-  if (error) {
-    const result = {
-      error: `Validation error: ${error.details[0].message}`,
+  if (!errorCache.has(trueKey)) {
+    const error = validateResource(resourceName, context, props)
+    errorCache.set(trueKey, error)
+    if (error) {
+      const result = {
+        error: `Validation error: ${error.details[0].message}`,
+      }
+      updateResource(result)
+      resultCache.set(cacheKey, result)
+      return result
     }
-    updateResource(result)
-    resultCache.set(cacheKey, result)
-    return result
   }
 
   const cachedResult = resultCache.get(cacheKey)
