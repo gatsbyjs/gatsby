@@ -11571,3 +11571,16 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: haseebmajid.dev
+  url: https://haseebmajid.dev
+  source_url: https://github.com/hmajid2301/personal-site
+  main_url: https://haseebmajid.dev
+  description: >
+    Personal portfolio website and blog.
+  categories:
+    - Blog
+    - Open Source
+    - Portfolio
+    - Technology
+  built_by: hmajid2301
+  featured: false
