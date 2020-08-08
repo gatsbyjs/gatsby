@@ -70,14 +70,15 @@ const startRecipe = ({ recipePath, projectRoot }) => {
       recipeMachine.withContext(initialState.context)
     ).onTransition(state => {
       // Don't emit again unless there's a state change.
-      console.log(`===onTransition`, {
-        state: state.value,
-        event: state.event.type,
-      })
-      if (state.changed) {
+      if (state.event.type !== `onUpdate`) {
+        console.log(`===onTransition`, {
+          state: state.value,
+          event: state.event.type,
+        })
+      }
+      if (state.changed && state.event.type !== `onUpdate`) {
         console.log(`===state.changed`, {
           state: state.value,
-          currentStep: state.context.currentStep,
         })
         // Wait until plans are created before updating the UI
         if (
