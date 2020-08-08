@@ -228,13 +228,10 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const emitter = mitt()
   const plan = {}
 
-  const queue = new Queue(
-    async (job, cb) => {
-      const result = await job
-      cb(null, result)
-    },
-    { concurrent: 5 }
-  )
+  const queue = new Queue(async (job, cb) => {
+    const result = await job
+    cb(null, result)
+  })
 
   const resultCache = new Map()
   const inFlightCache = new Map()
