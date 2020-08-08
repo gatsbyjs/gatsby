@@ -632,7 +632,6 @@ Evoq
 ex-PayPal-ers
 Ex-PayPal-ers
 exampleValue
-excited-gif
 executables
 EXIF
 ExitWP
