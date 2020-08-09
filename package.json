@@ -1,11 +1,12 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/node": "^7.8.7",
-    "@babel/plugin-transform-typescript": "^7.9.6",
-    "@babel/runtime": "^7.9.6",
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/plugin-transform-typescript": "^7.10.3",
+    "@babel/runtime": "^7.10.3",
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.1",
+    "@types/better-queue": "^3.8.2",
     "@types/bluebird": "^3.5.30",
     "@types/cache-manager": "^2.10.2",
     "@types/common-tags": "^1.8.0",
@@ -25,7 +26,7 @@
     "@types/semver": "^7.1.0",
     "@types/signal-exit": "^3.0.0",
     "@types/stack-trace": "^0.0.29",
-    "@types/webpack": "^4.41.8",
+    "@types/webpack": "^4.41.18",
     "@types/webpack-merge": "^4.1.5",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
@@ -41,14 +42,14 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-flowtype": "^3.13.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "husky": "3.1.0",
-    "ignore": "^5.1.4",
+    "ignore": "^5.1.8",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
@@ -56,8 +57,8 @@
     "jest-serializer-path": "^0.1.15",
     "jest-silent-reporter": "^0.2.1",
     "joi": "^14.3.1",
-    "js-yaml": "^3.13.1",
-    "lerna": "^3.21.0",
+    "js-yaml": "^3.14.0",
+    "lerna": "^3.22.1",
     "lint-staged": "^8.2.1",
     "markdown-magic": "^0.2.1",
     "npm-run-all": "4.1.5",
@@ -82,9 +83,13 @@
     "rimraf": "^3.0.2",
     "svgo": "1.3.2",
     "ts-jest": "^22",
-    "typescript": "^3.9.2",
+    "typescript": "^3.9.5",
     "unified": "^9.0.0",
     "yargs": "^10.1.2"
+  },
+  "resolutions": {
+    "theme-ui": "0.4.0-rc.1",
+    "csstype": "2.6.10"
   },
   "engines": {
     "yarn": "^1.17.3",
@@ -142,11 +147,6 @@
     "publish": "node scripts/check-publish-access && node scripts/clear-package-dir --verbose && lerna publish",
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next --bump=prerelease",
-    "remark": "^12.0.0",
-    "remark-frontmatter": "^2.0.0",
-    "remark-lint": "^7.0.0",
-    "remark-preset-lint-markdown-style-guide": "^3.0.0",
-    "remark-preset-lint-recommended": "^4.0.0",
     "test": "npm-run-all -s lint jest test:peril",
     "test:coverage": "jest --coverage",
     "test:update": "jest --updateSnapshot",
@@ -154,10 +154,19 @@
     "test:integration": "jest --config=integration-tests/jest.config.js",
     "test:peril": "cd peril && yarn test",
     "typecheck": "node ./scripts/check-ts",
+    "update-dictionary": "node ./scripts/update-dictionary.js",
     "version": "prettier --write \"**/CHANGELOG.md\"",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "dictionary-en": "^3.0.1",
+    "jest-matchmedia-mock": "^1.0.1",
+    "retext-emoji": "^7.0.1",
+    "retext-spell": "^4.0.0",
+    "retext-syntax-mentions": "^2.1.1",
+    "retext-syntax-urls": "^2.0.0"
+  }
 }

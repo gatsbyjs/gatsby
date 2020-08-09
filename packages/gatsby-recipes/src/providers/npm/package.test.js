@@ -45,6 +45,7 @@ describe(`package manager client commands`, () => {
     expect(yarnInstall).toMatchSnapshot()
     expect(yarnDevInstall).toMatchSnapshot()
   })
+
   it(`generates the correct commands for npm`, () => {
     const yarnInstall = pkg.generateClientComands({
       packageManager: `npm`,

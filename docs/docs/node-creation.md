@@ -8,7 +8,7 @@ A node is stored in redux under the `nodes` namespace, whose state is a map of t
 
 ## Sourcing Nodes
 
-The creation of nodes occurs primarily in the [sourceNodes](/docs/node-apis/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `null`. Nodes created via transform plugins (who implement [onCreateNode](/docs/node-apis/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [traceID illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
+The creation of nodes occurs primarily in the [sourceNodes](/docs/node-apis/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `null`. Nodes created via transform plugins (who implement [onCreateNode](/docs/node-apis/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [`traceId` illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
 
 ## Parent/Child/Refs
 
@@ -63,7 +63,7 @@ To track this, there is a redux `nodesTouched` namespace that tracks whether a p
 
 When a `source-nodes` plugin runs again, it generally recreates nodes (which automatically touches them too). But in some cases, such as [transformer-screenshot](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-screenshot/src/gatsby-node.js#L56), a node might not change, but we still want to keep it around for the build. In these cases, we must explicitly call `touchNode`.
 
-Any nodes that aren't touched by the end of the `source-nodes` phase, are deleted. This is performed via a diff between the `nodesTouched` and `nodes` redux namespaces, in [source-nodes.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/source-nodes.ts)
+Any nodes that aren't touched by the end of the `source-nodes` phase, are deleted. This is performed via a diff between the `nodesTouched` and `nodes` redux namespaces, in [source-nodes.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/source-nodes.ts)
 
 ## Changing a node's fields
 

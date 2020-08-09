@@ -1,6 +1,6 @@
 {
   "name": "gatsby-graphiql-explorer",
-  "version": "0.4.2",
+  "version": "0.4.12",
   "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
@@ -28,18 +28,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.9.6"
+    "@babel/runtime": "^7.10.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.9.4",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-transform-runtime": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
-    "babel-preset-gatsby-package": "^0.4.2",
-    "core-js": "^2.6.11",
+    "babel-preset-gatsby-package": "^0.5.2",
+    "core-js": "^3.6.5",
     "cross-env": "^5.2.1",
     "css-loader": "^1.0.1",
     "graphiql": "^0.17.5",
@@ -51,8 +51,8 @@
     "react-dom": "^16.12.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "whatwg-fetch": "^3.0.0"
+    "webpack-cli": "^3.3.12",
+    "whatwg-fetch": "^3.1.0"
   },
   "engines": {
     "node": ">=10.13.0"

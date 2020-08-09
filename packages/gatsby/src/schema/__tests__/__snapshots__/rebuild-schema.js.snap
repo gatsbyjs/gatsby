@@ -4,7 +4,7 @@ exports[`Built-in types preserves built-in types 1`] = `
 "\\"\\"\\"Provides default value for input field.\\"\\"\\"
 directive @default(value: JSON!) on INPUT_FIELD_DEFINITION
 
-\\"\\"\\"Add date formating options.\\"\\"\\"
+\\"\\"\\"Add date formatting options.\\"\\"\\"
 directive @dateformat(formatString: String, locale: String, fromNow: Boolean, difference: String) on FIELD_DEFINITION
 
 \\"\\"\\"Link to node by foreign-key relation.\\"\\"\\"

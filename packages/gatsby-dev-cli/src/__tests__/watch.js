@@ -312,6 +312,7 @@ jest.mock(`../local-npm-registry/install-packages`, () => {
 jest.mock(`../utils/promisified-spawn`, () => {
   return {
     promisifiedSpawn: jest.fn(() => Promise.resolve()),
+    setDefaultSpawnStdio: jest.fn(),
   }
 })
 

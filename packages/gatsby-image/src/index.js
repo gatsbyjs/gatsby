@@ -71,12 +71,12 @@ const matchesMedia = ({ media }) =>
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
  * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string}
+ * @return {string?} Returns image src or undefined it not given.
  */
-const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = fluid ? getCurrentSrcData(fluid) : getCurrentSrcData(fixed)
+const getImageCacheKey = ({ fluid, fixed }) => {
+  const srcData = getCurrentSrcData(fluid || fixed || [])
 
-  return data.src
+  return srcData && srcData.src
 }
 
 /**
@@ -109,16 +109,20 @@ const getCurrentSrcData = currentData => {
 const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  return imageCache[src] || false
+
+  const cacheKey = getImageCacheKey(convertedProps)
+
+  return imageCache[cacheKey] || false
 }
 
 const activateCacheForImage = props => {
   const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  imageCache[src] = true
+
+  const cacheKey = getImageCacheKey(convertedProps)
+
+  if (cacheKey) {
+    imageCache[cacheKey] = true
+  }
 }
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -723,6 +727,23 @@ const fluidObject = PropTypes.shape({
   maxHeight: PropTypes.number,
 })
 
+function requireFixedOrFluid(originalPropTypes) {
+  return (props, propName, componentName) => {
+    if (!props.fixed && !props.fluid) {
+      throw new Error(
+        `The prop \`fluid\` or \`fixed\` is marked as required in \`${componentName}\`, but their values are both \`undefined\`.`
+      )
+    }
+
+    PropTypes.checkPropTypes(
+      { [propName]: originalPropTypes },
+      props,
+      `prop`,
+      componentName
+    )
+  }
+}
+
 // If you modify these propTypes, please don't forget to update following files as well:
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
@@ -730,8 +751,12 @@ const fluidObject = PropTypes.shape({
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
-  fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
-  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
+  fixed: requireFixedOrFluid(
+    PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)])
+  ),
+  fluid: requireFixedOrFluid(
+    PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)])
+  ),
   fadeIn: PropTypes.bool,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,

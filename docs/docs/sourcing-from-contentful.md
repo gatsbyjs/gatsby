@@ -18,7 +18,7 @@ If you have a JSON file with content in it, you could pull it into Contentful us
 
 If you do create content directly in Contentful, make sure to name your fields in a way you can remember when you create GraphQL queries. If you use GraphiQL, it can suggest fields to you, but this will only help if the field names are clear and memorable.
 
-As far as pushing data out to your site goes, we suggest to you to use this fantastic plugin [gatsby-source-contentful](https://www.npmjs.com/package/gatsby-source-contentful), to use it, you'd need to have the `spaceId` and the `accessToken` from contentful.
+As far as pushing data out to your site goes, we suggest to you to use this fantastic plugin [gatsby-source-contentful](https://www.npmjs.com/package/gatsby-source-contentful), to use it, you'd need to have the `spaceId` and the `accessToken` from Contentful.
 
 ## Install
 

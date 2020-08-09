@@ -87,7 +87,7 @@ Note, the same enum mechanism is used for creation of `distinct` fields
 
 #### Group Resolver
 
-The resolver for the Group type is created in [build-connection-fields.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-connection-fields.js#L57). It operates on the result of the core connection query (e.g. `allMarkdownRemark`), which is a `Connection` object with edges. From these edges, we retrieve all the nodes (each edge has a `node` field). And now we can use lodash to group those nodes by the fieldname argument (e.g. `field: frontmatter___author`).
+The resolver for the Group type is created in [build-connection-fields.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-connection-fields.js#L57). It operates on the result of the core connection query (e.g. `allMarkdownRemark`), which is a `Connection` object with edges. From these edges, we retrieve all the nodes (each edge has a `node` field). And now we can use Lodash to group those nodes by the fieldname argument (e.g. `field: frontmatter___author`).
 
 If sorting was specified ([see below](#sorting)), we sort the groups by fieldname, and then apply any `skip/limit` arguments using the [graphql-skip-limit](https://www.npmjs.com/package/graphql-skip-limit) library. Finally we are ready to fill in our `field`, `fieldValue`, and `totalCount` fields on each group, and we can return our resolved node.
 

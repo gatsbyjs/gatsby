@@ -291,7 +291,7 @@ SEO.propTypes = {
 export default SEO
 ```
 
-The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work with in the rest of your project. Pretty cool, right?
+The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work within the rest of your project. Pretty cool, right?
 
 4. Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
 
@@ -357,7 +357,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 1. [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](https://gatsbyjs.github.io/gatsby-starter-default/)_
 2. [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](https://gatsbyjs.github.io/gatsby-starter-blog/)_
-3. [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
+3. [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.app/)_
 
 ## That's all, folks
 

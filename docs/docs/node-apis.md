@@ -9,9 +9,15 @@ Gatsby gives plugins and site builders many APIs for controlling your site's dat
 
 ## Async plugins
 
-If your plugin performs async operations (disk I/O, database access, calling remote APIs, etc.) you must either return a promise or use the callback passed to the 3rd argument. Gatsby needs to know when plugins are finished as some APIs, to work correctly, require previous APIs to be complete first. See [Debugging Async Lifecycles](/docs/debugging-async-lifecycles/) for more info.
+If your plugin performs async operations (disk I/O, database access, calling remote APIs, etc.) you must either return a promise (explicitly using `Promise` API or implicitly using `async`/`await` syntax) or use the callback passed to the 3rd argument. Gatsby needs to know when plugins are finished as some APIs, to work correctly, require previous APIs to be complete first. See [Debugging Async Lifecycles](/docs/debugging-async-lifecycles/) for more info.
 
 ```javascript
+// Async/await
+exports.createPages = async () => {
+  // do async work
+  const result = await fetchExternalData()
+}
+
 // Promise API
 exports.createPages = () => {
   return new Promise((resolve, reject) => {
@@ -21,7 +27,7 @@ exports.createPages = () => {
 
 // Callback API
 exports.createPages = (_, pluginOptions, cb) => {
-  // do Async work
+  // do async work
   cb()
 }
 ```

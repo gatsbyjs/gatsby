@@ -26,6 +26,9 @@ const IndexPage = ({ data }) => (
     <Link to="/__non_existent_page__/" data-testid="broken-link">
       Go to a broken link
     </Link>
+    <Link to="subdirectory/page-1" data-testid="subdir-link">
+      Go to subdirectory
+    </Link>
     <h2>Blog posts</h2>
     <ul>
       {data.posts.edges.map(({ node }) => (

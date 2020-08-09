@@ -1,6 +1,5 @@
 import React, { useRef, useState, useCallback, useLayoutEffect } from "react"
 import PropTypes from "prop-types"
-import { Trans } from "@lingui/macro"
 
 const VIDEO_RATIO = 9 / 16
 
@@ -36,9 +35,7 @@ const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
 
       <p>
         <em>
-          <Trans>
-            Video hosted on <a href={lessonLink}>egghead.io</a>
-          </Trans>
+          Video hosted on <a href={lessonLink}>egghead.io</a>
         </em>
         .
       </p>

@@ -83,18 +83,23 @@ describe(`sidebar`, () => {
       const { queryByText } = renderSidebar(`/characters/jay-gatsby/`)
       expect(queryByText(`Jay Gatsby`)).toBeInTheDocument()
     })
+
+    it(`opens sections with active items when the pathname is missing a trailing slash`, () => {
+      const { queryByText } = renderSidebar(`/characters/jay-gatsby`)
+      expect(queryByText(`Jay Gatsby`)).toBeInTheDocument()
+    })
   })
 
   describe(`toggle section`, () => {
     it(`opens the section if it is not open`, () => {
       const { queryByText, getByLabelText } = renderSidebar(`/plot-summary/`)
-      fireEvent.click(getByLabelText(`Motifs expand`))
+      fireEvent.click(getByLabelText(`Motifs toggle`))
       expect(queryByText(`The Green Light`)).toBeInTheDocument()
     })
 
     it(`closes the section if it is already opened`, () => {
       const { queryByText, getByLabelText } = renderSidebar(`/motifs/`)
-      fireEvent.click(getByLabelText(`Motifs collapse`))
+      fireEvent.click(getByLabelText(`Motifs toggle`))
       expect(queryByText(`The Green Light`)).not.toBeInTheDocument()
     })
   })
@@ -124,6 +129,11 @@ describe(`sidebar`, () => {
   describe(`scroll into view`, () => {
     it(`scrolls the sidebar into view on load`, () => {
       renderSidebar(`/characters/jay-gatsby/`)
+      expect(scrollIntoViewMock).toHaveBeenCalled()
+    })
+
+    it(`scrolls the sidebar into view on load when the pathname is missing a trailing slash`, () => {
+      renderSidebar(`/characters/jay-gatsby`)
       expect(scrollIntoViewMock).toHaveBeenCalled()
     })
 

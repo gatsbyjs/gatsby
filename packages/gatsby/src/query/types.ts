@@ -1,3 +1,5 @@
+import { ExecutionResult } from "graphql"
+
 export interface IGraphQLRunnerStats {
   totalQueries: number
   uniqueOperations: Set<string>
@@ -24,4 +26,10 @@ export interface IGraphQLRunnerStatResults {
   comparatorsUsed: Array<{ comparator: string; amount: number }>
   uniqueFilterPaths: number
   uniqueSorts: number
+}
+
+export type PageContext = any
+
+export interface IExecutionResult extends ExecutionResult {
+  pageContext?: PageContext
 }

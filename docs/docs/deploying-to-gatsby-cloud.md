@@ -18,7 +18,7 @@ Best of all, Gatsby Cloud includes a [free tier](https://www.gatsbyjs.com/pricin
 
 ## Integrations
 
-Gatsby Cloud integrates with the tools you already use to build sites. By connecting your Gatsby project's Github repo, Gatsby Cloud automatically builds and deploys your site when you make changes.
+Gatsby Cloud integrates with the tools you already use to build sites. By connecting your Gatsby project's GitHub repo, Gatsby Cloud automatically builds and deploys your site when you make changes.
 
 ### CMS Integrations
 

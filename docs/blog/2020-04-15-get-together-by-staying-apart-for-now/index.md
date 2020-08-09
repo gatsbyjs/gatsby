@@ -9,7 +9,7 @@ tags:
   - gatsby-days
 ---
 
-Getting folks together to learn, grow, and connect with each other is the lifeblood of any community, and especially Gatsby’s community. In-person events have always been something that our team has worked to support and encourage. Unfortunately, with the spread of COVID19, those in-person events have become a major health risk.
+Getting folks together to learn, grow, and connect with each other is the lifeblood of any community, and especially Gatsby’s community. In-person events have always been something that our team has worked to support and encourage. Unfortunately, with the spread of COVID-19, those in-person events have become a major health risk.
 
 We love that you love getting together as much as we do. But in light of the current situation, we ask that you please reschedule all in-person Gatsby community events or find a way to hold them remotely until the World Health Organization and/or your local authorities say it’s safe for people to meet in groups again.
 
