@@ -6922,3 +6922,27 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-intl-blog.now.sh/
+  repo: https://github.com/sampittko/gatsby-starter-intl-blog
+  description: Gatsby starter for creating an internationalized personal blog website.
+  tags:
+    - Blog
+    - i18n
+    - SEO
+    - Markdown
+    - MDX
+    - Styling:Tailwind
+    - Styling:PostCSS
+    - Client-side App
+  features:
+    - Supports as many languages as needed
+    - Extensible so that it fits anyones needs
+    - Dark mode
+    - Categorizable blog posts
+    - Git-hosted content that supports MDX
+    - Easy navigation
+    - Simple & clean look achieved with Tailwind CSS
+    - Accessible & fast for great SEO and high usability
+    - Easy to personalize
+    - Let visitors know that you are open to work
+    - Cookie consent for GDPR compliance
