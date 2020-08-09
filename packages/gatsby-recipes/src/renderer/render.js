@@ -315,7 +315,6 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     return new Promise((resolve, reject) => {
       emitter.on(`*`, (type, e) => {
         if (type === `done`) {
-          // timer.flush()
           resolve(e)
         }
         if (type === `error`) {
