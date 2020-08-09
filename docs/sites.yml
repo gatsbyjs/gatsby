@@ -11512,6 +11512,28 @@
     - Music
   built_by: Mei
   built_by_url: https://twitter.com/vo_mei0623
+- title: Reactive Resume
+  url: https://rxresu.me
+  main_url: https://rxresu.me
+  description: >
+    A free and open source resume builder.
+  categories:
+    - App
+    - Design
+    - Open Source
+  built_by: Amruth Pillai
+  built_by_url: https://amruthpillai.com
+- title: Meetup
+  url: https://meetup.com/
+  main_url: https://meetup.com/
+  description: >
+    Meetup is the leading social media platform dedicated to connecting people in person, or online during times of crisis.
+  categories:
+    - Accessibility
+    - App
+    - Community
+    - Event
+    - SEO
 - title: John Kavanagh Portfolio
   url: https://johnkavanagh.co.uk/
   main_url: https://johnkavanagh.co.uk/
@@ -11539,6 +11561,16 @@
     - Web Development
   built_by: MongoDB
   featured: false
+- title: Devnet
+  main_url: https://devnet.hr/
+  url: https://devnet.hr/
+  description: >
+    Business website for web development company.
+  categories:
+    - Web Development
+    - Agency
+  built_by: Devnet
+  built_by_url: https://devnet.hr
 - title: Leanier.com
   url: https://leanier.com
   main_url: https://leanier.com

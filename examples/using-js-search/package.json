@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "gatsby": "^2.23.12",
+    "gatsby": "^2.24.26",
     "js-search": "^1.4.3",
     "react": "^16.5.1",
     "react-dom": "^16.5.1"

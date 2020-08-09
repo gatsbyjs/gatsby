@@ -10,8 +10,8 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-theme-blog": "^2.0.0",
+    "gatsby": "^2.24.26",
+    "gatsby-theme-blog": "^2.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "theme-ui": "0.4.0-alpha.3"

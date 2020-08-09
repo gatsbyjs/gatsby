@@ -1,24 +1,25 @@
 import uuidV4 from "uuid/v4"
+import os from "os"
 import { isCI, getCIName } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
 } from "./repository-id"
-import os from "os"
+import { createFlush } from "./create-flush"
+import { EventStorage } from "./event-storage"
+import { showAnalyticsNotification } from "./show-analytics-notification"
+import { cleanPaths } from "./error-helpers"
 
 import { join, sep } from "path"
 import isDocker from "is-docker"
-import { showAnalyticsNotification } from "./show-analytics-notification"
 import lodash from "lodash"
 
-// TODO convert to TypeScript
-const EventStorage = require(`./event-storage`)
-const { cleanPaths } = require(`./error-helpers`)
+const typedUUIDv4 = uuidV4 as () => UUID
 
+const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
 
-type UUID = string
-type SemVer = string | undefined
+type SemVer = string
 
 interface IOSInfo {
   nodeVersion: SemVer
@@ -54,7 +55,8 @@ export class AnalyticsTracker {
   gatsbyCliVersion?: SemVer
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
-  machineId?: UUID
+  features = new Set<string>()
+  machineId: UUID
 
   constructor() {
     try {
@@ -71,6 +73,7 @@ export class AnalyticsTracker {
     } catch (e) {
       // ignore
     }
+    this.machineId = this.getMachineId()
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
@@ -112,7 +115,7 @@ export class AnalyticsTracker {
     } catch (e) {
       // ignore
     }
-    return undefined
+    return `-0.0.0`
   }
 
   getGatsbyCliVersion(): SemVer {
@@ -130,8 +133,9 @@ export class AnalyticsTracker {
     } catch (e) {
       // ignore
     }
-    return undefined
+    return `-0.0.0`
   }
+
   captureEvent(type = ``, tags = {}, opts = { debounce: false }): void {
     if (!this.isTrackingEnabled()) {
       return
@@ -158,6 +162,10 @@ export class AnalyticsTracker {
 
     delete this.metadataCache[type]
     this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  isFinalEvent(event: string): boolean {
+    return finalEventRegex.test(event)
   }
 
   captureError(type, tags = {}): void {
@@ -227,9 +235,15 @@ export class AnalyticsTracker {
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
       dbEngine,
+      features: Array.from(this.features),
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
+    if (this.isFinalEvent(eventType)) {
+      // call create flush
+      const flush = createFlush(this.isTrackingEnabled())
+      flush()
+    }
   }
 
   getMachineId(): UUID {
@@ -238,10 +252,10 @@ export class AnalyticsTracker {
       return this.machineId
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
-    if (!machineId) {
-      machineId = uuidV4()
-      this.store.updateConfig(`telemetry.machineId`, machineId)
+    if (typeof machineId !== `string`) {
+      machineId = typedUUIDv4()
     }
+    this.store.updateConfig(`telemetry.machineId`, machineId)
     this.machineId = machineId
     return machineId
   }
@@ -251,7 +265,7 @@ export class AnalyticsTracker {
     if (this.trackingEnabled !== undefined) {
       return this.trackingEnabled
     }
-    let enabled = this.store.getConfig(`telemetry.enabled`)
+    let enabled = this.store.getConfig(`telemetry.enabled`) as boolean | null
     if (enabled === undefined || enabled === null) {
       if (!isCI()) {
         showAnalyticsNotification()
@@ -352,5 +366,9 @@ export class AnalyticsTracker {
     }
 
     return this.store.sendEvents()
+  }
+
+  trackFeatureIsUsed(name: string): void {
+    this.features.add(name)
   }
 }
