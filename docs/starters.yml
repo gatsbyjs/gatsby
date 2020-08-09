@@ -6926,23 +6926,23 @@
   repo: https://github.com/p1t1ch/gatsby-starter-vadyan
   description: A modern content-agnostic Gatsby starter
   tags:
-	  - Language:TypeScript
-	  - Linting
-	  - Netlify
-	  - PWA
-	  - SEO
-	  - Storybook
-	  - Styling:CSS-in-JS
-	  - Testing
+    - Language:TypeScript
+    - Linting
+    - Netlify
+    - PWA
+    - SEO
+    - Storybook
+    - Styling:CSS-in-JS
+    - Testing
   features:
     - 💬 Static type checking with Typescript
-		- 🥇 Linting environment with ESLint, Prettier, Husky & lint-staged
-		- 🎲 Testing environment with Jest, RTL & Cypress
-		- 👩‍🎤 CSS in JS styling with Emotion
-		- 📕 Work with components in Storybook
-		- 🌀 Transform SVGs into React components with SVGR
-		- ✨ Full PWA support
-		- 🧠 Apollo Client setup for dynamic data
-		- 🚦 Ready to use CI/CD setup with Github Actions
-		- 📊 Analyze generated build with Webpack Bundle Analyzer
-		- 💥 Write pretty imports with Webpack aliases
+    - 🥇 Linting environment with ESLint, Prettier, Husky & lint-staged
+    - 🎲 Testing environment with Jest, RTL & Cypress
+    - 👩‍🎤 CSS in JS styling with Emotion
+    - 📕 Work with components in Storybook
+    - 🌀 Transform SVGs into React components with SVGR
+    - ✨ Full PWA support
+    - 🧠 Apollo Client setup for dynamic data
+    - 🚦 Ready to use CI/CD setup with Github Actions
+    - 📊 Analyze generated build with Webpack Bundle Analyzer
+    - 💥 Write pretty imports with Webpack aliases
