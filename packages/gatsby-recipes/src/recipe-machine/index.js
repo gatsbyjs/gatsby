@@ -81,7 +81,6 @@ const recipeMachine = Machine(
                   msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
-                  // console.log(e)
                   return {
                     error: `Could not parse recipe ${context.recipePath}`,
                     e,
@@ -131,7 +130,6 @@ const recipeMachine = Machine(
               const result = await createPlan(context, cb)
               return result
             } catch (e) {
-              console.log(e)
               throw e
             }
           },
@@ -205,16 +203,20 @@ const recipeMachine = Machine(
               cb(`TICK`)
             }, 10000)
 
-            applyPlan(context, cb)
-              .then(result => {
+            const emitter = applyPlan(context, cb)
+            emitter.on(`*`, (type, e) => {
+              if (type === `update`) {
+                cb({ type: `onUpdate`, data: e })
+              }
+              if (type === `done`) {
                 debug(`applied plan`)
-                cb({ type: `onDone`, data: result })
-              })
-              .catch(error => {
+                cb({ type: `onDone`, data: e })
+              }
+              if (type === `error`) {
                 debug(`error applying plan`)
-                debug(error)
-                cb({ type: `onError`, data: error })
-              })
+                cb({ type: `onError`, data: e })
+              }
+            })
 
             return () => clearInterval(interval)
           },
@@ -229,6 +231,9 @@ const recipeMachine = Machine(
             actions: assign({
               elapsed: context => (context.elapsed += 10000),
             }),
+          },
+          onUpdate: {
+            actions: [`addResourcesToContext`],
           },
           onDone: {
             target: `done`,
@@ -268,7 +273,7 @@ const recipeMachine = Machine(
             })
             if (!changedResource) return p
             p._message = changedResource._message
-            p.isDone = true
+            p.isDone = changedResource.isDone
             return p
           })
           return {

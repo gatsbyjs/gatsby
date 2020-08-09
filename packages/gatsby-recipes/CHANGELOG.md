@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.9...gatsby-recipes@0.2.10) (2020-08-08)
+
+### Features
+
+- **gatsby-recipes:** live stream updates from creating resources ([#26283](https://github.com/gatsbyjs/gatsby/issues/26283)) ([57843f7](https://github.com/gatsbyjs/gatsby/commit/57843f7))
+
 ## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.8...gatsby-recipes@0.2.9) (2020-08-07)
 
 ### Bug Fixes
