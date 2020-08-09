@@ -238,6 +238,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const inFlightCache = new Map()
 
   let result
+  let resourcesArray = []
 
   const recipeWithWrapper = (
     <Wrapper
@@ -256,7 +257,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const renderResources = isDrained => {
     result = RecipesReconciler.render(recipeWithWrapper, plan, name)
 
-    const resources = transformToPlan(result)
+    const resourcesArray = transformToPlan(result)
 
     const isDone = () => {
       let result
@@ -267,7 +268,10 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
       //
       // We use "inFlightCache" because the queue doesn't immediately show up
       // as having things in it.
-      if (resources.length === 0 && ![...inFlightCache.values()].some(a => a)) {
+      if (
+        resourcesArray.length === 0 &&
+        ![...inFlightCache.values()].some(a => a)
+      ) {
         result = true
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
       } else if (isDrained && queue.length === 0) {
@@ -275,7 +279,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
         // If there's one resource & it fails validation, it doesn't go into the queue
         // so we check if inFlightCache is empty & all resources have an error.
       } else if (
-        !resources.some(r => !r.error) &&
+        !resourcesArray.some(r => !r.error) &&
         ![...inFlightCache.values()].some(a => a)
       ) {
         result = true
@@ -288,7 +292,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
 
     if (isDone()) {
       // Rerender with the resources and resolve the data from the cache.
-      emitter.emit(`done`, resources)
+      emitter.emit(`done`, resourcesArray)
     }
   }
 
@@ -299,7 +303,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
 
-    emitter.emit(`update`, resources)
+    emitter.emit(`update`, resourcesArray)
   })
 
   queue.on(`drain`, () => {
