@@ -123,6 +123,7 @@ const handleResource = (resourceName, context, props) => {
   // Initialize
   const { mode, resultCache, inFlightCache, queue } = context
 
+  // TODO use session ID to ensure the IDs are unique
   const trueKey = props._key ? props._key : context._uuid
 
   let cacheKey
