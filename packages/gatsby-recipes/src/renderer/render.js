@@ -306,7 +306,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     trailing: false,
   })
 
-  queue.on(`task_finish`, function(taskId, r, stats) {
+  queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
   })
 
