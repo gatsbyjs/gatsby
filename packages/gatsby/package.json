@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.24.38",
+  "version": "2.24.39",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -31,7 +31,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^0.3.3",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "babel-plugin-remove-graphql-queries": "^2.9.16",
+    "babel-plugin-remove-graphql-queries": "^2.9.17",
     "babel-preset-gatsby": "^0.5.5",
     "better-opn": "1.0.0",
     "better-queue": "^3.8.10",
@@ -76,8 +76,8 @@
     "gatsby-graphiql-explorer": "^0.4.12",
     "gatsby-legacy-polyfills": "^0.0.2",
     "gatsby-link": "^2.4.13",
-    "gatsby-plugin-page-creator": "^2.3.20",
-    "gatsby-plugin-typescript": "^2.4.17",
+    "gatsby-plugin-page-creator": "^2.3.21",
+    "gatsby-plugin-typescript": "^2.4.18",
     "gatsby-react-router-scroll": "^3.0.12",
     "gatsby-telemetry": "^1.3.26",
     "glob": "^7.1.6",

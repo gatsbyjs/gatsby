@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.38...gatsby@2.24.39) (2020-08-10)
+
+### Features
+
+- **gatsby:** Extend support for file system pages to build client-only and collections of pages! ([#25204](https://github.com/gatsbyjs/gatsby/issues/25204)) ([61d8849](https://github.com/gatsbyjs/gatsby/commit/61d8849))
+
 ## [2.24.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.37...gatsby@2.24.38) (2020-08-10)
 
 ### Bug Fixes
