@@ -187,7 +187,7 @@ const RecipeInterpreter = ({ recipe }) => {
     })
   }
 
-  const { plan, stepsAsMdx, exports } = state.context
+  const { plan, stepsAsJS, exports } = state.context
 
   const groupedPlansByResource = lodash.groupBy(plan, p => p.resourceName)
 
@@ -214,7 +214,7 @@ const RecipeInterpreter = ({ recipe }) => {
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
-                  {exports?.join(`\n`) + `\n\n` + stepsAsMdx[0]}
+                  {exports?.join(`\n`) + `\n\n` + stepsAsJS[0]}
                 </MDX>
               </div>
               <Button
@@ -264,8 +264,8 @@ const RecipeInterpreter = ({ recipe }) => {
               )}
             </div>
 
-            <Heading sx={{ mb: 6 }}>{stepsAsMdx.length - 1} Steps</Heading>
-            {stepsAsMdx.slice(1).map((step, i) => (
+            <Heading sx={{ mb: 6 }}>{stepsAsJS.length - 1} Steps</Heading>
+            {stepsAsJS.slice(1).map((step, i) => (
               <Step
                 sendEvent={sendEvent}
                 state={state}
