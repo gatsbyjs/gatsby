@@ -6,7 +6,7 @@ This page roughly documents the APIs and conventions available with the new file
 
 For now, these features are marked as experimental and require a flag to utilize. Start your Gatsby site locally with the following flag:
 
-```bash
+```shell
 GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop
 ```
 
