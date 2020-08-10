@@ -3,6 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { useMutation } from "urql"
 import { useState, Fragment } from "react"
 import {
+  AnchorButton,
   Button,
   TextAreaField,
   TextAreaFieldControl,
@@ -78,105 +79,115 @@ export default function ManagePluginForm({ plugin }: IProps): JSX.Element {
           alignItems="center"
         >
           <Heading as="h1">{plugin.name}</Heading>
-          <Button
-            variant="GHOST"
-            tone="DANGER"
-            loading={deletingGatsbyPlugin}
-            onClick={(evt): void => {
+          <Flex gap={3}>
+            {npmData?.repository?.url && (
+              <AnchorButton variant="SECONDARY" href={npmData.repository.url}>
+                View on GitHub
+              </AnchorButton>
+            )}
+            <Button
+              variant="GHOST"
+              tone="DANGER"
+              loading={deletingGatsbyPlugin}
+              onClick={(evt): void => {
+                evt.preventDefault()
+                if (
+                  window.confirm(
+                    `Are you sure you want to uninstall ${plugin.name}?`
+                  )
+                ) {
+                  deleteGatsbyPlugin({ name: plugin.name }).then(() =>
+                    navigate(`/`)
+                  )
+                }
+              }}
+            >
+              Uninstall
+            </Button>
+          </Flex>
+        </Flex>
+        <Flex>
+          <div sx={{ width: `70%` }}>{npmData?.readme}</div>
+          <Flex
+            as="form"
+            // @ts-ignore
+            onSubmit={(evt: React.FormEvent): void => {
               evt.preventDefault()
-              if (
-                window.confirm(
-                  `Are you sure you want to uninstall ${plugin.name}?`
-                )
-              ) {
-                deleteGatsbyPlugin({ name: plugin.name }).then(() =>
-                  navigate(`/`)
-                )
+              setError(null)
+              let json
+              try {
+                // NOTE(@mxstbr): I use eval() to support JS object notation (`{ bla: true }`) and
+                // not just strict JSON (`{ "bla": true }`)
+                const js = eval(`(${options})`)
+                // Validate that options isn't any JavaScript but an object
+                json = JSON.parse(JSON.stringify(js))
+              } catch (err) {
+                setError(err)
+                return
               }
+              updateGatsbyPlugin({
+                name: plugin.name,
+                options: json,
+              }).catch(err => {
+                setError(err)
+              })
+            }}
+            gap={5}
+            alignItems="flex-start"
+            flexDirection="column"
+            sx={{
+              borderRadius: 3,
+              backgroundColor: `white`,
+              borderColor: `grey.30`,
+              borderWidth: 1,
+              borderStyle: `solid`,
+              padding: 7,
+              width: `30%`,
             }}
           >
-            Uninstall
-          </Button>
-        </Flex>
-        <Flex
-          as="form"
-          // @ts-ignore
-          onSubmit={(evt: React.FormEvent): void => {
-            evt.preventDefault()
-            setError(null)
-            let json
-            try {
-              // NOTE(@mxstbr): I use eval() to support JS object notation (`{ bla: true }`) and
-              // not just strict JSON (`{ "bla": true }`)
-              const js = eval(`(${options})`)
-              // Validate that options isn't any JavaScript but an object
-              json = JSON.parse(JSON.stringify(js))
-            } catch (err) {
-              setError(err)
-              return
-            }
-            updateGatsbyPlugin({
-              name: plugin.name,
-              options: json,
-            }).catch(err => {
-              setError(err)
-            })
-          }}
-          gap={5}
-          alignItems="flex-start"
-          flexDirection="column"
-          sx={{
-            borderRadius: 3,
-            backgroundColor: `white`,
-            borderColor: `grey.30`,
-            borderWidth: 1,
-            borderStyle: `solid`,
-            padding: 7,
-            width: `30%`,
-          }}
-        >
-          <TextAreaField id="plugin-options">
-            <Flex sx={{ width: `100%` }} gap={3} flexDirection="column">
-              <Flex sx={{ width: `100%` }} gap={5} flexDirection="column">
-                <Flex>
-                  <Heading as="h3" sx={{ fontSize: 2 }}>
-                    Configuration options
-                  </Heading>
+            <TextAreaField id="plugin-options">
+              <Flex sx={{ width: `100%` }} gap={3} flexDirection="column">
+                <Flex sx={{ width: `100%` }} gap={5} flexDirection="column">
+                  <Flex>
+                    <Heading as="h3" sx={{ fontSize: 2 }}>
+                      Configuration options
+                    </Heading>
+                  </Flex>
+                  <TextAreaFieldControl
+                    sx={{
+                      fontFamily: `monospace`,
+                      backgroundColor: `grey.70`,
+                      color: `white`,
+                      p: 5,
+                      borderRadius: 3,
+                      ...(error !== null
+                        ? {
+                            borderWidth: 1,
+                            borderStyle: `solid`,
+                            borderColor: `red.40`,
+                          }
+                        : {}),
+                    }}
+                    value={options}
+                    onChange={(evt): void => setOptions(evt.target.value)}
+                  />
                 </Flex>
-                <TextAreaFieldControl
-                  sx={{
-                    fontFamily: `monospace`,
-                    backgroundColor: `grey.70`,
-                    color: `white`,
-                    p: 5,
-                    borderRadius: 3,
-                    ...(error !== null
-                      ? {
-                          borderWidth: 1,
-                          borderStyle: `solid`,
-                          borderColor: `red.40`,
-                        }
-                      : {}),
-                  }}
-                  value={options}
-                  onChange={(evt): void => setOptions(evt.target.value)}
-                />
+                {error !== null && (
+                  <Text sx={{ color: `red.60`, fontSize: 0 }}>
+                    Invalid JSON: {error.message}
+                  </Text>
+                )}
               </Flex>
-              {error !== null && (
-                <Text sx={{ color: `red.60`, fontSize: 0 }}>
-                  Invalid JSON: {error.message}
-                </Text>
-              )}
-            </Flex>
-          </TextAreaField>
-          <Button
-            variant="PRIMARY"
-            tone="BRAND"
-            type="submit"
-            loading={updatingGatsbyPlugin}
-          >
-            Save
-          </Button>
+            </TextAreaField>
+            <Button
+              variant="PRIMARY"
+              tone="BRAND"
+              type="submit"
+              loading={updatingGatsbyPlugin}
+            >
+              Save
+            </Button>
+          </Flex>
         </Flex>
       </Flex>
     </Fragment>
