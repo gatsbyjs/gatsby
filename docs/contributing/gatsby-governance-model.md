@@ -1,4 +1,6 @@
-# Governance
+---
+title: Gatsby's Governance Model
+---
 
 ## Introduction
 
