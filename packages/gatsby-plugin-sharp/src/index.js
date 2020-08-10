@@ -283,12 +283,12 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   })
 }
 
-// A value in pixels(Int)
-const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: defaultBase64Width(),
+    // Should already be set to base64Width by `fluid()`/`fixed()` methods
+    // calling `generateBase64()`. Useful in Jest tests still.
+    width: args.base64Width || pluginOptions.base64Width,
   })
   let pipeline
   try {
@@ -306,10 +306,10 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = pipeline.trim(options.trim)
   }
 
-  const forceBase64Format =
-    args.toFormatBase64 || pluginOptions.forceBase64Format
-  if (forceBase64Format) {
-    args.toFormat = forceBase64Format
+  const changedBase64Format =
+    options.toFormatBase64 || pluginOptions.forceBase64Format
+  if (changedBase64Format) {
+    options.toFormat = changedBase64Format
   }
 
   pipeline
@@ -323,16 +323,16 @@ async function generateBase64({ file, args = {}, reporter }) {
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: options.toFormat === `png`,
     })
     .jpeg({
       quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: options.toFormat === `jpg`,
     })
     .webp({
       quality: options.webpQuality || options.quality,
-      force: args.toFormat === `webp`,
+      force: options.toFormat === `webp`,
     })
 
   // grayscale
@@ -347,7 +347,7 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
+    pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
   const { data: buffer, info } = await pipeline.toBuffer({
     resolveWithObject: true,
@@ -564,12 +564,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -699,12 +700,13 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -774,6 +776,7 @@ function toArray(buf) {
 exports.queueImageResizing = queueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
+exports.generateBase64 = generateBase64
 exports.traceSVG = traceSVG
 exports.sizes = fluid
 exports.resolutions = fixed

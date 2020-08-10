@@ -32,10 +32,22 @@ const pubsub = new PubSub()
 const PORT = process.argv[2] || 50400
 
 let lastState = {}
+let lastDone = 0
+
+const compareState = (oldState, newState) => {
+  // isEqual doesn't handle values on objects in arrays 🤷‍♀️
+  const newDone = newState.context.plan.filter(r => r.isDone).length
+  const comparison = !lodash.isEqual(newState, oldState) || lastDone !== newDone
+  lastDone = newDone
+
+  return comparison
+}
+
 const emitUpdate = state => {
   // eslint-disable-next-line no-unused-vars
   const { lastEvent, ...cleanedState } = state
-  if (!lodash.isEqual(cleanedState, lastState)) {
+  // isEqual doesn't handle values on objects in arrays 🤷‍♀️
+  if (compareState(lastState, cleanedState)) {
     pubsub.publish(`operation`, {
       state: JSON.stringify(cleanedState),
     })
@@ -59,8 +71,8 @@ const startRecipe = ({ recipePath, projectRoot }) => {
     ).onTransition(state => {
       // Don't emit again unless there's a state change.
       console.log(`===onTransition`, {
-        event: state.event,
         state: state.value,
+        event: state.event.type,
       })
       if (state.changed) {
         console.log(`===state.changed`, {
@@ -69,9 +81,13 @@ const startRecipe = ({ recipePath, projectRoot }) => {
         })
         // Wait until plans are created before updating the UI
         if (
-          [`presentPlan`, `done`, `doneError`, `applyingPlan`].includes(
-            state.value
-          )
+          [
+            `presentPlan`,
+            `done`,
+            `doneError`,
+            `applyingPlan`,
+            `onUpdate`,
+          ].includes(state.value)
         ) {
           emitUpdate({
             context: state.context,
