@@ -16,6 +16,7 @@ import {
 } from "gatsby-interface"
 import { navigate } from "gatsby-link"
 import useNpmPackageData from "../utils/use-npm-data"
+import gitHubIcon from "../github.svg"
 
 export default function PluginView(
   props: PageProps & {
@@ -86,9 +87,17 @@ export default function PluginView(
     { fetching: installingGatsbyPlugin },
     installGatsbyPlugin,
   ] = useMutation(`
-    mutation createGatsbyPlugin($name: String!){
+    mutation installGatsbyPlugin($name: String!) {
+      createNpmPackage(npmPackage: {
+        name: $name,
+        dependencyType: "production"
+      }) {
+        id
+        name
+      }
+
       createGatsbyPlugin(gatsbyPlugin: {
-        id: $name, name:$name
+        name: $name
       }) {
         id
         name
@@ -141,8 +150,12 @@ export default function PluginView(
               // Fall back to https://github.com/nice-registry/ghub.io, which redirects to the
               // package.json repository url automatically
               href={npmData?.repository?.url || `https://ghub.io/${pluginName}`}
+              sx={{
+                // Render the space between the text and the <img> icon
+                whiteSpace: `pre`,
+              }}
             >
-              View on GitHub
+              View on GitHub <img src={gitHubIcon} alt="" />
             </AnchorButton>
             {fetching ? (
               <Spinner />

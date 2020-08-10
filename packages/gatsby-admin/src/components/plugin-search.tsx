@@ -1,6 +1,5 @@
 /* @jsx jsx */
 import { jsx } from "strict-ui"
-import { Spinner } from "theme-ui"
 import { connectAutoComplete } from "react-instantsearch-dom"
 import {
   Combobox,
@@ -9,7 +8,6 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "gatsby-interface"
-import { useMutation } from "urql"
 import InstantSearchProvider from "./instantsearch-provider"
 import { navigate } from "gatsby-link"
 
@@ -38,40 +36,16 @@ const SearchCombobox: React.FC<{
 ))
 
 // the search bar holds the Search component in the InstantSearch widget
-const PluginSearchInput: React.FC<{}> = () => {
-  const [{ fetching }, installGatbyPlugin] = useMutation(`
-    mutation installGatsbyPlugin($name: String!) {
-      createNpmPackage(npmPackage: {
-        name: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      createGatsbyPlugin(gatsbyPlugin: {
-        name: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
-  return (
-    <div>
-      <InstantSearchProvider>
-        {fetching ? (
-          <Spinner />
-        ) : (
-          <SearchCombobox
-            onSelect={(name): void => {
-              navigate(`/plugins/${name}`)
-            }}
-          />
-        )}
-      </InstantSearchProvider>
-    </div>
-  )
-}
+const PluginSearchInput: React.FC<{}> = () => (
+  <div>
+    <InstantSearchProvider>
+      <SearchCombobox
+        onSelect={(name): void => {
+          navigate(`/plugins/${name}`)
+        }}
+      />
+    </InstantSearchProvider>
+  </div>
+)
 
 export default PluginSearchInput
