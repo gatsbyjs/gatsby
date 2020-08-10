@@ -88,3 +88,25 @@ Sharp uses a C library, libvips. If you are having issues while installing Sharp
 ## Windows Subsystem for Linux
 
 If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. For more explicit instructions on getting set up with WSL, see the [Gatsby on Linux](/docs/gatsby-on-linux/#windows-subsystem-linux-wsl) documentation.
+
+## Git Bash
+
+Another possible option is to use [Git Bash](https://gitforwindows.org/). Once in it, simply run the following command to install Gatsby CLI on your machine
+
+    npm install -g gatsby-cli
+
+Then, in [this location](https://www.gatsbyjs.org/docs/starters/) you have starter templates. For the sake of this explanation we're going to use the [starter blog](https://github.com/gatsbyjs/gatsby-starter-blog).
+
+[See here the Demo](https://gatsby-starter-blog-demo.netlify.app/).
+
+So, once Gatsby CLI is installed, let's create the new site in a folder of our chosing.
+
+    gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-blog
+
+Once the command finishes running, cd into that new location and start the development server by running
+
+    gatsby develop
+
+Then by going to http://localhost:8000/ you'll see the same as in the Demo.
+
+
