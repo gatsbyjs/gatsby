@@ -6923,17 +6923,17 @@
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
 - url: https://christianibarguen.com
-    repo: https://github.com/christiandavid/gatsby-starter-byfolio
-    description: Starter for the gatsby-theme-byfolio. A simple starter that makes it easy to publish your resume or portfolio using Gatsby, includes animations and automatic skill grouping
-    tags:
-      - Portfolio
-      - Transitions
-      - PWA
-    features:
-      - Gatsby v2
-      - Resume
-      - CV
-      - Style-Components Using @emotion
-      - Portfolio site for developers
-      - Responsive design
-      - Complete example with my real work history
+  repo: https://github.com/christiandavid/gatsby-starter-byfolio
+  description: Starter for the gatsby-theme-byfolio. A simple starter that makes it easy to publish your resume or portfolio using Gatsby, includes animations and automatic skill grouping
+  tags:
+    - Portfolio
+    - Transitions
+    - PWA
+  features:
+    - Gatsby v2
+    - Resume
+    - CV
+    - Style-Components Using @emotion
+    - Portfolio site for developers
+    - Responsive design
+    - Complete example with my real work history
