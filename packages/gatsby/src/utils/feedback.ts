@@ -32,7 +32,7 @@ const randomChanceToBeTrue = (): boolean => {
       // One quarter year in days (roughly)
       (30 * 3)
   )
-  const randomNumberWithinQuarter = randomNumber * currentQuarter
+  const randomNumberWithinQuarter = randomNumber + 30 * 3 * (currentQuarter - 1)
 
   return randomNumberWithinQuarter === getDayOfYear(new Date())
 }

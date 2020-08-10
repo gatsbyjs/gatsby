@@ -5,11 +5,11 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-image": "^2.4.9",
+    "gatsby": "^2.24.26",
+    "gatsby-image": "^2.4.14",
     "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-source-contentful": "^2.3.18",
-    "gatsby-transformer-remark": "^2.8.20",
+    "gatsby-source-contentful": "^2.3.34",
+    "gatsby-transformer-remark": "^2.8.27",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"

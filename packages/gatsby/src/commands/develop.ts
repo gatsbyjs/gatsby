@@ -5,15 +5,19 @@ import tmp from "tmp"
 import { spawn, ChildProcess } from "child_process"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
+import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
-import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import {
+  createServiceLock,
+  getService,
+} from "gatsby-core-utils/dist/service-lock"
 import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
-import getSslCert from "../utils/get-ssl-cert"
+import { getSslCert } from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
-import { IProgram } from "./types"
+import { IProgram, IDebugInfo } from "./types"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -58,12 +62,33 @@ const doesConfigChangeRequireRestart = (
   return true
 }
 
+// Return a user-supplied port otherwise the default Node.js debugging port
+const getDebugPort = (port?: number): number => port ?? 9229
+
+export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
+  if (program.hasOwnProperty(`inspect`)) {
+    return {
+      port: getDebugPort(program.inspect),
+      break: false,
+    }
+  } else if (program.hasOwnProperty(`inspectBrk`)) {
+    return {
+      port: getDebugPort(program.inspectBrk),
+      break: true,
+    }
+  } else {
+    return null
+  }
+}
+
 class ControllableScript {
   private process?: ChildProcess
   private script
+  private debugInfo: IDebugInfo | null
   public isRunning
-  constructor(script) {
+  constructor(script, debugInfo: IDebugInfo | null) {
     this.script = script
+    this.debugInfo = debugInfo
   }
   start(): void {
     const tmpFileName = tmp.tmpNameSync({
@@ -71,7 +96,17 @@ class ControllableScript {
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    this.process = spawn(`node`, [tmpFileName], {
+    const args = [tmpFileName]
+    // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
+    if (this.debugInfo) {
+      args.push(
+        this.debugInfo.break
+          ? `--inspect-brk=${this.debugInfo.port}`
+          : `--inspect=${this.debugInfo.port}`
+      )
+    }
+
+    this.process = spawn(`node`, args, {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -111,7 +146,7 @@ class ControllableScript {
   }
   onMessage(callback: (msg: any) => void): void {
     if (!this.process) {
-      throw new Error(`Trying to attach message handler before process starter`)
+      throw new Error(`Trying to attach message handler before process started`)
     }
     this.process.on(`message`, callback)
   }
@@ -119,9 +154,17 @@ class ControllableScript {
     callback: (code: number | null, signal: NodeJS.Signals | null) => void
   ): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process starter`)
+      throw new Error(`Trying to attach exit handler before process started`)
     }
     this.process.on(`exit`, callback)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send(msg: any): void {
+    if (!this.process) {
+      throw new Error(`Trying to send a message before process started`)
+    }
+
+    this.process.send(msg)
   }
 }
 
@@ -131,10 +174,25 @@ let isRestarting
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
+  // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
+  // So we want to early just force it to a number to ensure we always act on a correct type.
+  program.port = parseInt(program.port + ``, 10)
   const developProcessPath = slash(require.resolve(`./develop-process`))
+
+  try {
+    program.port = await detectPortInUseAndPrompt(program.port)
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      process.exit(0)
+    }
+
+    throw e
+  }
+
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
+  const debugInfo = getDebugInfo(program)
   const [statusServerPort, developPort] = await Promise.all([
     getRandomPort(),
     getRandomPort(),
@@ -165,13 +223,17 @@ module.exports = async (program: IProgram): Promise<void> => {
       )
     }
 
-    program.ssl = await getSslCert({
+    const ssl = await getSslCert({
       name: sslHost,
       caFile: program[`ca-file`],
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
     })
+
+    if (ssl) {
+      program.ssl = ssl
+    }
   }
 
   // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
@@ -182,7 +244,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     program,
   })
 
-  const developProcess = new ControllableScript(`
+  const developProcess = new ControllableScript(
+    `
     const cmd = require(${JSON.stringify(developProcessPath)});
     const args = ${JSON.stringify({
       ...program,
@@ -190,9 +253,12 @@ module.exports = async (program: IProgram): Promise<void> => {
       proxyPort,
       // Don't pass SSL options down to the develop process, it should always use HTTP
       ssl: null,
+      debugInfo,
     })};
     cmd(args);
-  `)
+  `,
+    debugInfo
+  )
 
   let unlocks: Array<UnlockFn> = []
   if (!isCI()) {
@@ -210,10 +276,19 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
+    // We don't need to keep a lock on this, as it's just site metadata
+    await createServiceLock(program.directory, `metadata`, {
+      name: program.sitePackageJson.name,
+      sitePath: program.directory,
+      pid: process.pid,
+      lastRun: Date.now(),
+    }).then(unlock => unlock?.())
 
     if (!statusUnlock || !developUnlock) {
+      const data = await getService(program.directory, `developproxy`)
+      const port = data?.port || 8000
       console.error(
-        `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
+        `Looks like develop for this site is already running. Try visiting http://localhost:${port}/ maybe?`
       )
       process.exit(1)
     }
@@ -313,6 +388,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       })
     })
   }
+
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
+  })
 
   process.on(`beforeExit`, async () => {
     await Promise.all([

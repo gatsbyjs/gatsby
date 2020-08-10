@@ -19,10 +19,10 @@
     "apollo-link-http": "^1.5.17",
     "apollo-link-ws": "^1.0.20",
     "apollo-utilities": "^1.3.4",
-    "gatsby-source-filesystem": "^2.3.14",
-    "graphql": "^15.2.0",
-    "graphql-tag": "^2.10.3",
+    "gatsby-source-filesystem": "^2.3.23",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.0",
-    "ws": "^7.3.0"
+    "ws": "^7.3.1"
   }
 }

@@ -789,38 +789,38 @@ Array [
           Object {
             "args": Object {
               "fit": "inside",
-              "height": 50,
+              "height": 34,
               "toFormat": "png",
               "width": 50,
             },
-            "outputPath": "d9f78/test.png",
+            "outputPath": "45628/test.png",
           },
           Object {
             "args": Object {
               "fit": "inside",
-              "height": 100,
+              "height": 68,
               "toFormat": "png",
               "width": 100,
             },
-            "outputPath": "997ba/test.png",
+            "outputPath": "52a18/test.png",
           },
           Object {
             "args": Object {
               "fit": "inside",
-              "height": 200,
+              "height": 136,
               "toFormat": "png",
               "width": 200,
             },
-            "outputPath": "6ad4e/test.png",
+            "outputPath": "279d8/test.png",
           },
           Object {
             "args": Object {
               "fit": "inside",
-              "height": 281,
+              "height": 191,
               "toFormat": "png",
               "width": 281,
             },
-            "outputPath": "7aa47/test.png",
+            "outputPath": "24238/test.png",
           },
         ],
         "pluginOptions": Object {
