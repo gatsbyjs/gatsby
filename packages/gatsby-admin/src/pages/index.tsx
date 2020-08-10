@@ -99,8 +99,6 @@ function Index(): JSX.Element {
     `,
   })
 
-  if (fetching) return <Spinner />
-
   if (error) {
     const errMsg =
       (error.networkError && error.networkError.message) ||
@@ -151,21 +149,29 @@ function Index(): JSX.Element {
               <img src={boltIcon} alt="" />
               <Subheading>
                 Installed plugins{` `}
-                <span sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}>
-                  ({data.allGatsbyPlugin.nodes.length})
-                </span>
+                {data?.allGatsbyPlugin?.nodes && (
+                  <span
+                    sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}
+                  >
+                    ({data.allGatsbyPlugin.nodes.length})
+                  </span>
+                )}
               </Subheading>
             </Flex>
-            <Flex
-              as="ul"
-              gap={3}
-              flexDirection="column"
-              sx={{ p: 0, listStyle: `none` }}
-            >
-              {data.allGatsbyPlugin.nodes.map(plugin => (
-                <InstalledPluginListItem key={plugin.id} plugin={plugin} />
-              ))}
-            </Flex>
+            {data?.allGatsbyPlugin?.nodes ? (
+              <Flex
+                as="ul"
+                gap={3}
+                flexDirection="column"
+                sx={{ p: 0, listStyle: `none` }}
+              >
+                {data.allGatsbyPlugin.nodes.map(plugin => (
+                  <InstalledPluginListItem key={plugin.id} plugin={plugin} />
+                ))}
+              </Flex>
+            ) : (
+              <Spinner />
+            )}
           </Flex>
         </Flex>
         <Flex flexDirection="column" gap={13} flex="1">

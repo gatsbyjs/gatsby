@@ -11,6 +11,7 @@ import {
 } from "gatsby-interface"
 import { useMutation } from "urql"
 import InstantSearchProvider from "./instantsearch-provider"
+import { navigate } from "gatsby-link"
 
 const SearchCombobox: React.FC<{
   onSelect: (value: string) => void
@@ -63,8 +64,8 @@ const PluginSearchInput: React.FC<{}> = () => {
           <Spinner />
         ) : (
           <SearchCombobox
-            onSelect={(value): void => {
-              installGatbyPlugin({ name: value })
+            onSelect={(name): void => {
+              navigate(`/plugins/${name}`)
             }}
           />
         )}
