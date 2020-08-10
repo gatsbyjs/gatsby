@@ -17,7 +17,7 @@ Please change this to: \\"/foo/{bar}\\""
       validatePathQuery(`/foo/{bar}.js`, [])
     }).toThrowErrorMatchingInlineSnapshot(`
 "To query node \\"path\\" the \\"filePath\\" argument must omit the file extension
-Please change this to: \\"/foo/{bar}\\""
+Please change /foo/{bar}.js to \\"/foo/{bar}\\""
 `)
   })
 
