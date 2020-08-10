@@ -144,7 +144,9 @@ export default function PluginView(
             >
               View on GitHub
             </AnchorButton>
-            {isInstalled ? (
+            {fetching ? (
+              <Spinner />
+            ) : isInstalled ? (
               <Button
                 variant="GHOST"
                 tone="DANGER"
@@ -181,7 +183,11 @@ export default function PluginView(
         </Flex>
         <Flex gap={12} sx={{ width: `100%` }} alignItems="flex-start">
           <div sx={{ width: `70%` }}>
-            {npmData ? npmData.readme || `No readme found.` : <Spinner />}
+            {fetchingNpmData ? (
+              <Spinner />
+            ) : (
+              npmData?.readme || `No readme found.`
+            )}
           </div>
           <Flex
             as="form"
