@@ -229,10 +229,13 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const emitter = mitt()
   const plan = {}
 
-  const queue = new Queue(async (job, cb) => {
-    const result = await job
-    cb(null, result)
-  })
+  const queue = new Queue(
+    async (job, cb) => {
+      const result = await job
+      cb(null, result)
+    },
+    { concurrent: 10000 }
+  )
 
   const resultCache = new Map()
   const inFlightCache = new Map()
@@ -258,6 +261,9 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     result = RecipesReconciler.render(recipeWithWrapper, plan, name)
 
     const resourcesArray = transformToPlan(result)
+
+    // Tell UI about updates.
+    emitter.emit(`update`, resourcesArray)
 
     const isDone = () => {
       let result
@@ -300,10 +306,8 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     trailing: false,
   })
 
-  queue.on(`task_finish`, function (taskId, r, stats) {
+  queue.on(`task_finish`, function(taskId, r, stats) {
     throttledRenderResources()
-
-    emitter.emit(`update`, resourcesArray)
   })
 
   queue.on(`drain`, () => {

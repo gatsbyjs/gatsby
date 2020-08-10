@@ -76,19 +76,15 @@ const startRecipe = ({ recipePath, projectRoot }) => {
           event: state.event.type,
         })
       }
-      if (state.changed && state.event.type !== `onUpdate`) {
+      if (state.changed) {
         console.log(`===state.changed`, {
           state: state.value,
         })
         // Wait until plans are created before updating the UI
         if (
-          [
-            `presentPlan`,
-            `done`,
-            `doneError`,
-            `applyingPlan`,
-            `onUpdate`,
-          ].includes(state.value)
+          [`presentPlan`, `done`, `doneError`, `applyingPlan`].includes(
+            state.value
+          )
         ) {
           emitUpdate({
             context: state.context,
