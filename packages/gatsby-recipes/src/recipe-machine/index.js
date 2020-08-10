@@ -68,7 +68,9 @@ const recipeMachine = Machine(
           src: async (context, _event) => {
             debug(`parsingRecipe`)
             const parsed = await parser.parse(context.recipeSrc)
-            const stepsAsJS = transformRecipeFromMdx(context.recipeSrc)
+            const stepsAsJS = parsed.stepsAsMdx.map(step =>
+              transformRecipeFromMdx(step)
+            )
             debug(`parsedRecipe`)
 
             return { ...parsed, ...stepsAsJS }
