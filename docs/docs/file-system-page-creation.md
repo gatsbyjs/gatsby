@@ -19,7 +19,7 @@ For example, if you are editing a user you might want a route like `/user/:id` t
 - `/src/pages/users/[id].js => /users/:id`
 - `/src/pages/users/[id]/group/[groupId].js => /users/:id/group/:groupId`
 
-We also support _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use-cases. One example might be that you are rendering images from S3, and the url is actually the key to the asset in AWS. Here is how you might create your file:
+Gatsby also supports _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
 - `/src/pages/image/[...awsKey].js => /users/*awsKey`
 - `/src/pages/image/[...].js => /app/*`
