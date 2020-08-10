@@ -121,7 +121,9 @@ export function setFieldsOnGraphQLNodeType({
           // fully understand the use-cases. So this is a simple fix for this
           // one common-use, and we'll iterate as we understand.
           const sourceCopy = { ...source }
+          // @ts-ignore
           if (typeof source.parent === `string`) {
+            // @ts-ignore
             sourceCopy.parent = getNode(source.parent)
           }
 
