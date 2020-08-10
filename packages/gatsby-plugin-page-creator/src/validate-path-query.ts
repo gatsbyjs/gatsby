@@ -14,7 +14,7 @@ Please change this to: "/${filePath}"`)
   // Paths must not include file extension
   if (/\.[a-z]+$/i.test(filePath)) {
     throw new Error(`To query node "path" the "filePath" argument must omit the file extension
-Please change this to: "${filePath.replace(/\.[a-z]+$/i, ``)}"`)
+Please change ${filePath} to "${filePath.replace(/\.[a-z]+$/i, ``)}"`)
   }
 
   // Paths must not utilize src/pages
