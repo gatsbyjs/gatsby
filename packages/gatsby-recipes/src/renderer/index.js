@@ -8,7 +8,7 @@ const { useInput, useInputByKey } = require(`./input-provider`)
 const { useResource } = require(`./resource-provider`)
 const { useProvider } = require(`./provider-provider`)
 
-const transformRecipeMDX = require(`../transform-recipe-mdx`).default
+// const transformRecipeMDX = require(`../transform-recipe-mdx`).default
 
 const scope = {
   React,
@@ -35,13 +35,13 @@ const transformCodeForEval = code => {
   return newCode
 }
 
-module.exports = (mdxSrc, cb, context, isApply, isStream = false) => {
+module.exports = (jsSrc, cb, context, isApply, isStream = false) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
-  const srcCode = transformRecipeMDX(mdxSrc, true)
+  // const srcCode = transformRecipeMDX(mdxSrc, true)
 
-  const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
+  const component = new Function(...scopeKeys, transformCodeForEval(jsSrc))
 
   try {
     const result = render(

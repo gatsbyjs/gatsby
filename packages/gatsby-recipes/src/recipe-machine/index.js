@@ -7,6 +7,7 @@ const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const resolveRecipe = require(`../resolve-recipe`)
+const transformRecipeFromMdx = require(`../transform-recipe-mdx`)
 
 const recipeMachine = Machine(
   {
@@ -18,6 +19,7 @@ const recipeMachine = Machine(
       recipe: ``,
       recipeSrc: ``,
       stepsAsMdx: [],
+      stepsAsJS: [],
       exports: [],
       plan: [],
       commands: [],
@@ -66,9 +68,10 @@ const recipeMachine = Machine(
           src: async (context, _event) => {
             debug(`parsingRecipe`)
             const parsed = await parser.parse(context.recipeSrc)
+            const stepsAsJS = transformRecipeFromMdx(context.recipeSrc)
             debug(`parsedRecipe`)
 
-            return parsed
+            return { ...parsed, ...stepsAsJS }
           },
           onError: {
             target: `doneError`,
@@ -94,6 +97,7 @@ const recipeMachine = Machine(
             actions: assign({
               recipe: (context, event) => event.data.recipe,
               stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              stepsAsJS: (context, event) => event.data.stepsAsJS,
               exports: (context, event) => event.data.exports,
             }),
           },
