@@ -15,7 +15,8 @@ export function extractModel(absolutePath: string): string {
 
 // Remove the file extension from the end of a path
 export function removeFileExtension(absolutePath: string): string {
-  return absolutePath.replace(/\.[a-z]+$/, ``)
+  const { dir, name } = path.parse(absolutePath);
+  return path.join(dir, name)
 }
 
 // This extracts all information in an absolute path to an array of each collection part
