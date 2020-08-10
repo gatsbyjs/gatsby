@@ -34,7 +34,7 @@ export const blogPostQuery = graphql`
 // This should filter it down to just a single instance
 export const collectionQuery = unstable_collectionGraphql`
   {
-    allImageSharp(filter: { id: { eq: "0558ffa9-5e2a-51a1-8881-ebb75a1bf468" }}) {
+    allImageSharp(limit: 1, skip: 1) {
       ...CollectionPagesQueryFragment
     }
   }
