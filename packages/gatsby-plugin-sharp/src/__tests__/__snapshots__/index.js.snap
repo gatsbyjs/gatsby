@@ -10,6 +10,16 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin-sharp base64 should support option: 'background' 1`] = `
+Object {
+  "aspectRatio": 1,
+  "height": 20,
+  "originalName": "alphatest.png",
+  "src": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAUABQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAGfAAAB/8QAFBABAAAAAAAAAAAAAAAAAAAAMP/aAAgBAQABBQIf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAFBABAAAAAAAAAAAAAAAAAAAAMP/aAAgBAQAGPwIf/8QAFBABAAAAAAAAAAAAAAAAAAAAMP/aAAgBAQABPyEf/9oADAMBAAIAAwAAABAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAEDAQE/EB//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/EB//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAE/EB//2Q==",
+  "width": 20,
+}
+`;
+
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
   "aspectRatio": 1,
@@ -72,8 +82,9 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -126,8 +137,9 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -180,8 +192,9 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -220,8 +233,9 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -288,8 +302,9 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -328,8 +343,9 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -408,8 +424,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -487,8 +504,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -566,8 +584,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -645,8 +664,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -702,8 +722,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -763,8 +784,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -824,8 +846,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -885,8 +908,9 @@ Array [
           },
         ],
         "pluginOptions": Object {
+          "base64Width": 20,
           "defaultQuality": 50,
-          "forceBase64Format": false,
+          "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
           "useMozJpeg": false,
@@ -918,8 +942,9 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -986,8 +1011,9 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1095,8 +1121,9 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1135,8 +1162,9 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1196,8 +1224,9 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1264,8 +1293,9 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1304,8 +1334,9 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1359,8 +1390,9 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1401,8 +1433,9 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1443,8 +1476,9 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1483,8 +1517,9 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round he
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
