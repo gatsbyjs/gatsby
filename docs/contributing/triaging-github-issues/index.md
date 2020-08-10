@@ -44,7 +44,6 @@ Gatsby is unique among most open source projects because:
 
 - Gatsby integrates with many third party tools (WordPress, Drupal, Contentful etc) via source plugins and hence the typical scope of issues is widened significantly
 - Gatsby aims to be really beginner friendly (we want to be the new way someone gets started with web development) and this means that we need to accommodate a wide range of skill levels
-- At Gatsby, we've defined a couple of metrics that we measure to ensure we're responsive and helpful to our open source community
 
 ## How do we do first touch maintenance?
 
@@ -57,7 +56,7 @@ Gatsby is unique among most open source projects because:
 
 ### Labeling
 
-Labeling helps group issues into manageable sets and also improves searchability and scannability. We have a set of labels that we use to group issues based on their type and status. While we want to limit adding too many labels, feel free to add one if it seems relevant and helps with this grouping!
+Labeling helps group issues into manageable sets and also improves searchability and scannability. We have a set of labels that we use to group issues based on their type, topic, and status.
 
 It's nice to update labels as the state of an issue changes or if the type of an issue changes, for example if a question becomes a feature request. This means labels are transient in nature and subject to being updated as progress is made on addressing issues.
 
@@ -72,31 +71,32 @@ Issues are categorized into one of five types: question or discussion, bug repor
 - Point to existing documentation to answer the question
 - If insufficient, do the following:
   1. Provide an answer
-  2. Label the issue with documentation
+  2. Label the issue with `type: documentation`
   3. Keep it open until a PR has added the answer to the documentation, and the issue includes a link to said documentation
 
-If an issue comes in as a question with a known answer it can be tempting to answer it and close the issue. However, the consequence of this approach is that the answer to a question others may have is now buried in a closed issue and may be hard to surface. The preferred solution is to get that answer documented in the main Gatsby documentation and connect the issue to an answer by including a docs link.
+If an issue comes in as a question with a known, but undocumented, answer it can be tempting to answer it and close the issue. However, the consequence of this approach is that the answer to a question others may have is now buried in a closed issue and may be hard to surface. The preferred solution is to get that answer documented in the main Gatsby documentation and connect the issue to an answer by including a docs link.
 
 #### Bug Report
 
-Bug Reports are issues that identify functionality in Gatsby that should work but does not in a given scenario. If an issue is a Bug Report, it should include steps to reproduce the problem. If it doesn't, ask the issue filer for those steps and label the issue with `needs reproduction`.
+Bug Reports are issues that identify functionality in Gatsby that should work but does not in a given scenario. If an issue is a Bug Report, it should include steps to reproduce the problem. If it doesn't, ask the issue filer for those steps and label the issue with `status: needs reproduction`.
 
-Attempt to reproduce the bug using the steps given. If that's not possible, ask for more information and label the issue as `needs more info`.
+Attempt to reproduce the bug using the steps given. If that's not possible, ask for more information and label the issue as `status: needs more info`.
 
-If the reproduction is successful, label the issue with `confirmed` and determine who is best suited to implement a fix. If it's approachable for the community, consider the `help wanted` or `good first issue` labels. Otherwise, label with `inkteam to review` so it can be picked up by a Gatsby team member.
+If the reproduction is successful, label the issue with `status: confirmed` and determine who is best suited to implement a fix. If it's approachable for the community, consider the `help wanted` or `good first issue` labels. Otherwise, label with `status: needs core review` so it can be picked up by a Gatsby team member.
 
-![Flow chart for handling a Bug Report](./BugFlow.png)
+![Flow chart for handling a bug report](./bug-triage-workflow.png)
 
 #### Feature Request
 
-Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and if you don't feel comfortable making this determination please label with `inkteam to review`. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue. Review the [saved replies](#saved-replies) to see if there is an appropriate response already available.
+Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and is usually the responsibility of a Gatsby team member to make. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue. Review the [saved replies](#saved-replies) to see if there is an appropriate response already available. If you have any doubt about whether a feature request should be incorporated into Gatsby, label it with `status: needs core review` and leave the issue open.
 
-If it's determined to be a worthwhile feature, the next decision point is whether the feature should be added to core or upstream. Upstream issues are those that are outside of Gatsby's control and caused by dependencies. Upstream features should be labeled with `upstream` and include comments about the scope.
+If it's determined to be a worthwhile feature, the next decision point is whether the feature should be added to core or upstream. Upstream issues are those that are outside of Gatsby's control and caused by dependencies. Upstream features should be labeled with `type: upstream` and include comments about the scope.
 
 If it's a core change, is it a breaking change? Breaking changes should be labeled with `breaking change` and typically closed. Note that they may sometimes be left open with the note that the functionality can only be added in a major release.
 
 Non-breaking changes can be labeled as `help wanted` and it is often best to ask the creator of the issue if they'd be interested in helping develop the PR.
-![Flow chart for handling a Feature Request](./FeatureFlow.png)
+
+![Flow chart for handling a feature request](./feature-triage-workflow.png)
 
 #### Documentation
 
@@ -104,12 +104,11 @@ Issues can be filed requesting documentation on a particular topic. Sometimes th
 
 Alternatively, the issue may be something the team is unable to address. Consider using a [saved reply](#saved-replies) in that circumstance.
 
-Otherwise, label the issue with `documentation` and ask the issuer filer if they'd like to help with a PR.
-![Flow chart for handling a Documentation Request](./DocumentationFlow.png)
+Otherwise, label the issue with `type: documentation` and ask the issue filer if they'd like to help with a PR.
 
 #### Maintenance
 
-Maintenance issues are things like bumping a package version. These issues should be labeled with `maintenance`.
+Maintenance issues are things like bumping a package version. These issues should be labeled with `type: maintenance`.
 
 ### Saved replies
 
@@ -121,7 +120,7 @@ We have a bot that helps us automate some aspects:
 
 - Issues with a question mark in their title or starting with "how" are automatically labeled as questions
 - Issues with an empty body are closed
-- Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless there are additional comments or the "not stale" label is applied
+- Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless there are additional comments or the `not stale` label is applied
 
 ## Frequently asked questions
 
@@ -151,4 +150,8 @@ If an author hasn’t responded to a comment for a week or two, it might be nice
 
 > What do I do if an issue relates to something upstream?
 
-It’s a good practice to open an issue in the upstream repository in cases like this but isn’t strictly necessary. Upstream in this case refers to repositories that house dependencies for Gatsby.
+It’s a good practice to open an issue in the upstream repository in cases like this but isn’t strictly necessary. "Upstream" in this case refers to repositories that house dependencies for Gatsby.
+
+> How long should I leave an issue open when awaiting more information from the issue filer?
+
+If a request is made of the issue filer for a reproduction or more information, and eight or more business days passes without a response, the issue should be closed. Leave a polite message that indicates the issue is being closed until there is an actionable response, and that it could be re-opened if said information is supplied.

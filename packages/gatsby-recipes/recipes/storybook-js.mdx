@@ -1,10 +1,12 @@
 # Add Storybook to Gatsby project
 
-[Storybook](https://storybook.js.org/) is an open source tool for developing UI components in isolation for React, Vue, and Angular. It makes building stunning UIs organized and efficient.
+[Storybook](https://storybook.js.org/) is an open source tool for developing UI components in isolation for React, Vue, and Angular. It is an organized and efficient way to build stunning UIs.
+
+This recipe:
 
 ---
 
-Install babel plugins and presets as well as the Storybook React NPM packages and addons
+Installs babel plugins and presets as well as the Storybook React NPM packages and addons.
 
 <NPMPackage name="babel-loader" />
 <NPMPackage name="@babel/preset-react" />
@@ -19,7 +21,7 @@ Install babel plugins and presets as well as the Storybook React NPM packages an
 
 ---
 
-Create JavaScript Storybook webpack config (main.js)
+Creates JavaScript Storybook webpack config (`main.js`).
 
 <File
   path="./.storybook/main.js"
@@ -28,7 +30,7 @@ Create JavaScript Storybook webpack config (main.js)
 
 ---
 
-Configure Storybook / Gatsby Link settings (preview.js)
+Configures Storybook / Gatsby Link settings (`preview.js`).
 
 <File
   path="./.storybook/preview.js"
@@ -37,7 +39,7 @@ Configure Storybook / Gatsby Link settings (preview.js)
 
 ---
 
-Create example JavaScript Link .stories
+Creates example JavaScript Link story.
 
 <File
   path="./src/components/Link.stories.js"
@@ -46,7 +48,7 @@ Create example JavaScript Link .stories
 
 ---
 
-Add Storybook npm scripts
+Adds Storybook npm scripts.
 
 <NPMScript
   name="storybook"
@@ -59,6 +61,4 @@ Add Storybook npm scripts
 
 ---
 
-## You're all done!
-
-Before your run Storybook make sure you run `gatsby develop` or `gatsby build`. This ensures that Gatsby's GraphQL data is available in Storybook.
+After installing this recipe and before you run Storybook, make sure you run `gatsby develop` or `gatsby build`. This ensures that Gatsby's GraphQL data is available in Storybook.

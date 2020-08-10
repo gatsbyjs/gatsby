@@ -85,11 +85,11 @@
           link: /contributing/blog-contributions/
         - title: Code Contributions
           link: /contributing/code-contributions/
-        - title: Website Contributions
-          link: /contributing/website-contributions/
           items:
             - title: Setting Up Your Local Dev Environment
               link: /contributing/setting-up-your-local-dev-environment/
+        - title: Website Contributions
+          link: /contributing/website-contributions/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:

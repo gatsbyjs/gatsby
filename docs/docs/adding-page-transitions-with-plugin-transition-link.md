@@ -97,7 +97,7 @@ You can specify a `trigger` function that will handle the animation. This is use
 
 ### Using passed props
 
-The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `enter` props defined on the `TransitionLink`.
+The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `entry` props defined on the `TransitionLink`.
 
 ```jsx
 const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
@@ -121,10 +121,10 @@ const Box = posed.div({
 })
 
 <TransitionState>
-      {({ transitionStatus, exit, enter, mount }) => {
+      {({ transitionStatus, exit, entry, mount }) => {
         console.log("current page's transition status is", transitionStatus)
         console.log("exit object is", exit)
-        console.log("enter object is", enter)
+        console.log("entry object is", entry)
 
         return (
             <Box

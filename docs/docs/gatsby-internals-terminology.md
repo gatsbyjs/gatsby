@@ -105,7 +105,7 @@ Created as part of page, but currently unused.
 
 ### page.context
 
-This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L79) and then is [passed to graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L36) queries as the `context` parameter.
+This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L79) and then is [passed to GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L36) queries as the `context` parameter.
 
 ## Query
 

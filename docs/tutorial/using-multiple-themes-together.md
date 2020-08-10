@@ -241,7 +241,7 @@ module.exports = {
 }
 ```
 
-3. Test it out by adding a Youtube video to one of your blog posts:
+3. Test it out by adding a YouTube video to one of your blog posts:
 
 ```mdx:title=content/posts/video-post.md
 ---
