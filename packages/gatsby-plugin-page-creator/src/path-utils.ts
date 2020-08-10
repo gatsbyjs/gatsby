@@ -63,9 +63,8 @@ export function extractField(filePart: string): string {
 //   foo__bar => foo.bar
 // This can then be used with _.get
 export function switchToPeriodDelimiters(filePart: string): string {
-  const __ = new RegExp(`__`, `g`)
   // replace access by periods
-  return filePart.replace(__, `.`)
+  return filePart.replace(/__/g, `.`)
 }
 
 // Converts the part of the file from something like `(Union)` to `... on Union`
