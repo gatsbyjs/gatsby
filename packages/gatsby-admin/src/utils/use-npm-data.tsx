@@ -24,9 +24,26 @@ export default function useNpmPackageData(
     searchIndex
       .getObject(name)
       .then(object => {
-        setFetching(false)
-        setError(null)
-        setData(object)
+        // TODO(@mxstbr): properly type this method and result
+        // @ts-ignore
+        if (object.readme) {
+          setFetching(false)
+          setError(null)
+          setData(object)
+        } else {
+          // Fallback for missing readme
+          fetch(`https://unpkg.com/${name}/README.md`)
+            .then(res => res.text())
+            .then(readme => {
+              setFetching(false)
+              setError(null)
+              setData({
+                ...object,
+                readme,
+              })
+            })
+            .catch(() => null)
+        }
       })
       .catch(err => {
         setFetching(false)
