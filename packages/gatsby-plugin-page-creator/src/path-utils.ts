@@ -15,7 +15,8 @@ export function extractModel(absolutePath: string): string {
 
 // Remove the file extension from the end of a path
 export function removeFileExtension(absolutePath: string): string {
-  return absolutePath.replace(/\.[a-z]+$/, ``)
+  const { dir, name } = path.parse(absolutePath);
+  return path.join(dir, name)
 }
 
 // This extracts all information in an absolute path to an array of each collection part
@@ -63,9 +64,8 @@ export function extractField(filePart: string): string {
 //   foo__bar => foo.bar
 // This can then be used with _.get
 export function switchToPeriodDelimiters(filePart: string): string {
-  const __ = new RegExp(`__`, `g`)
   // replace access by periods
-  return filePart.replace(__, `.`)
+  return filePart.replace(/__/g, `.`)
 }
 
 // Converts the part of the file from something like `(Union)` to `... on Union`
