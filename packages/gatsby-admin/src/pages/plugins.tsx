@@ -15,8 +15,12 @@ import {
   Spacer,
 } from "gatsby-interface"
 import { navigate } from "gatsby-link"
+import { FaUsers as CommunityIcon } from "react-icons/fa"
+import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import useNpmPackageData from "../utils/use-npm-data"
 import gitHubIcon from "../github.svg"
+import isOfficialPackage from "../../../../www/src/utils/is-official-package"
+import GatsbyIcon from "../../../../www/src/components/gatsby-monogram"
 
 export default function PluginView(
   props: PageProps & {
@@ -41,11 +45,9 @@ export default function PluginView(
     },
   })
 
-  const {
-    fetching: fetchingNpmData,
-    error: fetchingNpmDataError,
-    data: npmData,
-  } = useNpmPackageData(pluginName)
+  const { fetching: fetchingNpmData, data: npmData } = useNpmPackageData(
+    pluginName
+  )
 
   const [{ fetching: updatingGatsbyPlugin }, updateGatsbyPlugin] = useMutation(`
     mutation updateGatsbyPlugin(
@@ -111,6 +113,7 @@ export default function PluginView(
   const [options, setOptions] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<Error | null>(null)
   const isInstalled = !fetching && !!data?.gatsbyPlugin?.name
+  const isOfficial = !fetchingNpmData && npmData && isOfficialPackage(npmData)
 
   useEffect(() => {
     if (fetching) return
@@ -136,62 +139,93 @@ export default function PluginView(
     <Fragment>
       <Spacer size={15} />
       <Flex gap={9} flexDirection="column" alignItems="flex-start">
-        <Flex
-          sx={{ width: `100%` }}
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Heading as="h1">{pluginName}</Heading>
-          <Flex gap={3}>
-            <AnchorButton
-              variant="SECONDARY"
-              size="M"
-              target="_blank"
-              // Fall back to https://github.com/nice-registry/ghub.io, which redirects to the
-              // package.json repository url automatically
-              href={npmData?.repository?.url || `https://ghub.io/${pluginName}`}
-              sx={{
-                // Render the space between the text and the <img> icon
-                whiteSpace: `pre`,
-              }}
+        <Flex flexDirection="column" gap={2} sx={{ width: `100%` }}>
+          <Flex gap={5}>
+            <Text
+              sx={{ color: `grey.60`, fontSize: 1, whiteSpace: `pre-wrap` }}
             >
-              View on GitHub <img src={gitHubIcon} alt="" />
-            </AnchorButton>
-            {fetching ? (
-              <Spinner />
-            ) : isInstalled ? (
-              <Button
-                variant="GHOST"
-                tone="DANGER"
+              {fetchingNpmData ? (
+                ``
+              ) : isOfficial ? (
+                <span>
+                  <GatsbyIcon /> Official
+                </span>
+              ) : (
+                <span>
+                  <CommunityIcon /> Community
+                </span>
+              )}
+              {` `}
+              Gatsby plugin
+            </Text>
+            {}
+            <Text
+              sx={{ color: `grey.60`, fontSize: 1, whiteSpace: `pre-wrap` }}
+            >
+              <ArrowDownwardIcon /> {npmData?.humanDownloadsLast30Days || `...`}
+              {` `}
+              downloads
+            </Text>
+          </Flex>
+          <Flex
+            sx={{ width: `100%` }}
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Heading as="h1">{pluginName}</Heading>
+            <Flex gap={3}>
+              <AnchorButton
+                variant="SECONDARY"
                 size="M"
-                loading={deletingGatsbyPlugin}
-                onClick={(evt): void => {
-                  evt.preventDefault()
-                  if (
-                    window.confirm(
-                      `Are you sure you want to uninstall ${pluginName}?`
-                    )
-                  ) {
-                    deleteGatsbyPlugin({ name: pluginName }).then(() =>
-                      navigate(`/`)
-                    )
-                  }
+                target="_blank"
+                // Fall back to https://github.com/nice-registry/ghub.io, which redirects to the
+                // package.json repository url automatically
+                href={
+                  npmData?.repository?.url || `https://ghub.io/${pluginName}`
+                }
+                sx={{
+                  // Render the space between the text and the <img> icon
+                  whiteSpace: `pre`,
                 }}
               >
-                Uninstall
-              </Button>
-            ) : (
-              <Button
-                size="M"
-                loading={installingGatsbyPlugin}
-                onClick={(evt): void => {
-                  evt.preventDefault()
-                  installGatsbyPlugin({ name: pluginName })
-                }}
-              >
-                Install
-              </Button>
-            )}
+                View on GitHub <img src={gitHubIcon} alt="" />
+              </AnchorButton>
+              {fetching ? (
+                <Spinner />
+              ) : isInstalled ? (
+                <Button
+                  variant="GHOST"
+                  tone="DANGER"
+                  size="M"
+                  loading={deletingGatsbyPlugin}
+                  onClick={(evt): void => {
+                    evt.preventDefault()
+                    if (
+                      window.confirm(
+                        `Are you sure you want to uninstall ${pluginName}?`
+                      )
+                    ) {
+                      deleteGatsbyPlugin({ name: pluginName }).then(() =>
+                        navigate(`/`)
+                      )
+                    }
+                  }}
+                >
+                  Uninstall
+                </Button>
+              ) : (
+                <Button
+                  size="M"
+                  loading={installingGatsbyPlugin}
+                  onClick={(evt): void => {
+                    evt.preventDefault()
+                    installGatsbyPlugin({ name: pluginName })
+                  }}
+                >
+                  Install
+                </Button>
+              )}
+            </Flex>
           </Flex>
         </Flex>
         <Flex gap={12} sx={{ width: `100%` }} alignItems="flex-start">
