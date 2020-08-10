@@ -9,7 +9,10 @@ import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt
 import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
-import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import {
+  createServiceLock,
+  getService,
+} from "gatsby-core-utils/dist/service-lock"
 import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
@@ -143,7 +146,7 @@ class ControllableScript {
   }
   onMessage(callback: (msg: any) => void): void {
     if (!this.process) {
-      throw new Error(`Trying to attach message handler before process starter`)
+      throw new Error(`Trying to attach message handler before process started`)
     }
     this.process.on(`message`, callback)
   }
@@ -151,9 +154,17 @@ class ControllableScript {
     callback: (code: number | null, signal: NodeJS.Signals | null) => void
   ): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process starter`)
+      throw new Error(`Trying to attach exit handler before process started`)
     }
     this.process.on(`exit`, callback)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send(msg: any): void {
+    if (!this.process) {
+      throw new Error(`Trying to send a message before process started`)
+    }
+
+    this.process.send(msg)
   }
 }
 
@@ -265,10 +276,19 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
+    // We don't need to keep a lock on this, as it's just site metadata
+    await createServiceLock(program.directory, `metadata`, {
+      name: program.sitePackageJson.name,
+      sitePath: program.directory,
+      pid: process.pid,
+      lastRun: Date.now(),
+    }).then(unlock => unlock?.())
 
     if (!statusUnlock || !developUnlock) {
+      const data = await getService(program.directory, `developproxy`)
+      const port = data?.port || 8000
       console.error(
-        `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
+        `Looks like develop for this site is already running. Try visiting http://localhost:${port}/ maybe?`
       )
       process.exit(1)
     }
@@ -368,6 +388,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       })
     })
   }
+
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
+  })
 
   process.on(`beforeExit`, async () => {
     await Promise.all([

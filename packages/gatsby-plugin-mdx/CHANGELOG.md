@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.33...gatsby-plugin-mdx@1.2.34) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.32...gatsby-plugin-mdx@1.2.33) (2020-08-03)
+
+### Bug Fixes
+
+- gatsby-plugin-mdx's findImports not running plugins ([#26191](https://github.com/gatsbyjs/gatsby/issues/26191)) ([ae5f581](https://github.com/gatsbyjs/gatsby/commit/ae5f581))
+
+## [1.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.31...gatsby-plugin-mdx@1.2.32) (2020-08-03)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support import shorthand syntax ([#26198](https://github.com/gatsbyjs/gatsby/issues/26198)) ([0df7977](https://github.com/gatsbyjs/gatsby/commit/0df7977))
+
 ## [1.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.30...gatsby-plugin-mdx@1.2.31) (2020-07-31)
 
 ### Performance Improvements
