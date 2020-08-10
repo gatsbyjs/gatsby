@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.10...gatsby-recipes@0.2.11) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** speedup recipe runs for recipes with large numbers of resources ([#26307](https://github.com/gatsbyjs/gatsby/issues/26307)) ([07d555b](https://github.com/gatsbyjs/gatsby/commit/07d555b))
+
 ## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.9...gatsby-recipes@0.2.10) (2020-08-08)
 
 ### Features
