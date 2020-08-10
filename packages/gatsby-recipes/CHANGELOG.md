@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.11...gatsby-recipes@0.2.12) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** remove trailing config as we do want it to run again to ensure all resource updates are flushed ([#26341](https://github.com/gatsbyjs/gatsby/issues/26341)) ([0542c8b](https://github.com/gatsbyjs/gatsby/commit/0542c8b))
+
 ## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.10...gatsby-recipes@0.2.11) (2020-08-10)
 
 ### Bug Fixes
