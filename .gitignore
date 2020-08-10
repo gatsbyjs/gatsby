@@ -47,7 +47,6 @@ e2e-tests/gatsby-pnp/
 .idea/
 .vscode/
 *.sw*
-.history
 
 # misc
 .serverless/
