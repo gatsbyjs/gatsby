@@ -140,7 +140,7 @@ exports.onPostBuild = (
       },
       {
         // page-data.json files are not content hashed
-        urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
         handler: `StaleWhileRevalidate`,
       },
       {
