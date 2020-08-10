@@ -24,7 +24,7 @@ Gatsby also supports _splat_ routes, which are routes that will match _anything_
 - `/src/pages/image/[...awsKey].js => /users/*awsKey`
 - `/src/pages/image/[...].js => /app/*`
 
-Three periods `...` mark a page as a splat route. You can optionally name the splat as well, which has the benefit of naming the key of the property that your component receives. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
+Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
 ```js:title=/src/pages/users/[id].js
 function UserPage(props) {
