@@ -4,6 +4,7 @@ import { PageProps } from "gatsby"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
 import ManagePluginForm from "../components/manage-plugin-page"
+import useNpmPackageData from "../utils/use-npm-data"
 
 export default function PluginView(
   props: PageProps & {

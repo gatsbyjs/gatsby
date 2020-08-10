@@ -1,13 +1,7 @@
 /* @jsx jsx */
 import { jsx } from "strict-ui"
 import { Spinner } from "theme-ui"
-import {
-  InstantSearch,
-  Configure,
-  RefinementList,
-  ToggleRefinement,
-  connectAutoComplete,
-} from "react-instantsearch-dom"
+import { connectAutoComplete } from "react-instantsearch-dom"
 import {
   Combobox,
   ComboboxInput,
@@ -16,6 +10,7 @@ import {
   ComboboxOption,
 } from "gatsby-interface"
 import { useMutation } from "urql"
+import InstantSearchProvider from "./instantsearch-provider"
 
 const SearchCombobox: React.FC<{
   onSelect: (value: string) => void
@@ -63,32 +58,7 @@ const PluginSearchInput: React.FC<{}> = () => {
 
   return (
     <div>
-      <InstantSearch
-        apiKey="ae43b69014c017e05950a1cd4273f404"
-        appId="OFCNCOG2CU"
-        indexName="npm-search"
-      >
-        <div style={{ display: `none` }}>
-          <Configure analyticsTags={[`gatsby-plugins`]} />
-          <RefinementList
-            attribute="keywords"
-            transformItems={(items: Array<any>): Array<any> =>
-              items.map(({ count, ...item }) => {
-                return {
-                  ...item,
-                  count: count || 0,
-                }
-              })
-            }
-            defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
-          />
-          <ToggleRefinement
-            attribute="deprecated"
-            value={false}
-            label="No deprecated plugins"
-            defaultRefinement={true}
-          />
-        </div>
+      <InstantSearchProvider>
         {fetching ? (
           <Spinner />
         ) : (
@@ -98,7 +68,7 @@ const PluginSearchInput: React.FC<{}> = () => {
             }}
           />
         )}
-      </InstantSearch>
+      </InstantSearchProvider>
     </div>
   )
 }

@@ -11,6 +11,7 @@ import {
   Spacer,
 } from "gatsby-interface"
 import { navigate } from "gatsby-link"
+import useNpmPackageData from "../utils/use-npm-data"
 
 interface IProps {
   plugin: {
@@ -21,6 +22,12 @@ interface IProps {
 }
 
 export default function ManagePluginForm({ plugin }: IProps): JSX.Element {
+  const {
+    fetching: fetchingNpmData,
+    error: fetchingNpmDataError,
+    data: npmData,
+  } = useNpmPackageData(plugin.name)
+
   const [{ fetching: updatingGatsbyPlugin }, updateGatsbyPlugin] = useMutation(`
     mutation updateGatsbyPlugin(
       $name: String!
