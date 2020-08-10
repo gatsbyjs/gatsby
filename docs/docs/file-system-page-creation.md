@@ -12,7 +12,7 @@ GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop
 
 ## Creating client-only routes
 
-Client-only routes are pages that would be used if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations you usually create a route with dynamic segment(s) in which you use to query data from a server to render your page.
+Use client-only routes if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations, you will usually create a route with one or more dynamic segments to query data from a server in order to render your page.
 
 For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL. You can now use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL.
 
