@@ -241,7 +241,6 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const inFlightCache = new Map()
 
   let result
-  let resourcesArray = []
 
   const recipeWithWrapper = (
     <Wrapper
