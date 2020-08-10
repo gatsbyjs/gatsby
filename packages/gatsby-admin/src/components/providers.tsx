@@ -7,14 +7,9 @@ import { createUrqlClient } from "../urql-client"
 
 const baseTheme = getTheme()
 
-const recipesTheme = {
-  ...baseTheme,
+const recipesTheme = merge(baseTheme, {
   colors: {
-    ...baseTheme.colors,
     background: `white`,
-  },
-  fontWeights: {
-    ...baseTheme.fontWeights,
   },
   styles: {
     h1: {
@@ -80,16 +75,13 @@ const recipesTheme = {
       lineHeight: 1.6,
     },
   },
-}
+})
 
 const theme = merge(recipesTheme, {
-  ...baseTheme,
   colors: {
-    ...baseTheme.colors,
     background: baseTheme.colors.primaryBackground,
   },
   fonts: {
-    ...baseTheme.fonts,
     // We want to use inter for all text on the page, no more futura!
     brand: baseTheme.fonts.sans,
     heading: baseTheme.fonts.sans,
