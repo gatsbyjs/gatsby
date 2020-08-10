@@ -96,6 +96,7 @@ Please pick a path to an existing directory.`)
 }
 
 export function setFieldsOnGraphQLNodeType({
+  getNode,
   type,
   store,
 }: SetFieldsOnGraphQLNodeTypeArgs): object {
@@ -114,9 +115,19 @@ export function setFieldsOnGraphQLNodeType({
           source: object,
           { filePath }: { filePath: string }
         ): string => {
+          // This is a quick hack for attaching parents to the node.
+          // This may be an incomprehensive fixed for the general use case
+          // of connecting nodes together. However, I don't quite know how to
+          // fully understand the use-cases. So this is a simple fix for this
+          // one common-use, and we'll iterate as we understand.
+          const sourceCopy = { ...source }
+          if (typeof source.parent === `string`) {
+            sourceCopy.parent = getNode(source.parent)
+          }
+
           validatePathQuery(filePath, extensions)
 
-          return derivePath(filePath, source)
+          return derivePath(filePath, sourceCopy)
         },
       },
     }

@@ -16,13 +16,13 @@ export function isValidCollectionPathImplementation(filePath: string): boolean {
 
     const opener = part.slice(0)
     const model = part.match(/{([a-zA-Z]+)./)?.[1]!
-    const field = part.match(/\.([a-zA-Z_]+)}/)?.[1]!
+    const field = part.match(/\.([a-zA-Z_()]+)}/)?.[1]!
     const closer = part.match(/\}/)?.[0]!
 
     try {
       assert(opener, `{`, ``) // This is a noop because of the opening check, but here for posterity
       assert(model, /^[A-Z][a-zA-Z]+$/, errorMessage(filePath, part))
-      assert(field, /^[a-zA-Z_]+$/, errorMessage(filePath, part))
+      assert(field, /^[a-zA-Z_()]+$/, errorMessage(filePath, part))
       assert(closer, `}`, errorMessage(filePath, part))
     } catch (e) {
       reporter.panicOnBuild(e.message)

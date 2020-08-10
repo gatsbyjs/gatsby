@@ -64,7 +64,11 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
   >
 
   if (nodes) {
-    reporter.info(`   Creating ${nodes.length} pages from ${filePath}`)
+    reporter.info(
+      `   Creating ${nodes.length} page${
+        nodes.length > 1 ? `s` : ``
+      } from ${filePath}`
+    )
   }
 
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
