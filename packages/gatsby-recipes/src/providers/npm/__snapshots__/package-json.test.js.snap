@@ -78,6 +78,28 @@ Object {
 }
 `;
 
+exports[`packageJson resource handles multiple parallel create calls 1`] = `
+Object {
+  "_message": "Wrote key \\"husky\\" to package.json",
+  "id": "husky",
+  "name": "husky",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;
+
+exports[`packageJson resource handles multiple parallel create calls 2`] = `
+Object {
+  "_message": "Wrote key \\"husky2\\" to package.json",
+  "id": "husky2",
+  "name": "husky2",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;
+
 exports[`packageJson resource handles object values 1`] = `
 Object {
   "_message": "Wrote key \\"husky\\" to package.json",
