@@ -11,17 +11,12 @@ module.exports = async steps => {
     }
   })
 
-  try {
-    const firstStepPlan = await render(steps[0])
-    if (firstStepPlan.length) {
-      errors.push({
-        step: 0,
-        validationError: `Resources should not be placed in the introduction step (0)`,
-      })
-    }
-  } catch (e) {
-    // This means the first step has a syntax error which is already
-    // addressed above.
+  const firstStepPlan = await render(steps[0])
+  if (firstStepPlan.length) {
+    errors.push({
+      step: 0,
+      validationError: `Resources should not be placed in the introduction step (0)`,
+    })
   }
 
   return errors
