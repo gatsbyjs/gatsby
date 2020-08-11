@@ -24,4 +24,36 @@ describe(`Telemetry`, () => {
       (EventStorage as jest.Mock).mock.instances[0].addEvent
     ).not.toHaveBeenCalled()
   })
+
+  describe(`trackFeatureIsUsed`, () => {
+    it(`Attaches feature list to the events`, () => {
+      telemetry.trackFeatureIsUsed(`Foo:bar`)
+      telemetry.buildAndStoreEvent(`demo`, {})
+      expect(
+        (EventStorage as jest.Mock).mock.instances[0].addEvent
+      ).toHaveBeenCalledWith(
+        expect.objectContaining({
+          features: [`Foo:bar`],
+        })
+      )
+    })
+  })
+
+  describe(`allows overriding defaults`, () => {
+    it(`allows overriding componentId`, () => {
+      const t = new AnalyticsTracker({
+        componentId: `desktop`,
+        gatsbyCliVersion: `1.2.3-beta1`,
+      })
+      t.buildAndStoreEvent(`demo`, {})
+      expect(
+        (EventStorage as jest.Mock).mock.instances[1].addEvent
+      ).toHaveBeenCalledWith(
+        expect.objectContaining({
+          componentId: `desktop`,
+          gatsbyCliVersion: `1.2.3-beta1`,
+        })
+      )
+    })
+  })
 })
