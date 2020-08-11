@@ -8,6 +8,7 @@ import { derivePath } from "./derive-path"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
+import { Reporter } from "gatsby"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
@@ -15,7 +16,7 @@ export async function createPagesFromCollectionBuilder(
   absolutePath: string,
   actions: Actions,
   graphql: CreatePagesArgs["graphql"],
-  reporter
+  reporter: Reporter
 ): Promise<void> {
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, () =>
