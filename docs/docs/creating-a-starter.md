@@ -15,7 +15,7 @@ For a starter to work properly, it needs to include some files (see the [Hello W
 - `static`: a directory for static assets, such as a `favicon.ico` file.
 - `.gitignore`: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
 - `.prettierrc` _(optional)_: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
-- `LICENSE`: a file containing an [appropriate](#open-source-license) open source license, preferably with a [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/).
+- `LICENSE`: a file containing an [appropriate open source license](#open-source-license), preferably with a [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/).
 
 Your starter should also have these qualities:
 
