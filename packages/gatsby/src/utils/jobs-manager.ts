@@ -6,7 +6,7 @@ import pDefer from "p-defer"
 import _ from "lodash"
 import { createContentDigest, slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
-import { ActivityTracker } from "../.."
+import { IPhantomReporter } from "gatsby-cli"
 
 enum MESSAGE_TYPES {
   JOB_CREATED = `JOB_CREATED`,
@@ -64,7 +64,7 @@ export class WorkerError extends Error {
   }
 }
 
-let activityForJobs: ActivityTracker | null = null
+let activityForJobs: IPhantomReporter | null = null
 let activeJobs = 0
 let isListeningForMessages = false
 let hasShownIPCDisabledWarning = false
