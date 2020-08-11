@@ -14,7 +14,7 @@ import lodash from "lodash"
 import fetch from "isomorphic-fetch"
 
 import { Button, Heading } from "gatsby-interface"
-import MDX from "gatsby-recipes/src/components/mdx"
+import StepRenderer from "gatsby-recipes/src/components/step-renderer"
 import WelcomeMessage from "./welcome-message"
 import Step from "./recipe-step"
 import { components, removeJsx, log } from "./utils"
@@ -210,13 +210,13 @@ const RecipeInterpreter = ({ recipe }) => {
               }}
             >
               <div sx={{ "*:last-child": { mb: 0 } }}>
-                <MDX
+                <StepRenderer
                   components={components}
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
                   {exports?.join(`\n`) + `\n\n` + stepsAsJS[0]}
-                </MDX>
+                </StepRenderer>
               </div>
               <Button
                 onClick={() => sendEvent({ event: `CONTINUE` })}

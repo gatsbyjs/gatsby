@@ -11,12 +11,11 @@ const transformCodeForEval = jsx => `${jsx}
   );`
 
 export default ({ children: srcCode, scope, components, ...props }) => {
-  delete components.RecipeIntroduction
-  delete components.Config
   const fullScope = {
     mdx: createElement,
     MDXProvider,
     React,
+    // need to pass both so that we can guaruntee the components we need are passed to MDXProvider for shortcodes and we also need some components to be in direct scope
     ...components,
     components,
     props,

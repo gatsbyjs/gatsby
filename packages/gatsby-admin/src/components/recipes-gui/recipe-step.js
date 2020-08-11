@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, Styled } from "theme-ui"
 import { Heading } from "gatsby-interface"
-import MDX from "gatsby-recipes/src/components/mdx"
+import StepRenderer from "gatsby-recipes/src/components/step-renderer"
 import CodeDiff from "./code-diff"
 import { components, removeJsx, makeResourceId } from "./utils"
 
@@ -75,14 +75,14 @@ const Step = ({ sendEvent, state, step, i }) => {
             },
           }}
         >
-          <MDX
+          <StepRenderer
             key="DOC"
             components={components}
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
             {state.context.exports?.join(`\n`) + `\n\n` + step}
-          </MDX>
+          </StepRenderer>
         </div>
       </div>
       {stepResources?.length > 0 && (

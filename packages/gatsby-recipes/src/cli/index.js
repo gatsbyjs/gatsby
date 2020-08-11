@@ -3,7 +3,7 @@ const { useState, useEffect } = require(`react`)
 import SelectInput from "ink-select-input"
 import { render, Box, Text, useInput, useApp, Transform } from "ink"
 import Spinner from "ink-spinner"
-import MDX from "../components/mdx"
+import StepRenderer from "../components/step-renderer"
 const hicat = require(`hicat`)
 const { trackCli } = require(`gatsby-telemetry`)
 import {
@@ -317,9 +317,13 @@ export default async ({
                 </Text>
               </Box>
             ) : null}
-            <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-              {state.context.recipe}
-            </MDX>
+            <StepRenderer
+              key="DOC"
+              components={components}
+              remarkPlugins={[removeJsx]}
+            >
+              {state.context.stepsAsJS.join(`\n`)}
+            </StepRenderer>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
             <Text>{` `}</Text>
