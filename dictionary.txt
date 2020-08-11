@@ -1287,7 +1287,6 @@ modularizing
 modus
 Monahan
 mongo
-MongoDb
 monorepo
 monorepos
 Morby

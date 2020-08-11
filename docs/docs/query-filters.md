@@ -6,7 +6,7 @@ title: Query Filters with GraphQL in Gatsby
 
 ## Summary
 
-Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/).
+Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDB queries](https://docs.mongodb.com/manual/reference/operator/query/).
 
 Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). `filter` GraphQL argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on GraphQL resolver level.
 
@@ -14,13 +14,13 @@ Filtering is used in GraphQL root fields of Node types (e.g. for File type it wo
 
 ### History and Sift
 
-For a long time Gatsby used the [sift.js](https://github.com/crcn/sift.js) library through which you can use [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/) in JavaScript.
+For a long time Gatsby used the [sift.js](https://github.com/crcn/sift.js) library through which you can use [MongoDB queries](https://docs.mongoDB.com/manual/reference/operator/query/) in JavaScript.
 
 Unfortunately Sift did not align with how Gatsby used it and so a custom system was written to slowly replace it. This system was called "fast filters" and as of gatsby@2.23.0 (June 2020) the Sift library is no longer used.
 
 ## Query Language
 
-The syntax and API used by the filters is based on [the MongoDB query syntax](https://docs.mongodb.com/manual/reference/operator/query/) but keep in mind only a subset of comparators is supported in Gatsby.
+The syntax and API used by the filters is based on [the MongoDB query syntax](https://docs.mongoDB.com/manual/reference/operator/query/) but keep in mind only a subset of comparators is supported in Gatsby.
 
 In general a filter has a "filter path" component ending with a "comparator", and a "filter value". It's a way of programmatically asking "show me all nodes where `node[i].a.b.c` leads to a value less than `5`".
 
