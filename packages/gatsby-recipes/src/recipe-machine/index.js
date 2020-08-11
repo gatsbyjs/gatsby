@@ -4,10 +4,8 @@ const debug = require(`debug`)(`recipes-machine`)
 
 const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
-const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const resolveRecipe = require(`../resolve-recipe`)
-const transformRecipeFromMdx = require(`../transform-recipe-mdx`)
 const lodash = require(`lodash`)
 
 const recipeMachine = Machine(
@@ -69,12 +67,8 @@ const recipeMachine = Machine(
           src: async (context, _event) => {
             debug(`parsingRecipe`)
             const parsed = await parser.parse(context.recipeSrc)
-            const stepsAsJS = parsed.stepsAsMdx.map(step =>
-              transformRecipeFromMdx(step)
-            )
             debug(`parsedRecipe`)
-
-            return { ...parsed, ...stepsAsJS }
+            return parsed
           },
           onError: {
             target: `doneError`,
@@ -96,34 +90,12 @@ const recipeMachine = Machine(
             }),
           },
           onDone: {
-            target: `validateSteps`,
+            target: `creatingPlan`,
             actions: assign({
               recipe: (context, event) => event.data.recipe,
               stepsAsMdx: (context, event) => event.data.stepsAsMdx,
               stepsAsJS: (context, event) => event.data.stepsAsJS,
               exports: (context, event) => event.data.exports,
-            }),
-          },
-        },
-      },
-      validateSteps: {
-        invoke: {
-          id: `validateSteps`,
-          src: async (context, event) => {
-            debug(`validatingSteps`)
-            const result = await validateSteps(context.stepsAsMdx)
-            if (result.length > 0) {
-              debug(`errors found in validation`)
-              throw new Error(JSON.stringify(result))
-            }
-
-            return undefined
-          },
-          onDone: `creatingPlan`,
-          onError: {
-            target: `doneError`,
-            actions: assign({
-              error: (context, event) => JSON.parse(event.data.message),
             }),
           },
         },

@@ -11,10 +11,13 @@ const transformCodeForEval = jsx => `${jsx}
   );`
 
 export default ({ children: srcCode, scope, components, ...props }) => {
+  delete components.RecipeIntroduction
+  delete components.Config
   const fullScope = {
     mdx: createElement,
     MDXProvider,
     React,
+    ...components,
     components,
     props,
     useInput,

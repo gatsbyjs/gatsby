@@ -187,9 +187,10 @@ const RecipeInterpreter = ({ recipe }) => {
     })
   }
 
-  const { plan, stepsAsJS, exports } = state.context
+  let { plan, stepsAsJS, exports } = state.context
 
   const groupedPlansByResource = lodash.groupBy(plan, p => p.resourceName)
+  console.log(stepsAsJS[0])
 
   return (
     <>
