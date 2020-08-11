@@ -15,6 +15,8 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
+import reporter from "gatsby-cli/lib/reporter"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -88,8 +90,11 @@ Please pick a path to an existing directory.`)
             files.push(addedPath)
           }
         } catch (e) {
-          e.message = `PageCreator: ${e.message}`
-          throw e
+          reporter.panic(
+            e.message.startsWith(`PageCreator`)
+              ? e.message
+              : `PageCreator: ${e.message}`
+          )
         }
       },
       removedPath => {
@@ -106,14 +111,20 @@ Please pick a path to an existing directory.`)
           })
           files = files.filter(f => f !== removedPath)
         } catch (e) {
-          e.message = `PageCreator: ${e.message}`
-          throw e
+          reporter.panic(
+            e.message.startsWith(`PageCreator`)
+              ? e.message
+              : `PageCreator: ${e.message}`
+          )
         }
       }
     ).then(() => doneCb(null, null))
   } catch (e) {
-    e.message = `PageCreator: ${e.message}`
-    throw e
+    reporter.panic(
+      e.message.startsWith(`PageCreator`)
+        ? e.message
+        : `PageCreator: ${e.message}`
+    )
   }
 }
 
@@ -160,8 +171,11 @@ export function setFieldsOnGraphQLNodeType({
 
     return {}
   } catch (e) {
-    e.message = `PageCreator: ${e.message}`
-    throw e
+    reporter.panic(
+      e.message.startsWith(`PageCreator`)
+        ? e.message
+        : `PageCreator: ${e.message}`
+    )
   }
 }
 
@@ -173,6 +187,15 @@ export async function onPreInit(
     const pagesGlob = `**/\\{*\\}**`
 
     const files = await glob(pagesGlob, { cwd: pagesPath })
+
+    if (files.length > 0) {
+      trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
+      if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
+        reporter.panic(
+          `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
+        )
+      }
+    }
 
     await Promise.all(
       files.map(async relativePath => {
@@ -190,7 +213,10 @@ export async function onPreInit(
       })
     )
   } catch (e) {
-    e.message = `PageCreator: ${e.message}`
-    throw e
+    reporter.panic(
+      e.message.startsWith(`PageCreator`)
+        ? e.message
+        : `PageCreator: ${e.message}`
+    )
   }
 }

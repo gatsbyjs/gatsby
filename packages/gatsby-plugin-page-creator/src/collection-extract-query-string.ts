@@ -4,6 +4,7 @@ import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
 import traverse from "@babel/traverse"
 import { extractModel } from "./path-utils"
+import reporter from "gatsby-cli/lib/reporter"
 
 // This Function opens up the actual collection file and extracts the queryString used in the
 export function collectionExtractQueryString(
@@ -11,7 +12,7 @@ export function collectionExtractQueryString(
 ): string | null {
   let queryString: string | null = null
 
-  const modelType = extractModel(absolutePath)
+  let modelType = extractModel(absolutePath)
 
   // This can happen if you have an invalid path and you are trying to query for that path
   // our path graphql resolution logic does not validate the path before calling this
@@ -37,9 +38,16 @@ export function collectionExtractQueryString(
             if (!text) return
 
             if (text.includes(`...CollectionPagesQueryFragment`) === false) {
-              throw new Error(
-                `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes`
+              reporter.error(
+                `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
+
+Please fix the query from ${absolutePath.split(`src/pages`)[1]}.
+
+Offending query: ${text}`
               )
+              queryString = ``
+              modelType = ``
+              return
             }
 
             queryString = text
