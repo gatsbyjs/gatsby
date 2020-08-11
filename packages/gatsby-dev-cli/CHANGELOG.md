@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.16...gatsby-dev-cli@2.7.17) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** Increase verdaccio max_body_size ([#26339](https://github.com/gatsbyjs/gatsby/issues/26339)) ([da1caa6](https://github.com/gatsbyjs/gatsby/commit/da1caa6))
+
 ## [2.7.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.15...gatsby-dev-cli@2.7.16) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-dev-cli

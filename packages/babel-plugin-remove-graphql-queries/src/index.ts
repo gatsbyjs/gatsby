@@ -96,8 +96,11 @@ class GraphQLSyntaxError extends Error {
   }
 }
 
-const isGlobalIdentifier = (tag: NodePath): boolean =>
-  tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
+const isGlobalIdentifier = (
+  tag: NodePath,
+  tagName: string = `graphql`
+): boolean =>
+  tag.isIdentifier({ name: tagName }) && tag.scope.hasGlobal(tagName)
 
 export function followVariableDeclarations(binding: Binding): Binding {
   const node = binding.path?.node
@@ -149,27 +152,25 @@ function getTagImport(tag: NodePath<Identifier>): NodePath | null {
   return null
 }
 
-function isGraphqlTag(tag: NodePath): boolean {
+function isGraphqlTag(tag: NodePath, tagName: string = `graphql`): boolean {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
 
   const importPath = getTagImport(identifier as NodePath<Identifier>)
-  if (!importPath) return isGlobalIdentifier(tag)
+  if (!importPath) return isGlobalIdentifier(tag, tagName)
 
   if (
     isExpression &&
     (importPath.isImportNamespaceSpecifier() || importPath.isIdentifier())
   ) {
-    return (tag.get(`property`) as NodePath<Identifier>).node.name === `graphql`
+    return (tag.get(`property`) as NodePath<Identifier>).node.name === tagName
   }
 
   if (importPath.isImportSpecifier())
-    return importPath.node.imported.name === `graphql`
+    return importPath.node.imported.name === tagName
 
   if (importPath.isObjectProperty())
-    return (
-      (importPath.get(`key`) as NodePath<Identifier>).node.name === `graphql`
-    )
+    return (importPath.get(`key`) as NodePath<Identifier>).node.name === tagName
 
   return false
 }
@@ -207,11 +208,14 @@ function removeImport(tag: NodePath<Expression>): void {
   }
 }
 
-function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
+function getGraphQLTag(
+  path: NodePath<TaggedTemplateExpression>,
+  tagName: string = `graphql`
+): IGraphQLTag {
   const tag: NodePath = path.get(`tag`) as NodePath
-  const isGlobal: boolean = isGlobalIdentifier(tag)
+  const isGlobal: boolean = isGlobalIdentifier(tag, tagName)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {} as IGraphQLTag
+  if (!isGlobal && !isGraphqlTag(tag, tagName)) return {} as IGraphQLTag
 
   const quasis: TemplateElement[] = path.node.quasi.quasis
 
@@ -267,7 +271,8 @@ export default function ({ types: t }): PluginObj {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const staticQueryDir = state.opts.staticQueryDir || `static/d`
+              const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
               // Add query
               const parent = path2.parent as JSXOpeningElement
@@ -306,7 +311,8 @@ export default function ({ types: t }): PluginObj {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const staticQueryDir = state.opts.staticQueryDir || `static/d`
+              const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
 
               // only remove the import if its like:

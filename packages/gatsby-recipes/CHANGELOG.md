@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.11...gatsby-recipes@0.2.12) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** remove trailing config as we do want it to run again to ensure all resource updates are flushed ([#26341](https://github.com/gatsbyjs/gatsby/issues/26341)) ([0542c8b](https://github.com/gatsbyjs/gatsby/commit/0542c8b))
+
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.10...gatsby-recipes@0.2.11) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** speedup recipe runs for recipes with large numbers of resources ([#26307](https://github.com/gatsbyjs/gatsby/issues/26307)) ([07d555b](https://github.com/gatsbyjs/gatsby/commit/07d555b))
+
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.9...gatsby-recipes@0.2.10) (2020-08-08)
+
+### Features
+
+- **gatsby-recipes:** live stream updates from creating resources ([#26283](https://github.com/gatsbyjs/gatsby/issues/26283)) ([57843f7](https://github.com/gatsbyjs/gatsby/commit/57843f7))
+
+## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.8...gatsby-recipes@0.2.9) (2020-08-07)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix for when recipes have multiple NPMPackageJSON resources ([#26281](https://github.com/gatsbyjs/gatsby/issues/26281)) ([1e74b7c](https://github.com/gatsbyjs/gatsby/commit/1e74b7c))
+
+## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.7...gatsby-recipes@0.2.8) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby-recipes:** rename/remove internal fields ([#26254](https://github.com/gatsbyjs/gatsby/issues/26254)) ([3b5504f](https://github.com/gatsbyjs/gatsby/commit/3b5504f))
+
+## [0.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.6...gatsby-recipes@0.2.7) (2020-08-06)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.5...gatsby-recipes@0.2.6) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby-recipes:** also show general errors ([#26253](https://github.com/gatsbyjs/gatsby/issues/26253)) ([1cf5bc2](https://github.com/gatsbyjs/gatsby/commit/1cf5bc2))
+
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.4...gatsby-recipes@0.2.5) (2020-08-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Handle string values in NPMPackageJSON + more robust showing of validation errors on install ([#26252](https://github.com/gatsbyjs/gatsby/issues/26252)) ([3a5d46d](https://github.com/gatsbyjs/gatsby/commit/3a5d46d))
+
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.3...gatsby-recipes@0.2.4) (2020-08-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix prop validation & creation of cache keys during installs ([#26235](https://github.com/gatsbyjs/gatsby/issues/26235)) ([5aa8f25](https://github.com/gatsbyjs/gatsby/commit/5aa8f25))
+
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.2...gatsby-recipes@0.2.3) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.1...gatsby-recipes@0.2.2) (2020-08-04)
 
 ### Bug Fixes
