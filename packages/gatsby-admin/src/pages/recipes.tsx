@@ -21,7 +21,7 @@ function Recipes(): JSX.Element {
                 }}
               >
                 <h2> {recipe.label}</h2>
-                <Link to={`/recipe`} state={{ name: recipe.value }}>
+                <Link to={`/recipe?name=${recipe.value}`}>
                   Recipe GUI for {recipe.value}
                 </Link>
               </Flex>

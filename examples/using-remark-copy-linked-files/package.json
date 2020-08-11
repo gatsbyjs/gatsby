@@ -4,11 +4,11 @@
   "description": "Gatsby example site on gatsby-remark-copy-linked-files",
   "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.37",
+    "gatsby": "^2.24.41",
     "gatsby-plugin-google-analytics": "^2.3.13",
     "gatsby-plugin-offline": "^2.2.10",
     "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-sharp": "^2.6.25",
+    "gatsby-plugin-sharp": "^2.6.26",
     "gatsby-plugin-typography": "^2.5.10",
     "gatsby-remark-copy-linked-files": "^2.3.12",
     "gatsby-remark-images": "^3.3.25",

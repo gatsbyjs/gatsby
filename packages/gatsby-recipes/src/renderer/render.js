@@ -301,9 +301,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
     }
   }
 
-  const throttledRenderResources = lodash.throttle(renderResources, 100, {
-    trailing: false,
-  })
+  const throttledRenderResources = lodash.throttle(renderResources, 100)
 
   queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()

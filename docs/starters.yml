@@ -6941,3 +6941,21 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://texblog.akshatbisht.com/
+  repo: https://github.com/aaaakshat/gatsby-starter-texblog
+  description: A lightweight, LaTeX enabled starter to beautifully showcase your typeset articles.
+  tags:
+    - Blog
+    - Markdown
+    - MDX
+    - SEO
+    - Styling:SCSS
+    - Language:TypeScript
+  features:
+    - Automatically generated landing page with articles organised by date
+    - LaTeX support (rendered via remark-katex)
+    - Custom Image component to easily add images
+    - MDX to add components to articles
+    - Uses SCSS for easy-to-understand naming
+    - Google Analytics support
+    - Responsive design

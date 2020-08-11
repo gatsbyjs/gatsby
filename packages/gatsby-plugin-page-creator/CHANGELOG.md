@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.21...gatsby-plugin-page-creator@2.3.22) (2020-08-11)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** juggle reporter dont depend on cli ([#26357](https://github.com/gatsbyjs/gatsby/issues/26357)) ([2cef73b](https://github.com/gatsbyjs/gatsby/commit/2cef73b))
+
+## [2.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.20...gatsby-plugin-page-creator@2.3.21) (2020-08-10)
+
+### Features
+
+- **gatsby:** Extend support for file system pages to build client-only and collections of pages! ([#25204](https://github.com/gatsbyjs/gatsby/issues/25204)) ([61d8849](https://github.com/gatsbyjs/gatsby/commit/61d8849))
+
 ## [2.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.19...gatsby-plugin-page-creator@2.3.20) (2020-08-05)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
