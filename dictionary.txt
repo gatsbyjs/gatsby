@@ -1,6 +1,6 @@
+0BSD
 ½
 ⅓
-0BSD
 1000px
 1000s
 1000x
@@ -244,6 +244,7 @@ bois
 Bolda
 Bölüm
 bool
+booleans
 bootcamp
 bootcamps
 bootstrapable
@@ -388,6 +389,9 @@ Commento
 Commentors
 CommonJS
 CommonMark
+comparator
+Comparator
+comparators
 compile-to-js
 componentChunkName
 componentChunkNames
@@ -429,8 +433,8 @@ Costa
 Costea
 Coughlan
 counterintuitive
-COVID-19
 COVID
+COVID-19
 cowpaths
 Coyier
 CPG
@@ -665,6 +669,7 @@ filesystem-based
 filesystem-explorer-options
 filesystem-query
 Fillerama
+filterValue
 FindCollabs
 findDirtyIds
 findIdsWithoutDataDependencies
@@ -1254,6 +1259,7 @@ METROGLAM
 Meuleman
 Michał
 Microfrontends
+micromatch
 microservices
 microsites
 middleware
@@ -1332,11 +1338,11 @@ Nicky
 Nie
 Nik
 no-brainer
+Node.js
 nodeId
 nodeID
 NodeID
 nodemailer
-Node.js
 NodeSchool
 nodesPromise
 Nolen
