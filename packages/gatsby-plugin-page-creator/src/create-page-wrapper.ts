@@ -4,6 +4,7 @@ import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { Reporter } from "gatsby"
 
 function pathIsCollectionBuilder(path: string): boolean {
   return path.includes(`{`)
@@ -18,7 +19,8 @@ export function createPage(
   pagesDirectory: string,
   actions: Actions,
   ignore: string[],
-  graphql: CreatePagesArgs["graphql"]
+  graphql: CreatePagesArgs["graphql"],
+  reporter: Reporter
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
@@ -41,7 +43,13 @@ export function createPage(
         `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
       )
     }
-    createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+    createPagesFromCollectionBuilder(
+      filePath,
+      absolutePath,
+      actions,
+      graphql,
+      reporter
+    )
     return
   }
 

@@ -8,18 +8,24 @@ import { derivePath } from "./derive-path"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
-import reporter from "gatsby-cli/lib/reporter"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
   filePath: string,
   absolutePath: string,
   actions: Actions,
-  graphql: CreatePagesArgs["graphql"]
+  graphql: CreatePagesArgs["graphql"],
+  reporter
 ): Promise<void> {
-  if (isValidCollectionPathImplementation(absolutePath) === false) {
+  if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, () =>
-      createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+      createPagesFromCollectionBuilder(
+        filePath,
+        absolutePath,
+        actions,
+        graphql,
+        reporter
+      )
     )
     return
   }
@@ -30,7 +36,13 @@ export async function createPagesFromCollectionBuilder(
   // 1.a  If the query string is not findable, we can't move on. So we stop and watch
   if (queryString === null) {
     watchCollectionBuilder(absolutePath, ``, [], actions, () =>
-      createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+      createPagesFromCollectionBuilder(
+        filePath,
+        absolutePath,
+        actions,
+        graphql,
+        reporter
+      )
     )
     return
   }
@@ -51,7 +63,13 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
     )
 
     watchCollectionBuilder(absolutePath, queryString, [], actions, () =>
-      createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+      createPagesFromCollectionBuilder(
+        filePath,
+        absolutePath,
+        actions,
+        graphql,
+        reporter
+      )
     )
 
     return
@@ -97,6 +115,12 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
   })
 
   watchCollectionBuilder(absolutePath, queryString, paths, actions, () =>
-    createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+    createPagesFromCollectionBuilder(
+      filePath,
+      absolutePath,
+      actions,
+      graphql,
+      reporter
+    )
   )
 }

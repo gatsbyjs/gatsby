@@ -1,12 +1,15 @@
 import sysPath from "path"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby"
 
 // This file is a helper for consumers. It's going to log an error to them if they
 // in any way have an incorrect filepath setup for us to predictably use collection
 // querying.
 //
 // Without this, users will can get mystic errors.
-export function isValidCollectionPathImplementation(filePath: string): boolean {
+export function isValidCollectionPathImplementation(
+  filePath: string,
+  reporter: Reporter
+): boolean {
   const parts = filePath.split(sysPath.sep)
   let passing = true
 
