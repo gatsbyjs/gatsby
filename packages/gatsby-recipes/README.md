@@ -1,7 +1,7 @@
 # Gatsby Recipes
 
 Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpreter, perform common actions like installing
+files which, when run by our custom React renderer, perform common actions like installing
 NPM packages, installing plugins, creating pages, etc.
 
 It's designed to be extensible so new capabilities can be added which allow
@@ -170,9 +170,29 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name**: name of the package(s) to install. Takes a string or an array of strings.
+- **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
+
+### `<NPMPackageJson>`
+
+<!-- prettier-ignore-start -->
+```jsx
+<NPMPackageJson
+  name="lint-staged"
+  value={{
+     "src/**/*.js": [
+      "jest --findRelatedTests"
+    ],
+  }}
+/>
+```
+<!-- prettier-ignore-end -->
+
+#### props
+
+- **name**: name of the property to add to the package.json
+- **value**: the value assigned to the property. can be an object or a string.
 
 ### `<NPMScript>`
 
@@ -240,6 +260,8 @@ DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
 ```
 
 Then, open up Chrome and click the node icon in dev tools.
+
+To see log output from the Recipes graphql server, start the Recipes API in one terminal `node node_modules/gatsby-recipes/dist/graphql-server/server.js` and then in another terminal run your recipe with `RECIPES_DEV_MODE=true` set as an env variable.
 
 ### Official recipes
 
