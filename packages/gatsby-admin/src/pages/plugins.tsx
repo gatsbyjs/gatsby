@@ -243,14 +243,25 @@ export default function PluginView(
                     heading: (props: any): JSX.Element => (
                       <Heading as={`h${props.level}`} {...props} />
                     ),
+                    inlineCode: (props: any): JSX.Element => (
+                      <Text
+                        // @ts-ignore
+                        as="code"
+                        sx={{
+                          fontFamily: `monospace`,
+                        }}
+                        {...props}
+                      />
+                    ),
                     code: (props: any): JSX.Element => (
                       <pre>
                         <Text
+                          // @ts-ignore
                           as="code"
                           language={props.language}
                           sx={{
                             fontFamily: `monospace`,
-                            fontSize: 1,
+                            fontSize: 0,
                           }}
                         >
                           {props.value}
