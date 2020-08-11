@@ -125,7 +125,7 @@
     "react-refresh": "^0.7.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "semver": "^5.7.1",
+    "semver": "^7.3.2",
     "shallow-compare": "^1.2.2",
     "signal-exit": "^3.0.3",
     "slugify": "^1.4.4",
