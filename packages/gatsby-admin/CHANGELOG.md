@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.132](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.131...gatsby-admin@0.1.132) (2020-08-11)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.131](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.130...gatsby-admin@0.1.131) (2020-08-11)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.130](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.129...gatsby-admin@0.1.130) (2020-08-11)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.129](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.128...gatsby-admin@0.1.129) (2020-08-10)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.128](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.127...gatsby-admin@0.1.128) (2020-08-10)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.127](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.126...gatsby-admin@0.1.127) (2020-08-10)
+
+**Note:** Version bump only for package gatsby-admin
+
 ## [0.1.126](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.125...gatsby-admin@0.1.126) (2020-08-08)
 
 **Note:** Version bump only for package gatsby-admin
