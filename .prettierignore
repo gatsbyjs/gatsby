@@ -22,8 +22,6 @@ packages/**/*.js
 !packages/gatsby-plugin-mdx/**/*.js
 packages/gatsby-plugin-mdx/node_modules/**/*.js
 packages/gatsby/cache-dir/commonjs/**/*.js
-packages/gatsby-admin/public
-packages/gatsby/gatsby-admin-public
 
 # fixtures
 **/__testfixtures__/**
