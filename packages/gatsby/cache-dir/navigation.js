@@ -191,26 +191,27 @@ class RouteAnnouncer extends React.Component {
       //e.g. could put announcer on layout and then override in specific page
       if (routeAnnouncements && routeAnnouncements.length) {
         routeAnnouncement = routeAnnouncements[routeAnnouncements.length - 1]
-        useTitle = routeAnnouncement.dataset["gatsbyRouteAnnouncementUseTitle"]
+        useTitle = routeAnnouncement.dataset[`gatsbyRouteAnnouncementUseTitle`]
       }
 
-      if (document.title) {
-        pageName = document.title
-      }
       const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
       if (pageHeadings && pageHeadings.length) {
         pageName = pageHeadings[0].innerText
       }
 
+      if (document.title) {
+        pageName = document.title
+      }
+
       if (routeAnnouncement) {
         announcementText =
-          useTitle === "true" && document.title
+          useTitle === `true` && document.title
             ? document.title
             : routeAnnouncement.innerText
       }
       const newAnnouncement = announcementText
         ? announcementText
-        : `Navigated to ${pageName}`
+        : `${pageName}`
       if (this.announcementRef.current) {
         const oldAnnouncement = this.announcementRef.current.innerText
         if (oldAnnouncement !== newAnnouncement) {
