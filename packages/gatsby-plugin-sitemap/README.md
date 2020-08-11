@@ -61,7 +61,7 @@ plugins: [
           }
 
           allSitePage {
-            node {
+            nodes {
               path
             }
           }

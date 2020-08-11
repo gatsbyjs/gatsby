@@ -54,7 +54,7 @@ const APILink = ({ definition, relativeFilePath }) => {
           variant: `links.muted`,
           display: `inline-flex !important`,
         }}
-        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${relativeFilePath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
+        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/gatsby/${relativeFilePath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
         <GithubIcon focusable="false" sx={{ mr: 2 }} />
@@ -74,7 +74,7 @@ const APILink = ({ definition, relativeFilePath }) => {
           variant: `links.muted`,
           display: `inline-flex !important`,
         }}
-        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
+        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/gatsby/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
         <GithubIcon focusable="false" sx={{ mr: 2 }} />
@@ -105,7 +105,7 @@ const APILink = ({ definition, relativeFilePath }) => {
           {definition.codeLocation.map((loc, index) => (
             <LinkBox
               key={`${loc.file}${loc.start.line}-${loc.end.line}`}
-              href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${loc.file}#L${loc.start.line}-L${loc.end.line}`}
+              href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/gatsby/${loc.file}#L${loc.start.line}-L${loc.end.line}`}
               aria-label={`View source #${index + 1} on GitHub`}
             >
               {index + 1}

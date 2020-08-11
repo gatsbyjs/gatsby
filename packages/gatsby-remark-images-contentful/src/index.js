@@ -58,11 +58,11 @@ module.exports = async (
 
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
-    const options = _.defaults(pluginOptions, defaults)
+    const options = _.defaults({}, pluginOptions, defaults)
 
     const optionsHash = createContentDigest(options)
 
-    const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
+    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
     let cachedRawHTML = await cache.get(cacheKey)
 
     if (cachedRawHTML) {

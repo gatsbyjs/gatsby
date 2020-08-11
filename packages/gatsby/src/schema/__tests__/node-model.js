@@ -1,7 +1,5 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const nodeStore = require(`../../db/nodes`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
@@ -53,7 +51,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -285,205 +282,201 @@ describe(`NodeModel`, () => {
         )
       })
     })
-    ;[
-      { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
-    ].forEach(({ desc, cb: createFiltersCache }) => {
-      describe(`runQuery [${desc}]`, () => {
-        it(`returns first result only`, async () => {
-          const type = `Post`
-          const query = {
-            filter: { frontmatter: { published: { eq: false } } },
-          }
-          const firstOnly = true
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
+
+    describe(`runQuery`, () => {
+      it(`returns first result only`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = true
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        expect(result.id).toBe(`post1`)
+      })
+
+      it(`returns all results`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        expect(result.length).toBe(2)
+        expect(result[0].id).toBe(`post1`)
+        expect(result[1].id).toBe(`post3`)
+      })
+
+      it(`creates page dependencies`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
             query,
             firstOnly,
             type,
-          })
-          expect(result.id).toBe(`post1`)
+          },
+          { path: `/` }
+        )
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
         })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
 
-        it(`returns all results`, async () => {
-          const type = `Post`
-          const query = {
-            filter: { frontmatter: { published: { eq: false } } },
-          }
-          const firstOnly = false
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
+      it(`creates page dependencies when called with context`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.withContext({ path: `/` }).runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`creates page dependencies with connection type`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
             query,
             firstOnly,
             type,
-          })
-          expect(result.length).toBe(2)
-          expect(result[0].id).toBe(`post1`)
-          expect(result[1].id).toBe(`post3`)
+          },
+          { path: `/`, connectionType: `Post` }
+        )
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Post`,
         })
+      })
 
-        it(`creates page dependencies`, async () => {
-          const type = `Post`
-          const query = {
-            filter: { frontmatter: { published: { eq: false } } },
-          }
-          const firstOnly = false
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          await nodeModel.runQuery(
-            {
-              query,
-              firstOnly,
-              type,
+      it(`doesn't allow querying union types`, () => {
+        const type = `AllFiles`
+        const query = {}
+        const firstOnly = true
+        nodeModel.replaceFiltersCache()
+        const result = nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        return expect(result).rejects.toThrowError(
+          `Querying GraphQLUnion types is not supported.`
+        )
+      })
+
+      it(`handles interface types`, async () => {
+        const type = `TeamMember`
+        const query = { name: { ne: null } }
+        const firstOnly = true
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        expect(result.name).toBe(`Person1`)
+      })
+
+      it(`allows passing GraphQLType instead of type name`, async () => {
+        const type = schema.getType(`File`)
+        const query = {
+          filter: {
+            children: { elemMatch: { internal: { type: { eq: `Post` } } } },
+          },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        expect(result.length).toBe(2)
+        expect(result[0].id).toBe(`file1`)
+        expect(result[1].id).toBe(`file3`)
+      })
+
+      it(`handles elemMatch`, async () => {
+        const type = `Post`
+        const query = {
+          filter: {
+            nestedObject: { elemMatch: { nestedValue: { eq: `2` } } },
+          },
+        }
+        const firstOnly = true
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
+        })
+        expect(result).toBeDefined()
+        expect(result.id).toEqual(`post2`)
+      })
+
+      // FIXME: Filters on date instances are not supported yet
+      //  SIFT requires such filters to be expressed as Date instances but we
+      //  don't know if date is stored as `Date` instance or `string`
+      //  so can't really do that
+      //  See https://github.com/crcn/sift.js#date-comparison
+      it.skip(`queries date instances in nodes`, async () => {
+        const type = `Post`
+        const query = {
+          filter: {
+            frontmatter: {
+              date: { lte: `2018-01-01T00:00:00Z` },
             },
-            { path: `/` }
-          )
-          expect(createPageDependency).toHaveBeenCalledTimes(2)
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            nodeId: `post1`,
-          })
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            nodeId: `post3`,
-          })
+          },
+        }
+        const firstOnly = false
+        nodeModel.replaceTypeKeyValueCache()
+        const result = await nodeModel.runQuery({
+          query,
+          firstOnly,
+          type,
         })
-
-        it(`creates page dependencies when called with context`, async () => {
-          const type = `Post`
-          const query = {
-            filter: { frontmatter: { published: { eq: false } } },
-          }
-          const firstOnly = false
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          await nodeModel.withContext({ path: `/` }).runQuery({
-            query,
-            firstOnly,
-            type,
-          })
-          expect(createPageDependency).toHaveBeenCalledTimes(2)
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            nodeId: `post1`,
-          })
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            nodeId: `post3`,
-          })
-        })
-
-        it(`creates page dependencies with connection type`, async () => {
-          const type = `Post`
-          const query = {
-            filter: { frontmatter: { published: { eq: false } } },
-          }
-          const firstOnly = false
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          await nodeModel.runQuery(
-            {
-              query,
-              firstOnly,
-              type,
-            },
-            { path: `/`, connectionType: `Post` }
-          )
-          expect(createPageDependency).toHaveBeenCalledTimes(1)
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            connection: `Post`,
-          })
-        })
-
-        it(`doesn't allow querying union types`, () => {
-          const type = `AllFiles`
-          const query = {}
-          const firstOnly = true
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = nodeModel.runQuery({
-            query,
-            firstOnly,
-            type,
-          })
-          return expect(result).rejects.toThrowError(
-            `Querying GraphQLUnion types is not supported.`
-          )
-        })
-
-        it(`handles interface types`, async () => {
-          const type = `TeamMember`
-          const query = { name: { ne: null } }
-          const firstOnly = true
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
-            query,
-            firstOnly,
-            type,
-          })
-          expect(result.name).toBe(`Person1`)
-        })
-
-        it(`allows passing GraphQLType instead of type name`, async () => {
-          const type = schema.getType(`File`)
-          const query = {
-            filter: {
-              children: { elemMatch: { internal: { type: { eq: `Post` } } } },
-            },
-          }
-          const firstOnly = false
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
-            query,
-            firstOnly,
-            type,
-          })
-          expect(result.length).toBe(2)
-          expect(result[0].id).toBe(`file1`)
-          expect(result[1].id).toBe(`file3`)
-        })
-
-        it(`handles elemMatch`, async () => {
-          const type = `Post`
-          const query = {
-            filter: {
-              nestedObject: { elemMatch: { nestedValue: { eq: `2` } } },
-            },
-          }
-          const firstOnly = true
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
-            query,
-            firstOnly,
-            type,
-          })
-          expect(result).toBeDefined()
-          expect(result.id).toEqual(`post2`)
-        })
-
-        // FIXME: Filters on date instances are not supported yet
-        //  SIFT requires such filters to be expressed as Date instances but we
-        //  don't know if date is stored as `Date` instance or `string`
-        //  so can't really do that
-        //  See https://github.com/crcn/sift.js#date-comparison
-        it.skip(`queries date instances in nodes`, async () => {
-          const type = `Post`
-          const query = {
-            filter: {
-              frontmatter: {
-                date: { lte: `2018-01-01T00:00:00Z` },
-              },
-            },
-          }
-          const firstOnly = false
-          nodeModel.replaceTypeKeyValueCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
-            query,
-            firstOnly,
-            type,
-          })
-          expect(result).toBeDefined()
-          expect(result.length).toEqual(2)
-          expect(result[0].id).toEqual(`post2`)
-          expect(result[1].id).toEqual(`post3`)
-        })
+        expect(result).toBeDefined()
+        expect(result.length).toEqual(2)
+        expect(result[0].id).toEqual(`post2`)
+        expect(result[1].id).toEqual(`post3`)
       })
     })
 
@@ -501,6 +494,58 @@ describe(`NodeModel`, () => {
         const predicate = obj => obj.internal && obj.internal.type === `File`
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
+      })
+
+      it(`returns null when object's top-most ancestor doesn't match the provided predicate`, () => {
+        const node = nodeModel.getNodeById({ id: `post1` })
+        const obj = node.frontmatter.authors
+        const predicate = () => false
+        const result = nodeModel.findRootNodeAncestor(obj, predicate)
+        expect(result).toBe(null)
+      })
+    })
+
+    describe(`createPageDependency`, () => {
+      it(`it calls upstream createPageDependency for single nodes`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          nodeId: `person2`,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person2`,
+        })
+      })
+
+      it(`it calls upstream createPageDependency for connections of concrete types`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          connection: `Author`,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Author`,
+        })
+      })
+
+      it(`it calls upstream createPageDependency with concrete types for node interface connections`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          connection: `TeamMember`,
+        })
+
+        // TeamMember is interface with Author and Contributor types implementing it
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Author`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Contributor`,
+        })
       })
     })
   })
@@ -573,94 +618,89 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
-    ;[
-      { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
-    ].forEach(({ desc, cb: createFiltersCache }) => {
-      it(`[${desc}] should not resolve prepared nodes more than once`, async () => {
-        nodeModel.replaceFiltersCache(createFiltersCache())
-        await nodeModel.runQuery(
-          {
-            query: { filter: { betterTitle: { eq: `foo` } } },
-            firstOnly: false,
-            type: `Test`,
-          },
-          { path: `/` }
-        )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
-        nodeModel.replaceFiltersCache(createFiltersCache())
-        await nodeModel.runQuery(
-          {
-            query: { filter: { betterTitle: { eq: `foo` } } },
-            firstOnly: false,
-            type: `Test`,
-          },
-          { path: `/` }
-        )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
-        nodeModel.replaceFiltersCache(createFiltersCache())
-        await nodeModel.runQuery(
-          {
-            query: {
-              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
-            },
-            firstOnly: false,
-            type: `Test`,
-          },
-          { path: `/` }
-        )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
-        nodeModel.replaceFiltersCache(createFiltersCache())
-        await nodeModel.runQuery(
-          {
-            query: {
-              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
-            },
-            firstOnly: false,
-            type: `Test`,
-          },
-          { path: `/` }
-        )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
-        nodeModel.replaceFiltersCache(createFiltersCache())
-        await nodeModel.runQuery(
-          {
-            query: {
-              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
-            },
-            firstOnly: true,
-            type: `Test`,
-          },
-          { path: `/` }
-        )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
-      })
 
-      it(`[${desc}] can filter by resolved fields`, async () => {
-        nodeModel.replaceFiltersCache(createFiltersCache())
-        const result = await nodeModel.runQuery(
-          {
-            query: {
-              filter: { hidden: { eq: false } },
-            },
-            firstOnly: false,
-            type: `Test`,
+    it(`should not resolve prepared nodes more than once`, async () => {
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: { filter: { betterTitle: { eq: `foo` } } },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: { filter: { betterTitle: { eq: `foo` } } },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          { path: `/` }
-        )
-        expect(result.length).toBe(2)
-        expect(result[0].id).toBe(`id1`)
-        expect(result[1].id).toBe(`id2`)
-      })
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
+          },
+          firstOnly: true,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
+    })
+
+    it(`can filter by resolved fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { hidden: { eq: false } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(result.length).toBe(2)
+      expect(result[0].id).toBe(`id1`)
+      expect(result[1].id).toBe(`id2`)
     })
   })
 
@@ -708,7 +748,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -790,49 +829,45 @@ describe(`NodeModel`, () => {
         expect(trackedRootNode).not.toEqual(node)
       })
     })
-    ;[
-      { desc: `with cache`, cb: () => new Map() }, // Avoids sift
-      { desc: `no cache`, cb: () => null }, // Requires sift
-    ].forEach(({ desc, cb: createFiltersCache }) => {
-      describe(`[${desc}] Tracks nodes returned by queries`, () => {
-        it(`Tracks objects when running query without filter`, async () => {
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
-            query: {},
-            type: schema.getType(`Test`),
-            firstOnly: false,
-          })
 
-          expect(result.length).toEqual(2)
-          expect(
-            nodeModel.findRootNodeAncestor(result[0].inlineObject)
-          ).toEqual(result[0])
-          expect(
-            nodeModel.findRootNodeAncestor(result[1].inlineObject)
-          ).toEqual(result[1])
+    describe(`Tracks nodes returned by queries`, () => {
+      it(`Tracks objects when running query without filter`, async () => {
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query: {},
+          type: schema.getType(`Test`),
+          firstOnly: false,
         })
 
-        it(`Tracks objects when running query with filter`, async () => {
-          nodeModel.replaceFiltersCache(createFiltersCache())
-          const result = await nodeModel.runQuery({
-            query: {
-              filter: {
-                inlineObject: {
-                  field: {
-                    eq: `fieldOfSecondNode`,
-                  },
+        expect(result.length).toEqual(2)
+        expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
+          result[0]
+        )
+        expect(nodeModel.findRootNodeAncestor(result[1].inlineObject)).toEqual(
+          result[1]
+        )
+      })
+
+      it(`Tracks objects when running query with filter`, async () => {
+        nodeModel.replaceFiltersCache()
+        const result = await nodeModel.runQuery({
+          query: {
+            filter: {
+              inlineObject: {
+                field: {
+                  eq: `fieldOfSecondNode`,
                 },
               },
             },
-            type: schema.getType(`Test`),
-            firstOnly: false,
-          })
-
-          expect(result.length).toEqual(1)
-          expect(
-            nodeModel.findRootNodeAncestor(result[0].inlineObject)
-          ).toEqual(result[0])
+          },
+          type: schema.getType(`Test`),
+          firstOnly: false,
         })
+
+        expect(result.length).toEqual(1)
+        expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
+          result[0]
+        )
       })
     })
   })
@@ -878,7 +913,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })
@@ -923,7 +957,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })

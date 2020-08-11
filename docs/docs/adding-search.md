@@ -1,6 +1,5 @@
 ---
 title: Adding Search
-overview: true
 ---
 
 See below for a list of guides in this section, or keep reading for an overview on adding search functionality to your site.
@@ -13,9 +12,9 @@ Before going through the steps for adding search to your Gatsby website, examine
 
 There are three required components for adding search to your Gatsby website:
 
-1.  index
-2.  engine
-3.  UI
+1. index
+2. engine
+3. UI
 
 ## Site search components
 

@@ -15,7 +15,7 @@ I’ve built apps with it (Rails / Sinatra / Jekyll / etc).
 
 I used to like Jekyll because I could write my posts in Markdown which is super
 easy to write and edit.. When I started my blog, I took a theme called
-[Lanyon](https://github.com/poole/lanyon) and tweaked it a bit. That was a
+[Lanyon](https://github.com/poole/lanyon) and tweaked it a bit. That was
 enough for me.
 
 But recently I find that I only install Ruby and Jekyll to manage my blog (I

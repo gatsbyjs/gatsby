@@ -18,13 +18,13 @@ You have to install and configure Tailwind for all of these methods, so this gui
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start), then come back.
 
-1. Install Tailwind
+### 1. Install Tailwind
 
 ```shell
 npm install tailwindcss --save-dev
 ```
 
-2. Generate Tailwind config file (optional)
+### 2. Generate Tailwind config file (optional)
 
 **Note**: A config file isn't required for Tailwind 1.0.0+
 
@@ -34,15 +34,15 @@ To configure Tailwind, you'll need to add a Tailwind configuration file. Luckily
 npx tailwindcss init
 ```
 
-### Option #1: PostCSS
+#### Option #1: PostCSS
 
-1.  Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
+1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
 
 ```shell
 npm install --save gatsby-plugin-postcss
 ```
 
-2.  Include the plugin in your `gatsby-config.js` file.
+2. Include the plugin in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-postcss`],
@@ -64,17 +64,11 @@ You can now use the `@tailwind` directives to add Tailwind's utilities, prefligh
 
 To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documentation](https://tailwindcss.com/docs/installation#3-use-tailwind-in-your-css)
 
-### Option #2: CSS-in-JS
+#### Option #2: CSS-in-JS
 
 These steps assume you have a CSS-in-JS library already installed, and the examples are based on Emotion.
 
-1. Install Tailwind Babel Macro
-
-**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a new forked project can be found at `twin.macro` that supports Tailwindcss v1.2 classes. It's currently in pre-release so not all plugins are supported at the time of writing. Alternatively, you can revert to Tailwind 0.7.4.
-
-**Option 1**: Install `twin.macro` and use Tailwind 1.2.0+
-
-1. Install Twin and Emotion
+1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction)
 
 ```shell
 npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
@@ -83,7 +77,7 @@ npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
 2. Import the Tailwind base styles
 
 ```javascript:title=gatsby-browser.js
-import "tailwindcss/dist/base.css"
+import "tailwindcss/dist/base.min.css"
 ```
 
 3. Enable the Gatsby emotion plugin
@@ -94,35 +88,35 @@ module.exports = {
 }
 ```
 
-**Option 2**: Install stable `tailwind.macro` and use Tailwind 0.7.4
+4. Use `twin.macro` to create your styled component
 
-```bash
-// Remove tailwind 1.0.0+ if you've already installed it
-npm uninstall tailwindcss
+```jsx:title=src/pages/index.js
+import React from "react"
+import tw, { styled } from "twin.macro" //highlight-line
 
-// Install tailwind 0.7.4 and stable tailwind.macro
-npm install tailwindcss@0.7.4
-npm install tailwind.macro
-```
-
-2. Use the Babel Macro (`tailwind.macro`) in your styled component
-
-```javascript
-import styled from "@emotion/styled"
-import tw from "tailwind.macro"
-
-// All versions
 const Button = styled.button`
-  ${tw`bg-blue hover:bg-blue-dark text-white p-2 rounded`};
+  ${tw`bg-blue-500 hover:bg-blue-800 text-white p-2 rounded`}
 `
 
-// tailwind.macro@next
+// or use the shorthand version
+
 const Button = tw.button`
-  bg-blue hover:bg-blue-dark text-white p-2 rounded
+  bg-blue-500 hover:bg-blue-800 text-white p-2 rounded
 `
+
+const IndexPage = () => (
+  <div>
+    <h1>Hi people</h1>
+    <Button>Activate</Button> // highlight-line
+  </div>
+)
+
+export default IndexPage
 ```
 
-### Option #3: SCSS
+See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/emotion/gatsby.md) for more information.
+
+#### Option #3: SCSS
 
 1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass) and `node-sass`.
 
@@ -130,7 +124,7 @@ const Button = tw.button`
 npm install --save node-sass gatsby-plugin-sass
 ```
 
-2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter in your `gatsby-config.js`.
+2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCssPlugins` parameter in your `gatsby-config.js`.
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -148,6 +142,71 @@ plugins: [
 
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
+
+### 3. Add custom CSS/SCSS files
+
+**Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and `@apply` rules directly from your `.js` files.
+
+In case you need to create custom classes for elements for nested selectors, or for overriding external packages, you can create your own CSS/SCSS files.
+
+1. Create a new file and import your Tailwind directives.
+
+This will be your 'master' CSS file, which you will import all other CSS within.
+
+```css:title=src/css/index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+**Note**: if using SCSS (or another supported language, rename files/folders appropriately).
+
+2. Import any custom CSS files or add any custom CSS you need (optional)
+
+```css:title=src/css/index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import popup.css body {
+  @apply bg-purple-200;
+}
+```
+
+3. Apply these additional styles to the browser
+
+In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
+
+```js:title=gatsby-browser.js
+import "./src/css/index.css"
+```
+
+### 4. Purging your CSS
+
+Now we've fully configured Tailwind CSS, we want to make sure that only the classes we need are delivered to the browser. By default, Tailwind is a very large library because it includes every combination of every class you might think of. Most of these you won't need, so we use PurgeCSS to remove any unused classes.
+
+**Note**: By default, PurgeCSS only runs on the build command as it is a relatively slow process. The development server will include all Tailwind classes, so it's highly recommended you test on a build server before deploying.
+
+From v1.4.0 onwards PurgeCSS is built into Tailwind CSS, but the approaches needed are very similar.
+
+**1.4.0 and above**
+
+In 1.4.0 you can purge your CSS directly from your Tailwind config. You simply need to provide an array of strings telling it which files to process.
+
+```js:title=tailwind.config.js
+module.exports = {
+  purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
+  theme: {},
+  variants: {},
+  plugins: [],
+}
+```
+
+Full documentation on this can now be found on the Tailwind site - [Tailwind PurgeCSS documentation](https://tailwindCSS.com/docs/controlling-file-size/#app)
+
+**Older versions**
+
+It is recommended you install the latest version of Tailwind CSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [Purge CSS manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation)
 
 ## Other resources
 

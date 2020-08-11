@@ -1,21 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-
-// API Rendering Stuff
 import { sortBy } from "lodash-es"
 
-import PageWithSidebar from "../components/page-with-sidebar"
-import MarkdownPageFooter from "../components/markdown-page-footer"
-import DocSearchContent from "../components/docsearch-content"
-import FooterLinks from "../components/shared/footer-links"
-import Breadcrumb from "../components/docs-breadcrumb"
-import Container from "../components/container"
-import PrevAndNext from "../components/prev-and-next"
-import APIReference, { APIContents } from "../components/api-reference"
+import APIReference from "../components/api-reference"
+import DocsMarkdownPage from "../components/docs-markdown-page"
 
 const normalizeGatsbyApiCall = array =>
   array.map(entry => {
@@ -42,7 +31,7 @@ const mergeFunctions = (data, context) => {
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
     const doc = node.childrenDocumentationJs
-      .filter(def => def.kind !== `typedef` && def.memberof)
+      .filter(def => def.kind !== `typedef`)
       .map(def => {
         if (!context.apiCalls) {
           // When an api call list is not available, the line numbers from jsdoc
@@ -75,84 +64,54 @@ const mergeFunctions = (data, context) => {
 }
 
 export default function APITemplate({ data, location, pageContext }) {
-  const { next, prev } = pageContext
-  const page = data.mdx
+  const { docPage } = data
+  const { prev, next } = pageContext
+  const heading = docPage.contentsHeading || `APIs`
+  const headingId = `apis`
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
-  const description = page.frontmatter.description || page.excerpt
+
+  // Override the page with updates to the table of contents
+  const page = {
+    ...docPage,
+    tableOfContentsDepth: Math.max(docPage.tableOfContentsDepth, 2),
+    tableOfContents: {
+      ...docPage.tableOfContents,
+      // Generate table of content items for API entries
+      items: [
+        ...(docPage.tableOfContents.items || []),
+        {
+          title: heading,
+          url: `#${headingId}`,
+          items: mergedFuncs.map(mergedFunc => {
+            return {
+              url: `#${mergedFunc.name}`,
+              title: mergedFunc.name,
+            }
+          }),
+        },
+      ],
+    },
+  }
 
   return (
-    <PageWithSidebar location={location}>
-      <Helmet>
-        <title>{page.frontmatter.title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:title" content={page.frontmatter.title} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter.label1" content="Reading time" />
-        <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
-      </Helmet>
-      <DocSearchContent>
-        <Container
-          overrideCSS={{
-            pb: 0,
-            [mediaQueries.lg]: {
-              pt: 9,
-            },
-          }}
-        >
-          <Breadcrumb location={location} />
-          <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
-            {page.frontmatter.title}
-          </h1>
-        </Container>
-        <Container
-          overrideCSS={{
-            pt: 0,
-            position: `static`,
-            [mediaQueries.lg]: {
-              pb: 9,
-            },
-          }}
-        >
-          <div>
-            <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-            <h2>{page.frontmatter.contentsHeading || "APIs"}</h2>
-            <APIContents docs={mergedFuncs} />
-            <h2>Reference</h2>
-            <APIReference
-              docs={mergedFuncs}
-              showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
-            />
-            <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
-            <MarkdownPageFooter page={page} />
-          </div>
-        </Container>
-      </DocSearchContent>
-      <FooterLinks />
-    </PageWithSidebar>
+    <DocsMarkdownPage page={page} location={location} prev={prev} next={next}>
+      <h2 id={headingId}>{heading}</h2>
+      <APIReference
+        docs={mergedFuncs}
+        showTopLevelSignatures={page.showTopLevelSignatures}
+      />
+    </DocsMarkdownPage>
   )
 }
 
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
-    mdx(fields: { slug: { eq: $path } }) {
-      body
-      excerpt
-      timeToRead
-      fields {
-        slug
-        anchor
-      }
-      frontmatter {
-        title
-        description
-        contentsHeading
-        showTopLevelSignatures
-      }
-      ...MarkdownPageFooterMdx
+    docPage(slug: { eq: $path }) {
+      ...DocPageContent
+      contentsHeading
+      showTopLevelSignatures
     }
     jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
       nodes {

@@ -18,7 +18,7 @@ const constructError = ({
     text: result.text(otherDetails.context),
     stack: otherDetails.error
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
-      : null,
+      : [],
     docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
   }
 

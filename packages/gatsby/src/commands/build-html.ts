@@ -9,7 +9,7 @@ import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
@@ -42,7 +42,7 @@ const doBuildRenderer = async (
 
 const buildRenderer = async (
   program: IProgram,
-  stage: BuildHTMLStage,
+  stage: Stage,
   parentSpan: IActivity
 ): Promise<string> => {
   const { directory } = program
@@ -92,6 +92,23 @@ const renderHTMLQueue = async (
   })
 }
 
+class BuildHTMLError extends Error {
+  codeFrame = ``
+  context?: {
+    path: string
+  }
+
+  constructor(error: Error) {
+    super(error.message)
+
+    // We must use getOwnProperty because keys like `stack` are not enumerable,
+    // but we want to copy over the entire error
+    Object.getOwnPropertyNames(error).forEach(key => {
+      this[key] = error[key]
+    })
+  }
+}
+
 const doBuildPages = async (
   rendererPath: string,
   pagePaths: string[],
@@ -109,8 +126,9 @@ const doBuildPages = async (
       error.stack,
       `${rendererPath}.map`
     )
-    prettyError.context = error.context
-    throw prettyError
+    const buildError = new BuildHTMLError(prettyError)
+    buildError.context = error.context
+    throw buildError
   }
 }
 
@@ -122,7 +140,7 @@ export const buildHTML = async ({
   workerPool,
 }: {
   program: IProgram
-  stage: BuildHTMLStage
+  stage: Stage
   pagePaths: string[]
   activity: IActivity
   workerPool: IWorkerPool

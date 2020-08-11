@@ -15,7 +15,9 @@
 - fromPath: /docs/community/ # Moved "Community" page from /docs/community to /contributing/community
   toPath: /contributing/community/
 - fromPath: /docs/deploying-to-now/
-  toPath: /docs/deploying-to-zeit-now/
+  toPath: /docs/deploying-to-vercel/
+- fromPath: /docs/deploying-to-zeit-now/
+  toPath: /docs/deploying-to-vercel/
 - fromPath: /docs/pair-programming/
   toPath: /contributing/pair-programming/
 - fromPath: /docs/how-to-create-an-issue/
@@ -81,7 +83,7 @@
 - fromPath: /docs/remark-plugin-tutorial/
   toPath: /tutorial/remark-plugin-tutorial/
 - fromPath: /docs/source-plugin-tutorial/
-  toPath: /tutorial/pixabay-source-plugin-tutorial/
+  toPath: /tutorial/source-plugin-tutorial/
 - fromPath: /docs/how-plugins-work/
   toPath: /docs/plugins/
 - fromPath: /blog/2018-2-16-how-to-build-a-website-with-react/
@@ -148,3 +150,9 @@
   toPath: /contributing/blog-contributions/
 - fromPath: /contributing/docs-and-website-components/
   toPath: /contributing/docs-and-blog-components/
+- fromPath: /docs/pixabay-source-plugin-tutorial/
+  toPath: /docs/source-plugin-tutorial/
+- fromPath: /docs/page-build-optimizations-for-incremental-data-changes/
+  toPath: /docs/conditional-page-builds/
+- fromPath: /docs/contributing/translation/ui-messages/
+  toPath: /docs/contributing/translation/

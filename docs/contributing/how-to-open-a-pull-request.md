@@ -38,8 +38,11 @@ Some PRs can be done completely from the [GitHub UI](https://help.github.com/en/
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), you can fork the repo and install parts of it to run on your local machine.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
+
 - Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
+
 - Follow the instructions for the part of the project you want to change. (See specific sections below.)
+
 - [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
 
   ```shell
@@ -47,23 +50,33 @@ To test changes locally against the Gatsby [site and project files](https://gith
   ```
 
 - Once you have changes in Git you want to push, [add them and create a commit](https://help.github.com/en/articles/adding-a-file-to-a-repository-using-the-command-line). For information on how to structure your commits, check out the [Managing PRs](/contributing/managing-pull-requests/#commit-and-pr-title) doc.
+
   - Using a dot character `.` will add all untracked files in the current directory and subdirectories.
+
   ```shell
   git add .
   ```
+
   - Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
+
 - Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
+
   ```shell
   npm run format
   ```
+
 - Commit any linting changes before pushing by [amending the previous commit](https://help.github.com/en/articles/changing-a-commit-message) or by adding a new commit. For more on linting and tests, visit the [Managing PRs](/contributing/managing-pull-requests/#automated-checks) doc.
+
   ```shell
   git commit --amend
   ```
+
 - Push your changes to your fork, assuming it is set up as [`origin`](https://www.git-tower.com/learn/git/glossary/origin):
+
   ```shell
   git push origin head
   ```
+
 - To open a PR with your changes against the Gatsby repo, you can use the [GitHub Pull Request UI](https://help.github.com/en/articles/creating-a-pull-request). Alternatively, you can use the command line: we recommend [hub](https://github.com/github/hub) for that.
 
 ### Documentation PRs
@@ -95,7 +108,7 @@ For the Gatsby blog, it's necessary to run your content idea by the Gatsby team 
 
 After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
-The Gatsby core and learning teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
 
 These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
 

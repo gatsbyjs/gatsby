@@ -11,13 +11,13 @@ _This article was originally published on
 [our company blog](https://blog.smartive.ch/smartive-ch-goes-gatsby-js-27a056b3b817)
 on September 27, 2017._
 
-# smartive.ch goes Gatsby
+## smartive.ch goes Gatsby
 
 At smartive, a Swiss-based web agency, we always saw the potential of static
 site generators. After using Wintersmith and Next.js we recently made the switch
 to Gatsby for our company site. A decision we don’t regret. Here’s why.
 
-## Back in the Days..
+### Back in the Days..
 
 As mentioned we already built our company website using static site generators
 early on. Last year, we finally made the switch from our good old custom PHP
@@ -36,16 +36,16 @@ the major drawbacks at that time were:
 - Pulling in external resources, such as blog posts, was quite unhandy and
   sometimes even impossible
 - Build process optimization was almost impossible and in our case resulted in a
-  Webpack setup on top of Wintersmith which was not really maintainable
+  webpack setup on top of Wintersmith which was not really maintainable
 
-## React to the Rescue!
+### React to the Rescue!
 
 Since by the time we encountered the problems described above we already had
 deep knowledge of React we started looking for an alternative based on that hot
 new thing.
 
 The first thing that caught our attention was
-[Next.js](https://github.com/zeit/next.js/), as seemingly everyone going for a
+[Next.js](https://github.com/vercel/next.js/), as seemingly everyone going for a
 server-side rendered React app was using it. After some days hacking on our app
 we encountered some issues, especially when it came to frontend rendering. We
 chose [prismic.io](https://prismic.io/) for our backend system which served all

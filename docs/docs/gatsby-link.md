@@ -348,6 +348,10 @@ const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
 export default Link
 ```
 
+### Relative links
+
+The `<Link />` component follows [the behavior of @reach/router](https://reach.tech/router/nesting) by ignoring trailing slashes and treating each page as if it were a directory when resolving relative links. For example if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`.
+
 ### File Downloads
 
 You can similarly check for file downloads:

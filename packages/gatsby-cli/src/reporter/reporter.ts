@@ -17,9 +17,10 @@ import { ErrorMeta, CreateLogAction } from "./types"
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
 
-interface IActivityArgs {
+export interface IActivityArgs {
   id?: string
   parentSpan?: Span
+  tags?: { [key: string]: any }
 }
 
 let isVerbose = false
@@ -64,11 +65,11 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic = (errorMeta: ErrorMeta, error?: Error | Error[]): void => {
+  panic = (errorMeta: ErrorMeta, error?: Error | Error[]): never => {
     const reporterError = this.error(errorMeta, error)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
-    process.exit(1)
+    return process.exit(1)
   }
 
   panicOnBuild = (
@@ -85,7 +86,7 @@ class Reporter {
   }
 
   error = (
-    errorMeta: ErrorMeta,
+    errorMeta: ErrorMeta | ErrorMeta[],
     error?: Error | Error[]
   ): IStructuredError | IStructuredError[] => {
     let details: {
@@ -189,8 +190,8 @@ class Reporter {
     text: string,
     activityArgs: IActivityArgs = {}
   ): ITimerReporter => {
-    let { parentSpan, id } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    let { parentSpan, id, tags } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
       id = text
     }
@@ -214,8 +215,8 @@ class Reporter {
     text: string,
     activityArgs: IActivityArgs = {}
   ): IPhantomReporter => {
-    let { parentSpan, id } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    let { parentSpan, id, tags } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
       id = text
     }
@@ -234,8 +235,8 @@ class Reporter {
     start = 0,
     activityArgs: IActivityArgs = {}
   ): IProgressReporter => {
-    let { parentSpan, id } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    let { parentSpan, id, tags } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
       id = text
     }
@@ -255,5 +256,5 @@ class Reporter {
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
   _setStage = (): void => {}
 }
-
+export type { Reporter }
 export const reporter = new Reporter()

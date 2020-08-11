@@ -8,7 +8,7 @@ In this guide you will take a look at the [gatsby-source-cloudinary](/packages/g
 
 Plugins are generally used to abstract functionality in Gatsby. In this case, the `gatsby-source-cloudinary` plugin is a [source plugin](/docs/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.
 
-> Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.com) showcasing optimized images in a masonry grid, served from Cloudinary.
+> Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.app) showcasing optimized images in a masonry grid, served from Cloudinary.
 
 ## The problem with handling images on the web
 
@@ -25,7 +25,7 @@ Cloudinary provides a couple of amazing solutions to this problem, namely:
 ## Gatsby-source-cloudinary
 
 This plugin fetches media assets from Cloudinary that are specified in a folder. It then transforms these images into Cloudinary file nodes, which can be queried with GraphQL in a Gatsby project.
-`gatsby-source-cloudinary` applies [f_auto and q_auto](https://cloudinary.com/documentation/image_transformations) transformation parameters which aid in automatic optimisation of format and quality for media assets by over 70 percent.
+`gatsby-source-cloudinary` applies [f_auto and q_auto](https://cloudinary.com/documentation/image_transformations) transformation parameters which aid in automatic optimization of format and quality for media assets by over 70 percent.
 
 ### Prerequisites
 
@@ -47,7 +47,7 @@ Add the plugin to your project.
 
 2. In the root of your project, create an environment file called `.env` and add your Cloudinary credentials and their values
 
-```
+```shell
 CLOUDINARY_API_KEY=xxxxxxxxxxxxxx
 CLOUDINARY_API_SECRET=xxxxxxxxxxxxxxxxxxxx
 CLOUDINARY_CLOUD_NAME=xxxxx
@@ -88,7 +88,7 @@ Here's a [link to the README](https://github.com/Chuloo/gatsby-source-cloudinary
 
 After sourcing media files from Cloudinary, you will be able to leverage Cloudinary’s media transformation capabilities. To do so, use `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/creating-a-transformer-plugin/) that is used to change image formats, styles and dimensions. It also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
 
-Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-transformer-cloudinary.netlify.com/fluid/)
+Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-transformer-cloudinary.netlify.app/fluid/)
 
 ### Prerequisites
 
@@ -109,7 +109,7 @@ Before using the `gatsby-transformer-cloudinary` plugin you should do the follow
 
 2. In the root of your project, create an environment file called `.env` to which to add your Cloudinary credentials and their values.
 
-```
+```shell
 CLOUDINARY_API_KEY=xxxxxxxxxxxxxx
 CLOUDINARY_API_SECRET=xxxxxxxxxxxxxxxxxxxx
 CLOUDINARY_CLOUD_NAME=xxxxx

@@ -25,10 +25,10 @@ You'll use npm to install Gatsby and its dependencies. Type `npm install -g gats
 
 ## Learn more about Node.js
 
-- [Node.js](https://nodejs.org/en/) official web site
+- [Node.js](https://nodejs.org/en/) official website
 
 - [Introduction to Node.js](https://nodejs.dev)
 
 - [NodeSchool](https://nodeschool.io/) offers online and in-person Node.js workshops
 
-- [V8](https://v8.dev/) developer blog web site
+- [V8](https://v8.dev/) developer blog website

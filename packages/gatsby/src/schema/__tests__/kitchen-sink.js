@@ -16,7 +16,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)

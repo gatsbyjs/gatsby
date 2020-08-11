@@ -9,10 +9,11 @@ import isValid from "is-valid-path"
 import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
-
+import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import report from "./reporter"
 import { getPackageManager, promptPackageManager } from "./util/package-manager"
 import { isTTY } from "./util/is-tty"
+import reporter from "../lib/reporter"
 
 const spawnWithArgs = (
   file: string,
@@ -211,8 +212,8 @@ interface IGetPaths {
 }
 
 const getPaths = async (
-  starterPath: string,
-  rootPath: string
+  starterPath?: string,
+  rootPath?: string
 ): Promise<IGetPaths> => {
   let selectedOtherStarter = false
 
@@ -260,10 +261,6 @@ const getPaths = async (
   return { starterPath, rootPath, selectedOtherStarter }
 }
 
-interface IInitOptions {
-  rootPath: string
-}
-
 const successMessage = (path: string): void => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
@@ -277,12 +274,12 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
  * Main function that clones or copies the starter.
  */
 export async function initStarter(
-  starter: string,
-  options: IInitOptions
+  starter?: string,
+  root?: string
 ): Promise<void> {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
-    options.rootPath
+    root
   )
 
   const urlObject = url.parse(rootPath)
@@ -345,8 +342,28 @@ export async function initStarter(
   trackCli(`NEW_PROJECT`, {
     starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
   })
-  if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starterPath, rootPath)
+  if (hostedInfo) {
+    await clone(hostedInfo, rootPath)
+  } else {
+    await copy(starterPath, rootPath)
+  }
+
+  const sitePath = sysPath.resolve(rootPath)
+
+  const sitePackageJson = await fs
+    .readJSON(sysPath.join(sitePath, `package.json`))
+    .catch(() => {
+      reporter.verbose(
+        `Could not read "${sysPath.join(sitePath, `package.json`)}"`
+      )
+    })
+
+  await createServiceLock(sitePath, `metadata`, {
+    name: sitePackageJson?.name || rootPath,
+    sitePath,
+    lastRun: Date.now(),
+  }).then(unlock => unlock?.())
+
   successMessage(rootPath)
   trackCli(`NEW_PROJECT_END`)
 }

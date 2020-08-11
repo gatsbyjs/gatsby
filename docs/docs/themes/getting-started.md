@@ -52,7 +52,7 @@ module.exports = {
 }
 ```
 
-### 2. The starter scaffolds out example blog posts.
+### 2. The starter scaffolds out example blog posts
 
 ```mdx:title=/content/posts/hello-world.mdx
 ---

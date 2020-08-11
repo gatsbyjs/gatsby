@@ -22,7 +22,7 @@ If you're finding a recipe is becoming too long to fit on the Docs Recipes page 
 
 ## Recipe categories
 
-Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an h2 heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
+Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an `h2` heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
 
 Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
 
@@ -69,7 +69,7 @@ Prerequisites example:
 
 ### Directions
 
-The steps should list each part of the task in detail (omitting unrelated boilerplate or installation steps), and not skip or gloss over necessary details. Typically these steps are included with an ordered list. It's subjective whether to include a code snippet for each step, and will require your best judgement (ask for help in a PR if you're not sure). For some recipes, listing each individual step in text and including a single code snippet for the recipe makes sense to keep it short.
+The steps should list each part of the task in detail (omitting unrelated boilerplate or installation steps), and not skip or gloss over necessary details. Typically these steps are included with an ordered list. It's subjective whether to include a code snippet for each step, and will require your best judgment (ask for help in a PR if you're not sure). For some recipes, listing each individual step in text and including a single code snippet for the recipe makes sense to keep it short.
 
 If a recipe issue recommends a live example such as a CodeSandbox embed, the recipe steps are the best place to include it.
 
@@ -100,12 +100,14 @@ When writing a recipe, try to include each of the below items wherever relevant.
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link>
-    <p>What a world.</p>
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <Link to="/contact/">Contact</Link>
+      <p>What a world.</p>
+    </div>
+  )
+}
 ```
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link

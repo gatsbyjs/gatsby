@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { useLocale } from "./I18nContext"
+import { useLocale } from "./i18n-context"
 import { localizedPath } from "../utils/i18n"
 
 // Use the globally available context to choose the right path

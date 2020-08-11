@@ -16,7 +16,7 @@ const argv = require(`yargs`)
   .nargs(`s`, 0)
   .describe(`s`, `Scan once. Do not start file watch`)
   .alias(`p`, `set-path-to-repo`)
-  .nargs(`p`, 0)
+  .nargs(`p`, 1)
   .describe(
     `p`,
     `Set path to Gatsby repository.

@@ -1,7 +1,7 @@
 import React from "react"
 import { render, waitFor, fireEvent } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "../../I18nContext"
+import { I18nProvider } from "../../i18n-context"
 
 import theme from "../../../gatsby-plugin-theme-ui"
 import SearchForm from "../search-form"
@@ -25,14 +25,14 @@ test(`it initializes algola docsearch on form click, and keeps focus`, async () 
 
   // checking if docsearch has been initialized, we can confirm it if html
   // with class `ds-dropdown-menu` is injected
-  expect(container.querySelector(".ds-dropdown-menu")).toBeInTheDocument()
+  expect(container.querySelector(`.ds-dropdown-menu`)).toBeInTheDocument()
 
   // checking that input still has a focus
   expect(document.activeElement).toEqual(input)
 })
 
 test(`it initializes algola docsearch on form mouse hover, and keeps focus`, async () => {
-  const { container, getByRole } = render(
+  const { container } = render(
     <I18nProvider>
       <ThemeProvider theme={theme}>
         <SearchForm />
@@ -50,14 +50,14 @@ test(`it initializes algola docsearch on form mouse hover, and keeps focus`, asy
 
   // checking if docsearch has been initialized, we can confirm it if html
   // with class `ds-dropdown-menu` is injected
-  expect(container.querySelector(".ds-dropdown-menu")).toBeInTheDocument()
+  expect(container.querySelector(`.ds-dropdown-menu`)).toBeInTheDocument()
 
   // checking that input still has a focus
   expect(document.activeElement).toEqual(input)
 })
 
 test(`it initializes algola docsearch on form focus, and keeps focus`, async () => {
-  const { container, getByRole } = render(
+  const { container } = render(
     <I18nProvider>
       <ThemeProvider theme={theme}>
         <SearchForm />
@@ -75,7 +75,7 @@ test(`it initializes algola docsearch on form focus, and keeps focus`, async () 
 
   // checking if docsearch has been initialized, we can confirm it if html
   // with class `ds-dropdown-menu` is injected
-  expect(container.querySelector(".ds-dropdown-menu")).toBeInTheDocument()
+  expect(container.querySelector(`.ds-dropdown-menu`)).toBeInTheDocument()
 
   // checking that input still has a focus
   expect(document.activeElement).toEqual(input)

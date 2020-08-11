@@ -3,7 +3,11 @@ const path = require(`path`)
 const tmp = require(`tmp-promise`)
 
 const plugin = require(`./plugin`)
-const { addPluginToConfig, getPluginsFromConfig } = require(`./plugin`)
+const {
+  addPluginToConfig,
+  getPluginsFromConfig,
+  removePluginFromConfig,
+} = require(`./plugin`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
 const STARTER_BLOG_FIXTURE = path.join(
@@ -14,7 +18,7 @@ const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-hello-world`
 )
-const name = `gatsby-plugin-foo`
+const name = `gatsby-source-filesystem`
 
 describe(`gatsby-plugin resource`, () => {
   let tmpDir
@@ -62,6 +66,12 @@ describe(`gatsby-plugin resource`, () => {
     })
   })
 
+  test(`all returns plugins as array`, async () => {
+    const result = await plugin.all({ root: STARTER_BLOG_FIXTURE })
+
+    expect(result).toMatchSnapshot()
+  })
+
   test(`does not add the same plugin twice by default`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
     let newConfigSrc = addPluginToConfig(configSrc, {
@@ -85,6 +95,37 @@ describe(`gatsby-plugin resource`, () => {
     expect(plugins1).toEqual(plugins2)
   })
 
+  test(`removes plugins by name and key`, async () => {
+    let configSrc = await fs.readFile(configPath, `utf8`)
+    configSrc = addPluginToConfig(configSrc, { name: `gatsby-plugin-foo` })
+    configSrc = addPluginToConfig(configSrc, {
+      name: `gatsby-plugin-bar`,
+      options: { hello: `world` },
+    })
+    configSrc = addPluginToConfig(configSrc, {
+      name: `gatsby-plugin-baz`,
+      key: `special-key`,
+    })
+
+    configSrc = removePluginFromConfig(configSrc, { key: `special-key` })
+
+    let plugins = await getPluginsFromConfig(configSrc)
+
+    let pluginNames = plugins.map(p => p.name)
+    expect(pluginNames).toContain(`gatsby-plugin-foo`)
+    expect(pluginNames).toContain(`gatsby-plugin-bar`)
+    expect(pluginNames).not.toContain(`gatsby-plugin-baz`)
+
+    configSrc = removePluginFromConfig(configSrc, { id: `gatsby-plugin-bar` })
+
+    plugins = await getPluginsFromConfig(configSrc)
+
+    pluginNames = plugins.map(p => p.name)
+    expect(pluginNames).not.toContain(`gatsby-plugin-baz`)
+    expect(pluginNames).not.toContain(`gatsby-plugin-bar`)
+    expect(pluginNames).toContain(`gatsby-plugin-foo`)
+  })
+
   // A key isn't required for gatsby plugin, but when you want to distinguish
   // between multiple of the same plugin, you can specify it to target config changes.
   test(`validates the gatsby-source-filesystem specifies a key`, async () => {
@@ -98,7 +139,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`validates the gatsby-source-filesystem specifies a key that isn't equal to the name`, async () => {
     const result = plugin.validate({
       name: `gatsby-source-filesystem`,
-      key: `gatsby-source-filesystem`,
+      _key: `gatsby-source-filesystem`,
     })
 
     expect(result.error).toEqual(
@@ -125,8 +166,11 @@ describe(`gatsby-plugin resource`, () => {
       },
     }
 
-    await plugin.create(context, fooPlugin)
-    await plugin.create(context, barPlugin)
+    const createPromise1 = plugin.create(context, fooPlugin)
+    const createPromise2 = plugin.create(context, barPlugin)
+
+    await createPromise1
+    await createPromise2
 
     const barResult = await plugin.read(context, barPlugin.key)
     const fooResult = await plugin.read(context, fooPlugin.key)
@@ -151,7 +195,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`handles config options as an object`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
     const newConfigSrc = addPluginToConfig(configSrc, {
-      name: `gatsby-plugin-foo`,
+      name: `gatsby-source-filesystem`,
       options: {
         foo: 1,
         bar: `baz`,
@@ -173,7 +217,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`creates default gatsby-config.js if there isn't one already`, async () => {
     const result = await plugin.create(
       { root: emptyRoot },
-      { name: `gatsby-plugin-foo` }
+      { name: `gatsby-source-filesystem` }
     )
     expect(result).toMatchSnapshot()
   })

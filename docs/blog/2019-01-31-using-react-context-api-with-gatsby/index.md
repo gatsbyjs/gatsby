@@ -27,8 +27,8 @@ Let's do a deep dive into how this feature was actually implemented step by step
 First of all, you have to initialize a Gatsby project and start it in develop mode.
 
 1. gatsby new gatsby-dark-mode
-1. cd gatsby-dark-mode
-1. npm start
+2. cd gatsby-dark-mode
+3. npm start
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 

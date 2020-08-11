@@ -9,7 +9,7 @@ rendering support.
 ## Install
 
 ```shell
-npm install gatsby-plugin-styletron
+npm install gatsby-plugin-styletron styletron-react styletron-engine-atomic
 ```
 
 ## How to use

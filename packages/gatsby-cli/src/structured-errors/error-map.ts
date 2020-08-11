@@ -34,7 +34,15 @@ const errors = {
   },
   "98123": {
     text: (context): string =>
-      `${context.stageLabel} failed\n\n${context.message}`,
+      `${context.stageLabel} failed\n\n${
+        context.sourceMessage ?? context.message
+      }`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+  },
+  "98124": {
+    text: (context): string =>
+      `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`,
     type: Type.WEBPACK,
     level: Level.ERROR,
   },
@@ -170,21 +178,25 @@ const errors = {
   // Undefined variables in Queries
   "85920": {
     text: (context): string => {
-      const generalMessage = stripIndents(`You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
+      const staticQueryMessage = stripIndents(`Suggestion 1:
+
+      If you're not using a page query but a useStaticQuery / StaticQuery you see this error because they currently don't support variables. To learn more about the limitations of useStaticQuery / StaticQuery, please visit these docs:
+
+      https://www.gatsbyjs.org/docs/use-static-query/
+      https://www.gatsbyjs.org/docs/static-query/`)
+
+      const generalMessage = stripIndents(`Suggestion 2:
+
+      You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
 
       https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
-
-      const staticQueryMessage = stripIndents(`If you're not using a page query but a StaticQuery / useStaticQuery you see this error because they currently don't support variables. To learn more about the limitations of StaticQuery / useStaticQuery, please visit these docs:
-
-      https://www.gatsbyjs.org/docs/static-query/
-      https://www.gatsbyjs.org/docs/use-static-query/`)
 
       return stripIndent(`
         There was an error in your GraphQL query:\n\n${
           context.sourceMessage
         }${optionalGraphQLInfo(
         context
-      )}\n\n${generalMessage}\n\n${staticQueryMessage}`)
+      )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
     },
     type: Type.GRAPHQL,
     level: Level.ERROR,
@@ -244,6 +256,12 @@ const errors = {
     level: Level.ERROR,
   },
   // Config errors
+  "10122": {
+    text: (context): string =>
+      `The site's gatsby-config.js failed validation:\n\n${context.sourceMessage}`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+  },
   "10123": {
     text: (context): string =>
       `We encountered an error while trying to load your site's ${context.configName}. Please fix the error and try again.`,
@@ -400,26 +418,6 @@ const errors = {
         context.api
       } here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
     type: Type.PLUGIN,
-    level: Level.ERROR,
-  },
-  // Directory/file name exceeds OS character limit
-  "11331": {
-    text: (context): string =>
-      [
-        `One or more path segments are too long - they exceed OS filename length limit.\n`,
-        `Page path: "${context.path}"`,
-        `Invalid segments:\n${context.invalidPathSegments
-          .map(segment => ` - "${segment}"`)
-          .join(`\n`)}`,
-        ...(!context.isProduction
-          ? [
-              `\nThis will fail production builds, please adjust your paths.`,
-              `\nIn development mode gatsby truncated to: "${context.truncatedPath}"`,
-            ]
-          : []),
-      ]
-        .filter(Boolean)
-        .join(`\n`),
     level: Level.ERROR,
   },
   // node object didn't pass validation

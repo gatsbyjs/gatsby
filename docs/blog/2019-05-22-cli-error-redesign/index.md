@@ -33,10 +33,10 @@ We did a thorough search of other CLIs and style guides to learn what we're doin
 
 To optimize the CLI design, we’ll use the data being collected through our telemetry setup, which collects data about CLI usage (opt out is possible).
 
-1.  Crunch some numbers to find out what the most common error messages are that people get
-2.  Make error messages better, starting with the most common ones
-3.  Create a CLI style guide and make sure the CLI starts matching the style guide
-4.  Do some other things that will make the CLI easier to use (easier = takes less time to do a task and/or is less frustrating). See [issues tagged with `topic: cli`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+cli%22) in the OSS repo!
+1. Crunch some numbers to find out what the most common error messages are that people get
+2. Make error messages better, starting with the most common ones
+3. Create a CLI style guide and make sure the CLI starts matching the style guide
+4. Do some other things that will make the CLI easier to use (easier = takes less time to do a task and/or is less frustrating). See [issues tagged with `topic: cli`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+cli%22) in the OSS repo!
 
 ## Want to dive in and help / comment?
 

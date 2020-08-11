@@ -26,7 +26,7 @@ const hashPrimitive = (input: BinaryLike | string): string =>
 export const createContentDigest = (
   input: BinaryLike | string | any
 ): string => {
-  if (typeof input === `object`) {
+  if (typeof input === `object` && !Buffer.isBuffer(input)) {
     return hasher.hash(input)
   }
 

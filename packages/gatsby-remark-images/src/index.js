@@ -35,7 +35,7 @@ module.exports = (
   },
   pluginOptions
 ) => {
-  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
+  const options = _.defaults({}, pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -329,9 +329,9 @@ module.exports = (
     rawHTML = `
     <span
       class="${imageWrapperClass}"
-      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-        imageCaption ? `` : wrapperStyle
-      } max-width: ${presentationWidth}px;"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px; ${
+      imageCaption ? `` : wrapperStyle
+    }"
     >
       ${rawHTML}
     </span>

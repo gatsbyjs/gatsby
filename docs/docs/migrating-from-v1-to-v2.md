@@ -35,7 +35,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
   - [Move Babel configuration](#move-babel-configuration)
   - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
-  - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
+  - [Migrate from React Router to @reach/router](#migrate-from-react-router-to-reachrouter)
   - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
   - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
@@ -50,7 +50,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
 - [Resolving Deprecations](#resolving-deprecations)
 
   - [Import Link from Gatsby](#import-link-from-gatsby)
-  - [Import graphql from Gatsby](#import-graphql-from-gatsby)
+  - [Import GraphQL from Gatsby](#import-graphql-from-gatsby)
   - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
   - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
   - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -137,6 +137,7 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 There are some implications to this change:
 
 - Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+
 - Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
 - To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
@@ -150,12 +151,14 @@ In v1, the `children` prop passed to layout was a function (render prop) and nee
 ```diff
 import React from "react"
 
-export default ({ children }) => (
-  <div>
+export default function Layout({ children }) {
+  return (
+    <div>
 -    {children()}
 +    {children}
-  </div>
-)
+    </div>
+  );
+}
 ```
 
 #### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
@@ -172,11 +175,13 @@ Adhering to the normal React composition model, import your layout component and
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
-  <Layout>
-    <div>Hello World</div>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <div>Hello World</div>
+    </Layout>
+  )
+}
 ```
 
 Repeat for every page and template that needs this layout.
@@ -188,23 +193,27 @@ In v1, the layout component had access to `history`, `location`, and `match` pro
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-export default ({ children, location }) => (
-  <div>
-    <p>Path is {location.pathname}</p>
-    {children}
-  </div>
-)
+export default function Layout({ children, location }) {
+  return (
+    <div>
+      <p>Path is {location.pathname}</p>
+      {children}
+    </div>
+  )
+}
 ```
 
 ```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
-export default props => (
-  <Layout location={props.location}>
-    <div>Hello World</div>
-  </Layout>
-)
+export default function Home(props) {
+  return (
+    <Layout location={props.location}>
+      <div>Hello World</div>
+    </Layout>
+  )
+}
 ```
 
 #### 5. Change query to use `StaticQuery`
@@ -218,14 +227,16 @@ import React, { Fragment } from "react"
 import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
-- export default ({ children, data }) => (
--   <>
--     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
--     <div>
--       {children()}
--     </div>
--   </>
-- )
+- export default function Layout({ children, data }) {
+-   return (
+-     <>
+-       <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
+-       <div>
+-         {children()}
+-       </div>
+-     </>
+-   );
+- }
 -
 - export const query = graphql`
 -   query LayoutQuery {
@@ -236,27 +247,29 @@ import { Helmet } from "react-helmet"
 -     }
 -   }
 - `
-+ export default ({ children }) => (
-+   <StaticQuery
-+     query={graphql`
-+       query LayoutQuery {
-+         site {
-+           siteMetadata {
-+             title
++ export default function Layout({ children }) {
++   return (
++     <StaticQuery
++       query={graphql`
++         query LayoutQuery {
++           site {
++             siteMetadata {
++               title
++             }
 +           }
 +         }
-+       }
-+     `}
-+     render={data => (
-+       <>
-+         <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
-+         <div>
-+           {children}
-+         </div>
-+       </>
-+     )}
-+   />
-+ )
++       `}
++       render={data => (
++         <>
++           <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
++           <div>
++             {children}
++           </div>
++         </>
++       )}
++     />
++   );
++ }
 ```
 
 ### Change `navigateTo` to `navigate`
@@ -272,10 +285,12 @@ import React from "react"
 
 // Don't use navigate with an onClick btw :-)
 // Generally use the `<Link>` component.
-export default props => (
--  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
-+  <div onClick={() => navigate(`/`)}>Click to go to home</div>
-)
+export default function Page(props) {
+  return (
+-    <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
++    <div onClick={() => navigate(`/`)}>Click to go to home</div>
+  )
+}
 ```
 
 ### Convert to either pure CommonJS or pure ES6
@@ -316,7 +331,7 @@ module.exports = foo
 
 ### Move Babel Configuration
 
-The latest version of Gatsby uses Babel 7. Babel 7 introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a _.babelrc_ file might be used at the root of the project (like for configuring Jest), moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+The latest version of Gatsby uses Babel 7. Babel 7 introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a `.babelrc` file might be used at the root of the project (like for configuring Jest), moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
@@ -482,13 +497,15 @@ A basic example of the `<Router>` component:
 import React from "react"
 import { Router } from "@reach/router"
 
-export default () => (
-  <Router>
-    <div path="/">I am the home!</div>
-    <div path="/about">Here's a bit about me</div>
-    <div path="/store">Buy my t-shirts!</div>
-  </Router>
-)
+export default function Routes() {
+  return (
+    <Router>
+      <div path="/">I am the home!</div>
+      <div path="/about">Here's a bit about me</div>
+      <div path="/store">Buy my t-shirts!</div>
+    </Router>
+  )
+}
 ```
 
 Here's a more complex example of migrating a `<PrivateRoute>` component (used
@@ -500,20 +517,22 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 +import { Router, navigate } from '@reach/router';
  import { isAuthenticated } from '../../utils/auth';
 
--export default ({ component: Component, ...rest }) => (
--  <Route
--    {...rest}
--    render={props =>
--      !isAuthenticated() ? (
--        // If we’re not logged in, redirect to the home page.
--        <Redirect to={{ pathname: '/login' }} />
--      ) : (
--        <Component {...props} />
--      )
--    }
--  />
--);
-+export default ({ component: Component, ...rest }) => {
+-export default function PrivateRoute({ component: Component, ...rest }) {
+-  return (
+-    <Route
+-      {...rest}
+-      render={props =>
+-        !isAuthenticated() ? (
+-          // If we’re not logged in, redirect to the home page.
+-          <Redirect to={{ pathname: '/login' }} />
+-        ) : (
+-          <Component {...props} />
+-        )
+-      }
+-    />
+-  );
+-}
++export default function PrivateRoute({ component: Component, ...rest }) {
 +  if (!isAuthenticated() && window.location.pathname !== `/login`) {
 +    // If we’re not logged in, redirect to the home page.
 +    navigate(`/app/login`);
@@ -657,7 +676,7 @@ If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), yo
 
 If you use CSS Modules and have class names with dashes in them, you'll need to change how you access the class names from JavaScript.
 
-This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
+This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader/tree/version-1#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
 
 Here's an example with a class named `.my-class-name`:
 
@@ -665,7 +684,7 @@ Here's an example with a class named `.my-class-name`:
 import React from "react"
 import myStyles from "./my.module.css"
 
-export default ({ children }) => (
+export default function Component({ children }) (
 -  <div className={myStyles['my-class-name']}>
 +  <div className={myStyles.myClassName}>
     {children}
@@ -673,7 +692,7 @@ export default ({ children }) => (
 )
 ```
 
-The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader#options).
+The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader/tree/version-1#options).
 
 For vanilla CSS without a preprocessor:
 
@@ -775,12 +794,14 @@ import React from "react"
 - import Link from "gatsby-link"
 + import { Link } from "gatsby"
 
-export default props => (
-  <Link to="/">Home</Link>
-)
+export default function Page(props) {
+  return (
+    <Link to="/">Home</Link>
+  );
+}
 ```
 
-Furthermore you can remove the package from the `package.json`.
+Furthermore, you can remove the package from the `package.json`.
 
 ```diff:title=package.json
 "dependencies": {
@@ -791,7 +812,7 @@ Furthermore you can remove the package from the `package.json`.
 }
 ```
 
-### Import graphql from Gatsby
+### Import GraphQL from Gatsby
 
 The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gatsby will throw deprecation warning unless you explicitly import it from the `gatsby` package.
 
@@ -799,9 +820,11 @@ The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gat
 import React from "react"
 + import { graphql } from "gatsby"
 
-export default ({ data }) => (
-  <h1>{data.site.siteMetadata.title}</h1>
-)
+export default function Home({ data }) {
+  return (
+    <h1>{data.site.siteMetadata.title}</h1>
+  );
+}
 
 export const query = graphql`
   query HomeQuery {
@@ -996,13 +1019,13 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 ### Only allow defined keys on the node internal object
 
-The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behaviour we now validate against it for v2. Node data should be added as fields on the top-level node object.
+The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behavior we now validate against it for v2. Node data should be added as fields on the top-level node object.
 
 [Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface/) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 
-Import graphql types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
+Import GraphQL types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
 
 ```diff
 -const { GraphQLString } = require(`graphql`)
@@ -1023,7 +1046,7 @@ _Start from scratch:_ If you're a _start from scratch_ kind of person, you can i
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
-_Starters:_ If you'd rather use one of the official starters, install your favourite one with the Gatsby CLI.
+_Starters:_ If you'd rather use one of the official starters, install your favorite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 

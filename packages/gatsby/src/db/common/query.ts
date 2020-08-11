@@ -45,12 +45,14 @@ export interface IDbFilterStatement {
  * structured representation of each distinct path of the query. We convert
  * nested objects with multiple keys to separate instances.
  */
-export function createDbQueriesFromObject(filter: object): Array<DbQuery> {
+export function createDbQueriesFromObject(
+  filter: Record<string, any>
+): Array<DbQuery> {
   return createDbQueriesFromObjectNested(filter)
 }
 
 function createDbQueriesFromObjectNested(
-  filter: object,
+  filter: Record<string, any>,
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
@@ -104,26 +106,6 @@ export function prefixResolvedFields(
   return queries
 }
 
-export function dbQueryToSiftQuery(query: DbQuery): object {
-  const result = {}
-  if (query.type === `elemMatch`) {
-    result[query.path.join(`.`)] = {
-      $elemMatch: dbQueryToSiftQuery(query.nestedQuery),
-    }
-  } else if (query.path.length) {
-    result[query.path.join(`.`)] = {
-      [query.query.comparator]: query.query.value,
-    }
-  } else {
-    return {
-      [query.query.comparator]: query.query.value,
-    }
-  }
-  return result
-}
-
-// Most of the below can be gone after we decide to remove loki
-
 // Converts a nested mongo args object into a dotted notation. acc
 // (accumulator) must be a reference to an empty object. The converted
 // fields will be added to it. E.g
@@ -155,24 +137,6 @@ export function dbQueryToSiftQuery(query: DbQuery): object {
 //     $regex: // as above
 //   }
 // }
-export function toDottedFields(
-  filter: object,
-  acc: object = {},
-  path: Array<string> = []
-): object {
-  Object.keys(filter).forEach(key => {
-    const value = filter[key]
-    const nextValue = _.isPlainObject(value) && value[Object.keys(value)[0]]
-    if (key === `$elemMatch`) {
-      acc[path.join(`.`)] = { [`$elemMatch`]: toDottedFields(value) }
-    } else if (_.isPlainObject(nextValue)) {
-      toDottedFields(value, acc, path.concat(key))
-    } else {
-      acc[path.concat(key).join(`.`)] = value
-    }
-  })
-  return acc
-}
 
 // Like above, but doesn't handle $elemMatch
 export function objectToDottedField(
@@ -193,29 +157,4 @@ export function objectToDottedField(
     }
   })
   return result
-}
-
-export function liftResolvedFields(
-  args: object,
-  resolvedFields: object
-): object {
-  const dottedFields = objectToDottedField(resolvedFields)
-  const dottedFieldKeys = Object.keys(dottedFields)
-  const finalArgs = {}
-  Object.keys(args).forEach(key => {
-    const value = args[key]
-    if (dottedFields[key]) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else if (
-      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
-      value.$elemMatch
-    ) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else {
-      finalArgs[key] = value
-    }
-  })
-  return finalArgs
 }

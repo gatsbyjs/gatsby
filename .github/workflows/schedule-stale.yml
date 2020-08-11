@@ -35,6 +35,7 @@ jobs:
             Thanks again for being part of the Gatsby community! 💪💜
           EXEMPT_ISSUE_LABELS: |
             not stale
+            status: triage needed
       - name: Post slack report
         uses: pullreminders/slack-action@v1.0.7
         env:

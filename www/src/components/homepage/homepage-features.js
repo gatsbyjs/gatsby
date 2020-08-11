@@ -10,11 +10,13 @@ import FuturaParagraph from "../futura-paragraph"
 const HomepageFeatures = () => (
   <div
     sx={{
-      borderBottom: t => `1px solid ${t.colors.ui.border}`,
+      borderBottom: 1,
+      borderColor: `ui.border`,
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,
       px: 8,
+      pb: [8, 0],
     }}
   >
     <Card>
@@ -51,9 +53,9 @@ const HomepageFeatures = () => (
       <CardHeadline>Future-proof your website</CardHeadline>
       <FuturaParagraph>
         Don't build a website with last decade’s tech. The future of the web is
-        mobile, JavaScript and APIs. Every website is a web app
-        and every web app is a website. Gatsby.js is the universal JavaScript
-        framework you’ve been waiting for.
+        mobile, JavaScript and APIs. Every website is a web app and every web
+        app is a website. Gatsby.js is the universal JavaScript framework you’ve
+        been waiting for.
       </FuturaParagraph>
     </Card>
     <Card>

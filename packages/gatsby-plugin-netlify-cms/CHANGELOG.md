@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.10...gatsby-plugin-netlify-cms@4.3.11) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.9...gatsby-plugin-netlify-cms@4.3.10) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.8...gatsby-plugin-netlify-cms@4.3.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.7...gatsby-plugin-netlify-cms@4.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.6...gatsby-plugin-netlify-cms@4.3.7) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.5...gatsby-plugin-netlify-cms@4.3.6) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.4...gatsby-plugin-netlify-cms@4.3.5) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.3...gatsby-plugin-netlify-cms@4.3.4) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.2...gatsby-plugin-netlify-cms@4.3.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.1...gatsby-plugin-netlify-cms@4.3.2) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.0...gatsby-plugin-netlify-cms@4.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 # [4.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.2.5...gatsby-plugin-netlify-cms@4.3.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

@@ -598,7 +598,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "events" and "event" template components.
+### Create the "events" and "event" template components
 
 The last step to make sure that these pages build is to create the page template components.
 
@@ -1530,7 +1530,9 @@ For example, create a new file to override the layout component: `theme-test/src
 ```jsx:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
 
-export default ({ children }) => <>{children}</>
+export default function Layout({ children }) {
+  return <>{children}</>
+}
 ```
 
 If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:

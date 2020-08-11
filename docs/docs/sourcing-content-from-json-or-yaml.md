@@ -8,7 +8,7 @@ To follow along with the JSON or YAML data sourcing tips outlined in this guide,
 
 Open up a terminal and run the following command:
 
-```bash
+```shell
 gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
@@ -132,7 +132,7 @@ For this example, you will need to add an extra dependency so that the file cont
 
 Open your terminal, navigate to the folder containing the Gatsby site, and issue the following command:
 
-```bash
+```shell
 npm install --save js-yaml
 ```
 

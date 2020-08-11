@@ -14,7 +14,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    - a [Firebase Account](https://console.firebase.google.com).
    - created a [Firebase Project](https://firebase.google.com/docs/web/setup#create-firebase-project).
 
-1. This guide assumes that you already have a Gatsby project on your local machine.
+2. This guide assumes that you already have a Gatsby project on your local machine.
 
 ## Deployment
 
@@ -24,7 +24,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    npm install -g firebase-tools
    ```
 
-1. Sign into Firebase using your Google account by running the following command:
+2. Sign into Firebase using your Google account by running the following command:
 
    ```shell
    firebase login
@@ -32,7 +32,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 
    You can test if the CLI is correctly installed by running `firebase projects:list`, which should show you a list of your Firebase Projects.
 
-1. Navigate into your gatsby project directory and setup firebase:
+3. Navigate into your gatsby project directory and setup firebase:
 
    ```shell
    firebase init
@@ -45,7 +45,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 
    When prompted to select your public directory, press <kbd>enter</kbd>. It will default to `public`, which is also Gatsby's default public directory.
 
-1. Update the `firebase.json` with the following cache settings
+4. Update the `firebase.json` with the following cache settings
 
    ```json
    {
@@ -103,9 +103,9 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    }
    ```
 
-1. Prepare your site for deployment by running `gatsby build`. This generates a publishable version of your site in the `public` folder.
+5. Prepare your site for deployment by running `gatsby build`. This generates a publishable version of your site in the `public` folder.
 
-1. Deploy your site by running the following command:
+6. Deploy your site by running the following command:
 
    ```shell
    firebase deploy

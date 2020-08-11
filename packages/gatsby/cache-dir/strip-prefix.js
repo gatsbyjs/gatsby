@@ -3,15 +3,17 @@
  * isn't found.
  */
 
-export default (str, prefix = ``) => {
+export default function stripPrefix(str, prefix = ``) {
   if (!prefix) {
     return str
   }
 
-  prefix += `/`
+  if (str === prefix) {
+    return `/`
+  }
 
-  if (str.substr(0, prefix.length) === prefix) {
-    return str.slice(prefix.length - 1)
+  if (str.startsWith(`${prefix}/`)) {
+    return str.slice(prefix.length)
   }
 
   return str

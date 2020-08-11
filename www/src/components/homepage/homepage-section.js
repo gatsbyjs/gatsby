@@ -110,9 +110,7 @@ const HomepageSection = ({
     {sectionName && (
       <Header>
         <Name>
-          {sectionIcon && (
-            <Icon dangerouslySetInnerHTML={{ __html: sectionIcon }} />
-          )}
+          {sectionIcon && <Icon>{sectionIcon}</Icon>}
           {sectionName}
         </Name>
         {title && <Title>{title}</Title>}
@@ -145,7 +143,7 @@ const HomepageSection = ({
 HomepageSection.propTypes = {
   children: PropTypes.node.isRequired,
   sectionName: PropTypes.string,
-  sectionIcon: PropTypes.string,
+  sectionIcon: PropTypes.element,
   title: PropTypes.string,
   introduction: PropTypes.string,
   links: PropTypes.array,

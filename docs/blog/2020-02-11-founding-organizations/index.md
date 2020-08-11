@@ -25,7 +25,7 @@ Founding organizations have a responsibility to their projects and communities: 
 
 And when founding organizations aren’t able to build strong businesses, or then fail to invest adequately, and the project starts falling behind the times, the community should hold founding orgs accountable.
 
-### Open source has a sustainability problem
+## Open source has a sustainability problem
 
 A question that’s frequently discussed in the web development community is how to make open-source maintainable. Some examples:
 
@@ -38,13 +38,13 @@ Inconsistent or sparse funding isn’t just bad for project _maintainers_. It’
 
 [As Devon Zuegel at GitHub put it:](https://github.blog/2019-01-17-lets-talk-about-open-source-sustainability/) “[Open source] is everywhere, yet it lacks financial and personnel resources. Developers and companies benefit from a vibrant OSS ecosystem, but they lack proportionate incentive to contribute time and money to creating and maintaining projects.”
 
-### Thriving open-source communities open opportunities
+## Thriving open-source communities open opportunities
 
 One of the lessons we’ve learned from recent economic growth is that for most people, their economic future is tied to their country of residence. The level of economic development and well-being in one’s country of residence strongly influences one’s baseline standard of living, as well as the ups and downs.
 
 This is also true for developers when choosing a development community—developers with expertise in communities with healthy, growing usage have better economic prospects than developers with expertise in less well-maintained, shrinking communities. For example, a React developer in 2016 generally had more career prospects than a Perl developer.
 
-### Founding organizations: one route to sustainability
+## Founding organizations: one route to sustainability
 
 This means that creating sustainable open-source communities isn’t simply a problem for community maintainers, it’s a problem for _everyone_.
 
@@ -56,7 +56,7 @@ Of course, with great power comes great responsibility. Founding organizations a
 
 We believe founding organizations have a responsibility to provide public goods and infrastructure to their communities to contribute to the community’s health and long-term success.
 
-### Founding organizations provide public goods for their communities
+## Founding organizations provide public goods for their communities
 
 As Dries Buytaert, the founder of Drupal and Acquia [put it](https://dri.es/balancing-makers-and-takers-to-scale-and-sustain-open-source):
 
@@ -86,7 +86,7 @@ Governments aren’t the _only_ organizations providing public goods; in most de
 
 But governments are often responsible for crucial pieces of infrastructure (such as transportation!)—especially ones requiring large capital expenditures.
 
-### Great founding organizations keep their community’s technology up-to-date in a changing world
+## Great founding organizations keep their community’s technology up-to-date in a changing world
 
 This is a crucial distinction because often large expenditures—new major versions, centralized, coordinated releases—are required for open-source projects over time to keep them modern and prevent them from falling behind.
 
@@ -101,7 +101,7 @@ We believe founding organizations’ responsibility to the community extends to 
 - When a technology stays at the cutting edge, the founding organization has fulfilled its social contract.
 - Conversely, when a technology begins to fall behind the times, fails to invest in important public goods or keep up with changing development standards, the community should hold the founding organization largely responsible.
 
-### Staying on the cutting edge requires adequate investment from founding organizations
+## Staying on the cutting edge requires adequate investment from founding organizations
 
 Keeping an open-source tool on the cutting edge doesn’t typically require technological breakthroughs. More often, it requires steady, methodological, persistent engineering work—and lots of it.
 
@@ -116,7 +116,7 @@ To invest the requisite amount, a founding organization must be both _able_ and 
 
 To analyze the level of investment a founding organization makes, we must ask two questions.
 
-#### Creating a sustainable business
+### Creating a sustainable business
 
 **The first question is: is the company effective in creating a sustainable business around the community?**
 
@@ -132,7 +132,7 @@ Closed-source vendors like Shopify, Bigcommerce, Wix, and Squarespace typically 
 
 To be competitive in this world, “founding organization” website company needs to be making something in the ballpark of that -- based on data we share a bit later, at least \$100M in revenue per percentage point of the web.
 
-#### Investing back in open source
+### Investing back in open source
 
 **The second question is: is the company investing product & engineering resources to open source?**
 
@@ -146,7 +146,7 @@ What’s a good baseline for how much a founding organization should invest in o
 
 After a number of conversations with other founding organizations who have helped sustain their communities and keep them relevant in changing technological times, the general tenor was sufficient investment was at least 10% of headcount.
 
-### Gatsby’s commitment to investing in open source & sustaining the community
+## Gatsby’s commitment to investing in open source & sustaining the community
 
 We wrote this piece, among other reasons, to share our deep commitment to open source technology and to the community. We feel that we have a responsibility to keep Gatsby an incredibly healthy and vibrant ecosystem.
 

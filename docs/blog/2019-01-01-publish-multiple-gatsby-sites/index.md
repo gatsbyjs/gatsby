@@ -1,5 +1,5 @@
 ---
-title: Publish Multiple Gatsby Sites in a Monorepo, Using Lerna, Travis & Now
+title: Publish Multiple Gatsby Sites in a Monorepo, Using Lerna, Travis & Vercel
 date: 2019-01-01
 author: Andrico Karoulla
 tags: ["apps", "testing", "deployment"]
@@ -10,23 +10,23 @@ excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spa
 
 ### Foreword
 
-This tutorial will take about two hours to complete. If you're unfamiliar with Lerna, Travis or Now, you may fall into a few traps, but it's all part of the learning process! I’ve included a troubleshooting section at the end of the article for common problems, so refer to it at any time.
+This tutorial will take about two hours to complete. If you're unfamiliar with Lerna, Travis or Vercel, you may fall into a few traps, but it's all part of the learning process! I’ve included a troubleshooting section at the end of the article for common problems, so refer to it at any time.
 
 ### Introduction
 
 If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
 
-The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be an headache to keep track of. These are some of the problems monorepos solve.
+The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of CSS style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be a headache to keep track of. These are some of the problems monorepos solve.
 
 ![Monorepo Diagram](./images/monorepo-diagram.jpeg)
 
 A monorepo is an architectural design pattern that allows us to maintain several packages within a single repo. This reduces the complexity when dealing with packages that share in-house and third-party dependencies.
 
-Think of monorepos like a well-organised supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free/)).
+Think of monorepos like a well-organized supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free/)).
 
 With monorepos the code is split into specific packages (aisles). Meaning you can easily navigate the project to find the component or module you want to work on. It also means not needing to maintain separate repos when making changes that affect multiple parts of your stack (the single shop).
 
-Everything is accessible from a single place, while still being organised enough to navigate painlessly.
+Everything is accessible from a single place, while still being organized enough to navigate painlessly.
 Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
 
 *Development* — We’ll configure an existing application, built with [Gatsby](/), into a monorepo. I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it.
@@ -66,7 +66,7 @@ Navigate inside of the `lerna-monorepo-starter` directory and install the packag
 
 Open Chrome, and navigate to `http://localhost:8000`. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
 
-Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of json files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these json files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
+Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of JSON files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these JSON files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
 
 So imagine our application is starting to grow, the shop and the blog start intertwining with each other. You may not notice the lack of separation until its too late and your code is tangled tighter than the ivy across the side of your grandma’s cottage.
 
@@ -117,7 +117,7 @@ The Layout component behaves as the entry point of each Gatsby application, whic
 
 We’ll avoid code duplication by abstracting the parts of the layout that won’t need to change based on the page, like the use of the Header component. We’ll keep each package’s individual logic, like the `graphql` query.
 
-In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`. Create an `index.js` file and move over the contents of the `src/layouts/index.js` file here. Once that’s done get rid of the `graphql` query. Move over the css file so the imports don’t break.
+In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`. Create an `index.js` file and move over the contents of the `src/layouts/index.js` file here. Once that’s done get rid of the `graphql` query. Move over the CSS file so the imports don’t break.
 
 Back in the `src/layouts` file we can get rid of everything and replace it with this:
 
@@ -359,13 +359,13 @@ This will allow us to transition between our two sites. Do the same for the shop
 
 Congratulations, the site now behaves in exactly the same way as when we started. This might make it seem like monorepos have little use, but you’ll find that using a monorepo is a way of keeping packages independent from each other while easily reusing assets.
 
-You can stop the tutorial now and you’ll have a working knowedge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
+You can stop the tutorial now and you’ll have a working knowledge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
 
 ### Part Two
 
 Let’s take a second to reflect on where we are right now. We’ve managed to start with a single application with two discrete sections and split them apart in a monorepo. This allows us to _separate the concerns_ and share reusable components.
 
-There are two parts to this section, our Continuous Integration (CI) pipeline and the site’s deployment. Our CI pipeline will be used to automate a series of checks to ensure our tests pass and our build compiles. If either of these, or any part of the pipeline, fails then our site won’t deploy. The second part is how we deal with a successful build, and that’s deployment! If everything passes, our site will deploy using Now, where it will be hosted for the world to see on the interwebs.
+There are two parts to this section, our Continuous Integration (CI) pipeline and the site’s deployment. Our CI pipeline will be used to automate a series of checks to ensure our tests pass and our build compiles. If either of these, or any part of the pipeline, fails then our site won’t deploy. The second part is how we deal with a successful build, and that’s deployment! If everything passes, our site will deploy using Vercel, where it will be hosted for the world to see on the interwebs.
 
 To use Travis we’ll first need to create an account and add the GitHub repo we’ve been pushing to. And like with every other tool we’ve used, the best way to get started with Travis is by reading [Travis’ getting started page](https://docs.travis-ci.com/user/getting-started/). The getting started page also runs through adding your GitHub repo which can be done via the main page. Click the ‘+’ and on your profile page click ‘Manage repositories in GitHub’. Choose the repo that you’ve been using and you should be set up.
 
@@ -442,7 +442,7 @@ There are two more sections we need to add to our `.travis.yml` file
 
 We won’t worry about the latter for now, but let’s deal with running scripts for different repos. Because we’re not going to be deploying our `shared-ui` we can skip it from our CI pipeline. We’ll run `yarn test` and `yarn build` for both the blog and the shop.
 
-We’ll do this by adding a `matrix` step right after the `install` step to the CI pipeline. This `matrix` step will let us specify which packages we want to run the CI pipeline on. We’ll name each matrix and set a environment variables for the package location. We’ll then change the `script` step so Travis moves into the correct directory and runs the `script` step. Delete everything after the `install` step and add the following:
+We’ll do this by adding a `matrix` step right after the `install` step to the CI pipeline. This `matrix` step will let us specify which packages we want to run the CI pipeline on. We’ll name each matrix and set an environment variables for the package location. We’ll then change the `script` step so Travis moves into the correct directory and runs the `script` step. Delete everything after the `install` step and add the following:
 
 ```yaml:title=.travis.yml
 matrix:
@@ -459,13 +459,13 @@ script:
 
 Hopefully what I’ve said makes more sense with the code in front of us. The `script` pipeline runs for each step we’ve included in the `matrix`. We’ve also added another step to the `script` section, this is doing nothing more than moving to the directory of the current package. Push the changes again to your repo and open Travis to see your pipeline running. You should now be seeing two build jobs running simultaneously, which means our matrix is working. If everything passes, we’ll move on to deploying our application.
 
-### Now
+### Vercel
 
-Now is a tool created by ZEIT that makes the process of deploying Node applications simple. Now has recently released updates to the way they deploy static websites. Fortunately our Gatsby packages build to static sites, so it’s a win for us.
+Vercel is a tool created by Vercel that makes the process of deploying Node applications simple. Vercel has recently released updates to the way they deploy static websites. Fortunately our Gatsby packages build to static sites, so it’s a win for us.
 
-If you haven’t used Now before, then go-ahead and [get started](https://zeit.co/now#features). This will install the `now-cli` and get a free account created, things we need for the tutorial. The getting started page also has a brief FAQs section that’s well worth reading.
+If you haven’t used Vercel before, then go-ahead and [get started](https://vercel.com/home#features). This will install the `Vercel CLI` and get a free account created, things we need for the tutorial. The getting started page also has a brief FAQs section that’s well worth reading.
 
-Travis-CI isn’t permitted to deploy to your Now account by default, and requires a token. You can create a token via the Account Settings page on the Now website. Once you’re there click the tokens tab and create a new token. Copy it to your clipboard, as we’ll be adding to the list of variables that Travis uses in our pipelines. Go to your lerna-monorepo repository in Travis and from the ‘More options’ drop down, click ‘settings’. When you’re here, you’ll see a section called ‘environment variables’. Create a new variable called `NOW_TOKEN` and paste your Now public key as the value. We can now reference the key from within our `.travis.yml` file.
+Travis-CI isn’t permitted to deploy to your Vercel account by default, and requires a token. You can create a token via the Account Settings page on the Vercel website. Once you’re there click the tokens tab and create a new token. Copy it to your clipboard, as we’ll be adding to the list of variables that Travis uses in our pipelines. Go to your lerna-monorepo repository in Travis and from the ‘More options’ drop down, click ‘settings’. When you’re here, you’ll see a section called ‘environment variables’. Create a new variable called `VERCEL_TOKEN` and paste your Vercel public key as the value. We can now reference the key from within our `.travis.yml` file.
 
 We’ll add the final part of our pipeline now, which deals with deployment. Make sure your `.travis.yml` file looks like the following, and we’ll run through the additions.
 
@@ -477,7 +477,7 @@ node_js:
 cache: yarn
 
 install:
-  - yarn global add lerna jest now
+  - yarn global add lerna jest vercel
   - lerna bootstrap
 
 matrix:
@@ -494,7 +494,7 @@ script:
 
 deploy:
   provider: script
-  script: now public --token $NOW_TOKEN
+  script: vercel public --token $VERCEL_TOKEN
   skip_cleanup: true
   app: $PACKAGE_NAME
 ```
@@ -506,9 +506,9 @@ Note that we’ve added some additional environment variables to our matrix so a
 - skip_cleanup — we don’t want Travis to get rid of any files made during the build. We created the ‘public’ folder when running the build, so we don’t want Travis to get rid of it.
 - app — specifies the name of the application we’re deploying,
 
-We have to do add a little bit of configuration on our side to ensure that Now hosts our sites correctly. The config comes in the form of a `now.json` file, which outlines the options we want Now to use when deploying our site. Go into the directory for our blog packages and create a `now.json` file. We want to let Now know that we’re deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `now.json` file.
+We have to do add a little bit of configuration on our side to ensure that Vercel hosts our sites correctly. The config comes in the form of a `vercel.json` file, which outlines the options we want Vercel to use when deploying our site. Go into the directory for our blog packages and create a `vercel.json` file. We want to let Vercel know that we’re deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `vercel.json` file.
 
-```json:title=now.json
+```json:title=vercel.json
 {
   "type": "static",
   "alias": "lerna-monorepo-blog",
@@ -520,16 +520,16 @@ We have to do add a little bit of configuration on our side to ensure that Now h
 }
 ```
 
-Note: `public: true` needs to be specified since you’ll most likely have a free Now account. Having a publicly facing site is one of the restrictions of the free tier. The entry file to our static site is also called `public` so don’t conflate the two.
+Note: `public: true` needs to be specified since you’ll most likely have a free Vercel account. Having a publicly facing site is one of the restrictions of the free tier. The entry file to our static site is also called `public` so don’t conflate the two.
 
-Push these changes to your repo to kick off your build pipeline. If everything was successful then your build will have passed and your site will have deployed. Go to Travis, open up your blog build so you have access to the logs. Scroll right to the bottom to where it says ‘deploying application’ and uncollapse the section. This’ll be the URL that Now deployed your site to. It should look something like `https://buildsjdoe383jd.now.sh`. Copy that url and go back to your command line. Run the following command:
+Push these changes to your repo to kick off your build pipeline. If everything was successful then your build will have passed and your site will have deployed. Go to Travis, open up your blog build so you have access to the logs. Scroll right to the bottom to where it says ‘deploying application’ and uncollapse the section. This’ll be the URL that Vercel deployed your site to. It should look something like `https://buildsjdoe383jd.vercel.app`. Copy that url and go back to your command line. Run the following command:
 
-`now alias <your randomly generated URL> <your chosen alias>`
+`vercel alias <your randomly generated URL> <your chosen alias>`
 I chose ‘lerna-monorepo-blog’ as my alias, so that one won’t be available for you to use, so choose your own. When you’ve run the command, there will be feedback saying that the alias was successfully created. If not, then it’s likely the command was written incorrectly or the alias is already in use by someone else. Once you’ve added an alias successfully for the blog, do the same for your shop package.
 
 Even if you push everything forward now the site’s navigation will still be broken. The very last thing we need to do is add our alias URL as an environment variables in our `.env.production` file. In your blog package’s `.env.production` go ahead and add the following:
 
-`BLOG_URL=https://<your chosen alias>.now.sh/`
+`BLOG_URL=https://<your chosen alias>.vercel.app/`
 
 Do the same for your shop url, commit and push. Congrats!
 
@@ -547,7 +547,7 @@ I'm also running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-works
 
 I’ll be adding to this section as I get feedback or stumble across issues myself.
 
-If you get an error that says ‘lerna: command not found’ after installing it globally, then install it locally as a project dependency and run it using `yarn lerna <command>`.
+If you get an error that says `lerna: command not found` after installing it globally, then install it locally as a project dependency and run it using `yarn lerna <command>`.
 
 Running your application:
 
@@ -561,12 +561,12 @@ My suggestion would be to have the package level react dependency the latest ver
 
 Running the pipeline for your application:
 
-If your CI pipeline isn’t deploying your site correctly, it can be difficult to distinguish whether or not it’s an issue with Travis or an issue with Now. If you can navigate to one of your package directory and run now, and everything's successful, then it’s likely an issue with your `.travis.yml` file or the way in which your defining your environment variables in Travis. Go over that section one more time to make sure you’ve got it all written as it should be.
+If your CI pipeline isn’t deploying your site correctly, it can be difficult to distinguish whether or not it’s an issue with Travis or an issue with Vercel. If you can navigate to one of your package directory and run now, and everything's successful, then it’s likely an issue with your `.travis.yml` file or the way in which your defining your environment variables in Travis. Go over that section one more time to make sure you’ve got it all written as it should be.
 
 Deploying your application:
 
-If running the now command in your package throws an error, then make sure you’re logged in to now via the CLI. You can do this via now login. Make sure that your `now.json` file points to the correct output of yarn build. It may be your version of Gatsby doesn’t create a build directory called `public` but instead `dist` or `build`.
+If running the now command in your package throws an error, then make sure you’re logged in to Vercel via the CLI. You can do this via Vercel login. Make sure that your `vercel.json` file points to the correct output of yarn build. It may be your version of Gatsby doesn’t create a build directory called `public` but instead `dist` or `build`.
 
 Viewing your live application:
 
-Chances are that you might need to deploy your site more than once before everything works, lord knows I did when writing this application. One thing that tripped me up was client-side caching. Which is something that Now does out of the box. It just means that even if you’ve deployed a new version of the site, you might be viewing an older, cached version. If this is the case, open the Chrome/browser dev tools, right-click the reload symbol, and click ‘empty cache and hard reload’.
+Chances are that you might need to deploy your site more than once before everything works, lord knows I did when writing this application. One thing that tripped me up was client-side caching. Which is something that Vercel does out of the box. It just means that even if you’ve deployed a new version of the site, you might be viewing an older, cached version. If this is the case, open the Chrome/browser dev tools, right-click the reload symbol, and click ‘empty cache and hard reload’.

@@ -14,7 +14,8 @@ const {
   getRemoteFileName,
   createFilePath,
 } = require(`./utils`)
-const cacheId = url => `create-remote-file-node-${url}`
+const cacheIdForHeaders = url => `create-remote-file-node-headers-${url}`
+const cacheIdForExtensions = url => `create-remote-file-node-extension-${url}`
 
 let bar
 // Keep track of the total number of jobs we push in the queue
@@ -54,11 +55,10 @@ let totalJobs = 0
  * @param  {Reporter} [options.reporter]
  */
 
-const STALL_RETRY_LIMIT = 3
-const STALL_TIMEOUT = 30000
+const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT || 3
+const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT || 30000
 
-const CONNECTION_RETRY_LIMIT = 5
-const CONNECTION_TIMEOUT = 30000
+const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
 
 /********************
  * Queue Management *
@@ -151,8 +151,9 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     }
     const responseStream = got.stream(url, {
       headers,
-      timeout: CONNECTION_TIMEOUT,
-      retries: CONNECTION_RETRY_LIMIT,
+      timeout: {
+        send: CONNECTION_TIMEOUT, // https://github.com/sindresorhus/got#timeout
+      },
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
@@ -208,7 +209,7 @@ async function processRemoteNode({
   const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
-  const cachedHeaders = await cache.get(cacheId(url))
+  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
 
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
@@ -238,15 +239,22 @@ async function processRemoteNode({
 
   if (response.statusCode == 200) {
     // Save the response headers for future requests.
-    await cache.set(cacheId(url), response.headers)
+    await cache.set(cacheIdForHeaders(url), response.headers)
   }
 
   // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
   if (ext === ``) {
-    const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-    const filetype = fileType(buffer)
-    if (filetype) {
-      ext = `.${filetype.ext}`
+    if (response.statusCode === 200) {
+      // if this is fresh response - try to guess extension and cache result for future
+      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
+      const filetype = fileType(buffer)
+      if (filetype) {
+        ext = `.${filetype.ext}`
+        await cache.set(cacheIdForExtensions(url), ext)
+      }
+    } else if (response.statusCode === 304) {
+      // if file on server didn't change - grab cached extension
+      ext = await cache.get(cacheIdForExtensions(url))
     }
   }
 
@@ -354,7 +362,9 @@ module.exports = ({
   }
 
   if (!url || isWebUri(url) === undefined) {
-    return Promise.reject(`wrong url: ${url}`)
+    return Promise.reject(
+      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
+    )
   }
 
   if (totalJobs === 0) {

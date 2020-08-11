@@ -85,12 +85,12 @@ By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
-Note that `gatsby-plugin-mdx` requires gatsby-source-filesystem to be present
+Note that `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
 
 To automatically create pages with `.mdx` from other sources, you also need
-to configure gatsby-plugin-page-creator.
+to configure `gatsby-plugin-page-creator`.
 
 ```js
 module.exports = {
@@ -128,7 +128,6 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
-| [`timeToRead`](#time-to-read)                                             | `wordCount => wordCount / 265`         | Calculate `timeToRead` from the word count, html, and raw MDX content |
 
 #### Extensions
 
@@ -451,27 +450,6 @@ module.exports = {
               path.parse(node.dir).dir.endsWith(`packages`))
           )
         },
-      },
-    },
-  ],
-}
-```
-
-#### Time to read
-
-Calculating the time to read a Markdown document based on the word
-count or Markdown node. This is useful for customizing the time to
-read a document based on a faster or slower words per minute reading
-rate or by custom heuristics based on the markdown node.
-
-```js
-// gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-mdx`,
-      options: {
-        timeToRead: (wordCount, html, rawMDX) => wordCount / 42,
       },
     },
   ],

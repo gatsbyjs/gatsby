@@ -45,7 +45,7 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/livestr
 - Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/)
 - Post: [Why Themes](/blog/2019-01-31-why-themes/)
 - [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/)
-- [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.com/getting-started)
+- [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.app/getting-started)
 - [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 - [John Otander on Twitter](https://twitter.com/4lpine)
 - [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)

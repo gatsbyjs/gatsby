@@ -12,7 +12,7 @@ All configurations can be done through your Forestry site dashboard, but they ca
 
 To complete this tutorial, you will need a Forestry account. You can sign-up at [Forestry.io](https://app.forestry.io/signup).
 
-_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.
 
 ## Setup
 
@@ -29,7 +29,7 @@ git remote set-url origin <your-github-repo-link>
 git push -u origin master
 ```
 
-Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static html file for the Forestry CMS login page at the path: /admin.
+Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static HTML file for the Forestry CMS login page at the path: /admin.
 
 Once Forestry is connected with your GitHub Gatsby site repository, pull Forestry's changes.
 
@@ -122,10 +122,9 @@ new_page_extension: md
 auto_deploy: false
 admin_path: /static/admin
 webhook_url:
-sections:
 upload_dir: static/uploads
 public_path: "/static/uploads"
-front_matter_path: ''
+front_matter_path: ""
 use_front_matter_path: false
 file_template: ":filename:"
 build:
@@ -136,13 +135,15 @@ build:
   working_dir: "/srv"
   instant_preview_command: npm run forestry:preview
 sections:
-- type: directory
-  path: src/content/posts
-  label: Posts
-  create: documents
-  match: "**/*"
-  templates:
-  - blog
+  - type: directory
+    path: src/content/posts
+    label: Posts
+    create: documents
+    match: "**/*"
+    templates:
+      - blog
+---
+
 ```
 
 Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Run `gatsby build && gatsby serve`. Once the server is running, it will print the address to open for viewing. It's typically `http://localhost:8000`. Now navigate to `/admin` - so if your site is at `http://localhost:8000`, go to `http://localhost:8000/admin`
@@ -165,4 +166,4 @@ Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses
 
 For more examples and help, visit the [Forestry.io docs](https://forestry.io/docs/welcome/).
 
-_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.

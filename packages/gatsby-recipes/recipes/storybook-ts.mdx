@@ -1,0 +1,68 @@
+# Add Storybook
+
+[Storybook](https://storybook.js.org/) is an open source tool for developing UI components in isolation for React, Vue, and Angular. It is an organized and efficient way to build stunning UIs.
+
+This recipe adds support for JavaScript and TypeScript components.
+
+This recipe:
+
+---
+
+Installs TypesScript + babel plugins and presets as well as the Storybook React NPM packages and addons.
+
+<NPMPackage name="typescript" />
+<NPMPackage name="babel-loader" />
+<NPMPackage name="@babel/preset-react" />
+<NPMPackage name="@babel/preset-env" />
+<NPMPackage name="@babel/preset-typescript" />
+<NPMPackage name="@babel/plugin-proposal-class-properties" />
+<NPMPackage name="babel-plugin-remove-graphql-queries" />
+<NPMPackage name="react-docgen-typescript-loader" />
+
+<NPMPackage name="@storybook/react" />
+<NPMPackage name="@storybook/addon-actions" />
+<NPMPackage name="@storybook/addon-docs" />
+
+---
+
+Creates custom Storybook webpack config (`main.js`).
+
+<File
+  path="./.storybook/main.js"
+  content="https://raw.githubusercontent.com/PaulieScanlon/gatsby-recipe-storybook-ts/master/recipe/main.js"
+/>
+
+---
+
+Configures Storybook / Gatsby Link settings (`preview.js`).
+
+<File
+  path="./.storybook/preview.js"
+  content="https://raw.githubusercontent.com/PaulieScanlon/gatsby-recipe-storybook-ts/master/recipe/preview.js"
+/>
+
+---
+
+Creates example Link stories.
+
+<File
+  path="./src/components/Link.stories.tsx"
+  content="https://raw.githubusercontent.com/PaulieScanlon/gatsby-recipe-storybook-ts/master/recipe/Link.stories.tsx"
+/>
+
+---
+
+Adds Storybook npm scripts.
+
+<NPMScript
+  name="storybook"
+  command="NODE_ENV=production start-storybook -s ./public -p 6006 --ci"
+/>
+<NPMScript
+  name="build-storybook"
+  command="NODE_ENV=production build-storybook"
+/>
+
+---
+
+After installing this recipe and before you run Storybook, make sure you run `gatsby develop` or `gatsby build`. This ensures that Gatsby's GraphQL data is available in Storybook.

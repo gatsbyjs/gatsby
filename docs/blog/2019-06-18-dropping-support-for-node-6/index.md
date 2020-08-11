@@ -19,7 +19,7 @@ Several months ago (01/03/2019) we opened a [Request for Commentary (RFC)][rfc],
 
 1. Used `async`, `await`, and other non-supported features in Node 6 in our documentation
    - Copying code directly from the docs will manifest a runtime error in Node 6, and will gently guide towards updating to Node 8 or greater
-1. [Documented that our minimum supported version is Node 8 or greater][node-8-docs]
+2. [Documented that our minimum supported version is Node 8 or greater][node-8-docs]
 
 These approaches jointly served as a gentle guide towards encouraging users to upgrade to Node 8 _prior to this breaking change._ However, up to this point, I haven't defended why we're making the breaking change. Let me do just that.
 
@@ -62,7 +62,7 @@ This much is clear. Supporting Node 6 is making it **more challenging to ship fe
 There are minimally two types of breaking changes:
 
 1. **Known breaking changes**: breaking changes that change how something is consumed, e.g. changing the name of an API method. These should _only_ happen in major versions.
-1. **Potential breaking changes**: this _could_ be a breaking change, but we're not _sure_, and we need data to know whether this could be a known breaking change.
+2. **Potential breaking changes**: this _could_ be a breaking change, but we're not _sure_, and we need data to know whether this could be a known breaking change.
 
 Known breaking changes should never happen in a non-major release. However, potential breaking changes are more reasonable to do in a minor release _if_ we can quantify the number of users that are using Node 6 and most importantly, the number of users using later versions of Gatsby that would contain this breaking change.
 
@@ -94,4 +94,3 @@ We are very much cognizant that this change may introduce some measure of churn 
 [babel-preset-gatsby-package]: https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package
 [babel-preset-env]: https://babeljs.io/docs/en/babel-preset-env#targetsnode
 [pr]: https://github.com/gatsbyjs/gatsby/pull/14842
-[object-rest-spread]: https://github.com/tc39/proposal-object-rest-spread

@@ -1,70 +1,69 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.12.5",
+  "version": "2.12.83",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "lib/index.js"
+    "gatsby": "cli.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.8.3",
-    "@babel/runtime": "^7.9.2",
+    "@babel/code-frame": "^7.10.3",
     "@hapi/joi": "^15.1.1",
+    "@types/common-tags": "^1.8.0",
     "better-opn": "^1.0.0",
-    "bluebird": "^3.7.2",
     "chalk": "^2.4.2",
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "core-js": "^2.6.11",
     "envinfo": "^7.5.1",
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.2.0",
-    "gatsby-recipes": "^0.1.6",
-    "gatsby-telemetry": "^1.3.0",
+    "gatsby-core-utils": "^1.3.15",
+    "gatsby-recipes": "^0.2.13",
+    "gatsby-telemetry": "^1.3.27",
     "hosted-git-info": "^3.0.4",
+    "ink": "^2.7.1",
+    "ink-spinner": "^3.1.0",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.15",
     "meant": "^1.0.1",
     "node-fetch": "^2.6.0",
-    "object.entries": "^1.1.1",
     "opentracing": "^0.14.4",
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
     "prompts": "^2.3.2",
     "react": "^16.8.0",
     "redux": "^4.0.5",
-    "resolve-cwd": "^2.0.0",
-    "semver": "^6.3.0",
+    "resolve-cwd": "^3.0.0",
+    "semver": "^7.3.2",
     "signal-exit": "^3.0.3",
     "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
-    "update-notifier": "^3.0.1",
+    "update-notifier": "^4.1.0",
     "uuid": "3.4.0",
-    "yargs": "^12.0.5",
+    "yargs": "^15.3.1",
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
     "@types/hosted-git-info": "^3.0.0",
-    "babel-preset-gatsby-package": "^0.4.0",
-    "cross-env": "^5.2.1"
-  },
-  "optionalDependencies": {
-    "ink": "^2.7.1",
-    "ink-spinner": "^3.0.1"
+    "@types/yargs": "^15.0.4",
+    "babel-preset-gatsby-package": "^0.5.2",
+    "cross-env": "^5.2.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
   },
   "files": [
     "lib",
-    "scripts"
+    "scripts",
+    "cli.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
@@ -79,12 +78,10 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "postinstall": "node scripts/postinstall.js"
-  },
-  "yargs": {
-    "boolean-negation": false
   },
   "engines": {
     "node": ">=10.13.0"

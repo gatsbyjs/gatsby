@@ -2,7 +2,7 @@
 title: Deploying to Microsoft Internet Information Server (IIS)
 ---
 
-Deploying to Microsoft IIS is mostly copy &amp; paste.
+Deploying to Microsoft IIS is mostly copy & paste.
 After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
 
 One important and sometimes overlooked aspect is to configure caching correctly.
@@ -60,7 +60,7 @@ you have to be careful to copy any changes to `web.config` on your server back t
                   <add input="{REQUEST_FILENAME}" pattern="(.*\.html)|(sw\.js)|(app\-data\.json)|(page\-data\.json)" />
                 </preCondition>
                 <preCondition name="IsCachePermanentlyFile">
-                  <add input="{REQUEST_FILENAME}" pattern="(.*\.js)|(.*\.css)" />
+                  <add input="{REQUEST_FILENAME}" pattern="((.*\.js)|(.*\.css))$" />
                 </preCondition>
               </preConditions>
             </outboundRules>
