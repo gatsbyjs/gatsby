@@ -11602,3 +11602,14 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
+- title: Share Price
+  url: https://www.shareprice.ie
+  main_url: https://www.shareprice.ie
+  description: >
+    Up to date share prices and market data to help you make better trading decisions. Master the Markets.
+  categories:
+    - Business
+    - Finance
+  built_by: shareprice.ie
+  built_by_url: https://www.shareprice.ie
+  featured: false
