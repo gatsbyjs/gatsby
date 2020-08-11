@@ -58,6 +58,7 @@
     "isomorphic-fetch": "^2.1.0",
     "jest-diff": "^25.5.0",
     "lodash": "^4.17.15",
+    "lock": "^1.0.0",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.5.0",

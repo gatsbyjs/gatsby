@@ -61,6 +61,7 @@ describe(`packageJson resource`, () => {
     expect(result2).toMatchSnapshot()
 
     await pkgJson.destroy({ root }, result)
+    await pkgJson.destroy({ root }, result2)
   })
 
   test(`handles object values`, async () => {
