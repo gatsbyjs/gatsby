@@ -79,24 +79,20 @@ exports.replaceRenderer = true
  * is merged with other body props and passed to `html.js` as `bodyProps`.
  * @param {pluginOptions} pluginOptions
  * @example
- * const { Helmet } = require("react-helmet")
- *
- * exports.onRenderBody = (
- *   { setHeadComponents, setHtmlAttributes, setBodyAttributes },
- *   pluginOptions
- * ) => {
- *   const helmet = Helmet.renderStatic()
- *   setHtmlAttributes(helmet.htmlAttributes.toComponent())
- *   setBodyAttributes(helmet.bodyAttributes.toComponent())
- *   setHeadComponents([
- *     helmet.title.toComponent(),
- *     helmet.link.toComponent(),
- *     helmet.meta.toComponent(),
- *     helmet.noscript.toComponent(),
- *     helmet.script.toComponent(),
- *     helmet.style.toComponent(),
- *   ])
+ * // Object of props
+ * const HtmlAttributes = {
+ *   "data-whatever": "content"
  * }
+ *
+ * // Magic
+ * exports.onRenderBody = (
+ *   { setHtmlAttributes }
+ * ) => {
+ *    setHtmlAttributes(HtmlAttributes)
+ * }
+ *
+ * // Output
+ * <html data-whatever="content">
  */
 exports.onRenderBody = true
 
