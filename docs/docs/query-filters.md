@@ -8,7 +8,7 @@ title: Query Filters with GraphQL in Gatsby
 
 Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/).
 
-Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). `filter` GraphQL argument is passed to the filtering system and will return all the nodes that match each of the given filters. The resto of the processing, such as pagination, is handled on GraphQL resolver level.
+Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). `filter` GraphQL argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on GraphQL resolver level.
 
 Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). The GraphQL `filter` argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on GraphQL resolver level.
 
@@ -137,7 +137,7 @@ Specific rules:
   - Glob pattern is converted to a JavaScript RegExp with [micromatch](https://github.com/micromatch/micromatch)
   - The `regex` filterValue must be a stringified regular expression, including leading and trailing forward slash and optional flags; Like `"/foo/g"`
   - Never returns nodes with partial paths
-  - While testing, result values are explicitly casted to a string through `String(resultValue)` before passing it to `regex.test()`
+  - While testing, result values are explicitly cast to a string through `String(resultValue)` before passing it to `regex.test()`
 
 ### Nulls and partial paths
 
