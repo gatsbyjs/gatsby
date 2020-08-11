@@ -243,6 +243,20 @@ export default function PluginView(
                     heading: (props: any): JSX.Element => (
                       <Heading as={`h${props.level}`} {...props} />
                     ),
+                    code: (props: any): JSX.Element => (
+                      <pre>
+                        <Text
+                          as="code"
+                          language={props.language}
+                          sx={{
+                            fontFamily: `monospace`,
+                            fontSize: 1,
+                          }}
+                        >
+                          {props.value}
+                        </Text>
+                      </pre>
+                    ),
                   }}
                   source={npmData.readme.replace(
                     // Remove the first heading with the plugin name since we render that manually
