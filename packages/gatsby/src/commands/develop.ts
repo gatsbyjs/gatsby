@@ -295,7 +295,9 @@ module.exports = async (program: IProgram): Promise<void> => {
       const data = await getService(program.directory, `developproxy`)
       const port = data?.port || 8000
       console.error(
-        `Looks like develop for this site is already running. Try visiting http://localhost:${port}/ maybe?`
+        `Looks like develop for this site is already running, can you visit ${
+          program.ssl ? `https://` : `http://`
+        }://localhost:${port} ? If it is not, try again in five seconds!`
       )
       process.exit(1)
     }
