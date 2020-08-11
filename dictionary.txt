@@ -243,6 +243,7 @@ bois
 Bolda
 Bölüm
 bool
+booleans
 bootcamp
 bootcamps
 bootstrapable
@@ -666,6 +667,7 @@ filesystem-based
 filesystem-explorer-options
 filesystem-query
 Fillerama
+filterValue
 FindCollabs
 findDirtyIds
 findIdsWithoutDataDependencies
@@ -1255,6 +1257,7 @@ METROGLAM
 Meuleman
 Michał
 Microfrontends
+micromatch
 microservices
 microsites
 middleware
@@ -1282,6 +1285,7 @@ modularizing
 modus
 Monahan
 mongo
+MongoDb
 monorepo
 monorepos
 Morby
