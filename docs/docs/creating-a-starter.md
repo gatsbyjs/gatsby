@@ -15,7 +15,7 @@ For a starter to work properly, it needs to include some files (see the [Hello W
 - `static`: a directory for static assets, such as a `favicon.ico` file.
 - `.gitignore`: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
 - `.prettierrc` _(optional)_: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
-- `LICENSE`: a file containing an [apropriate](#open-source) open source license, preferably with a [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/).
+- `LICENSE`: a file containing an [appropriate](#open-source) open source license, preferably with a [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/).
 
 Your starter should also have these qualities:
 
@@ -39,7 +39,7 @@ Although the official starters live in the Gatsby repo, community members can of
 
 ## Open source license
 
-Gatsby recomends all starters use the [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/). While the [MIT License](https://choosealicense.com/licenses/mit/) is more common (and was used in Gatsby official starters [for a long time](https://github.com/gatsbyjs/gatsby/pull/25441)), MIT's "License and copyright notice" condition make it a bad fit for starters. Starters, by design, are for people to customize and use for their own sites (open and closed source). The 0BSD has no "License and copyright notice" condition. This allows folks to use and customize the starter without reference to the original license or source. Gatsby believes this is how most creators expect starters to be treated and how developers expect to use starters, despite many having the MIT license. By recomending 0BSD we sre trying to align expectations and licensing.
+Gatsby recommends all starters use the [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/)(0BSD). While the [MIT License](https://choosealicense.com/licenses/mit/) is more common (and was used in Gatsby official starters [for a long time](https://github.com/gatsbyjs/gatsby/pull/25441)), MIT's "License and copyright notice" condition make it a bad fit for starters. Starters, by design, are for people to customize and use for their own sites (open and closed source). The 0BSD has no "License and copyright notice" condition. This allows folks to use and customize the starter without reference to the original license or source. Gatsby believes this is how most creators expect starters to be treated and how developers expect to use starters, despite many having the MIT license. By recommending 0BSD we are trying to align expectations and licensing.
 
 ## Configurable
 
