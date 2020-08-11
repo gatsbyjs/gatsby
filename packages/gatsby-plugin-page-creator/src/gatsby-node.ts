@@ -67,7 +67,7 @@ Please pick a path to an existing directory.`)
   // Get initial list of files.
   let files = await glob(pagesGlob, { cwd: pagesPath })
   files.forEach(file => {
-    createPage(file, pagesDirectory, actions, ignore, graphql)
+    createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
   })
 
   watchDirectory(
@@ -75,7 +75,14 @@ Please pick a path to an existing directory.`)
     pagesGlob,
     addedPath => {
       if (!_.includes(files, addedPath)) {
-        createPage(addedPath, pagesDirectory, actions, ignore, graphql)
+        createPage(
+          addedPath,
+          pagesDirectory,
+          actions,
+          ignore,
+          graphql,
+          reporter
+        )
         files.push(addedPath)
       }
     },
