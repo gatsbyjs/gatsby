@@ -70,7 +70,7 @@ For example, here is a structured data snippet (added with `react-helmet`) in th
 </Helmet>
 ```
 
-When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method.
+When using structured data, you'll need to test during development and the [Rich Results Test](https://search.google.com/test/rich-results) from Google is one recommended method.
 
 After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
 

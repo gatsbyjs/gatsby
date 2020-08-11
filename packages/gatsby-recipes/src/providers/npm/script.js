@@ -34,7 +34,7 @@ const read = async ({ root }, id) => {
       id,
       name: id,
       command: pkg.scripts[id],
-      _message: `Wrote script ${id} to your package.json`,
+      _message: `Added script "${id}" to your package.json`,
     }
   }
 
@@ -89,7 +89,7 @@ module.exports.plan = async ({ root }, { name, command }) => {
     currentState,
     newState: scriptDescription(name, command),
     diff,
-    describe: `Add new command to your package.json`,
+    describe: `Add script "${name}" to your package.json`,
   }
 }
 

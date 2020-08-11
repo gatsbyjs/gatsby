@@ -154,9 +154,11 @@ ArchieML.org
 architected
 architecting
 Archlinux
+Arellano
 arg
 args
 Arkins
+Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
@@ -303,6 +305,7 @@ CDN
 CDN-backed
 CDNs
 Cereda
+Certbot
 CFP
 Chakra
 changelog
@@ -372,7 +375,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial
@@ -427,6 +430,7 @@ Costea
 Coughlan
 counterintuitive
 COVID-19
+COVID
 cowpaths
 Coyier
 CPG
@@ -679,6 +683,7 @@ focusable
 FOMO
 Fonegra
 Fonnegra
+Forem
 FormatJS
 formatter
 Formik
@@ -952,8 +957,10 @@ headlessly
 headmatter
 headmouse
 headstart
+Hernández
 heroku
 heroku-buildpack-static
+Hetman
 Hexo
 hinzufügen
 HIPAA
@@ -985,6 +992,7 @@ hypermodern
 i10n
 i18n
 i18next
+IaaS
 IaC
 IAM
 iam_timsmith
@@ -1005,7 +1013,6 @@ imho
 Imoh
 impactful
 implementers
-implementors-of-Gatsby
 incineratingly
 Indexability
 indexable
@@ -1082,6 +1089,7 @@ jumbotron
 JWPlayer
 JWT
 Ka
+Kadlec
 Kalin
 Kasten
 Kategorien
@@ -1105,6 +1113,7 @@ Kirkham
 Kissling
 Knut
 KNW
+Kocjan
 Koelewijn
 Koenig
 Koerselman
@@ -1199,7 +1208,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
@@ -1212,6 +1220,7 @@ materialisation
 Materialisation
 Mateusz
 MathJax
+Matías
 Matomo
 mccrodp
 MD5
@@ -1240,6 +1249,7 @@ metacompiler
 metadescription
 metafields
 Metalsmith
+metatags
 METROGLAM
 Meuleman
 Michał
@@ -1326,6 +1336,7 @@ nodeId
 nodeID
 NodeID
 nodemailer
+Node.js
 NodeSchool
 nodesPromise
 Nolen
@@ -1356,6 +1367,7 @@ observability
 Octocat
 Oduye
 oEmbed
+OG
 ok
 Ok
 OKRs
@@ -1384,6 +1396,7 @@ OpenAI
 OpenAPI
 OpenCollective
 OpenGraph
+OpenSSH
 opentracing
 OpenTracing
 operandi
@@ -1423,6 +1436,7 @@ pathname
 pathnames
 pathPrefix
 Paulie
+Paulina
 Pavel
 PayPal
 PayPal-ers
@@ -1450,11 +1464,11 @@ pixelated
 pjax
 pleaaase
 pluggable
+pm
 PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
@@ -1473,6 +1487,7 @@ PostHog
 postprocessing
 Poumián
 PowerShell
+PPA
 pragma
 pragmas
 PRDs
@@ -1632,6 +1647,7 @@ redux
 Redux
 Reduxjs
 ReferenceError
+ReflexJS
 reformats
 reframe
 rehydrate
@@ -1812,6 +1828,7 @@ source-filesystem
 Sourcegraph
 sourceNodes
 SpaceX
+Spalato
 spambots
 spammy
 spelt
@@ -1941,7 +1958,7 @@ trainings
 transactional
 transformational
 transformative
-transifex
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -1965,6 +1982,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck
@@ -2064,6 +2083,7 @@ voilà
 Vojtech
 Vojtěch
 VPs
+VPS
 VS2015
 VS201x
 VSCode
@@ -2123,6 +2143,7 @@ Wiseman
 wishlist
 with-navigation2
 Woah
+Wojciech
 WooCommerce
 Woodworth
 Workbox
@@ -2143,6 +2164,7 @@ WXR
 wysiwyg
 x64
 Xcode
+XD
 XSL
 XSS
 XState
