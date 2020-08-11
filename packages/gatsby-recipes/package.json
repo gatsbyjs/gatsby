@@ -1,7 +1,7 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.2.10",
+  "version": "0.2.12",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -52,6 +52,7 @@
     "graphql-type-json": "^0.3.2",
     "hicat": "^0.7.0",
     "html-tag-names": "^1.1.5",
+    "ink-box": "^1.0.0",
     "is-binary-path": "^2.1.0",
     "is-url": "^1.2.4",
     "isomorphic-fetch": "^2.1.0",

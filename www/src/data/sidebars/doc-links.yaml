@@ -660,8 +660,8 @@
               link: /docs/schema-gql-type/
             - title: Building the Input Filters
               link: /docs/schema-input-gql/
-            - title: Querying with Sift
-              link: /docs/schema-sift/
+            - title: Query Filters
+              link: /docs/query-filters/
             - title: Connections
               link: /docs/schema-connections/
         - title: Page Creation
