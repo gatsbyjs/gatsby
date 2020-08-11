@@ -294,6 +294,8 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 }
 ```
 
+**Note** If you use Gatsby, it will not work including <Global> a local css file is required
+
 **Note:** Make sure the font name is referenced from the relevant CSS, e.g.:
 
 ```css:title=src/components/layout.css
