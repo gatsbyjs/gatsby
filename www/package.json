@@ -130,7 +130,7 @@
     "babel-jest": "^24.9.0",
     "babel-plugin-macros": "^2.8.0",
     "babel-preset-gatsby": "^0.2.36",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.2",
     "front-matter": "^2.3.0",
     "github-api": "^3.3.0",
     "identity-obj-proxy": "^3.0.0",

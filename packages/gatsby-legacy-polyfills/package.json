@@ -34,7 +34,7 @@
     "codegen.macro": "^4.0.0",
     "core-js": "^3.6.5",
     "cpy-cli": "^3.1.1",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.2",
     "execa": "^4.0.2",
     "fs-extra": "^9.0.1",
     "microbundle": "^0.12.0",

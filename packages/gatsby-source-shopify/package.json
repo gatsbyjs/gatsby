@@ -30,7 +30,7 @@
   "devDependencies": {
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
-    "cross-env": "^5.2.1"
+    "cross-env": "^7.0.2"
   },
   "dependencies": {
     "babel-preset-gatsby-package": "^0.5.2",

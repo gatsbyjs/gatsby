@@ -34,7 +34,7 @@
     "@babel/core": "^7.10.3",
     "@types/micromatch": "^4.0.1",
     "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "cross-env": "^7.0.2"
   },
   "files": [
     "dist/*"
