@@ -17,6 +17,7 @@ import {
 import { navigate } from "gatsby-link"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
+import ReactMarkdown from "react-markdown"
 import useNpmPackageData from "../utils/use-npm-data"
 import gitHubIcon from "../github.svg"
 import isOfficialPackage from "../../../../www/src/utils/is-official-package"
@@ -232,8 +233,10 @@ export default function PluginView(
           <div sx={{ width: `70%` }}>
             {fetchingNpmData ? (
               <Spinner />
+            ) : npmData?.readme ? (
+              <ReactMarkdown source={npmData.readme} />
             ) : (
-              npmData?.readme || `No readme found.`
+              `No readme found.`
             )}
           </div>
           <Flex
