@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.12...gatsby-recipes@0.2.13) (2020-08-11)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix NPMScript for parallel calls ([#26349](https://github.com/gatsbyjs/gatsby/issues/26349)) ([e845615](https://github.com/gatsbyjs/gatsby/commit/e845615))
+
 ## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.11...gatsby-recipes@0.2.12) (2020-08-10)
 
 ### Bug Fixes
