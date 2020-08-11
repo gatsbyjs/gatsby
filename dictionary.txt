@@ -387,6 +387,8 @@ Commento
 Commentors
 CommonJS
 CommonMark
+comparator
+comparators
 compile-to-js
 componentChunkName
 componentChunkNames
