@@ -236,6 +236,14 @@ export default function PluginView(
             ) : npmData?.readme ? (
               <Flex gap={5} flexDirection="column">
                 <ReactMarkdown
+                  renderers={{
+                    paragraph: (props: any): JSX.Element => (
+                      <Text as="p" {...props} sx={{ color: `text.primary` }} />
+                    ),
+                    heading: (props: any): JSX.Element => (
+                      <Heading as={`h${props.level}`} {...props} />
+                    ),
+                  }}
                   source={npmData.readme.replace(
                     // Remove the first heading with the plugin name since we render that manually
                     new RegExp(`(?:#+|^)\\s*${pluginName}$`, `m`),
