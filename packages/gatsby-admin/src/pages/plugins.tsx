@@ -234,7 +234,13 @@ export default function PluginView(
             {fetchingNpmData ? (
               <Spinner />
             ) : npmData?.readme ? (
-              <ReactMarkdown source={npmData.readme} />
+              <ReactMarkdown
+                source={npmData.readme.replace(
+                  // Remove the first heading with the plugin name since we render that manually
+                  new RegExp(`(?:#+|^)\\s*${pluginName}$`, `m`),
+                  ``
+                )}
+              />
             ) : (
               `No readme found.`
             )}
