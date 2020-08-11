@@ -38,7 +38,7 @@ export function collectionExtractQueryString(
 
             if (text.includes(`...CollectionPagesQueryFragment`) === false) {
               throw new Error(
-                `Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes`
+                `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes`
               )
             }
 

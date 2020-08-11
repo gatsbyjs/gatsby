@@ -34,7 +34,7 @@ export function derivePath(path: string, node: Record<string, any>): string {
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
       console.error(
-        `CollectionBuilderError: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
+        `PageCreator: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
       )
       console.log(JSON.stringify(node, null, 4))
       return
