@@ -16,6 +16,8 @@ import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
 
+const errorCache = new Map()
+
 const GlobalsContext = React.createContext({})
 const useGlobals = () => useContext(GlobalsContext)
 const GlobalsProvider = GlobalsContext.Provider
@@ -121,6 +123,7 @@ const handleResource = (resourceName, context, props) => {
   // Initialize
   const { mode, resultCache, inFlightCache, queue } = context
 
+  // TODO use session ID to ensure the IDs are unique..
   const trueKey = props._key ? props._key : context._uuid
 
   let cacheKey
@@ -151,14 +154,17 @@ const handleResource = (resourceName, context, props) => {
   }
 
   let allResources = useResourceContext()
-  const error = validateResource(resourceName, context, props)
-  if (error) {
-    const result = {
-      error: `Validation error: ${error.details[0].message}`,
+  if (!errorCache.has(trueKey)) {
+    const error = validateResource(resourceName, context, props)
+    errorCache.set(trueKey, error)
+    if (error) {
+      const result = {
+        error: `Validation error: ${error.details[0].message}`,
+      }
+      updateResource(result)
+      resultCache.set(cacheKey, result)
+      return result
     }
-    updateResource(result)
-    resultCache.set(cacheKey, result)
-    return result
   }
 
   const cachedResult = resultCache.get(cacheKey)
@@ -228,7 +234,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
       const result = await job
       cb(null, result)
     },
-    { concurrent: 5 }
+    { concurrent: 10000 }
   )
 
   const resultCache = new Map()
@@ -253,9 +259,13 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const renderResources = isDrained => {
     result = RecipesReconciler.render(recipeWithWrapper, plan, name)
 
-    const resources = transformToPlan(result)
+    const resourcesArray = transformToPlan(result)
+
+    // Tell UI about updates.
+    emitter.emit(`update`, resourcesArray)
 
     const isDone = () => {
+      let result
       // Mostly for validation stage that checks that there's no resources
       // in the initial step — this done condition says no resources were found
       // and there's no inflight resource work (resources will be empty until the
@@ -263,38 +273,38 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
       //
       // We use "inFlightCache" because the queue doesn't immediately show up
       // as having things in it.
-      if (resources.length === 0 && ![...inFlightCache.values()].some(a => a)) {
-        return true
+      if (
+        resourcesArray.length === 0 &&
+        ![...inFlightCache.values()].some(a => a)
+      ) {
+        result = true
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
       } else if (isDrained && queue.length === 0) {
-        return true
+        result = true
         // If there's one resource & it fails validation, it doesn't go into the queue
         // so we check if inFlightCache is empty & all resources have an error.
       } else if (
-        !resources.some(r => !r.error) &&
+        !resourcesArray.some(r => !r.error) &&
         ![...inFlightCache.values()].some(a => a)
       ) {
-        return true
+        result = true
+      } else {
+        result = false
       }
 
-      return false
+      return result
     }
 
     if (isDone()) {
       // Rerender with the resources and resolve the data from the cache.
-      emitter.emit(`done`, resources)
+      emitter.emit(`done`, resourcesArray)
     }
   }
 
-  const throttledRenderResources = lodash.throttle(renderResources, 30, {
-    trailing: false,
-  })
+  const throttledRenderResources = lodash.throttle(renderResources, 100)
 
   queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
-
-    const resources = transformToPlan(result)
-    emitter.emit(`update`, resources)
   })
 
   queue.on(`drain`, () => {
