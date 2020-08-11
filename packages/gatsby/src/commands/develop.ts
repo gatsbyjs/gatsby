@@ -193,8 +193,15 @@ module.exports = async (program: IProgram): Promise<void> => {
   // which users will access
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
+
+  // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
+  // when the browser should prompt the user to restart the develop process.
+  // This port is randomized by default and in most cases should never be required to configure.
+  // It is exposed for environments where port access needs to be explicit, such as with Docker.
+  // As the port is meant for internal usage only, any attempt to interface with features
+  // it exposes via third-party software is not supported.
   const [statusServerPort, developPort] = await Promise.all([
-    getRandomPort(),
+    getRandomPort(process.env.INTERNAL_STATUS_PORT),
     getRandomPort(),
   ])
 
