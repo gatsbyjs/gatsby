@@ -80,6 +80,9 @@ const startRecipe = ({ recipePath, projectRoot }) => {
         console.log(`===state.changed`, {
           state: state.value,
         })
+        if (state.value === `doneError`) {
+          console.log(state.event)
+        }
         // Wait until plans are created before updating the UI
         if (
           [`presentPlan`, `done`, `doneError`, `applyingPlan`].includes(

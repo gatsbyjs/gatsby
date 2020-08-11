@@ -129,6 +129,63 @@ const recipeMachine = Machine(
           src: (context, event) => async (cb, onReceive) => {
             try {
               const result = await createPlan(context, cb)
+              // Validate dependencies are met in the plan
+              const dependencyErrors = []
+              const dependenciesMet = result.every(r => {
+                if (!r.dependsOn) {
+                  return true
+                } else {
+                  return r.dependsOn.some(d => {
+                    const { resourceName, ...otherValues } = d
+                    const keys = Object.keys(otherValues)
+
+                    const isMatchFound = result.some(r1 => {
+                      // Is this the right resourceName?
+                      if (resourceName !== r1.resourceName) {
+                        return false
+                      }
+                      // Do keys match?
+                      if (
+                        !keys.every(
+                          k =>
+                            Object.keys(r1.resourceDefinitions).indexOf(k) >= 0
+                        )
+                      ) {
+                        return false
+                      }
+
+                      // Do values match?
+                      if (
+                        !keys.every(k => r1.resourceDefinitions[k] === d[k])
+                      ) {
+                        return false
+                      }
+
+                      return true
+                    })
+
+                    if (!isMatchFound) {
+                      const {
+                        mdxType,
+                        ...resourceDefinition
+                      } = r.resourceDefinitions
+                      dependencyErrors.push(
+                        `A resource (${r.resourceName}: ${JSON.stringify(
+                          resourceDefinition
+                        )}) is missing its dependency on ${JSON.stringify(
+                          r.dependsOn[0]
+                        )}`
+                      )
+                    }
+
+                    return isMatchFound
+                  })
+                }
+              })
+
+              // eslint-disable-next-line
+              if (!dependenciesMet) throw { error: dependencyErrors }
+
               return result
             } catch (e) {
               throw e
