@@ -1,4 +1,7 @@
 {
   "name": "test",
-  "scripts": {}
+  "scripts": {},
+  "husky2": {
+    "hooks": {}
+  }
 }

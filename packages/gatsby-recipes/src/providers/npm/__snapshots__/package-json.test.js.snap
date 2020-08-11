@@ -13,24 +13,31 @@ exports[`packageJson resource e2e package resource test: PackageJson create plan
 Object {
   "currentState": "{
   \\"name\\": \\"test\\",
-  \\"scripts\\": {}
+  \\"scripts\\": {},
+  \\"husky2\\": {
+    \\"hooks\\": {}
+  }
 }",
   "describe": "Add husky to package.json",
   "diff": "- Original  - 0
 + Modified  + 3
 
+@@ -1,4 +1,7 @@
   Object {
 +   \\"husky\\": \\"{
 +   /\\"hooks/\\": {}
 + }\\",
-    \\"name\\": \\"test\\",
-    \\"scripts\\": Object {},
-  }",
+    \\"husky2\\": Object {
+      \\"hooks\\": Object {},
+    },",
   "id": "husky",
   "name": "husky",
   "newState": "{
   \\"name\\": \\"test\\",
   \\"scripts\\": {},
+  \\"husky2\\": {
+    \\"hooks\\": {}
+  },
   \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
 }
@@ -52,6 +59,9 @@ Object {
   "currentState": "{
   \\"name\\": \\"test\\",
   \\"scripts\\": {},
+  \\"husky2\\": {
+    \\"hooks\\": {}
+  },
   \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
   "describe": "Add husky to package.json",
@@ -66,14 +76,39 @@ Object {
 +     /\\"pre-commit/\\": /\\"lint-staged/\\"
 +   }
   }\\",
-    \\"name\\": \\"test\\",
-    \\"scripts\\": Object {},",
+    \\"husky2\\": Object {
+      \\"hooks\\": Object {},",
   "id": "husky",
   "name": "husky",
   "newState": "{
   \\"name\\": \\"test\\",
   \\"scripts\\": {},
+  \\"husky2\\": {
+    \\"hooks\\": {}
+  },
   \\"husky\\": \\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"
+}",
+}
+`;
+
+exports[`packageJson resource handles multiple parallel create calls 1`] = `
+Object {
+  "_message": "Wrote key \\"husky\\" to package.json",
+  "id": "husky",
+  "name": "husky",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;
+
+exports[`packageJson resource handles multiple parallel create calls 2`] = `
+Object {
+  "_message": "Wrote key \\"husky2\\" to package.json",
+  "id": "husky2",
+  "name": "husky2",
+  "value": "{
+  \\"hooks\\": {}
 }",
 }
 `;
