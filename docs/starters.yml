@@ -6959,3 +6959,32 @@
     - Uses SCSS for easy-to-understand naming
     - Google Analytics support
     - Responsive design
+- url: https://gatsby-prismic-blog-starter.vercel.app/
+  repo: https://github.com/iamsainikhil/gatsby-prismic-blog-starter
+  description: A blog starter template developed using Gatsby and Prismic. This starter is styled using Theme UI which allows for more easy customization.
+  tags:
+    - Blog
+    - CMS:Prismic
+    - Disqus
+    - Gallery
+    - PWA
+    - SEO
+    - Styling:CSS-in-JS
+    - Styling:Theme-UI
+    - Styling:SCSS
+  features:
+    - Prismic as Headless CMS
+    - Theme UI for styling
+    - Uses light/dark mode for the app using Theme UI and can support multiple custom themes too
+    - Blog post listing with (image + summary + categories) for each blog post
+    - Blog post page with customizable Prismic Slices
+    - Blog post with Categories and Tags
+    - Code syntax highlighting with support for copy-to-clipboard functionality
+    - Prism React Renderer plugin using PrismJS highlighting
+    - Comments enabled using Disqus
+    - Responsive images using gatsby-image
+    - SEO enabled on each page with react-helmet
+    - Offline support
+    - WebApp Manifest supporting PWA
+    - Typeface based fonts
+    - Responsive design
