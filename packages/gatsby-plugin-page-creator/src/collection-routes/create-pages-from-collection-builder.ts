@@ -1,7 +1,7 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
 import { reverseLookupParams } from "./extract-query"
-import { getMatchPath } from "./get-match-path"
+import { getMatchPath } from "../client-routes/get-match-path"
 import { createPath } from "gatsby-page-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
 import { derivePath } from "./derive-path"

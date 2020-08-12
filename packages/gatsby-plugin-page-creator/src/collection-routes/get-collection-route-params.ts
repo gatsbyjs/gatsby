@@ -6,7 +6,7 @@ import {
   compose,
   extractFieldWithoutUnion,
   removeFileExtension,
-} from "./path-utils"
+} from "../path-utils"
 
 //   /foo/{Product.id}, /foo/123 => {id: 123}
 export function getCollectionRouteParams(

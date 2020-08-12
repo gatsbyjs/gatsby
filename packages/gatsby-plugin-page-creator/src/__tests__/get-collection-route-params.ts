@@ -1,4 +1,4 @@
-import { getCollectionRouteParams } from "../get-collection-route-params"
+import { getCollectionRouteParams } from "../collection-routes/get-collection-route-params"
 
 describe(`getCollectionRouteParams`, () => {
   it(`gets params out of middle of url`, () => {

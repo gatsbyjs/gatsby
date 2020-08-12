@@ -1,7 +1,7 @@
 // Given a absolutePath that has a collection marker it will extract the Model.
 // /foo/bar/{Model.bar} => Model
 export function extractModel(absolutePath: string): string {
-  const model = /\{([a-zA-Z]+)\./.exec(absolutePath)
+  const model = /\{([A-Z][a-zA-Z]+)\./.exec(absolutePath)
 
   //  This shouldn't happen - but TS requires us to validate
   if (!model) {

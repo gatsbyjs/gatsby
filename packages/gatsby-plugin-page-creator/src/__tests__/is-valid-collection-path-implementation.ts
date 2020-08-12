@@ -1,4 +1,4 @@
-import { isValidCollectionPathImplementation } from "../is-valid-collection-path-implementation"
+import { isValidCollectionPathImplementation } from "../collection-routes/is-valid-collection-path-implementation"
 import reporter from "gatsby-cli/lib/reporter"
 import syspath from "path"
 

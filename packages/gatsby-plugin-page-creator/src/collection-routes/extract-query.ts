@@ -7,7 +7,7 @@ import {
   extractFieldWithoutUnion,
   removeFileExtension,
   switchToPeriodDelimiters,
-} from "./path-utils"
+} from "../path-utils"
 
 // Input queryStringParent could be a Model or a full graphql query
 // End result should be something like { allProducts { nodes { id }}}

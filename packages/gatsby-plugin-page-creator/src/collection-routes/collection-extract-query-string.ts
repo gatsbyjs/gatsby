@@ -3,7 +3,7 @@ import { generateQueryFromString } from "./extract-query"
 import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
 import traverse from "@babel/traverse"
-import { extractModel } from "./path-utils"
+import { extractModel } from "../path-utils"
 import { Reporter } from "gatsby"
 
 // This Function opens up the actual collection file and extracts the queryString used in the

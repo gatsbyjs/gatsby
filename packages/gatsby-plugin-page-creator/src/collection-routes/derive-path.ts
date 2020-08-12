@@ -6,7 +6,7 @@ import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
-} from "./path-utils"
+} from "../path-utils"
 import { Reporter } from "gatsby"
 
 // Generates the path for the page from the file path

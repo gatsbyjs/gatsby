@@ -1,4 +1,7 @@
-import { generateQueryFromString, reverseLookupParams } from "../extract-query"
+import {
+  generateQueryFromString,
+  reverseLookupParams,
+} from "../collection-routes/extract-query"
 import path from "path"
 
 // windows and mac have different seperators, all code is written with unix-like

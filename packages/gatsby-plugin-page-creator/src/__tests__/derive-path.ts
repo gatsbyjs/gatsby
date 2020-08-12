@@ -1,4 +1,4 @@
-import { derivePath } from "../derive-path"
+import { derivePath } from "../collection-routes/derive-path"
 import reporter from "gatsby-cli/lib/reporter"
 
 describe(`derive-path`, () => {

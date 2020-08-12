@@ -1,6 +1,6 @@
 import sysPath from "path"
 import fs from "fs-extra"
-import { collectionExtractQueryString } from "../collection-extract-query-string"
+import { collectionExtractQueryString } from "../collection-routes/collection-extract-query-string"
 import reporter from "gatsby-cli/lib/reporter"
 
 jest.mock(`gatsby-cli/lib/reporter`)

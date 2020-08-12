@@ -13,6 +13,7 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
+import { IGatsbyState } from "./src/redux/types"
 
 export {
   default as Link,
@@ -298,6 +299,21 @@ export interface GatsbyNode {
    * }
    */
   onCreateNode?<TNode extends object = {}>(
+    args: CreateNodeArgs<TNode>,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
+
+  /**
+   * Called when a node is deleted. Plugins wishing to extend or
+   * transform nodes created by other plugins should implement this API.
+   *
+   * @example
+   * exports.onDeleteNode = ({ node, actions }) => {
+   *   // Handle the node that was deleted
+   * }
+   */
+  onDeleteNode?<TNode extends object = {}>(
     args: CreateNodeArgs<TNode>,
     options?: PluginOptions,
     callback?: PluginCallback
@@ -1275,7 +1291,7 @@ export interface Actions {
 export interface Store {
   dispatch: Function
   subscribe: Function
-  getState: Function
+  getState(): IGatsbyState
   replaceReducer: Function
 }
 

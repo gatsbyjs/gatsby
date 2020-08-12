@@ -1,6 +1,7 @@
 import { Actions, Reporter } from "gatsby"
 import chokidar from "chokidar"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 
 /*
  * When a user is developing, they may want to mess around with the collectionQuery or renaming

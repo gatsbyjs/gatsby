@@ -490,6 +490,13 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   const deleteDescendantsActions =
     node && findChildren(node.children).map(getNode).map(createDeleteAction)
 
+  apiRunnerNode(`onDeleteNode`, {
+    node,
+    traceId: node?.traceId,
+    // parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  })
+
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
   } else {

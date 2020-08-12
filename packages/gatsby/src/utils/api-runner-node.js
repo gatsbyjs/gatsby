@@ -384,6 +384,8 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       id = `${api}${apiRunInstance.startTime}${args.type.name}${traceId}`
     } else if (api === `onCreateNode`) {
       id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${traceId}`
+    } else if (api === `onDeleteNode`) {
+      id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${traceId}`
     } else if (api === `preprocessSource`) {
       id = `${api}${apiRunInstance.startTime}${args.filename}${traceId}`
     } else if (api === `onCreatePage`) {

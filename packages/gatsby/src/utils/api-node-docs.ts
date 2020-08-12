@@ -134,6 +134,17 @@ export const sourceNodes = true
 export const onCreateNode = true
 
 /**
+ * Called when a node is deleted. Plugins wishing to respond to
+ * nodes deleted by other plugins should implement this API.
+ *
+ * @example
+ * exports.onDeleteNode = ({ node, actions }) => {
+ *   // handle the node that was deleted
+ * }
+ */
+export const onDeleteNode = true
+
+/**
  * Called when a new page is created. This extension API is useful
  * for programmatically manipulating pages created by other plugins e.g.
  * if you want paths without trailing slashes.

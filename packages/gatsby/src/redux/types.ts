@@ -30,7 +30,7 @@ export interface IGatsbyPage {
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
-  context: {}
+  context: Record<string, any>
   updatedAt: number
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
