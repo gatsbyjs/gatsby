@@ -33,6 +33,6 @@ Lastly, familiarize yourself with the [accessibility guidelines regarding forms]
 
 ### What to Do If You Need Help
 
-If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [AskGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
 
 For this challenge, you can also ask the [Formik community](https://jaredpalmer.com/formik/help) for help.

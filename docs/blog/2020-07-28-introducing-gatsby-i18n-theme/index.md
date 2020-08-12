@@ -77,23 +77,23 @@ And `de.json` with:
 Now you’re ready to localize content! Go to your `src/pages/index.js` file and reference the JSON files you just created. Import `useIntl` from `react-intl` and translate `Hello World`:
 
 ```diff:title=src/pages/index.js
-import * as React from "react"
-import { graphql } from "gatsby"
-import { LocalizedLink, LocalesList } from "gatsby-theme-i18n"
+  import * as React from "react"
+  import { graphql } from "gatsby"
+  import { LocalizedLink, LocalesList } from "gatsby-theme-i18n"
 + import { useIntl } from "react-intl"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+  import Layout from "../components/layout"
+  import SEO from "../components/seo"
 
-const Index = ({ data }) => {
-+  const intl = useIntl()
-  return (
-    <Layout>
-      <SEO title="Home" />
-+      <h1>{intl.formatMessage({ id: "helloWorld" })}</h1>
-      <p>This is in the Index page.</p>
+  const Index = ({ data }) => {
++   const intl = useIntl()
+    return (
+      <Layout>
+        <SEO title="Home" />
++       <h1>{intl.formatMessage({ id: "helloWorld" })}</h1>
+        <p>This is in the Index page.</p>
 ```
 
-After starting the development server, visit `localhost:8000` and `localhost:8000/de/` to see both texts.
+After starting the development server, visit `http://localhost:8000` and `http://localhost:8000/de/` to see both texts.
 
 ## FAQs
 
@@ -128,7 +128,7 @@ Time will tell what parts can be ported over to Gatsby’s codebase and what nee
 
 ### Why a theme and not a plugin?
 
-Composability is a major consideration for “Themes” and it should probably be more clear that you should work on top of it rather than it being a one-fits/one-click solution. We also might need to make use of gatsby-config.js which can only be used in a theme package.
+Composability is a major consideration for “Themes” and it should probably be more clear that you should work on top of it rather than it being a one-fits/one-click solution. We also might need to make use of `gatsby-config.js` which can only be used in a theme package.
 
 ### Can I use i18n library X with this theme?
 
