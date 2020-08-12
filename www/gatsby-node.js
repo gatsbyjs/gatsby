@@ -3,6 +3,7 @@ const startersRedirects = require(`./starter-redirects.json`)
 
 const { loadYaml } = require(`./src/utils/load-yaml`)
 const redirects = loadYaml(`./redirects.yaml`)
+const cloudRedirects = loadYaml(`./cloud-redirects.yaml`)
 
 // Split the logic into files based on the section of the website.
 // The eventual goal is to split www into different themes per section.
@@ -23,7 +24,7 @@ const sections = [
   creators,
   packages,
   features,
-  apiCalls,
+  apiCalls
 ]
 
 // Run the provided API on all defined sections of the site
@@ -36,16 +37,16 @@ async function runApiForSections(api, helpers) {
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
   const currentCommitSHA = require(`child_process`)
     .execSync(`git rev-parse HEAD`, {
-      encoding: `utf-8`,
+      encoding: `utf-8`
     })
     .trim()
 
   actions.setWebpackConfig({
     plugins: [
       plugins.define({
-        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
-      }),
-    ],
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA)
+      })
+    ]
   })
 }
 
@@ -53,7 +54,7 @@ exports.createSchemaCustomization = async helpers => {
   await runApiForSections(`createSchemaCustomization`, helpers)
 
   const {
-    actions: { createTypes },
+    actions: { createTypes }
   } = helpers
 
   // Explicitly define Airtable types so that queries still work
@@ -104,9 +105,9 @@ exports.createResolvers = async helpers => {
           }
 
           return []
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }
 
@@ -120,6 +121,13 @@ exports.createPages = async helpers => {
   const { actions } = helpers
   const { createRedirect } = actions
 
+  /**
+   * ============================================================================
+   * REDIIRECTS
+   * NOTE: Order matters!! Higher specificity comes first
+   * ============================================================================
+   */
+
   redirects.forEach(redirect => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
@@ -129,7 +137,37 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
-      force: true,
+      force: true
     })
+  })
+
+  // one-off redirects for .com
+  //  pages that don't line up 1 to 1 with data stored in WP
+  cloudRedirects.forEach(redirect => {
+    createRedirect({ isPermanent: true, ...redirect, force: true })
+  })
+
+  // splat redirects
+  await createRedirect({
+    fromPath: `/packages/*`,
+    toPath: `https://gatsbyjs.com/plugins/:splat`,
+    isPermanent: true,
+    force: true
+  })
+
+  await createRedirect({
+    fromPath: `/creators/*`,
+    toPath: `https://gatsbyjs.com/partner/`,
+    isPermanent: true,
+    force: true
+  })
+
+  // catch all redirect
+  //  this needs to be the last redirect created or it'll match everything
+  await createRedirect({
+    fromPath: `/*`,
+    toPath: `https://gatsbyjs.com/:splat`,
+    isPermanent: true,
+    force: true
   })
 }
