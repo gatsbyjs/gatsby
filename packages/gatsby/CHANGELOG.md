@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.45](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.44...gatsby@2.24.45) (2020-08-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.44](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.43...gatsby@2.24.44) (2020-08-12)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.24.43](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.42...gatsby@2.24.43) (2020-08-11)
 
 ### Bug Fixes
