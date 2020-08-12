@@ -29,7 +29,10 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   // Required plugins/presets
   const requiredPlugins = [
     babel.createConfigItem(
-      [resolve(`babel-plugin-remove-graphql-queries`), { stage }],
+      [
+        resolve(`babel-plugin-remove-graphql-queries`),
+        { stage, staticQueryDir: `page-data/sq/d` },
+      ],
       {
         type: `plugin`,
       }

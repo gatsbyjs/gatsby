@@ -149,7 +149,7 @@ Here’s an example of creating specific widths and heights for images:
             localFile {
               childImageSharp {
                 # Try editing the "width" and "height" values.
-                resolutions(width: 200, height: 200) {
+                fixed(width: 200, height: 200) {
                   # In the GraphQL explorer, use field names
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
@@ -157,7 +157,7 @@ Here’s an example of creating specific widths and heights for images:
 
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site.
-                  # ...GatsbyImageSharpResolutions_withWebp
+                  # ...GatsbyImageSharpFixed_withWebp
                 }
               }
             }
@@ -215,8 +215,7 @@ import Img from "gatsby-image"
 const IndexPage = ({ data }) => {
   const imagesResolutions = data.allWordpressPost.edges.map(
     edge =>
-      edge.node.childWordPressAcfPostPhoto.photo.localFile.childImageSharp
-        .resolutions
+      edge.node.childWordPressAcfPostPhoto.photo.localFile.childImageSharp.fixed
   )
   return (
     <div>
@@ -224,7 +223,7 @@ const IndexPage = ({ data }) => {
       <p>Welcome to your new Gatsby site.</p>
       <p>Now go build something great.</p>
       {imagesResolutions.map(imageRes => (
-        <Img resolutions={imageRes} key={imageRes.src} />
+        <Img fixed={imageRes} key={imageRes.src} />
       ))}
       <Link to="/page-2/">Go to page 2</Link>
     </div>
@@ -243,8 +242,8 @@ export const query = graphql`
               localFile {
                 childImageSharp {
                   # edit the maxWidth value to generate resized images
-                  resolutions(width: 500, height: 500) {
-                    ...GatsbyImageSharpResolutions_withWebp_tracedSVG
+                  fixed(width: 500, height: 500) {
+                    ...GatsbyImageSharpFixed_withWebp_tracedSVG
                   }
                 }
               }
