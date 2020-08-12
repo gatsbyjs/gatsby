@@ -39,7 +39,7 @@ export function createPage(
   if (pathIsCollectionBuilder(absolutePath)) {
     trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
     if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-      throw new Error(
+      reporter.panic(
         `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
       )
     }
@@ -57,7 +57,7 @@ export function createPage(
   if (pathIsClientOnlyRoute(absolutePath)) {
     trackFeatureIsUsed(`UnifiedRoutes:client-page-builder`)
     if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-      throw new Error(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
+      reporter.panic(`PageCreator: Found a client route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.
 Skipping creating pages for ${absolutePath}`)
     }
     createClientOnlyPage(filePath, absolutePath, actions)
