@@ -26,9 +26,11 @@ export const SECURITY_HEADERS = {
 }
 
 export const IMMUTABLE_CACHING_HEADER = `Cache-Control: public, max-age=31536000, immutable`
+const NO_CACHING_HEADER = `Cache-Control: public, max-age=0, must-revalidate`
 
 export const CACHING_HEADERS = {
   "/static/*": [IMMUTABLE_CACHING_HEADER],
+  "/static/d/*": [NO_CACHING_HEADER],
   "/sw.js": [`Cache-Control: no-cache`],
 }
 

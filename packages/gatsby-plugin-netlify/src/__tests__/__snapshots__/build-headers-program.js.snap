@@ -30,6 +30,8 @@ X-Frame-Options
   Cache-Control: public, max-age=31536000, immutable
 /static/*
   Cache-Control: public, max-age=31536000, immutable
+/static/d/*
+  Cache-Control: public, max-age=0, must-revalidate
 /sw.js
   Cache-Control: no-cache
 /offline-plugin-app-shell-fallback/
@@ -118,6 +120,8 @@ exports[`build-headers-program with caching headers 1`] = `
   Cache-Control: public, max-age=31536000, immutable
 /static/*
   Cache-Control: public, max-age=31536000, immutable
+/static/d/*
+  Cache-Control: public, max-age=0, must-revalidate
 /sw.js
   Cache-Control: no-cache
 /offline-plugin-app-shell-fallback/
@@ -208,6 +212,8 @@ exports[`build-headers-program with manifest['pages-manifest'] 1`] = `
   Cache-Control: public, max-age=31536000, immutable
 /static/*
   Cache-Control: public, max-age=31536000, immutable
+/static/d/*
+  Cache-Control: public, max-age=0, must-revalidate
 /sw.js
   Cache-Control: no-cache
 /offline-plugin-app-shell-fallback/
@@ -285,6 +291,8 @@ exports[`build-headers-program with security headers 1`] = `
   Cache-Control: public, max-age=31536000, immutable
 /static/*
   Cache-Control: public, max-age=31536000, immutable
+/static/d/*
+  Cache-Control: public, max-age=0, must-revalidate
 /sw.js
   Cache-Control: no-cache
 /offline-plugin-app-shell-fallback/
