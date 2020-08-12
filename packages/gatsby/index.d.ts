@@ -2,7 +2,8 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+export { Reporter }
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -170,6 +171,15 @@ export class StaticQuery<T = any> extends React.Component<
  * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
  */
 export const graphql: (query: TemplateStringsArray) => void
+
+/**
+ * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+ *
+ * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+ *
+ * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ */
+export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
 
 /**
  * Gatsby configuration API.
@@ -1268,8 +1278,6 @@ export interface Store {
   getState: Function
   replaceReducer: Function
 }
-
-export type Reporter = typeof reporter
 
 export type ActivityTracker = {
   start(): () => void
