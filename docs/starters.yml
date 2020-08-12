@@ -1,3 +1,20 @@
+- url: https://gatsby-starter-lamma.netlify.app/
+  repo: https://github.com/desktopofsamuel/gatsby-starter-lamma/
+  description: A minimal, elegant, dark theme blog starter. Forked from Gatsby Advance Starter.
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - MDX
+  features:
+    - Gatsby v2 + MDX
+    - Main page, Blog page, Category page, Tags Page
+    - Dark mode using use-dark-mode
+    - Subtle table of content component
+    - SEO with react-helmet
+    - Optimized image rendering using gatsby-image
+    - Icons from Font Awesome
+    - Programmatically generates styled pages for each blog post written in Markdown
 - url: https://mdx-cms-docs.netlify.app/
   repo: https://github.com/danielcurtis/gatsby-starter-netlify-docs
   description: An accessible and blazing fast documentation starter for Gatsby integrated with Netlify CMS.
