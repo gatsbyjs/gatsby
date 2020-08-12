@@ -18,7 +18,7 @@ Errors while building static HTML files generally happen for one of the followin
    have a default export that's a component or string.
 
 3. You mix up `import` and `require` calls in the same file. This might lead to
-   "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4
+   "WebpackError: Invariant Violation: Minified React error #130" [since webpack 4
    is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
    The solution is to only use `import` and this also extends to `gatsby-ssr` and `gatsby-browser` files.
 
