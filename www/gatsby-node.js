@@ -24,7 +24,7 @@ const sections = [
   creators,
   packages,
   features,
-  apiCalls
+  apiCalls,
 ]
 
 // Run the provided API on all defined sections of the site
@@ -37,16 +37,16 @@ async function runApiForSections(api, helpers) {
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
   const currentCommitSHA = require(`child_process`)
     .execSync(`git rev-parse HEAD`, {
-      encoding: `utf-8`
+      encoding: `utf-8`,
     })
     .trim()
 
   actions.setWebpackConfig({
     plugins: [
       plugins.define({
-        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA)
-      })
-    ]
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
   })
 }
 
@@ -54,7 +54,7 @@ exports.createSchemaCustomization = async helpers => {
   await runApiForSections(`createSchemaCustomization`, helpers)
 
   const {
-    actions: { createTypes }
+    actions: { createTypes },
   } = helpers
 
   // Explicitly define Airtable types so that queries still work
@@ -105,9 +105,9 @@ exports.createResolvers = async helpers => {
           }
 
           return []
-        }
-      }
-    }
+        },
+      },
+    },
   })
 }
 
@@ -137,7 +137,7 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
-      force: true
+      force: true,
     })
   })
 
@@ -152,14 +152,14 @@ exports.createPages = async helpers => {
     fromPath: `/packages/*`,
     toPath: `https://gatsbyjs.com/plugins/:splat`,
     isPermanent: true,
-    force: true
+    force: true,
   })
 
   await createRedirect({
     fromPath: `/creators/*`,
     toPath: `https://gatsbyjs.com/partner/`,
     isPermanent: true,
-    force: true
+    force: true,
   })
 
   // catch all redirect
@@ -168,6 +168,6 @@ exports.createPages = async helpers => {
     fromPath: `/*`,
     toPath: `https://gatsbyjs.com/:splat`,
     isPermanent: true,
-    force: true
+    force: true,
   })
 }
