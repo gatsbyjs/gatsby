@@ -11589,14 +11589,6 @@
     - Business
   built_by: leaniercode
   featured: false
-- title: Fast Golf Scores
-  description: >
-    Tour scores delivered in milliseconds
-  main_url: https://fastgolfscores.com
-  url: https://fastgolfscores.com
-  categories:
-    - App
-    - Sports
 - title: The Mezzofanti Guild - Language Learning Made Simple
   url: https://www.mezzoguild.com
   main_url: https://www.mezzoguild.com
@@ -11610,3 +11602,11 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
+- title: Fast Golf Scores
+  description: >
+    Tour scores delivered in milliseconds
+  main_url: https://fastgolfscores.com
+  url: https://fastgolfscores.com
+  categories:
+    - App
+    - Sports
