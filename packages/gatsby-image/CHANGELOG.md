@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.15...gatsby-image@2.4.16) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix typings for fixed and fluid props ([#24767](https://github.com/gatsbyjs/gatsby/issues/24767)) ([08e0aa1](https://github.com/gatsbyjs/gatsby/commit/08e0aa1))
+
 ## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.14...gatsby-image@2.4.15) (2020-08-10)
 
 **Note:** Version bump only for package gatsby-image
