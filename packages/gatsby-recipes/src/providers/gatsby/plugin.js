@@ -407,7 +407,10 @@ const validate = resource => {
 exports.schema = schema
 exports.validate = validate
 
-module.exports.plan = async ({ root }, { id, key, name, options }) => {
+module.exports.plan = async (
+  { root },
+  { id, key, name, options, isLocal = false }
+) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
@@ -436,7 +439,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
-    // TODO figure out if plugin is a local one.
-    dependsOn: [{ resourceName: `NPMPackage`, name }],
+    dependsOn: !isLocal ? [{ resourceName: `NPMPackage`, name }] : null,
   }
 }
