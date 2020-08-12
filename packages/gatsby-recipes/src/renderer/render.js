@@ -164,7 +164,7 @@ const handleResource = (resourceName, context, props) => {
   // TODO test this when we can mock resources by varying what
   // resources depend on what & which return first and ensuring
   // resources end in right order.
-  let allResources = useResourceContext()
+  const allResources = useResourceContext()
   const resourcePlan = allResources?.find(
     a => a.resourceDefinitions._key === trueKey || a._uuid === trueKey
   )
