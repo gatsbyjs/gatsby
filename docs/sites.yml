@@ -11692,6 +11692,20 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: laury.dev
+  url: https://laury.dev
+  main_url: https://laury.dev
+  source_url: https://github.com/laurybueno/laury.dev
+  description: >
+    Blog and portfolio of Laury Bueno, software developer and journalist
+  categories:
+    - Open Source
+    - Blog
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Laury Bueno
+  built_by_url: https://github.com/laurybueno/
 - title: Github Profile README Generator
   url: https://rahuldkjain.github.io/gh-profile-readme-generator/
   main_url: https://rahuldkjain.github.io/gh-profile-readme-generator/
