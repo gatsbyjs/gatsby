@@ -103,7 +103,7 @@ export class EventStorage {
     }
   }
 
-  getConfig(key: string): string | boolean | UUID | Record<string, unknown> {
+  getConfig(key: string): string | boolean | Record<string, unknown> {
     if (key) {
       return this.config.get(key)
     }
