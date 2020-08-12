@@ -7085,6 +7085,26 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-persoanl.netlify.app/
+  repo: https://github.com/AbdaliDahir/gatsby-portfolio
+  description: creative personal & portfolio template based on gatsby. designed so you can showcase your work and write your blogs.
+  tags:
+    - Blog
+    - Portfolio
+    - SEO
+    - Styling:CSS-in-JS
+    - Markdown
+    - Landing Page
+  features:
+    - creative portfolio + blog
+    - Styled components
+    - Responsive Design
+    - Portfolio
+    - Blog
+    - Github Api
+    - Google Analytics
+    - Create pages and posts
+    - Show works
 - url: https://gatsby-starter-vadyan.netlify.app/
   repo: https://github.com/p1t1ch/gatsby-starter-vadyan
   description: A modern content-agnostic Gatsby starter
