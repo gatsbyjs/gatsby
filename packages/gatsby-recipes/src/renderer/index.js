@@ -35,7 +35,7 @@ const transformCodeForEval = code => {
   return newCode
 }
 
-module.exports = (mdxSrc, cb, context, isApply) => {
+module.exports = (mdxSrc, cb, context, isApply, isStream = false) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
@@ -44,7 +44,13 @@ module.exports = (mdxSrc, cb, context, isApply) => {
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
   try {
-    const result = render(component(...scopeValues), cb, context, isApply)
+    const result = render(
+      component(...scopeValues),
+      cb,
+      context,
+      isApply,
+      isStream
+    )
     return result
   } catch (e) {
     throw e

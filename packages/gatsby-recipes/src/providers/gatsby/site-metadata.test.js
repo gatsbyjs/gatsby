@@ -39,4 +39,35 @@ describe(`gatsby-plugin resource`, () => {
       partialUpdate: { name: `author`, value: `Velma` },
     })
   })
+
+  test(`handles multiple parallel create calls`, async () => {
+    const root = starterBlogRoot
+    const resultPromise = plugin.create(
+      {
+        root,
+      },
+      {
+        name: `husky`,
+        value: `hi`,
+      }
+    )
+    const result2Promise = plugin.create(
+      {
+        root,
+      },
+      {
+        name: `husky2`,
+        value: `hi`,
+      }
+    )
+
+    const result = await resultPromise
+    const result2 = await result2Promise
+
+    expect(result).toMatchSnapshot()
+    expect(result2).toMatchSnapshot()
+
+    await plugin.destroy({ root }, result)
+    await plugin.destroy({ root }, result2)
+  })
 })
