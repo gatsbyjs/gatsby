@@ -8,6 +8,7 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
+  GraphQLBoolean,
   execute,
   subscribe,
 } = require(`graphql`)
@@ -56,9 +57,8 @@ const emitUpdate = state => {
   }
 }
 
-// only one service can run at a time.
 let service
-const startRecipe = ({ recipePath, projectRoot }) => {
+const startRecipe = ({ recipePath, projectRoot, watchChanges = false }) => {
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
@@ -79,7 +79,11 @@ const startRecipe = ({ recipePath, projectRoot }) => {
       if (state.changed) {
         console.log(`===state.changed`, {
           state: state.value,
+          event: state.event.type,
         })
+        if (state.value === `doneError`) {
+          console.log(state.event)
+        }
         // Wait until plans are created before updating the UI
         if (
           [`presentPlan`, `done`, `doneError`, `applyingPlan`].includes(
@@ -107,11 +111,13 @@ const startRecipe = ({ recipePath, projectRoot }) => {
     }
   }
 
-  chokidar
-    .watch(initialState.context.recipePath)
-    .on(`change`, (filename, stats) => {
-      startService()
-    })
+  if (watchChanges) {
+    chokidar
+      .watch(initialState.context.recipePath)
+      .on(`change`, (filename, stats) => {
+        startService()
+      })
+  }
 
   startService()
 }
@@ -140,6 +146,7 @@ const rootMutationType = new GraphQLObjectType({
         args: {
           recipePath: { type: GraphQLString },
           projectRoot: { type: GraphQLString },
+          watchChanges: { type: GraphQLBoolean },
         },
         resolve: (_data, args) => {
           console.log(`received operation`, args)

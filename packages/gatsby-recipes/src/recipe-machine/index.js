@@ -1,4 +1,5 @@
 const { Machine, assign, send } = require(`xstate`)
+const lodash = require(`lodash`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -7,7 +8,7 @@ const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const resolveRecipe = require(`../resolve-recipe`)
-const lodash = require(`lodash`)
+const findDependencyMatch = require(`../find-dependency-match`)
 
 const recipeMachine = Machine(
   {
@@ -128,7 +129,19 @@ const recipeMachine = Machine(
           id: `createPlan`,
           src: (context, event) => async (cb, onReceive) => {
             try {
-              const result = await createPlan(context, cb)
+              let result = await createPlan(context, cb)
+              // Validate dependencies are met in the plan
+              result = result.map(r => {
+                const matches = findDependencyMatch(result, r)
+                // If there's any errors, replace the resource
+                // with the error
+                if (matches.some(m => m.error)) {
+                  r.error = matches[0].error
+                  delete r.diff
+                }
+                return r
+              })
+
               return result
             } catch (e) {
               throw e
@@ -194,7 +207,6 @@ const recipeMachine = Machine(
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {
-            debug(`applying plan`)
             cb(`RESET`)
             if (context.plan.length === 0) {
               return cb(`onDone`)
