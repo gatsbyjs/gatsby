@@ -420,26 +420,6 @@ const errors = {
     type: Type.PLUGIN,
     level: Level.ERROR,
   },
-  // Directory/file name exceeds OS character limit
-  "11331": {
-    text: (context): string =>
-      [
-        `One or more path segments are too long - they exceed OS filename length limit.\n`,
-        `Page path: "${context.path}"`,
-        `Invalid segments:\n${context.invalidPathSegments
-          .map(segment => ` - "${segment}"`)
-          .join(`\n`)}`,
-        ...(!context.isProduction
-          ? [
-              `\nThis will fail production builds, please adjust your paths.`,
-              `\nIn development mode gatsby truncated to: "${context.truncatedPath}"`,
-            ]
-          : []),
-      ]
-        .filter(Boolean)
-        .join(`\n`),
-    level: Level.ERROR,
-  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>

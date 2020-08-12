@@ -238,7 +238,7 @@ The file node can then be queried using GraphQL. See an example of this in the [
 
 #### Retrieving the remote file name and extension
 
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg` and the name as `image`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
+The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is `https://example.com/image.jpg`, the extension will be inferred as `.jpg` and the name as `image`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
 
 ```javascript
 createRemoteFileNode({
@@ -335,3 +335,11 @@ function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
 
 module.exports = createMySqlNodes
 ```
+
+## Troubleshooting
+
+In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
+
+- `STALL_RETRY_LIMIT`, default: `3`
+- `STALL_TIMEOUT`, default: `30000`
+- `CONNECTION_TIMEOUT`, default: `30000`

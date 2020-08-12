@@ -543,3 +543,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: John Kavanagh
+  type: individual
+  description: >-
+    John is a specialist front-end web developer based in Brighton in the UK. With close to two decades of hands-on development experience, he specialises in building fundamentally well-engineered, maintainable, testable and scalable front-end code.  He delivers carefully-crafted, semantic and intuitive websites and SPAs using React and Gatsby.
+  location: Brighton, UK
+  website: https://johnkavanagh.co.uk
+  github: https://github.com/johnkavanagh/
+  image: images/john-kavanagh.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
