@@ -11629,3 +11629,15 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
+- title: Alex Perronnet Personal Website
+  url: https://alexperronnet.io
+  main_url: https://alexperronnet.io
+  source_url: https://github.com/alexperronnet/alexperronnet.io
+  description: >
+    I'm Alex Perronnet, a french freelance developer and designer. I'm also an open-source contributor and a content creator.
+  categories:
+    - Open Source
+    - Freelance
+  built_by: Alex Perronnet
+  built_by_url: https://alexperronnet.io
+  featured: false
