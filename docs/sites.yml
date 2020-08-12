@@ -10867,7 +10867,6 @@
   description: >
     Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
   categories:
-    - Styling:Tailwind
     - Productivity
     - Technology
     - Podcast
@@ -11391,6 +11390,18 @@
     - Freelance
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
+  featured: false
+- title: LANDTX
+  main_url: https://www.landtx.com
+  url: https://www.landtx.com
+  source_url: https://github.com/ltx-digett/landtx
+  description: >
+    LANDTX markets investment, recreational, ranch and farm lands throughout Texas.
+  categories:
+    - Real Estate
+    - Business
+  built_by: Digett
+  built_by_url: https://www.digett.com
   featured: false
 - title: Raleigh Bikes
   url: https://www.raleigh.co.uk/gb/en/
