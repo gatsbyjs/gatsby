@@ -136,7 +136,6 @@ const recipeMachine = Machine(
                 // If there's any errors, replace the resource
                 // with the error
                 if (matches.some(m => m.error)) {
-                  console.log(matches)
                   r.error = matches[0].error
                   delete r.diff
                 }

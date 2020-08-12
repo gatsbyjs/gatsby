@@ -57,15 +57,8 @@ const emitUpdate = state => {
   }
 }
 
-// only one service can run at a time.
-let serviceStarted = false
 let service
 const startRecipe = ({ recipePath, projectRoot, watchChanges = false }) => {
-  if (serviceStarted) {
-    return
-  }
-  serviceStarted = true
-
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,

@@ -577,10 +577,16 @@ export default async ({
       }
 
       const GeneralError = ({ state }) => {
-        const errors = Array.isArray(state.context.error.error)
-          ? state.context.error.error
-          : [state.context.error.error]
-        if (state.context?.error?.error) {
+        let errors = []
+        if (state.context.error) {
+          errors = Array.isArray(state.context.error.error)
+            ? state.context.error.error
+            : [state.context.error.error]
+        } else {
+          // Errors are on a plan.
+          errors = state.context.plan?.filter(p => p.error)
+        }
+        if (errors.length > 0) {
           return (
             <>
               <Text bold>The recipe has an error:</Text>
