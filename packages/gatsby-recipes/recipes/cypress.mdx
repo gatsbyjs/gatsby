@@ -2,7 +2,11 @@ Gatsby and Cypress can be used together seamlessly (and should be!). [Cypress](h
 
 First, we'll want to install Cypress and additional dependencies.
 
+This recipe:
+
 ---
+
+Adds dependencies to your package.json, including a useful package `gatsby-cypress`. `gatsby-cypress` exposes additional Cypress functionality which makes Gatsby and Cypress work together just a bit more nicely. You'll see that later with your first test after running this recipe.
 
 <NPMPackage name="cypress" dependencyType="development" />
 <NPMPackage name="gatsby-cypress" dependencyType="development" />
@@ -10,9 +14,7 @@ First, we'll want to install Cypress and additional dependencies.
 
 ---
 
-Well look at that — we've added dependencies to your package.json and we also installed a useful package `gatsby-cypress`. `gatsby-cypress` exposes additional Cypress functionality which makes Gatsby and Cypress work together just a bit more nicely. We'll show that later with our first test, but hold tight for just a bit because first we need to scaffold out some boilerplate files for Cypress.
-
----
+Creates a local `cypress` folder with two sub-folders, `support` and `plugins`. It automatically includes all the `gatsby-cypress` utilities, which you can use in your first test.
 
 <File
  path="cypress/plugins/index.js"
@@ -26,9 +28,7 @@ Well look at that — we've added dependencies to your package.json and we also 
 
 ---
 
-Cool cool! So we created a local `cypress` folder with two sub-folders, `support` and `plugins`. We've also automatically included all the nice `gatsby-cypress` utilities, which we can now use in our first test.
-
----
+Runs a test that intentionally fails so you can practice fixing it. 
 
 <File
  path="cypress/integration/home-page/home-page.js"
@@ -37,9 +37,7 @@ Cool cool! So we created a local `cypress` folder with two sub-folders, `support
 
 ---
 
-Our first test! You'll notice it's failing. This is intentional -- we'd like you to run the test and fix it. This raises a question -- how do you run a Cypress test? Easy peasy.
-
----
+Adds two scripts for running a Cypress test. 1) `start-server-and-test`: This spins up a local Gatsby development server and "waits" until it's live so we can then run our tests and 2) `test:e2e`: This is the command you'll use to run your tests.
 
 <NPMScript
   name="develop"
@@ -58,12 +56,7 @@ Our first test! You'll notice it's failing. This is intentional -- we'd like you
 
 ---
 
-Nifty! We've added two scripts:
-
-- `start-server-and-test`: This spins up a local Gatsby development server and "waits" until it's live so we can then run our tests
-- `test:e2e`: This is the command you'll use to run your tests.
-
-Let's give it a try. Run the following command in your terminal.
+After installing this recipe, you can run the following command in your terminal.
 
 npm run test:e2e
 

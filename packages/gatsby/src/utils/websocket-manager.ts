@@ -86,7 +86,8 @@ const getCachedStaticQueryResults = (
     const filePath = path.join(
       directory,
       `public`,
-      `static`,
+      `page-data`,
+      `sq`,
       `d`,
       `${staticQueryComponent.hash}.json`
     )
