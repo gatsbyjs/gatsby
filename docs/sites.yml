@@ -119,7 +119,8 @@
   main_url: https://theodorawarre.eu
   url: https://theodorawarre.eu
   description: >-
-    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby +
+    + Prismic + Matter.js
   categories:
     - E-commerce
     - Marketing
@@ -572,14 +573,6 @@
   url: https://housemanager.calstate.aaa.com/
   categories:
     - Marketing
-- title: The freeCodeCamp Guide
-  main_url: https://guide.freecodecamp.org/
-  url: https://guide.freecodecamp.org/
-  source_url: https://github.com/freeCodeCamp/guide
-  featured: false
-  categories:
-    - Web Development
-    - Documentation
 - title: Hapticmedia
   main_url: https://hapticmedia.fr/en/
   url: https://hapticmedia.fr/en/
@@ -863,7 +856,7 @@
 - title: Alec Lomas's Portfolio / Blog
   main_url: https://www.lowmess.com/
   url: https://www.lowmess.com/
-  source_url: https://github.com/lowmess/lowmess
+  source_url: https://github.com/lowmess/lowmess.com
   featured: false
   categories:
     - Web Development
@@ -1307,16 +1300,16 @@
   built_by: Jonas Tebbe
   built_by_url: https://twitter.com/jonastebbe
   featured: false
-- title: Parker Sarsfield Portfolio
+- title: Parker Sarsfield
   description: |
-    I'm Parker, a software engineer and sneakerhead.
-  main_url: https://parkersarsfield.com
-  url: https://parkersarsfield.com
+    I'm Parker, a software engineer.
+  main_url: https://sarsfield.io
+  url: https://sarsfield.io
   categories:
     - Blog
     - Portfolio
   built_by: Parker Sarsfield
-  built_by_url: https://parkersarsfield.com
+  built_by_url: https://sarsfield.io
 - title: Frontend web development with Greg
   description: |
     JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
@@ -1347,12 +1340,32 @@
     - Portfolio
   built_by: Aman Mittal
   built_by_url: https://amanhimself.dev/
+- title: janosh.dev
+  description: >
+    Janosh Riebesell's blog. Writes about physics, machine learning, sustainability
+    and web development. Site is fully responsive and has fluid typography. Built with
+    MDX (for interactive content), styled-components (for design), KaTeX (for math),
+    gatsby-remark-vscode (for syntax highlighting), Disqus (for reader comments),
+    Algolia (for search), react-spring (for animations).
+  main_url: https://janosh.dev
+  url: https://janosh.dev
+  source_url: https://github.com/janosh/blog
+  categories:
+    - Portfolio
+    - Blog
+    - Science
+    - Photography
+    - Travel
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.dev
+  featured: false
 - title: Ocean artUp
   description: >
-    Science outreach site built using styled-components and Contentful. It
-    presents the research project "Ocean artUp" funded by an Advanced Grant of
-    the European Research Council to explore the possible benefits of artificial
-    uplift of nutrient-rich deep water to the ocean’s sunlit surface layer.
+    Science outreach site built using styled-components and Contentful. Ocean artUp
+    is a research project funded by an Advanced Grant of the European Research
+    Council (ERC) to explore the possible benefits of artificial upwelling, i.e.
+    pumping nutrient-rich deep water to the ocean’s sunlit surface layer. Potential
+    benefits include increased bioactivity and CO2 sequestration.
   main_url: https://ocean-artup.eu
   url: https://ocean-artup.eu
   source_url: https://github.com/janosh/ocean-artup
@@ -1361,7 +1374,23 @@
     - Education
     - Blog
   built_by: Janosh Riebesell
-  built_by_url: https://janosh.io
+  built_by_url: https://janosh.dev
+  featured: false
+- title: Studenten bilden Schüler
+  description: >
+    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
+    contribute to more equal educational opportunities by providing free tutoring to refugees
+    and children from underprivileged families. The site is built with styled-components,
+    Contentful, CSS grid, fluid typography, Algolia search.
+  main_url: https://studenten-bilden-schueler.de
+  url: https://studenten-bilden-schueler.de
+  source_url: https://github.com/StudentenBildenSchueler/homepage
+  categories:
+    - Education
+    - Nonprofit
+    - Blog
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.dev
   featured: false
 - title: Ryan Fitzgerald
   description: |
@@ -1950,22 +1979,6 @@
     - Portfolio
     - Freelance
   featured: false
-- title: Studenten bilden Schüler
-  description: >
-    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
-    contribute to more equal educational opportunities by providing free tutoring to refugees
-    and children from underprivileged families. The site is built on Gatsby v2, styled-components
-    and Contentful. It supports Google Analytics, fluid typography and Algolia search.
-  main_url: https://studenten-bilden-schueler.de
-  url: https://studenten-bilden-schueler.de
-  source_url: https://github.com/StudentenBildenSchueler/homepage
-  categories:
-    - Education
-    - Nonprofit
-    - Blog
-  built_by: Janosh Riebesell
-  built_by_url: https://janosh.io
-  featured: false
 - title: Mike's Remote List
   main_url: https://www.mikesremotelist.com
   url: https://www.mikesremotelist.com
@@ -2162,23 +2175,6 @@
     - Web Development
   built_by: Coletiv
   built_by_url: https://coletiv.com
-  featured: false
-- title: janosh.io
-  description: >
-    Personal blog and portfolio of Janosh Riebesell. The site is built with Gatsby v2 and designed
-    entirely with styled-components v4. Much of the layout was achieved with CSS grid. It supports
-    Google Analytics, fluid typography and Algolia search.
-  main_url: https://janosh.io
-  url: https://janosh.io
-  source_url: https://github.com/janosh/janosh.io
-  categories:
-    - Portfolio
-    - Blog
-    - Science
-    - Photography
-    - Travel
-  built_by: Janosh Riebesell
-  built_by_url: https://janosh.io
   featured: false
 - title: Gold Edge Training
   url: https://www.goldedgetraining.co.uk
@@ -2829,16 +2825,6 @@
   main_url: https://coop.com/
   description: >
     COOP is a platform that connects fleet managers that have idle vehicles to businesses that are looking to rent vehicles. COOP simplifies the process and paperwork required to safely share vehicles between business owners.
-  categories:
-    - Marketing
-  built_by: Crispin Porter Bogusky
-  built_by_url: http://www.cpbgroup.com/
-  featured: false
-- title: Domino's Paving for Pizza
-  url: https://www.pavingforpizza.com/
-  main_url: https://www.pavingforpizza.com/
-  description: >
-    Nominate your town for a chance to have your rough drive home from Domino's fixed to pizza perfection.
   categories:
     - Marketing
   built_by: Crispin Porter Bogusky
@@ -3908,18 +3894,6 @@
     - Blog
   built_by: Eleftherios Psitopoulos
   built_by_url: https://bakedbird.com
-- title: Benjamin Lannon
-  url: https://lannonbr.com
-  main_url: https://lannonbr.com
-  source_url: https://github.com/lannonbr/Portfolio-gatsby
-  description: >
-    Personal portfolio of Benjamin Lannon
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Benjamin Lannon
-  built_by_url: https://lannonbr.com
-  featured: false
 - title: Aravind Balla
   url: https://aravindballa.com
   main_url: https://aravindballa.com
@@ -4419,18 +4393,6 @@
     - Agency
     - Design
     - Web Development
-  built_by: Arctica
-  built_by_url: https://arctica.io
-  featured: false
-- title: Shard Ventures
-  url: https://shard.vc
-  main_url: https://shard.vc
-  description: >
-    Shard is building new online companies from scratch, partnering with other like-minded founders to start and invest in technology companies.
-  categories:
-    - Finance
-    - Technology
-    - Portfolio
   built_by: Arctica
   built_by_url: https://arctica.io
   featured: false
@@ -5222,19 +5184,6 @@
   built_by: Camilo Holguin
   built_by_url: https://camiloholguin.me
   featured: false
-- title: Bennett Hardwick
-  url: https://bennetthardwick.com
-  main_url: https://bennetthardwick.com
-  description: >
-    The personal website and blog of Bennett Hardwick, an Australian software developer and human being.
-  categories:
-    - Blog
-    - Programming
-    - Technology
-  source_url: https://github.com/bennetthardwick/website
-  built_by: Bennett Hardwick
-  built_by_url: https://bennetthardwick.com
-  featured: false
 - title: Kodingnesia
   url: https://kodingnesia.com/
   main_url: https://kodingnesia.com/
@@ -5928,18 +5877,6 @@
     - Documentation
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one
-- title: Arnondora
-  main_url: https://arnondora.in.th/
-  url: https://arnondora.in.th/
-  source_url: https://github.com/arnondora/arnondoraBlog
-  description: Arnondora is a personal blog by Arnon Puitrakul
-  categories:
-    - Blog
-    - Programming
-    - Technology
-  built_by: Arnon Puitrakul
-  built_by_url: https://arnondora.in.th/
-  featured: false
 - title: KingsDesign
   url: https://www.kingsdesign.com.au/
   main_url: https://www.kingsdesign.com.au/
@@ -6734,7 +6671,7 @@
     Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
   categories:
     - E-commerce
-  built_by: BrikL
+  built_by: BRIKL
   built_by_url: https://github.com/Brikl
 - title: Cole Ruche
   main_url: https://coleruche.com
@@ -7343,7 +7280,7 @@
   main_url: https://www.philtietjen.dev/
   source_url: https://github.com/Phizzard/phil-portfolio
   description: >
-    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+    Portfolio of Phil Tietjen using Gatsby, Tailwind CSS, and Emotion/styled
   categories:
     - Portfolio
     - Open Source
@@ -8618,8 +8555,8 @@
     - Blog
     - Web Development
 - title: Rumaan Khalander - Portfolio
-  url: https://www.rumaan.me/
-  main_url: https://www.rumaan.me/
+  url: https://rumaan.tech/
+  main_url: https://rumaan.tech/
   description: >
     Rumaan Khalander is a Full-Stack Dev from Bengaluru who loves to develop for mobile and web.
   categories:
@@ -10788,6 +10725,27 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Vim Training
+  description: >
+    Bite sized video tutorials for Vim
+  main_url: https://vimtraining.com
+  url: https://vimtraining.com
+  featured: false
+  categories:
+    - Education
+    - Programming
+  built_by: Nishant Dania
+  built_by_url: https://nishantdania.com
+- title: CodeTisans
+  url: https://codetisans.com
+  main_url: https://codetisans.com
+  description: >-
+    Website of an agency specialized in creating Laravel and Vue apps
+  categories:
+    - Agency
+  built_by: Przemysław Przyłucki
+  built_by_url: https://twitter.com/przylucki_p
+  featured: false
 - title: Mox Bank
   main_url: https://mox.com/
   url: https://mox.com/
@@ -10903,6 +10861,39 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+- title: Narration Box
+  main_url: https://narrationbox.com
+  url: https://narrationbox.com
+  description: >
+    Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
+  categories:
+    - Styling:Tailwind
+    - Productivity
+    - Technology
+    - Podcast
+    - Landing Page
+    - Media
+    - Entertainment
+    - Business
+    - API
+    - Video
+  built_by: Chetan Malhotra
+  built_by_url: https://twitter.com/narrationbox
+- title: CodeWithLinda
+  url: https://www.codewithlinda.com/
+  main_url: https://www.codewithlinda.com/
+  source_url: https://github.com/Linda-Ikechukwu/Personal-Site
+  description: >
+    CodeWithLinda is the personal portfolio and blog site of Linda Ikechukwu, a Frontend developer based in Lagos, Nigeria.
+  categories:
+    - Portfolio
+    - Blog
+    - Technology
+    - Programming
+    - Web Development
+  built_by: Linda Ikechukwu
+  built_by_url: https://twitter.com/_MsLinda
+  featured: false
 - title: Headless WordPress Blog and Portfolio by Simon Halimonov
   url: https://simonhalimonov.com/
   main_url: https://simonhalimonov.com/
@@ -10920,6 +10911,56 @@
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
   featured: false
+- title: Clarke Harris
+  url: https://www.clarkeharris.com/
+  main_url: https://www.clarkeharris.com/
+  description: >
+    Brooklyn based designer portfolio. Uses pretty advance animations. Content is pulled from the contentful.
+  categories:
+    - Portfolio
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Husar
+  built_by_url: https://www.danielhusar.sk/
+  featured: false
+- title: Daniel Husar
+  url: https://www.danielhusar.sk/
+  main_url: https://www.danielhusar.sk/
+  source_url: https://github.com/danielhusar/danielhusar.sk
+  description: >
+    An open source portfolio and blog.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Open Source
+  built_by: Daniel Husar
+  built_by_url: https://www.danielhusar.sk/
+  featured: false
+- title: SANDALBOYZ
+  main_url: https://sandalboyz.com
+  url: https://sandalboyz.com
+  description: >
+    The official website of SANDALBOYZ – home to coziness and comfort. Built in conjunction with https://planetary.co/.
+  categories:
+    - Retail
+    - E-commerce
+    - Blog
+  built_by: SANDALBOYZ
+  built_by_url: https://sandalboyz.com
+  featured: false
+- title: Tim Phillips
+  url: https://www.tim-phillips.com/
+  main_url: https://www.tim-phillips.com/
+  source_url: https://github.com/timphillips/tim-phillips.com
+  description: >
+    Personal website for Tim Phillips, a software engineer and web developer.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+  featured: false
 - title: Nagarjun Palavalli
   main_url: https://nagarjun.co/
   url: https://nagarjun.co/
@@ -10930,4 +10971,682 @@
     - Blog
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
+  featured: false
+- title: Diogo Rodrigues
+  url: https://www.diogorodrigues.dev/
+  main_url: https://www.diogorodrigues.dev/
+  description: >
+    As a front-end developer with UI/UX design skills, I create digital experiences through design & code.
+  categories:
+    - Freelance
+    - Portfolio
+    - Blog
+    - Mobile Development
+    - Web Development
+    - User Experience
+  built_by: Diogo Rodrigues
+  built_by_url: https://www.diogorodrigues.dev/
+- title: Jamstack Storefront
+  main_url: https://jamstackstorefront.com/
+  url: https://jamstackstorefront.com/
+  categories:
+    - E-commerce
+    - Agency
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+  featured: false
+- title: Support Black Business
+  main_url: https://support-black.business
+  url: https://support-black.business
+  categories:
+    - Directory
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+  featured: false
+- title: Nyxo
+  url: https://www.nyxo.app
+  main_url: https://www.nyxo.app
+  description: >
+    Nyxo is the best aid for improving your sleep quality. We combine leading sleep research techniques with your sleep tracker’s data to provide you with personalized and actionable coaching, to improve your sleep.
+  categories:
+    - Healthcare
+    - Blog
+    - Science
+    - Technology
+    - Data
+    - Mobile Development
+  built_by: Kayla Gordon
+  built_by_url: https://www.kayla-gordon.com/
+  featured: false
+- title: Earner
+  url: https://www.earner.ai/
+  main_url: https://www.earner.ai/
+  source_url: https://github.com/Earner-ai/earner-website
+  description: >
+    Earner is here to keep you informed of services you are entitled to from the Finnish government to entrepreneurship. We are here to help you succeed.
+  categories:
+    - Blog
+    - Open Source
+    - Education
+    - Technology
+    - Community
+    - Data
+    - Entrepreneurship
+    - Human Resources
+  built_by: Kayla Gordon
+  built_by_url: https://www.kayla-gordon.com/
+  featured: false
+- title: Amamos Vivir Cada Día
+  main_url: https://www.amvi.org.mx/
+  url: https://www.amvi.org.mx/
+  description: >
+    AMVI, Amamos Vivir Cada Día A.C. is a Mexican non-profit organisation helping children with degenerative illnesses by fulfilling their dreams and helping their families financially, but also with personal support. During the Covid-19 crisis, their donations have plummeted since they did not have a website, so I decided to help by building this site for them using Gatsby, TypeScript and Styled-Components, proudly hosted on Netlify who helped the cause with a free pro plan.
+  featured: false
+  categories:
+    - Nonprofit
+    - Healthcare
+  built_by: Jacob Herper
+  built_by_url: https://herper.io/
+- title: Digital4Better
+  url: https://digital4better.com
+  main_url: https://digital4better.com
+  description: >
+    Digital4Better is an agency promoting a sustainable digital future.
+  categories:
+    - Accessibility
+    - Agency
+    - Blog
+    - Consulting
+    - Design
+    - E-commerce
+    - Mobile Development
+    - Open Source
+    - Programming
+    - Technology
+    - User Experience
+    - Web Development
+  built_by: Digital4Better
+  built_by_url: https://digital4better.com
+  featured: false
+- title: With Pulp
+  url: https://withpulp.com
+  main_url: https://withpulp.com
+  description: >
+    With Pulp's agency website and blog. Meet our team, see our work and read our latest insights on design and development.
+  categories:
+    - Agency
+    - Marketing
+    - Web Development
+    - Portfolio
+    - Blog
+  featured: false
+- title: DUDOS
+  main_url: https://dudos.co.uk
+  url: https://dudos.co.uk
+  description: >
+    UK based web design agency building premium bespoke websites with light-speed performance and rock-solid security
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - SEO
+    - Portfolio
+    - Blog
+    - JavaScript
+    - Mobile Development
+    - Marketing
+    - Photography
+    - User Experience
+  built_by: Mark A Hext
+  built_by_url: https://dudos.co.uk/about
+  featured: false
+- title: Impuls-e
+  main_url: https://impuls-e.works/
+  url: https://impuls-e.works/
+  description: >
+    Digital Agency focused on helping our clients build their online digital presence. Located in Santa Catarina, Brazil
+  categories:
+    - Web Development
+    - E-commerce
+    - Mobile Development
+    - Landing Page
+    - Blog
+    - Programming
+    - Agency
+  built_by: Impuls-e
+  built_by_url: https://www.instagram.com/impulse.works/
+  featured: false
+- title: Honeycomb Creative
+  main_url: https://www.honeycombcreative.com/
+  url: https://www.honeycombcreative.com/
+  description: >
+    Honeycomb Creative has been producing websites and other print and electronic communications material since 1991. Website built with Gatsby v2 and headless WordPress.
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - SEO
+    - Portfolio
+    - Marketing
+    - Blog
+    - WordPress
+  built_by: Honeycomb Creative
+  built_by_url: https://www.honeycombcreative.com/
+- title: Personal Website of Suganthan Mohanadasan
+  main_url: https://suganthan.com/
+  url: https://suganthan.com/
+  description: >
+    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and Tailwind CSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
+  categories:
+    - Blog
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Portfolio
+    - SEO
+  built_by: Shane Jones
+  built_by_url: https://shanejones.co.uk/
+- title: Bold.org
+  url: https://bold.org/
+  main_url: https://bold.org/
+  description: >
+    Fighting Student Debt. Create or apply to exclusive scholarships, fellowships, and grants, in minutes.
+  categories:
+    - Education
+  built_by: Bold.org
+  featured: false
+- title: The Story of Dovetail and Afterpay
+  url: https://dovetailstudios.com/the-story-of-dovetail-and-afterpay
+  main_url: https://dovetailstudios.com/the-story-of-dovetail-and-afterpay
+  description: An interactive story sharing how Dovetail helped Afterpay build the fastest growing consumer tech platform in Australian history.
+  categories:
+    - Agency
+    - Design
+    - Entrepreneurship
+    - Mobile Development
+    - Web Development
+  built_by: Dovetail
+  built_by_url: https://dovetailstudios.com
+  featured: false
+- title: Daily Texas Country
+  url: https://dailytexascountry.com
+  main_url: https://dailytexascountry.com
+  source_url: https://github.com/bradgarropy/dailytexascountry.com
+  description: >
+    She tries to tell me that Oklahoma's better, but I ain't got time for that.
+  categories:
+    - Blog
+    - Community
+    - E-commerce
+    - Entertainment
+    - Marketing
+    - Media
+    - Music
+    - Podcast
+    - SEO
+    - Video
+  built_by: Brad Garropy
+  built_by_url: https://bradgarropy.com
+- title: Petite & Minimal
+  url: https://www.petiteandminimal.com/
+  main_url: https://www.petiteandminimal.com/
+  description: >-
+    Eco-friendly lifestyle website. Green, sustainable, minimal. Covering food,
+    style, travel, living and featuring several eco-friendly directories.
+  categories:
+    - Blog
+    - Food
+    - Travel
+    - Photography
+    - Directory
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
+  featured: false
+- title: Petite & Minimal Concept Store DEMO
+  url: https://petiteandminimalstore.netlify.app/
+  main_url: https://petiteandminimalstore.netlify.app/
+  source_url: https://github.com/AnnieTaylorCHEN/PetiteandMinimalStore
+  description: >-
+    A JAMstack e-commerce solution built with Gatsby, Contentful and
+    CommerceLayer.
+  categories:
+    - E-commerce
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
+- title: Tatjana Volbeke Portfolio
+  url: https://tatjanavolbeke.com/
+  main_url: https://tatjanavolbeke.com/
+  categories:
+    - Design
+    - Portfolio
+    - User Experience
+- title: Inbound Latino
+  url: https://inboundlatino.com/
+  main_url: https://inboundlatino.com/
+  source_url: https://github.com/JoseSoteloCohen/inboundlatino
+  description: >-
+    A portfolio website built with Gatsby, featuring websites and WordPress plugins.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: José Sotelo
+  built_by_url: https://inboundlatino.com/
+- title: ReqView
+  url: https://www.reqview.com
+  main_url: https://www.reqview.com
+  description: >
+    Requirements management tool for development of software and systems products
+  categories:
+    - App
+    - Business
+    - Data
+    - Documentation
+    - Productivity
+    - Technology
+  built_by: Eccam
+  built_by_url: https://www.eccam.com
+- title: Hippocampus's Garden
+  url: https://hippocampus-garden.com/
+  main_url: https://hippocampus-garden.com/
+  source_url: https://github.com/shionhonda/hippocampus-garden
+  description: >-
+    A blog by Shion Honda. Posts on what I learn about machine learning, statistics, and programming.
+  categories:
+    - Blog
+    - Science
+    - Technology
+  built_by: Shion Honda
+  built_by_url: https://twitter.com/shion_honda
+  featured: false
+- title: mindkit
+  url: https://mindkit.fr
+  main_url: https://mindkit.fr
+  description: >
+    A collection of wellness links to help with mind and body. Built with Gatsby, Theme UI, Airtable and Netlify.
+  categories:
+    - Directory
+    - Healthcare
+  built_by: Joseph Race
+  built_by_url: https://josephrace.co.uk
+- title: Travel Diary - Your Digital Travelogue
+  main_url: https://ontraveldiary.com
+  url: https://ontraveldiary.com
+  description: >
+    An open to all digital platform for avid travelers to share their trips and photos with the world.
+  categories:
+    - Blog
+    - Travel
+    - Community
+  built_by: Draftbox
+  built_by_url: https://draftbox.co
+  featured: false
+- title: Ellington Hammond
+  main_url: https://ellington-hammond.com
+  url: https://ellington-hammond.com
+  description: >
+    Ellington Hammond is a photographer and film director based in the United States.
+  categories:
+    - Portfolio
+    - E-commerce
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+- title: Laputan ERP
+  main_url: https://erp.laputan.com.au
+  url: https://erp.laputan.com.au
+  description: >
+    Customizable Enterprise Resource Planning (ERP) System helps companies save time and money across departments (Accounting, Finance, Human Resources, Marketing, Sales & IT) in order to improve productivity and competitiveness.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+    - Finance
+    - Marketing
+  built_by: Laputan Software
+  built_by_url: https://laputan.com.au
+- title: Laputan Schools
+  main_url: https://schools.laputan.com.au
+  url: https://schools.laputan.com.au
+  description: >
+    Laputan Schools helps parents to research and engage with the schools around their areas.
+  categories:
+    - Education
+  built_by: Laputan Software
+  built_by_url: https://laputan.com.au
+- title: LeanyLabs
+  main_url: https://leanylabs.com/
+  url: https://leanylabs.com/mvp-development/
+  description: >
+    Web Development Agency. We help startups to build successful web applications.
+  categories:
+    - Agency
+    - Web Development
+    - Programming
+    - JavaScript
+    - Consulting
+    - Blog
+  built_by: LeanyLabs
+  built_by_url: https://leanylabs.com/
+- title: Require Podcast
+  main_url: https://require.podcast.gq
+  url: https://require.podcast.gq
+  source_url: https://github.com/requirepodcast/website
+  description: >
+    Website for Require Podcast - a Polish podcast about webdevelopment. Simple landing page + episode archive with player and episode notes generated from markdown files
+  categories:
+    - Entertainment
+    - Landing Page
+    - Podcast
+    - Programming
+    - Web Development
+  built_by: Adam Siekierski and Artur Dudek
+  built_by_url: https://siekierski.ml
+- title: Lidabox
+  description: >-
+    Website for the sale of medical supplies and biosafety supplies.
+  main_url: https://lidabox.com/
+  url: https://lidabox.com/
+  featured: false
+  categories:
+    - E-commerce
+    - Marketing
+  built_by: Ramón Chancay
+  built_by_url: https://ramonchancay.me/
+- title: Real Estate Shows
+  main_url: https://realestateshows.com/
+  url: https://realestateshows.com/
+  description: >
+    Marketing site for Real Estate Shows, a web app for making real estate video slide shows. Using WordPress as a data store for the blog via the WPGraphQL plugin.
+  categories:
+    - Real Estate
+    - Blog
+    - WordPress
+    - SEO
+    - Video
+  built_by: Zeek Interactive
+  built_by_url: https://zeek.com/
+- title: Fidisys Playbook
+  main_url: https://playbook.fidisys.com/
+  url: https://playbook.fidisys.com/
+  description: >
+    Fidisys playbook is the process we follow in Fidisys to build awesome products. It shows engineering, hiring and operation process.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+  built_by: Fidisys Technologies
+  built_by_url: https://www.fidisys.com/
+- title: Gabriel Giordano Portfolio
+  main_url: https://gabrielgiordano.com
+  url: https://gabrielgiordano.com
+  source_url: https://github.com/gabrielgiordan/gabrielgiordano.com
+  description: >
+    Personal website for Gabriel Giordano, a Senior Software Engineer and also an open-source contributor.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+    - SEO
+    - Technology
+    - Programming
+    - Freelance
+  built_by: Gabriel Giordano
+  built_by_url: https://gabrielgiordano.com
+  featured: false
+- title: Raleigh Bikes
+  url: https://www.raleigh.co.uk/gb/en/
+  main_url: https://raleigh.co.uk/
+  description: >
+    Chances are that you rode a Raleigh when you were younger - and maybe you still do now. Raleigh is one of the oldest bicycle companies in the world. Website build with Algolia, Shopware & Storyblok.
+  categories:
+    - E-commerce
+    - Sports
+  built_by: Oberon (for Accell Group)
+  built_by_url: https://oberon.nl
+- title: Nitro Sign
+  main_url: https://www.nitrosign.com
+  url: https://www.nitrosign.com
+  description: >
+    Nitro Sign is a free to use Electronic Signature solution that helps businesses & individuals work smarter, faster, and more securely—without the need for paper or pen.
+  categories:
+    - Technology
+    - Productivity
+    - Business
+  built_by: Nitro Software Inc
+  built_by_url: https://www.nitrosign.com
+- title: Neon Law
+  main_url: https://www.neonlaw.com
+  source_url: https://github.com/neonlaw/interface
+  url: https://www.neonlaw.com
+  description: >
+    Neon Law is a general-practice law firm that uses software to improve access to justice.
+  categories:
+    - Consulting
+    - Data
+    - Open Source
+  built_by: Neon Law
+  built_by_url: https://twitter.com/neonlaw
+
+- title: Developer Ecosystem
+  main_url: https://www.developerecosystem.com/
+  url: https://www.developerecosystem.com/
+  description: >
+    Theories, talks, and tools for building or being part of a Developer Ecosystem. Learn how Platform Economies are built and scaled.
+  categories:
+    - Blog
+    - Design
+    - Entrepreneurship
+  built_by: Hugh Durkin
+  built_by_url: https://twitter.com/hughdurkin
+- title: Jose D. Santos IV
+  main_url: https://ivjose.com
+  url: https://ivjose.com
+  source_url: https://github.com/ivjose/portfolio
+  description: >
+    I’m a freelance Frontend Developer specializing in React and in building a web interface with better user experiences.
+  categories:
+    - Freelance
+    - Portfolio
+    - Web Development
+  built_by: Jose D. Santos IV
+  built_by_url: https://ivjose.com
+  featured: false
+- title: Jeff Jadulco
+  main_url: https://jeffjadulco.com
+  url: https://jeffjadulco.com
+  description: >
+    Personal website for Jeff Jadulco, an experienced game developer with deep interest in modern web development.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Jeff Jadulco
+  built_by_url: https://jeffjadulco.com
+  featured: false
+- title: Château de Morey 🏰
+  main_url: https://chateaudemorey.fr
+  url: https://chateaudemorey.fr/en/
+  description: >
+    Website of Château de Morey. Built on the ruins of a Templar convent 🏰
+  categories:
+    - Travel
+    - Blog
+  built_by: Julien Karst
+  built_by_url: https://julienkarst.com
+- title: TRUE STORY
+  main_url: https://custom.truestorysport.com/
+  url: https://custom.truestorysport.com/
+  description: >
+    TRUE STORY is a contemporary sportswear brand offering custom products for orienteering.
+  categories:
+    - E-commerce
+  built_by: BRIKL
+  built_by_url: https://github.com/Brikl
+- title: Julien Karst Freelance
+  main_url: https://julienkarst.com
+  url: https://julienkarst.com
+  description: >
+    Personal website for Julien Karst, a Mobile / Web developer.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Programming
+    - Freelance
+  built_by: Julien Karst
+  built_by_url: https://twitter.com/JulienKarst
+- title: Chien Tai Co.
+  main_url: https://www.chientai.com.tw
+  url: https://www.chientai.com.tw
+  description: >
+    Chien Tai Co. is an electronic, motor material and magnet wire retailer in Taiwan.
+  categories:
+    - Retail
+    - Business
+    - Agency
+  built_by: Chen-Tai Hou
+  built_by_url: https://ctxhou.com/
+- title: Glee
+  main_url: https://glee.traction.one/
+  url: https://glee.traction.one/
+  description: Whether you're a startup, a developer, an artist, a creator, or just a handful of friends building a great product or creating interesting content, Glee makes it easy to collect, track and manage feedback from your users.
+  featured: false
+  categories:
+    - App
+    - Technology
+    - Productivity
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
+- title: Paths.io
+  url: https://paths.io/
+  main_url: https://paths.io/
+  description: >
+    Paths enables a new type of career discovery, in addition to being a better way to find work.
+  categories:
+    - Data
+    - Technology
+    - Landing Page
+  built_by: HiringSolved
+  built_by_url: https://hiringsolved.com/home/
+  featured: false
+- title: Crogic
+  url: https://crogic.jp
+  main_url: https://crogic.jp
+  description: >
+    Web and Music Creator's porfolio site.
+  categories:
+    - Portfolio
+    - Web Development
+    - Music
+  built_by: Mei
+  built_by_url: https://twitter.com/vo_mei0623
+- title: Reactive Resume
+  url: https://rxresu.me
+  main_url: https://rxresu.me
+  description: >
+    A free and open source resume builder.
+  categories:
+    - App
+    - Design
+    - Open Source
+  built_by: Amruth Pillai
+  built_by_url: https://amruthpillai.com
+- title: Meetup
+  url: https://meetup.com/
+  main_url: https://meetup.com/
+  description: >
+    Meetup is the leading social media platform dedicated to connecting people in person, or online during times of crisis.
+  categories:
+    - Accessibility
+    - App
+    - Community
+    - Event
+    - SEO
+- title: John Kavanagh's Portfolio
+  url: https://johnkavanagh.co.uk/
+  main_url: https://johnkavanagh.co.uk/
+  description: >
+    Website and portfolio of John Kavanagh: a freelance front-end web developer in Brighton, UK.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+    - Blog
+    - Freelance
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
+- title: Red Central
+  url: https://redcentral.co.uk/
+  main_url: https://redcentral.co.uk/
+  description: >
+    Based in Bristol in the UK, Red Central is the World's no.1 creative agency for entertainment and brand licensing.
+  categories:
+    - Agency
+    - Entertainment
+    - Media
+    - Consulting
+    - Design
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
+- title: MongoDB Developer Hub
+  url: https://developer.mongodb.com
+  main_url: https://developer.mongodb.com
+  description: >
+    The MongoDB Developer Hub serves as the central location for all MongoDB developer content, programs, and resources.
+  categories:
+    - Blog
+    - Data
+    - Education
+    - Learning
+    - Programming
+    - Technology
+    - Web Development
+  built_by: MongoDB
+  featured: false
+- title: Devnet
+  main_url: https://devnet.hr/
+  url: https://devnet.hr/
+  description: >
+    Business website for web development company.
+  categories:
+    - Web Development
+    - Agency
+  built_by: Devnet
+  built_by_url: https://devnet.hr
+- title: Leanier.com
+  url: https://leanier.com
+  main_url: https://leanier.com
+  description: >
+    Enterprise SaaS Management for Modern IT
+  categories:
+    - Data
+    - Technology
+    - Business
+  built_by: leaniercode
+  featured: false
+- title: The Mezzofanti Guild - Language Learning Made Simple
+  url: https://www.mezzoguild.com
+  main_url: https://www.mezzoguild.com
+  description: >
+    Learning a foreign language and don't know where to start? The Mezzofanti Guild will teach you the best tips, tricks and hacks to simplify your language learning.
+  categories:
+    - Blog
+    - Education
+    - Learning
+    - Travel
+  built_by: Donovan Nagel
+  built_by_url: https://www.donovannagel.com
+  featured: false
+- title: Alex Perronnet Personal Website
+  url: https://alexperronnet.io
+  main_url: https://alexperronnet.io
+  source_url: https://github.com/alexperronnet/alexperronnet.io
+  description: >
+    I'm Alex Perronnet, a french freelance developer and designer. I'm also an open-source contributor and a content creator.
+  categories:
+    - Open Source
+    - Freelance
+  built_by: Alex Perronnet
+  built_by_url: https://alexperronnet.io
   featured: false

@@ -28,7 +28,7 @@ Plugins [extend Gatsby's functionality](/docs/what-is-a-plugin/), because they i
 
 If you encounter a webpack error that says `Generating SSR bundle failed` after installing a plugin and trying to run `gatsby develop` or `gatsby build`, it's possible you haven't yet installed all the packages you need.
 
-For some plugins like emotion, styled-components, or SASS, it won't be enough to only install the plugin, you also need to install libraries they rely on. The official installation instructions should guide you to install all needed libraries when you install the plugin, but some tutorials or blog posts you find at other sources may not.
+For some plugins like emotion, styled-components, or Sass, it won't be enough to only install the plugin, you also need to install libraries they rely on. The official installation instructions should guide you to install all needed libraries when you install the plugin, but some tutorials or blog posts you find at other sources may not.
 
 Here are some examples of plugins that require you to install more than just the plugin:
 
@@ -38,7 +38,7 @@ Here are some examples of plugins that require you to install more than just the
 - [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/): `@material-ui/styles`
 - [gatsby-image](/packages/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
-Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of SASS.
+Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of Sass.
 
 To resolve these errors, identify the packages that haven't been installed, the error message might look like this:
 
@@ -63,9 +63,29 @@ npm install --save @emotion/core
 
 Or replace `@emotion/core` with the name of the library that is missing. Installing the plugin and any necessary libraries as well as adding the plugin to your `gatsby-config` should resolve this error.
 
+### Issues with `fs` resolution
+
+You may see this error because you're attempting to use `fs` inside a React component. Additionally, it often shows up when working with `@mdx-js/runtime`.
+
+This error may be a top level `Cannot resolve module 'fs'` or part of a webpack error like `Can't resolve 'fs'`.
+
+`fs` stands for filesystem and it's a Node.js library that's used to access files on your computer. However, when your packaged Gatsby code runs, your computer is but a distant memory.
+
+Some packages, like Babel, bring `fs` along for the ride anyway. In order to prevent it from causing errors, you can add the following to your `gatsby-node.js` file.
+
+```javascript:title=gatsby-node.js
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    node: {
+      fs: "empty", // highlight-line
+    },
+  })
+}
+```
+
 ## Errors in styling
 
-The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JSS solutions.
+The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JS solutions.
 
 ### Inconsistent CSS styles between develop and build using styled-components or emotion
 
@@ -113,7 +133,7 @@ Gatsby's image processing is broken up into different packages which need to wor
 
 ### Field "image" must not have a selection since type "String" has no subfields
 
-This errror message `Field "image" must not have a selection since type "String" has no subfields.` comes up when a GraphQL query is trying to query a field for subfields, but none exist. This generally happens when plugins that are used together are added in the `gatsby-config` in the wrong order, or haven't been added at all.
+This error message `Field "image" must not have a selection since type "String" has no subfields.` comes up when a GraphQL query is trying to query a field for subfields, but none exist. This generally happens when plugins that are used together are added in the `gatsby-config` in the wrong order, or haven't been added at all.
 
 The query is trying to access fields that don't exist because they weren't set up at build time. In the following code, a query is looking to find the subfield `childImageSharp` of the `image` field, like the error states. The problematic GraphQL schema looks like this:
 

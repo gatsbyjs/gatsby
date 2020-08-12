@@ -104,7 +104,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
 }
 ```
 
-You can see there are several dependencies installed right off the bat. I'll just cover a few of them. Gatsby-Image creates an effect similar to Medium and also allows you to use responsive images and optimize your site. Gatsby-Transformer-Sharp is what creates the responsive and optimized images, then allows you to query for those through GraphQL. You also have Gatsby-Source-Filesystem which could be used to pull in markdown files for content, but you're using WordPress instead. The last package I want to mention is Gatsby-Plugin-React-Helmet, which allows you to create meta tags for the site's head which helps with Search Engine Optimization, or SEO.
+You can see there are several dependencies installed right off the bat. I'll just cover a few of them. gatsby-image creates an effect similar to Medium and also allows you to use responsive images and optimize your site. gatsby-transformer-sharp is what creates the responsive and optimized images, then allows you to query for those through GraphQL. You also have gatsby-source-filesystem which could be used to pull in markdown files for content, but you're using WordPress instead. The last package I want to mention is gatsby-plugin-react-helmet, which allows you to create meta tags for the site's head which helps with Search Engine Optimization, or SEO.
 
 Whew! That was a mouthful.
 
@@ -388,6 +388,6 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 https://giphy.com/gifs/great-dicaprio-leonardo-rY93u9tQbybks
 
-The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
+The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on GitHub.
 
 See you in [How To Build A Blog with WordPress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

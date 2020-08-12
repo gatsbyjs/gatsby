@@ -16,7 +16,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 This week you'll learn how to create a Gatsby Theme! Themes are a neat way to wrap your site development work into a package that can be used by others on your team, or the open source community.
 
-The resources below will help you to creat your first theme, and learn from themes that the Gatsby community has published.
+The resources below will help you to create your first theme, and learn from themes that the Gatsby community has published.
 
 ### Gatsby Theme Creation Resources
 
@@ -26,4 +26,4 @@ For inspiration, investigate the repos of the projects [that were showcased duri
 
 ### What to Do If You Need Help
 
-If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [AskGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).

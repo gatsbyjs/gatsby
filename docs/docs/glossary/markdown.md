@@ -49,7 +49,7 @@ When converted to HTML, the preceding Markdown will become the markup below.
 
 You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) and [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
 
-```bash
+```shell
 npm install --save gatsby-source-filesystem gatsby-transformer-remark
 ```
 

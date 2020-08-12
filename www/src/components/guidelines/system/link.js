@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 
-import Box from "./box"
+import { Box } from "theme-ui"
 
 const Link = styled(Box)()
 
