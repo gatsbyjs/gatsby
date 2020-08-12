@@ -194,10 +194,8 @@ ${code}`
 module.exports = genMDX // Legacy API, drop in v3 in favor of named export
 module.exports.genMDX = genMDX
 
-async function findImportsExports({
+async function findImports({
   node,
-  rawInput,
-  absolutePath = null,
   options,
   getNode,
   getNodes,
@@ -207,7 +205,7 @@ async function findImportsExports({
   pathPrefix,
   ...helpers
 }) {
-  const { data: frontmatter, content } = grayMatter(rawInput)
+  const { content } = grayMatter(node.rawBody)
 
   const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
     {
@@ -228,7 +226,7 @@ async function findImportsExports({
   )
 
   const compilerOptions = {
-    filepath: absolutePath,
+    filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: [
       ...options.remarkPlugins,
@@ -238,27 +236,27 @@ async function findImportsExports({
   const compiler = mdx.createCompiler(compilerOptions)
 
   const fileOpts = { contents: content }
-  if (absolutePath) {
-    fileOpts.path = absolutePath
+  if (node.fileAbsolutePath) {
+    fileOpts.path = node.fileAbsolutePath
   }
 
-  const mdast = await compiler.parse(fileOpts)
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast)
 
   // Assuming valid code, identifiers must be unique (they are consts) so
   // we don't need to dedupe the symbols here.
   const identifiers = []
   const imports = []
-  const exports = []
 
   mdast.children.forEach(node => {
-    if (node.type === `import`) {
-      const importCode = node.value
-      imports.push(importCode)
-      const bindings = parseImportBindings(importCode)
-      identifiers.push(...bindings)
-    } else if (node.type === `export`) {
-      exports.push(node.value)
-    }
+    if (node.type !== `import`) return
+
+    const importCode = node.value
+
+    imports.push(importCode)
+
+    const bindings = parseImportBindings(importCode)
+    identifiers.push(...bindings)
   })
 
   if (!identifiers.includes(`React`)) {
@@ -267,11 +265,9 @@ async function findImportsExports({
   }
 
   return {
-    frontmatter,
     scopeImports: imports,
-    scopeExports: exports,
     scopeIdentifiers: identifiers,
   }
 }
 
-module.exports.findImportsExports = findImportsExports
+module.exports.findImports = findImports
