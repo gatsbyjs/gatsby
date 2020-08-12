@@ -7061,6 +7061,23 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://renyuanz.github.io/leonids/
+  repo: https://github.com/renyuanz/leonids
+  description: A simple, fixed sidebar two columns blog theme using tailwind to polish and Github Actions to deploy
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - Styling:Tailwind
+    - Styling:PostCSS
+  features:
+    - All gatsby-starter-blog (the official blog theme) features
+    - Light/Dark mode
+    - Uses PostCSS with Tailwind to make styling pleasurable
+    - Auto-deploys to Github pages with Github actions CI
+    - SEO enabled on each page with react-helmet
+    - Features optimized image rendering using gatsby-image
+    - Writes with Markdown, your favourite writing tool
 - url: https://gatsby-opinionated-starter.netlify.app/
   repo: https://github.com/datacrafts-io/gatsby-opinionated-starter
   description: Opinionated full-fledged TypeScript dev environment starter
