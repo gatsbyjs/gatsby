@@ -11303,6 +11303,15 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Laputan Schools
+  main_url: https://schools.laputan.com.au
+  url: https://schools.laputan.com.au
+  description: >
+    Laputan Schools helps parents to research and engage with the schools around their areas.
+  categories:
+    - Education
+  built_by: Laputan Software
+  built_by_url: https://laputan.com.au
 - title: LeanyLabs
   main_url: https://leanylabs.com/
   url: https://leanylabs.com/mvp-development/
