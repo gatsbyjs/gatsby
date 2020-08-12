@@ -11671,6 +11671,17 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: Ámbito Dólar
+  url: https://ambito-dolar.app
+  main_url: https://ambito-dolar.app
+  description: >
+    Free mobile application that informs the different exchange rates USD vs ARS in Argentina.
+  categories:
+    - App
+    - Landing Page
+    - Finance
+  built_by: Ariel Falduto
+  built_by_url: https://outa.im
 - title: UP42
   main_url: https://up42.com/
   url: https://up42.com/
