@@ -11671,6 +11671,10 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: KuliahSG
+  url: https://kuliah.sg
+  main_url: https://kuliah.sg
+  description: Online Islamic content in Singapore
 - title: Ámbito Dólar
   url: https://ambito-dolar.app
   main_url: https://ambito-dolar.app
@@ -11743,6 +11747,7 @@
     - Nonprofit
     - SEO
   built_by: TengkuHafidz
+  built_by_url: https://fidz.dev
 - title: WebSheets Generator
   url: https://my.websheets.co
   main_url: https://demo.websheets.co
