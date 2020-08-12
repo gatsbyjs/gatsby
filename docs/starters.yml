@@ -7007,10 +7007,6 @@
   description: A simple e-commerce shop built using Gatsby / React Bootstrap and Snipcart.
   tags:
     - E-commerce
-    - React-Bootstrap CSS framework
-    - Snipcart
-    - Shop
-    - Products
   features:
     - Pwa
     - Styled Components
