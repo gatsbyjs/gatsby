@@ -6,15 +6,13 @@ title: Query Filters with GraphQL in Gatsby
 
 ## Summary
 
-Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/).
+Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDB queries](https://docs.mongodb.com/manual/reference/operator/query/).
 
-Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). `filter` GraphQL argument is passed to the filtering system and will return all the nodes that match each of the given filters. The resto of the processing, such as pagination, is handled on GraphQL resolver level.
-
-Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). The GraphQL `filter` argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on GraphQL resolver level.
+Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). The GraphQL `filter` argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on the GraphQL resolver level.
 
 ### History and Sift
 
-For a long time Gatsby used the [sift.js](https://github.com/crcn/sift.js) library through which you can use [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/) in JavaScript.
+For a long time Gatsby used the [sift.js](https://github.com/crcn/sift.js) library through which you can use [MongoDB queries](https://docs.mongodb.com/manual/reference/operator/query/) in JavaScript.
 
 Unfortunately Sift did not align with how Gatsby used it and so a custom system was written to slowly replace it. This system was called "fast filters" and as of gatsby@2.23.0 (June 2020) the Sift library is no longer used.
 
@@ -137,7 +135,7 @@ Specific rules:
   - Glob pattern is converted to a JavaScript RegExp with [micromatch](https://github.com/micromatch/micromatch)
   - The `regex` filterValue must be a stringified regular expression, including leading and trailing forward slash and optional flags; Like `"/foo/g"`
   - Never returns nodes with partial paths
-  - While testing, result values are explicitly casted to a string through `String(resultValue)` before passing it to `regex.test()`
+  - While testing, result values are explicitly cast to a string through `String(resultValue)` before passing it to `regex.test()`
 
 ### Nulls and partial paths
 
