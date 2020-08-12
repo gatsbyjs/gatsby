@@ -11548,6 +11548,18 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Carie Fisher brings accessibility + fun to the web
+  url: https://cariefisher.com
+  main_url: https://cariefisher.com
+  source_url: https://github.com/cehfisher/cehfisher.github.io
+  description: >
+    Who says accessible websites have to be ugly and boring? Carie Fisher's blog/portfolio website aims to prove otherwise.
+  categories:
+    - Accessibility
+    - Blog
+    - Design
+  built_by: Carie Fisher
+  built_by_url: https://twitter.com/cariefisher
 - title: Concept Classes
   main_url: https://conceptclassesindore.xyz/
   url: https://www.conceptclassesindore.xyz/
