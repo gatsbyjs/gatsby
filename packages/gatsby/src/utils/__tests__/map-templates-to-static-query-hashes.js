@@ -47,7 +47,7 @@ const createModule = (resource, reasons = []) => {
 describe(`map-templates-to-static-query-hashes`, () => {
   it(`should map static-queries to a component file on all platforms`, () => {
     const asyncRequires = createModule(
-      `_this_is_virtual_fs_path_/$virtual/async-requires.js`
+      `.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`
     )
 
     const templateMap = mapTemplatesToStaticQueryHashes(
