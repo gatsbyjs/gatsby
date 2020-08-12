@@ -162,6 +162,7 @@ Array [
       "/path/to/module/babel-plugin-remove-graphql-queries",
       Object {
         "stage": "test",
+        "staticQueryDir": "page-data/sq/d",
       },
     ],
     Object {
