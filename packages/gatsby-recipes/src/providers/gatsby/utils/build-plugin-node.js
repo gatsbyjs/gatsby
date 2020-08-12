@@ -6,13 +6,16 @@ module.exports = ({ name, options, key }) => {
     return t.stringLiteral(name)
   }
 
-  const pluginWithOptions = template(`
+  const pluginWithOptions = template(
+    `
     const foo = {
       resolve: '${name}',
       options: ${JSON.stringify(options, null, 2)},
       ${key ? `__key: "` + key + `"` : ``}
     }
-  `)()
+  `,
+    { placeholderPattern: false }
+  )()
 
   return pluginWithOptions.declarations[0].init
 }

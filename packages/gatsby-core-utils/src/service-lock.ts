@@ -66,17 +66,21 @@ export const createServiceLock = async (
   }
 }
 
-export const getService = async (
+export const getService = async <T = Record<string, unknown>>(
   programPath: string,
-  serviceName: string
-): Promise<string | null> => {
+  serviceName: string,
+  ignoreLockfile: boolean = false
+): Promise<T | null> => {
   if (isCI()) return memoryServices[serviceName] || null
 
   const siteDir = getSiteDir(programPath)
   const serviceDataFile = getDataFilePath(siteDir, serviceName)
 
   try {
-    if (await lockfile.check(serviceDataFile, lockfileOptions)) {
+    if (
+      ignoreLockfile ||
+      (await lockfile.check(serviceDataFile, lockfileOptions))
+    ) {
       return JSON.parse(
         await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`)
       )
