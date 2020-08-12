@@ -127,10 +127,6 @@ export const queryRunner = async (
   // Add the page context onto the results.
   if (queryJob && queryJob.isPage) {
     result[`pageContext`] = Object.assign({}, queryJob.context)
-  } else {
-    result[`moduleDependencies`] = Array.from(
-      queryJob.context.__INTERNAL_DO_NOT_USE__moduleDependencies || new Set()
-    )
   }
 
   // Delete internal data from pageContext
