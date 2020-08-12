@@ -1,5 +1,5 @@
 - url: https://gatsby-starter-lamma.netlify.app/
-  repo: https://github.com/desktopofsamuel/gatsby-starter-lamma/
+  repo: https://github.com/desktopofsamuel/gatsby-starter-lamma
   description: A minimal, elegant, dark theme blog starter. Forked from Gatsby Advance Starter.
   tags:
     - Blog
@@ -7301,7 +7301,7 @@
     - Netlify deploy optional support
 - url: https://gatsby-starter-fresh.netlify.app
   repo: https://github.com/mishal23/gatsby-starter-fresh
-  description:  A minimal GatsbyJS starter blog template using the Fresh Theme for anyone to build a blogging site
+  description: A minimal GatsbyJS starter blog template using the Fresh Theme for anyone to build a blogging site
   tags:
     - Portfolio
     - Blog
