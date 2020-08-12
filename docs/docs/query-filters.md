@@ -78,13 +78,37 @@ One additional feature that Gatsby supports is the `elemMatch` query. This query
 A contrived `elemMatch` example:
 
 ```js
-filter = {a: { elemMatch: { b: { eq: 5 } } } }
+filter = { a: { elemMatch: { b: { eq: 5 } } } }
 
 nodes = [
-  { id: 1, a: [{ a: 1, b: 8, c: 7 }, { a: 3, b: 5, c: 6 }] },
-  { id: 2, a: [{ a: 2, b: 4, c: 6 }, { a: 6, b: 3, c: 3 }] },
-  { id: 3, a: [{ a: 3, b: 5, c: 3 }, { a: 5, b: 4, c: 1 }] },
-  { id: 4, a: [{ a: 4, b: 7, c: 1 }, { a: 9, b: 1, c: 6 }] },
+  {
+    id: 1,
+    a: [
+      { a: 1, b: 8, c: 7 },
+      { a: 3, b: 5, c: 6 },
+    ],
+  },
+  {
+    id: 2,
+    a: [
+      { a: 2, b: 4, c: 6 },
+      { a: 6, b: 3, c: 3 },
+    ],
+  },
+  {
+    id: 3,
+    a: [
+      { a: 3, b: 5, c: 3 },
+      { a: 5, b: 4, c: 1 },
+    ],
+  },
+  {
+    id: 4,
+    a: [
+      { a: 4, b: 7, c: 1 },
+      { a: 9, b: 1, c: 6 },
+    ],
+  },
 ]
 ```
 
