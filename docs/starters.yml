@@ -7061,6 +7061,31 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-fresh.netlify.app
+  repo: https://github.com/mishal23/gatsby-starter-fresh
+  description:  A minimal GatsbyJS starter blog template using the Fresh Theme for anyone to build a blogging site
+  tags:
+    - Portfolio
+    - Blog
+    - SEO
+    - Markdown
+  features:
+    - Gatsby v2
+    - Blazing fast loading time
+    - Mobile Friendly
+    - High quality code
+    - Component seperated code
+    - Custom 404 page
+    - In-built contact form powered by Formspree
+    - Markdown support for new posts
+    - Code syntax highlighting
+    - Disqus support for comments
+    - Supports PWA
+    - Social Media icons
+    - SEO friendly
+    - Twitter Tags
+    - Sitemap Generation
+    - Google Analytics
 - url: https://gatsby-starter-testing.netlify.app/
   repo: https://github.com/DanailMinchev/gatsby-starter-testing
   description: A simple Gatsby starter with configured testing frameworks and tools for each layer of the Test Pyramid and more.
