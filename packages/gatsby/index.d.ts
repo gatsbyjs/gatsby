@@ -2,7 +2,8 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+export { Reporter }
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -24,6 +25,13 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
+export const useScrollRestoration: (
+  key: string
+) => {
+  ref: React.MutableRefObject<HTMLElement | undefined>
+  onScroll(): void
+}
+
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
@@ -41,7 +49,8 @@ export const prefetchPathname: (path: string) => void
  * export default (props: PageProps) => {
  *
  * @example
- * // When adding types for both pageContext and GraphQL query data
+ * // When adding types for both pageContext (represented by LocaleLookUpInfo)
+ * // and GraphQL query data (represented by IndexQueryProps)
  *
  * import {PageProps} from "gatsby"
  *
@@ -162,6 +171,15 @@ export class StaticQuery<T = any> extends React.Component<
  * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
  */
 export const graphql: (query: TemplateStringsArray) => void
+
+/**
+ * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+ *
+ * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+ *
+ * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ */
+export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
 
 /**
  * Gatsby configuration API.
@@ -1260,8 +1278,6 @@ export interface Store {
   getState: Function
   replaceReducer: Function
 }
-
-export type Reporter = typeof reporter
 
 export type ActivityTracker = {
   start(): () => void

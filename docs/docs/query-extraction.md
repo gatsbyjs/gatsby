@@ -17,7 +17,7 @@ Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into Redux, [
 
 ### Query compilation
 
-The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/next/babel-traverse.html) to load all JavaScript files in the site that have graphql queries in them. This produces AST results that are passed to the [relay-compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html). This accomplishes a couple of things:
+The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/next/babel-traverse.html) to load all JavaScript files in the site that have GraphQL queries in them. This produces AST results that are passed to the [relay-compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html). This accomplishes a couple of things:
 
 1. It informs us of any malformed queries, which are promptly reported back to the user.
 2. It builds a tree of queries and fragments they depend on. And outputs a single optimized query string with the fragments.

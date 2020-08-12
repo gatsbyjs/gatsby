@@ -14,7 +14,6 @@ labels: "type: question or discussion"
   Gatsby has several community support channels, try asking your question on:
 
   - Discord: https://gatsby.dev/discord
-  - Spectrum: https://spectrum.chat/gatsby-js
   - Twitter: https://twitter.com/gatsbyjs
 
   Before opening a new issue, please search existing issues https://github.com/gatsbyjs/gatsby/issues

@@ -81,7 +81,7 @@ export class ScrollHandler extends React.Component<
     hash: string,
     prevProps: LocationContext | undefined
   ): void => {
-    const node = document.querySelector(hash)
+    const node = document.getElementById(hash.substring(1))
 
     if (node && this.shouldUpdateScroll(prevProps, this.props)) {
       node.scrollIntoView()

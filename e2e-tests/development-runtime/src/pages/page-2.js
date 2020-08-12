@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { navigate } from "gatsby"
 
 const SecondPage = () => (
   <Layout>
@@ -12,6 +13,9 @@ const SecondPage = () => (
     <Link to="/" data-testid="back-button">
       Go back to the homepage
     </Link>
+    <button data-testid="back-by-number" onClick={() => navigate(-1)}>
+      Navigate by number back
+    </button>
   </Layout>
 )
 

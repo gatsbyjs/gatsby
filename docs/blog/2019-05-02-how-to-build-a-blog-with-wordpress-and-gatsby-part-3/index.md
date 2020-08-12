@@ -299,7 +299,7 @@ The title you're seeing in the header comes from the title listed here. You can 
 
 Since you are building a blog using WordPress and want your users to have full control over the data, you should get your site name from WordPress so if it ever changes the user can update it. Fortunately, WordPress makes this available to us through the API, so you can query it in GraphQL like so:
 
-![Graphql query to get siteName from WordPress](./images/gatsby3.png)
+![GraphQL query to get siteName from WordPress](./images/gatsby3.png)
 
 Using queries works a bit differently inside of components. Rather than just writing a query which drops data into your page or template, you have to use a new component called `StaticQuery` which is designed specifically for using queries inside of components.
 
@@ -487,7 +487,7 @@ If you look at the code above, you'll notice you have added two new routes to th
 
 ![GraphiQL query to get menu items from WordPress](./images/gatsby6.png)
 
-The final step is to add this query into your static query and create the menu itself in the header component. You can just drop this in under the wordpressSiteMetadata piece. Once you have it added into the query, you can just use a `map()` function to iterate over the menu items and create it dynamically, allowing the user to update it through WordPress. Doing it this way does require us to specify which menu you want, so you need the name of the menu which is set in WordPress. In this case, your menu is called Main Menu so you will use that in your query.
+The final step is to add this query into your static query and create the menu itself in the header component. You can just drop this in under the `wordpressSiteMetadata` piece. Once you have it added into the query, you can just use a `map()` function to iterate over the menu items and create it dynamically, allowing the user to update it through WordPress. Doing it this way does require us to specify which menu you want, so you need the name of the menu which is set in WordPress. In this case, your menu is called Main Menu so you will use that in your query.
 
 ```jsx:title=src/components/header.js
 import { StaticQuery, graphql, Link } from "gatsby"

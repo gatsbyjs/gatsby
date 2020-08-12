@@ -13,7 +13,7 @@ It is now possible to indicate to Gatsby, that you want to add a resolver to an 
 
 ## Summary
 
-After about a month of testing schema customization both pre and post release, we determined a couple of issues. The original aim of our schema customisation work was to remove uncertainty in a user's schemas when their data changes.
+After about a month of testing schema customization both pre and post release, we determined a couple of issues. The original aim of our schema customization work was to remove uncertainty in a user's schemas when their data changes.
 
 However, the original design allowed some uncertainties to still creep in. In addition, it made inference a heavier process, trading performance for consistency without providing a way to opt-out completely. To summarize, the schema customization work released in Gatsby 2.2.0 suffered from a few non-ideal issues:
 

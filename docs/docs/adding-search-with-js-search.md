@@ -320,7 +320,7 @@ const SearchTemplate = props => {
   return (
     <div>
       <h1 style={{ marginTop: `3em`, textAlign: `center` }}>
-        Search data using JS Search using Gatsby Api
+        Search data using JS Search using Gatsby API
       </h1>
       <div>
         <ClientSearch books={allBooks} engine={options} />

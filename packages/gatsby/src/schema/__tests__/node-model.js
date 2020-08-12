@@ -1,6 +1,5 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const nodeStore = require(`../../db/nodes`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
@@ -52,7 +51,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -497,6 +495,14 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
       })
+
+      it(`returns null when object's top-most ancestor doesn't match the provided predicate`, () => {
+        const node = nodeModel.getNodeById({ id: `post1` })
+        const obj = node.frontmatter.authors
+        const predicate = () => false
+        const result = nodeModel.findRootNodeAncestor(obj, predicate)
+        expect(result).toBe(null)
+      })
     })
 
     describe(`createPageDependency`, () => {
@@ -612,7 +618,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -743,7 +748,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -909,7 +913,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })
@@ -954,7 +957,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })

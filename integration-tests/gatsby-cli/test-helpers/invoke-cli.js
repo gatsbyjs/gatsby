@@ -7,12 +7,14 @@ export const GatsbyCLI = {
   from(relativeCwd) {
     return {
       invoke(args) {
+        const NODE_ENV = args[0] === `develop` ? `development` : `production`
         try {
           const results = sync(
             resolve(`./node_modules/.bin/gatsby`),
             [].concat(args),
             {
               cwd: join(__dirname, `../`, `./${relativeCwd}`),
+              env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
             }
           )
 
@@ -23,17 +25,19 @@ export const GatsbyCLI = {
         } catch (err) {
           return [
             err.exitCode,
-            createLogsMatcher(err.stdout.toString().split("\n")),
+            createLogsMatcher(err.stdout?.toString().split("\n") || ``),
           ]
         }
       },
 
       invokeAsync: (args, onExit) => {
+        const NODE_ENV = args[0] === `develop` ? `development` : `production`
         const res = execa(
           resolve(`./node_modules/.bin/gatsby`),
           [].concat(args),
           {
             cwd: join(__dirname, `../`, `./${relativeCwd}`),
+            env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
           }
         )
 

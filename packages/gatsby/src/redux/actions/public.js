@@ -9,7 +9,7 @@ const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../db/nodes`)
+const { hasNodeChanged, getNode } = require(`../../redux/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
@@ -364,17 +364,17 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (invalidPathSegments.length > 0) {
     const truncatedPath = truncatePath(page.path)
-    report.panicOnBuild({
-      id: `11331`,
-      context: {
-        path: page.path,
-        invalidPathSegments,
+    report.warn(
+      report.stripIndent(`
+        The path to the following page is longer than the supported limit on most 
+        operating systems and will cause an ENAMETOOLONG error. The path has been
+        truncated to prevent this. 
 
-        // we will only show truncatedPath in non-production scenario
-        isProduction: process.env.NODE_ENV === `production`,
-        truncatedPath,
-      },
-    })
+        Original Path: ${page.path}
+
+        Truncated Path: ${truncatedPath}
+      `)
+    )
     page.path = truncatedPath
   }
 

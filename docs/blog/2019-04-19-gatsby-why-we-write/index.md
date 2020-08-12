@@ -108,7 +108,7 @@ We want everyone to understand [the depths of Gatsby](/docs/behind-the-scenes/),
 
 We want folks who build their site with Gatsby; to build a plugin. We want folks who write documentation; to want to contribute code.
 
-We want folks who contribute code to dive deep into Gatsby's core, to the internal plugins where few other than [Michal](https://twitter.com/mipiechowiak) and [Kyle](https://twitter.com/kylemathews) dare to venture.
+We want folks who contribute code to dive deep into Gatsby's core, to the internal plugins where few other than [Michał](https://twitter.com/mipiechowiak) and [Kyle](https://twitter.com/kylemathews) dare to venture.
 
 We want to do this because Gatsby _is_ the future of the web, a place where performance and accessibility don't have to be reinvented site-by-site but can come baked in, where you can author your content wherever and still have an amazing developer experience.
 
