@@ -174,6 +174,26 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
 
+### `<NPMPackageJson>`
+
+<!-- prettier-ignore-start -->
+```jsx
+<NPMPackageJson
+  name="lint-staged"
+  value={{
+     "src/**/*.js": [
+      "jest --findRelatedTests"
+    ],
+  }}
+/>
+```
+<!-- prettier-ignore-end -->
+
+#### props
+
+- **name**: name of the property to add to the package.json
+- **value**: the value assigned to the property. can be an object or a string.
+
 ### `<NPMScript>`
 
 ```jsx

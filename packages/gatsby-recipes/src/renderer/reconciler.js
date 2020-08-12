@@ -106,7 +106,7 @@ const reconciler = ReactReconciler({
 const RecipesRenderer = {
   render(whatToRender, currState) {
     debug(`rendering recipe`)
-    let container = reconciler.createContainer(currState, false, false)
+    const container = reconciler.createContainer(currState, false, false)
     reconciler.updateContainer(whatToRender, container, null, null)
 
     return currState
