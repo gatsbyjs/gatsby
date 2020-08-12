@@ -37,5 +37,7 @@ export interface IBuildContext {
   compiler?: Compiler
   websocketManager?: WebsocketManager
   webpackWatching?: IWebpackWatchingPauseResume
+  webpackListener?: Actor<unknown, AnyEventObject>
   queryFilesDirty?: boolean
+  sourceFilesDirty?: boolean
 }

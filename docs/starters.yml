@@ -1,3 +1,22 @@
+- url: https://mdx-cms-docs.netlify.app/
+  repo: https://github.com/danielcurtis/gatsby-starter-netlify-docs
+  description: An accessible and blazing fast documentation starter for Gatsby integrated with Netlify CMS.
+  tags:
+    - CMS:Netlify
+    - CMS:Headless
+    - Documentation
+    - MDX
+    - Markdown
+    - Netlify
+  features:
+    - Netlify CMS for Creating, Updating, and Deleting MDX files
+    - Fully-Configurable Landing Page from Netlify CMS
+    - Accessible and Fast with a Perfect Lighthouse Score
+    - Clean, Repsponsive User Interface
+    - Table of Contents & Toggleable Main-Menu
+    - Configurable Dark and Light Mode Themes
+    - Google Analytics Support
+    - MDX Embeds for Tweets, Repl.it, YouTube and More
 - url: https://gatsby-pod6.netlify.app/
   repo: https://github.com/zag/gatsby-starter-pod6
   description: A minimal, lightweight, and mobile-first starter for creating blogs with pod6 markup language.
@@ -6922,3 +6941,21 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://texblog.akshatbisht.com/
+  repo: https://github.com/aaaakshat/gatsby-starter-texblog
+  description: A lightweight, LaTeX enabled starter to beautifully showcase your typeset articles.
+  tags:
+    - Blog
+    - Markdown
+    - MDX
+    - SEO
+    - Styling:SCSS
+    - Language:TypeScript
+  features:
+    - Automatically generated landing page with articles organised by date
+    - LaTeX support (rendered via remark-katex)
+    - Custom Image component to easily add images
+    - MDX to add components to articles
+    - Uses SCSS for easy-to-understand naming
+    - Google Analytics support
+    - Responsive design

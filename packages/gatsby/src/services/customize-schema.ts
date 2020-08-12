@@ -4,6 +4,7 @@ import { IDataLayerContext } from "../state-machines/data-layer/types"
 
 export async function customizeSchema({
   parentSpan,
+  deferNodeMutation,
   refresh, // webhookBody,//coming soon
 }: Partial<IDataLayerContext>): Promise<void> {
   const activity = reporter.activityTimer(`createSchemaCustomization`, {
@@ -13,6 +14,7 @@ export async function customizeSchema({
   await createSchemaCustomization({
     parentSpan,
     refresh,
+    deferNodeMutation,
     // webhookBody,
   })
   activity.end()

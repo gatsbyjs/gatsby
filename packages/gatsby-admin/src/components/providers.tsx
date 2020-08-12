@@ -2,6 +2,7 @@ import React from "react"
 import { Provider, Client } from "urql"
 import { ThemeProvider, getTheme } from "gatsby-interface"
 import { ThemeProvider as StrictUIProvider } from "strict-ui"
+import { Spinner } from "theme-ui"
 import { createUrqlClient } from "../urql-client"
 
 const baseTheme = getTheme()
@@ -12,9 +13,22 @@ const theme = {
     ...baseTheme.colors,
     background: baseTheme.colors.primaryBackground,
   },
+  fonts: {
+    ...baseTheme.fonts,
+    // We want to use inter for all text on the page, no more futura!
+    brand: baseTheme.fonts.sans,
+    heading: baseTheme.fonts.sans,
+    body: baseTheme.fonts.sans,
+    // NOTE(@mxstbr): This is really confusing, but unfortunately the gatsby-interface
+    // <Text /> component uses fontFamily: `system` instead of fontFamily: `body`.
+    // Once gatsby-inc/gatsby-interface#369 lands we can remove this hack
+    system: baseTheme.fonts.sans,
+  },
   fontWeights: {
     ...baseTheme.fontWeights,
-    "500": 500,
+    bold: 600,
+    400: 400,
+    800: 800,
   },
   borders: {
     none: `none`,
@@ -29,7 +43,14 @@ const theme = {
     "16px": `16px`,
     "15em": `15em`,
     "20em": `20em`,
+    "24px": `24px`,
+    "1.5em": `1.5em`,
     initial: `initial`,
+  },
+  styles: {
+    root: {
+      backgroundColor: `grey.5`,
+    },
   },
 }
 
@@ -49,10 +70,15 @@ const GraphQLProvider: React.FC<{}> = ({ children }) => {
       })
   }, [])
 
-  if (status === `loading`) return <p>Loading...</p>
+  if (status === `loading`) return <Spinner />
 
   if (client === null)
-    return <p>It looks like no develop process is running.</p>
+    return (
+      <p>
+        Please start <code>gatsby develop</code> to show the data about your
+        site.
+      </p>
+    )
 
   return <Provider value={client}>{children}</Provider>
 }

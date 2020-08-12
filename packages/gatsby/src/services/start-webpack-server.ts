@@ -22,6 +22,7 @@ import {
 } from "../utils/webpack-status"
 import { enqueueFlush } from "../utils/page-data"
 import mapTemplatesToStaticQueryHashes from "../utils/map-templates-to-static-query-hashes"
+import { emitter } from "../redux"
 
 export async function startWebpackServer({
   program,
@@ -42,6 +43,7 @@ export async function startWebpackServer({
     websocketManager,
     webpackWatching,
   } = await startServer(program, app, workerPool)
+  webpackWatching.suspend()
 
   compiler.hooks.invalid.tap(`log compiling`, function () {
     if (!webpackActivity) {
@@ -160,6 +162,7 @@ export async function startWebpackServer({
 
       markWebpackStatusAsDone()
       done()
+      emitter.emit(`COMPILATION_DONE`, stats)
       resolve({ compiler, websocketManager, webpackWatching })
     })
   })

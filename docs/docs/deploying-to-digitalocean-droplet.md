@@ -20,50 +20,50 @@ A Droplet can be spun up in less than a minute for as little as \$5/month.
 
 ## How to deploy your Gatsby site to DigitalOcean
 
-### Install Node, npm and Gatsby-CLI onto your droplet
+### Install Node.js, npm and Gatsby-CLI onto your droplet
 
 Follow these instructions for installs on an Ubuntu droplet.
 
 1. Log in to your droplet as a non-root user.
 
-2. Install Node
+2. Install Node.js
 
-   ```bash
+   ```shell
    sudo apt-get update
    sudo apt-get install node
    ```
 
 3. Install npm
 
-   ```bash
+   ```shell
    sudo apt-get install npm
    ```
 
-   To view the version of Node and npm installed, run,
+   To view the version of Node.js and npm installed, run,
 
-   ```bash
+   ```shell
    node -v
    npm -v
    ```
 
 4. To install the latest stable Node.js release using the `n` package (Required),
 
-   ```bash
+   ```shell
    sudo npm install -g n
    sudo n stable
    ```
 
-   `Note`: If you check the version now, you would see the older versions of node and npm from the cache.
-   You can either exit and restart your terminal or refresh the cache by following commands,
+   > **Note:** If you check the version now, you would see the older versions of Node.js and npm from the cache.
+   > You can either exit and restart your terminal or refresh the cache by running the following commands:
 
-   ```bash
+   ```shell
    hash node
    hash npm
    ```
 
-5. Install the gatsby-cli now globally. This will be useful ahead in building the Gatsby site for production.
+5. Install the Gatsby CLI globally. This will be useful ahead in building the Gatsby site for production.
 
-   ```bash
+   ```shell
    sudo npm install -g gatsby-cli
    ```
 
@@ -71,41 +71,41 @@ Follow these instructions for installs on an Ubuntu droplet.
 
 The next step is to clone the repository containing your Gatsby app (Replace `<your-github-repo-site>` with your GitHub repository link)
 
-```bash
+```shell
 git clone <your-github-repo-site>
 ```
 
-> Note: Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
+> **Note:** Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
 
-```bash
+```shell
 pwd
 ```
 
 In case of a warning related to "Permission denied", check if `<your non-root user>` has `sudo` privileges. Or before cloning your repository, [change permissions](https://help.ubuntu.com/community/FilePermissions) for `<your non-root user>` to access the `.config` directory of under `/home/<your non-root user>/`:
 
-```bash
+```shell
 cd ~/
 sudo chown -R $(whoami) .config
 ```
 
-> Note: This guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
+> **Note:** This guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
 
 ### Generate your Gatsby site for production
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
 
-> Note: Go to the path where <my-gatsby-app> is. You can used the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
+> **Note:** Go to the path where `<my-gatsby-app>` is. You can used the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
 
 1. Install dependencies.
 
-```bash
+```shell
 cd <my-gatsby-app>
 sudo npm install
 ```
 
 2. Run build to generate static files.
 
-```bash
+```shell
 sudo gatsby build
 ```
 
@@ -117,32 +117,32 @@ Nginx is web-server. It provides the infrastructure code for handling client req
 
 1. Install Nginx.
 
-   ```bash
+   ```shell
    sudo apt-get install nginx
    ```
 
 2. Configure firewall settings of the droplet to listen to HTTP and HTTPS requests on port 80 and 443 respectively.
 
-   ```bash
+   ```shell
    sudo ufw allow 'Nginx HTTP'
    sudo ufw allow 'Nginx HTTPS'
    ```
 
 3. To check the access,
 
-   ```bash
+   ```shell
    sudo ufw app list
    ```
 
 4. If `ufw` status is disabled/inactive, you can enable it with the following command:
 
-   ```bash
+   ```shell
    sudo ufw enable
    ```
 
    Allow the OpenSSH if not already done, to not disconnect from your droplet.
 
-   ```bash
+   ```shell
    sudo ufw allow 'OpenSSH'
    ```
 
@@ -152,19 +152,19 @@ Change the root directory configuration of Nginx in the default server block fil
 
 1. Go to `/etc/nginx/sites-available/`
 
-   ```bash
+   ```shell
    cd /etc/nginx/sites-available/
    ```
 
-2. Open the file default in Vim ([shortcut cheat sheet](https://devhints.io/vim))
+2. Open the file `default` in Vim ([shortcut cheat sheet](https://devhints.io/vim))
 
-   ```bash
+   ```shell
    sudo vim default
    ```
 
 3. Edit the file and make the following changes for below-mentioned fields, leave the rest of the fields as is. Your exact path may vary, but it may resemble `/home/<your non-root user>/<my-gatsby-app>/public`.
 
-   ```bash
+   ```text:title=default
    server {
      root <path to my-gatsby-app>/public;
 
@@ -180,17 +180,17 @@ Change the root directory configuration of Nginx in the default server block fil
 
 4. Restart the Nginx service
 
-   ```bash
+   ```shell
    sudo systemctl restart nginx
    ```
 
    You should now be able to view your built Gatsby site at your DigitalOcean IP address, before configuring a domain.
 
-5. Configure your domain to point to the IP address of your droplet. Go to the Advanced DNS settings in your domain provider's console and put an A record that points to the IP address of the droplet.
+5. Configure your domain to point to the IP address of your droplet. Go to the Advanced DNS settings in your domain provider's console and put an `A` record that points to the IP address of the droplet.
 
 6. By this time, you can view your site live at `<your-domain>`.
 
-### Configuring HTTPS for your Gatsby Site
+### Configuring HTTPS for your Gatsby site
 
 Follow the below steps to configure your site with a free SSL/TLS certificate from Lets Encrypt using their Certbot CLI tool.
 
@@ -198,7 +198,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
    You'll need to add the Certbot PPA (Personal Package Archives) to your list of repositories. To do so, run the following commands:
 
-   ```bash
+   ```shell
    sudo apt-get update
    sudo add-apt-repository ppa:certbot/certbot
    sudo apt-get update
@@ -206,7 +206,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
    Run the following commands to install Certbot.
 
-   ```bash
+   ```shell
    sudo apt-get install certbot python3-certbot-nginx
    ```
 
@@ -214,7 +214,7 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
    Run the following command:
 
-   ```bash
+   ```shell
    sudo certbot --nginx
    ```
 
@@ -222,14 +222,14 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
 4. Agree to the license agreement on prompt.
 
-   `Note`: You will be prompted to select the domain for which you want to generate the certificate. Select the domain configured in a [previous step](#configuring-nginx-to-point-to-your-gatsby-site's-`public`-directory-and-add-your-domain).
+   > **Note:** You will be prompted to select the domain for which you want to generate the certificate. Select the domain configured in a [previous step](#configure-nginx-to-point-to-your-gatsby-sites-public-directory-and-add-your-domain).
 
-   `Note`: You will be prompted to choose the option to redirect HTTP requests to HTTPS, which you may choose on your needs.
-   (It is recommended to choose to redirect HTTP to HTTPS)
+   > **Note:** You will be prompted to choose the option to redirect HTTP requests to HTTPS, which you may choose on your needs.
+   > (It is recommended to choose to redirect HTTP to HTTPS)
 
 5. Restart the Nginx service.
 
-   ```bash
+   ```shell
    sudo systemctl restart nginx
    ```
 
