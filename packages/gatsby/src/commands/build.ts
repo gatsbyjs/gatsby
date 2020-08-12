@@ -36,6 +36,7 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
+import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -62,6 +63,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
+
+  await createServiceLock(program.directory, `metadata`, {
+    name: program.sitePackageJson.name,
+    sitePath: program.directory,
+    lastRun: Date.now(),
+  }).then(unlock => unlock?.())
 
   markWebpackStatusAsPending()
 
@@ -315,23 +322,23 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `${program.directory}/.cache`,
       `newPages.txt`
     )
+    const createdFilesContent = pagePaths.length
+      ? `${pagePaths.join(`\n`)}\n`
+      : ``
+
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `deletedPages.txt`
     )
+    const deletedFilesContent = deletedPageKeys.length
+      ? `${deletedPageKeys.join(`\n`)}\n`
+      : ``
 
-    if (pagePaths.length) {
-      await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`.cache/newPages.txt created`)
-    }
-    if (deletedPageKeys.length) {
-      await fs.writeFile(
-        deletedFilesPath,
-        `${deletedPageKeys.join(`\n`)}\n`,
-        `utf8`
-      )
-      report.info(`.cache/deletedPages.txt created`)
-    }
+    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+    report.info(`.cache/newPages.txt created`)
+
+    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+    report.info(`.cache/deletedPages.txt created`)
   }
 
   if (await userPassesFeedbackRequestHeuristic()) {

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.12...gatsby-link@2.4.13) (2020-07-15)
+
+### Bug Fixes
+
+- **gatsby:** Support numbers in navigate function ([#25611](https://github.com/gatsbyjs/gatsby/issues/25611)) ([83926c8](https://github.com/gatsbyjs/gatsby/commit/83926c8))
+- **gatsby-link:** Do not crash in unit tests when globals are undefined ([#25608](https://github.com/gatsbyjs/gatsby/issues/25608)) ([6404fc7](https://github.com/gatsbyjs/gatsby/commit/6404fc7))
+
 ## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.11...gatsby-link@2.4.12) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-link

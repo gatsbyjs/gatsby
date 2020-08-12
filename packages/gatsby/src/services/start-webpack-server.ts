@@ -13,7 +13,7 @@ import {
 import { printDeprecationWarnings } from "../utils/print-deprecation-warnings"
 import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
-import { startServer } from "../utils/start-server"
+import { startServer, IWebpackWatchingPauseResume } from "../utils/start-server"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IBuildContext } from "./"
 import {
@@ -22,6 +22,7 @@ import {
 } from "../utils/webpack-status"
 import { enqueueFlush } from "../utils/page-data"
 import mapTemplatesToStaticQueryHashes from "../utils/map-templates-to-static-query-hashes"
+import { emitter } from "../redux"
 
 export async function startWebpackServer({
   program,
@@ -31,28 +32,39 @@ export async function startWebpackServer({
 }: Partial<IBuildContext>): Promise<{
   compiler: Compiler
   websocketManager: WebsocketManager
+  webpackWatching: IWebpackWatchingPauseResume
 }> {
   if (!program || !app || !store) {
     report.panic(`Missing required params`)
   }
-  let { compiler, webpackActivity, websocketManager } = await startServer(
-    program,
-    app,
-    workerPool
-  )
+  let {
+    compiler,
+    webpackActivity,
+    websocketManager,
+    webpackWatching,
+  } = await startServer(program, app, workerPool)
+  webpackWatching.suspend()
 
   compiler.hooks.invalid.tap(`log compiling`, function () {
-    markWebpackStatusAsPending()
+    if (!webpackActivity) {
+      // mark webpack as pending if we are not in the middle of compilation already
+      // when input is invalidated during compilation, webpack will automatically
+      // run another compilation round before triggering `done` event
+      report.pendingActivity({ id: `webpack-develop` })
+      markWebpackStatusAsPending()
+    }
   })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
-    if (webpackActivity) {
-      webpackActivity.end()
+    if (!webpackActivity) {
+      // there can be multiple `watchRun` events before receiving single `done` event
+      // webpack will not emit assets or `done` event until all pending invalidated
+      // inputs were compiled
+      webpackActivity = report.activityTimer(`Re-building development bundle`, {
+        id: `webpack-develop`,
+      })
+      webpackActivity.start()
     }
-    webpackActivity = report.activityTimer(`Re-building development bundle`, {
-      id: `webpack-develop`,
-    })
-    webpackActivity.start()
 
     done()
   })
@@ -150,8 +162,8 @@ export async function startWebpackServer({
 
       markWebpackStatusAsDone()
       done()
-
-      resolve({ compiler, websocketManager })
+      emitter.emit(`COMPILATION_DONE`, stats)
+      resolve({ compiler, websocketManager, webpackWatching })
     })
   })
 }
