@@ -7061,6 +7061,19 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-testing.netlify.app/
+  repo: https://github.com/DanailMinchev/gatsby-starter-testing
+  description: A simple Gatsby starter with configured testing frameworks and tools for each layer of the Test Pyramid and more.
+  tags:
+    - Linting
+    - Storybook
+    - Testing
+  features:
+    - Unit Testing - Jest with React Testing Library
+    - Structural Testing - Jest Snapshot Testing
+    - End-to-End Testing - Cypress with Cypress Testing Library
+    - Accessibility Testing - axe with cypress-axe
+    - Automated Visual Testing - Storybook with jest-puppeteer and jest-image-snapshot
 - url: https://boogi.netlify.app
   repo: https://github.com/filipowm/boogi
   description: Create awesome documentation with modern, Gitbook-like look-and-feel.
