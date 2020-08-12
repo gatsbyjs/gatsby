@@ -8,7 +8,10 @@ import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
-import { writeModule } from "../utils/gatsby-webpack-virtual-modules"
+import {
+  writeModule,
+  getAbsolutePathForVirtualModule,
+} from "../utils/gatsby-webpack-virtual-modules"
 
 interface IGatsbyPageComponent {
   component: string
@@ -192,7 +195,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   let syncRequires = `${hotImport}
 
 // prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
@@ -206,13 +209,13 @@ const preferDefault = m => m && m.default || m
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n`
   asyncRequires += `exports.components = {\n${components
     .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
-        path.join(program.directory, `node_modules`, `$virtual`),
+        getAbsolutePathForVirtualModule(`$virtual`),
         c.component
       )
 

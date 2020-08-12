@@ -26,7 +26,7 @@ const styles = {
     color: `lilac`,
   },
   forHire: {
-    background: `#effaef`,
-    color: `#2b7e2b`,
+    bg: `green.50`,
+    color: `white`,
   },
 }

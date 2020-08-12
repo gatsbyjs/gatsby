@@ -31,6 +31,7 @@ module.exports = {
     `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
+    `<rootDir>/packages/gatsby-admin/.cache/`,
     `__tests__/fixtures`,
   ],
   transform: {
