@@ -15,6 +15,7 @@ import {
 import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
+import findDependencyMatch from "../find-dependency-match"
 
 const errorCache = new Map()
 
@@ -28,10 +29,6 @@ const getUserProps = props => {
   return userProps
 }
 
-const SetResourcesProvider = React.createContext()
-
-let resourcesCache
-
 const Wrapper = ({
   children,
   inputs,
@@ -39,11 +36,8 @@ const Wrapper = ({
   resultCache,
   inFlightCache,
   queue,
+  plan,
 }) => {
-  // eslint-disable-next-line
-  const [resourcesList, setResources] = useState(resourcesCache || [])
-  resourcesCache = resourcesList
-
   return (
     <ErrorBoundary>
       <GlobalsProvider
@@ -54,15 +48,11 @@ const Wrapper = ({
           queue,
         }}
       >
-        <SetResourcesProvider.Provider value={setResources}>
-          <ResourceProvider value={resourcesList}>
-            <InputProvider value={inputs}>
-              <Suspense fallback={<p>Loading recipe...</p>}>
-                {children}
-              </Suspense>
-            </InputProvider>
-          </ResourceProvider>
-        </SetResourcesProvider.Provider>
+        <ResourceProvider value={plan}>
+          <InputProvider value={inputs}>
+            <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+          </InputProvider>
+        </ResourceProvider>
       </GlobalsProvider>
     </ErrorBoundary>
   )
@@ -138,14 +128,12 @@ const handleResource = (resourceName, context, props) => {
   const updateResource = result => {
     allResources = allResources.filter(a => a.resourceDefinitions._key)
     const resourceMap = new Map()
-
     allResources.forEach(r => resourceMap.set(r.resourceDefinitions._key, r))
     const newResource = {
       resourceName,
       resourceDefinitions: props,
       ...result,
     }
-
     if (!lodash.isEqual(newResource, resourceMap.get(trueKey))) {
       resourceMap.set(trueKey, newResource)
       // TODO Do we need this? It's causing infinite loops
@@ -154,6 +142,9 @@ const handleResource = (resourceName, context, props) => {
   }
 
   let allResources = useResourceContext()
+  const resourcePlan = allResources?.find(
+    a => a.resourceDefinitions._key === trueKey || a._uuid === trueKey
+  )
   if (!errorCache.has(trueKey)) {
     const error = validateResource(resourceName, context, props)
     errorCache.set(trueKey, error)
@@ -171,12 +162,22 @@ const handleResource = (resourceName, context, props) => {
   const inFlightPromise = inFlightCache.get(cacheKey)
 
   if (cachedResult) {
-    updateResource(cachedResult)
     return cachedResult
   }
 
   if (inFlightPromise) {
     throw inFlightPromise
+  }
+
+  // If this resource requires another resource to be created before it,
+  // check if it's created.
+  if (mode === `apply` && resourcePlan.dependsOn) {
+    const matches = findDependencyMatch(allResources, resourcePlan)
+    if (!matches.every(m => m.isDone)) {
+      throw new Promise((resolve, reject) => {
+        setTimeout(() => reject(), 100)
+      })
+    }
   }
 
   const fn = mode === `apply` ? `create` : `plan`
@@ -225,9 +226,10 @@ const handleResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
+const render = (recipe, cb, context = {}, isApply, isStream, name) => {
+  const { inputs } = context
   const emitter = mitt()
-  const plan = {}
+  const renderState = {}
 
   const queue = new Queue(
     async (job, cb) => {
@@ -241,10 +243,12 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   const inFlightCache = new Map()
 
   let result
+  let resourcesArray = []
 
   const recipeWithWrapper = (
     <Wrapper
       inputs={inputs}
+      plan={context.plan}
       isApply={isApply}
       resultCache={resultCache}
       inFlightCache={inFlightCache}
@@ -257,9 +261,9 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   // Keep calling render until there's remaining resources to render.
   // This let's resources that depend on other resources to pause until one finishes.
   const renderResources = isDrained => {
-    result = RecipesReconciler.render(recipeWithWrapper, plan, name)
+    result = RecipesReconciler.render(recipeWithWrapper, renderState, name)
 
-    const resourcesArray = transformToPlan(result)
+    resourcesArray = transformToPlan(result)
 
     // Tell UI about updates.
     emitter.emit(`update`, resourcesArray)
@@ -279,7 +283,11 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
       ) {
         result = true
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
-      } else if (isDrained && queue.length === 0) {
+      } else if (
+        isDrained &&
+        queue.length === 0 &&
+        context.plan.every(p => p.isDone)
+      ) {
         result = true
         // If there's one resource & it fails validation, it doesn't go into the queue
         // so we check if inFlightCache is empty & all resources have an error.
@@ -303,7 +311,7 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
 
   const throttledRenderResources = lodash.throttle(renderResources, 100)
 
-  queue.on(`task_finish`, function (taskId, r, stats) {
+  queue.on(`task_finish`, function(taskId, r, stats) {
     throttledRenderResources()
   })
 

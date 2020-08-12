@@ -381,7 +381,10 @@ module.exports.all = async ({ root }) => {
 
 const schema = {
   name: Joi.string(),
-  description: Joi.string().optional().allow(null).allow(``),
+  description: Joi.string()
+    .optional()
+    .allow(null)
+    .allow(``),
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),

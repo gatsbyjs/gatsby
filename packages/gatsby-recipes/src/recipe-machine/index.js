@@ -1,4 +1,5 @@
 const { Machine, assign, send } = require(`xstate`)
+const lodash = require(`lodash`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -7,7 +8,7 @@ const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const resolveRecipe = require(`../resolve-recipe`)
-const lodash = require(`lodash`)
+const findDependencyMatch = require(`../find-dependency-match`)
 
 const recipeMachine = Machine(
   {
@@ -131,60 +132,17 @@ const recipeMachine = Machine(
               const result = await createPlan(context, cb)
               // Validate dependencies are met in the plan
               const dependencyErrors = []
-              const dependenciesMet = result.every(r => {
-                if (!r.dependsOn) {
-                  return true
-                } else {
-                  return r.dependsOn.some(d => {
-                    const { resourceName, ...otherValues } = d
-                    const keys = Object.keys(otherValues)
-
-                    const isMatchFound = result.some(r1 => {
-                      // Is this the right resourceName?
-                      if (resourceName !== r1.resourceName) {
-                        return false
-                      }
-                      // Do keys match?
-                      if (
-                        !keys.every(
-                          k =>
-                            Object.keys(r1.resourceDefinitions).indexOf(k) >= 0
-                        )
-                      ) {
-                        return false
-                      }
-
-                      // Do values match?
-                      if (
-                        !keys.every(k => r1.resourceDefinitions[k] === d[k])
-                      ) {
-                        return false
-                      }
-
-                      return true
-                    })
-
-                    if (!isMatchFound) {
-                      const {
-                        mdxType,
-                        ...resourceDefinition
-                      } = r.resourceDefinitions
-                      dependencyErrors.push(
-                        `A resource (${r.resourceName}: ${JSON.stringify(
-                          resourceDefinition
-                        )}) is missing its dependency on ${JSON.stringify(
-                          r.dependsOn[0]
-                        )}`
-                      )
-                    }
-
-                    return isMatchFound
-                  })
-                }
+              result.forEach(r => {
+                const matches = findDependencyMatch(result, r)
+                matches.forEach(m => {
+                  if (m.error) {
+                    dependencyErrors.push(m)
+                  }
+                })
               })
 
               // eslint-disable-next-line
-              if (!dependenciesMet) throw { error: dependencyErrors }
+              if (dependencyErrors.length > 0) throw { error: dependencyErrors }
 
               return result
             } catch (e) {
@@ -251,7 +209,6 @@ const recipeMachine = Machine(
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {
-            debug(`applying plan`)
             cb(`RESET`)
             if (context.plan.length === 0) {
               return cb(`onDone`)

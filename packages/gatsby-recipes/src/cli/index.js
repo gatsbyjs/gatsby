@@ -483,8 +483,8 @@ export default async ({
 
       // eslint-disable-next-line
       const [_, createOperation] = useMutation(`
-        mutation ($recipePath: String!, $projectRoot: String!) {
-          createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
+        mutation ($recipePath: String!, $projectRoot: String!, $isDevelopMode: Boolean!) {
+          createOperation(recipePath: $recipePath, projectRoot: $projectRoot, watchChanges: $isDevelopMode)
         }
       `)
       // eslint-disable-next-line
@@ -511,6 +511,7 @@ export default async ({
             await createOperation({
               recipePath: localRecipe,
               projectRoot,
+              isDevelopMode,
             })
           } catch (e) {
             console.log(`error creating operation`, e)
@@ -576,14 +577,21 @@ export default async ({
       }
 
       const GeneralError = ({ state }) => {
+        const errors = Array.isArray(state.context.error.error)
+          ? state.context.error.error
+          : [state.context.error.error]
         if (state.context?.error?.error) {
           return (
             <>
               <Text bold>The recipe has an error:</Text>
               <Text>{`\n`}</Text>
-              <Text backgroundColor="#C41E3A" color="white">
-                {state.context.error.error}
-              </Text>
+              {errors.map((error, i) => {
+                return (
+                  <Text key={i} backgroundColor="#C41E3A" color="white">
+                    {error.error}
+                  </Text>
+                )
+              })}
             </>
           )
         } else return null
