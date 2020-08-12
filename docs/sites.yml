@@ -11519,6 +11519,17 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Crogic
+  url: https://crogic.jp
+  main_url: https://crogic.jp
+  description: >
+    Web and Music Creator's porfolio site.
+  categories:
+    - Portfolio
+    - Web Development
+    - Music
+  built_by: Mei
+  built_by_url: https://twitter.com/vo_mei0623
 - title: Reactive Resume
   url: https://rxresu.me
   main_url: https://rxresu.me
