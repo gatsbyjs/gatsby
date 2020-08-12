@@ -10867,7 +10867,6 @@
   description: >
     Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
   categories:
-    - Styling:Tailwind
     - Productivity
     - Technology
     - Podcast
@@ -11392,6 +11391,18 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: LANDTX
+  main_url: https://www.landtx.com
+  url: https://www.landtx.com
+  source_url: https://github.com/ltx-digett/landtx
+  description: >
+    LANDTX markets investment, recreational, ranch and farm lands throughout Texas.
+  categories:
+    - Real Estate
+    - Business
+  built_by: Digett
+  built_by_url: https://www.digett.com
+  featured: false
 - title: Raleigh Bikes
   url: https://www.raleigh.co.uk/gb/en/
   main_url: https://raleigh.co.uk/
@@ -11528,6 +11539,17 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Marcus Wood
+  main_url: https://www.marcuswood.io/
+  url: https://www.marcuswood.io/
+  description: >
+    Personal website for Marcus Wood, a web developer that builds products with React, TypeScript, and GraphQL.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Marcus Wood
+  built_by_url: https://www.marcuswood.io/
 - title: Crogic
   url: https://crogic.jp
   main_url: https://crogic.jp
@@ -11638,6 +11660,68 @@
     - Business
     - Blog
     - API
+- title: Webplace
+  url: https:/www.webplace.com.au
+  main_url: https:/www.webplace.com.au
+  description: Corporate website for the Webplace Digital Agency
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+  built_by: Webplace
+  built_by_url: https://www.webplace.com.au
+  featured: false
+- title: Motherhost
+  main_url: https://motherhost.com/
+  url: https://motherhost.com/
+  description: >
+    Ecommerce website for web hosting company.
+  categories:
+    - Web Development
+    - E-commerce
+  built_by: Motherhost
+  built_by_url: https://motherhost.com
+- title: Oomph
+  url: https://www.oomphinc.com/agency
+  main_url: https://www.oomphinc.com
+  description: >
+    We craft digital products — but we make so much more. We design delight. We make a lasting first impression. We communicate value & purpose. We build lifelong relationships.
+  categories:
+    - Accessibility
+    - Agency
+    - Business
+    - Design
+    - Marketing
+    - Technology
+    - User Experience
+    - Web Development
+  built_by: Oomph, Inc.
+  built_by_url: https://www.oomphinc.com
+- title: FatihaTV
+  url: https://fatihatv.com
+  main_url: https://fatihatv.com
+  description: A distaction-free platform to consume Islamic content from reputable Youtube Channels
+  categories:
+    - Community
+    - Library
+    - Media
+    - Nonprofit
+    - SEO
+  built_by: TengkuHafidz
+- title: WebSheets Generator
+  url: https://my.websheets.co
+  main_url: https://demo.websheets.co
+  source_url: https://github.com/tengkuhafidz/websheets-generator
+  description: Generate websites with just Google Sheets
+  categories:
+    - Open Source
+    - Web Development
+    - Directory
+    - Gallery
+    - Portfolio
+    - Documentation
+  built_by: Tengku Hafidz
+  built_by_url: https://twitter.com/sohafidz
 - title: The Mezzofanti Guild - Language Learning Made Simple
   url: https://www.mezzoguild.com
   main_url: https://www.mezzoguild.com
