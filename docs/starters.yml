@@ -7002,6 +7002,18 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-bootstrap-snipcart.netlify.app/
+  repo: https://github.com/julianbattaglino/gatsby-snipcart-eccomerce.git
+  description: A simple e-commerce shop built using Gatsby / React Bootstrap and Snipcart.
+  tags:
+    - E-commerce
+    - React-Bootstrap CSS framework
+    - Snipcart
+    - Shop
+    - Products
+  features:
+    - Pwa
+    - Styled Components
 - url: https://gatsby-starter-emotion-theme.netlify.app/
   repo: https://github.com/jackoliver/gatsby-starter-emotion-theme
   description: Gatsby+Emotion+Theming, made to get up and running quicker with standard marketing microsites.
