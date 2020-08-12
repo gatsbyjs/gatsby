@@ -166,6 +166,10 @@ const handleResource = (resourceName, context, props) => {
 
   // If this resource requires another resource to be created before it,
   // check if it's created.
+  //
+  // TODO test this when we can mock resources by varying what
+  // resources depend on what & which return first and ensuring
+  // resources end in right order.
   if (mode === `apply` && resourcePlan.dependsOn) {
     const matches = findDependencyMatch(allResources, resourcePlan)
     if (!matches.every(m => m.isDone)) {
