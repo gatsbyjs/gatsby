@@ -1,37 +1,25 @@
-import { bootstrap } from "../bootstrap"
-import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
-import report from "gatsby-cli/lib/reporter"
+import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
-import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
+import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
-import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import * as requiresWriter from "../bootstrap/requires-writer"
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
-import { IProgram } from "./types"
-import {
-  calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
-  startWebpackServer,
-  writeOutRequires,
-} from "../services"
-import { boundActionCreators } from "../redux/actions"
-import { ProgramStatus } from "../redux/types"
+import { IProgram, IDebugInfo } from "./types"
+import { interpret } from "xstate"
+import { globalTracer } from "opentracing"
+import { developMachine } from "../state-machines/develop"
+import { logTransitions } from "../utils/state-machine-logging"
+
+const tracer = globalTracer()
 
 // const isInteractive = process.stdout.isTTY
 
@@ -66,7 +54,27 @@ process.on(`message`, msg => {
   }
 })
 
-module.exports = async (program: IProgram): Promise<void> => {
+interface IDevelopArgs extends IProgram {
+  debugInfo: IDebugInfo | null
+}
+
+const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (debugInfo.break) {
+    inspector.open(debugInfo.port, undefined, true)
+    // eslint-disable-next-line no-debugger
+    debugger
+  } else {
+    inspector.open(debugInfo.port)
+  }
+}
+
+module.exports = async (program: IDevelopArgs): Promise<void> => {
+  reporter.setVerbose(program.verbose)
+
+  if (program.debugInfo) {
+    openDebuggerPort(program.debugInfo)
+  }
+
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -81,7 +89,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    report.panic(
+    reporter.panic(
       `The flag ${chalk.yellow(
         `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
       )} is not available with ${chalk.cyan(
@@ -91,7 +99,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()
-  report.pendingActivity({ id: `webpack-develop` })
+  reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -108,34 +116,20 @@ module.exports = async (program: IProgram): Promise<void> => {
     throw e
   }
 
-  // Start bootstrap process.
-  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({ program })
-
-  // Start the createPages hot reloader.
-  bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
-
-  // Start the schema hot reloader.
-  bootstrapSchemaHotReloader()
-
-  const { queryIds } = await calculateDirtyQueries({ store })
-
-  await runStaticQueries({ queryIds, store, program })
-  await runPageQueries({ queryIds, store, program })
-  await writeOutRequires({ store })
-  boundActionCreators.setProgramStatus(
-    ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
-  )
-
-  await db.saveState()
-
-  await waitUntilAllJobsComplete()
-  requiresWriter.startListener()
-  db.startAutosave()
-  queryUtil.startListeningToDevelopQueue({
-    graphqlTracing: program.graphqlTracing,
-  })
-  queryWatcher.startWatchDeletePage()
   const app = express()
+  const parentSpan = tracer.startSpan(`bootstrap`)
 
-  await startWebpackServer({ program, app, workerPool })
+  const machine = developMachine.withContext({
+    program,
+    parentSpan,
+    app,
+  })
+
+  const service = interpret(machine)
+
+  if (program.verbose) {
+    logTransitions(service)
+  }
+
+  service.start()
 }

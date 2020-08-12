@@ -52,8 +52,8 @@ const CodeBlock = ({
                   fileName={title}
                   sx={{
                     position: `absolute`,
-                    right: t => t.space[1],
-                    top: t => t.space[1],
+                    right: 1,
+                    top: 1,
                     borderRadius: 2,
                   }}
                   content={content}

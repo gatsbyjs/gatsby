@@ -11,7 +11,7 @@ import { BlogIcon } from "../../assets/icons"
 const HomepageBlog = ({ posts }) => (
   <HomepageSection
     sectionName="Blog"
-    sectionIcon={BlogIcon}
+    sectionIcon={<BlogIcon />}
     title="The Gatsby blog"
     links={[
       {

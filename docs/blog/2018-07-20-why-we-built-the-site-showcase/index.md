@@ -13,7 +13,7 @@ We're starting the second phase soon and would love your help! For a list of tas
 
 ![Filtered Sites](filtered-sites.png)
 
-The Site Showcase was developed by Cassie Beckley ([@ThatOtherPerson](https://github.com/ThatOtherPerson)), Shawn Wang ([@sw-yx](https://github.com/sw-yx)), and Kurt Kemple ([@kkemple](https://github.com/kkemple)) and Flo ([@fk](https://github.com/fk)) did an _incredible_ job on design. Many thanks to other people who contributed, including Kyle Gill ([@gillkyle](https://github.com/gillkyle)), LekoArts ([@LeKoArts](https://github.com/LeKoArts)), David Luhr ([@davidluhr](https://github.com/davidluhr)), Vince P. ([@daydream05](https://github.com/daydream05)), Mike Allanson ([@m-allanson](https://github.com/m-allanson)), Michał Piechowiak ([@pieh](https://github.com/pieh)), Sam Bhagwat ([@calcsam](https://github.com/calcsam)) and more.
+The Site Showcase was developed by Cassie Beckley ([@ThatOtherPerson](https://github.com/ThatOtherPerson)), Shawn Wang ([@sw-yx](https://github.com/sw-yx)), and Kurt Kemple ([@kkemple](https://github.com/kkemple)) and Flo ([@fk](https://github.com/fk)) did an _incredible_ job on design. Many thanks to other people who contributed, including Kyle Gill ([@gillkyle](https://github.com/gillkyle)), Lennart Jörgens ([@LekoArts](https://github.com/LekoArts)), David Luhr ([@davidluhr](https://github.com/davidluhr)), Vince P. ([@daydream05](https://github.com/daydream05)), Mike Allanson ([@m-allanson](https://github.com/m-allanson)), Michał Piechowiak ([@pieh](https://github.com/pieh)), Sam Bhagwat ([@calcsam](https://github.com/calcsam)) and more.
 
 ## Submitting your site
 
