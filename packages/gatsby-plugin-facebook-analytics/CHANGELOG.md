@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.4.9...gatsby-plugin-facebook-analytics@2.4.10) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.4.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.4.8...gatsby-plugin-facebook-analytics@2.4.9) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.4.7...gatsby-plugin-facebook-analytics@2.4.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.4.6...gatsby-plugin-facebook-analytics@2.4.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
 ## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.4.5...gatsby-plugin-facebook-analytics@2.4.6) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-plugin-facebook-analytics

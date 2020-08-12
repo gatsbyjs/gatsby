@@ -1,6 +1,4 @@
 const Promise = require(`bluebird`)
-const fetch = require(`node-fetch`)
-const fs = require(`fs-extra`)
 const startersRedirects = require(`./starter-redirects.json`)
 
 const { loadYaml } = require(`./src/utils/load-yaml`)
@@ -15,16 +13,23 @@ const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, blog, showcase, starters, creators, packages, features]
+const apiCalls = require(`./src/utils/node/api-calls.js`)
+
+const sections = [
+  docs,
+  blog,
+  showcase,
+  starters,
+  creators,
+  packages,
+  features,
+  apiCalls,
+]
 
 // Run the provided API on all defined sections of the site
 async function runApiForSections(api, helpers) {
   await Promise.all(
-    sections.map(section => {
-      if (section[api]) {
-        section[api](helpers)
-      }
-    })
+    sections.map(section => section[api] && section[api](helpers))
   )
 }
 
@@ -74,8 +79,11 @@ exports.createSchemaCustomization = async helpers => {
   `)
 }
 
-// Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
-exports.createResolvers = ({ createResolvers }) => {
+exports.createResolvers = async helpers => {
+  await runApiForSections(`createResolvers`, helpers)
+
+  const { createResolvers } = helpers
+  // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
   createResolvers({
     DocumentationJs: {
       availableIn: {
@@ -102,28 +110,6 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
-exports.sourceNodes = async ({
-  actions: { createNode },
-  createContentDigest,
-}) => {
-  // get data from GitHub API at build time
-  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
-  const resultData = await result.json()
-  // create node for build time data example in the docs
-  createNode({
-    nameWithOwner: resultData.full_name,
-    url: resultData.html_url,
-    // required fields
-    id: `example-build-time-data`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
-  })
-}
-
 exports.onCreateNode = async helpers => {
   await runApiForSections(`onCreateNode`, helpers)
 }
@@ -146,11 +132,4 @@ exports.createPages = async helpers => {
       force: true,
     })
   })
-}
-
-exports.onPostBuild = () => {
-  fs.copySync(
-    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-    `./public/gatsbygram.mp4`
-  )
 }

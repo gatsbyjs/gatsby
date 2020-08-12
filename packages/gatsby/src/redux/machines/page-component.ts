@@ -74,15 +74,13 @@ export const componentMachine = machine<IContext, IState, IEvent>(
     },
     states: {
       inactive: {
-        on: {
-          // Transient transition
-          // Will transition to either 'inactiveWhileBootstrapping' or idle
-          // immediately upon entering 'inactive' state if the condition is met.
-          "": [
-            { target: `inactiveWhileBootstrapping`, cond: `isBootstrapping` },
-            { target: `idle`, cond: `isNotBootstrapping` },
-          ],
-        },
+        // Transient transition
+        // Will transition to either 'inactiveWhileBootstrapping' or idle
+        // immediately upon entering 'inactive' state if the condition is met.
+        always: [
+          { target: `inactiveWhileBootstrapping`, cond: `isBootstrapping` },
+          { target: `idle`, cond: `isNotBootstrapping` },
+        ],
       },
       inactiveWhileBootstrapping: {
         on: {

@@ -212,6 +212,7 @@ jobs:
     executor: node
     steps:
       - checkout
+      # We should always assert on master
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
@@ -266,7 +267,7 @@ jobs:
     executor: node
     steps:
       - e2e-test:
-          test_path: integration-tests/gatsby-pipeline
+          test_path: integration-tests/gatsby-cli
           trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
 
   integration_tests_structured_logging:
@@ -274,6 +275,12 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/structured-logging
+
+  integration_tests_artifacts:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/artifacts
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
@@ -363,6 +370,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes/production-runtime
+          test_command: yarn test
+
+  mdx_e2e_tests:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/mdx
           test_command: yarn test
 
   starters_validate:
@@ -564,6 +578,8 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_structured_logging:
           <<: *e2e-test-workflow
+      - integration_tests_artifacts:
+          <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:
             - bootstrap
@@ -580,6 +596,8 @@ workflows:
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - mdx_e2e_tests:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
