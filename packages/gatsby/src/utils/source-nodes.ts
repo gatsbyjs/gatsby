@@ -85,13 +85,16 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Node[]): void {
 export default async ({
   webhookBody,
   parentSpan,
+  deferNodeMutation = false,
 }: {
-  webhookBody?: unknown
-  parentSpan?: Span
+  webhookBody: unknown
+  parentSpan: Span
+  deferNodeMutation: boolean
 }): Promise<void> => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
+    deferNodeMutation,
     parentSpan,
     webhookBody: webhookBody || {},
   })

@@ -53,7 +53,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
-  Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
+  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
@@ -73,7 +73,7 @@ Gatsby is a modern web framework for blazing fast websites.
   to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
 - **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources,
+  splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
   and more to ensure your site is fast — no manual tuning required.
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire

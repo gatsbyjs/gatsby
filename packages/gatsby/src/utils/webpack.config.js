@@ -16,6 +16,7 @@ import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
+import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -409,6 +410,7 @@ module.exports = async (
         "socket.io-client": path.dirname(
           require.resolve(`socket.io-client/package.json`)
         ),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
