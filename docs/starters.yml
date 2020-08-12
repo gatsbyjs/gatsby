@@ -7319,6 +7319,23 @@
     - Uses SCSS for easy-to-understand naming
     - Google Analytics support
     - Responsive design
+- url: https://gatsby-starter-essentials.netlify.app/
+  repo: https://github.com/selrond/gatsby-starter-essentials
+  description: A solid base to build your project upon
+  tags:
+    - Styling:CSS-in-JS
+  features:
+    - Sensible folder structure
+    - Only linted code is commit-able with pre-commit eslint hook
+    - Absolute imports (no more import Button from '../../../../../components/atoms/Button')
+    - styled-components set up
+    - sanitize.css included for sane out-of-the-box CSS defaults
+    - eslint with Airbnb config
+    - Auto formatted code via `prettier` as an `eslint` plugin
+    - Always up-to-date starter dependencies thanks to Dependabot
+    - Improved npm scripts - npm start runs a local server, so you can view your site live on multiple devices at once
+    - .nvmrc requiring lts node version
+    - Simple circleci integration to utilize CI/CD in your app
 - url: https://frosty-torvalds-822eb0.netlify.app
   repo: https://github.com/willb335/gatsby-starter-hoa
   description: A template for home owner associations built with Gatsby, Contentful, and Netlify
