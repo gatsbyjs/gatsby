@@ -548,6 +548,7 @@ export default async ({
                   await createOperation({
                     recipePath: recipeItem.value,
                     projectRoot,
+                    isDevelopMode: false,
                   })
                 } catch (e) {
                   console.log(`error creating operation`, e)
