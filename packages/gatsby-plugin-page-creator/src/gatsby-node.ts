@@ -16,7 +16,6 @@ import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
-import reporter from "gatsby-cli/lib/reporter"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -132,6 +131,7 @@ export function setFieldsOnGraphQLNodeType({
   getNode,
   type,
   store,
+  reporter,
 }: SetFieldsOnGraphQLNodeTypeArgs): object {
   try {
     const extensions = store.getState().program.extensions
@@ -163,7 +163,7 @@ export function setFieldsOnGraphQLNodeType({
 
             validatePathQuery(filePath, extensions)
 
-            return derivePath(filePath, sourceCopy)
+            return derivePath(filePath, sourceCopy, reporter)
           },
         },
       }
@@ -176,11 +176,12 @@ export function setFieldsOnGraphQLNodeType({
         ? e.message
         : `PageCreator: ${e.message}`
     )
+    return {}
   }
 }
 
 export async function onPreInit(
-  _args: ParentSpanPluginArgs,
+  { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
   try {
@@ -202,7 +203,10 @@ export async function onPreInit(
         const absolutePath = require.resolve(
           systemPath.join(pagesPath, relativePath)
         )
-        const queryString = await collectionExtractQueryString(absolutePath)
+        const queryString = await collectionExtractQueryString(
+          absolutePath,
+          reporter
+        )
         if (!queryString) return
         const ast = parse(queryString)
         knownCollections.set(

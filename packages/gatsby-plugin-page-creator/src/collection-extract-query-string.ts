@@ -4,11 +4,12 @@ import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
 import traverse from "@babel/traverse"
 import { extractModel } from "./path-utils"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby"
 
 // This Function opens up the actual collection file and extracts the queryString used in the
 export function collectionExtractQueryString(
-  absolutePath: string
+  absolutePath: string,
+  reporter: Reporter
 ): string | null {
   let queryString: string | null = null
 
