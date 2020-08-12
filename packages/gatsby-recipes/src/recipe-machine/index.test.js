@@ -78,7 +78,7 @@ describe(`recipe-machine`, () => {
     service.start()
   })
 
-  it(`fetches official recipes from unpkg`, done => {
+  it.skip(`fetches official recipes from unpkg`, done => {
     const initialContext = {
       recipePath: `theme-ui`,
       projectRoot: `/Users/fake`,
