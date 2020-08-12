@@ -6964,18 +6964,15 @@
   description: A flat design Gatsby Starter Blog, Powered by Sanity to manage the content and styled using styled-components.
   tags:
     - Blog
-    - Sanity
-    - Styled-components
+    - CMS:sanity.io
     - SEO
     - Search
     - Pagination
-    - Minimal Design
-    - Responsive Design
-    - Styling:styled-components
-    - Language:JavaScript
+    - JavaScript
   features:
     - Search Support for Blog Posts
     - Dark Mode
+    - Styled with styled-components
     - Featured Posts Section
     - Pagination
     - Home Page, Blog Archive Page, Blog Post Page
