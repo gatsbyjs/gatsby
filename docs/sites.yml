@@ -10861,6 +10861,24 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+- title: Narration Box
+  main_url: https://narrationbox.com
+  url: https://narrationbox.com
+  description: >
+    Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
+  categories:
+    - Styling:Tailwind
+    - Productivity
+    - Technology
+    - Podcast
+    - Landing Page
+    - Media
+    - Entertainment
+    - Business
+    - API
+    - Video
+  built_by: Chetan Malhotra
+  built_by_url: https://twitter.com/narrationbox
 - title: CodeWithLinda
   url: https://www.codewithlinda.com/
   main_url: https://www.codewithlinda.com/
@@ -11501,6 +11519,17 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Crogic
+  url: https://crogic.jp
+  main_url: https://crogic.jp
+  description: >
+    Web and Music Creator's porfolio site.
+  categories:
+    - Portfolio
+    - Web Development
+    - Music
+  built_by: Mei
+  built_by_url: https://twitter.com/vo_mei0623
 - title: Reactive Resume
   url: https://rxresu.me
   main_url: https://rxresu.me
@@ -11523,7 +11552,7 @@
     - Community
     - Event
     - SEO
-- title: John Kavanagh Portfolio
+- title: John Kavanagh's Portfolio
   url: https://johnkavanagh.co.uk/
   main_url: https://johnkavanagh.co.uk/
   description: >
@@ -11532,6 +11561,22 @@
     - Portfolio
     - Technology
     - Web Development
+    - Blog
+    - Freelance
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
+- title: Red Central
+  url: https://redcentral.co.uk/
+  main_url: https://redcentral.co.uk/
+  description: >
+    Based in Bristol in the UK, Red Central is the World's no.1 creative agency for entertainment and brand licensing.
+  categories:
+    - Agency
+    - Entertainment
+    - Media
+    - Consulting
+    - Design
   built_by: John Kavanagh
   built_by_url: https://johnkavanagh.co.uk/
   featured: false
@@ -11585,4 +11630,28 @@
     - Technology
   built_by: Laury Bueno
   built_by_url: https://github.com/laurybueno/
+- title: The Mezzofanti Guild - Language Learning Made Simple
+  url: https://www.mezzoguild.com
+  main_url: https://www.mezzoguild.com
+  description: >
+    Learning a foreign language and don't know where to start? The Mezzofanti Guild will teach you the best tips, tricks and hacks to simplify your language learning.
+  categories:
+    - Blog
+    - Education
+    - Learning
+    - Travel
+  built_by: Donovan Nagel
+  built_by_url: https://www.donovannagel.com
+  featured: false
+- title: Alex Perronnet Personal Website
+  url: https://alexperronnet.io
+  main_url: https://alexperronnet.io
+  source_url: https://github.com/alexperronnet/alexperronnet.io
+  description: >
+    I'm Alex Perronnet, a french freelance developer and designer. I'm also an open-source contributor and a content creator.
+  categories:
+    - Open Source
+    - Freelance
+  built_by: Alex Perronnet
+  built_by_url: https://alexperronnet.io
   featured: false

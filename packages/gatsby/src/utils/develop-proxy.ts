@@ -61,6 +61,7 @@ export const startDevelopProxy = (input: {
     }
 
     if (req.url === `/socket.io/socket.io.js`) {
+      res.setHeader(`Content-Type`, `application/javascript`)
       res.end(
         fs.readFileSync(require.resolve(`socket.io-client/dist/socket.io.js`))
       )

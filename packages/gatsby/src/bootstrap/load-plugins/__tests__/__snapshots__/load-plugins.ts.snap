@@ -81,6 +81,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
@@ -97,6 +99,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
@@ -113,6 +117,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
@@ -129,6 +135,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
@@ -145,6 +153,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
@@ -189,6 +199,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "/src/pages",
@@ -295,6 +307,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
@@ -311,6 +325,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
@@ -327,6 +343,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
@@ -343,6 +361,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
@@ -359,6 +379,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
@@ -375,6 +397,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "__TEST__/src/pages",
@@ -419,6 +443,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "/src/pages",
@@ -513,6 +539,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "ignore": Array [
@@ -531,6 +559,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
@@ -547,6 +577,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
@@ -563,6 +595,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
@@ -579,6 +613,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
@@ -595,6 +631,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
@@ -611,6 +649,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby-plugin-page-creator/src/pages",
@@ -655,6 +695,8 @@ Array [
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
     ],
     "pluginOptions": Object {
       "path": "/src/pages",

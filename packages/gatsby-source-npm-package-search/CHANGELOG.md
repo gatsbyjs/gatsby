@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.3.12...gatsby-source-npm-package-search@2.3.13) (2020-08-06)
+
+### Features
+
+- **gatsby-source-npm-package-search:** add Node type NpmPackage ([#25038](https://github.com/gatsbyjs/gatsby/issues/25038)) ([0b58ef2](https://github.com/gatsbyjs/gatsby/commit/0b58ef2))
+
 ## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.3.11...gatsby-source-npm-package-search@2.3.12) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-source-npm-package-search

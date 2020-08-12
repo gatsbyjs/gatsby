@@ -11,6 +11,12 @@ const {
 // even if another instance might already be running. This is necessary to ensure the gatsby
 // develop command does not _not_ run the server if the user is running gatsby recipes at the same time.
 export default async (programPath, forceStart) => {
+  // If this env variable is set, we're in dev mode & assume the recipes API was already started
+  // manually.
+  if (process.env.RECIPES_DEV_MODE) {
+    return { port: 50400 }
+  }
+
   let { port } = (await getService(programPath, `recipesgraphqlserver`)) || {}
 
   if (!port || forceStart) {

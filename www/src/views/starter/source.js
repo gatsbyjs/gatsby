@@ -74,6 +74,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
           "&&": {
             borderBottom: 0,
             mr: 4,
+            color: `link.color`,
           },
         }}
       >
@@ -86,6 +87,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
+            color: `link.color`,
           },
         }}
       >
