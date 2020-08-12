@@ -35,6 +35,7 @@ const Wrapper = ({
   isApply,
   resultCache,
   inFlightCache,
+  blockedResources,
   queue,
   plan,
 }) => (
@@ -44,6 +45,7 @@ const Wrapper = ({
         mode: isApply ? `apply` : `plan`,
         resultCache,
         inFlightCache,
+        blockedResources,
         queue,
       }}
     >
@@ -63,7 +65,13 @@ const ResourceComponent = ({
   children,
   ...props
 }) => {
-  const { mode, resultCache, inFlightCache, queue } = useGlobals()
+  const {
+    mode,
+    resultCache,
+    inFlightCache,
+    blockedResources,
+    queue,
+  } = useGlobals()
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
 
@@ -77,6 +85,7 @@ const ResourceComponent = ({
       mode,
       resultCache,
       inFlightCache,
+      blockedResources,
       queue,
     },
     props
@@ -109,7 +118,7 @@ const validateResource = (resourceName, context, props) => {
 
 const handleResource = (resourceName, context, props) => {
   // Initialize
-  const { mode, resultCache, inFlightCache, queue } = context
+  const { mode, resultCache, inFlightCache, blockedResources, queue } = context
 
   // TODO use session ID to ensure the IDs are unique..
   const trueKey = props._key ? props._key : context._uuid
@@ -124,19 +133,7 @@ const handleResource = (resourceName, context, props) => {
 
   // update global context when results come in.
   const updateResource = result => {
-    allResources = allResources.filter(a => a.resourceDefinitions._key)
-    const resourceMap = new Map()
-    allResources.forEach(r => resourceMap.set(r.resourceDefinitions._key, r))
-    const newResource = {
-      resourceName,
-      resourceDefinitions: props,
-      ...result,
-    }
-    if (!lodash.isEqual(newResource, resourceMap.get(trueKey))) {
-      resourceMap.set(trueKey, newResource)
-      // TODO Do we need this? It's causing infinite loops
-      // setResources([...resourceMap.values()])
-    }
+    // TODO move to events
   }
 
   let allResources = useResourceContext()
@@ -172,8 +169,12 @@ const handleResource = (resourceName, context, props) => {
   if (mode === `apply` && resourcePlan.dependsOn) {
     const matches = findDependencyMatch(allResources, resourcePlan)
     if (!matches.every(m => m.isDone)) {
+      blockedResources.add(trueKey)
       throw new Promise((resolve, reject) => {
-        setTimeout(() => reject(), 100)
+        setTimeout(() => {
+          blockedResources.delete(trueKey)
+          reject()
+        }, 100)
       })
     }
   }
@@ -239,6 +240,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
 
   const resultCache = new Map()
   const inFlightCache = new Map()
+  const blockedResources = new Set()
 
   let result
   let resourcesArray = []
@@ -250,6 +252,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
       isApply={isApply}
       resultCache={resultCache}
       inFlightCache={inFlightCache}
+      blockedResources={blockedResources}
       queue={queue}
     >
       {recipe}
@@ -284,7 +287,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
       } else if (
         isDrained &&
         queue.length === 0 &&
-        context.plan.every(p => p.isDone)
+        blockedResources.size === 0
       ) {
         result = true
         // If there's one resource & it fails validation, it doesn't go into the queue

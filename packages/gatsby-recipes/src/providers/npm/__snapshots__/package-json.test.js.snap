@@ -13,24 +13,29 @@ exports[`packageJson resource e2e package resource test: PackageJson create plan
 Object {
   "currentState": "{
   \\"name\\": \\"test\\",
-  \\"scripts\\": {}
+  \\"scripts\\": {
+    \\"apple\\": \\"foot\\"
+  }
 }",
   "describe": "Add husky to package.json",
   "diff": "- Original  - 0
 + Modified  + 3
 
+@@ -1,4 +1,7 @@
   Object {
 +   \\"husky\\": \\"{
 +   /\\"hooks/\\": {}
 + }\\",
     \\"name\\": \\"test\\",
-    \\"scripts\\": Object {},
-  }",
+    \\"scripts\\": Object {
+      \\"apple\\": \\"foot\\",",
   "id": "husky",
   "name": "husky",
   "newState": "{
   \\"name\\": \\"test\\",
-  \\"scripts\\": {},
+  \\"scripts\\": {
+    \\"apple\\": \\"foot\\"
+  },
   \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
 }
