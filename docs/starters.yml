@@ -6876,6 +6876,20 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://gatsby-tfs-acme-starter.netlify.app/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-acme-starter
+  description: Your new digital garden. ACME Blog is a starter that was build on top of a gatsby-theme-acmeblog
+  tags:
+    - SEO
+    - Blog
+    - MDX
+  features:
+    - MDX
+    - Light and Dark mode
+    - Includes React Helmet to allow editing site meta tags
+    - Theme-ui
+    - Tags
+    - Categories
 - url: https://code-notes-example.netlify.com/
   repo: https://github.com/MrMartineau/gatsby-starter-code-notes
   description: A starter for the "Code Notes" Gatsby theme
