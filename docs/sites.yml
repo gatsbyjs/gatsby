@@ -11636,6 +11636,17 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: Webplace
+  url: https:/www.webplace.com.au
+  main_url: https:/www.webplace.com.au
+  description: Corporate website for the Webplace Digital Agency
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+  built_by: Webplace
+  built_by_url: https://www.webplace.com.au
+  featured: false
 - title: Motherhost
   main_url: https://motherhost.com/
   url: https://motherhost.com/
