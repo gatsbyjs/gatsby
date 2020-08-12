@@ -11647,6 +11647,19 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: UP42
+  main_url: https://up42.com/
+  url: https://up42.com/
+  description: UP42 is an open marketplace to buy and sell Earth Observation data and analytics algorithms. UP42 is also a platform to build and run analytics algorithms.
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+  categories:
+    - Data
+    - Technology
+    - Business
+    - Blog
+    - API
 - title: Webplace
   url: https:/www.webplace.com.au
   main_url: https:/www.webplace.com.au
