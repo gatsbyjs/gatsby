@@ -11539,6 +11539,17 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Marcus Wood
+  main_url: https://www.marcuswood.io/
+  url: https://www.marcuswood.io/
+  description: >
+    Personal website for Marcus Wood, a web developer that builds products with React, TypeScript, and GraphQL.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Marcus Wood
+  built_by_url: https://www.marcuswood.io/
 - title: Crogic
   url: https://crogic.jp
   main_url: https://crogic.jp
