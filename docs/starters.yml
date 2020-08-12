@@ -7319,6 +7319,26 @@
     - Uses SCSS for easy-to-understand naming
     - Google Analytics support
     - Responsive design
+- url: https://knochenmark.github.io/gatsby-starter-level-2/
+  repo: https://github.com/Knochenmark/gatsby-starter-level-2
+  description: A minimalistic, responsive and easily configurable Gatsby starter that will help to bring your portfolio to the next level.
+  tags:
+    - Portfolio
+    - Blog
+    - Markdown
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Responsive Layout
+    - High configurability
+    - Configurable Sections via Markdown
+    - Organized Projects by techs and Blog Posts by tags
+    - Posts in Markdown
+    - Pagination support
+    - Syntax highlighting in code blocks
+    - Styled Components with Emotion
+    - ESLint and Prettier
+    - FontAwsome Library for icons
 - url: https://gatsby-starter-essentials.netlify.app/
   repo: https://github.com/selrond/gatsby-starter-essentials
   description: A solid base to build your project upon
