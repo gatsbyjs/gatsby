@@ -33,26 +33,26 @@ describe(`recipe-machine errors`, () => {
     service.start()
   })
 
-  //   it(`errors if the introduction step has a command`, done => {
-  //     const initialContext = {
-  //       src: `
-  // # Hello, world
+  it(`errors if the introduction step has a command`, done => {
+    const initialContext = {
+      src: `
+  # Hello, world
 
-  // <File path="./hi.md" content="#yo" />
-  //     `,
-  //     }
-  //     const service = interpret(
-  //       recipeMachine.withContext(initialContext)
-  //     ).onTransition(state => {
-  //       if (state.value === `doneError`) {
-  //         expect(state.context.error).toBeTruthy()
-  //         service.stop()
-  //         done()
-  //       }
-  //     })
+  <File path="./hi.md" content="#yo" />
+      `,
+    }
+    const service = interpret(
+      recipeMachine.withContext(initialContext)
+    ).onTransition(state => {
+      if (state.value === `doneError`) {
+        expect(state.context.error).toBeTruthy()
+        service.stop()
+        done()
+      }
+    })
 
-  //     service.start()
-  //   })
+    service.start()
+  })
 
   it(`errors if no src or recipePath has been given`, done => {
     const initialContext = {}

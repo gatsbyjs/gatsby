@@ -1,7 +1,7 @@
 const { Machine, assign, send } = require(`xstate`)
 
 const debug = require(`debug`)(`recipes-machine`)
-
+const validateSteps = require(`../validate-steps`)
 const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const parser = require(`../parser`)
@@ -90,12 +90,34 @@ const recipeMachine = Machine(
             }),
           },
           onDone: {
-            target: `creatingPlan`,
+            target: `validatingSteps`,
             actions: assign({
               recipe: (context, event) => event.data.recipe,
               stepsAsMdx: (context, event) => event.data.stepsAsMdx,
               stepsAsJS: (context, event) => event.data.stepsAsJS,
               exports: (context, event) => event.data.exports,
+            }),
+          },
+        },
+      },
+      validateSteps: {
+        invoke: {
+          id: `validateSteps`,
+          src: async (context, event) => {
+            debug(`validatingSteps`)
+            const result = await validateSteps(context.stepsAsMdx)
+            if (result.length > 0) {
+              debug(`errors found in validation`)
+              throw new Error(JSON.stringify(result))
+            }
+
+            return undefined
+          },
+          onDone: `creatingPlan`,
+          onError: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, event) => JSON.parse(event.data.message),
             }),
           },
         },
