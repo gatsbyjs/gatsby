@@ -22,7 +22,7 @@ interface IGatsbyWebpackVirtualModulesContext {
 const fileContentLookup: Record<string, string> = {}
 const instances: IGatsbyWebpackVirtualModulesContext[] = []
 
-export const VIRTUAL_MODULES_BASE_PATH = `_this_is_virtual_fs_path_`
+export const VIRTUAL_MODULES_BASE_PATH = `.cache/_this_is_virtual_fs_path_`
 
 export class GatsbyWebpackVirtualModules {
   apply(compiler): void {

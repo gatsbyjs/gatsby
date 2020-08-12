@@ -314,7 +314,7 @@ If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyj
 
 If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg/), choose the fragment with `tracedSVG` at the end.
 
-#### About `withWebP`
+#### About `withWebp`
 
 If you want to automatically use [WebP images](https://developers.google.com/speed/webp/) when the browser supports the file format, use the `withWebp` fragments. If the browser doesn't support WebP, `gatsby-image` will fall back to the default image format.
 
