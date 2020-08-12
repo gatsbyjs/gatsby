@@ -4053,20 +4053,6 @@
     - Alternate links to other languages
     - Sitemap with language information
     - Localized 404 pages
-- url: https://gatsby-skeleton.netlify.app/
-  repo: https://github.com/msallent/gatsby-skeleton
-  description: Gatsby starter with TypeScript and all sort of linting
-  tags:
-    - Language:TypeScript
-    - Styling:CSS-in-JS
-    - SEO
-  features:
-    - TypeScript
-    - Styled-Components
-    - ESLint
-    - Prettier
-    - Stylelint
-    - SEO
 - url: https://nehalem.netlify.app/
   repo: https://github.com/nehalist/gatsby-starter-nehalem
   description: A starter for the Gatsby Nehalem Theme
@@ -7085,6 +7071,23 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-skeleton.netlify.app/
+  repo: https://github.com/msallent/gatsby-starter-skeleton
+  description: Gatsby starter featuring TypeScript, ESLint, Prettier and more...
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Styling:SCSS
+    - SEO
+  features:
+    - TypeScript (even for gatsby-* files!)
+    - ESLint
+    - Prettier
+    - stylelint
+    - husky
+    - lint-staged
+    - Layout and SEO components
+    - SCSS Modules
 - url: https://gatsby-persoanl.netlify.app/
   repo: https://github.com/AbdaliDahir/gatsby-portfolio
   description: creative personal & portfolio template based on gatsby. designed so you can showcase your work and write your blogs.
