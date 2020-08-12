@@ -6959,3 +6959,25 @@
     - Uses SCSS for easy-to-understand naming
     - Google Analytics support
     - Responsive design
+- url: https://flat-magazine.netlify.app/
+  repo: https://github.com/damnitrahul/gatsby-starter-flat-magazine
+  description: A flat design Gatsby Starter Blog, Powered by Sanity to manage the content and styled using styled-components.
+  tags:
+    - Blog
+    - Sanity
+    - Styled-components
+    - SEO
+    - Search
+    - Pagination
+    - Minimal Design
+    - Responsive Design
+    - Styling:styled-components
+    - Language:JavaScript
+  features:
+    - Search Support for Blog Posts
+    - Dark Mode
+    - Featured Posts Section
+    - Pagination
+    - Home Page, Blog Archive Page, Blog Post Page
+    - XML Sitemap and Robots.txt
+    - Responsive design
