@@ -7061,6 +7061,29 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-opinionated-starter.netlify.app/
+  repo: https://github.com/datacrafts-io/gatsby-opinionated-starter
+  description: Opinionated full-fledged TypeScript dev environment starter
+  tags:
+    - Styling:SCSS
+    - Styling:Other
+    - Testing
+    - Language:TypeScript
+    - Linting
+    - Storybook
+  features:
+    - Storybook support
+    - SCSS + SCSS Modules support
+    - Jest + testing-library support
+    - TypeScript support
+    - ESLint support for both ES and TS
+    - remark-lint support for linting markdown files
+    - style-lint support for linting SCSS and SCSS Modules
+    - GitHub Actions CI optional support
+    - Renovate bot optional support
+    - Husky optional support
+    - Typography.js support
+    - Netlify deploy optional support
 - url: https://gatsby-starter-fresh.netlify.app
   repo: https://github.com/mishal23/gatsby-starter-fresh
   description:  A minimal GatsbyJS starter blog template using the Fresh Theme for anyone to build a blogging site
