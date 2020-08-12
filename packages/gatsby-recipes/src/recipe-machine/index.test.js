@@ -10,7 +10,6 @@ describe(`recipe-machine`, () => {
       src: `
 # Hello, world!
     `,
-      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -34,7 +33,6 @@ describe(`recipe-machine`, () => {
 
 <File path="./hi.md" content="#yo" />
     `,
-      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -59,7 +57,6 @@ describe(`recipe-machine`, () => {
 
 <File path="${filePath}" content="#yo" />
     `,
-      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -74,6 +71,25 @@ describe(`recipe-machine`, () => {
         expect(fileExists).toBeTruthy()
         // Clean up file
         fs.unlinkSync(fullPath)
+        done()
+      }
+    })
+
+    service.start()
+  })
+
+  it.skip(`fetches official recipes from unpkg`, done => {
+    const initialContext = {
+      recipePath: `theme-ui`,
+      projectRoot: `/Users/fake`,
+      currentStep: 0,
+    }
+    const service = interpret(
+      recipeMachine.withContext(initialContext)
+    ).onTransition(state => {
+      if (state.value === `presentPlan`) {
+        expect(state.context.plan.length).toBeGreaterThan(1)
+        service.stop()
         done()
       }
     })

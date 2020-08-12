@@ -6,10 +6,7 @@
     "modules": ["@slack/client", "joi", "js-yaml", "date-fns"]
   },
   "rules": {
-    "issues.opened": ["peril/rules/emptybody.ts", "peril/rules/labeler.ts"],
-    "pull_request.closed (pull_request.merged == true)": [
-      "peril/rules/invite-collaborator.ts"
-    ]
+    "issues.opened": ["peril/rules/emptybody.ts", "peril/rules/labeler.ts"]
   },
   "repos": {
     "gatsbyjs/gatsby": {

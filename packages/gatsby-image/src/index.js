@@ -25,10 +25,12 @@ const convertProps = props => {
 
   if (resolutions) {
     convertedProps.fixed = resolutions
+    logDeprecationNotice(`resolutions`, `the gatsby-image v2 prop "fixed"`)
     delete convertedProps.resolutions
   }
   if (sizes) {
     convertedProps.fluid = sizes
+    logDeprecationNotice(`sizes`, `the gatsby-image v2 prop "fluid"`)
     delete convertedProps.sizes
   }
 
