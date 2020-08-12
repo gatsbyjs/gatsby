@@ -171,7 +171,7 @@ export function setFieldsOnGraphQLNodeType({
 
     return {}
   } catch (e) {
-    return reporter.panic(
+    reporter.panic(
       e.message.startsWith(`PageCreator`)
         ? e.message
         : `PageCreator: ${e.message}`
