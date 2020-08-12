@@ -10,3 +10,11 @@ Array [
   },
 ]
 `;
+
+exports[`findDependencyMatch basic matching 2`] = `
+Array [
+  Object {
+    "error": "A resource (undefined: {\\"otherKey\\":\\"hi\\"}) is missing its dependency on {\\"resourceName\\":\\"foo\\",\\"name\\":\\"bar2\\"}",
+  },
+]
+`;
