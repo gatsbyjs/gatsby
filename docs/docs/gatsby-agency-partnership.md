@@ -9,7 +9,7 @@ If you're in the business of building websites or web apps for clients, and you'
 Depending on the amount of websites you build with Gatsby, the partner program will include:
 
 - Joint case studies that are highlighted on the Gatsby blog, website, and other channels
-- Dedicated page on Gatsbyjs.org showcasing the sites you’ve built with Gatsby
+- Dedicated page on Gatsbyjs.com showcasing the sites you’ve built with Gatsby
 - A lead capture form on this page so people can get in touch with you directly
 - Live training for developers (in-person or virtual)
 
