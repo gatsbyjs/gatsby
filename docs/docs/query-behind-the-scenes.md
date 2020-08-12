@@ -2,7 +2,7 @@
 title: How Queries Work
 ---
 
-As part of Gatsby's data layer, GraphQL queries can be specified as tagged graphql expressions at the bottom of your component source file (e.g. [query for Gatsby frontpage](https://github.com/gatsbyjs/gatsby/blob/master/www/src/pages/index.js#L142)), StaticQueries within your components (e.g. [showcase site details](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/showcase-details.js#L96)), or fragments created by plugins (e.g. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/fragments.js)).
+As part of Gatsby's data layer, GraphQL queries can be specified as tagged GraphQL expressions at the bottom of your component source file (e.g. [query for Gatsby frontpage](https://github.com/gatsbyjs/gatsby/blob/master/www/src/pages/index.js#L142)), StaticQueries within your components (e.g. [showcase site details](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/showcase-details.js#L96)), or fragments created by plugins (e.g. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/fragments.js)).
 
 Note that this process only applies to queries that are specified directly in components or templates. It doesn't apply to queries involved in the creation of dynamic pages through your site's `gatsby-node.js` file (e.g. on [Gatsby's website](https://github.com/gatsbyjs/gatsby/blob/master/www/src/utils/node/docs.js#L42)).
 

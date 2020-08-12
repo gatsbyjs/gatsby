@@ -6,12 +6,16 @@ import { boundActionCreators } from "../redux/actions"
 
 export async function postBootstrap({
   parentSpan,
+  deferNodeMutation,
 }: Partial<IDataLayerContext>): Promise<void> {
   const activity = reporter.activityTimer(`onPostBootstrap`, {
     parentSpan,
   })
   activity.start()
-  await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+  await apiRunnerNode(`onPostBootstrap`, {
+    parentSpan: activity.span,
+    deferNodeMutation,
+  })
   activity.end()
 
   reporter.info(reporter.stripIndent`

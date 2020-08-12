@@ -67,6 +67,13 @@ function getBruteForceCases() {
     import {import as x, y} from 'bar'
     import {x, import as y} from 'bar'
     import Events from "@components/events/events"
+    import {x, import as y} from 'bar';
+    import foo from 'bar' // commment
+    import foo from 'bar' // commment containing confusing from "chars"
+    import foo from 'bar' // import bad from 'imp'
+    import foo from 'bar'//next to it
+    import "./empty.css"
+    import "./empty.css"; // This happens in the real world
   `
     .trim()
     .split(/\n/g)
@@ -89,7 +96,11 @@ describe(`regex import scanner`, () => {
         const output = parseImportBindings(input, true)
         const bindings = output.bindings
 
-        expect(output.bindings.length).not.toBe(0)
+        if (input.includes(`empty`)) {
+          expect(output.bindings.length).toBe(0)
+        } else {
+          expect(output.bindings.length).not.toBe(0)
+        }
         // Note: putting everything in the snapshot makes reviews easier
         expect({ input, result: output }).toMatchSnapshot()
         expect(
@@ -99,19 +110,27 @@ describe(`regex import scanner`, () => {
           )
         ).toBe(true)
 
+        // For the next tests, don't mangle the comment and make sure it doesn't
+        // end up on a newline by itself. Test cases only have `//` for comment.
+        let commentStart = input.indexOf(`//`) - 1
+        if (commentStart < 0) commentStart = input.length
+        const commentLess = input.slice(0, commentStart)
+        const commentPart = input.slice(commentStart)
+
         // Confirm that the parser works when all spaces become newlines
-        const newlined = input.replace(/ /g, `\n`)
+        const newlined = commentLess.replace(/ /g, `\n`) + commentPart
         expect(parseImportBindings(newlined)).toEqual(bindings)
 
         // Confirm that the parser works with a minimal amount of spacing
-        const minified = input.replace(
-          /(?<=[_\w$]) (?![_\w$])|(?<![_\w$]) (?=[_\w$])|(?<![_\w$]) (?![_\w$])/g,
-          ``
-        )
+        const minified =
+          commentLess.replace(
+            /(?<=[_\w$]) (?![_\w$])|(?<![_\w$]) (?=[_\w$])|(?<![_\w$]) (?![_\w$])/g,
+            ``
+          ) + commentPart
         expect(parseImportBindings(minified)).toEqual(bindings)
 
         // Confirm that the parser works with an excessive amount of spacing
-        const blown = input.replace(/ /g, `   `)
+        const blown = commentLess.replace(/ /g, `   `) + commentPart
         expect(parseImportBindings(blown)).toEqual(bindings)
       })
     })
@@ -273,6 +292,57 @@ import {A} from "@your/name"
             "value": "import {A} from \\"@your/name\\"",
           },
         ]
+      `)
+    })
+
+    it(`double import with shorthand import`, async () => {
+      // Note: the point of this test is to have two back2back imports clustered
+      //       as one pseudo-node in the ast where the first is the short-hand
+      //       version of `import` that declares no symbols.
+
+      const { content } = grayMatter(`
+---
+title: double test
+---
+
+import "./foo.css"
+import Events from "@components/events/events"
+
+<Events />
+      `)
+
+      const compiler = mdx.createCompiler()
+      const fileOpts = { contents: content }
+      const mdast = await compiler.parse(fileOpts)
+
+      const imports = mdast.children.filter(obj => obj.type === `import`)
+
+      // Assert the md parser outputs same mdast (update test if this changes)
+      expect(
+        imports.map(({ type, value }) => {
+          return { type, value }
+        })
+      ).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "type": "import",
+            "value": "import \\"./foo.css\\"
+        import Events from \\"@components/events/events\\"",
+          },
+        ]
+      `)
+
+      // Take the imports being parsed and feed them to the import parser
+      expect(parseImportBindings(imports[0].value, true))
+        .toMatchInlineSnapshot(`
+        Object {
+          "bindings": Array [
+            "Events",
+          ],
+          "segments": Array [
+            "Events",
+          ],
+        }
       `)
     })
   })

@@ -158,7 +158,8 @@ class FeaturedSites extends Component {
         <div css={{ position: `relative` }}>
           <div
             sx={{
-              borderBottom: t => `1px solid ${t.colors.ui.border}`,
+              borderBottom: 1,
+              borderColor: `ui.border`,
               display: `flex`,
               flexShrink: 0,
               mx: -6,

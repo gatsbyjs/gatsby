@@ -160,8 +160,8 @@ it(`Ends activities if plugin didn't end them`, async () => {
   })
   await apiRunnerNode(`testAPIHook`)
 
-  expect(mockActivity.start).toBeCalledTimes(6)
+  expect(start).toBeCalledTimes(6)
   // we called end same amount of times we called start, even tho plugins
   // didn't call end/done themselves
-  expect(mockActivity.end).toBeCalledTimes(6)
+  expect(end).toBeCalledTimes(6)
 })

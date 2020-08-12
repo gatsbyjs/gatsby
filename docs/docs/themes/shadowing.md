@@ -85,7 +85,7 @@ export default {
 }
 ```
 
-> Note that any styles in shadowed files will automatically get deepmerged with your `preset` theme. Shadowed styles take precedence.
+> Note that any styles in shadowed files will automatically get deep-merged with your `preset` theme. Shadowed styles take precedence.
 
 Which will result in the following directory tree:
 

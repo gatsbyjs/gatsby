@@ -143,7 +143,7 @@ plugins: [
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-### 4. Add custom CSS/SCSS files
+### 3. Add custom CSS/SCSS files
 
 **Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and `@apply` rules directly from your `.js` files.
 
@@ -181,7 +181,7 @@ In `gatsby-browser.js` add an import rule for your Tailwind directives and custo
 import "./src/css/index.css"
 ```
 
-### 5. Purging your CSS
+### 4. Purging your CSS
 
 Now we've fully configured Tailwind CSS, we want to make sure that only the classes we need are delivered to the browser. By default, Tailwind is a very large library because it includes every combination of every class you might think of. Most of these you won't need, so we use PurgeCSS to remove any unused classes.
 

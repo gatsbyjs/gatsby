@@ -155,7 +155,7 @@ ${code}`
           require(`@babel/preset-env`),
           {
             useBuiltIns: `entry`,
-            corejs: 2,
+            corejs: 3,
             modules: false,
           },
         ],
@@ -240,7 +240,8 @@ async function findImports({
     fileOpts.path = node.fileAbsolutePath
   }
 
-  const mdast = await compiler.parse(fileOpts)
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast)
 
   // Assuming valid code, identifiers must be unique (they are consts) so
   // we don't need to dedupe the symbols here.

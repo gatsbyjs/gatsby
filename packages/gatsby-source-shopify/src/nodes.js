@@ -14,6 +14,7 @@ import {
   PRODUCT_METAFIELD,
   PRODUCT_VARIANT_METAFIELD,
   SHOP_POLICY,
+  SHOP_DETAILS,
   PAGE,
 } from "./constants"
 
@@ -146,7 +147,7 @@ export const ProductMetafieldNode = _imageArgs =>
 
 export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
 
-export const ProductVariantNode = imageArgs =>
+export const ProductVariantNode = (imageArgs, productNode) =>
   createNodeFactory(PRODUCT_VARIANT, async node => {
     if (node.metafields) {
       const metafields = node.metafields.edges.map(edge => edge.node)
@@ -166,6 +167,7 @@ export const ProductVariantNode = imageArgs =>
         imageArgs
       )
 
+    node.product___NODE = productNode.id
     return node
   })
 
@@ -173,5 +175,7 @@ export const ProductVariantMetafieldNode = _imageArgs =>
   createNodeFactory(PRODUCT_VARIANT_METAFIELD)
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
+
+export const ShopDetailsNode = createNodeFactory(SHOP_DETAILS)
 
 export const PageNode = createNodeFactory(PAGE)
