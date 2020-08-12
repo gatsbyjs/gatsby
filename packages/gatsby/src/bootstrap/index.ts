@@ -33,7 +33,6 @@ export async function bootstrap(
   const bootstrapContext: IBuildContext = {
     ...initialContext,
     parentSpan,
-    firstRun: true,
   }
 
   const context = {

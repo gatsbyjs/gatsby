@@ -37,9 +37,11 @@ const { loadNodeContent } = require(`../db/nodes`)
 // metadata to actions they create.
 const boundPluginActionCreators = {}
 const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
-  const { traceId } = actionOptions
-  if (boundPluginActionCreators[plugin.name + api + traceId]) {
-    return boundPluginActionCreators[plugin.name + api + traceId]
+  const { traceId, deferNodeMutation } = actionOptions
+  const defer = deferNodeMutation ? `defer-node-mutation` : ``
+  const actionKey = plugin.name + api + traceId + defer
+  if (boundPluginActionCreators[actionKey]) {
+    return boundPluginActionCreators[actionKey]
   } else {
     const keys = Object.keys(boundActionCreators)
     const doubleBoundActionCreators = {}
@@ -59,9 +61,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
         }
       }
     }
-    boundPluginActionCreators[
-      plugin.name + api + traceId
-    ] = doubleBoundActionCreators
+    boundPluginActionCreators[actionKey] = doubleBoundActionCreators
     return doubleBoundActionCreators
   }
 }
@@ -80,13 +80,55 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
+const deferredAction = type => (...args) => {
+  // Regular createNode returns a Promise, but when deferred we need
+  // to wrap it in another which we resolve when it's actually called
+  if (type === `createNode`) {
+    return new Promise(resolve => {
+      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+        type,
+        payload: args,
+        resolve,
+      })
+    })
+  }
+  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+    type,
+    payload: args,
+  })
+}
+
+const NODE_MUTATION_ACTIONS = [
+  `createNode`,
+  `deleteNode`,
+  `deleteNodes`,
+  `touchNode`,
+  `createParentChildLink`,
+  `createNodeField`,
+]
+
+const deferActions = actions => {
+  const deferred = { ...actions }
+  NODE_MUTATION_ACTIONS.forEach(action => {
+    deferred[action] = deferredAction(action)
+  })
+  return deferred
+}
+
 const getLocalReporter = (activity, reporter) =>
   activity
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
     : reporter
 
+const pluginNodeCache = new Map()
+
 const runAPI = async (plugin, api, args, activity) => {
-  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+  let gatsbyNode = pluginNodeCache.get(plugin.name)
+  if (!gatsbyNode) {
+    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+    pluginNodeCache.set(plugin.name, gatsbyNode)
+  }
+
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
@@ -103,10 +145,15 @@ const runAPI = async (plugin, api, args, activity) => {
       ...publicActions,
       ...(restrictedActionsAvailableInAPI[api] || {}),
     }
-    const boundActionCreators = bindActionCreators(
+    let boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch
     )
+
+    if (args.deferNodeMutation) {
+      boundActionCreators = deferActions(boundActionCreators)
+    }
+
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,
