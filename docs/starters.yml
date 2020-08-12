@@ -6743,6 +6743,7 @@
     - Designed with component shadowing in mind to allow easier customization.
     - Theme UI is deeply integrated with design tokens and variants throughout.
     - Color mode switching available by default.
+    - RSS Feed
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
@@ -6917,6 +6918,57 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-starter-catalyst-lithium.netlify.app/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst-lithium
+  description: A personal blog starter with large featured images, SEO optimization, dark mode, and support for many different frontmatter fields. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme UI for styling. Includes a core theme, a header theme, a footer theme, and a blog theme.
+  tags:
+    - MDX
+    - Styling:Theme-UI
+    - SEO
+    - PWA
+    - Blog
+  features:
+    - Based on Gatsby Theme Catalyst series of themes and starters.
+    - Theme options are used to enable some simple layout changes.
+    - Designed with component shadowing in mind to allow easier customization.
+    - Theme UI is deeply integrated with design tokens and variants throughout.
+    - Color mode switching available by default.
+    - RSS Feed
+    - SEO optimized to include social media images and Twitter handles.
+    - React Scroll for one page, anchor based navigation is available.
+    - Code highlighting via Prism.
+- url: https://ghost-novela-preview.draftbox.co/
+  repo: https://github.com/draftbox-co/gatsby-ghost-novela-starter
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - AMP
+    - Blog
+    - CMS:Headless
+    - CMS:Ghost
+    - Disqus
+    - Language:TypeScript
+    - Markdown
+    - MDX
+    - Netlify
+    - Pagination
+    - PWA
+    - RSS
+    - SEO
+    - Styling:CSS-in-JS
+    - Styling:Theme-UI
+  features:
+    - Novela theme by Narrative
+    - Data sourcing from headless Ghost
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
 - url: https://gatsby-starter-portfolio.herokuapp.com/
   repo: https://github.com/surudhb/gatsby-personal-site-template
   description: A minimalist dev portfolio featuring a blog, SEO, app-theming with React.Context, Bootstrap and Sass
