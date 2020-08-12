@@ -90,7 +90,7 @@ const recipeMachine = Machine(
             }),
           },
           onDone: {
-            target: `validatingSteps`,
+            target: `validateSteps`,
             actions: assign({
               recipe: (context, event) => event.data.recipe,
               stepsAsMdx: (context, event) => event.data.stepsAsMdx,
@@ -108,7 +108,7 @@ const recipeMachine = Machine(
             const result = await validateSteps(context.stepsAsMdx)
             if (result.length > 0) {
               debug(`errors found in validation`)
-              throw new Error(JSON.stringify(result))
+              // throw new Error(JSON.stringify(result))
             }
 
             return undefined
