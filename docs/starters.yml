@@ -7059,3 +7059,20 @@
     - Uses SCSS for easy-to-understand naming
     - Google Analytics support
     - Responsive design
+- url: https://frosty-torvalds-822eb0.netlify.app
+  repo: https://github.com/willb335/gatsby-starter-hoa
+  description: A template for home owner associations built with Gatsby, Contentful, and Netlify
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Styling:CSS-in-JS
+    - Netlify
+  features:
+    - CMS:Contentful integration with ready to go placeholder content
+    - Netlify integration including a pre-built contact form
+    - Pagination logic
+    - Styled Components
+    - SEO friendly components
+    - Prebuilt events calendar
+    - Material UI
