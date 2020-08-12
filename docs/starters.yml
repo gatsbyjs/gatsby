@@ -6985,6 +6985,16 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-starter-emotion-theme.netlify.app/
+  repo: https://github.com/jackoliver/gatsby-starter-emotion-theme
+  description: Gatsby+Emotion+Theming, made to get up and running quicker with standard marketing microsites.
+  tags:
+    - Styling:CSS-in-JS
+  features:
+    - Alias imports for quicker development
+    - Emotion theming out of the box
+    - Easy to change global parameters
+    - BYOD (Bring your own data sources)
 - url: https://gatsby-starter-catalyst-lithium.netlify.app/
   repo: https://github.com/ehowey/gatsby-starter-catalyst-lithium
   description: A personal blog starter with large featured images, SEO optimization, dark mode, and support for many different frontmatter fields. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme UI for styling. Includes a core theme, a header theme, a footer theme, and a blog theme.
