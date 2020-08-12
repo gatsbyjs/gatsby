@@ -7071,6 +7071,16 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-p5-gallery-starter.herokuapp.com/
+  repo: https://github.com/doubledherin/gatsby-p5-starter
+  description: A responsive gallery / portofolio site for showing off your p5.js sketches, with React-p5.js integration via a built-in wrapper.
+  tags:
+    - Gallery
+    - Portfolio
+    - Styling:SCSS
+
+  features:
+    - A responsive gallery website set up to easily contain generative art and other works created with p5.js
 - url: https://emulsify-ds.github.io/gatsby-starter-emulsify-mdx/
   repo: https://github.com/emulsify-ds/gatsby-starter-emulsify-mdx
   description: A starter for a style guide powered by Gatsby Theme Emulsify
