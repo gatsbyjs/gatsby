@@ -10867,7 +10867,6 @@
   description: >
     Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
   categories:
-    - Styling:Tailwind
     - Productivity
     - Technology
     - Podcast
@@ -11392,6 +11391,27 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Prescriptive Data Solutions
+  main_url: https://www.prescriptive.solutions
+  url: https://www.prescriptive.solutions
+  source_url: https://github.com/prescriptive/2018Q4Website
+  description: >
+    IT Solution Delivery with Unique Benefits to the Enterprise Buyer.
+  categories:
+    - Technology
+    - Consulting
+- title: LANDTX
+  main_url: https://www.landtx.com
+  url: https://www.landtx.com
+  source_url: https://github.com/ltx-digett/landtx
+  description: >
+    LANDTX markets investment, recreational, ranch and farm lands throughout Texas.
+  categories:
+    - Real Estate
+    - Business
+  built_by: Digett
+  built_by_url: https://www.digett.com
+  featured: false
 - title: Raleigh Bikes
   url: https://www.raleigh.co.uk/gb/en/
   main_url: https://raleigh.co.uk/
@@ -11537,6 +11557,32 @@
     - Education
     - Featured
   built_by: Harsh Solanki
+- title: ZN Agency
+  url: https://zn.agency
+  main_url: https://zn.agency
+  description: >
+    We are a digital consulting agency in Brisbane with UI/UX, Web Design & Development and Branding services. Our purpose is to contribute our share of positive experiences to this world.
+  categories:
+    - Agency
+    - Business
+    - Consulting
+    - Portfolio
+    - Technology
+    - User Experience
+    - Web Development
+  built_by: Nate Zerk
+  built_by_url: https://natezerk.com
+- title: Marcus Wood
+  main_url: https://www.marcuswood.io/
+  url: https://www.marcuswood.io/
+  description: >
+    Personal website for Marcus Wood, a web developer that builds products with React, TypeScript, and GraphQL.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Marcus Wood
+  built_by_url: https://www.marcuswood.io/
 - title: Crogic
   url: https://crogic.jp
   main_url: https://crogic.jp
@@ -11634,6 +11680,110 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: Github Profile README Generator
+  url: https://rahuldkjain.github.io/gh-profile-readme-generator/
+  main_url: https://rahuldkjain.github.io/gh-profile-readme-generator/
+  source_url: https://github.com/rahuldkjain/github-profile-readme-generator
+  description: >
+    Generate github profile README easily with latest add-ons like visitors count, github stats, etc using minimal UI.
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Rahul Jain
+  built_by_url: https://rahuldkjain.github.io
+- title: KuliahSG
+  url: https://kuliah.sg
+  main_url: https://kuliah.sg
+  categories:
+    - Education
+  description: Online Islamic content in Singapore
+- title: Ámbito Dólar
+  url: https://ambito-dolar.app
+  main_url: https://ambito-dolar.app
+  description: >
+    Free mobile application that informs the different exchange rates USD vs ARS in Argentina.
+  categories:
+    - App
+    - Landing Page
+    - Finance
+  built_by: Ariel Falduto
+  built_by_url: https://outa.im
+- title: UP42
+  main_url: https://up42.com/
+  url: https://up42.com/
+  description: UP42 is an open marketplace to buy and sell Earth Observation data and analytics algorithms. UP42 is also a platform to build and run analytics algorithms.
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+  categories:
+    - Data
+    - Technology
+    - Business
+    - Blog
+    - API
+- title: Webplace
+  url: https:/www.webplace.com.au
+  main_url: https:/www.webplace.com.au
+  description: Corporate website for the Webplace Digital Agency
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+  built_by: Webplace
+  built_by_url: https://www.webplace.com.au
+  featured: false
+- title: Motherhost
+  main_url: https://motherhost.com/
+  url: https://motherhost.com/
+  description: >
+    Ecommerce website for web hosting company.
+  categories:
+    - Web Development
+    - E-commerce
+  built_by: Motherhost
+  built_by_url: https://motherhost.com
+- title: Oomph
+  url: https://www.oomphinc.com/agency
+  main_url: https://www.oomphinc.com
+  description: >
+    We craft digital products — but we make so much more. We design delight. We make a lasting first impression. We communicate value & purpose. We build lifelong relationships.
+  categories:
+    - Accessibility
+    - Agency
+    - Business
+    - Design
+    - Marketing
+    - Technology
+    - User Experience
+    - Web Development
+  built_by: Oomph, Inc.
+  built_by_url: https://www.oomphinc.com
+- title: FatihaTV
+  url: https://fatihatv.com
+  main_url: https://fatihatv.com
+  description: A distaction-free platform to consume Islamic content from reputable Youtube Channels
+  categories:
+    - Community
+    - Library
+    - Media
+    - Nonprofit
+    - SEO
+  built_by: TengkuHafidz
+  built_by_url: https://fidz.dev
+- title: WebSheets Generator
+  url: https://my.websheets.co
+  main_url: https://demo.websheets.co
+  source_url: https://github.com/tengkuhafidz/websheets-generator
+  description: Generate websites with just Google Sheets
+  categories:
+    - Open Source
+    - Web Development
+    - Directory
+    - Gallery
+    - Portfolio
+    - Documentation
+  built_by: Tengku Hafidz
+  built_by_url: https://twitter.com/sohafidz
 - title: The Mezzofanti Guild - Language Learning Made Simple
   url: https://www.mezzoguild.com
   main_url: https://www.mezzoguild.com
