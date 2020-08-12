@@ -195,7 +195,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   let syncRequires = `${hotImport}
 
 // prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
@@ -209,7 +209,7 @@ const preferDefault = m => m && m.default || m
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n`
   asyncRequires += `exports.components = {\n${components
     .map((c: IGatsbyPageComponent): string => {
