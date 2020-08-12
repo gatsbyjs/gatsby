@@ -1,3 +1,20 @@
+- url: https://gatsby-starter-lamma.netlify.app/
+  repo: https://github.com/desktopofsamuel/gatsby-starter-lamma
+  description: A minimal, elegant, dark theme blog starter. Forked from Gatsby Advance Starter.
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - MDX
+  features:
+    - Gatsby v2 + MDX
+    - Main page, Blog page, Category page, Tags Page
+    - Dark mode using use-dark-mode
+    - Subtle table of content component
+    - SEO with react-helmet
+    - Optimized image rendering using gatsby-image
+    - Icons from Font Awesome
+    - Programmatically generates styled pages for each blog post written in Markdown
 - url: https://mdx-cms-docs.netlify.app/
   repo: https://github.com/danielcurtis/gatsby-starter-netlify-docs
   description: An accessible and blazing fast documentation starter for Gatsby integrated with Netlify CMS.
@@ -6985,6 +7002,14 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-bootstrap-snipcart.netlify.app/
+  repo: https://github.com/julianbattaglino/gatsby-snipcart-eccomerce.git
+  description: A simple e-commerce shop built using Gatsby / React Bootstrap and Snipcart.
+  tags:
+    - E-commerce
+  features:
+    - Pwa
+    - Styled Components
 - url: https://gatsby-starter-emotion-theme.netlify.app/
   repo: https://github.com/jackoliver/gatsby-starter-emotion-theme
   description: Gatsby+Emotion+Theming, made to get up and running quicker with standard marketing microsites.
@@ -7284,7 +7309,7 @@
     - Netlify deploy optional support
 - url: https://gatsby-starter-fresh.netlify.app
   repo: https://github.com/mishal23/gatsby-starter-fresh
-  description:  A minimal GatsbyJS starter blog template using the Fresh Theme for anyone to build a blogging site
+  description: A minimal GatsbyJS starter blog template using the Fresh Theme for anyone to build a blogging site
   tags:
     - Portfolio
     - Blog
