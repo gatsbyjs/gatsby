@@ -11,7 +11,7 @@ let store = createStore(
   {}
 )
 
-type GatsbyCLIStore = typeof store
+export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
 type ActionLogListener = (action: ActionsUnion) => any
 type Thunk = (...args: any[]) => ActionsUnion
