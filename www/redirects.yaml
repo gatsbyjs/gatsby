@@ -156,3 +156,5 @@
   toPath: /docs/conditional-page-builds/
 - fromPath: /docs/contributing/translation/ui-messages/
   toPath: /docs/contributing/translation/
+- fromPath: /contributing/website-contributions/
+  toPath: /contributing/
