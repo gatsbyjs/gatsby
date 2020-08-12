@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
+const lock = require(`../lock`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -18,12 +19,15 @@ const writePackageJson = async (root, obj) => {
 }
 
 const create = async ({ root }, { name, command }) => {
+  const release = await lock(`package.json`)
   const pkg = await readPackageJson(root)
   pkg.scripts = pkg.scripts || {}
   pkg.scripts[name] = command
   await writePackageJson(root, pkg)
 
-  return await read({ root }, name)
+  const readPackagejson = await read({ root }, name)
+  release()
+  return readPackagejson
 }
 
 const read = async ({ root }, id) => {
@@ -34,7 +38,7 @@ const read = async ({ root }, id) => {
       id,
       name: id,
       command: pkg.scripts[id],
-      _message: `Wrote script ${id} to your package.json`,
+      _message: `Added script "${id}" to your package.json`,
     }
   }
 
@@ -89,7 +93,7 @@ module.exports.plan = async ({ root }, { name, command }) => {
     currentState,
     newState: scriptDescription(name, command),
     diff,
-    describe: `Add new command to your package.json`,
+    describe: `Add script "${name}" to your package.json`,
   }
 }
 

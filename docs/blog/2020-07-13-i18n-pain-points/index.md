@@ -44,7 +44,7 @@ This is a non-exhaustive list of issues I most commonly read and heard. Feel fre
 
 9. **Right-to-left support has to be added manually.** Adapting the styles has currently no happy path.
 
-10. **Difficult to integrate SaaS localization platforms.** There are not many plugins that deal with localization platforms such as Crowdin and transifex, meaning you have to handle the integration yourself. This can be difficult.
+10. **Difficult to integrate SaaS localization platforms.** There are not many plugins that deal with localization platforms such as Crowdin and Transifex, meaning you have to handle the integration yourself. This can be difficult.
 
 ## What this means for future development
 
@@ -56,6 +56,6 @@ Most importantly the great variety of responses received thus far showed that ou
 
 ## What's next?
 
-The alpha of gatsby-theme-i18n and its child themes will be released very soon. Until then (and in the future, as well) you can join the [Discord channel](https://discord.gg/cQ2MPUz) to chat as more details on how to contribute will follow. Also, keep an eye out for the announcement post.
+The alpha of `gatsby-theme-i18n` and its child themes will be released very soon. Until then (and in the future, as well) you can join the [Discord channel](https://discord.gg/cQ2MPUz) to chat as more details on how to contribute will follow. Also, keep an eye out for the announcement post.
 
 I encourage all interested parties to try out the theme when it's ready and get involved in the process of refining it. And then show us the awesome things you build!

@@ -354,9 +354,29 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   cli.command({
     command: `recipes [recipe]`,
     describe: `[EXPERIMENTAL] Run a recipe`,
+    builder: _ =>
+      _.option(`D`, {
+        alias: `develop`,
+        type: `boolean`,
+        default: false,
+        describe: `Start recipe in develop mode to live-develop your recipe (defaults to false)`,
+      }).option(`I`, {
+        alias: `install`,
+        type: `boolean`,
+        default: false,
+        describe: `Install recipe (defaults to plan mode)`,
+      }),
     handler: handlerP(
-      async ({ recipe }: yargs.Arguments<{ recipe: string | undefined }>) => {
-        await recipesHandler(siteInfo.directory, recipe)
+      async ({
+        recipe,
+        develop,
+        install,
+      }: yargs.Arguments<{
+        recipe: string | undefined
+        develop: boolean
+        install: boolean
+      }>) => {
+        await recipesHandler(siteInfo.directory, recipe, develop, install)
       }
     ),
   })

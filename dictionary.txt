@@ -1,3 +1,4 @@
+0BSD
 ½
 ⅓
 1000px
@@ -97,7 +98,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -155,13 +155,14 @@ ArchieML.org
 architected
 architecting
 Archlinux
+Arellano
 arg
 args
 Arkins
+Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
-ASKGatsbyJS
 Asko
 aspirational
 AST
@@ -243,6 +244,7 @@ bois
 Bolda
 Bölüm
 bool
+booleans
 bootcamp
 bootcamps
 bootstrapable
@@ -304,6 +306,7 @@ CDN
 CDN-backed
 CDNs
 Cereda
+Certbot
 CFP
 Chakra
 changelog
@@ -373,7 +376,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial
@@ -386,6 +389,9 @@ Commento
 Commentors
 CommonJS
 CommonMark
+comparator
+Comparator
+comparators
 compile-to-js
 componentChunkName
 componentChunkNames
@@ -427,6 +433,7 @@ Costa
 Costea
 Coughlan
 counterintuitive
+COVID
 COVID-19
 cowpaths
 Coyier
@@ -662,6 +669,7 @@ filesystem-based
 filesystem-explorer-options
 filesystem-query
 Fillerama
+filterValue
 FindCollabs
 findDirtyIds
 findIdsWithoutDataDependencies
@@ -680,6 +688,7 @@ focusable
 FOMO
 Fonegra
 Fonnegra
+Forem
 FormatJS
 formatter
 Formik
@@ -953,8 +962,10 @@ headlessly
 headmatter
 headmouse
 headstart
+Hernández
 heroku
 heroku-buildpack-static
+Hetman
 Hexo
 hinzufügen
 HIPAA
@@ -986,6 +997,7 @@ hypermodern
 i10n
 i18n
 i18next
+IaaS
 IaC
 IAM
 iam_timsmith
@@ -1006,7 +1018,6 @@ imho
 Imoh
 impactful
 implementers
-implementors-of-Gatsby
 incineratingly
 Indexability
 indexable
@@ -1083,6 +1094,7 @@ jumbotron
 JWPlayer
 JWT
 Ka
+Kadlec
 Kalin
 Kasten
 Kategorien
@@ -1106,6 +1118,7 @@ Kirkham
 Kissling
 Knut
 KNW
+Kocjan
 Koelewijn
 Koenig
 Koerselman
@@ -1200,7 +1213,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
@@ -1213,6 +1225,7 @@ materialisation
 Materialisation
 Mateusz
 MathJax
+Matías
 Matomo
 mccrodp
 MD5
@@ -1241,10 +1254,12 @@ metacompiler
 metadescription
 metafields
 Metalsmith
+metatags
 METROGLAM
 Meuleman
 Michał
 Microfrontends
+micromatch
 microservices
 microsites
 middleware
@@ -1323,6 +1338,7 @@ Nicky
 Nie
 Nik
 no-brainer
+Node.js
 nodeId
 nodeID
 NodeID
@@ -1357,6 +1373,7 @@ observability
 Octocat
 Oduye
 oEmbed
+OG
 ok
 Ok
 OKRs
@@ -1385,6 +1402,7 @@ OpenAI
 OpenAPI
 OpenCollective
 OpenGraph
+OpenSSH
 opentracing
 OpenTracing
 operandi
@@ -1424,6 +1442,7 @@ pathname
 pathnames
 pathPrefix
 Paulie
+Paulina
 Pavel
 PayPal
 PayPal-ers
@@ -1451,11 +1470,11 @@ pixelated
 pjax
 pleaaase
 pluggable
+pm
 PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
@@ -1474,6 +1493,7 @@ PostHog
 postprocessing
 Poumián
 PowerShell
+PPA
 pragma
 pragmas
 PRDs
@@ -1633,6 +1653,7 @@ redux
 Redux
 Reduxjs
 ReferenceError
+ReflexJS
 reformats
 reframe
 rehydrate
@@ -1813,6 +1834,7 @@ source-filesystem
 Sourcegraph
 sourceNodes
 SpaceX
+Spalato
 spambots
 spammy
 spelt
@@ -1942,7 +1964,7 @@ trainings
 transactional
 transformational
 transformative
-transifex
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -1966,6 +1988,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck
@@ -1985,6 +2009,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
@@ -2064,6 +2089,7 @@ voilà
 Vojtech
 Vojtěch
 VPs
+VPS
 VS2015
 VS201x
 VSCode
@@ -2091,11 +2117,12 @@ webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest
@@ -2120,9 +2147,9 @@ wireframe-level
 Wirth
 Wiseman
 wishlist
-with-layout2
 with-navigation2
 Woah
+Wojciech
 WooCommerce
 Woodworth
 Workbox
@@ -2143,6 +2170,7 @@ WXR
 wysiwyg
 x64
 Xcode
+XD
 XSL
 XSS
 XState
