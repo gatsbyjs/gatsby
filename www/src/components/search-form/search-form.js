@@ -67,6 +67,11 @@ function SearchForm() {
           hint: false,
           keyboardShortcuts: [`s`],
         },
+        transformData: hits =>
+          hits.map(hit => {
+            hit.url = hit.url.replace(/\.com/g, `.org`)
+            return hit
+          }),
       })
       searchInput.current.focus()
     }

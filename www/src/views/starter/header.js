@@ -37,7 +37,7 @@ const Header = ({ stub }) => (
       </Link>
     </div>
     <div>
-      <h1 sx={{ m: 0, display: `inline-block` }}>{stub}</h1>
+      <h1 sx={{ m: 0, display: `inline-block`, color: `heading` }}>{stub}</h1>
     </div>
   </div>
 )

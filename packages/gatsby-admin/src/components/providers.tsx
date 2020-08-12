@@ -43,6 +43,7 @@ const theme = {
     "16px": `16px`,
     "15em": `15em`,
     "20em": `20em`,
+    "24px": `24px`,
     "1.5em": `1.5em`,
     initial: `initial`,
   },

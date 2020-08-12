@@ -9,35 +9,39 @@ Gatsby will handle scroll restoration for you in most cases. However, when you r
 Here is an example of using the `useScrollRestoration` hook to render a list of countries in an overflow `ul` element.
 
 ```jsx
-import { useScrollRestoration } from "gatsby";
-import countryList from "../utils/country-list";
+import { useScrollRestoration } from "gatsby"
+import countryList from "../utils/country-list"
 
 export default function PageComponent() {
-    const ulScrollRestoration = useScrollRestoration(`page-component-ul-list`)
+  const ulScrollRestoration = useScrollRestoration(`page-component-ul-list`)
 
-    return (
-        <ul style={{ height: 200, overflow: `auto` }} {...ulScrollRestoration}>
-            {countryList.map(country => <li>{country}</li>)
-        </ul>
-    );
+  return (
+    <ul style={{ height: 200, overflow: `auto` }} {...ulScrollRestoration}>
+      {countryList.map(country => (
+        <li>{country}</li>
+      ))}
+    </ul>
+  )
 }
 ```
 
 This is an example of using the (deprecated) `ScrollContainer` component with the same code.
 
 ```jsx
-import { ScrollContainer } from "gatsby-react-router-scroll";
-import countryList from "../utils/country-list";
+import { ScrollContainer } from "gatsby-react-router-scroll"
+import countryList from "../utils/country-list"
 
 export default class PageComponent extends React.Component {
-    render() {
-        return (
-            <ScrollContainer key="page-component-ul-list">
-                <ul style={{ height: 200, overflow: `auto` }}>
-                    {countryList.map(country => <li>{country}</li>)
-                </ul>
-            </ScrollContainer>
-        );
-    }
+  render() {
+    return (
+      <ScrollContainer key="page-component-ul-list">
+        <ul style={{ height: 200, overflow: `auto` }}>
+          {countryList.map(country => (
+            <li>{country}</li>
+          ))}
+        </ul>
+      </ScrollContainer>
+    )
+  }
 }
 ```

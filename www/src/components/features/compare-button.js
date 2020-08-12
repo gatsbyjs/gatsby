@@ -9,9 +9,8 @@ const compareButtonStyles = {
   fontFamily: `heading`,
   alignItems: `center`,
   justifyContent: `center`,
+  border: 1,
   borderRadius: 1,
-  borderWidth: 1,
-  borderStyle: `solid`,
   p: 2,
   ":hover": {
     borderColor: `purple.60`,
