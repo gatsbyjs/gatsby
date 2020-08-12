@@ -139,13 +139,9 @@ exports.onPostBuild = (
         handler: `CacheFirst`,
       },
       {
-        // page-data.json files are not content hashed
-        urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `StaleWhileRevalidate`,
-      },
-      {
-        // app-data.json is not content hashed
-        urlPattern: /^https?:.*\/page-data\/app-data\.json/,
+        // page-data.json files, static query results and app-data.json
+        // are not content hashed
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
         handler: `StaleWhileRevalidate`,
       },
       {
