@@ -9,6 +9,7 @@ const prettier = require(`prettier`)
 const resolveCwd = require(`resolve-cwd`)
 const { slash } = require(`gatsby-core-utils`)
 
+const lock = require(`../lock`)
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
@@ -147,13 +148,7 @@ const getPluginsFromConfig = src => {
 
 const getConfigPath = root => path.join(root, `gatsby-config.js`)
 
-const readConfigFile = async root => {
-  let src
-  try {
-    src = await fs.readFile(getConfigPath(root), `utf8`)
-  } catch (e) {
-    if (e.code === `ENOENT`) {
-      src = `/**
+const defaultConfig = `/**
  * Configure your Gatsby site with this file.
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
@@ -162,15 +157,49 @@ const readConfigFile = async root => {
 module.exports = {
   plugins: [],
 }`
+
+const readConfigFile = async root => {
+  let src
+  try {
+    src = await fs.readFile(getConfigPath(root), `utf8`)
+  } catch (e) {
+    if (e.code === `ENOENT`) {
+      src = defaultConfig
     } else {
       throw e
     }
   }
 
+  if (src === ``) {
+    src = defaultConfig
+  }
+
   return src
 }
 
+class MissingInfoError extends Error {
+  constructor(foo = `bar`, ...params) {
+    // Pass remaining arguments (including vendor specific ones) to parent constructor
+    super(...params)
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, MissingInfoError)
+    }
+
+    this.name = `MissingInfoError`
+    // Custom debugging information
+    this.foo = foo
+    this.date = new Date()
+  }
+}
+
 const create = async ({ root }, { name, options, key }) => {
+  const release = await lock(`gatsby-config.js`)
+  // TODO generalize this — it's for the demo.
+  if (options?.accessToken === `(Known after install)`) {
+    throw new MissingInfoError({ name, options, key })
+  }
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
@@ -179,7 +208,9 @@ const create = async ({ root }, { name, options, key }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, key || name)
+  const config = await read({ root }, key || name)
+  release()
+  return config
 }
 
 const read = async ({ root }, id) => {
@@ -358,13 +389,13 @@ const schema = {
 }
 
 const validate = resource => {
-  if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
+  if (REQUIRES_KEYS.includes(resource.name) && !resource._key) {
     return {
       error: `${resource.name} requires a key to be set`,
     }
   }
 
-  if (resource.key && resource.key === resource.name) {
+  if (resource._key && resource._key === resource.name) {
     return {
       error: `${resource.name} requires a key to be different than the plugin name`,
     }
@@ -395,6 +426,7 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     ...prettierConfig,
     parser: `babel`,
   })
+
   const diff = await getDiff(configSrc, newContents)
 
   return {
