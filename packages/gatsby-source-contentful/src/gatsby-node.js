@@ -39,6 +39,7 @@ exports.sourceNodes = async (
     actions,
     getNode,
     getNodes,
+    getNodesByType,
     createNodeId,
     store,
     cache,
@@ -263,7 +264,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
-      getNodes,
+      getNodesByType,
       reporter,
     })
   }

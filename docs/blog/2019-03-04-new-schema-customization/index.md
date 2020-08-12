@@ -29,7 +29,7 @@ On the other hand, we wanted to reevaluate our approach to schemas in general. I
 
 There are two main additions to the API:
 
-1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
+1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [GraphQL SDL](https://graphql.org/learn/schema/).
 2. A `createResolvers` [Gatsby Node API](/docs/node-apis/) that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
 
 Why the two APIs? `createTypes` primary purpose is to _fix_ the definition for an automatically generated Node type. Often one is totally happy with the default resolvers that Gatsby provides and the only issue is that inference can change based on data changes.
@@ -113,7 +113,7 @@ exports.sourceNodes = ({ actions }) => {
 
 Gatsby will now know that you want a Date and not override it with a string.
 
-You can specify types for some or all of the fields that you have on the given node type. Gatsby will add missing fields. This behaviour can be controlled with `@infer` and `@dontInfer` directives.
+You can specify types for some or all of the fields that you have on the given node type. Gatsby will add missing fields. This behavior can be controlled with `@infer` and `@dontInfer` directives.
 
 ```graphql
 # For this type `name` won't be added
@@ -126,7 +126,7 @@ type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
   birthday: Date
 }
 
-# For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
+# For this type both `name` and `birthday` fields will be added. Current default behavior, but allows one to be explicit about it.
 type AuthorJson implements Node @infer {
   id: ID!
 }
@@ -229,7 +229,7 @@ When you have many connections, this becomes pretty tedious, especially destruct
 
 ### Inference quirks
 
-We've had some quirks in inference that were dependant on ordering. We've made all inference deterministic.
+We've had some quirks in inference that were dependent on ordering. We've made all inference deterministic.
 
 1. Mix of date and non-date strings is always a string
 2. Conflicting field names always prefer Node references first and then the canonical name of the field.

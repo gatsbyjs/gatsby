@@ -38,7 +38,7 @@ const BlogCard = () => (
           my: 3,
         }}
       >
-        <Avatar mr={2} />
+        <Avatar />
         <Text color="grey.50" fontSize={1}>
           <Link href="#" css={{ textDecoration: `none` }}>
             Shannon Soper

@@ -14,7 +14,7 @@ The namespaces in Gatsby's Redux store are a great overview of the Gatsby intern
 - **[Components](/docs/gatsby-internals-terminology/#component)** - A `Map` of component file paths to page objects.
 - **[Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores)** - A `Map` of any components detected with a [static query](/docs/static-query/).
 - **Jobs** - Long-running and CPU-intensive processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
-- **webpack** - Config for the [webpack](/docs/webpack-and-ssr/) bundler which handles code optimization and splitting of delivered javascript bundles.
+- **webpack** - Config for the [webpack](/docs/webpack-and-ssr/) bundler which handles code optimization and splitting of delivered JavaScript bundles.
 
 The Gatsby [redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
 

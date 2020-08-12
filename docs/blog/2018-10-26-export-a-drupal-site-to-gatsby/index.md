@@ -88,7 +88,7 @@ if (image) {
 }
 ```
 
-And now that you have all the data you need, it is just a matter of creating a file with the metadata in yaml format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
+And now that you have all the data you need, it is just a matter of creating a file with the metadata in YAML format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
 
 ```javascript
   fs.mkdir(path, (err) => { });
@@ -126,7 +126,7 @@ To have comments on your site you can use a service like [Disqus](https://disqus
 ```javascript
 const Database = require("better-sqlite3")
 const fs = require("fs")
-const yourSite = "http://username.github.io/yoursite/"
+const yourSite = "https://username.github.io/yoursite/"
 
 if (process.argv.length < 3) {
   usage()

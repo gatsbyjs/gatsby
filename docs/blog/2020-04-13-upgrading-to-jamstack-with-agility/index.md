@@ -241,7 +241,7 @@ async function handleRequest(request) {
     let path = url.pathname
 
     //secondary domain...
-    const secDomain = "https://my-new-website.netlify.com"
+    const secDomain = "https://my-new-website.netlify.app"
 
     if (
       path == "/" || //redirect the home page...

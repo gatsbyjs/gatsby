@@ -110,7 +110,7 @@ If you want more information about authenticated areas with Gatsby, this (non-ex
 
 - [Making a site with user authentication](/tutorial/authentication-tutorial), an advanced Gatsby tutorial
 - [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/tree/master/examples/simple-auth)
-- [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
+- [Live version of the "simple auth" example](https://simple-auth.netlify.app/)
 - [A Gatsby email _application_](https://github.com/DSchau/gatsby-mail), using React Context API to handle authentication
 - [Add Authentication to your Gatsby apps with Auth0](/blog/2019-03-21-add-auth0-to-gatsby-livestream/) (livestream with Jason Lengstorf)
 - [Add Authentication to your Gatsby apps with Okta](https://www.youtube.com/watch?v=7b1iKuFWVSw&t=9s)

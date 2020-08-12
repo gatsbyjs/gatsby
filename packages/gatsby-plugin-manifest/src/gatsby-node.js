@@ -253,6 +253,10 @@ const makeManifest = async ({
     // the resized image(s)
     if (faviconIsEnabled) {
       await processIconSet(favicons)
+
+      if (metadata.format === `svg`) {
+        fs.copyFileSync(icon, path.join(`public`, `favicon.svg`))
+      }
     }
   }
 

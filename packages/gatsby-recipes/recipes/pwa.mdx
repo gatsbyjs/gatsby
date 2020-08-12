@@ -2,24 +2,26 @@
 
 “Progressive web app” (PWA) is a term for a new philosophy of building websites.
 
-They help provide native-like features to web apps and require 3 things:
+PWAs help provide native-like features to web apps and require 3 things:
 
 1. A manifest file (provided by gatsby-plugin-manifest)
 2. A service worker (provided by gatsby-plugin-offline)
 3. The site is served over https
 
+This recipe:
+
 ---
 
-Install the necessary NPM packages:
+Installs the necessary NPM packages.
 
 <NPMPackage name="gatsby-plugin-manifest" />
 <NPMPackage name="gatsby-plugin-offline" />
 
 ---
 
-Add the manifest plugin and the offline plugin to your Gatsby config, which will add a manifest file and a service worker for you.
+Adds the manifest plugin and the offline plugin to your Gatsby config, which will add a manifest file and a service worker for you.
 
-We also add a default icon @ src/images/icon.svg (which you can replace afterwards with your own).
+It also adds a default icon @ src/images/icon.svg (which you can replace afterwards with your own).
 
 <File
   path="src/images/icon.png"
@@ -43,10 +45,10 @@ We also add a default icon @ src/images/icon.svg (which you can replace afterwar
 
 ---
 
-Your site is now a PWA!
+After running this recipe, your site will be a PWA.
 
-Refer to the documentation for the manifest & offline plugins if there's any
-other tweaks you'd like to make.
+Refer to the documentation for the manifest & offline plugins if there are any
+other edits you'd like to make.
 
 - https://www.gatsbyjs.org/packages/gatsby-plugin-manifest
 - https://www.gatsbyjs.org/packages/gatsby-plugin-offline

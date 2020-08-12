@@ -8,6 +8,10 @@ import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
+import {
+  writeModule,
+  getAbsolutePathForVirtualModule,
+} from "../utils/gatsby-webpack-virtual-modules"
 
 interface IGatsbyPageComponent {
   component: string
@@ -191,7 +195,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   let syncRequires = `${hotImport}
 
 // prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
@@ -205,13 +209,13 @@ const preferDefault = m => m && m.default || m
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n`
   asyncRequires += `exports.components = {\n${components
     .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
-        path.join(program.directory, `.cache`),
+        getAbsolutePathForVirtualModule(`$virtual`),
         c.component
       )
 
@@ -222,7 +226,16 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  const writeAndMove = (file: string, data: string): Promise<void> => {
+  const writeAndMove = (
+    virtualFilePath: string,
+    file: string,
+    data: string
+  ): Promise<void> => {
+    writeModule(virtualFilePath, data)
+
+    // files in .cache are not used anymore as part of webpack builds, but
+    // still can be used by other tools (for example `gatsby serve` reads
+    // `match-paths.json` to setup routing)
     const destination = joinPath(program.directory, `.cache`, file)
     const tmp = `${destination}.${Date.now()}`
     return fs
@@ -231,9 +244,17 @@ const preferDefault = m => m && m.default || m
   }
 
   await Promise.all([
-    writeAndMove(`sync-requires.js`, syncRequires),
-    writeAndMove(`async-requires.js`, asyncRequires),
-    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
+    writeAndMove(`$virtual/sync-requires.js`, `sync-requires.js`, syncRequires),
+    writeAndMove(
+      `$virtual/async-requires.js`,
+      `async-requires.js`,
+      asyncRequires
+    ),
+    writeAndMove(
+      `$virtual/match-paths.json`,
+      `match-paths.json`,
+      JSON.stringify(matchPaths, null, 4)
+    ),
   ])
 
   return true
@@ -245,10 +266,7 @@ const debouncedWriteAll = _.debounce(
       id: `requires-writer`,
     })
     activity.start()
-    const didRequiresChange = await writeAll(store.getState())
-    if (didRequiresChange) {
-      reporter.pendingActivity({ id: `webpack-develop` })
-    }
+    await writeAll(store.getState())
     activity.end()
   },
   500,

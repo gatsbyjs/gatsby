@@ -482,4 +482,4 @@ export default IndexPage
 ### Additional resources
 
 - Guide on [client-data fetching](/docs/data-fetching/)
-- Live [example site](https://gatsby-data-fetching.netlify.com/) using this example
+- Live [example site](https://gatsby-data-fetching.netlify.app/) using this example

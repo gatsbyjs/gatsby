@@ -5,7 +5,11 @@ import { Fragment } from "react"
 import { getItemList } from "../utils/sidebar/item-list"
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 
-export default ({ children, enableScrollSync, location }) => {
+export default function PageWithSidebar({
+  children,
+  enableScrollSync,
+  location,
+}) {
   const itemList = getItemList(location.pathname)
   if (!itemList) {
     return children

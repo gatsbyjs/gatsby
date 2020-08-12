@@ -125,7 +125,7 @@ Query execution involves calling the [graphql-js](https://graphql.org/graphql-js
 2. The raw query text. Obtained from the Query Job.
 3. The Context, also from the Query Job. Has the page's `path` amongst other things so that Gatsby can record [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
-Graphql-js will parse the query, and executes the top level query. E.g. `allMarkdownRemark( limit: 10 )` or `file( relativePath: { eq: "blog/my-blog.md" } )`. These will invoke the resolvers defined in [Schema Connections](/docs/schema-connections/) or [GQL Type](/docs/schema-gql-type/), which both use sift to query over all nodes of the type in redux. The result will be passed through the inner part of the graphql query where each type's resolver will be invoked. The vast majority of these will be `identity` functions that just return the field value. Some however could call a [custom plugin field](/docs/schema-gql-type/#plugin-fields) resolver. These in turn might perform side effects such as generating images. This is why the query execution phase of bootstrap often takes the longest.
+Graphql-js will parse the query, and executes the top level query. E.g. `allMarkdownRemark( limit: 10 )` or `file( relativePath: { eq: "blog/my-blog.md" } )`. These will invoke the resolvers defined in [Schema Connections](/docs/schema-connections/) or [GQL Type](/docs/schema-gql-type/), which both use sift to query over all nodes of the type in redux. The result will be passed through the inner part of the GraphQL query where each type's resolver will be invoked. The vast majority of these will be `identity` functions that just return the field value. Some however could call a [custom plugin field](/docs/schema-gql-type/#plugin-fields) resolver. These in turn might perform side effects such as generating images. This is why the query execution phase of bootstrap often takes the longest.
 
 Finally, a result is returned.
 
@@ -139,4 +139,4 @@ As queries are consumed from the queue and executed, their results are saved to 
 
 For static queries, instead of using the page's jsonName, Gatsby uses a hash of the query.
 
-Now Gatsby needs to store the association of the page -> the query result in redux so it can be recalled later. This is accomplished via the [json-data-paths](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/json-data-paths.js) reducer which is invoked by creating a `SET_JSON_DATA_PATH` action with the page's jsonName and the saved dataPath.
+Now Gatsby needs to store the association of the page -> the query result in redux so it can be recalled later. This is accomplished via the [`json-data-paths`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/json-data-paths.js) reducer which is invoked by creating a `SET_JSON_DATA_PATH` action with the page's jsonName and the saved dataPath.

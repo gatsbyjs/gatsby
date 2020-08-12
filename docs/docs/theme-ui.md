@@ -29,8 +29,59 @@ module.exports = {
 Theme UI uses a `theme` configuration object to provide color, typography, layout, and other shared stylistic values through [React context][].
 This allows components within your site to add styles based on a predefined set of values.
 
-The Theme UI plugin uses the [component shadowing API][] to add the theme object context to your site.
-Create a `src/gatsby-plugin-theme-ui` directory in your project, and add an `index.js` file to export a theme object.
+There are two ways to add a theme to your site: using configuration options in `gatsby-plugin-theme-ui`, or local shadowing.
+
+### `gatsby-plugin-theme-ui` configuration
+
+`gatsby-plugin-theme-ui` allows for optional configuration. One of the options you can pass in is `preset`. Preset is a base theme object you'd like your site to use.
+
+The `preset` can be a JSON object or a string package name that the plugin will require for you.
+
+If you're passing in a string package name you need to make sure that the dependency is installed.
+
+```shell
+npm install @theme-ui/preset-funk
+```
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-theme-ui`,
+      options: {
+        preset: "@theme-ui/preset-funk",
+      },
+    },
+  ],
+}
+```
+
+Alternatively, you could do the same thing and require the package yourself. This is necessary if you're referencing a local package that isn't available publicly.
+
+```shell
+npm install @theme-ui/preset-funk
+```
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-theme-ui`,
+      options: {
+        preset: require("my-local-preset"),
+      },
+    },
+  ],
+}
+```
+
+`preset` operates as your base theme and any local shadowed styles will automatically merge with it. Local styles are considered more specific and will override base styles where necessary.
+
+### Local shadowing
+
+The Theme UI plugin uses the [component shadowing API][] to add the theme object context to your site. Shadowing is the ability to create a file in the same location as the theme you're leveraging and override the original file's content.
+
+In this case, that location is `src/gatsby-plugin-theme-ui`. So, create that directory in your project and add an `index.js` file to export a theme object.
 
 ```shell
 mkdir src/gatsby-plugin-theme-ui
@@ -42,7 +93,7 @@ export default {}
 
 ## Creating a theme object
 
-Add a `colors` object to the file created above to store the color palette for your site.
+Create a `src/gatsby-plugin-theme-ui` directory in your project and add an `index.js` file to export a theme object. Add a `colors` object to the file to store the color palette for your site.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
@@ -155,21 +206,29 @@ export default function Header(props) {
 ## Using Theme UI in a Gatsby theme
 
 When using Theme UI in a Gatsby theme, it's important to understand how the `gatsby-plugin-theme-ui` package handles theme objects from multiple Gatsby themes and sites.
-If a Gatsby theme that uses `gatsby-plugin-theme-ui` is installed in a site,
-shadowing the `src/gatsby-plugin-theme-ui/index.js` file will completely override the default styles.
-This is intended to give full control to the person using the theme.
+
 If multiple themes are installed in the same site, the one defined last in your `gatsby-config.js` file's `plugins` array will take precedence.
 
-To extend an existing Theme UI configuration from a theme, it can be imported and merged with any other values you would like to customize.
-The following is an example of extending the configuration from `gatsby-theme-blog`.
+To extend an existing Theme UI configuration from a theme you'll need to find out how the base theme is passing styles. If it's using a `preset`, as the `gatsby-theme-blog` package does, any shadowed files are merged automatically. This can be discovered by looking at the theme source code in `node_modules` or on GitHub.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
-import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui"
-import merge from "lodash.merge"
+export default {
+  colors: {
+    text: "#222",
+    primary: "tomato",
+  },
+}
+```
 
-// lodash.merge will deeply merge custom values with the
-// blog theme's defaults
-export default merge({}, baseTheme, {
+If the theme itself is shadowing styles without a preset, you'll want to merge those styles with your local ones. Here's an example using Theme UI's `merge` API:
+
+```js:title=src/gatsby-plugin-theme-ui/index.js
+import baseTheme from "gatsby-theme-unknown/src/gatsby-plugin-theme-ui"
+import { merge } from "theme-ui"
+
+// merge will deeply merge custom values with the
+// unknown theme's defaults
+export default merge(baseTheme, {
   colors: {
     text: "#222",
     primary: "tomato",
@@ -218,5 +277,5 @@ To learn more about using Theme UI in your project, see the official [Theme UI][
 [mdx]: /docs/mdx
 [typography.js]: /docs/typography-js
 [react context]: https://reactjs.org/docs/context.html
-[component shadowing api]: /docs/themes/api-reference#component-shadowing
+[component shadowing api]: /docs/theme-api/#shadowing
 [`sx` prop]: https://theme-ui.com/sx-prop

@@ -61,7 +61,7 @@ There was one central takeaway: Those who responded they would be “very disapp
 
 > Feeling that somebody's got my back on various little things like image loading, typeface loading, other asset and content prefetching. You get the idea.
 
-> Simplification of complex HTML5 features (lazy-loading images at multiple resolutions, i18n, head metadata fields, pwa...), obtaining always optimized code.
+> Simplification of complex HTML5 features (lazy-loading images at multiple resolutions, i18n, head metadata fields, PWA...), obtaining always optimized code.
 
 > Superior workflow compared to traditional CMS (WordPress/GRAV etc.). Freedom of choice for system design regarding tools in the React ecosystem.
 

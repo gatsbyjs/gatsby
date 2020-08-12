@@ -110,7 +110,7 @@ _You can include the plugin by using its name if you are using [npm link or yarn
 
 You can now navigate into the `example-site` folder and run `gatsby develop`. You should see a line in the output in the terminal that shows your plugin loaded:
 
-```shell
+```shell:title=example-site
 $ gatsby develop
 success open and validate gatsby-configs - 0.033s
 success load plugins - 0.074s
@@ -200,7 +200,7 @@ You can query data from any location to source at build time using functions and
 
 You'll use several modules from npm to making fetching data with GraphQL easier. Install them in the `source-plugin` project with:
 
-```shell
+```shell:title=source-plugin
 npm install apollo-cache-inmemory apollo-client apollo-link apollo-link-http apollo-link-ws apollo-utilities graphql graphql-tag node-fetch ws subscriptions-transport-ws
 ```
 
@@ -642,7 +642,7 @@ Add a file at `example-site/src/pages/index.js` and copy the following code into
 
 Ensure you have `gatsby-image` installed in the site by running `npm install gatsby-image`. It provides a component that can take the optimized image data and render it.
 
-```javascript:title=example-site/src/pages/index.js
+```jsx:title=example-site/src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"

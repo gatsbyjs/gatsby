@@ -27,60 +27,45 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
     })
   : null
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      childScreenshot: Screenshot # added by gatsby-transformer-screenshot
+      fields: StartersYamlFields!
+    }
 
-  const starterTemplate = getTemplate(`template-starter-page`)
+    type StartersYamlFields @dontInfer {
+      featured: Boolean
+      hasScreenshot: Boolean
+      starterShowcase: StartersYamlFieldsStarterShowcase
+    }
 
-  const { data, errors } = await graphql(`
-    query {
-      allStartersYaml {
-        nodes {
-          id
-          fields {
-            starterShowcase {
-              slug
-            }
-            hasScreenshot
-          }
-          url
-          repo
-        }
-      }
+    type StartersYamlFieldsStarterShowcase @dontInfer {
+      slug: String!
+      stub: String
+      name: String
+      description: String
+      stars: Int
+      lastUpdated: String
+      owner: String
+      githubFullName: String
+      gatsbyMajorVersion: [[String]]
+      allDependencies: [[String]]
+      gatsbyDependencies: [[String]]
+      miscDependencies: [[String]]
     }
   `)
-  if (errors) throw errors
-
-  // Create starter pages.
-  const starters = _.filter(data.allStartersYaml.nodes, node => {
-    const slug = _.get(node, `fields.starterShowcase.slug`)
-    if (!slug) {
-      return null
-    } else if (!_.get(node, `fields.hasScreenshot`)) {
-      reporter.warn(
-        `Starter showcase entry "${node.repo}" seems offline. Skipping.`
-      )
-      return null
-    } else {
-      return node
-    }
-  })
-
-  starters.forEach(node => {
-    createPage({
-      path: `/starters${node.fields.starterShowcase.slug}`,
-      component: starterTemplate,
-      context: {
-        slug: node.fields.starterShowcase.slug,
-      },
-    })
-  })
 }
 
 const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
   githubApiClient
     .request(
-      `
+      /* GraphQL */ `
     query {
       repository(owner:"${owner}", name:"${repo}") {
         name
@@ -227,4 +212,54 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         })
     }
   }
+}
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
+
+  const starterTemplate = getTemplate(`template-starter-page`)
+
+  const { data, errors } = await graphql(/* GraphQL */ `
+    query {
+      allStartersYaml {
+        nodes {
+          id
+          fields {
+            starterShowcase {
+              slug
+            }
+            hasScreenshot
+          }
+          url
+          repo
+        }
+      }
+    }
+  `)
+  if (errors) throw errors
+
+  // Create starter pages.
+  const starters = _.filter(data.allStartersYaml.nodes, node => {
+    const slug = _.get(node, `fields.starterShowcase.slug`)
+    if (!slug) {
+      return null
+    } else if (!_.get(node, `fields.hasScreenshot`)) {
+      reporter.warn(
+        `Starter showcase entry "${node.repo}" seems offline. Skipping.`
+      )
+      return null
+    } else {
+      return node
+    }
+  })
+
+  starters.forEach(node => {
+    createPage({
+      path: `/starters${node.fields.starterShowcase.slug}`,
+      component: starterTemplate,
+      context: {
+        slug: node.fields.starterShowcase.slug,
+      },
+    })
+  })
 }

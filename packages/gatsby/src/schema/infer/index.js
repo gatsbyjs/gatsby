@@ -4,10 +4,10 @@ const { hasNodes } = require(`./inference-metadata`)
 const { getExampleObject } = require(`./build-example-data`)
 const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
+const { getNodesByType } = require(`../../redux/nodes`)
 
 const addInferredTypes = ({
   schemaComposer,
-  nodeStore,
   typeConflictReporter,
   typeMapping,
   inferenceMetadata,
@@ -68,7 +68,6 @@ const addInferredTypes = ({
     addInferredType({
       schemaComposer,
       typeComposer,
-      nodeStore,
       typeConflictReporter,
       typeMapping,
       parentSpan,
@@ -80,7 +79,6 @@ const addInferredTypes = ({
 const addInferredType = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   typeConflictReporter,
   typeMapping,
   inferenceMetadata = {},
@@ -93,7 +91,7 @@ const addInferredType = ({
     typeComposer.getExtension(`createdFrom`) === `inference` &&
     hasNodes(inferenceMetadata.typeMap[typeName])
   ) {
-    const nodes = nodeStore.getNodesByType(typeName)
+    const nodes = getNodesByType(typeName)
     typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
   }
 
@@ -106,7 +104,6 @@ const addInferredType = ({
   addInferredFields({
     schemaComposer,
     typeComposer,
-    nodeStore,
     exampleValue,
     typeMapping,
     parentSpan,

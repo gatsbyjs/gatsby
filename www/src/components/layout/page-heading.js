@@ -71,7 +71,7 @@ const Icon = styled(`span`)`
 const PageHeading = ({ title, icon }) => (
   <PageHeadingContainer>
     <H1 data-title={title}>
-      <Icon dangerouslySetInnerHTML={{ __html: icon }} />
+      <Icon>{icon}</Icon>
       {title}
     </H1>
   </PageHeadingContainer>
@@ -79,7 +79,7 @@ const PageHeading = ({ title, icon }) => (
 
 PageHeading.propTypes = {
   title: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.element,
 }
 
 export default PageHeading

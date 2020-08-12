@@ -41,6 +41,8 @@
         - title: Preparing Your Environment
           link: /docs/preparing-your-environment/
           items:
+            - title: Basic Hardware & Software Requirements
+              link: /docs/basic-hardware-software-requirements/
             - title: Browser Support
               link: /docs/browser-support/
             - title: Gatsby on Windows
@@ -72,6 +74,9 @@
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
+            - title: Deploying to a DigitalOcean Droplet
+              link: /docs/deploying-to-digitalocean-droplet/
+              breadcrumbTitle: DigitalOcean
             - title: Deploying to S3 & CloudFront
               link: /docs/deploying-to-s3-cloudfront/
               breadcrumbTitle: S3 & CloudFront
@@ -111,6 +116,9 @@
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
+            - title: Deploying to 21YunBox
+              link: /docs/deploying-to-21yunbox/
+              breadcrumbTitle: 21YunBox Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -154,12 +162,12 @@
             - title: Using the Static Folder
               link: /docs/static-folder/
               breadcrumbTitle: Static Folder
+            - title: Working with Images in Gatsby
+              link: /docs/working-with-images/
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
             - title: Using Cloudinary Image service
               link: /docs/using-cloudinary-image-service/
-            - title: Working with Images in Gatsby
-              link: /docs/working-with-images/
               breadcrumbTitle: Images in Gatsby
             - title: Preoptimizing Your Images
               link: /docs/preoptimizing-images/
@@ -350,6 +358,8 @@
                   link: /docs/bulma/
                 - title: Using Theme UI
                   link: /docs/theme-ui/
+                - title: Other CSS Frameworks
+                  link: /docs/other-css-frameworks/
         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           breadcrumbTitle: MDX
@@ -367,6 +377,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Migrating Remark to MDX
+              link: /docs/mdx/migrate-remark-to-mdx/
             - title: Markdown Syntax
               link: /docs/mdx/markdown-syntax/
         - title: Adding Testing
@@ -411,6 +423,7 @@
               link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
+          breadcrumbTitle: App and Website Functionality
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -472,6 +485,8 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
+                - title: "Scroll Restoration"
+                  link: /docs/scroll-restoration/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation
@@ -498,6 +513,8 @@
                   link: /docs/sourcing-from-etsy/
                 - title: Sourcing from WooCommerce
                   link: /docs/sourcing-from-woocommerce/
+            - title: Adding a Redux Store
+              link: /docs/adding-redux-store/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -643,8 +660,8 @@
               link: /docs/schema-gql-type/
             - title: Building the Input Filters
               link: /docs/schema-input-gql/
-            - title: Querying with Sift
-              link: /docs/schema-sift/
+            - title: Query Filters
+              link: /docs/query-filters/
             - title: Connections
               link: /docs/schema-connections/
         - title: Page Creation

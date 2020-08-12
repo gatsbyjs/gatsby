@@ -4,7 +4,7 @@ title: Deploying to Azure
 
 This guide walks through how to deploy and host your next Gatsby site on Azure.
 
-Azure is a great option for deploying Gatsby sites. Azure is a large cloud platform with hundreds of services working together to give you serverless, databases, AI, and static web site hosting. The Azure Static Web Apps service is meant to be used with static web sites. It provides features like hosting, [CDN](/docs/glossary/content-delivery-network/), authentication/authorization, [continuous deployment](/docs/glossary/continuous-deployment/) with Git-triggered builds, HTTPS, the ability to add a serverless API, and much more.
+Azure is a great option for deploying Gatsby sites. Azure is a large cloud platform with hundreds of services working together to give you serverless, databases, AI, and static website hosting. The Azure Static Web Apps service is meant to be used with static websites. It provides features like hosting, [CDN](/docs/glossary/content-delivery-network/), authentication/authorization, [continuous deployment](/docs/glossary/continuous-deployment/) with Git-triggered builds, HTTPS, the ability to add a serverless API, and much more.
 
 ## Prerequisites
 

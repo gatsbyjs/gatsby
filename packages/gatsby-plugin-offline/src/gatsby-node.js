@@ -139,8 +139,9 @@ exports.onPostBuild = (
         handler: `CacheFirst`,
       },
       {
-        // page-data.json files are not content hashed
-        urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+        // page-data.json files, static query results and app-data.json
+        // are not content hashed
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
         handler: `StaleWhileRevalidate`,
       },
       {
@@ -162,7 +163,9 @@ exports.onPostBuild = (
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
-  const idbKeyvalDest = `public/${idbKeyvalFile}`
+  const idbKeyvalPackageJson = require(`idb-keyval/package.json`)
+  const idbKeyValVersioned = `idb-keyval-${idbKeyvalPackageJson.version}-iife.min.js`
+  const idbKeyvalDest = `public/${idbKeyValVersioned}`
   fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
 
   const swDest = `public/sw.js`
@@ -183,6 +186,7 @@ exports.onPostBuild = (
 
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
+        .replace(/%idbKeyValVersioned%/g, idbKeyValVersioned)
         .replace(/%pathPrefix%/g, pathPrefix)
         .replace(/%appFile%/g, appFile)
 

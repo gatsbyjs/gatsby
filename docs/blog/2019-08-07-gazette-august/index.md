@@ -74,7 +74,7 @@ Check out the implementation on the [PR on GitHub](https://github.com/gatsbyjs/g
 
 Jason has basically been living his life on livestream since the past month. He's done some incredible streams and has many more exciting ones coming up.
 
-My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
+My favorite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
 
 In case that isn't your jam, there's also [Gatsby + WordPress](https://www.youtube.com/watch?v=DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ), [composing and styling Gatsby themes](https://www.youtube.com/watch?v=6Z4p-qjnKCQ), [Microfrontends](https://www.youtube.com/watch?v=0Ta-awtLZTs) and even a [livestream on livestreaming](https://www.youtube.com/watch?v=rgTugjTDYaE)! How _meta_!
 
@@ -86,7 +86,7 @@ Talking about jam, to celebrate the launch of Gatsby Themes, we announced the [G
 
 The response was incredible. Seeing so many wonderful themes from all of you has been spectacular and we're afraid we might like _too_ many of them to pick one.
 
-The team is currently hard at work judging and picking their favourites so results should be out very soon!
+The team is currently hard at work judging and picking their favorites so results should be out very soon!
 
 ## Community Highlights
 

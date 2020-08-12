@@ -25,20 +25,15 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     store,
     cache,
     getCache,
-    getNodes,
+    getNodesByType,
     reporter,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
-  const contentfulAssetNodes = getNodes().filter(
-    n =>
-      n.internal.owner === `gatsby-source-contentful` &&
-      n.internal.type === `ContentfulAsset`
-  )
 
   await Promise.all(
-    contentfulAssetNodes.map(async node => {
+    getNodesByType(`ContentfulAsset`).map(async node => {
       totalJobs += 1
       bar.total = totalJobs
 

@@ -7,7 +7,7 @@ tags:
   - large-sites
 ---
 
-Gatsby has always been, and will always be, focused on performance. All of the best practices and patterns relating to performance are internalized and we enable these performance optimizations _by default_ for every Gatsby application. However, there is always more we can do and we are always striving to make incremental improvements that impact _every_ Gatsby user. From this basis, we're happy to announce a new performance improvement: splitting the page manifest into individual files for each page. Prior to this change, for large Gatsby applications (e.g. more than 5,000 pages), the page manifest could grow to 200Kb or more, and loading this manifest could take several seconds on 3g connections, which is certainly non-ideal!
+Gatsby has always been, and will always be, focused on performance. All of the best practices and patterns relating to performance are internalized and we enable these performance optimizations _by default_ for every Gatsby application. However, there is always more we can do and we are always striving to make incremental improvements that impact _every_ Gatsby user. From this basis, we're happy to announce a new performance improvement: splitting the page manifest into individual files for each page. Prior to this change, for large Gatsby applications (e.g. more than 5,000 pages), the page manifest could grow to 200Kb or more, and loading this manifest could take several seconds on 3G connections, which is certainly non-ideal!
 
 Over the past few months, I've been gradually changing Gatsby's architecture so that the size of the site has absolutely no impact on real-world performance. This change [has been merged](https://github.com/gatsbyjs/gatsby/pull/14359#event-2402986461) and is available, for free, in [Gatsby v2.9.0](https://www.npmjs.com/package/gatsby/v/2.9.0). From this point forward, your application manifest will no longer grow proportionally to the number of pages in your Gatsby application.
 
@@ -25,7 +25,7 @@ There were two main symptoms experienced by users of large Gatsby sites.
 The central problem was that Gatsby generates a file for each build called `pages-manifest.json` (also called `data.json`) that must be loaded by the browser before users can navigate to other pages. It contains metadata about every page on the site, including:
 
 - **componentChunkName**: The logical name of the React component for the page
-- **dataPath**: The path to the file that contains the page's graphql query result, and any other page context.
+- **dataPath**: The path to the file that contains the page's GraphQL query result, and any other page context.
 
 When a user clicks a link to another page, Gatsby first looks up the manifest for the page's component and query result file. Gatsby then downloads them (if they haven't already been prefetched), and then passes the loaded query results to the page's component and renders it. Since `pages-manifest` contains the list of all pages on the site, Gatsby can also immediately show a 404 if necessary if the page is not able to be located.
 
@@ -38,10 +38,10 @@ Even after the manifest had been loaded, the manifest had to be searched for the
 The solution seems abundantly obvious at this point. We needed to introduce a manifest file per page, instead of a global pages-manifest. We called this `page-data.json`. It includes:
 
 - **componentChunkName**: The logical name of the React component for the page
-- **result**: The full graphql query result and page context
+- **result**: The full GraphQL query result and page context
 - **webpackCompilationHash**: Unique hash output by webpack any time user's `src` code content changes
 
-This is very similar to each entry in the pages manifest. The major difference being that the graphql query result is inlined instead of being contained in a separate file.
+This is very similar to each entry in the pages manifest. The major difference being that the GraphQL query result is inlined instead of being contained in a separate file.
 
 Now, when a page navigation occurs, Gatsby makes a request directly to the server for the `page-data.json`, instead of checking the global manifest (which doesn't exist anymore).
 
@@ -62,7 +62,7 @@ Prefetching FTW! Gatsby already prefetches any links on the page so that when th
 
 ### Gatsby sites are now more "live"
 
-Previously in Gatsby, all resources are content-hashed (except the html files). This includes the pages-manifest. So once a Gatsby site is loaded in the browser, the user will only ever see the resources generated during that build. If they stay on the site for days, they'll never see new content until they refresh.
+Previously in Gatsby, all resources are content-hashed (except the HTML files). This includes the pages-manifest. So once a Gatsby site is loaded in the browser, the user will only ever see the resources generated during that build. If they stay on the site for days, they'll never see new content until they refresh.
 
 The new `page-data.json` resources are **not** content-hashed. This means that if a user is on the site and a rebuild occurs resulting in changed `page-data.json`, the user will then see that new information when they navigate to that page.
 
@@ -70,7 +70,7 @@ However, this is only true if a page hasn't already been prefetched. We have som
 
 ### Netlify builds faster
 
-The old graphql static query results were content-hashed. Which meant that any change to any data resulted in a change to the pages-manifest. Hosting sites such as Netlify look at the changed files and use that to figure out what files can be shared between builds. Since the pages-manifest depends on all query result files, which are all content-hashed, then any data change resulted in a change to the pages-manifest, which could be 10+ MB in size.
+The old GraphQL static query results were content-hashed. Which meant that any change to any data resulted in a change to the pages-manifest. Hosting sites such as Netlify look at the changed files and use that to figure out what files can be shared between builds. Since the pages-manifest depends on all query result files, which are all content-hashed, then any data change resulted in a change to the pages-manifest, which could be 10+ MB in size.
 
 With the latest changes, if you only make a change one page's data, then Netlify will only have to copy that file when it rebuilds.
 

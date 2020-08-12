@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import Link from "../localized-link"
@@ -114,108 +114,93 @@ const ViewAll = () => (
   </ViewAllStyle>
 )
 
-class HomepageBlogPosts extends Component {
-  desktopMediaQuery
+const splitPostsToColumns = posts =>
+  posts.reduce(
+    (merge, post, idx) => {
+      if (idx % 2) {
+        merge[1].push(post)
+      } else {
+        merge[0].push(post)
+      }
 
-  state = {
-    desktopViewport: false,
-  }
+      return merge
+    },
+    [[], []]
+  )
 
-  componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
-    this.desktopMediaQuery.addListener(this.updateViewPortState)
-    this.setState({ desktopViewport: this.desktopMediaQuery.matches })
-  }
+export default function HomepageBlogPosts({ posts }) {
+  const [desktopViewport, setDesktopViewport] = useState(false)
 
-  componentWillUnmount = () => {
-    this.desktopMediaQuery.removeListener(this.updateViewPortState)
-  }
+  useEffect(() => {
+    const updateViewPortState = () =>
+      setDesktopViewport(desktopMediaQuery.matches)
+    const desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
+    desktopMediaQuery.addListener(updateViewPortState)
+    updateViewPortState()
+    return () => desktopMediaQuery.removeListener(updateViewPortState)
+  }, [])
 
-  updateViewPortState = () => {
-    this.setState({ desktopViewport: this.desktopMediaQuery.matches })
-  }
+  const postsInColumns = splitPostsToColumns(posts)
 
-  splitPostsToColumns = posts =>
-    posts.reduce(
-      (merge, post, idx) => {
-        if (idx % 2) {
-          merge[1].push(post)
-        } else {
-          merge[0].push(post)
-        }
-
-        return merge
-      },
-      [[], []]
-    )
-
-  render() {
-    const { posts } = this.props
-    const postsInColumns = this.splitPostsToColumns(posts)
-    const { desktopViewport } = this.state
-
-    return (
-      <>
-        {desktopViewport ? (
-          <HomepageBlogPostsRootDesktop>
-            {postsInColumns.map((column, colIdx) => (
-              <PostsColumn key={`col${colIdx}`}>
-                {column.map((post, postIdx) => {
-                  const {
-                    fields: { slug },
-                  } = post
-
-                  const firstPost = !colIdx && !postIdx
-                  const lastPost = colIdx & postIdx
-
-                  if (lastPost) {
-                    {
-                      /* add 'View all posts' link as a sibling of the last post card */
-                    }
-                    return (
-                      <LastPost key={slug}>
-                        <HomepageBlogPost
-                          post={post}
-                          desktopViewport={desktopViewport}
-                        />
-                        <ViewAll />
-                      </LastPost>
-                    )
-                  }
-
-                  return (
-                    <HomepageBlogPost
-                      fullWidth={postIdx === 0}
-                      first={firstPost}
-                      key={slug}
-                      post={post}
-                      desktopViewport={desktopViewport}
-                    />
-                  )
-                })}
-              </PostsColumn>
-            ))}
-          </HomepageBlogPostsRootDesktop>
-        ) : (
-          <HomepageBlogPostsRootMobile className={SCROLLER_CLASSNAME}>
-            <HorizontalScrollerContentAsDiv>
-              {posts.map((post, idx) => {
+  return (
+    <>
+      {desktopViewport ? (
+        <HomepageBlogPostsRootDesktop>
+          {postsInColumns.map((column, colIdx) => (
+            <PostsColumn key={`col${colIdx}`}>
+              {column.map((post, postIdx) => {
                 const {
                   fields: { slug },
                 } = post
-                return <HomepageBlogPost index={idx} key={slug} post={post} />
+
+                const firstPost = !colIdx && !postIdx
+                const lastPost = colIdx & postIdx
+
+                if (lastPost) {
+                  {
+                    /* add 'View all posts' link as a sibling of the last post card */
+                  }
+                  return (
+                    <LastPost key={slug}>
+                      <HomepageBlogPost
+                        post={post}
+                        desktopViewport={desktopViewport}
+                      />
+                      <ViewAll />
+                    </LastPost>
+                  )
+                }
+
+                return (
+                  <HomepageBlogPost
+                    fullWidth={postIdx === 0}
+                    first={firstPost}
+                    key={slug}
+                    post={post}
+                    desktopViewport={desktopViewport}
+                  />
+                )
               })}
-              <ViewAll />
-            </HorizontalScrollerContentAsDiv>
-          </HomepageBlogPostsRootMobile>
-        )}
-      </>
-    )
-  }
+            </PostsColumn>
+          ))}
+        </HomepageBlogPostsRootDesktop>
+      ) : (
+        <HomepageBlogPostsRootMobile className={SCROLLER_CLASSNAME}>
+          <HorizontalScrollerContentAsDiv>
+            {posts.map((post, idx) => {
+              const {
+                fields: { slug },
+              } = post
+              return <HomepageBlogPost index={idx} key={slug} post={post} />
+            })}
+            <ViewAll />
+          </HorizontalScrollerContentAsDiv>
+        </HomepageBlogPostsRootMobile>
+      )}
+    </>
+  )
 }
 
 HomepageBlogPosts.propTypes = {
   posts: PropTypes.array.isRequired,
 }
-
-export default HomepageBlogPosts

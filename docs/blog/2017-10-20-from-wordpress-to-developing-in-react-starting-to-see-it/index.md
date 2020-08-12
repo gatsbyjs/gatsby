@@ -10,7 +10,7 @@ specialist. My use of JavaScript has been limited to animations and DOM
 manipulation. However, at
 [Indigo Tree](https://indigotree.co.uk)
 we're branching out from our staple of WordPress and trying different methods of
-creating websites with functionality that our clients require, whilst maximising
+creating websites with functionality that our clients require, whilst maximizing
 their budget.
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of
@@ -170,5 +170,5 @@ impressive gains on loading time. We’ll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.
 
 The web is always changing. And the way forward isn't always easy to see. Now,
-with GatsbyJS, we're beginning to feel like we can visualise where things are
+with GatsbyJS, we're beginning to feel like we can visualize where things are
 going.
