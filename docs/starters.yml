@@ -7061,6 +7061,22 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://kontent-sample-app-gatsby-intranet.netlify.app
+  repo: https://github.com/Simply007/kontent-sample-app-gatsby-intranet
+  description: Showcase of Kentico Kontent Intranet admin UI using Material design.
+  tags:
+    - CMS:Headless
+    - CMS:Kontent
+    - Netlify
+    - Styling:Material
+    - i18n
+  features:
+    - Kentico Kontent CaaS platform as the data source
+    - Kentico Kontent rich text element resolution example
+    - Showcasing multilingual possibilities
+    - Includes plugins for easy, beautiful typography
+    - Material Design
+    - Intranet showcase
 - url: https://varunagrawal.github.io/gatsby-bootstrap-template/
   repo: https://github.com/varunagrawal/gatsby-bootstrap-template
   description: A minimalistic Gatsby starter template with Bootstrap 4 included. Great for getting started with Gatsby without worrying out styling.
