@@ -337,3 +337,19 @@ module.exports = {
 ",
 }
 `;
+
+exports[`gatsby-plugin resource handles multiple parallel create calls 1`] = `
+Object {
+  "id": "husky",
+  "name": "husky",
+  "value": "\\"hi\\"",
+}
+`;
+
+exports[`gatsby-plugin resource handles multiple parallel create calls 2`] = `
+Object {
+  "id": "husky2",
+  "name": "husky2",
+  "value": "\\"hi\\"",
+}
+`;

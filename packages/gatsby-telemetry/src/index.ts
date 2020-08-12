@@ -1,4 +1,9 @@
-import { AnalyticsTracker, IAggregateStats } from "./telemetry"
+import {
+  AnalyticsTracker,
+  IAggregateStats,
+  ITelemetryTagsPayload,
+  ITelemetryOptsPayload,
+} from "./telemetry"
 import * as express from "express"
 import { createFlush } from "./create-flush"
 
@@ -24,35 +29,84 @@ function tick(): void {
     .then(() => setTimeout(tick, interval))
 }
 
-module.exports = {
-  trackFeatureIsUsed: (name: string): void => instance.trackFeatureIsUsed(name),
-  trackCli: (input, tags, opts): void =>
-    instance.captureEvent(input, tags, opts),
-  trackError: (input, tags): void => instance.captureError(input, tags),
-  trackBuildError: (input, tags): void =>
-    instance.captureBuildError(input, tags),
-  setDefaultTags: (tags): void => instance.decorateAll(tags),
-  decorateEvent: (event, tags): void => instance.decorateNextEvent(event, tags),
-  setTelemetryEnabled: (enabled): void => instance.setTelemetryEnabled(enabled),
-  startBackgroundUpdate: (): void => {
-    setTimeout(tick, interval)
-  },
-  isTrackingEnabled: (): boolean => instance.isTrackingEnabled(),
-  aggregateStats: (data): IAggregateStats => instance.aggregateStats(data),
-  addSiteMeasurement: (event, obj): void =>
-    instance.addSiteMeasurement(event, obj),
-  expressMiddleware: function (source: string) {
-    return function (
-      _req: express.Request,
-      _res: express.Response,
-      next
-    ): void {
-      try {
-        instance.trackActivity(`${source}_ACTIVE`)
-      } catch (e) {
-        // ignore
-      }
-      next()
+export function trackFeatureIsUsed(name: string): void {
+  instance.trackFeatureIsUsed(name)
+}
+export function trackCli(
+  input: string | string[],
+  tags?: ITelemetryTagsPayload,
+  opts?: ITelemetryOptsPayload
+): void {
+  instance.captureEvent(input, tags, opts)
+}
+
+export function trackError(input, tags): void {
+  instance.captureError(input, tags)
+}
+
+export function trackBuildError(input, tags): void {
+  instance.captureBuildError(input, tags)
+}
+
+export function setDefaultTags(tags): void {
+  instance.decorateAll(tags)
+}
+
+export function decorateEvent(event, tags): void {
+  instance.decorateNextEvent(event, tags)
+}
+
+export function setTelemetryEnabled(enabled): void {
+  instance.setTelemetryEnabled(enabled)
+}
+
+export function startBackgroundUpdate(): void {
+  setTimeout(tick, interval)
+}
+
+export function isTrackingEnabled(): boolean {
+  return instance.isTrackingEnabled()
+}
+
+export function aggregateStats(data): IAggregateStats {
+  return instance.aggregateStats(data)
+}
+
+export function addSiteMeasurement(event, obj): void {
+  instance.addSiteMeasurement(event, obj)
+}
+
+export function expressMiddleware(source: string) {
+  return function (_req: express.Request, _res: express.Response, next): void {
+    try {
+      instance.trackActivity(`${source}_ACTIVE`)
+    } catch (e) {
+      // ignore
     }
-  },
+    next()
+  }
+}
+
+// Internal
+export function setDefaultComponentId(componentId): void {
+  instance.componentId = componentId
+}
+
+export function setGatsbyCliVersion(version): void {
+  instance.gatsbyCliVersion = version
+}
+
+module.exports = {
+  trackFeatureIsUsed,
+  trackCli,
+  trackError,
+  trackBuildError,
+  setDefaultTags,
+  decorateEvent,
+  setTelemetryEnabled,
+  startBackgroundUpdate,
+  isTrackingEnabled,
+  aggregateStats,
+  addSiteMeasurement,
+  expressMiddleware,
 }
