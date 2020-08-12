@@ -7061,6 +7061,31 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://demo.websheets.co
+  repo: https://github.com/tengkuhafidz/WebSheets-Listing-Page
+  description: A listing website generator based on a standard Google Sheets template. Manage the branding, layout, and data of the site by just updating the Google Sheets.
+  tags:
+    - Google Sheets
+    - Language:TypeScript
+    - Styling:Tailwind
+    - Styling:PostCSS
+    - PWA
+    - SEO
+    - Onepage
+    - Gallery
+    - Portfolio
+  features:
+    - Google Sheets as data point
+    - Change the Branding, template, and data of the site by just updating the Google Sheets
+    - Fast-loading static site
+    - Progressive web app with offline capabilities
+    - Customisable SEO and site metadata
+    - Social share
+    - Dark Mode
+    - Google Analytics
+    - Search functionality
+    - Responsive Design
+    - Preconfigured prettier, eslint, husky
 - url: https://www.minimal-portfolio.openarchitex.dev/
   repo: https://github.com/OpenArchitex/gatsby-starter-minimal-portfolio
   description: A simple portfolio with About, Projects and Contact sections created using Theme UI and MDX
