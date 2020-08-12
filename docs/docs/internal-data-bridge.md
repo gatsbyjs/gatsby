@@ -32,7 +32,7 @@ A very commonly used field on this node is the `siteMetadata` field. This field 
 
 In `gatsby-config.js`:
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `My beautiful Gatsby site title`,

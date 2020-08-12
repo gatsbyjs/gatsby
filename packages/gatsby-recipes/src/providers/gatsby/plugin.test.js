@@ -139,7 +139,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`validates the gatsby-source-filesystem specifies a key that isn't equal to the name`, async () => {
     const result = plugin.validate({
       name: `gatsby-source-filesystem`,
-      key: `gatsby-source-filesystem`,
+      _key: `gatsby-source-filesystem`,
     })
 
     expect(result.error).toEqual(
@@ -166,8 +166,11 @@ describe(`gatsby-plugin resource`, () => {
       },
     }
 
-    await plugin.create(context, fooPlugin)
-    await plugin.create(context, barPlugin)
+    const createPromise1 = plugin.create(context, fooPlugin)
+    const createPromise2 = plugin.create(context, barPlugin)
+
+    await createPromise1
+    await createPromise2
 
     const barResult = await plugin.read(context, barPlugin.key)
     const fooResult = await plugin.read(context, fooPlugin.key)

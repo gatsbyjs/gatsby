@@ -13,6 +13,7 @@ import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
+import { pageDataExists } from "../utils/page-data"
 
 const resultHashes = new Map()
 
@@ -147,7 +148,12 @@ export const queryRunner = async (
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
-  if (resultHash !== resultHashes.get(queryJob.id)) {
+
+  if (
+    resultHash !== resultHashes.get(queryJob.id) ||
+    (queryJob.isPage &&
+      !pageDataExists(path.join(program.directory, `public`), queryJob.id))
+  ) {
     resultHashes.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
@@ -167,12 +173,11 @@ export const queryRunner = async (
         },
       })
     } else {
-      // The babel plugin is hard-coded to load static queries from
-      // public/static/d/
       const resultPath = path.join(
         program.directory,
         `public`,
-        `static`,
+        `page-data`,
+        `sq`,
         `d`,
         `${queryJob.hash}.json`
       )
