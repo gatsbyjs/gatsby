@@ -7061,6 +7061,27 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://emulsify-ds.github.io/gatsby-starter-emulsify-mdx/
+  repo: https://github.com/emulsify-ds/gatsby-starter-emulsify-mdx
+  description: A starter for a style guide powered by Gatsby Theme Emulsify
+  tags:
+    - Style Guide
+    - Documentation
+    - Storybook
+    - Markdown
+    - MDX
+    - Styling:Theme-UI
+  features:
+    - Fully customizable style guide
+    - Document pages and components using Markdown/MDX
+    - Show live Storybook components with a shortcode
+    - Flexible code syntax highlighting using PrismJS
+    - Theming using config-based Theme UI
+    - Support for modes - light/dark built-in
+    - Image and file support in Markdown
+    - Shortcodes for wrapping components and building tab links
+    - Gatsby shadowing for Gatsby Theme Emulsify components
+    - Supports linking multiple style guides
 - url: https://kontent-sample-app-gatsby-intranet.netlify.app
   repo: https://github.com/Simply007/kontent-sample-app-gatsby-intranet
   description: Showcase of Kentico Kontent Intranet admin UI using Material design.
