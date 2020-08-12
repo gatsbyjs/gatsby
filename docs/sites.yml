@@ -11541,7 +11541,7 @@
     - Community
     - Event
     - SEO
-- title: John Kavanagh Portfolio
+- title: John Kavanagh's Portfolio
   url: https://johnkavanagh.co.uk/
   main_url: https://johnkavanagh.co.uk/
   description: >
@@ -11550,6 +11550,22 @@
     - Portfolio
     - Technology
     - Web Development
+    - Blog
+    - Freelance
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
+- title: Red Central
+  url: https://redcentral.co.uk/
+  main_url: https://redcentral.co.uk/
+  description: >
+    Based in Bristol in the UK, Red Central is the World's no.1 creative agency for entertainment and brand licensing.
+  categories:
+    - Agency
+    - Entertainment
+    - Media
+    - Consulting
+    - Design
   built_by: John Kavanagh
   built_by_url: https://johnkavanagh.co.uk/
   featured: false
