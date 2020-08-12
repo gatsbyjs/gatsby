@@ -3,7 +3,7 @@ import fs from "fs-extra"
 import { collectionExtractQueryString } from "../collection-extract-query-string"
 import reporter from "gatsby-cli/lib/reporter"
 
-jest.mock("gatsby-cli/lib/reporter")
+jest.mock(`gatsby-cli/lib/reporter`)
 
 // This makes the tests work on windows properly
 const createPath = (path: string): string => path.replace(/\//g, sysPath.sep)
