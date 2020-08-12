@@ -585,13 +585,11 @@ export default async ({
             <>
               <Text bold>The recipe has an error:</Text>
               <Text>{`\n`}</Text>
-              {errors.map((error, i) => {
-                return (
-                  <Text key={i} backgroundColor="#C41E3A" color="white">
-                    {error.error}
-                  </Text>
-                )
-              })}
+              {errors.map((error, i) => (
+                <Text key={i} backgroundColor="#C41E3A" color="white">
+                  {error.error}
+                </Text>
+              ))}
             </>
           )
         } else return null

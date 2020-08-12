@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useState } from "react"
+import React, { Suspense, useContext } from "react"
 import Queue from "better-queue"
 import lodash from "lodash"
 import mitt from "mitt"
@@ -37,26 +37,24 @@ const Wrapper = ({
   inFlightCache,
   queue,
   plan,
-}) => {
-  return (
-    <ErrorBoundary>
-      <GlobalsProvider
-        value={{
-          mode: isApply ? `apply` : `plan`,
-          resultCache,
-          inFlightCache,
-          queue,
-        }}
-      >
-        <ResourceProvider value={plan}>
-          <InputProvider value={inputs}>
-            <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
-          </InputProvider>
-        </ResourceProvider>
-      </GlobalsProvider>
-    </ErrorBoundary>
-  )
-}
+}) => (
+  <ErrorBoundary>
+    <GlobalsProvider
+      value={{
+        mode: isApply ? `apply` : `plan`,
+        resultCache,
+        inFlightCache,
+        queue,
+      }}
+    >
+      <ResourceProvider value={plan}>
+        <InputProvider value={inputs}>
+          <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+        </InputProvider>
+      </ResourceProvider>
+    </GlobalsProvider>
+  </ErrorBoundary>
+)
 
 const ResourceComponent = ({
   _resourceName: Resource,
@@ -311,7 +309,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
 
   const throttledRenderResources = lodash.throttle(renderResources, 100)
 
-  queue.on(`task_finish`, function(taskId, r, stats) {
+  queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
   })
 
