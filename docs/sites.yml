@@ -11392,6 +11392,18 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: LANDTX
+  main_url: https://www.landtx.com
+  url: https://www.landtx.com
+  source_url: https://github.com/ltx-digett/landtx
+  description: >
+    LANDTX markets investment, recreational, ranch and farm lands throughout Texas.
+  categories:
+    - Real Estate
+    - Business
+  built_by: Digett
+  built_by_url: https://www.digett.com
+  featured: false
 - title: Raleigh Bikes
   url: https://www.raleigh.co.uk/gb/en/
   main_url: https://raleigh.co.uk/
