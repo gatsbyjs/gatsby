@@ -1,6 +1,5 @@
 ---
 title: Plugins, Themes, & Starters
-overview: true
 ---
 
 In the Gatsby ecosystem, there's more than one way to build a site. To help you understand the differences between plugins, themes, and starters, this guide will talk through some of the details.

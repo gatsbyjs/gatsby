@@ -50,7 +50,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
 - [Resolving Deprecations](#resolving-deprecations)
 
   - [Import Link from Gatsby](#import-link-from-gatsby)
-  - [Import graphql from Gatsby](#import-graphql-from-gatsby)
+  - [Import GraphQL from Gatsby](#import-graphql-from-gatsby)
   - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
   - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
   - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -331,7 +331,7 @@ module.exports = foo
 
 ### Move Babel Configuration
 
-The latest version of Gatsby uses Babel 7. Babel 7 introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a _.babelrc_ file might be used at the root of the project (like for configuring Jest), moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+The latest version of Gatsby uses Babel 7. Babel 7 introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a `.babelrc` file might be used at the root of the project (like for configuring Jest), moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
@@ -676,7 +676,7 @@ If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), yo
 
 If you use CSS Modules and have class names with dashes in them, you'll need to change how you access the class names from JavaScript.
 
-This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
+This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader/tree/version-1#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
 
 Here's an example with a class named `.my-class-name`:
 
@@ -692,7 +692,7 @@ export default function Component({ children }) (
 )
 ```
 
-The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader#options).
+The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader/tree/version-1#options).
 
 For vanilla CSS without a preprocessor:
 
@@ -801,7 +801,7 @@ export default function Page(props) {
 }
 ```
 
-Furthermore you can remove the package from the `package.json`.
+Furthermore, you can remove the package from the `package.json`.
 
 ```diff:title=package.json
 "dependencies": {
@@ -812,7 +812,7 @@ Furthermore you can remove the package from the `package.json`.
 }
 ```
 
-### Import graphql from Gatsby
+### Import GraphQL from Gatsby
 
 The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gatsby will throw deprecation warning unless you explicitly import it from the `gatsby` package.
 
@@ -1025,7 +1025,7 @@ The node `internal` object isn't meant for adding node data. While Gatsby v1 all
 
 ### Import `graphql` types from `gatsby/graphql`
 
-Import graphql types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
+Import GraphQL types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
 
 ```diff
 -const { GraphQLString } = require(`graphql`)

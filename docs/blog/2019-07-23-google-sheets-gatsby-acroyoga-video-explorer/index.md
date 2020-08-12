@@ -159,7 +159,7 @@ itemsArrayWithTagsArray.map((item, i) => {
     id: createNodeId(`${i}`),
     parent: `__SOURCE__`,
     internal: {
-      type: `item`, // name of the graphQL query --> allItem {}
+      type: `item`, // name of the GraphQL query --> allItem {}
       contentDigest: createContentDigest(item),
     },
     children: [],
@@ -215,7 +215,7 @@ I did exactly the same for my instructors so I'll skip it here for brevity. As y
 
 As I mentioned at the beginning, I won't show the code for each and every component here. But I will explain the general process I used to create this UI. I first created the templates, which are single-tag.js, single-item.js, and single-instructor.js. These templates are used in gatsby-node.js when the createPage methods are called.
 
-My templates are fairly standard Gatsby templates with a React component at the top and a graphql query at the bottom. On the single-tag.js and single-instructor.js templates, I use filters in the query to get only the videos that match that tag. Here's how that query looks:
+My templates are fairly standard Gatsby templates with a React component at the top and a GraphQL query at the bottom. On the single-tag.js and single-instructor.js templates, I use filters in the query to get only the videos that match that tag. Here's how that query looks:
 
 ```javascript
 export const tagPageQuery = graphql`
@@ -238,7 +238,7 @@ export const tagPageQuery = graphql`
 
 This query uses $tag from React context (which was created in gatsby-node.js) to do the filtering. If $tag is found in the array of tags (for that row), then it returns that row (which is a video). This is how I can create separate instructor and tag pages that only show those relevant videos (the videos with those specific tags or instructors).
 
-At the top of my tag pages, I have a title that says “24 videos tagged with [the tag]”. To get the tag for that page, I need to pass pageContext as a prop to this template component. That allows me to access that \$tag variable within the template (instead of a graphql query). Now I can make the title with the following code:
+At the top of my tag pages, I have a title that says “24 videos tagged with [the tag]”. To get the tag for that page, I need to pass pageContext as a prop to this template component. That allows me to access that \$tag variable within the template (instead of a GraphQL query). Now I can make the title with the following code:
 
 ```jsx
 {itemsWithTag.length} {itemsWithTag.length > 1 ? 'videos' : 'video'} tagged with
@@ -305,7 +305,7 @@ Linking to the instructor and tags is done with this code:
 </CardContent>
 ```
 
-That's it. It's just `<Link to=` and the relative path, e.g. `<Link to="/some-resource/" />`. I don't need to worry about passing the right props or anything else. I know the page exists (because I built it using createPage in gatsby-node.js). I know the template will have the right data (because I setup the graphql query in that template file). I just need to Link to the right URL, and the pages will connect correctly. This creates a fast and intuitive user experience wherein the user can quickly click through the pages to find the right video.
+That's it. It's just `<Link to=` and the relative path, e.g. `<Link to="/some-resource/" />`. I don't need to worry about passing the right props or anything else. I know the page exists (because I built it using createPage in gatsby-node.js). I know the template will have the right data (because I setup the GraphQL query in that template file). I just need to Link to the right URL, and the pages will connect correctly. This creates a fast and intuitive user experience wherein the user can quickly click through the pages to find the right video.
 
 ## Creating a simple video player with React-Player
 

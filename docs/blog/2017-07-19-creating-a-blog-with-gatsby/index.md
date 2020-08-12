@@ -164,7 +164,7 @@ You only need one transformer plugin (for Markdown), so let's get that
 installed.
 
 - [gatsby-transformer-remark][gatsby-transformer-remark]
-  - Uses the [remark][remark] Markdown parser to transform .md files on disk
+  - Uses the [remark][remark] Markdown parser to transform `.md` files on disk
     into HTML; additionally, this transformer can optionally take plugins to
     further extend functionality--e.g. add syntax highlighting with
     `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative

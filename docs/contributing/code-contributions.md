@@ -122,19 +122,15 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 
 ## Official theme development
 
-This section is for official theme development in Gatsby's monorepo. If you are looking
+This section is for official theme development. If you are looking
 to build your own theme, see [building themes](/docs/themes/building-themes/).
 
-Before getting started, make sure that you have
-[set up your local dev environment](/contributing/setting-up-your-local-dev-environment/)
-and that you're on the latest version of `gatsby-dev-cli`.
+Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes themselves live in the `packages` directory and starters using them are in the `starters` directory. In order to work on a theme, find the starter that uses it and do the following:
 
-- In the Gatsby monorepo find the starter in the `/starters` directory that uses the theme you want to work on
-- Navigate to that directory, e.g. `cd starters/gatsby-starter-blog-theme`
-- Install dependencies: `yarn`
-- Run Gatsby Dev CLI to sync theme files, referencing the appropriate theme: `gatsby-dev --packages gatsby-theme-blog`
-- In another tab run the starter: `yarn develop`
-- Edit the theme files, you'll see changes automatically copied over and update in your starter.
+1. Run `yarn` in your terminal in the root of the repo.
+2. Still in the repo root, run `yarn workspace <starter name> develop`.
+
+From there, you can make changes in the theme and see them reflected in the running site.
 
 ## Feedback
 
