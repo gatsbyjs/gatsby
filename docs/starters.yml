@@ -60,6 +60,31 @@
     - Offline Support
     - RSS Feed
     - Composable and extensible
+- url: https://gatsby-typescript-markdown-starter.vercel.app/
+  repo: https://github.com/caelinsutch/gatsby-typescript-markdown-starter
+  description: A Gatsby starter with TypeScript and Markdown Preconfigured to Make a Portfolio.
+  tags:
+    - Blog
+    - SEO
+    - Styling:SCSS
+    - Styling:CSS-in-JS
+    - Markdown
+    - Portfolio
+  features:
+    - Eslint/Prettier configured
+    - Easy to customize
+    - Typescript pre configured
+    - Markdown posts with PrismJS code styling
+    - Categories based off a yaml file
+    - Preconfigured with Gatsby Image
+    - High Lighthouse Scores
+    - Easy to understand product structure
+    - CSS in JS with Emotion
+    - Sass stylesheets
+    - React Helmet for SEO best practices and metatags
+    - SEO optimized
+    - Projects page, categories, home, 404 page
+    - Responsive
 - url: https://gatsby-starter-wordpress-twenty-twenty.netlify.app/
   repo: https://github.com/henrikwirth/gatsby-starter-wordpress-twenty-twenty
   description: A port of the WordPress Twenty Twenty theme to Gatsby.
