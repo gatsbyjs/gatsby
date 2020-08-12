@@ -411,6 +411,16 @@
     - Use your GitHub as your own portfolio site
     - List your GitHub repositories
     - GitHub GraphQL API v4
+- url: https://gatsby-starter-github-repositories.netlify.app
+  repo: https://github.com/tool3/gatsby-starter-github-repositories
+  description: Single page starter based on gatsby-source-github-api and gatsby-starter-github-api
+  tags:
+    - Portfolio
+    - Onepage
+  features:
+    - Use your GitHub as your own portfolio site
+    - List your GitHub repositories
+    - GitHub GraphQL API v4
 
 - url: https://gatsby-starter-bloomer.netlify.app/
   repo: https://github.com/Cethy/gatsby-starter-bloomer
