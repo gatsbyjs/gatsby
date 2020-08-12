@@ -49,7 +49,7 @@ ANSWER: make time-consuming things take less time, and make frustrating things l
 
 People who use plugin authoring docs say they are super helpful; however, most people don’t know about them and solve challenges through looking at the source code of other plugins. While this works for many people, we think making this even easier is a positive change.
 
-## Solution
+## Solution to make things less time consuming
 
 - [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
 - [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)
@@ -66,7 +66,7 @@ Examples of things that are confusing:
 - Most people don’t know how to write automated tests for plugins and mentioned building a site just to test the plugin, which they felt wasn't the most ideal way to test
 - Rebuilding for every change often “feels wrong” to people
 
-## Solution
+## Solution to reduce frustration
 
 [Redesigned the plugin docs](https://github.com/gatsbyjs/gatsby/pull/13261/files) to include a category called "Creating Plugins" where we can document answers to people's concerns; for example, ideas for how to test plugins and advice to use yarn workspaces to avoid yarn link inconsistencies.
 

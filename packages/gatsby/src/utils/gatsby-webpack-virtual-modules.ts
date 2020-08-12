@@ -1,5 +1,5 @@
 import VirtualModulesPlugin from "webpack-virtual-modules"
-
+import * as path from "path"
 /*
  * This module allows creating virtual (in memory only) modules / files
  * that webpack compilation can access without the need to write module
@@ -22,6 +22,8 @@ interface IGatsbyWebpackVirtualModulesContext {
 const fileContentLookup: Record<string, string> = {}
 const instances: IGatsbyWebpackVirtualModulesContext[] = []
 
+export const VIRTUAL_MODULES_BASE_PATH = `_this_is_virtual_fs_path_`
+
 export class GatsbyWebpackVirtualModules {
   apply(compiler): void {
     const virtualModules = new VirtualModulesPlugin(fileContentLookup)
@@ -32,10 +34,12 @@ export class GatsbyWebpackVirtualModules {
   }
 }
 
+export function getAbsolutePathForVirtualModule(filePath: string): string {
+  return path.join(process.cwd(), VIRTUAL_MODULES_BASE_PATH, filePath)
+}
+
 export function writeModule(filePath: string, fileContents: string): void {
-  // "node_modules" added in front of filePath allow to allow importing
-  // those modules using same path
-  const adjustedFilePath = `node_modules/${filePath}`
+  const adjustedFilePath = getAbsolutePathForVirtualModule(filePath)
 
   if (fileContentLookup[adjustedFilePath] === fileContents) {
     // we already have this, no need to cause invalidation
