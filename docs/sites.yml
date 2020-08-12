@@ -6671,7 +6671,7 @@
     Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
   categories:
     - E-commerce
-  built_by: BrikL
+  built_by: BRIKL
   built_by_url: https://github.com/Brikl
 - title: Cole Ruche
   main_url: https://coleruche.com
@@ -10861,6 +10861,24 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+- title: Narration Box
+  main_url: https://narrationbox.com
+  url: https://narrationbox.com
+  description: >
+    Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
+  categories:
+    - Styling:Tailwind
+    - Productivity
+    - Technology
+    - Podcast
+    - Landing Page
+    - Media
+    - Entertainment
+    - Business
+    - API
+    - Video
+  built_by: Chetan Malhotra
+  built_by_url: https://twitter.com/narrationbox
 - title: CodeWithLinda
   url: https://www.codewithlinda.com/
   main_url: https://www.codewithlinda.com/
@@ -11202,8 +11220,6 @@
     - Design
     - Portfolio
     - User Experience
-  built_by: Outer Studio
-  built_by_url: https://outer.studio
 - title: Inbound Latino
   url: https://inboundlatino.com/
   main_url: https://inboundlatino.com/
@@ -11437,6 +11453,38 @@
   built_by: Jeff Jadulco
   built_by_url: https://jeffjadulco.com
   featured: false
+- title: Château de Morey 🏰
+  main_url: https://chateaudemorey.fr
+  url: https://chateaudemorey.fr/en/
+  description: >
+    Website of Château de Morey. Built on the ruins of a Templar convent 🏰
+  categories:
+    - Travel
+    - Blog
+  built_by: Julien Karst
+  built_by_url: https://julienkarst.com
+- title: TRUE STORY
+  main_url: https://custom.truestorysport.com/
+  url: https://custom.truestorysport.com/
+  description: >
+    TRUE STORY is a contemporary sportswear brand offering custom products for orienteering.
+  categories:
+    - E-commerce
+  built_by: BRIKL
+  built_by_url: https://github.com/Brikl
+- title: Julien Karst Freelance
+  main_url: https://julienkarst.com
+  url: https://julienkarst.com
+  description: >
+    Personal website for Julien Karst, a Mobile / Web developer.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Programming
+    - Freelance
+  built_by: Julien Karst
+  built_by_url: https://twitter.com/JulienKarst
 - title: Chien Tai Co.
   main_url: https://www.chientai.com.tw
   url: https://www.chientai.com.tw
@@ -11487,4 +11535,86 @@
     - Web Development
   built_by: Carie Fisher
   built_by_url: https://twitter.com/cariefisher
+- title: Reactive Resume
+  url: https://rxresu.me
+  main_url: https://rxresu.me
+  description: >
+    A free and open source resume builder.
+  categories:
+    - App
+    - Design
+    - Open Source
+  built_by: Amruth Pillai
+  built_by_url: https://amruthpillai.com
+- title: Meetup
+  url: https://meetup.com/
+  main_url: https://meetup.com/
+  description: >
+    Meetup is the leading social media platform dedicated to connecting people in person, or online during times of crisis.
+  categories:
+    - Accessibility
+    - App
+    - Community
+    - Event
+    - SEO
+- title: John Kavanagh Portfolio
+  url: https://johnkavanagh.co.uk/
+  main_url: https://johnkavanagh.co.uk/
+  description: >
+    Website and portfolio of John Kavanagh: a freelance front-end web developer in Brighton, UK.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
+- title: MongoDB Developer Hub
+  url: https://developer.mongodb.com
+  main_url: https://developer.mongodb.com
+  description: >
+    The MongoDB Developer Hub serves as the central location for all MongoDB developer content, programs, and resources.
+  categories:
+    - Blog
+    - Data
+    - Education
+    - Learning
+    - Programming
+    - Technology
+    - Web Development
+  built_by: MongoDB
+  featured: false
+- title: Devnet
+  main_url: https://devnet.hr/
+  url: https://devnet.hr/
+  description: >
+    Business website for web development company.
+  categories:
+    - Web Development
+    - Agency
+  built_by: Devnet
+  built_by_url: https://devnet.hr
+- title: Leanier.com
+  url: https://leanier.com
+  main_url: https://leanier.com
+  description: >
+    Enterprise SaaS Management for Modern IT
+  categories:
+    - Data
+    - Technology
+    - Business
+  built_by: leaniercode
+  featured: false
+- title: The Mezzofanti Guild - Language Learning Made Simple
+  url: https://www.mezzoguild.com
+  main_url: https://www.mezzoguild.com
+  description: >
+    Learning a foreign language and don't know where to start? The Mezzofanti Guild will teach you the best tips, tricks and hacks to simplify your language learning.
+  categories:
+    - Blog
+    - Education
+    - Learning
+    - Travel
+  built_by: Donovan Nagel
+  built_by_url: https://www.donovannagel.com
   featured: false

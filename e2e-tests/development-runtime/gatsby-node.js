@@ -15,7 +15,7 @@ exports.onCreateNode = function onCreateNode({
 
       createNodeField({
         name: `slug`,
-        value: slug,
+        value: slug.replace("/", ""),
         node,
       })
       break
@@ -59,10 +59,10 @@ exports.createPages = async function createPages({
   data.posts.edges.forEach(({ node }) => {
     const { slug } = node.fields
     createPage({
-      path: slug,
+      path: `/${slug}`,
       component: blogPostTemplate,
       context: {
-        slug,
+        slug: slug,
       },
     })
   })

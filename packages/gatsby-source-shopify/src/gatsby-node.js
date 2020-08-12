@@ -15,6 +15,7 @@ import {
   ProductMetafieldNode,
   ProductVariantMetafieldNode,
   ShopPolicyNode,
+  ShopDetailsNode,
   PageNode,
 } from "./nodes"
 import {
@@ -26,6 +27,7 @@ import {
   COLLECTION,
   PRODUCT,
   SHOP_POLICY,
+  SHOP_DETAILS,
   PAGE,
 } from "./constants"
 import {
@@ -34,6 +36,7 @@ import {
   COLLECTIONS_QUERY,
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
+  SHOP_DETAILS_QUERY,
   PAGES_QUERY,
 } from "./queries"
 
@@ -64,6 +67,7 @@ export const sourceNodes = async (
     collections: COLLECTIONS_QUERY,
     products: PRODUCTS_QUERY,
     shopPolicies: SHOP_POLICIES_QUERY,
+    shopDetails: SHOP_DETAILS_QUERY,
     pages: PAGES_QUERY,
   }
 
@@ -106,30 +110,39 @@ export const sourceNodes = async (
     if (includeCollections.includes(SHOP)) {
       promises = promises.concat([
         createNodes(COLLECTION, queries.collections, CollectionNode, args),
-        createNodes(PRODUCT, queries.products, ProductNode, args, async x => {
-          if (x.variants)
-            await forEach(x.variants.edges, async edge => {
-              const v = edge.node
-              if (v.metafields)
-                await forEach(v.metafields.edges, async edge =>
-                  createNode(
-                    await ProductVariantMetafieldNode(imageArgs)(edge.node)
+        createNodes(
+          PRODUCT,
+          queries.products,
+          ProductNode,
+          args,
+          async (product, productNode) => {
+            if (product.variants)
+              await forEach(product.variants.edges, async edge => {
+                const v = edge.node
+                if (v.metafields)
+                  await forEach(v.metafields.edges, async edge =>
+                    createNode(
+                      await ProductVariantMetafieldNode(imageArgs)(edge.node)
+                    )
                   )
+                return createNode(
+                  await ProductVariantNode(imageArgs, productNode)(edge.node)
                 )
-              return createNode(await ProductVariantNode(imageArgs)(edge.node))
-            })
+              })
 
-          if (x.metafields)
-            await forEach(x.metafields.edges, async edge =>
-              createNode(await ProductMetafieldNode(imageArgs)(edge.node))
-            )
+            if (product.metafields)
+              await forEach(product.metafields.edges, async edge =>
+                createNode(await ProductMetafieldNode(imageArgs)(edge.node))
+              )
 
-          if (x.options)
-            await forEach(x.options, async option =>
-              createNode(await ProductOptionNode(imageArgs)(option))
-            )
-        }),
+            if (product.options)
+              await forEach(product.options, async option =>
+                createNode(await ProductOptionNode(imageArgs)(option))
+              )
+          }
+        ),
         createShopPolicies(args),
+        createShopDetails(args),
       ])
     }
     if (includeCollections.includes(CONTENT)) {
@@ -182,9 +195,28 @@ const createNodes = async (
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
-      await f(entity)
+      await f(entity, node)
     }
   )
+  if (verbose) console.timeEnd(msg)
+}
+
+/**
+ * Fetch and create nodes for shop policies.
+ */
+const createShopDetails = async ({
+  client,
+  createNode,
+  formatMsg,
+  verbose,
+  queries,
+}) => {
+  // // Message printed when fetching is complete.
+  const msg = formatMsg(`fetched and processed ${SHOP_DETAILS} nodes`)
+
+  if (verbose) console.time(msg)
+  const { shop } = await queryOnce(client, queries.shopDetails)
+  createNode(ShopDetailsNode(shop))
   if (verbose) console.timeEnd(msg)
 }
 

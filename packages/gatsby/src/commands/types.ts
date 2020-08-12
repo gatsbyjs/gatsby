@@ -3,8 +3,8 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
-  key: string
-  cert: string
+  key: Buffer
+  cert: Buffer
 }
 
 export interface IDebugInfo {
@@ -31,10 +31,15 @@ export interface IProgram {
   inspect?: number
   inspectBrk?: number
   graphqlTracing?: boolean
+  verbose?: boolean
   setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 
-// @deprecated
+/**
+ * @deprecated
+ * Use `Stage` instead
+ */
+
 export enum BuildHTMLStage {
   DevelopHTML = `develop-html`,
   BuildHTML = `build-html`,
