@@ -38,4 +38,22 @@ describe(`Telemetry`, () => {
       )
     })
   })
+
+  describe(`allows overriding defaults`, () => {
+    it(`allows overriding componentId`, () => {
+      const t = new AnalyticsTracker({
+        componentId: `desktop`,
+        gatsbyCliVersion: `1.2.3-beta1`,
+      })
+      t.buildAndStoreEvent(`demo`, {})
+      expect(
+        (EventStorage as jest.Mock).mock.instances[1].addEvent
+      ).toHaveBeenCalledWith(
+        expect.objectContaining({
+          componentId: `desktop`,
+          gatsbyCliVersion: `1.2.3-beta1`,
+        })
+      )
+    })
+  })
 })
