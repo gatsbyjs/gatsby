@@ -336,6 +336,14 @@ module.exports = {
             `Cache-Control: max-age=0,no-cache,no-store,must-revalidate`,
           ],
         },
+        transformHeaders: (headers, path) => {
+          if (path === `/sw.js`) {
+            // remove last cache-control as it's set by the plugin itself
+            headers.splice(1, 1)
+          }
+
+          return headers
+        },
       },
     },
     `gatsby-plugin-netlify-cache`,

@@ -1,4 +1,5 @@
 const Promise = require(`bluebird`)
+const fs = require(`fs`)
 const startersRedirects = require(`./starter-redirects.json`)
 
 const { loadYaml } = require(`./src/utils/load-yaml`)
@@ -170,4 +171,12 @@ exports.createPages = async helpers => {
     isPermanent: true,
     force: true,
   })
+}
+
+exports.onPostBuild = () => {
+  const redirectsString = fs.readFileSync(`./public/_redirects`).toString()
+  const chunked = redirectsString.split(`\n`)
+
+  chunked.splice(chunked.length - 1, 0, `/sw.js  /sw.js  200`)
+  fs.writeFileSync(`./public/_redirects`, chunked.join(`\n`))
 }
