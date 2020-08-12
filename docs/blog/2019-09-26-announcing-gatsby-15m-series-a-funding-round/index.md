@@ -18,7 +18,7 @@ With Gatsby, we’re reinventing website technology so people can create sites t
 
 Gatsby strips away much of the complexity that plagues website development. Teams tell us that they can build stunning sites 3-5x faster with Gatsby—and have a lot more fun in the process.
 
-The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create websites and apps that stand out](https://www.gatsbyjs.org/blog/tags/case-studies)[.](https://www.gatsbyjs.org/blog/tags/case-studies)
+The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create websites and apps that stand out.](https://www.gatsbyjs.org/blog/tags/case-studies)
 
 ## From the CMS to the content mesh
 
