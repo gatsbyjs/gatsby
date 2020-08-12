@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.15...gatsby-recipes@0.2.16) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add missing var for the recipes selector ([#26410](https://github.com/gatsbyjs/gatsby/issues/26410)) ([2be03bf](https://github.com/gatsbyjs/gatsby/commit/2be03bf))
+
 ## [0.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.14...gatsby-recipes@0.2.15) (2020-08-12)
 
 ### Bug Fixes
