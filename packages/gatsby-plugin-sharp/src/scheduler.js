@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require(`uuid`)
 const path = require(`path`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const got = require(`got`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const worker = require(`./gatsby-worker`)
