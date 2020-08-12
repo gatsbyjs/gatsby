@@ -1629,6 +1629,23 @@
     - ESLint with Airbnb's config
     - Prettier integrated into ESLint
     - A few example components and pages with stories and simple site structure
+- url: https://awesome-gatsby-starter-ts.netlify.app/
+  repo: https://github.com/South-Paw/awesome-gatsby-starter-ts
+  description: TypeScript starter with a preconfigured MDX, Storybook, and ESLint environment for component first development of your next Gatsby site.
+  tags:
+    - Language:TypeScript
+    - MDX
+    - Markdown
+    - Storybook
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Gatsby MDX for JSX in Markdown loading, parsing, and rendering of pages
+    - Storybook for isolated component development
+    - styled-components for CSS-in-JS
+    - ESLint with Airbnb's config
+    - Prettier integrated into ESLint
+    - A few example components and pages with stories and simple site structure
 - url: https://santosfrancisco.github.io/gatsby-starter-cv/
   repo: https://github.com/santosfrancisco/gatsby-starter-cv
   description: A simple starter to get up and developing your digital curriculum with Gatsby'
