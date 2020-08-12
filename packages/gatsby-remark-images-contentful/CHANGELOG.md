@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.13...gatsby-remark-images-contentful@2.3.14) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-remark-images-contentful:** Support custom Url search params in inline markdown images ([#25947](https://github.com/gatsbyjs/gatsby/issues/25947)) ([d70d389](https://github.com/gatsbyjs/gatsby/commit/d70d389))
+
 ## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.12...gatsby-remark-images-contentful@2.3.13) (2020-08-11)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful
