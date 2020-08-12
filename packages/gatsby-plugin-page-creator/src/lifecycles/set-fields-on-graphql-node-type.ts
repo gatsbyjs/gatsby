@@ -7,6 +7,7 @@ import knownCollections from "../known-collections"
 export function setFieldsOnGraphQLNodeType({
   type,
   store,
+  getNode,
   reporter,
 }: SetFieldsOnGraphQLNodeTypeArgs): object {
   try {

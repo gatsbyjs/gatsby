@@ -6,7 +6,7 @@ export function onDeleteNode({
   store,
   actions,
   reporter,
-}: CreateNodeArgs) {
+}: CreateNodeArgs): void {
   try {
     for (const [urlPath, pageNode] of store.getState().pages) {
       let pageNodeModel
