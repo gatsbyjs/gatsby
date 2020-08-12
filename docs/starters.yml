@@ -7011,6 +7011,36 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://boogi.netlify.app
+  repo: https://github.com/filipowm/boogi
+  description: Create awesome documentation with modern, Gitbook-like look-and-feel.
+  tags:
+    - Documentation
+    - PWA
+    - SEO
+    - Markdown
+    - MDX
+    - Styling:CSS-in-JS
+    - CMS:Netlify
+  features:
+    - Customize your page to match your branding and needs
+    - Responsive, GitBook-like design inspired by https://gitbook.com/
+    - Light / dark mode themes for entire app
+    - Custom [BooGi CLI](https://github.com/filipowm/boogi-cli) wrapping Gatsby CLI
+      to start quickly, simplify codebase, easily run locally and build you BooGi-based app
+    - Rich-content and rich-text features like text formatting, graphs and diagrams,
+      quotes, columnar layout, emojis, feather icons, highlights, live code editor,
+      syntax highlighting, external code snippets, social buttons and many many more!
+    - draft pages
+    - Search capabilities with [Algolia](https://www.algolia.com/)
+    - local search (search in a browser without need to integrate with Algolia)
+    - Progressive Web App (PWA) support - app can work entirely offline
+    - Integration with Google Analytics
+    - SEO friendliness
+    - full screen mode
+    - RSS feed
+    - Edit content on Gitlab, Github or Bitbucket with edit-on-repo feature
+    - Fully customizable using plain Yaml files
 - url: https://texblog.akshatbisht.com/
   repo: https://github.com/aaaakshat/gatsby-starter-texblog
   description: A lightweight, LaTeX enabled starter to beautifully showcase your typeset articles.
