@@ -6876,6 +6876,21 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://code-notes-example.netlify.com/
+  repo: https://github.com/MrMartineau/gatsby-starter-code-notes
+  description: A starter for the "Code Notes" Gatsby theme
+  tags:
+    - Markdown
+    - MDX
+    - Documentation
+    - Styling:Theme-UI
+  features:
+    - Notes can be written using Markdown or MDX
+    - Full syntax highlighting for most programming languages
+    - Notes can be tagged
+    - Notes can have associated emojis 👏
+    - Extra markdown features have also been added. See the demo for in-depth examples
+    - Note search powered by the super-fast Flexsearch
 - url: https://adityaketkar.netlify.app/
   repo: https://github.com/adityaketkar/circle-packing-personal-homepage
   description: A Customizable Personal-Website Template, Ready to Deploy in 10 mins!
