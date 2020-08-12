@@ -16,7 +16,9 @@ Object {
   "diff": "- Original  - 1
 + Modified  + 3
 
-  Object {
+@@ -6,5 +6,7 @@
+      \\"hooks\\": Object {},
+    },
     \\"name\\": \\"test\\",
 -   \\"scripts\\": Object {},
 +   \\"scripts\\": Object {

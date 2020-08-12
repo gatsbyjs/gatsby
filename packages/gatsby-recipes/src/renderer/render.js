@@ -131,15 +131,11 @@ const handleResource = (resourceName, context, props) => {
     cacheKey = JSON.stringify({ resourceName, ...props, mode })
   }
 
-  // update global context when results come in.
-  const updateResource = result => {
-    // TODO move to events
-  }
-
   let allResources = useResourceContext()
   const resourcePlan = allResources?.find(
     a => a.resourceDefinitions._key === trueKey || a._uuid === trueKey
   )
+
   if (!errorCache.has(trueKey)) {
     const error = validateResource(resourceName, context, props)
     errorCache.set(trueKey, error)
@@ -147,7 +143,6 @@ const handleResource = (resourceName, context, props) => {
       const result = {
         error: `Validation error: ${error.details[0].message}`,
       }
-      updateResource(result)
       resultCache.set(cacheKey, result)
       return result
     }
@@ -165,21 +160,32 @@ const handleResource = (resourceName, context, props) => {
   }
 
   // If this resource requires another resource to be created before it,
-  // check if it's created.
+  // check to see if they're created. The first time this is called,
+  // create a promise which we cache and keep throwing until
+  // all the dependencies are created & then we reject the promise
+  // to trigger andother render where we finally can create the
+  // now no-longer-blocked resource.
   //
   // TODO test this when we can mock resources by varying what
   // resources depend on what & which return first and ensuring
   // resources end in right order.
   if (mode === `apply` && resourcePlan.dependsOn) {
     const matches = findDependencyMatch(allResources, resourcePlan)
+    let outsideReject
     if (!matches.every(m => m.isDone)) {
-      blockedResources.add(trueKey)
-      throw new Promise((resolve, reject) => {
-        setTimeout(() => {
-          blockedResources.delete(trueKey)
-          reject()
-        }, 100)
+      // Probably we're going to need a state machine
+      // just for installing things, sheesh.
+      if (blockedResources.get(cacheKey)) {
+        throw blockedResources.get(cacheKey).promise
+      }
+      const promise = new Promise((resolve, reject) => {
+        outsideReject = reject
       })
+      blockedResources.set(cacheKey, { promise, outsideReject })
+      throw promise
+    } else {
+      blockedResources.get(cacheKey).outsideReject()
+      blockedResources.delete(cacheKey)
     }
   }
 
@@ -194,14 +200,12 @@ const handleResource = (resourceName, context, props) => {
       const cachedValue = resultCache.get(cacheKey)
       if (cachedValue) {
         resolve(cachedValue)
-        updateResource(cachedValue)
       } else {
         resources[resourceName][fn](context, props)
           .then(result => {
             if (fn === `create`) {
               result.isDone = true
             }
-            updateResource(result)
             inFlightCache.set(cacheKey, false)
             return result
           })
@@ -244,7 +248,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
 
   const resultCache = new Map()
   const inFlightCache = new Map()
-  const blockedResources = new Set()
+  const blockedResources = new Map()
 
   let result
   let resourcesArray = []
