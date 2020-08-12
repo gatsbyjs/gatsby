@@ -171,7 +171,7 @@ class Rotator extends Component {
           >
             There’s{` `}
             {pluginName ? (
-              <Link to={`/packages/` + pluginName}>a plugin</Link>
+              <Link to={`/plugins/` + pluginName}>a plugin</Link>
             ) : (
               `a plugin`
             )}
