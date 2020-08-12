@@ -11674,6 +11674,8 @@
 - title: KuliahSG
   url: https://kuliah.sg
   main_url: https://kuliah.sg
+  categories:
+    - Education
   description: Online Islamic content in Singapore
 - title: Ámbito Dólar
   url: https://ambito-dolar.app
