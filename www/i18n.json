@@ -24,5 +24,6 @@
   { "code": "tr", "name": "Turkish", "localName": "Türkçe" },
   { "code": "vi", "name": "Vietnamese", "localName": "Tiếng Việt" },
   { "code": "zh-Hans", "name": "Simplified Chinese", "localName": "简体中文" },
-  { "code": "zh-Hant", "name": "Traditional Chinese", "localName": "繁體中文" }
+  { "code": "zh-Hant", "name": "Traditional Chinese", "localName": "繁體中文" },
+  { "code": "fa", "name": "Persian (Farsi)", "localName": "فارسی" }
 ]
