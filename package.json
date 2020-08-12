@@ -6,6 +6,7 @@
     "@babel/runtime": "^7.10.3",
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.1",
+    "@types/better-queue": "^3.8.2",
     "@types/bluebird": "^3.5.30",
     "@types/cache-manager": "^2.10.2",
     "@types/common-tags": "^1.8.0",
@@ -87,7 +88,7 @@
     "yargs": "^10.1.2"
   },
   "resolutions": {
-    "theme-ui": "0.4.0-alpha.3",
+    "theme-ui": "0.4.0-rc.1",
     "csstype": "2.6.10"
   },
   "engines": {
@@ -153,6 +154,7 @@
     "test:integration": "jest --config=integration-tests/jest.config.js",
     "test:peril": "cd peril && yarn test",
     "typecheck": "node ./scripts/check-ts",
+    "update-dictionary": "node ./scripts/update-dictionary.js",
     "version": "prettier --write \"**/CHANGELOG.md\"",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
@@ -161,6 +163,7 @@
   ],
   "dependencies": {
     "dictionary-en": "^3.0.1",
+    "jest-matchmedia-mock": "^1.0.1",
     "retext-emoji": "^7.0.1",
     "retext-spell": "^4.0.0",
     "retext-syntax-mentions": "^2.1.1",

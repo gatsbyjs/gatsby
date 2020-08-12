@@ -166,7 +166,9 @@ const processQueries = async (
   queryJobs,
   { activity, graphqlRunner, graphqlTracing }
 ) => {
-  const queue = queryQueue.createBuildQueue(graphqlRunner, { graphqlTracing })
+  const queue = queryQueue.createAppropriateQueue(graphqlRunner, {
+    graphqlTracing,
+  })
   return queryQueue.processBatch(queue, queryJobs, activity)
 }
 
@@ -364,6 +366,7 @@ const enqueueExtractedPageComponent = componentPath => {
 
 module.exports = {
   calcInitialDirtyQueryIds,
+  calcDirtyQueryIds,
   processPageQueries,
   processStaticQueries,
   groupQueryIds,

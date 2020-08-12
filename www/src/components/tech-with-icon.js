@@ -1,23 +1,20 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
-const TechWithIcon = ({ icon, height, children }) => {
-  let h = height ? height : `1.2em`
-
+export default function TechWithIcon({ icon, height = `1.2em`, children }) {
   return (
-    <span css={{ whiteSpace: `nowrap` }}>
+    <span sx={{ whiteSpace: `nowrap` }}>
       {children}
       &nbsp;
       <img
         src={icon}
         alt=""
-        css={{
-          height: `${h}`,
-          margin: 0,
+        sx={{
           verticalAlign: `text-bottom`,
+          height: `${height}`,
+          m: 0,
         }}
       />
     </span>
   )
 }
-
-export default TechWithIcon

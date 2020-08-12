@@ -13,16 +13,23 @@ const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, blog, showcase, starters, creators, packages, features]
+const apiCalls = require(`./src/utils/node/api-calls.js`)
+
+const sections = [
+  docs,
+  blog,
+  showcase,
+  starters,
+  creators,
+  packages,
+  features,
+  apiCalls,
+]
 
 // Run the provided API on all defined sections of the site
 async function runApiForSections(api, helpers) {
   await Promise.all(
-    sections.map(section => {
-      if (section[api]) {
-        section[api](helpers)
-      }
-    })
+    sections.map(section => section[api] && section[api](helpers))
   )
 }
 
@@ -72,8 +79,11 @@ exports.createSchemaCustomization = async helpers => {
   `)
 }
 
-// Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
-exports.createResolvers = ({ createResolvers }) => {
+exports.createResolvers = async helpers => {
+  await runApiForSections(`createResolvers`, helpers)
+
+  const { createResolvers } = helpers
+  // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
   createResolvers({
     DocumentationJs: {
       availableIn: {

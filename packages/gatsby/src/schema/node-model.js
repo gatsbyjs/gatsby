@@ -445,7 +445,10 @@ class LocalNodeModel {
       const id = this._rootNodeMap.get(node)
       const trackedParent = getNodeById(id)
 
-      if (!parent && !trackedParent) return node
+      if (!parent && !trackedParent) {
+        const isMatchingRoot = !predicate || predicate(node)
+        return isMatchingRoot ? node : null
+      }
 
       node = parent || trackedParent
     }
