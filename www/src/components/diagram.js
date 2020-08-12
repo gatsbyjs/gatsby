@@ -63,7 +63,7 @@ const VerticalLine = () => (
     <path
       d="M10 40 L10 -10"
       sx={{
-        stroke: t => t.colors.lilac,
+        stroke: `lilac`,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -74,10 +74,9 @@ const VerticalLine = () => (
 )
 
 const box = {
+  border: 1,
   borderColor: `ui.border`,
   borderRadius: 2,
-  borderStyle: `solid`,
-  borderWidth: `1px`,
   px: 7,
   py: 5,
 }
@@ -215,114 +214,122 @@ const Diagram = () => (
     `}
     render={({ allStaticHostsYaml: { nodes: staticHosts } }) => (
       <section
-        className="Diagram"
         sx={{
-          flex: `1 1 100%`,
-          fontFamily: `heading`,
-          py: 6,
-          textAlign: `center`,
-          [mediaQueries.sm]: {
-            px: 6,
-          },
+          width: `100%`,
+          p: 8,
+          pt: 0,
         }}
       >
-        <h1
+        <div
+          className="Diagram"
           sx={{
-            fontWeight: `heading`,
-            mb: 6,
+            flex: `1 1 100%`,
+            fontFamily: `heading`,
+            py: 6,
+            textAlign: `center`,
+            [mediaQueries.sm]: {
+              px: 6,
+            },
           }}
         >
-          How Gatsby works
-        </h1>
-        <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
-          <FuturaParagraph>
-            Pull data from <em>anywhere</em>
-          </FuturaParagraph>
-        </div>
-
-        <Segment className="Source">
-          <SegmentTitle>Data Sources</SegmentTitle>
-          <SourceItems>
-            <SourceItem>
-              <ItemTitle>CMSs</ItemTitle>
-              <ItemDescription>
-                Contentful, Drupal, WordPress, etc.
-              </ItemDescription>
-            </SourceItem>
-            <SourceItem>
-              <ItemTitle>Markdown</ItemTitle>
-              <ItemDescription>Documentation, Posts, etc.</ItemDescription>
-            </SourceItem>
-            <SourceItem>
-              <ItemTitle>Data</ItemTitle>
-              <ItemDescription>
-                APIs, Databases, YAML, JSON, CSV, etc.
-              </ItemDescription>
-            </SourceItem>
-          </SourceItems>
-        </Segment>
-
-        <Segment className="Build">
-          <VerticalLine />
-          <SegmentTitle>Build</SegmentTitle>
-          <div
+          <h1
             sx={{
-              ...box,
-              backgroundColor: `purple.70`,
-              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
-              backgroundImage: t =>
-                `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
-              py: 0,
+              fontWeight: `heading`,
+              mb: 6,
             }}
           >
+            How Gatsby works
+          </h1>
+          <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
+            <FuturaParagraph>
+              Pull data from <em>anywhere</em>
+            </FuturaParagraph>
+          </div>
+
+          <Segment className="Source">
+            <SegmentTitle>Data Sources</SegmentTitle>
+            <SourceItems>
+              <SourceItem>
+                <ItemTitle>CMSs</ItemTitle>
+                <ItemDescription>
+                  Contentful, Drupal, WordPress, etc.
+                </ItemDescription>
+              </SourceItem>
+              <SourceItem>
+                <ItemTitle>Markdown</ItemTitle>
+                <ItemDescription>Documentation, Posts, etc.</ItemDescription>
+              </SourceItem>
+              <SourceItem>
+                <ItemTitle>Data</ItemTitle>
+                <ItemDescription>
+                  APIs, Databases, YAML, JSON, CSV, etc.
+                </ItemDescription>
+              </SourceItem>
+            </SourceItems>
+          </Segment>
+
+          <Segment className="Build">
             <VerticalLine />
-            <Gatsby />
-            <VerticalLine />
+            <SegmentTitle>Build</SegmentTitle>
             <div
               sx={{
-                ...borderAndBoxShadow,
-                ...boxPadding,
-                bg: `white`,
-                display: `inline-block`,
-                py: 3,
-                width: `auto`,
+                ...box,
+                backgroundColor: `purple.70`,
+                backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
+                backgroundImage: t =>
+                  `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
+                py: 0,
               }}
             >
-              <ItemDescription color="grey.50">
-                HTML &middot; CSS &middot;
-                {` `}
-                <TechWithIcon icon={ReactJSIcon} height="1.1em">
-                  React
-                </TechWithIcon>
+              <VerticalLine />
+              <Gatsby />
+              <VerticalLine />
+              <div
+                sx={{
+                  ...borderAndBoxShadow,
+                  ...boxPadding,
+                  bg: `white`,
+                  display: `inline-block`,
+                  py: 3,
+                  width: `auto`,
+                }}
+              >
+                <ItemDescription color="grey.50">
+                  HTML &middot; CSS &middot;
+                  {` `}
+                  <TechWithIcon icon={ReactJSIcon} height="1.1em">
+                    React
+                  </TechWithIcon>
+                </ItemDescription>
+              </div>
+              <VerticalLine />
+            </div>
+          </Segment>
+
+          <Segment className="Deploy">
+            <VerticalLine />
+            <SegmentTitle>Deploy</SegmentTitle>
+            <div
+              sx={{
+                ...box,
+                pb: 5,
+              }}
+            >
+              <ItemTitle>Web Hosting</ItemTitle>
+              <ItemDescription>
+                {staticHosts.map((staticHost, index) => (
+                  <Fragment key={staticHost.url}>
+                    {index > 0 && `, `}
+                    <ItemDescriptionLink to={staticHost.url}>
+                      {staticHost.title}
+                    </ItemDescriptionLink>
+                  </Fragment>
+                ))}
+                {` `}& many more
               </ItemDescription>
             </div>
-            <VerticalLine />
-          </div>
-        </Segment>
-
-        <Segment className="Deploy">
-          <VerticalLine />
-          <SegmentTitle>Deploy</SegmentTitle>
-          <div
-            sx={{
-              ...box,
-              pb: 5,
-            }}
-          >
-            <ItemTitle>Web Hosting</ItemTitle>
-            <ItemDescription>
-              {staticHosts.map((staticHost, index) => (
-                <Fragment key={staticHost.url}>
-                  {index > 0 && `, `}
-                  <ItemDescriptionLink to={staticHost.url}>
-                    {staticHost.title}
-                  </ItemDescriptionLink>
-                </Fragment>
-              ))}
-              {` `}& many more
-            </ItemDescription>
-          </div>
-        </Segment>
+          </Segment>
+        </div>
       </section>
     )}
   />

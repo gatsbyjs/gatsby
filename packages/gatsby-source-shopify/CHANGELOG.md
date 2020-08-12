@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.25...gatsby-source-shopify@3.2.26) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.24...gatsby-source-shopify@3.2.25) (2020-07-24)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.23...gatsby-source-shopify@3.2.24) (2020-07-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.22...gatsby-source-shopify@3.2.23) (2020-07-21)
+
+### Bug Fixes
+
+- **readme:** gatsby-source-shopify: unify variable names ([#25882](https://github.com/gatsbyjs/gatsby/issues/25882)) ([d404d87](https://github.com/gatsbyjs/gatsby/commit/d404d87))
+
+### Features
+
+- **gatsby-source-shopify:** Add shopifyShop query ([#25763](https://github.com/gatsbyjs/gatsby/issues/25763)) ([16ee206](https://github.com/gatsbyjs/gatsby/commit/16ee206))
+- **gatsby-source-shopify:** set link from product variant to product ([#25316](https://github.com/gatsbyjs/gatsby/issues/25316)) ([d2e356d](https://github.com/gatsbyjs/gatsby/commit/d2e356d))
+
+## [3.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.21...gatsby-source-shopify@3.2.22) (2020-07-17)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.20...gatsby-source-shopify@3.2.21) (2020-07-15)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** resource handle ([#24467](https://github.com/gatsbyjs/gatsby/issues/24467)) ([ee9319d](https://github.com/gatsbyjs/gatsby/commit/ee9319d))
+
+## [3.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.19...gatsby-source-shopify@3.2.20) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [3.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.18...gatsby-source-shopify@3.2.19) (2020-07-07)
 
 ### Features

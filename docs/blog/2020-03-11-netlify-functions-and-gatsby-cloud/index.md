@@ -136,7 +136,7 @@ Let's say we have two functions, `track-hit.js` and `like-content.js`. And let's
             └── some-other-faunadb-dependency
 ```
 
-Because the folks at Netlify are wonderful wizards, they extracted the module that prepares functions and published it on NPM as `@netlify/zip-it-and-ship-it`. This means we can leverage this critical part of Netlify's build process even though we aren't building on Netlify.
+Because the folks at Netlify are wonderful wizards, they extracted the module that prepares functions and published it on npm as `@netlify/zip-it-and-ship-it`. This means we can leverage this critical part of Netlify's build process even though we aren't building on Netlify.
 
 ### Cold and warm builds
 

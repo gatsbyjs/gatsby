@@ -11,7 +11,7 @@ Gatsby's design principles include:
   code.
 - Extracting logic and configuration into [plugins](/docs/plugins/) should be
   trivial and encouraged.
-- Plugins are easy to open source and reuse. They're just NPM packages.
+- Plugins are easy to open source and reuse. They're just npm packages.
 
 ## High level Overview
 

@@ -148,6 +148,6 @@ created to support this guide.
 
 ## Other resources
 
-- [WordPress integration announcement](/docs/blog/2020-07-07-wordpress-source-beta)
+- [WordPress integration announcement](/blog/2020-07-07-wordpress-source-beta)
 - [Video Demo of WordPress integration](https://www.youtube.com/watch?v=vyuEu95yQkA)
 - More [Gatsby blog posts about using Gatsby + WordPress](/blog/tags/wordpress/)

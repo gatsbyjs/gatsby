@@ -53,6 +53,7 @@ starter:
   - Square
   - Storybook
   - Stripe
+  - Style Guide
   - Styling:Ant Design
   - Styling:Bootstrap
   - Styling:Bulma
@@ -93,6 +94,7 @@ site:
   - Food
   - Freelance
   - Gallery
+  - Ghost
   - Government
   - Healthcare
   - Human Resources

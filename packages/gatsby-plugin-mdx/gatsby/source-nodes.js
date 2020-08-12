@@ -9,6 +9,8 @@ const remove = require(`unist-util-remove`)
 const toString = require(`mdast-util-to-string`)
 const generateTOC = require(`mdast-util-toc`)
 const prune = require(`underscore.string/prune`)
+const slugify = require(`slugify`)
+const path = require(`path`)
 
 const debug = require(`debug`)(`gatsby-plugin-mdx:extend-node-type`)
 const getTableOfContents = require(`../utils/get-table-of-content`)
@@ -133,6 +135,32 @@ module.exports = (
       rawBody: { type: `String!` },
       fileAbsolutePath: { type: `String!` },
       frontmatter: { type: `MdxFrontmatter` },
+      slug: {
+        type: `String`,
+        async resolve(mdxNode, args, context) {
+          const nodeWithContext = context.nodeModel.findRootNodeAncestor(
+            mdxNode,
+            node => node.internal && node.internal.type === `File`
+          )
+
+          if (!nodeWithContext) {
+            return null
+          }
+          const fileRelativePath = nodeWithContext.relativePath
+
+          const parsedPath = path.parse(fileRelativePath)
+
+          let relevantPath
+          if (parsedPath.name === `index`) {
+            relevantPath = fileRelativePath.replace(parsedPath.base, ``)
+          } else {
+            relevantPath = fileRelativePath.replace(parsedPath.ext, ``)
+          }
+          return slugify(relevantPath, {
+            remove: /[^\w\s$*_+~.()'"!\-:@/]/g, // this is the set of allowable characters
+          })
+        },
+      },
       body: {
         type: `String!`,
         async resolve(mdxNode) {
