@@ -1,36 +1,87 @@
-const uuid = require(`uuid/v4`)
-const path = require(`path`)
-const hasha = require(`hasha`)
-const fs = require(`fs-extra`)
-const pDefer = require(`p-defer`)
-const _ = require(`lodash`)
-const { createContentDigest, slash } = require(`gatsby-core-utils`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import uuid from "uuid/v4"
+import path from "path"
+import hasha from "hasha"
+import fs from "fs-extra"
+import pDefer from "p-defer"
+import _ from "lodash"
+import { createContentDigest, slash } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
+import { IPhantomReporter } from "gatsby-cli"
 
-const MESSAGE_TYPES = {
-  JOB_CREATED: `JOB_CREATED`,
-  JOB_COMPLETED: `JOB_COMPLETED`,
-  JOB_FAILED: `JOB_FAILED`,
-  JOB_NOT_WHITELISTED: `JOB_NOT_WHITELISTED`,
+enum MESSAGE_TYPES {
+  JOB_CREATED = `JOB_CREATED`,
+  JOB_COMPLETED = `JOB_COMPLETED`,
+  JOB_FAILED = `JOB_FAILED`,
+  JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`,
 }
 
-let activityForJobs = null
+interface IBaseJob {
+  name: string
+  outputDir: string
+  args: Record<string, any>
+}
+
+interface IJobInput {
+  inputPaths: string[]
+  plugin: {
+    name: string
+    version: string
+    resolve: string
+  }
+}
+
+interface IInternalJob {
+  id: string
+  contentDigest: string
+  inputPaths: {
+    path: string
+    contentDigest: string
+  }[]
+  plugin: {
+    name: string
+    version: string
+    resolve: string
+    isLocal: boolean
+  }
+}
+
+export type JobResultInterface = Record<string, unknown>
+export type JobInput = IBaseJob & IJobInput
+export type InternalJob = IBaseJob & IInternalJob
+
+export class WorkerError extends Error {
+  constructor(error: Error | string) {
+    if (typeof error === `string`) {
+      super(error)
+    } else {
+      // use error.message or else stringiyf the object so we don't get [Object object]
+      super(error.message ?? JSON.stringify(error))
+    }
+
+    this.name = `WorkerError`
+
+    Error.captureStackTrace(this, WorkerError)
+  }
+}
+
+let activityForJobs: IPhantomReporter | null = null
 let activeJobs = 0
 let isListeningForMessages = false
 let hasShownIPCDisabledWarning = false
 
-/** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise<any>}>} */
-const jobsInProcess = new Map()
-/** @type {Map<string, {job: InternalJob, deferred: pDefer.DeferredPromise<any>}>} */
-const externalJobsMap = new Map()
+const jobsInProcess: Map<
+  string,
+  { id: string; deferred: pDefer.DeferredPromise<object> }
+> = new Map()
+const externalJobsMap: Map<
+  string,
+  { job: InternalJob; deferred: pDefer.DeferredPromise<any> }
+> = new Map()
 
 /**
  * We want to use absolute paths to make sure they are on the filesystem
- *
- * @param {string} filePath
- * @return {string}
  */
-const convertPathsToAbsolute = filePath => {
+function convertPathsToAbsolute(filePath: string): string {
   if (!path.isAbsolute(filePath)) {
     throw new Error(`${filePath} should be an absolute path.`)
   }
@@ -39,50 +90,27 @@ const convertPathsToAbsolute = filePath => {
 }
 /**
  * Get contenthash of a file
- *
- * @param {string} path
  */
-const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
+function createFileHash(path: string): string {
+  return hasha.fromFileSync(path, { algorithm: `sha1` })
+}
 
-/**
- * @typedef BaseJobInterface
- * @property {string} name
- * @property {string} outputDir,
- * @property {Record<string, any>} args
+let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
 
- * @typedef JobInputInterface
- * @property {string[]} inputPaths
- * @property {{name: string, version: string, resolve: string}} plugin
-
- * @typedef InternalJobInterface
- * @property {string} id
- * @property {string} contentDigest
- * @property {{path: string, contentDigest: string}[]} inputPaths
- * @property {{name: string, version: string, resolve: string, isLocal: boolean}} plugin
- *
- * @typedef {Record<string, unknown>} JobResultInterface
- *
- * I know this sucks but this is the only way to do it properly in jsdoc..
- * @typedef {BaseJobInterface & JobInputInterface} JobInput
- * @typedef {BaseJobInterface & InternalJobInterface} InternalJob
- */
-
-/** @type {pDefer.DeferredPromise<void>|null} */
-let hasActiveJobs = null
-
-const hasExternalJobsEnabled = () =>
-  process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
-  process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+function hasExternalJobsEnabled(): boolean {
+  return (
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+  )
+}
 
 /**
  * Get the local worker function and execute it on the user's machine
- *
- * @template T
- * @param {function({ inputPaths: InternalJob["inputPaths"], outputDir: InternalJob["outputDir"], args: InternalJob["args"]}): T} workerFn
- * @param {InternalJob} job
- * @return {Promise<T>}
  */
-const runLocalWorker = async (workerFn, job) => {
+async function runLocalWorker<T>(
+  workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
+  job: InternalJob
+): Promise<T> {
   await fs.ensureDir(job.outputDir)
 
   return new Promise((resolve, reject) => {
@@ -95,7 +123,7 @@ const runLocalWorker = async (workerFn, job) => {
             inputPaths: job.inputPaths,
             outputDir: job.outputDir,
             args: job.args,
-          })
+          } as InternalJob)
         )
       } catch (err) {
         reject(new WorkerError(err))
@@ -104,7 +132,7 @@ const runLocalWorker = async (workerFn, job) => {
   })
 }
 
-const listenForJobMessages = () => {
+function listenForJobMessages(): void {
   process.on(`message`, msg => {
     if (
       msg &&
@@ -113,7 +141,8 @@ const listenForJobMessages = () => {
       msg.payload.id &&
       externalJobsMap.has(msg.payload.id)
     ) {
-      const { job, deferred } = externalJobsMap.get(msg.payload.id)
+      const { job, deferred } = externalJobsMap.get(msg.payload.id)!
+
       switch (msg.type) {
         case MESSAGE_TYPES.JOB_COMPLETED: {
           deferred.resolve(msg.payload.result)
@@ -134,17 +163,15 @@ const listenForJobMessages = () => {
   })
 }
 
-/**
- * @param {InternalJob} job
- */
-const runExternalWorker = job => {
-  const deferred = pDefer()
+function runExternalWorker(job: InternalJob): Promise<any> {
+  const deferred = pDefer<any>()
+
   externalJobsMap.set(job.id, {
     job,
     deferred,
   })
 
-  process.send({
+  process.send!({
     type: MESSAGE_TYPES.JOB_CREATED,
     payload: job,
   })
@@ -156,11 +183,8 @@ const runExternalWorker = job => {
  * Make sure we have everything we need to run a job
  * If we do, run it locally.
  * TODO add external job execution through ipc
- *
- * @param {InternalJob} job
- * @return {Promise<object>}
  */
-const runJob = (job, forceLocal = false) => {
+function runJob(job: InternalJob, forceLocal = false): Promise<object> {
   const { plugin } = job
   try {
     const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
@@ -194,17 +218,22 @@ const runJob = (job, forceLocal = false) => {
   }
 }
 
+function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
+  return (
+    (job as InternalJob).id !== undefined &&
+    (job as InternalJob).contentDigest !== undefined
+  )
+}
+
 /**
  * Create an internal job object
- *
- * @param {JobInput|InternalJob} job
- * @param {{name: string, version: string, resolve: string}} plugin
- * @return {InternalJob}
  */
-exports.createInternalJob = (job, plugin) => {
+export function createInternalJob(
+  job: JobInput | InternalJob,
+  plugin: { name: string; version: string; resolve: string }
+): InternalJob {
   // It looks like we already have an augmented job so we shouldn't redo this work
-  // @ts-ignore
-  if (job.id && job.contentDigest) {
+  if (isInternalJob(job)) {
     return job
   }
 
@@ -213,15 +242,14 @@ exports.createInternalJob = (job, plugin) => {
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
   // are still processing their hashes
-  const inputPathsWithContentDigest = inputPaths.map(path => {
+  const inputPathsWithContentDigest = inputPaths.map((pth: string) => {
     return {
-      path: convertPathsToAbsolute(path),
-      contentDigest: createFileHash(path),
+      path: convertPathsToAbsolute(pth),
+      contentDigest: createFileHash(pth),
     }
   })
 
-  /** @type {InternalJob} */
-  const internalJob = {
+  const internalJob: InternalJob = {
     id: uuid(),
     name,
     contentDigest: ``,
@@ -252,29 +280,26 @@ exports.createInternalJob = (job, plugin) => {
 
 /**
  * Creates a job
- *
- * @param {InternalJob} job
- * @return {Promise<object>}
  */
-exports.enqueueJob = async job => {
+export async function enqueueJob(job: InternalJob): Promise<object> {
   // When we already have a job that's executing, return the same promise.
   // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
-    return jobsInProcess.get(job.contentDigest).deferred.promise
+    return jobsInProcess.get(job.contentDigest)!.deferred.promise
   }
 
   if (activeJobs === 0) {
-    hasActiveJobs = pDefer()
+    hasActiveJobs = pDefer<void>()
   }
 
   // Bump active jobs
   activeJobs++
   if (!activityForJobs) {
     activityForJobs = reporter.phantomActivity(`Running jobs v2`)
-    activityForJobs.start()
+    activityForJobs!.start()
   }
 
-  const deferred = pDefer()
+  const deferred = pDefer<object>()
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
     deferred,
@@ -294,8 +319,8 @@ exports.enqueueJob = async job => {
   } finally {
     // when all jobs are done we end the activity
     if (--activeJobs === 0) {
-      hasActiveJobs.resolve()
-      activityForJobs.end()
+      hasActiveJobs!.resolve()
+      activityForJobs!.end()
       // eslint-disable-next-line require-atomic-updates
       activityForJobs = null
     }
@@ -306,35 +331,30 @@ exports.enqueueJob = async job => {
 
 /**
  * Get in progress job promise
- *
- * @param {string} contentDigest
- * @return {Promise<void>}
  */
-exports.getInProcessJobPromise = contentDigest =>
-  jobsInProcess.get(contentDigest)?.deferred.promise
+export function getInProcessJobPromise(
+  contentDigest: string
+): Promise<object> | undefined {
+  return jobsInProcess.get(contentDigest)?.deferred.promise
+}
 
 /**
  * Remove a job from our inProgressQueue to reduce memory usage
- *
- * @param {string} contentDigest
  */
-exports.removeInProgressJob = contentDigest => {
+export function removeInProgressJob(contentDigest: string): void {
   jobsInProcess.delete(contentDigest)
 }
 
 /**
  * Wait for all processing jobs to have finished
- *
- * @return {Promise<void>}
  */
-exports.waitUntilAllJobsComplete = () =>
-  hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
+export function waitUntilAllJobsComplete(): Promise<void> {
+  return hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
+}
 
-/**
- * @param {Partial<InternalJob>  & {inputPaths: InternalJob['inputPaths']}} job
- * @return {boolean}
- */
-exports.isJobStale = job => {
+export function isJobStale(
+  job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] }
+): boolean {
   const areInputPathsStale = job.inputPaths.some(inputPath => {
     // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
@@ -347,22 +367,4 @@ exports.isJobStale = job => {
   })
 
   return areInputPathsStale
-}
-
-export class WorkerError extends Error {
-  /**
-   * @param {Error|string} error
-   */
-  constructor(error) {
-    if (typeof error === `string`) {
-      super(error)
-    } else {
-      // use error.message or else stringiyf the object so we don't get [Object object]
-      super(error.message ?? JSON.stringify(error))
-    }
-
-    this.name = `WorkerError`
-
-    Error.captureStackTrace(this, WorkerError)
-  }
 }

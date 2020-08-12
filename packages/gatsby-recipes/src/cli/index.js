@@ -424,9 +424,7 @@ export default async ({
               </Box>
             ) : null}
             <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-              {state.context.exports?.join(`\n`) +
-                `\n\n` +
-                state.context.steps.join(`\n`)}
+              {state.context.recipe}
             </MDX>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
@@ -443,11 +441,15 @@ export default async ({
     const Installing = ({ state }) => (
       <Div>
         {state.context.plan.map((p, i) => (
-          <Div key={`${p.resourceName}-${i}`}>
-            <Text italic>{p.resourceName}:</Text>
+          <Box
+            textWrap="wrap"
+            flexDirection="column"
+            key={`${p.resourceName}-${i}`}
+          >
             <Text>
+              {p.isDone ? `✔ ` : <Spinner.default />}
               {` `}
-              {p.isDone ? `✅ ` : <Spinner.default />}
+              <Text italic>{p.resourceName}:</Text>
               {` `}
               {p.isDone ? p._message : p.describe}
               {` `}
@@ -455,7 +457,7 @@ export default async ({
                 <Text>({state.context.elapsed / 1000}s elapsed)</Text>
               )}
             </Text>
-          </Div>
+          </Box>
         ))}
       </Div>
     )
@@ -556,7 +558,7 @@ export default async ({
       }
 
       const ValidationErrors = state => {
-        if (state.context.plan) {
+        if (state.context?.plan) {
           return (
             <>
               <Text bold>
@@ -573,6 +575,20 @@ export default async ({
         } else return null
       }
 
+      const GeneralError = ({ state }) => {
+        if (state.context?.error?.error) {
+          return (
+            <>
+              <Text bold>The recipe has an error:</Text>
+              <Text>{`\n`}</Text>
+              <Text backgroundColor="#C41E3A" color="white">
+                {state.context.error.error}
+              </Text>
+            </>
+          )
+        } else return null
+      }
+
       if (state?.value === `doneError`) {
         process.nextTick(() => process.exit())
         return (
@@ -582,6 +598,7 @@ export default async ({
             }
           >
             <ValidationErrors />
+            <GeneralError state={state} />
           </ResourceProvider>
         )
       }

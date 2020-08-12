@@ -2,6 +2,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
 const getDiff = require(`../utils/get-diff`)
+const lock = require(`../lock`)
 
 const resourceSchema = require(`../resource-schema`)
 
@@ -19,12 +20,16 @@ const writePackageJson = async (root, obj) => {
 }
 
 const create = async ({ root }, { name, value }) => {
+  const release = await lock(`package.json`)
   const pkg = await readPackageJson(root)
-  pkg[name] = typeof value === `string` ? JSON.parse(value) : value
+  pkg[name] = value
 
   await writePackageJson(root, pkg)
 
-  return await read({ root }, name)
+  const newPkg = await read({ root }, name)
+
+  release()
+  return newPkg
 }
 
 const read = async ({ root }, id) => {
@@ -38,6 +43,7 @@ const read = async ({ root }, id) => {
     id,
     name: id,
     value: JSON.stringify(pkg[id], null, 2),
+    _message: `Wrote key "${id}" to package.json`,
   }
 }
 
