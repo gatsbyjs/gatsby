@@ -13,8 +13,8 @@ import {
   createServiceLock,
   getService,
   updateSiteMetadata,
-} from "gatsby-core-utils/node"
-import { UnlockFn } from "gatsby-core-utils/src/service-lock"
+  UnlockFn,
+} from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"

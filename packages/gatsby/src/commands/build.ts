@@ -36,7 +36,7 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { updateSiteMetadata } from "gatsby-core-utils/node"
+import { updateSiteMetadata } from "gatsby-core-utils"
 
 let cachedPageData
 let cachedWebpackCompilationHash
