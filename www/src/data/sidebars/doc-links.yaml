@@ -775,11 +775,6 @@
           link: /contributing/how-to-contribute/
     - title: Partnering With Gatsby
       link: /docs/partnering-with-gatsby/
-      items:
-        - title: Integrating & Partnering For Vendors
-          link: /docs/gatsby-vendor-partnership/
-        - title: Agency Partnership Program
-          link: /docs/gatsby-agency-partnership/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
