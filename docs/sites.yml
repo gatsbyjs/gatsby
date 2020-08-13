@@ -11835,3 +11835,14 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Morgan Baker Development
+  url: https://www.morganbaker.dev
+  main_url: https://www.morganbaker.dev
+  description: >
+    I'm a front-end developer based in Inverness.
+  categories:
+    - Portfolio
+    - Freelance
+  built_by: Morgan Baker
+  built_by_url: https://github.com/bagseye
+  featured: false
