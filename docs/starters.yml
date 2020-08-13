@@ -6959,3 +6959,21 @@
     - Uses SCSS for easy-to-understand naming
     - Google Analytics support
     - Responsive design
+- url: https://gatsby-directus-starter.netlify.app/
+  repo: https://github.com/muhzulzidan/gatsby-starter-directus
+  description: A starter template to build websites using  Directus as CMS & Gatsby for FrontEnd 
+  tags:
+    - Blog
+    - SEO
+    - CMS:Directus
+    - Styling:Sass
+    - Pagination
+  features:
+    - Data sourcing from Directus
+    - Blog post (it is News in the original data, so i call it News) listing with previews (tags and author) for each blog post
+    - Mobile-First approach in development
+    - Pagination support
+    - Sitemap Generation
+    - Offline support
+    - Google Analytics support
+    - Styling with Sass/SCSS
