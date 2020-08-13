@@ -30,6 +30,7 @@ export function initializeYurnalistLogger(): void {
     [LogLevels.Error]: yurnalist.error.bind(yurnalist),
     [LogLevels.Info]: yurnalist.info.bind(yurnalist),
     [LogLevels.Success]: yurnalist.success.bind(yurnalist),
+    [LogLevels.Debug]: yurnalist.verbose.bind(yurnalist),
     [ActivityLogLevels.Success]: yurnalist.success.bind(yurnalist),
     [ActivityLogLevels.Failed]: (text: string): void => {
       yurnalist.log(`${chalk.red(`failed`)} ${text}`)

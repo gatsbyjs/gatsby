@@ -84,7 +84,7 @@ There are a few `topic:` labels that signal "off ramps" from the Gatsby Core tea
 - `topic: MDX` - Issues related to the MDX plugin
 - `topic: themes` - Issues related to the `themes-ui` plugin
 - `topic: blogpost` - Issues about the Gatsby blog or a specific blog post
-- `topic: website` - Issues related to the Gatsbyjs.org or Gatsbyjs.com websites
+- `topic: website` - Issues related to gatsbyjs.com
 - `topic: showcase` - Issues related to the [Site Showcase](/showcase)
 
 If you apply one of these off-ramp `topic:` labels, there is no need to apply any further labels - your work is done!

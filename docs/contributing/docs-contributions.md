@@ -15,7 +15,9 @@ Check the GitHub repo for issues labeled with ["type: documentation" and "good f
 When working on the Gatsby.js documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
+- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
+
+> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
 ## Fixing image and link paths
 
@@ -82,7 +84,9 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+
+> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
 - Prerequisites: install Node.js and Yarn. See [development setup instructions](/contributing/setting-up-your-local-dev-environment/).
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).

@@ -26,7 +26,7 @@
       link: /contributing/code-of-conduct/
     - title: Gatsby Style Guide
       link: /contributing/gatsby-style-guide/
-    - title: Translating Gatsbyjs.org
+    - title: Translating the Gatsby Documentation
       link: /contributing/translation/
       items:
         - title: Starting a New Translation
@@ -88,8 +88,6 @@
           items:
             - title: Setting Up Your Local Dev Environment
               link: /contributing/setting-up-your-local-dev-environment/
-        - title: Website Contributions
-          link: /contributing/website-contributions/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:

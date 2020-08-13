@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.15...gatsby-recipes@0.2.16) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add missing var for the recipes selector ([#26410](https://github.com/gatsbyjs/gatsby/issues/26410)) ([2be03bf](https://github.com/gatsbyjs/gatsby/commit/2be03bf))
+
+## [0.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.14...gatsby-recipes@0.2.15) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipe:** let resources declare dependencies & validate recipes & ensure dependencies installed first ([#26386](https://github.com/gatsbyjs/gatsby/issues/26386)) ([cc354af](https://github.com/gatsbyjs/gatsby/commit/cc354af))
+
+## [0.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.13...gatsby-recipes@0.2.14) (2020-08-12)
+
+### Bug Fixes
+
+- **deps:** install deps as devDependencies on storybook recipe ([#25991](https://github.com/gatsbyjs/gatsby/issues/25991)) ([88a8025](https://github.com/gatsbyjs/gatsby/commit/88a8025))
+- **recipes:** Install storybook dependencies with development type on typescript recipe ([#25989](https://github.com/gatsbyjs/gatsby/issues/25989)) ([e6b6268](https://github.com/gatsbyjs/gatsby/commit/e6b6268))
+
+## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.12...gatsby-recipes@0.2.13) (2020-08-11)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix NPMScript for parallel calls ([#26349](https://github.com/gatsbyjs/gatsby/issues/26349)) ([e845615](https://github.com/gatsbyjs/gatsby/commit/e845615))
+
 ## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.11...gatsby-recipes@0.2.12) (2020-08-10)
 
 ### Bug Fixes
