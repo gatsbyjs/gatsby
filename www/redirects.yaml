@@ -156,5 +156,11 @@
   toPath: /docs/conditional-page-builds/
 - fromPath: /docs/contributing/translation/ui-messages/
   toPath: /docs/contributing/translation/
+- fromPath: /docs/schema-gql-type/
+  toPath: /docs/schema-inference/
+- fromPath: /docs/schema-input-gql/
+  toPath: /docs/schema-root-fields/
+- fromPath: /docs/schema-connections/
+  toPath: /docs/schema-root-fields/
 - fromPath: /contributing/website-contributions/
   toPath: /contributing/

@@ -1,7 +1,9 @@
 ---
-title: GraphQL Node Types Creation
+title: Schema Inference
 ---
 
+> This used to be called GraphQL Node Types Creation and should contain info about schema inference and inference > metadata
+>
 > This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
 >
 > Outdated areas are:
