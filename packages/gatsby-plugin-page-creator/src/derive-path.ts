@@ -7,12 +7,17 @@ import {
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
 } from "./path-utils"
+import { Reporter } from "gatsby"
 
 // Generates the path for the page from the file path
 // product/{Product.id}.js => /product/:id, pulls from nodes.id
 // product/{Product.sku__en} => product/:sku__en pulls from nodes.sku.en
 // blog/{MarkdownRemark.parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
-export function derivePath(path: string, node: Record<string, any>): string {
+export function derivePath(
+  path: string,
+  node: Record<string, any>,
+  reporter: Reporter
+): string {
   // 1.  Remove the extension
   let pathWithoutExtension = removeFileExtension(path)
 
@@ -33,10 +38,10 @@ export function derivePath(path: string, node: Record<string, any>): string {
 
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
-      console.error(
-        `CollectionBuilderError: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
+      reporter.error(
+        `PageCreator: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
       )
-      console.log(JSON.stringify(node, null, 4))
+      reporter.log(JSON.stringify(node, null, 4))
       return
     }
 
