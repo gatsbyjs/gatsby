@@ -9,6 +9,7 @@ There are many options out there for adding comment functionality, several of th
 - [Disqus](https://disqus.com)
 - [Commento](https://commento.io)
 - [Facebook Comments](https://www.npmjs.com/package/react-facebook)
+- [FastComments](https://fastcomments.com/) with Gatsby examples [here](https://github.com/FastComments/fastcomments-gatsbyjs-example/blob/master/src/pages/index.tsx#L11).
 - [Staticman](https://staticman.net)
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
