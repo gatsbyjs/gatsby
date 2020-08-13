@@ -95,7 +95,7 @@ Instructions for making changes to the Gatsby source code, tests, internals, API
 
 ### Starters or Site Showcase
 
-**Note:** Showcase contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
 
 ### Blog posts
 
