@@ -11835,3 +11835,16 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Markdown Dungeon
+  url: https://markdown-dungeon.netlify.app/
+  main_url: https://markdown-dungeon.netlify.app/
+  source_url: https://github.com/MakeContributions/markdown-dungeon
+  description: >
+    This is an example that how to use Markdown creating a dungeon.
+  categories:
+    - Blog
+    - Markdown
+    - Open Source
+  built_by: Make Contributions
+  built_by_url: https://github.com/MakeContributions
+  featured: false
