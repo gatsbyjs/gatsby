@@ -162,3 +162,5 @@
   toPath: /docs/schema-root-fields/
 - fromPath: /docs/schema-connections/
   toPath: /docs/schema-root-fields/
+- fromPath: /contributing/website-contributions/
+  toPath: /contributing/

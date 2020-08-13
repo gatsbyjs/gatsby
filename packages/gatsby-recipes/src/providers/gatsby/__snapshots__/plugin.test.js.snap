@@ -325,6 +325,12 @@ module.exports = {
   plugins: [],
 };
 ",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 1
 + Modified  + 7
@@ -406,6 +412,12 @@ module.exports = {
   plugins: [\\"gatsby-source-filesystem\\"],
 };
 ",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 1
 + Modified  + 8
@@ -546,6 +558,12 @@ module.exports = {
   ],
 };
 ",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 0
 + Modified  + 5
@@ -736,6 +754,12 @@ module.exports = {
   ],
 };
 ",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
   "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 0
 + Modified  + 5
