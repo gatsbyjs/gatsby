@@ -150,6 +150,9 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 - **name**: name of the plugin
 - **options**: object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
 - **key**: string used to distinguish between multiple plugin instances
+- **isLocal**: boolean that indicates this is a local plugin. This lets
+  recipes know it shouldn't require an NPMPackage with the plugin name
+  to be installed as well.
 
 ### `<GatsbyShadowFile>`
 
