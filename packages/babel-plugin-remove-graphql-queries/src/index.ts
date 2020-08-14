@@ -1,5 +1,5 @@
 /*  eslint-disable new-cap */
-import { graphql } from "gatsby"
+import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
