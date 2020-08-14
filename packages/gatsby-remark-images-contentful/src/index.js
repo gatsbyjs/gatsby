@@ -58,7 +58,7 @@ module.exports = async (
 
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
-    const options = _.defaults(pluginOptions, defaults)
+    const options = _.defaults({}, pluginOptions, defaults)
 
     const optionsHash = createContentDigest(options)
 
@@ -91,11 +91,14 @@ module.exports = async (
 
     response.data.destroy()
 
-    const responsiveSizesResult = await buildResponsiveSizes({
-      metadata,
-      imageUrl: originalImg,
-      options,
-    })
+    const responsiveSizesResult = await buildResponsiveSizes(
+      {
+        metadata,
+        imageUrl: originalImg,
+        options,
+      },
+      reporter
+    )
 
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`

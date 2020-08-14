@@ -177,7 +177,7 @@ Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://ww
 
 ### Mark localhost URLs as code strings
 
-Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs.
 
 ```markdown
 <!-- Good -->
@@ -219,7 +219,7 @@ Folder:
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
-Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby graphql", so the article title should ideally reflect common search terms.
+Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby GraphQL", so the article title should ideally reflect common search terms.
 
 Here are some title examples:
 

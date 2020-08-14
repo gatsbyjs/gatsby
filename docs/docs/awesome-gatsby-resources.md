@@ -28,6 +28,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 
 ## Podcasts
 
+- [2020-01-21: Sam Julien on Real Talk JavaScript #67](https://realtalkjavascript.simplecast.com/episodes/episode-67-jamstacking-with-the-great-gatsby-sam-julien)
 - [2019-06-05: Jason Lengstorf on Syntax #150: Gatsby Themes](https://syntax.fm/show/150/gatsby-themes)
 - [2019-05-22: Jason Lengstorf on Full Stack Radio #115: Gatsby for Skeptics](http://www.fullstackradio.com/115)
 - [2019-04-12: Jason Lengstorf on JS Party #71](https://changelog.com/jsparty/71)
