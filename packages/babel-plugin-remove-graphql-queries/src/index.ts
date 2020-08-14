@@ -244,16 +244,21 @@ function getGraphQLTag(
 }
 
 function isUseStaticQuery(path: NodePath<CallExpression>): boolean {
-  return (
-    (path.node.callee.type === `MemberExpression` &&
-      path.node.callee.property.name === `useStaticQuery` &&
-      (path.get(`callee`).get(`object`) as NodePath).referencesImport(
+  const callee = path.node.callee
+  if (callee.type === `MemberExpression`) {
+    const property = callee.property as Identifier
+    if (property.name === `useStaticQuery`) {
+      return (path.get(`callee`).get(`object`) as NodePath).referencesImport(
         `gatsby`,
         ``
-      )) ||
-    ((path.node.callee as Identifier).name === `useStaticQuery` &&
-      path.get(`callee`).referencesImport(`gatsby`, ``))
-  )
+      )
+    }
+    return false
+  }
+  if ((callee as Identifier).name === `useStaticQuery`) {
+    return path.get(`callee`).referencesImport(`gatsby`, ``)
+  }
+  return false
 }
 
 export default function ({ types: t }): PluginObj {
@@ -297,7 +302,7 @@ export default function ({ types: t }): PluginObj {
                     : shortResultPath
                 )
               )
-              path.unshiftContainer(`body`, importDeclaration)
+              path.node.body.unshift(importDeclaration)
             }
           },
         } as INestedJSXVisitor
@@ -357,7 +362,7 @@ export default function ({ types: t }): PluginObj {
                     : shortResultPath
                 )
               )
-              path.unshiftContainer(`body`, importDeclaration)
+              path.node.body.unshift(importDeclaration)
             }
           },
         } as INestedHookVisitor
