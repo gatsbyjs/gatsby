@@ -16,7 +16,10 @@ Plural fields accept four arguments - `filter`, `sort`, `skip` and `limit`. `fil
 
 ```graphql
 {
-  allBlogPost(filter: { date: { lt: "2020-01-01" }}, sort: {fields: [date], order: ASC}) {
+  allBlogPost(
+    filter: { date: { lt: "2020-01-01" } }
+    sort: { fields: [date], order: ASC }
+  ) {
     nodes {
       id
     }
