@@ -322,11 +322,11 @@ If you're interested in further reading, check out [Christopher "vjeux" Chedeau'
 
 Gatsby supports almost every possible styling option (if there isn't a plugin yet for your favorite CSS option, [please contribute one!](/contributing/how-to-contribute/))
 
-- [Typography.js](/packages/gatsby-plugin-typography/)
-- [Sass](/packages/gatsby-plugin-sass/)
-- [JSS](/packages/gatsby-plugin-jss/)
-- [Stylus](/packages/gatsby-plugin-stylus/)
-- [PostCSS](/packages/gatsby-plugin-postcss/)
+- [Typography.js](/plugins/gatsby-plugin-typography/)
+- [Sass](/plugins/gatsby-plugin-sass/)
+- [JSS](/plugins/gatsby-plugin-jss/)
+- [Stylus](/plugins/gatsby-plugin-stylus/)
+- [PostCSS](/plugins/gatsby-plugin-postcss/)
 
 and more!
 
