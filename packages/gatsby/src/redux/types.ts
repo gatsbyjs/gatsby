@@ -3,7 +3,7 @@ import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
+import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
 type SystemPath = string
@@ -101,18 +101,18 @@ export interface IGatsbyStaticQueryComponents {
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
-  job: InternalJobInterface
+  job: InternalJob
   plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyIncompleteJob {
-  job: InternalJobInterface
+  job: InternalJob
   plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyCompleteJobV2 {
   result: JobResultInterface
-  inputPaths: InternalJobInterface["inputPaths"]
+  inputPaths: InternalJob["inputPaths"]
 }
 
 export interface IPlugin {

@@ -95,10 +95,7 @@ Instructions for making changes to the Gatsby source code, tests, internals, API
 
 ### Starters or Site Showcase
 
-There are specific pages about contributing to various parts of the Gatsby ecosystem:
-
-- [Showcase submissions](/contributing/site-showcase-submissions/)
-- [Starter library](/contributing/submit-to-starter-library/)
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
 
 ### Blog posts
 

@@ -19,6 +19,7 @@ const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
+const { grabMatchParams } = require(`./find-path`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
@@ -213,6 +214,10 @@ export default (pagePath, callback) => {
       const props = {
         ...this.props,
         ...pageData.result,
+        params: {
+          ...grabMatchParams(this.props.location.pathname),
+          ...(pageData.result?.pageContext?.__params || {}),
+        },
         // pathContext was deprecated in v2. Renamed to pageContext
         pathContext: pageData.result ? pageData.result.pageContext : undefined,
       }

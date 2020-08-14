@@ -55,3 +55,21 @@ Object {
   "newState": "\\"apple\\": \\"foot2\\"",
 }
 `;
+
+exports[`npm script resource handles multiple parallel create calls 1`] = `
+Object {
+  "_message": "Added script \\"husky\\" to your package.json",
+  "command": "hi",
+  "id": "husky",
+  "name": "husky",
+}
+`;
+
+exports[`npm script resource handles multiple parallel create calls 2`] = `
+Object {
+  "_message": "Added script \\"husky2\\" to your package.json",
+  "command": "hi",
+  "id": "husky2",
+  "name": "husky2",
+}
+`;

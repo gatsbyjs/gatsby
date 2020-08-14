@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useState } from "react"
+import React, { Suspense, useContext } from "react"
 import Queue from "better-queue"
 import lodash from "lodash"
 import mitt from "mitt"
@@ -15,6 +15,9 @@ import {
 import { useRecipeStep } from "./step-component"
 import { InputProvider } from "./input-provider"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
+import findDependencyMatch from "../find-dependency-match"
+
+const errorCache = new Map()
 
 const GlobalsContext = React.createContext({})
 const useGlobals = () => useContext(GlobalsContext)
@@ -26,45 +29,34 @@ const getUserProps = props => {
   return userProps
 }
 
-const SetResourcesProvider = React.createContext()
-
-let resourcesCache
-
 const Wrapper = ({
   children,
   inputs,
   isApply,
   resultCache,
   inFlightCache,
+  blockedResources,
   queue,
-}) => {
-  // eslint-disable-next-line
-  const [resourcesList, setResources] = useState(resourcesCache || [])
-  resourcesCache = resourcesList
-
-  return (
-    <ErrorBoundary>
-      <GlobalsProvider
-        value={{
-          mode: isApply ? `apply` : `plan`,
-          resultCache,
-          inFlightCache,
-          queue,
-        }}
-      >
-        <SetResourcesProvider.Provider value={setResources}>
-          <ResourceProvider value={resourcesList}>
-            <InputProvider value={inputs}>
-              <Suspense fallback={<p>Loading recipe...</p>}>
-                {children}
-              </Suspense>
-            </InputProvider>
-          </ResourceProvider>
-        </SetResourcesProvider.Provider>
-      </GlobalsProvider>
-    </ErrorBoundary>
-  )
-}
+  plan,
+}) => (
+  <ErrorBoundary>
+    <GlobalsProvider
+      value={{
+        mode: isApply ? `apply` : `plan`,
+        resultCache,
+        inFlightCache,
+        blockedResources,
+        queue,
+      }}
+    >
+      <ResourceProvider value={plan}>
+        <InputProvider value={inputs}>
+          <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+        </InputProvider>
+      </ResourceProvider>
+    </GlobalsProvider>
+  </ErrorBoundary>
+)
 
 const ResourceComponent = ({
   _resourceName: Resource,
@@ -73,7 +65,13 @@ const ResourceComponent = ({
   children,
   ...props
 }) => {
-  const { mode, resultCache, inFlightCache, queue } = useGlobals()
+  const {
+    mode,
+    resultCache,
+    inFlightCache,
+    blockedResources,
+    queue,
+  } = useGlobals()
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
 
@@ -87,6 +85,7 @@ const ResourceComponent = ({
       mode,
       resultCache,
       inFlightCache,
+      blockedResources,
       queue,
     },
     props
@@ -119,8 +118,9 @@ const validateResource = (resourceName, context, props) => {
 
 const handleResource = (resourceName, context, props) => {
   // Initialize
-  const { mode, resultCache, inFlightCache, queue } = context
+  const { mode, resultCache, inFlightCache, blockedResources, queue } = context
 
+  // TODO use session ID to ensure the IDs are unique..
   const trueKey = props._key ? props._key : context._uuid
 
   let cacheKey
@@ -131,46 +131,61 @@ const handleResource = (resourceName, context, props) => {
     cacheKey = JSON.stringify({ resourceName, ...props, mode })
   }
 
-  // update global context when results come in.
-  const updateResource = result => {
-    allResources = allResources.filter(a => a.resourceDefinitions._key)
-    const resourceMap = new Map()
-
-    allResources.forEach(r => resourceMap.set(r.resourceDefinitions._key, r))
-    const newResource = {
-      resourceName,
-      resourceDefinitions: props,
-      ...result,
+  if (!errorCache.has(trueKey)) {
+    const error = validateResource(resourceName, context, props)
+    errorCache.set(trueKey, error)
+    if (error) {
+      const result = {
+        error: `Validation error: ${error.details[0].message}`,
+      }
+      resultCache.set(cacheKey, result)
+      return result
     }
-
-    if (!lodash.isEqual(newResource, resourceMap.get(trueKey))) {
-      resourceMap.set(trueKey, newResource)
-      // TODO Do we need this? It's causing infinite loops
-      // setResources([...resourceMap.values()])
-    }
-  }
-
-  let allResources = useResourceContext()
-  const error = validateResource(resourceName, context, props)
-  if (error) {
-    const result = {
-      error: `Validation error: ${error.details[0].message}`,
-    }
-    updateResource(result)
-    resultCache.set(cacheKey, result)
-    return result
   }
 
   const cachedResult = resultCache.get(cacheKey)
   const inFlightPromise = inFlightCache.get(cacheKey)
 
   if (cachedResult) {
-    updateResource(cachedResult)
     return cachedResult
   }
 
   if (inFlightPromise) {
     throw inFlightPromise
+  }
+
+  // If this resource requires another resource to be created before it,
+  // check to see if they're created. The first time this is called,
+  // create a promise which we cache and keep throwing until
+  // all the dependencies are created & then we reject the promise
+  // to trigger andother render where we finally can create the
+  // now no-longer-blocked resource.
+  //
+  // TODO test this when we can mock resources by varying what
+  // resources depend on what & which return first and ensuring
+  // resources end in right order.
+  const allResources = useResourceContext()
+  const resourcePlan = allResources?.find(
+    a => a.resourceDefinitions._key === trueKey || a._uuid === trueKey
+  )
+  if (mode === `apply` && resourcePlan.dependsOn) {
+    const matches = findDependencyMatch(allResources, resourcePlan)
+    let outsideReject
+    if (!matches.every(m => m.isDone)) {
+      // Probably we're going to need a state machine
+      // just for installing things, sheesh.
+      if (blockedResources.get(cacheKey)) {
+        throw blockedResources.get(cacheKey).promise
+      }
+      const promise = new Promise((resolve, reject) => {
+        outsideReject = reject
+      })
+      blockedResources.set(cacheKey, { promise, outsideReject })
+      throw promise
+    } else {
+      blockedResources.get(cacheKey).outsideReject()
+      blockedResources.delete(cacheKey)
+    }
   }
 
   const fn = mode === `apply` ? `create` : `plan`
@@ -184,14 +199,12 @@ const handleResource = (resourceName, context, props) => {
       const cachedValue = resultCache.get(cacheKey)
       if (cachedValue) {
         resolve(cachedValue)
-        updateResource(cachedValue)
       } else {
         resources[resourceName][fn](context, props)
           .then(result => {
             if (fn === `create`) {
               result.isDone = true
             }
-            updateResource(result)
             inFlightCache.set(cacheKey, false)
             return result
           })
@@ -219,29 +232,34 @@ const handleResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
+const render = (recipe, cb, context = {}, isApply, isStream, name) => {
+  const { inputs } = context
   const emitter = mitt()
-  const plan = {}
+  const renderState = {}
 
   const queue = new Queue(
     async (job, cb) => {
       const result = await job
       cb(null, result)
     },
-    { concurrent: 5 }
+    { concurrent: 10000 }
   )
 
   const resultCache = new Map()
   const inFlightCache = new Map()
+  const blockedResources = new Map()
 
   let result
+  let resourcesArray = []
 
   const recipeWithWrapper = (
     <Wrapper
       inputs={inputs}
+      plan={context.plan}
       isApply={isApply}
       resultCache={resultCache}
       inFlightCache={inFlightCache}
+      blockedResources={blockedResources}
       queue={queue}
     >
       {recipe}
@@ -251,11 +269,15 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
   // Keep calling render until there's remaining resources to render.
   // This let's resources that depend on other resources to pause until one finishes.
   const renderResources = isDrained => {
-    result = RecipesReconciler.render(recipeWithWrapper, plan, name)
+    result = RecipesReconciler.render(recipeWithWrapper, renderState, name)
 
-    const resources = transformToPlan(result)
+    resourcesArray = transformToPlan(result)
+
+    // Tell UI about updates.
+    emitter.emit(`update`, resourcesArray)
 
     const isDone = () => {
+      let result
       // Mostly for validation stage that checks that there's no resources
       // in the initial step — this done condition says no resources were found
       // and there's no inflight resource work (resources will be empty until the
@@ -263,38 +285,42 @@ const render = (recipe, cb, inputs = {}, isApply, isStream, name) => {
       //
       // We use "inFlightCache" because the queue doesn't immediately show up
       // as having things in it.
-      if (resources.length === 0 && ![...inFlightCache.values()].some(a => a)) {
-        return true
+      if (
+        resourcesArray.length === 0 &&
+        ![...inFlightCache.values()].some(a => a)
+      ) {
+        result = true
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
-      } else if (isDrained && queue.length === 0) {
-        return true
+      } else if (
+        isDrained &&
+        queue.length === 0 &&
+        blockedResources.size === 0
+      ) {
+        result = true
         // If there's one resource & it fails validation, it doesn't go into the queue
         // so we check if inFlightCache is empty & all resources have an error.
       } else if (
-        !resources.some(r => !r.error) &&
+        !resourcesArray.some(r => !r.error) &&
         ![...inFlightCache.values()].some(a => a)
       ) {
-        return true
+        result = true
+      } else {
+        result = false
       }
 
-      return false
+      return result
     }
 
     if (isDone()) {
       // Rerender with the resources and resolve the data from the cache.
-      emitter.emit(`done`, resources)
+      emitter.emit(`done`, resourcesArray)
     }
   }
 
-  const throttledRenderResources = lodash.throttle(renderResources, 30, {
-    trailing: false,
-  })
+  const throttledRenderResources = lodash.throttle(renderResources, 100)
 
   queue.on(`task_finish`, function (taskId, r, stats) {
     throttledRenderResources()
-
-    const resources = transformToPlan(result)
-    emitter.emit(`update`, resources)
   })
 
   queue.on(`drain`, () => {
