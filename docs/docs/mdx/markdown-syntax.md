@@ -170,7 +170,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 ## Processing Markdown and MDX in Gatsby:
 
 - In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](/docs/sourcing-from-the-filesystem) plugin
-- You can check out the package [README](/packages/gatsby-source-filesystem) for more information on how it works!
+- You can check out the package [README](/plugins/gatsby-source-filesystem) for more information on how it works!
 
 ## Frontmatter
 
