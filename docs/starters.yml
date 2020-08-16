@@ -8477,6 +8477,8 @@
     - SEO
     - CMS:Other
     - Styling:SCSS
+    - CMS:Directus
+    - Styling:Sass
     - Pagination
   features:
     - Data sourcing from Directus
