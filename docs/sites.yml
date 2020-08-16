@@ -11835,3 +11835,18 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Inkoop
+  url: https://www.inkoop.io
+  main_url: https://www.inkoop.io
+  description: >
+    Inkoop is a group of software engineers, creative designers, and technology consultants coming together to deliver marvelous Software products to our clients.
+  categories:
+    - Agency
+    - Web Development
+    - Mobile Development
+    - User Experience
+    - Technology
+    - Portfolio
+  built_by: Inkoop
+  built_by_url: https://www.inkoop.io
+  featured: false
