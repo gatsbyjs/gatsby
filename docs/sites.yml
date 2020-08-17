@@ -11835,3 +11835,19 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Mekar
+  url: https://mekar.com.br
+  main_url: https://mekar.com.br
+  description: >
+    Consulting for your business - Be the difference simply because it is different.
+  categories:
+    - Consulting
+    - Business
+    - Entrepreneurship
+    - SEO
+    - Productivity
+    - Human Resources
+    - Accessibility
+  built_by: Giovanni Carvalheira Mendes Pereira
+  built_by_url: https://github.com/GiovanniCarvalheira
+  featured: false
