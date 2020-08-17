@@ -7447,3 +7447,23 @@
     - SEO friendly components
     - Prebuilt events calendar
     - Material UI
+- url: https://gatsby-starter-typescript-seo-grand.netlify.app/
+  repo: https://github.com/S-ayanide/gatsby-starter-typescript-seo-grand
+  description: A pre-configured Typescript Gatsby starter with amazing SEO, PWA, Accessibility and Optimizability.
+  tags:
+    - SEO
+    - Typescript
+    - Styled Component
+    - PWA
+    - Jest
+    - Accessibility
+  features:
+    - TypeScript for type-safe code.
+    - Styled-Components for all your styles.
+    - modern-css-reset for a reset of sensible default styles.
+    - gatsby-image and gatsby-transformer-sharp for optimized images.
+    - gatsby-plugin-manifest / SEO component for an SEO-friendly PWA.
+    - Jest and React Testing library for snapshots and unit tests.
+    - gatsby-plugin-catch-links for avoiding the browser having to refresh the whole page when navigating between local pages.
+    - ESLint with an emphasis on functional patterns (with Prettier and TypeScript integration) to make your code look its best.
+    - React Axe and React A11y for accessibility so that your site is awesome for everyone.
