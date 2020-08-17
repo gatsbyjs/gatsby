@@ -43,7 +43,7 @@
     "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^4.0.4",
+    "@testing-library/cypress": "^6.0.0",
     "cross-env": "^5.2.0",
     "cypress": "3.4.1",
     "fs-extra": "^7.0.1",
