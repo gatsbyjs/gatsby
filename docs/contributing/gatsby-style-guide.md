@@ -177,7 +177,7 @@ Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://ww
 
 ### Mark localhost URLs as code strings
 
-Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs.
 
 ```markdown
 <!-- Good -->

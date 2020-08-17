@@ -1,4 +1,4 @@
-const { SORTABLE_ENUM } = require(`./sort`)
+import { SORTABLE_ENUM } from "./sort"
 import { SEARCHABLE_ENUM } from "./filter"
 
 const NodeInterfaceFields = [`id`, `parent`, `children`, `internal`]

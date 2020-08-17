@@ -1,4 +1,5 @@
 const { Machine, assign, send } = require(`xstate`)
+const lodash = require(`lodash`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -7,6 +8,7 @@ const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
 const resolveRecipe = require(`../resolve-recipe`)
+const findDependencyMatch = require(`../find-dependency-match`)
 
 const recipeMachine = Machine(
   {
@@ -81,7 +83,6 @@ const recipeMachine = Machine(
                   msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
-                  // console.log(e)
                   return {
                     error: `Could not parse recipe ${context.recipePath}`,
                     e,
@@ -128,10 +129,21 @@ const recipeMachine = Machine(
           id: `createPlan`,
           src: (context, event) => async (cb, onReceive) => {
             try {
-              const result = await createPlan(context, cb)
+              let result = await createPlan(context, cb)
+              // Validate dependencies are met in the resources plan
+              result = result.map(r => {
+                const matches = findDependencyMatch(result, r)
+                // If there's any errors, replace the resource
+                // with the error
+                if (matches.some(m => m.error)) {
+                  r.error = matches[0].error
+                  delete r.diff
+                }
+                return r
+              })
+
               return result
             } catch (e) {
-              console.log(e)
               throw e
             }
           },
@@ -195,7 +207,6 @@ const recipeMachine = Machine(
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {
-            debug(`applying plan`)
             cb(`RESET`)
             if (context.plan.length === 0) {
               return cb(`onDone`)
@@ -205,16 +216,20 @@ const recipeMachine = Machine(
               cb(`TICK`)
             }, 10000)
 
-            applyPlan(context, cb)
-              .then(result => {
+            const emitter = applyPlan(context, cb)
+            emitter.on(`*`, (type, e) => {
+              if (type === `update`) {
+                cb({ type: `onUpdate`, data: e })
+              }
+              if (type === `done`) {
                 debug(`applied plan`)
-                cb({ type: `onDone`, data: result })
-              })
-              .catch(error => {
+                cb({ type: `onDone`, data: e })
+              }
+              if (type === `error`) {
                 debug(`error applying plan`)
-                debug(error)
-                cb({ type: `onError`, data: error })
-              })
+                cb({ type: `onError`, data: e })
+              }
+            })
 
             return () => clearInterval(interval)
           },
@@ -229,6 +244,9 @@ const recipeMachine = Machine(
             actions: assign({
               elapsed: context => (context.elapsed += 10000),
             }),
+          },
+          onUpdate: {
+            actions: [`addResourcesToContext`],
           },
           onDone: {
             target: `done`,
@@ -256,7 +274,7 @@ const recipeMachine = Machine(
         }
       }),
       addResourcesToContext: assign((context, event) => {
-        if (event.data) {
+        if (lodash.isArray(event.data) && event.data.length > 0) {
           let plan = context.plan || []
           plan = plan.map(p => {
             const changedResource = event.data.find(c => {
@@ -268,7 +286,7 @@ const recipeMachine = Machine(
             })
             if (!changedResource) return p
             p._message = changedResource._message
-            p.isDone = true
+            p.isDone = changedResource.isDone
             return p
           })
           return {

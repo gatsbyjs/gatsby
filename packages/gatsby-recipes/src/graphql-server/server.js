@@ -8,6 +8,7 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
+  GraphQLBoolean,
   execute,
   subscribe,
 } = require(`graphql`)
@@ -32,10 +33,22 @@ const pubsub = new PubSub()
 const PORT = process.argv[2] || 50400
 
 let lastState = {}
+let lastDone = 0
+
+const compareState = (oldState, newState) => {
+  // isEqual doesn't handle values on objects in arrays 🤷‍♀️
+  const newDone = newState.context.plan.filter(r => r.isDone).length
+  const comparison = !lodash.isEqual(newState, oldState) || lastDone !== newDone
+  lastDone = newDone
+
+  return comparison
+}
+
 const emitUpdate = state => {
   // eslint-disable-next-line no-unused-vars
   const { lastEvent, ...cleanedState } = state
-  if (!lodash.isEqual(cleanedState, lastState)) {
+  // isEqual doesn't handle values on objects in arrays 🤷‍♀️
+  if (compareState(lastState, cleanedState)) {
     pubsub.publish(`operation`, {
       state: JSON.stringify(cleanedState),
     })
@@ -44,9 +57,8 @@ const emitUpdate = state => {
   }
 }
 
-// only one service can run at a time.
 let service
-const startRecipe = ({ recipePath, projectRoot }) => {
+const startRecipe = ({ recipePath, projectRoot, watchChanges = false }) => {
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
@@ -58,15 +70,20 @@ const startRecipe = ({ recipePath, projectRoot }) => {
       recipeMachine.withContext(initialState.context)
     ).onTransition(state => {
       // Don't emit again unless there's a state change.
-      console.log(`===onTransition`, {
-        event: state.event,
-        state: state.value,
-      })
+      if (state.event.type !== `onUpdate`) {
+        console.log(`===onTransition`, {
+          state: state.value,
+          event: state.event.type,
+        })
+      }
       if (state.changed) {
         console.log(`===state.changed`, {
           state: state.value,
-          currentStep: state.context.currentStep,
+          event: state.event.type,
         })
+        if (state.value === `doneError`) {
+          console.log(state.event)
+        }
         // Wait until plans are created before updating the UI
         if (
           [`presentPlan`, `done`, `doneError`, `applyingPlan`].includes(
@@ -94,11 +111,13 @@ const startRecipe = ({ recipePath, projectRoot }) => {
     }
   }
 
-  chokidar
-    .watch(initialState.context.recipePath)
-    .on(`change`, (filename, stats) => {
-      startService()
-    })
+  if (watchChanges) {
+    chokidar
+      .watch(initialState.context.recipePath)
+      .on(`change`, (filename, stats) => {
+        startService()
+      })
+  }
 
   startService()
 }
@@ -127,6 +146,7 @@ const rootMutationType = new GraphQLObjectType({
         args: {
           recipePath: { type: GraphQLString },
           projectRoot: { type: GraphQLString },
+          watchChanges: { type: GraphQLBoolean },
         },
         resolve: (_data, args) => {
           console.log(`received operation`, args)
