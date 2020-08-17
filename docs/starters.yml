@@ -7467,3 +7467,4 @@
     - gatsby-plugin-catch-links for avoiding the browser having to refresh the whole page when navigating between local pages.
     - ESLint with an emphasis on functional patterns (with Prettier and TypeScript integration) to make your code look its best.
     - React Axe and React A11y for accessibility so that your site is awesome for everyone.
+    
