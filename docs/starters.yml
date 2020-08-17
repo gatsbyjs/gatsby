@@ -7449,7 +7449,7 @@
     - Material UI
 - url: https://gatsby-directus-starter.netlify.app/
   repo: https://github.com/muhzulzidan/gatsby-starter-directus
-  description: A starter template to build websites using  Directus as CMS & Gatsby for FrontEnd 
+  description: A starter template to build websites using  Directus as CMS & Gatsby for FrontEnd
   tags:
     - Blog
     - SEO
@@ -7465,4 +7465,3 @@
     - Offline support
     - Google Analytics support
     - Styling with Sass/SCSS
-    
