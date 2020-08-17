@@ -56,5 +56,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby"
+  },
+  "resolutions": {
+    "cypress": "3.4.1"
   }
 }
