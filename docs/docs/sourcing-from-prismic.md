@@ -6,13 +6,13 @@ In this guide, you’ll set up a site using [Prismic](https://prismic.io/) and t
 Prismic is a Headless CMS with a web app for creating and publishing content: the “Writing Room” + a fully-fledged GraphQL API
 It’s suitable for marketers and developers as it offers features like a components-based page builder, image optimization, previewing, scheduling, content versioning, and multi-language support.
 
+In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC) provided by [LekoArts](https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
+
 Interesting reads:
 
-[Read the official Prismic documentation on Gatsby](https://prismic.io/docs/gatsby/getting-started/home).
-
-[Sample Blog with API-based CMS & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
-
-[Multi-language website example](https://user-guides.prismic.io/en/articles/3601217-multi-language-website-example-with-gatsby-js).
+- [Official Prismic documentation on Gatsby](https://prismic.io/docs/gatsby/getting-started/home).
+- [Sample Blog with Prismic & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
+- [Multi-language website example](https://user-guides.prismic.io/en/articles/3601217-multi-language-website-example-with-gatsby-js).
 
 [Prismic Official documentation](https://prismic.io/docs).
 
@@ -84,13 +84,13 @@ module.exports = {
 }
 ```
 
-3. The best way to create and test your queries is to first develop them in the [GraphQL Playground](https://www.gatsbyjs.org/docs/using-graphql-playground/) and then paste them into your files. You can access to it when running your project in dev mode at `http://localhost:8000/__graphql`. Run the following command to start the local development server and experiment a bit with the available queries:
+The best way to create and test your queries is to first develop them in the [GraphQL Playground](https://www.gatsbyjs.org/docs/using-graphql-playground/) and then paste them into your files. You can access to it when running your project in dev mode at `http://localhost:8000/__graphql`. Run the following command to start the local development server and experiment a bit with the available queries:
 
 ```
 gatsby develop
 ```
 
-4. Create your page templates
+3. Create your page templates
 
 ### Single Type
 
@@ -103,9 +103,9 @@ import { graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 
 export const query = graphql`
- query($lang: String!, $uid:String!){
-  prismic{
-    homepage(lang:$lang, uid:$uid){
+ query($lang: String!, $uid: String!) {
+  prismic {
+    homepage(lang: $lang, uid: $uid){
       title
       content
     }
@@ -170,6 +170,12 @@ const Post = props => {
 export default Post
 ```
 
+The best way to create and test your queries is to first develop them in the [GraphQL Playground](https://www.gatsbyjs.org/docs/using-graphql-playground/) and then paste them into your files. You can access to it when running your project in dev mode at `http://localhost:8000/__graphql`. Run the following command to start the local development server and experiment a bit with the available queries:
+
+```
+gatsby develop
+```
+
 ## Deploying to Netlify
 
 Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site. 
@@ -189,13 +195,11 @@ The video shows the usage of a Group field and Content Relationship field — if
 The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/reactjs/beyond-the-api/link-resolving) for each field if necessary.
 
 
-## Wrapping up
+## Other resources
 
-This was an example meant to help you understand how Prismic works with Gatsby. The videos in this article where provided by [LekoArts](https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
+This was an example meant to help you understand how Prismic works with Gatsby. 
 
-With your newfound knowledge of Prismic (and perhaps even Gatsby), you're now able to:
-
-- Create a Prismic repository and setting it up together with the Gatsby plugin
-- Query data from Prismic for repeatable and single pages and dynamically generate pages
-- Deploy the site in Netlify
-- Add Content Relationship links between documents.
+- [Create a Prismic repository and setup the Gatsby plugin](https://prismic.io/docs/gatsby/getting-started/prismic-gatsby-source-plugin)
+- [Query data from Prismic](https://prismic.io/docs/gatsby/query-basics/anatomy-of-a-query)
+- [Deploy the site in Netlify](https://prismic.io/docs/gatsby/misc-topics/deployment)
+- [Content Relationship links between documents.](https://prismic.io/docs/gatsby/arguments-and-filtering/query-by-content-relationship-or-link)
