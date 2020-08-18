@@ -4,15 +4,6 @@ title: Code Contributions
 
 The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
 
-On this page:
-
-- [Repo setup](#repo-setup)
-- [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
-- [Contributing example sites](#contributing-example-sites)
-- [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
-- [Development tools](#development-tools)
-- [Official theme development](#official-theme-development)
-
 ## Repo setup
 
 This page includes details specific to the Gatsby core and ecosystem codebase.
