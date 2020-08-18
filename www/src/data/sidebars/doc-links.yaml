@@ -228,6 +228,8 @@
             - title: Sourcing Content from JSON or YAML
               link: /docs/sourcing-content-from-json-or-yaml/
               breadcrumbTitle: JSON or YAML
+            - title: Refreshing Content
+              link: /docs/refreshing-content/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL
