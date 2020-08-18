@@ -2,13 +2,6 @@
 title: Working with Video
 ---
 
-- [Sourcing video from a host](#sourcing-video-from-a-host)
-- [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
-- [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
-- [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
-- [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
-- [Using custom video players](#using-custom-video-players)
-
 ## Sourcing video from a host
 
 The easiest method for including video on a Gatsby site is to source an uploaded file from a site like YouTube, Vimeo, or Twitch. Using the source URL from one of those hosts, you can use Remark plugins or create a custom `<iframe>` solution to embed videos into your Gatsby site.
