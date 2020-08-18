@@ -6,39 +6,15 @@ import {
   ActionFunctionMap,
   DoneEventObject,
 } from "xstate"
-import { Store } from "redux"
-import { IBuildContext, IMutationAction } from "../../services"
-import { actions, boundActionCreators } from "../../redux/actions"
+import { IBuildContext } from "../../services"
+import { boundActionCreators } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
-import { assertStore } from "../../utils/assert-store"
 import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
-
-/**
- * These are the deferred redux actions sent from api-runner-node
- * They may include a `resolve` prop (if they are createNode actions).
- * If so, we resolve the promise when we're done
- */
-export const callRealApi = (event: IMutationAction, store?: Store): void => {
-  assertStore(store)
-  const { type, payload, resolve } = event
-  if (type in actions) {
-    // If this is a createNode action then this will be a thunk.
-    // No worries, we just dispatch it like any other
-    const action = actions[type](...payload)
-    const result = store.dispatch(action)
-    // Somebody may be waiting for this
-    if (resolve) {
-      resolve(result)
-    }
-  } else {
-    reporter.log(`Could not dispatch unknown action "${type}`)
-  }
-}
-
+import { callRealApi } from "../../utils/call-deferred-api"
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
  * Instead of queueing, we call it right away
@@ -129,6 +105,20 @@ export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
 
 export const saveDbState = (): Promise<void> => saveState()
 
+export const logError: ActionFunction<IBuildContext, AnyEventObject> = (
+  _context,
+  event
+) => {
+  reporter.error(event.data)
+}
+
+export const panic: ActionFunction<IBuildContext, AnyEventObject> = (
+  _context,
+  event
+) => {
+  reporter.panic(event.data)
+}
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle
@@ -158,4 +148,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   markSourceFilesClean,
   saveDbState,
   setQueryRunningFinished,
+  panic,
+  logError,
 }

@@ -211,7 +211,7 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
 2. Create a new site from a starter:
 
 ```shell
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new hello-world https://github.com/gatsbyjs/gatsby/tree/master/starters/hello-world
 ```
 
 > 💡 What happened?

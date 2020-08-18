@@ -134,9 +134,7 @@ Gatsby also allows you to specify another environment variable when running the 
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
-If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
-
-You can trigger this endpoint locally, for example, on Unix-based operating systems (like Ubuntu and macOS) using `curl -X POST http://localhost:8000/__refresh`.
+This allows you to refresh your sourced content. See [Refreshing content](/docs/content-and-data/refreshing-content).
 
 ## Build Variables
 

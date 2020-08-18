@@ -1,14 +1,8 @@
 const render = require(`./renderer`)
 
-// TODO: Properly handle context in the renderer
-// const SITE_ROOT = process.cwd()
-// const ctx = { root: SITE_ROOT }
-
-module.exports = async context => {
-  const stepAsMdx = context.steps[context.currentStep]
-
+module.exports = async (context, cb) => {
   try {
-    const result = await render(stepAsMdx)
+    const result = await render(context.recipe, cb, context)
     return result
   } catch (e) {
     throw e
