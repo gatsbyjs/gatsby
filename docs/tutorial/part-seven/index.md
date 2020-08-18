@@ -35,7 +35,7 @@ So, here's where you'll do that. In the root of your site, create a file named `
 
 ```javascript:title=gatsby-node.js
 exports.onCreateNode = ({ node }) => {
-  console.log(node.internal.type)
+  console.log(`Node created of type "${node.internal.type}"`)
 }
 ```
 
