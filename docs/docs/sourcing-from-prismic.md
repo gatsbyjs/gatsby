@@ -6,7 +6,7 @@ In this guide, you’ll set up a site using [Prismic](https://prismic.io/) and t
 Prismic is a Headless CMS with a web app for creating and publishing content: the “Writing Room” + a fully-fledged GraphQL API
 It’s suitable for marketers and developers as it offers features like a components-based page builder, image optimization, previewing, scheduling, content versioning, and multi-language support.
 
-In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC) provided by [LekoArts](https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
+In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC) provided by [LekoArts].(https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
 
 Interesting reads:
 
