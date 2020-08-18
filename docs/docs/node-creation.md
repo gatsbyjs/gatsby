@@ -26,7 +26,7 @@ All nodes in Gatsby are stored in a flat structure in the redux `nodes` namespac
 }
 ```
 
-An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. This has some implications on [child field inference](/docs/schema-gql-type/#child-fields-creation) in the Schema Generation phase.
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. This has some implications on [child field inference](/docs/schema-generation/#parent-children-relationships) in the Schema Generation phase.
 
 ### Explicitly recording a parent/child relationship
 
@@ -36,7 +36,7 @@ This does **not** automatically create a `parent` field on the child node. If a 
 
 ### Foreign Key reference (`___NODE`)
 
-We've established that child nodes are stored at the top level in redux, and are referenced via ids in their parent's `children` collection. The same mechanism drives foreign key relationships. Foreign key fields have a `___NODE` suffix on the field name. At query time, Gatsby will take the field's value as an ID, and search redux for a matching node. This is explained in more detail in [schema gqlTypes](/docs/schema-gql-type#foreign-key-reference-___node).
+We've established that child nodes are stored at the top level in redux, and are referenced via ids in their parent's `children` collection. The same mechanism drives foreign key relationships. Foreign key fields have a `___NODE` suffix on the field name. At query time, Gatsby will take the field's value as an ID, and search redux for a matching node. This is explained in more detail in [schema gqlTypes](/docs/schema-inference#foreign-key-reference-___node).
 
 ### Plain objects at creation time
 
@@ -53,7 +53,7 @@ Let's say you create the following node by passing it to `createNode`
 
 The value for `baz` is itself an object. That value's parent is the top level object. In this case, Gatsby simply saves the top level node as is to redux. It doesn't attempt to extract `baz` into its own node. It does however track the subobject's root NodeID using [Node Tracking](/docs/node-tracking/)
 
-During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-gql-type#plain-object-or-value-field).
+During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-inference#plain-object-or-value-field).
 
 ## Fresh/stale nodes
 

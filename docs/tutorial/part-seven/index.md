@@ -369,11 +369,11 @@ export const query = graphql`
             title
             date(formatString: "DD MMMM, YYYY")
           }
-          // highlight-start
+          # highlight-start
           fields {
             slug
           }
-          // highlight-end
+          # highlight-end
           excerpt
         }
       }
