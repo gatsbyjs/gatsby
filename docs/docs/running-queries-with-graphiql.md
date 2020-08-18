@@ -43,7 +43,7 @@ Read more [about the GraphiQL Explorer](/blog/2019-06-03-integrating-graphiql-ex
 
 ## Enable Refresh Content Button
 
-You can enable with the environment variable `ENABLE_GATSBY_REFRESH_ENDPOINT` a button "Refresh Data" to refresh your sourced content. See [Refreshing content](/docs/content-and-data/refreshing-content).
+You can enable with the environment variable `ENABLE_GATSBY_REFRESH_ENDPOINT` a button "Refresh Data" to refresh your sourced content. See [Refreshing Content](/docs/refreshing-content/).
 
 ## Other resources
 
