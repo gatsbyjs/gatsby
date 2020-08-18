@@ -9,7 +9,6 @@ It’s suitable for marketers and developers as it offers features like a compon
 In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC) provided by [LekoArts].(https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
 
 Interesting reads:
-
 - [Official Prismic documentation on Gatsby](https://prismic.io/docs/gatsby/getting-started/home).
 - [Sample Blog with Prismic & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
 - [Multi-language website example](https://user-guides.prismic.io/en/articles/3601217-multi-language-website-example-with-gatsby-js).
