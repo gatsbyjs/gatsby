@@ -12,7 +12,6 @@ Interesting reads:
 - [Official Prismic documentation on Gatsby](https://prismic.io/docs/gatsby/getting-started/home).
 - [Sample Blog with Prismic & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
 - [Multi-language website example](https://user-guides.prismic.io/en/articles/3601217-multi-language-website-example-with-gatsby-js).
-
 [Prismic Official documentation](https://prismic.io/docs).
 
 
