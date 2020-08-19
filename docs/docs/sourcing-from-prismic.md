@@ -6,12 +6,13 @@ In this guide, you’ll set up a site using [Prismic](https://prismic.io/) and t
 Prismic is a Headless CMS with a web app for creating and publishing content: the “Writing Room” + a fully-fledged GraphQL API
 It’s suitable for marketers and developers as it offers features like a components-based page builder, image optimization, previewing, scheduling, content versioning, and multi-language support.
 
-In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC) provided by [LekoArts].(https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
+In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC) provided by [LekoArts](https://www.youtube.com/channel/UCbxFBnrkEMExO_QX8tkJ76Q)  
 
 Interesting reads:
 - [Official Prismic documentation on Gatsby](https://prismic.io/docs/gatsby/getting-started/home).
 - [Sample Blog with Prismic & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
 - [Multi-language website example](https://user-guides.prismic.io/en/articles/3601217-multi-language-website-example-with-gatsby-js).
+- check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic).
 - [Prismic Official documentation](https://prismic.io/docs).
 
 
