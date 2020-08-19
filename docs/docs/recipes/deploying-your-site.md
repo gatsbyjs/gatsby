@@ -9,8 +9,8 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -47,9 +47,9 @@ gatsby build && gatsby serve
 ### Additional resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/preparing-for-deployment/)
-- Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
+- Learn about [performance optimization](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/performance.md)
+- Read about [other deployment related topics](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/preparing-for-deployment.md)
+- Check out the [deployment docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/deploying-and-hosting.md) for specific hosting platforms and how to deploy to them
 
 ## Deploying to Netlify
 
@@ -57,9 +57,9 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a single component `index.js`
 - The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -89,9 +89,9 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 ### Prerequisites
 
 - A [Vercel](https://vercel.com/signup) account
-- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a single component `index.js`
 - [Vercel CLI](https://vercel.com/download) package installed
-- [Gatsby CLI](/docs/gatsby-cli) installed
+- [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -113,7 +113,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 - An account on [Cloudflare](https://dash.cloudflare.com/sign-up)
 - A [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for \$5/month to enable the KV store, which is required to serve the Gatsby files.
-- A [Gatsby site](/docs/quick-start) set up with Gatsby's CLI
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) set up with Gatsby's CLI
 - [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/install/) installed globally (`npm i -g @cloudflare/wrangler`)
 
 ### Directions
@@ -129,7 +129,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 ### Additional resources
 
-- [Hosting on Cloudflare](/docs/deploying-to-cloudflare-workers)
+- [Hosting on Cloudflare](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/deploying-to-cloudflare-workers.md)
 
 ## Setting up Google Analytics
 
@@ -137,8 +137,8 @@ Use `gatsby-plugin-google-analytics` to track site activity and provide insights
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `gatsby-config.js` file and an `index.js` page
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 - A domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
 ### Verify the domain in search.google.com
