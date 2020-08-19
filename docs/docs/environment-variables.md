@@ -134,7 +134,7 @@ Gatsby also allows you to specify another environment variable when running the 
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
-This allows you to refresh your sourced content. See [Refreshing content](/docs/content-and-data/refreshing-content).
+This allows you to refresh your sourced content. See [Refreshing Content](/docs/refreshing-content/).
 
 ## Build Variables
 
