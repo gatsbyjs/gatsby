@@ -479,6 +479,11 @@ class Image extends React.Component {
     if (fluid) {
       const imageVariants = fluid
       const image = getCurrentSrcData(fluid)
+      const imageFileType = image.src.substring(
+        image.src.lastIndexOf(`.`) + 1,
+        image.src.length || image.src
+      )
+      const imageMediaType = imageMediaTypes[imageFileType]
 
       return (
         <Tag
@@ -562,6 +567,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                type={imageMediaType}
               />
             </picture>
           )}
@@ -587,6 +593,11 @@ class Image extends React.Component {
     if (fixed) {
       const imageVariants = fixed
       const image = getCurrentSrcData(fixed)
+      const imageFileType = image.src.substring(
+        image.src.lastIndexOf(`.`) + 1,
+        image.src.length || image.src
+      )
+      const imageMediaType = imageMediaTypes[imageFileType]
 
       const divStyle = {
         position: `relative`,
@@ -667,6 +678,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                type={imageMediaType}
               />
             </picture>
           )}
@@ -701,6 +713,16 @@ Image.defaultProps = {
   // We set it to `lazy` by default because it's best to default to a performant
   // setting and let the user "opt out" to `eager`
   loading: `lazy`,
+}
+
+const imageMediaTypes = {
+  apng: `image/apng`,
+  flif: `image/flif`,
+  gif: `image/gif`,
+  jpg: `image/jpg`,
+  jpeg: `image/jpg`,
+  png: `image/png`,
+  webp: `image/webp`,
 }
 
 const fixedObject = PropTypes.shape({
