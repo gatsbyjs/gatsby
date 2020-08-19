@@ -233,7 +233,7 @@ You have context about the text as well as what depth the heading is (for instan
 
 With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
-```js
+```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
 const toString = require("mdast-util-to-string")
 
@@ -266,9 +266,9 @@ A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util
 
 ## Using asynchronous behavior
 
-Gatsby supports the usage of asynchronous behavior in plugins, and gatsby-transformer-remark`uses [unified](https://github.com/unifiedjs/unified) under the hood, so in this case the`gatsby-remark-purple-headers`transformer can be converted to asynchronous by adding the`async` keyword to the function declaration.
+Gatsby supports the usage of asynchronous behavior in plugins, and gatsby-transformer-remark`uses [unified](https://github.com/unifiedjs/unified) under the hood. The following example shows how the`gatsby-remark-purple-headers`transformer can be converted to asynchronous by adding the`async` keyword to the function declaration.
 
-```js
+```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
 const toString = require("mdast-util-to-string")
 
