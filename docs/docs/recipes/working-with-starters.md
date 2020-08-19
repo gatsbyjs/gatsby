@@ -3,13 +3,13 @@ title: "Recipes: Working with Starters"
 tableOfContentsDepth: 1
 ---
 
-[Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
+[Starters](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/starters.md) are boilerplate Gatsby sites maintained officially, or by the community.
 
 ## Using a starter
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -32,7 +32,7 @@ gatsby develop
 
 ### Additional resources
 
-- Follow a [more detailed guide](/docs/starters/) on using Gatsby starters.
-- Learn how to use the [Gatsby CLI](/docs/gatsby-cli) tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
+- Follow a [more detailed guide](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/starters.md) on using Gatsby starters.
+- Learn how to use the [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
 - Browse the [Starter Library](/starters/?v=2)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)

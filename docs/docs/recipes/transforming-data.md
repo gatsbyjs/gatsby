@@ -60,7 +60,7 @@ export const query = graphql`
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `gatsby-config.js` file and an `index.js` page
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
 - A source plugin installed, such as `gatsby-source-filesystem`
 - An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src/images` folder
@@ -143,6 +143,6 @@ export default function Home() {
 
 ### Additional resources
 
-- [API docs, including grayscale and duotone query tips](/docs/gatsby-image/#shared-query-parameters)
-- [Gatsby Image docs](/docs/gatsby-image/)
+- [API docs, including grayscale and duotone query tips](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image/#shared-query-parameters)
+- [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md)
 - [Image processing examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)

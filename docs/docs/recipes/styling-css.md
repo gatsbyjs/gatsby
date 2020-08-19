@@ -9,7 +9,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 ### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- An existing [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with an index page component
 - A `gatsby-browser.js` file
 
 ### Directions
@@ -40,13 +40,13 @@ import "./src/styles/global.css"
 
 ### Additional resources
 
-- More on [adding global styles without a layout component](/docs/global-css/#adding-global-styles-without-a-layout-component)
+- More on [adding global styles without a layout component](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/global-css/#adding-global-styles-without-a-layout-component)
 
 ## Using global styles in a layout component
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/) with an index page component
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with an index page component
 
 ### Directions
 
@@ -88,14 +88,14 @@ export default function Home() {
 
 ### Additional resources
 
-- [Standard Styling with Global CSS Files](/docs/global-css/)
+- [Standard Styling with Global CSS Files](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/global-cs.md)
 - [More about layout components](/tutorial/part-three)
 
 ## Using Styled Components
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/) with an index page component
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with an index page component
 - [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
 
 ### Directions
@@ -168,14 +168,14 @@ export default function UsersList() {
 
 ### Additional resources
 
-- [More on Using Styled Components](/docs/styled-components/)
+- [More on Using Styled Components](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/styled-components.md)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
 ## Using CSS Modules
 
 ### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- An existing [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with an index page component
 
 ### Directions
 
@@ -226,7 +226,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/).
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md).
 
 ### Directions
 
@@ -240,7 +240,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 plugins: [`gatsby-plugin-sass`],
 ```
 
-3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes/#2-styling-with-css)
 
 ```css:title=styles.scss
 $font-stack: Helvetica, sans-serif;
@@ -278,7 +278,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - A font file: `.woff2`, `.ttf`, etc.
 
 ### Directions
@@ -308,7 +308,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Additional resources
 
-- More on [importing assets into files](/docs/importing-assets-into-files/)
+- More on [importing assets into files](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/importing-assets-into-files.md)
 
 ## Using Emotion
 
@@ -316,7 +316,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 
 ### Directions
 
@@ -383,7 +383,7 @@ export default function EmotionSample() {
 
 ### Additional resources
 
-- [Using Emotion in Gatsby](/docs/emotion/)
+- [Using Emotion in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/emotion.md)
 - [Emotion website](https://emotion.sh)
 - [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
 
@@ -393,8 +393,8 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 - Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
 
 ### Directions
@@ -421,7 +421,7 @@ _NOTE: So for the above example, the relevant CSS declaration would be `font-fam
 
 ### Additional resources
 
-- [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
+- [Typography.js](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/typography-js.md) - Another option for using Google fonts on a Gatsby site
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
 - [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
 
@@ -431,8 +431,8 @@ Using [Font Awesome](https://fontawesome.com/) gives you access to thousands of 
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
-- A [Gatsby site](/docs/quick-start)
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 
 ### Directions
 

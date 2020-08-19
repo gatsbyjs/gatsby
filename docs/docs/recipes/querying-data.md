@@ -51,13 +51,13 @@ export default IndexPage
 
 ### Additional resources
 
-- [GraphQL and Gatsby](/docs/graphql/): understanding the expected shape of your data
-- [More on querying data in pages with GraphQL](/docs/page-query/)
+- [GraphQL and Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql.md): understanding the expected shape of your data
+- [More on querying data in pages with GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/page-query.md)
 - [MDN on Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) like the ones used in GraphQL
 
 ## Querying data with the StaticQuery Component
 
-`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/), such as a header, navigation, or any other child component.
+`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/static-query.md), such as a header, navigation, or any other child component.
 
 ### Directions
 
@@ -92,7 +92,7 @@ const NonPageComponent = () => (
 export default NonPageComponent
 ```
 
-2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components) by importing it into a larger page of JSX components and HTML markup.
+2. You can now use this component as you would [any other component](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/building-with-components#non-page-components) by importing it into a larger page of JSX components and HTML markup.
 
 ## Querying data with the useStaticQuery hook
 
@@ -142,20 +142,20 @@ export default NonPageComponent
 
 ### Additional resources
 
-- [More on Static Query for querying data in components](/docs/static-query/)
-- [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
-- [More on the useStaticQuery hook](/docs/use-static-query/)
-- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
+- [More on Static Query for querying data in components](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/static-query.md)
+- [The difference between a static query and a page query](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/static-query/#how-staticquery-differs-from-page-query)
+- [More on the useStaticQuery hook](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/use-static-query.md)
+- [Visualize your data with GraphiQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/introducing-graphiq.md)
 
 ## Limiting with GraphQL
 
-When querying for data with GraphQL, you can limit the number of results returned with a specific number. This is helpful if you only need a few pieces of data or need to [paginate data](/docs/adding-pagination/).
+When querying for data with GraphQL, you can limit the number of results returned with a specific number. This is helpful if you only need a few pieces of data or need to [paginate data](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/adding-pagination.md).
 
 To limit data, you'll need a Gatsby site with some nodes in the GraphQL data layer. All sites have some nodes like `allSitePage` and `sitePage` created automatically: more can be added by installing source plugins like `gatsby-source-filesystem` in `gatsby-config.js`.
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 
 ### Directions
 
@@ -195,8 +195,8 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 
 ### Additional resources
 
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
-- [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
+- Learn about [nodes in Gatsby's GraphQL data API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/node-interface.md)
+- [Gatsby GraphQL reference for limiting](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-reference/#limit)
 - Live example:
 
 <iframe
@@ -214,7 +214,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - Queryable fields prefixed with `all`, e.g. `allSitePage`
 
 ### Directions
@@ -256,8 +256,8 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 
 ### Additional resources
 
-- [Gatsby GraphQL reference for sorting](/docs/graphql-reference/#sort)
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
+- [Gatsby GraphQL reference for sorting](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-reference/#sort)
+- Learn about [nodes in Gatsby's GraphQL data API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/node-interface.md)
 - Live example:
 
 <iframe
@@ -275,7 +275,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - Queryable fields prefixed with `all`, e.g. `allSitePage` or `allMarkdownRemark`
 
 ### Directions
@@ -320,9 +320,9 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 ### Additional resources
 
-- [Gatsby GraphQL reference for filtering](/docs/graphql-reference/#filter)
-- [Complete list of possible operators](/docs/graphql-reference/#complete-list-of-possible-operators)
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
+- [Gatsby GraphQL reference for filtering](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-reference/#filter)
+- [Complete list of possible operators](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-reference/#complete-list-of-possible-operators)
+- Learn about [nodes in Gatsby's GraphQL data API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/node-interface.md)
 - Live example:
 
 <iframe
@@ -376,7 +376,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 
 ### Additional resources
 
-- [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
+- [Gatsby GraphQL reference for aliasing](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-reference/#aliasing)
 - Live example:
 
 <iframe
@@ -428,8 +428,8 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 ### Additional resources
 
 - [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
-- [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
-- [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
+- [Gatsby GraphQL reference for fragments](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-reference/#fragments)
+- [Gatsby image fragments](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## Querying data client-side with `fetch`
@@ -438,7 +438,7 @@ Data doesn't only have to be queried at build time and remain solely static. You
 
 ### Prerequisites
 
-- [A Gatsby Site](/docs/quick-start/)
+- [A Gatsby Site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - A page component, such as `index.js`
 
 ### Directions
@@ -481,5 +481,5 @@ export default IndexPage
 
 ### Additional resources
 
-- Guide on [client-data fetching](/docs/data-fetching/)
+- Guide on [client-data fetching](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/data-fetching.md)
 - Live [example site](https://gatsby-data-fetching.netlify.app/) using this example

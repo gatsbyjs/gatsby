@@ -33,9 +33,9 @@ Some notable files and their definitions:
 
 ### Additional resources
 
-- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/gatsby-project-structure/)
-- For common commands, check out the [Gatsby CLI docs](/docs/gatsby-cli)
-- Check out the [Gatsby Cheat Sheet](/docs/cheat-sheet/) for downloadable info at a glance
+- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-project-structure.md)
+- For common commands, check out the [Gatsby CLI docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md)
+- Check out the [Gatsby Cheat Sheet](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/cheat-sheet.md) for downloadable info at a glance
 
 ## Creating pages automatically
 
@@ -44,8 +44,8 @@ For example, components at `src/pages/index.js` and `src/pages/about.js` would a
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -70,7 +70,7 @@ export default AboutPage
 
 ### Additional resources
 
-- [Creating and modifying pages](/docs/creating-and-modifying-pages/)
+- [Creating and modifying pages](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/creating-and-modifying-pages.md)
 
 ## Linking between pages
 
@@ -79,7 +79,7 @@ Routing for links internal to your Gatsby site relies on the `<Link />` componen
 ### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
-- The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) to run `gatsby develop`
 
 ### Directions
 
@@ -103,12 +103,12 @@ export default function Home() {
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
-> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](/docs/gatsby-link/).
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-link.md).
 
 ### Additional resources
 
-- [Linking Between Pages guide](/docs/linking-between-pages)
-- [Gatsby Link API](/docs/gatsby-link)
+- [Linking Between Pages guide](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/linking-between-pages.md)
+- [Gatsby Link API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-link.md)
 
 ## Creating a layout component
 
@@ -116,7 +116,7 @@ It's common to wrap pages with a React layout component, which makes it possible
 
 ### Prerequisites
 
-- [A Gatsby Site](/docs/quick-start/)
+- [A Gatsby Site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 
 ### Directions
 
@@ -154,7 +154,7 @@ export default function Home() {
 ### Additional resources
 
 - Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
-- Styling with [Layout Components](/docs/layout-components/)
+- Styling with [Layout Components](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/layout-components.md)
 
 ## Creating pages programmatically with createPage
 
@@ -162,7 +162,7 @@ You can create pages programmatically in the `gatsby-node.js` file with helper m
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - A `gatsby-node.js` file
 
 ### Directions
@@ -245,5 +245,5 @@ export default function DogTemplate({ pageContext: { dog } }) {
 ### Additional resources
 
 - Tutorial section on [programmatically creating pages from data](/tutorial/part-seven/)
-- Reference guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- Reference guide on [using Gatsby without GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-gatsby-without-graphql.md)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage) for this recipe

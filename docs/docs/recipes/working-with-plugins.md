@@ -3,7 +3,7 @@ title: "Recipes: Working with Plugins"
 tableOfContentsDepth: 1
 ---
 
-A [Gatsby plugin](/docs/what-is-a-plugin/) abstracts Gatsby APIs into an installable package. This means that modular chunks of Gatsby functionality aren’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can add external data, transform data, add third-party services (e.g. Google Analytics, Stripe), and more.
+A [Gatsby plugin](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/what-is-a-plugin.md) abstracts Gatsby APIs into an installable package. This means that modular chunks of Gatsby functionality aren’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can add external data, transform data, add third-party services (e.g. Google Analytics, Stripe), and more.
 
 ## Using a plugin
 
@@ -18,7 +18,7 @@ Found a plugin you'd like to use in your project? Awesome! You can configure it 
 
 ### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` file
+- An existing [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `gatsby-config.js` file
 
 ### Directions
 
@@ -52,7 +52,7 @@ _The instructions found in the README of the plugin you're using can you help yo
 
 ### Additional resources
 
-- Learn more about configuring options or using default options in the [Using a Plugin in Your Site](/docs/using-a-plugin-in-your-site/) guide.
+- Learn more about configuring options or using default options in the [Using a Plugin in Your Site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-a-plugin-in-your-site.md) guide.
 - See an example Gatsby site using this configuration in [the repo for the default Gatsby starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/gatsby-config.js).
 
 ## Creating a new plugin using a plugin starter
@@ -66,7 +66,7 @@ If you want to create your own plugin you can get started with the Gatsby plugin
 
 ### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` file
+- An existing [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `gatsby-config.js` file
 
 ### Directions
 
@@ -113,8 +113,8 @@ success onPreInit - 0.016s
 ...
 ```
 
-4. Now you can implement [browser](/docs/browser-apis/), [server-side rendering](/docs/ssr-apis/), or [node APIs](/docs/node-apis/) and your site will run them each time it loads your plugin!
+4. Now you can implement [browser](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/browser-apis.md), [server-side rendering](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/ssr-apis.md), or [node APIs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/node-apis.md) and your site will run them each time it loads your plugin!
 
 ### Additional resources
 
-- Read about creating and loading your own plugins in development in the [Creating a Local Plugin](/docs/creating-a-local-plugin/) guide
+- Read about creating and loading your own plugins in development in the [Creating a Local Plugin](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/creating-a-local-plugin.md) guide

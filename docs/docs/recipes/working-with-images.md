@@ -16,7 +16,7 @@ Images can be imported right into a JavaScript module with webpack. This process
 
 ### Prerequisites
 
-- A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
+- A [Gatsby Site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `.js` file exporting a React component
 - an image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src` folder
 
 ### Directions
@@ -49,7 +49,7 @@ export default function Home() {
 ### Additional resources
 
 - [Example repo importing an image with webpack](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-webpack-image)
-- [More on all image techniques in Gatsby](/docs/images-and-files/)
+- [More on all image techniques in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/images-and-files.md)
 
 ## Reference an image from the `static` folder
 
@@ -64,7 +64,7 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 
 ### Prerequisites
 
-- A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
+- A [Gatsby Site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `.js` file exporting a React component
 - An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `static` folder
 
 ### Directions
@@ -98,8 +98,8 @@ export default function Home() {
 ### Additional resources
 
 - [Example repo referencing an image from the static folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-static-image)
-- [Using the Static Folder](/docs/static-folder/)
-- [More on all image techniques in Gatsby](/docs/images-and-files/)
+- [Using the Static Folder](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/static-folder.md)
+- [More on all image techniques in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/images-and-files.md)
 
 ## Optimizing and querying local images with gatsby-image
 
@@ -125,7 +125,7 @@ import Img from "gatsby-image" // to take image data and render it
 
 Choose any of the following options or a combination of them.
 
-a. a single image queried by its file [path](/docs/content-and-data/) (Example: `images/corgi.jpg`)
+a. a single image queried by its file [path](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/content-and-data.md) (Example: `images/corgi.jpg`)
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -149,7 +149,7 @@ return (
 )
 ```
 
-b. using a [GraphQL fragment](/docs/using-fragments/), to query for the necessary fields more tersely
+b. using a [GraphQL fragment](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-fragments.md), to query for the necessary fields more tersely
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -297,9 +297,9 @@ return (
 ### Additional resources
 
 - [Example repository illustrating these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
-- [Gatsby Image API](/docs/gatsby-image/)
-- [Using Gatsby Image](/docs/using-gatsby-image)
-- [More on working with images in Gatsby](/docs/working-with-images/)
+- [Gatsby Image API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md)
+- [Using Gatsby Image](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-gatsby-image.md)
+- [More on working with images in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/working-with-images.md)
 - [Free egghead.io videos explaining these steps](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e)
 
 ## Optimizing and querying images in post frontmatter with gatsby-image
@@ -313,7 +313,7 @@ To inline images in markdown (using the `![]()` syntax), consider using a plugin
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
 - [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 - Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
-- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+- [Pages created](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/creating-and-modifying-pages.md) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
 
 ### Directions
 
@@ -350,7 +350,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-3. Now, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component, write a [pageQuery](/docs/page-query/) to get image data based on the passed in `slug` and pass that data to the `<Img />` component:
+3. Now, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component, write a [pageQuery](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/page-query.md) to get image data based on the passed in `slug` and pass that data to the `<Img />` component:
 
 ```jsx:title=markdown-layout.jsx
 import React from "react"
@@ -396,7 +396,7 @@ export const pageQuery = graphql`
 ### Additional resources
 
 - [Example repository using this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
-- [Featured images with frontmatter](/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
-- [Gatsby Image API](/docs/gatsby-image/)
-- [Using Gatsby Image](/docs/using-gatsby-image)
-- [More on working with images in Gatsby](/docs/working-with-images/)
+- [Featured images with frontmatter](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
+- [Gatsby Image API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md)
+- [Using Gatsby Image](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-gatsby-image.md)
+- [More on working with images in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/working-with-images.md)

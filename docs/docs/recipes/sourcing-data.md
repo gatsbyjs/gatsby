@@ -7,7 +7,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## Adding data to GraphQL
 
-Gatsby's [GraphQL data layer](/docs/graphql-concepts/) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
+Gatsby's [GraphQL data layer](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-concepts.md) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
 
 This recipe shows you how to add custom data using `createNode()`.
 
@@ -41,7 +41,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 
    > _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
 
-3. Query the data (in [GraphiQL](/docs/running-queries-with-graphiql/) or in your components).
+3. Query the data (in [GraphiQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/running-queries-with-graphiql.md) or in your components).
 
 ```graphql
 query MyPokemonQuery {
@@ -60,18 +60,18 @@ query MyPokemonQuery {
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [source plugin tutorial](/tutorial/source-plugin-tutorial/)
-- The createNode function [documentation](/docs/actions/#createNode)
+- The createNode function [documentation](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/actions/#createNode)
 
 ## Sourcing Markdown data for blog posts and pages with GraphQL
 
-You can source Markdown data and use Gatsby's [`createPages` API](/docs/actions/#createPage) to create pages dynamically.
+You can source Markdown data and use Gatsby's [`createPages` API](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/actions/#createPage) to create pages dynamically.
 
 This recipe shows how to create pages from Markdown files on your local filesystem using Gatsby's GraphQL data layer.
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `gatsby-config.js` file
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 - The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
 - The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
 - A `gatsby-node.js` file
@@ -203,16 +203,16 @@ export const pageQuery = graphql`
 ### Additional resources
 
 - [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
-- [Creating and modifying pages](/docs/creating-and-modifying-pages/)
-- [Adding Markdown pages](/docs/adding-markdown-pages/)
-- [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
+- [Creating and modifying pages](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/creating-and-modifying-pages.md)
+- [Adding Markdown pages](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/adding-markdown-pages.md)
+- [Guide to creating pages from data programmatically](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/programmatically-create-pages-from-data.md)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
 
 ## Sourcing from WordPress
 
 ### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
+- An existing [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md) with a `gatsby-config.js` and `gatsby-node.js` file
 - A WordPress instance, either self-hosted or on Wordpress.com
 
 ### Directions
@@ -333,14 +333,14 @@ The dynamic pages created above in `gatsby-node.js` have unique paths for naviga
 ### Additional resources
 
 - [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
-- More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
+- More on [Sourcing from WordPress](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/sourcing-from-wordpress.md)
 - [Live example on Sourcing from WordPress](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ## Sourcing data from Contentful
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - A [Contentful account](https://www.contentful.com/)
 - The [Contentful CLI](https://www.npmjs.com/package/contentful-cli) installed
 
@@ -380,7 +380,7 @@ contentful space accesstoken create -s '<space ID>' --name 'Example token'
 npm install --save gatsby-source-contentful
 ```
 
-6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
+6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/environment-variables.md) to store your space ID and token for security purposes.
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -401,7 +401,7 @@ plugins: [
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
 
-8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+8. Query data with the [GraphiQL editor](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/introducing-graphiql.md) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![The GraphQL interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
@@ -456,26 +456,26 @@ export const query = graphql`
 `
 ```
 
-To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](/docs/sourcing-from-contentful/) and additional resources below.
+To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/sourcing-from-contentful.md) and additional resources below.
 
 ### Additional resources
 
 - [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
-- [More on Sourcing from Contentful](/docs/sourcing-from-contentful/)
+- [More on Sourcing from Contentful](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/sourcing-from-contentfu.md/)
 - [Contentful source plugin](/packages/gatsby-source-contentful/)
 - [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
 - [Example repository for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-contentful)
 
 ## Pulling data from an external source and creating pages without GraphQL
 
-You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql/). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
+You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/why-gatsby-uses-graphql.md). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
 
 In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
 
 ### Prerequisites
 
 - A Gatsby Site with a `gatsby-node.js` file
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 - The [axios](https://www.npmjs.com/package/axios) package installed through npm
 
 ### Directions
@@ -534,14 +534,14 @@ export default function AllPokemon({ pageContext: { allPokemon } }) {
 ### Additional resources
 
 - [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
-- More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- When and how to [query data with GraphQL](/docs/graphql-concepts/) for more complex Gatsby sites
+- More on using unstructured data in [Using Gatsby without GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-gatsby-without-graphql.md)
+- When and how to [query data with GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/graphql-concepts.md) for more complex Gatsby sites
 
 ## Sourcing content from Drupal
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
+- A [Gatsby site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/quick-start.md)
 - A [Drupal](http://drupal.org) site
 - The [JSON:API module](https://www.drupal.org/project/jsonapi) installed and enabled on the Drupal site
 
@@ -632,5 +632,5 @@ export const query = graphql`
 ### Additional Resources
 
 - [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
-- [More on sourcing from Drupal](/docs/sourcing-from-drupal)
+- [More on sourcing from Drupal](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/sourcing-from-drupal.md)
 - [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)

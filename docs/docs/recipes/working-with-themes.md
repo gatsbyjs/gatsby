@@ -3,7 +3,7 @@ title: "Recipes: Working with Themes"
 tableOfContentsDepth: 1
 ---
 
-A [Gatsby theme](/docs/themes/what-are-gatsby-themes) abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
+A [Gatsby theme](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/themes/what-are-gatsby-themes.md) abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
 ## Creating a new site using a theme
 
@@ -13,7 +13,7 @@ Found a theme you'd like to use on your project? Awesome! You can configure it f
 
 ### Prerequisites
 
-- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -58,9 +58,9 @@ module.exports = {
 
 ### Additional resources
 
-- To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing.](/docs/themes/shadowing/)
+- To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing.](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/themes/shadowing.md)
 
-- You can also [use multiple themes](/docs/themes/using-multiple-gatsby-themes/) on a project.
+- You can also [use multiple themes](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/themes/using-multiple-gatsby-themes.md) on a project.
 
 ## Creating a new site using a theme starter
 
@@ -68,7 +68,7 @@ Creating a site based on a starter that configures a theme follows the same proc
 
 ### Prerequisites
 
-- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 
 ### Directions
 
@@ -87,7 +87,7 @@ gatsby develop
 
 ### Additional resources
 
-- Learn how to use an existing Gatsby theme in the [shorter conceptual guide](/docs/themes/using-a-gatsby-theme) or the more detailed [step-by-step tutorial](/tutorial/using-a-theme).
+- Learn how to use an existing Gatsby theme in the [shorter conceptual guide](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/themes/using-a-gatsby-theme.md) or the more detailed [step-by-step tutorial](/tutorial/using-a-theme).
 
 ## Building a new theme
 
@@ -98,7 +98,7 @@ gatsby develop
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-cli.md) installed
 - [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
 
 ### Directions
@@ -117,5 +117,5 @@ yarn workspace example develop
 
 ### Additional resources
 
-- Follow a [more detailed guide](/docs/themes/building-themes/) on using the Gatsby theme workspace starter.
+- Follow a [more detailed guide](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/themes/building-themes.md) on using the Gatsby theme workspace starter.
 - Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](/tutorial/building-a-theme).
