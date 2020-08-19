@@ -342,7 +342,9 @@ module.exports = {
             headers.splice(1, 1)
           }
 
-          return headers
+          return headers.filter(
+            header => !header.toLowerCase().includes(`link:`)
+          )
         },
       },
     },
