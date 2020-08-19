@@ -17,7 +17,7 @@ GraphiQL is the GraphQL integrated development environment (IDE). It's a powerfu
 You can access it when your site's development server is running—normally at `http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4" />
+  <source type="video/mp4" src="/static/graphiql-explore.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
