@@ -18,8 +18,10 @@ export async function updateSiteMetadata(
   merge = true
 ): Promise<void> {
   if (merge) {
-    const oldMetadata = (await getSiteMetadata(metadata.sitePath)) || {}
-    metadata = { ...oldMetadata, ...metadata }
+    const oldMetadata = await getSiteMetadata(metadata.sitePath)
+    if (oldMetadata) {
+      metadata = { ...oldMetadata, ...metadata }
+    }
   }
 
   return createServiceLock(
