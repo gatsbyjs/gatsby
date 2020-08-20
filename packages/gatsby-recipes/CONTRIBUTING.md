@@ -7,6 +7,7 @@ These docs are intended to serve as an introduction to Recipes, its motivations,
 - [ ] Document the various paths for testing
 - [ ] Plug recipe machine into xstate visualizer
 - [ ] Define context in resources
+- [ ] Move recipe asides on tech debt into issues
 
 ## Table of contents
 
@@ -145,6 +146,8 @@ The [renderer](#renderer) can be thought of as a runtime loop on both the client
 ![IMG_2969](https://user-images.githubusercontent.com/1424573/90547170-4fbe7c00-e148-11ea-860f-4cc5f394c296.jpeg)
 
 #### Generating types
+
+Each resource defines its own schema which is what we use to generate GraphQL types for the API. We use a forked version of `joi-to-graphql` to do this for us. It's a little bit clunky because the shape that the library returns is a bit different than what we want for a code-first GraphQL definition so we have to massage it into place.
 
 ##### An aside on generating types
 
