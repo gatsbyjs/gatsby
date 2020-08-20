@@ -165,7 +165,7 @@ function getIO() {
   return io
 }
 
-function generateImageSources(imageVariants) {
+function generateImageSources(imageVariants, imageMediaType) {
   return imageVariants.map(({ src, srcSet, srcSetWebp, media, sizes }) => (
     <React.Fragment key={src}>
       {srcSetWebp && (
@@ -176,7 +176,12 @@ function generateImageSources(imageVariants) {
           sizes={sizes}
         />
       )}
-      <source media={media} srcSet={srcSet} sizes={sizes} />
+      <source
+        type={imageMediaType}
+        media={media}
+        srcSet={srcSet}
+        sizes={sizes}
+      />
     </React.Fragment>
   ))
 }
@@ -552,7 +557,7 @@ class Image extends React.Component {
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {generateImageSources(imageVariants)}
+              {generateImageSources(imageVariants, imageMediaType)}
               <Img
                 alt={alt}
                 title={title}
@@ -567,7 +572,6 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
-                type={imageMediaType}
               />
             </picture>
           )}
@@ -661,7 +665,7 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {generateImageSources(imageVariants)}
+              {generateImageSources(imageVariants, imageMediaType)}
               <Img
                 alt={alt}
                 title={title}
@@ -678,7 +682,6 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
-                type={imageMediaType}
               />
             </picture>
           )}
