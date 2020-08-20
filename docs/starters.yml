@@ -7447,3 +7447,16 @@
     - SEO friendly components
     - Prebuilt events calendar
     - Material UI
+- url: https://tail-story.netlify.app/
+  repo: https://github.com/btahir/tail-story
+  description: Gatsby Tailwind + Firebase + Stripe Starter
+  tags:
+    - Stripe
+    - Firebase
+    - Netlify
+    - Styling:Tailwind
+  features:
+    - Stripe Customer Portal Integration
+    - Firebase Auth
+    - Subscription Management
+    - Progressive Web App
