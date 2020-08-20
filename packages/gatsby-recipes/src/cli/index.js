@@ -381,8 +381,8 @@ export default async ({
 
       // eslint-disable-next-line
       const [_, createOperation] = useMutation(`
-        mutation ($recipePath: String!, $projectRoot: String!) {
-          createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
+        mutation ($recipePath: String!, $projectRoot: String!, $isDevelopMode: Boolean!) {
+          createOperation(recipePath: $recipePath, projectRoot: $projectRoot, watchChanges: $isDevelopMode)
         }
       `)
       // eslint-disable-next-line
@@ -409,6 +409,7 @@ export default async ({
             await createOperation({
               recipePath: localRecipe,
               projectRoot,
+              isDevelopMode,
             })
           } catch (e) {
             console.log(`error creating operation`, e)
@@ -445,6 +446,7 @@ export default async ({
                   await createOperation({
                     recipePath: recipeItem.value,
                     projectRoot,
+                    isDevelopMode: false,
                   })
                 } catch (e) {
                   console.log(`error creating operation`, e)
@@ -474,14 +476,25 @@ export default async ({
       }
 
       const GeneralError = ({ state }) => {
-        if (state.context?.error?.error) {
+        let errors = []
+        if (state.context.error) {
+          errors = Array.isArray(state.context.error.error)
+            ? state.context.error.error
+            : [state.context.error.error]
+        } else {
+          // Errors are on a plan.
+          errors = state.context.plan?.filter(p => p.error)
+        }
+        if (errors.length > 0) {
           return (
             <>
               <Text bold>The recipe has an error:</Text>
               <Text>{`\n`}</Text>
-              <Text backgroundColor="#C41E3A" color="white">
-                {state.context.error.error}
-              </Text>
+              {errors.map((error, i) => (
+                <Text key={i} backgroundColor="#C41E3A" color="white">
+                  {error.error}
+                </Text>
+              ))}
             </>
           )
         } else return null
