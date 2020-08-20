@@ -35,7 +35,7 @@ const {
   internalExtensionNames,
 } = require(`./extensions`)
 import { getPagination } from "./types/pagination"
-const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
+import { getSortInput, SORTABLE_ENUM } from "./types/sort"
 import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
 import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
 

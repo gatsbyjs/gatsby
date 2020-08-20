@@ -19,7 +19,7 @@ export async function createPagesFromCollectionBuilder(
   reporter: Reporter
 ): Promise<void> {
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
-    watchCollectionBuilder(absolutePath, ``, [], actions, () =>
+    watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
       createPagesFromCollectionBuilder(
         filePath,
         absolutePath,
@@ -32,11 +32,11 @@ export async function createPagesFromCollectionBuilder(
   }
 
   // 1. Query for the data for the collection to generate pages
-  const queryString = collectionExtractQueryString(absolutePath)
+  const queryString = collectionExtractQueryString(absolutePath, reporter)
 
   // 1.a  If the query string is not findable, we can't move on. So we stop and watch
   if (queryString === null) {
-    watchCollectionBuilder(absolutePath, ``, [], actions, () =>
+    watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
       createPagesFromCollectionBuilder(
         filePath,
         absolutePath,
@@ -55,7 +55,7 @@ export async function createPagesFromCollectionBuilder(
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     reporter.error(
-      `Tried to create pages from the collection builder.
+      `PageCreator: Tried to create pages from the collection builder.
 Unfortunately, the query came back empty. There may be an error in your query.
 
 file: ${absolutePath}
@@ -63,14 +63,20 @@ file: ${absolutePath}
 ${errors.map(error => error.message).join(`\n`)}`.trim()
     )
 
-    watchCollectionBuilder(absolutePath, queryString, [], actions, () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter
-      )
+    watchCollectionBuilder(
+      absolutePath,
+      queryString,
+      [],
+      actions,
+      reporter,
+      () =>
+        createPagesFromCollectionBuilder(
+          filePath,
+          absolutePath,
+          actions,
+          graphql,
+          reporter
+        )
     )
 
     return
@@ -84,7 +90,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
 
   if (nodes) {
     reporter.info(
-      `   Creating ${nodes.length} page${
+      `   PageCreator: Creating ${nodes.length} page${
         nodes.length > 1 ? `s` : ``
       } from ${filePath}`
     )
@@ -94,7 +100,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths = nodes.map((node: Record<string, object>) => {
     // URL path for the component and node
-    const path = createPath(derivePath(filePath, node))
+    const path = createPath(derivePath(filePath, node, reporter))
     // Params is supplied to the FE component on props.params
     const params = getCollectionRouteParams(createPath(filePath), path)
     // nodeParams is fed to the graphql query for the component
@@ -115,13 +121,19 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
     return path
   })
 
-  watchCollectionBuilder(absolutePath, queryString, paths, actions, () =>
-    createPagesFromCollectionBuilder(
-      filePath,
-      absolutePath,
-      actions,
-      graphql,
-      reporter
-    )
+  watchCollectionBuilder(
+    absolutePath,
+    queryString,
+    paths,
+    actions,
+    reporter,
+    () =>
+      createPagesFromCollectionBuilder(
+        filePath,
+        absolutePath,
+        actions,
+        graphql,
+        reporter
+      )
   )
 }
