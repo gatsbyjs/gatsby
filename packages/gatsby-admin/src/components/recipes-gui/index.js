@@ -20,9 +20,6 @@ import Step from "./recipe-step"
 import { components, removeJsx, log } from "./utils"
 import ResourceMessage from "./resource-message"
 
-//TODO: We need to be able to grab this dynamically
-// const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
-
 const graphqlPort = 50400
 
 const API_ENDPOINT = `http://localhost:${graphqlPort}`
