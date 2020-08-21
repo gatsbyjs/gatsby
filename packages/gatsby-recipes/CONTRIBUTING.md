@@ -4,8 +4,6 @@ These docs are intended to serve as an introduction to Recipes, its motivations,
 
 ## TODO
 
-- [ ] Document the various paths for testing
-- [ ] Plug recipe machine into xstate visualizer
 - [ ] Define context in resources
 - [ ] Move recipe asides on tech debt into issues
 
@@ -15,9 +13,14 @@ These docs are intended to serve as an introduction to Recipes, its motivations,
   - [Goals](#goals)
   - [Example Recipe](#example-recipe)
 - [Setting up a development environment](#setting-up-a-development-environment)
+  - [Running the unit tests](#running-the-unit-tests)
+  - [Testing and extending providers/resources](#testing-and-extending-providers-resources)
+  - [Using gatsby-dev-cli](#using-gatsby-dev-cli)
+  - [Running with Gatsby Admin](#running-with-gatsby-admin)
+  - [Debugging your development environment](#debugging-your-development-environment)
 - [Architecture](#architecture)
   - [GraphQL API](#graphql-api)
-    - [Schema](#schema))
+    - [Schema](#schema)
     - [Subscriptions](#subscriptions)
     - [Generating types](#generating-types)
   - [State machine](#state-machine)
@@ -87,13 +90,23 @@ This example will be used throughout this document as an illustration tool.
 
 First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/).
 
+### Running the unit tests
+
+```shell
+yarn jest packages/gatsby-recipes
+```
+
+### Testing and extending providers/resources
+
 If you want to fix a bug in a resource or extend it in some way, typically you’ll be working against the tests for that resource.
 
 In your terminal, start a jest watch process against the resource you’re working on e.g. for GatsbyPlugin:
 
 ```shell
-yarn jest packages/gatsby-recipes --testPathPattern "src/.*plugin.test" --watch
+yarn jest packages/gatsby-recipes --testPathPattern "providers" --watch
 ```
+
+### Using gatsby-dev-cli
 
 You can create test recipes that you run in a test site. You’ll need to [use `gatsby-dev-cli` for this.](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes).
 
@@ -109,11 +122,27 @@ Then, open up Chrome and click the node icon in dev tools.
 
 To see log output from the Recipes graphql server, start the Recipes API in one terminal `node node_modules/gatsby-recipes/dist/graphql-server/server.js` and then in another terminal run your recipe with `RECIPES_DEV_MODE=true` set as an env variable.
 
+### Running with Gatsby Admin
+
+Make sure all packages are built:
+
+```shell
+yarn bootstrap
+```
+
+Then run Gatsby Admin directly:
+
+```shell
+yarn workspace gatsby-admin run develop
+```
+
+### Debugging your development environment
+
+It's possible for your prior development GraphQL server to get caught in a "zombie" state when it hangs. If it appears that changes to the API aren't being reflected check your running processes to see if it's hanging with `ps aux`.
+
 ## Architecture
 
 In Recipes there's a notion of a _"client"_ and the _"backend"_. The backend handles the running of a Recipe (for both [plan](#plan) and [apply](#apply)). They communicate over a [GraphQL API](#graphql-api).
-
-TODO: Add sub table of contents
 
 ### GraphQL API
 
@@ -268,6 +297,8 @@ In order to do this the original recipe MDX source code undergoes a few transfor
 
 Recipes source code can contain nested resources and all resources are asynchronous by default. In order to work with this all resources are rendered with React Suspense and then an emitter is returned which emits events as resources are diffed and/or applied.
 
+#### Reconciler
+
 ##### Input
 
 ```jsx
@@ -306,8 +337,6 @@ const result = [
   },
 ]
 ```
-
-#### Reconciler
 
 [Read more about the reconciler motivation &rarr;](https://johno.com/recipes-interpreter)
 
@@ -521,11 +550,24 @@ module.exports.all = all
 
 ## Roadmap
 
+The following features are next up for implementation.
+
 ### Gatsby Admin GUI
 
-### Optimizing client bundles
+Recipes included a WIP GUI that is currently being ported to Gatsby Admin where it is meant to live. This will (likely) be were most folks explore, read, and run Recipes.
+
+[See the PR &rarr;](https://github.com/gatsbyjs/gatsby/pull/26243)
+
+#### Optimizing client bundles
+
+Part of the Recipes GUI inside Admin requires optimizing the client side bundle which includes sending along the precompiled JS from the server so that the client needs to include MDX and Babel transforms.
 
 ### Inputs
+
+Part of inputs are currently shipped, but we need to finish the implementation, especially adding the `useInput` API.
+
+- `useInput` support for a more developer-friendly API
+- CLI support so that inputs can be passed as CLI arguments
 
 ### Statefile
 
@@ -573,14 +615,24 @@ ambiguity as possible.
 
 #### Apply
 
-This is a mode modeled off of Terraform which applies the plan to the current environment. This is handled by the server when the client tells it to **"apply"**.
+This is a mode modeled off of Terraform which applies the plan to the current environment. This is handled by the server when the client tells it to _"apply"_.
 
 #### Plan
 
-Set of instructions, including the resource name, its definition, and the diff it will effect on the current state of the environment. For example, a plan for `<NPMPackage name="gatsby" />` will result in a plan that specifies **"NPMPackage"** as the resource name, a resource definition of **"package name gatsby"**, and the diff will be an ANSI-encoded git diff that shows the version change (if there is one).
+Set of instructions, including the resource name, its definition, and the diff it will effect on the current state of the environment. For example, a plan for `<NPMPackage name="gatsby" />` will result in a plan that specifies _"NPMPackage"_ as the resource name, a resource definition of _"package name gatsby"_, and the diff will be an ANSI-encoded git diff that shows the version change (if there is one).
 
 This is the non-destructive version of [apply](#apply) which compares current state with intended state and reports back the _"diff"_.
 
+#### Providers
+
+Providers refer to a service, whether that's something local to the development environment like the file system, or a third-party remote service like GitHub.
+
+Providers contain a collection of [resources](#resources).
+
 #### Recipe
 
-An MDX file that contains instructions via components using a **Literate Programming** model.
+An MDX file that contains instructions via components using a _Literate Programming_ model.
+
+### Resources
+
+Resources belong to a [provider](#providers). Filesystem resources are files and directories. Gatsby resources include pages, plugins, and even site metadata.
