@@ -90,4 +90,4 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 
 - **For most developers, it's recommended to start with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples, head [to the official Gatsby documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the [MDX section of the sidebar](https://www.gatsbyjs.org/docs/mdx/).
+- **To dive straight into code samples, head [to the official Gatsby documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the [MDX section of the sidebar](https://www.gatsbyjs.com/docs/mdx/).
