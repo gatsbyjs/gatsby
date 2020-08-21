@@ -20,18 +20,15 @@ import Step from "./recipe-step"
 import { components, removeJsx, log } from "./utils"
 import ResourceMessage from "./resource-message"
 
-const graphqlPort = 50400
-
-const API_ENDPOINT = `http://localhost:${graphqlPort}`
-
 let isSubscriptionConnected = false
 let isRecipeStarted = false
 let sessionId
 let sendEvent
 let projectRoot
+let api_endpoint
 
 const checkServerSession = async () => {
-  const response = await fetch(`${API_ENDPOINT}/session`)
+  const response = await fetch(`${api_endpoint}/session`)
   const newSessionId = await response.text()
   if (!sessionId) {
     sessionId = newSessionId
@@ -88,6 +85,7 @@ const RecipeInterpreter = ({ recipe }) => {
       .then(json => {
         if (json.metadata) projectRoot = json.metadata.sitePath
         if (json.recipesgraphqlserver) {
+          api_endpoint = `http://localhost:${json.recipesgraphqlserver.port}`
           const newClient = createUrqlClient({
             port: json.recipesgraphqlserver.port,
             connectionCallback: async () => {
