@@ -25,7 +25,7 @@ interface IModule extends Omit<Stats.FnModules, "identifier" | "reasons"> {
  */
 const entryNodes = [
   `.cache/api-runner-browser-plugins.js`,
-  `.cache/async-requires.js`,
+  `.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`,
 ]
 
 /* This function takes the current Redux state and a compilation

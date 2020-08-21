@@ -1,8 +1,10 @@
 const Promise = require(`bluebird`)
+const fs = require(`fs`)
 const startersRedirects = require(`./starter-redirects.json`)
 
 const { loadYaml } = require(`./src/utils/load-yaml`)
 const redirects = loadYaml(`./redirects.yaml`)
+const cloudRedirects = loadYaml(`./cloud-redirects.yaml`)
 
 // Split the logic into files based on the section of the website.
 // The eventual goal is to split www into different themes per section.
@@ -120,6 +122,13 @@ exports.createPages = async helpers => {
   const { actions } = helpers
   const { createRedirect } = actions
 
+  /**
+   * ============================================================================
+   * REDIIRECTS
+   * NOTE: Order matters!! Higher specificity comes first
+   * ============================================================================
+   */
+
   redirects.forEach(redirect => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
@@ -132,4 +141,42 @@ exports.createPages = async helpers => {
       force: true,
     })
   })
+
+  // one-off redirects for .com
+  //  pages that don't line up 1 to 1 with data stored in WP
+  cloudRedirects.forEach(redirect => {
+    createRedirect({ isPermanent: true, ...redirect, force: true })
+  })
+
+  // splat redirects
+  await createRedirect({
+    fromPath: `/packages/*`,
+    toPath: `https://www.gatsbyjs.com/plugins/:splat`,
+    isPermanent: true,
+    force: true,
+  })
+
+  await createRedirect({
+    fromPath: `/creators/*`,
+    toPath: `https://www.gatsbyjs.com/partner/`,
+    isPermanent: true,
+    force: true,
+  })
+
+  // catch all redirect
+  //  this needs to be the last redirect created or it'll match everything
+  await createRedirect({
+    fromPath: `/*`,
+    toPath: `https://www.gatsbyjs.com/:splat`,
+    isPermanent: true,
+    force: true,
+  })
+}
+
+exports.onPostBuild = () => {
+  const redirectsString = fs.readFileSync(`./public/_redirects`).toString()
+  const chunked = redirectsString.split(`\n`)
+
+  chunked.splice(chunked.length - 1, 0, `/sw.js  /sw.js  200`)
+  fs.writeFileSync(`./public/_redirects`, chunked.join(`\n`))
 }

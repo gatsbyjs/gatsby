@@ -6,11 +6,11 @@
   "author": "Madalyn Parker <hello@madalyn.dev>",
   "dependencies": {
     "@reach/skip-nav": "^0.8.0",
-    "gatsby": "^2.24.41",
-    "gatsby-plugin-manifest": "^2.4.22",
+    "gatsby": "^2.24.47",
+    "gatsby-plugin-manifest": "^2.4.23",
     "gatsby-plugin-react-helmet": "^3.3.10",
     "gatsby-source-filesystem": "^2.3.24",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-helmet": "^5.2.1"

@@ -46,7 +46,7 @@ const CloudCallout = ({ narrow = true, children }) => (
   <CloudCalloutRoot narrow={narrow}>
     <CloudText>{children}</CloudText>
     Try it on{` `}
-    <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>!
+    <OutboundLink href="https://www.gatsbyjs.com">Gatsby Cloud</OutboundLink>!
     <Circles>
       <CirclesOrnament />
     </Circles>

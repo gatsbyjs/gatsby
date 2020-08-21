@@ -328,7 +328,23 @@ module.exports = {
       resolve: `gatsby-plugin-netlify`,
       options: {
         headers: {
-          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+          "/*": [
+            `Referrer-Policy: strict-origin-when-cross-origin`,
+            `Clear-Site-Data: "cache", "storage"`,
+          ],
+          "/sw.js": [
+            `Cache-Control: max-age=0,no-cache,no-store,must-revalidate`,
+          ],
+        },
+        transformHeaders: (headers, path) => {
+          if (path === `/sw.js`) {
+            // remove last cache-control as it's set by the plugin itself
+            headers.splice(1, 1)
+          }
+
+          return headers.filter(
+            header => !header.toLowerCase().includes(`link:`)
+          )
         },
       },
     },

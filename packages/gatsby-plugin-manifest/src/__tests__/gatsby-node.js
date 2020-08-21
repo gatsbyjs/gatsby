@@ -1,5 +1,6 @@
 jest.mock(`fs`, () => {
   return {
+    ...jest.requireActual(`fs`),
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
     mkdirSync: jest.fn(),

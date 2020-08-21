@@ -1,10 +1,12 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
+const t = require(`@babel/types`)
 const declare = require(`@babel/helper-plugin-utils`).declare
 const Joi = require(`@hapi/joi`)
 const prettier = require(`prettier`)
 
+const lock = require(`../lock`)
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
@@ -78,6 +80,7 @@ module.exports = {
 }
 
 const create = async ({ root }, { name, value }) => {
+  const release = await lock(`gatsby-config.js`)
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
@@ -86,7 +89,9 @@ const create = async ({ root }, { name, value }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, name)
+  const resource = await read({ root }, name)
+  release()
+  return resource
 }
 
 const read = async ({ root }, id) => {
@@ -133,13 +138,16 @@ class BabelPluginSetSiteMetadataField {
               return
             }
 
+            let siteMetadataExists = false
             const siteMetadata = right.properties.find(
               p => p.key.name === `siteMetadata`
             )
 
-            if (!siteMetadata || !siteMetadata.value) return
-
-            const siteMetadataObj = getObjectFromNode(siteMetadata.value)
+            let siteMetadataObj = {}
+            if (siteMetadata?.value) {
+              siteMetadataExists = true
+              siteMetadataObj = getObjectFromNode(siteMetadata?.value)
+            }
 
             const valueType = typeof value
             const shouldParse =
@@ -155,14 +163,20 @@ class BabelPluginSetSiteMetadataField {
 
             const newSiteMetadata = newSiteMetadataTemplate.declarations[0].init
 
-            right.properties = right.properties.map(p => {
-              if (p.key.name !== `siteMetadata`) return p
+            if (siteMetadataExists) {
+              right.properties = right.properties.map(p => {
+                if (p.key.name !== `siteMetadata`) return p
 
-              return {
-                ...p,
-                value: newSiteMetadata,
-              }
-            })
+                return {
+                  ...p,
+                  value: newSiteMetadata,
+                }
+              })
+            } else {
+              right.properties.unshift(
+                t.objectProperty(t.identifier(`siteMetadata`), newSiteMetadata)
+              )
+            }
 
             path.stop()
           },

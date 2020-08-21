@@ -83,4 +83,5 @@ Learn [how to make a starter](/docs/creating-a-starter/) in the Gatsby docs. Sta
 Community starters are created and maintained by Gatsby community members.
 
 - Looking for a starter for a particular use case? Browse starters that have been submitted to the [Starter Library](/starters/).
-- Created a starter you'd like to share? Follow [these steps to submit your starter](/contributing/submit-to-starter-library/) to the Starter Library.
+
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.

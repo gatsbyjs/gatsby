@@ -10,6 +10,7 @@ const resolveCwd = require(`resolve-cwd`)
 const { slash } = require(`gatsby-core-utils`)
 const fetch = require(`node-fetch`)
 
+const lock = require(`../lock`)
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
@@ -205,6 +206,7 @@ class MissingInfoError extends Error {
 }
 
 const create = async ({ root }, { name, options, key }) => {
+  const release = await lock(`gatsby-config.js`)
   // TODO generalize this — it's for the demo.
   if (options?.accessToken === `(Known after install)`) {
     throw new MissingInfoError({ name, options, key })
@@ -217,7 +219,9 @@ const create = async ({ root }, { name, options, key }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, key || name)
+  const config = await read({ root }, key || name)
+  release()
+  return config
 }
 
 const read = async ({ root }, id) => {
@@ -419,7 +423,10 @@ const validate = resource => {
 exports.schema = schema
 exports.validate = validate
 
-module.exports.plan = async ({ root }, { id, key, name, options }) => {
+module.exports.plan = async (
+  { root },
+  { id, key, name, options, isLocal = false }
+) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
@@ -448,5 +455,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
+    dependsOn: isLocal ? null : [{ resourceName: `NPMPackage`, name }],
   }
 }
