@@ -7447,3 +7447,18 @@
     - SEO friendly components
     - Prebuilt events calendar
     - Material UI
+- url: https://mixedblog.netlify.app
+  repo: https://github.com/mixedbitmedia/Mixedblog
+  description: A simple blog starter written in GatsbyJS. 
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Netlify
+    - Styling:SCSS
+    - Netlify
+  features:
+    - CMS:netlify integration with ready to go placeholder content
+    - Netlify integration including a pre-built contact form
+    - Pagination logic
+    - SCSS
+    - SEO friendly component
