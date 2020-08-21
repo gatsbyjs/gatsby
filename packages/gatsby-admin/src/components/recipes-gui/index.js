@@ -89,8 +89,7 @@ const RecipeInterpreter = ({ recipe }) => {
     fetch(`/___services`)
       .then(res => res.json())
       .then(json => {
-        console.log(json.metadata)
-        if (json.metadata) projectRoot = json.metadata.programPath
+        if (json.metadata) projectRoot = json.metadata.sitePath
         if (json.recipesgraphqlserver) {
           const newClient = createUrqlClient({
             port: json.recipesgraphqlserver.port,
