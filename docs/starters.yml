@@ -6963,13 +6963,10 @@
   repo: https://github.com/tsparticles/gatsby-landing-page-starter
   description: tsParticles Simple Landing Page Starter for Gatsby Websites
   tags:
+    - Client-side App
     - Landing Page
-    - Particles
-    - Particles.js
-    - tsParticles
-    - Animated
-    - Background
-    - Language:Javascript
+    - Onepage
+    - Portfolio
   features:
     - Animated Particles Background
     - FontAwesome
