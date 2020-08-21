@@ -26,7 +26,7 @@ const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const semver = require(`semver`)
 const remove = require(`unist-util-remove`)
-const recipesList = require(`./recipes-list`)
+const recipesList = require(`./recipes-list`).default
 
 const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
@@ -322,7 +322,9 @@ export default async ({
               components={components}
               remarkPlugins={[removeJsx]}
             >
-              {state.context.stepsAsJS.join(`\n`)}
+              {state.context.exports?.join(`\n`) +
+                `\n\n` +
+                state.context.stepsAsJS.join(`\n`)}
             </StepRenderer>
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
