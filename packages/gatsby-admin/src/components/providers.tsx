@@ -4,6 +4,7 @@ import { ThemeProvider, getTheme } from "gatsby-interface"
 import { ThemeProvider as StrictUIProvider } from "strict-ui"
 import { Spinner, merge } from "theme-ui"
 import { createUrqlClient } from "../urql-client"
+import "normalize.css"
 
 const baseTheme = getTheme()
 

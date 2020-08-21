@@ -3,7 +3,6 @@ import React from "react"
 import { useState } from "react"
 
 import { jsx, Styled } from "theme-ui"
-import "normalize.css"
 
 import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
