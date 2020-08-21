@@ -10,6 +10,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
@@ -34,6 +35,7 @@
     "fs-extra": "^8.1.0",
     "node-object-hash": "^2.0.0",
     "proper-lockfile": "^4.1.1",
+    "tmp": "^0.2.1",
     "xdg-basedir": "^4.0.0"
   },
   "devDependencies": {

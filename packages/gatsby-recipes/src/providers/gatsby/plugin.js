@@ -439,6 +439,6 @@ module.exports.plan = async (
     currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
-    dependsOn: !isLocal ? [{ resourceName: `NPMPackage`, name }] : null,
+    dependsOn: isLocal ? null : [{ resourceName: `NPMPackage`, name }],
   }
 }

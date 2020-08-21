@@ -28,7 +28,7 @@ When identifying a topic, start by:
 
 A GitHub issue for new learning material should indicate the format. Is it a Reference or Conceptual Guide? A Tutorial? A recipe?
 
-Does docs coverage exist anywhere on `gatsbyjs.org`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
+Does docs coverage exist anywhere on `gatsbyjs.com`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
 
 ### Tutorials vs. recipes vs. guides:
 

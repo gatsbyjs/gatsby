@@ -2,7 +2,7 @@
 
 const { createSchemaComposer } = require(`../../schema-composer`)
 import { getFilterInput } from "../filter"
-const { getSortInput } = require(`../sort`)
+import { getSortInput } from "../sort"
 
 const {
   GraphQLBoolean,
