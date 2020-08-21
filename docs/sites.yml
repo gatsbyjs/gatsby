@@ -11835,3 +11835,18 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+  - title: New Relic Developer Site
+  main_url: https://developer.newrelic.com/
+  url: https://github.com/newrelic/developer-website/blob/main/src/screenshots/developer-home.png
+  source_url: https://github.com/newrelic/developer-website
+  description:  The world’s best engineering teams rely on New Relic to visualize,
+  analyze and troubleshoot their software. New Relic One is the most powerful
+  cloud-based observability platform built to help companies create more perfect software.
+  categories:
+    - Data
+    - Programming
+    - Open Source
+    - Technology
+  built_by: New Relic
+  built_by_url: https://www.newrelic.com
+  featured: false
