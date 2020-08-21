@@ -21,7 +21,7 @@ module.exports = (schema, config = {}) => {
   const typeConstructor = schema.meta(config)
 
   Hoek.assert(
-    typeConstructor._type === `object`,
+    typeConstructor.type === `object`,
     `schema must be a Joi Object type.`
   )
 

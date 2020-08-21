@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "@contentful/rich-text-types": "^13.4.0",
-    "@hapi/joi": "^15.1.1",
+    "@hapi/joi": "^17.1.1",
     "axios": "^0.19.2",
     "base64-img": "^1.0.4",
     "bluebird": "^3.7.2",

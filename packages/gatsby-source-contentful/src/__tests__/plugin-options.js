@@ -193,7 +193,7 @@ describe(`Options validation`, () => {
       expect.stringContaining(`"spaceId" must be a string`)
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"localeFilter" must be a Function`)
+      expect.stringContaining(`"localeFilter" must be of type function`)
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"downloadLocal" must be a boolean`)
@@ -205,7 +205,7 @@ describe(`Options validation`, () => {
       expect.stringContaining(`"pageLimit" must be a number`)
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"richText" must be an object`)
+      expect.stringContaining(`"richText" must be of type object`)
     )
   })
 

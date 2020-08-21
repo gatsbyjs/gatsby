@@ -34,39 +34,41 @@ exports.onPreBootstrap = async function onPreBootstrap(
 ) {
   delete pluginOptions.plugins
 
-  try {
-    const normalized = await pluginOptionsSchema.validate(pluginOptions)
+  const { value: normalized, error } = await pluginOptionsSchema.validate(
+    pluginOptions
+  )
 
-    // TODO: remove these checks in the next major release
-    if (!normalized.feeds) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(`feeds option`, `the internal RSS feed creation`)
-        )
-      )
-    } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(`title in a feed`, `the default feed title`)
-        )
-      )
-    } else if (
-      normalized.feeds.some(feed => typeof feed.serialize !== `function`)
-    ) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(
-            `serialize function in a feed`,
-            `the internal serialize function`
-          )
-        )
-      )
-    }
-  } catch (e) {
+  if (error) {
     throw new Error(
-      e.details
+      error.details
         .map(detail => `[Config Validation]: ${detail.message}`)
         .join(`\n`)
+    )
+  }
+
+  // TODO: remove these checks in the next major release
+  if (!normalized.feeds) {
+    reporter.warn(
+      reporter.stripIndent(
+        warnMessage(`feeds option`, `the internal RSS feed creation`)
+      )
+    )
+  } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
+    reporter.warn(
+      reporter.stripIndent(
+        warnMessage(`title in a feed`, `the default feed title`)
+      )
+    )
+  } else if (
+    normalized.feeds.some(feed => typeof feed.serialize !== `function`)
+  ) {
+    reporter.warn(
+      reporter.stripIndent(
+        warnMessage(
+          `serialize function in a feed`,
+          `the internal serialize function`
+        )
+      )
     )
   }
 }

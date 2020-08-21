@@ -138,17 +138,14 @@ const read = async ({ root }, id) => {
 
 const schema = {
   name: Joi.string().required(),
-  version: Joi.string().default(`latest`, `Defaults to "latest"`),
-  dependencyType: Joi.string().default(
-    `dependency`,
-    `defaults to regular dependency`
-  ),
+  version: Joi.string().default(`latest`),
+  dependencyType: Joi.string().default(`dependency`),
   description: Joi.string(),
   ...resourceSchema,
 }
 
 const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  Joi.object(schema).validate(resource, { abortEarly: false })
 
 exports.validate = validate
 

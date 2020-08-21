@@ -16,11 +16,12 @@ module.exports = async ({
 
   // Test creating the resource
   const createResponse = await resource.create(context, initialObject)
-  const validateResult = Joi.validate(createResponse, {
+  const schema = Joi.object({
     ...resource.schema,
     ...resourceSchema,
   })
-  expect(validateResult.error).toBeNull()
+  const validateResult = schema.validate(createResponse)
+  expect(validateResult.error).toBeUndefined()
   expect(createResponse).toMatchSnapshot(`${resourceName} create`)
 
   // Test reading the resource
