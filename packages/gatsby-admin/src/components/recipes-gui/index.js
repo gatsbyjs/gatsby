@@ -13,7 +13,7 @@ import lodash from "lodash"
 import fetch from "isomorphic-fetch"
 
 import { Button, Heading } from "gatsby-interface"
-import StepRenderer from "gatsby-recipes/src/components/step-renderer"
+import { StepRenderer } from "gatsby-recipes/components"
 import WelcomeMessage from "./welcome-message"
 import Step from "./recipe-step"
 import { components, removeJsx, log } from "./utils"

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, Styled } from "theme-ui"
 import { Heading } from "gatsby-interface"
-import StepRenderer from "gatsby-recipes/src/components/step-renderer"
+import { StepRenderer } from "gatsby-recipes/components"
 import CodeDiff from "./code-diff"
 import { components, removeJsx, makeResourceId } from "./utils"
 
