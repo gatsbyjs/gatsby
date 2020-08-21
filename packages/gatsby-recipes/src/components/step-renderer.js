@@ -15,7 +15,7 @@ export default ({ children: srcCode, scope, components, ...props }) => {
     mdx: createElement,
     MDXProvider,
     React,
-    // need to pass both so that we can guaruntee the components we need are passed to MDXProvider for shortcodes and we also need some components to be in direct scope
+    // need to pass both so that we can guarantee the components we need are passed to MDXProvider for shortcodes and we also need some components to be in direct scope
     ...components,
     components,
     props,
