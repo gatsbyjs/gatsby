@@ -3,6 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { PageProps } from "gatsby"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
+import { Global, css } from "@emotion/core"
 import { useMutation } from "urql"
 import { useState, Fragment, useEffect } from "react"
 import {
@@ -18,10 +19,68 @@ import { navigate } from "gatsby-link"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import ReactMarkdown from "react-markdown"
+import Highlight, { defaultProps } from "prism-react-renderer"
 import useNpmPackageData from "../utils/use-npm-data"
+import prismThemeCss from "../prism-theme"
 import gitHubIcon from "../github.svg"
 import isOfficialPackage from "../../../../www/src/utils/is-official-package"
 import GatsbyIcon from "../../../../www/src/components/gatsby-monogram"
+import prismTheme from "../prism-theme"
+
+const markdownRenderers = {
+  paragraph: (props: any): JSX.Element => (
+    <Text as="p" {...props} sx={{ color: `text.primary` }} />
+  ),
+  heading: (props: any): JSX.Element => (
+    <Heading as={`h${props.level}`} {...props} />
+  ),
+  inlineCode: (props: any): JSX.Element => (
+    <Text
+      // @ts-ignore
+      as="code"
+      sx={{
+        fontFamily: `monospace`,
+      }}
+      {...props}
+    />
+  ),
+  code: (props: any): JSX.Element => (
+    <Highlight
+      {...defaultProps}
+      // The theme is provided via CSS, not prism-react-renderer's custom theming system
+      theme={undefined}
+      code={props.value}
+      language={props.language}
+    >
+      {({
+        className,
+        style,
+        tokens,
+        getLineProps,
+        getTokenProps,
+      }): JSX.Element => (
+        <Text
+          // @ts-ignore
+          as="pre"
+          sx={{
+            fontFamily: `monospace`,
+            fontSize: 0,
+          }}
+          className={className}
+          style={style}
+        >
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </Text>
+      )}
+    </Highlight>
+  ),
+}
 
 export default function PluginView(
   props: PageProps & {
@@ -139,6 +198,7 @@ export default function PluginView(
   return (
     <Fragment>
       <Spacer size={15} />
+      <Global styles={prismThemeCss} />
       <Flex gap={9} flexDirection="column" alignItems="flex-start">
         <Flex flexDirection="column" gap={2} sx={{ width: `100%` }}>
           <Flex gap={5}>
@@ -236,39 +296,7 @@ export default function PluginView(
             ) : npmData?.readme ? (
               <Flex gap={5} flexDirection="column">
                 <ReactMarkdown
-                  renderers={{
-                    paragraph: (props: any): JSX.Element => (
-                      <Text as="p" {...props} sx={{ color: `text.primary` }} />
-                    ),
-                    heading: (props: any): JSX.Element => (
-                      <Heading as={`h${props.level}`} {...props} />
-                    ),
-                    inlineCode: (props: any): JSX.Element => (
-                      <Text
-                        // @ts-ignore
-                        as="code"
-                        sx={{
-                          fontFamily: `monospace`,
-                        }}
-                        {...props}
-                      />
-                    ),
-                    code: (props: any): JSX.Element => (
-                      <pre>
-                        <Text
-                          // @ts-ignore
-                          as="code"
-                          language={props.language}
-                          sx={{
-                            fontFamily: `monospace`,
-                            fontSize: 0,
-                          }}
-                        >
-                          {props.value}
-                        </Text>
-                      </pre>
-                    ),
-                  }}
+                  renderers={markdownRenderers}
                   source={npmData.readme.replace(
                     // Remove the first heading with the plugin name since we render that manually
                     new RegExp(`(?:#+|^)\\s*${pluginName}$`, `m`),

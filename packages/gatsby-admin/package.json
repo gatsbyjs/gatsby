@@ -27,6 +27,7 @@
     "lodash-es": "^4.17.15",
     "ncp": "^2.0.0",
     "nodemon": "^2.0.4",
+    "prism-react-renderer": "^1.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
