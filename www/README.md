@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# gatsbyjs.com
+<h2 align="center"> gatsbyjs.com </h2>
 
 The main Gatsby site at gatsbyjs.com
 
