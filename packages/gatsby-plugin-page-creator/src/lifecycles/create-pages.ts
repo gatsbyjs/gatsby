@@ -4,8 +4,9 @@ import systemPath from "path"
 import { CreatePagesArgs } from "gatsby"
 import { createPath, watchDirectory } from "gatsby-page-utils"
 import { createPagesFromCollectionBuilder } from "../collection-routes/create-pages-from-collection-builder"
+import { applyIncrementalBuildPatches } from "../collection-routes/apply-incremental-build-patches"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { IOptions } from "../types"
+import { IOptions, IPluginState } from "../types"
 
 /* This lifecycle method is solely used for collection routes right now */
 export async function createPages(
@@ -21,7 +22,27 @@ export async function createPages(
   doneCb: Function
 ): Promise<void> {
   try {
-    const { program } = store.getState()
+    const { program, status } = store.getState()
+    const state = (status.plugins[
+      `gatsby-plugin-page-creator`
+    ] as any) as IPluginState
+
+    // Incremental builds support
+    if (state.isInBootstrap === false) {
+      if (path.includes(`node_modules`)) {
+        doneCb()
+        return
+      }
+      await applyIncrementalBuildPatches(
+        path,
+        state.nodes,
+        graphql,
+        reporter,
+        actions
+      )
+      doneCb()
+      return
+    }
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
     const pagesDirectory = systemPath.resolve(process.cwd(), path)
