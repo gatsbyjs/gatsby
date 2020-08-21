@@ -21,7 +21,6 @@ export default async (programPath, forceStart) => {
     // more divisors than any smaller positive integer.
     port = await detectPort(50400)
     await createServiceLock(programPath, `recipesgraphqlserver`, { port })
-    await createServiceLock(programPath, `metadata`, { programPath })
 
     const subprocess = execa(
       `node`,

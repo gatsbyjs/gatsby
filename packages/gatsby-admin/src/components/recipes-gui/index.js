@@ -21,10 +21,9 @@ import { components, removeJsx, log } from "./utils"
 import ResourceMessage from "./resource-message"
 
 //TODO: We need to be able to grab this dynamically
-const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
+// const PROJECT_ROOT = `/Users/laurie/Documents/Gatsby/gatsby/starters/blog`
 
 const graphqlPort = 50400
-const projectRoot = PROJECT_ROOT
 
 const API_ENDPOINT = `http://localhost:${graphqlPort}`
 
@@ -32,6 +31,7 @@ let isSubscriptionConnected = false
 let isRecipeStarted = false
 let sessionId
 let sendEvent
+let projectRoot
 
 const checkServerSession = async () => {
   const response = await fetch(`${API_ENDPOINT}/session`)
@@ -89,6 +89,8 @@ const RecipeInterpreter = ({ recipe }) => {
     fetch(`/___services`)
       .then(res => res.json())
       .then(json => {
+        console.log(json.metadata)
+        if (json.metadata) projectRoot = json.metadata.programPath
         if (json.recipesgraphqlserver) {
           const newClient = createUrqlClient({
             port: json.recipesgraphqlserver.port,
