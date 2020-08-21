@@ -7,15 +7,15 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3"
+    "@babel/runtime": "^7.11.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
     "babel-plugin-dev-expression": "^0.2.2",
     "babel-preset-gatsby-package": "^0.5.2",
     "cross-env": "^5.2.1",
-    "history": "^4.7.2"
+    "history": "^4.10.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll#readme",
   "keywords": [

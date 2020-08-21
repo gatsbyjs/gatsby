@@ -28,15 +28,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.10.3"
+    "@babel/runtime": "^7.11.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-transform-runtime": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
-    "@babel/preset-react": "^7.10.1",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "babel-preset-gatsby-package": "^0.5.2",
     "core-js": "^3.6.5",
@@ -50,9 +50,9 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "whatwg-fetch": "^3.1.0"
+    "whatwg-fetch": "^3.4.0"
   },
   "engines": {
     "node": ">=10.13.0"

@@ -11,8 +11,8 @@
     "better-queue": "^3.8.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
     "babel-preset-gatsby-package": "^0.5.2",
     "cross-env": "^5.2.1"
   },
