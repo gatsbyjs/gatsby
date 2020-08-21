@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://gatsbyjs.org">
+  <a href="https://gatsbyjs.com">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
@@ -27,23 +27,23 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
+  <a href="https://gatsbyjs.com/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
 
 <h3 align="center">
-  <a href="https://gatsbyjs.org/docs/">Quickstart</a>
+  <a href="https://gatsbyjs.com/docs/">Quickstart</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/tutorial/">Tutorial</a>
+  <a href="https://gatsbyjs.com/tutorial/">Tutorial</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/plugins/">Plugins</a>
+  <a href="https://gatsbyjs.com/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.com/docs/gatsby-starters/">Starters</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/showcase/">Showcase</a>
+  <a href="https://gatsbyjs.com/showcase/">Showcase</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
+  <a href="https://gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
@@ -95,8 +95,8 @@ This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This mea
 
 We have set-up read-only clones of all of the [starters][starters] in the official gatsbyjs organization. For example, the [`default` starter](starters/default) is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
 
-[code-of-conduct]: https://gatsbyjs.org/contributing/code-of-conduct/
-[contributing-guide]: https://gatsbyjs.org/contributing/how-to-contribute/
+[code-of-conduct]: https://gatsbyjs.com/contributing/code-of-conduct/
+[contributing-guide]: https://gatsbyjs.com/contributing/how-to-contribute/
 [monorepo]: https://trunkbaseddevelopment.com/monorepos
 [lerna]: https://github.com/lerna/lerna
 [starters]: /starters
