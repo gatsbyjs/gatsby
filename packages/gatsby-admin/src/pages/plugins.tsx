@@ -3,7 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { PageProps } from "gatsby"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
-import { Global, css } from "@emotion/core"
+import { Global } from "@emotion/core"
 import { useMutation } from "urql"
 import { useState, Fragment, useEffect } from "react"
 import {
@@ -25,7 +25,6 @@ import prismThemeCss from "../prism-theme"
 import gitHubIcon from "../github.svg"
 import isOfficialPackage from "../../../../www/src/utils/is-official-package"
 import GatsbyIcon from "../../../../www/src/components/gatsby-monogram"
-import prismTheme from "../prism-theme"
 
 const markdownRenderers = {
   paragraph: (props: any): JSX.Element => (
