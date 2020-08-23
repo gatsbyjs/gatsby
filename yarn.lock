@@ -10375,6 +10375,13 @@ figures@^3.0.0:
   dependencies:
     escape-string-regexp "^1.0.5"
 
+figures@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/figures/-/figures-3.2.0.tgz#625c18bd293c604dc4a8ddb2febf0c88341746af"
+  integrity sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==
+  dependencies:
+    escape-string-regexp "^1.0.5"
+
 file-entry-cache@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-2.0.0.tgz#c392990c3e684783d838b8c84a45d8a048458361"
@@ -12862,23 +12869,15 @@ ink-box@^1.0.0:
     boxen "^3.0.0"
     prop-types "^15.7.2"
 
-ink-link@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ink-link/-/ink-link-1.1.0.tgz#e00bd68dfd163a9392baecc0808391fd07e6cfbb"
-  integrity sha512-a716nYz4YDPu8UOA2PwabTZgTvZa3SYB/70yeXVmTOKFAEdMbJyGSVeNuB7P+aM2olzDj9AGVchA7W5QytF9uA==
-  dependencies:
-    prop-types "^15.7.2"
-    terminal-link "^2.1.1"
-
-ink-select-input@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/ink-select-input/-/ink-select-input-3.1.2.tgz#fd53f2f0946bc43989899522b013a2c10a60f722"
-  integrity sha512-PaLraGx8A54GhSkTNzZI8bgY0elAoa1jSPPe5Q52B5VutcBoJc4HE3ICDwsEGJ88l1Hw6AWjpeoqrq82a8uQPA==
+ink-select-input@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ink-select-input/-/ink-select-input-4.0.0.tgz#ff642302b4ffea53227e96fa9152709de8a3de54"
+  integrity sha512-LwvsWqJh64ARY/4WxhC9B0+Dcb+BiTm9lzwTW5XH8OT5ng7drs7J7C23ZQdt25ZETCPvzg5BSZf2w6fhdg/SXw==
   dependencies:
     arr-rotate "^1.0.0"
-    figures "^2.0.0"
+    figures "^3.2.0"
+    lodash "^4.17.19"
     lodash.isequal "^4.5.0"
-    prop-types "^15.5.10"
 
 ink-spinner@^4.0.1:
   version "4.0.1"
@@ -23552,7 +23551,7 @@ term-size@^2.1.0:
   resolved "https://registry.yarnpkg.com/term-size/-/term-size-2.1.0.tgz#3aec444c07a7cf936e157c1dc224b590c3c7eef2"
   integrity sha512-I42EWhJ+2aeNQawGx1VtpO0DFI9YcfuvAMNIdKyf/6sRbHJ4P+ZQ/zIT87tE+ln1ymAGcCJds4dolfSAS0AcNg==
 
-terminal-link@^2.0.0, terminal-link@^2.1.1:
+terminal-link@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/terminal-link/-/terminal-link-2.1.1.tgz#14a64a27ab3c0df933ea546fba55f2d078edc994"
   integrity sha512-un0FmiRUQNr5PJqy9kP7c40F5BOfpGlYTrxonDChEZB7pzZxRNp/bt+ymiy9/npwXya9KH99nJ/GXFIiUkYGFQ==
