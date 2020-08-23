@@ -5,5 +5,7 @@ export const createLabel = (
   text: string,
   color: string
 ): FunctionComponent<TextProps> => (...props): JSX.Element => (
-  <Text color={color} {...props}>{text}</Text>
+  <Text color={color} {...props}>
+    {text}
+  </Text>
 )
