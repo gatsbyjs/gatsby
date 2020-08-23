@@ -9,7 +9,10 @@ import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt
 import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
-import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import {
+  createServiceLock,
+  getService,
+} from "gatsby-core-utils/dist/service-lock"
 import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
@@ -265,10 +268,19 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
+    // We don't need to keep a lock on this, as it's just site metadata
+    await createServiceLock(program.directory, `metadata`, {
+      name: program.sitePackageJson.name,
+      sitePath: program.directory,
+      pid: process.pid,
+      lastRun: Date.now(),
+    }).then(unlock => unlock?.())
 
     if (!statusUnlock || !developUnlock) {
+      const data = await getService(program.directory, `developproxy`)
+      const port = data?.port || 8000
       console.error(
-        `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
+        `Looks like develop for this site is already running. Try visiting http://localhost:${port}/ maybe?`
       )
       process.exit(1)
     }

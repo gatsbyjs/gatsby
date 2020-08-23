@@ -10,7 +10,7 @@ const {
 // NOTE(@mxstbr): The forceStart boolean enforces us to start the recipes graphql server
 // even if another instance might already be running. This is necessary to ensure the gatsby
 // develop command does not _not_ run the server if the user is running gatsby recipes at the same time.
-exports.startGraphQLServer = async (programPath, forceStart) => {
+export default async (programPath, forceStart) => {
   let { port } = (await getService(programPath, `recipesgraphqlserver`)) || {}
 
   if (!port || forceStart) {
@@ -19,15 +19,19 @@ exports.startGraphQLServer = async (programPath, forceStart) => {
     port = await detectPort(50400)
     await createServiceLock(programPath, `recipesgraphqlserver`, { port })
 
-    const subprocess = execa(`node`, [require.resolve(`./server.js`), port], {
-      all: true,
-      env: {
-        // Chalk doesn't want to output color in a child process
-        // as it (correctly) thinks it's not in a normal terminal environemnt.
-        // Since we're just returning data, we'll override that.
-        FORCE_COLOR: `true`,
-      },
-    })
+    const subprocess = execa(
+      `node`,
+      [require.resolve(`gatsby-recipes/dist/graphql-server/server.js`), port],
+      {
+        all: true,
+        env: {
+          // Chalk doesn't want to output color in a child process
+          // as it (correctly) thinks it's not in a normal terminal environemnt.
+          // Since we're just returning data, we'll override that.
+          FORCE_COLOR: `true`,
+        },
+      }
+    )
 
     // eslint-disable-next-line no-unused-expressions
     subprocess.stderr?.on(`data`, data => {
