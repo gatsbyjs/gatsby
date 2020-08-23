@@ -28,6 +28,7 @@ module.exports = {
       },
     },
     `gatsby-source-fake-data`,
+    `gatsby-source-module-mock`,
     `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-transformer-remark`,
