@@ -63,7 +63,9 @@ export const Error: FunctionComponent<IErrorProps> = React.memo(
               <Text color="red">{details.type ? ` ` + details.type : ``}</Text>
             </Box>
           </Box>
-          <Box marginTop={1}>{details.text}</Box>
+          <Box marginTop={1}>
+            <Text>{details.text}</Text>
+          </Box>
           {details.filePath && (
             <Box marginTop={1}>
               <Text>File:{` `}</Text>
