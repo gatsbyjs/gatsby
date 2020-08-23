@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Static } from "ink"
 import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
-// import { Spinner } from "./components/spinner"
+import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
@@ -99,9 +99,9 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
             }
           </Static>
 
-          {/* {spinners.map(activity => (
+          {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />
-          ))} */}
+          ))}
 
           {progressBars.map(activity => (
             <ProgressBar
