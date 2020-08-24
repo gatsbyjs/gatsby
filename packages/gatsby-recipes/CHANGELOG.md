@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.16...gatsby-recipes@0.2.17) (2020-08-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** some code cleanups + tests ([#26420](https://github.com/gatsbyjs/gatsby/issues/26420)) ([3d1cc4b](https://github.com/gatsbyjs/gatsby/commit/3d1cc4b))
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
 ## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.15...gatsby-recipes@0.2.16) (2020-08-12)
 
 ### Bug Fixes
