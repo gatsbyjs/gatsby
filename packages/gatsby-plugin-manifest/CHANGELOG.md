@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.23...gatsby-plugin-manifest@2.4.24) (2020-08-24)
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
 ## [2.4.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.22...gatsby-plugin-manifest@2.4.23) (2020-08-11)
 
 **Note:** Version bump only for package gatsby-plugin-manifest
