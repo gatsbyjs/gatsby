@@ -120,11 +120,18 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
       }
 
       if (displayedStuckStatusDiagnosticWarning) {
+        // using nextTick here to prevent infinite recursion (report.warn would
+        // result in another call of this function and so on)
         process.nextTick(() => {
-          const { status } = store.getState().logs
           const activitiesDiagnosticsMessage = generateStuckStatusDiagnosticMessage()
           reporter.warn(
-            `This is just diagnostic information (enabled by GATSBY_DIAGNOSTIC_STUCK_STATUS_TIMEOUT):\n\nThere was activity since last diagnostic message. Currently Gatsby is in: "${status}" state.${
+            `This is just diagnostic information (enabled by GATSBY_DIAGNOSTIC_STUCK_STATUS_TIMEOUT):\n\nThere was activity since last diagnostic message. Log action:\n\n${JSON.stringify(
+              action,
+              null,
+              2
+            )}\n\nCurrently Gatsby is in: "${
+              store.getState().logs.status
+            }" state.${
               activitiesDiagnosticsMessage.length > 0
                 ? `\n\nActivities preventing Gatsby from transitioning to idle state:\n\n${activitiesDiagnosticsMessage}`
                 : ``
@@ -178,7 +185,7 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
                 (stuckStatusWatchdogTimeoutDelay ?? 0) / 1000
               ).toFixed(
                 3
-              )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${generateStuckStatusDiagnosticMessage()}\n\n`
+              )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${generateStuckStatusDiagnosticMessage()}`
             )
           },
           stuckStatusWatchdogTimeoutDelay
