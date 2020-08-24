@@ -1,5 +1,12 @@
 const path = require(`path`)
 
+exports.onCreateBabelConfig = ({ actions }) => {
+  // rewrites import { get }from 'lodash' into import get from 'lodash/get';
+  actions.setBabelPlugin({
+    name: `babel-plugin-lodash`,
+  })
+}
+
 exports.onCreateWebpackConfig = function onCreateWebpackConfig({
   stage,
   actions,
