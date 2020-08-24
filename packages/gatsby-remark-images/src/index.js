@@ -218,8 +218,7 @@ module.exports = (
           { toFormat: `WEBP` },
           // override options if it's an object, otherwise just pass through defaults
           options.withWebp === true ? {} : options.withWebp,
-          pluginOptions,
-          DEFAULT_OPTIONS
+          options
         ),
         reporter,
       })
