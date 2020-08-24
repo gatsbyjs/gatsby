@@ -200,6 +200,7 @@ export function loadPlugins(
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
+    `../../internal-plugins/bundle-optimisations`,
   ]
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
