@@ -72,10 +72,9 @@ function generateStuckStatusDiagnosticMessage(): string {
           return activity
         }
 
-        const diagnostics_elapsed_seconds = calcElapsedTime(activity.startTime)
         return {
           ...activity,
-          diagnostics_elapsed_seconds,
+          diagnostics_elapsed_seconds: calcElapsedTime(activity.startTime),
         }
       }),
     null,
