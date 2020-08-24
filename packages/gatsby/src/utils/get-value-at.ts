@@ -5,6 +5,7 @@ export function getValueAt(obj: object, selector: string | string[]): any {
 }
 
 function get(obj: object, selectors: string[]): any {
+  if (obj === null) return undefined
   if (Array.isArray(obj)) return getArray(obj, selectors)
   const [key, ...rest] = selectors
   const value = obj[key]

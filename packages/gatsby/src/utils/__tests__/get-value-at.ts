@@ -94,4 +94,16 @@ describe(`getValueAt util`, () => {
     const value = getValueAt(obj, `foo.foo`)
     expect(value).toEqual([`bar`])
   })
+
+  it(`handles array with null`, () => {
+    const obj = { foo: [null, { bar: `baz` }] }
+    const value = getValueAt(obj, `foo.bar`)
+    expect(value).toEqual([`baz`])
+  })
+
+  it(`handles non-existing selector in array with null`, () => {
+    const obj = { foo: [null] }
+    const value = getValueAt(obj, `foo.bar`)
+    expect(value).toEqual([])
+  })
 })
