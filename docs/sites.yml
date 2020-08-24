@@ -4799,6 +4799,18 @@
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
+  - title: Feline Love
+  url: https://feline-love.netlify.app/
+  main_url: https://feline-love.netlify.app/
+  source_url: https://github.com/Kiittyka/Feline-love
+  description: >
+    A simple Gatsby website about cats using cat API's.
+  categories:
+    - Open Source
+    - Web development
+  built_by: Krithika Udupa
+  built_by_url: https://feline-love.netlify.app/
+  featured: false
 - title: Lebuin D'Haese
   url: https://www.lebuindhaese.be/
   main_url: https://www.lebuindhaese.be/
