@@ -2,6 +2,7 @@ import { createStore, combineReducers } from "redux"
 import { reducer } from "./reducer"
 import { ActionsUnion, ISetLogs } from "./types"
 import { isInternalAction } from "./utils"
+import { calcElapsedTime } from "../../util/calc-elapsed-time"
 import { Actions, ActivityStatuses } from "../constants"
 import { setTimeout } from "timers"
 
@@ -60,11 +61,23 @@ function generateStuckStatusDiagnosticMessage(): string {
   const { activities } = store.getState().logs
 
   return JSON.stringify(
-    Object.values(activities).filter(
-      activity =>
-        activity.status === ActivityStatuses.InProgress ||
-        activity.status === ActivityStatuses.NotStarted
-    ),
+    Object.values(activities)
+      .filter(
+        activity =>
+          activity.status === ActivityStatuses.InProgress ||
+          activity.status === ActivityStatuses.NotStarted
+      )
+      .map(activity => {
+        if (!activity.startTime) {
+          return activity
+        }
+
+        const diagnostics_elapsed_seconds = calcElapsedTime(activity.startTime)
+        return {
+          ...activity,
+          diagnostics_elapsed_seconds,
+        }
+      }),
     null,
     2
   )
