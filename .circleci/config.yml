@@ -76,7 +76,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split)
+          command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split --split-by=timings)
           environment:
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
