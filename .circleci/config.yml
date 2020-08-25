@@ -185,7 +185,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - node/install-packages:
-        pkg-manager: yarn
+          pkg-manager: yarn
       - run:
           name: Build monorepo
           command: yarn bootstrap
@@ -206,8 +206,8 @@ jobs:
           command: |
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
       - node/install-packages:
-        pkg-manager: yarn
-        cache-version: no-workspace-v1
+          pkg-manager: yarn
+          cache-version: no-workspace-v1
       - run: yarn lint:code
       - run: yarn lint:docs
       - run: yarn lint:other
@@ -218,7 +218,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - node/install-packages:
-        pkg-manager: yarn
+          pkg-manager: yarn
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
