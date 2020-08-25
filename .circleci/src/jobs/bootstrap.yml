@@ -1,0 +1,20 @@
+executor: node
+parameters:
+  concurrency:
+    type: integer
+    default: 2
+steps:
+  - checkout
+  - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+  - node/install-packages:
+      pkg-manager: yarn
+      # cache-path: ~/.cache
+      override-ci-command: yarn install --frozen-lockfile --immutable
+  - run:
+      name: Build monorepo
+      command: yarn bootstrap --concurrency=<< parameters.concurrency >> --stream
+  # Persist the workspace with all packages already built
+  - persist_to_workspace:
+      root: ./
+      paths:
+        - "packages/"

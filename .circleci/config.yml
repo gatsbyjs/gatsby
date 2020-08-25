@@ -1,3 +1,13 @@
+aliases:
+  attach_to_bootstrap:
+    attach_workspace:
+      at: ./
+  node-linux-executor:
+    executor: node
+    parameters:
+      concurrency:
+        default: 2
+        type: integer
 executors:
   node:
     docker:
@@ -6,6 +16,50 @@ executors:
       image:
         default: 12.18.3
         type: string
+jobs:
+  bootstrap:
+    executor: node
+    parameters:
+      concurrency:
+        default: 2
+        type: integer
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - node/install-packages:
+          override-ci-command: yarn install --frozen-lockfile --immutable
+          pkg-manager: yarn
+      - run:
+          command: yarn bootstrap --concurrency=<< parameters.concurrency >> --stream
+          name: Build monorepo
+      - persist_to_workspace:
+          paths:
+            - packages/
+          root: ./
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          command: |
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+          name: remove workspaces from package.json
+      - node/install-packages:
+          cache-version: no-workspace-v1
+          override-ci-command: yarn install --frozen-lockfile --immutable
+          pkg-manager: yarn
+      - run: yarn lint:code
+      - run: yarn lint:docs
+      - run: yarn lint:other
+  typecheck:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - node/install-packages:
+          pkg-manager: yarn
+      - run: yarn typecheck
+      - run: yarn check-repo-fields
 orbs:
   node:
     commands:
@@ -164,6 +218,7 @@ orbs:
             type: string
   slack: circleci/slack@3.4.1
   win: circleci/windows@2.2.0
+version: 2.1
 workflows:
   build-test:
     jobs:
