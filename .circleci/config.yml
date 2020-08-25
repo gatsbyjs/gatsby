@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - node/install-packages:
-          override-ci-command: yarn install --frozen-lockfile --immutable
+          cache-path: ~/.cache
           pkg-manager: yarn
       - run:
           command: yarn bootstrap -- concurrency=<< parameters.concurrency >> --stream

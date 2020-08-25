@@ -8,8 +8,7 @@ steps:
   - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
   - node/install-packages:
       pkg-manager: yarn
-      # cache-path: ~/.cache
-      override-ci-command: yarn install --frozen-lockfile --immutable
+      cache-path: ~/.cache
   - run:
       name: Build monorepo
       command: yarn bootstrap -- concurrency=<< parameters.concurrency >> --stream
