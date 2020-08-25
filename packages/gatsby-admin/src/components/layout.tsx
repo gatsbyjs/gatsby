@@ -1,9 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Flex } from "strict-ui"
+import { Helmet } from "react-helmet"
+import telemetry from "gatsby-telemetry"
+import pkgJson from "../../package.json"
 import Providers from "./providers"
 import Navbar from "./navbar"
-import { Helmet } from "react-helmet"
+
+telemetry.setDefaultComponentId(`gatsby-admin`)
+telemetry.setGatsbyCliVersion(pkgJson.version)
 
 function Layout({ children }: { children: React.ReactNode }): JSX.Element {
   return (
