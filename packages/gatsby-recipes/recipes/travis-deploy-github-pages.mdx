@@ -1,0 +1,30 @@
+# Deploy to GitHub Pages with Travis CI
+
+GitHub Pages is a solution to host static websites directly in your GitHub repository by pushing site files to `gh-pages` branch.
+
+This recipe:
+
+---
+
+Defines the basic Travis CI configuration to build and push your site's built files to the `gh-pages` branch on each new commit on `master`.
+
+<File
+  path=".travis.yml"
+  content="https://gist.githubusercontent.com/Slashgear/a52090c90e672e129d1bf8957785d34f/raw/13625589c0c29e636d121d17852a8de470953d35/.travis-ci.yml"
+/>
+
+---
+
+Generates a GitHub token on [this page](https://github.com/settings/tokens/new).
+
+---
+
+Toggles on your repository in [your Travis CI configuration page](https://travis-ci.org/account/repositories).
+
+---
+
+Opens the Travis CI settings for this repository and adds the secret _Environment variable_ **GITHUB_TOKEN** with your previously generated token.
+
+---
+
+After installing this recipe, your next commit pushed on `master` branch with trigger deployment of your site.

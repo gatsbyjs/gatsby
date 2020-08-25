@@ -8,6 +8,7 @@ starter:
   - Client-side App
   - CMS:Agility CMS
   - CMS:Cosmic
+  - CMS:Ghost
   - CMS:Headless
   - CMS:Contentful
   - CMS:DatoCMS
@@ -52,6 +53,7 @@ starter:
   - Square
   - Storybook
   - Stripe
+  - Style Guide
   - Styling:Ant Design
   - Styling:Bootstrap
   - Styling:Bulma
@@ -92,6 +94,7 @@ site:
   - Food
   - Freelance
   - Gallery
+  - Ghost
   - Government
   - Healthcare
   - Human Resources

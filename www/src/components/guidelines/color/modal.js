@@ -12,17 +12,16 @@ import { focusStyle } from "../../../utils/styles"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { colors as themeColors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
+const padding = [6, null, null, 8]
+
 const Column = ({ children, ...rest }) => (
   <Flex
     sx={{
       flexWrap: `wrap`,
       width: `100%`,
-      p: 6,
+      p: padding,
       m: 0,
       ...rest,
-      [mediaQueries.md]: {
-        p: 8,
-      },
       [mediaQueries.lg]: {
         width: `50%`,
       },
@@ -231,10 +230,7 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
       <Flex
         sx={{
           alignItems: `baseline`,
-          p: 6,
-          [mediaQueries.md]: {
-            p: 8,
-          },
+          p: padding,
         }}
       >
         <Heading color="black" mr={4} mt={0}>
@@ -249,11 +245,8 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
       </Flex>
       <Box
         sx={{
-          p: 6,
+          p: padding,
           bg: base.hex,
-          [mediaQueries.md]: {
-            p: 8,
-          },
         }}
       >
         <Heading

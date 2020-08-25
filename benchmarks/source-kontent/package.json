@@ -1,0 +1,41 @@
+{
+  "name": "kontent-gatsby-benchmark",
+  "description": "Example site for Kontent as a source for \"Will It Build\"",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "data-update": "cross-env NODE_ENV=production node update-article.js"
+  },
+  "dependencies": {
+    "@kentico/gatsby-source-kontent": "^6.0.1",
+    "@rshackleton/gatsby-transformer-kontent-image": "^2.0.0",
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.19.7",
+    "gatsby-image": "^2.2.40",
+    "gatsby-plugin-benchmark-reporting": "*",
+    "gatsby-plugin-sharp": "^2.4.5",
+    "gatsby-transformer-sharp": "^2.3.14",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@kentico/kontent-delivery": "^9.1.1",
+    "@kentico/kontent-management": "^0.3.19",
+    "cross-env": "^7.0.0",
+    "prettier": "^1.19.1",
+    "rxjs": "^6.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

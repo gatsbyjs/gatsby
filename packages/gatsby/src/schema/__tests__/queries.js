@@ -116,10 +116,10 @@ describe(`Query schema`, () => {
                     query: {
                       filter: {
                         frontmatter: {
-                          authors: { email: { eq: source.email } },
-                          // authors: {
-                          //   elemMatch: { email: { eq: source.email } },
-                          // },
+                          // authors: { email: { eq: source.email } },
+                          authors: {
+                            elemMatch: { email: { eq: source.email } },
+                          },
                         },
                       },
                     },

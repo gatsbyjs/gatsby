@@ -3,7 +3,7 @@ title: Server Side Rendering
 disableTableOfContents: true
 ---
 
-Learn what server side rendering is and why it's preferable to client-side (browser) rendering. You'll also learn how Gatsby uses server-side rendering to create static web sites.
+Learn what server side rendering is and why it's preferable to client-side (browser) rendering. You'll also learn how Gatsby uses server-side rendering to create static websites.
 
 ## What is Server-Side rendering?
 

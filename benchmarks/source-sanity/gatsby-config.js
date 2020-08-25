@@ -11,9 +11,9 @@ module.exports = {
     {
       resolve: `gatsby-source-sanity`,
       options: {
-        projectId: process.env.GATSBY_SANITY_PROJECT_ID,
-        dataset: process.env.GATSBY_SANITY_DATASET,
-      }
-    }
+        projectId: process.env.BENCHMARK_SANITY_PROJECT_ID,
+        dataset: process.env.BENCHMARK_SANITY_DATASET,
+      },
+    },
   ],
 }

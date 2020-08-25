@@ -6,7 +6,10 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
+const resolveCwd = require(`resolve-cwd`)
+const { slash } = require(`gatsby-core-utils`)
 
+const lock = require(`../lock`)
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
@@ -16,17 +19,20 @@ const getObjectFromNode = require(`./utils/get-object-from-node`)
 const { getValueFromNode } = require(`./utils/get-object-from-node`)
 const { REQUIRES_KEYS } = require(`./utils/constants`)
 
+const { read: readPackageJSON } = require(`../npm/package`)
+
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const fullThemePath = path.join(directory, `node_modules`, theme, `src`)
-  const shadowableThemeFiles = glob.sync(fullThemePath + `/**/*.*`, {
+  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
+  const themeSrcPath = path.join(themePath, `src`)
+  const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
 
   const toShadowPath = filePath => {
-    const themePath = filePath.replace(fullThemePath, ``)
-    return path.join(`src`, theme, themePath)
+    const relativeFilePath = slash(filePath).replace(slash(themeSrcPath), ``)
+    return path.join(`src`, theme, relativeFilePath)
   }
 
   const shadowPaths = shadowableThemeFiles.map(toShadowPath)
@@ -92,6 +98,12 @@ const getNameForPlugin = node => {
   return null
 }
 
+const getDescriptionForPlugin = async name => {
+  const pkg = await readPackageJSON({}, name)
+
+  return pkg ? pkg.description : null
+}
+
 const addPluginToConfig = (src, { name, options, key }) => {
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: name,
@@ -136,13 +148,7 @@ const getPluginsFromConfig = src => {
 
 const getConfigPath = root => path.join(root, `gatsby-config.js`)
 
-const readConfigFile = async root => {
-  let src
-  try {
-    src = await fs.readFile(getConfigPath(root), `utf8`)
-  } catch (e) {
-    if (e.code === `ENOENT`) {
-      src = `/**
+const defaultConfig = `/**
  * Configure your Gatsby site with this file.
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
@@ -151,15 +157,49 @@ const readConfigFile = async root => {
 module.exports = {
   plugins: [],
 }`
+
+const readConfigFile = async root => {
+  let src
+  try {
+    src = await fs.readFile(getConfigPath(root), `utf8`)
+  } catch (e) {
+    if (e.code === `ENOENT`) {
+      src = defaultConfig
     } else {
       throw e
     }
   }
 
+  if (src === ``) {
+    src = defaultConfig
+  }
+
   return src
 }
 
+class MissingInfoError extends Error {
+  constructor(foo = `bar`, ...params) {
+    // Pass remaining arguments (including vendor specific ones) to parent constructor
+    super(...params)
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, MissingInfoError)
+    }
+
+    this.name = `MissingInfoError`
+    // Custom debugging information
+    this.foo = foo
+    this.date = new Date()
+  }
+}
+
 const create = async ({ root }, { name, options, key }) => {
+  const release = await lock(`gatsby-config.js`)
+  // TODO generalize this — it's for the demo.
+  if (options?.accessToken === `(Known after install)`) {
+    throw new MissingInfoError({ name, options, key })
+  }
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
@@ -168,7 +208,9 @@ const create = async ({ root }, { name, options, key }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, key || name)
+  const config = await read({ root }, key || name)
+  release()
+  return config
 }
 
 const read = async ({ root }, id) => {
@@ -180,7 +222,20 @@ const read = async ({ root }, id) => {
     )
 
     if (plugin) {
-      return { id, ...plugin, _message: `Installed ${id} in gatsby-config.js` }
+      const description = await getDescriptionForPlugin(id)
+      const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
+        root,
+        plugin.name
+      )
+
+      return {
+        id,
+        description: description || null,
+        ...plugin,
+        shadowedFiles,
+        shadowableFiles,
+        _message: `Installed ${id} in gatsby-config.js`,
+      }
     } else {
       return undefined
     }
@@ -321,24 +376,12 @@ module.exports.all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  // TODO: Consider mapping to read function
-  return plugins.map(plugin => {
-    const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
-      root,
-      plugin.name
-    )
-
-    return {
-      id: plugin.name,
-      ...plugin,
-      shadowedFiles,
-      shadowableFiles,
-    }
-  })
+  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
 }
 
 const schema = {
   name: Joi.string(),
+  description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
@@ -346,13 +389,13 @@ const schema = {
 }
 
 const validate = resource => {
-  if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
+  if (REQUIRES_KEYS.includes(resource.name) && !resource._key) {
     return {
       error: `${resource.name} requires a key to be set`,
     }
   }
 
-  if (resource.key && resource.key === resource.name) {
+  if (resource._key && resource._key === resource.name) {
     return {
       error: `${resource.name} requires a key to be different than the plugin name`,
     }
@@ -364,7 +407,10 @@ const validate = resource => {
 exports.schema = schema
 exports.validate = validate
 
-module.exports.plan = async ({ root }, { id, key, name, options }) => {
+module.exports.plan = async (
+  { root },
+  { id, key, name, options, isLocal = false }
+) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
@@ -383,6 +429,7 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     ...prettierConfig,
     parser: `babel`,
   })
+
   const diff = await getDiff(configSrc, newContents)
 
   return {
@@ -392,5 +439,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
+    dependsOn: isLocal ? null : [{ resourceName: `NPMPackage`, name }],
   }
 }

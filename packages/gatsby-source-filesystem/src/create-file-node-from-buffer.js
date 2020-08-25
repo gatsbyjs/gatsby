@@ -74,8 +74,8 @@ async function processBufferNode({
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
 
-    await fs.ensureDir(path.join(pluginCacheDir, hash))
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
+    await fs.ensureDir(path.dirname(filename))
 
     // Cache the buffer contents
     await writeBuffer(filename, buffer)

@@ -45,7 +45,7 @@ deep knowledge of React we started looking for an alternative based on that hot
 new thing.
 
 The first thing that caught our attention was
-[Next.js](https://github.com/zeit/next.js/), as seemingly everyone going for a
+[Next.js](https://github.com/vercel/next.js/), as seemingly everyone going for a
 server-side rendered React app was using it. After some days hacking on our app
 we encountered some issues, especially when it came to frontend rendering. We
 chose [prismic.io](https://prismic.io/) for our backend system which served all

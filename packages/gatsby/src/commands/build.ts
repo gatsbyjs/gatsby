@@ -6,15 +6,15 @@ import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
 import { store, readState } from "../redux"
-import queryUtil from "../query"
 import * as appDataUtil from "../utils/app-data"
+import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
@@ -26,6 +26,17 @@ import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
+import {
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+  writeOutRequires,
+} from "../services"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
+import { updateSiteMetadata } from "gatsby-core-utils"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -53,6 +64,15 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
+  await updateSiteMetadata({
+    name: program.sitePackageJson.name,
+    sitePath: program.directory,
+    lastRun: Date.now(),
+    pid: process.pid,
+  })
+
+  markWebpackStatusAsPending()
+
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
   const buildActivity = report.phantomActivity(`build`)
@@ -66,8 +86,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
-    ...program,
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+    program,
     parentSpan: buildSpan,
   })
 
@@ -76,18 +96,29 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlTracing: program.graphqlTracing,
   })
 
-  const {
-    processPageQueries,
-    processStaticQueries,
-  } = queryUtil.getInitialQueryProcessors({
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  await runStaticQueries({
+    queryIds,
     parentSpan: buildSpan,
+    store,
     graphqlRunner,
   })
 
-  await processStaticQueries()
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
+  })
 
   await apiRunnerNode(`onPreBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -134,7 +165,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await processPageQueries()
+  await flushPendingPageDataWrites()
+  markWebpackStatusAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
@@ -247,7 +279,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()
@@ -291,23 +323,23 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `${program.directory}/.cache`,
       `newPages.txt`
     )
+    const createdFilesContent = pagePaths.length
+      ? `${pagePaths.join(`\n`)}\n`
+      : ``
+
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `deletedPages.txt`
     )
+    const deletedFilesContent = deletedPageKeys.length
+      ? `${deletedPageKeys.join(`\n`)}\n`
+      : ``
 
-    if (pagePaths.length) {
-      await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`.cache/newPages.txt created`)
-    }
-    if (deletedPageKeys.length) {
-      await fs.writeFile(
-        deletedFilesPath,
-        `${deletedPageKeys.join(`\n`)}\n`,
-        `utf8`
-      )
-      report.info(`.cache/deletedPages.txt created`)
-    }
+    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+    report.info(`.cache/newPages.txt created`)
+
+    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+    report.info(`.cache/deletedPages.txt created`)
   }
 
   if (await userPassesFeedbackRequestHeuristic()) {

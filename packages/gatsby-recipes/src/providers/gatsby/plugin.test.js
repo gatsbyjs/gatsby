@@ -18,7 +18,7 @@ const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-hello-world`
 )
-const name = `gatsby-plugin-foo`
+const name = `gatsby-source-filesystem`
 
 describe(`gatsby-plugin resource`, () => {
   let tmpDir
@@ -139,7 +139,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`validates the gatsby-source-filesystem specifies a key that isn't equal to the name`, async () => {
     const result = plugin.validate({
       name: `gatsby-source-filesystem`,
-      key: `gatsby-source-filesystem`,
+      _key: `gatsby-source-filesystem`,
     })
 
     expect(result.error).toEqual(
@@ -166,8 +166,11 @@ describe(`gatsby-plugin resource`, () => {
       },
     }
 
-    await plugin.create(context, fooPlugin)
-    await plugin.create(context, barPlugin)
+    const createPromise1 = plugin.create(context, fooPlugin)
+    const createPromise2 = plugin.create(context, barPlugin)
+
+    await createPromise1
+    await createPromise2
 
     const barResult = await plugin.read(context, barPlugin.key)
     const fooResult = await plugin.read(context, fooPlugin.key)
@@ -192,7 +195,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`handles config options as an object`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
     const newConfigSrc = addPluginToConfig(configSrc, {
-      name: `gatsby-plugin-foo`,
+      name: `gatsby-source-filesystem`,
       options: {
         foo: 1,
         bar: `baz`,
@@ -214,7 +217,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`creates default gatsby-config.js if there isn't one already`, async () => {
     const result = await plugin.create(
       { root: emptyRoot },
-      { name: `gatsby-plugin-foo` }
+      { name: `gatsby-source-filesystem` }
     )
     expect(result).toMatchSnapshot()
   })

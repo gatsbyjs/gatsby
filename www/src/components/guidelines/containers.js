@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const container = {
-  boxSizing: `border-box`,
   position: `relative`,
   px: 6,
   zIndex: 1,
@@ -28,13 +27,24 @@ export const Section = ({ children, ...rest }) => (
     sx={{
       ...rest,
       ...container,
-      py: 4,
-      [mediaQueries.sm]: {
-        py: 5,
-      },
+      py: [4, null, 5, 8],
       [mediaQueries.md]: {
-        py: 8,
         px: 10,
+      },
+    }}
+  >
+    {children}
+  </section>
+)
+
+export const SectionNoRightPadding = ({ children }) => (
+  <section
+    sx={{
+      ...container,
+      py: [4, null, 5, 8],
+      pr: 0,
+      [mediaQueries.md]: {
+        pl: 10,
       },
     }}
   >
@@ -69,11 +79,6 @@ export const CopyColumn = ({
   ...rest
 }) => (
   <div
-    css={{
-      "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
-    }}
     sx={{
       ...rest,
       fontSize: 2,
@@ -89,6 +94,9 @@ export const CopyColumn = ({
         mb: 0,
         maxWidth: `none`,
         width: narrow ? copyColumnWidth : `30rem`,
+      },
+      "p, ul, ol": {
+        maxWidth: `40rem`,
       },
     }}
   >
@@ -109,21 +117,26 @@ export const CopyColumn = ({
   </div>
 )
 
-export const ContentColumn = ({ children, fullWidth, ...rest }) => (
+export const ContentColumn = ({
+  children,
+  fullWidth,
+  overflowXMobile,
+  ...rest
+}) => (
   <div
-    css={{
-      "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
-    }}
     sx={{
       ...rest,
       width: `100%`,
       overflow: `hidden`,
+      overflowX: overflowXMobile ? `auto` : `hidden`,
       position: `relative`,
       [mediaQueries.lg]: {
         width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
+        overflowX: `hidden`,
+      },
+      "p, ul, ol": {
+        maxWidth: `40rem`,
       },
     }}
   >

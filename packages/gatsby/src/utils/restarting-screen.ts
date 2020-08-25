@@ -91,8 +91,7 @@ export default html`
             .then(res => res.json())
             .then(services => {
               const socket = io(
-                window.location.protocol +
-                  "//" +
+                "http://" +
                   window.location.hostname +
                   ":" +
                   services.developstatusserver.port
@@ -103,6 +102,13 @@ export default html`
 
               socket.on("develop:needs-restart", () => {
                 socket.emit("develop:restart")
+              })
+
+              socket.on("disconnect", () => {
+                console.warn(
+                  "[socket.io] Disconnected. Unable to perform health-check."
+                )
+                socket.close()
               })
             })
         </script>

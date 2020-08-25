@@ -3,7 +3,7 @@ import { border, typography, compose } from "styled-system"
 import themeGet from "@styled-system/theme-get"
 import propTypes from "@styled-system/prop-types"
 
-import Box from "./box"
+import { Box } from "theme-ui"
 
 const buttonPropTypes = { ...propTypes.border, ...propTypes.typography }
 

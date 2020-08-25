@@ -1,6 +1,5 @@
 ---
 title: GraphQL & Gatsby
-overview: true
 ---
 
 When building with Gatsby, you access your data through a query language named [GraphQL](https://graphql.org/). GraphQL allows you to declaratively express your data needs. This is done with `queries`, queries are the representation of the data you need. A query looks like this:

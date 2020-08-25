@@ -95,10 +95,7 @@ Instructions for making changes to the Gatsby source code, tests, internals, API
 
 ### Starters or Site Showcase
 
-There are specific pages about contributing to various parts of the Gatsby ecosystem:
-
-- [Showcase submissions](/contributing/site-showcase-submissions/)
-- [Starter library](/contributing/submit-to-starter-library/)
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
 
 ### Blog posts
 
@@ -108,7 +105,7 @@ For the Gatsby blog, it's necessary to run your content idea by the Gatsby team 
 
 After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
-The Gatsby core and learning teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
 
 These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
 
@@ -151,8 +148,6 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
   ```
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
-
-_**Note:** as a member of the Gatsby repo, you can also clone it directly (instead of forking and using an upstream remote workflow). You can then push changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows) to open PRs._
 
 ## Additional resources
 

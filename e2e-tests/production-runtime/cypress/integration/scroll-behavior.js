@@ -34,6 +34,25 @@ describe(`Scroll behaviour`, () => {
     cy.getTestElement(`index-link`).click().waitForRouteChange()
   })
 
+  it(`should scroll to hashes - even with encoded characters`, () => {
+    cy.visit(`/`).waitForRouteChange()
+    cy.getTestElement(`long-page-id`).click().waitForRouteChange()
+
+    // UI should auto scroll to the id with a matching hash
+    cy.window().then(win => {
+      let idScrollY = win.scrollY
+      expect(win.scrollY).not.to.eq(0, 0)
+
+      cy.scrollTo(`bottom`)
+      cy.go(`back`).waitForRouteChange()
+      cy.go(`forward`).waitForRouteChange()
+
+      cy.window().then(updatedWindow => {
+        expect(updatedWindow.scrollY).not.to.eq(idScrollY)
+      })
+    })
+  })
+
   it(`should keep track of location.key`, () => {
     cy.visit(`/`).waitForRouteChange()
 

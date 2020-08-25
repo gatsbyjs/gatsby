@@ -30,9 +30,12 @@ plugins: [
   {
     resolve: `gatsby-plugin-sharp`,
     options: {
-      useMozJpeg: false,
+      // Available options and their defaults:
+      base64Width: 20,
+      forceBase64Format: ``, // valid formats: png,jpg,webp
+      useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
       stripMetadata: true,
-      defaultQuality: 75,
+      defaultQuality: 50,
     },
   },
 ]
@@ -137,6 +140,8 @@ following:
 - `grayscale` (bool, default: false)
 - `duotone` (bool|obj, default: false)
 - `toFormat` (string, default: '')
+- `toFormatBase64` (string, default: '')
+- `base64Width` (int, default: 20)
 - `cropFocus` (string, default: 'ATTENTION')
 - `fit` (string, default: 'COVER')
 - `pngCompressionSpeed` (int, default: 4)
@@ -146,6 +151,26 @@ following:
 
 Convert the source image to one of the following available options: `NO_CHANGE`,
 `JPG`, `PNG`, `WEBP`.
+
+#### toFormatBase64
+
+base64 image uses the image format from the source , or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
+
+`WEBP` allows for a smaller data size, allowing you to reduce your HTML size when transferring over the network, or to use a larger base64 placeholder width default for improved image placeholder quality.
+
+[Not all browsers support `WEBP`](https://caniuse.com/#feat=webp). It would be wasteful to include a fallback image format in this case. Consider also adding a `backgroundColor` placeholder as a fallback instead.
+
+The plugin config option `forceBase64Format` performs the equivalent functionality by default to all your base64 placeholders. `toFormatBase64` has a higher priority for base64 images that need to selectively use a different format.
+
+#### base64Width
+
+The width in pixels for your base64 placeholder to use. The height will also be adjusted based on the aspect ratio of the image. Use this to increase the image quality by allowing more pixels to be used at the expense of increasing the file size of the data to be transferred.
+
+The default for Gatsby is `20`px. This keeps the data size low enough to embed into the HTML document for immediate display on DOM loaded and avoids an additional network request.
+
+[Facebook](https://engineering.fb.com/android/the-technology-behind-preview-photos/) and [Medium](https://jmperezperez.com/medium-image-progressive-loading-placeholder/) are both known to use `42`px width for their image placeholders. However Medium presently uses a solid background color placeholder to load the page as fast as possible, followed by an image placeholder requested over the network instead of embedding it with base64.
+
+The plugin config has an equivalent option, allowing you to change the default for all base64 placeholders. This parameter option has a higher priority over the plugin config option.
 
 #### cropFocus
 

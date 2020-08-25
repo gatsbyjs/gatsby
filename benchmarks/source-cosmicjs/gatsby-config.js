@@ -18,16 +18,16 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-cosmicjs',
+      resolve: `gatsby-source-cosmicjs`,
       options: {
-        apiURL: process.env.COSMIC_API_URL,
-        bucketSlug: process.env.COSMIC_BUCKET,
-        objectTypes: ['posts'],
+        apiURL: process.env.BENCHMARK_COSMIC_API_URL,
+        bucketSlug: process.env.BENCHMARK_COSMIC_BUCKET,
+        objectTypes: [`posts`],
         apiAccess: {
-          read_key: process.env.COSMIC_READ_KEY,
+          read_key: process.env.BENCHMARK_COSMIC_READ_KEY,
         },
-        localMedia: true
-      }
+        localMedia: true,
+      },
     },
   ],
 }

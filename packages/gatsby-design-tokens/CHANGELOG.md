@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.9...gatsby-design-tokens@2.0.10) (2020-07-03)
+
+### Bug Fixes
+
+- **gatsby-design-tokens:** Add border definitions to theme ([#25486](https://github.com/gatsbyjs/gatsby/issues/25486)) ([7efdbd3](https://github.com/gatsbyjs/gatsby/commit/7efdbd3))
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.8...gatsby-design-tokens@2.0.9) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-design-tokens:** yarn run watch broken ([#25369](https://github.com/gatsbyjs/gatsby/issues/25369)) ([e563a2e](https://github.com/gatsbyjs/gatsby/commit/e563a2e))
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.7...gatsby-design-tokens@2.0.8) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.6...gatsby-design-tokens@2.0.7) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.5...gatsby-design-tokens@2.0.6) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-design-tokens

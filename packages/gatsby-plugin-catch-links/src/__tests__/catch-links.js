@@ -401,7 +401,7 @@ describe(`navigation is routed through browser if resources have failed and the 
   })
 })
 
-describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
+describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer

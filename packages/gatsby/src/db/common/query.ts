@@ -45,12 +45,14 @@ export interface IDbFilterStatement {
  * structured representation of each distinct path of the query. We convert
  * nested objects with multiple keys to separate instances.
  */
-export function createDbQueriesFromObject(filter: object): Array<DbQuery> {
+export function createDbQueriesFromObject(
+  filter: Record<string, any>
+): Array<DbQuery> {
   return createDbQueriesFromObjectNested(filter)
 }
 
 function createDbQueriesFromObjectNested(
-  filter: object,
+  filter: Record<string, any>,
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
@@ -102,24 +104,6 @@ export function prefixResolvedFields(
     }
   })
   return queries
-}
-
-export function dbQueryToSiftQuery(query: DbQuery): object {
-  const result = {}
-  if (query.type === `elemMatch`) {
-    result[query.path.join(`.`)] = {
-      $elemMatch: dbQueryToSiftQuery(query.nestedQuery),
-    }
-  } else if (query.path.length) {
-    result[query.path.join(`.`)] = {
-      [query.query.comparator]: query.query.value,
-    }
-  } else {
-    return {
-      [query.query.comparator]: query.query.value,
-    }
-  }
-  return result
 }
 
 // Converts a nested mongo args object into a dotted notation. acc

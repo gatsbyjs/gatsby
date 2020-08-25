@@ -7,7 +7,7 @@ import { CirclesOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const CloudCalloutRoot = styled(`div`)`
-  border: 1px solid ${p => console.log(p) || p.theme.colors.purple[`20`]};
+  border: 1px solid ${p => p.theme.colors.purple[`20`]};
   border-radius: ${p => p.theme.radii[2]};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[3]};
@@ -46,8 +46,10 @@ const CloudCallout = ({ narrow = true, children }) => (
   <CloudCalloutRoot narrow={narrow}>
     <CloudText>{children}</CloudText>
     Try it on{` `}
-    <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>!
-    <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
+    <OutboundLink href="https://www.gatsbyjs.com">Gatsby Cloud</OutboundLink>!
+    <Circles>
+      <CirclesOrnament />
+    </Circles>
   </CloudCalloutRoot>
 )
 

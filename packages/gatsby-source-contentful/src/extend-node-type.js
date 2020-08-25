@@ -125,6 +125,11 @@ const resolveFixed = (image, options) => {
     options.width = 400
   }
 
+  // If only a height is given, calculate the width based on the height and the aspect ratio
+  if (options.height !== undefined && options.width === undefined) {
+    options.width = Math.round(options.height * desiredAspectRatio)
+  }
+
   // If we're cropping, calculate the specified aspect ratio.
   if (options.width !== undefined && options.height !== undefined) {
     desiredAspectRatio = options.width / options.height

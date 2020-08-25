@@ -228,7 +228,7 @@ Update the transform in `jest.config.js` to run `jest-preprocess` on files in yo
     "^.+\\.[jt]sx?$": "<rootDir>/jest-preprocess.js",
 ```
 
-Also update `jest.preprocess.js` with the following Babel preset to look like this:
+Also update `jest-preprocess.js` with the following Babel preset to look like this:
 
 ```js:title=jest-preprocess.js
 const babelOptions = {
