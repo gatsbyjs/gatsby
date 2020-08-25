@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.24.49",
+  "version": "2.24.50",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -14,7 +14,6 @@
     "@babel/core": "^7.10.3",
     "@babel/parser": "^7.10.3",
     "@babel/runtime": "^7.10.3",
-    "@babel/types": "^7.10.3",
     "@babel/traverse": "^7.10.3",
     "@babel/types": "^7.10.3",
     "@hapi/joi": "^15.1.1",
