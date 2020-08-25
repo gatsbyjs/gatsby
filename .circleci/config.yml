@@ -1,13 +1,3 @@
-aliases:
-  attach_to_bootstrap:
-    attach_workspace:
-      at: ./
-  node-linux-executor:
-    executor: node
-    parameters:
-      concurrency:
-        default: 2
-        type: integer
 executors:
   node:
     docker:
@@ -30,7 +20,7 @@ jobs:
           override-ci-command: yarn install --frozen-lockfile --immutable
           pkg-manager: yarn
       - run:
-          command: yarn bootstrap -- --concurrency=<< parameters.concurrency >> --stream
+          command: yarn bootstrap -- concurrency=<< parameters.concurrency >> --stream
           name: Build monorepo
       - persist_to_workspace:
           paths:

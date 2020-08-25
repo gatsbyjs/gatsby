@@ -16,15 +16,3 @@ executors:
         default: "12.18.3"
     docker:
       - image: cimg/node:<< parameters.image >>
-
-aliases:
-  node-linux-executor: &node-linux-executor
-    parameters:
-      concurrency:
-        type: integer
-        default: 2
-    executor: node
-
-  attach_to_bootstrap: &attach_to_bootstrap
-    attach_workspace:
-      at: ./

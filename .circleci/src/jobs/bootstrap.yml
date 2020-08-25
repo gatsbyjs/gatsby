@@ -12,7 +12,7 @@ steps:
       override-ci-command: yarn install --frozen-lockfile --immutable
   - run:
       name: Build monorepo
-      command: yarn bootstrap -- --concurrency=<< parameters.concurrency >> --stream
+      command: yarn bootstrap -- concurrency=<< parameters.concurrency >> --stream
   # Persist the workspace with all packages already built
   - persist_to_workspace:
       root: ./
