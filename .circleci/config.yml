@@ -17,6 +17,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - node/install-packages:
+          cache-name: monorepo-deps
           cache-path: ~/.cache
           pkg-manager: yarn
       - run:
@@ -35,8 +36,7 @@ jobs:
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
           name: remove workspaces from package.json
       - node/install-packages:
-          cache-version: no-workspace-v1
-          override-ci-command: yarn install --frozen-lockfile --immutable
+          cache-name: no-workspace
           pkg-manager: yarn
       - run: yarn lint:code
       - run: yarn lint:docs

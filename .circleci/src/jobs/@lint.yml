@@ -10,8 +10,7 @@ lint:
           sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
     - node/install-packages:
         pkg-manager: yarn
-        override-ci-command: yarn install --frozen-lockfile --immutable
-        cache-version: no-workspace-v1
+        cache-name: no-workspace
         # cache-path: ~/.cache
     - run: yarn lint:code
     - run: yarn lint:docs

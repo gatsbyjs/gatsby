@@ -8,6 +8,7 @@ steps:
   - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
   - node/install-packages:
       pkg-manager: yarn
+      cache-name: monorepo-deps
       cache-path: ~/.cache
   - run:
       name: Build monorepo
