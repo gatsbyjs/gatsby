@@ -54,7 +54,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
   )
 
   if (!stuckStatusDiagnosticTimeoutDelay && !stuckStatusWatchdogTimeoutDelay) {
-    // none of timers are enabled, so this is middleware is no-op
+    // none of timers are enabled, so this is no-op middleware
     return (): void => {}
   }
 
