@@ -12,7 +12,7 @@ steps:
       at: ./
   - run:
       name: Run tests
-      command: yarn jest --ci --runInBand
+      command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split)
       environment:
         NODE_OPTIONS: --max-old-space-size=2048
         GENERATE_JEST_REPORT: true
