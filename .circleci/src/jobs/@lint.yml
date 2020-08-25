@@ -11,7 +11,7 @@ lint:
     - node/install-packages:
         pkg-manager: yarn
         cache-name: no-workspace
-        # cache-path: ~/.cache
+        cache-path: ~/.cache
     - run: yarn lint:code
     - run: yarn lint:docs
     - run: yarn lint:other
