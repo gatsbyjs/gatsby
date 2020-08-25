@@ -1,5 +1,4 @@
-executor:
-  - node
+executor: node
 parameters:
   concurrency:
     type: integer

@@ -8,8 +8,7 @@ executors:
         type: string
 jobs:
   bootstrap:
-    executor:
-      - node
+    executor: node
     parameters:
       concurrency:
         default: 2
