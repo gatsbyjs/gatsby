@@ -21,7 +21,7 @@
     "is-docker": "2.0.0",
     "lodash": "^4.17.15",
     "node-fetch": "2.6.0",
-    "uuid": "3.4.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
