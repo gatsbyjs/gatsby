@@ -45,8 +45,6 @@ const stuckStatusDiagnosticTimeoutDelay = calculateTimeoutDelay(
   1000 * 5 // 5 seconds minimal value (this is mostly useful for debugging diagnostic code itself)
 )
 
-// console.log(`stuck stuff`, stuckStatusDiagnosticTimeoutDelay)
-
 const stuckStatusWatchdogTimeoutDelay = calculateTimeoutDelay(
   process.env.GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT,
   1000 * 60 * 10, // 10 minutes default timeout
