@@ -1,6 +1,7 @@
 import { ActionsUnion } from "./types"
 import { ActivityStatuses } from "../constants"
 import { calcElapsedTime } from "../../util/calc-elapsed-time"
+import { isActivityInProgress } from "./utils"
 import type { Reporter } from "../reporter"
 import type { GatsbyCLIStore } from "./"
 
@@ -68,11 +69,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
 
     return JSON.stringify(
       Object.values(activities)
-        .filter(
-          activity =>
-            activity.status === ActivityStatuses.InProgress ||
-            activity.status === ActivityStatuses.NotStarted
-        )
+        .filter(activity => isActivityInProgress(activity.status))
         .map(activity => {
           if (!activity.startTime) {
             return activity
