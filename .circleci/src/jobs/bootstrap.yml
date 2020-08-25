@@ -18,3 +18,4 @@ steps:
       root: ./
       paths:
         - "packages/"
+        - "node_modules"

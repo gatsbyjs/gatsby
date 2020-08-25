@@ -26,6 +26,7 @@ jobs:
       - persist_to_workspace:
           paths:
             - packages/
+            - node_modules
           root: ./
   lint:
     executor: node
