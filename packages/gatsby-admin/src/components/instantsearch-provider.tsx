@@ -6,6 +6,7 @@ import {
   RefinementList,
   ToggleRefinement,
 } from "react-instantsearch-dom"
+import algoliaConfig from "../utils/algolia-config"
 
 export default function InstantSearchProvider({
   children,
@@ -16,8 +17,8 @@ export default function InstantSearchProvider({
 }): JSX.Element {
   return (
     <InstantSearch
-      apiKey="ae43b69014c017e05950a1cd4273f404"
-      appId="OFCNCOG2CU"
+      apiKey={algoliaConfig.API_KEY}
+      appId={algoliaConfig.APPLICATION_ID}
       indexName="npm-search"
       searchState={searchState}
     >

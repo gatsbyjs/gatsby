@@ -1,7 +1,11 @@
 import React from "react"
 import algoliasearch from "algoliasearch"
+import algoliaConfig from "./algolia-config"
 
-const client = algoliasearch(`OFCNCOG2CU`, `ae43b69014c017e05950a1cd4273f404`)
+const client = algoliasearch(
+  algoliaConfig.APPLICATION_ID,
+  algoliaConfig.API_KEY
+)
 const searchIndex = client.initIndex(`npm-search`)
 
 interface IUseNpmPackageDataResult {
