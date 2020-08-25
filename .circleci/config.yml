@@ -190,7 +190,7 @@ jobs:
           override-ci-command: yarn install --frozen-lockfile --immutable
       - run:
           name: Build monorepo
-          command: yarn bootstrap
+          command: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       # Persist the workspace with all packages already built
       - persist_to_workspace:
           root: ./
