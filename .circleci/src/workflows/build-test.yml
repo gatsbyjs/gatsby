@@ -1,0 +1,6 @@
+jobs:
+  - bootstrap
+  - lint
+  - typecheck:
+      requires:
+        - bootstrap

@@ -1,0 +1,138 @@
+# copied from https://github.com/CircleCI-Public/node-orb/blob/master/src/commands/install-packages.yml
+
+description: >
+  Install your Node packages with automated caching and best practices applied.
+
+parameters:
+  pkg-manager:
+    type: enum
+    enum: ["npm", "yarn"]
+    default: "npm"
+    description: Select the default node package manager to use.
+  with-cache:
+    type: boolean
+    default: true
+    description: Cache your node packages automatically for faster install times.
+  app-dir:
+    type: string
+    default: "~/project"
+    description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
+  override-ci-command:
+    description: |
+      By default, packages will be installed with "npm ci" or "yarn install --frozen-lockfile".
+      Optionally supply a custom package installation command, with any additional flags needed.
+    type: string
+    default: ""
+  cache-path:
+    description: |
+      By default, this orb will utilize 'npm ci' and cache the '~/.npm' directory. Override which path to cache with this parameter.
+    type: string
+    default: "node-deps"
+  cache-name:
+    description: the name of the cache, by default it's node-deps.
+    type: string
+    default: node-deps
+  cache-version:
+    type: string
+    default: v1
+    description: Change the default cache version if you need to clear the cache for any reason.
+  include-branch-in-cache-key:
+    type: boolean
+    default: true
+    description: >
+      If true, this cache bucket will only apply to jobs within the same branch.
+
+steps:
+  - run:
+      name: Checking for package.json.
+      working_directory: <<parameters.app-dir>>
+      command: |
+        if [ ! -f "package.json" ]; then
+          echo
+          echo "---"
+          echo "Unable to find your package.json file. Did you forget to set the app-dir parameter?"
+          echo "---"
+          echo
+          echo "Current directory: $(pwd)"
+          echo
+          echo
+          echo "List directory: "
+          echo
+          ls
+          exit 1
+        fi
+  - when: # Install packages based on NPM
+      condition:
+        equal: [npm, << parameters.pkg-manager >>]
+      steps:
+        - when: # Restore cache for NPM
+            condition: << parameters.with-cache >>
+            steps:
+              - restore_cache:
+                  keys:
+                    - <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+        - run:
+            name: Installing NPM packages
+            working_directory: <<parameters.app-dir>>
+            command: |
+              if [[ ! -z "<< parameters.override-ci-command >>" ]]; then
+                echo "Running override package installation command:"
+                << parameters.override-ci-command >>
+              else
+                npm ci
+              fi
+        - when: # cache enabled, save cache
+            condition: << parameters.with-cache >>
+            steps:
+              - when: # custom cache path selected
+                  condition: << parameters.cache-path >>
+                  steps:
+                    - save_cache:
+                        key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                        paths:
+                          - <<parameters.cache-path>>
+              - unless: # npm ci cache path
+                  condition: << parameters.cache-path >>
+                  steps:
+                    - save_cache:
+                        key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                        paths:
+                          - ~/.npm
+
+  - when: # Install packages based on YARN
+      condition:
+        equal: [yarn, << parameters.pkg-manager >>]
+      steps:
+        - when: # Restore cache for YARN
+            condition: << parameters.with-cache >>
+            steps:
+              - restore_cache:
+                  keys:
+                    - <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+        - run:
+            name: Installing YARN packages
+            working_directory: <<parameters.app-dir>>
+            command: |
+              if [[ ! -z "<< parameters.override-ci-command >>" ]]; then
+                echo "Running override package installation command:"
+                << parameters.override-ci-command >>
+              else
+                yarn install --frozen-lockfile
+              fi
+        - when: # cache enabled, save cache
+            condition: << parameters.with-cache >>
+            steps:
+              - when: # custom cache path selected
+                  condition: << parameters.cache-path >>
+                  steps:
+                    - save_cache:
+                        key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                        paths:
+                          - <<parameters.cache-path>>
+              - unless: # use node modules
+                  condition: << parameters.cache-path >>
+                  steps:
+                    - save_cache:
+                        key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                        paths:
+                          - <<parameters.app-dir>>/node_modules
