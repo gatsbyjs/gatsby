@@ -52,6 +52,28 @@ jobs:
           at: ./
       - run: yarn typecheck
       - run: yarn check-repo-fields
+  unit_tests_node:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - attach_workspace:
+          at: ./
+      - run:
+          command: yarn jest --ci -runInBand
+          environment:
+            GENERATE_JEST_REPORT: true
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+            NODE_OPTIONS: --max-old-space-size=2048
+          matrix:
+            parameters:
+              version:
+                - 10.13.0
+                - 12
+          name: Run tests
+      - store_test_results:
+          path: ./test-results/jest-node/
 orbs:
   node:
     commands:
