@@ -10,8 +10,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-flotiq',
       options: {
-        baseUrl: process.env.GATSBY_FLOTIQ_API_URL,
-        authToken: process.env.GATSBY_FLOTIQ_API_TOKEN,
+        baseUrl: "https://api.flotiq.com",
+        authToken: process.env.BENCHMARK_FLOTIQ_API_TOKEN,
         forceReload: false,
       },
     },
