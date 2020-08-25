@@ -6,10 +6,10 @@ parameters:
 steps:
   - checkout
   - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
-  - run: yarn config set yarn-offline-mirror ./npm-packages-offline-cache
+  - run: yarn config set yarn-offline-mirror ~/npm-packages-offline-cache
   - run: yarn config set yarn-offline-mirror-pruning true
   - restore_cache:
-      key: npm-packages-offline-cache
+      key: npm-packages-offline-cache-v2
   - node/install-packages:
       pkg-manager: yarn
       with-cache: false
@@ -19,7 +19,7 @@ steps:
   - save_cache:
       paths:
         - ~/.npm-packages-offline-cache
-      key: npm-packages-offline-cache
+      key: npm-packages-offline-cache-v2
   - run:
       name: Build monorepo
       command: yarn bootstrap -- concurrency=<< parameters.concurrency >> --stream

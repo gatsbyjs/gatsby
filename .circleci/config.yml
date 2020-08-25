@@ -16,10 +16,10 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
-      - run: yarn config set yarn-offline-mirror ./npm-packages-offline-cache
+      - run: yarn config set yarn-offline-mirror ~/npm-packages-offline-cache
       - run: yarn config set yarn-offline-mirror-pruning true
       - restore_cache:
-          key: npm-packages-offline-cache
+          key: npm-packages-offline-cache-v2
       - node/install-packages:
           cache-name: monorepo-deps
           cache-path: ~/.cache/
@@ -27,7 +27,7 @@ jobs:
           pkg-manager: yarn
           with-cache: false
       - save_cache:
-          key: npm-packages-offline-cache
+          key: npm-packages-offline-cache-v2
           paths:
             - ~/.npm-packages-offline-cache
       - run:
@@ -55,8 +55,6 @@ jobs:
           cache-path: ~/.cache
           pkg-manager: yarn
       - run: yarn npm-run-all -p lint:code lint:docs lint:other --aggregate-output --max-parallel=<< parameters.concurrency >>
-      - run: yarn lint:docs
-      - run: yarn lint:other
   typecheck:
     executor: node
     steps:

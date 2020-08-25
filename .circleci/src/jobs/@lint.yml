@@ -17,8 +17,6 @@ lint:
         cache-name: no-workspace
         cache-path: ~/.cache
     - run: yarn npm-run-all -p lint:code lint:docs lint:other --aggregate-output --max-parallel=<< parameters.concurrency >>
-    - run: yarn lint:docs
-    - run: yarn lint:other
 
 typecheck:
   executor: node
