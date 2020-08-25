@@ -1,4 +1,8 @@
 lint:
+  parameters:
+    concurrency:
+      type: integer
+      default: 2
   executor: node
   steps:
     - checkout
@@ -12,7 +16,7 @@ lint:
         pkg-manager: yarn
         cache-name: no-workspace
         cache-path: ~/.cache
-    - run: yarn lint:code
+    - run: yarn npm-run-all -p lint:code lint:docs lint:other --aggregate-output --max-parallel=<< parameters.concurrency >>
     - run: yarn lint:docs
     - run: yarn lint:other
 

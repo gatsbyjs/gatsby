@@ -4,12 +4,15 @@ jobs:
   - typecheck:
       requires:
         - bootstrap
-  - unit_tests_node:
-      matrix:
-        parameters:
-          version:
-            - "10.13.0"
-            - "12"
+  - unit_tests:
+      name: unit_tests_node10
+      version: "10.14.2"
+      requires:
+        - lint
+        - typecheck
+  - unit_tests:
+      name: unit_tests_node12
+      version: "12.18"
       requires:
         - lint
         - typecheck
