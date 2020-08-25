@@ -7,6 +7,9 @@ orbs:
 executors:
   node:
     parameters:
+      concurrency:
+        type: integer
+        default: 2
       image:
         type: string
         # First 10.x LTS release, but old Yarn
@@ -190,7 +193,7 @@ jobs:
           override-ci-command: yarn install --frozen-lockfile --immutable
       - run:
           name: Build monorepo
-          command: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
+          command: yarn bootstrap --concurrency=<< parameters.concurrency >> --stream
       # Persist the workspace with all packages already built
       - persist_to_workspace:
           root: ./
