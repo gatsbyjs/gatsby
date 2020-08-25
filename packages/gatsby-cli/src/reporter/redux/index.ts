@@ -27,7 +27,7 @@ function calculateTimeoutDelay(
     return defaultValue
   }
 
-  const parsedToNumber = parseInt(envVarValue)
+  const parsedToNumber = parseInt(envVarValue, 10)
   if (isNaN(parsedToNumber)) {
     // it's truthy, but not a number - let's enable it with default value
     return defaultValue
