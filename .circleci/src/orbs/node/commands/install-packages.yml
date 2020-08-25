@@ -117,7 +117,7 @@ steps:
                 echo "Running override package installation command:"
                 << parameters.override-ci-command >>
               else
-                yarn install --frozen-lockfile
+                yarn install --frozen-lockfile --prefer-offline
               fi
         - when: # cache enabled, save cache
             condition: << parameters.with-cache >>

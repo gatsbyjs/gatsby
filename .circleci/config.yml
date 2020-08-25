@@ -172,7 +172,7 @@ orbs:
                         echo "Running override package installation command:"
                         << parameters.override-ci-command >>
                       else
-                        yarn install --frozen-lockfile
+                        yarn install --frozen-lockfile --prefer-offline
                       fi
                     name: Installing YARN packages
                     working_directory: <<parameters.app-dir>>
