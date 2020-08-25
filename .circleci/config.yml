@@ -48,8 +48,8 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - at: ./
-        attach_workspace: null
+      - attach_workspace:
+          at: ./
       - run: yarn typecheck
       - run: yarn check-repo-fields
 orbs:

@@ -22,6 +22,6 @@ typecheck:
     - checkout
     - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
     - attach_workspace:
-      at: ./
+        at: ./
     - run: yarn typecheck
     - run: yarn check-repo-fields
