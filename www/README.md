@@ -1,13 +1,21 @@
-# gatsbyjs.com
+# gatsbyjs.org (Currently deprecated)
 
-The main Gatsby site at gatsbyjs.com
+Until the unification of gatsbyjs.org and gatsbyjs.com (see the [blogpost announcing the change](https://www.gatsbyjs.com/blog/announcing-unified-gatsby/)) the `www` portion of this monorepo contained the complete code for gatsbyjs.org.
+
+The code for gatsbyjs.com is not open-source at the moment and therefore this portion of the monorepo will exist for archival reasons. While you're still able to run this site and its contents, it doesn't represent the current/latest version of the website.
+
+The plan is to open-source parts of gatsbyjs.com (the previous gatsbyjs.org parts) again but we don't have any ETA on this yet.
+
+---
+
+**Below you can see the (old) instructions to run the site:**
 
 Run locally with:
 
 - `yarn install`
 - `gatsby develop`
 
-See the full contributing instructions at https://www.gatsbyjs.com/contributing/how-to-contribute/
+See the full contributing instructions in the [documentation](https://www.gatsbyjs.com/contributing/how-to-contribute/).
 
 ## Environment variables
 
@@ -29,17 +37,6 @@ GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 
 _Note:_ For `gatsby build` to be able to run you also need a `.env.production` file with the same contents
 
-### Enabling guess.js
-
-Guess.js is disabled by default and can be enabled by setting `ANALYTICS_SERVICE_ACCOUNT` and `ANALYTICS_SERVICE_ACCOUNT_KEY` env variables. These variables need to have access to the gatsbyjs.com analytics.
-
-If you have access to the keys, add them like so:
-
-```shell
-ANALYTICS_SERVICE_ACCOUNT="service account@email.com"
-ANALYTICS_SERVICE_ACCOUNT_KEY="PEM KEY VALUE"
-```
-
 ### Enabling localizations
 
 Localizations are currently a work-in-progress and are thus disabled by default. They can be enabled by setting the `LOCALES` env variable to the locales you want to build:
@@ -53,26 +50,6 @@ The list of possible locales can be found at [i18n.json](/www/i18n.json).
 The default locale, English, is always on. There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
 
 ## Running slow build?
-
-### Disabling sourcing docs
-
-You can disable sourcing from the `docs/` and `packages/` directory by setting the following variable to `.env.development`:
-
-```shell
-DISABLE_SOURCE_DOCS=true
-```
-
-This will mean that the following URLs won't be generated:
-
-- docs/
-- tutorial/
-- blog/
-- features/
-- starters/
-- showcase/
-- creators/
-
-Use this option when you just want to test that the site builds or when working on a component that is not part of these sections (such as the homepage or the navigation).
 
 ### Disabling NPM search (plugins/packages)
 
@@ -94,15 +71,4 @@ Add the following env variable to your `.env.development` file to enable placeho
 GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
 
-For more information checkout [`gatsby-transformer-screenshot` docs](https://www.gatsbyjs.com/packages/gatsby-transformer-screenshot#placeholder-image).
-
-## `theme-ui`, CSS authoring, and dark mode
-
-Since [#18027](https://github.com/gatsbyjs/gatsby/pull/18027), we are using [`theme-ui`](https://theme-ui.com/) (via [`gatsby-plugin-theme-ui`](https://www.gatsbyjs.com/packages/gatsby-plugin-theme-ui/?=gatsby-plugin-theme)) to handle theming, CSS authoring, and to provide a dark color mode.
-
-- Please use the [`sx` prop](https://theme-ui.com/sx-prop) and theme values to style elements and components wherever possible. The prop is "enabled" by adding `theme-ui`'s [JSX pragma](https://theme-ui.com/jsx-pragma).
-- It is still okay to directly import tokens, e.g. `mediaQueries` or `colors` directly from `www/src/gatsby-plugin-theme-ui` if it helps your specific use case — for example when global CSS is required, when passing theme values to other libraries or plugins, when authoring complex responsive styles, etc.
-- It is also perfectly fine to follow the [`theme-ui` approach for responsive styles](https://theme-ui.com/getting-started/#responsive-styles)!
-- If you need to add fields to the [theme](https://theme-ui.com/theme-spec), you can do so in (the work-in-progress) `www/src/gatsby-plugin-theme-ui`. As things settle down, we will eventually migrate changed and added role-based tokens to https://www.npmjs.com/package/gatsby-design-tokens.
-- Please keep the dark mode in mind when editing existing or adding new components.
-- Please bear with us while we adjust https://www.gatsbyjs.com/guidelines/design-tokens/ to document the `theme-ui` values next to the raw token values.
+For more information checkout [`gatsby-transformer-screenshot` docs](https://www.gatsbyjs.com/plugins/gatsby-transformer-screenshot#placeholder-image).
