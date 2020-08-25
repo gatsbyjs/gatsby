@@ -30,7 +30,7 @@ jobs:
           override-ci-command: yarn install --frozen-lockfile --immutable
           pkg-manager: yarn
       - run:
-          command: yarn bootstrap --concurrency=<< parameters.concurrency >> --stream
+          command: yarn bootstrap -- --concurrency=<< parameters.concurrency >> --stream
           name: Build monorepo
       - persist_to_workspace:
           paths:
@@ -136,7 +136,7 @@ orbs:
                     steps:
                       - restore_cache:
                           keys:
-                            - <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                            - <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
                 - run:
                     command: |
                       if [[ ! -z "<< parameters.override-ci-command >>" ]]; then
@@ -154,14 +154,14 @@ orbs:
                           condition: << parameters.cache-path >>
                           steps:
                             - save_cache:
-                                key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
                                 paths:
                                   - <<parameters.cache-path>>
                       - unless:
                           condition: << parameters.cache-path >>
                           steps:
                             - save_cache:
-                                key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
                                 paths:
                                   - ~/.npm
           - when:
@@ -175,7 +175,7 @@ orbs:
                     steps:
                       - restore_cache:
                           keys:
-                            - <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                            - <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
                 - run:
                     command: |
                       if [[ ! -z "<< parameters.override-ci-command >>" ]]; then
@@ -193,14 +193,14 @@ orbs:
                           condition: << parameters.cache-path >>
                           steps:
                             - save_cache:
-                                key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
                                 paths:
                                   - <<parameters.cache-path>>
                       - unless:
                           condition: << parameters.cache-path >>
                           steps:
                             - save_cache:
-                                key: <<parameters.cache-version>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
                                 paths:
                                   - <<parameters.app-dir>>/node_modules
     executors:
