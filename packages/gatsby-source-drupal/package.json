@@ -11,7 +11,7 @@
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
-    "gatsby-source-filesystem": "^2.3.24",
+    "gatsby-source-filesystem": "^2.3.25",
     "lodash": "^4.17.15",
     "tiny-async-pool": "^1.1.0"
   },
