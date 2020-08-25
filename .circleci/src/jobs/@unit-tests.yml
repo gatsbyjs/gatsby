@@ -1,16 +1,17 @@
 unit_tests_node:
-  executor: node
-  steps: &test_template
+  parameters:
+    version:
+      description: "node version"
+      type: string
+  executor:
+    name: node
+    version: <<parameters.version>>
+  steps:
     - checkout
     - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
     - attach_workspace:
         at: ./
     - run:
-        matrix:
-          parameters:
-            version:
-              - 10.13.0
-              - 12
         name: Run tests
         command: yarn jest --ci -runInBand
         environment:

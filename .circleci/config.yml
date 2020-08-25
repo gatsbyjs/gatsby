@@ -1,9 +1,9 @@
 executors:
   node:
     docker:
-      - image: cimg/node:<< parameters.image >>
+      - image: cimg/node:<< parameters.version >>
     parameters:
-      image:
+      version:
         default: 12.18.3
         type: string
 jobs:
@@ -53,7 +53,13 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
   unit_tests_node:
-    executor: node
+    executor:
+      name: node
+      version: <<parameters.version>>
+    parameters:
+      version:
+        description: node version
+        type: string
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -66,11 +72,6 @@ jobs:
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
             NODE_OPTIONS: --max-old-space-size=2048
-          matrix:
-            parameters:
-              version:
-                - 10.13.0
-                - 12
           name: Run tests
       - store_test_results:
           path: ./test-results/jest-node/
@@ -241,3 +242,12 @@ workflows:
       - typecheck:
           requires:
             - bootstrap
+      - unit_tests_node:
+          matrix:
+            parameters:
+              version:
+                - 10.13.0
+                - "12"
+          requires:
+            - lint
+            - typecheck

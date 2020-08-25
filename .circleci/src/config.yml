@@ -10,9 +10,9 @@ orbs:
 executors:
   node:
     parameters:
-      image:
+      version:
         type: string
         # First 10.x LTS release, but old Yarn
         default: "12.18.3"
     docker:
-      - image: cimg/node:<< parameters.image >>
+      - image: cimg/node:<< parameters.version >>
