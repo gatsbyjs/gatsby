@@ -6,7 +6,7 @@ import LangList from "@components/lang-list"
 
 There is an ongoing effort to translate the content in the Gatsby docs into multiple languages. For members of the community around the world building Gatsby sites and learning about web development, having docs and learning materials in your own language provides a lot of value. There's also a great opportunity for folks like you to contribute to the translations of the Gatsby docs.
 
-If you're a fluent speaker of a language other than English and you're interested in helping translate [gatsbyjs.org](https://gatsbyjs.org), here is some information for you to know:
+If you're a fluent speaker of a language other than English and you're interested in helping translate [gatsbyjs.com](https://gatsbyjs.com), here is some information for you to know:
 
 ## The general process
 
