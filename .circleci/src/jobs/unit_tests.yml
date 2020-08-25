@@ -1,3 +1,4 @@
+parallelism: 4
 parameters:
   version:
     description: "node version"

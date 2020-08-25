@@ -66,6 +66,7 @@ jobs:
     executor:
       name: node
       version: <<parameters.version>>
+    parallelism: 4
     parameters:
       version:
         description: node version
