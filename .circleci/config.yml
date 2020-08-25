@@ -7,9 +7,6 @@ orbs:
 executors:
   node:
     parameters:
-      concurrency:
-        type: integer
-        default: 2
       image:
         type: string
         # First 10.x LTS release, but old Yarn
@@ -26,6 +23,13 @@ executors:
       - image: circleci/node:<< parameters.image >>
 
 aliases:
+  node-linux-executor: &node-linux-executor
+    parameters:
+      concurrency:
+        type: integer
+        default: 2
+    executor: node
+
   e2e-executor: &e2e-executor
     docker:
       - image: cypress/browsers:node10.16.0-chrome76
@@ -183,7 +187,7 @@ version: 2.1
 
 jobs:
   bootstrap:
-    executor: node
+    <<: *node-linux-executor
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
