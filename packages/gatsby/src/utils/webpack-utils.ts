@@ -470,7 +470,7 @@ export const createWebpackUtils = (
 
   rules.yaml = (): RuleSetRule => {
     return {
-      test: /\.ya?ml/,
+      test: /\.ya?ml$/,
       use: [loaders.json(), loaders.yaml()],
     }
   }

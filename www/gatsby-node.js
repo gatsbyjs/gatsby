@@ -151,14 +151,14 @@ exports.createPages = async helpers => {
   // splat redirects
   await createRedirect({
     fromPath: `/packages/*`,
-    toPath: `https://gatsbyjs.com/plugins/:splat`,
+    toPath: `https://www.gatsbyjs.com/plugins/:splat`,
     isPermanent: true,
     force: true,
   })
 
   await createRedirect({
     fromPath: `/creators/*`,
-    toPath: `https://gatsbyjs.com/partner/`,
+    toPath: `https://www.gatsbyjs.com/partner/`,
     isPermanent: true,
     force: true,
   })
@@ -167,7 +167,7 @@ exports.createPages = async helpers => {
   //  this needs to be the last redirect created or it'll match everything
   await createRedirect({
     fromPath: `/*`,
-    toPath: `https://gatsbyjs.com/:splat`,
+    toPath: `https://www.gatsbyjs.com/:splat`,
     isPermanent: true,
     force: true,
   })
