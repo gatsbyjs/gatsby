@@ -186,7 +186,8 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - node/install-packages:
           pkg-manager: yarn
-          cache-path: ~/.cache
+          # cache-path: ~/.cache
+          override-ci-command: yarn install --frozen-lockfile --immutable
       - run:
           name: Build monorepo
           command: yarn bootstrap
@@ -208,8 +209,9 @@ jobs:
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
       - node/install-packages:
           pkg-manager: yarn
+          override-ci-command: yarn install --frozen-lockfile --immutable
           cache-version: no-workspace-v1
-          cache-path: ~/.cache
+          # cache-path: ~/.cache
       - run: yarn lint:code
       - run: yarn lint:docs
       - run: yarn lint:other
