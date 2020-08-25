@@ -21,7 +21,7 @@ typecheck:
   steps:
     - checkout
     - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-    - node/install-packages:
-        pkg-manager: yarn
+    - attach_workspace:
+      at: ./
     - run: yarn typecheck
     - run: yarn check-repo-fields
