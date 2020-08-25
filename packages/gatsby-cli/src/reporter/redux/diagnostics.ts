@@ -60,8 +60,8 @@ export function createStructuredLoggingDiagnosticsMiddleware(
 
   let displayedStuckStatusDiagnosticWarning = false
   let displayingStuckStatusDiagnosticWarning = false
-  let stuckStatusDiagnosticTimer: NodeJS.Timeout
-  let stuckStatusWatchdogTimer: NodeJS.Timeout
+  let stuckStatusDiagnosticTimer: NodeJS.Timeout | null = null
+  let stuckStatusWatchdogTimer: NodeJS.Timeout | null = null
   let reporter: Reporter
 
   function generateStuckStatusDiagnosticMessage(): string {
@@ -100,6 +100,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
       if (stuckStatusDiagnosticTimeoutDelay) {
         if (stuckStatusDiagnosticTimer) {
           clearTimeout(stuckStatusDiagnosticTimer)
+          stuckStatusDiagnosticTimer = null
         }
 
         if (displayedStuckStatusDiagnosticWarning) {
@@ -156,6 +157,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
       if (stuckStatusWatchdogTimeoutDelay) {
         if (stuckStatusWatchdogTimer) {
           clearTimeout(stuckStatusWatchdogTimer)
+          stuckStatusWatchdogTimer = null
         }
 
         if (currentStatus === ActivityStatuses.InProgress) {
