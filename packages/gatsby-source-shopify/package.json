@@ -28,8 +28,8 @@
     "gatsby": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.4",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
     "cross-env": "^5.2.1"
   },
   "dependencies": {
@@ -38,7 +38,7 @@
     "gatsby-node-helpers": "^0.3.0",
     "gatsby-source-filesystem": "^2.3.25",
     "graphql-request": "^1.8.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.15",
     "p-iteration": "^1.1.8",
     "prettyjson": "^1.2.1"
   },
