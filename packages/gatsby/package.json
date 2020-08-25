@@ -14,6 +14,7 @@
     "@babel/core": "^7.10.3",
     "@babel/parser": "^7.10.3",
     "@babel/runtime": "^7.10.3",
+    "@babel/types": "^7.10.3",
     "@babel/traverse": "^7.10.3",
     "@babel/types": "^7.10.3",
     "@hapi/joi": "^15.1.1",
