@@ -121,6 +121,7 @@
     }
   },
   "scripts": {
+    "prebootstrap": "yarn",
     "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
     "check-versions": "babel-node scripts/check-versions.js",
     "check-repo-fields": "babel-node scripts/check-repo-fields.js",
@@ -141,9 +142,9 @@
     "lint:scripts": "sh scripts/lint-shell-scripts.sh",
     "lint:other": "npm run prettier -- --check",
     "markdown": "md-magic --path \"starters/**/*.md\"",
+    "noop": "echo \"do nothing\"",
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
     "plop": "plop",
-    "prebootstrap": "yarn",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
     "publish": "node scripts/check-publish-access && node scripts/clear-package-dir --verbose && lerna publish",
     "publish-canary": "lerna publish --canary --yes",

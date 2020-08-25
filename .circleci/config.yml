@@ -186,6 +186,7 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - node/install-packages:
           pkg-manager: yarn
+          cache-path: ~/.cache
       - run:
           name: Build monorepo
           command: yarn bootstrap
@@ -208,6 +209,7 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
           cache-version: no-workspace-v1
+          cache-path: ~/.cache
       - run: yarn lint:code
       - run: yarn lint:docs
       - run: yarn lint:other
