@@ -1,0 +1,20 @@
+parallelism: 4
+executor:
+  name: win/default
+steps:
+  - checkout
+  - run:
+      command: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      shell: bash.exe
+  - attach_workspace:
+      at: ./
+  - run:
+      name: Run tests
+      command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split --split-by=timings)
+      environment:
+        NODE_OPTIONS: --max-old-space-size=2048
+        GENERATE_JEST_REPORT: true
+        JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+        JEST_JUNIT_OUTPUT_NAME: results.xml
+  - store_test_results:
+      path: ./test-results/jest-node/

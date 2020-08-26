@@ -52,16 +52,7 @@ jobs:
           cache-path: ~/.cache
           pkg-manager: yarn
       - run: yarn npm-run-all -p lint:code lint:docs lint:other --aggregate-output --max-parallel=<< parameters.concurrency >>
-  typecheck:
-    executor: node
-    steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - attach_workspace:
-          at: ./
-      - run: yarn typecheck
-      - run: yarn check-repo-fields
-  unit_tests:
+  linux_unit_tests:
     executor:
       name: node
       version: <<parameters.version>>
@@ -73,6 +64,36 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - attach_workspace:
+          at: ./
+      - run:
+          command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split --split-by=timings)
+          environment:
+            GENERATE_JEST_REPORT: true
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+            NODE_OPTIONS: --max-old-space-size=2048
+          name: Run tests
+      - store_test_results:
+          path: ./test-results/jest-node/
+  typecheck:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - attach_workspace:
+          at: ./
+      - run: yarn typecheck
+      - run: yarn check-repo-fields
+  windows_unit_tests:
+    executor:
+      name: win/default
+    parallelism: 4
+    steps:
+      - checkout
+      - run:
+          command: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+          shell: bash.exe
       - attach_workspace:
           at: ./
       - run:
@@ -252,15 +273,20 @@ workflows:
       - typecheck:
           requires:
             - bootstrap
-      - unit_tests:
+      - linux_unit_tests:
           name: unit_tests_node10
           requires:
             - lint
             - typecheck
           version: 10.14.2
-      - unit_tests:
+      - linux_unit_tests:
           name: unit_tests_node12
           requires:
             - lint
             - typecheck
           version: "12.18"
+      - windows_unit_tests:
+          name: windows_unit_tests_node
+          requires:
+            - lint
+            - typecheck

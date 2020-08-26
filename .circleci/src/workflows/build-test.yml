@@ -4,15 +4,20 @@ jobs:
   - typecheck:
       requires:
         - bootstrap
-  - unit_tests:
+  - linux_unit_tests:
       name: unit_tests_node10
       version: "10.14.2"
       requires:
         - lint
         - typecheck
-  - unit_tests:
+  - linux_unit_tests:
       name: unit_tests_node12
       version: "12.18"
+      requires:
+        - lint
+        - typecheck
+  - windows_unit_tests:
+      name: windows_unit_tests_node
       requires:
         - lint
         - typecheck
