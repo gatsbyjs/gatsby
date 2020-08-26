@@ -46,7 +46,7 @@ success Build schema - 0.266 s
 success createPages - 0.014 s
 success createPagesStatefully - 0.067 s
 success onPreExtractQueries - 0.017 s
-Update schema - 0.034 s
+success Update schema - 0.034 s
 success Extract queries from components - 0.222 s
 success Write out requires - 0.044 s
 success Write out redirect data - 0.014 s
@@ -84,7 +84,7 @@ success Build schema - 0.365 s
 success createPages - 0.016 s
 success createPagesStatefully - 0.079 s
 success onPreExtractQueries - 0.025 s
-Update schema - 0.041 s
+success Update schema - 0.041 s
 success Extract queries from components - 0.333 s
 success Write out requires - 0.020 s
 success Write out redirect data - 0.019 s
@@ -126,7 +126,7 @@ success Build schema - 0.365 s
 success createPages - 0.016 s
 success createPagesStatefully - 0.079 s
 success onPreExtractQueries - 0.025 s
-Update schema - 0.041 s
+success Update schema - 0.041 s
 success Extract queries from components - 0.333 s
 success Write out requires - 0.020 s
 success Write out redirect data - 0.019 s
@@ -251,7 +251,7 @@ Similar to the `createPages` step, but for the [`createPagesStatefully` API](/do
 
 Calls the [`onPreExtractQueries` API](/docs/node-apis/#onPreExtractQueries) for your site and all plugins implementing it.
 
-16. Update schema`
+16. `Update schema`
 
 Rebuilds the GraphQL schema, this time with [`SitePage` context](/docs/internal-data-bridge/#sitepage) -- an internal piece of Gatsby that allows you to introspect all pages created for your site.
 

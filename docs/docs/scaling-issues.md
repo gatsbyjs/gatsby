@@ -29,7 +29,7 @@ success Build schema — 0.623 s
 success createPages — 0.608 s
 success createPagesStatefully — 0.025 s
 success onPreExtractQueries — 0.000 s
-Update schema — 0.478 s
+success Update schema — 0.478 s
 success Extract queries from components — 0.127 s
 ⠄ run graphql queries — 310/728 2.51 queries/second
 <--- Last few GCs --->
