@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.89](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.88...gatsby-cli@2.12.89) (2020-08-26)
+
+### Features
+
+- **gatsby-cli:** log what activities prevent from transitioning to idle when stuck ([#26618](https://github.com/gatsbyjs/gatsby/issues/26618)) ([b88f193](https://github.com/gatsbyjs/gatsby/commit/b88f193))
+
 ## [2.12.88](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.87...gatsby-cli@2.12.88) (2020-08-24)
 
 ### Features
