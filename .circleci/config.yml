@@ -18,11 +18,126 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - restore_cache:
           key: yarn-offline-cache-v0.0
+      - restore_cache:
+          key: monorepo-alldeppssssss-v0.0
       - node/install-packages:
           cache-name: monorepo-depsssssssssssssss
           cache-path: ~/.cache/
           cache-version: v2
           pkg-manager: yarn
+          with-cache: false
+      - save_cache:
+          key: monorepo-alldeppssssss-v0.0
+          paths:
+            - node_modules
+            - babel-plugin-remove-graphql-queries/node_modules
+            - babel-preset-gatsby-package/node_modules
+            - babel-preset-gatsby/node_modules
+            - gatsby-admin/node_modules
+            - gatsby-cli/node_modules
+            - gatsby-codemods/node_modules
+            - gatsby-core-utils/node_modules
+            - gatsby-cypress/node_modules
+            - gatsby-design-tokens/node_modules
+            - gatsby-dev-cli/node_modules
+            - gatsby-graphiql-explorer/node_modules
+            - gatsby-image/node_modules
+            - gatsby-legacy-polyfills/node_modules
+            - gatsby-link/node_modules
+            - gatsby-page-utils/node_modules
+            - gatsby-plugin-benchmark-reporting/node_modules
+            - gatsby-plugin-canonical-urls/node_modules
+            - gatsby-plugin-catch-links/node_modules
+            - gatsby-plugin-coffeescript/node_modules
+            - gatsby-plugin-create-client-paths/node_modules
+            - gatsby-plugin-cxs/node_modules
+            - gatsby-plugin-emotion/node_modules
+            - gatsby-plugin-facebook-analytics/node_modules
+            - gatsby-plugin-feed/node_modules
+            - gatsby-plugin-flow/node_modules
+            - gatsby-plugin-fullstory/node_modules
+            - gatsby-plugin-glamor/node_modules
+            - gatsby-plugin-google-analytics/node_modules
+            - gatsby-plugin-google-gtag/node_modules
+            - gatsby-plugin-google-tagmanager/node_modules
+            - gatsby-plugin-guess-js/node_modules
+            - gatsby-plugin-jss/node_modules
+            - gatsby-plugin-layout/node_modules
+            - gatsby-plugin-less/node_modules
+            - gatsby-plugin-lodash/node_modules
+            - gatsby-plugin-manifest/node_modules
+            - gatsby-plugin-mdx/node_modules
+            - gatsby-plugin-netlify-cms/node_modules
+            - gatsby-plugin-netlify/node_modules
+            - gatsby-plugin-no-sourcemaps/node_modules
+            - gatsby-plugin-nprogress/node_modules
+            - gatsby-plugin-offline/node_modules
+            - gatsby-plugin-page-creator/node_modules
+            - gatsby-plugin-postcss/node_modules
+            - gatsby-plugin-preact/node_modules
+            - gatsby-plugin-preload-fonts/node_modules
+            - gatsby-plugin-react-css-modules/node_modules
+            - gatsby-plugin-react-helmet/node_modules
+            - gatsby-plugin-remove-trailing-slashes/node_modules
+            - gatsby-plugin-sass/node_modules
+            - gatsby-plugin-schema-snapshot/node_modules
+            - gatsby-plugin-sharp/node_modules
+            - gatsby-plugin-sitemap/node_modules
+            - gatsby-plugin-styled-components/node_modules
+            - gatsby-plugin-styled-jsx/node_modules
+            - gatsby-plugin-styletron/node_modules
+            - gatsby-plugin-stylus/node_modules
+            - gatsby-plugin-subfont/node_modules
+            - gatsby-plugin-twitter/node_modules
+            - gatsby-plugin-typescript/node_modules
+            - gatsby-plugin-typography/node_modules
+            - gatsby-react-router-scroll/node_modules
+            - gatsby-recipes/node_modules
+            - gatsby-remark-autolink-headers/node_modules
+            - gatsby-remark-code-repls/node_modules
+            - gatsby-remark-copy-linked-files/node_modules
+            - gatsby-remark-custom-blocks/node_modules
+            - gatsby-remark-embed-snippet/node_modules
+            - gatsby-remark-graphviz/node_modules
+            - gatsby-remark-images-contentful/node_modules
+            - gatsby-remark-images/node_modules
+            - gatsby-remark-katex/node_modules
+            - gatsby-remark-prismjs/node_modules
+            - gatsby-remark-responsive-iframe/node_modules
+            - gatsby-remark-smartypants/node_modules
+            - gatsby-source-contentful/node_modules
+            - gatsby-source-drupal/node_modules
+            - gatsby-source-faker/node_modules
+            - gatsby-source-filesystem/node_modules
+            - gatsby-source-graphql/node_modules
+            - gatsby-source-hacker-news/node_modules
+            - gatsby-source-lever/node_modules
+            - gatsby-source-medium/node_modules
+            - gatsby-source-mongodb/node_modules
+            - gatsby-source-npm-package-search/node_modules
+            - gatsby-source-shopify/node_modules
+            - gatsby-source-wikipedia/node_modules
+            - gatsby-source-wordpress/node_modules
+            - gatsby-telemetry/node_modules
+            - gatsby-theme/node_modules
+            - gatsby-transformer-asciidoc/node_modules
+            - gatsby-transformer-csv/node_modules
+            - gatsby-transformer-documentationjs/node_modules
+            - gatsby-transformer-excel/node_modules
+            - gatsby-transformer-hjson/node_modules
+            - gatsby-transformer-javascript-frontmatter/node_modules
+            - gatsby-transformer-javascript-static-exports/node_modules
+            - gatsby-transformer-json/node_modules
+            - gatsby-transformer-pdf/node_modules
+            - gatsby-transformer-react-docgen/node_modules
+            - gatsby-transformer-remark/node_modules
+            - gatsby-transformer-screenshot/node_modules
+            - gatsby-transformer-sharp/node_modules
+            - gatsby-transformer-sqip/node_modules
+            - gatsby-transformer-toml/node_modules
+            - gatsby-transformer-xml/node_modules
+            - gatsby-transformer-yaml/node_modules
+            - gatsby/node_modules
       - save_cache:
           key: yarn-offline-cache-v0.0
           paths:
