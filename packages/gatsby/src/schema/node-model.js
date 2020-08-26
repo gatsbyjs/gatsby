@@ -748,7 +748,8 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames
+  nodeTypeNames,
+  isNestedType = false
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
@@ -775,7 +776,8 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType)
+        toNodeTypeNames(schema, gqlFieldType),
+        true
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -783,6 +785,11 @@ const determineResolvableFields = (
     }
 
     if (!fieldsToResolve[fieldName] && needsResolve) {
+      fieldsToResolve[fieldName] = true
+    }
+    if (!fieldsToResolve[fieldName] && isNestedType) {
+      // If parent field needs to be resolved - all nested fields should be added as well
+      // See https://github.com/gatsbyjs/gatsby/issues/26056
       fieldsToResolve[fieldName] = true
     }
   })

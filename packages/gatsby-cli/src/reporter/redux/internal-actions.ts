@@ -160,6 +160,7 @@ export const createPendingActivity = ({
       payload: {
         id,
         type: ActivityTypes.Pending,
+        startTime: process.hrtime(),
         status,
       },
     },

@@ -558,6 +558,10 @@ describe(`NodeModel`, () => {
         {
           id: `id1`,
           title: `Foo`,
+          nested: {
+            foo: `foo1`,
+            bar: `bar1`,
+          },
           internal: {
             type: `Test`,
             contentDigest: `0`,
@@ -567,6 +571,10 @@ describe(`NodeModel`, () => {
           id: `id2`,
           title: `Bar`,
           hidden: false,
+          nested: {
+            foo: `foo2`,
+            bar: `bar2`,
+          },
           internal: {
             type: `Test`,
             contentDigest: `1`,
@@ -582,6 +590,14 @@ describe(`NodeModel`, () => {
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
+          typeBuilders.buildObjectType({
+            name: `TestNested`,
+            fields: {
+              foo: { type: `String` },
+              bar: { type: `String` },
+            },
+          }),
+
           typeBuilders.buildObjectType({
             name: `Test`,
             interfaces: [`Node`],
@@ -603,6 +619,10 @@ describe(`NodeModel`, () => {
               hidden: {
                 type: `Boolean!`,
                 resolve: parent => Boolean(parent.hidden),
+              },
+              nested: {
+                type: `TestNested`,
+                resolve: source => source.nested,
               },
             },
           }),
@@ -701,6 +721,39 @@ describe(`NodeModel`, () => {
       expect(result.length).toBe(2)
       expect(result[0].id).toBe(`id1`)
       expect(result[1].id).toBe(`id2`)
+    })
+
+    it(`merges query caches when filtering by nested field`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/26056
+      nodeModel.replaceFiltersCache()
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { nested: { foo: { eq: `foo1` } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { nested: { bar: { eq: `bar2` } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(result1).toBeTruthy()
+      expect(result1.length).toBe(1)
+      expect(result1[0].id).toBe(`id1`)
+
+      expect(result2).toBeTruthy()
+      expect(result2.length).toBe(1)
+      expect(result2[0].id).toBe(`id2`)
     })
   })
 

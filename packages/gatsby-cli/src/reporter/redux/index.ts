@@ -2,6 +2,7 @@ import { createStore, combineReducers } from "redux"
 import { reducer } from "./reducer"
 import { ActionsUnion, ISetLogs } from "./types"
 import { isInternalAction } from "./utils"
+import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
 
 let store = createStore(
@@ -9,6 +10,10 @@ let store = createStore(
     logs: reducer,
   }),
   {}
+)
+
+const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
+  store
 )
 
 export type GatsbyCLIStore = typeof store
@@ -45,6 +50,8 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
   } as ActionsUnion
 
   store.dispatch(action)
+
+  diagnosticsMiddleware(action)
 
   if (isInternalAction(action)) {
     // consumers (ipc, yurnalist, json logger) shouldn't have to
