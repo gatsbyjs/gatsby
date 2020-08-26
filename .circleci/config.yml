@@ -18,23 +18,9 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - restore_cache:
           key: yarn-offline-cache-v0.0
-      - restore_cache:
-          key: monorepo-alldeppssssss-v0.0
       - node/install-packages:
-          cache-name: monorepo-depsssssssssssssss
-          cache-path: ~/.cache/
-          cache-version: v2
           pkg-manager: yarn
           with-cache: false
-      - save_cache:
-          key: monorepo-alldeppssssss-v0.0
-          paths:
-            - node_modules/
-            - packages/gatsby-admin/node_modules/
-            - packages/gatsby-core-utils/node_modules/
-            - packages/gatsby-telemetry/node_modules/
-            - packages/gatsby-theme/node_modules/
-            - packages/gatsby/node_modules/
       - save_cache:
           key: yarn-offline-cache-v0.0
           paths:
@@ -79,7 +65,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          command: yarn jest --ci --runInBand $(yarn jest --listTests | sed 's/\/home\/circleci\/project//g' | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand $(yarn jest --listTests | sed 's/\/root\/project//g' | circleci tests split --split-by=timings)
           environment:
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
@@ -106,11 +92,9 @@ jobs:
       - run:
           command: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
           shell: bash.exe
-      - attach_workspace:
-          at: ./
       - restore_cache:
           key: yarn-offline-cache-v0.0
-      - run: yarn --frozen-lockfile --prefer-offline
+      - run: yarn --frozen-lockfile --prefer-offline --link-duplicates
       - save_cache:
           key: yarn-offline-cache-v0.0
           paths:
@@ -247,7 +231,7 @@ orbs:
                         echo "Running override package installation command:"
                         << parameters.override-ci-command >>
                       else
-                        yarn install --frozen-lockfile --prefer-offline --verbose
+                        yarn install --frozen-lockfile --prefer-offline --link-duplicates --verbose
                       fi
                     name: Installing YARN packages
                     working_directory: <<parameters.app-dir>>

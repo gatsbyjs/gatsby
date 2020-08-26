@@ -8,23 +8,9 @@ steps:
   - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
   - restore_cache:
       key: yarn-offline-cache-v0.0
-  - restore_cache:
-      key: monorepo-alldeppssssss-v0.0
   - node/install-packages:
       pkg-manager: yarn
       with-cache: false
-      cache-name: monorepo-depsssssssssssssss
-      cache-version: v2
-      cache-path: ~/.cache/
-  - save_cache:
-      key: monorepo-alldeppssssss-v0.0
-      paths:
-        - node_modules/
-        - packages/gatsby-admin/node_modules/
-        - packages/gatsby-core-utils/node_modules/
-        - packages/gatsby-telemetry/node_modules/
-        - packages/gatsby-theme/node_modules/
-        - packages/gatsby/node_modules/
   - save_cache:
       paths:
         - ./.yarn/yarn-offline-cache/

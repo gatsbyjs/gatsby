@@ -6,11 +6,9 @@ steps:
   - run:
       command: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       shell: bash.exe
-  - attach_workspace:
-      at: ./
   - restore_cache:
       key: yarn-offline-cache-v0.0
-  - run: yarn --frozen-lockfile --prefer-offline
+  - run: yarn --frozen-lockfile --prefer-offline --link-duplicates
   - save_cache:
       paths:
         - ./.yarn/yarn-offline-cache/
