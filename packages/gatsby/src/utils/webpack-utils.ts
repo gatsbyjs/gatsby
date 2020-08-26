@@ -127,7 +127,8 @@ interface IWebpackUtils {
  */
 export const createWebpackUtils = (
   stage: Stage,
-  program: IProgram
+  program: IProgram,
+  reactMajorVersion: number
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
@@ -273,6 +274,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          runtime: reactMajorVersion >= 17 ? `automatic` : `classic`,
           // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,

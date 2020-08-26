@@ -17,6 +17,7 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+import semver from "semver"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -35,13 +36,25 @@ module.exports = async (
 ) => {
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
+  let reactMajorVersion = 0
+
+  try {
+    const react = require(`react`)
+    reactMajorVersion = semver.major(react.version)
+  } catch (e) {
+    // no-op.
+  }
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
+  const { rules, loaders, plugins } = createWebpackUtils(
+    stage,
+    program,
+    reactMajorVersion
+  )
 
   const { assetPrefix, pathPrefix } = store.getState().config
 
