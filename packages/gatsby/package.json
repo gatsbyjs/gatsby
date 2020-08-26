@@ -195,7 +195,8 @@
     "scripts/postinstall.js",
     "utils.js",
     "internal.js",
-    "internal.d.ts"
+    "internal.d.ts",
+    "!cache-dir/__tests__/"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
@@ -231,8 +232,8 @@
     "postbuild": "node scripts/output-api-file.js && yarn workspace gatsby-admin build",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\"",
-    "build:src": "babel src --out-dir dist --source-maps --verbose --ignore \"**/gatsby-cli.js,src/internal-plugins/dev-404-page/raw_dev-404-page.js,**/__tests__\" --extensions \".ts,.js\"",
+    "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\" --ignore \"**/__mocks__\"",
+    "build:src": "babel src --out-dir dist --source-maps --verbose --ignore \"**/gatsby-cli.js,src/internal-plugins/dev-404-page/raw_dev-404-page.js,**/__tests__,**/__mocks__\" --extensions \".ts,.js\"",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
