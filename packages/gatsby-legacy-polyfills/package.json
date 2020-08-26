@@ -27,7 +27,7 @@
     "core-js-compat": "^3.6.5"
   },
   "files": [
-    "dist/**"
+    "dist/"
   ],
   "devDependencies": {
     "chokidar-cli": "^2.1.0",
