@@ -21,6 +21,16 @@ plugins: [
       // Defaults to false meaning GTM will only be loaded in production.
       includeInDevelopment: false,
 
+      // Set the sandbox attribute on the GTM noscript iframe.
+      //
+      // Defaults to false which matches the GTM docs.
+      useIframeSandbox: false,
+
+      // Set a custom value for the sandbox attribute the GTM noscript iframe.
+      //
+      // Defaults to undefined, which results in no value.
+      iframeSandboxAttributes: "allow-top-navigation",
+
       // datalayer to be set before GTM is loaded
       // should be an object or a function that is executed in the browser
       //

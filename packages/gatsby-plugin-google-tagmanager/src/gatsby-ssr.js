@@ -8,8 +8,19 @@ const generateGTM = ({ id, environmentParamStr, dataLayerName }) => stripIndent`
   'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
   })(window,document,'script','${dataLayerName}', '${id}');`
 
-const generateGTMIframe = ({ id, environmentParamStr }) =>
-  oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
+const generateGTMIframe = ({
+  id,
+  environmentParamStr,
+  useIframeSandbox,
+  iframeSandboxAttributes,
+}) =>
+  oneLine`<iframe ${
+    useIframeSandbox
+      ? `sandbox${
+          iframeSandboxAttributes ? `="${iframeSandboxAttributes}"` : ``
+        } `
+      : ``
+  }src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
 
 const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
   let result = `window.${dataLayerName} = window.${dataLayerName} || [];`
@@ -36,6 +47,8 @@ exports.onRenderBody = (
   {
     id,
     includeInDevelopment = false,
+    useIframeSandbox = false,
+    iframeSandboxAttributes,
     gtmAuth,
     gtmPreview,
     defaultDataLayer,
@@ -74,7 +87,12 @@ exports.onRenderBody = (
       <noscript
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
-          __html: generateGTMIframe({ id, environmentParamStr }),
+          __html: generateGTMIframe({
+            id,
+            environmentParamStr,
+            useIframeSandbox,
+            iframeSandboxAttributes,
+          }),
         }}
       />,
     ])
