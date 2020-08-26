@@ -49,6 +49,8 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
+    language,
+    defaultLanguage,
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -203,6 +205,14 @@ exports.sourceNodes = async (
   // Default skipFileDownloads to false.
   skipFileDownloads = skipFileDownloads || false
 
+  // Default language to `en`
+  language = language || `en`
+
+  // Default defaultLanguage to `en`
+  defaultLanguage = defaultLanguage || `en`
+
+  const languagePrefix = defaultLanguage !== language ? language : ``
+
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
 
@@ -210,7 +220,7 @@ exports.sourceNodes = async (
 
   let allData
   try {
-    const data = await axios.get(`${baseUrl}/${apiBase}`, {
+    const data = await axios.get(`${baseUrl}/${languagePrefix}/${apiBase}`, {
       auth: basicAuth,
       headers,
       params,
@@ -292,7 +302,7 @@ exports.sourceNodes = async (
     if (!contentType) return
     _.each(contentType.data, datum => {
       if (!datum) return
-      const node = nodeFromData(datum, createNodeId)
+      const node = nodeFromData(datum, createNodeId, languagePrefix)
       nodes.set(node.id, node)
     })
   })
@@ -302,7 +312,7 @@ exports.sourceNodes = async (
     handleReferences(node, {
       getNode: nodes.get.bind(nodes),
       createNodeId,
-    })
+    }, languagePrefix)
   })
 
   if (skipFileDownloads) {

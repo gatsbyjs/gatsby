@@ -4,7 +4,13 @@ const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
-const handleReferences = (node, { getNode, createNodeId }) => {
+const createNamespacedNodeId = (id, language) => language
+  ? `${language}_${id}`
+  : id
+
+exports.createNamespacedNodeId = createNamespacedNodeId
+
+const handleReferences = (node, { getNode, createNodeId }, languagePrefix) => {
   const relationships = node.relationships
 
   if (node.drupal_relationships) {
@@ -15,7 +21,7 @@ const handleReferences = (node, { getNode, createNodeId }) => {
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
           v.data.map(data => {
-            const referencedNodeId = createNodeId(data.id)
+            const referencedNodeId = createNodeId(createNamespacedNodeId(data.id, languagePrefix))
             if (!getNode(referencedNodeId)) {
               return null
             }
@@ -35,7 +41,7 @@ const handleReferences = (node, { getNode, createNodeId }) => {
           node[k] = meta
         }
       } else {
-        const referencedNodeId = createNodeId(v.data.id)
+        const referencedNodeId = createNodeId(createNamespacedNodeId(v.data.id, languagePrefix))
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)

@@ -1,12 +1,14 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const nodeFromData = (datum, createNodeId) => {
+const { createNamespacedNodeId } = require(`./utils`)
+
+const nodeFromData = (datum, createNodeId, languagePrefix) => {
   const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
   const preservedId =
     typeof _attributes_id !== `undefined` ? { _attributes_id } : {}
   return {
-    id: createNodeId(datum.id),
+    id: createNodeId(createNamespacedNodeId(datum.id, languagePrefix)),
     drupal_id: datum.id,
     parent: null,
     drupal_parent_menu_item: attributes.parent,
