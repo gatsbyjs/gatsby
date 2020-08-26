@@ -51,11 +51,6 @@ export default function withResolverContext<TSource, TArgs>({
       throw new Error(`Adding modules doesn't work in gatsby-node or graphiql`)
     }
 
-    // TO-DO: validation:
-    // - check if source is absolute path
-    // - check if type is one of the allowed values: `default`, `named`, `namespace`
-    // - if type is `named` - make sure `importName` is set
-
     const moduleID = generateModuleId({ source, type, importName })
 
     if (!store.getState().modules.has(moduleID)) {
