@@ -37,7 +37,6 @@
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
     "prompts": "^2.3.2",
-    "react": "^16.8.0",
     "redux": "^4.0.5",
     "resolve-cwd": "^3.0.0",
     "semver": "^7.3.2",
@@ -59,6 +58,9 @@
     "cross-env": "^5.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
   },
   "files": [
     "lib/",
