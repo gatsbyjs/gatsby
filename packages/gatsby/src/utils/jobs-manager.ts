@@ -295,7 +295,7 @@ export async function enqueueJob(job: InternalJob): Promise<object> {
   // Bump active jobs
   activeJobs++
   if (!activityForJobs) {
-    activityForJobs = reporter.phantomActivity(`Running jobs v2`)
+    activityForJobs = reporter.phantomActivity(`Run jobs v2`)
     activityForJobs!.start()
   }
 

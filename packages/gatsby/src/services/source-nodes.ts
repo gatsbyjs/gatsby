@@ -16,7 +16,7 @@ export async function sourceNodes({
 }> {
   assertStore(store)
 
-  const activity = reporter.activityTimer(`source and transform nodes`, {
+  const activity = reporter.activityTimer(`Source and transform nodes`, {
     parentSpan,
   })
   activity.start()
@@ -35,9 +35,9 @@ export async function sourceNodes({
       .join(`, `)}]`
   )
 
-  reporter.verbose(`Checking for deleted pages`)
+  reporter.verbose(`Check for deleted pages`)
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Check for changed pages`)
   tim.start()
 
   const { changedPages, deletedPages } = findChangedPages(

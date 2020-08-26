@@ -31,7 +31,7 @@ describe(`Load plugins`, () => {
       }
     })
 
-  it(`Load plugins for a site`, async () => {
+  it(`Loads plugins for a site`, async () => {
     let plugins = await loadPlugins({ plugins: [] })
 
     plugins = replaceFieldsThatCanVary(plugins)

@@ -106,8 +106,8 @@ module.exports = {
 
 ```shell
 $ gatsby develop
-success open and validate gatsby-configs - 0.033s
-success load plugins - 0.074s
+success Open and validate gatsby-configs - 0.033s
+success Load plugins - 0.074s
 Loaded gatsby-starter-plugin
 success onPreInit - 0.016s
 ...

@@ -42,7 +42,7 @@ export async function createPages({
   )
   activity.end()
 
-  reporter.verbose(`Checking for deleted pages`)
+  reporter.verbose(`Check for deleted pages`)
 
   const deletedPages = deleteUntouchedPages(store.getState().pages, timestamp)
 
@@ -50,7 +50,7 @@ export async function createPages({
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
   )
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Check for changed pages`)
   tim.start()
 
   const { changedPages } = findChangedPages(

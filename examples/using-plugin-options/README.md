@@ -21,8 +21,8 @@ In your command line output, you should then see the text listed below. This tex
 
 ```shell
 $ gatsby develop
-success open and validate gatsby-configs - 0.034s
-success load plugins - 0.050s
+success Open and validate gatsby-configs - 0.034s
+success Load plugins - 0.050s
 logging: "Hello world" to the console
 logging: "default message" to the console
 success onPreInit - 0.022s

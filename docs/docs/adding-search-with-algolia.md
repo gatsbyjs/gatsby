@@ -164,7 +164,7 @@ Each query has optional [settings](https://www.algolia.com/doc/api-reference/set
 This should complete the indexing setup. Now run `gatsby build`. If all goes well, the output should include the following:
 
 ```shell
-success Building static HTML for pages - 7.610s - 5/5 0.66/s
+success Build static HTML for pages - 7.610s - 5/5 0.66/s
 Algolia: 1 queries to index
 Algolia: query 0: executing query
 Algolia: query 0: graphql resulted in 3 records

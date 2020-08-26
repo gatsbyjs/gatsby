@@ -18,19 +18,19 @@ A scaling issue is evident if your application is unable to build due to an erro
 and more. An example of a scaling error thrown to the console may look something like:
 
 ```shell
-success open and validate gatsby-configs — 0.005 s
-success load plugins — 0.131 s
+success Open and validate gatsby-configs — 0.005 s
+success Load plugins — 0.131 s
 success onPreInit — 0.283 s
-success initialize cache — 0.026 s
-success copy gatsby files — 0.071 s
+success Initialize cache — 0.026 s
+success Copy gatsby files — 0.071 s
 success onPreBootstrap — 0.009 s
-success source and transform nodes — 5.291 s
-success building schema — 0.623 s
+success Source and transform nodes — 5.291 s
+success Build schema — 0.623 s
 success createPages — 0.608 s
 success createPagesStatefully — 0.025 s
 success onPreExtractQueries — 0.000 s
-success update schema — 0.478 s
-success extract queries from components — 0.127 s
+Update schema — 0.478 s
+success Extract queries from components — 0.127 s
 ⠄ run graphql queries — 310/728 2.51 queries/second
 <--- Last few GCs --->
 

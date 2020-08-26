@@ -75,7 +75,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
-  const buildActivity = report.phantomActivity(`build`)
+  const buildActivity = report.phantomActivity(`Build`)
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
@@ -127,7 +127,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   copyStaticDirs()
 
   const buildActivityTimer = report.activityTimer(
-    `Building production JavaScript and CSS bundles`,
+    `Build production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
   buildActivityTimer.start()
@@ -153,7 +153,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
 
     const rewriteActivityTimer = report.activityTimer(
-      `Rewriting compilation hashes`,
+      `Rewrite compilation hashes`,
       {
         parentSpan: buildSpan,
       }
@@ -220,7 +220,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   const buildHTMLActivityProgress = report.createProgress(
-    `Building static HTML for pages`,
+    `Build static HTML for pages`,
     pagePaths.length,
     0,
     {

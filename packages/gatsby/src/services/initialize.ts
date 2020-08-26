@@ -91,7 +91,7 @@ export async function initialize({
 
   emitter.on(`CREATE_JOB`, () => {
     if (!activityForJobs) {
-      activityForJobs = reporter.phantomActivity(`Running jobs`)
+      activityForJobs = reporter.phantomActivity(`Run jobs`)
       activityForJobs.start()
     }
   })
@@ -106,7 +106,7 @@ export async function initialize({
   emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
+  let activity = reporter.activityTimer(`Open and validate gatsby-configs`, {
     parentSpan,
   })
   activity.start()
@@ -165,7 +165,7 @@ export async function initialize({
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = reporter.activityTimer(`load plugins`, {
+  activity = reporter.activityTimer(`Load plugins`, {
     parentSpan,
   })
   activity.start()
@@ -198,7 +198,7 @@ export async function initialize({
     process.env.NODE_ENV === `production`
   ) {
     activity = reporter.activityTimer(
-      `delete html and css files from previous builds`,
+      `Delete HTML and CSS files from previous builds`,
       {
         parentSpan,
       }
@@ -213,7 +213,7 @@ export async function initialize({
     activity.end()
   }
 
-  activity = reporter.activityTimer(`initialize cache`, {
+  activity = reporter.activityTimer(`Initialize cache`, {
     parentSpan,
   })
   activity.start()
@@ -294,7 +294,7 @@ export async function initialize({
 
   activity.end()
 
-  activity = reporter.activityTimer(`copy gatsby files`, {
+  activity = reporter.activityTimer(`Copy gatsby files`, {
     parentSpan,
   })
   activity.start()

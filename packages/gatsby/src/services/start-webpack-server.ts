@@ -60,7 +60,7 @@ export async function startWebpackServer({
       // there can be multiple `watchRun` events before receiving single `done` event
       // webpack will not emit assets or `done` event until all pending invalidated
       // inputs were compiled
-      webpackActivity = report.activityTimer(`Re-building development bundle`, {
+      webpackActivity = report.activityTimer(`Rebuild development bundle`, {
         id: `webpack-develop`,
       })
       webpackActivity.start()
