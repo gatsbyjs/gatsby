@@ -34,8 +34,8 @@
     "jest-junit": "^6.4.0"
   },
   "files": [
-    "lib",
-    "src"
+    "lib/",
+    "src/"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry#readme",
   "keywords": [

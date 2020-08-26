@@ -26,8 +26,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "files": [
-    "dist/",
-    "dist/index.d.ts"
+    "dist/"
   ],
   "dependencies": {
     "ci-info": "2.0.0",

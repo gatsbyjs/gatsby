@@ -37,7 +37,7 @@
     "cross-env": "^5.2.1"
   },
   "files": [
-    "dist/*"
+    "dist/"
   ],
   "engines": {
     "node": ">=10.13.0"
