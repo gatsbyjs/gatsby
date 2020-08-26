@@ -10,9 +10,7 @@ steps:
       at: ./
   - restore_cache:
       key: yarn-offline-cache-v0.0
-  - node/install-packages:
-      pkg-manager: yarn
-      with-cache: false
+  - run: yarn --frozen-lockfile --prefer-offline
   - save_cache:
       paths:
         - ./.yarn/yarn-offline-cache/
