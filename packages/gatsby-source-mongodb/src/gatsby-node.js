@@ -83,7 +83,7 @@ function createNodes(
   let collectionName, type
   if (typeof collectionData === `object`) {
     collectionName = collectionData.name
-    type = collectionData.nodeType
+    type = sanitizeName(collectionData.nodeType, false)
   } else {
     collectionName = collectionData
     type = `mongodb${sanitizeName(dbName)}${sanitizeName(collectionName)}`
