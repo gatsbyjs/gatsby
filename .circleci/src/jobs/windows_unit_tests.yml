@@ -8,6 +8,15 @@ steps:
       shell: bash.exe
   - attach_workspace:
       at: ./
+  - restore_cache:
+      key: yarn-offline-cache-v0.0
+  - node/install-packages:
+      pkg-manager: yarn
+      with-cache: false
+  - save_cache:
+      paths:
+        - ./.yarn/yarn-offline-cache/
+      key: yarn-offline-cache-v0.0
   - run:
       name: Run tests
       command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split --split-by=timings)

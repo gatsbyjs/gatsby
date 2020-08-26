@@ -96,6 +96,15 @@ jobs:
           shell: bash.exe
       - attach_workspace:
           at: ./
+      - restore_cache:
+          key: yarn-offline-cache-v0.0
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - save_cache:
+          key: yarn-offline-cache-v0.0
+          paths:
+            - ./.yarn/yarn-offline-cache/
       - run:
           command: yarn jest --ci --runInBand $(circleci tests glob "packages/*" | circleci tests split --split-by=timings)
           environment:
