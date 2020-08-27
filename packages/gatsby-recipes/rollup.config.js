@@ -48,6 +48,7 @@ export default {
       "react-reconcilier",
       "@mdx-js/react",
       "@mdx-js/mdx",
+      "@mdx-js/runtime"
     ]),
   ],
   external: [
