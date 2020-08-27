@@ -1,14 +1,8 @@
 const _ = require(`lodash`)
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const { nodeFromData, downloadFile, isFileNode, createNamespacedNodeId } = require(`./normalize`)
 
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
-
-const createNamespacedNodeId = (id, language) => language
-  ? `${language}_${id}`
-  : id
-
-exports.createNamespacedNodeId = createNamespacedNodeId
 
 const handleReferences = (node, { getNode, createNodeId }, languagePrefix) => {
   const relationships = node.relationships
@@ -102,15 +96,16 @@ const handleWebhookUpdate = async (
   pluginOptions = {}
 ) => {
   const { createNode } = actions
+  const { skipFileDownloads, languagePrefix } = pluginOptions
 
-  const newNode = nodeFromData(nodeToUpdate, createNodeId)
+  const newNode = nodeFromData(nodeToUpdate, createNodeId, languagePrefix)
 
   const nodesToUpdate = [newNode]
 
   handleReferences(newNode, {
     getNode,
     createNodeId,
-  })
+  }, languagePrefix)
 
   const oldNode = getNode(newNode.id)
   if (oldNode) {
@@ -160,7 +155,6 @@ const handleWebhookUpdate = async (
   }
 
   // download file
-  const { skipFileDownloads } = pluginOptions
   if (isFileNode(newNode) && !skipFileDownloads) {
     await downloadFile(
       {

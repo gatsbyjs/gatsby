@@ -1,7 +1,7 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const { nodeFromData, downloadFile, isFileNode, createNamespacedNodeId } = require(`./normalize`)
 const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 
 const asyncPool = require(`tiny-async-pool`)
@@ -49,8 +49,7 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
-    language,
-    defaultLanguage,
+    languagePrefix,
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -72,7 +71,7 @@ exports.sourceNodes = async (
         return
       }
       if (action === `delete`) {
-        actions.deleteNode({ node: getNode(createNodeId(id)) })
+        actions.deleteNode({ node: getNode(createNodeId(createNamespacedNodeId(id, languagePrefix))) })
         reporter.log(`Deleted node: ${id}`)
         return
       }
@@ -147,7 +146,7 @@ exports.sourceNodes = async (
         let nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode({ node: getNode(createNodeId(nodeSyncData.id)) })
+            actions.deleteNode({ node: getNode(createNodeId(createNamespacedNodeId(nodeSyncData.id, languagePrefix))) })
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
@@ -168,6 +167,7 @@ exports.sourceNodes = async (
                   getNode,
                   reporter,
                   store,
+                  languagePrefix
                 },
                 pluginOptions
               )
@@ -205,13 +205,8 @@ exports.sourceNodes = async (
   // Default skipFileDownloads to false.
   skipFileDownloads = skipFileDownloads || false
 
-  // Default language to `en`
-  language = language || `en`
-
-  // Default defaultLanguage to `en`
-  defaultLanguage = defaultLanguage || `en`
-
-  const languagePrefix = defaultLanguage !== language ? language : ``
+  // Default languagePrefix to ``
+  languagePrefix = languagePrefix || ``
 
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
@@ -220,7 +215,8 @@ exports.sourceNodes = async (
 
   let allData
   try {
-    const data = await axios.get(`${baseUrl}/${languagePrefix}/${apiBase}`, {
+    const languagePrefixPath = languagePrefix ? `/${languagePrefix}` : ``
+    const data = await axios.get(`${baseUrl}${languagePrefixPath}/${apiBase}`, {
       auth: basicAuth,
       headers,
       params,

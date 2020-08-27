@@ -1,7 +1,11 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const { createNamespacedNodeId } = require(`./utils`)
+const createNamespacedNodeId = (id, language) => language
+  ? `${language}_${id}`
+  : id
+
+exports.createNamespacedNodeId = createNamespacedNodeId
 
 const nodeFromData = (datum, createNodeId, languagePrefix) => {
   const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
