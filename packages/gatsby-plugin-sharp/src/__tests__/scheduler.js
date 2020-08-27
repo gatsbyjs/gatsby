@@ -5,7 +5,7 @@ jest.mock(`../gatsby-worker`, () => {
 })
 jest.mock(`got`)
 const got = require(`got`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 
 const workerMock = require(`../gatsby-worker`).IMAGE_PROCESSING
 
