@@ -3,6 +3,8 @@ import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../components/layout_1"
 
+import "../styles/styles.css"
+
 const Article = ({ data }) => {
 	let article = data.article.nodes[0];
   return (

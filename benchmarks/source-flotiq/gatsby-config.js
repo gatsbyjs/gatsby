@@ -15,13 +15,5 @@ module.exports = {
         forceReload: false,
       },
     },
-    `gatsby-transformer-sharp`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
-    },
   ],
 }

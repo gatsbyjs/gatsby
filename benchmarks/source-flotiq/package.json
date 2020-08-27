@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "flotiq-benchmark-willit-build",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "Benchmark project for the willit.build site",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -30,12 +30,5 @@
   "devDependencies": {
     "cross-env": "^7.0.0",
     "prettier": "^1.19.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
