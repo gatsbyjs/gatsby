@@ -92,19 +92,19 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
+    const args = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    const args = [tmpFileName]
     // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
     if (this.debugInfo) {
-      args.push(
-        this.debugInfo.break
-          ? `--inspect-brk=${this.debugInfo.port}`
-          : `--inspect=${this.debugInfo.port}`
-      )
+      if (this.debugInfo.break) {
+        args.push(`--inspect-brk=${this.debugInfo.port}`)
+      } else {
+        args.push(`--inspect=${this.debugInfo.port}`)
+      }
     }
 
     this.process = spawn(`node`, args, {
