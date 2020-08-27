@@ -78,9 +78,11 @@ export default function preset(_, options = {}) {
         {
           useBuiltIns: true,
           pragma:
-            options.runtime === `automatic` ? null : `React.createElement`,
+            options.reactRuntime === `automatic`
+              ? undefined
+              : `React.createElement`,
           development: stage === `develop`,
-          runtime: options.runtime || `classic`,
+          runtime: options.reactRuntime || `classic`,
         },
       ],
     ],

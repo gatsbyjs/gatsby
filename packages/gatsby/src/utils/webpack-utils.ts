@@ -9,7 +9,6 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import isWsl from "is-wsl"
-import semver from "semver"
 import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
@@ -137,6 +136,20 @@ export const createWebpackUtils = (
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
+
+  let jsxRuntimeExists = false
+
+  try {
+    // React is shipping a new jsx runtime that is to be used with
+    // an option on @babel/preset-react called `runtime: automatic`
+    // Not every version of React has this jsx-runtime yet. Eventually,
+    // it will be backported to older versions of react and this check
+    // will become unnecessary.
+    jsxRuntimeExists = !!require.resolve(`react/jsx-runtime.js`)
+  } catch (e) {
+    // If the require.resolve throws, that means this version of React
+    // does not support the jsx runtime.
+  }
 
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
@@ -271,18 +284,10 @@ export const createWebpackUtils = (
     },
 
     js: options => {
-      let runtimeExists = false
-
-      try {
-        runtimeExists = !!require.resolve(`react/jsx-runtime.js`)
-        console.log({ runtimeExists })
-      } catch (e) {
-        // no-op.
-      }
       return {
         options: {
           stage,
-          runtime: runtimeExists ? `automatic` : `classic`,
+          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
           // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
@@ -313,7 +318,7 @@ export const createWebpackUtils = (
     },
 
     eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema)
+      const options = eslintConfig(schema, jsxRuntimeExists)
 
       return {
         options,
