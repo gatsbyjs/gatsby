@@ -191,7 +191,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
-        startGraphQLServer(siteInfo.directory, true)
+
+        // Only run recipes when admin is enabled
+        if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
+          startGraphQLServer(siteInfo.directory, true)
+        }
 
         if (args.hasOwnProperty(`inspect`)) {
           args.inspect = args.inspect || 9229
