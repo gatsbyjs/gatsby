@@ -108,7 +108,7 @@ exports.sourceNodes = async (
   fastBuilds = fastBuilds || false
   if (fastBuilds) {
     let lastFetched =
-      store.getState().status.plugins?.[`gatsby-source-drupal-${languagePrefix}`]?.lastFetched ??
+      store.getState().status.plugins?.[`gatsby-source-drupal`]?.[`lastFetched${languagePrefix}`] ??
       0
 
     const drupalFetchIncrementalActivity = reporter.activityTimer(
@@ -132,7 +132,7 @@ exports.sourceNodes = async (
       if (data.data.status === -1) {
         // The incremental data is expired or this is the first fetch.
         reporter.info(`Unable to pull incremental data changes from Drupal`)
-        setPluginStatus({ lastFetched: data.data.timestamp })
+        setPluginStatus({ [`lastFetched${languagePrefix}`]: data.data.timestamp })
         requireFullRebuild = true
       } else {
         // Touch nodes so they are not garbage collected by Gatsby.
@@ -175,7 +175,7 @@ exports.sourceNodes = async (
           }
         }
 
-        setPluginStatus({ lastFetched: data.data.timestamp })
+        setPluginStatus({ [`lastFetched${languagePrefix}`]: data.data.timestamp })
       }
     } catch (e) {
       gracefullyRethrow(drupalFetchIncrementalActivity, e)
