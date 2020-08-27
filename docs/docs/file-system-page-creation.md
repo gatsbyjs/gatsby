@@ -147,7 +147,7 @@ import { Link, graphql } from "gatsby"
 
 export default function HomePage(props) {
   return props.data.allProducts.map(
-    product => <Link to={product.path}>{product.name}</Link>
+    product => <Link to={product.gatsbyPath}>{product.name}</Link>
   );
 }
 
