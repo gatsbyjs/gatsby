@@ -1,4 +1,4 @@
-import uuidV4 from "uuid/v4"
+import { v4 as uuidv4 } from "uuid"
 import os from "os"
 import { isCI, getCIName } from "gatsby-core-utils"
 import {
@@ -14,7 +14,7 @@ import { join, sep } from "path"
 import isDocker from "is-docker"
 import lodash from "lodash"
 
-const typedUUIDv4 = uuidV4 as () => string
+const typedUUIDv4 = uuidv4 as () => string
 
 const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
@@ -130,7 +130,7 @@ export class AnalyticsTracker {
   getSessionId(): string {
     const p = process as any
     if (!p.gatsbyTelemetrySessionId) {
-      p.gatsbyTelemetrySessionId = uuidV4()
+      p.gatsbyTelemetrySessionId = uuidv4()
     }
     return p.gatsbyTelemetrySessionId
   }
