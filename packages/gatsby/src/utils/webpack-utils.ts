@@ -9,6 +9,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import isWsl from "is-wsl"
+import semver from "semver"
 import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
@@ -127,8 +128,7 @@ interface IWebpackUtils {
  */
 export const createWebpackUtils = (
   stage: Stage,
-  program: IProgram,
-  reactMajorVersion: number
+  program: IProgram
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
@@ -271,6 +271,14 @@ export const createWebpackUtils = (
     },
 
     js: options => {
+      let reactMajorVersion = 0
+
+      try {
+        const react = require(`react`)
+        reactMajorVersion = semver.major(react.version)
+      } catch (e) {
+        // no-op.
+      }
       return {
         options: {
           stage,
