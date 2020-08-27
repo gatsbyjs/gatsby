@@ -2,14 +2,17 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import { spawn, ChildProcess } from "child_process"
+import { ChildProcess } from "child_process"
+import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import socket from "socket.io"
 import fs from "fs-extra"
-import { isCI, slash } from "gatsby-core-utils"
+import onExit from "signal-exit"
 import {
+  isCI,
+  slash,
   createServiceLock,
   getService,
   updateSiteMetadata,
@@ -107,7 +110,7 @@ class ControllableScript {
       )
     }
 
-    this.process = spawn(`node`, args, {
+    this.process = execa.node(tmpFileName, args, {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -372,8 +375,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
 
-  let watcher
-
   if (!isCI()) {
     chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
@@ -403,26 +404,10 @@ module.exports = async (program: IProgram): Promise<void> => {
     developProcess.send(msg)
   })
 
-  process.on(`beforeExit`, async () => {
-    await Promise.all([
-      watcher?.close(),
-      ...unlocks.map(unlock => unlock()),
-      new Promise(resolve => {
-        statusServer.close(resolve)
-      }),
-      new Promise(resolve => {
-        proxy.server.close(resolve)
-      }),
-    ])
-  })
-
-  process.on(`SIGINT`, async () => {
-    await developProcess.stop(`SIGINT`)
-    process.exit()
-  })
-
-  process.on(`SIGTERM`, async () => {
-    await developProcess.stop(`SIGTERM`)
-    process.exit()
+  onExit((code, signal) => {
+    developProcess.stop(signal)
+    unlocks.map(unlock => unlock())
+    statusServer.close()
+    proxy.server.close()
   })
 }
