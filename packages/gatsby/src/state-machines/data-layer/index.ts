@@ -2,6 +2,7 @@ import { Machine, StatesConfig, MachineOptions } from "xstate"
 import { dataLayerActions } from "./actions"
 import { IDataLayerContext } from "./types"
 import { dataLayerServices } from "./services"
+import { genericOnError } from "../../utils/generic-on-error"
 
 export type DataLayerResult = Pick<
   IDataLayerContext,
@@ -19,6 +20,7 @@ const loadDataStates: StatesConfig<IDataLayerContext, any, any> = {
       onDone: {
         target: `sourcingNodes`,
       },
+      onError: genericOnError,
     },
   },
   sourcingNodes: {
@@ -29,6 +31,7 @@ const loadDataStates: StatesConfig<IDataLayerContext, any, any> = {
         target: `buildingSchema`,
         actions: `assignChangedPages`,
       },
+      onError: genericOnError,
     },
   },
 }
@@ -42,6 +45,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
         target: `creatingPages`,
         actions: `assignGraphQLRunners`,
       },
+      onError: genericOnError,
     },
   },
   creatingPages: {
@@ -53,6 +57,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
         target: `creatingPagesStatefully`,
         actions: `assignChangedPages`,
       },
+      onError: genericOnError,
     },
   },
   creatingPagesStatefully: {
@@ -62,6 +67,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       onDone: {
         target: `rebuildingSchemaWithSitePage`,
       },
+      onError: genericOnError,
     },
   },
   rebuildingSchemaWithSitePage: {
@@ -70,6 +76,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       onDone: {
         target: `writingOutRedirects`,
       },
+      onError: genericOnError,
     },
   },
   writingOutRedirects: {
@@ -78,6 +85,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       onDone: {
         target: `done`,
       },
+      onError: genericOnError,
     },
   },
 }
@@ -91,6 +99,7 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
         target: `creatingPages`,
         actions: `assignGraphQLRunners`,
       },
+      onError: genericOnError,
     },
   },
   creatingPages: {
@@ -102,6 +111,7 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
         target: `rebuildingSchemaWithSitePage`,
         actions: `assignChangedPages`,
       },
+      onError: genericOnError,
     },
   },
   rebuildingSchemaWithSitePage: {
@@ -110,6 +120,7 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       onDone: {
         target: `done`,
       },
+      onError: genericOnError,
     },
   },
 }
