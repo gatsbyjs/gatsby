@@ -108,7 +108,7 @@ exports.sourceNodes = async (
   fastBuilds = fastBuilds || false
   if (fastBuilds) {
     let lastFetched =
-      store.getState().status.plugins?.[`gatsby-source-drupal-${languagePrefix}`]?.lastFetched ??
+      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
       0
 
     const drupalFetchIncrementalActivity = reporter.activityTimer(
