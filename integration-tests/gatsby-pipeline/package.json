@@ -27,10 +27,9 @@
   "devDependencies": {
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
+    "node-fetch": "^2.6.0",
     "jest": "^26.4.2",
-    "jest-cli": "^26.4.2",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "jest-cli": "^26.4.2"
   },
   "repository": {
     "type": "git",
