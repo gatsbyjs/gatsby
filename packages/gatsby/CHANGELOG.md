@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.51](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.50...gatsby@2.24.51) (2020-08-26)
+
+### Bug Fixes
+
+- **gatsby:** fix filtering by sub-fields of the field with custom resolver ([#26644](https://github.com/gatsbyjs/gatsby/issues/26644)) ([6eefdee](https://github.com/gatsbyjs/gatsby/commit/6eefdee))
+
 ## [2.24.50](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.49...gatsby@2.24.50) (2020-08-25)
 
 ### Bug Fixes

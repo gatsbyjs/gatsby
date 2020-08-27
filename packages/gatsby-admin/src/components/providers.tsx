@@ -40,12 +40,21 @@ const theme = {
     // NOTE(@mxstbr): Hacks around issues with strict-ui that I have to fix upstream eventually
     "1px": `1px`,
     "100%": `100%`,
+    "30%": `30%`,
+    "70%": `70%`,
     "16px": `16px`,
     "15em": `15em`,
+    "10em": `10em`,
     "20em": `20em`,
     "24px": `24px`,
     "1.5em": `1.5em`,
     initial: `initial`,
+  },
+  borderStyles: {
+    solid: `solid`,
+  },
+  borderWidths: {
+    1: `1px`,
   },
   styles: {
     root: {
