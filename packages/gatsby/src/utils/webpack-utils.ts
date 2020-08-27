@@ -271,18 +271,18 @@ export const createWebpackUtils = (
     },
 
     js: options => {
-      let reactMajorVersion = 0
+      let runtimeExists = false
 
       try {
-        const react = require(`react`)
-        reactMajorVersion = semver.major(react.version)
+        runtimeExists = !!require.resolve(`react/jsx-runtime.js`)
+        console.log({ runtimeExists })
       } catch (e) {
         // no-op.
       }
       return {
         options: {
           stage,
-          runtime: reactMajorVersion >= 17 ? `automatic` : `classic`,
+          runtime: runtimeExists ? `automatic` : `classic`,
           // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
