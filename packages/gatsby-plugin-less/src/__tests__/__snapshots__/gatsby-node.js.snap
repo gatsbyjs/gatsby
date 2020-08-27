@@ -116,7 +116,7 @@ exports[`gatsby-plugin-less Stage: build-html / Loader options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "appendData": "@env: test;",
+                        "appendData": "@env: development;",
                         "lessOptions": Object {},
                         "sourceMap": false,
                       },
@@ -426,7 +426,7 @@ exports[`gatsby-plugin-less Stage: build-javascript / Loader options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "appendData": "@env: test;",
+                        "appendData": "@env: development;",
                         "lessOptions": Object {},
                         "sourceMap": false,
                       },
@@ -442,7 +442,7 @@ exports[`gatsby-plugin-less Stage: build-javascript / Loader options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "appendData": "@env: test;",
+                        "appendData": "@env: development;",
                         "lessOptions": Object {},
                         "sourceMap": false,
                       },
@@ -776,7 +776,7 @@ exports[`gatsby-plugin-less Stage: develop / Loader options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "appendData": "@env: test;",
+                        "appendData": "@env: development;",
                         "lessOptions": Object {},
                         "sourceMap": true,
                       },
@@ -792,7 +792,7 @@ exports[`gatsby-plugin-less Stage: develop / Loader options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "appendData": "@env: test;",
+                        "appendData": "@env: development;",
                         "lessOptions": Object {},
                         "sourceMap": true,
                       },
@@ -1096,7 +1096,7 @@ exports[`gatsby-plugin-less Stage: develop-html / Loader options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "appendData": "@env: test;",
+                        "appendData": "@env: development;",
                         "lessOptions": Object {},
                         "sourceMap": false,
                       },
