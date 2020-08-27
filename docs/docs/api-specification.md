@@ -5,6 +5,7 @@ title: API Specification
 Gatsby's APIs are tailored conceptually, to some extent, to React.js to improve the coherence between the two systems.
 
 The two top priorities of the APIs are:
+
 - Enable a broad and robust plugin ecosystem.
 - Build a broad and robust theme ecosystem on top of that.
 
