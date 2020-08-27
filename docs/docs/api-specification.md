@@ -2,13 +2,15 @@
 title: API Specification
 ---
 
-Gatsby's APIs are tailored conceptually to some extent after React.js to improve the coherence between the two systems.
+Gatsby's APIs are tailored conceptually, to some extent, to React.js to improve the coherence between the two systems.
 
-The two top priorities of the API are : a) enable a broad and robust plugin ecosystem and b) build on top of that a broad and robust theme ecosystem.
+The two top priorities of the APIs are:
+- Enable a broad and robust plugin ecosystem.
+- Build a broad and robust theme ecosystem on top of that.
 
 ## Prerequisites
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, look into [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
 
 ## Plugins
 
@@ -57,7 +59,7 @@ _More definitions and terms are defined in the [Glossary](/docs/glossary/)_
 
 ### Extension APIs
 
-Gatsby has multiple processes. The most prominent is the "bootstrap" process. It has several subprocesses. One tricky part to their design is that they run both once during the initial bootstrap but also stay alive during development to continue to respond to changes. This is what drives hot reloading that all Gatsby data is "alive" and reacts to changes in the environment.
+Gatsby has multiple processes. The most prominent is the "bootstrap" process. It has several subprocesses. One tricky part to their design is that they run once during the initial bootstrap, but also stay alive during development to continue to respond to changes. This is what drives hot reloading - the feature that reacts to changes in the environment and renders all Gatsby data "alive".
 
 The bootstrap process is as follows:
 
@@ -65,7 +67,7 @@ load site config -> load plugins -> source nodes -> transform nodes -> create Gr
 
 Once the initial bootstrap is finished, a `webpack-dev-server` and express server are started for serving files for the development workflow with live updates. For a production build, Gatsby skips the development server and instead builds the CSS, then JavaScript, then static HTML with webpack.
 
-During these processes there are various extension points where plugins can intervene. All major processes have an `onPre` and `onPost` e.g. `onPreBootstrap` and `onPostBootstrap` or `onPreBuild` or `onPostBuild`. During bootstrap plugins can respond at various stages to APIs like `onCreatePages`, `onCreateBabelConfig`, and `onSourceNodes`.
+During these processes there are various extension points where plugins can intervene. All major processes have an `onPre` and `onPost`, e.g., `onPreBootstrap` and `onPostBootstrap`, and `onPreBuild` and `onPostBuild`. During bootstrap plugins can respond at various stages to APIs like `onCreatePages`, `onCreateBabelConfig`, and `onSourceNodes`.
 
 At each extension point, Gatsby identifies the plugins which implement the API and calls them in serial following their order in the site's `gatsby-config.js`.
 
