@@ -22,14 +22,12 @@ Object {
 
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
-  "aspectRatio": 2.0833333333333335,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAHDUk5wAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABMElEQVQoz32SzU4CMRSF5z1hIUpbKhRdGSUBI2/gwpDwOrCBR8AoiYmrkTCj7us5nbaZDoOL2+nPuV/vudPs8DS2QyUtvxkHKaX94oLD8lbbrMCk25fV8fp+6CSM37nP+ZgZeyWkpdKBcgzKqy5FjX6nlTtgRtxk/MyrSwJbI5Y32pUShVzspiaKQoxU7e5ALEFcgMDCKPh8NJGWEF8g0jUay6C1RMiNnkivpZHtw8jmdSGvHTTqE4i3qTk1s0cbuqIiUTS5VtFIYiYkFL7bE/SRdQpfRgB0sDcDhGaPPufQBuRBiXhFWVrJk5Y2yzfQvENbNKARmPsmrfBAet7SOSDPqNmgeczJ/7P8jXgeD1yfdAtM+1/Gf03YWcuJdQj3sEMwAReiCs75HtjjsgXG+AOWewFqO7LcYgAAAABJRU5ErkJggg==",
-  "height": 48,
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/df2e1/test.png",
-  "srcSet": "/static/1234/df2e1/test.png 1x,
-/static/1234/32443/test.png 1.5x,
-/static/1234/84792/test.png 2x",
+  "srcSet": "/static/1234/df2e1/test.png 1x",
   "tracedSVG": undefined,
   "width": 100,
 }
@@ -37,12 +35,12 @@ Object {
 
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
-  "aspectRatio": 2.0833333333333335,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAHDUk5wAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABMElEQVQoz32SzU4CMRSF5z1hIUpbKhRdGSUBI2/gwpDwOrCBR8AoiYmrkTCj7us5nbaZDoOL2+nPuV/vudPs8DS2QyUtvxkHKaX94oLD8lbbrMCk25fV8fp+6CSM37nP+ZgZeyWkpdKBcgzKqy5FjX6nlTtgRtxk/MyrSwJbI5Y32pUShVzspiaKQoxU7e5ALEFcgMDCKPh8NJGWEF8g0jUay6C1RMiNnkivpZHtw8jmdSGvHTTqE4i3qTk1s0cbuqIiUTS5VtFIYiYkFL7bE/SRdQpfRgB0sDcDhGaPPufQBuRBiXhFWVrJk5Y2yzfQvENbNKARmPsmrfBAet7SOSDPqNmgeczJ/7P8jXgeD1yfdAtM+1/Gf03YWcuJdQj3sEMwAReiCs75HtjjsgXG+AOWewFqO7LcYgAAAABJRU5ErkJggg==",
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/df2e1/test.png",
   "originalName": "test.png",
-  "presentationHeight": 48,
+  "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
   "src": "/static/1234/df2e1/test.png",
@@ -1040,12 +1038,12 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
-  "aspectRatio": 2.0833333333333335,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAAAsSAAALEgHS3X78AAAA1UlEQVQoz4WRywrCMBBFb6L1XXWtmzZSLa78FheCoK78Qd2KXyJufIO/YNVMpj7aBh2Gkknvyb0weHTx7kh/ezgrTF2UBbgqAvM6rh36df8S606TF4XQIUYCwrQ0TwwKFj4Jh5i4JC0KvIzpUDCD9teCWxZm261HIRn4Lh6bEgefZFEKvgX06rIVB84WX67bxjywwYt/8MoKc+yNh5KwkHzXkNhZY99f/KhGOicJ8zhzyTb6saq9gsrHOXOCmgP3HZxUwjYBf3gfw2q8Hl7buIZjhtT9BIzDgenJiEVPAAAAAElFTkSuQmCC",
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
-  "presentationHeight": 48,
+  "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
   "src": "/static/1234/7e516/test.png",
@@ -1057,12 +1055,12 @@ Object {
 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api 1`] = `
 Object {
-  "aspectRatio": 2.0833333333333335,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAAAsSAAALEgHS3X78AAAA1UlEQVQoz4WRywrCMBBFb6L1XXWtmzZSLa78FheCoK78Qd2KXyJufIO/YNVMpj7aBh2Gkknvyb0weHTx7kh/ezgrTF2UBbgqAvM6rh36df8S606TF4XQIUYCwrQ0TwwKFj4Jh5i4JC0KvIzpUDCD9teCWxZm261HIRn4Lh6bEgefZFEKvgX06rIVB84WX67bxjywwYt/8MoKc+yNh5KwkHzXkNhZY99f/KhGOicJ8zhzyTb6saq9gsrHOXOCmgP3HZxUwjYBf3gfw2q8Hl7buIZjhtT9BIzDgenJiEVPAAAAAElFTkSuQmCC",
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
-  "presentationHeight": 48,
+  "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
   "src": "/static/1234/7e516/test.png",
@@ -1368,11 +1366,11 @@ exports[`gatsby-plugin-sharp fluid should throw on srcSet breakpoints less than 
 exports[`gatsby-plugin-sharp image quirks handles padding bytes correctly 1`] = `
 Object {
   "hUnits": "px",
-  "height": 136,
-  "mime": "image/png",
-  "type": "png",
+  "height": 1000,
+  "mime": "image/jpeg",
+  "type": "jpg",
   "wUnits": "px",
-  "width": 281,
+  "width": 746,
 }
 `;
 
@@ -1558,14 +1556,12 @@ Object {
 
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
-  "aspectRatio": 2.0833333333333335,
+  "aspectRatio": 1,
   "base64": undefined,
-  "height": 48,
+  "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/7e516/test.png",
-  "srcSet": "/static/1234/7e516/test.png 1x,
-/static/1234/8a4e8/test.png 1.5x,
-/static/1234/772e8/test.png 2x",
+  "srcSet": "/static/1234/7e516/test.png 1x",
   "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
   "width": 100,
 }
@@ -1573,12 +1569,12 @@ Object {
 
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
 Object {
-  "aspectRatio": 2.0833333333333335,
+  "aspectRatio": 1,
   "base64": undefined,
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
-  "presentationHeight": 48,
+  "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
   "src": "/static/1234/7e516/test.png",
