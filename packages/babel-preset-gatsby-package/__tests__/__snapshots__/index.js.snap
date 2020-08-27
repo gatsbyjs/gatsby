@@ -58,6 +58,7 @@ Array [
   "@babel/plugin-proposal-optional-chaining",
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
+  "babel-plugin-dynamic-import-node",
 ]
 `;
 
@@ -113,5 +114,6 @@ Array [
   "@babel/plugin-proposal-optional-chaining",
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
+  "babel-plugin-dynamic-import-node",
 ]
 `;
