@@ -29,7 +29,7 @@
     "ansi-html": "^0.0.7",
     "babel-plugin-remove-export-keywords": "^1.6.5",
     "better-queue": "^3.8.10",
-    "chokidar": "3.4.0",
+    "chokidar": "^3.4.2",
     "concurrently": "^5.0.0",
     "contentful-management": "^5.26.3",
     "cors": "^2.8.5",

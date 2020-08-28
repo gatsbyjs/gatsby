@@ -42,6 +42,6 @@
     "object-assign": "^4.1.1",
     "source-map": "^0.7.3",
     "url-polyfill": "^1.1.9",
-    "whatwg-fetch": "3.0.0"
+    "whatwg-fetch": "^3.4.0"
   }
 }

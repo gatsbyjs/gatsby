@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.3",
-    "chokidar": "^3.4.0",
+    "chokidar": "^3.4.2",
     "configstore": "^5.0.1",
     "del": "^5.1.0",
     "execa": "^3.4.0",
