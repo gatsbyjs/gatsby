@@ -404,10 +404,59 @@ module.exports = async (program: IProgram): Promise<void> => {
     developProcess.send(msg)
   })
 
-  onExit((code, signal) => {
-    developProcess.stop(signal)
-    unlocks.map(unlock => unlock())
-    statusServer.close()
-    proxy.server.close()
+  process.on(`SIGINT`, async () => {
+    await shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+      },
+      `SIGINT`
+    )
+
+    process.exit(0)
   })
+
+  process.on(`SIGTERM`, async () => {
+    await shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+      },
+      `SIGINT`
+    )
+
+    process.exit(0)
+  })
+
+  onExit((_code, signal) => {
+    shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+      },
+      signal as NodeJS.Signals
+    )
+  })
+}
+function shutdownServices(
+  { statusServer, developProcess, proxy, unlocks },
+  signal: NodeJS.Signals
+): Promise<void> {
+  const services = [
+    developProcess.stop(signal),
+    new Promise(resolve => statusServer.close(resolve)),
+    new Promise(resolve => proxy.close(resolve)),
+  ]
+
+  unlocks.forEach(unlock => {
+    services.push(unlock())
+  })
+
+  return Promise.all(unlocks).then(() => {})
 }
