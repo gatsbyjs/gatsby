@@ -197,34 +197,36 @@ export default function mapTemplatesToStaticQueryHashes(
     )
   })
 
-  queryModules.forEach(queryModule => {
-    const staticQueryHashes: Array<string> = []
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+    queryModules.forEach(queryModule => {
+      const staticQueryHashes: Array<string> = []
 
-    // Does this module contain an inline static query?
-    if (mapOfComponentsToStaticQueryHashes.has(queryModule.source)) {
-      const hash = mapOfComponentsToStaticQueryHashes.get(queryModule.source)
-      if (hash) {
-        staticQueryHashes.push(hash)
-      }
-    }
-
-    // Check dependencies
-    mapOfStaticQueryComponentsToDependants.forEach(
-      (setOfDependants, moduleSource) => {
-        if (setOfDependants.has(queryModule.source)) {
-          const hash = mapOfComponentsToStaticQueryHashes.get(moduleSource)
-          if (hash) {
-            staticQueryHashes.push(hash)
-          }
+      // Does this module contain an inline static query?
+      if (mapOfComponentsToStaticQueryHashes.has(queryModule.source)) {
+        const hash = mapOfComponentsToStaticQueryHashes.get(queryModule.source)
+        if (hash) {
+          staticQueryHashes.push(hash)
         }
       }
-    )
 
-    mapOfTemplatesToStaticQueryHashes.set(
-      queryModule.source,
-      staticQueryHashes.sort().map(String)
-    )
-  })
+      // Check dependencies
+      mapOfStaticQueryComponentsToDependants.forEach(
+        (setOfDependants, moduleSource) => {
+          if (setOfDependants.has(queryModule.source)) {
+            const hash = mapOfComponentsToStaticQueryHashes.get(moduleSource)
+            if (hash) {
+              staticQueryHashes.push(hash)
+            }
+          }
+        }
+      )
+
+      mapOfTemplatesToStaticQueryHashes.set(
+        queryModule.source,
+        staticQueryHashes.sort().map(String)
+      )
+    })
+  }
 
   return mapOfTemplatesToStaticQueryHashes
 }

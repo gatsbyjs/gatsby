@@ -47,6 +47,10 @@ export default function withResolverContext<TSource, TArgs>({
     type?: string
     importName?: string
   }): string => {
+    if (!process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+      throw new Error(`GATSBY_EXPERIMENTAL_QUERY_MODULES is not enabled`)
+    }
+
     if (!context?.path) {
       throw new Error(`Adding modules doesn't work in gatsby-node or graphiql`)
     }

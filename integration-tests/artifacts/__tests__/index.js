@@ -289,6 +289,7 @@ describe(`Second run`, () => {
       env: {
         ...process.env,
         NODE_ENV: `production`,
+        GATSBY_EXPERIMENTAL_QUERY_MODULES: `1`,
         RUN_FOR_STALE_PAGE_ARTIFICATS: `2`,
       },
     })
