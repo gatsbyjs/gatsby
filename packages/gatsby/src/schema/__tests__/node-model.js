@@ -550,7 +550,7 @@ describe(`NodeModel`, () => {
     })
   })
 
-  describe(`prepare nodes caching`, () => {
+  describe(`materialization`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     beforeEach(async () => {
@@ -590,12 +590,21 @@ describe(`NodeModel`, () => {
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
+          typeBuilders.buildInterfaceType({
+            name: `TestNestedInterface`,
+            fields: {
+              foo: { type: `String` },
+            },
+            resolveType: value => value.kind,
+          }),
+
           typeBuilders.buildObjectType({
             name: `TestNested`,
             fields: {
               foo: { type: `String` },
               bar: { type: `String` },
             },
+            interfaces: [`TestNestedInterface`],
           }),
 
           typeBuilders.buildObjectType({
@@ -623,6 +632,14 @@ describe(`NodeModel`, () => {
               nested: {
                 type: `TestNested`,
                 resolve: source => source.nested,
+              },
+              arrayWithNulls: {
+                type: `[TestNestedInterface]`,
+                resolve: source => [
+                  null,
+                  { kind: `TestNested`, foo: source.id },
+                  undefined,
+                ],
               },
             },
           }),
@@ -754,6 +771,23 @@ describe(`NodeModel`, () => {
       expect(result2).toBeTruthy()
       expect(result2.length).toBe(1)
       expect(result2[0].id).toBe(`id2`)
+    })
+
+    it(`handles nulish values within array of interface type`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { arrayWithNulls: { elemMatch: { foo: { eq: `id1` } } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(result).toBeTruthy()
+      expect(result.length).toEqual(1)
+      expect(result[0].id).toEqual(`id1`)
     })
   })
 
