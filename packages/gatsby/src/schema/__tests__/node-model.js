@@ -580,6 +580,14 @@ describe(`NodeModel`, () => {
             contentDigest: `1`,
           },
         },
+        // Test2 is a special type that must have no nodes!
+        {
+          id: `id3`,
+          internal: {
+            type: `Test3`,
+            contentDigest: `2`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -590,6 +598,13 @@ describe(`NodeModel`, () => {
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
+          typeBuilders.buildInterfaceType({
+            name: `TestInterface`,
+            fields: {
+              slug: { type: `String` },
+            },
+          }),
+
           typeBuilders.buildInterfaceType({
             name: `TestNestedInterface`,
             fields: {
@@ -609,7 +624,7 @@ describe(`NodeModel`, () => {
 
           typeBuilders.buildObjectType({
             name: `Test`,
-            interfaces: [`Node`],
+            interfaces: [`Node`, `TestInterface`],
             fields: {
               betterTitle: {
                 type: `String`,
@@ -640,6 +655,30 @@ describe(`NodeModel`, () => {
                   { kind: `TestNested`, foo: source.id },
                   undefined,
                 ],
+              },
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test2`,
+            interfaces: [`Node`, `TestInterface`],
+            fields: {
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test3`,
+            interfaces: [`Node`, `TestInterface`],
+            fields: {
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
               },
             },
           }),
@@ -788,6 +827,22 @@ describe(`NodeModel`, () => {
       expect(result).toBeTruthy()
       expect(result.length).toEqual(1)
       expect(result[0].id).toEqual(`id1`)
+    })
+
+    it(`handles fields with custom resolvers on interfaces having multiple implementations`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { slug: { eq: `id3` } },
+          },
+          firstOnly: true,
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(result).toBeTruthy()
+      expect(result.id).toEqual(`id3`)
     })
   })
 
