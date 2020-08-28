@@ -321,14 +321,6 @@ export default async ({
               </StepRenderer>
             ))}
 
-            {/* <StepRenderer
-                key="DOM"
-                components={components}
-                remarkPlugins={[removeJsx]}
-              >
-                {state.context.stepsAsJS?.join(`\n`)}
-              </StepRenderer> */}
-
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
             <Text>{` `}</Text>
