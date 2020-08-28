@@ -426,7 +426,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         statusServer,
         proxy,
       },
-      `SIGINT`
+      `SIGTERM`
     )
 
     process.exit(0)
