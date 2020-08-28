@@ -64,7 +64,7 @@
     "node-fetch": "^2.5.0",
     "normalize.css": "^8.0.1",
     "pkg-dir": "^4.2.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "prop-types": "^15.6.1",
     "property-information": "5.5.0",
     "react-circular-progressbar": "^2.0.0",
