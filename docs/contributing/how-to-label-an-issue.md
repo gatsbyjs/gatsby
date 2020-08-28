@@ -1,5 +1,5 @@
 ---
-title: How the Gatsty core team label issues
+title: How the Gatsby core team labels issues
 ---
 
 ## What are issue labels?
