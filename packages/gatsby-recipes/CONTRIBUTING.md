@@ -267,8 +267,10 @@ That's it!
 <RecipeStep step={1} total={2}>
 Creates a "hello, world" file
 
+
 <File name="hello.md" content="# Hello, world!" _uuid="123abc" />
 </RecipeStep>
+
 
 <RecipeStep step={2} total={2}>
   That's it!

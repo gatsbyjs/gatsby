@@ -215,7 +215,7 @@ You can specify the media types handled by a node type using the `@mimeTypes` ex
 
 ```graphql
 type Markdown implements Node
-  @mimeTypes(types: ["text/markdown", "text/x-markdown"]) {
+@mimeTypes(types: ["text/markdown", "text/x-markdown"]) {
   id: ID!
 }
 ```
@@ -240,7 +240,7 @@ The `mimeTypes` argument takes an array of strings and determines what media typ
 ```graphql
 # Adds `childMdx` as a child of any node type with the `@mimeTypes` set to "text/markdown" or "text/x-markdown"
 type Mdx implements Node
-  @childOf(mimeTypes: ["text/markdown", "text/x-markdown"]) {
+@childOf(mimeTypes: ["text/markdown", "text/x-markdown"]) {
   id: ID!
 }
 ```
@@ -250,7 +250,7 @@ The `mimeTypes` and `types` arguments can be combined as follows:
 ```graphql
 # Adds `childMdx` as a child to `File` nodes *and* nodes with `@mimeTypes` set to "text/markdown" or "text/x-markdown"
 type Mdx implements Node
-  @childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
+@childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
   id: ID!
 }
 ```

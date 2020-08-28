@@ -46,7 +46,7 @@ exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node
-      @childOf(types: ["File", "DocumentationJs"], many: true) {
+    @childOf(types: ["File", "DocumentationJs"], many: true) {
       name: String
       kind: String
       memberof: String
@@ -68,9 +68,9 @@ exports.sourceNodes = ({ actions }) => {
       type: DoctrineType
       default: JSON
       description: DocumentationJSComponentDescription
-        @link(from: "description___NODE")
+      @link(from: "description___NODE")
       deprecated: DocumentationJSComponentDescription
-        @link(from: "deprecated___NODE")
+      @link(from: "deprecated___NODE")
       augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
       implements: [DocumentationJs] @link(from: "implements___NODE")
@@ -86,7 +86,7 @@ exports.sourceNodes = ({ actions }) => {
     }
 
     type DocumentationJSComponentDescription implements Node
-      @mimeTypes(types: ["text/markdown"]) {
+    @mimeTypes(types: ["text/markdown"]) {
       id: ID! # empty type
     }
 
