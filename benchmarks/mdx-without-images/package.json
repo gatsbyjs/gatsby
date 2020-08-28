@@ -14,18 +14,18 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
-    "@mdx-js/mdx": "1.6.6",
-    "@mdx-js/react": "1.6.6",
+    "@mdx-js/mdx": "^1",
+    "@mdx-js/react": "^1",
     "faker": "^4.1.0",
-    "front-matter": "4.0.2",
-    "gatsby": "2.24.2",
+    "front-matter": "^4",
+    "gatsby": "^2",
     "gatsby-plugin-benchmark-reporting": "*",
-    "gatsby-plugin-mdx": "1.2.25",
-    "gatsby-plugin-page-creator": "2.3.10",
-    "gatsby-source-filesystem": "2.3.18",
+    "gatsby-plugin-mdx": "^1",
+    "gatsby-plugin-page-creator": "^2",
+    "gatsby-source-filesystem": "^2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "remark-react": "^7.0.1"
+    "remark-react": "^7"
   },
   "devDependencies": {
     "prettier": "2.0.4"
