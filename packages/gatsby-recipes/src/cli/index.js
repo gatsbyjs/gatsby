@@ -207,12 +207,6 @@ const components = {
       </Div>
     )
   },
-  // Don't use <Box> for li > p as that breaks Ink.
-  "li.p": props => {
-    const children = eliminateNewLines(props.children)
-    return <Text>{children}</Text>
-  },
-  // p: () => <Text>`hi`</Text>, // null,
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
@@ -317,15 +311,24 @@ export default async ({
                 </Text>
               </Box>
             ) : null}
-            <StepRenderer
-              key="DOC"
-              components={components}
-              remarkPlugins={[removeJsx]}
-            >
-              {state.context.exports?.join(`\n`) +
-                `\n\n` +
-                state.context.stepsAsJS.join(`\n`)}
-            </StepRenderer>
+            {state.context.stepsAsJS.map((step, i) => (
+              <StepRenderer
+                key={`step-${i}`}
+                components={components}
+                remarkPlugins={[removeJsx]}
+              >
+                {state.context.exports?.join(`\n`) + `\n\n` + step}
+              </StepRenderer>
+            ))}
+
+            {/* <StepRenderer
+                key="DOM"
+                components={components}
+                remarkPlugins={[removeJsx]}
+              >
+                {state.context.stepsAsJS?.join(`\n`)}
+              </StepRenderer> */}
+
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
             <Text>{` `}</Text>
