@@ -13,8 +13,6 @@ export function detectHotLoaderToUse(): void {
     const reactVersion = require(`react/package.json`).version
     const parsed = semver.parse(reactVersion)
 
-    console.log(parsed)
-
     if (
       parsed &&
       // React 17+ is supported
@@ -30,6 +28,4 @@ export function detectHotLoaderToUse(): void {
 
   if (!process.env.GATSBY_HOT_LOADER)
     process.env.GATSBY_HOT_LOADER = `react-hot-loader`
-
-  console.debug(`HOTLOADER: ${process.env.GATSBY_HOT_LOADER}`)
 }
