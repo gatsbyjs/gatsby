@@ -137,6 +137,7 @@ export const createWebpackUtils = (
 
   const isSSR = stage.includes(`html`)
 
+  const jsxRuntimeExists = reactHasJsxRuntime()
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
   ): RuleSetRule => {
@@ -273,6 +274,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
           // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
@@ -303,7 +305,7 @@ export const createWebpackUtils = (
     },
 
     eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema)
+      const options = eslintConfig(schema, jsxRuntimeExists)
 
       return {
         options,
@@ -709,4 +711,20 @@ export const createWebpackUtils = (
     rules,
     plugins,
   }
+}
+
+function reactHasJsxRuntime(): boolean {
+  try {
+    // React is shipping a new jsx runtime that is to be used with
+    // an option on @babel/preset-react called `runtime: automatic`
+    // Not every version of React has this jsx-runtime yet. Eventually,
+    // it will be backported to older versions of react and this check
+    // will become unnecessary.
+    return !!require.resolve(`react/jsx-runtime.js`)
+  } catch (e) {
+    // If the require.resolve throws, that means this version of React
+    // does not support the jsx runtime.
+  }
+
+  return false
 }

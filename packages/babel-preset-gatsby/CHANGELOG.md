@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.8](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.5.7...babel-preset-gatsby@0.5.8) (2020-08-28)
+
+### Features
+
+- **gatsby:** Support React 17's new JSX Transform ([#26652](https://github.com/gatsbyjs/gatsby/issues/26652)) ([6ba68f8](https://github.com/gatsbyjs/gatsby/commit/6ba68f8))
+
 ## [0.5.7](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.5.6...babel-preset-gatsby@0.5.7) (2020-08-26)
 
 **Note:** Version bump only for package babel-preset-gatsby
