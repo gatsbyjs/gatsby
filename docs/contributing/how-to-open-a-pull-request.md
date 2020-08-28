@@ -101,7 +101,7 @@ For the Gatsby blog, it's necessary to run your content idea by the Gatsby team 
 
 ## Follow up with reviews and suggestions
 
-After a PR is sent to the Gatsby GitHub repo, the Gatsby core team may suggest modifications to the changes that your PR introduces.
+After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
 Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
 
