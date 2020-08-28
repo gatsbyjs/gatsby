@@ -13,7 +13,7 @@
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.15",
     "path-is-inside": "^1.0.2",
-    "probe-image-size": "^4.1.1",
+    "probe-image-size": "^5.0.0",
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {

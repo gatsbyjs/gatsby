@@ -194,10 +194,10 @@ const compressPng = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [
           imageminPngquant({
-            quality: `${options.pngQuality || options.quality}-${Math.min(
-              (options.pngQuality || options.quality) + 25,
-              100
-            )}`, // e.g. 40-65
+            quality: [
+              (options.pngQuality || options.quality) / 100,
+              Math.min(((options.pngQuality || options.quality) + 25) / 100, 1),
+            ], // e.g. [0.4, 0.65]
             speed: options.pngCompressionSpeed
               ? options.pngCompressionSpeed
               : undefined,
