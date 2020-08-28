@@ -67,6 +67,7 @@ beforeAll(async done => {
     stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
     env: {
       ...process.env,
+      GATSBY_EXPERIMENTAL_QUERY_MODULES: `1`,
       NODE_ENV: `production`,
     },
   })

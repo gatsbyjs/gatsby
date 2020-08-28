@@ -135,23 +135,26 @@ export async function flush(): Promise<void> {
   const { pagePaths, templatePaths } = pendingPageDataWrites
 
   const pathToModules = new Map<string, IDependencyModule>()
-  modules.forEach(m => {
-    pathToModules.set(m.source, m)
-  })
-
   const pathToHash = new Map<string, string>()
   const hashToStaticQueryId = new Map<string, Set<string>>()
-  staticQueryComponents.forEach(({ id, hash, componentPath }) => {
-    const key = String(hash)
-    let existingSet = hashToStaticQueryId.get(key)
-    if (!existingSet) {
-      existingSet = new Set<string>()
-      hashToStaticQueryId.set(key, existingSet)
-    }
 
-    existingSet.add(id)
-    pathToHash.set(componentPath, key)
-  })
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+    modules.forEach(m => {
+      pathToModules.set(m.source, m)
+    })
+
+    staticQueryComponents.forEach(({ id, hash, componentPath }) => {
+      const key = String(hash)
+      let existingSet = hashToStaticQueryId.get(key)
+      if (!existingSet) {
+        existingSet = new Set<string>()
+        hashToStaticQueryId.set(key, existingSet)
+      }
+
+      existingSet.add(id)
+      pathToHash.set(componentPath, key)
+    })
+  }
 
   const pagesToWrite = Array.from(templatePaths).reduce(
     (acc, componentPath) => getPagesUsingStaticQuery(acc, componentPath),
@@ -221,49 +224,51 @@ export async function flush(): Promise<void> {
       templateComponent.pages.forEach(set.add.bind(set))
     }
 
-    const staticQueryHash = pathToHash.get(componentPath)
-    if (staticQueryHash) {
-      staticQueriesByTemplate.forEach(
-        (staticQueryHashes, moduleOrTemplatePath) => {
-          if (staticQueryHashes.includes(staticQueryHash)) {
-            getPagesUsingStaticQuery(
-              set,
-              moduleOrTemplatePath,
-              visitedComponentPaths
-            )
-          }
-        }
-      )
-    }
-
-    const moduleEntry = pathToModules.get(componentPath)
-    if (moduleEntry) {
-      // check if this module is used by static query
-      // moduleEntry.
-      moduleEntry.queryIDs.forEach(usedIn => {
-        // static queries that use given module
-        if (usedIn.startsWith(`sq--`)) {
-          const staticQueryDef = staticQueryComponents.get(usedIn)
-          if (!staticQueryDef) {
-            return
-          }
-          const hash = String(staticQueryDef.hash)
-          staticQueriesByTemplate.forEach(
-            (staticQueryIds, moduleOrTemplatePath) => {
-              if (staticQueryIds.includes(hash)) {
-                getPagesUsingStaticQuery(
-                  set,
-                  moduleOrTemplatePath,
-                  visitedComponentPaths
-                )
-              }
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+      const staticQueryHash = pathToHash.get(componentPath)
+      if (staticQueryHash) {
+        staticQueriesByTemplate.forEach(
+          (staticQueryHashes, moduleOrTemplatePath) => {
+            if (staticQueryHashes.includes(staticQueryHash)) {
+              getPagesUsingStaticQuery(
+                set,
+                moduleOrTemplatePath,
+                visitedComponentPaths
+              )
             }
-          )
-        } else {
-          // if not static query - it's page path
-          set.add(usedIn)
-        }
-      })
+          }
+        )
+      }
+
+      const moduleEntry = pathToModules.get(componentPath)
+      if (moduleEntry) {
+        // check if this module is used by static query
+        // moduleEntry.
+        moduleEntry.queryIDs.forEach(usedIn => {
+          // static queries that use given module
+          if (usedIn.startsWith(`sq--`)) {
+            const staticQueryDef = staticQueryComponents.get(usedIn)
+            if (!staticQueryDef) {
+              return
+            }
+            const hash = String(staticQueryDef.hash)
+            staticQueriesByTemplate.forEach(
+              (staticQueryIds, moduleOrTemplatePath) => {
+                if (staticQueryIds.includes(hash)) {
+                  getPagesUsingStaticQuery(
+                    set,
+                    moduleOrTemplatePath,
+                    visitedComponentPaths
+                  )
+                }
+              }
+            )
+          } else {
+            // if not static query - it's page path
+            set.add(usedIn)
+          }
+        })
+      }
     }
 
     return set
