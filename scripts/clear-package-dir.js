@@ -87,8 +87,20 @@ const getListOfFilesToClear = ({ location, name }) => {
     npmignore = npmignore.concat([`node_modules/**`])
   }
 
-  const result = glob.sync(`**/*`, {
-    nodir: true,
+  let globPattern = `**/*`
+  // check files array in package.json and use it as glob pattern
+  try {
+    const pkg = require(`${location}/package.json`)
+    if (pkg.files && pkg.files.length) {
+      globPattern =
+        pkg.files.length > 1 ? `{${pkg.files.join(`,`)}}` : pkg.files[0]
+    }
+  } catch {
+    // do nothing
+  }
+
+  let result = []
+  result = glob.sync(globPattern, {
     ignore: npmignore,
     cwd: location,
   })

@@ -4,7 +4,7 @@
   "description": "Gatsby example site using using-path-prefix",
   "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "dependencies": {
-    "gatsby": "^2.24.47",
+    "gatsby": "^2.24.50",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },

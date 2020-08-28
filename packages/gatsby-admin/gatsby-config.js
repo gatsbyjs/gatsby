@@ -2,6 +2,7 @@ module.exports = {
   plugins: [
     {
       resolve: "gatsby-plugin-react-helmet",
+      options: {},
     },
     {
       resolve: "gatsby-plugin-webfonts",
@@ -14,6 +15,12 @@ module.exports = {
             },
           ],
         },
+      },
+    },
+    {
+      resolve: "gatsby-plugin-create-client-paths",
+      options: {
+        prefixes: ["/plugins/*"],
       },
     },
   ],
