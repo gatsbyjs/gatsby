@@ -18,6 +18,7 @@
     "@typescript-eslint/parser": "^2.28.0",
     "csstype": "^2.6.10",
     "feedback-fish": "^0.1.12",
+    "query-string": "^6.13.1",
     "formik": "^2.1.4",
     "gatsby": "^2.24.51",
     "gatsby-interface": "0.0.183",
