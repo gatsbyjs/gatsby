@@ -1,3 +1,3 @@
 /*.js
-yarn.lock
+!index.js
 scripts

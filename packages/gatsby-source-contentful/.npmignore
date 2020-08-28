@@ -27,9 +27,11 @@ build/Release
 node_modules
 *.un~
 yarn.lock
-__tests__
-__fixtures__
+src
 flow-typed
 coverage
 decls
 examples
+.eslintrc
+.babelrc
+tsconfig.json

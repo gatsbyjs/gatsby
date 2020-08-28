@@ -32,3 +32,6 @@ flow-typed
 coverage
 decls
 examples
+.eslintrc
+.babelrc
+tsconfig.json

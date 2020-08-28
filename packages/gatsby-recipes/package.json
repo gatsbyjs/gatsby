@@ -117,6 +117,10 @@
     ],
     "testEnvironment": "node"
   },
+  "files": [
+    "dist/",
+    "recipes/"
+  ],
   "keywords": [
     "gatsby",
     "gatsby-recipes",
