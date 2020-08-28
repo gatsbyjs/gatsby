@@ -32,6 +32,9 @@ export default function Layout({ children }) {
 
 The following components can be customized with the MDXProvider:
 
+<!-- prettier also has the issue below as of v2.1 -->
+<!-- the prettier ignore comment must be outside of the remark ignore block as to not break remark-lint -->
+<!-- prettier-ignore-start -->
 <!-- remark lint doesn't realize the pipes in code blocks aren't table markers -->
 <!-- lint ignore table-pipe-alignment -->
 
@@ -63,6 +66,7 @@ The following components can be customized with the MDXProvider:
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                 |
 
 <!-- lint enable table-pipe-alignment -->
+<!-- prettier-ignore-end -->
 
 ## How does this work?
 
