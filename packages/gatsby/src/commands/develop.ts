@@ -122,6 +122,7 @@ class ControllableScript {
     if (!this.process) {
       throw new Error(`Trying to stop the process before starting it`)
     }
+
     this.isRunning = false
     if (signal) {
       this.process.kill(signal)
@@ -139,6 +140,7 @@ class ControllableScript {
       if (!this.process) {
         throw new Error(`Trying to stop the process before starting it`)
       }
+
       this.process.on(`exit`, () => {
         if (this.process) {
           this.process.removeAllListeners()
@@ -374,9 +376,10 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+  let watcher: chokidar.FSWatcher = null
 
   if (!isCI()) {
-    chokidar.watch(files).on(`change`, filePath => {
+    watcher = chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
 
       if (file === `gatsby-config.js`) {
@@ -411,6 +414,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         unlocks,
         statusServer,
         proxy,
+        watcher,
       },
       `SIGINT`
     )
@@ -425,6 +429,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         unlocks,
         statusServer,
         proxy,
+        watcher,
       },
       `SIGTERM`
     )
@@ -439,24 +444,26 @@ module.exports = async (program: IProgram): Promise<void> => {
         unlocks,
         statusServer,
         proxy,
+        watcher,
       },
       signal as NodeJS.Signals
     )
   })
 }
 function shutdownServices(
-  { statusServer, developProcess, proxy, unlocks },
+  { statusServer, developProcess, proxy, unlocks, watcher },
   signal: NodeJS.Signals
 ): Promise<void> {
   const services = [
     developProcess.stop(signal),
+    watcher?.close(),
     new Promise(resolve => statusServer.close(resolve)),
-    new Promise(resolve => proxy.close(resolve)),
+    new Promise(resolve => proxy.server.close(resolve)),
   ]
 
   unlocks.forEach(unlock => {
     services.push(unlock())
   })
 
-  return Promise.all(unlocks).then(() => {})
+  return Promise.all(services).then(() => {})
 }
