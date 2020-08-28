@@ -149,8 +149,6 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
 
-_**Note:** as a member of the Gatsby repo, you can also clone it directly (instead of forking and using an upstream remote workflow). You can then push changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows) to open PRs._
-
 ## Additional resources
 
 - CSS Tricks: [How to Contribute to an Open Source Project](https://css-tricks.com/how-to-contribute-to-an-open-source-project/)

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import uuidv4 from "uuid/v4"
+import { v4 as uuidv4 } from "uuid"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"
 import { Dispatch } from "redux"
@@ -160,6 +160,7 @@ export const createPendingActivity = ({
       payload: {
         id,
         type: ActivityTypes.Pending,
+        startTime: process.hrtime(),
         status,
       },
     },

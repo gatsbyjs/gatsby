@@ -16,13 +16,13 @@ As a website owner, how do I test my site is serving its HTML correctly when `ga
 **on Windows (using PowerShell):**
 
 ```shell
-Invoke-WebRequest https://www.gatsbyjs.org/docs/seo | Select -ExpandProperty Content
+Invoke-WebRequest https://www.gatsbyjs.com/docs/seo | Select -ExpandProperty Content
 ```
 
 **on macOS/Linux:**
 
 ```shell
-curl https://www.gatsbyjs.org/docs/seo
+curl https://www.gatsbyjs.com/docs/seo
 ```
 
 ## Speed boost
@@ -35,7 +35,7 @@ In July 2018, [Google announced a new ranking factor for site speed](https://web
 
 Adding metadata to pages, such as page title, meta description, alt text and structured data using JSON-LD, helps search engines understand your content and when to show your pages in search results.
 
-A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](https://www.gatsbyjs.org/docs/add-seo-component/) to your Gatsby app.
+A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/plugins/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](/docs/add-seo-component/) to your Gatsby app.
 
 Some examples using react-helmet:
 
