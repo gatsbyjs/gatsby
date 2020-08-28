@@ -27,7 +27,7 @@ describe(`babel-preset-gatsby`, () => {
     ])
   })
 
-  fit(`Allows to configure react runtime`, () => {
+  it(`Allows to configure react runtime`, () => {
     const { presets } = preset(null, {
       reactRuntime: `automatic`,
     })
