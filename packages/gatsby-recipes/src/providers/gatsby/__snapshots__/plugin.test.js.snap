@@ -4,7 +4,7 @@ exports[`gatsby-plugin resource all returns plugins as array 1`] = `
 Array [
   Object {
     "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-    "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+    "description": null,
     "id": "gatsby-source-filesystem",
     "name": "gatsby-source-filesystem",
     "options": Object {
@@ -378,7 +378,7 @@ In case that due to spotty network, or slow connection, some remote files fail t
   },
   Object {
     "_message": "Installed gatsby-transformer-sharp in gatsby-config.js",
-    "description": "Gatsby transformer plugin for images using Sharp",
+    "description": null,
     "id": "gatsby-transformer-sharp",
     "name": "gatsby-transformer-sharp",
     "options": undefined,
@@ -491,7 +491,7 @@ If updating these doesn't fix the issue, your project probably uses other plugin
   },
   Object {
     "_message": "Installed gatsby-plugin-emotion in gatsby-config.js",
-    "description": "Gatsby plugin to add support for Emotion",
+    "description": null,
     "id": "gatsby-plugin-emotion",
     "name": "gatsby-plugin-emotion",
     "options": undefined,
@@ -537,7 +537,7 @@ module.exports = {
   },
   Object {
     "_message": "Installed gatsby-plugin-typography in gatsby-config.js",
-    "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
+    "description": null,
     "id": "gatsby-plugin-typography",
     "name": "gatsby-plugin-typography",
     "options": Object {
@@ -605,7 +605,7 @@ module.exports = {
   },
   Object {
     "_message": "Installed gatsby-transformer-remark in gatsby-config.js",
-    "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
+    "description": null,
     "id": "gatsby-transformer-remark",
     "name": "gatsby-transformer-remark",
     "options": Object {
@@ -926,7 +926,7 @@ Then specify \`MARKDOWN\` as the format in your graphql query:
   },
   Object {
     "_message": "Installed gatsby-plugin-sharp in gatsby-config.js",
-    "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
+    "description": null,
     "id": "gatsby-plugin-sharp",
     "name": "gatsby-plugin-sharp",
     "options": undefined,
@@ -1363,7 +1363,7 @@ If updating these doesn't fix the issue, your project probably uses other plugin
   },
   Object {
     "_message": "Installed gatsby-plugin-google-analytics in gatsby-config.js",
-    "description": "Gatsby plugin to add google analytics onto a site",
+    "description": null,
     "id": "gatsby-plugin-google-analytics",
     "name": "gatsby-plugin-google-analytics",
     "options": Object {
@@ -1627,7 +1627,7 @@ module.exports = {
   },
   Object {
     "_message": "Installed gatsby-plugin-manifest in gatsby-config.js",
-    "description": "Gatsby plugin which adds a manifest.webmanifest to make sites progressive web apps",
+    "description": null,
     "id": "gatsby-plugin-manifest",
     "name": "gatsby-plugin-manifest",
     "options": Object {
@@ -2138,7 +2138,7 @@ If updating these doesn't fix the issue, your project probably uses other plugin
   },
   Object {
     "_message": "Installed gatsby-plugin-offline in gatsby-config.js",
-    "description": "Gatsby plugin which sets up a site to be able to run offline",
+    "description": null,
     "id": "gatsby-plugin-offline",
     "name": "gatsby-plugin-offline",
     "options": undefined,
@@ -2421,7 +2421,7 @@ Note that you have to prefix your icon with \`icon-path\` or whatever you may ca
   },
   Object {
     "_message": "Installed gatsby-plugin-react-helmet in gatsby-config.js",
-    "description": "Manage document head data with react-helmet. Provides drop-in server rendering support for Gatsby.",
+    "description": null,
     "id": "gatsby-plugin-react-helmet",
     "name": "gatsby-plugin-react-helmet",
     "options": undefined,
@@ -2484,7 +2484,7 @@ If you are using this plugin with React hooks, you may notice some errors like \
 exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -2858,7 +2858,7 @@ In case that due to spotty network, or slow connection, some remote files fail t
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -3291,7 +3291,7 @@ exports[`gatsby-plugin resource e2e plugin resource test with hello world starte
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -3724,7 +3724,7 @@ module.exports = {
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -4272,7 +4272,7 @@ exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
