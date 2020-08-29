@@ -92,6 +92,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
 
         # Query for a fluid image resource on this `ContentfulAsset` node
         fluid(maxWidth: 500){
+          # Query fragment included with the `gatsby-source-contentful` plugin, learn more about query fragments: https://www.gatsbyjs.com/plugins/gatsby-image/#fragments
           ...GatsbyContentfulFluid_withWebp
         }
 
@@ -104,6 +105,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
           # Use `gatsby-image` to create fluid image resource
           childImageSharp {
             fluid(maxWidth: 500) {
+              # Query fragment included with the `gatsby-transformer-sharp` plugin, learn more about query fragments: https://www.gatsbyjs.com/plugins/gatsby-image/#fragments
               ...GatsbyImageSharpFluid
           }
         }
