@@ -8,7 +8,7 @@
 `npm install --save gatsby-transformer-remark gatsby-remark-katex katex`
 
 ## How to use
-
+If using `gatsby-transformer-remark`:
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -22,6 +22,22 @@ plugins: [
             // Add any KaTeX options from https://github.com/KaTeX/KaTeX/blob/master/docs/options.md here
             strict: `ignore`
           }
+        }
+      ],
+    },
+  },
+],
+```
+
+If using `gatsby-plugin-mdx`:
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-mdx`,
+    options: {
+      gatsbyRemarkplugins: [
+        {
+          resolve: `gatsby-remark-katex`,
         }
       ],
     },
