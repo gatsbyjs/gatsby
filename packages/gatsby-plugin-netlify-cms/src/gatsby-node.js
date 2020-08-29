@@ -252,8 +252,8 @@ exports.onCreateWebpackConfig = (
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
       }),
 
-      new CopyPlugin(
-        [].concat.apply(
+      new CopyPlugin({
+        patterns: [].concat.apply(
           [],
           externals.map(({ name, assetName, sourceMap, assetDir }) =>
             [
@@ -267,8 +267,8 @@ exports.onCreateWebpackConfig = (
               },
             ].filter(item => item)
           )
-        )
-      ),
+        ),
+      }),
 
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),
