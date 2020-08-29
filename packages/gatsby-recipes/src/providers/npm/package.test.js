@@ -8,15 +8,15 @@ const resourceTestHelper = require(`../resource-test-helper`)
 
 const root = path.join(os.tmpdir(), uuid.v4())
 fs.mkdirSync(root)
-const pkgResource = { name: `glob` }
+const pkgResource = { name: `bar` }
 
 test(`plan returns a description`, async () => {
   const result = await pkg.plan({ root }, pkgResource)
 
-  expect(result.describe).toEqual(expect.stringContaining(`Install glob`))
+  expect(result.describe).toEqual(expect.stringContaining(`Install bar`))
 })
 
-describe.skip(`npm package resource`, () => {
+describe(`npm package resource`, () => {
   test(`e2e npm package resource test`, async () => {
     await resourceTestHelper({
       resourceModule: pkg,
@@ -26,6 +26,18 @@ describe.skip(`npm package resource`, () => {
       partialUpdate: { name: `is-sorted`, version: `1.0.2` },
     })
   })
+  test(`installs 2 resources, one prod & one dev`, async () => {
+    await Promise.all([
+      pkg.create({ root }, { name: `foo` }),
+      pkg.create({ root }, { name: `bar`, dependencyType: `development` }),
+    ])
+
+    const fooResource = await pkg.read({ root }, `foo`)
+    const barResource = await pkg.read({ root }, `bar`)
+
+    expect(fooResource).toMatchSnapshot()
+    expect(barResource).toMatchSnapshot()
+  }, 20000)
 })
 
 describe(`package manager client commands`, () => {

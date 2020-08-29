@@ -4,18 +4,31 @@ const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)
-const resolveCwd = require(`resolve-cwd`)
+const resolveFrom = require(`resolve-from`)
+const mockPackageInstall = require(`mock-package-install`)
 
 const packageMangerConfigKey = `cli.packageManager`
 const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
 
 const resourceSchema = require(`../resource-schema`)
 
+const readPackageJson = async (root, pkg) => {
+  let obj
+  try {
+    const fullPath = resolveFrom(root, path.join(pkg, `package.json`))
+    const contents = await fs.readFile(fullPath, `utf8`)
+    obj = JSON.parse(contents)
+  } catch (e) {
+    // ignore
+  }
+  return obj
+}
+
 const getPackageNames = packages => packages.map(n => `${n.name}@${n.version}`)
 
 // Generate install commands
 const generateClientComands = ({ packageManager, depType, packageNames }) => {
-  let commands = []
+  const commands = []
   if (packageManager === `yarn`) {
     commands.push(`add`)
     // Needed for Yarn Workspaces and is a no-opt elsewhere.
@@ -48,7 +61,7 @@ const executeInstalls = async root => {
   const depType = installs[0].resource.dependencyType
   const packagesToInstall = types[depType]
   installs = installs.filter(
-    i => !_.some(packagesToInstall, p => i.resource.id === p.resource.id)
+    i => !_.some(packagesToInstall, p => i.resource.name === p.resource.name)
   )
 
   const pkgs = packagesToInstall.map(p => p.resource)
@@ -60,33 +73,52 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
-  try {
-    await execa(PACKAGE_MANGER, commands, {
-      cwd: root,
+  if (isJest) {
+    // Just do a mock install
+    // ensure the package.json exists as mockPackageInstall fails otherwise
+    const packageJsonPath = path.join(root, `package.json`)
+    if (!fs.existsSync(packageJsonPath)) {
+      fs.writeFileSync(packageJsonPath, `{}`)
+    }
+    packagesToInstall.forEach(p => {
+      mockPackageInstall.install({
+        package: { name: p.resource.name, version: p.resource.version },
+        nodeModulesDir: path.join(root, `node_modules`),
+        targetPackage: packageJsonPath,
+        isDev: depType === `development`,
+      })
     })
-  } catch (e) {
-    // A package failed so call the rejects
-    return packagesToInstall.forEach(p => {
-      p.outsideReject(
-        JSON.stringify({
-          message: e.shortMessage,
-          installationError: `Could not install package`,
-        })
-      )
-    })
+  } else {
+    try {
+      await execa(PACKAGE_MANGER, commands, {
+        cwd: root,
+      })
+    } catch (e) {
+      // A package failed so call the rejects
+      return packagesToInstall.forEach(p => {
+        p.outsideReject(
+          JSON.stringify({
+            message: e.shortMessage,
+            installationError: `Could not install package`,
+          })
+        )
+      })
+    }
   }
 
   packagesToInstall.forEach(p => p.outsideResolve())
 
   // Run again if there's still more installs.
   if (installs.length > 0) {
-    executeInstalls()
+    executeInstalls(root)
   }
 
   return undefined
 }
 
 const debouncedExecute = _.debounce(executeInstalls, 25)
+
+const isJest = process.env.JEST_WORKER_ID
 
 // Collect installs run at the same time so we can batch them.
 const createInstall = async ({ root }, resource) => {
@@ -118,21 +150,18 @@ const create = async ({ root }, resource) => {
 }
 
 const read = async ({ root }, id) => {
-  let packageJSON
-  try {
-    packageJSON = JSON.parse(
-      await fs.readFile(resolveCwd(path.join(id, `package.json`)))
-    )
-  } catch (e) {
-    return undefined
-  }
+  const pkg = await readPackageJson(root, id)
 
-  return {
-    id: packageJSON.name,
-    name: packageJSON.name,
-    description: packageJSON.description,
-    version: packageJSON.version,
-    _message: `Installed NPM package ${packageJSON.name}@${packageJSON.version}`,
+  if (pkg) {
+    return {
+      id: id,
+      name: id,
+      description: pkg.description,
+      version: pkg.version,
+      _message: `Installed NPM package ${id}@${pkg.version}`,
+    }
+  } else {
+    return undefined
   }
 }
 
@@ -159,9 +188,19 @@ const destroy = async ({ root }, resource) => {
     return undefined
   }
 
-  await execa(`yarn`, [`remove`, resource.name, `-W`], {
-    cwd: root,
-  })
+  if (isJest) {
+    const packageJsonPath = path.join(root, `package.json`)
+    mockPackageInstall.remove({
+      package: { name: resource.name },
+      nodeModulesDir: path.join(root, `node_modules`),
+      targetPackage: packageJsonPath,
+      isDev: resource.dependencyType === `development`,
+    })
+  } else {
+    await execa(`yarn`, [`remove`, resource.name, `-W`], {
+      cwd: root,
+    })
+  }
 
   return readResource
 }
