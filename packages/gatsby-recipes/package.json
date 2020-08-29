@@ -59,9 +59,9 @@
     "jest-diff": "^25.5.0",
     "lock": "^1.0.0",
     "lodash": "^4.17.15",
-    "mock-package-install": "^1.0.0",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "mock-package-install": "^1.0.0",
     "node-fetch": "^2.5.0",
     "normalize.css": "^8.0.1",
     "pkg-dir": "^4.2.0",
@@ -112,10 +112,17 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
-    "testPathIgnorePatterns": ["/.cache/", "dist"],
+    "testPathIgnorePatterns": [
+      "/.cache/",
+      "dist"
+    ],
     "testEnvironment": "node"
   },
-  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
+  "keywords": [
+    "gatsby",
+    "gatsby-recipes",
+    "mdx"
+  ],
   "license": "MIT",
   "main": "dist/index.js",
   "peerDependencies": {
