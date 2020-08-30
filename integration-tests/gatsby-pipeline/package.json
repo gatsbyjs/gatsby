@@ -28,8 +28,8 @@
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "node-fetch": "^2.6.0",
-    "jest": "^26.4.2",
-    "jest-cli": "^26.4.2"
+    "jest": "^25.5.4",
+    "jest-cli": "^25.5.4"
   },
   "repository": {
     "type": "git",
