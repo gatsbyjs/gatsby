@@ -8,6 +8,7 @@ import TerserPlugin from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
+import isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
@@ -589,6 +590,9 @@ export const createWebpackUtils = (
     new TerserPlugin({
       // TODO add proper cache keys
       cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
+      // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
+      // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
+      parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {
