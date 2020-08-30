@@ -152,10 +152,18 @@ export const routeThroughBrowserOrApp = (
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
+  // Regex to test against exclude patterns
   if (pluginOptions.excludePattern) {
-    const excludeRegex = new RegExp(pluginOptions.excludePattern)
-    if (excludeRegex.test(destination.pathname)) {
-      return true
+    if (Array.isArray(pluginOptions.excludePattern)) {
+      pluginOptions.excludePattern.forEach(pattern => {
+        const excludeRegex = new RegExp(pattern)
+        if (excludeRegex.test(destination.pathname)) return true
+      })
+    } else {
+      const excludeRegex = new RegExp(pluginOptions.excludePattern)
+      if (excludeRegex.test(destination.pathname)) {
+        return true
+      }
     }
   }
 

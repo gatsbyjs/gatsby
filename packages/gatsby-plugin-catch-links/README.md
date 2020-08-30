@@ -26,13 +26,15 @@ plugins: [`gatsby-plugin-catch-links`]
 
 **`excludePattern`** [Regular Expression][optional]
 
-Regular expression for paths to be excluded from being handled by this plugin.
+Regular expression for paths to be excluded from being handled by this plugin. Multiple exclutions can be handled within an array.
 
 ```javascript
 {
   resolve: `gatsby-plugin-catch-links`,
   options: {
-    excludePattern: /(excluded-link|external)/,
+    excludePattern: /(excluded-link|external)/ | [
+      /(excluded-link|external)/
+    ],
   },
 },
 ```
