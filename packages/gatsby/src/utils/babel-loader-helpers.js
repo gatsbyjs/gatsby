@@ -24,7 +24,7 @@ const getCustomOptions = stage => {
 const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   const pluginBabelConfig = loadCachedConfig()
 
-  const { stage } = options
+  const { stage, reactRuntime } = options
 
   // Required plugins/presets
   const requiredPlugins = [
@@ -67,6 +67,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         resolve(`babel-preset-gatsby`),
         {
           stage,
+          reactRuntime,
         },
       ],
       {

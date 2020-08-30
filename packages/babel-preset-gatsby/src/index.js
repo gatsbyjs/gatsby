@@ -77,8 +77,12 @@ export default function preset(_, options = {}) {
         resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
-          pragma: `React.createElement`,
+          pragma:
+            options.reactRuntime === `automatic`
+              ? undefined
+              : `React.createElement`,
           development: stage === `develop`,
+          runtime: options.reactRuntime || `classic`,
         },
       ],
     ],
