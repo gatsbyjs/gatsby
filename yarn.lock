@@ -15216,10 +15216,6 @@ lodash.defaults@^4.0.1, lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
-lodash.every@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.every/-/lodash.every-4.6.0.tgz#eb89984bebc4364279bb3aefbbd1ca19bfa6c6a7"
-
 lodash.filter@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
@@ -15234,10 +15230,6 @@ lodash.flatten@^4.2.0, lodash.flatten@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
 
-lodash.flattendeep@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
-
 lodash.foreach@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-3.0.3.tgz#6fd7efb79691aecd67fdeac2761c98e701d6c39a"
@@ -15247,7 +15239,7 @@ lodash.foreach@^3.0.3:
     lodash._bindcallback "^3.0.0"
     lodash.isarray "^3.0.0"
 
-lodash.foreach@^4.3.0, lodash.foreach@^4.5.0:
+lodash.foreach@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
 
@@ -15340,7 +15332,7 @@ lodash.keys@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-4.2.0.tgz#a08602ac12e4fb83f91fc1fb7a360a4d9ba35205"
   integrity sha1-oIYCrBLk+4P5H8H7ejYKTZujUgU=
 
-lodash.map@^4.4.0, lodash.map@^4.6.0:
+lodash.map@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
 
@@ -15348,10 +15340,6 @@ lodash.mapvalues@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
   integrity sha1-G6+lAF3p3W9PJmaMMMo3IwzJaJw=
-
-lodash.maxby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.maxby/-/lodash.maxby-4.6.0.tgz#082240068f3c7a227aa00a8380e4f38cf0786e3d"
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -17139,13 +17127,13 @@ nth-check@^1.0.1, nth-check@~1.0.1:
   dependencies:
     boolbase "~1.0.0"
 
-null-loader@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/null-loader/-/null-loader-3.0.0.tgz#3e2b6c663c5bda8c73a54357d8fa0708dc61b245"
-  integrity sha512-hf5sNLl8xdRho4UPBOOeoIwT3WhjYcMUQm0zj44EhD6UscMAz72o2udpoDFBgykucdEDGIcd6SXbc/G6zssbzw==
+null-loader@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/null-loader/-/null-loader-4.0.0.tgz#8e491b253cd87341d82c0e84b66980d806dfbd04"
+  integrity sha512-vSoBF6M08/RHwc6r0gvB/xBJBtmbvvEkf6+IiadUCoNYchjxE8lwzCGFg0Qp2D25xPiJxUBh2iNWzlzGMILp7Q==
   dependencies:
-    loader-utils "^1.2.3"
-    schema-utils "^1.0.0"
+    loader-utils "^2.0.0"
+    schema-utils "^2.6.5"
 
 num2fraction@^1.2.2:
   version "1.2.2"
@@ -22709,16 +22697,10 @@ string-length@^3.1.0:
     astral-regex "^1.0.0"
     strip-ansi "^5.2.0"
 
-string-similarity@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-1.2.2.tgz#99b2c20a3c9bbb3903964eae1d89856db3d8db9b"
-  integrity sha512-IoHUjcw3Srl8nsPlW04U3qwWPk3oG2ffLM0tN853d/E/JlIvcmZmDY2Kz5HzKp4lEi2T7QD7Zuvjq/1rDw+XcQ==
-  dependencies:
-    lodash.every "^4.6.0"
-    lodash.flattendeep "^4.4.0"
-    lodash.foreach "^4.5.0"
-    lodash.map "^4.6.0"
-    lodash.maxby "^4.6.0"
+string-similarity@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-4.0.2.tgz#1dc29518d0e92e50509499ce2974368f77bbb1b1"
+  integrity sha512-eCsPPyoQBgY4TMpVD6DVfO7pLrimUONriaO4Xjp3WPUW0YnNLqdHgRj23xotLlqrL90eJhBeq3zdAJf2mQgfBQ==
 
 string-template@~0.2.1:
   version "0.2.1"

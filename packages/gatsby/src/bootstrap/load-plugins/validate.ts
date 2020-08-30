@@ -1,6 +1,6 @@
 import _ from "lodash"
 import * as semver from "semver"
-import * as stringSimilarity from "string-similarity"
+import { findBestMatch } from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
 import { resolveModuleExports } from "../resolve-module-exports"
@@ -85,7 +85,7 @@ function getErrorContext(
     : []
 
   entries.forEach(entry => {
-    const similarities = stringSimilarity.findBestMatch(
+    const similarities = findBestMatch(
       entry.exportName,
       currentAPIs[exportType]
     )
