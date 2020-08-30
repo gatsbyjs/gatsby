@@ -21,7 +21,7 @@
     "babel-preset-gatsby-package": "^0.5.2",
     "cpx": "^1.5.0",
     "cross-env": "^5.2.1",
-    "rewire": "^4.0.1"
+    "rewire": "^5.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",
   "keywords": [

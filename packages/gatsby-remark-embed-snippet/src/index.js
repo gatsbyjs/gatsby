@@ -4,7 +4,7 @@ const path = require(`path`)
 const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
-const rangeParser = require(`parse-numeric-range`)
+const parseRange = require(`parse-numeric-range`)
 
 // Language defaults to extension.toLowerCase();
 // This map tracks languages that don't match their extension.
@@ -59,7 +59,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
         if (range.length === 1) {
           lines = [Number.parseInt(range, 10)]
         } else {
-          lines = rangeParser.parse(range)
+          lines = parseRange(range)
         }
         // Remove everything after the range prefix from file path
         snippetPath = snippetPath.slice(0, rangePrefixIndex)

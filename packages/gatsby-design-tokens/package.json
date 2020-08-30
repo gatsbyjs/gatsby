@@ -32,7 +32,7 @@
     "agadoo": "^1.1.0",
     "cross-env": "^5.2.1",
     "microbundle": "^0.12.2",
-    "preval.macro": "^3.0.0"
+    "preval.macro": "^5.0.0"
   },
   "engines": {
     "node": ">=10.13.0"

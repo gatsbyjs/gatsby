@@ -1,4 +1,4 @@
-import merge from "webpack-merge"
+import { merge } from "webpack-merge"
 import { ActionsUnion, IGatsbyState } from "../types"
 
 export const webpackReducer = (

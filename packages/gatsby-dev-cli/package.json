@@ -15,7 +15,7 @@
     "configstore": "^5.0.1",
     "del": "^5.1.0",
     "execa": "^3.4.0",
-    "find-yarn-workspace-root": "^1.2.1",
+    "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^8.1.0",
     "is-absolute": "^1.0.0",
     "lodash": "^4.17.15",

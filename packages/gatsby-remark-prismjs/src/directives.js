@@ -1,4 +1,4 @@
-const rangeParser = require(`parse-numeric-range`)
+const parseRange = require(`parse-numeric-range`)
 
 /**
  * As code has already been prism-highlighted at this point,
@@ -91,7 +91,7 @@ const parseLine = (line, code, index, actions) => {
 
       if (directiveRange) {
         const strippedDirectiveRange = directiveRange.slice(1, -1)
-        const range = rangeParser.parse(strippedDirectiveRange)
+        const range = parseRange(strippedDirectiveRange)
         if (range.length > 0) {
           range.forEach(relativeIndex => {
             actions.flag(feature, index + relativeIndex, flagSource)
