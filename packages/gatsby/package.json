@@ -30,7 +30,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
-    "babel-plugin-add-module-exports": "^0.3.3",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-remove-graphql-queries": "^2.9.17",
     "babel-preset-gatsby": "^0.5.8",
