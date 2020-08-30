@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)
 const resolveFrom = require(`resolve-from`)
 const mockPackageInstall = require(`mock-package-install`)
+const lock = require(`../lock`)
 
 const packageMangerConfigKey = `cli.packageManager`
 const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
@@ -73,6 +74,7 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
+  const release = await lock(`package.json`)
   if (isJest) {
     // Just do a mock install
     // ensure the package.json exists as mockPackageInstall fails otherwise
@@ -80,13 +82,17 @@ const executeInstalls = async root => {
     if (!fs.existsSync(packageJsonPath)) {
       fs.writeFileSync(packageJsonPath, `{}`)
     }
-    packagesToInstall.forEach(p => {
-      mockPackageInstall.install({
-        package: { name: p.resource.name, version: p.resource.version },
-        nodeModulesDir: path.join(root, `node_modules`),
-        targetPackage: packageJsonPath,
-        isDev: depType === `development`,
+    await new Promise(resolve => {
+      packagesToInstall.forEach(p => {
+        mockPackageInstall.install({
+          package: { name: p.resource.name, version: p.resource.version },
+          nodeModulesDir: path.join(root, `node_modules`),
+          targetPackage: packageJsonPath,
+          isDev: depType === `development`,
+        })
       })
+      // Make mock async
+      setTimeout(() => resolve(), Math.max(Math.random() * 150, 25))
     })
   } else {
     try {
@@ -105,6 +111,7 @@ const executeInstalls = async root => {
       })
     }
   }
+  release()
 
   packagesToInstall.forEach(p => p.outsideResolve())
 
@@ -190,11 +197,15 @@ const destroy = async ({ root }, resource) => {
 
   if (isJest) {
     const packageJsonPath = path.join(root, `package.json`)
-    mockPackageInstall.remove({
-      package: { name: resource.name },
-      nodeModulesDir: path.join(root, `node_modules`),
-      targetPackage: packageJsonPath,
-      isDev: resource.dependencyType === `development`,
+    await new Promise(resolve => {
+      mockPackageInstall.remove({
+        package: { name: resource.name },
+        nodeModulesDir: path.join(root, `node_modules`),
+        targetPackage: packageJsonPath,
+        isDev: resource.dependencyType === `development`,
+      })
+      // Make mock async
+      setTimeout(() => resolve(), Math.random() * 100)
     })
   } else {
     await execa(`yarn`, [`remove`, resource.name, `-W`], {
