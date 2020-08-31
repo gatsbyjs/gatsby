@@ -2,14 +2,17 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import { spawn, ChildProcess } from "child_process"
+import { ChildProcess } from "child_process"
+import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import socket from "socket.io"
 import fs from "fs-extra"
-import { isCI, slash } from "gatsby-core-utils"
+import onExit from "signal-exit"
 import {
+  isCI,
+  slash,
   createServiceLock,
   getService,
   updateSiteMetadata,
@@ -92,12 +95,12 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
+    const args = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    const args = [tmpFileName]
     // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
     if (this.debugInfo) {
       if (this.debugInfo.break) {
@@ -107,7 +110,7 @@ class ControllableScript {
       }
     }
 
-    this.process = spawn(`node`, args, {
+    this.process = execa.node(tmpFileName, args, {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -119,6 +122,7 @@ class ControllableScript {
     if (!this.process) {
       throw new Error(`Trying to stop the process before starting it`)
     }
+
     this.isRunning = false
     if (signal) {
       this.process.kill(signal)
@@ -136,6 +140,7 @@ class ControllableScript {
       if (!this.process) {
         throw new Error(`Trying to stop the process before starting it`)
       }
+
       this.process.on(`exit`, () => {
         if (this.process) {
           this.process.removeAllListeners()
@@ -371,11 +376,10 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
-
-  let watcher
+  let watcher: chokidar.FSWatcher = null
 
   if (!isCI()) {
-    chokidar.watch(files).on(`change`, filePath => {
+    watcher = chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
 
       if (file === `gatsby-config.js`) {
@@ -403,26 +407,63 @@ module.exports = async (program: IProgram): Promise<void> => {
     developProcess.send(msg)
   })
 
-  process.on(`beforeExit`, async () => {
-    await Promise.all([
-      watcher?.close(),
-      ...unlocks.map(unlock => unlock()),
-      new Promise(resolve => {
-        statusServer.close(resolve)
-      }),
-      new Promise(resolve => {
-        proxy.server.close(resolve)
-      }),
-    ])
-  })
-
   process.on(`SIGINT`, async () => {
-    await developProcess.stop(`SIGINT`)
-    process.exit()
+    await shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGINT`
+    )
+
+    process.exit(0)
   })
 
   process.on(`SIGTERM`, async () => {
-    await developProcess.stop(`SIGTERM`)
-    process.exit()
+    await shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGTERM`
+    )
+
+    process.exit(0)
   })
+
+  onExit((_code, signal) => {
+    shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      signal as NodeJS.Signals
+    )
+  })
+}
+function shutdownServices(
+  { statusServer, developProcess, proxy, unlocks, watcher },
+  signal: NodeJS.Signals
+): Promise<void> {
+  const services = [
+    developProcess.stop(signal),
+    watcher?.close(),
+    new Promise(resolve => statusServer.close(resolve)),
+    new Promise(resolve => proxy.server.close(resolve)),
+  ]
+
+  unlocks.forEach(unlock => {
+    services.push(unlock())
+  })
+
+  return Promise.all(services).then(() => {})
 }
