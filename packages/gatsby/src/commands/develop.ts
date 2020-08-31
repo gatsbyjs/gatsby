@@ -100,11 +100,11 @@ class ControllableScript {
     const args = [tmpFileName]
     // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
     if (this.debugInfo) {
-      args.push(
-        this.debugInfo.break
-          ? `--inspect-brk=${this.debugInfo.port}`
-          : `--inspect=${this.debugInfo.port}`
-      )
+      if (this.debugInfo.break) {
+        args.push(`--inspect-brk=${this.debugInfo.port}`)
+      } else {
+        args.push(`--inspect=${this.debugInfo.port}`)
+      }
     }
 
     this.process = spawn(`node`, args, {
