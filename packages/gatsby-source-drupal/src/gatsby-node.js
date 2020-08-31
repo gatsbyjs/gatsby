@@ -2,7 +2,7 @@ const axios = require(`axios`)
 const _ = require(`lodash`)
 
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
-const { handleReferences, handleWebhookUpdate } = require(`./utils`)
+const { handleReferences, handleWebhookUpdate, fetchLanguageConfig } = require(`./utils`)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
@@ -49,8 +49,29 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
+    translation,
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
+
+  // Default apiBase to `jsonapi`
+  apiBase = apiBase || `jsonapi`
+
+  // Default disallowedLinkTypes to self, describedby.
+  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
+
+  // Default concurrentFileRequests to `20`
+  concurrentFileRequests = concurrentFileRequests || 20
+
+  // Default skipFileDownloads to false.
+  skipFileDownloads = skipFileDownloads || false
+
+  // Determine what entities can be translated and what languages are enabled.
+  
+  const languageConfig = (
+    store.getState().status.plugins?.[`gatsby-source-drupal`]?.languageConfig
+    || await fetchLanguageConfig({ translation, baseUrl, apiBase, basicAuth, headers, params })
+  )
+  setPluginStatus({ languageConfig })
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -92,6 +113,7 @@ exports.sourceNodes = async (
             getNode,
             reporter,
             store,
+            languageConfig,
           },
           pluginOptions
         )
@@ -166,6 +188,7 @@ exports.sourceNodes = async (
                   getNode,
                   reporter,
                   store,
+                  languageConfig,
                 },
                 pluginOptions
               )
@@ -191,18 +214,6 @@ exports.sourceNodes = async (
     `Fetch all data from Drupal`
   )
 
-  // Default apiBase to `jsonapi`
-  apiBase = apiBase || `jsonapi`
-
-  // Default disallowedLinkTypes to self, describedby.
-  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
-
-  // Default concurrentFileRequests to `20`
-  concurrentFileRequests = concurrentFileRequests || 20
-
-  // Default skipFileDownloads to false.
-  skipFileDownloads = skipFileDownloads || false
-
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
 
@@ -220,6 +231,14 @@ exports.sourceNodes = async (
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
+
+        // Lookup this type in our list of language alterable entities.
+        const isTranslatable = (
+          languageConfig
+          .translatableEntities
+          .some(entity => entity.id === type)
+        )
+
         const getNext = async (url, data = []) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
@@ -267,7 +286,25 @@ exports.sourceNodes = async (
           return data
         }
 
-        const data = await getNext(url)
+        let data = []
+        if (isTranslatable === false) {
+          data = await getNext(url)
+        } else {
+          for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
+            let currentLanguage = languageConfig.enabledLanguages[i]
+            let dataForLanguage
+
+            if (currentLanguage === languageConfig.defaultLanguage) {
+              dataForLanguage = await getNext(url)
+            } else {
+              const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+              const urlPath = url.href.replace(`${baseUrlWithoutTrailingSlash}/${apiBase}/`, ``)
+              dataForLanguage = await getNext(`${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`)
+            }
+            
+            data = data.concat(dataForLanguage)
+          }
+        }
 
         const result = {
           type,
@@ -299,7 +336,7 @@ exports.sourceNodes = async (
 
   // second pass - handle relationships and back references
   nodes.forEach(node => {
-    handleReferences(node, {
+    handleReferences(node, languageConfig, {
       getNode: nodes.get.bind(nodes),
       createNodeId,
     })

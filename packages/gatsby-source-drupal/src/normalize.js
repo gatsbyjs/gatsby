@@ -6,7 +6,7 @@ const nodeFromData = (datum, createNodeId) => {
   const preservedId =
     typeof _attributes_id !== `undefined` ? { _attributes_id } : {}
   return {
-    id: createNodeId(datum.id),
+    id: createNodeId(`${datum.attributes.langcode}${datum.id}`),
     drupal_id: datum.id,
     parent: null,
     drupal_parent_menu_item: attributes.parent,
