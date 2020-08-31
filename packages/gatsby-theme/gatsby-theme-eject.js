@@ -2,7 +2,7 @@
 "use strict";
 const fs = require("fs");
 const path = require("path");
-const glob = require("glob");
+const glob = require("globby");
 const mkdirp = require("mkdirp");
 const { sortBy, uniq } = require("lodash");
 const babel = require("@babel/core");

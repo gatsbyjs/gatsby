@@ -19,9 +19,8 @@
     "@babel/plugin-syntax-jsx": "^7.10.1",
     "commander": "^2.20.3",
     "fast-levenshtein": "^3.0.0",
-    "glob": "^7.1.6",
-    "globby": "^10.0.2",
-    "inquirer": "^6.5.2",
+    "globby": "^11.0.1",
+    "inquirer": "^7.3.3",
     "lodash": "^4.17.15",
     "mkdirp": "^1.0.4",
     "npm-keyword": "^6.1.0"
