@@ -70,6 +70,7 @@ export interface IPendingActivity {
     id: string
     type: ActivityTypes
     status: ActivityStatuses
+    startTime?: [number, number]
   }
 }
 

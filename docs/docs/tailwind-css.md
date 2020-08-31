@@ -62,7 +62,7 @@ module.exports = () => ({
 
 You can now use the `@tailwind` directives to add Tailwind's utilities, preflight, and components into your CSS. You can also use `@apply` and all of Tailwind's other directives and functions!
 
-To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documentation](https://tailwindcss.com/docs/installation#3-use-tailwind-in-your-css)
+To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documentation](https://tailwindcss.com/docs/installation#add-tailwind-to-your-css)
 
 #### Option #2: CSS-in-JS
 
@@ -191,7 +191,7 @@ From v1.4.0 onwards PurgeCSS is built into Tailwind CSS, but the approaches need
 
 **1.4.0 and above**
 
-In 1.4.0 you can purge your CSS directly from your Tailwind config. You simply need to provide an array of strings telling it which files to process.
+In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to provide an array of strings telling it which files to process.
 
 ```js:title=tailwind.config.js
 module.exports = {

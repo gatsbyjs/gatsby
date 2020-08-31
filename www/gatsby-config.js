@@ -328,10 +328,7 @@ module.exports = {
       resolve: `gatsby-plugin-netlify`,
       options: {
         headers: {
-          "/*": [
-            `Referrer-Policy: strict-origin-when-cross-origin`,
-            `Clear-Site-Data: "cache", "storage"`,
-          ],
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
           "/sw.js": [
             `Cache-Control: max-age=0,no-cache,no-store,must-revalidate`,
           ],

@@ -140,22 +140,22 @@ Assume that a `Product` model is used in two pages:
 - `/src/pages/products/{Product.name}.js`
 - `/src/pages/discounts/{Product.name}.js`
 
-If you wanted to link to the `products/{Product:name}` route from your home page, you would have a component like this:
+If you wanted to link to the `products/{Product.name}` route from your home page, you would have a component like this:
 
 ```jsx:title=/src/pages/index.js
 import { Link, graphql } from "gatsby"
 
 export default function HomePage(props) {
   return props.data.allProducts.map(
-    product => <Link to={product.path}>{product.name}</Link>
+    product => <Link to={product.gatsbyPath}>{product.name}</Link>
   );
 }
 
 export const query = graphql`
-  query ($id: String) {
+  query {
     allProducts {
       name
-      gatsbyPath(filePath: "/products/{Product:name}")
+      gatsbyPath(filePath: "/products/{Product.name}")
     }
   }
 }

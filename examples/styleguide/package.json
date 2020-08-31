@@ -5,10 +5,10 @@
   "author": "scott.eckenthal@gmail.com",
   "dependencies": {
     "app-root-dir": "^1.0.2",
-    "gatsby": "^2.24.47",
-    "gatsby-source-filesystem": "^2.3.24",
+    "gatsby": "^2.24.50",
+    "gatsby-source-filesystem": "^2.3.25",
     "gatsby-transformer-react-docgen": "^5.2.11",
-    "gatsby-transformer-remark": "^2.8.28",
+    "gatsby-transformer-remark": "^2.8.29",
     "glamor": "^2.20.40",
     "html-to-react": "^1.4.3",
     "react": "^16.4.0",

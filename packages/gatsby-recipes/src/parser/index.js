@@ -5,6 +5,7 @@ const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
 const visit = require(`unist-util-visit`)
 const remove = require(`unist-util-remove`)
+const transformMdx = require(`../transform-recipe-mdx`).default
 
 const { uuid } = require(`./util`)
 
@@ -115,6 +116,7 @@ const parse = async src => {
 
     const exportsAsMdx = exportNodes.map(toMdx)
     const stepsAsMdx = steps.map(toMdx)
+    const stepsAsJS = stepsAsMdx.map(transformMdx)
 
     return {
       ast,
@@ -122,6 +124,7 @@ const parse = async src => {
       exports: exportNodes,
       exportsAsMdx,
       stepsAsMdx,
+      stepsAsJS,
       recipe: exportsAsMdx.join(`\n`) + `\n\n` + stepsAsMdx.join(`\n`),
     }
   } catch (e) {
