@@ -14,6 +14,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     SOURCE_FILE_CHANGED: {
       target: `extractingQueries`,
     },
+    ADD_NODE_MUTATION: {
+      actions: [`markNodesDirty`, `callApi`],
+    },
   },
   context: {},
   states: {

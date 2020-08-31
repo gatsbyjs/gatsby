@@ -101,6 +101,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         SOURCE_FILE_CHANGED: {
           actions: [forwardTo(`run-queries`), `markSourceFilesDirty`],
         },
+        ADD_NODE_MUTATION: {
+          actions: [forwardTo(`run-queries`)],
+        },
       },
       invoke: {
         id: `run-queries`,
