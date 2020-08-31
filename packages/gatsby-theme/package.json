@@ -23,7 +23,7 @@
     "globby": "^10.0.2",
     "inquirer": "^6.5.2",
     "lodash": "^4.17.15",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "npm-keyword": "^6.1.0"
   },
   "engines": {

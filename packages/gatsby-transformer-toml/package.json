@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "lodash": "^4.17.15",
-    "toml": "^2.3.6"
+    "toml": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",

@@ -60,7 +60,7 @@
     "lock": "^1.0.0",
     "lodash": "^4.17.15",
     "mitt": "^2.1.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "node-fetch": "^2.5.0",
     "normalize.css": "^8.0.1",
     "pkg-dir": "^4.2.0",
@@ -107,7 +107,7 @@
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.0",
     "terminal-link": "^2.0.0",
-    "tmp-promise": "^2.1.0"
+    "tmp-promise": "^3.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
