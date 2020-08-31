@@ -10,7 +10,7 @@ export const useInputByKey = key => {
 
 export const useInput = (key, sendEvent = () => {}) => {
   const contextVal = useInputByKey(key) || ``
-  const [val, setVal] = useState(contextVal)
+  const [val] = useState(contextVal)
 
   const Input = ({ label = key, type = `text`, ...props }) => (
     <div>

@@ -193,13 +193,20 @@ const RecipeInterpreter = ({ recipe }) => {
   let plansWithoutInputs = state.context.plan?.filter(
     p => p.resourceName !== `Input`
   )
-  const groupedPlansByResource = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
+  const groupedPlansByResource = lodash.groupBy(
+    plansWithoutInputs,
+    p => p.resourceName
+  )
 
   return (
     <>
       <Styled.p>{` `}</Styled.p>
       <ResourceProvider
-        value={plan?.filter(p => p.resourceName !== `Input` && p.resourceDefinitions?._key) || []}
+        value={
+          plan?.filter(
+            p => p.resourceName !== `Input` && p.resourceDefinitions?._key
+          ) || []
+        }
       >
         <InputProvider value={inputs || {}}>
           <Wrapper>
