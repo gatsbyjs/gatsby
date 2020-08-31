@@ -298,7 +298,7 @@ exports.sourceNodes = async (
     if (!contentType) return
     _.each(contentType.data, datum => {
       if (!datum) return
-      if (languagePrefix !== '' && !datum.attributes.langcode !== languagePrefix) return
+      if (languagePrefix !== '' && datum.attributes.langcode !== languagePrefix) return
       const node = nodeFromData(datum, createNodeId, languagePrefix)
       nodes.set(node.id, node)
     })
