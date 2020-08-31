@@ -131,6 +131,13 @@ const RecipeInterpreter = ({ recipe }) => {
     }
   }
 
+  const sendInputEvent = event => {
+    sendEvent({
+      event: `INPUT_ADDED`,
+      input: event,
+    })
+  }
+
   const startRecipe = async recipe => {
     log(`createOperation`)
     if (!isRecipeStarted) {
@@ -182,17 +189,19 @@ const RecipeInterpreter = ({ recipe }) => {
     })
   }
 
-  let { plan, stepsAsJS, exports } = state.context
-
-  const groupedPlansByResource = lodash.groupBy(plan, p => p.resourceName)
+  let { plan, stepsAsJS, exports, inputs } = state.context
+  let plansWithoutInputs = state.context.plan?.filter(
+    p => p.resourceName !== `Input`
+  )
+  const groupedPlansByResource = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
 
   return (
     <>
       <Styled.p>{` `}</Styled.p>
       <ResourceProvider
-        value={plan?.filter(p => p.resourceDefinitions?._key) || []}
+        value={plan?.filter(p => p.resourceName !== `Input` && p.resourceDefinitions?._key) || []}
       >
-        <InputProvider value={{}}>
+        <InputProvider value={inputs || {}}>
           <Wrapper>
             <WelcomeMessage />
             <div
@@ -223,7 +232,7 @@ const RecipeInterpreter = ({ recipe }) => {
             </div>
             <div sx={{ marginBottom: 14 }}>
               <Heading sx={{ marginBottom: 6 }}>
-                {plan?.length}
+                {plansWithoutInputs?.length}
                 {` `}
                 Changes
               </Heading>
@@ -263,6 +272,7 @@ const RecipeInterpreter = ({ recipe }) => {
             {stepsAsJS.slice(1).map((step, i) => (
               <Step
                 sendEvent={sendEvent}
+                sendInputEvent={sendInputEvent}
                 state={state}
                 step={step}
                 key={`step-${i}`}

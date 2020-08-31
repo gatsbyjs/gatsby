@@ -28,7 +28,9 @@ export default ({ children: srcCode, scope, components, ...props }) => {
   const scopeKeys = Object.keys(fullScope)
   const scopeValues = Object.values(fullScope)
 
-  const fn = new Function(...scopeKeys, transformCodeForEval(srcCode))
+const test = transformCodeForEval(srcCode)
+console.log(test)
+  const fn = new Function(...scopeKeys, test)
 
   return fn(...scopeValues)
 }

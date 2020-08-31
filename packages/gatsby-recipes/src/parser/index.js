@@ -18,7 +18,7 @@ const asRoot = node => {
   }
 }
 
-const pluckExports = tree => {
+const pluckAndTransformExports = tree => {
   let exports = []
   visit(tree, `export`, node => {
     exports.push(node)
@@ -81,7 +81,7 @@ const toMdx = nodes => {
 const parse = async src => {
   try {
     const ast = u.parse(src)
-    const exportNodes = pluckExports(ast)
+    const exportNodes = pluckAndTransformExports(ast)
     const [intro, ...resourceSteps] = partitionSteps(ast)
 
     const wrappedIntroStep = {

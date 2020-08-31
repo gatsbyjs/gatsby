@@ -1,9 +1,10 @@
 import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
 import babelChainingPlugin from "@babel/plugin-proposal-optional-chaining"
 import mdx from "@mdx-js/mdx"
-import babelPluginRemoveShortcodes from "./renderer/babel-plugin-remove-shortcodes"
-import babelPluginCopyKeyProp from "./renderer/babel-plugin-copy-key-prop"
-import babelPluginMoveExportKeywords from "./renderer/babel-plugin-move-export-keywords"
+import babelPluginRemoveShortcodes from "./babel-plugins/remove-shortcodes"
+import babelPluginCopyKeyProp from "./babel-plugins/copy-key-prop"
+import babelPluginMoveExportKeywords from "./babel-plugins/move-export-keywords"
+import babelPluginAddUseInputKey from "./babel-plugins/add-use-input-key"
 
 const mdxCache = new Map()
 const jsxCache = new Map()
@@ -20,6 +21,7 @@ const transformJsx = jsx => {
     plugins: [
       babelPluginCopyKeyProp,
       babelPluginMoveExportKeywords,
+      babelPluginAddUseInputKey,
       babelPluginRemoveShortcodes,
       // TODO figure out how to use preset-env
       babelChainingPlugin,

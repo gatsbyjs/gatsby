@@ -19,6 +19,7 @@ const scope = {
   useInputByKey,
   useResource,
   useProvider,
+  sendEvent: () => {},
   Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
   mdx: React.createElement,

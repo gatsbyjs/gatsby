@@ -4,6 +4,13 @@ import { Heading } from "gatsby-interface"
 import { StepRenderer } from "gatsby-recipes/components"
 import CodeDiff from "./code-diff"
 import { components, removeJsx, makeResourceId } from "./utils"
+import {
+  TextAreaField,
+  TextAreaFieldControl,
+  InputField,
+  InputFieldLabel,
+  InputFieldControl,
+} from "gatsby-interface"
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   <div id={makeResourceId(resourcePlan)} sx={{}}>
@@ -21,10 +28,13 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   </div>
 )
 
-const Step = ({ sendEvent, state, step, i }) => {
+const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
   const stepResources = state.context?.plan?.filter(
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
+  const exportsAsMdx = state.context.exports?.map(e => e.value).join(`\n`) || ``
+  const fullStepMdx = exportsAsMdx + `\n\n` + step
+
   return (
     <div
       key={`step-${i}`}
@@ -81,12 +91,58 @@ const Step = ({ sendEvent, state, step, i }) => {
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
-            {state.context.exports?.join(`\n`) + `\n\n` + step}
+            {fullStepMdx}
           </StepRenderer>
         </div>
       </div>
       {stepResources?.length > 0 && (
         <div>
+          <div sx={{ px: 6, pt: 3 }}>
+            {stepResources?.map((res, i) => {
+              if (res.resourceName === `Input`) {
+                if (res.type === `textarea`) {
+                  return (
+                    <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
+                      <TextAreaField>
+                        <div>
+                          <InputFieldLabel>{res.label}</InputFieldLabel>
+                        </div>
+                        <TextAreaFieldControl
+                          onInput={e => {
+                            sendInputEvent({
+                              uuid: res._uuid,
+                              key: res._key,
+                              value: e.target.value,
+                            })
+                          }}
+                        />
+                      </TextAreaField>
+                    </div>
+                  )
+                }
+                return (
+                  <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
+                    <InputField sx={{ pt: 3 }}>
+                      <div>
+                        <InputFieldLabel>{res.label}</InputFieldLabel>
+                      </div>
+                      <InputFieldControl
+                        type={res.type}
+                        onInput={e => {
+                          sendInputEvent({
+                            uuid: res._uuid,
+                            key: res._key,
+                            value: e.target.value,
+                          })
+                        }}
+                      />
+                    </InputField>
+                  </div>
+                )
+              }
+              return null
+            })}
+          </div>
           <div sx={{ padding: 6 }}>
             <Heading
               sx={{
