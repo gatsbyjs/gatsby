@@ -12,7 +12,7 @@ title: Query Execution
 
 ## Query execution
 
-Query execution is kicked off by bootstrap by calling [createQueryRunningActivity()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L192). The main files involved in this step are:
+Query execution is kicked off by bootstrap by calling [`createQueryRunningActivity()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L192). The main files involved in this step are:
 
 - [index.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js)
 - [queue.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/queue.ts)
