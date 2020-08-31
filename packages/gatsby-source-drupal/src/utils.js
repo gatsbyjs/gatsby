@@ -98,6 +98,8 @@ const handleWebhookUpdate = async (
   const { createNode } = actions
   const { skipFileDownloads, languagePrefix } = pluginOptions
 
+  if (languagePrefix !== '' && nodeToUpdate.attributes.langcode !== languagePrefix) return
+
   const newNode = nodeFromData(nodeToUpdate, createNodeId, languagePrefix)
 
   const nodesToUpdate = [newNode]
@@ -135,7 +137,7 @@ const handleWebhookUpdate = async (
       referencedNode.relationships[
         nodeFieldName
       ] = referencedNode.relationships[nodeFieldName].filter(
-        id => id !== newNode.id
+        id => createNamespacedNodeId(id, languagePrefix) !== newNode.id
       )
     })
 
