@@ -26,7 +26,7 @@ All nodes in Gatsby are stored in a flat structure in the redux `nodes` namespac
 }
 ```
 
-An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. This has some implications on [child field inference](/docs/schema-generation/#parent-children-relationships) in the Schema Generation phase.
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. This has some implications on [child field inference](/docs/schema-generation/#4-parent--children-relationships) in the Schema Generation phase.
 
 ### Explicitly recording a parent/child relationship
 
