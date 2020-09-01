@@ -24,6 +24,10 @@ export default function IndexRoute(props: PageProps) {
 
 The example above uses the power of TypeScript, in combination with exported types from Gatsby (`PageProps`) to tell this code what props is. This can greatly improve your developer experience by letting your IDE show you what properties are injected by Gatsby. To see all of the types available look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
+## Migrate Gastby starter to support TypeScript
+
+As mentioned before you need to change `.js` files to `.tsx` and you would also need to add `@types/react-helmet` to your project by your package manager of choice. Since you are using TypeScript you can remove all `propTypes` from your project.
+
 ## Other resources
 
 TypeScript integration is supported through automatically including [`gatsby-plugin-typescript`](/packages/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
