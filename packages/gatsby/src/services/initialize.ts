@@ -18,7 +18,7 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { detectHotLoaderToUse } from "../utils/detect-hot-loader-to-use"
+import { getReactHotLoaderStrategy } from "../utils/get-react-hot-loader-strategy"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
@@ -53,7 +53,8 @@ export async function initialize({
     reporter.panic(`Missing program args`)
   }
 
-  detectHotLoaderToUse()
+  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
+  console.log(`HOTLOADER:`, process.env.GATSBY_HOT_LOADER)
 
   /* Time for a little story...
    * When running `gatsby develop`, the globally installed gatsby-cli starts

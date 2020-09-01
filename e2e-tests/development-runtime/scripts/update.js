@@ -3,7 +3,6 @@ const path = require(`path`)
 const yargs = require(`yargs`)
 
 const { getHistory, writeHistory } = require(`./history`)
-const { syncBuiltinESMExports } = require("module")
 
 const args = yargs
   .option(`file`, {
