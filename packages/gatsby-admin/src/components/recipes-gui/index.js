@@ -235,7 +235,7 @@ const RecipeInterpreter = ({ recipe }) => {
     })
   }
 
-  let { plan, stepsAsJS, exports, inputs } = state.context
+  let { plan, stepsAsJS, inputs } = state.context
   let plansWithoutInputs = state.context.plan?.filter(
     p => p.resourceName !== `Input`
   )
@@ -243,7 +243,7 @@ const RecipeInterpreter = ({ recipe }) => {
     plansWithoutInputs,
     p => p.resourceName
   )
-  console.log(exports)
+
   return (
     <>
       <Styled.p>{` `}</Styled.p>

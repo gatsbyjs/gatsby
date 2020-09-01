@@ -1,4 +1,3 @@
-import React from "react"
 import remove from "unist-util-remove"
 import slugify from "slugify"
 
