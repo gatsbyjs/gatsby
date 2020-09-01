@@ -104,10 +104,3 @@ export const getNodeInterface = <TSource = any, TContext = any, TArgs = any>({
   schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>
 }): InterfaceTypeComposer<TSource, TContext> =>
   getOrCreateNodeInterface(schemaComposer)
-
-module.exports = {
-  addNodeInterface,
-  addNodeInterfaceFields,
-  getNodeInterface,
-  NodeInterfaceFields,
-}
