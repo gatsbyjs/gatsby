@@ -198,6 +198,7 @@ const RecipeInterpreter = ({ recipe }) => {
     plansWithoutInputs,
     p => p.resourceName
   )
+  console.log(exports)
   return (
     <>
       <Styled.p>{` `}</Styled.p>

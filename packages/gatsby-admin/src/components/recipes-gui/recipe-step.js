@@ -38,7 +38,7 @@ const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
     File: () => null,
     Input: ({ label, type = `text`, _key: key, ...rest }) => {
       const value = useInputByKey(key)
-  
+
       return (
         <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
           <InputField sx={{ pt: 3 }}>
@@ -123,14 +123,14 @@ const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
             },
           }}
         >
-          {/* <StepRenderer
+          <StepRenderer
             key="DOC"
             components={components}
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
             {fullStepMdx}
-          </StepRenderer> */}
+          </StepRenderer>
         </div>
       </div>
       {stepResources?.length > 0 && (

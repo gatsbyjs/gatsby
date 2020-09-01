@@ -20,7 +20,7 @@ const transformJsx = jsx => {
     },
     plugins: [
       copyKeyProp,
-      // moveExportKeywords,
+      moveExportKeywords,
       addUseInputKey,
       removeShortcodes,
       // TODO figure out how to use preset-env
