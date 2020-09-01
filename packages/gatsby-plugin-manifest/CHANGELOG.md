@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.26...gatsby-plugin-manifest@2.4.27) (2020-08-31)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 ## [2.4.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.25...gatsby-plugin-manifest@2.4.26) (2020-08-28)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

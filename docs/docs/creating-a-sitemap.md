@@ -30,7 +30,7 @@ module.exports = {
 
 **Note:** The siteUrl property must be defined and not left empty.
 
-Next run a build (`npm run build`) since the sitemap generation will only happen for production builds. This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap path is /sitemap.xml and will include all of your site’s pages, but of course the plugin exposes options to configure this default functionality.
+Next run a build (`npm run build`) since the sitemap generation will only happen for production builds. This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap path is /sitemap.xml and will include all of your site’s pages, but the plugin exposes options to configure this default functionality.
 
 ### Additional modifications
 
