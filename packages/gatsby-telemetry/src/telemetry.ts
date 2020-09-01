@@ -426,6 +426,7 @@ export class AnalyticsTracker {
   }
 
   trackFeatureIsUsed(name: string): void {
+    if (this.features.has(name)) return
     this.features.add(name)
   }
 }
