@@ -11835,3 +11835,15 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: YourKatakana
+  url: https://yourkatakana.com/
+  main_url: https://yourkatakana.com/
+  description: >
+    YourKatakana is a free to use online service for translating your first or last name into Japanese Katakana, Hiragana, and Romaji.
+  categories:
+    - Directory
+    - Education
+    - Learning
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
