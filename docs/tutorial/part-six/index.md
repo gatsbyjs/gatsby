@@ -129,7 +129,7 @@ export default function Home({ data }) {
   )
 }
 
-export const query = graphql`
+export const data = graphql`
   query {
     allMarkdownRemark {
       totalCount
