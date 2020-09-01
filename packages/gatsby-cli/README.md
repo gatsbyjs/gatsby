@@ -81,7 +81,7 @@ development server.
 |     Option      | Description                                     |          Default          |
 | :-------------: | ----------------------------------------------- | :-----------------------: |
 | `-H`, `--host`  | Set host.                                       | `env.HOST` or `localhost` |
-| `-p`, `--port`  | Set port.                                       | `env.PORT` or `8000`      |
+| `-p`, `--port`  | Set port.                                       |   `env.PORT` or `8000`    |
 | `-o`, `--open`  | Open the site in your (default) browser for you |                           |
 | `-S`, `--https` | Use HTTPS                                       |                           |
 
