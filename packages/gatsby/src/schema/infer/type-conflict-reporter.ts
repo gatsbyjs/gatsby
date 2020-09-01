@@ -9,7 +9,7 @@ export interface ITypeConflictExample {
   value: unknown
   type: string
   parent?: Node
-  arrayTypes?: string[]
+  arrayTypes?: Array<string>
 }
 
 interface ITypeConflict {
@@ -26,7 +26,7 @@ const formatValue = (value: unknown): string => {
     })
   }
 
-  const output: string[] = []
+  const output: Array<string> = []
 
   if (value.length === 1) {
     // For arrays usually a single conflicting item is exposed vs. the whole array
@@ -35,7 +35,7 @@ const formatValue = (value: unknown): string => {
     output.push(`...`)
   } else {
     let wasElipsisLast = false
-    const usedTypes: string[] = []
+    const usedTypes: Array<string> = []
     value.forEach(item => {
       const type = typeOf(item)
       if (usedTypes.includes(type)) {
@@ -111,7 +111,7 @@ class TypeConflictReporter {
     return dataEntry
   }
 
-  addConflict(selector: string, examples: ITypeConflictExample[]): void {
+  addConflict(selector: string, examples: Array<ITypeConflictExample>): void {
     if (selector.substring(0, 11) === `SitePlugin.`) {
       // Don't store and print out type conflicts in plugins.
       // This is out of user control so he/she can't do anything
@@ -141,7 +141,7 @@ class TypeConflictReporter {
     }
   }
 
-  getConflicts(): TypeConflictEntry[] {
+  getConflicts(): Array<TypeConflictEntry> {
     return Array.from(this.entries.values())
   }
 }

@@ -43,7 +43,7 @@ Please change this to: "${filePath.replace(/index$/, ``)}"`
         }
       })
     )
-  ).filter(Boolean) as string[]
+  ).filter(Boolean) as Array<string>
 
   if (file.length === 0 || file[0].length === 0) {
     throw new Error(

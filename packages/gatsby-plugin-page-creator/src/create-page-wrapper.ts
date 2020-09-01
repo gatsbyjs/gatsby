@@ -18,7 +18,7 @@ export function createPage(
   filePath: string,
   pagesDirectory: string,
   actions: Actions,
-  ignore: string[],
+  ignore: Array<string>,
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter
 ): void {

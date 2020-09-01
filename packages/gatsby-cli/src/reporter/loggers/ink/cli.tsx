@@ -27,7 +27,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
   readonly state: ICLIState = {
     hasError: false,
   }
-  memoizedReactElementsForMessages: React.ReactElement[] = []
+  memoizedReactElementsForMessages: Array<React.ReactElement> = []
 
   componentDidCatch(error: Error, info: React.ErrorInfo): void {
     trackBuildError(`INK`, {

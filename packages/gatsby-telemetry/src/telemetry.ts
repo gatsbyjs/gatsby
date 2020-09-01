@@ -56,7 +56,7 @@ export interface ITelemetryTagsPayload {
   duration?: number
   uiSource?: string
   valid?: boolean
-  plugins?: string[]
+  plugins?: Array<string>
   pathname?: string
   error?: {
     id?: string
@@ -75,7 +75,7 @@ export interface ITelemetryTagsPayload {
   siteMeasurements?: {
     pagesCount?: number
     clientsCount?: number
-    paths?: string[]
+    paths?: Array<string>
     bundleStats?: unknown
     pageDataStats?: unknown
     queryStats?: unknown
@@ -187,7 +187,7 @@ export class AnalyticsTracker {
   }
 
   captureEvent(
-    type: string | string[] = ``,
+    type: string | Array<string> = ``,
     tags: ITelemetryTagsPayload = {},
     opts: ITelemetryOptsPayload = { debounce: false }
   ): void {

@@ -11,8 +11,8 @@ export async function sourceNodes({
   store,
   deferNodeMutation = false,
 }: Partial<IDataLayerContext>): Promise<{
-  deletedPages: string[]
-  changedPages: string[]
+  deletedPages: Array<string>
+  changedPages: Array<string>
 }> {
   assertStore(store)
 
