@@ -272,7 +272,6 @@ const RecipeInterpreter = ({ recipe }) => {
                   remarkPlugins={[removeJsx]}
                 >
                   {stepsAsJS[0]}
-                  {/* {exports?.join(`\n`) + `\n\n` + stepsAsJS[0]} */}
                 </StepRenderer>
               </div>
               <Button
