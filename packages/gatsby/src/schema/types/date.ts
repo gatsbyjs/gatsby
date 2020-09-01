@@ -8,12 +8,14 @@ interface IFormatDateArgs {
   formatString?: string
   difference?: unitOfTime.Diff
   locale?: LocaleSpecifier
+  utcOffset?: number
 }
 interface IDateResolverOption {
   locale?: string
   formatString?: string
   fromNow?: string
   difference?: string
+  utcOffset?: number
   from?: string
   fromNode?: { type: string; defaultValue: boolean }
 }
@@ -214,21 +216,27 @@ const formatDate = ({
   difference,
   formatString,
   locale = `en`,
+  utcOffset = 0,
 }: IFormatDateArgs): string | number => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
     return moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)
+      .utcOffset(utcOffset)
       .locale(locale)
       .format(formatString)
   } else if (fromNow) {
     return moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)
+      .utcOffset(utcOffset)
       .locale(locale)
       .fromNow()
   } else if (difference) {
     return moment().diff(
-      moment.utc(normalizedDate, ISO_8601_FORMAT, true).locale(locale),
+      moment
+        .utc(normalizedDate, ISO_8601_FORMAT, true)
+        .utcOffset(utcOffset)
+        .locale(locale),
       difference
     )
   }
@@ -239,7 +247,7 @@ export const getDateResolver = (
   options: IDateResolverOption = {},
   fieldConfig: DateResolverFieldConfig
 ): { args: Record<string, any>; resolve: DateResolver } => {
-  const { locale, formatString, fromNow, difference } = options
+  const { locale, formatString, fromNow, difference, utcOffset } = options
   return {
     args: {
       ...fieldConfig.args,
@@ -272,6 +280,13 @@ export const getDateResolver = (
         description: oneLine`
         Configures the locale Moment.js will use to format the date.`,
         defaultValue: locale,
+      },
+      utcOffset: {
+        type: `Int`,
+        description: oneLine`
+        Configures the utcOffset Moment.js will use to format the date.
+        See https://momentjs.com/docs/#/manipulating/utc-offset/`,
+        defaultValue: utcOffset,
       },
     },
     async resolve(source, args, context, info): ReturnType<DateResolver> {

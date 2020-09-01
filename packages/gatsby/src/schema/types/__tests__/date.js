@@ -443,4 +443,34 @@ describe(`dateResolver`, () => {
       )
     ).toEqual(`Invalid date`)
   })
+
+  it.each([
+    [`2020-09-01T12:00:00.000+08:00`, 8],
+    [`2020-09-01T04:00:00.000+00:00`, 8],
+    [`2020-09-01T04:00:00.000Z`, 8],
+    [`2020-09-01T05:00:00.000Z`, 7],
+    [`2020-09-01T19:00:00.000Z`, -7],
+    [`2020-09-01T20:00:00.000Z`, -8],
+    [`2020-09-01T12:00:00.000Z`, 0],
+    [`2020-09-01T20:00:00.000+08:00`, 0],
+  ])(
+    `should return "Sep 01, 2020 12:00:00": %s`,
+    async (dateString, utcOffset) => {
+      const schema = await buildTestSchema()
+      const fields = schema.getType(`Test`).getFields()
+      expect(
+        await fields[`testDate`].resolve(
+          { date: dateString },
+          {
+            formatString: `MMM DD, YYYY HH:mm:ss`,
+            utcOffset,
+          },
+          withResolverContext({}, schema),
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`Sep 01, 2020 12:00:00`)
+    }
+  )
 })
