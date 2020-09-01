@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "bluebird": "^3.7.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
