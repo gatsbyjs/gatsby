@@ -1,4 +1,5 @@
 import { Path } from "graphql/jsutils/Path"
+import { IQueryMeta } from "./types"
 
 export const indentString = (string: string): string =>
   string.replace(/\n/g, `\n  `)
@@ -19,4 +20,8 @@ export function pathToArray(path: Path | undefined): Array<string | number> {
     curr = curr.prev
   }
   return flattened.reverse()
+}
+
+export function initQueryMeta(): IQueryMeta {
+  return { moduleDependencies: new Set() }
 }
