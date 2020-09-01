@@ -4,7 +4,10 @@ import { useState } from "react"
 
 import { jsx, Styled } from "theme-ui"
 
-import { InputProvider } from "gatsby-recipes/src/renderer/input-provider"
+import {
+  InputProvider,
+  useInputByKey,
+} from "gatsby-recipes/src/renderer/input-provider"
 import { ResourceProvider } from "gatsby-recipes/src/renderer/resource-provider"
 import { createUrqlClient } from "../../urql-client"
 import { useMutation, useSubscription } from "urql"
@@ -12,11 +15,17 @@ import { useMutation, useSubscription } from "urql"
 import lodash from "lodash"
 import fetch from "isomorphic-fetch"
 
-import { Button, Heading } from "gatsby-interface"
+import {
+  Button,
+  Heading,
+  InputField,
+  InputFieldLabel,
+  InputFieldControl,
+} from "gatsby-interface"
 import { StepRenderer } from "gatsby-recipes/components"
 import WelcomeMessage from "./welcome-message"
 import Step from "./recipe-step"
-import { components, removeJsx, log } from "./utils"
+import { removeJsx, log } from "./utils"
 import ResourceMessage from "./resource-message"
 
 let isSubscriptionConnected = false
@@ -137,6 +146,42 @@ const RecipeInterpreter = ({ recipe }) => {
       event: `INPUT_ADDED`,
       input: event,
     })
+  }
+
+  const components = {
+    Config: () => null,
+    GatsbyPlugin: () => null,
+    NPMPackageJson: () => null,
+    NPMPackage: () => null,
+    File: () => null,
+    Input: ({ label, type = `text`, _key: key, ...rest }) => {
+      const value = useInputByKey(key)
+
+      return (
+        <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
+          <InputField sx={{ pt: 3 }}>
+            <div>
+              <InputFieldLabel>{label}</InputFieldLabel>
+            </div>
+            <InputFieldControl
+              type={type}
+              value={value}
+              onInput={e => {
+                sendInputEvent({ key, value: e.target.value })
+              }}
+            />
+          </InputField>
+        </div>
+      )
+    },
+    Directory: () => null,
+    GatsbyShadowFile: () => null,
+    NPMScript: () => null,
+    RecipeIntroduction: props => <div>{props.children}</div>,
+    RecipeStep: props => <div>{props.children}</div>,
+    ContentfulSpace: () => null,
+    ContentfulEnvironment: () => null,
+    ContentfulType: () => null,
   }
 
   const startRecipe = async recipe => {
@@ -282,6 +327,7 @@ const RecipeInterpreter = ({ recipe }) => {
               <Step
                 sendEvent={sendEvent}
                 sendInputEvent={sendInputEvent}
+                components={components}
                 state={state}
                 step={step}
                 key={`step-${i}`}

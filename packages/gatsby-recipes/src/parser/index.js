@@ -116,7 +116,9 @@ const parse = async src => {
 
     const exportsAsMdx = exportNodes.map(toMdx)
     const stepsAsMdx = steps.map(toMdx)
-    const stepsAsJS = stepsAsMdx.map(transformMdx)
+    const stepsAsJS = stepsAsMdx.map(step =>
+      transformMdx(exportsAsMdx.join(`\n`) + `\n\n` + step)
+    )
 
     return {
       ast,
