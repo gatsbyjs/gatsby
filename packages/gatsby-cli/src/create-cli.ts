@@ -175,17 +175,23 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         .option(`inspect`, {
           type: `number`,
           describe: `Opens a port for debugging. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
-          default: 9229,
         })
         .option(`inspect-brk`, {
           type: `number`,
           describe: `Opens a port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
-          default: 9229,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         startGraphQLServer(siteInfo.directory, true)
+
+        if (args.hasOwnProperty(`inspect`)) {
+          args.inspect = args.inspect || 9229
+        }
+        if (args.hasOwnProperty(`inspect-brk`)) {
+          args.inspect = args.inspect || 9229
+        }
+
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly

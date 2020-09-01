@@ -390,7 +390,6 @@ Commentors
 CommonJS
 CommonMark
 comparator
-Comparator
 comparators
 compile-to-js
 componentChunkName
@@ -639,7 +638,6 @@ EXIF
 ExitWP
 Expedia
 explorable
-extractFieldsToSift
 extractQueries
 F12
 F8
@@ -669,7 +667,6 @@ filesystem-based
 filesystem-explorer-options
 filesystem-query
 Fillerama
-filterValue
 FindCollabs
 findDirtyIds
 findIdsWithoutDataDependencies
@@ -1794,8 +1791,6 @@ shouldUpdateScroll
 shoutout
 Sidenotes
 Sidhartha
-siftified
-siftifyArgs
 signup
 signups
 simple-auth
