@@ -12,7 +12,7 @@ import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
-import { IExecutionResult, PageContext } from "./types"
+import { IExecutionResult, PageContext, IQueryMeta } from "./types"
 import { pageDataExists } from "../utils/page-data"
 
 const resultHashes = new Map()
@@ -25,6 +25,7 @@ interface IQueryJob {
   context: PageContext
   isPage: boolean
   pluginCreatorId: string
+  meta: IQueryMeta
 }
 
 // Run query
@@ -44,6 +45,7 @@ export const queryRunner = async (
     const promise = graphqlRunner.query(query, context, {
       parentSpan,
       queryName,
+      meta: queryJob.meta,
     })
     let isPending = true
 

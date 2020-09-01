@@ -64,8 +64,7 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
               result: {
                 ...result,
                 moduleDependencies: Array.from(
-                  queryJob.context.__INTERNAL_DO_NOT_USE__moduleDependencies ||
-                    new Set()
+                  queryJob.meta.moduleDependencies || new Set()
                 ),
               },
               id: queryJob.id,
