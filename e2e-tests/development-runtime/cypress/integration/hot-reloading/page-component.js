@@ -14,6 +14,12 @@ describe(`hot reloading page component`, () => {
       `npm run update -- --file src/pages/index.js --replacements "GATSBY_SITE:${text}"`
     )
 
+    // Hack, run this twice because we have a state machine bug that doesn't trigger webpack on the first
+    // save.
+    cy.exec(
+      `npm run update -- --file src/pages/index.js --replacements "GATSBY_SITE:${text}"`
+    )
+
     cy.wait(1000).getTestElement(TEST_ID).invoke(`text`).should(`contain`, text)
   })
 })
