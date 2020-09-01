@@ -19,8 +19,8 @@ describe(`hot-reloading anonymous arrow functions`, () => {
     const text = `The title`
     cy.exec(
       `npm run update -- --file src/components/title.tsx --replacements "TITLE:${text}"`
-    )
-
-    cy.getTestElement(IDS.title).invoke(`text`).should(`eq`, text)
+    ).then(() => {
+      cy.wait(2000).getTestElement(IDS.title).invoke(`text`).should(`eq`, text)
+    })
   })
 })

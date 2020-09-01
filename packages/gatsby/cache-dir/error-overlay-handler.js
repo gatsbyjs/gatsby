@@ -1,15 +1,17 @@
-import * as ReactRefreshErrorOverlay from "@pmmmwh/react-refresh-webpack-plugin/overlay"
-import * as ReactErrorOverlay from "react-error-overlay"
+const overlayPackage =
+  process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+    ? require(`react-error-overlay`)
+    : require(`@pmmmwh/react-refresh-webpack-plugin/src/overlay`)
 
 const ErrorOverlay = {
   showCompileError:
     process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-      ? ReactErrorOverlay.reportBuildError
-      : ReactRefreshErrorOverlay.showCompileError,
+      ? overlayPackage.reportBuildError
+      : overlayPackage.showCompileError,
   clearCompileError:
     process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-      ? ReactErrorOverlay.dismissBuildError
-      : ReactRefreshErrorOverlay.clearCompileError,
+      ? overlayPackage.dismissBuildError
+      : overlayPackage.clearCompileError,
 }
 
 if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
@@ -41,7 +43,7 @@ if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
 
     registeredReloadListeners = true
   }
-  ReactErrorOverlay.startReportingRuntimeErrors({
+  overlayPackage.startReportingRuntimeErrors({
     onError,
     filename: `/commons.js`,
   })
@@ -52,7 +54,7 @@ if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
   window.addEventListener(`error`, onError)
   window.addEventListener(`unhandledrejection`, onError)
 
-  ReactErrorOverlay.setEditorHandler(errorLocation =>
+  overlayPackage.setEditorHandler(errorLocation =>
     window.fetch(
       `/__open-stack-frame-in-editor?fileName=` +
         window.encodeURIComponent(errorLocation.fileName) +

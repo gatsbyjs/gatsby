@@ -28,4 +28,6 @@ export function detectHotLoaderToUse(): void {
 
   if (!process.env.GATSBY_HOT_LOADER)
     process.env.GATSBY_HOT_LOADER = `react-hot-loader`
+
+  console.log(`HOTLOADER:`, process.env.GATSBY_HOT_LOADER)
 }
