@@ -76,6 +76,7 @@ const ResourceChildren = ({ resourceChildren, state }) => {
 }
 
 const RecipeInterpreter = ({ recipe }) => {
+  recipe = `./foo.mdx`
   const [client, setClient] = useState(null)
 
   React.useEffect(() => {
@@ -197,7 +198,6 @@ const RecipeInterpreter = ({ recipe }) => {
     plansWithoutInputs,
     p => p.resourceName
   )
-
   return (
     <>
       <Styled.p>{` `}</Styled.p>
@@ -225,7 +225,8 @@ const RecipeInterpreter = ({ recipe }) => {
                   scope={{ sendEvent }}
                   remarkPlugins={[removeJsx]}
                 >
-                  {exports?.join(`\n`) + `\n\n` + stepsAsJS[0]}
+                  {stepsAsJS[0]}
+                  {/* {exports?.join(`\n`) + `\n\n` + stepsAsJS[0]} */}
                 </StepRenderer>
               </div>
               <Button

@@ -11,6 +11,7 @@ const transformCodeForEval = jsx => `${jsx}
   );`
 
 export default ({ children: srcCode, scope, components, ...props }) => {
+  // console.log(components)
   const fullScope = {
     mdx: createElement,
     MDXProvider,
@@ -29,7 +30,6 @@ export default ({ children: srcCode, scope, components, ...props }) => {
   const scopeValues = Object.values(fullScope)
 
   const test = transformCodeForEval(srcCode)
-  console.log(test)
   const fn = new Function(...scopeKeys, test)
 
   return fn(...scopeValues)

@@ -3,7 +3,7 @@ import { jsx, Styled } from "theme-ui"
 import { Heading } from "gatsby-interface"
 import { StepRenderer } from "gatsby-recipes/components"
 import CodeDiff from "./code-diff"
-import { components, removeJsx, makeResourceId } from "./utils"
+import { removeJsx, makeResourceId } from "./utils"
 import {
   TextAreaField,
   TextAreaFieldControl,
@@ -11,6 +11,7 @@ import {
   InputFieldLabel,
   InputFieldControl,
 } from "gatsby-interface"
+import { useInputByKey } from "gatsby-recipes/src/renderer/input-provider"
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   <div id={makeResourceId(resourcePlan)} sx={{}}>
@@ -29,11 +30,48 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
 )
 
 const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
+  const components = {
+    Config: () => null,
+    GatsbyPlugin: () => null,
+    NPMPackageJson: () => null,
+    NPMPackage: () => null,
+    File: () => null,
+    Input: ({ label, type = `text`, _key: key, ...rest }) => {
+      const value = useInputByKey(key)
+  
+      return (
+        <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
+          <InputField sx={{ pt: 3 }}>
+            <div>
+              <InputFieldLabel>{label}</InputFieldLabel>
+            </div>
+            <InputFieldControl
+              type={type}
+              value={value}
+              onInput={e => {
+                sendInputEvent({ key, value: e.target.value })
+              }}
+            />
+          </InputField>
+        </div>
+      )
+    },
+    Directory: () => null,
+    GatsbyShadowFile: () => null,
+    NPMScript: () => null,
+    RecipeIntroduction: props => <div>{props.children}</div>,
+    RecipeStep: props => <div>{props.children}</div>,
+    ContentfulSpace: () => null,
+    ContentfulEnvironment: () => null,
+    ContentfulType: () => null,
+  }
+
   const stepResources = state.context?.plan?.filter(
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
   const exportsAsMdx = state.context.exports?.map(e => e.value).join(`\n`) || ``
   const fullStepMdx = exportsAsMdx + `\n\n` + step
+  console.log(fullStepMdx)
 
   return (
     <div
@@ -85,14 +123,14 @@ const Step = ({ sendEvent, sendInputEvent, state, step, i }) => {
             },
           }}
         >
-          <StepRenderer
+          {/* <StepRenderer
             key="DOC"
             components={components}
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
             {fullStepMdx}
-          </StepRenderer>
+          </StepRenderer> */}
         </div>
       </div>
       {stepResources?.length > 0 && (

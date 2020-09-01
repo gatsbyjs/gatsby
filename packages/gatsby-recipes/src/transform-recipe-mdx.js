@@ -1,10 +1,10 @@
-import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
-import babelChainingPlugin from "@babel/plugin-proposal-optional-chaining"
+import transformReactJsx from "@babel/plugin-transform-react-jsx"
+import chainingPlugin from "@babel/plugin-proposal-optional-chaining"
 import mdx from "@mdx-js/mdx"
-import babelPluginRemoveShortcodes from "./babel-plugins/remove-shortcodes"
-import babelPluginCopyKeyProp from "./babel-plugins/copy-key-prop"
-import babelPluginMoveExportKeywords from "./babel-plugins/move-export-keywords"
-import babelPluginAddUseInputKey from "./babel-plugins/add-use-input-key"
+import removeShortcodes from "./babel-plugins/remove-shortcodes"
+import copyKeyProp from "./babel-plugins/copy-key-prop"
+import moveExportKeywords from "./babel-plugins/move-export-keywords"
+import addUseInputKey from "./babel-plugins/add-use-input-key"
 
 const mdxCache = new Map()
 const jsxCache = new Map()
@@ -19,13 +19,13 @@ const transformJsx = jsx => {
       allowReturnOutsideFunction: true,
     },
     plugins: [
-      babelPluginCopyKeyProp,
-      babelPluginMoveExportKeywords,
-      babelPluginAddUseInputKey,
-      babelPluginRemoveShortcodes,
+      copyKeyProp,
+      // moveExportKeywords,
+      addUseInputKey,
+      removeShortcodes,
       // TODO figure out how to use preset-env
-      babelChainingPlugin,
-      [babelPluginTransformReactJsx, { useBuiltIns: true }],
+      chainingPlugin,
+      [transformReactJsx, { useBuiltIns: true }],
     ],
   }
 
