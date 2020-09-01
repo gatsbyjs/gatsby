@@ -1718,7 +1718,6 @@ RSS
 rsync
 RTC
 RTEs
-runInitialQuerys
 runQueries
 runQueriesForPathnames
 runtimes
