@@ -3,9 +3,7 @@ import semver from "semver"
 // Fast refresh is supported as of React 16.8.
 // This package will do some sniffing to see if the current version of
 // React installed is greater than 16.8.
-export function getReactHotLoaderStrategy():
-  | "fast-refresh"
-  | "react-hot-loader" {
+export function getReactHotLoaderStrategy(): string {
   // If the user has defined this, we don't want to do any package sniffing
   if (process.env.GATSBY_HOT_LOADER) return process.env.GATSBY_HOT_LOADER
 
