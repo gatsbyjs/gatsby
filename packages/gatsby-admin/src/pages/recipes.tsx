@@ -4,12 +4,13 @@ import recipesList from "gatsby-recipes/src/recipes-list"
 import { Link } from "gatsby"
 
 function Recipes(): JSX.Element {
+  const recipesWithoutInputs = recipesList.filter(recipe => !recipe.hasInputs)
   return (
     <Flex gap={8} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
       <Flex gap={6} flexDirection="column">
         <h1>Recipes</h1>
         <ul sx={{ pl: 0, listStyle: `none` }}>
-          {recipesList.map(recipe => (
+          {recipesWithoutInputs.map(recipe => (
             <li key={recipe.value}>
               <Flex
                 flexDirection="column"

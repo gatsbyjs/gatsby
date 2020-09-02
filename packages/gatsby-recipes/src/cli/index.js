@@ -90,7 +90,7 @@ const WelcomeMessage = () => (
 )
 
 const RecipesList = ({ setRecipe }) => {
-  const items = recipesList
+  const items = recipesList.filter(recipe => !recipe.hasInputs) // CLI doesn't support inputs yet
 
   return (
     <SelectInput.default

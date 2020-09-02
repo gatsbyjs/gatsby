@@ -4,13 +4,6 @@ import { Heading } from "gatsby-interface"
 import { StepRenderer } from "gatsby-recipes/components"
 import CodeDiff from "./code-diff"
 import { removeJsx, makeResourceId } from "./utils"
-import {
-  TextAreaField,
-  TextAreaFieldControl,
-  InputField,
-  InputFieldLabel,
-  InputFieldControl,
-} from "gatsby-interface"
 
 const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   <div id={makeResourceId(resourcePlan)} sx={{}}>
@@ -28,11 +21,10 @@ const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
   </div>
 )
 
-const Step = ({ sendEvent, sendInputEvent, components, state, step, i }) => {
+const Step = ({ sendEvent, components, state, step, i }) => {
   const stepResources = state.context?.plan?.filter(
     p => parseInt(p._stepMetadata.step, 10) === i + 1
   )
-
   return (
     <div
       key={`step-${i}`}
@@ -94,73 +86,25 @@ const Step = ({ sendEvent, sendInputEvent, components, state, step, i }) => {
         </div>
       </div>
       {stepResources?.length > 0 && (
-        <div>
-          <div sx={{ px: 6, pt: 3 }}>
-            {stepResources?.map((res, i) => {
-              if (res.resourceName === `Input`) {
-                if (res.type === `textarea`) {
-                  return (
-                    <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
-                      <TextAreaField>
-                        <div>
-                          <InputFieldLabel>{res.label}</InputFieldLabel>
-                        </div>
-                        <TextAreaFieldControl
-                          onInput={e => {
-                            sendInputEvent({
-                              uuid: res._uuid,
-                              key: res._key,
-                              value: e.target.value,
-                            })
-                          }}
-                        />
-                      </TextAreaField>
-                    </div>
-                  )
-                }
-                return (
-                  <div sx={{ pt: 3, width: `30%`, maxWidth: `100%` }}>
-                    <InputField sx={{ pt: 3 }}>
-                      <div>
-                        <InputFieldLabel>{res.label}</InputFieldLabel>
-                      </div>
-                      <InputFieldControl
-                        type={res.type}
-                        onInput={e => {
-                          sendInputEvent({
-                            uuid: res._uuid,
-                            key: res._key,
-                            value: e.target.value,
-                          })
-                        }}
-                      />
-                    </InputField>
-                  </div>
-                )
-              }
-              return null
-            })}
-          </div>
-          <div sx={{ padding: 6 }}>
-            <Heading
-              sx={{
-                mb: 4,
-                mt: 0,
-                color: theme => theme.tones.NEUTRAL.darker,
-                fontWeight: 500,
-              }}
-              as={`h3`}
-            >
-              Proposed changes
-            </Heading>
-            {stepResources.map((res, i) => (
-              <ResourcePlan
-                key={`res-plan-${i}`}
-                resourcePlan={res}
-                isLastPlan={i === stepResources.length - 1}
-              />
-            ))}
-          </div>
+        <div sx={{ padding: 6 }}>
+          <Heading
+            sx={{
+              mb: 4,
+              mt: 0,
+              color: theme => theme.tones.NEUTRAL.darker,
+              fontWeight: 500,
+            }}
+            as={`h3`}
+          >
+            Proposed changes
+          </Heading>
+          {stepResources.map((res, i) => (
+            <ResourcePlan
+              key={`res-plan-${i}`}
+              resourcePlan={res}
+              isLastPlan={i === stepResources.length - 1}
+            />
+          ))}
         </div>
       )}
     </div>

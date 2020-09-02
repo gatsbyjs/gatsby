@@ -235,8 +235,8 @@ const RecipeInterpreter = ({ recipe }) => {
     })
   }
 
-  let { plan, stepsAsJS, inputs } = state.context
-  let plansWithoutInputs = state.context.plan?.filter(
+  const { plan, stepsAsJS, inputs } = state.context
+  const plansWithoutInputs = state.context.plan?.filter(
     p => p.resourceName !== `Input`
   )
   const groupedPlansByResource = lodash.groupBy(
@@ -325,7 +325,6 @@ const RecipeInterpreter = ({ recipe }) => {
             {stepsAsJS.slice(1).map((step, i) => (
               <Step
                 sendEvent={sendEvent}
-                sendInputEvent={sendInputEvent}
                 components={components}
                 state={state}
                 step={step}

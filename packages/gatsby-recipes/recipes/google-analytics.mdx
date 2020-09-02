@@ -1,0 +1,27 @@
+# Set up Google Analytics
+
+This recipe sets up Google analytics on your site. You'll need to provide a Tracking ID. See [the docs](https://www.gatsbyjs.com/docs/recipes/deploying-your-site/#getting-your-google-analytics-tracking-id) for more information.
+
+---
+
+Install `gatsby-plugin-google-analytics`.
+
+<NPMPackage name="gatsby-plugin-google-analytics" />
+
+---
+
+export const trackingId = useInputByKey('tracking-id')
+
+Configure the plugin using your Tracking ID.
+
+<Input
+  type="text"
+  label="Tracking ID"
+  key="tracking-id"
+/>
+
+<GatsbyPlugin name="gatsby-plugin-google-analytics" options={{trackingId}} />
+
+---
+
+That's it, we did it!

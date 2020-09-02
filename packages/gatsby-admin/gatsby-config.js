@@ -23,6 +23,12 @@ module.exports = {
         prefixes: ["/plugins/*"],
       },
     },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: "tests",
+      },
+    },
   ],
   pathPrefix: `/___admin`,
 }

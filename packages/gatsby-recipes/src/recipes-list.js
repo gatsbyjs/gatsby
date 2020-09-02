@@ -105,4 +105,9 @@ export default [
     label: `Add GitLab CI/CD`,
     value: `gitlab-ci-cd`,
   },
+  {
+    label: `Set up Google Analytics`,
+    value: `google-analytics`,
+    hasInputs: true,
+  },
 ]
