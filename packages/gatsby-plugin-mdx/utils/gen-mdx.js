@@ -139,12 +139,20 @@ import { mdx } from '@mdx-js/react';
 ${code}`
 
   if (!isLoader) {
+    let mdxFileDirectory = null
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES && node.parent) {
+      const parentNode = getNode(node.parent)
+      if (parentNode && parentNode.internal.type === `File`) {
+        mdxFileDirectory = parentNode.dir
+      }
+    }
+
     debug(`compiling scope`)
     const instance = new BabelPluginPluckImports()
     const result = babel.transform(code, {
       configFile: false,
       plugins: [
-        instance.plugin,
+        [instance.plugin, { mdxFileDirectory }],
         objRestSpread,
         htmlAttrToJSXAttr,
         removeExportKeywords,
@@ -171,6 +179,24 @@ ${code}`
 
     results.scopeImports = imports
     results.scopeIdentifiers = identifiers
+
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+      const importSpecs = instance.state.importSpecs
+      // not ideal - we should check for namespace and warn if there is non-namespace import with React named variable
+      const hasReactImport = importSpecs.some(
+        importSpec => importSpec.local === `React`
+      )
+
+      if (!hasReactImport) {
+        imports.push({
+          source: `react`,
+          type: `namespace`,
+          local: `React`,
+        })
+      }
+
+      results.importSpecs = importSpecs
+    }
     // TODO: be more sophisticated about these replacements
     results.body = result.code
       .replace(
