@@ -85,7 +85,7 @@ const ResourceChildren = ({ resourceChildren, state }) => {
 }
 
 const RecipeInterpreter = ({ recipe }) => {
-  recipe = `./foo.mdx`
+  recipe = `./google-analytics.mdx`
   const [client, setClient] = useState(null)
 
   React.useEffect(() => {
