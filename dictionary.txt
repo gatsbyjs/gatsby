@@ -225,6 +225,7 @@ bigtime
 bikeshed
 bindActionCreators
 Bing
+Bip
 Biscardi
 BitBalloon
 Bitbucket
