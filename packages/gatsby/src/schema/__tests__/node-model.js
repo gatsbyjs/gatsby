@@ -495,6 +495,14 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
       })
+
+      it(`returns null when object's top-most ancestor doesn't match the provided predicate`, () => {
+        const node = nodeModel.getNodeById({ id: `post1` })
+        const obj = node.frontmatter.authors
+        const predicate = () => false
+        const result = nodeModel.findRootNodeAncestor(obj, predicate)
+        expect(result).toBe(null)
+      })
     })
 
     describe(`createPageDependency`, () => {
@@ -542,7 +550,7 @@ describe(`NodeModel`, () => {
     })
   })
 
-  describe(`prepare nodes caching`, () => {
+  describe(`materialization`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     beforeEach(async () => {
@@ -550,6 +558,10 @@ describe(`NodeModel`, () => {
         {
           id: `id1`,
           title: `Foo`,
+          nested: {
+            foo: `foo1`,
+            bar: `bar1`,
+          },
           internal: {
             type: `Test`,
             contentDigest: `0`,
@@ -559,9 +571,21 @@ describe(`NodeModel`, () => {
           id: `id2`,
           title: `Bar`,
           hidden: false,
+          nested: {
+            foo: `foo2`,
+            bar: `bar2`,
+          },
           internal: {
             type: `Test`,
             contentDigest: `1`,
+          },
+        },
+        // Test2 is a special type that must have no nodes!
+        {
+          id: `id3`,
+          internal: {
+            type: `Test3`,
+            contentDigest: `2`,
           },
         },
       ])()
@@ -574,9 +598,33 @@ describe(`NodeModel`, () => {
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
+          typeBuilders.buildInterfaceType({
+            name: `TestInterface`,
+            fields: {
+              slug: { type: `String` },
+            },
+          }),
+
+          typeBuilders.buildInterfaceType({
+            name: `TestNestedInterface`,
+            fields: {
+              foo: { type: `String` },
+            },
+            resolveType: value => value.kind,
+          }),
+
+          typeBuilders.buildObjectType({
+            name: `TestNested`,
+            fields: {
+              foo: { type: `String` },
+              bar: { type: `String` },
+            },
+            interfaces: [`TestNestedInterface`],
+          }),
+
           typeBuilders.buildObjectType({
             name: `Test`,
-            interfaces: [`Node`],
+            interfaces: [`Node`, `TestInterface`],
             fields: {
               betterTitle: {
                 type: `String`,
@@ -595,6 +643,42 @@ describe(`NodeModel`, () => {
               hidden: {
                 type: `Boolean!`,
                 resolve: parent => Boolean(parent.hidden),
+              },
+              nested: {
+                type: `TestNested`,
+                resolve: source => source.nested,
+              },
+              arrayWithNulls: {
+                type: `[TestNestedInterface]`,
+                resolve: source => [
+                  null,
+                  { kind: `TestNested`, foo: source.id },
+                  undefined,
+                ],
+              },
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test2`,
+            interfaces: [`Node`, `TestInterface`],
+            fields: {
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test3`,
+            interfaces: [`Node`, `TestInterface`],
+            fields: {
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
               },
             },
           }),
@@ -693,6 +777,72 @@ describe(`NodeModel`, () => {
       expect(result.length).toBe(2)
       expect(result[0].id).toBe(`id1`)
       expect(result[1].id).toBe(`id2`)
+    })
+
+    it(`merges query caches when filtering by nested field`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/26056
+      nodeModel.replaceFiltersCache()
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { nested: { foo: { eq: `foo1` } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { nested: { bar: { eq: `bar2` } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(result1).toBeTruthy()
+      expect(result1.length).toBe(1)
+      expect(result1[0].id).toBe(`id1`)
+
+      expect(result2).toBeTruthy()
+      expect(result2.length).toBe(1)
+      expect(result2[0].id).toBe(`id2`)
+    })
+
+    it(`handles nulish values within array of interface type`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { arrayWithNulls: { elemMatch: { foo: { eq: `id1` } } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(result).toBeTruthy()
+      expect(result.length).toEqual(1)
+      expect(result[0].id).toEqual(`id1`)
+    })
+
+    it(`handles fields with custom resolvers on interfaces having multiple implementations`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { slug: { eq: `id3` } },
+          },
+          firstOnly: true,
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(result).toBeTruthy()
+      expect(result.id).toEqual(`id3`)
     })
   })
 

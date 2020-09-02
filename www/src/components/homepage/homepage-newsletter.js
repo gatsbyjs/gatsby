@@ -1,111 +1,100 @@
-import React from "react"
-import styled from "@emotion/styled"
+/** @jsx jsx */
+import { jsx, Flex } from "theme-ui"
 
 import HomepageSection from "./homepage-section"
 import EmailCaptureForm from "../email-capture-form"
 
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
-import { rhythm } from "../../utils/typography"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const stripedBorderHeight = 1
 
-const Container = styled(`div`)`
-  background: ${p => p.theme.colors.newsletter.background};
-  border: 1px solid ${p => p.theme.colors.newsletter.border};
-  border-radius: ${p => p.theme.radii[2]};
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${p => p.theme.space[8]};
-  padding: calc(${p => p.theme.space[8]} * 1.2);
-  padding-bottom: calc(
-    ${props => rhythm(props.theme.space[8] * 1.2)} +
-      ${p => p.theme.space[stripedBorderHeight]}
-  );
-  position: relative;
+const containerStyles = {
+  bg: `newsletter.background`,
+  borderColor: `newsletter.border`,
+  borderStyle: `solid`,
+  borderWidth: 1,
+  borderRadius: 2,
+  flexDirection: `column`,
+  mb: 8,
+  p: 9,
+  pb: t => `calc(${t.space[9]} + ${t.space[stripedBorderHeight]})`,
+  position: `relative`,
 
-  :after {
-    border-radius: 0 0 ${p => p.theme.radii[2]} ${p => p.theme.radii[2]};
-    background: ${p => p.theme.colors.newsletter.background}
+  ":after": {
+    borderBottomLeftRadius: 2,
+    borderBottomRightRadius: 2,
+    background: t => `${t.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${p => p.theme.colors.newsletter.stripeColorA},
-        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
+        ${t.colors.newsletter.stripeColorA},
+        ${t.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
-        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
+        ${t.colors.newsletter.stripeColorB} 40px,
+        ${t.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
-      );
-    bottom: 0;
-    content: "";
-    height: ${p => p.theme.space[stripedBorderHeight]};
-    left: 0;
-    right: 0;
-    position: absolute;
-  }
+      )`,
+    bottom: 0,
+    content: `""`,
+    height: t => t.space[stripedBorderHeight],
+    left: 0,
+    right: 0,
+    position: `absolute`,
+  },
 
-  ${mediaQueries.lg} {
-    flex-direction: row;
-    justify-content: space-between;
+  [mediaQueries.lg]: {
+    flexDirection: `row`,
+    justifyContent: `space-between`,
 
-    > * {
-      flex-basis: 50%;
-    }
-  }
-`
+    "> *": {
+      flexBasis: `50%`,
+    },
+  },
+}
 
-const Ornament = styled(`span`)`
-  left: -${p => p.theme.space[1]};
-  position: absolute;
-  top: -${p => p.theme.space[2]};
-`
+const nameStyles = {
+  color: `textMuted`,
+  fontFamily: `heading`,
+  fontSize: 1,
+  fontWeight: `body`,
+  letterSpacing: `tracked`,
+  m: 0,
+  textTransform: `uppercase`,
+}
 
-const Name = styled(`h3`)`
-  color: ${p => p.theme.colors.textMuted};
-  font-family: ${p => p.theme.fonts.heading};
-  font-size: ${p => p.theme.fontSizes[1]};
-  font-weight: ${p => p.theme.fontWeights.body};
-  letter-spacing: ${p => p.theme.letterSpacings.tracked};
-  margin: 0;
-  text-transform: uppercase;
-`
+const titleStyles = {
+  color: `newsletter.heading`,
+  fontSize: 4,
+  fontWeight: `heading`,
+  lineHeight: `dense`,
+  m: 0,
+  mt: 1,
+}
 
-const Title = styled(`h1`)`
-  color: ${p => p.theme.colors.newsletter.heading};
-  font-size: ${p => p.theme.fontSizes[4]};
-  font-weight: ${p => p.theme.fontWeights.heading};
-  line-height: ${p => p.theme.lineHeights.dense};
-  margin: 0;
-  margin-top: ${p => p.theme.space[1]};
-`
-
-const Form = styled(EmailCaptureForm)`
-  margin-top: ${p => p.theme.space[5]};
-
-  ${mediaQueries.lg} {
-    margin-top: 0;
-  }
-`
-
-const HomepageNewsletter = () => (
-  <HomepageSection>
-    <Container>
-      <Ornament>
-        <NewsletterFormOrnament />
-      </Ornament>
-      <header>
-        <Name>The Gatsby Newsletter</Name>
-        <Title>Keep up with the latest things Gatsby!</Title>
-      </header>
-      <Form
-        isHomepage={true}
-        confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
-      />
-    </Container>
-  </HomepageSection>
-)
-
-export default HomepageNewsletter
+export default function HomepageNewsletter() {
+  return (
+    <HomepageSection>
+      <Flex sx={containerStyles}>
+        <NewsletterFormOrnament
+          sx={{
+            left: -1,
+            position: `absolute`,
+            top: -2,
+          }}
+        />
+        <header>
+          <h3 sx={nameStyles}>The Gatsby Newsletter</h3>
+          <h1 sx={titleStyles}>Keep up with the latest things Gatsby!</h1>
+        </header>
+        <EmailCaptureForm
+          isHomepage
+          confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
+          sx={{ mt: [5, null, null, null, 0] }}
+        />
+      </Flex>
+    </HomepageSection>
+  )
+}

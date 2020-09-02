@@ -13,6 +13,10 @@ import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import {
+  GatsbyWebpackVirtualModules,
+  VIRTUAL_MODULES_BASE_PATH,
+} from "./gatsby-webpack-virtual-modules"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -104,6 +108,7 @@ type PluginUtils = BuiltinPlugins & {
   minifyCss: PluginFactory
   fastRefresh: PluginFactory
   eslintGraphqlSchemaReload: PluginFactory
+  virtualModules: PluginFactory
 }
 
 /**
@@ -132,6 +137,7 @@ export const createWebpackUtils = (
 
   const isSSR = stage.includes(`html`)
 
+  const jsxRuntimeExists = reactHasJsxRuntime()
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
   ): RuleSetRule => {
@@ -268,6 +274,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
           // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
@@ -298,7 +305,7 @@ export const createWebpackUtils = (
     },
 
     eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema)
+      const options = eslintConfig(schema, jsxRuntimeExists)
 
       return {
         options,
@@ -395,34 +402,55 @@ export const createWebpackUtils = (
         }`,
       }
 
+      // TODO REMOVE IN V3
+      // a list of vendors we know we shouldn't polyfill (we should have set core-js to entry but we didn't so we have to do this)
+      const VENDORS_TO_NOT_POLYFILL = [
+        `@babel[\\\\/]runtime`,
+        `@mikaelkristiansson[\\\\/]domready`,
+        `@reach[\\\\/]router`,
+        `babel-preset-gatsby`,
+        `core-js`,
+        `dom-helpers`,
+        `gatsby-legacy-polyfills`,
+        `gatsby-link`,
+        `gatsby-react-router-scroll`,
+        `invariant`,
+        `lodash`,
+        `mitt`,
+        `prop-types`,
+        `react-dom`,
+        `react`,
+        `regenerator-runtime`,
+        `scheduler`,
+        `scroll-behavior`,
+        `shallow-compare`,
+        `warning`,
+        `webpack`,
+      ]
+      const doNotPolyfillRegex = new RegExp(
+        `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+          `|`
+        )})[\\\\/]`
+      )
+
       return {
         test: /\.(js|mjs)$/,
         exclude: (modulePath: string): boolean => {
-          if (vendorRegex.test(modulePath)) {
-            // If dep uses Gatsby, exclude
-            if (
-              modulesThatUseGatsby.some(module =>
-                modulePath.includes(module.path)
-              )
-            ) {
-              return true
-            }
-            // If dep is known library that doesn't need polyfilling, we don't.
-            // TODO this needs rework, this is buggy as hell
-            if (
-              /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
-                modulePath
-              )
-            ) {
-              return true
-            }
-
-            // If dep is in node_modules and none of the above, include
-            return false
+          // If dep is user land code, exclude
+          if (!vendorRegex.test(modulePath)) {
+            return true
           }
 
-          // If dep is user land code, exclude
-          return true
+          // If dep uses Gatsby, exclude
+          if (
+            modulesThatUseGatsby.some(module =>
+              modulePath.includes(module.path)
+            )
+          ) {
+            return true
+          }
+
+          return doNotPolyfillRegex.test(modulePath)
         },
         type: `javascript/auto`,
         use: [loaders.dependencies(jsOptions)],
@@ -435,14 +463,16 @@ export const createWebpackUtils = (
     return {
       enforce: `pre`,
       test: /\.jsx?$/,
-      exclude: vendorRegex,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
       use: [loaders.eslint(schema)],
     }
   }
 
   rules.yaml = (): RuleSetRule => {
     return {
-      test: /\.ya?ml/,
+      test: /\.ya?ml$/,
       use: [loaders.json(), loaders.yaml()],
     }
   }
@@ -673,9 +703,28 @@ export const createWebpackUtils = (
   plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
     new GatsbyWebpackEslintGraphqlSchemaReload()
 
+  plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
+    new GatsbyWebpackVirtualModules()
+
   return {
     loaders,
     rules,
     plugins,
   }
+}
+
+function reactHasJsxRuntime(): boolean {
+  try {
+    // React is shipping a new jsx runtime that is to be used with
+    // an option on @babel/preset-react called `runtime: automatic`
+    // Not every version of React has this jsx-runtime yet. Eventually,
+    // it will be backported to older versions of react and this check
+    // will become unnecessary.
+    return !!require.resolve(`react/jsx-runtime.js`)
+  } catch (e) {
+    // If the require.resolve throws, that means this version of React
+    // does not support the jsx runtime.
+  }
+
+  return false
 }

@@ -92,12 +92,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-gitinfo`,
-      options: {
-        include: /mdx?$/i,
-      },
-    },
-    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
         // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword
@@ -247,13 +241,7 @@ module.exports = {
         icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
-    `gatsby-plugin-offline`,
-    {
-      resolve: `gatsby-plugin-perf-metrics`,
-      options: {
-        appId: `1:216044356421:web:92185d5e24b3a2a1`,
-      },
-    },
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
@@ -262,7 +250,7 @@ module.exports = {
       resolve: `gatsby-plugin-react-svg`,
       options: {
         rule: {
-          include: /assets\/(guidelines|icons|ornaments)\/.*.svg$/,
+          include: /assets\/(guidelines|icons|ornaments)\/.*\.svg$/,
         },
       },
     },
@@ -341,6 +329,19 @@ module.exports = {
       options: {
         headers: {
           "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+          "/sw.js": [
+            `Cache-Control: max-age=0,no-cache,no-store,must-revalidate`,
+          ],
+        },
+        transformHeaders: (headers, path) => {
+          if (path === `/sw.js`) {
+            // remove last cache-control as it's set by the plugin itself
+            headers.splice(1, 1)
+          }
+
+          return headers.filter(
+            header => !header.toLowerCase().includes(`link:`)
+          )
         },
       },
     },

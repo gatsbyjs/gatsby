@@ -231,7 +231,7 @@ Some notes:
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
-Your `/tags` page will simply list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
+Your `/tags` page will list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
 
 ```jsx:title=src/pages/tags.js
 import React from "react"
@@ -308,4 +308,4 @@ export const pageQuery = graphql`
 
 ## _(optional)_ Render tags inline with your blog posts
 
-The home stretch! Anywhere else you'd like to render your tags, simply add them to the `frontmatter` section of your `graphql` query and access them in your component like any other prop.
+The home stretch! Anywhere else you'd like to render your tags, add them to the `frontmatter` section of your `graphql` query and access them in your component like any other prop.

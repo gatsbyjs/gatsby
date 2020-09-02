@@ -477,7 +477,7 @@ node_js:
 cache: yarn
 
 install:
-  - yarn global add lerna jest now
+  - yarn global add lerna jest vercel
   - lerna bootstrap
 
 matrix:
@@ -494,7 +494,7 @@ script:
 
 deploy:
   provider: script
-  script: now public --token $VERCEL_TOKEN
+  script: vercel public --token $VERCEL_TOKEN
   skip_cleanup: true
   app: $PACKAGE_NAME
 ```
@@ -506,9 +506,9 @@ Note that we’ve added some additional environment variables to our matrix so a
 - skip_cleanup — we don’t want Travis to get rid of any files made during the build. We created the ‘public’ folder when running the build, so we don’t want Travis to get rid of it.
 - app — specifies the name of the application we’re deploying,
 
-We have to do add a little bit of configuration on our side to ensure that Vercel hosts our sites correctly. The config comes in the form of a `now.json` file, which outlines the options we want Vercel to use when deploying our site. Go into the directory for our blog packages and create a `now.json` file. We want to let Vercel know that we’re deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `now.json` file.
+We have to do add a little bit of configuration on our side to ensure that Vercel hosts our sites correctly. The config comes in the form of a `vercel.json` file, which outlines the options we want Vercel to use when deploying our site. Go into the directory for our blog packages and create a `vercel.json` file. We want to let Vercel know that we’re deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `vercel.json` file.
 
-```json:title=now.json
+```json:title=vercel.json
 {
   "type": "static",
   "alias": "lerna-monorepo-blog",
@@ -524,7 +524,7 @@ Note: `public: true` needs to be specified since you’ll most likely have a fre
 
 Push these changes to your repo to kick off your build pipeline. If everything was successful then your build will have passed and your site will have deployed. Go to Travis, open up your blog build so you have access to the logs. Scroll right to the bottom to where it says ‘deploying application’ and uncollapse the section. This’ll be the URL that Vercel deployed your site to. It should look something like `https://buildsjdoe383jd.vercel.app`. Copy that url and go back to your command line. Run the following command:
 
-`now alias <your randomly generated URL> <your chosen alias>`
+`vercel alias <your randomly generated URL> <your chosen alias>`
 I chose ‘lerna-monorepo-blog’ as my alias, so that one won’t be available for you to use, so choose your own. When you’ve run the command, there will be feedback saying that the alias was successfully created. If not, then it’s likely the command was written incorrectly or the alias is already in use by someone else. Once you’ve added an alias successfully for the blog, do the same for your shop package.
 
 Even if you push everything forward now the site’s navigation will still be broken. The very last thing we need to do is add our alias URL as an environment variables in our `.env.production` file. In your blog package’s `.env.production` go ahead and add the following:
@@ -565,7 +565,7 @@ If your CI pipeline isn’t deploying your site correctly, it can be difficult t
 
 Deploying your application:
 
-If running the now command in your package throws an error, then make sure you’re logged in to Vercel via the CLI. You can do this via Vercel login. Make sure that your `now.json` file points to the correct output of yarn build. It may be your version of Gatsby doesn’t create a build directory called `public` but instead `dist` or `build`.
+If running the now command in your package throws an error, then make sure you’re logged in to Vercel via the CLI. You can do this via Vercel login. Make sure that your `vercel.json` file points to the correct output of yarn build. It may be your version of Gatsby doesn’t create a build directory called `public` but instead `dist` or `build`.
 
 Viewing your live application:
 

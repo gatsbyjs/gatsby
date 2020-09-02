@@ -1,6 +1,5 @@
 ---
 title: Adding App and Website Functionality
-overview: true
 ---
 
 Gatsby empowers developers and creators to make many different types of websites. One may wish to add additional functionality to their site such as search, authentication, forms, comments, and plenty of others.

@@ -156,3 +156,21 @@
   toPath: /docs/conditional-page-builds/
 - fromPath: /docs/contributing/translation/ui-messages/
   toPath: /docs/contributing/translation/
+- fromPath: /docs/schema-gql-type/
+  toPath: /docs/schema-inference/
+- fromPath: /docs/schema-input-gql/
+  toPath: /docs/schema-root-fields/
+- fromPath: /docs/schema-connections/
+  toPath: /docs/schema-root-fields/
+- fromPath: /contributing/website-contributions/
+  toPath: /contributing/
+- fromPath: /contributing/site-showcase-submissions/
+  toPath: /contributing/community-contributions/
+- fromPath: /contributing/submit-to-creator-showcase/
+  toPath: /contributing/community-contributions/
+- fromPath: /contributing/submit-to-starter-library/
+  toPath: /contributing/community-contributions/
+- fromPath: /docs/gatsby-vendor-partnership/
+  toPath: /partner-technology/
+- fromPath: /docs/gatsby-agency-partnership/
+  toPath: /partner-agency/

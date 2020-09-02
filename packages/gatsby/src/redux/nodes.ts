@@ -138,7 +138,7 @@ export const saveResolvedNodes = async (
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
     const nodes = store.getState().nodesByType.get(typeName)
-    if (!nodes) return
+    if (!nodes) continue
 
     const resolvedNodes = new Map()
     for (const node of nodes.values()) {

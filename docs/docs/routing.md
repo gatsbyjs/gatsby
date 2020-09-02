@@ -59,6 +59,8 @@ In order to link between pages, you can use [`gatsby-link`](/docs/gatsby-link/).
 
 Alternatively, you can navigate between pages using standard `<a>` tags, but you won't get the benefit of prefetching in this case.
 
+Gatsby will handle scroll restoration for you in most cases. To track and restore scroll position in additional containers, you can [use the `useScrollRestoration` hook](/docs/scroll-restoration/).
+
 ## Creating authentication-gated links
 
 For pages dealing with sensitive information, or other dynamic behavior, you may want to handle that information server-side. Gatsby lets you create [client-only routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate, ensuring that the information is only available to authorized users.

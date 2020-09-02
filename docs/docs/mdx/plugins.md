@@ -7,7 +7,7 @@ title: MDX Plugins
 `gatsby-plugin-mdx` is compatible with all of the [gatsby-remark
 plugins](/packages/gatsby-remark-images/?=gatsby-remark),
 including
-[`gatsby-remark-images`](https://next.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark).
+[`gatsby-remark-images`](/plugins/gatsby-remark-images/?=gatsby-remark).
 
 To enable `gatsby-remark-images`, you first need to install the relevant
 image plugins:

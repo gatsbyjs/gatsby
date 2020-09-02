@@ -1,11 +1,11 @@
-import { IBuildContext } from "./"
 import { rebuildWithSitePage } from "../schema"
 import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
 
 export async function rebuildSchemaWithSitePage({
   parentSpan,
-}: Partial<IBuildContext>): Promise<void> {
-  const activity = reporter.activityTimer(`updating schema`, {
+}: Partial<IQueryRunningContext>): Promise<void> {
+  const activity = reporter.activityTimer(`update schema`, {
     parentSpan,
   })
   activity.start()

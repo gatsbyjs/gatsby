@@ -215,7 +215,7 @@ const errors = {
   },
   "85923": {
     text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo.\nHowever, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node.js/gatsby-config.js, please try a restart of your development server\n- The field might be accessible in another subfield, please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere. Therefore Gatsby can't infer the type and add it to the GraphQL schema. A quick fix is to add a least one entry with that field ("dummy content")\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":\nhttps://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions`,
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo.\nHowever, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node.js/gatsby-config.js, please try a restart of your development server\n- The field might be accessible in another subfield, please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere. Therefore Gatsby can't infer the type and add it to the GraphQL schema. A quick fix is to add at least one entry with that field ("dummy content")\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":\nhttps://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
   },
@@ -418,26 +418,6 @@ const errors = {
         context.api
       } here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
     type: Type.PLUGIN,
-    level: Level.ERROR,
-  },
-  // Directory/file name exceeds OS character limit
-  "11331": {
-    text: (context): string =>
-      [
-        `One or more path segments are too long - they exceed OS filename length limit.\n`,
-        `Page path: "${context.path}"`,
-        `Invalid segments:\n${context.invalidPathSegments
-          .map(segment => ` - "${segment}"`)
-          .join(`\n`)}`,
-        ...(!context.isProduction
-          ? [
-              `\nThis will fail production builds, please adjust your paths.`,
-              `\nIn development mode gatsby truncated to: "${context.truncatedPath}"`,
-            ]
-          : []),
-      ]
-        .filter(Boolean)
-        .join(`\n`),
     level: Level.ERROR,
   },
   // node object didn't pass validation
