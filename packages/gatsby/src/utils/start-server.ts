@@ -4,7 +4,7 @@ import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware, {
   WebpackDevMiddleware,
 } from "webpack-dev-middleware"
-import got from "got"
+import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import graphqlHTTP from "express-graphql"
@@ -80,7 +80,6 @@ export async function startServer(
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
-        return
       }
       report.panic(
         report.stripIndent`
@@ -245,8 +244,8 @@ export async function startServer(
           // remove `host` from copied headers
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           headers: { host, ...headers },
-          method,
         } = req
+        const method = req.method as Method
         req
           .pipe(
             got

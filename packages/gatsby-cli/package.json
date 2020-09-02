@@ -42,7 +42,7 @@
     "resolve-cwd": "^3.0.0",
     "semver": "^7.3.2",
     "signal-exit": "^3.0.3",
-    "source-map": "0.7.3",
+    "source-map": "^0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^6.0.0",
     "update-notifier": "^4.1.0",

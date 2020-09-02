@@ -20,7 +20,7 @@
     "@babel/core": "^7.10.3",
     "babel-preset-gatsby-package": "^0.5.2",
     "cross-env": "^5.2.1",
-    "debug": "^3.2.6"
+    "debug": "^4.1.1"
   },
   "peerDependencies": {
     "gatsby": "^2.0.0",

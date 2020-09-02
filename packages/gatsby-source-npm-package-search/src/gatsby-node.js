@@ -92,7 +92,7 @@ exports.sourceNodes = async (
       if (!hit.readme) {
         try {
           hit.readme = (
-            await got.get(
+            await got(
               url.resolve(`https://unpkg.com/`, `/${hit.objectID}/README.md`)
             )
           ).body

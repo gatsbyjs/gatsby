@@ -73,9 +73,7 @@ describe(`gatsby-source-npm-package-search`, () => {
       })
 
       it(`should fetch readme`, () => {
-        expect(got.get).toBeCalledWith(
-          `https://unpkg.com/${packageName}/README.md`
-        )
+        expect(got).toBeCalledWith(`https://unpkg.com/${packageName}/README.md`)
       })
     })
   })

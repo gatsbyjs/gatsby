@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "algoliasearch": "^3.35.1",
-    "got": "^8.3.2"
+    "got": "^10.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",

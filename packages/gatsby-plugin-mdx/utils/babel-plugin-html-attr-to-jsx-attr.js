@@ -1,4 +1,4 @@
-const { camelCase } = require(`change-case`)
+const { camelCase } = require(`camel-case`)
 const styleToObject = require(`style-to-object`)
 const camelCaseCSS = require(`camelcase-css`)
 const t = require(`@babel/types`)

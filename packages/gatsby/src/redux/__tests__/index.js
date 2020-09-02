@@ -38,8 +38,11 @@ jest.mock(`fs-extra`, () => {
     }),
     existsSync: jest.fn(target => mockWrittenContent.has(target)),
     mkdtempSync: jest.fn(suffix => {
-      let dir = mockCompatiblePath.join(`some`, `tmp` + suffix + Math.random())
-      mockWrittenContent.set(dir, Buffer(`empty dir`))
+      const dir = mockCompatiblePath.join(
+        `some`,
+        `tmp` + suffix + Math.random()
+      )
+      mockWrittenContent.set(dir, Buffer.from(`empty dir`))
       return dir
     }),
     removeSync: jest.fn(file => mockWrittenContent.delete(file)),
@@ -53,7 +56,7 @@ jest.mock(`glob`, () => {
       if (pattern.slice(-1) !== `*`) {
         throw new Error(`Expected pattern ending with star`)
       }
-      let globPrefix = pattern.slice(0, -1)
+      const globPrefix = pattern.slice(0, -1)
       if (globPrefix.includes(`*`)) {
         throw new Error(`Expected pattern to be a prefix`)
       }
@@ -71,7 +74,7 @@ jest.mock(`glob`, () => {
 function getFakeNodes() {
   // Set nodes to something or the cache will fail because it asserts this
   // Actual nodes content should match TS type; these are verified
-  let map /*: Map<string, IReduxNode>*/ = new Map()
+  const map /** Map<string, IReduxNode> */ = new Map()
   map.set(`pageA`, {
     id: `pageA`,
     internal: {

@@ -246,8 +246,8 @@ async function processRemoteNode({
   if (ext === ``) {
     if (response.statusCode === 200) {
       // if this is fresh response - try to guess extension and cache result for future
-      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-      const filetype = fileType(buffer)
+      const buffer = readChunk.sync(tmpFilename, 0, 4100)
+      const filetype = await fileType.fromBuffer(buffer)
       if (filetype) {
         ext = `.${filetype.ext}`
         await cache.set(cacheIdForExtensions(url), ext)
