@@ -12,7 +12,7 @@ export function getReactHotLoaderStrategy(): string {
   try {
     const reactVersion = require(`react/package.json`).version
 
-    if (semver.satisfies(reactVersion, `>=16.8.0`)) {
+    if (semver.satisfies(reactVersion, `>=16.9.0`)) {
       return `fast-refresh`
     }
   } catch (e) {

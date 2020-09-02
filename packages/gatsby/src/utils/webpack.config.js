@@ -170,9 +170,12 @@ module.exports = async (
         return {
           polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            // `${require.resolve(`webpack-hot-middleware/client`)}`,
+            process.env.GATSBY_HOT_LOADER !== `fast-refresh` &&
+              `${require.resolve(
+                `webpack-hot-middleware/client`
+              )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
-          ],
+          ].filter(Boolean),
         }
       case `develop-html`:
         return {

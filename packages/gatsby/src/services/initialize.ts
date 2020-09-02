@@ -54,7 +54,6 @@ export async function initialize({
   }
 
   process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
-  console.log(`HOTLOADER:`, process.env.GATSBY_HOT_LOADER)
 
   /* Time for a little story...
    * When running `gatsby develop`, the globally installed gatsby-cli starts
