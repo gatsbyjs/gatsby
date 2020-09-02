@@ -64,40 +64,8 @@ export async function startServer(
   app: Express,
   workerPool: JestWorker = WorkerPool.create()
 ): Promise<IServer> {
-  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
-  indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
-    try {
-      await buildHTML({
-        program,
-        stage: Stage.DevelopHTML,
-        pagePaths: [`/`],
-        workerPool,
-        activity,
-      })
-    } catch (err) {
-      if (err.name !== `WebpackError`) {
-        report.panic(err)
-        return
-      }
-      report.panic(
-        report.stripIndent`
-          There was an error compiling the html.js component for the development server.
-
-          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
-        `,
-        err
-      )
-    }
-  }
-
-  await createIndexHtml(indexHTMLActivity)
-
-  indexHTMLActivity.end()
-
-  // report.stateUpdate(`webpack`, `IN_PROGRESS`)
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     id: `webpack-develop`,
@@ -281,12 +249,27 @@ export async function startServer(
   })
 
   // Render an HTML page and serve it.
-  app.use((_, res) => {
-    res.sendFile(directoryPath(`public/index.html`), err => {
-      if (err) {
-        res.status(500).end()
-      }
+  app.use(async (req, res) => {
+    // res.sendFile(directoryPath(`public/index.html`), err => {
+    //   if (err) {
+    //     res.status(500).end()
+    //   }
+    // })
+
+    const htmlActivity = report.phantomActivity(`building index.html`, {})
+    htmlActivity.start()
+
+    const responseHtml = await buildHTML({
+      program,
+      stage: Stage.DevelopHTML,
+      pagePaths: [req.path],
+      workerPool,
+      activity: htmlActivity,
     })
+
+    res.status(200).send(responseHtml)
+
+    htmlActivity.end()
   })
 
   /**
@@ -306,7 +289,7 @@ export async function startServer(
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml(indexHTMLActivity)
+    // await createIndexHtml(indexHTMLActivity)
     // eslint-disable-next-line no-unused-expressions
     socket?.to(`clients`).emit(`reload`)
   })

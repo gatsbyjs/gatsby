@@ -189,6 +189,8 @@ export default function ({ types: t }) {
           JSXIdentifier(path2) {
             if (
               (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `develop` ||
+                state.opts.stage === `develop-html` ||
                 state.opts.stage === `build-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`) &&
@@ -230,6 +232,8 @@ export default function ({ types: t }) {
           CallExpression(path2) {
             if (
               (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `develop` ||
+                state.opts.stage === `develop-html` ||
                 state.opts.stage === `build-html`) &&
               isUseStaticQuery(path2)
             ) {
