@@ -297,6 +297,7 @@ module.exports = async ({ markdownAST }, pluginOptions) => {
   return markdownAST
 }
 ```
+A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
 
 ## Loading in changes and seeing effect
 
