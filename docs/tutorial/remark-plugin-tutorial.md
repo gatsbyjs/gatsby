@@ -266,7 +266,7 @@ A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util
 
 ## Using asynchronous behavior
 
-Gatsby supports the usage of asynchronous behavior in plugins, and `gatsby-transformer-remark` uses [unified](https://github.com/unifiedjs/unified) under the hood. The following example shows how the `gatsby-remark-purple-headers` transformer can be converted to asynchronous by adding the `async`  keyword to the function declaration.
+Gatsby supports the usage of asynchronous behavior in plugins, and `gatsby-transformer-remark` uses [unified](https://github.com/unifiedjs/unified) under the hood. The following example shows how the `gatsby-remark-purple-headers` transformer can be converted to asynchronous by adding the `async` keyword to the function declaration.
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
@@ -297,6 +297,7 @@ module.exports = async ({ markdownAST }, pluginOptions) => {
   return markdownAST
 }
 ```
+
 A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
 
 ## Loading in changes and seeing effect
