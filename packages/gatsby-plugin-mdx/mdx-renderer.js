@@ -1,6 +1,7 @@
 const React = require(`react`)
 const { useMDXComponents, mdx } = require(`@mdx-js/react`)
 const { useMDXScope } = require(`./context`)
+const { getModule } = require(`gatsby`)
 
 module.exports = function MDXRenderer({
   scope,
@@ -13,8 +14,21 @@ module.exports = function MDXRenderer({
 
   // Memoize the compiled component
   const End = React.useMemo(() => {
-    if (!children) {
+    if (!children || !children.body) {
       return null
+    }
+
+    let moduleScope = {}
+    if (children.moduleMapping && getModule) {
+      moduleScope = children.moduleMapping.reduce(
+        (scope, moduleMappingEntry) => {
+          scope[moduleMappingEntry.local] = getModule(
+            moduleMappingEntry.moduleID
+          )
+          return scope
+        },
+        {}
+      )
     }
 
     const fullScope = {
@@ -23,14 +37,15 @@ module.exports = function MDXRenderer({
       React,
       mdx,
       ...mdxScope,
+      ...moduleScope,
     }
 
     const keys = Object.keys(fullScope)
     const values = keys.map(key => fullScope[key])
-    const fn = new Function(`_fn`, ...keys, `${children}`)
+    const fn = new Function(`_fn`, ...keys, `${children.body}`)
 
     return fn({}, ...values)
-  }, [children, scope])
+  }, [children.body, scope])
 
   return React.createElement(End, { components: mdxComponents, ...props })
 }
