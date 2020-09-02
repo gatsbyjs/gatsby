@@ -1,5 +1,5 @@
 {
-  "name": "mdx2",
+  "name": "gabe-mdx",
   "private": true,
   "description": "Benchmark site for testing baseline mdx perf",
   "author": "Peter van der Zee <pvdz@github>",
@@ -12,16 +12,6 @@
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
-  "dependencies": {
-    "@mdx-js/mdx": "^1",
-    "@mdx-js/react": "^1",
-    "faker": "^4.1.0",
-    "gatsby": "^2",
-    "gatsby-plugin-mdx": "^1",
-    "gatsby-source-filesystem": "^2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  },
   "devDependencies": {
     "prettier": "2.0.4"
   },
@@ -31,5 +21,18 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "keywords": [
+    "gatsby", "benchmark", "mdx"
+  ],
+  "dependencies": {
+    "@mdx-js/mdx": "^1",
+    "@mdx-js/react": "^1",
+    "faker": "^4.1.0",
+    "gatsby": "^2",
+    "gatsby-plugin-mdx": "^1",
+    "gatsby-source-filesystem": "^2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
