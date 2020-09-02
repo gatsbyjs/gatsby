@@ -441,7 +441,7 @@ const Photo = ({ location, photoId }) => {
 
 React Router would pass a `history` prop to components that you could use to navigate.
 
-If you need to do programmatic navigation, import @reach/router's navigate function instead.
+If you need to do programmatic navigation, import @reach/router's `navigate` function instead.
 
 ```javascript
 import { navigate } from "@reach/router"
@@ -944,8 +944,6 @@ See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](h
 ### Remove explicit polyfills
 
 If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with Babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's Babel docs for more details](/docs/babel).
-
-> Note: This works for your code, but is not yet implemented for code imported from `node_modules`. Track the progress of this feature in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
 
 ## For Plugin Maintainers
 
