@@ -12,6 +12,7 @@ There are many options out there for adding comment functionality, several of th
 - [Staticman](https://staticman.net)
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
+- [Utterances](https://utteranc.es)
 
 You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comment-system/), as Tania Rascia wrote on the Gatsby blog.
 
