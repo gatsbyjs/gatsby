@@ -136,7 +136,7 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 
 There are some implications to this change:
 
-- Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains or needs to maintain, separate behavior for handling layouts.
+- Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
 
 - Because the "top-level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires a layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
@@ -441,7 +441,7 @@ const Photo = ({ location, photoId }) => {
 
 React Router would pass a `history` prop to components that you could use to navigate.
 
-If you need to do programmatic navigation, import instead of the @reach/router's `navigate` function.
+If you need to do programmatic navigation, import @reach/router's navigate function instead.
 
 ```javascript
 import { navigate } from "@reach/router"
@@ -676,7 +676,7 @@ If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), yo
 
 If you use CSS Modules and have class names with dashes in them, you'll need to change how you access the class names from JavaScript.
 
-This is because of the [`camelCase` option](https://github.com/webpack-contrib/css-loader/tree/version-1#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
+This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader/tree/version-1#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
 
 Here's an example with a class named `.my-class-name`:
 
