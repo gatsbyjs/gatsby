@@ -1,6 +1,8 @@
+# will not be run because it's scheduled for Feb 31st,
+# this action paused for site unification
 on:
   schedule:
-    - cron: 0 0 * * *
+    - cron: 0 0 31 2 *
 name: Site Showcase Validator workflow
 jobs:
   gatsby-site-showcase-validator:
