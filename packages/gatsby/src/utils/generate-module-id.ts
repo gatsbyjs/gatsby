@@ -1,4 +1,3 @@
-import { isAbsolute } from "path"
 import { generateComponentChunkName } from "./js-chunk-names"
 
 const allowedTypes = [`default`, `named`, `namespace`]
@@ -20,8 +19,16 @@ export const generateModuleId = ({
     throw new Error(`Named imports need "importName" argument.`)
   }
 
-  if (!isAbsolute(source)) {
-    throw new Error(`"source" need to be absolute path.`)
+  if (!source) {
+    throw new Error(`"source was not given.`)
+  }
+
+  // this is tricky - we can't try to use require.resolve here, because it's not the same
+  // as webpack resolver, so instead it just explicitly checks for path starting with `.`
+  if (source.startsWith(`.`)) {
+    throw new Error(
+      `"source" need to be absolute path or package name. "${source}" was given.`
+    )
   }
 
   return `${generateComponentChunkName(source, `module`)}-${type}-${
