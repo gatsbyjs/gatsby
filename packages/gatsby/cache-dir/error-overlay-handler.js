@@ -1,7 +1,7 @@
 const overlayPackage =
   process.env.GATSBY_HOT_LOADER !== `fast-refresh`
     ? require(`react-error-overlay`)
-    : require(`@pmmmwh/react-refresh-webpack-plugin/src/overlay`)
+    : require(`@pmmmwh/react-refresh-webpack-plugin/overlay`)
 
 const ErrorOverlay = {
   showCompileError:

@@ -3,7 +3,7 @@ import { useRef, useContext, useLayoutEffect } from "react"
 import { useLocation } from "@reach/router"
 
 interface IScrollRestorationProps {
-  ref: React.MutableRefObject<HTMLElement | undefined>
+  ref: React.MutableRefObject<undefined>
   onScroll(): void
 }
 
@@ -12,7 +12,7 @@ export function useScrollRestoration(
 ): IScrollRestorationProps {
   const location = useLocation()
   const state = useContext(ScrollContext)
-  const ref = useRef<HTMLElement>()
+  const ref = useRef()
 
   useLayoutEffect((): void => {
     if (ref.current) {

@@ -123,7 +123,7 @@ export async function startServer(
   app.use(
     webpackHotMiddleware(compiler, {
       log: false,
-      path: `/__webpack_hmr`,
+      // path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
     })
   )

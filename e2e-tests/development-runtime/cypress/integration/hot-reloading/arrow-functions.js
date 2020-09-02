@@ -21,12 +21,6 @@ describe(`hot-reloading anonymous arrow functions`, () => {
       `npm run update -- --file src/components/title.tsx --replacements "TITLE:${text}"`
     )
 
-    // Hack, run this twice because we have a state machine bug that doesn't trigger webpack on the first
-    // save.
-    cy.exec(
-      `npm run update -- --file src/components/title.tsx --replacements "TITLE:${text}"`
-    )
-
     cy.getTestElement(IDS.title).invoke(`text`).should(`eq`, text)
   })
 })
