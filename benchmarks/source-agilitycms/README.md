@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" height="60" />
+  <a href="https://gatsbyjs.com">
+    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" height="60" />
     <img alt="Gatsby" src="https://static.agilitycms.com/layout/img/logo-original.svg" width="200" />
   </a>
 </p>

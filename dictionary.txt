@@ -1,3 +1,4 @@
+0BSD
 ½
 ⅓
 1000px
@@ -162,7 +163,6 @@ Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
-ASKGatsbyJS
 Asko
 aspirational
 AST
@@ -225,6 +225,7 @@ bigtime
 bikeshed
 bindActionCreators
 Bing
+Bip
 Biscardi
 BitBalloon
 Bitbucket
@@ -244,6 +245,7 @@ bois
 Bolda
 Bölüm
 bool
+booleans
 bootcamp
 bootcamps
 bootstrapable
@@ -388,6 +390,8 @@ Commento
 Commentors
 CommonJS
 CommonMark
+comparator
+comparators
 compile-to-js
 componentChunkName
 componentChunkNames
@@ -429,8 +433,8 @@ Costa
 Costea
 Coughlan
 counterintuitive
-COVID-19
 COVID
+COVID-19
 cowpaths
 Coyier
 CPG
@@ -629,13 +633,11 @@ Evoq
 ex-PayPal-ers
 Ex-PayPal-ers
 exampleValue
-excited-gif
 executables
 EXIF
 ExitWP
 Expedia
 explorable
-extractFieldsToSift
 extractQueries
 F12
 F8
@@ -1254,6 +1256,7 @@ METROGLAM
 Meuleman
 Michał
 Microfrontends
+micromatch
 microservices
 microsites
 middleware
@@ -1332,11 +1335,11 @@ Nicky
 Nie
 Nik
 no-brainer
+Node.js
 nodeId
 nodeID
 NodeID
 nodemailer
-Node.js
 NodeSchool
 nodesPromise
 Nolen
@@ -1715,7 +1718,6 @@ RSS
 rsync
 RTC
 RTEs
-runInitialQuerys
 runQueries
 runQueriesForPathnames
 runtimes
@@ -1788,8 +1790,6 @@ shouldUpdateScroll
 shoutout
 Sidenotes
 Sidhartha
-siftified
-siftifyArgs
 signup
 signups
 simple-auth

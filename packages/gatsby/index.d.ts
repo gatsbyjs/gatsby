@@ -173,6 +173,15 @@ export class StaticQuery<T = any> extends React.Component<
 export const graphql: (query: TemplateStringsArray) => void
 
 /**
+ * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+ *
+ * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+ *
+ * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ */
+export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
+
+/**
  * Gatsby configuration API.
  *
  * @see https://www.gatsbyjs.org/docs/gatsby-config/
@@ -808,27 +817,27 @@ export interface GatsbyGraphQLObjectType {
   config: ComposeObjectTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInputObjectType {
+export interface GatsbyGraphQLInputObjectType {
   kind: "INPUT_OBJECT"
   config: ComposeInputObjectTypeConfig
 }
 
-interface GatsbyGraphQLUnionType {
+export interface GatsbyGraphQLUnionType {
   kind: "UNION"
   config: ComposeUnionTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInterfaceType {
+export interface GatsbyGraphQLInterfaceType {
   kind: "INTERFACE"
   config: ComposeInterfaceTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLEnumType {
+export interface GatsbyGraphQLEnumType {
   kind: "ENUM"
   config: ComposeEnumTypeConfig
 }
 
-interface GatsbyGraphQLScalarType {
+export interface GatsbyGraphQLScalarType {
   kind: "SCALAR"
   config: ComposeScalarTypeConfig
 }

@@ -2,18 +2,22 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import { spawn, ChildProcess } from "child_process"
+import { ChildProcess } from "child_process"
+import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import socket from "socket.io"
 import fs from "fs-extra"
-import { isCI, slash } from "gatsby-core-utils"
+import onExit from "signal-exit"
 import {
+  isCI,
+  slash,
   createServiceLock,
   getService,
-} from "gatsby-core-utils/dist/service-lock"
-import { UnlockFn } from "gatsby-core-utils/src/service-lock"
+  updateSiteMetadata,
+  UnlockFn,
+} from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
@@ -91,22 +95,22 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
+    const args = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    const args = [tmpFileName]
     // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
     if (this.debugInfo) {
-      args.push(
-        this.debugInfo.break
-          ? `--inspect-brk=${this.debugInfo.port}`
-          : `--inspect=${this.debugInfo.port}`
-      )
+      if (this.debugInfo.break) {
+        args.push(`--inspect-brk=${this.debugInfo.port}`)
+      } else {
+        args.push(`--inspect=${this.debugInfo.port}`)
+      }
     }
 
-    this.process = spawn(`node`, args, {
+    this.process = execa.node(tmpFileName, args, {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -118,6 +122,7 @@ class ControllableScript {
     if (!this.process) {
       throw new Error(`Trying to stop the process before starting it`)
     }
+
     this.isRunning = false
     if (signal) {
       this.process.kill(signal)
@@ -135,6 +140,7 @@ class ControllableScript {
       if (!this.process) {
         throw new Error(`Trying to stop the process before starting it`)
       }
+
       this.process.on(`exit`, () => {
         if (this.process) {
           this.process.removeAllListeners()
@@ -146,7 +152,7 @@ class ControllableScript {
   }
   onMessage(callback: (msg: any) => void): void {
     if (!this.process) {
-      throw new Error(`Trying to attach message handler before process starter`)
+      throw new Error(`Trying to attach message handler before process started`)
     }
     this.process.on(`message`, callback)
   }
@@ -154,9 +160,17 @@ class ControllableScript {
     callback: (code: number | null, signal: NodeJS.Signals | null) => void
   ): void {
     if (!this.process) {
-      throw new Error(`Trying to attach exit handler before process starter`)
+      throw new Error(`Trying to attach exit handler before process started`)
     }
     this.process.on(`exit`, callback)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send(msg: any): void {
+    if (!this.process) {
+      throw new Error(`Trying to send a message before process started`)
+    }
+
+    this.process.send(msg)
   }
 }
 
@@ -185,8 +199,15 @@ module.exports = async (program: IProgram): Promise<void> => {
   // which users will access
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
+
+  // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
+  // when the browser should prompt the user to restart the develop process.
+  // This port is randomized by default and in most cases should never be required to configure.
+  // It is exposed for environments where port access needs to be explicit, such as with Docker.
+  // As the port is meant for internal usage only, any attempt to interface with features
+  // it exposes via third-party software is not supported.
   const [statusServerPort, developPort] = await Promise.all([
-    getRandomPort(),
+    getRandomPort(process.env.INTERNAL_STATUS_PORT),
     getRandomPort(),
   ])
 
@@ -268,19 +289,20 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
-    // We don't need to keep a lock on this, as it's just site metadata
-    await createServiceLock(program.directory, `metadata`, {
+    await updateSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
       pid: process.pid,
       lastRun: Date.now(),
-    }).then(unlock => unlock?.())
+    })
 
     if (!statusUnlock || !developUnlock) {
       const data = await getService(program.directory, `developproxy`)
       const port = data?.port || 8000
       console.error(
-        `Looks like develop for this site is already running. Try visiting http://localhost:${port}/ maybe?`
+        `Looks like develop for this site is already running, can you visit ${
+          program.ssl ? `https://` : `http://`
+        }://localhost:${port} ? If it is not, try again in five seconds!`
       )
       process.exit(1)
     }
@@ -354,11 +376,10 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
-
-  let watcher
+  let watcher: chokidar.FSWatcher = null
 
   if (!isCI()) {
-    chokidar.watch(files).on(`change`, filePath => {
+    watcher = chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
 
       if (file === `gatsby-config.js`) {
@@ -381,26 +402,68 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
-  process.on(`beforeExit`, async () => {
-    await Promise.all([
-      watcher?.close(),
-      ...unlocks.map(unlock => unlock()),
-      new Promise(resolve => {
-        statusServer.close(resolve)
-      }),
-      new Promise(resolve => {
-        proxy.server.close(resolve)
-      }),
-    ])
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
   })
 
   process.on(`SIGINT`, async () => {
-    await developProcess.stop(`SIGINT`)
-    process.exit()
+    await shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGINT`
+    )
+
+    process.exit(0)
   })
 
   process.on(`SIGTERM`, async () => {
-    await developProcess.stop(`SIGTERM`)
-    process.exit()
+    await shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGTERM`
+    )
+
+    process.exit(0)
   })
+
+  onExit((_code, signal) => {
+    shutdownServices(
+      {
+        developProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      signal as NodeJS.Signals
+    )
+  })
+}
+function shutdownServices(
+  { statusServer, developProcess, proxy, unlocks, watcher },
+  signal: NodeJS.Signals
+): Promise<void> {
+  const services = [
+    developProcess.stop(signal),
+    watcher?.close(),
+    new Promise(resolve => statusServer.close(resolve)),
+    new Promise(resolve => proxy.server.close(resolve)),
+  ]
+
+  unlocks.forEach(unlock => {
+    services.push(unlock())
+  })
+
+  return Promise.all(services).then(() => {})
 }
