@@ -84,8 +84,8 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static items={messages}>
-            {message =>
-              message.level === `ERROR` ? (
+            {message => {
+              return message.level === `ERROR` ? (
                 <ErrorComponent
                   details={message as IStructuredError}
                   key={messages.indexOf(message)}
@@ -96,7 +96,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
                   {...(message as IMessageProps)}
                 />
               )
-            }
+            }}
           </Static>
 
           {spinners.map(activity => (
