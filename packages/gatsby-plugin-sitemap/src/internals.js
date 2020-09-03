@@ -1,68 +1,4 @@
-/* global: reporter */
-
-import Joi from "joi"
 import reporter from "gatsby-cli/lib/reporter"
-
-const defaultExcludes = [
-  `/dev-404-page`,
-  `/404`,
-  `/404.html`,
-  `/offline-plugin-app-shell-fallback`,
-]
-
-const defaultPluginOptions = Joi.object({
-  plugins: Joi.array().strip(),
-  output: Joi.string().default(`/`),
-  createLinkInHead: Joi.boolean().default(true),
-  sitemapSize: Joi.number().default(45000), // default based on upstream "sitemap" plugin default, maybe need optimization
-  query: Joi.string().default(`
-  {
-    site {
-      siteMetadata {
-        siteUrl
-      }
-    }
-
-    allSitePage {
-      nodes {
-        path
-      }
-    }
-  }`),
-  excludes: Joi.array()
-    .items(Joi.string(), Joi.object())
-    .default(parent => {
-      const configExclude = parent?.exclude
-
-      if (!configExclude) {
-        return defaultExcludes
-      }
-
-      return [...defaultExcludes, ...configExclude]
-    }),
-  resolveSiteUrl: Joi.function().default(() => resolveSiteUrl),
-  resolvePagePath: Joi.function().default(() => resolvePagePath),
-  resolvePages: Joi.function().default(() => resolvePages),
-  filterPages: Joi.function().default(() => filterPages),
-  serialize: Joi.function().default(() => serialize),
-})
-
-const ssrPluginOptions = Joi.object({
-  output: defaultPluginOptions.extract([`output`]),
-  createLinkInHead: defaultPluginOptions.extract([`createLinkInHead`]),
-})
-
-export async function validateOptions(pluginOptions) {
-  return defaultPluginOptions.validateAsync(pluginOptions)
-}
-
-export function validateOptionsSsr(pluginOptions) {
-  const { value } = ssrPluginOptions.validate(pluginOptions, {
-    stripUnknown: true,
-    allowUnknown: true,
-  })
-  return value
-}
 
 /**
  *
@@ -92,7 +28,7 @@ export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
  * @param {Object} data - results of the GraphQL query
  * @returns {string} - site URL, this can come from thegraphql query or another scope
  */
-function resolveSiteUrl(data) {
+export function resolveSiteUrl(data) {
   return data.site.siteMetadata.siteUrl
 }
 /**
@@ -105,7 +41,7 @@ function resolveSiteUrl(data) {
  * @returns {string} - uri of the page without domain or protocol
  */
 
-function resolvePagePath(page) {
+export function resolvePagePath(page) {
   return page?.path
 }
 /**
@@ -118,7 +54,7 @@ function resolvePagePath(page) {
  * @param {Object} data - results of the GraphQL query
  * @returns {Array} - Array of Objects representing each page
  */
-function resolvePages(data) {
+export function resolvePages(data) {
   return data.allSitePage.nodes
 }
 
@@ -136,7 +72,7 @@ function resolvePages(data) {
  *
  * @returns {Array}
  */
-function filterPages(
+export function filterPages(
   page,
   excludedRoute,
   { minimatch, withoutTrailingSlash, resolvePagePath }
@@ -167,7 +103,7 @@ function filterPages(
  * @param {Object} tools - contains tools for serializing
  *
  */
-function serialize(page, { resolvePagePath }) {
+export function serialize(page, { resolvePagePath }) {
   return {
     url: `${resolvePagePath(page)}`,
     changefreq: `daily`,
