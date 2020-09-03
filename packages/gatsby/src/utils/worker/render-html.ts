@@ -9,8 +9,8 @@ export const renderHTML = ({
   envVars,
 }: {
   htmlComponentRendererPath: string
-  paths: string
-  envVars: [string, string][]
+  paths: string[]
+  envVars: string[][]
 }): Promise<unknown[]> => {
   // This is being executed in child process, so we need to set some vars
   // for modules that aren't bundled by webpack.
@@ -23,12 +23,12 @@ export const renderHTML = ({
         const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
           htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-            resolve(
-              fs.outputFile(
-                getPageHtmlFilePath(join(process.cwd(), `public`), path),
-                htmlString
-              )
-            )
+            // resolve(
+            //   fs.outputFile(
+            //     getPageHtmlFilePath(join(process.cwd(), `public`), path),
+            resolve(htmlString)
+            // )
+            // )
           })
         } catch (e) {
           // add some context to error so we can display more helpful message

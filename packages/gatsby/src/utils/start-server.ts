@@ -14,13 +14,14 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
-import { buildHTML } from "../commands/build-html"
+import { buildHTML, buildRenderer } from "../commands/build-html"
 import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
+import { renderHTML } from "../utils/worker/render-html"
 import http from "http"
 import https from "https"
 
@@ -181,12 +182,6 @@ export async function startServer(
     res.end()
   })
 
-  // Disable directory indexing i.e. serving index.html from a directory.
-  // This can lead to serving stale html files during development.
-  //
-  // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
-
   const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
     logLevel: `silent`,
     publicPath: devConfig.output.publicPath,
@@ -248,29 +243,54 @@ export async function startServer(
     res.status(404).end()
   })
 
+  const buildRendererActivity = report.activityTimer(
+    `Building renderer bundle`,
+    {
+      id: `webpack-renderer`,
+    }
+  )
+
+  await buildRenderer(
+    program,
+    Stage.DevelopHTML,
+    buildRendererActivity.span
+  ).then(console.log)
+
   // Render an HTML page and serve it.
-  app.use(async (req, res) => {
-    // res.sendFile(directoryPath(`public/index.html`), err => {
-    //   if (err) {
-    //     res.status(500).end()
-    //   }
-    // })
+  app.use(async (req, res, next) => {
+    const { pages } = store.getState()
+
+    if (!pages.has(req.path)) {
+      return next()
+    }
 
     const htmlActivity = report.phantomActivity(`building index.html`, {})
     htmlActivity.start()
 
-    const responseHtml = await buildHTML({
-      program,
-      stage: Stage.DevelopHTML,
-      pagePaths: [req.path],
-      workerPool,
-      activity: htmlActivity,
+    const [response] = await renderHTML({
+      htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+      paths: [req.path],
+      envVars: [
+        [`NODE_ENV`, process.env.NODE_ENV || ``],
+        [
+          `gatsby_executing_command`,
+          process.env.gatsby_executing_command || ``,
+        ],
+        [`gatsby_log_level`, process.env.gatsby_log_level || ``],
+      ],
     })
 
-    res.status(200).send(responseHtml)
+    res.status(200).send(response)
 
     htmlActivity.end()
+    return null
   })
+
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(developStatic(`public`, { index: false }))
 
   /**
    * Set up the HTTP server and socket.io.
@@ -289,7 +309,9 @@ export async function startServer(
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
-    // await createIndexHtml(indexHTMLActivity)
+    // console.log(`Time to build a renderer`)
+    // await buildRenderer(program, Stage.DevelopHTML, webpackActivity)
+    // console.log(`We built a renderer`)
     // eslint-disable-next-line no-unused-expressions
     socket?.to(`clients`).emit(`reload`)
   })

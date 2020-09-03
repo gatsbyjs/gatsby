@@ -40,7 +40,7 @@ const doBuildRenderer = async (
   return `${directory}/public/render-page.js`
 }
 
-const buildRenderer = async (
+export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan: IActivity
