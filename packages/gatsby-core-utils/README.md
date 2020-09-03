@@ -87,7 +87,7 @@ const { getCIName } = require("gatsby-core-utils")
 const CI_NAME = getCIName()
 console.log({ CI_NAME })
 // {CI_NAME: null}, or
-// {CI_NAME: "ZEIT Now"}
+// {CI_NAME: "Vercel"}
 // ...
 ```
 
