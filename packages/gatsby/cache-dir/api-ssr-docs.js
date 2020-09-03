@@ -79,20 +79,30 @@ exports.replaceRenderer = true
  * is merged with other body props and passed to `html.js` as `bodyProps`.
  * @param {pluginOptions} pluginOptions
  * @example
- * // Object of props
+ * // Import React so that you can use JSX in HeadComponents
+ * const React = require("react")
+ *
  * const HtmlAttributes = {
- *   "data-whatever": "content"
+ *   lang: "en"
  * }
  *
- * // Magic
- * exports.onRenderBody = (
- *   { setHtmlAttributes }
- * ) => {
- *    setHtmlAttributes(HtmlAttributes)
+ * const HeadComponents = [
+ *   <script key="my-script" src="https://gatsby.dev/my-script" />
+ * ]
+ *
+ * const BodyAttributes = {
+ *   "data-theme": "dark"
  * }
  *
- * // Output
- * <html data-whatever="content">
+ * exports.onRenderBody = ({
+ *   setHeadComponents,
+ *   setHtmlAttributes,
+ *   setBodyAttributes
+ * }) => {
+ *   setHtmlAttributes(HtmlAttributes)
+ *   setHeadComponents(HeadComponents)
+ *   setBodyAttributes(BodyAttributes)
+ * }
  */
 exports.onRenderBody = true
 
