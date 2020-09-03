@@ -2,7 +2,7 @@ import { Machine } from "xstate"
 
 const customFilterExists = (context, event) => context.custom_config.filter
 
-const stateMachine = Machine(
+export const stateMachine = Machine(
   {
     initial: `initializing`,
     context: {
