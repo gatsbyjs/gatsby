@@ -81,6 +81,8 @@ export async function startServer(
     { parentSpan: webpackActivity.span }
   )
 
+  await buildRenderer(program, Stage.DevelopHTML)
+
   const compiler = webpack(devConfig)
 
   /**
@@ -243,18 +245,12 @@ export async function startServer(
     res.status(404).end()
   })
 
-  const buildRendererActivity = report.activityTimer(
-    `Building renderer bundle`,
-    {
-      id: `webpack-renderer`,
-    }
-  )
-
-  await buildRenderer(
-    program,
-    Stage.DevelopHTML,
-    buildRendererActivity.span
-  ).then(console.log)
+  // const buildRendererActivity = report.activityTimer(
+  //   `Building renderer bundle`,
+  //   {
+  //     id: `webpack-renderer`,
+  //   }
+  // )
 
   // Render an HTML page and serve it.
   app.use(async (req, res, next) => {
@@ -264,8 +260,8 @@ export async function startServer(
       return next()
     }
 
-    const htmlActivity = report.phantomActivity(`building index.html`, {})
-    htmlActivity.start()
+    // const htmlActivity = report.phantomActivity(`building index.html`, {})
+    // htmlActivity.start()
 
     const [response] = await renderHTML({
       htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
@@ -282,8 +278,7 @@ export async function startServer(
 
     res.status(200).send(response)
 
-    htmlActivity.end()
-    return null
+    // htmlActivity.end()
   })
 
   // Disable directory indexing i.e. serving index.html from a directory.
@@ -304,17 +299,17 @@ export async function startServer(
   const listener = server.listen(program.port, `localhost`)
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-    slash(directoryPath(path))
-  )
+  // const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+  //   slash(directoryPath(path))
+  // )
 
-  chokidar.watch(watchGlobs).on(`change`, async () => {
-    // console.log(`Time to build a renderer`)
-    // await buildRenderer(program, Stage.DevelopHTML, webpackActivity)
-    // console.log(`We built a renderer`)
-    // eslint-disable-next-line no-unused-expressions
-    socket?.to(`clients`).emit(`reload`)
-  })
+  // chokidar.watch(watchGlobs).on(`change`, async () => {
+  //   // console.log(`Time to build a renderer`)
+  //   // await buildRenderer(program, Stage.DevelopHTML, webpackActivity)
+  //   // console.log(`We built a renderer`)
+  //   // eslint-disable-next-line no-unused-expressions
+  //   socket?.to(`clients`).emit(`reload`)
+  // })
 
   return {
     compiler,

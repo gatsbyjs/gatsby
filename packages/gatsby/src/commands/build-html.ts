@@ -43,7 +43,7 @@ const doBuildRenderer = async (
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
-  parentSpan: IActivity
+  parentSpan?: IActivity
 ): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
