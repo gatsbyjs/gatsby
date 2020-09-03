@@ -217,7 +217,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
         store.getState(),
         cachedPageData
       )
-    else {
+    else if (cachedWebpackCompilationHash) {
       report.info(
         report.stripIndent(`
         One or more of your source files have changed since the last time you ran Gatsby. All 
