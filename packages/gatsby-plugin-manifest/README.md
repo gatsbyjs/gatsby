@@ -530,7 +530,7 @@ Comment out `"Alias /icons/"` in `/etc/httpd/conf.d/autoindex.conf`:
 cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"
 ```
 
-Reload Apache or restart  the server:
+Reload Apache or restart the server:
 
 ```shell
 service httpd reload
