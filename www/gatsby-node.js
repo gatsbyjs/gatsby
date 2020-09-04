@@ -1,9 +1,10 @@
 const Promise = require(`bluebird`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const startersRedirects = require(`./starter-redirects.json`)
 
 const { loadYaml } = require(`./src/utils/load-yaml`)
 const redirects = loadYaml(`./redirects.yaml`)
+const cloudRedirects = loadYaml(`./cloud-redirects.yaml`)
 
 // Split the logic into files based on the section of the website.
 // The eventual goal is to split www into different themes per section.
@@ -14,16 +15,23 @@ const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, blog, showcase, starters, creators, packages, features]
+const apiCalls = require(`./src/utils/node/api-calls.js`)
+
+const sections = [
+  docs,
+  blog,
+  showcase,
+  starters,
+  creators,
+  packages,
+  features,
+  apiCalls,
+]
 
 // Run the provided API on all defined sections of the site
 async function runApiForSections(api, helpers) {
   await Promise.all(
-    sections.map(section => {
-      if (section[api]) {
-        section[api](helpers)
-      }
-    })
+    sections.map(section => section[api] && section[api](helpers))
   )
 }
 
@@ -73,8 +81,11 @@ exports.createSchemaCustomization = async helpers => {
   `)
 }
 
-// Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
-exports.createResolvers = ({ createResolvers }) => {
+exports.createResolvers = async helpers => {
+  await runApiForSections(`createResolvers`, helpers)
+
+  const { createResolvers } = helpers
+  // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
   createResolvers({
     DocumentationJs: {
       availableIn: {
@@ -111,6 +122,13 @@ exports.createPages = async helpers => {
   const { actions } = helpers
   const { createRedirect } = actions
 
+  /**
+   * ============================================================================
+   * REDIIRECTS
+   * NOTE: Order matters!! Higher specificity comes first
+   * ============================================================================
+   */
+
   redirects.forEach(redirect => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
@@ -123,11 +141,42 @@ exports.createPages = async helpers => {
       force: true,
     })
   })
+
+  // one-off redirects for .com
+  //  pages that don't line up 1 to 1 with data stored in WP
+  cloudRedirects.forEach(redirect => {
+    createRedirect({ isPermanent: true, ...redirect, force: true })
+  })
+
+  // splat redirects
+  await createRedirect({
+    fromPath: `/packages/*`,
+    toPath: `https://www.gatsbyjs.com/plugins/:splat`,
+    isPermanent: true,
+    force: true,
+  })
+
+  await createRedirect({
+    fromPath: `/creators/*`,
+    toPath: `https://www.gatsbyjs.com/partner/`,
+    isPermanent: true,
+    force: true,
+  })
+
+  // catch all redirect
+  //  this needs to be the last redirect created or it'll match everything
+  await createRedirect({
+    fromPath: `/*`,
+    toPath: `https://www.gatsbyjs.com/:splat`,
+    isPermanent: true,
+    force: true,
+  })
 }
 
 exports.onPostBuild = () => {
-  fs.copySync(
-    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-    `./public/gatsbygram.mp4`
-  )
+  const redirectsString = fs.readFileSync(`./public/_redirects`).toString()
+  const chunked = redirectsString.split(`\n`)
+
+  chunked.splice(chunked.length - 1, 0, `/sw.js  /sw.js  200`)
+  fs.writeFileSync(`./public/_redirects`, chunked.join(`\n`))
 }

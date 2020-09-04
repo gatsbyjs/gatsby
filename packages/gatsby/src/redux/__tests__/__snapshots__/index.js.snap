@@ -58,6 +58,7 @@ Object {
     "pagePaths": Set {},
     "templatePaths": Set {},
   },
+  "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "PLUGINS_HASH": "",

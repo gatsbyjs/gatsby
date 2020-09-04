@@ -162,7 +162,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="Plugins"
         description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
-        icon={PluginsIcon}
+        icon={<PluginsIcon />}
         links={[
           { label: `Browse Plugins`, to: `/plugins/` },
           {
@@ -178,7 +178,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="Starters"
         description="Starters are Gatsby sites that are preconfigured for different use cases to give you a head start for your project."
-        icon={StartersIcon}
+        icon={<StartersIcon />}
         links={[
           { label: `Browse Starters`, to: `/starters/` },
           { label: `Using Starters`, to: `/docs/starters/`, secondary: true },

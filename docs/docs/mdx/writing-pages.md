@@ -98,7 +98,7 @@ sources
 ### Where do I start?
 
 The documentation offers guides for all different skill levels, you can
-find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.org/docs/quick-start)
+find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.com/docs/quick-start)
 
 <!-- This default export overrides the default layout ensuring -->
 <!--  that the FAQ component isn't wrapped by other elements -->

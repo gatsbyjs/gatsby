@@ -21,7 +21,7 @@ export default function EvaluationTable(props) {
 
   return (
     <div
-      style={{
+      sx={{
         // this should be a table, but that breaks the
         // anchor links on this page due to a bug in the
         // scrolling library
@@ -62,10 +62,8 @@ export default function EvaluationTable(props) {
                             "&:hover": {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
-                            borderBottom: t =>
-                              !showTooltip(s, i)
-                                ? `1px solid ${t.colors.ui.border}`
-                                : `none`,
+                            borderBottom: !showTooltip(s, i) ? 1 : `none`,
+                            borderColor: `ui.border`,
                             minWidth: 40,
                             px: 0,
                             textAlign: `left`,

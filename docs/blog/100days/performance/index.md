@@ -14,7 +14,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Make Your Site Faster Than The Competition’s
 
-Over the last few weeks we’ve helped you get your site production-ready by focusing on [SEO](/blog/100days/seo/) and [accessibility](/blog/100days/accessibility/). This week we purposely saved “performance” for last, because the features we are inviting you to add to your site can have a positive impact on your search engine rankings (SEO), and your user's ability to consume your content (accessiblity).
+Over the last few weeks we’ve helped you get your site production-ready by focusing on [SEO](/blog/100days/seo/) and [accessibility](/blog/100days/accessibility/). This week we purposely saved “performance” for last, because the features we are inviting you to add to your site can have a positive impact on your search engine rankings (SEO), and your user's ability to consume your content (accessibility).
 
 If you embrace and master all of the resources we have shared in the last three weeks, you’ll create web projects that are noticeably faster, more usable, and will help your clients reach their business goals!
 

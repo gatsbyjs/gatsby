@@ -1,10 +1,11 @@
-const uuidv4 = require(`uuid/v4`)
+const { v4: uuidv4 } = require(`uuid`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
-  transformSchema,
+  wrapSchema,
   introspectSchema,
   RenameTypes,
-} = require(`graphql-tools`)
+} = require(`@graphql-tools/wrap`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
 const { createHttpLink } = require(`apollo-link-http`)
 const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
@@ -31,6 +32,7 @@ exports.sourceNodes = async (
     createSchema,
     refetchInterval,
     batch = false,
+    transformSchema,
   } = options
 
   invariant(
@@ -68,7 +70,7 @@ exports.sourceNodes = async (
     let sdl = await cache.get(cacheKey)
 
     if (!sdl) {
-      introspectionSchema = await introspectSchema(link)
+      introspectionSchema = await introspectSchema(linkToExecutor(link))
       sdl = printSchema(introspectionSchema)
     } else {
       introspectionSchema = buildSchema(sdl)
@@ -94,21 +96,31 @@ exports.sourceNodes = async (
     return {}
   }
 
-  const schema = transformSchema(
-    {
-      schema: introspectionSchema,
-      link,
-    },
-    [
-      new StripNonQueryTransform(),
-      new RenameTypes(name => `${typeName}_${name}`),
-      new NamespaceUnderFieldTransform({
-        typeName,
-        fieldName,
+  const defaultTransforms = [
+    new StripNonQueryTransform(),
+    new RenameTypes(name => `${typeName}_${name}`),
+    new NamespaceUnderFieldTransform({
+      typeName,
+      fieldName,
+      resolver,
+    }),
+  ]
+
+  const schema = transformSchema
+    ? transformSchema({
+        schema: introspectionSchema,
+        link,
         resolver,
-      }),
-    ]
-  )
+        defaultTransforms,
+        options,
+      })
+    : wrapSchema(
+        {
+          schema: introspectionSchema,
+          executor: linkToExecutor(link),
+        },
+        defaultTransforms
+      )
 
   addThirdPartySchema({ schema })
 

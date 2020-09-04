@@ -3,7 +3,7 @@ const { actions } = require(`../../../redux/actions`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { defaultResolver } = require(`../../resolvers`)
-const { isDate, looksLikeADate } = require(`../date`)
+import { isDate, looksLikeADate } from "../date"
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {

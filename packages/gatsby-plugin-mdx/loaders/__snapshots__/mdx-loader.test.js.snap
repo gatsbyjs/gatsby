@@ -7,17 +7,6 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const _frontmatter = {};
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   _frontmatter,
 };
@@ -51,17 +40,6 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   _frontmatter,
 };
@@ -95,17 +73,6 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   _frontmatter,
 };
@@ -144,17 +111,6 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,
@@ -194,17 +150,6 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,
@@ -235,17 +180,6 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const _frontmatter = {};
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   _frontmatter,
 };
@@ -280,17 +214,6 @@ export const meta = {
   author: "chris",
 };
 export const _frontmatter = {};
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,
@@ -326,17 +249,6 @@ export const meta = {
   author: "chris",
 };
 export const _frontmatter = {};
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,

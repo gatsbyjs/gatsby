@@ -1,15 +1,4 @@
-.babelrc
-.env
-.html
-.jpg
-.js
-.md
-.mdx
-.png
-.scss
-.tsx
-.yaml
-.yml
+0BSD
 ½
 ⅓
 1000px
@@ -41,6 +30,7 @@
 18F
 1920s
 1990s
+1GB
 1M
 1pm
 1px
@@ -54,6 +44,7 @@
 200px
 20K
 20x
+21YunBox
 250px
 2a
 2am
@@ -77,6 +68,7 @@
 4g
 5-10X
 500M
+500mb
 500ms
 500px
 50k
@@ -106,7 +98,6 @@
 a11y
 A11y
 Abhishek
-about-uncentered
 Abramov
 ACF
 Acquia
@@ -136,7 +127,6 @@ Albright
 Alexa
 Algolia
 Allanson
-allfile-query
 allWordpressPage
 Amberley
 Ambras
@@ -164,13 +154,14 @@ ArchieML.org
 architected
 architecting
 Archlinux
+Arellano
 arg
 args
 Arkins
+Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
-ASKGatsbyJS
 Asko
 aspirational
 AST
@@ -218,6 +209,7 @@ Bazaarvoice
 Bazel
 Behance
 BEM
+Bemis
 benchmarking
 Benedicte
 Benedikt
@@ -232,6 +224,7 @@ bigtime
 bikeshed
 bindActionCreators
 Bing
+Bip
 Biscardi
 BitBalloon
 Bitbucket
@@ -246,10 +239,12 @@ Blogroll
 Bluehost
 Bo
 Bogdan
+boilerplates
 bois
 Bolda
 Bölüm
 bool
+booleans
 bootcamp
 bootcamps
 bootstrapable
@@ -311,6 +306,7 @@ CDN
 CDN-backed
 CDNs
 Cereda
+Certbot
 CFP
 Chakra
 changelog
@@ -380,7 +376,7 @@ CodeName
 Codenames
 codeowner
 codeowners
-Codepen
+CodePen
 CodeSandbox
 codesplitting
 collegial
@@ -393,6 +389,8 @@ Commento
 Commentors
 CommonJS
 CommonMark
+comparator
+comparators
 compile-to-js
 componentChunkName
 componentChunkNames
@@ -434,6 +432,7 @@ Costa
 Costea
 Coughlan
 counterintuitive
+COVID
 COVID-19
 cowpaths
 Coyier
@@ -555,6 +554,7 @@ dnf
 DNS
 DNVBs
 DocSearch
+Doctocat
 Docz
 Dodds
 Doggo
@@ -592,6 +592,7 @@ ecommerce
 Ehmke
 EJ
 Eka
+Ekwuno
 Elevar
 Eleventy
 EmailCaptureForm
@@ -631,13 +632,11 @@ Evoq
 ex-PayPal-ers
 Ex-PayPal-ers
 exampleValue
-excited-gif
 executables
 EXIF
 ExitWP
 Expedia
 explorable
-extractFieldsToSift
 extractQueries
 F12
 F8
@@ -662,10 +661,8 @@ filepath
 filepaths
 Filestack
 filesystem
-filesystem-autocomplete
 filesystem-based
 filesystem-explorer-options
-filesystem-query
 Fillerama
 FindCollabs
 findDirtyIds
@@ -685,6 +682,7 @@ focusable
 FOMO
 Fonegra
 Fonnegra
+Forem
 FormatJS
 formatter
 Formik
@@ -798,6 +796,7 @@ gatsby-source-shopify
 gatsby-source-stripe
 gatsby-source-tmdb
 gatsby-source-wordpress
+gatsby-source-wordpress-experimental
 gatsby-source-x-cms
 gatsby-ssr
 gatsby-starter-blog
@@ -864,6 +863,7 @@ Gienow
 gif
 GIFs
 Gitalk
+Gitee
 GitLab
 Gitpod
 Gitter
@@ -893,11 +893,8 @@ Graf
 Grande
 Graph_i_QL
 GraphCMS
-Graphiql
-GraphiQl
 GraphiQL
 graphiql-code-exporter
-graphiql-filesystem
 graphql
 GraphQL
 GraphQL-based
@@ -959,8 +956,10 @@ headlessly
 headmatter
 headmouse
 headstart
+Hernández
 heroku
 heroku-buildpack-static
+Hetman
 Hexo
 hinzufügen
 HIPAA
@@ -989,8 +988,10 @@ HubspotForm
 HyperCard
 hyperconnected
 hypermodern
+i10n
 i18n
 i18next
+IaaS
 IaC
 IAM
 iam_timsmith
@@ -1011,17 +1012,10 @@ imho
 Imoh
 impactful
 implementers
-implementors-of-Gatsby
 incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromFieldName
-inferFromMapping
-inferGraphQLType
-inferInputObjectStrctureFromNodes
-inferInputObjectStructureFromFields
-inferObjectStructureFromNodes
 InfluxData
 infrastructure-centric
 ing
@@ -1094,6 +1088,7 @@ jumbotron
 JWPlayer
 JWT
 Ka
+Kadlec
 Kalin
 Kasten
 Kategorien
@@ -1117,6 +1112,7 @@ Kirkham
 Kissling
 Knut
 KNW
+Kocjan
 Koelewijn
 Koenig
 Koerselman
@@ -1135,6 +1131,7 @@ Kukic
 kung
 Kurulum
 KV
+Kwong
 l33t
 labelled
 labelledby
@@ -1178,6 +1175,7 @@ LinkedIn
 Linsley
 linter
 linters
+LIV
 livechat
 livestream
 livestreamed
@@ -1209,7 +1207,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-markdown-autocomplete
 markdownlint
 markdownRemark
 Martyn
@@ -1222,6 +1219,7 @@ materialisation
 Materialisation
 Mateusz
 MathJax
+Matías
 Matomo
 mccrodp
 MD5
@@ -1250,10 +1248,12 @@ metacompiler
 metadescription
 metafields
 Metalsmith
+metatags
 METROGLAM
 Meuleman
 Michał
 Microfrontends
+micromatch
 microservices
 microsites
 middleware
@@ -1332,6 +1332,7 @@ Nicky
 Nie
 Nik
 no-brainer
+Node.js
 nodeId
 nodeID
 NodeID
@@ -1347,7 +1348,7 @@ Novela
 Novia
 Novikov
 npm
-NPM
+*NPM
 npm-check
 npm-force-resolutions
 npx
@@ -1361,9 +1362,12 @@ nvm
 NYCHA
 NYU
 OAuth
+Obinna
 observability
+Octocat
 Oduye
 oEmbed
+OG
 ok
 Ok
 OKRs
@@ -1392,6 +1396,7 @@ OpenAI
 OpenAPI
 OpenCollective
 OpenGraph
+OpenSSH
 opentracing
 OpenTracing
 operandi
@@ -1431,6 +1436,7 @@ pathname
 pathnames
 pathPrefix
 Paulie
+Paulina
 Pavel
 PayPal
 PayPal-ers
@@ -1458,11 +1464,11 @@ pixelated
 pjax
 pleaaase
 pluggable
+pm
 PNG
 POC
 podcasters
 pogo
-poject
 PokéAPI
 Pokémon
 polyfill
@@ -1481,6 +1487,7 @@ PostHog
 postprocessing
 Poumián
 PowerShell
+PPA
 pragma
 pragmas
 PRDs
@@ -1595,6 +1602,7 @@ quickstart
 Quickstart
 Raae
 Rahić
+Rainn
 Rascia
 Razuvaev
 Re-engageable
@@ -1639,6 +1647,7 @@ redux
 Redux
 Reduxjs
 ReferenceError
+ReflexJS
 reformats
 reframe
 rehydrate
@@ -1706,7 +1715,6 @@ RSS
 rsync
 RTC
 RTEs
-runInitialQuerys
 runQueries
 runQueriesForPathnames
 runtimes
@@ -1722,6 +1730,9 @@ Salsify
 SameSite
 sanitize-html
 Santo
+*sass
+Sass
+*SASS
 Sathyan
 scaffolded
 scalable
@@ -1764,6 +1775,7 @@ sexualized
 SFTP
 shadowable
 sharable
+Shardul
 shareability
 shared-ui
 ShopFlamingo
@@ -1775,8 +1787,6 @@ shouldUpdateScroll
 shoutout
 Sidenotes
 Sidhartha
-siftified
-siftifyArgs
 signup
 signups
 simple-auth
@@ -1815,6 +1825,7 @@ source-filesystem
 Sourcegraph
 sourceNodes
 SpaceX
+Spalato
 spambots
 spammy
 spelt
@@ -1887,6 +1898,8 @@ Swartz
 Syfy
 symlink
 syntaxes
+systemizing
+Systemizing
 tachyons
 Tachyons
 Tada
@@ -1942,6 +1955,7 @@ trainings
 transactional
 transformational
 transformative
+Transifex
 TransitionLink
 TransitionPortal
 TransitionState
@@ -1965,6 +1979,8 @@ Tumblr
 turndown
 tweetstorm
 Twilio
+*twitter
+Twitter
 TXT
 typeBuilder
 typecheck
@@ -1984,6 +2000,7 @@ Ultra-schnellen
 un-transpiled
 Unbundling
 uncached
+uncentered
 uncheck
 uncollapse
 uncomment
@@ -2004,6 +2021,7 @@ unserious
 Unsplash
 unstyled
 untracked
+untriaged
 untrusted
 unvisited
 updatedAt
@@ -2062,6 +2080,7 @@ voilà
 Vojtech
 Vojtěch
 VPs
+VPS
 VS2015
 VS201x
 VSCode
@@ -2082,16 +2101,19 @@ WeakMap
 WebAIM
 webapps
 Webby
+webfont
+webfonts
 WebGL
 webhook
 webhooks
 WebP
 webpack
-Webpack
+*Webpack
 webpack-merge
 webpack-runtime
 WebpackError
 webpacks
+*Webpacks
 webpage
 webpages
 WebPagetest
@@ -2116,9 +2138,9 @@ wireframe-level
 Wirth
 Wiseman
 wishlist
-with-layout2
 with-navigation2
 Woah
+Wojciech
 WooCommerce
 Woodworth
 Workbox
@@ -2139,6 +2161,7 @@ WXR
 wysiwyg
 x64
 Xcode
+XD
 XSL
 XSS
 XState

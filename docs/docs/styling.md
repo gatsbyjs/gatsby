@@ -1,6 +1,5 @@
 ---
 title: Styling
-overview: true
 ---
 
 There are many ways to style your website. They can roughly be grouped into three styling approaches:

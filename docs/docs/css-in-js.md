@@ -1,6 +1,5 @@
 ---
 title: Enhancing Styles with CSS-in-JS
-overview: true
 ---
 
 CSS-in-JS refers to an approach where styles are written in JavaScript instead of in external CSS files to easily scope styles in components, eliminate dead code, encourage faster performance and dynamic styling, and more.

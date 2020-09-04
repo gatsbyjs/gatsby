@@ -16,7 +16,7 @@ playing with the code!
 
 <div>
   <video controls="controls" autoplay="true" loop="true">
-    <source type="video/mp4" src="/gatsbygram.mp4" />
+    <source type="video/mp4" src="gatsbygram.mp4" />
     <p>Your browser does not support the video element.</p>
   </video>
 </div>

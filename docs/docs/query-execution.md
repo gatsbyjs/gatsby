@@ -12,11 +12,11 @@ title: Query Execution
 
 ## Query execution
 
-Query execution is kicked off by bootstrap by calling [page-query-runner.js runInitialQuerys()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L29). The main files involved in this step are:
+Query execution is kicked off by bootstrap by calling [`createQueryRunningActivity()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L192). The main files involved in this step are:
 
-- [page-query-runner.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js)
-- [query-queue.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js)
-- [query-runner.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js)
+- [index.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js)
+- [queue.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/queue.ts)
+- [query-runner.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts)
 
 Here's an overview of how it all relates:
 
@@ -91,11 +91,11 @@ All queries whose component path isn't listed in `componentDataDependencies`. In
 
 ### Pages that depend on dirty nodes
 
-In `develop` mode, every time a node is created, or is updated (e.g. via editing a markdown file), that node needs to be dynamically added to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When your queries are executed, the code will look up all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, the code marks all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
+In `develop` mode, every time a node is created, or is updated (e.g. via editing a markdown file), that node needs to be dynamically added to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When your queries are executed, the code will look up all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-root-fields/)). Connections depend on a node's type. So if a node is dirty, the code marks all connection nodes of that type dirty as well. The code for this step is in [popNodeQueries](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L72). _Note: dirty ids is really talking about dirty paths_.
 
 ### Queue queries for execution
 
-There is now a list of all pages that need to be executed (linked to their Query information). Gatsby will queue them for execution (for real this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L127) kicks off this step. For each page or static query, Gatsby creates a Query Job that looks something like:
+There is now a list of all pages that need to be executed (linked to their Query information). Gatsby will queue them for execution (for real this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L153) kicks off this step. For each page or static query, Gatsby creates a Query Job that looks something like:
 
 ```javascript
 {
@@ -113,11 +113,11 @@ There is now a list of all pages that need to be executed (linked to their Query
 }
 ```
 
-This Query Job contains everything it needs to execute the query (and do things like recording dependencies between pages and nodes). It gets pushed onto the queue in [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) and then waits for the queue to empty. Next, this doc will cover how `query-queue` works.
+This Query Job contains everything it needs to execute the query (and do things like recording dependencies between pages and nodes). It gets pushed onto the queue in [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js) and then waits for the queue to empty. Next, this doc will cover how `query-queue` works.
 
 ### Query queue execution
 
-[query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) creates a [better-queue](https://www.npmjs.com/package/better-queue) queue that offers advanced features like parallel execution, which is handy since queries do not depend on each other so Gatsby can take advantage of this. Every time an item is consumed from the queue, it calls [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js) where it can finally execute the query!
+[query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js) creates a [better-queue](https://www.npmjs.com/package/better-queue) queue that offers advanced features like parallel execution, which is handy since queries do not depend on each other so Gatsby can take advantage of this. Every time an item is consumed from the queue, it calls [query-runner.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts) where it can finally execute the query!
 
 Query execution involves calling the [graphql-js](https://graphql.org/graphql-js/) library with 3 pieces of information:
 
@@ -125,7 +125,7 @@ Query execution involves calling the [graphql-js](https://graphql.org/graphql-js
 2. The raw query text. Obtained from the Query Job.
 3. The Context, also from the Query Job. Has the page's `path` amongst other things so that Gatsby can record [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
-Graphql-js will parse the query, and executes the top level query. E.g. `allMarkdownRemark( limit: 10 )` or `file( relativePath: { eq: "blog/my-blog.md" } )`. These will invoke the resolvers defined in [Schema Connections](/docs/schema-connections/) or [GQL Type](/docs/schema-gql-type/), which both use sift to query over all nodes of the type in redux. The result will be passed through the inner part of the graphql query where each type's resolver will be invoked. The vast majority of these will be `identity` functions that just return the field value. Some however could call a [custom plugin field](/docs/schema-gql-type/#plugin-fields) resolver. These in turn might perform side effects such as generating images. This is why the query execution phase of bootstrap often takes the longest.
+Graphql-js will parse the query, and executes the top level query. E.g. `allMarkdownRemark( limit: 10 )` or `file( relativePath: { eq: "blog/my-blog.md" } )`. These will invoke the resolvers defined in [Schema Connections](/docs/schema-root-fields/) or [GQL Type](/docs/schema-gql-type/), which both use sift to query over all nodes of the type in redux. The result will be passed through the inner part of the GraphQL query where each type's resolver will be invoked. The vast majority of these will be `identity` functions that just return the field value. Some however could call a [custom plugin field](/docs/schema-gql-type/#plugin-fields) resolver. These in turn might perform side effects such as generating images. This is why the query execution phase of bootstrap often takes the longest.
 
 Finally, a result is returned.
 
