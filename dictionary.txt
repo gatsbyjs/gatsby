@@ -127,7 +127,6 @@ Albright
 Alexa
 Algolia
 Allanson
-allfile-query
 allWordpressPage
 Amberley
 Ambras
@@ -662,10 +661,8 @@ filepath
 filepaths
 Filestack
 filesystem
-filesystem-autocomplete
 filesystem-based
 filesystem-explorer-options
-filesystem-query
 Fillerama
 FindCollabs
 findDirtyIds
@@ -898,7 +895,7 @@ Graph_i_QL
 GraphCMS
 GraphiQL
 graphiql-code-exporter
-graphiql-filesystem
+graphql
 GraphQL
 GraphQL-based
 graphql-compose
