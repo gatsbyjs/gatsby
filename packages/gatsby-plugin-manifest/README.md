@@ -478,7 +478,7 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 
 ### APACHE: Error while trying to use the following icon from the Manifest
 
-If you are on an Apache webserver and utilizing the automatic solution, you may receive an error when attempting to access an icon listed in the Manifest as residing in the `/icons` folder. This is because Apache restricts access to all `/icons` folders by default. You can fix this by switching to the hybrid solution and changing the folder name from 'icons' to something like 'favicons'.
+If you are on an Apache webserver and utilizing the automatic solution, you may receive an error when attempting to access an icon listed in the manifest as residing in the `/icons` folder. This is because Apache restricts access to all `/icons` folders by default. You can fix this by switching to the hybrid solution and changing the folder name from `icons` to something like `favicons`.
 
 Example:
 
@@ -498,13 +498,13 @@ Alternatively, if you have access to modify Apache, you can resolve this issue b
 
 #### On Debian based systems
 
-Backup the /etc/apache2/mods-available/alias.conf file:
+Backup the `/etc/apache2/mods-available/alias.conf` file:
 
 ```shell
 cp /etc/apache2/mods-available/alias.conf /etc/apache2/mods-available/alias.conf.back
 ```
 
-Comment out the Alias /icons/ "/usr/share/apache2/icons/" row in /etc/apache2/mods-available/alias.conf file:
+Comment out the Alias `/icons/ "/usr/share/apache2/icons/"` row in `/etc/apache2/mods-available/alias.conf` file:
 
 ```shell
 cat /etc/apache2/mods-available/alias.conf | grep "Alias /icons/"
@@ -524,13 +524,13 @@ Create a backup of `/etc/httpd/conf.d/autoindex.conf`:
 cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back
 ```
 
-Comment out "Alias /icons/" in /etc/httpd/conf.d/autoindex.conf:
+Comment out `"Alias /icons/"` in `/etc/httpd/conf.d/autoindex.conf`:
 
 ```shell
 cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"
 ```
 
-Reload Apache/or restart server:
+Reload Apache or restart  the server:
 
 ```shell
 service httpd reload
