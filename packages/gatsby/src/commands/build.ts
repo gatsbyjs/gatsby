@@ -212,12 +212,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     if (
       cachedWebpackCompilationHash === store.getState().webpackCompilationHash
-    )
+    ) {
       pagePaths = buildUtils.getChangedPageDataKeys(
         store.getState(),
         cachedPageData
       )
-    else if (cachedWebpackCompilationHash) {
+    } else if (cachedWebpackCompilationHash) {
       report.info(
         report.stripIndent(`
         One or more of your source files have changed since the last time you ran Gatsby. All 
