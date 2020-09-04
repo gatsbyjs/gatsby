@@ -220,8 +220,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     } else if (cachedWebpackCompilationHash) {
       report.info(
         report.stripIndent(`
-        One or more of your source files have changed since the last time you ran Gatsby. All 
-        pages will be rebuilt.
+          One or more of your source files have changed since the last time you ran Gatsby. All 
+          pages will be rebuilt.
         `)
       )
     }
