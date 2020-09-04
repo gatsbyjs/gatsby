@@ -80,7 +80,7 @@ module.exports = {
 }
 
 const create = async ({ root }, { name, value }) => {
-  const release = await lock(`gatsby-config.js`)
+  const release = await lock(root + `gatsby-config.js`)
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 

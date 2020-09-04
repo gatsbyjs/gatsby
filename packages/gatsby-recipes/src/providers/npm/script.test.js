@@ -3,7 +3,7 @@ const path = require(`path`)
 const script = require(`./script`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
-const root = path.join(__dirname, `fixtures`)
+const root = path.join(__dirname, `fixtures`, `scripts`)
 
 describe(`npm script resource`, () => {
   test(`e2e script resource test`, async () => {

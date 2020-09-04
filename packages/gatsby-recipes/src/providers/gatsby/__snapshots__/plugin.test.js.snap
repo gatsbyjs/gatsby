@@ -898,7 +898,7 @@ date: \\"2017-09-18T23:19:51.246Z\\"
 <p>Is he in the stable or down by the stream?</p>
 \`\`\`
 
-Then specify \`MARKDOWN\` as the format in your graphql query:
+Then specify \`MARKDOWN\` as the format in your GraphQL query:
 
 \`\`\`graphql
 {
@@ -2484,7 +2484,7 @@ If you are using this plugin with React hooks, you may notice some errors like \
 exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -2858,7 +2858,7 @@ In case that due to spotty network, or slow connection, some remote files fail t
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -3291,7 +3291,7 @@ exports[`gatsby-plugin resource e2e plugin resource test with hello world starte
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -3724,7 +3724,7 @@ module.exports = {
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
@@ -4272,7 +4272,7 @@ exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": null,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,

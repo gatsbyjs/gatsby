@@ -99,8 +99,8 @@ const getNameForPlugin = node => {
   return null
 }
 
-const getDescriptionForPlugin = async name => {
-  const pkg = await readPackageJSON({}, name)
+const getDescriptionForPlugin = async (root, name) => {
+  const pkg = await readPackageJSON({ root }, name)
 
   return pkg ? pkg.description : null
 }
@@ -206,7 +206,7 @@ class MissingInfoError extends Error {
 }
 
 const create = async ({ root }, { name, options, key }) => {
-  const release = await lock(`gatsby-config.js`)
+  const release = await lock(root + `gatsby-config.js`)
   // TODO generalize this — it's for the demo.
   if (options?.accessToken === `(Known after install)`) {
     throw new MissingInfoError({ name, options, key })
@@ -234,7 +234,7 @@ const read = async ({ root }, id) => {
 
     if (plugin) {
       const [description, readme] = await Promise.all([
-        getDescriptionForPlugin(id),
+        getDescriptionForPlugin(root, id),
         getReadmeForPlugin(id),
       ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(

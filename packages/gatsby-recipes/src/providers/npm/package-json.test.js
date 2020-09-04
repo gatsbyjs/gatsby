@@ -3,7 +3,7 @@ const path = require(`path`)
 const pkgJson = require(`./package-json`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
-const root = path.join(__dirname, `fixtures`)
+const root = path.join(__dirname, `fixtures`, `package-json`)
 
 const name = `husky`
 const initialValue = JSON.stringify(
