@@ -137,7 +137,7 @@ const read = async ({ root }, id) => {
 
   if (pkg) {
     return {
-      id: id,
+      id,
       name: id,
       description: pkg.description,
       version: pkg.version,
