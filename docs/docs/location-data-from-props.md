@@ -36,7 +36,18 @@ In this case, you would first need to add configuration that describes where you
 
 Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenating it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
 
-```jsx
+```jsx:title=src/pages/some-page.js
+import React from "react"
+import { graphql } from "gatsby"
+
+const Page = ({ location, data }) => {
+  const canonicalUrl = data.site.siteMetadata.siteURL + location.pathname
+
+  return <div>The URL of this page is {canonicalUrl}</div>
+}
+
+export default Page
+
 export const query = graphql`
   query PageQuery {
     site {
@@ -46,11 +57,6 @@ export const query = graphql`
     }
   }
 `
-const Page = ({ location, data }) => {
-  const canonicalUrl = data.site.siteMetadata.siteURL + location.pathname)
-
-  return <div>The URL of this page is {canonicalUrl}</div>
-}
 ```
 
 ## Use cases
