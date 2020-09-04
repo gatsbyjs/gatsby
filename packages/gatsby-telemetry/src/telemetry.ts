@@ -48,6 +48,27 @@ interface IAnalyticsTrackerConstructorParameters {
   gatsbyCliVersion?: SemVer
 }
 
+export interface IStructuredError {
+  id?: string
+  code?: string
+  text: string
+  level?: string
+  type?: string
+  context?: unknown
+  error?: {
+    stack?: string
+  }
+}
+
+export interface IStructuredErrorV2 {
+  id?: string
+  text: string
+  level?: string
+  type?: string
+  context?: string
+  stack?: string
+}
+
 export interface ITelemetryTagsPayload {
   name?: string
   starterName?: string
@@ -58,29 +79,23 @@ export interface ITelemetryTagsPayload {
   valid?: boolean
   plugins?: string[]
   pathname?: string
-  error?: {
-    id?: string
-    code?: string
-    text: string
-    level?: string
-    type?: string
-    stack?: string
-    context?: string
-    error?: {
-      stack?: string
-    }
-  }
+  error?: IStructuredError | Array<IStructuredError>
   cacheStatus?: string
   pluginCachePurged?: string
   siteMeasurements?: {
     pagesCount?: number
     clientsCount?: number
-    paths?: string[]
+    paths?: Array<string | undefined>
     bundleStats?: unknown
     pageDataStats?: unknown
     queryStats?: unknown
   }
-  errorV2?: unknown
+  errorV2?: IStructuredErrorV2
+}
+
+export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {
+  gatsbyCliVersion?: SemVer
+  installedGatsbyVersion?: SemVer
 }
 
 export interface ITelemetryOptsPayload {
@@ -390,7 +405,7 @@ export class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
-  aggregateStats(data): IAggregateStats {
+  aggregateStats(data: Array<number>): IAggregateStats {
     const sum = data.reduce((acc, x) => acc + x, 0)
     const mean = sum / data.length || 0
     const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
@@ -419,14 +434,13 @@ export class AnalyticsTracker {
 
   async sendEvents(): Promise<boolean> {
     if (!this.isTrackingEnabled()) {
-      return Promise.resolve(true)
+      return true
     }
 
     return this.store.sendEvents()
   }
 
   trackFeatureIsUsed(name: string): void {
-    if (this.features.has(name)) return
     this.features.add(name)
   }
 }
