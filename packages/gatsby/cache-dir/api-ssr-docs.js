@@ -98,7 +98,7 @@ exports.replaceRenderer = true
  *   setHeadComponents,
  *   setHtmlAttributes,
  *   setBodyAttributes
- * }) => {
+ * }, pluginOptions) => {
  *   setHtmlAttributes(HtmlAttributes)
  *   setHeadComponents(HeadComponents)
  *   setBodyAttributes(BodyAttributes)
