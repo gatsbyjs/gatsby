@@ -206,7 +206,7 @@ class MissingInfoError extends Error {
 }
 
 const create = async ({ root }, { name, options, key }) => {
-  const release = await lock(root + `gatsby-config.js`)
+  const release = await lock(`gatsby-config.js`)
   // TODO generalize this — it's for the demo.
   if (options?.accessToken === `(Known after install)`) {
     throw new MissingInfoError({ name, options, key })

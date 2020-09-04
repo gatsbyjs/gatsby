@@ -73,7 +73,7 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
-  const release = await lock(root + `package.json`)
+  const release = await lock(`package.json`)
   try {
     await execa(PACKAGE_MANGER, commands, {
       cwd: root,
