@@ -3,8 +3,9 @@ import {
   IAggregateStats,
   ITelemetryTagsPayload,
   ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
 } from "./telemetry"
-import * as express from "express"
+import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
 
 const instance = new AnalyticsTracker()
@@ -40,23 +41,29 @@ export function trackCli(
   instance.captureEvent(input, tags, opts)
 }
 
-export function trackError(input, tags): void {
+export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
   instance.captureError(input, tags)
 }
 
-export function trackBuildError(input, tags): void {
+export function trackBuildError(
+  input: string,
+  tags?: ITelemetryTagsPayload
+): void {
   instance.captureBuildError(input, tags)
 }
 
-export function setDefaultTags(tags): void {
+export function setDefaultTags(tags: IDefaultTelemetryTagsPayload): void {
   instance.decorateAll(tags)
 }
 
-export function decorateEvent(event, tags): void {
+export function decorateEvent(
+  event: string,
+  tags?: Record<string, unknown>
+): void {
   instance.decorateNextEvent(event, tags)
 }
 
-export function setTelemetryEnabled(enabled): void {
+export function setTelemetryEnabled(enabled: boolean): void {
   instance.setTelemetryEnabled(enabled)
 }
 
@@ -68,16 +75,16 @@ export function isTrackingEnabled(): boolean {
   return instance.isTrackingEnabled()
 }
 
-export function aggregateStats(data): IAggregateStats {
+export function aggregateStats(data: Array<number>): IAggregateStats {
   return instance.aggregateStats(data)
 }
 
-export function addSiteMeasurement(event, obj): void {
+export function addSiteMeasurement(event: string, obj): void {
   instance.addSiteMeasurement(event, obj)
 }
 
 export function expressMiddleware(source: string) {
-  return function (_req: express.Request, _res: express.Response, next): void {
+  return function (_req: Request, _res: Response, next): void {
     try {
       instance.trackActivity(`${source}_ACTIVE`)
     } catch (e) {
@@ -88,11 +95,11 @@ export function expressMiddleware(source: string) {
 }
 
 // Internal
-export function setDefaultComponentId(componentId): void {
+export function setDefaultComponentId(componentId: string): void {
   instance.componentId = componentId
 }
 
-export function setGatsbyCliVersion(version): void {
+export function setGatsbyCliVersion(version: string): void {
   instance.gatsbyCliVersion = version
 }
 
