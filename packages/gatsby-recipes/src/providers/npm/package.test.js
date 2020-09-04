@@ -8,12 +8,12 @@ const resourceTestHelper = require(`../resource-test-helper`)
 
 const root = path.join(os.tmpdir(), uuid.v4())
 fs.mkdirSync(root)
-const pkgResource = { name: `bar` }
+const pkgResource = { name: `div` }
 
 test(`plan returns a description`, async () => {
   const result = await pkg.plan({ root }, pkgResource)
 
-  expect(result.describe).toEqual(expect.stringContaining(`Install bar`))
+  expect(result.describe).toEqual(expect.stringContaining(`Install div`))
 })
 
 describe(`npm package resource`, () => {
@@ -28,15 +28,15 @@ describe(`npm package resource`, () => {
   })
   test(`installs 2 resources, one prod & one dev`, async () => {
     await Promise.all([
-      pkg.create({ root }, { name: `foo` }),
-      pkg.create({ root }, { name: `bar`, dependencyType: `development` }),
+      pkg.create({ root }, { name: `div` }),
+      pkg.create({ root }, { name: `is-odd`, dependencyType: `development` }),
     ])
 
-    const fooResource = await pkg.read({ root }, `foo`)
-    const barResource = await pkg.read({ root }, `bar`)
+    const divResource = await pkg.read({ root }, `div`)
+    const isOddResource = await pkg.read({ root }, `is-odd`)
 
-    expect(fooResource).toMatchSnapshot()
-    expect(barResource).toMatchSnapshot()
+    expect(divResource).toMatchSnapshot()
+    expect(isOddResource).toMatchSnapshot()
   }, 20000)
 })
 
