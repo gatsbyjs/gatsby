@@ -20,7 +20,7 @@ const writePackageJson = async (root, obj) => {
 }
 
 const create = async ({ root }, { name, value }) => {
-  const release = await lock(`package.json`)
+  const release = await lock(root + `package.json`)
   const pkg = await readPackageJson(root)
   pkg[name] = value
 

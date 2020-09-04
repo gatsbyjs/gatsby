@@ -3,7 +3,7 @@
 exports[`npm package resource e2e npm package resource test: NPMPackage create 1`] = `
 Object {
   "_message": "Installed NPM package is-sorted@1.0.0",
-  "description": "mock package",
+  "description": "A small module to check if an Array is sorted",
   "id": "is-sorted",
   "name": "is-sorted",
   "version": "1.0.0",
@@ -21,7 +21,7 @@ Object {
 exports[`npm package resource e2e npm package resource test: NPMPackage destroy 1`] = `
 Object {
   "_message": "Installed NPM package is-sorted@1.0.2",
-  "description": "mock package",
+  "description": "A small module to check if an Array is sorted",
   "id": "is-sorted",
   "name": "is-sorted",
   "version": "1.0.2",
@@ -31,7 +31,7 @@ Object {
 exports[`npm package resource e2e npm package resource test: NPMPackage update 1`] = `
 Object {
   "_message": "Installed NPM package is-sorted@1.0.2",
-  "description": "mock package",
+  "description": "A small module to check if an Array is sorted",
   "id": "is-sorted",
   "name": "is-sorted",
   "version": "1.0.2",
@@ -48,21 +48,21 @@ Object {
 
 exports[`npm package resource installs 2 resources, one prod & one dev 1`] = `
 Object {
-  "_message": "Installed NPM package foo@latest",
-  "description": "mock package",
+  "_message": "Installed NPM package foo@0.0.7",
+  "description": "An opinionated git cli for oss",
   "id": "foo",
   "name": "foo",
-  "version": "latest",
+  "version": "0.0.7",
 }
 `;
 
 exports[`npm package resource installs 2 resources, one prod & one dev 2`] = `
 Object {
-  "_message": "Installed NPM package bar@latest",
-  "description": "mock package",
+  "_message": "Installed NPM package bar@0.1.2",
+  "description": "Node.js framework for building large modular web applications",
   "id": "bar",
   "name": "bar",
-  "version": "latest",
+  "version": "0.1.2",
 }
 `;
 

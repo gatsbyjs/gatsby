@@ -5,7 +5,6 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)
 const resolveFrom = require(`resolve-from`)
-const mockPackageInstall = require(`mock-package-install`)
 const lock = require(`../lock`)
 
 const packageMangerConfigKey = `cli.packageManager`
@@ -74,42 +73,21 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
-  const release = await lock(`package.json`)
-  if (isJest) {
-    // Just do a mock install
-    // ensure the package.json exists as mockPackageInstall fails otherwise
-    const packageJsonPath = path.join(root, `package.json`)
-    if (!fs.existsSync(packageJsonPath)) {
-      fs.writeFileSync(packageJsonPath, `{}`)
-    }
-    await new Promise(resolve => {
-      packagesToInstall.forEach(p => {
-        mockPackageInstall.install({
-          package: { name: p.resource.name, version: p.resource.version },
-          nodeModulesDir: path.join(root, `node_modules`),
-          targetPackage: packageJsonPath,
-          isDev: depType === `development`,
-        })
-      })
-      // Make mock async
-      setTimeout(() => resolve(), Math.max(Math.random() * 150, 25))
+  const release = await lock(root + `package.json`)
+  try {
+    await execa(PACKAGE_MANGER, commands, {
+      cwd: root,
     })
-  } else {
-    try {
-      await execa(PACKAGE_MANGER, commands, {
-        cwd: root,
-      })
-    } catch (e) {
-      // A package failed so call the rejects
-      return packagesToInstall.forEach(p => {
-        p.outsideReject(
-          JSON.stringify({
-            message: e.shortMessage,
-            installationError: `Could not install package`,
-          })
-        )
-      })
-    }
+  } catch (e) {
+    // A package failed so call the rejects
+    return packagesToInstall.forEach(p => {
+      p.outsideReject(
+        JSON.stringify({
+          message: e.shortMessage,
+          installationError: `Could not install package`,
+        })
+      )
+    })
   }
   release()
 
@@ -124,8 +102,6 @@ const executeInstalls = async root => {
 }
 
 const debouncedExecute = _.debounce(executeInstalls, 25)
-
-const isJest = process.env.JEST_WORKER_ID
 
 // Collect installs run at the same time so we can batch them.
 const createInstall = async ({ root }, resource) => {
@@ -195,23 +171,9 @@ const destroy = async ({ root }, resource) => {
     return undefined
   }
 
-  if (isJest) {
-    const packageJsonPath = path.join(root, `package.json`)
-    await new Promise(resolve => {
-      mockPackageInstall.remove({
-        package: { name: resource.name },
-        nodeModulesDir: path.join(root, `node_modules`),
-        targetPackage: packageJsonPath,
-        isDev: resource.dependencyType === `development`,
-      })
-      // Make mock async
-      setTimeout(() => resolve(), Math.random() * 100)
-    })
-  } else {
-    await execa(`yarn`, [`remove`, resource.name, `-W`], {
-      cwd: root,
-    })
-  }
+  await execa(`yarn`, [`remove`, resource.name, `-W`], {
+    cwd: root,
+  })
 
   return readResource
 }

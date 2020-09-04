@@ -61,7 +61,6 @@
     "lodash": "^4.17.15",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "mock-package-install": "^1.0.0",
     "node-fetch": "^2.5.0",
     "normalize.css": "^8.0.1",
     "pkg-dir": "^4.2.0",
