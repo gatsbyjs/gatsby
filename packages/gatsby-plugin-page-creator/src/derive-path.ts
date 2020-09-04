@@ -51,6 +51,7 @@ export function derivePath(
     const replaceSlashesValue = (nodeValue + ``).replace(/\//g, `(REPLACED)`)
     const slugifiedWithoutSlashesValue = slugify(replaceSlashesValue, {
       lower: true,
+      remove: /\./,
     })
     const value = slugifiedWithoutSlashesValue.replace(/\(REPLACED\)/gi, `/`)
 
