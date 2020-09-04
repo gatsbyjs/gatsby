@@ -409,7 +409,7 @@ case) and you'll see your newly published site! Great work!
 
 [Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools. It's the best place to build and deploy sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
 
-To deploy your site to Gatsby Cloud, create an account on [GitHub](https://github.com) if you don't have one. GitHub allows you to host and collaborate on code projects using Git for version control.
+To deploy your site to Gatsby Cloud, create an account on [GitHub](https://github.com) if you don't have one. GitHub allows you to host and collaborate on code projects using Git for version control. You will need to [generate a new SSH key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [add the SSH key to your Github account](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account), if you have not done so previously.
 
 Create a new repository on GitHub. Since you're importing your existing project, you'll want a completely empty one, so don't initialize it with `README` or `.gitignore` files.
 
@@ -419,8 +419,20 @@ You can tell Git where the remote (i.e. not on your computer) repository is like
 git remote add origin [GITHUB_REPOSITORY_URL]
 ```
 
-When you created a new Gatsby project with a starter, it automatically made an initial `git commit`, or a set of changes. Now, you can push your changes to the new remote location:
+When you created a new Gatsby project with a starter, it automatically made an initial `git commit`, or a set of changes. 
 
+Since we created new files, you can add them to git.
+
+```shell
+git add .
+```
+
+And commit your changes.
+```shell
+git commit -m 'part one of tutorial'
+```
+
+Now, you can push your changes to the new remote location:
 ```shell
 git push -u origin master
 ```
