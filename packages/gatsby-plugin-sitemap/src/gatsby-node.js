@@ -1,7 +1,14 @@
 import path from "path"
+import fs from "fs"
 import minimatch from "minimatch"
-import { simpleSitemapAndIndex } from "sitemap"
-import { validateOptions, withoutTrailingSlash, prefixPath } from "./internals"
+import { simpleSitemapAndIndex } from "./sitemap-writer"
+import { validateOptions } from "./options-validation"
+import {
+  withoutTrailingSlash,
+  prefixPath,
+  defaultFilterPages,
+  defaultExcludes,
+} from "./internals"
 
 const publicPath = `./public`
 
@@ -48,32 +55,62 @@ exports.onPostBuild = async (
   reporter.verbose(
     `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
-  //TODO: Seperate custom filter and required page filtering so user doesnt't have to merge systems when customizing the filter.
-  const filteredPages = allPages.filter(page => {
-    const result = !excludes.some(exclude => {
-      try {
-        return filterPages(page, exclude, {
-          minimatch,
-          withoutTrailingSlash,
-          resolvePagePath,
-        })
-      } catch (err) {
-        reporter.panic(
-          `${reporterPrefix} filering pages failed. If you've customized your query or excludes you may need to customize the "filterPages" function.`
+
+  const filteredPages = allPages
+    .filter(page => {
+      const result = !defaultExcludes.some(exclude => {
+        try {
+          return defaultFilterPages(page, exclude, {
+            minimatch,
+            withoutTrailingSlash,
+            resolvePagePath,
+          })
+        } catch (err) {
+          reporter.panic(
+            `${reporterPrefix} default filtering of pages failed. This shouldn't really be possible, please report a bug.`
+          )
+
+          return err
+        }
+      })
+
+      if (!result) {
+        reporter.verbose(
+          `${reporterPrefix} Default filter excluded page ${resolvePagePath(
+            page
+          )}`
         )
-
-        return err
       }
+
+      return result
     })
+    .filter(page => {
+      const result = !excludes.some(exclude => {
+        try {
+          return filterPages(page, exclude, {
+            minimatch,
+            withoutTrailingSlash,
+            resolvePagePath,
+          })
+        } catch (err) {
+          reporter.panic(
+            `${reporterPrefix} custom page filtering failed. If you've customized your excludes you may need to customize the "filterPages" function.`
+          )
 
-    if (!result) {
-      reporter.verbose(
-        `${reporterPrefix} Excluded page ${resolvePagePath(page)}`
-      )
-    }
+          return err
+        }
+      })
 
-    return result
-  })
+      if (!result) {
+        reporter.verbose(
+          `${reporterPrefix} Custom Filter excluded page ${resolvePagePath(
+            page
+          )}`
+        )
+      }
+
+      return result
+    })
 
   reporter.verbose(
     `${reporterPrefix} ${filteredPages.length} pages remain after filtering`
@@ -85,11 +122,16 @@ exports.onPostBuild = async (
     return { url: prefixPath({ url, siteUrl, pathPrefix }), ...rest }
   })
 
-  const saved = path.join(publicPath, output)
+  const sitemapPath = path.join(publicPath, output)
+
+  //create destination directory if it doesn't exist
+  if (!fs.existsSync(sitemapPath)) {
+    fs.mkdirSync(sitemapPath)
+  }
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,
-    destinationDir: saved,
+    destinationDir: sitemapPath,
     sourceData: serializedPages,
     limit: sitemapSize,
   })

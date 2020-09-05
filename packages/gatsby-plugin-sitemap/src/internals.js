@@ -72,7 +72,7 @@ export function resolvePages(data) {
  *
  * @returns {Array}
  */
-export function filterPages(
+export function defaultFilterPages(
   page,
   excludedRoute,
   { minimatch, withoutTrailingSlash, resolvePagePath }
@@ -110,3 +110,10 @@ export function serialize(page, { resolvePagePath }) {
     priority: 0.7,
   }
 }
+
+export const defaultExcludes = [
+  `/dev-404-page`,
+  `/404`,
+  `/404.html`,
+  `/offline-plugin-app-shell-fallback`,
+]

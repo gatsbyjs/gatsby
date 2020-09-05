@@ -5,20 +5,13 @@ import {
   resolveSiteUrl,
   resolvePagePath,
   resolvePages,
-  filterPages,
   serialize,
+  defaultFilterPages,
 } from "./internals"
-
-const defaultExcludes = [
-  `/dev-404-page`,
-  `/404`,
-  `/404.html`,
-  `/offline-plugin-app-shell-fallback`,
-]
 
 const defaultPluginOptions = Joi.object({
   plugins: Joi.array().strip(),
-  output: Joi.string().default(`/`),
+  output: Joi.string().default(`/sitemap`),
   createLinkInHead: Joi.boolean().default(true),
   sitemapSize: Joi.number().default(45000), // default based on upstream "sitemap" plugin default, maybe need optimization
   query: Joi.string().default(`
@@ -35,21 +28,11 @@ const defaultPluginOptions = Joi.object({
       }
     }
   }`),
-  excludes: Joi.array()
-    .items(Joi.string(), Joi.object())
-    .default(parent => {
-      const configExclude = parent?.exclude
-
-      if (!configExclude) {
-        return defaultExcludes
-      }
-
-      return [...defaultExcludes, ...configExclude]
-    }),
+  excludes: Joi.array().items(Joi.any()).default([]),
   resolveSiteUrl: Joi.function().default(() => resolveSiteUrl),
   resolvePagePath: Joi.function().default(() => resolvePagePath),
   resolvePages: Joi.function().default(() => resolvePages),
-  filterPages: Joi.function().default(() => filterPages),
+  filterPages: Joi.function().default(() => defaultFilterPages),
   serialize: Joi.function().default(() => serialize),
 })
 
