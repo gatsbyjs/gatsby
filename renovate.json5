@@ -70,8 +70,6 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
-        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
-        "react-docgen",
       ],
     },
     // we need to replicate this so that it goes to a separate group
@@ -104,8 +102,6 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
-        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
-        "react-docgen",
       ],
     },
     {
@@ -137,8 +133,6 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
-        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
-        "react-docgen",
       ],
     },
     {
