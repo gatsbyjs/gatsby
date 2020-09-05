@@ -16,7 +16,7 @@
     "del": "^5.1.0",
     "execa": "^4.0.3",
     "find-yarn-workspace-root": "^2.0.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.1",
     "is-absolute": "^1.0.0",
     "lodash": "^4.17.20",
     "request": "2.88.2",

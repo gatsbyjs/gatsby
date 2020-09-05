@@ -14,8 +14,6 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@types/react-instantsearch-dom": "^5.2.6",
-    "@typescript-eslint/eslint-plugin": "^2.28.0",
-    "@typescript-eslint/parser": "^2.28.0",
     "csstype": "^2.6.10",
     "feedback-fish": "^0.1.12",
     "formik": "^2.1.4",

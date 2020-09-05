@@ -3642,10 +3642,10 @@
   resolved "https://registry.yarnpkg.com/@types/fined/-/fined-1.1.2.tgz#05d2b9f93d144855c97c18c9675f424ed01400c4"
   integrity sha512-hzzTS+X9EqDhx4vwdch/DOZci/bfh5J6Nyz8lqvyfBg2ROx2fPafX+LpDfpVgSvQKj0EYkwTYpBO3z2etwbkOw==
 
-"@types/fs-extra@^8.1.0":
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.1.0.tgz#1114834b53c3914806cd03b3304b37b3bd221a4d"
-  integrity sha512-UoOfVEzAUpeSPmjm7h1uk5MH6KZma2z2O7a75onTGjnNvAvMVrPzPL/vBbT65iIGHWj6rokwfmYcmxmlSf2uwg==
+"@types/fs-extra@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-9.0.1.tgz#91c8fc4c51f6d5dbe44c2ca9ab09310bd00c7918"
+  integrity sha512-B42Sxuaz09MhC3DDeW5kubRcQ5by4iuVQ0cRRWM2lggLzAa/KVom0Aft/208NgMvNQQZ86s5rVcqDdn/SH0/mg==
   dependencies:
     "@types/node" "*"
 
@@ -13912,16 +13912,6 @@ jest-junit@^10.0.0:
     uuid "^3.3.3"
     xml "^1.0.1"
 
-jest-junit@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-6.4.0.tgz#23e15c979fa6338afde46f2d2ac2a6b7e8cf0d9e"
-  integrity sha512-GXEZA5WBeUich94BARoEUccJumhCgCerg7mXDFLxWwI2P7wL3Z7sGWk+53x343YdBLjiMR9aD/gYMVKO+0pE4Q==
-  dependencies:
-    jest-validate "^24.0.0"
-    mkdirp "^0.5.1"
-    strip-ansi "^4.0.0"
-    xml "^1.0.1"
-
 jest-leak-detector@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-leak-detector/-/jest-leak-detector-24.9.0.tgz#b665dea7c77100c5c4f7dfcb153b65cf07dcf96a"
@@ -14182,7 +14172,7 @@ jest-validate@^22.4.4:
     leven "^2.1.0"
     pretty-format "^22.4.0"
 
-jest-validate@^24.0.0, jest-validate@^24.9.0:
+jest-validate@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-24.9.0.tgz#0775c55360d173cd854e40180756d4ff52def8ab"
   integrity sha512-HPIt6C5ACwiqSiwi+OfSSHbK8sG7akG8eATl+IPKaeIjtPOeBUd/g3J7DghugzxrGjI93qS/+RPKe1H6PqvhRQ==
