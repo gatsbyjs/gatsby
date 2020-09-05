@@ -209,14 +209,22 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
   // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    cachedWebpackCompilationHash === store.getState().webpackCompilationHash
-  ) {
-    pagePaths = buildUtils.getChangedPageDataKeys(
-      store.getState(),
-      cachedPageData
-    )
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    if (
+      cachedWebpackCompilationHash === store.getState().webpackCompilationHash
+    ) {
+      pagePaths = buildUtils.getChangedPageDataKeys(
+        store.getState(),
+        cachedPageData
+      )
+    } else if (cachedWebpackCompilationHash) {
+      report.info(
+        report.stripIndent(`
+          One or more of your source files have changed since the last time you ran Gatsby. All 
+          pages will be rebuilt.
+        `)
+      )
+    }
   }
 
   const buildHTMLActivityProgress = report.createProgress(
