@@ -1,10 +1,8 @@
 import { SitemapAndIndexStream, SitemapStream } from "sitemap"
-import { createGzip } from "zlib"
 import { createWriteStream } from "fs"
 import { resolve } from "path"
 import { Readable, pipeline as pline } from "stream"
 import { promisify } from "util"
-import { URL } from "url"
 
 const pipeline = promisify(pline)
 export const simpleSitemapAndIndex = ({
