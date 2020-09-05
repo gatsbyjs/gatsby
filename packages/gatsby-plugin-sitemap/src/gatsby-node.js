@@ -31,7 +31,7 @@ exports.onPostBuild = async (
 
   const {
     output,
-    sitemapSize,
+    entryLimit,
     query,
     excludes,
     resolveSiteUrl,
@@ -133,6 +133,6 @@ exports.onPostBuild = async (
     hostname: siteUrl,
     destinationDir: sitemapPath,
     sourceData: serializedPages,
-    limit: sitemapSize,
+    limit: entryLimit,
   })
 }

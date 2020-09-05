@@ -13,7 +13,7 @@ const defaultPluginOptions = Joi.object({
   plugins: Joi.array().strip(),
   output: Joi.string().default(`/sitemap`),
   createLinkInHead: Joi.boolean().default(true),
-  sitemapSize: Joi.number().default(45000), // default based on upstream "sitemap" plugin default, maybe need optimization
+  entryLimit: Joi.number().default(45000), // default based on upstream "sitemap" plugin default, may need optimization
   query: Joi.string().default(`
   {
     site {
