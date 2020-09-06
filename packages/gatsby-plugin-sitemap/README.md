@@ -23,6 +23,33 @@ generated sitemap will include all of your site's pages, except the ones you exc
 
 ## Recomended usage
 
+You probably do not want to use the defaults in this plugin. Here's an example of the default output:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.net/blog/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://example.net/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
+```
+
+See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong...but that's not even the worst of it, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
+
+> - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them. 
+> - Google reads the `<lastmod>` value, but if you misrepresent this value, we will stop reading it.
+
+So you really want to customize this plugin config to include a last mod date that is accurate. Checkout the [example](#example) for some ideas on how to do this.
+
+
+
 ## Options
 
 The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L13) can be overridden.
@@ -34,15 +61,15 @@ The options are as follows:
 - `entryLimit` (number) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
 - `exclude` (array of strings) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the `filterPages` function.
 - `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom `resolveSiteUrl` function. If you override the query, you may need to pass in a custom `resolvePagePath`, `resolvePages` to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will need to customize the `resolvePages` funciton.
-- `resolveSiteUrl` (function) Takes the output of the data query and lets you return the site URL.
-- `resolvePagePath` (function) Takes a page object and returns the uri of the page (no domain or protocol).
-- `resolvePages` (function) Takes the output of the data query and expects an array of page objects to be returned.
-- `filterPages` (function) Takes the current page a string (or other object) from the `excludes` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
-- `serialize` (function) Takes the output of the data query and lets you return an array of sitemap entries.
+- [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL.
+- [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
+- [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned.
+- [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `excludes` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
+- [`serialize`](#serialize) (function) Takes the output of the data query and lets you return an array of sitemap entries.
 
-We _ALWAYS_ exclude the following pages: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed enven by customizing the filterPages function.
+We _ALWAYS_ exclude the following pages: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 
-Example:
+## Example:
 
 ```javascript
 // In your gatsby-config.js
@@ -51,67 +78,138 @@ siteMetadata: {
 },
 plugins: [
   {
-    resolve: `gatsby-plugin-sitemap`,
-    options: {
-      output: `/sitemaps/`,
-      // Exclude specific pages or groups of pages using glob parameters
-      // See: https://github.com/isaacs/minimatch
-      // The example below will exclude the single `path/to/page` and all routes beginning with `category`
-      exclude: [`/category/*`, `/path/to/page`],
-      query: `
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        query: `
         {
-          wp {
-            generalSettings {
-              siteUrl
-            }
-          }
-
           allSitePage {
             nodes {
               path
             }
           }
-      }`,
-      resolveSiteUrl: (data) => {
-        return data.wp.generalSettings.siteUrl
-        //Alternativly, you may ignore data and pass in an any variable from the begining of your `gatsby-config.js`.
-        // eg. ABOVE: const cmsUrl = process.env.CMS_URL
-        // return cmsUrl
-      },
-      serialize: (page, siteUrl, {resolvePagePath}) =>
-        allSitePage.nodes.map(node => {
+          allWpContentNode(filter: {nodeType: {in: ["Post", "Page"]}}) {
+            nodes {
+              ... on WpPost {
+                uri
+                modifiedGmt
+              }
+              ... on WpPage {
+                uri
+                modifiedGmt
+              }
+            }
+          }
+        }
+      `,
+        resolveSiteUrl: () => process.env.URL || `https://example.net`,
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allWpContentNode: { nodes: allWpNodes },
+        }) => {
+          const wpNodeMap = allWpNodes.reduce((acc, node) => {
+            const { uri } = node;
+            acc[uri] = node;
+
+            return acc;
+          }, {});
+
+          return allPages.map((page) => {
+            return { ...page, ...wpNodeMap[page.path] };
+          });
+        },
+        serialize: ({ path, modifiedGmt }) => {
           return {
-            url: `${siteUrl}${resolvePagePath(page)}`,
-            changefreq: `daily`,
-            priority: 0.7,
-          }
-          }
-        })
-    }
+            url: path,
+            lastmod: modifiedGmt,
+          };
+        },
+      },
+    },
   }
 ]
 ```
 
-## Sitemap Index
+## API Reference
 
-We also support generating `sitemap index`.
+<a id=resolveSiteUrl></a>
 
-- [Split up your large sitemaps](https://support.google.com/webmasters/answer/75712?hl=en)
-- [Using Sitemap index files (to group multiple sitemap files)](https://www.sitemaps.org/protocol.html#index)
+## resolveSiteUrl ⇒ <code>string</code>
+
+**Returns**: <code>string</code> - - site URL, this can come from the graphql query or another scope.
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | Results of the GraphQL query |
+
+<a id=resolvePagePath></a>
+
+## resolvePagePath ⇒ <code>string</code>
+
+If you don't want to place the URI in `path` then `resolvePagePath`
+is needed.
+
+**Returns**: <code>string</code> - - uri of the page without domain or protocol 
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| page | <code>Object</code> | <code>string</code> | Array Item returned from resolvePages |
+
+<a id=resolvePages></a>
+
+## resolvePages ⇒ <code>Array</code>
+
+This allows custom resolution of the array of pages.
+This also where users could merge multiple sources into
+a single array if needed. 
+
+**Returns**: <code>Object[]</code> - - Array of Objects representing each page     
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | results of the GraphQL query |
+
+<a id="filterPages"></a>
+
+## filterPages ⇒ <code>Array</code>
+
+This allows filtering any data in any way.
+
+This function is executed via:
 
 ```javascript
-// In your gatsby-config.js
-siteMetadata: {
-  siteUrl: `https://www.example.com`,
-},
-plugins: [
-  {
-    resolve: `gatsby-plugin-sitemap`,
-    options: {
-      entryLimit: 5000
-    }
-  }
-]
-```
+allPages.filter((page) => 
 
-When the number of URLs in a sitemap is more than 5000 (defaults to 45k), the plugin will create sitemap (e.g. `sitemap-0.xml`, `sitemap-1.xml`) and index (e.g. `sitemap-index.xml`) files.
+  !excludes.some((excludedRoute) =>
+    thisFunc(page, ecludedRoute, tools)
+  )
+)
+```
+`allPages` is the results of the <a href="#resolvePages">`resolvePages`</a> funciton.
+
+**Returns**: <code>Object[]</code> - - Array of Objects representing each page, but now filtered   
+
+| Param | Type | Description |
+| --- | --- | --- |
+| page | <code>Object</code> |  |
+| excludedRoute | <code>string</code> | Element from `exclude` Array in plugin config.|
+| tools | <code>Object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
+
+<a id="serialize"></a>
+
+## serialize⇒ <code>Object</code>
+
+This funciton is executed by:
+```javascript
+  allPages.map(page =>
+    thisFunc(page, siteUrl, tools)
+  )
+```
+`allpages` is the result of the <a href="#filterPages">`filterPages`</a> function.
+
+**Kind**: global variable
+
+| Param | Type | Description |
+| --- | --- | --- |
+| page | <code>Object</code> | results of the resolvePages function |
+| tools | <code>Object</code> | contains tools for serializing `{ resolvePagePath } ` |

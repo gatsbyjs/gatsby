@@ -11,7 +11,7 @@ export const withoutTrailingSlash = path =>
 /**
  * @name prefixPath
  *
- * Propperly handles prefixing relative path with site domain, Gatsby pathPrefix and AssetPrefix
+ * Properly handles prefixing relative path with site domain, Gatsby pathPrefix and AssetPrefix
  *
  * @param {string} url - string containing relative path
  * @param {string} siteUrl - results of the resolveSiteUrl function
@@ -37,7 +37,7 @@ export function resolveSiteUrl(data) {
  * if you don't want to place the URI in "path" then resolvePagePath
  * are needed.
  *
- * @param {Object|string} page - Array Item returned from resolvePages
+ * @param {Object} page - Array Item returned from resolvePages
  * @returns {string} - uri of the page without domain or protocol
  */
 
@@ -99,7 +99,7 @@ export function defaultFilterPages(
  * This funciton is executed by allPages.map(page => thisFunc(page, siteUrl, tools))
  * allpages is the result of the filter process
  *
- * @param {Object} page - results of the resolvePages function
+ * @param {Object[]} page - results of the resolvePages function
  * @param {Object} tools - contains tools for serializing
  *
  */
