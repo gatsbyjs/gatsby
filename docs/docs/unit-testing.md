@@ -47,6 +47,7 @@ module.exports = {
   },
   testURL: `http://localhost`,
   setupFiles: [`<rootDir>/loadershim.js`],
+  clearMocks: true,
 }
 ```
 
