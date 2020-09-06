@@ -65,7 +65,7 @@ The options are as follows:
 - [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `excludes` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
 - [`serialize`](#serialize) (function) Takes the output of the data query and lets you return an array of sitemap entries.
 
-We _ALWAYS_ exclude the following pages: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
+ The following pages are _ALWAYS_ excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 
 ## Example:
 
