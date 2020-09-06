@@ -21,7 +21,7 @@ plugins: [`gatsby-plugin-sitemap`]
 Above is the minimal configuration required to have it work. By default, the
 generated sitemap will include all of your site's pages, except the ones you exclude.
 
-## Recomended usage
+## Recommended usage
 
 You probably do not want to use the defaults in this plugin. Here's an example of the default output:
 
@@ -46,20 +46,18 @@ See the `changefreq` and `priority` fields? Those will be the same for every pag
 > - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them. 
 > - Google reads the `<lastmod>` value, but if you misrepresent this value, we will stop reading it.
 
-So you really want to customize this plugin config to include a last mod date that is accurate. Checkout the [example](#example) for some ideas on how to do this.
-
-
+You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for anb example of how to do this.
 
 ## Options
 
-The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L13) can be overridden.
+The [`default config`](src/options-validation.js) can be overridden.
 
 The options are as follows:
 
-- `output` (string) Folder path where sitemaps are stored. Defaults to `/sitemap`.
-- `createLinkInHead` (boolean) Whether to populate the `<head>` of your site with a link to the sitemap.
-- `entryLimit` (number) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
-- `exclude` (array of strings) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the `filterPages` function.
+- `output` (string = `/sitemap`) Folder path where sitemaps are stored.
+- `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
+- `entryLimit` (number = 45000) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
+- `exclude` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
 - `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom `resolveSiteUrl` function. If you override the query, you may need to pass in a custom `resolvePagePath`, `resolvePages` to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will need to customize the `resolvePages` funciton.
 - [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL.
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
@@ -72,12 +70,12 @@ We _ALWAYS_ exclude the following pages: `/dev-404-page`,`/404` &`/offline-plugi
 ## Example:
 
 ```javascript
+const siteUrl = process.env.URL || `https://fallback.net`
+
 // In your gatsby-config.js
-siteMetadata: {
-  siteUrl: `https://www.example.com`,
-},
-plugins: [
-  {
+module.exports = {
+  plugins: [
+    {
       resolve: 'gatsby-plugin-sitemap',
       options: {
         query: `
@@ -101,7 +99,7 @@ plugins: [
           }
         }
       `,
-        resolveSiteUrl: () => process.env.URL || `https://example.net`,
+        resolveSiteUrl: () => siteUrl,
         resolvePages: ({
           allSitePage: { nodes: allPages },
           allWpContentNode: { nodes: allWpNodes },
@@ -125,8 +123,8 @@ plugins: [
         },
       },
     },
-  }
-]
+  ]
+}
 ```
 
 ## API Reference
@@ -185,7 +183,7 @@ allPages.filter((page) =>
   )
 )
 ```
-`allPages` is the results of the <a href="#resolvePages">`resolvePages`</a> funciton.
+`allPages` is the results of the [`resolvePages`](#resolvePages) funciton.
 
 **Returns**: <code>Object[]</code> - - Array of Objects representing each page, but now filtered   
 
@@ -205,7 +203,7 @@ This funciton is executed by:
     thisFunc(page, siteUrl, tools)
   )
 ```
-`allpages` is the result of the <a href="#filterPages">`filterPages`</a> function.
+`allpages` is the result of the [`filterPages`](#filterPages) function.
 
 **Kind**: global variable
 
