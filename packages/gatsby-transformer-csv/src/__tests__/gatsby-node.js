@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const { parse: json2csv } = require(`json2csv`)
 const os = require(`os`)
 const { cloneDeep } = require(`lodash`)

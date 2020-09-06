@@ -11,12 +11,12 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
   "devDependencies": {
-    "@emotion/core": "^10.0.28",
+    "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "@types/react-instantsearch-dom": "^5.2.6",
     "csstype": "^2.6.10",
     "feedback-fish": "^0.1.12",
-    "formik": "^2.1.4",
+    "formik": "^2.1.5",
     "gatsby": "^2.24.53",
     "gatsby-interface": "0.0.183",
     "gatsby-plugin-typescript": "^2.4.18",
@@ -39,8 +39,8 @@
     "subscriptions-transport-ws": "^0.9.18",
     "theme-ui": "^0.4.0-alpha.3",
     "typescript": "^3.9.5",
-    "urql": "^1.9.8",
-    "yup": "^0.29.1"
+    "urql": "^1.10.0",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "develop": "gatsby develop",
