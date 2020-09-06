@@ -6,14 +6,16 @@ import { callApi, markNodesDirty } from "../develop/actions"
 import { assertStore } from "../../utils/assert-store"
 import { GraphQLRunner } from "../../query/graphql-runner"
 
-const concatUnique = <T>(array1: T[] = [], array2: T[] = []): T[] =>
-  Array.from(new Set(array1.concat(array2)))
+const concatUnique = <T>(
+  array1: Array<T> = [],
+  array2: Array<T> = []
+): Array<T> => Array.from(new Set(array1.concat(array2)))
 
 export const assignChangedPages = assign<
   IDataLayerContext,
   DoneInvokeEvent<{
-    changedPages: string[]
-    deletedPages: string[]
+    changedPages: Array<string>
+    deletedPages: Array<string>
   }>
 >((context, event) => {
   return {

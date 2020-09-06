@@ -34,7 +34,7 @@ export function trackFeatureIsUsed(name: string): void {
   instance.trackFeatureIsUsed(name)
 }
 export function trackCli(
-  input: string | string[],
+  input: string | Array<string>,
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload
 ): void {

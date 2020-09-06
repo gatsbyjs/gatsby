@@ -65,7 +65,7 @@ export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 /**
  * Get all nodes from redux store.
  */
-export const getNodes = (): IGatsbyNode[] => {
+export const getNodes = (): Array<IGatsbyNode> => {
   const nodes = store.getState().nodes
   if (nodes) {
     return Array.from(nodes.values())
@@ -83,7 +83,7 @@ export const getNode = (id: string): IGatsbyNode | undefined =>
 /**
  * Get all nodes of type from redux store.
  */
-export const getNodesByType = (type: string): IGatsbyNode[] => {
+export const getNodesByType = (type: string): Array<IGatsbyNode> => {
   const nodes = store.getState().nodesByType.get(type)
   if (nodes) {
     return Array.from(nodes.values())
@@ -95,7 +95,7 @@ export const getNodesByType = (type: string): IGatsbyNode[] => {
 /**
  * Get all type names from redux store.
  */
-export const getTypes = (): string[] =>
+export const getTypes = (): Array<string> =>
   Array.from(store.getState().nodesByType.keys())
 
 /**
@@ -133,7 +133,7 @@ export const getNodeAndSavePathDependency = (
 type Resolver = (node: IGatsbyNode) => Promise<any> // TODO
 
 export const saveResolvedNodes = async (
-  nodeTypeNames: string[],
+  nodeTypeNames: Array<string>,
   resolver: Resolver
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
@@ -308,8 +308,8 @@ function postIndexingMetaSetupLtLteGtGte(
 export const ensureIndexByQuery = (
   op: FilterOp,
   filterCacheKey: FilterCacheKey,
-  filterPath: string[],
-  nodeTypeNames: string[],
+  filterPath: Array<string>,
+  nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
 ): void => {
   const state = store.getState()
@@ -347,7 +347,7 @@ export const ensureIndexByQuery = (
 
 export function ensureEmptyFilterCache(
   filterCacheKey,
-  nodeTypeNames: string[],
+  nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
 ): void {
   // This is called for queries without any filters

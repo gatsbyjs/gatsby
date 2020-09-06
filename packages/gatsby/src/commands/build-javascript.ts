@@ -85,7 +85,7 @@ export const buildProductionBundle = async (
       reportWebpackWarnings(stats)
 
       if (stats.hasErrors()) {
-        const flattenStatsErrors = (stats: webpack.Stats): Error[] => [
+        const flattenStatsErrors = (stats: webpack.Stats): Array<Error> => [
           ...stats.compilation.errors,
           ...flatMap(stats.compilation.children, child =>
             flattenStatsErrors(child.getStats())
