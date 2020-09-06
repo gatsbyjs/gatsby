@@ -1,7 +1,7 @@
 import path from "path"
 import fs from "fs"
 import minimatch from "minimatch"
-import { simpleSitemapAndIndex } from "./sitemap-writer"
+import { writeSitemapAndIndex } from "./sitemap-writer"
 import { validateOptions } from "./options-validation"
 import {
   withoutTrailingSlash,
@@ -94,7 +94,7 @@ exports.onPostBuild = async (
           })
         } catch (err) {
           reporter.panic(
-            `${reporterPrefix} custom page filtering failed. If you've customized your excludes you may need to customize the "filterPages" function.`
+            `${reporterPrefix} custom page filtering failed. If you've customized your excludes you may need to provide a custom "filterPages" function in your config.`
           )
 
           return err
@@ -103,7 +103,7 @@ exports.onPostBuild = async (
 
       if (!result) {
         reporter.verbose(
-          `${reporterPrefix} Custom Filter excluded page ${resolvePagePath(
+          `${reporterPrefix} Custom filtering excluded page ${resolvePagePath(
             page
           )}`
         )
@@ -129,7 +129,7 @@ exports.onPostBuild = async (
     fs.mkdirSync(sitemapPath)
   }
 
-  return simpleSitemapAndIndex({
+  return writeSitemapAndIndex({
     hostname: siteUrl,
     destinationDir: sitemapPath,
     sourceData: serializedPages,

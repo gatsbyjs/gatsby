@@ -5,7 +5,8 @@ import { Readable, pipeline as pline } from "stream"
 import { promisify } from "util"
 
 const pipeline = promisify(pline)
-export const simpleSitemapAndIndex = ({
+
+export const writeSitemapAndIndex = ({
   hostname,
   sitemapHostname = hostname,
   sourceData,
