@@ -32,9 +32,10 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
   componentDidCatch(error: Error, info: React.ErrorInfo): void {
     trackBuildError(`INK`, {
       error: {
-        stack: info.componentStack,
+        error: {
+          stack: info.componentStack,
+        },
         text: error.message,
-        context: {},
       },
     })
   }

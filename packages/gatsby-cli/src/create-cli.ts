@@ -529,7 +529,7 @@ Creating a plugin:
           }),
 
       handler: handlerP(({ enable, disable }: yargs.Arguments) => {
-        const enabled = enable || !disable
+        const enabled = Boolean(enable) || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
       }),

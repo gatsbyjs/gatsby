@@ -11,6 +11,10 @@ import { IProgram } from "./types"
 
 import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 
+interface IWebpackCompilerWithParentCompilation extends webpack.Compiler {
+  parentCompilation?: webpack.compilation.Compilation
+}
+
 export const buildProductionBundle = async (
   program: IProgram,
   parentSpan: Span
@@ -29,6 +33,16 @@ export const buildProductionBundle = async (
     const compiler = webpack(compilerConfig)
 
     compiler.hooks.compilation.tap(`webpack-dep-tree-plugin`, compilation => {
+      // "compilation" callback gets called for child compilers.
+      // We only want to attach "seal" hook on main compilation
+      // so we ignore compilations that have parent.
+      // (mini-css-extract-plugin is one example of child compilations)
+      const compilationCompiler: IWebpackCompilerWithParentCompilation =
+        compilation.compiler
+      if (compilationCompiler.parentCompilation) {
+        return
+      }
+
       compilation.hooks.seal.tap(`webpack-dep-tree-plugin`, () => {
         const state = store.getState()
         const mapOfTemplatesToStaticQueryHashes = mapTemplatesToStaticQueryHashes(
