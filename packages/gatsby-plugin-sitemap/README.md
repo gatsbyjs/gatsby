@@ -43,7 +43,7 @@ You probably do not want to use the defaults in this plugin. Here's an example o
 
 See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong...but that's not even the worst of it, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
 
-> - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them. 
+> - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them.
 > - Google reads the `<lastmod>` value, but if you misrepresent this value, we will stop reading it.
 
 You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for anb example of how to do this.
@@ -58,14 +58,14 @@ The options are as follows:
 - `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `entryLimit` (number = 45000) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
 - `exclude` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
-- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definately need to customize the [`resolvePages`](#resolvePages) funciton.
+- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definately need to customize the [`resolvePages`](#resolvePages) function.
 - [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL.
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
 - [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned.
-- [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `excludes` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
+- [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
 - [`serialize`](#serialize) (function) Takes the output of the data query and lets you return an array of sitemap entries.
 
- The following pages are _ALWAYS_ excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
+The following pages are _ALWAYS_ excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 
 ## Example:
 
@@ -76,7 +76,7 @@ const siteUrl = process.env.URL || `https://fallback.net`
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-plugin-sitemap',
+      resolve: "gatsby-plugin-sitemap",
       options: {
         query: `
         {
@@ -105,25 +105,25 @@ module.exports = {
           allWpContentNode: { nodes: allWpNodes },
         }) => {
           const wpNodeMap = allWpNodes.reduce((acc, node) => {
-            const { uri } = node;
-            acc[uri] = node;
+            const { uri } = node
+            acc[uri] = node
 
-            return acc;
-          }, {});
+            return acc
+          }, {})
 
-          return allPages.map((page) => {
-            return { ...page, ...wpNodeMap[page.path] };
-          });
+          return allPages.map(page => {
+            return { ...page, ...wpNodeMap[page.path] }
+          })
         },
         serialize: ({ path, modifiedGmt }) => {
           return {
             url: path,
             lastmod: modifiedGmt,
-          };
+          }
         },
       },
     },
-  ]
+  ],
 }
 ```
 
@@ -135,9 +135,9 @@ module.exports = {
 
 **Returns**: <code>string</code> - - site URL, this can come from the graphql query or another scope.
 
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>Object</code> | Results of the GraphQL query |
+| Param | Type                | Description                  |
+| ----- | ------------------- | ---------------------------- |
+| data  | <code>object</code> | Results of the GraphQL query |
 
 <a id=resolvePagePath></a>
 
@@ -146,12 +146,11 @@ module.exports = {
 If you don't want to place the URI in `path` then `resolvePagePath`
 is needed.
 
-**Returns**: <code>string</code> - - uri of the page without domain or protocol 
+**Returns**: <code>string</code> - - uri of the page without domain or protocol
 
-
-| Param | Type | Description |
-| --- | --- | --- |
-| page | <code>Object</code> | <code>string</code> | Array Item returned from resolvePages |
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| page  | <code>object</code> | <code>string</code> | Array Item returned from resolvePages |
 
 <a id=resolvePages></a>
 
@@ -159,55 +158,53 @@ is needed.
 
 This allows custom resolution of the array of pages.
 This also where users could merge multiple sources into
-a single array if needed. 
+a single array if needed.
 
-**Returns**: <code>Object[]</code> - - Array of Objects representing each page     
+**Returns**: <code>object[]</code> - - Array of objects representing each page
 
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>Object</code> | results of the GraphQL query |
+| Param | Type                | Description                  |
+| ----- | ------------------- | ---------------------------- |
+| data  | <code>object</code> | results of the GraphQL query |
 
 <a id="filterPages"></a>
 
-## filterPages ⇒ <code>Array</code>
+## filterPages ⇒ <code>boolean</code>
 
 This allows filtering any data in any way.
 
 This function is executed via:
 
 ```javascript
-allPages.filter((page) => 
-
-  !excludes.some((excludedRoute) =>
-    thisFunc(page, ecludedRoute, tools)
-  )
+allPages.filter(
+  page => !excludes.some(excludedRoute => thisFunc(page, ecludedRoute, tools))
 )
 ```
-`allPages` is the results of the [`resolvePages`](#resolvePages) funciton.
 
-**Returns**: <code>Object[]</code> - - Array of Objects representing each page, but now filtered   
+`allPages` is the results of the [`resolvePages`](#resolvePages) function.
 
-| Param | Type | Description |
-| --- | --- | --- |
-| page | <code>Object</code> |  |
-| excludedRoute | <code>string</code> | Element from `exclude` Array in plugin config.|
-| tools | <code>Object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
+**Returns**: <code>Boolean</code> - - `true` excludes the path, `false` keeps it.
+
+| Param         | Type                | Description                                                                         |
+| ------------- | ------------------- | ----------------------------------------------------------------------------------- |
+| page          | <code>object</code> |                                                                                     |
+| excludedRoute | <code>string</code> | Element from `exclude` Array in plugin config.                                      |
+| tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 
 <a id="serialize"></a>
 
-## serialize⇒ <code>Object</code>
+## serialize ⇒ <code>object</code>
 
-This funciton is executed by:
+This function is executed by:
+
 ```javascript
-  allPages.map(page =>
-    thisFunc(page, siteUrl, tools)
-  )
+allPages.map(page => thisFunc(page, siteUrl, tools))
 ```
+
 `allpages` is the result of the [`filterPages`](#filterPages) function.
 
 **Kind**: global variable
 
-| Param | Type | Description |
-| --- | --- | --- |
-| page | <code>Object</code> | results of the resolvePages function |
-| tools | <code>Object</code> | contains tools for serializing `{ resolvePagePath } ` |
+| Param | Type                | Description                                          |
+| ----- | ------------------- | ---------------------------------------------------- |
+| page  | <code>object</code> | results of the resolvePages function                 |
+| tools | <code>object</code> | contains tools for serializing `{ resolvePagePath }` |

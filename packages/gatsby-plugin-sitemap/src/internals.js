@@ -25,7 +25,7 @@ export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
 /**
  * @name resolveSiteUrl
  *
- * @param {Object} data - results of the GraphQL query
+ * @param {object} data - results of the GraphQL query
  * @returns {string} - site URL, this can come from thegraphql query or another scope
  */
 export function resolveSiteUrl(data) {
@@ -37,7 +37,7 @@ export function resolveSiteUrl(data) {
  * if you don't want to place the URI in "path" then resolvePagePath
  * are needed.
  *
- * @param {Object} page - Array Item returned from resolvePages
+ * @param {object} page - Array Item returned from resolvePages
  * @returns {string} - uri of the page without domain or protocol
  */
 
@@ -51,8 +51,8 @@ export function resolvePagePath(page) {
  * This also where user's could merge multiple sources into
  * a single array if needed.
  *
- * @param {Object} data - results of the GraphQL query
- * @returns {Array} - Array of Objects representing each page
+ * @param {object} data - results of the GraphQL query
+ * @returns {Array} - Array of objects representing each page
  */
 export function resolvePages(data) {
   return data.allSitePage.nodes
@@ -66,11 +66,11 @@ export function resolvePages(data) {
  * This Function is executed via allPages.filter((page) => !excludes.some((excludedRoute) => thisFunc(page, ecludedRoute, tools)))
  * allPages is the results of the resolvePages
  *
- * @param {Object} page
+ * @param {object} page
  * @param {string} excludedRoute - Array from plugin config `options.exclude`
- * @param {Object} tools - contains required tools for filtering
+ * @param {object} tools - contains required tools for filtering
  *
- * @returns {Array}
+ * @returns {boolean}
  */
 export function defaultFilterPages(
   page,
@@ -96,11 +96,11 @@ export function defaultFilterPages(
 /**
  * @name serialize
  *
- * This funciton is executed by allPages.map(page => thisFunc(page, siteUrl, tools))
+ * This function is executed by allPages.map(page => thisFunc(page, siteUrl, tools))
  * allpages is the result of the filter process
  *
- * @param {Object[]} page - results of the resolvePages function
- * @param {Object} tools - contains tools for serializing
+ * @param {object[]} page - results of the resolvePages function
+ * @param {object} tools - contains tools for serializing
  *
  */
 export function serialize(page, { resolvePagePath }) {
