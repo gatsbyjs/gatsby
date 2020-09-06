@@ -21,8 +21,6 @@
     "@graphql-tools/utils": "^6.2.1",
     "@hapi/hoek": "^8.5.1",
     "@hapi/joi": "^15.1.1",
-    "acorn": "^7.2.0",
-    "acorn-jsx": "^5.2.0",
     "ansi-html": "^0.0.7",
     "babel-plugin-remove-export-keywords": "^1.6.5",
     "better-queue": "^3.8.10",
