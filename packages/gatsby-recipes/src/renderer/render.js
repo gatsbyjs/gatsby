@@ -131,11 +131,6 @@ const handleResource = (resourceName, context, props) => {
     cacheKey = JSON.stringify({ resourceName, ...props, mode })
   }
 
-  let allResources = useResourceContext()
-  const resourcePlan = allResources?.find(
-    a => a.resourceDefinitions._key === trueKey || a._uuid === trueKey
-  )
-
   if (!errorCache.has(trueKey)) {
     const error = validateResource(resourceName, context, props)
     errorCache.set(trueKey, error)
@@ -169,6 +164,10 @@ const handleResource = (resourceName, context, props) => {
   // TODO test this when we can mock resources by varying what
   // resources depend on what & which return first and ensuring
   // resources end in right order.
+  const allResources = useResourceContext()
+  const resourcePlan = allResources?.find(
+    a => a.resourceDefinitions._key === trueKey || a._uuid === trueKey
+  )
   if (mode === `apply` && resourcePlan.dependsOn) {
     const matches = findDependencyMatch(allResources, resourcePlan)
     let outsideReject

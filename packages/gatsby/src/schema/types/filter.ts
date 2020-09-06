@@ -108,8 +108,8 @@ const ARRAY_OPERATORS = [IN, NIN]
 
 const getOperatorFields = (
   fieldType: string,
-  operators: string[]
-): Record<string, string | string[]> => {
+  operators: Array<string>
+): Record<string, string | Array<string>> => {
   const result = {}
   operators.forEach(op => {
     if (ARRAY_OPERATORS.includes(op)) {

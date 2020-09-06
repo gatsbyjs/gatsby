@@ -37,7 +37,7 @@ module.exports = {
     title: "My Blog Title",
     author: "My Name",
     description: "My site description...",
-    siteUrl: "https://www.gatsbyjs.org/",
+    siteUrl: "https://www.gatsbyjs.com/",
     social: [
       {
         name: "twitter",

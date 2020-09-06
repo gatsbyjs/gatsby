@@ -48,11 +48,11 @@ interface ILoaderUtils {
   style: LoaderResolver
   css: LoaderResolver
   postcss: LoaderResolver<{
-    browsers?: string[]
-    overrideBrowserslist?: string[]
+    browsers?: Array<string>
+    overrideBrowserslist?: Array<string>
     plugins?:
-      | postcss.Plugin<any>[]
-      | ((loader: Loader) => postcss.Plugin<any>[])
+      | Array<postcss.Plugin<any>>
+      | ((loader: Loader) => Array<postcss.Plugin<any>>)
   }>
 
   file: LoaderResolver
@@ -81,8 +81,10 @@ interface IRuleUtils {
   /**
    * Handles JavaScript compilation via babel
    */
-  js: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
-  dependencies: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
+  js: RuleFactory<{ modulesThatUseGatsby?: Array<IModuleThatUseGatsby> }>
+  dependencies: RuleFactory<{
+    modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
+  }>
   yaml: RuleFactory
   fonts: RuleFactory
   images: RuleFactory
@@ -90,11 +92,11 @@ interface IRuleUtils {
   media: RuleFactory
 
   css: ContextualRuleFactory<{
-    browsers?: string[]
+    browsers?: Array<string>
     modules?: CssLoaderModuleOption
   }>
   cssModules: RuleFactory
-  postcss: ContextualRuleFactory<{ overrideBrowserOptions: string[] }>
+  postcss: ContextualRuleFactory<{ overrideBrowserOptions: Array<string> }>
 
   eslint: (schema: GraphQLSchema) => RuleSetRule
 }
@@ -137,6 +139,7 @@ export const createWebpackUtils = (
 
   const isSSR = stage.includes(`html`)
 
+  const jsxRuntimeExists = reactHasJsxRuntime()
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
   ): RuleSetRule => {
@@ -228,7 +231,7 @@ export const createWebpackUtils = (
         options: {
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): postcss.Plugin<any>[] => {
+          plugins: (loader: Loader): Array<postcss.Plugin<any>> => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
@@ -273,6 +276,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
           // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
@@ -303,7 +307,7 @@ export const createWebpackUtils = (
     },
 
     eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema)
+      const options = eslintConfig(schema, jsxRuntimeExists)
 
       return {
         options,
@@ -339,7 +343,9 @@ export const createWebpackUtils = (
     const js = ({
       modulesThatUseGatsby = [],
       ...options
-    }: { modulesThatUseGatsby?: IModuleThatUseGatsby[] } = {}): RuleSetRule => {
+    }: {
+      modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
+    } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: (modulePath: string): boolean => {
@@ -376,7 +382,7 @@ export const createWebpackUtils = (
     const dependencies = ({
       modulesThatUseGatsby = [],
     }: {
-      modulesThatUseGatsby?: IModuleThatUseGatsby[]
+      modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
     } = {}): RuleSetRule => {
       const jsOptions = {
         babelrc: false,
@@ -470,7 +476,7 @@ export const createWebpackUtils = (
 
   rules.yaml = (): RuleSetRule => {
     return {
-      test: /\.ya?ml/,
+      test: /\.ya?ml$/,
       use: [loaders.json(), loaders.yaml()],
     }
   }
@@ -709,4 +715,20 @@ export const createWebpackUtils = (
     rules,
     plugins,
   }
+}
+
+function reactHasJsxRuntime(): boolean {
+  try {
+    // React is shipping a new jsx runtime that is to be used with
+    // an option on @babel/preset-react called `runtime: automatic`
+    // Not every version of React has this jsx-runtime yet. Eventually,
+    // it will be backported to older versions of react and this check
+    // will become unnecessary.
+    return !!require.resolve(`react/jsx-runtime.js`)
+  } catch (e) {
+    // If the require.resolve throws, that means this version of React
+    // does not support the jsx runtime.
+  }
+
+  return false
 }

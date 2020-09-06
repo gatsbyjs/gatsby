@@ -1,5 +1,6 @@
 jest.mock(`fs`, () => {
   return {
+    ...jest.requireActual(`fs`),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
   }
 })

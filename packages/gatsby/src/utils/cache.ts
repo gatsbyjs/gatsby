@@ -33,7 +33,7 @@ export default class Cache {
   init(): Cache {
     fs.ensureDirSync(this.directory)
 
-    const configs: StoreConfig[] = [
+    const configs: Array<StoreConfig> = [
       {
         store: `memory`,
         max: MAX_CACHE_SIZE,

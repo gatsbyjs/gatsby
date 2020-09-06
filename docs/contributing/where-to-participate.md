@@ -12,9 +12,8 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Submitting documentation updates, enhancements, designs, or bug fixes
 - Submitting spelling or grammar fixes
 - Adding unit or functional tests
-- Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
 - [Reporting bugs or issues](/contributing/how-to-file-an-issue/)
-- Searching for Gatsby on [Discord](https://gatsby.dev/discord) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
+- Visiting our [Discord](https://gatsby.dev/discord) server and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
 As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/contributing/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/contributing/contributor-swag/)

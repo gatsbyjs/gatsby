@@ -14,8 +14,8 @@ import { Node } from "../../index"
  */
 function discoverPluginsWithoutNodes(
   storeState: IGatsbyState,
-  nodes: Node[]
-): string[] {
+  nodes: Array<Node>
+): Array<string> {
   // Find out which plugins own already created nodes
   const nodeOwnerSet = new Set([`default-site-plugin`])
   nodes.forEach(node => nodeOwnerSet.add(node.internal.owner))
@@ -34,7 +34,10 @@ function discoverPluginsWithoutNodes(
 /**
  * Warn about plugins that should have created nodes but didn't.
  */
-function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
+function warnForPluginsWithoutNodes(
+  state: IGatsbyState,
+  nodes: Array<Node>
+): void {
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
 
   pluginsWithNoNodes.map(name =>
@@ -47,7 +50,7 @@ function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
 /**
  * Return the set of nodes for which its root node has not been touched
  */
-function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
+function getStaleNodes(state: IGatsbyState, nodes: Array<Node>): Array<Node> {
   return nodes.filter(node => {
     let rootNode = node
     let next: Node | undefined = undefined
@@ -74,7 +77,7 @@ function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(state: IGatsbyState, nodes: Node[]): void {
+function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {

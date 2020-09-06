@@ -25,8 +25,8 @@ const getAPI = (
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
 // for subplugins.
-const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
-  const flattened: IPluginInfo[] = []
+const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
+  const flattened: Array<IPluginInfo> = []
   const extractPlugins = (plugin: IPluginInfo): void => {
     if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
       plugin.pluginOptions.plugins.forEach(subPlugin => {
@@ -47,7 +47,7 @@ const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
 export async function loadPlugins(
   config: ISiteConfig = {},
   rootDir: string | null = null
-): Promise<IFlattenedPlugin[]> {
+): Promise<Array<IFlattenedPlugin>> {
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,

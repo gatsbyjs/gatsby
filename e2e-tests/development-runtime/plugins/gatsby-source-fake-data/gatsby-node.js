@@ -29,6 +29,9 @@ exports.sourceNodes = async function sourceNodes({
     reporter.info(`Webhook data detected; creating nodes`)
     webhookBody.items.forEach(node => createNode(api.getNode(node, helpers)))
   } else {
+    if (!(webhookBody && webhookBody[`fake-data-update`])) {
+      await api.reset()
+    }
     const [updated, deleted = []] = await api.sync(helpers)
 
     updated.forEach(node => createNode(node))
