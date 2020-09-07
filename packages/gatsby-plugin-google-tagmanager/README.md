@@ -38,9 +38,14 @@ plugins: [
       // Defaults to gatsby-route-change
       routeChangeEventName: "YOUR_ROUTE_CHANGE_EVENT_NAME",
 
+      // This is your Optimize Container ID (e.g., "GTM-XXXXXX")
       // This will include the anti-flicker snippet if you have integrated the
       // optimize with your GTM. See https://developers.google.com/optimize
-      optimizeId: "", // This is your Optimize Container ID (e.g., "GTM-XXXXXX")
+      optimizeId: "",
+      // The amount of time Optimize will wait before removing the `.async-hide` class.
+      // It will be ignored if the `optimizeId` is empty.
+      // The default is 4000 milliseconds.
+      antiFlickerSnippetDelay: 4000,
     },
   },
 ]

@@ -35,7 +35,11 @@ const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
 // code.
 //
 // See https://developers.google.com/optimize#the_anti-flicker_snippet_code
-const generateOptimizeAntiFlickerSnippet = optimizeId => {
+const generateOptimizeAntiFlickerSnippet = ({
+  optimizeId,
+  dataLayerName,
+  antiFlickerSnippetDelay,
+}) => {
   if (!optimizeId) {
     return []
   }
@@ -54,7 +58,7 @@ const generateOptimizeAntiFlickerSnippet = optimizeId => {
 (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
 h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
 (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-})(window,document.documentElement,'async-hide','dataLayer',4000,
+})(window,document.documentElement,'async-hide',${dataLayerName},${antiFlickerSnippetDelay},
 {${optimizeId}:true});`,
       }}
     />,
@@ -71,6 +75,7 @@ exports.onRenderBody = (
     gtmPreview,
     defaultDataLayer,
     dataLayerName = `dataLayer`,
+    antiFlickerSnippetDelay = 4000,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -104,7 +109,13 @@ exports.onRenderBody = (
     }
 
     if (optimizeId) {
-      headComponents.push(...generateOptimizeAntiFlickerSnippet(optimizeId))
+      headComponents.push(
+        ...generateOptimizeAntiFlickerSnippet({
+          optimizeId,
+          dataLayerName,
+          antiFlickerSnippetDelay,
+        })
+      )
     }
 
     headComponents.push(
