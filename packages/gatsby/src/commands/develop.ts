@@ -465,5 +465,7 @@ function shutdownServices(
     services.push(unlock())
   })
 
-  return Promise.all(services).then(() => {})
+  return Promise.all(services)
+    .catch(() => {})
+    .then(() => {})
 }
