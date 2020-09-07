@@ -77,7 +77,7 @@ export interface ITelemetryTagsPayload {
   duration?: number
   uiSource?: string
   valid?: boolean
-  plugins?: string[]
+  plugins?: Array<string>
   pathname?: string
   error?: IStructuredError | Array<IStructuredError>
   cacheStatus?: string
@@ -202,7 +202,7 @@ export class AnalyticsTracker {
   }
 
   captureEvent(
-    type: string | string[] = ``,
+    type: string | Array<string> = ``,
     tags: ITelemetryTagsPayload = {},
     opts: ITelemetryOptsPayload = { debounce: false }
   ): void {

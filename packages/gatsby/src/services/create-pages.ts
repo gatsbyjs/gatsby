@@ -11,8 +11,8 @@ export async function createPages({
   store,
   deferNodeMutation,
 }: Partial<IDataLayerContext>): Promise<{
-  deletedPages: string[]
-  changedPages: string[]
+  deletedPages: Array<string>
+  changedPages: Array<string>
 }> {
   assertStore(store)
   const activity = reporter.activityTimer(`createPages`, {

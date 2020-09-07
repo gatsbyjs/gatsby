@@ -22,7 +22,7 @@ interface IBaseJob {
 }
 
 interface IJobInput {
-  inputPaths: string[]
+  inputPaths: Array<string>
   plugin: {
     name: string
     version: string
@@ -33,10 +33,10 @@ interface IJobInput {
 interface IInternalJob {
   id: string
   contentDigest: string
-  inputPaths: {
+  inputPaths: Array<{
     path: string
     contentDigest: string
-  }[]
+  }>
   plugin: {
     name: string
     version: string

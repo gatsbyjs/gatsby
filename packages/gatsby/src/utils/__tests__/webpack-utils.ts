@@ -6,7 +6,7 @@ import autoprefixer from "autoprefixer"
 
 jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: (): string[] => [],
+    getBrowsersList: (): Array<string> => [],
   }
 })
 

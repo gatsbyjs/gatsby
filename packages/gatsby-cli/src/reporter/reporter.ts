@@ -65,7 +65,7 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic = (errorMeta: ErrorMeta, error?: Error | Error[]): never => {
+  panic = (errorMeta: ErrorMeta, error?: Error | Array<Error>): never => {
     const reporterError = this.error(errorMeta, error)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
@@ -74,8 +74,8 @@ class Reporter {
 
   panicOnBuild = (
     errorMeta: ErrorMeta,
-    error?: Error | Error[]
-  ): IStructuredError | IStructuredError[] => {
+    error?: Error | Array<Error>
+  ): IStructuredError | Array<IStructuredError> => {
     const reporterError = this.error(errorMeta, error)
     trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
@@ -86,9 +86,9 @@ class Reporter {
   }
 
   error = (
-    errorMeta: ErrorMeta | ErrorMeta[],
-    error?: Error | Error[]
-  ): IStructuredError | IStructuredError[] => {
+    errorMeta: ErrorMeta | Array<ErrorMeta>,
+    error?: Error | Array<Error>
+  ): IStructuredError | Array<IStructuredError> => {
     let details: {
       error?: Error
       context: {}
@@ -104,7 +104,7 @@ class Reporter {
       if (Array.isArray(error)) {
         return error.map(errorItem =>
           this.error(errorMeta, errorItem)
-        ) as IStructuredError[]
+        ) as Array<IStructuredError>
       }
       details.error = error
       details.context = {
@@ -121,9 +121,9 @@ class Reporter {
       //    reporter.error([Error]);
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      return errorMeta.map(errorItem =>
-        this.error(errorItem)
-      ) as IStructuredError[]
+      return errorMeta.map(errorItem => this.error(errorItem)) as Array<
+        IStructuredError
+      >
       // 4.
       //    reporter.error(errorMeta);
     } else if (typeof errorMeta === `object`) {
