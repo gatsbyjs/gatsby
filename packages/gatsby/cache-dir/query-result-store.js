@@ -83,7 +83,7 @@ export class PageQueryStore extends React.Component {
       return <div />
     }
 
-    return <PageRenderer {...this.props} {...data} />
+    return <PageRenderer {...this.props} {...data.result} />
   }
 }
 

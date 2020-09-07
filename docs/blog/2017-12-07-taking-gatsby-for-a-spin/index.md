@@ -21,15 +21,15 @@ GatsbyJS is based on React which means that you'll be writing almost everything 
 
 ### GraphQL
 
-Gatsby was my first introduction to [GraphQL](https://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph*i*QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
+Gatsby was my first introduction to [GraphQL](https://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph_i_QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
 
-![Screenshot of GraphiQl](./grahiql_screenshot.png "GraphiQL")
+![Screenshot of GraphiQL](./grahiql_screenshot.png "GraphiQL")
 
 ### Progressive Web App and PRPL Pattern (Blazing fast)
 
 With an eye on the future, Gatsby already implements lots of Googles so called '**P**ush, **R**ender **P**re-Cache and **L**azy-load pattern (PRPL, I'm not sure if that acronym will catch on). Gatsby takes care of the pre-loading and code-splitting, which makes browsing around Gatsby sites an insanely fast experience. PRPL + the gatsby offline plugin mean that your site will be considered a PWA, will load insanely fast on any device and scores great in Google lighthouse. Read more on [PRPL](/docs/prpl-pattern/).
 
-### Webpack and Plugins
+### webpack and Plugins
 
 Can you say React without webpack? I can hardly say `hello world` without webpack anymore, although I'm still not sure how to configure it right on the first go. Gatsby comes with an extensive webpack configuration and you don't really need to touch if you don't want to. If you do, you can modify and add to the default configuration with a plugin or in the `gatsby-node` file. There's already a great range of plugins so most likely any webpack tweak is a plugin install away. With all the plenty of good examples, it’s often straightforward to write your own plugin too.
 
@@ -45,11 +45,11 @@ Some other thoughts I had while working with Gatsby:
 
 ### It's fast
 
-Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work miracles. I tried browsing the [list of sites made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) with network throttling set to 'slow 3g' in Google Chrome and the performance of these sites is still impressive.
+Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work miracles. I tried browsing the [list of sites made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) with network throttling set to 'slow 3G' in Google Chrome and the performance of these sites is still impressive.
 
 ### GraphQL is amazing
 
-Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
+Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph_i_QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
 
 ```javascript
 export const query = graphql`
@@ -103,4 +103,4 @@ You can use anything to style your Gatsby site; CSS, SCSS, Styled Components, CS
 
 I like Gatsby and I like the ideas that it promotes. The sites created with Gatsby are blazing fast, as promised. The development environment is one big party and GraphQL makes me rethink my life. I am really looking forward to develop more sites with Gatsby and I'm hoping to find an opportunity to replace a traditional WordPress install with a Gatsby site that pulls in the WP data. When that time comes, I'll report back of course.
 
-If you have any questions based on this post, don't hesitate to contact me on [Twitter](http://twitter.com/ardennl) or via [mail](mailto:a.de.raaij@gmail.com). Thanks for reading!
+If you have any questions based on this post, don't hesitate to contact me on [Twitter](https://twitter.com/ardennl) or via [mail](mailto:a.de.raaij@gmail.com). Thanks for reading!

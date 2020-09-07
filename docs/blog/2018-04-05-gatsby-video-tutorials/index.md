@@ -29,4 +29,4 @@ Ready to dive in? [All four parts of Khaled’s video series are now available o
   allowfullscreen
 ></iframe>
 
-Additionally, for a great Contentful + Gatsby blog starter, you can clone the [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) repo and be up and running in no time.
+Additionally, for a great Contentful + Gatsby blog starter, you can clone the [gatsby-contentful-starter](https://github.com/contentful/starter-gatsby-blog) repo and be up and running in no time.

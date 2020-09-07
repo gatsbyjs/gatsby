@@ -18,7 +18,34 @@
         "uuid": "file-2",
         "filename": "secondary-image.png",
         "uri": {
-          "url" : "/sites/default/files/secondary-image.png"
+          "url" : "/sites/default/files/secondary-image.png",
+           "value" : "public://secondary-image.png"
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "file-3",
+      "attributes": {
+        "id": 3,
+        "uuid": "file-3",
+        "filename": "third-image.png",
+        "uri": {
+          "url": "https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png",
+          "value" : "s3://third-image.png"
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "file-4",
+      "attributes": {
+        "id": 2,
+        "uuid": "file-4",
+        "filename": "forth-image.png",
+        "uri": {
+          "url" : "/sites/default/files/forth-image.png",
+          "value" : "private://forth-image.png"
         }
       }
     }

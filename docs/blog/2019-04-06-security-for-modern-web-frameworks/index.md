@@ -110,7 +110,7 @@ There is a small blog that does this very thing. They build the Firebase credent
 
 Assuming a nation state is not trying to attack you, what are you options for better security? You need an API.
 
-One great option is to check out Netlify. They will provide great static hosting and allow you to deploy serverless functions right along side your Gatsby site. They are not the only ones: Azure, Google, Amazon, Zeit.co, and others all have API solutions.
+One great option is to check out Netlify. They will provide great static hosting and allow you to deploy serverless functions right along side your Gatsby site. They are not the only ones: Azure, Google, Amazon, Vercel, and others all have API solutions.
 
 What does this API allow? First, you can secure your database. Any API keys can be secured on your serverless...server 😭. The point is, they will be secure. But what does this gain you? After all, instead of pillaging your database directly you have given them an API through which to pillage.
 
@@ -134,9 +134,9 @@ Remember, keep it **secret**, keep it **safe** 🧙🏼‍! Do not store API key
 
 Now go make awesome Gatsby sites that are completely secure! For more information on web security checkout these resources:
 
-- **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
+- **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is an excellent resource for security.
 
-* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
+- **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
 
 - **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
 

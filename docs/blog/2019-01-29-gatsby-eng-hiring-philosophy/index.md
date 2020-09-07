@@ -201,7 +201,7 @@ A good example of this is Gatsby core. Gatsby Core, as a ["200,000-line codebase
 
 ### Solving the next decade’s problems
 
-The "PayPal Mafia" is a group of early employees, executives, and founders of PayPal. PayPal, was founded in 1998 and sold to eBay in 2002 for $1.5 billion. This was an impressive outcome in a tech landscape littered with dot-com busts; it became even more impressive as PayPal grew inside eBay. Today, Paypal is worth over $100 billion.
+The "PayPal Mafia" is a group of early employees, executives, and founders of PayPal. PayPal, was founded in 1998 and sold to eBay in 2002 for $1.5 billion. This was an impressive outcome in a tech landscape littered with dot-com busts; it became even more impressive as PayPal grew inside eBay. Today, PayPal is worth over $100 billion.
 
 After the acquisition, there was a diaspora of PayPal employees/founders; ex-PayPal-ers went on to found and lead most of the most successful startups of the next fifteen years, including SpaceX, Tesla, Facebook (1st investor), YouTube, Yelp, LinkedIn, and Square.
 

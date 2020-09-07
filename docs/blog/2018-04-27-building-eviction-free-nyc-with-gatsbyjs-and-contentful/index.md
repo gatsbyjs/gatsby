@@ -12,7 +12,7 @@ On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) 
 
 In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
-#### **Mapping Design Considerations to Technical Scoping**
+## **Mapping Design Considerations to Technical Scoping**
 
 ![Design Mapping](design-mapping.jpeg)
 _Journey mapping for a tenant organizing process!_
@@ -39,7 +39,7 @@ outdated. We also wanted to utilize this system to make it easy for new
 languages to be added and maintained with as little technical knowledge as
 possible.
 
-#### **Our solution: GatsbyJS**
+## **Our solution: GatsbyJS**
 
 We knew that we would build the site in [React](https://reactjs.org/).
 Developers can build websites quickly and reliably through its modular
@@ -57,28 +57,28 @@ that provided a more “out-of-the-box” solution. We wound up building the sit
 GatsbyJS, which is a **React-based static site generator**. GatsbyJS is the
 perfect fit for a number of reasons:
 
-1.  [Static sites](https://en.wikipedia.org/wiki/Static_web_page) load content much
-    more quickly than dynamic web applications, which require multiple
-    back-and-forth calls to a server in order to display the final composited view
-    to the user. They are more easily adaptable for low connectivity / offline
-    functionality for this reason. This allows us to provide a faster and more
-    reliable experience for tenants utilizing the service.
-1.  GatsbyJS ships with an incredible amount of pre-handled optimization features,
-    from prefetching resources to progressive image loading to inlining code blocks
-    so they don’t need to be fetched via
-    [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
-    could have achieved this level of optimization on our own in this timeframe.
-1.  A growing plugin library that allows for easy integrations that utilize Gatsby’s
-    GraphQL data query system. With these we could easily use things like
-    [gatsby-source-contentful](/packages/gatsby-source-contentful/?=conten)
-    and [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n).
-1.  A growing community of developers sharing resources and best practices. Credit
-    is due to [mccrodp](https://github.com/mccrodp) for setting up
-    [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
-    a boilerplate that synced Contentful and i18n features together and allowed us
-    to hit the ground running.
+1. [Static sites](https://en.wikipedia.org/wiki/Static_web_page) load content much
+   more quickly than dynamic web applications, which require multiple
+   back-and-forth calls to a server in order to display the final composited view
+   to the user. They are more easily adaptable for low connectivity / offline
+   functionality for this reason. This allows us to provide a faster and more
+   reliable experience for tenants utilizing the service.
+2. GatsbyJS ships with an incredible amount of pre-handled optimization features,
+   from prefetching resources to progressive image loading to inlining code blocks
+   so they don’t need to be fetched via
+   [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
+   could have achieved this level of optimization on our own in this timeframe.
+3. A growing plugin library that allows for easy integrations that utilize Gatsby’s
+   GraphQL data query system. With these we could easily use things like
+   [gatsby-source-contentful](/packages/gatsby-source-contentful/?=conten)
+   and [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n).
+4. A growing community of developers sharing resources and best practices. Credit
+   is due to [mccrodp](https://github.com/mccrodp) for setting up
+   [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
+   a boilerplate that synced Contentful and i18n features together and allowed us
+   to hit the ground running.
 
-#### **Using Contentful**
+## **Using Contentful**
 
 [Contentful](https://www.contentful.com/) is a “headless” [Content Management
 System](https://en.wikipedia.org/wiki/Content_management_system), or CMS.
@@ -108,26 +108,28 @@ GraphQL `pageQuery` will then populate your React component’s `props` with the
 corresponding data, creating an incredibly simple pipeline from content → code.
 As an example, here’s the provider portion of a sample `pageQuery`:
 
-    providers {
-      title
-      acceptsRtcCases
-      phoneNumber
-      website
-      hours
-      intakeInstructions
-      address
-      logo {
-        resolutions(width: 100, height: 100) {
-          aspectRatio
-          width
-          height
-          src
-          srcSet
-        }
-      }
+```graphql
+providers {
+  title
+  acceptsRtcCases
+  phoneNumber
+  website
+  hours
+  intakeInstructions
+  address
+  logo {
+    resolutions(width: 100, height: 100) {
+      aspectRatio
+      width
+      height
+      src
+      srcSet
     }
+  }
+}
+```
 
-#### **Challenge: Hyper-personalized result pages in a static site**
+## **Challenge: Hyper-personalized result pages in a static site**
 
 When a tenant goes to Eviction Free NYC, they answer a simple questionnaire that
 determines a results page. It's tailored to their borough’s housing court
@@ -172,7 +174,7 @@ Feel free to [explore the source
 code](https://github.com/JustFixNYC/eviction-free-nyc) to get a better sense of
 how all this works!
 
-#### **Wrapping everything up: using Netlify**
+## **Wrapping everything up: using Netlify**
 
 When it came time to deploy, we were very excited to try out a new hosting
 platform called [Netlify](https://www.netlify.com/) that we’d been hearing a lot
@@ -181,8 +183,7 @@ simply linked Netlify to a branch in the Eviction Free NYC GitHub repo and it
 compiles and deploys the site with each push. It simplifies HTTPS certificate
 generation and even includes a system for deploying AWS Lambda functions, which
 we used to ship a small Twilio integration for the site's “Save to Phone”
-feature. _(note: we’re actually still using the original
-_[Serverless](https://serverless.com/)_ solution, but this code is in the repo
+feature. _(note: we’re actually still using the original_ [Serverless](https://serverless.com/) _solution, but this code is in the repo
 as a to-do)_
 
 The best feature of Netlify is its ability to utilize build hooks. This allows
@@ -195,7 +196,7 @@ deploy everything. Done!
 ![Mobile Comps](mobile-comps.png)
 _Mobile comps for Eviction Free NYC_
 
-#### In Conclusion
+## In Conclusion
 
 The technical process for building the site went by incredibly fast — this all
 came together in a little over a month! Despite the frenzied speed, we created a
@@ -207,4 +208,4 @@ tenants take advantage of this historic new right.
 **Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org/) is
 open source! [Click
 here](https://github.com/JustFixNYC/eviction-free-nyc) to view the code on
-github.**
+GitHub.**

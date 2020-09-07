@@ -121,7 +121,7 @@ export interface ITypeMetadata {
   dirty?: boolean
   total?: number
   ignoredFields?: Set<string>
-  fieldMap: Record<string, IValueDescriptor>
+  fieldMap?: Record<string, IValueDescriptor>
   typeConflictReporter?: TypeConflictReporter
   [key: string]: unknown
 }
@@ -164,7 +164,7 @@ const updateValueDescriptorObject = (
   nodeId: string,
   operation: Operation,
   metadata: ITypeMetadata,
-  path: object[]
+  path: Array<object>
 ): void => {
   path.push(value)
 
@@ -187,13 +187,13 @@ const updateValueDescriptorObject = (
 }
 
 const updateValueDescriptorArray = (
-  value: unknown[],
+  value: Array<unknown>,
   key: string,
   typeInfo: ITypeInfoArray,
   nodeId: string,
   operation: Operation,
   metadata: ITypeMetadata,
-  path: object[]
+  path: Array<object>
 ): void => {
   value.forEach(item => {
     let descriptor = typeInfo.item
@@ -215,7 +215,7 @@ const updateValueDescriptorArray = (
 }
 
 const updateValueDescriptorRelNodes = (
-  listOfNodeIds: string[],
+  listOfNodeIds: Array<string>,
   delta: number,
   operation: Operation,
   typeInfo: ITypeInfoRelatedNodes,
@@ -256,7 +256,7 @@ const updateValueDescriptor = (
   operation: Operation = `add`,
   descriptor: IValueDescriptor,
   metadata: ITypeMetadata,
-  path: object[]
+  path: Array<object>
 ): void => {
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
@@ -329,7 +329,7 @@ const updateValueDescriptor = (
       return
     case `relatedNodeList`:
       updateValueDescriptorRelNodes(
-        value as string[],
+        value as Array<string>,
         delta,
         operation,
         typeInfo as ITypeInfoRelatedNodes,
@@ -354,7 +354,7 @@ const updateValueDescriptor = (
 const mergeObjectKeys = (
   dpropsKeysA: object = {},
   dpropsKeysB: object = {}
-): string[] => {
+): Array<string> => {
   const dprops = Object.keys(dpropsKeysA)
   const otherProps = Object.keys(dpropsKeysB)
   return [...new Set(dprops.concat(otherProps))]
@@ -391,10 +391,12 @@ const descriptorsAreEqual = (
           descriptor?.relatedNode?.nodes,
           otherDescriptor?.relatedNode?.nodes
         )
+        // Must be present in both descriptors or absent in both
+        // in order to be considered equal
         return nodeIds.every(
           id =>
-            descriptor?.relatedNode?.nodes[id] &&
-            otherDescriptor?.relatedNode?.nodes[id]
+            Boolean(descriptor?.relatedNode?.nodes[id]) ===
+            Boolean(otherDescriptor?.relatedNode?.nodes[id])
         )
       }
       case `relatedNodeList`: {
@@ -404,8 +406,8 @@ const descriptorsAreEqual = (
         )
         return nodeIds.every(
           id =>
-            descriptor?.relatedNodeList?.nodes[id] &&
-            otherDescriptor?.relatedNodeList?.nodes[id]
+            Boolean(descriptor?.relatedNodeList?.nodes[id]) ===
+            Boolean(otherDescriptor?.relatedNodeList?.nodes[id])
         )
       }
       default:
@@ -417,7 +419,7 @@ const descriptorsAreEqual = (
   return isEqual(types, otherTypes) && types.every(childDescriptorsAreEqual)
 }
 
-const nodeFields = (node: Node, ignoredFields = new Set()): string[] =>
+const nodeFields = (node: Node, ignoredFields = new Set()): Array<string> =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
 const updateTypeMetadata = (
@@ -471,13 +473,15 @@ const addNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
 
 const deleteNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
   updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata = initialMetadata(), nodes: Node[]): ITypeMetadata =>
-  nodes.reduce(addNode, metadata)
+const addNodes = (
+  metadata = initialMetadata(),
+  nodes: Array<Node>
+): ITypeMetadata => nodes.reduce(addNode, metadata)
 
-const possibleTypes = (descriptor: IValueDescriptor = {}): ValueType[] =>
-  Object.keys(descriptor).filter(
-    type => descriptor[type].total > 0
-  ) as ValueType[]
+const possibleTypes = (descriptor: IValueDescriptor = {}): Array<ValueType> =>
+  Object.keys(descriptor).filter(type => descriptor[type].total > 0) as Array<
+    ValueType
+  >
 
 const isEmpty = ({ fieldMap }): boolean =>
   Object.keys(fieldMap).every(

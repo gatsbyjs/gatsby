@@ -1,6 +1,5 @@
 const { store } = require(`../../redux`)
 const { build, rebuildWithSitePage } = require(`..`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {

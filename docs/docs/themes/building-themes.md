@@ -41,11 +41,11 @@ Yarn workspaces are a great way to set up a project for theme development becaus
 
 For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project, and develop them locally.
 
-> 💡 If you prefer, you can develop themes as [local plugins](https://www.gatsbyjs.org/docs/creating-a-local-plugin/). Using `yarn link` or `npm link` are also viable alternatives. In general, Gatsby recommends the yarn workspaces approach for building themes, and that's what the starter and this guide will reflect.
+> 💡 If you prefer, you can develop themes as [local plugins](/docs/creating-a-local-plugin/). Using `yarn link` or `npm link` are also viable alternatives. In general, Gatsby recommends the yarn workspaces approach for building themes, and that's what the starter and this guide will reflect.
 
 > 💡 The starter takes care of all of the configuration for developing a theme using yarn workspaces. If you're interested in more detail on this setup, check out [this blog post](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
-### `package.json`
+## `package.json`
 
 The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
 
@@ -65,7 +65,7 @@ The `package.json` in the root of the new project is primarily responsible for s
 }
 ```
 
-### `/gatsby-theme-minimal`
+## `/gatsby-theme-minimal`
 
 The `/gatsby-theme-minimal` directory is the starting point of the new theme you'll develop.
 
@@ -75,7 +75,7 @@ Inside it you'll find:
 - `index.js`: Since themes also function as plugins, this is an empty file that Gatsby requires in order to use this theme as a plugin.
 - `package.json`: A file listing the dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
 
-### `/example`
+## `/example`
 
 The `/example` directory is an example Gatsby site that installs and uses the local theme, `gatsby-theme-minimal`.
 
@@ -112,4 +112,4 @@ Check out how some existing themes are built:
 
 - The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)
 - The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby-starter-notes-theme)
-- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)
+- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)

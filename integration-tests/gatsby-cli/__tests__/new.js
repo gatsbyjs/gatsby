@@ -1,25 +1,27 @@
-import { GatsbyCLI, removeFolder } from "../test-helpers"
-import fs from "fs"
+import { GatsbyCLI } from "../test-helpers"
+import * as fs from "fs-extra"
+import execa from "execa"
 import { join } from "path"
 
-const MAX_TIMEOUT = 2147483647
+const MAX_TIMEOUT = 30000
 jest.setTimeout(MAX_TIMEOUT)
 
 const cwd = `execution-folder`
 
+const clean = dir => execa(`yarn`, ["del-cli", dir])
+
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
   const dir = join(__dirname, "../execution-folder")
-  beforeAll(() => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir)
-    }
+  beforeAll(async () => {
+    await clean(dir)
+    await fs.ensureDir(dir)
   })
 
-  afterAll(() => removeFolder("execution-folder"))
+  afterAll(() => clean(dir))
 
   it(`a default starter creates a gatsby site`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke(`new`, `gatsby-default`)
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([`new`, `gatsby-default`])
 
     logs.should.contain(
       `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git`
@@ -36,11 +38,11 @@ describe(`gatsby new`, () => {
   })
 
   it(`a theme starter creates a gatsby site`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke(
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
-      `gatsbyjs/gatsby-starter-blog`
-    )
+      `gatsbyjs/gatsby-starter-blog`,
+    ])
 
     logs.should.contain(
       `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git`
@@ -57,11 +59,11 @@ describe(`gatsby new`, () => {
   })
 
   it(`an invalid starter fails to create a gatsby site`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke(
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-invalid`,
-      `tHiS-Is-A-fAkE-sTaRtEr`
-    )
+      `tHiS-Is-A-fAkE-sTaRtEr`,
+    ])
 
     logs.should.contain(`Error`)
     logs.should.contain(`starter tHiS-Is-A-fAkE-sTaRtEr doesn't exist`)

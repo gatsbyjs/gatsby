@@ -35,16 +35,18 @@ jest.mock(
   { virtual: true }
 )
 
-jest.mock(`uuid/v4`, () =>
-  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
-)
+jest.mock(`uuid`, () => {
+  return {
+    v4: jest.fn().mockImplementation(jest.requireActual(`uuid`).v4),
+  }
+})
 
 const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const uuid = require(`uuid/v4`)
+const { v4: uuidv4 } = require(`uuid`)
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
@@ -83,7 +85,7 @@ describe(`Jobs manager`, () => {
     worker.TEST_JOB.mockReset()
     endActivity.mockClear()
     pDefer.mockClear()
-    uuid.mockClear()
+    uuidv4.mockClear()
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
@@ -151,7 +153,7 @@ describe(`Jobs manager`, () => {
       const internalJob = createInternalJob(createMockJob(), plugin)
       createInternalJob(internalJob, plugin)
 
-      expect(uuid).toHaveBeenCalledTimes(1)
+      expect(uuidv4).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -216,28 +218,49 @@ describe(`Jobs manager`, () => {
       const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
       const jobArgs2 = createInternalMockJob({ inputPaths: [] })
+      const jobArgs3 = createInternalMockJob({ args: { key: `value` } })
+      const jobArgs4 = createInternalMockJob({ args: { key: `value2` } })
 
       worker.TEST_JOB.mockImplementationOnce(() => {
         throw new Error(`An error occurred`)
-      }).mockImplementationOnce(() =>
-        Promise.reject(new Error(`An error occurred`))
-      )
+      })
+        .mockImplementationOnce(() =>
+          Promise.reject(new Error(`An error occurred`))
+        )
+        .mockImplementationOnce(() =>
+          Promise.reject({ message: `An error occured` })
+        )
+        .mockImplementationOnce(() =>
+          Promise.reject({ key: `weird error object` })
+        )
 
-      expect.assertions(4)
+      expect.assertions(6)
       try {
         await enqueueJob(jobArgs)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(
-          `[WorkerError: Error: An error occurred]`
-        )
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occurred]`)
       }
       try {
         await enqueueJob(jobArgs2)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(`[WorkerError: An error occurred]`)
       }
-      expect(endActivity).toHaveBeenCalledTimes(2)
-      expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)
+
+      try {
+        await enqueueJob(jobArgs3)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
+      }
+
+      try {
+        await enqueueJob(jobArgs4)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(
+          `[WorkerError: {"key":"weird error object"}]`
+        )
+      }
+      expect(endActivity).toHaveBeenCalledTimes(4)
+      expect(worker.TEST_JOB).toHaveBeenCalledTimes(4)
     })
 
     it(`should fail when the worker returns a non object result`, async () => {

@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
 import Container from "../components/container"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
@@ -101,43 +100,36 @@ const FeaturesHeader = () => (
   </section>
 )
 
-class FeaturesPage extends Component {
-  render() {
-    return (
-      <PageWithSidebar location={this.props.location}>
-        <Helmet>
-          <title>Features</title>
-          <meta
-            name="description"
-            content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+export default function FeaturesPage({ location, data }) {
+  return (
+    <PageWithSidebar location={location}>
+      <PageMetadata
+        title="Features"
+        description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+      />
+      <Container>
+        <main id={`reach-skip-nav`}>
+          <FeaturesHeader />
+          <SimpleEvaluationTable
+            title="Feature Comparison"
+            headers={[
+              { display: `Category`, nodeFieldProperty: `Category` },
+              { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+              {
+                display: `JAMstack frameworks`,
+                nodeFieldProperty: `Jamstack`,
+              },
+              { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+            ]}
+            data={data.allGatsbyFeaturesSpecsCsv.nodes}
           />
-        </Helmet>
-        <Container>
-          <main id={`reach-skip-nav`}>
-            <FeaturesHeader />
-            <SimpleEvaluationTable
-              title="Feature Comparison"
-              headers={[
-                { display: `Category`, nodeFieldProperty: `Category` },
-                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
-                {
-                  display: `JAMstack frameworks`,
-                  nodeFieldProperty: `Jamstack`,
-                },
-                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
-              ]}
-              data={this.props.data.allGatsbyFeaturesSpecsCsv.nodes}
-            />
-            <FeaturesFooter />
-          </main>
-          <FooterLinks />
-        </Container>
-      </PageWithSidebar>
-    )
-  }
+          <FeaturesFooter />
+        </main>
+        <FooterLinks />
+      </Container>
+    </PageWithSidebar>
+  )
 }
-
-export default FeaturesPage
 
 export const pageQuery = graphql`
   query {

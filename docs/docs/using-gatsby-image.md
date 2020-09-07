@@ -2,6 +2,8 @@
 title: Using Gatsby Image to Prevent Image Bloat
 ---
 
+import ImageModel from "@components/layer-model/image-model"
+
 Using images in Gatsby components and pages requires four steps to take advantage of performance benefits.
 
 <ImageModel initialLayer="Install" />
@@ -10,7 +12,7 @@ Using images in Gatsby components and pages requires four steps to take advantag
 
 > _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
-[Demo](https://using-gatsby-image.gatsbyjs.org/)
+Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-image.gatsbyjs.org/)
 
 `gatsby-image` includes the tricks you’d expect from a modern image component. It:
 
@@ -90,7 +92,7 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
@@ -127,7 +129,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => {
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>

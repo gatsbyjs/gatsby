@@ -192,7 +192,9 @@ const commonAssertionsForSuccess = events => {
     expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
     expect(event).toHaveProperty(`action.payload`, `SUCCESS`)
   })
-  it(`it emits just 2 SET_STATUS`, () => {
+  // NOTE(@mxstbr): As part of splitting the develop process into two processes, we removed this guarantee
+  // as the FAILED status will be emitted twice. This does not impact/break Gatsby Cloud (we tested). Ref PR: #22759
+  it.skip(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
       event => event.action.type === `SET_STATUS`
     )
@@ -213,7 +215,9 @@ const commonAssertionsForFailure = events => {
     expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
     expect(event).toHaveProperty(`action.payload`, `IN_PROGRESS`)
   })
-  it(`it emits just 2 SET_STATUS`, () => {
+  // NOTE(@mxstbr): As part of splitting the develop process into two processes, we removed this guarantee
+  // as the FAILED status will be emitted twice. This does not impact/break Gatsby Cloud (we tested). Ref PR: #22759
+  it.skip(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
       event => event.action.type === `SET_STATUS`
     )
@@ -295,16 +299,19 @@ describe(`develop`, () => {
     describe(`process.kill`, () => {
       let events = []
 
-      beforeAll(async () => {
+      beforeAll(done => {
         const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
           events
         )
 
         setTimeout(() => {
           gatsbyProcess.kill(`SIGTERM`)
-        }, 1000)
+          setTimeout(() => {
+            done()
+          }, 5000)
+        }, 5000)
 
-        await finishedPromise
+        finishedPromise.then(done)
       })
 
       commonAssertionsForFailure(events)
@@ -319,7 +326,7 @@ describe(`develop`, () => {
   // See https://github.com/gatsbyjs/gatsby/issues/18518
   describe.skip(`test preview workflows`, () => {
     let gatsbyProcess
-    const mitt = new EventEmitter()
+    const eventEmitter = new EventEmitter()
     const events = []
     const clearEvents = () => {
       events.splice(0, events.length)
@@ -345,7 +352,7 @@ describe(`develop`, () => {
           msg.action.payload !== `IN_PROGRESS`
         ) {
           setTimeout(() => {
-            mitt.emit(`done`)
+            eventEmitter.emit(`done`)
             done()
           }, 5000)
         }
@@ -391,7 +398,7 @@ describe(`develop`, () => {
             codeWithError
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -406,7 +413,7 @@ describe(`develop`, () => {
             `git checkout -- ${require.resolve(`../src/pages/index.js`)}`
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -431,7 +438,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -453,7 +460,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })

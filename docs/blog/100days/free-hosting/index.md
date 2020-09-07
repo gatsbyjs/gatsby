@@ -31,8 +31,8 @@ Bonus: Try deploying your site to the free tier of multiple services to see firs
 
 For your git repo, you can use GitHub, GitLab, Bitbucket, or many similar services.
 
-And for your build tool and CDN we see many people have success with [AWS Amplify](/docs/deploying-to-aws-amplify/), [Netlify](/docs/deploying-to-netlify/), and [ZEIT Now](/docs/deploying-to-zeit-now/). Our documentation has step-by-step tutorials for those services, [and others](/docs/deploying-and-hosting/).
+And for your build tool and CDN we see many people have success with [AWS Amplify](/docs/deploying-to-aws-amplify/), [Netlify](/docs/deploying-to-netlify/), and [Vercel](/docs/deploying-to-vercel). Our documentation has step-by-step tutorials for those services, [and others](/docs/deploying-and-hosting/).
 
 ### What to Do If You Need Help
 
-If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account.. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [AskGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account.. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).

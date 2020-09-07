@@ -3,11 +3,11 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
 import { TiArrowRight } from "react-icons/ti"
 
+import PageMetadata from "../../components/page-metadata"
 import Link from "../../components/localized-link"
 import Button from "../../components/button"
 import Container from "../../components/container"
@@ -15,11 +15,7 @@ import SearchIcon from "../../components/search-icon"
 import FooterLinks from "../../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
-import {
-  colors,
-  space,
-  mediaQueries,
-} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { colors, space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const POPULAR_TAGS = [
   `themes`,
@@ -36,14 +32,14 @@ const POPULAR_TAGS = [
   `contentful`,
 ]
 
+// Responsive tag list using grid
+// https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
+
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   grid-gap: ${space[2]};
-  ${mediaQueries.md} {
-    grid-template-columns: repeat(4, 1fr);
-  }
 `
 
 const PopularTagButton = ({ children, tag }) => (
@@ -112,18 +108,15 @@ class TagsPage extends React.Component {
 
     let PopularTagButtons = []
     POPULAR_TAGS.forEach(key => {
-      PopularTagButtons.push(<PopularTagButton tag={key} />)
+      PopularTagButtons.push(<PopularTagButton key={key} tag={key} />)
     })
 
     return (
       <Container>
-        <Helmet>
-          <title>Tags</title>
-          <meta
-            name={`description`}
-            content={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
-          />
-        </Helmet>
+        <PageMetadata
+          title="Tags"
+          description={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
+        />
         <div>
           <h1
             css={{
@@ -225,10 +218,7 @@ export const pageQuery = graphql`
   query {
     allMdx(
       limit: 2000
-      filter: {
-        fields: { released: { eq: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-      }
+      filter: { fields: { released: { eq: true }, section: { eq: "blog" } } }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

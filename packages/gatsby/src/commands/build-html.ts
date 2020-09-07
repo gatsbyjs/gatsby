@@ -9,7 +9,7 @@ import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
@@ -42,7 +42,7 @@ const doBuildRenderer = async (
 
 const buildRenderer = async (
   program: IProgram,
-  stage: BuildHTMLStage,
+  stage: Stage,
   parentSpan: IActivity
 ): Promise<string> => {
   const { directory } = program
@@ -66,7 +66,7 @@ const renderHTMLQueue = async (
   workerPool: IWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
-  pages: string[]
+  pages: Array<string>
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -92,9 +92,26 @@ const renderHTMLQueue = async (
   })
 }
 
+class BuildHTMLError extends Error {
+  codeFrame = ``
+  context?: {
+    path: string
+  }
+
+  constructor(error: Error) {
+    super(error.message)
+
+    // We must use getOwnProperty because keys like `stack` are not enumerable,
+    // but we want to copy over the entire error
+    Object.getOwnPropertyNames(error).forEach(key => {
+      this[key] = error[key]
+    })
+  }
+}
+
 const doBuildPages = async (
   rendererPath: string,
-  pagePaths: string[],
+  pagePaths: Array<string>,
   activity: IActivity,
   workerPool: IWorkerPool
 ): Promise<void> => {
@@ -109,8 +126,9 @@ const doBuildPages = async (
       error.stack,
       `${rendererPath}.map`
     )
-    prettyError.context = error.context
-    throw prettyError
+    const buildError = new BuildHTMLError(prettyError)
+    buildError.context = error.context
+    throw buildError
   }
 }
 
@@ -122,8 +140,8 @@ export const buildHTML = async ({
   workerPool,
 }: {
   program: IProgram
-  stage: BuildHTMLStage
-  pagePaths: string[]
+  stage: Stage
+  pagePaths: Array<string>
   activity: IActivity
   workerPool: IWorkerPool
 }): Promise<void> => {

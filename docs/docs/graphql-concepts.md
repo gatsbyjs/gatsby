@@ -64,12 +64,14 @@ A basic page component with a GraphQL query might look like this:
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ data }) => (
-  <div>
-    <h1>About {data.site.siteMetadata.title}</h1>
-    <p>We're a very cool website you should return to often.</p>
-  </div>
-)
+export default function Page({ data }) {
+  return (
+    <div>
+      <h1>About {data.site.siteMetadata.title}</h1>
+      <p>We're a very cool website you should return to often.</p>
+    </div>
+  )
+}
 
 export const query = graphql`
   query {
@@ -201,12 +203,14 @@ import React from "react"
 import Img from "gatsby-image"
 import { graphql } from "gatsby"
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default function Page({ data }) {
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 
 export const query = graphql`
   query {
@@ -266,7 +270,7 @@ It’s good practice for your helper components to define and export a fragment 
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <div>
       <h1>Index page</h1>
@@ -306,13 +310,15 @@ If the index component becomes too large, you might want to refactor it into sma
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ frontmatter: { title, date } }) => (
-  <div>
-    <h3>
-      {title} <span>— {date}</span>
-    </h3>
-  </div>
-)
+export default function IndexPost({ frontmatter: { title, date } }) {
+  return (
+    <div>
+      <h3>
+        {title} <span>— {date}</span>
+      </h3>
+    </div>
+  )
+}
 
 export const query = graphql`
   fragment IndexPostFragment on MarkdownRemark {
@@ -331,7 +337,7 @@ import React from "react"
 import IndexPost from "../components/IndexPost"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <div>
       <h1>Index page</h1>
@@ -363,7 +369,7 @@ export const query = graphql`
 ## Further reading
 
 - [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
-- [The Anatomy of a GraphQL Query](https://www.apollographql.com/blog/the-anatomy-of-a-graphql-query)
+- [The Anatomy of a GraphQL Query](https://www.apollographql.com/blog/the-anatomy-of-a-graphql-query-6dffa9e9e747)
 
 ### Getting started with GraphQL
 
@@ -374,6 +380,6 @@ export const query = graphql`
 
 ### Advanced readings on GraphQL
 
-- [GraphQL specification](https://facebook.github.io/graphql/October2016/)
+- [GraphQL specification](https://spec.graphql.org/October2016/)
 - [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
 - [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)

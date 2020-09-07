@@ -6,19 +6,9 @@ The Gatsby REPL ("read-eval-print loop") is available via the Gatsby CLI by runn
 
 This doc will give a brief description of each REPL command, expected output, and an example of what you can do with the command to digest the data. Examples are using the [Gatsby Starter Blog](/starters/gatsbyjs/gatsby-starter-blog/) as a demo environment, since it is currently the highest rated starter, and provides standard output for most of these commands.
 
-To get started, in your terminal, after running the initial site setup steps [here](/docs/quick-start), run the command `gatsby repl` to enter the interactive shell. If you are writing out a function, you can write that over multiple lines, as long as you do not use a semicolon or close a parenthesis or brace prematurely. This is helpful for running graphql queries and callback functions.
+To get started, in your terminal, after running the initial site setup steps [here](/docs/quick-start), run the command `gatsby repl` to enter the interactive shell. If you are writing out a function, you can write that over multiple lines, as long as you do not use a semicolon or close a parenthesis or brace prematurely. This is helpful for running GraphQL queries and callback functions.
 
 ## REPL Commands
-
-- [`babelrc`](#babelrc)
-- [`components`](#components)
-- [`getNode`](#getNode)
-- [`getNodes`](#getNodes)
-- [`nodes`](#nodes)
-- [`pages`](#pages)
-- [`schema`](#schema)
-- [`siteConfig`](#siteConfig)
-- [`staticQueries`](#staticQueries)
 
 ### `babelrc`
 
@@ -194,7 +184,7 @@ gatsby > siteConfig.siteMetadata
 { title: 'Gatsby Starter Blog',
   author: 'Kyle Mathews',
   description: 'A starter blog demonstrating what Gatsby can do.',
-  siteUrl: 'https://gatsby-starter-blog-demo.netlify.com/',
+  siteUrl: 'https://gatsby-starter-blog-demo.netlify.app/',
   social: { twitter: 'kylemathews' } } // returns just the siteMetadata value of the config.
 ```
 

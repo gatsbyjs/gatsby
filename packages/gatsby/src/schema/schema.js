@@ -18,31 +18,37 @@ const {
   EnumTypeComposer,
   defineFieldMapToConfig,
 } = require(`graphql-compose`)
+const { getNode, getNodesByType } = require(`../redux/nodes`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
-const { findOne, findManyPaginated } = require(`./resolvers`)
+const {
+  findOne,
+  findManyPaginated,
+  wrappingResolver,
+  defaultResolver,
+} = require(`./resolvers`)
 const {
   processFieldExtensions,
   internalExtensionNames,
 } = require(`./extensions`)
-const { getPagination } = require(`./types/pagination`)
-const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
-const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
-const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+import { getPagination } from "./types/pagination"
+import { getSortInput, SORTABLE_ENUM } from "./types/sort"
+import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
+import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
+
 const {
   isASTDocument,
   parseTypeDef,
   reportParsingError,
 } = require(`./types/type-defs`)
-const { clearDerivedTypes } = require(`./types/derived-types`)
+import { clearDerivedTypes } from "./types/derived-types"
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
   schemaComposer,
-  nodeStore,
   types,
   typeMapping,
   fieldExtensions,
@@ -54,7 +60,6 @@ const buildSchema = async ({
 }) => {
   await updateSchemaComposer({
     schemaComposer,
-    nodeStore,
     types,
     typeMapping,
     fieldExtensions,
@@ -72,7 +77,6 @@ const buildSchema = async ({
 
 const rebuildSchemaWithSitePage = async ({
   schemaComposer,
-  nodeStore,
   typeMapping,
   fieldExtensions,
   typeConflictReporter,
@@ -92,7 +96,6 @@ const rebuildSchemaWithSitePage = async ({
     addInferredType({
       schemaComposer,
       typeComposer,
-      nodeStore,
       typeConflictReporter,
       typeMapping,
       inferenceMetadata,
@@ -103,7 +106,6 @@ const rebuildSchemaWithSitePage = async ({
     schemaComposer,
     typeComposer,
     fieldExtensions,
-    nodeStore,
     parentSpan,
   })
   return schemaComposer.buildSchema()
@@ -116,7 +118,6 @@ module.exports = {
 
 const updateSchemaComposer = async ({
   schemaComposer,
-  nodeStore,
   types,
   typeMapping,
   fieldExtensions,
@@ -139,7 +140,6 @@ const updateSchemaComposer = async ({
   activity.start()
   await addInferredTypes({
     schemaComposer,
-    nodeStore,
     typeConflictReporter,
     typeMapping,
     inferenceMetadata,
@@ -158,7 +158,6 @@ const updateSchemaComposer = async ({
   })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
-    nodeStore,
     parentSpan: activity.span,
   })
   await addConvenienceChildrenFields({
@@ -171,7 +170,6 @@ const updateSchemaComposer = async ({
         schemaComposer,
         typeComposer,
         fieldExtensions,
-        nodeStore,
         parentSpan: activity.span,
       })
     )
@@ -183,6 +181,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
+  await attachTracingResolver({ schemaComposer, parentSpan: activity.span })
   activity.end()
 }
 
@@ -190,7 +189,6 @@ const processTypeComposer = async ({
   schemaComposer,
   typeComposer,
   fieldExtensions,
-  nodeStore,
   parentSpan,
 }) => {
   if (typeComposer instanceof ObjectTypeComposer) {
@@ -206,7 +204,6 @@ const processTypeComposer = async ({
       await addImplicitConvenienceChildrenFields({
         schemaComposer,
         typeComposer,
-        nodeStore,
         parentSpan,
       })
     }
@@ -637,11 +634,7 @@ const createTypeComposerFromGatsbyType = ({
   }
 }
 
-const addSetFieldsOnGraphQLNodeTypeFields = ({
-  schemaComposer,
-  nodeStore,
-  parentSpan,
-}) =>
+const addSetFieldsOnGraphQLNodeTypeFields = ({ schemaComposer, parentSpan }) =>
   Promise.all(
     Array.from(schemaComposer.values()).map(async tc => {
       if (tc instanceof ObjectTypeComposer && tc.hasInterface(`Node`)) {
@@ -649,7 +642,7 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({
         const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
           type: {
             name: typeName,
-            nodes: nodeStore.getNodesByType(typeName),
+            nodes: getNodesByType(typeName),
           },
           traceId: `initial-setFieldsOnGraphQLNodeType`,
           parentSpan,
@@ -840,6 +833,24 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   })
 }
 
+function attachTracingResolver({ schemaComposer }) {
+  schemaComposer.forEach(typeComposer => {
+    if (
+      typeComposer instanceof ObjectTypeComposer ||
+      typeComposer instanceof InterfaceTypeComposer
+    ) {
+      typeComposer.getFieldNames().forEach(fieldName => {
+        const field = typeComposer.getField(fieldName)
+        typeComposer.extendField(fieldName, {
+          resolve: field.resolve
+            ? wrappingResolver(field.resolve)
+            : defaultResolver,
+        })
+      })
+    }
+  })
+}
+
 const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
   typeComposer.getFieldNames().forEach(fieldName => {
     const field = typeComposer.getField(fieldName)
@@ -987,7 +998,6 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
 const addImplicitConvenienceChildrenFields = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
 }) => {
   const shouldInfer = typeComposer.getExtension(`infer`)
   // In Gatsby v3, when `@dontInfer` is set, children fields will not be
@@ -997,9 +1007,9 @@ const addImplicitConvenienceChildrenFields = ({
   // if (shouldInfer === false) return
 
   const parentTypeName = typeComposer.getTypeName()
-  const nodes = nodeStore.getNodesByType(parentTypeName)
+  const nodes = getNodesByType(parentTypeName)
 
-  const childNodesByType = groupChildNodesByType({ nodeStore, nodes })
+  const childNodesByType = groupChildNodesByType({ nodes })
 
   Object.keys(childNodesByType).forEach(typeName => {
     const typeChildren = childNodesByType[typeName]
@@ -1078,11 +1088,9 @@ const createChildField = typeName => {
   }
 }
 
-const groupChildNodesByType = ({ nodeStore, nodes }) =>
+const groupChildNodesByType = ({ nodes }) =>
   _(nodes)
-    .flatMap(node =>
-      (node.children || []).map(nodeStore.getNode).filter(Boolean)
-    )
+    .flatMap(node => (node.children || []).map(getNode).filter(Boolean))
     .groupBy(node => (node.internal ? node.internal.type : undefined))
     .value()
 

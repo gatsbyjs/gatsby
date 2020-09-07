@@ -1,4 +1,4 @@
-const uuidv4 = require(`uuid/v4`)
+const { v4: uuidv4 } = require(`uuid`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const got = require(`got`)
@@ -47,13 +47,13 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
   if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
     const cloudJob = got
       .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
-        body: {
+        json: {
           file: job.inputPaths[0],
           hash: createContentDigest(job),
           transforms: job.args.operations,
           options: job.args.pluginOptions,
         },
-        json: true,
+        responseType: `json`,
       })
       .then(() => {})
 

@@ -22,7 +22,7 @@ This will generate a publishable version of your site in the `./public` folder.
 
 ## Step 2: Deploy
 
-Zip your `./public` folder and head over to [https://tiiny.host](https://tiiny.host).
+Zip your `./public` folder and head over to https://tiiny.host.
 
 Here, enter a subdomain, upload your zip file and click `Launch`.
 

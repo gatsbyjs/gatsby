@@ -20,7 +20,9 @@ module.exports = plan => {
               console.log(`${key} is missing an exported validate function`)
               return undefined
             }
-            const result = resources[key].validate(resourceDeclaration)
+            const result = resources[key].validate(
+              resourceDeclaration.resourceDefinitions
+            )
             if (result.error) {
               return {
                 step: i,

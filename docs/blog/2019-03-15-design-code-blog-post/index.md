@@ -12,7 +12,7 @@ When [Design+Code](https://designcode.io/) needed to rebuild their website to fo
 
 Design+Code started in 2015 when Meng To began with a digital book on designing iOS apps and Sketch. With Swift, Design+Code taught how to build the real iOS app from the app itself. This would serve as the foundation for future Design+Code courses – teaching how to build real, live apps, but in a compelling and design-focused way. The Design+Code React course has become their most popular course by far, and teaches how to build a production website (designcode.io) for designers and beginners. It goes from basic React concepts all the way to adding content with Contentful, to deployment and accepting payments. There have been some beautiful sites from students who've taken the course (such as [Cyfa](https://cyfa.io/)).
 
-#### Example of a student-built website, Cyfa
+## Example of a student-built website, Cyfa
 
 ![](./images/cyfa.png)
 
@@ -25,7 +25,7 @@ Design+Code started in 2015 when Meng To began with a digital book on designing 
   that we could teach them in the future
 </Pullquote>
 
-### **Learn from Doing**
+## **Learn from Doing**
 
 The Design+Code team chose Gatsby for its out-of-the-box support for page routing and its compatibility with GraphQL. Thomas also acknowledges they were well aware of Gatsby’s emerging popularity in the React ecosystem. Gatsby’s signature simplicity of starting up a new website with its variety of starter templates ticked off even more extras they were looking for.
 
@@ -37,13 +37,13 @@ AND, not to be overlooked, they wanted to be on the leading-side of offering Gat
   be able to teach designers and beginners.
 </Pullquote>
 
-### **Moving to a Subscription Model**
+## **Moving to a Subscription Model**
 
 The team was looking to transition the site from focusing on downloadable, digital book content to a full, subscription-based learning platform. The volume of new courses being provided required a system that would support their anticipated content growth as well as drive the business side of subscriptions.
 
 They achieved both with the new Gatsby-powered site and a Stripe subscription system.
 
-### **Fired Up SEO!**
+## **Fired Up SEO!**
 
 The launch was a success and landed [Design+Code at #1 on Product Hunt](https://www.producthunt.com/posts/design-code-3) the first day of the launch and #2 for the entire week.
 

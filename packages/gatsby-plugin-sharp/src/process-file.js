@@ -6,7 +6,6 @@ const duotone = require(`./duotone`)
 const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
-const imageminWebp = require(`imagemin-webp`)
 const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
 const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
@@ -169,11 +168,6 @@ exports.processFile = (file, transforms, options = {}) => {
         return transform
       }
 
-      if (transformArgs.toFormat === `webp`) {
-        await compressWebP(clonedPipeline, outputPath, transformArgs)
-        return transform
-      }
-
       try {
         await clonedPipeline.toFile(outputPath)
       } catch (err) {
@@ -200,10 +194,10 @@ const compressPng = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [
           imageminPngquant({
-            quality: `${options.pngQuality || options.quality}-${Math.min(
-              (options.pngQuality || options.quality) + 25,
-              100
-            )}`, // e.g. 40-65
+            quality: [
+              (options.pngQuality || options.quality) / 100,
+              Math.min(((options.pngQuality || options.quality) + 25) / 100, 1),
+            ], // e.g. [0.4, 0.65]
             speed: options.pngCompressionSpeed
               ? options.pngCompressionSpeed
               : undefined,
@@ -222,20 +216,6 @@ const compressJpg = (pipeline, outputPath, options) =>
           imageminMozjpeg({
             quality: options.jpegQuality || options.quality,
             progressive: options.jpegProgressive,
-          }),
-        ],
-      })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
-  )
-
-const compressWebP = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
-    imagemin
-      .buffer(sharpBuffer, {
-        plugins: [
-          imageminWebp({
-            quality: options.webpQuality || options.quality,
-            metadata: options.stripMetadata ? `none` : `all`,
           }),
         ],
       })

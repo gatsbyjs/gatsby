@@ -115,7 +115,7 @@ Which would return:
 
 ### Default Values
 
-If your spreadsheet contains column headers with only blank cells, the default behavior is to exclude this column in the graphql output as per the [documentation](https://docs.sheetjs.com/#json)
+If your spreadsheet contains column headers with only blank cells, the default behavior is to exclude this column in the GraphQL output as per the [documentation](https://docs.sheetjs.com/#json)
 
 > If `defval` is not specified, `null` and `undefined` values are skipped normally. If specified, all `null` and `undefined` points will be filled with `defval`.
 
@@ -137,7 +137,7 @@ This will make sure that any blank cells are assigned the `defval` value.
 
 ### Field Type Conflicts
 
-If your columns have different data types, e.g. numbers and strings graphql will omit these values and provide you with a field type conflicts warning during build.
+If your columns have different data types, e.g. numbers and strings, GraphQL will omit these values and provide you with a field type conflicts warning during build.
 To solve this, you can set the rawOutput option of the plugin to false. This will convert all values to strings.
 
 ```javascript

@@ -21,7 +21,8 @@ const {
   findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
-const { calculateTimeToRead } = require(`./utils/time-to-read`)
+const { getHeadingID } = require(`./utils/get-heading-id`)
+const { timeToRead } = require(`./utils/time-to-read`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -112,7 +113,6 @@ module.exports = (
         heading: null,
         maxDepth: 6,
       },
-      timeToRead = null,
     } = pluginOptions
     const tocOptions = tableOfContents
     const remarkOptions = {
@@ -272,6 +272,7 @@ module.exports = (
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
           return {
+            id: getHeadingID(heading),
             value: mdastToString(heading),
             depth: heading.depth,
           }
@@ -618,9 +619,7 @@ module.exports = (
       timeToRead: {
         type: `Int`,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(html =>
-            calculateTimeToRead(markdownNode, html, timeToRead)
-          )
+          return getHTML(markdownNode).then(timeToRead)
         },
       },
       tableOfContents: {

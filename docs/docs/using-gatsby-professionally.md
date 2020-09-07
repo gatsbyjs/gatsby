@@ -1,6 +1,5 @@
 ---
 title: Using Gatsby Professionally
-overview: true
 ---
 
 As a Gatsby developer and enthusiast, you may be interested in how you can spend more of your time professionally building with Gatsby.

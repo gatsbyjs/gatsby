@@ -23,6 +23,32 @@ describe(`Create content digest`, () => {
     )
   })
 
+  // @fixes https://github.com/gatsbyjs/gatsby/issues/21840
+  it(`returns the content digest when input is a Buffer`, () => {
+    const input = Buffer.from(`1234`)
+    const input2 = Buffer.from(`5678`)
+
+    const contentDigest = createContentDigest(input)
+    const contentDigest2 = createContentDigest(input2)
+
+    expect(typeof contentDigest).toEqual(`string`)
+    expect(contentDigest).toMatchInlineSnapshot(
+      `"81dc9bdb52d04dc20036dbd8313ed055"`
+    )
+    expect(contentDigest2).toMatchInlineSnapshot(
+      `"674f3c2c1a8a6f90461e8a66fb5550ba"`
+    )
+    expect(contentDigest).not.toEqual(contentDigest2)
+  })
+
+  // @fixes https://github.com/gatsbyjs/gatsby/issues/21840
+  it(`returns a deterministic hash from a Buffer`, () => {
+    const input = Buffer.from(`1234`)
+    const input2 = Buffer.from(`1234`)
+
+    expect(createContentDigest(input)).toEqual(createContentDigest(input2))
+  })
+
   it(`returns a deterministic hash from an object`, () => {
     const input = {
       id: `12345`,

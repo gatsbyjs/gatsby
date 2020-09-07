@@ -3,7 +3,7 @@ title: Docs & Blog Components
 tableOfContentsDepth: 2
 ---
 
-The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
+The Gatsby docs site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
 
 This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-blog-components.md) to see to how each component can be used, because they are all embedded here!
 
@@ -17,13 +17,13 @@ A variety of components have been written to help with formatting code and conte
 
 ### Guide List
 
-The `<GuideList />` is a component that renders an h2 heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
+The `<GuideList />` is a component that renders an `h2` heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
 
 #### Usage
 
 The Guide List component takes one prop:
 
-- `slug` (required) - the value of which is already available on every page's context on Gatsbyjs.org by default
+- `slug` (required) - the value of which is already available on every page's context on the site by default
 
 The slug is used to find a matching value in one of the `yaml` files that sets up the hierarchical structure for how the guides in the [docs](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/doc-links.yaml), [tutorial](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/tutorial-links.yaml), and [contributing](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/contributing-links.yaml) section are organized. It finds the matching entry in the hierarchy and renders the pages that are children of it in a list.
 
@@ -143,7 +143,7 @@ title: Deploying to Storage Provider
 
 <!-- highlight-start -->
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
+  Connect your Gatsby site to Storage Provider for automatic deployments.
 </CloudCallout>
 <!-- highlight-end -->
 ```
@@ -153,7 +153,7 @@ title: Deploying to Storage Provider
 Rendered, the component looks like this:
 
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
+  Connect your Gatsby site to Storage Provider for automatic deployments.
 </CloudCallout>
 
 ### Component Model
@@ -176,57 +176,24 @@ To help understand how GraphQL works in Gatsby...
 <ComponentModel initialLayer="Data" />
 ```
 
-#### Sample
+## Importing other components
 
-When used, it looks like this:
+If you need to use a component that is not globally available, you can do by importing it using the special `@components` alias, which points to `www/src/components`:
 
-<ComponentModel initialLayer="Data" />
+```mdx
+import EmailCaptureForm from "@components/email-capture-form"
 
-### Horizontal Navigation List
-
-The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format.
-
-#### Usage
-
-The Horizontal Nav List component takes two props:
-
-- `slug` - which is provided in the props of the page by default
-- `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
-
-The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-blog-components#guide-list`).
-
-<!-- prettier-ignore -->
-```markdown
----
-title: Glossary
----
-
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
-
-The glossary defines key vocabulary...
-
----
-
-<HorizontalNavList
-  slug={props.slug}
-  items={["guide-list", "egghead-embed", "pull-quote", "layer-model", "horizontal-navigation-list"]}
-/>
+<EmailCaptureForm />
 ```
 
-#### Sample
+**NOTE:** Do _not_ import a component using relative path directories:
 
-Rendered, it looks like this:
+```mdx
+// DO NOT DO THIS
+import EmailCaptureForm from "../../www/src/components/email-capture-form"
+```
 
-<HorizontalNavList
-  items={[
-    "guide-list",
-    "egghead-embed",
-    "pull-quote",
-    "layer-model",
-    "horizontal-navigation-list",
-  ]}
-  slug={props.slug}
-/>
+Doing so will break localized versions of the page, which are stored in other repos.
 
 ---
 
@@ -251,6 +218,10 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
   The excerpt for the post. Gatsby renders the value in `description`, `og:description`, and `twitter:description`.
 
 #### Blog Posts
+
+- `seoTitle` (string)
+
+  If provided, this value will overwrite the `title` for the blog post's `og:title` and `<title>`. This is useful for SEO, as it lets us target specific relevant keywords, without needing to change the page's primary visible title.
 
 - `date` (string)
 
@@ -328,7 +299,7 @@ Code can be formatted using regular Markdown syntax, but the docs site has addit
 Code blocks are wrapped in 3 backticks. A language can be added immediately after the first set of back ticks to provide syntax highlighting for the language. A `title` of the file can be added after the language. Line highlighting can be included in the code block by commenting `highlight-line`, or `highlight-start` followed by a `highlight-end`.
 
 <!-- prettier-ignore -->
-````
+````markdown
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js
 plugins: [
@@ -346,7 +317,7 @@ plugins: [
 
 In order to demonstrate how to use code blocks in a doc without your triple backticks being styled and formatted automatically (just like the example above), you can wrap a set of triple backticks in quadruple backticks like this:
 
-`````
+`````markdown
 ````
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js

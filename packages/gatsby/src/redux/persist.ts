@@ -55,9 +55,9 @@ export function readFromCache(): ICachedReduxState {
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
+  const nodes: Array<[string, IGatsbyNode]> = [].concat(...chunks)
 
-  if (!chunks.length && process.env.GATSBY_DB_NODES !== `loki`) {
+  if (!chunks.length) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
@@ -70,7 +70,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
+function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -84,6 +84,13 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   for (let i = 0; i < valueCount; i += step) {
     const size = v8.serialize(values[i]).length
     maxSize = Math.max(size, maxSize)
+  }
+
+  // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
+  if (maxSize > 500000) {
+    report.warn(
+      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
+    )
   }
 
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
@@ -107,7 +114,7 @@ function prepareCacheFolder(
 
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: [string, IGatsbyNode][] = [...map.entries()]
+    const values: Array<[string, IGatsbyNode]> = [...map.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 

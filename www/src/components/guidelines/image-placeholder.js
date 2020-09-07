@@ -1,19 +1,17 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx, Box } from "theme-ui"
 
-import { Box } from "./system"
-
-const ImagePlaceholder = ({ aspectRatio, ...props }) => (
-  <Box
-    {...props}
-    pb={aspectRatio ? `${aspectRatio * 100}%` : `${(9 / 16) * 100}%`}
-  />
-)
-
-ImagePlaceholder.defaultProps = {
-  bg: `grey.10`,
-  flex: `0 0 auto`,
-  height: 0,
-  width: `100%`,
+export default function ImagePlaceholder({ aspectRatio, ...props }) {
+  return (
+    <Box
+      sx={{
+        bg: `grey.10`,
+        flex: `0 0 auto`,
+        height: 0,
+        width: `100%`,
+        pb: aspectRatio ? `${aspectRatio * 100}%` : `${(9 / 16) * 100}%`,
+        ...props,
+      }}
+    />
+  )
 }
-
-export default ImagePlaceholder

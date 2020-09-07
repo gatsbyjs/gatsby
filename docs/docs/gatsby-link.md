@@ -193,7 +193,7 @@ Instead, Gatsby exports a `navigate` helper function that accepts `to` and `opti
 
 | Argument          | Required | Description                                                                                     |
 | ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`). Note: it needs to be a pathname, not a full URL.       |
 | `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
 | `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
@@ -347,6 +347,10 @@ const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
 
 export default Link
 ```
+
+### Relative links
+
+The `<Link />` component follows [the behavior of @reach/router](https://reach.tech/router/nesting) by ignoring trailing slashes and treating each page as if it were a directory when resolving relative links. For example if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`.
 
 ### File Downloads
 

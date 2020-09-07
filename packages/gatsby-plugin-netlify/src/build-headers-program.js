@@ -234,7 +234,7 @@ const validateUserOptions = (pluginOptions, reporter) => headers => {
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
       `The "transformHeaders" option to gatsby-plugin-netlify must be a function ` +
-        `that returns a array of header strings.` +
+        `that returns an array of header strings. ` +
         `Check your gatsby-config.js.`
     )
   }

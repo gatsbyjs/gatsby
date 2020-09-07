@@ -11,11 +11,11 @@ What this section will cover:
 - Pulling the data into a component using StaticQuery
 - Dynamically rendering your navigation
 
-You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
+You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through GraphQL when generating your static pages.
 
 This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default`.
 
-### Creating the link data
+## Creating the link data
 
 First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: `name` and `link`. `name` is the name of your navigation item and `link` is the page which will be navigated to when a menu item is clicked.
 
@@ -38,7 +38,7 @@ module.exports = {
 }
 ```
 
-### Viewing the `siteMetadata` in GraphQL
+## Viewing the `siteMetadata` in GraphQL
 
 GraphQL can be used to query for information contained in the `siteMetadata` object located in your project's `gatsby-config.js`. In order to test this out, you can start the `default-starter-project` in development mode by running `npm run develop`.
 
@@ -86,7 +86,7 @@ When executing this query within the GraphiQL editor you see output that looks s
 
 Perfect! You now have a way of obtaining data from the `gatsby-config.js` file. Continue by pulling this data into the layout using the query you just formed.
 
-### Pulling data inside the layout component
+## Pulling data inside the layout component
 
 Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component, you should notice a component named `StaticQuery`.
 
@@ -185,13 +185,15 @@ const Layout = ({ children }) => (
 )
 ```
 
-### Using the header component to display the navigation
+## Using the header component to display the navigation
 
-Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to you when generating your project):
+Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is boilerplate code given to you when generating your project):
 
 ```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
+import PropTypes from "prop-types"
+
 const Header = ({ siteTitle, menuLinks }) => (
   <header
     style={{

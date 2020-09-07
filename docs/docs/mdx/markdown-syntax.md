@@ -63,6 +63,7 @@ Here's how those tags render in HTML:
 - can use `*`, `-`, or `+` for each list item
 
 <!-- prettier-ignore-start -->
+
 ```markdown
 * Gatsby
   * docs
@@ -71,16 +72,15 @@ Here's how those tags render in HTML:
 + Gatsby
   + docs
 ```
+
 <!-- prettier-ignore-end -->
 
 How unordered lists are rendered in HTML:
 
 - Gatsby
   - docs
-
-* Gatsby
+- Gatsby
   - docs
-
 - Gatsby
   - docs
 
@@ -96,8 +96,8 @@ How unordered lists are rendered in HTML:
 ```
 
 1. One
-1. Two
-1. Three
+2. Two
+3. Three
 
 ## Links and images
 
@@ -180,7 +180,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
   - At the top of the file
   - Valid YAML
   - Between triple dashed lines
-  ```
+  ```markdown
   ---
   title: My Frontmatter Title
   example_boolean: true

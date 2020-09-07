@@ -209,7 +209,7 @@ The arguments you can pass to an `excerpt` field are:
 - [`pruneLength`](/docs/graphql-reference#excerpt)
 - [`truncate`](/docs/graphql-reference#excerpt)
 
-### Graphql query operations
+### GraphQL query operations
 
 Other built-in configurations can be used in queries
 

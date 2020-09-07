@@ -145,7 +145,7 @@ author {
 }
 ```
 
-Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
+Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modeling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
 
 ```graphql
 post {
@@ -311,7 +311,7 @@ This can be achieved by the following steps:
 
 1. Install `gatsby-source-filesystem` as a dependency in your source plugin:
 
-```
+```shell
 npm install gatsby-source-filesystem
 ```
 
@@ -405,7 +405,7 @@ module.exports = {
 }
 ```
 
-Then, the sharp plugins will automatically transform the File nodes created by `createRemoteFileNode` in `your-source-plugin` (which have supported image extensions like .jpg or .png). You can then query for the `remoteImage` field on your source type:
+Then, the sharp plugins will automatically transform the File nodes created by `createRemoteFileNode` in `your-source-plugin` (which have supported image extensions like `.jpg` or `.png`). You can then query for the `remoteImage` field on your source type:
 
 ```graphql
 query {
@@ -413,7 +413,7 @@ query {
     id
     remoteImage {
       childImageSharp {
-        # fluid or fixed fields for optimzed images
+        # fluid or fixed fields for optimized images
       }
     }
   }
@@ -429,10 +429,10 @@ One challenge when developing locally is that a developer might make modificatio
 
 If possible, the proactive listener approach creates the best experience if existing APIs in the data source can support it (or you have access to build support into the data source).
 
-The code to support this behavior looks like this:
+Here's some pseudo code that shows this behavior:
 
 ```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async ({ actions }, pluginOptions) => {
+exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
   const { createNode, touchNode, deleteNode } = actions
 
   // highlight-start
@@ -482,5 +482,5 @@ Then the new data needs to be pulled in via a live update like a websocket (in t
 ## Additional resources
 
 - Working example repository on [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with the features in this guide implemented
-- Tutorial on [Creating a Pixabay Image Source Plugin](/tutorial/pixabay-source-plugin-tutorial/)
+- Tutorial on [Creating a Source Plugin](/tutorial/source-plugin-tutorial/)
 - [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers), a community-made npm package with helper functions to generate Node objects with required fields like IDs and the `contentDigest` MD5 hash.

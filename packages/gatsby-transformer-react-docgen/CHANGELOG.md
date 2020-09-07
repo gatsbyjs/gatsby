@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.10...gatsby-transformer-react-docgen@5.2.11) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.9...gatsby-transformer-react-docgen@5.2.10) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.8...gatsby-transformer-react-docgen@5.2.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.7...gatsby-transformer-react-docgen@5.2.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.6...gatsby-transformer-react-docgen@5.2.7) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.5...gatsby-transformer-react-docgen@5.2.6) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.4...gatsby-transformer-react-docgen@5.2.5) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.3...gatsby-transformer-react-docgen@5.2.4) (2020-06-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-react-docgen:** update react-docgen, fix tests ([#24788](https://github.com/gatsbyjs/gatsby/issues/24788)) ([032a18c](https://github.com/gatsbyjs/gatsby/commit/032a18c))
+
+## [5.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.2...gatsby-transformer-react-docgen@5.2.3) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.1...gatsby-transformer-react-docgen@5.2.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [5.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.2.0...gatsby-transformer-react-docgen@5.2.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
 # [5.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.1.4...gatsby-transformer-react-docgen@5.2.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-transformer-react-docgen

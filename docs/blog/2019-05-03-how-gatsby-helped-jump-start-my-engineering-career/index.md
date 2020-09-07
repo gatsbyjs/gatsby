@@ -61,7 +61,7 @@ And GraphQL is great -- if you know what resolvers do, it supercharges your fron
 
 The other company -- they didn't know what React was back then -- now today they're putting out 20-30 positions for React developers. I get contacted on LinkedIn multiple times a day for companies in Dallas looking for React engineers.
 
-If you need to survive, learn React, put it on your resume, and you'll probably get an interview. React is the most looked-for skill in web development right now.
+If you need to survive, learn React, put it on your résumé, and you'll probably get an interview. React is the most looked-for skill in web development right now.
 
 **Sam**: And if you’re looking to learn React, why Gatsby?
 
@@ -77,7 +77,7 @@ There were a few things I had to learn -- Git etiquette, not committing to other
 
 But there's stuff you just can't learn until you work professionally -- how to be an effective team member, how to weight tickets.
 
-A lot of times, when we're learning to code, we get caught up in "is my resume perfect?" but when I was interviewing people, we were looking for, can we find people who want to learn? Do you like playing around with cutting edge tech?
+A lot of times, when we're learning to code, we get caught up in "is my résumé perfect?" but when I was interviewing people, we were looking for, can we find people who want to learn? Do you like playing around with cutting edge tech?
 
 And that's why Gatsby's great.
 
