@@ -95,11 +95,14 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       }
 
       onRenderBody(mocks, pluginOptions)
-      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
-      expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
-      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+      const [dataLayerInit, gtmInit] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(
+        dataLayerInit.props.dangerouslySetInnerHTML.__html
+      ).toMatchSnapshot()
+      expect(dataLayerInit.props.dangerouslySetInnerHTML.__html).toContain(
         `window.dataLayer`
       )
+      expect(gtmInit.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
     })
 
     it(`should add a function as defaultDatalayer`, () => {
@@ -120,11 +123,14 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const datalayerFuncAsString = oneLine`${pluginOptions.defaultDataLayer.value}`
 
       onRenderBody(mocks, pluginOptions)
-      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
-      expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
-      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+      const [dataLayerInit, gtmInit] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(
+        dataLayerInit.props.dangerouslySetInnerHTML.__html
+      ).toMatchSnapshot()
+      expect(dataLayerInit.props.dangerouslySetInnerHTML.__html).toContain(
         `window.dataLayer.push((${datalayerFuncAsString})());`
       )
+      expect(gtmInit.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
     })
 
     it(`should report an error when data is not valid`, () => {
@@ -175,10 +181,16 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       }
 
       onRenderBody(mocks, pluginOptions)
-      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
-      expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
-      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+      const [dataLayerInit, gtmInit] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(
+        dataLayerInit.props.dangerouslySetInnerHTML.__html
+      ).toMatchSnapshot()
+      expect(dataLayerInit.props.dangerouslySetInnerHTML.__html).toContain(
         `window.${dataLayerName}`
+      )
+      expect(gtmInit.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+      expect(gtmInit.props.dangerouslySetInnerHTML.__html).toContain(
+        `gtm.start`
       )
     })
   })
