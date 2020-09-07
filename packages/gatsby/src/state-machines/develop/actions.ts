@@ -64,6 +64,25 @@ export const markSourceFilesClean = assign<IBuildContext>({
   sourceFilesDirty: false,
 })
 
+export const markNodesDirty = assign<IBuildContext>({
+  nodesMutatedDuringQueryRun: true,
+})
+
+export const markNodesClean = assign<IBuildContext>({
+  nodesMutatedDuringQueryRun: false,
+})
+
+export const incrementRecompileCount = assign<IBuildContext>({
+  nodesMutatedDuringQueryRunRecompileCount: ({
+    nodesMutatedDuringQueryRunRecompileCount = 0,
+  }) => nodesMutatedDuringQueryRunRecompileCount + 1,
+})
+
+export const resetRecompileCount = assign<IBuildContext>({
+  nodesMutatedDuringQueryRunRecompileCount: 0,
+  nodesMutatedDuringQueryRun: false,
+})
+
 export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
   (_context, { data }): DataLayerResult => data
 )
@@ -119,17 +138,17 @@ export const panic: ActionFunction<IBuildContext, AnyEventObject> = (
   reporter.panic(event.data)
 }
 
-/**
- * Event handler used in all states where we're not ready to process a file change
- * Instead we add it to a batch to process when we're next idle
- */
-// export const markFilesDirty: BuildMachineAction = assign<IBuildContext>({
-//   filesDirty: true,
-// })
-
-export const markNodesDirty = assign<IBuildContext>({
-  nodesMutatedDuringQueryRun: true,
-})
+export const panicBecauseOfInfiniteLoop: ActionFunction<
+  IBuildContext,
+  AnyEventObject
+> = () => {
+  reporter.panic(
+    reporter.stripIndent(`
+  Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely. 
+  Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query. 
+  This may happen if they create nodes with a field that is different every time, such as a timestamp or unique id.`)
+  )
+}
 
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   callApi,
@@ -146,6 +165,10 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   spawnWebpackListener,
   markSourceFilesDirty,
   markSourceFilesClean,
+  markNodesClean,
+  incrementRecompileCount,
+  resetRecompileCount,
+  panicBecauseOfInfiniteLoop,
   saveDbState,
   setQueryRunningFinished,
   panic,

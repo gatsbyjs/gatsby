@@ -6,6 +6,8 @@ import { buildActions } from "./actions"
 import { developServices } from "./services"
 import { IBuildContext } from "../../services"
 
+const RECOMPILE_PANIC_LIMIT = 6
+
 /**
  * This is the top-level state machine for the `gatsby develop` command
  */
@@ -56,7 +58,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: [`markNodesDirty`, `callApi`],
+          actions: `callApi`,
         },
       },
       invoke: {
@@ -101,6 +103,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         SOURCE_FILE_CHANGED: {
           actions: [forwardTo(`run-queries`), `markSourceFilesDirty`],
         },
+        ADD_NODE_MUTATION: {
+          actions: [`markNodesDirty`, `callApi`],
+        },
       },
       invoke: {
         id: `run-queries`,
@@ -124,6 +129,24 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           }
         },
         onDone: [
+          {
+            // If we're at the recompile limit and nodes were mutated again then panic
+            target: `waiting`,
+            actions: `panicBecauseOfInfiniteLoop`,
+            cond: ({
+              nodesMutatedDuringQueryRun,
+              nodesMutatedDuringQueryRunRecompileCount,
+            }: IBuildContext): boolean =>
+              nodesMutatedDuringQueryRun &&
+              nodesMutatedDuringQueryRunRecompileCount >= RECOMPILE_PANIC_LIMIT,
+          },
+          {
+            // Nodes were mutated while querying, so we need to re-run everything
+            target: `recreatingPages`,
+            cond: ({ nodesMutatedDuringQueryRun }: IBuildContext): boolean =>
+              !!nodesMutatedDuringQueryRun,
+            actions: [`markNodesClean`, `incrementRecompileCount`],
+          },
           {
             // If we have no compiler (i.e. it's first run), then spin up the
             // webpack and socket.io servers
@@ -182,7 +205,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Idle, waiting for events that make us rebuild
     waiting: {
-      entry: `saveDbState`,
+      entry: [`saveDbState`, `resetRecompileCount`],
       on: {
         // Forward these events to the child machine, so it can handle batching
         ADD_NODE_MUTATION: {
@@ -221,7 +244,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: [`markNodesDirty`, `callApi`],
+          actions: `callApi`,
         },
         // Ignore, because we're about to extract them anyway
         SOURCE_FILE_CHANGED: undefined,
@@ -258,6 +281,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     // Rebuild pages if a node has been mutated outside of sourceNodes
     recreatingPages: {
       invoke: {
+        id: `recreate-pages`,
         src: `recreatePages`,
         data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
           return { parentSpan, store, deferNodeMutation: true }

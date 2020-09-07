@@ -32,6 +32,7 @@ export interface IBuildContext {
   workerPool?: JestWorker
   app?: Express
   nodesMutatedDuringQueryRun?: boolean
+  nodesMutatedDuringQueryRunRecompileCount?: number
   mutationListener?: Actor<unknown, AnyEventObject>
   nodeMutationBatch?: Array<IMutationAction>
   compiler?: Compiler
