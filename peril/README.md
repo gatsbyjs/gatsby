@@ -35,7 +35,6 @@ The Peril instance can also be configured to run events on a schedule.
 
 - [EmptyBody](./rules/emptybody.ts): Automatically requests more information from a user who opens a new issue with a blank body.
 
-
 ### To Develop
 
 ```shell
