@@ -23,6 +23,42 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     )
   })
 
+  it(`should include anti-flicker between dataLayerInit and gtmInit`, () => {
+    const mocks = {
+      setHeadComponents: jest.fn(),
+      setPreBodyComponents: jest.fn(),
+    }
+    const pluginOptions = {
+      includeInDevelopment: true,
+      optimizeId: `GTM-TEST`,
+      defaultDataLayer: {
+        type: `object`,
+        value: { pageCategory: `home` },
+      },
+    }
+
+    onRenderBody(mocks, pluginOptions)
+    const [
+      dataLayerInit,
+      antiFlickerCss,
+      antiFlickerJs,
+      gtmInit,
+    ] = mocks.setHeadComponents.mock.calls[0][0]
+    const [preBodyConfig] = mocks.setPreBodyComponents.mock.calls[0][0]
+
+    expect(dataLayerInit.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+    expect(
+      antiFlickerCss.props.dangerouslySetInnerHTML.__html
+    ).toMatchSnapshot()
+    expect(antiFlickerJs.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+    expect(gtmInit.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+    expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+    // check if no newlines were added
+    expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
+      `\n`
+    )
+  })
+
   describe(`defaultDatalayer`, () => {
     it(`should add no dataLayer by default`, () => {
       const mocks = {

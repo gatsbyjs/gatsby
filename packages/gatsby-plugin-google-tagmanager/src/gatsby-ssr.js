@@ -31,11 +31,42 @@ const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
   return stripIndent`${result}`
 }
 
+// If optimizeId is provided by a user, it will install anti-flicker snippet
+// code.
+//
+// See https://developers.google.com/optimize#the_anti-flicker_snippet_code
+const generateOptimizeAntiFlickerSnippet = optimizeId => {
+  if (!optimizeId) {
+    return []
+  }
+
+  return [
+    <style
+      key="plugin-google-tagmanager-anti-flicker-css"
+      dangerouslySetInnerHTML={{
+        __html: stripIndent`.async-hide { opacity: 0 !important}`,
+      }}
+    />,
+    <script
+      key="plugin-google-tagmanager-anti-flicker-js"
+      dangerouslySetInnerHTML={{
+        __html: stripIndent`
+(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+})(window,document.documentElement,'async-hide','dataLayer',4000,
+{${optimizeId}:true});`,
+      }}
+    />,
+  ]
+}
+
 exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents, reporter },
   {
     id,
     includeInDevelopment = false,
+    optimizeId = ``,
     gtmAuth,
     gtmPreview,
     defaultDataLayer,
@@ -59,16 +90,37 @@ exports.onRenderBody = (
       )
     }
 
-    setHeadComponents([
+    const headComponents = []
+
+    if (defaultDataLayerCode) {
+      headComponents.push(
+        <script
+          key="plugin-google-tagmanager-dataLayer"
+          dangerouslySetInnerHTML={{
+            __html: oneLine`${defaultDataLayerCode}`,
+          }}
+        />
+      )
+    }
+
+    if (optimizeId) {
+      headComponents.push(...generateOptimizeAntiFlickerSnippet(optimizeId))
+    }
+
+    headComponents.push(
       <script
-        key="plugin-google-tagmanager"
+        key="plugin-google-tagmanager-gtm"
         dangerouslySetInnerHTML={{
-          __html: oneLine`
-            ${defaultDataLayerCode}
-            ${generateGTM({ id, environmentParamStr, dataLayerName })}`,
+          __html: oneLine`${generateGTM({
+            id,
+            environmentParamStr,
+            dataLayerName,
+          })}`,
         }}
-      />,
-    ])
+      />
+    )
+
+    setHeadComponents(headComponents)
 
     setPreBodyComponents([
       <noscript

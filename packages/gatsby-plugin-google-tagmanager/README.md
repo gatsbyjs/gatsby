@@ -37,6 +37,10 @@ plugins: [
       //
       // Defaults to gatsby-route-change
       routeChangeEventName: "YOUR_ROUTE_CHANGE_EVENT_NAME",
+
+      // This will include the anti-flicker snippet if you have integrated the
+      // optimize with your GTM. See https://developers.google.com/optimize
+      optimizeId: "", // This is your Optimize Container ID (e.g., "GTM-XXXXXX")
     },
   },
 ]
