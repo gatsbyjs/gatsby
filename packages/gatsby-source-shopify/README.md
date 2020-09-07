@@ -104,7 +104,7 @@ plugins: [
       },
     },
   },
-];
+]
 ```
 
 NOTE: By default, all metafields are private. In order to pull metafields,
@@ -472,10 +472,10 @@ To learn more about image processing, check the documentation of
 ## Site's `gatsby-node.js` example
 
 ```js
-const path = require("path");
+const path = require("path")
 
 exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
   const pages = await graphql(`
     {
@@ -488,18 +488,18 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
         }
       }
     }
-  `);
+  `)
 
-  pages.data.allShopifyProduct.edges.forEach((edge) => {
+  pages.data.allShopifyProduct.edges.forEach(edge => {
     createPage({
       path: `/${edge.node.handle}`,
       component: path.resolve("./src/templates/product.js"),
       context: {
         id: edge.node.id,
       },
-    });
-  });
-};
+    })
+  })
+}
 ```
 
 ## shopifyQueries Defaults
