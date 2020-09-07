@@ -74,8 +74,15 @@ export const markNodesClean = assign<IBuildContext>({
 
 export const incrementRecompileCount = assign<IBuildContext>({
   nodesMutatedDuringQueryRunRecompileCount: ({
-    nodesMutatedDuringQueryRunRecompileCount = 0,
-  }) => nodesMutatedDuringQueryRunRecompileCount + 1,
+    nodesMutatedDuringQueryRunRecompileCount: count = 0,
+  }) => {
+    reporter.verbose(
+      `Re-running queries because nodes mutated during query run. Count: ${
+        count + 1
+      }`
+    )
+    return count + 1
+  },
 })
 
 export const resetRecompileCount = assign<IBuildContext>({
