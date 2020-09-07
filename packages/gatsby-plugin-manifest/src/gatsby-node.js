@@ -189,7 +189,7 @@ const makeManifest = async ({
   if (typeof icon !== `undefined`) {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
-      throw new Error(
+      reporter.panic(
         `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
       )
     }
