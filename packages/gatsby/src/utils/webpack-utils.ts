@@ -277,7 +277,6 @@ export const createWebpackUtils = (
         options: {
           stage,
           reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
-          // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -285,6 +284,7 @@ export const createWebpackUtils = (
             `babel`
           ),
           ...options,
+          rootDir: program.directory,
         },
         loader: require.resolve(`./babel-loader`),
       }
@@ -293,7 +293,6 @@ export const createWebpackUtils = (
     dependencies: options => {
       return {
         options: {
-          // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -401,9 +400,11 @@ export const createWebpackUtils = (
         // debugger to show the original code. Instead, the code
         // being evaluated would be much more helpful.
         sourceMaps: false,
-        cacheIdentifier: `${stage}---gatsby-dependencies@${
-          require(`babel-preset-gatsby/package.json`).version
-        }`,
+
+        cacheIdentifier: JSON.stringify({
+          browerslist: supportedBrowsers,
+          gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
+        }),
       }
 
       // TODO REMOVE IN V3
