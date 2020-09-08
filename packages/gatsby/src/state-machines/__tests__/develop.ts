@@ -11,6 +11,7 @@ const actions = {
   saveDbState: jest.fn(),
   logError: jest.fn(),
   panic: jest.fn(),
+  panicBecauseOfInfiniteLoop: jest.fn(),
 }
 
 const services = {
@@ -74,7 +75,6 @@ describe(`the top-level develop state machine`, () => {
       expect.objectContaining({ type: `ADD_NODE_MUTATION`, ...payload }),
       expect.anything()
     )
-    expect(service.state.context.nodesMutatedDuringQueryRun).toBeTruthy()
   })
 
   it(`marks source file as dirty during node sourcing`, () => {
@@ -103,7 +103,7 @@ describe(`the top-level develop state machine`, () => {
     expect(services.reloadData).toHaveBeenCalled()
   })
 
-  it(`queues a node mutation during query running`, () => {
+  it(`runs a node mutation during query running and marks node as dirty`, () => {
     const payload = { foo: 1 }
 
     const service = interpret(machine)
@@ -112,10 +112,61 @@ describe(`the top-level develop state machine`, () => {
     service.send(`done.invoke.initialize-data`)
     service.send(`done.invoke.post-bootstrap`)
     expect(service.state.context.nodeMutationBatch).toBeUndefined()
+    expect(service.state.context.nodesMutatedDuringQueryRun).toBeFalsy()
+
     service.send(`ADD_NODE_MUTATION`, { payload })
-    expect(service.state.context.nodeMutationBatch).toEqual(
-      expect.arrayContaining([payload])
-    )
+    expect(service.state.context.nodesMutatedDuringQueryRun).toBeTruthy()
+    expect(actions.callApi).toHaveBeenCalled()
+  })
+
+  it(`increments the recompile count if nodes were mutated during query running`, () => {
+    const payload = { foo: 1 }
+
+    const service = interpret(machine)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
+    service.send(`ADD_NODE_MUTATION`, { payload })
+    service.send(`done.invoke.run-queries`)
+    expect(
+      service.state.context.nodesMutatedDuringQueryRunRecompileCount
+    ).toEqual(1)
+    expect(service.state.context.nodesMutatedDuringQueryRun).toBeFalsy()
+  })
+
+  it(`resets the recompile count if nodes were not mutated during query running`, () => {
+    const service = interpret(machine)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
+    service.state.context.compiler = {} as any
+    service.state.context.nodesMutatedDuringQueryRunRecompileCount = 1
+    service.send(`done.invoke.run-queries`)
+    expect(
+      service.state.context.nodesMutatedDuringQueryRunRecompileCount
+    ).toEqual(0)
+    expect(service.state.context.nodesMutatedDuringQueryRun).toBeFalsy()
+  })
+
+  it(`panics if the recompile count is above the limit`, () => {
+    const payload = { foo: 1 }
+
+    const service = interpret(machine)
+    service.start()
+    service.send(`done.invoke.initialize`)
+    service.send(`done.invoke.initialize-data`)
+    service.send(`done.invoke.post-bootstrap`)
+
+    service.send(`ADD_NODE_MUTATION`, { payload })
+    service.send(`done.invoke.run-queries`)
+    for (let index = 0; index < 6; index++) {
+      service.send(`done.invoke.recreate-pages`)
+      service.send(`ADD_NODE_MUTATION`, { payload })
+      service.send(`done.invoke.run-queries`)
+    }
+    expect(actions.panicBecauseOfInfiniteLoop).toHaveBeenCalled()
   })
 
   it(`starts webpack if there is no compiler`, () => {
