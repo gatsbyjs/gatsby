@@ -31,7 +31,7 @@
     "globby": "^11.0.1",
     "graphql": "^14.6.0",
     "lodash": "^4.17.20",
-    "slugify": "^1.4.4"
+    "@sindresorhus/slugify": "^1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",

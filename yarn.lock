@@ -3132,6 +3132,22 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-2.1.1.tgz#ceff6a28a5b4867c2dd4a1ba513de278ccbe8bb1"
   integrity sha512-/aPsuoj/1Dw/kzhkgz+ES6TxG0zfTMGLwuK2ZG00k/iJzYHTLCE8mVU8EPqEOp/lmxPoq1C1C9RYToRKb2KEfg==
 
+"@sindresorhus/slugify@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-1.1.0.tgz#2f195365d9b953384305b62664b44b4036c49430"
+  integrity sha512-ujZRbmmizX26yS/HnB3P9QNlNa4+UvHh+rIse3RbOXLp8yl6n1TxB4t7NHggtVgS8QmmOtzXo48kCxZGACpkPw==
+  dependencies:
+    "@sindresorhus/transliterate" "^0.1.1"
+    escape-string-regexp "^4.0.0"
+
+"@sindresorhus/transliterate@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/transliterate/-/transliterate-0.1.1.tgz#779b31244781d3c898f185b61d58c89e7c782674"
+  integrity sha512-QSdIQ5keUFAZ3KLbfbsntW39ox0Ym8183RqTwBq/ZEFoN3NQAtGV+qWaNdzKpIDHgj9J2CQ2iNDRVU11Zyr7MQ==
+  dependencies:
+    escape-string-regexp "^2.0.0"
+    lodash.deburr "^4.1.0"
+
 "@styled-system/background@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@styled-system/background/-/background-5.1.2.tgz#75c63d06b497ab372b70186c0bf608d62847a2ba"
@@ -15218,6 +15234,11 @@ lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+
+lodash.deburr@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.deburr/-/lodash.deburr-4.1.0.tgz#ddb1bbb3ef07458c0177ba07de14422cb033ff9b"
+  integrity sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=
 
 lodash.defaults@^4.0.1, lodash.defaults@^4.2.0:
   version "4.2.0"
