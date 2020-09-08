@@ -46,7 +46,6 @@ export async function startWebpackServer({
   webpackWatching.suspend()
 
   compiler.hooks.invalid.tap(`log compiling`, function () {
-    console.log(`log compiling`)
     if (!webpackActivity) {
       // mark webpack as pending if we are not in the middle of compilation already
       // when input is invalidated during compilation, webpack will automatically
@@ -57,7 +56,6 @@ export async function startWebpackServer({
   })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
-    console.log(`watchRun`)
     if (!webpackActivity) {
       // there can be multiple `watchRun` events before receiving single `done` event
       // webpack will not emit assets or `done` event until all pending invalidated
@@ -73,17 +71,11 @@ export async function startWebpackServer({
 
   let isFirstCompile = true
 
-  console.log(`return`)
-
-  return new Promise((resolve, reject) => {
-    console.log({
-      compiler,
-    })
+  return new Promise(resolve => {
     compiler.hooks.done.tapAsync(`print gatsby instructions`, async function (
       stats,
       done
     ) {
-      console.log(`done`)
       // "done" event fires when Webpack has finished recompiling the bundle.
       // Whether or not you have warnings or errors, you will get this event.
 
@@ -171,7 +163,6 @@ export async function startWebpackServer({
       markWebpackStatusAsDone()
       done()
       emitter.emit(`COMPILATION_DONE`, stats)
-      console.log(`about to resolve`)
       resolve({ compiler, websocketManager, webpackWatching })
     })
   })

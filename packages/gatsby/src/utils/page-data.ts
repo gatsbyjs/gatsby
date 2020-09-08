@@ -171,10 +171,10 @@ export async function flush(): Promise<void> {
   return
 }
 
-export function enqueueFlush(): void {
+export async function enqueueFlush(): Promise<void> {
   if (isWebpackStatusPending()) {
     isFlushPending = true
   } else {
-    flush()
+    await flush()
   }
 }

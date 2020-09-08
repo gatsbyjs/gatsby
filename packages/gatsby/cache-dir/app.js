@@ -89,7 +89,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    ReactDOM.render
+    ReactDOM.hydrate
   )[0]
 
   Promise.all([

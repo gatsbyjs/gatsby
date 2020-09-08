@@ -1,5 +1,3 @@
-import chokidar from "chokidar"
-
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware, {
   WebpackDevMiddleware,
@@ -276,7 +274,7 @@ export async function startServer(
       ],
     })
 
-    res.status(200).send(response)
+    return res.status(200).send(response)
 
     // htmlActivity.end()
   })
