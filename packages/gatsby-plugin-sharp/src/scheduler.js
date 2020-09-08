@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require(`uuid`)
+const uuidv4 = require(`uuid/v4`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const got = require(`got`)

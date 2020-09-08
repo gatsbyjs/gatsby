@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.21...gatsby-recipes@0.2.22) (2020-09-08)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Normalise recipes snapshots ([#26818](https://github.com/gatsbyjs/gatsby/issues/26818)) ([4610102](https://github.com/gatsbyjs/gatsby/commit/4610102))
+
 ## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.20...gatsby-recipes@0.2.21) (2020-09-07)
 
 ### Bug Fixes
