@@ -20,6 +20,18 @@ const HELLO_WORLD_FIXTURE = path.join(
 )
 const name = `gatsby-source-filesystem`
 
+// Some of these are slow tests, because they hit the network
+jest.setTimeout(20000)
+
+function normalizePlugin({ _message, id, name, options }) {
+  return {
+    _message,
+    id,
+    name,
+    options,
+  }
+}
+
 describe(`gatsby-plugin resource`, () => {
   let tmpDir
   let starterBlogRoot
@@ -69,7 +81,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`all returns plugins as array`, async () => {
     const result = await plugin.all({ root: STARTER_BLOG_FIXTURE })
 
-    expect(result).toMatchSnapshot()
+    expect(result.map(normalizePlugin)).toMatchSnapshot()
   })
 
   test(`does not add the same plugin twice by default`, async () => {
