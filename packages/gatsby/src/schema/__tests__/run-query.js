@@ -1310,6 +1310,26 @@ describe(`Filter fields`, () => {
       )
     })
 
+    it(`handles the in operator and return a unique list even if multiple requested elements match the same array`, async () => {
+      const needle = [1, 2] // both elements appear in each node's ainArray list, but it should still return each node once
+      const [result, allNodes] = await runFilter({
+        anArray: { in: needle },
+      })
+
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
+      // Same as the test for just `[5]`. 20 and 300 do not appear anywhere.
+      expect(result?.length).toEqual(
+        allNodes.filter(node => node.anArray?.some(n => needle.includes(n)))
+          .length
+      )
+      expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+      result.forEach(node =>
+        expect(
+          node.anArray && needle.some(n => node.anArray.includes(n))
+        ).toEqual(true)
+      )
+    })
+
     it(`handles the nested in operator for array of strings`, async () => {
       const needle = [`moo`]
       const [result, allNodes] = await runFilter({
