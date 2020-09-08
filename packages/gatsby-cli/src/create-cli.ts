@@ -12,7 +12,7 @@ import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
 
-const handlerP = (fn: Function) => (...args: unknown[]): void => {
+const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
     err => report.panic(err)
@@ -422,7 +422,7 @@ Gatsby version: ${gatsbyVersion}
   }
 }
 
-export const createCli = (argv: string[]): yargs.Arguments => {
+export const createCli = (argv: Array<string>): yargs.Arguments => {
   const cli = yargs(argv).parserConfiguration({
     "boolean-negation": false,
   })
@@ -529,7 +529,7 @@ Creating a plugin:
           }),
 
       handler: handlerP(({ enable, disable }: yargs.Arguments) => {
-        const enabled = enable || !disable
+        const enabled = Boolean(enable) || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
       }),

@@ -267,7 +267,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
   buildHTMLActivityProgress.end()
 
-  let deletedPageKeys: string[] = []
+  let deletedPageKeys: Array<string> = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const deletePageDataActivityTimer = report.activityTimer(
       `Delete previous page data`

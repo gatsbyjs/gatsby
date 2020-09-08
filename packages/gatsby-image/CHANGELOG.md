@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.16...gatsby-image@2.4.17) (2020-09-07)
+
+### Bug Fixes
+
+- **gatsby-image:** do not render the source tag if no srcSet is provided ([#26766](https://github.com/gatsbyjs/gatsby/issues/26766)) ([268d982](https://github.com/gatsbyjs/gatsby/commit/268d982))
+
 ## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.15...gatsby-image@2.4.16) (2020-08-12)
 
 ### Bug Fixes
