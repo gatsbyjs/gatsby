@@ -471,7 +471,7 @@ module.exports = (
       excerptSeparator
     ) {
       const text = await getAST(markdownNode).then(ast => {
-        let excerptNodes = []
+        const excerptNodes = []
         let isBeforeSeparator = true
         visit(
           ast,
