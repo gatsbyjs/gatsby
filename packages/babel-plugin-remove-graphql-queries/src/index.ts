@@ -217,7 +217,7 @@ function getGraphQLTag(
 
   if (!isGlobal && !isGraphqlTag(tag, tagName)) return {} as IGraphQLTag
 
-  const quasis: TemplateElement[] = path.node.quasi.quasis
+  const quasis: Array<TemplateElement> = path.node.quasi.quasis
 
   if (quasis.length !== 1) {
     throw new StringInterpolationNotAllowedError(
