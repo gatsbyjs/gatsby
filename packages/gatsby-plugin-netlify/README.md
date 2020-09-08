@@ -95,6 +95,9 @@ have to add to every path. To make this easier, the plugin provides the
 }
 ```
 
+You can validate the `_headers` config through the
+[Netlify playground app](https://play.netlify.com/headers).
+
 #### Removing default headers
 
 This plugin provides default headers for increased security. If you need to remove any of those headers you can in the transfromHeaders option:
@@ -112,9 +115,6 @@ options: {
     },
 },
 ```
-
-You can validate the `_headers` config through the
-[Netlify playground app](https://play.netlify.com/headers).
 
 ### Redirects
 
