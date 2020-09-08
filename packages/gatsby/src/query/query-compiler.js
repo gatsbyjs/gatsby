@@ -27,6 +27,7 @@ const {
   VariablesAreInputTypesRule,
   VariablesInAllowedPositionRule,
 } = require(`graphql`)
+import fs from "fs-extra"
 
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
@@ -57,13 +58,15 @@ export default async function compile({ parentSpan } = {}): Promise<
     parentSpan,
     id: `query-extraction`,
   })
+
+  const base = program.directory
   activity.start()
 
   const errors = []
   const addError = errors.push.bind(errors)
 
   const parsedQueries = await parseQueries({
-    base: program.directory,
+    base,
     additional: resolveThemes(
       themes.themes
         ? themes.themes
@@ -82,6 +85,7 @@ export default async function compile({ parentSpan } = {}): Promise<
     parsedQueries,
     addError,
     parentSpan,
+    base,
   })
 
   if (errors.length !== 0) {
@@ -165,6 +169,7 @@ export const processQueries = ({
   parsedQueries,
   addError,
   parentSpan,
+  base,
 }) => {
   const { definitionsByName, operations } = extractOperations(
     schema,
@@ -172,6 +177,17 @@ export const processQueries = ({
     addError,
     parentSpan
   )
+
+  const cacheDir = base && path.join(base, `.cache`)
+
+  if (cacheDir && fs.existsSync(cacheDir)) {
+    const fragmentString = Array.from(definitionsByName.entries())
+      .filter(([_, def]) => def.isFragment)
+      .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
+      .join(`\n`)
+
+    fs.writeFileSync(path.join(cacheDir, `fragments.graphql`), fragmentString)
+  }
 
   return processDefinitions({
     schema,

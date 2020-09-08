@@ -1,5 +1,7 @@
 /* @flow */
-
+const fs = require(`fs`)
+const { printSchema } = require(`graphql`)
+const path = require(`path`)
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
 const { getNodesByType, getTypes } = require(`../redux/nodes`)
@@ -96,6 +98,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     schemaCustomization: { thirdPartySchemas, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
+    program,
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
@@ -114,6 +117,16 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     parentSpan,
   })
 
+  const cacheDirectory =
+    program.directory && path.join(program.directory, `.cache`)
+
+  if (cacheDirectory && fs.existsSync(cacheDirectory)) {
+    fs.writeFileSync(
+      path.join(cacheDirectory, `fullschema.graphql`),
+      printSchema(schema)
+    )
+  }
+
   typeConflictReporter.printConflicts()
 
   store.dispatch({
@@ -128,7 +141,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   span.finish()
 }
 
-const rebuild = async ({ parentSpan }) =>
+const rebuild = async ({ parentSpan, program }) =>
   await build({ parentSpan, fullMetadataBuild: false })
 
 const rebuildWithSitePage = async ({ parentSpan }) => {
