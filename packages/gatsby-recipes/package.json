@@ -82,7 +82,7 @@
     "unist-util-remove": "^2.0.0",
     "unist-util-visit": "^2.0.2",
     "urql": "^1.9.7",
-    "uuid": "^8.3.0",
+    "uuid": "3.4.0",
     "ws": "^7.3.0",
     "xstate": "^4.9.1",
     "yoga-layout-prebuilt": "^1.9.6",

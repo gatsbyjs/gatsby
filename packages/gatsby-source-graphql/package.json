@@ -17,7 +17,7 @@
     "graphql": "^14.6.0",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",
-    "uuid": "^8.3.0"
+    "uuid": "3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",

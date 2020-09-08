@@ -695,15 +695,16 @@ export const getNodesFromCacheByValue = (
     }
     const filterValueArr: Array<FilterValueNullable> = filterValue
 
-    const arr: Array<IGatsbyNode> = []
+    const set: Set<IGatsbyNode> = new Set()
 
     // TODO: we can also mergeSort for every step. this may perform worse because of how memory in js works.
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
     filterValueArr.forEach((v: FilterValueNullable) =>
-      filterCache.byValue.get(v)?.forEach(v => arr.push(v))
+      filterCache.byValue.get(v)?.forEach(v => set.add(v))
     )
 
+    const arr = [...set] // this is bad for perf but will guarantee us a unique set :(
     arr.sort((A, B) => A.internal.counter - B.internal.counter)
 
     // Note: it's very unlikely that the list of filter values is big so .includes should be fine here
