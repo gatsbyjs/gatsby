@@ -556,7 +556,7 @@ it is possible to define custom extensions as a way to add reusable functionalit
 to fields. Say you want to add a `fullName` field to `AuthorJson`
 and `ContributorJson`.
 
-You could of course write a `fullNameResolver`, and use it in two places:
+You could write a `fullNameResolver`, and use it in two places:
 
 ```js:title=gatsby-node.js
 const fullNameResolver = source => `${source.firstName} ${source.name}`
@@ -662,7 +662,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-It can then be used in any `createTypes` call by simply adding the directive/extension
+It can then be used in any `createTypes` call by adding the directive/extension
 to the field:
 
 ```js:title=gatsby-node.js
@@ -1143,7 +1143,7 @@ exports.createResolvers = ({
 You create a new `imageFile` field on the `CMS_Asset` type, which will create `File`
 nodes from every value on the `url` field. Since `File` nodes automatically have
 `childImageSharp` convenience fields available, you can then feed the images from the CMS
-into `gatsby-image` by simply querying:
+into `gatsby-image` by querying:
 
 ```graphql
 query {

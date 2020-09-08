@@ -1,5 +1,6 @@
 import { derivePath } from "../derive-path"
 import reporter from "gatsby-cli/lib/reporter"
+import { createPath } from "gatsby-page-utils"
 
 describe(`derive-path`, () => {
   it(`has basic support`, () => {
@@ -40,5 +41,19 @@ describe(`derive-path`, () => {
         reporter
       )
     ).toEqual(`product/bar/baz`)
+  })
+
+  it(`slugify's periods properly`, () => {
+    expect(
+      createPath(
+        derivePath(
+          `film/{Movie.title}.js`,
+          {
+            title: `Mrs. Doubtfire`,
+          },
+          reporter
+        )
+      )
+    ).toEqual(`/film/mrs-doubtfire/`)
   })
 })

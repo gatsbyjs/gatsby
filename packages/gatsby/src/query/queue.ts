@@ -97,7 +97,7 @@ const createAppropriateQueue = (
  */
 const processBatch = async (
   queue: Queue<Task, TaskResult>,
-  jobs: Task[],
+  jobs: Array<Task>,
   activity: ProgressActivityTracker
 ): Promise<unknown> => {
   if (jobs.length === 0) {

@@ -32,7 +32,7 @@ Great! You've told webpack where you want to code split. But how will these be n
 [name]-[contenthash].js
 ```
 
-Content hash is simply a hash of the contents of the chunk that was code split. But what about `name`? You haven't told webpack the "name" of the chunk, other than the filename, which can't be a name since it has slashes in it. Normally, webpack would replace `[name]` with `[id]` (see [webpack docs](https://webpack.js.org/configuration/output/#output-chunkfilename)). But, it gives us the opportunity to specify the name instead as a comment in the `import block`. In the example above, that's what the `/* webpackChunkName: "component---src-blog-js" */` is doing.
+Content hash is a hash of the contents of the chunk that was code split. But what about `name`? You haven't told webpack the "name" of the chunk, other than the filename, which can't be a name since it has slashes in it. Normally, webpack would replace `[name]` with `[id]` (see [webpack docs](https://webpack.js.org/configuration/output/#output-chunkfilename)). But, it gives us the opportunity to specify the name instead as a comment in the `import block`. In the example above, that's what the `/* webpackChunkName: "component---src-blog-js" */` is doing.
 
 ## Primer on chunkGroups and chunks
 

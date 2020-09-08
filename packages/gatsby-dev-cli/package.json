@@ -1,7 +1,7 @@
 {
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
-  "version": "2.7.18",
+  "version": "2.7.19",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -18,7 +18,7 @@
     "find-yarn-workspace-root": "^1.2.1",
     "fs-extra": "^8.1.0",
     "is-absolute": "^1.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "request": "2.88.2",
     "signal-exit": "^3.0.3",
     "verdaccio": "^4.7.2",

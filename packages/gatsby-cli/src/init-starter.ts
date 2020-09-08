@@ -17,7 +17,7 @@ import reporter from "../lib/reporter"
 
 const spawnWithArgs = (
   file: string,
-  args: string[],
+  args: Array<string>,
   options?: execa.Options
 ): execa.ExecaChildProcess =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
