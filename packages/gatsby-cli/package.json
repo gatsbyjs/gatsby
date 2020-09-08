@@ -45,7 +45,7 @@
     "source-map": "^0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^6.0.0",
-    "update-notifier": "^4.1.0",
+    "update-notifier": "^4.1.1",
     "uuid": "3.4.0",
     "yargs": "^15.4.1",
     "yurnalist": "^1.1.2"
