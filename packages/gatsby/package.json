@@ -143,7 +143,7 @@
     "type-of": "^2.0.1",
     "url-loader": "^1.1.2",
     "util.promisify": "^1.0.1",
-    "uuid": "^8.3.0",
+    "uuid": "3.4.0",
     "v8-compile-cache": "^1.1.2",
     "webpack": "^4.44.1",
     "webpack-dev-middleware": "^3.7.2",
