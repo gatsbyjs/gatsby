@@ -98,6 +98,7 @@
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
+    "fetch-mock-jest": "^1.3.0",
     "ink": "next",
     "ink-select-input": "^4.0.0",
     "ink-spinner": "^4.0.0-0",
