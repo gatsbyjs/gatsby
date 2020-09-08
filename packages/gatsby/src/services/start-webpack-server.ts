@@ -127,7 +127,7 @@ export async function startWebpackServer({
 
       if (isSuccessful) {
         const state = store.getState()
-        const mapOfTemplatesToStaticQueryHashes = mapTemplatesToStaticQueryHashes(
+        const mapOfTemplatesToStaticQueryHashes = await mapTemplatesToStaticQueryHashes(
           state,
           stats.compilation
         )
