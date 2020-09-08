@@ -683,19 +683,21 @@ module.exports = {
 exports[`gatsby-plugin resource handles config options as an object 1`] = `
 Array [
   Object {
-    "key": "foo-data-sourcing",
     "name": "gatsby-source-filesystem",
     "options": Object {
-      "name": "foo",
-      "path": "foo",
-    },
-  },
-  Object {
-    "key": "bar-data-sourcing",
-    "name": "gatsby-source-filesystem",
-    "options": Object {
-      "name": "bar",
-      "path": "bar",
+      "bar": "baz",
+      "baz": "qux",
+      "foo": 1,
+      "otherStuff": Array [
+        Object {
+          "bar": Array [
+            Object {
+              "foo": "bar",
+            },
+          ],
+          "foo": "bar2",
+        },
+      ],
     },
   },
 ]
