@@ -176,7 +176,7 @@ function generateImageSources(imageVariants) {
           sizes={sizes}
         />
       )}
-      <source media={media} srcSet={srcSet} sizes={sizes} />
+      {srcSet && <source media={media} srcSet={srcSet} sizes={sizes} />}
     </React.Fragment>
   ))
 }

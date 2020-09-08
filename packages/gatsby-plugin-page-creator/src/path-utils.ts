@@ -6,7 +6,7 @@ export function extractModel(absolutePath: string): string {
   //  This shouldn't happen - but TS requires us to validate
   if (!model) {
     throw new Error(
-      `CollectionBuilderError: An error occured extracting the Model from the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
+      `PageCreator: An error occured extracting the Model from the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
     )
   }
 
@@ -28,7 +28,7 @@ export function extractAllCollectionSegments(
   // This shouldn't happen - but TS requires us to validate
   if (!slugParts) {
     throw new Error(
-      `CollectionBuilderError: An error occured building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
+      `PageCreator: An error occured building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
     )
   }
 

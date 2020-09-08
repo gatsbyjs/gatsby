@@ -23,7 +23,9 @@ npm install --save-dev babel-preset-gatsby
 <!-- prettier-ignore-start -->
 ```json:title=.babelrc
 {
-  "plugins": ["@babel/plugin-proposal-optional-chaining"],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
+  ],
   "presets": [
     [
       "babel-preset-gatsby",

@@ -15,7 +15,9 @@ Check the GitHub repo for issues labeled with ["type: documentation" and "good f
 When working on the Gatsby.js documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
+- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
+
+> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
 ## Fixing image and link paths
 
@@ -25,7 +27,7 @@ To address missing images, check the doc or tutorial source [in the Gatsby repo]
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
-Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice for links in documentation to work on GitHub, having them working on gatsbyjs.org is a higher priority!
+Keep in mind that some links in here are already correct because they work on gatsbyjs.com. While it would be nice for links in documentation to work on GitHub, having them working on gatsbyjs.com is a higher priority!
 
 ## Headings
 
@@ -82,7 +84,9 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+
+> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
 - Prerequisites: install Node.js and Yarn. See [development setup instructions](/contributing/setting-up-your-local-dev-environment/).
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
@@ -168,13 +172,13 @@ When you're new to Gatsby there can be a lot of words to learn...
 
 There are embedded examples in a few places in the docs (like the [GraphQL Reference guide](/docs/graphql-reference/)) that provide a working version of the code described. In the specific example of the GraphQL Query Options Reference page, these examples of the GraphiQL interface show how data can be queried from Gatsby's data layer.
 
-To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://711808k40x.sse.codesandbox.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
+To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://graphql-reference-1124782374.gtsb.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
 
 <!-- prettier-ignore -->
 ```mdx
 Here's an example of a GraphQL query inline:
 
-<iframe src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
+<iframe src="https://graphql-reference-1124782374.gtsb.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
 
 More markdown content...
 ```

@@ -856,7 +856,7 @@
 - title: Alec Lomas's Portfolio / Blog
   main_url: https://www.lowmess.com/
   url: https://www.lowmess.com/
-  source_url: https://github.com/lowmess/lowmess
+  source_url: https://github.com/lowmess/lowmess.com
   featured: false
   categories:
     - Web Development
@@ -10867,7 +10867,6 @@
   description: >
     Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
   categories:
-    - Styling:Tailwind
     - Productivity
     - Technology
     - Podcast
@@ -11303,6 +11302,15 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Laputan Schools
+  main_url: https://schools.laputan.com.au
+  url: https://schools.laputan.com.au
+  description: >
+    Laputan Schools helps parents to research and engage with the schools around their areas.
+  categories:
+    - Education
+  built_by: Laputan Software
+  built_by_url: https://laputan.com.au
 - title: LeanyLabs
   main_url: https://leanylabs.com/
   url: https://leanylabs.com/mvp-development/
@@ -11382,6 +11390,27 @@
     - Freelance
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
+  featured: false
+- title: Prescriptive Data Solutions
+  main_url: https://www.prescriptive.solutions
+  url: https://www.prescriptive.solutions
+  source_url: https://github.com/prescriptive/2018Q4Website
+  description: >
+    IT Solution Delivery with Unique Benefits to the Enterprise Buyer.
+  categories:
+    - Technology
+    - Consulting
+- title: LANDTX
+  main_url: https://www.landtx.com
+  url: https://www.landtx.com
+  source_url: https://github.com/ltx-digett/landtx
+  description: >
+    LANDTX markets investment, recreational, ranch and farm lands throughout Texas.
+  categories:
+    - Real Estate
+    - Business
+  built_by: Digett
+  built_by_url: https://www.digett.com
   featured: false
 - title: Raleigh Bikes
   url: https://www.raleigh.co.uk/gb/en/
@@ -11519,6 +11548,64 @@
   built_by: HiringSolved
   built_by_url: https://hiringsolved.com/home/
   featured: false
+- title: Carie Fisher brings accessibility + fun to the web
+  url: https://cariefisher.com
+  main_url: https://cariefisher.com
+  source_url: https://github.com/cehfisher/cehfisher.github.io
+  description: >
+    Who says accessible websites have to be ugly and boring? Carie Fisher's blog/portfolio website aims to prove otherwise.
+  categories:
+    - Accessibility
+    - Blog
+    - Design
+  built_by: Carie Fisher
+  built_by_url: https://twitter.com/cariefisher
+- title: Concept Classes
+  main_url: https://conceptclassesindore.xyz/
+  url: https://www.conceptclassesindore.xyz/
+  description: >
+    A fast and blazing website made for coaching classes
+  categories:
+    - Education
+    - Featured
+  built_by: Harsh Solanki
+- title: ZN Agency
+  url: https://zn.agency
+  main_url: https://zn.agency
+  description: >
+    We are a digital consulting agency in Brisbane with UI/UX, Web Design & Development and Branding services. Our purpose is to contribute our share of positive experiences to this world.
+  categories:
+    - Agency
+    - Business
+    - Consulting
+    - Portfolio
+    - Technology
+    - User Experience
+    - Web Development
+  built_by: Nate Zerk
+  built_by_url: https://natezerk.com
+- title: Marcus Wood
+  main_url: https://www.marcuswood.io/
+  url: https://www.marcuswood.io/
+  description: >
+    Personal website for Marcus Wood, a web developer that builds products with React, TypeScript, and GraphQL.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Marcus Wood
+  built_by_url: https://www.marcuswood.io/
+- title: Crogic
+  url: https://crogic.jp
+  main_url: https://crogic.jp
+  description: >
+    Web and Music Creator's porfolio site.
+  categories:
+    - Portfolio
+    - Web Development
+    - Music
+  built_by: Mei
+  built_by_url: https://twitter.com/vo_mei0623
 - title: Reactive Resume
   url: https://rxresu.me
   main_url: https://rxresu.me
@@ -11541,7 +11628,7 @@
     - Community
     - Event
     - SEO
-- title: John Kavanagh Portfolio
+- title: John Kavanagh's Portfolio
   url: https://johnkavanagh.co.uk/
   main_url: https://johnkavanagh.co.uk/
   description: >
@@ -11550,6 +11637,22 @@
     - Portfolio
     - Technology
     - Web Development
+    - Blog
+    - Freelance
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
+- title: Red Central
+  url: https://redcentral.co.uk/
+  main_url: https://redcentral.co.uk/
+  description: >
+    Based in Bristol in the UK, Red Central is the World's no.1 creative agency for entertainment and brand licensing.
+  categories:
+    - Agency
+    - Entertainment
+    - Media
+    - Consulting
+    - Design
   built_by: John Kavanagh
   built_by_url: https://johnkavanagh.co.uk/
   featured: false
@@ -11589,6 +11692,124 @@
     - Business
   built_by: leaniercode
   featured: false
+- title: laury.dev
+  url: https://laury.dev
+  main_url: https://laury.dev
+  source_url: https://github.com/laurybueno/laury.dev
+  description: >
+    Blog and portfolio of Laury Bueno, software developer and journalist
+  categories:
+    - Open Source
+    - Blog
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Laury Bueno
+  built_by_url: https://github.com/laurybueno/
+- title: Github Profile README Generator
+  url: https://rahuldkjain.github.io/gh-profile-readme-generator/
+  main_url: https://rahuldkjain.github.io/gh-profile-readme-generator/
+  source_url: https://github.com/rahuldkjain/github-profile-readme-generator
+  description: >
+    Generate github profile README easily with latest add-ons like visitors count, github stats, etc using minimal UI.
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Rahul Jain
+  built_by_url: https://rahuldkjain.github.io
+- title: KuliahSG
+  url: https://kuliah.sg
+  main_url: https://kuliah.sg
+  categories:
+    - Education
+  description: Online Islamic content in Singapore
+- title: Ámbito Dólar
+  url: https://ambito-dolar.app
+  main_url: https://ambito-dolar.app
+  description: >
+    Free mobile application that informs the different exchange rates USD vs ARS in Argentina.
+  categories:
+    - App
+    - Landing Page
+    - Finance
+  built_by: Ariel Falduto
+  built_by_url: https://outa.im
+- title: UP42
+  main_url: https://up42.com/
+  url: https://up42.com/
+  description: UP42 is an open marketplace to buy and sell Earth Observation data and analytics algorithms. UP42 is also a platform to build and run analytics algorithms.
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+  categories:
+    - Data
+    - Technology
+    - Business
+    - Blog
+    - API
+- title: Webplace
+  url: https:/www.webplace.com.au
+  main_url: https:/www.webplace.com.au
+  description: Corporate website for the Webplace Digital Agency
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+  built_by: Webplace
+  built_by_url: https://www.webplace.com.au
+  featured: false
+- title: Motherhost
+  main_url: https://motherhost.com/
+  url: https://motherhost.com/
+  description: >
+    Ecommerce website for web hosting company.
+  categories:
+    - Web Development
+    - E-commerce
+  built_by: Motherhost
+  built_by_url: https://motherhost.com
+- title: Oomph
+  url: https://www.oomphinc.com/agency
+  main_url: https://www.oomphinc.com
+  description: >
+    We craft digital products — but we make so much more. We design delight. We make a lasting first impression. We communicate value & purpose. We build lifelong relationships.
+  categories:
+    - Accessibility
+    - Agency
+    - Business
+    - Design
+    - Marketing
+    - Technology
+    - User Experience
+    - Web Development
+  built_by: Oomph, Inc.
+  built_by_url: https://www.oomphinc.com
+- title: FatihaTV
+  url: https://fatihatv.com
+  main_url: https://fatihatv.com
+  description: A distaction-free platform to consume Islamic content from reputable Youtube Channels
+  categories:
+    - Community
+    - Library
+    - Media
+    - Nonprofit
+    - SEO
+  built_by: TengkuHafidz
+  built_by_url: https://fidz.dev
+- title: WebSheets Generator
+  url: https://my.websheets.co
+  main_url: https://demo.websheets.co
+  source_url: https://github.com/tengkuhafidz/websheets-generator
+  description: Generate websites with just Google Sheets
+  categories:
+    - Open Source
+    - Web Development
+    - Directory
+    - Gallery
+    - Portfolio
+    - Documentation
+  built_by: Tengku Hafidz
+  built_by_url: https://twitter.com/sohafidz
 - title: The Mezzofanti Guild - Language Learning Made Simple
   url: https://www.mezzoguild.com
   main_url: https://www.mezzoguild.com
@@ -11601,4 +11822,16 @@
     - Travel
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
+  featured: false
+- title: Alex Perronnet Personal Website
+  url: https://alexperronnet.io
+  main_url: https://alexperronnet.io
+  source_url: https://github.com/alexperronnet/alexperronnet.io
+  description: >
+    I'm Alex Perronnet, a french freelance developer and designer. I'm also an open-source contributor and a content creator.
+  categories:
+    - Open Source
+    - Freelance
+  built_by: Alex Perronnet
+  built_by_url: https://alexperronnet.io
   featured: false

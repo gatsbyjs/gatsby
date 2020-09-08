@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.20...gatsby-recipes@0.2.21) (2020-09-07)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add mdx packages to rollup ([#26660](https://github.com/gatsbyjs/gatsby/issues/26660)) ([69a93ba](https://github.com/gatsbyjs/gatsby/commit/69a93ba))
+
+## [0.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.19...gatsby-recipes@0.2.20) (2020-08-31)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.18...gatsby-recipes@0.2.19) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.17...gatsby-recipes@0.2.18) (2020-08-26)
+
+### Features
+
+- **gatsby-admin:** plugin view ([#26195](https://github.com/gatsbyjs/gatsby/issues/26195)) ([6287c73](https://github.com/gatsbyjs/gatsby/commit/6287c73))
+
+## [0.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.16...gatsby-recipes@0.2.17) (2020-08-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** some code cleanups + tests ([#26420](https://github.com/gatsbyjs/gatsby/issues/26420)) ([3d1cc4b](https://github.com/gatsbyjs/gatsby/commit/3d1cc4b))
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
+## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.15...gatsby-recipes@0.2.16) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add missing var for the recipes selector ([#26410](https://github.com/gatsbyjs/gatsby/issues/26410)) ([2be03bf](https://github.com/gatsbyjs/gatsby/commit/2be03bf))
+
+## [0.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.14...gatsby-recipes@0.2.15) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipe:** let resources declare dependencies & validate recipes & ensure dependencies installed first ([#26386](https://github.com/gatsbyjs/gatsby/issues/26386)) ([cc354af](https://github.com/gatsbyjs/gatsby/commit/cc354af))
+
+## [0.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.13...gatsby-recipes@0.2.14) (2020-08-12)
+
+### Bug Fixes
+
+- **deps:** install deps as devDependencies on storybook recipe ([#25991](https://github.com/gatsbyjs/gatsby/issues/25991)) ([88a8025](https://github.com/gatsbyjs/gatsby/commit/88a8025))
+- **recipes:** Install storybook dependencies with development type on typescript recipe ([#25989](https://github.com/gatsbyjs/gatsby/issues/25989)) ([e6b6268](https://github.com/gatsbyjs/gatsby/commit/e6b6268))
+
 ## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.12...gatsby-recipes@0.2.13) (2020-08-11)
 
 ### Bug Fixes

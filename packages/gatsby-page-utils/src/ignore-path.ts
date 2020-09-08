@@ -7,7 +7,7 @@ interface IPathIgnoreOptions {
 
 export function ignorePath(
   path: string,
-  ignore?: IPathIgnoreOptions | string | string[] | null
+  ignore?: IPathIgnoreOptions | string | Array<string> | null
 ): boolean {
   // Don't do anything if no ignore patterns
   if (!ignore) return false

@@ -24,10 +24,11 @@ const {
 module.exports = babelLoader.custom(babel => {
   const toReturn = {
     // Passed the loader options.
-    customOptions({ stage = `test`, ...options }) {
+    customOptions({ stage = `test`, reactRuntime = `classic`, ...options }) {
       return {
         custom: {
           stage,
+          reactRuntime,
         },
         loader: {
           sourceType: `unambiguous`,
