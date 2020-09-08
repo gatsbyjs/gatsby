@@ -78,7 +78,7 @@ export const useSiteMetadata = () => {
 }
 ```
 
-Then just import your newly created hook, like so:
+Then import your newly created hook, like so:
 
 ```jsx:title=src/pages/index.js
 import React from "react"

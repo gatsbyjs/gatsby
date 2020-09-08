@@ -10,9 +10,9 @@ import { testRequireError } from "../utils/test-require-error"
 const staticallyAnalyzeExports = (
   modulePath: string,
   resolver = require.resolve
-): string[] => {
+): Array<string> => {
   let absPath: string | undefined
-  const exportNames: string[] = []
+  const exportNames: Array<string> = []
 
   try {
     absPath = resolver(modulePath)
@@ -183,7 +183,7 @@ https://gatsby.dev/no-mixed-modules
 export const resolveModuleExports = (
   modulePath: string,
   { mode = `analysis`, resolver = require.resolve } = {}
-): string[] => {
+): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {

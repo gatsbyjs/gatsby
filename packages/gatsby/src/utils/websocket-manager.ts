@@ -57,7 +57,9 @@ const getCachedPageData = async (
   }
 }
 
-const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
+const hashPaths = (
+  paths?: Array<string>
+): undefined | Array<string | undefined> => {
   if (!paths) {
     return undefined
   }
