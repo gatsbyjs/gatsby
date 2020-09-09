@@ -19,6 +19,15 @@ describe(`test-require-error`, () => {
       ).toEqual(true)
     }
   })
+  it(`correctly handles double slashes when using windows paths`, () => {
+    try {
+      require(`.\\\\fixtures\\\\module-does-not-exist`)
+    } catch (err) {
+      expect(
+        testRequireError(`.\\\\fixtures\\\\module-does-not-exist`, err)
+      ).toEqual(true)
+    }
+  })
   it(`Only returns true on not found errors for actual module not "not found" errors of requires inside the module`, () => {
     try {
       require(`./fixtures/bad-module-require`)
