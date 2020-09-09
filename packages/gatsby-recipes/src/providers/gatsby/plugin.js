@@ -102,16 +102,27 @@ const getNameForPlugin = node => {
 const getDescriptionForPlugin = async name => {
   const pkg = await readPackageJSON({}, name)
 
-  return pkg ? pkg.description : null
+  return pkg?.description || ``
 }
 
+const readmeCache = new Map()
+
 const getReadmeForPlugin = async name => {
+  if (readmeCache.has(name)) {
+    return readmeCache.get(name)
+  }
+
   try {
-    return fetch(`https://unpkg.com/${name}/README.md`)
+    const readme = await fetch(`https://unpkg.com/${name}/README.md`)
       .then(res => res.text())
       .catch(() => null)
+
+    if (readme) {
+      readmeCache.set(name, readme)
+    }
+    return readme || ``
   } catch (err) {
-    return null
+    return ``
   }
 }
 
@@ -244,8 +255,8 @@ const read = async ({ root }, id) => {
 
       return {
         id,
-        description: description || null,
-        readme: readme,
+        description,
+        readme,
         ...plugin,
         shadowedFiles,
         shadowableFiles,
