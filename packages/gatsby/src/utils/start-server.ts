@@ -12,7 +12,7 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
-import { buildHTML, buildRenderer } from "../commands/build-html"
+import { buildRenderer } from "../commands/build-html"
 import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -26,7 +26,6 @@ import https from "https"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import { slash } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
 
@@ -64,7 +63,6 @@ export async function startServer(
   workerPool: JestWorker = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
-  const directoryPath = withBasePath(directory)
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     id: `webpack-develop`,
@@ -290,7 +288,7 @@ export async function startServer(
    **/
   const server = new http.Server(app)
 
-  const socket = websocketManager.init({ server, directory: program.directory })
+  // const socket = websocketManager.init({ server, directory: program.directory })
 
   // hardcoded `localhost`, because host should match `target` we set
   // in http proxy in `develop-proxy`
