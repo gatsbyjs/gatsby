@@ -8,7 +8,12 @@
 import express from "express"
 import bodyParser from "body-parser"
 import detectPort from "detect-port"
-import { setGatsbyCliVersion, setDefaultComponentId, trackCli } from "./"
+import {
+  setGatsbyCliVersion,
+  setDefaultComponentId,
+  trackCli,
+  startBackgroundUpdate,
+} from "./"
 
 const PORT = Promise.resolve(Number(process.env.PORT) || detectPort())
 const ROUTES = {
@@ -42,6 +47,7 @@ Object.keys(ROUTES).map(route => {
 })
 
 PORT.then(port => {
+  startBackgroundUpdate()
   app.listen(port)
   console.log(`Telemetry service listening at http://localhost:${port}.`)
 })
