@@ -516,7 +516,7 @@ export default function ({ types: t }): PluginObj {
             // By removing the page query export, FastRefresh works properly with page components
             const potentialExportPath = path2.parentPath?.parentPath?.parentPath
             if (potentialExportPath?.isExportNamedDeclaration()) {
-              potentialExportPath.remove()
+              potentialExportPath.replaceWith(path2.parentPath.parentPath)
             }
 
             const tag = path2.get(`tag`)
