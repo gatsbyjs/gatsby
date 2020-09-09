@@ -61,7 +61,7 @@ const executeInstalls = async root => {
   const depType = installs[0].resource.dependencyType
   const packagesToInstall = types[depType]
   installs = installs.filter(
-    i => !_.some(packagesToInstall, p => i.resource.name === p.resource.name)
+    i => !packagesToInstall.some(p => i.resource.name === p.resource.name)
   )
 
   const pkgs = packagesToInstall.map(p => p.resource)
