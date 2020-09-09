@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-xml",
   "description": "Gatsby plugin for parsing XML files. It supports also attributes",
-  "version": "2.3.10",
+  "version": "2.3.11",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "bluebird": "^3.7.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {

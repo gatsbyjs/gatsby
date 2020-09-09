@@ -16,7 +16,10 @@ Plural fields accept four arguments - `filter`, `sort`, `skip` and `limit`. `fil
 
 ```graphql
 {
-  allBlogPost(filter: { date: { lt: "2020-01-01" }}, sort: {fields: [date], order: ASC) {
+  allBlogPost(
+    filter: { date: { lt: "2020-01-01" } }
+    sort: { fields: [date], order: ASC }
+  ) {
     nodes {
       id
     }
@@ -48,7 +51,7 @@ Gatsby uses a common pattern in GraphQL called [Connections](https://relay.dev/g
 - `pageInfo.totalCount` - (also available as `totalCount` number of all nodes that match the filter, before pagination
 - `pageInfo.currentPage` - index of the current page (based on 1)
 - `pageInfo.hasNextPage`, `pageInfo.hasPreviousPage` - whether there is a next or previous page based on current pagination
-- `pageInfoitemCount` - number of items on current page
+- `pageInfo.itemCount` - number of items on current page
 - `perPage` - requested number of items on each page
 - `pageCount` - total number of pages
 - `distinct(field)` - print distinct values for given field

@@ -20,7 +20,7 @@ interface IGatsbyWebpackVirtualModulesContext {
 }
 
 const fileContentLookup: Record<string, string> = {}
-const instances: IGatsbyWebpackVirtualModulesContext[] = []
+const instances: Array<IGatsbyWebpackVirtualModulesContext> = []
 
 export const VIRTUAL_MODULES_BASE_PATH = `.cache/_this_is_virtual_fs_path_`
 

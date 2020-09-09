@@ -9,9 +9,9 @@ export const renderHTML = ({
   envVars,
 }: {
   htmlComponentRendererPath: string
-  paths: string[]
-  envVars: string[][]
-}): Promise<unknown[]> => {
+  paths: Array<string>
+  envVars: Array<Array<string>>
+}): Promise<Array<unknown>> => {
   // This is being executed in child process, so we need to set some vars
   // for modules that aren't bundled by webpack.
   envVars.forEach(([key, value]) => (process.env[key] = value))

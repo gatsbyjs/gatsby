@@ -145,7 +145,7 @@ author {
 }
 ```
 
-Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
+Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modeling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
 
 ```graphql
 post {
@@ -413,7 +413,7 @@ query {
     id
     remoteImage {
       childImageSharp {
-        # fluid or fixed fields for optimzed images
+        # fluid or fixed fields for optimized images
       }
     }
   }
