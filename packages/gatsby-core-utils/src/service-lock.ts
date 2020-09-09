@@ -58,9 +58,15 @@ export const createServiceLock = async (
   try {
     await fs.writeFile(serviceDataFile, JSON.stringify(content))
 
-    const unlock = await lockfile.lock(serviceDataFile, lockfileOptions)
+    const release = await lockfile.lock(serviceDataFile, lockfileOptions)
 
-    return unlock
+    return async function unlockService(): Promise<void> {
+      try {
+        await release()
+      } catch (err) {
+        // We can silently ignore this, because the error will just be if it's already unlocked
+      }
+    }
   } catch (err) {
     return null
   }
