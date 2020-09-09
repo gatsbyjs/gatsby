@@ -119,6 +119,8 @@ exports.sourceNodes = async (
     parentSpan,
   })
 
+  console.time(`ctf data processing`)
+
   const processingActivity = reporter.activityTimer(`process Contentful data`, {
     parentSpan,
   })
@@ -154,7 +156,9 @@ exports.sourceNodes = async (
   )
 
   // Store a raw and unresolved copy of the data for caching
+  console.time(`clone deep current sync`)
   const currentSyncDataRaw = _.cloneDeep(currentSyncData)
+  console.timeEnd(`clone deep current sync`)
 
   // Use the JS-SDK to resolve the entries and assets
   const res = createClient({
@@ -228,6 +232,10 @@ exports.sourceNodes = async (
     cache.set(CACHE_SYNC_KEY, currentSyncDataRaw),
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
+
+  console.timeEnd(`ctf data processing`)
+
+  console.time(`ctf node creation`)
 
   reporter.verbose(`Building Contentful reference map`)
 
@@ -347,6 +355,8 @@ exports.sourceNodes = async (
   }
 
   creationActivity.end()
+
+  console.timeEnd(`ctf node creation`)
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
