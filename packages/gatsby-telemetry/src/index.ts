@@ -116,4 +116,6 @@ module.exports = {
   aggregateStats,
   addSiteMeasurement,
   expressMiddleware,
+  setDefaultComponentId,
+  setGatsbyCliVersion,
 }
