@@ -16,6 +16,6 @@ export const testRequireError = (moduleName: string, err: any): boolean => {
       `\\$&`
     )}`
   )
-  const firstLine = err.toString().replace(/\\\\/g, `\\`).split(`\n`)[0]
-  return regex.test(firstLine)
+  const [ firstLine ] = err.toString().split(`\n`)
+  return regex.test(firstLine.replace(`\\\\`, `\\`))
 }
