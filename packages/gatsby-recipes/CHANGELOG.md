@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.22...gatsby-recipes@0.2.23) (2020-09-09)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Cache readme and always return string ([#26833](https://github.com/gatsbyjs/gatsby/issues/26833)) ([58dc15e](https://github.com/gatsbyjs/gatsby/commit/58dc15e))
+
 ## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.21...gatsby-recipes@0.2.22) (2020-09-08)
 
 ### Bug Fixes
