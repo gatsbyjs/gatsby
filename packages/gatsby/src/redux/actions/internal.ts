@@ -51,7 +51,7 @@ export const createPageDependency = (
  * @private
  */
 export const deleteComponentsDependencies = (
-  paths: string[]
+  paths: Array<string>
 ): IDeleteComponentDependenciesAction => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,

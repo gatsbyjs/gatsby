@@ -3,7 +3,7 @@ const { useState, useEffect } = require(`react`)
 import SelectInput from "ink-select-input"
 import { render, Box, Text, useInput, useApp, Transform } from "ink"
 import Spinner from "ink-spinner"
-import MDX from "../components/mdx"
+import StepRenderer from "../components/step-renderer"
 const hicat = require(`hicat`)
 const { trackCli } = require(`gatsby-telemetry`)
 import {
@@ -26,6 +26,7 @@ const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const semver = require(`semver`)
 const remove = require(`unist-util-remove`)
+const recipesList = require(`./recipes-list`).default
 
 const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
@@ -89,114 +90,7 @@ const WelcomeMessage = () => (
 )
 
 const RecipesList = ({ setRecipe }) => {
-  const items = [
-    {
-      label: `Add a custom ESLint config`,
-      value: `eslint.mdx`,
-    },
-    {
-      label: `Add Jest`,
-      value: `jest.mdx`,
-    },
-    // Waiting on joi2graphql support for Joi.object().unknown()
-    // with a JSON type.
-    // {
-    // label: "Automatically run Prettier on commits",
-    // value: "prettier-git-hook.mdx",
-    // },
-    {
-      label: `Add Gatsby Theme Blog`,
-      value: `gatsby-theme-blog`,
-    },
-    {
-      label: `Add Gatsby Theme Blog Core`,
-      value: `gatsby-theme-blog-core`,
-    },
-    {
-      label: `Add Gatsby Theme Notes`,
-      value: `gatsby-theme-notes`,
-    },
-    {
-      label: `Add persistent layout component with gatsby-plugin-layout`,
-      value: `gatsby-plugin-layout`,
-    },
-    {
-      label: `Add Theme UI`,
-      value: `theme-ui.mdx`,
-    },
-    {
-      label: `Add Emotion`,
-      value: `emotion.mdx`,
-    },
-    {
-      label: `Add support for MDX Pages`,
-      value: `mdx-pages.mdx`,
-    },
-    {
-      label: `Add support for MDX Pages with images`,
-      value: `mdx-images.mdx`,
-    },
-    {
-      label: `Add Styled Components`,
-      value: `styled-components.mdx`,
-    },
-    {
-      label: `Add Tailwind`,
-      value: `tailwindcss.mdx`,
-    },
-    {
-      label: `Add Sass`,
-      value: `sass.mdx`,
-    },
-    {
-      label: `Add Typescript`,
-      value: `typescript.mdx`,
-    },
-    {
-      label: `Add Cypress testing`,
-      value: `cypress.mdx`,
-    },
-    {
-      label: `Add animated page transition support`,
-      value: `animated-page-transitions.mdx`,
-    },
-    {
-      label: `Add plugins to make site a PWA`,
-      value: `pwa.mdx`,
-    },
-    {
-      label: `Add React Helmet`,
-      value: `gatsby-plugin-react-helmet.mdx`,
-    },
-    {
-      label: `Add GitHub Pages deployment with Travis CI`,
-      value: `travis-deploy-github-pages.mdx`,
-    },
-    {
-      label: `Add Headless WordPress integration`,
-      value: `wordpress.mdx`,
-    },
-    {
-      label: `Add Storybook - JavaScript`,
-      value: `storybook-js.mdx`,
-    },
-    {
-      label: `Add Storybook - TypeScript`,
-      value: `storybook-ts.mdx`,
-    },
-    {
-      label: `Add AVA`,
-      value: `ava.mdx`,
-    },
-    {
-      label: `Add Preact`,
-      value: `preact.mdx`,
-    },
-    {
-      label: `Add GitLab CI/CD`,
-      value: `gitlab-ci-cd.mdx`,
-    },
-  ]
+  const items = recipesList
 
   return (
     <SelectInput.default
@@ -257,7 +151,15 @@ const ResourceComponent = props => {
       {resource?.diff ? (
         <>
           <Text>{` `}</Text>
-          <Text>{resource?.diff}"</Text>
+          <Text>{resource?.diff}</Text>
+        </>
+      ) : null}
+      {resource?.error ? (
+        <>
+          <Text>{` `}</Text>
+          <Text backgroundColor="#C41E3A" color="white">
+            {resource?.error}
+          </Text>
         </>
       ) : null}
     </Div>
@@ -305,12 +207,6 @@ const components = {
       </Div>
     )
   },
-  // Don't use <Box> for li > p as that breaks Ink.
-  "li.p": props => {
-    const children = eliminateNewLines(props.children)
-    return <Text>{children}</Text>
-  },
-  // p: () => <Text>`hi`</Text>, // null,
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
@@ -398,6 +294,11 @@ export default async ({
       return (
         <>
           <ResourceProvider
+            // Exclude inputs as they are components (so "plans" currrently
+            // (we need to cleanup our names) too like resources which is why we
+            // exclude them. The input from the inputs (haha) are ignored unless
+            // they're passed as props into a resource component in which case
+            // they're validated like normal.
             value={
               state.context.plan?.filter(p => p.resourceName !== `Input`) || []
             }
@@ -410,11 +311,16 @@ export default async ({
                 </Text>
               </Box>
             ) : null}
-            <MDX key="DOC" components={components} remarkPlugins={[removeJsx]}>
-              {state.context.exports?.join(`\n`) +
-                `\n\n` +
-                state.context.steps.join(`\n`)}
-            </MDX>
+            {state.context.stepsAsJS.map((step, i) => (
+              <StepRenderer
+                key={`step-${i}`}
+                components={components}
+                remarkPlugins={[removeJsx]}
+              >
+                {state.context.exports?.join(`\n`) + `\n\n` + step}
+              </StepRenderer>
+            ))}
+
             <Text>{`\n------\n`}</Text>
             <Text color="yellow">To install this recipe, run:</Text>
             <Text>{` `}</Text>
@@ -430,11 +336,15 @@ export default async ({
     const Installing = ({ state }) => (
       <Div>
         {state.context.plan.map((p, i) => (
-          <Div key={`${p.resourceName}-${i}`}>
-            <Text italic>{p.resourceName}:</Text>
+          <Box
+            textWrap="wrap"
+            flexDirection="column"
+            key={`${p.resourceName}-${i}`}
+          >
             <Text>
+              {p.isDone ? `✔ ` : <Spinner.default />}
               {` `}
-              {p.isDone ? `✅ ` : <Spinner.default />}
+              <Text italic>{p.resourceName}:</Text>
               {` `}
               {p.isDone ? p._message : p.describe}
               {` `}
@@ -442,7 +352,7 @@ export default async ({
                 <Text>({state.context.elapsed / 1000}s elapsed)</Text>
               )}
             </Text>
-          </Div>
+          </Box>
         ))}
       </Div>
     )
@@ -468,8 +378,8 @@ export default async ({
 
       // eslint-disable-next-line
       const [_, createOperation] = useMutation(`
-        mutation ($recipePath: String!, $projectRoot: String!) {
-          createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
+        mutation ($recipePath: String!, $projectRoot: String!, $isDevelopMode: Boolean!) {
+          createOperation(recipePath: $recipePath, projectRoot: $projectRoot, watchChanges: $isDevelopMode)
         }
       `)
       // eslint-disable-next-line
@@ -496,6 +406,7 @@ export default async ({
             await createOperation({
               recipePath: localRecipe,
               projectRoot,
+              isDevelopMode,
             })
           } catch (e) {
             console.log(`error creating operation`, e)
@@ -532,6 +443,7 @@ export default async ({
                   await createOperation({
                     recipePath: recipeItem.value,
                     projectRoot,
+                    isDevelopMode: false,
                   })
                 } catch (e) {
                   console.log(`error creating operation`, e)
@@ -542,16 +454,61 @@ export default async ({
         )
       }
 
-      const Error = ({ state }) => {
-        if (state && state.context && state.context.error) {
-          return <Text red>{JSON.stringify(state.context.error, null, 2)}</Text>
-        }
+      const ValidationErrors = state => {
+        if (state.context?.plan) {
+          return (
+            <>
+              <Text bold>
+                The recipe didn't validate. Please fix the following errors:
+              </Text>
+              <Text>{`\n`}</Text>
+              {state.context.plan
+                .filter(p => p.error)
+                .map((p, i) => (
+                  <ResourceComponent key={i} {...p} />
+                ))}
+            </>
+          )
+        } else return null
+      }
 
-        return null
+      const GeneralError = ({ state }) => {
+        let errors = []
+        if (state.context.error) {
+          errors = Array.isArray(state.context.error.error)
+            ? state.context.error.error
+            : [state.context.error.error]
+        } else {
+          // Errors are on a plan.
+          errors = state.context.plan?.filter(p => p.error)
+        }
+        if (errors.length > 0) {
+          return (
+            <>
+              <Text bold>The recipe has an error:</Text>
+              <Text>{`\n`}</Text>
+              {errors.map((error, i) => (
+                <Text key={i} backgroundColor="#C41E3A" color="white">
+                  {error.error}
+                </Text>
+              ))}
+            </>
+          )
+        } else return null
       }
 
       if (state?.value === `doneError`) {
-        return <Error width="100%" state={state} />
+        process.nextTick(() => process.exit())
+        return (
+          <ResourceProvider
+            value={
+              state.context.plan?.filter(p => p.resourceName !== `Input`) || []
+            }
+          >
+            <ValidationErrors />
+            <GeneralError state={state} />
+          </ResourceProvider>
+        )
       }
 
       let isReady
@@ -580,12 +537,6 @@ export default async ({
       }
 
       const isDone = state.value === `done`
-
-      // If we're done with an error, render out error (happens below)
-      // then exit.
-      if (state.value === `doneError`) {
-        process.nextTick(() => process.exit())
-      }
 
       if (isDone) {
         process.nextTick(() => {

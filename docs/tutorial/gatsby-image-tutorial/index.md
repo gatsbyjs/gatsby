@@ -352,10 +352,10 @@ These examples should handle a fair number of use cases. A couple of bonus thing
 `gatsby-image` has a feature that gives you the ability to set an aspect ratio to constrain image proportions. This can be used for fixed or fluid processed images; it doesn't matter.
 
 ```jsx
-<Img sizes={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
+<Img fluid={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
 ```
 
-This example uses the `sizes` option on the `Img` component to specify the `aspectRatio` option along with the fluid image data. This processing is made possible by `gatsby-plugin-sharp`.
+This example uses the `fluid` option on the `Img` component to specify the `aspectRatio` option along with the fluid image data. This processing is made possible by `gatsby-plugin-sharp`.
 
 ## Bonus Error
 

@@ -132,11 +132,11 @@ that will result in:
 - `blog-1.mdx` => `http://localhost:8000/blog/blog-1/`
 - `blog-2.mdx` => `http://localhost:8000/blog/blog-2/`
 
-[`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
+[`createFilePath`](/plugins/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
 paths to usable URLs.
 
-[`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode)
+[`onCreateNode`](/docs/node-apis/#onCreateNode)
 is a Gatsby lifecycle method that gets called whenever a new node is
 created. In this case only `MDX` nodes are touched.
 
@@ -214,7 +214,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 ```
 
 For further reading, check out the
-[createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+[createPages](/docs/node-apis/#createPages)
 API.
 
 ## Make a template for your posts

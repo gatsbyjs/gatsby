@@ -93,7 +93,7 @@ export class GraphQLRunner {
   validate(
     schema: GraphQLSchema,
     document: DocumentNode
-  ): readonly GraphQLError[] {
+  ): ReadonlyArray<GraphQLError> {
     if (!this.validDocuments.has(document)) {
       const errors = validate(schema, document)
       if (!errors.length) {

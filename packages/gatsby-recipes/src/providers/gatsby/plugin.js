@@ -8,7 +8,9 @@ const glob = require(`glob`)
 const prettier = require(`prettier`)
 const resolveCwd = require(`resolve-cwd`)
 const { slash } = require(`gatsby-core-utils`)
+const fetch = require(`node-fetch`)
 
+const lock = require(`../lock`)
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
@@ -100,7 +102,28 @@ const getNameForPlugin = node => {
 const getDescriptionForPlugin = async name => {
   const pkg = await readPackageJSON({}, name)
 
-  return pkg ? pkg.description : null
+  return pkg?.description || ``
+}
+
+const readmeCache = new Map()
+
+const getReadmeForPlugin = async name => {
+  if (readmeCache.has(name)) {
+    return readmeCache.get(name)
+  }
+
+  try {
+    const readme = await fetch(`https://unpkg.com/${name}/README.md`)
+      .then(res => res.text())
+      .catch(() => null)
+
+    if (readme) {
+      readmeCache.set(name, readme)
+    }
+    return readme || ``
+  } catch (err) {
+    return ``
+  }
 }
 
 const addPluginToConfig = (src, { name, options, key }) => {
@@ -194,6 +217,7 @@ class MissingInfoError extends Error {
 }
 
 const create = async ({ root }, { name, options, key }) => {
+  const release = await lock(`gatsby-config.js`)
   // TODO generalize this — it's for the demo.
   if (options?.accessToken === `(Known after install)`) {
     throw new MissingInfoError({ name, options, key })
@@ -206,7 +230,9 @@ const create = async ({ root }, { name, options, key }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, key || name)
+  const config = await read({ root }, key || name)
+  release()
+  return config
 }
 
 const read = async ({ root }, id) => {
@@ -218,7 +244,10 @@ const read = async ({ root }, id) => {
     )
 
     if (plugin) {
-      const description = await getDescriptionForPlugin(id)
+      const [description, readme] = await Promise.all([
+        getDescriptionForPlugin(id),
+        getReadmeForPlugin(id),
+      ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
         root,
         plugin.name
@@ -226,7 +255,8 @@ const read = async ({ root }, id) => {
 
       return {
         id,
-        description: description || null,
+        description,
+        readme,
         ...plugin,
         shadowedFiles,
         shadowableFiles,
@@ -379,6 +409,7 @@ const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
+  readme: Joi.string().optional().allow(null).allow(``),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
   ...resourceSchema,
@@ -403,7 +434,10 @@ const validate = resource => {
 exports.schema = schema
 exports.validate = validate
 
-module.exports.plan = async ({ root }, { id, key, name, options }) => {
+module.exports.plan = async (
+  { root },
+  { id, key, name, options, isLocal = false }
+) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
@@ -432,5 +466,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
+    dependsOn: isLocal ? null : [{ resourceName: `NPMPackage`, name }],
   }
 }

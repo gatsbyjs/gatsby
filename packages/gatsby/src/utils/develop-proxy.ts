@@ -3,7 +3,7 @@ import https from "https"
 import httpProxy from "http-proxy"
 import path from "path"
 import fs from "fs-extra"
-import { getServices } from "gatsby-core-utils/dist/service-lock"
+import { getServices } from "gatsby-core-utils"
 import st from "st"
 import restartingScreen from "./restarting-screen"
 import { IProgram } from "../commands/types"
@@ -61,6 +61,7 @@ export const startDevelopProxy = (input: {
     }
 
     if (req.url === `/socket.io/socket.io.js`) {
+      res.setHeader(`Content-Type`, `application/javascript`)
       res.end(
         fs.readFileSync(require.resolve(`socket.io-client/dist/socket.io.js`))
       )

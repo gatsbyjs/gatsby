@@ -3,6 +3,170 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.55](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.54...gatsby@2.24.55) (2020-09-08)
+
+### Bug Fixes
+
+- **gatsby:** fix `$in` operator to return unique elements ([#26822](https://github.com/gatsbyjs/gatsby/issues/26822)) ([df9014d](https://github.com/gatsbyjs/gatsby/commit/df9014d))
+- **gatsby:** Run mutations during query running ([#26808](https://github.com/gatsbyjs/gatsby/issues/26808)) ([4427f13](https://github.com/gatsbyjs/gatsby/commit/4427f13))
+- **gatsby-cli:** Fix typo (repeated ://) ([#26781](https://github.com/gatsbyjs/gatsby/issues/26781)) ([6a7fcfb](https://github.com/gatsbyjs/gatsby/commit/6a7fcfb))
+
+## [2.24.54](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.53...gatsby@2.24.54) (2020-09-07)
+
+### Bug Fixes
+
+- **doc:** updated onCreateBabelConfig documentation ([#25212](https://github.com/gatsbyjs/gatsby/issues/25212)) ([5538c49](https://github.com/gatsbyjs/gatsby/commit/5538c49))
+- **gatsby:** catch when lock already unlocked ([#26805](https://github.com/gatsbyjs/gatsby/issues/26805)) ([9509d01](https://github.com/gatsbyjs/gatsby/commit/9509d01))
+- **gatsby:** tap just into main compilation in webpack-dep-tree-plugin ([#26778](https://github.com/gatsbyjs/gatsby/issues/26778)) ([bf7d633](https://github.com/gatsbyjs/gatsby/commit/bf7d633))
+
+## [2.24.53](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.52...gatsby@2.24.53) (2020-08-31)
+
+### Bug Fixes
+
+- **gatsby:** only enable debugger when argument is given ([#26669](https://github.com/gatsbyjs/gatsby/issues/26669)) ([93fdc09](https://github.com/gatsbyjs/gatsby/commit/93fdc09))
+- **gatsby:** properly unlock processes onExit ([#26670](https://github.com/gatsbyjs/gatsby/issues/26670)) ([c2aeded](https://github.com/gatsbyjs/gatsby/commit/c2aeded))
+
+## [2.24.52](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.51...gatsby@2.24.52) (2020-08-28)
+
+### Bug Fixes
+
+- **gatsby:** fix error from ts conversion ([#26681](https://github.com/gatsbyjs/gatsby/issues/26681)) ([04c75bb](https://github.com/gatsbyjs/gatsby/commit/04c75bb))
+- **gatsby:** fix materialization edge case with nullish values ([#26677](https://github.com/gatsbyjs/gatsby/issues/26677)) ([25e3a63](https://github.com/gatsbyjs/gatsby/commit/25e3a63))
+
+### Features
+
+- **gatsby:** Support React 17's new JSX Transform ([#26652](https://github.com/gatsbyjs/gatsby/issues/26652)) ([6ba68f8](https://github.com/gatsbyjs/gatsby/commit/6ba68f8))
+
+## [2.24.51](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.50...gatsby@2.24.51) (2020-08-26)
+
+### Bug Fixes
+
+- **gatsby:** fix filtering by sub-fields of the field with custom resolver ([#26644](https://github.com/gatsbyjs/gatsby/issues/26644)) ([6eefdee](https://github.com/gatsbyjs/gatsby/commit/6eefdee))
+
+## [2.24.50](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.49...gatsby@2.24.50) (2020-08-25)
+
+### Bug Fixes
+
+- move babel/types from devDependencies to dependencies ([#26404](https://github.com/gatsbyjs/gatsby/issues/26404)) ([318a8a2](https://github.com/gatsbyjs/gatsby/commit/318a8a2))
+
+## [2.24.49](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.48...gatsby@2.24.49) (2020-08-24)
+
+### Bug Fixes
+
+- **gatsby:** take into account possible invalid values in getValueAt ([#26613](https://github.com/gatsbyjs/gatsby/issues/26613)) ([bc3a177](https://github.com/gatsbyjs/gatsby/commit/bc3a177))
+
+## [2.24.48](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.47...gatsby@2.24.48) (2020-08-24)
+
+### Bug Fixes
+
+- **gatsby:** update devcert ([#26566](https://github.com/gatsbyjs/gatsby/issues/26566)) ([1328a97](https://github.com/gatsbyjs/gatsby/commit/1328a97))
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
+## [2.24.47](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.46...gatsby@2.24.47) (2020-08-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.46](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.45...gatsby@2.24.46) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby:** place auto-generated virtual modules in `.cache` ([#26396](https://github.com/gatsbyjs/gatsby/issues/26396)) ([9590a2c](https://github.com/gatsbyjs/gatsby/commit/9590a2c))
+
+## [2.24.45](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.44...gatsby@2.24.45) (2020-08-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.44](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.43...gatsby@2.24.44) (2020-08-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.43](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.42...gatsby@2.24.43) (2020-08-11)
+
+### Bug Fixes
+
+- **gatsby:** improve the log for service lock issues ([#26360](https://github.com/gatsbyjs/gatsby/issues/26360)) ([5a4496c](https://github.com/gatsbyjs/gatsby/commit/5a4496c))
+
+## [2.24.42](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.41...gatsby@2.24.42) (2020-08-11)
+
+### Bug Fixes
+
+- **gatsby:** set correct content-type header for socket.io.js ([#26358](https://github.com/gatsbyjs/gatsby/issues/26358)) ([87babc9](https://github.com/gatsbyjs/gatsby/commit/87babc9))
+
+### Features
+
+- **gatsby-cli:** Allow setting the server status port ([#25862](https://github.com/gatsbyjs/gatsby/issues/25862)) ([67615bf](https://github.com/gatsbyjs/gatsby/commit/67615bf))
+
+## [2.24.41](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.40...gatsby@2.24.41) (2020-08-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.39...gatsby@2.24.40) (2020-08-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.38...gatsby@2.24.39) (2020-08-10)
+
+### Features
+
+- **gatsby:** Extend support for file system pages to build client-only and collections of pages! ([#25204](https://github.com/gatsbyjs/gatsby/issues/25204)) ([61d8849](https://github.com/gatsbyjs/gatsby/commit/61d8849))
+
+## [2.24.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.37...gatsby@2.24.38) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby:** Added { default } to default exports ([#26020](https://github.com/gatsbyjs/gatsby/issues/26020)) ([6e6e419](https://github.com/gatsbyjs/gatsby/commit/6e6e419))
+
+## [2.24.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.36...gatsby@2.24.37) (2020-08-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.35...gatsby@2.24.36) (2020-08-07)
+
+### Features
+
+- **gatsby:** add flag to disable schema rebuilding ([#26291](https://github.com/gatsbyjs/gatsby/issues/26291)) ([44175f6](https://github.com/gatsbyjs/gatsby/commit/44175f6))
+
+## [2.24.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.34...gatsby@2.24.35) (2020-08-07)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.33...gatsby@2.24.34) (2020-08-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.32...gatsby@2.24.33) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby:** Move static queries to page data dir ([#26242](https://github.com/gatsbyjs/gatsby/issues/26242)) ([de979d3](https://github.com/gatsbyjs/gatsby/commit/de979d3))
+
+## [2.24.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.31...gatsby@2.24.32) (2020-08-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.30...gatsby@2.24.31) (2020-08-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.29...gatsby@2.24.30) (2020-08-05)
+
+### Bug Fixes
+
+- **gatsby:** enable ipc messaging on develop ([#26221](https://github.com/gatsbyjs/gatsby/issues/26221)) ([a063a1f](https://github.com/gatsbyjs/gatsby/commit/a063a1f))
+
+## [2.24.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.28...gatsby@2.24.29) (2020-08-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.27...gatsby@2.24.28) (2020-08-05)
+
+### Features
+
+- **gatsby:** Store site metadata ([#26162](https://github.com/gatsbyjs/gatsby/issues/26162)) ([36367c4](https://github.com/gatsbyjs/gatsby/commit/36367c4))
+
 ## [2.24.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.26...gatsby@2.24.27) (2020-08-04)
 
 **Note:** Version bump only for package gatsby
