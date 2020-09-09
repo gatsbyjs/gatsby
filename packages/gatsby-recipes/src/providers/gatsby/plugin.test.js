@@ -4,6 +4,10 @@ const tmp = require(`tmp-promise`)
 const resourceSchema = require(`../resource-schema`)
 const Joi = require(`@hapi/joi`)
 const plugin = require(`./plugin`)
+jest.mock(`node-fetch`, () => require(`fetch-mock-jest`).sandbox())
+const { mockReadmeLoader } = require(`../../test-helper`)
+mockReadmeLoader()
+
 const {
   addPluginToConfig,
   getPluginsFromConfig,
