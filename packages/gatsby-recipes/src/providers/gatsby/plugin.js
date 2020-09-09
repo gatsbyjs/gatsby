@@ -100,7 +100,7 @@ const getNameForPlugin = node => {
 }
 
 const getDescriptionForPlugin = async (root, name) => {
-  const pkg = await readPackageJSON({ root }, name)
+  const pkg = await readPackageJSON(root, name)
 
   return pkg?.description || ``
 }
