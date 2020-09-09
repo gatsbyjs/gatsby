@@ -32,7 +32,7 @@ First create a new component with this initial boilerplate.
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
-import { useLocation } from "@reach/router"
+import { useLocation } from "@react/router"
 import { useStaticQuery, graphql } from "gatsby"
 
 const SEO = ({ title, description, image, article }) => ()
@@ -121,7 +121,7 @@ The last step is to return this data with the help of `Helmet`. Your complete SE
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
-import { useLocation } from "@reach/router"
+import { useLocation } from "@react/router"
 import { useStaticQuery, graphql } from "gatsby"
 
 const SEO = ({ title, description, image, article }) => {
