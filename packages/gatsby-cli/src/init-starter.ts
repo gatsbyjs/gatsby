@@ -12,7 +12,6 @@ import url from "url"
 import { updateSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
-import { isTTY } from "./util/is-tty"
 import reporter from "../lib/reporter"
 
 const spawnWithArgs = (
@@ -35,6 +34,7 @@ const spawn = (
 const checkForYarn = async (): Promise<boolean> => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
+    return true
   } catch (e) {
     return false
   }

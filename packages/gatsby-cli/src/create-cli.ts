@@ -414,7 +414,7 @@ cli.command({
         return
       }
       console.log({packageManager: getPackageManager(), telemetry: isTrackingEnabled()})
-    },,
+    },
 })
 
 
