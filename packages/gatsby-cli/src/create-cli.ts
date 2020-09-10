@@ -569,12 +569,12 @@ Creating a plugin:
         if (telemetry) {
           setTelemetryEnabled(telemetry)
         }
-        // const currentPackageManager = getPackageManager()
-        // const currentTelemetry = isTrackingEnabled()
-        // console.log(`
-        // Package Manager: ${currentPackageManager}
-        // Telemetry enabled: ${currentTelemetry}
-        // `)
+        const currentPackageManager = getPackageManager()
+        const currentTelemetry = isTrackingEnabled()
+        console.log(`
+        Package Manager: ${currentPackageManager}
+        Telemetry enabled: ${currentTelemetry}
+        `)
       }),
     })
     .wrap(cli.terminalWidth())
