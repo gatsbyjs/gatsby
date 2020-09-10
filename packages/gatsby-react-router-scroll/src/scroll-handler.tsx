@@ -39,7 +39,7 @@ export class ScrollHandler extends React.Component<
     let { key, hash } = this.props.location
 
     try {
-      decodeURI(hash)
+      hash = decodeURI(hash)
     } catch (e) {
       hash = `#`
     }
@@ -51,7 +51,7 @@ export class ScrollHandler extends React.Component<
     if (scrollPosition) {
       this.windowScroll(scrollPosition, undefined)
     } else if (hash) {
-      this.scrollToHash(decodeURI(hash), undefined)
+      this.scrollToHash(hash, undefined)
     }
   }
 
@@ -64,7 +64,7 @@ export class ScrollHandler extends React.Component<
     let scrollPosition
 
     try {
-      decodeURI(hash)
+      hash = decodeURI(hash)
     } catch (e) {
       hash = `#`
     }
@@ -74,7 +74,7 @@ export class ScrollHandler extends React.Component<
     }
 
     if (hash && scrollPosition === 0) {
-      this.scrollToHash(decodeURI(hash), prevProps)
+      this.scrollToHash(hash, prevProps)
     } else {
       this.windowScroll(scrollPosition, prevProps)
     }

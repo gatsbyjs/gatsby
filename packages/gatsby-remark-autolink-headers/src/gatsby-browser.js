@@ -2,14 +2,13 @@ let offsetY = 0
 
 const getTargetOffset = hash => {
   try {
-    decodeURI(hash)
+    hash = window.decodeURI(hash.replace(`#`, ``))
   } catch (e) {
-    hash = `#`
+    hash = ``
   }
 
-  const id = window.decodeURI(hash.replace(`#`, ``))
-  if (id !== ``) {
-    const element = document.getElementById(id)
+  if (hash !== ``) {
+    const element = document.getElementById(hash)
     if (element) {
       let scrollTop =
         window.pageYOffset ||
