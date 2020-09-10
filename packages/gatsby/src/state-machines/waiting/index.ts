@@ -54,6 +54,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       on: {
         ADD_NODE_MUTATION: {
           actions: `addNodeMutation`,
+          target: `batchingNodeMutations`,
         },
         SOURCE_FILE_CHANGED: {
           target: undefined,
