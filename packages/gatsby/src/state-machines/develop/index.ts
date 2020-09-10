@@ -134,8 +134,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `waiting`,
             actions: `panicBecauseOfInfiniteLoop`,
             cond: ({
-              nodesMutatedDuringQueryRun,
-              nodesMutatedDuringQueryRunRecompileCount,
+              nodesMutatedDuringQueryRun = false,
+              nodesMutatedDuringQueryRunRecompileCount = 0,
             }: IBuildContext): boolean =>
               nodesMutatedDuringQueryRun &&
               nodesMutatedDuringQueryRunRecompileCount >= RECOMPILE_PANIC_LIMIT,
@@ -280,6 +280,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Rebuild pages if a node has been mutated outside of sourceNodes
     recreatingPages: {
+      on: {
+        // We need to run mutations immediately when in this state
+        ADD_NODE_MUTATION: {
+          actions: `callApi`,
+        },
+      },
       invoke: {
         id: `recreate-pages`,
         src: `recreatePages`,

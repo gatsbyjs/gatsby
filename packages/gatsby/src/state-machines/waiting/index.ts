@@ -4,7 +4,8 @@ import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
 
 const NODE_MUTATION_BATCH_SIZE = 100
-const NODE_MUTATION_BATCH_TIMEOUT = 1000
+const NODE_MUTATION_BATCH_TIMEOUT = 500
+const FILE_CHANGE_AGGREGATION_TIMEOUT = 200
 
 export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 
@@ -45,7 +46,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       // we won't pick up the changed files
       after: {
         // The aggregation timeout
-        200: {
+        [FILE_CHANGE_AGGREGATION_TIMEOUT]: {
           actions: `extractQueries`,
           target: `idle`,
         },
@@ -98,9 +99,9 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
         }
       }),
       on: {
-        // While we're running the batch we need to batch any incoming mutations too
+        // While we're running the batch we will also run new actions, as these may be cascades
         ADD_NODE_MUTATION: {
-          actions: `addNodeMutation`,
+          actions: `callApi`,
         },
       },
       invoke: {
