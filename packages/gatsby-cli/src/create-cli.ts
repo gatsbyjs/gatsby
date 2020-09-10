@@ -7,12 +7,20 @@ import { getLocalGatsbyVersion } from "./util/version"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
 import clipboardy from "clipboardy"
-import { trackCli, setDefaultTags, setTelemetryEnabled, isTrackingEnabled } from "gatsby-telemetry"
+import {
+  trackCli,
+  setDefaultTags,
+  setTelemetryEnabled,
+  isTrackingEnabled,
+} from "gatsby-telemetry"
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
-import {promptPackageManager, getPackageManager, setPackageManager} from "./util/package-manager"
-
+import {
+  promptPackageManager,
+  getPackageManager,
+  setPackageManager,
+} from "./util/package-manager"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
@@ -390,34 +398,6 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   })
 }
 
-cli.command({
-  command: `config`,
-  builder: _ =>
-    _.option(`packagemanager`, {
-      type: `string`,
-      default: `npm`,
-      describe: `Set the package manager <gatsby new> is using.`,
-    }).option(`telemetry`, {
-      type: `boolean`,
-      default: true,
-      describe: `Set your setting for sharing telemetry data with Gatsby.`,
-    }),
-  handler: (args: yargs.Arguments) => {
-      if (getPackageManager() && yargs.packagemanager) {
-        setPackageManager(yargs.packagemanager)
-        return
-      } else {
-        promptPackageManager()
-      }
-      if (yargs.telemetry) {
-        setTelemetryEnabled(yargs.telemetry)
-        return
-      }
-      console.log({packageManager: getPackageManager(), telemetry: isTrackingEnabled()})
-    },
-})
-
-
 function isLocalGatsbySite(): boolean {
   let inGatsbySite = false
   try {
@@ -563,6 +543,35 @@ Creating a plugin:
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
       }),
+    })
+    .command({
+      command: `config`,
+      builder: _ =>
+        _.option(`packagemanager`, {
+          type: `string`,
+          default: `npm`,
+          describe: `Set the package manager <gatsby new> is using.`,
+        }).option(`telemetry`, {
+          type: `boolean`,
+          default: true,
+          describe: `Set your setting for sharing telemetry data with Gatsby.`,
+        }),
+      handler: handlerP(args: yargs.Arguments) => {
+        if (getPackageManager() && args.packagemanager) {
+          setPackageManager(args.packagemanager)
+          return
+        } else {
+          promptPackageManager()
+        }
+        if (args.telemetry) {
+          setTelemetryEnabled(args.telemetry)
+          return
+        }
+        console.log({
+          packageManager: getPackageManager(),
+          telemetry: isTrackingEnabled(),
+        })
+      },
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
