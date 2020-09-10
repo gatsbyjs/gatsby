@@ -106,7 +106,7 @@ module.exports = (
 
     // prettier-ignore
     node.value = ``
-    + `<div class="${highlightClassName}" data-language="${languageName}">`
+    + `<div class="${highlightClassName}" data-language="${languageName}" tabindex="0">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
     +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
