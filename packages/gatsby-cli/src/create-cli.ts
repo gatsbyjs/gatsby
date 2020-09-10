@@ -574,7 +574,7 @@ Creating a plugin:
         console.log(`
         Package Manager: ${currentPackageManager} 
         Telemetry enabled: ${currentTelemetry}
-        `
+        `)
       },
     })
     .wrap(cli.terminalWidth())
