@@ -12,7 +12,7 @@ import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
 
-const handlerP = (fn: Function) => (...args: unknown[]): void => {
+const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
     err => report.panic(err)
@@ -175,17 +175,23 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         .option(`inspect`, {
           type: `number`,
           describe: `Opens a port for debugging. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
-          default: 9229,
         })
         .option(`inspect-brk`, {
           type: `number`,
           describe: `Opens a port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
-          default: 9229,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         startGraphQLServer(siteInfo.directory, true)
+
+        if (args.hasOwnProperty(`inspect`)) {
+          args.inspect = args.inspect || 9229
+        }
+        if (args.hasOwnProperty(`inspect-brk`)) {
+          args.inspect = args.inspect || 9229
+        }
+
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
@@ -416,7 +422,7 @@ Gatsby version: ${gatsbyVersion}
   }
 }
 
-export const createCli = (argv: string[]): yargs.Arguments => {
+export const createCli = (argv: Array<string>): yargs.Arguments => {
   const cli = yargs(argv).parserConfiguration({
     "boolean-negation": false,
   })
@@ -523,7 +529,7 @@ Creating a plugin:
           }),
 
       handler: handlerP(({ enable, disable }: yargs.Arguments) => {
-        const enabled = enable || !disable
+        const enabled = Boolean(enable) || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
       }),

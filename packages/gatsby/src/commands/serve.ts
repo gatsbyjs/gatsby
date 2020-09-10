@@ -31,7 +31,7 @@ onExit(() => {
 
 const readMatchPaths = async (
   program: IServeProgram
-): Promise<IMatchPath[]> => {
+): Promise<Array<IMatchPath>> => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
   try {
@@ -49,11 +49,11 @@ const readMatchPaths = async (
       )}?`
     )
   }
-  return JSON.parse(rawJSON) as IMatchPath[]
+  return JSON.parse(rawJSON) as Array<IMatchPath>
 }
 
 const matchPathRouter = (
-  matchPaths: IMatchPath[],
+  matchPaths: Array<IMatchPath>,
   options: {
     root: string
   }

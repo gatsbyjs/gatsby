@@ -122,7 +122,7 @@ const Header = () => {
 
 Isn't that neat?
 
-![excited-gif](./images/excited.gif)
+![Animation of someone looking excited](./images/excited.gif)
 
 And if there's a change to the structure of that data, you only need to change the query in one place!
 

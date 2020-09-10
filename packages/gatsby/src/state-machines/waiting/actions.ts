@@ -4,9 +4,16 @@ import {
   ActionFunctionMap,
   sendParent,
   AnyEventObject,
+  ActionFunction,
 } from "xstate"
 import { IWaitingContext } from "./types"
 import { AnyAction } from "redux"
+import { callRealApi } from "../../utils/call-deferred-api"
+
+export const callApi: ActionFunction<IWaitingContext, AnyEventObject> = (
+  { store },
+  event
+) => callRealApi(event.payload, store)
 
 /**
  * Event handler used when we're not ready to process node mutations.
@@ -29,4 +36,5 @@ export const extractQueries = sendParent<IWaitingContext, AnyEventObject>(
 export const waitingActions: ActionFunctionMap<IWaitingContext, AnyAction> = {
   addNodeMutation,
   extractQueries,
+  callApi,
 }

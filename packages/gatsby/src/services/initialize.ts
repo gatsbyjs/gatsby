@@ -343,7 +343,7 @@ export async function initialize({
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
 
-  const ssrPlugins: IPluginResolution[] = flattenedPlugins
+  const ssrPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
       return {
         resolve: hasAPIFile(`ssr`, plugin),
@@ -352,7 +352,7 @@ export async function initialize({
     })
     .filter(isResolved)
 
-  const browserPlugins: IPluginResolution[] = flattenedPlugins
+  const browserPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
       return {
         resolve: hasAPIFile(`browser`, plugin),
