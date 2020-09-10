@@ -16,11 +16,7 @@ import {
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
-import {
-  promptPackageManager,
-  getPackageManager,
-  setPackageManager,
-} from "./util/package-manager"
+import { getPackageManager, setPackageManager } from "./util/package-manager"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
@@ -548,32 +544,27 @@ Creating a plugin:
       command: `config`,
       describe: `Set your gatsby-cli configuration settings.`,
       builder: yargs =>
-        yargs
-          .option(`packagemanager`, {
-            type: `string`,
-            default: `npm`,
-            describe: `Set the package manager <gatsby new> is using.`,
-          })
-          .option(`telemetry`, {
-            type: `boolean`,
-            default: true,
-            describe: `Set your setting for sharing telemetry data with Gatsby.`,
-          }),
+        yargs.option(`pm`, {
+          type: `string`,
+          describe: `Set the package manager \`gatsby new\` is using.`,
+        }),
 
-      handler: handlerP(({ packagemanager, telemetry }: yargs.Arguments) => {
-        if (getPackageManager() && packagemanager) {
-          setPackageManager(packagemanager)
-        } else {
-          promptPackageManager()
+      handler: handlerP(({ pm }: yargs.Arguments) => {
+        if (!getPackageManager()) {
+          report.warn(
+            `Please set your package manager using the command \`gatsby config --pm <yarn || npm>\``
+          )
+          return
+        } else if (pm) {
+          if (pm !== `yarn` && pm !== `npm`)
+            report.panic(`Package manager must be yarn or npm.`)
+          setPackageManager(pm)
+          return
         }
-        if (telemetry) {
-          setTelemetryEnabled(telemetry)
-        }
-        const currentPackageManager = getPackageManager()
-        const currentTelemetry = isTrackingEnabled()
+
         console.log(`
-        Package Manager: ${currentPackageManager}
-        Telemetry enabled: ${currentTelemetry}
+        Package Manager: ${getPackageManager()}
+        Telemetry enabled: ${isTrackingEnabled()}
         `)
       }),
     })

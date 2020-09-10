@@ -12,12 +12,8 @@ describe(`gatsby config`, () => {
       `config`
     )
 
-    logs.should.contain(
-      `packagemanager`
-    )
-    logs.should.contain(
-      `telemetry`
-    )
+    logs.should.contain(`Package Manager`)
+    logs.should.contain(`Telemetry enabled`)
     expect(status).toBe(0)
   })
 })
