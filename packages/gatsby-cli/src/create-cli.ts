@@ -546,8 +546,10 @@ Creating a plugin:
     })
     .command({
       command: `config`,
-      builder: _ =>
-        _.option(`packagemanager`, {
+      describe: `Set your gatsby-cli configuration settings.`,
+      builder: yargs =>
+        yargs
+        .option(`packagemanager`, {
           type: `string`,
           default: `npm`,
           describe: `Set the package manager <gatsby new> is using.`,
@@ -556,16 +558,15 @@ Creating a plugin:
           default: true,
           describe: `Set your setting for sharing telemetry data with Gatsby.`,
         }),
-      handler: handlerP(args: yargs.Arguments) => {
-        if (getPackageManager() && args.packagemanager) {
-          setPackageManager(args.packagemanager)
-          return
+
+      handler: handlerP(({ packagemanager, telemetry }: yargs.Arguments) => {
+        if (getPackageManager() && packagemanager) {
+          setPackageManager(packagemanager)
         } else {
           promptPackageManager()
         }
-        if (args.telemetry) {
-          setTelemetryEnabled(args.telemetry)
-          return
+        if (telemetry) {
+          setTelemetryEnabled(telemetry)
         }
         console.log({
           packageManager: getPackageManager(),
