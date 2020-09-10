@@ -560,22 +560,22 @@ Creating a plugin:
             describe: `Set your setting for sharing telemetry data with Gatsby.`,
           }),
 
-      // handler: handlerP(({ packagemanager, telemetry }: yargs.Arguments) => {
-      //   if (getPackageManager() && packagemanager) {
-      //     setPackageManager(packagemanager)
-      //   } else {
-      //     promptPackageManager()
-      //   }
-      //   if (telemetry) {
-      //     setTelemetryEnabled(telemetry)
-      //   }
-      //   const currentPackageManager = getPackageManager()
-      //   const currentTelemetry = isTrackingEnabled()
-      //   console.log(`
-      //   Package Manager: ${currentPackageManager}
-      //   Telemetry enabled: ${currentTelemetry}
-      //   `)
-      // },
+      handler: handlerP(({ packagemanager, telemetry }: yargs.Arguments) => {
+        if (getPackageManager() && packagemanager) {
+          setPackageManager(packagemanager)
+        } else {
+          promptPackageManager()
+        }
+        if (telemetry) {
+          setTelemetryEnabled(telemetry)
+        }
+        // const currentPackageManager = getPackageManager()
+        // const currentTelemetry = isTrackingEnabled()
+        // console.log(`
+        // Package Manager: ${currentPackageManager}
+        // Telemetry enabled: ${currentTelemetry}
+        // `)
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
