@@ -15,6 +15,6 @@ describe(`hot reloading template component`, () => {
       `npm run update -- --file src/templates/blog-post.js --replacements "${TEMPLATE}:${message}"`
     )
 
-    cy.getTestElement(TEST_ID).should(`eq.text`, `Hello ${message}`)
+    cy.getTestElement(TEST_ID).should(`have.text`, `Hello ${message}`)
   })
 })
