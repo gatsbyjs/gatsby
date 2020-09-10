@@ -8,11 +8,8 @@ Helper components that make Gatsby more accessible, specifically in respect to c
 
 ## Table of Contents
 
-- [Route Announcements](#route-announcements)
-- [Route Focus](#route-focus)
-- [Install](#install)
-- [How to use](#how-to-use)
-- [Other Stuff](#some-other-stuff-to-be-aware-of)
+- [RouteAnnouncement](#routeannouncement)
+- [RouteFocus](#routefocus)
 
 ## `RouteAnnouncement`
 
@@ -89,14 +86,14 @@ const specialPage = ({ data }) => {
 }
 ```
 
-#### `RouteAnnouncer` props
+#### `RouteAnnouncement` props
 
 | Name             | Type   | Description                                                                                |
 | ---------------- | ------ | ------------------------------------------------------------------------------------------ |
 | `useTitle`       | `bool` | tells Gatsby's internal Route Announcer to announce page `<title>` content on route change |
 | `visuallyHidden` | `bool` | visually hides content wrapped inside of the `RouteAnnouncement`                           |
 
-## RouteFocus
+## `RouteFocus`
 
 Client-side routing is a two-part problem for accessibility. One half of that problem is solved by [announcing route changes](https://github.com/gatsbyjs/gatsby/pull/19290). The other half requires developers to manage focus to ensure that all users are provided enough context about their current position within the new page.
 
