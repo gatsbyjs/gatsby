@@ -2,7 +2,6 @@ import { assign, DoneInvokeEvent, ActionFunctionMap } from "xstate"
 import { createGraphQLRunner } from "../../bootstrap/create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { IDataLayerContext } from "./types"
-import { callApi, markNodesDirty } from "../develop/actions"
 import { assertStore } from "../../utils/assert-store"
 import { GraphQLRunner } from "../../query/graphql-runner"
 
@@ -40,6 +39,4 @@ export const assignGraphQLRunners = assign<IDataLayerContext>(
 export const dataLayerActions: ActionFunctionMap<IDataLayerContext, any> = {
   assignChangedPages,
   assignGraphQLRunners,
-  callApi,
-  markNodesDirty,
 }
