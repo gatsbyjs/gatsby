@@ -37,11 +37,11 @@ export class ScrollHandler extends React.Component<
     window.addEventListener(`scroll`, this.scrollListener)
     let scrollPosition
     let { key, hash } = this.props.location
-    
+
     try {
       decodeURI(hash)
     } catch (e) {
-       hash = `#`
+      hash = `#`
     }
 
     if (key) {
@@ -62,11 +62,11 @@ export class ScrollHandler extends React.Component<
   componentDidUpdate(prevProps: LocationContext): void {
     let { hash, key } = this.props.location
     let scrollPosition
-    
+
     try {
       decodeURI(hash)
     } catch (e) {
-       hash = `#`
+      hash = `#`
     }
 
     if (key) {

@@ -4,7 +4,7 @@ const getTargetOffset = hash => {
   try {
     decodeURI(hash)
   } catch (e) {
-     hash = `#`
+    hash = `#`
   }
 
   const id = window.decodeURI(hash.replace(`#`, ``))
