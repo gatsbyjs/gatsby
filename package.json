@@ -84,7 +84,7 @@
     "ts-jest": "^22",
     "typescript": "^3.9.5",
     "unified": "^9.0.0",
-    "yargs": "^16.0.3"
+    "yargs": "^15.4.1"
   },
   "resolutions": {
     "theme-ui": "0.4.0-rc.1",

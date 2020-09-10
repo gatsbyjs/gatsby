@@ -47,7 +47,7 @@
     "strip-ansi": "^6.0.0",
     "update-notifier": "^4.1.1",
     "uuid": "3.4.0",
-    "yargs": "^16.0.3",
+    "yargs": "^15.4.1",
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {
