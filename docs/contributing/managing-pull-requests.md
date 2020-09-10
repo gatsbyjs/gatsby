@@ -2,7 +2,7 @@
 title: Managing Pull Requests
 ---
 
-If you'd like to help out managing PRs on the Gatsby repo on GitHub, this document is for you. We'll go over conventions the team prefers, what we check for on various types of pull requests, permissions, and guidelines on how to leave feedback.
+If you're curious how we manage PRs on the Gatsby repo on GitHub, this document is for you. We'll go over conventions the team prefers, what we check for on various types of pull requests, permissions, and guidelines on how we leave feedback.
 
 We have over 3,300 contributors and so much of what makes Gatsby great is contributed by folks like you.
 
@@ -16,7 +16,7 @@ For an introduction on what Pull Requests are and how to file one, check out the
 
 ### General Guidelines
 
-Some general things to verify in a pull request are:
+Some general things we verify in a pull request are:
 
 - Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
 - Language ought to be inclusive and accessible
@@ -75,7 +75,7 @@ For PRs that add a blog post, we ought to check:
 
 Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.org).
 
-We want all of these checks to pass. While it's okay to review a work in progress PR with some failed checks, a PR is only ready to ship when all the tests have passed.
+We want all of these checks to pass. While we'll sometimes review a work in progress PR with some failed checks, a PR is only ready to ship when all the tests have passed.
 
 Let's go over some common failure cases and how to fix them:
 
@@ -145,25 +145,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 - Be objective and limit nitpicks (a few are fine if they add value or improve code readability)
 - Don't suggest and expect changes out of scope which are best addressed in a separate PR
 
-## Pushing changes to a remote fork
-
-Sometimes the easiest way to unblock a stalled PR is to sort out merge conflicts or apply remaining suggestions. When the GitHub UI won't cut it, you can (often) apply changes directly to someone's remote fork with Git:
-
-- Add their Gatsby fork as a remote:<br />`git remote add <forkname> git@github.com:<username>/gatsby.git`
-- Fetch the branches:<br />`git fetch <forkname>`
-- Check out their branch locally:<br />`git checkout -b <branch-name> <forkname>/<branch-name>`
-- Make your changes, add some commits
-- Push branch to the remote fork (also see [Gotchas](#gotchas) below):<br /> `git push <forkname> head:<branch-name>`
-
-Alternatively, you can manage forks and branches with [hub](https://github.com/github/hub).
-
 ## Rights and Permissions
-
-### Who can review a PR?
-
-If you're a member of the [gatsbyjs](https://github.com/gatsbyjs) organization on GitHub, you can review **most** PRs. PRs with [`topic: internal`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+internal%22) are reserved for Gatsby team members as they are typically part of an internal project or hiring process.
-
-> 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
 
 ### Who can approve a PR?
 
@@ -174,7 +156,7 @@ Typically this is:
 - **gatsbyjs/themes** for certain features like Themes, Recipes, and Admin
 - **gatsbyjs/learning** for documentation
 - **gatsbyjs/core** for any other code
-- **gatsbyjs/website** for anything related to GatsbyJS.org
+- **gatsbyjs/website** for anything related to GatsbyJS.com
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 
@@ -185,10 +167,6 @@ PRs can only be merged by members of the core team and Gatsbot.
 #### Gatsbot
 
 Gatsbot is our little android friend that automatically merges PRs that are ready to go. If a PR is approved and all checks are passing, add the `bot: merge on green` label and Gatsbot will merge it in automatically.
-
-## Gotchas
-
-- Sometimes you might want to fix something on someone else's PR. This is perfectly okay to do as long as the author doesn't mind. However, depending on their settings, you might find that you are not able to push to their fork. In such a case, just leave your changes as suggestions.
 
 ## Frequently Asked Questions
 

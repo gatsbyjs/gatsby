@@ -79,7 +79,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 
 ## VS Code Debugger (Manual Config)
 
-Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
+Using built-in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
@@ -89,26 +89,21 @@ We won't go in depth here about how to debug in VS Code - for that you can check
   "configurations": [
     {
       "name": "Gatsby develop",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
-      "autoAttachChildProcesses": true,
-      "args": ["develop", "--inspect-brk"],
-      "stopOnEntry": false,
+      "args": ["develop"],
       "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
+      "console": "integratedTerminal"
     },
     {
       "name": "Gatsby build",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
       "args": ["build"],
-      "stopOnEntry": false,
       "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
+      "console": "integratedTerminal"
     }
   ]
 }

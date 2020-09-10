@@ -116,7 +116,7 @@ Your options are as follows:
 
 ## After `devcert` setup process
 
-You can open the development server at `https://localhost:8000` and enjoy the HTTPS goodness ✨. Of course, you may change the port according to your setup.
+You can open the development server at `https://localhost:8000` and enjoy the HTTPS goodness ✨. You may change the port according to your setup.
 
 Find out more about [how devcert works](https://github.com/davewasmer/devcert#how-it-works).
 

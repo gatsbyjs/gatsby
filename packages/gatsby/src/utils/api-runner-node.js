@@ -120,6 +120,22 @@ const getLocalReporter = (activity, reporter) =>
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
     : reporter
 
+const getUninitializedCache = plugin => {
+  const message =
+    `Usage of "cache" instance in "onPreInit" API is not supported as ` +
+    `this API runs before cache initialization` +
+    (plugin && plugin !== `default-site-plugin` ? ` (called in ${plugin})` : ``)
+
+  return {
+    get() {
+      throw new Error(message)
+    },
+    set() {
+      throw new Error(message)
+    },
+  }
+}
+
 const pluginNodeCache = new Map()
 
 const runAPI = async (plugin, api, args, activity) => {
@@ -170,7 +186,11 @@ const runAPI = async (plugin, api, args, activity) => {
 
     const tracing = initAPICallTracing(pluginSpan)
 
-    const cache = getCache(plugin.name)
+    // See https://github.com/gatsbyjs/gatsby/issues/11369
+    const cache =
+      api === `onPreInit`
+        ? getUninitializedCache(plugin.name)
+        : getCache(plugin.name)
 
     // Ideally this would be more abstracted and applied to more situations, but right now
     // this can be potentially breaking so targeting `createPages` API and `createPage` action

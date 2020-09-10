@@ -1,5 +1,5 @@
 import _ from "lodash"
-import slugify from "slugify"
+import slugify from "@sindresorhus/slugify"
 import {
   compose,
   removeFileExtension,
@@ -45,18 +45,30 @@ export function derivePath(
       return
     }
 
-    // If the node value is meant to be a slug, like `foo/bar`, the slugify
-    // function will remove the slashes. This is a hack to make sure the slashes
-    // stick around in the final url structuring
-    const replaceSlashesValue = (nodeValue + ``).replace(/\//g, `(REPLACED)`)
-    const slugifiedWithoutSlashesValue = slugify(replaceSlashesValue, {
-      lower: true,
-    })
-    const value = slugifiedWithoutSlashesValue.replace(/\(REPLACED\)/gi, `/`)
+    const value = safeSlugify(nodeValue)
 
     // 3.d  replace the part of the slug with the actual value
     pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
   })
 
   return pathWithoutExtension
+}
+
+function safeSlugify(nodeValue: string): string {
+  // If the node value is meant to be a slug, like `foo/bar`, the slugify
+  // function will remove the slashes. This is a hack to make sure the slashes
+  // stick around in the final url structuring
+  const SLASH_PRESERVING_STATIC_KEY = `-replaced-`
+
+  const replaceSlashesValue = (nodeValue + ``).replace(
+    /\//g,
+    SLASH_PRESERVING_STATIC_KEY
+  )
+
+  const slugifiedWithoutSlashesValue = slugify(replaceSlashesValue)
+
+  return slugifiedWithoutSlashesValue.replace(
+    new RegExp(SLASH_PRESERVING_STATIC_KEY, `g`),
+    `/`
+  )
 }

@@ -114,7 +114,7 @@ describe(`collatePluginAPIs`, () => {
 describe(`handleBadExports`, () => {
   const getValidExports = (): {
     currentAPIs: ICurrentAPIs
-    badExports: { [api in ExportType]: IEntry[] }
+    badExports: { [api in ExportType]: Array<IEntry> }
   } => {
     return {
       currentAPIs: {

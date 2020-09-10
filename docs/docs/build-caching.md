@@ -64,7 +64,7 @@ exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
 
 ## Clearing cache
 
-Since cache files are stored within the `.cache` directory, simply deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
+Since cache files are stored within the `.cache` directory, deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
 The cache is also invalidated by Gatsby in a few cases, specifically:
 
 - If `package.json` changes, for example a dependency is updated or added

@@ -2,7 +2,7 @@
 title: Adding a List of Markdown Blog Posts
 ---
 
-Once you have added Markdown pages to your site, you are just one step away from being able to list your posts on a dedicated index page.
+Once you have added Markdown pages to your site, you are one step away from being able to list your posts on a dedicated index page.
 
 ## Creating posts
 
