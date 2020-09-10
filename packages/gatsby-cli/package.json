@@ -47,14 +47,14 @@
     "strip-ansi": "^6.0.0",
     "update-notifier": "^4.1.1",
     "uuid": "3.4.0",
-    "yargs": "^15.4.1",
+    "yargs": "^16.0.3",
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
     "@types/hosted-git-info": "^3.0.0",
-    "@types/yargs": "^15.0.4",
+    "@types/yargs": "^15.0.5",
     "babel-preset-gatsby-package": "^0.5.2",
     "cross-env": "^5.2.1",
     "rimraf": "^3.0.2",

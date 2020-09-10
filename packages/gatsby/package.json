@@ -63,7 +63,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^4.1.0",
+    "eslint-plugin-react-hooks": "^4.1.1",
     "event-source-polyfill": "^1.0.17",
     "execa": "^4.0.3",
     "express": "^4.17.1",
