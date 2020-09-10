@@ -549,33 +549,33 @@ Creating a plugin:
       describe: `Set your gatsby-cli configuration settings.`,
       builder: yargs =>
         yargs
-        .option(`packagemanager`, {
-          type: `string`,
-          default: `npm`,
-          describe: `Set the package manager <gatsby new> is using.`,
-        })
-        .option(`telemetry`, {
-          type: `boolean`,
-          default: true,
-          describe: `Set your setting for sharing telemetry data with Gatsby.`,
-        }),
+          .option(`packagemanager`, {
+            type: `string`,
+            default: `npm`,
+            describe: `Set the package manager <gatsby new> is using.`,
+          })
+          .option(`telemetry`, {
+            type: `boolean`,
+            default: true,
+            describe: `Set your setting for sharing telemetry data with Gatsby.`,
+          }),
 
-      handler: handlerP(({ packagemanager, telemetry }: yargs.Arguments) => {
-        if (getPackageManager() && packagemanager) {
-          setPackageManager(packagemanager)
-        } else {
-          promptPackageManager()
-        }
-        if (telemetry) {
-          setTelemetryEnabled(telemetry)
-        }
-        const currentPackageManager = getPackageManager()
-        const currentTelemetry = isTrackingEnabled()
-        console.log(`
-        Package Manager: ${currentPackageManager} 
-        Telemetry enabled: ${currentTelemetry}
-        `)
-      },
+      // handler: handlerP(({ packagemanager, telemetry }: yargs.Arguments) => {
+      //   if (getPackageManager() && packagemanager) {
+      //     setPackageManager(packagemanager)
+      //   } else {
+      //     promptPackageManager()
+      //   }
+      //   if (telemetry) {
+      //     setTelemetryEnabled(telemetry)
+      //   }
+      //   const currentPackageManager = getPackageManager()
+      //   const currentTelemetry = isTrackingEnabled()
+      //   console.log(`
+      //   Package Manager: ${currentPackageManager}
+      //   Telemetry enabled: ${currentTelemetry}
+      //   `)
+      // },
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
