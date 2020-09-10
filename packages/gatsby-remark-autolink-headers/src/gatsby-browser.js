@@ -1,6 +1,12 @@
 let offsetY = 0
 
 const getTargetOffset = hash => {
+  try {
+    decodeURI(hash)
+  } catch (e) {
+     hash = `#`
+  }
+
   const id = window.decodeURI(hash.replace(`#`, ``))
   if (id !== ``) {
     const element = document.getElementById(id)

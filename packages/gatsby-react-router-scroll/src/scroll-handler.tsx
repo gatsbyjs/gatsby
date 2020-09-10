@@ -36,7 +36,13 @@ export class ScrollHandler extends React.Component<
   componentDidMount(): void {
     window.addEventListener(`scroll`, this.scrollListener)
     let scrollPosition
-    const { key, hash } = this.props.location
+    let { key, hash } = this.props.location
+    
+    try {
+      decodeURI(hash)
+    } catch (e){
+       hash = `#`
+    }
 
     if (key) {
       scrollPosition = this._stateStorage.read(this.props.location, key)
@@ -54,8 +60,14 @@ export class ScrollHandler extends React.Component<
   }
 
   componentDidUpdate(prevProps: LocationContext): void {
-    const { hash, key } = this.props.location
+    let { hash, key } = this.props.location
     let scrollPosition
+    
+    try {
+      decodeURI(hash)
+    } catch (e){
+       hash = `#`
+    }
 
     if (key) {
       scrollPosition = this._stateStorage.read(this.props.location, key)
