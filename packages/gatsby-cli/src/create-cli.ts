@@ -553,7 +553,8 @@ Creating a plugin:
           type: `string`,
           default: `npm`,
           describe: `Set the package manager <gatsby new> is using.`,
-        }).option(`telemetry`, {
+        })
+        .option(`telemetry`, {
           type: `boolean`,
           default: true,
           describe: `Set your setting for sharing telemetry data with Gatsby.`,
@@ -568,10 +569,12 @@ Creating a plugin:
         if (telemetry) {
           setTelemetryEnabled(telemetry)
         }
-        console.log({
-          packageManager: getPackageManager(),
-          telemetry: isTrackingEnabled(),
-        })
+        const currentPackageManager = getPackageManager()
+        const currentTelemetry = isTrackingEnabled()
+        console.log(`
+        Package Manager: ${currentPackageManager} 
+        Telemetry enabled: ${currentTelemetry}
+        `
       },
     })
     .wrap(cli.terminalWidth())
