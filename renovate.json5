@@ -73,6 +73,8 @@
         "zipkin-transport-http",
         // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
         "react-docgen",
+        // prettier updates can break CI per discussion in https://github.com/gatsbyjs/gatsby/pull/26686
+        "prettier",
       ],
     },
     // we need to replicate this so that it goes to a separate group
@@ -108,6 +110,8 @@
         "zipkin-transport-http",
         // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
         "react-docgen",
+        // prettier updates can break CI per discussion in https://github.com/gatsbyjs/gatsby/pull/26686
+        "prettier",
       ],
     },
     {
