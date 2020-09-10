@@ -550,15 +550,18 @@ Creating a plugin:
         }),
 
       handler: handlerP(({ pm }: yargs.Arguments) => {
+        if (pm !== `yarn` && pm !== `npm`)
+          report.panic(`Package manager must be yarn or npm.`)
+
         if (!getPackageManager()) {
           report.warn(
             `Please set your package manager using the command \`gatsby config --pm <yarn || npm>\``
           )
           return
-        } else if (pm) {
-          if (pm !== `yarn` && pm !== `npm`)
-            report.panic(`Package manager must be yarn or npm.`)
+        }
 
+        if (pm) {
+          // @ts-ignore
           setPackageManager(pm)
           return
         }
