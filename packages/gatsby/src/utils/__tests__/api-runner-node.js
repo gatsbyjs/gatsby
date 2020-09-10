@@ -12,6 +12,11 @@ jest.mock(`../../redux`, () => {
     },
   }
 })
+jest.mock(`../get-cache`, () => {
+  return {
+    getCache: jest.fn(),
+  }
+})
 
 const start = jest.fn()
 const end = jest.fn()
@@ -31,14 +36,18 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 const { store, emitter } = require(`../../redux`)
+const reporter = require(`gatsby-cli/lib/reporter`)
+const { getCache } = require(`../get-cache`)
 
 beforeEach(() => {
   store.getState.mockClear()
   emitter.on.mockClear()
   emitter.off.mockClear()
   emitter.emit.mockClear()
-  mockActivity.start.mockClear()
-  mockActivity.end.mockClear()
+  start.mockClear()
+  end.mockClear()
+  reporter.panicOnBuild.mockClear()
+  getCache.mockClear()
 })
 
 it(`Ends activities if plugin didn't end them`, async () => {
@@ -164,4 +173,60 @@ it(`Ends activities if plugin didn't end them`, async () => {
   // we called end same amount of times we called start, even tho plugins
   // didn't call end/done themselves
   expect(end).toBeCalledTimes(6)
+})
+
+it(`Doesn't initialize cache in onPreInit API`, async () => {
+  jest.doMock(
+    `test-plugin-on-preinit-works/gatsby-node`,
+    () => {
+      return {
+        onPreInit: () => {},
+        otherTestApi: () => {},
+      }
+    },
+    { virtual: true }
+  )
+  jest.doMock(
+    `test-plugin-on-preinit-fails/gatsby-node`,
+    () => {
+      return {
+        onPreInit: ({ cache }) => {
+          cache.get(`foo`)
+        },
+      }
+    },
+    { virtual: true }
+  )
+  store.getState.mockImplementation(() => {
+    return {
+      program: {},
+      config: {},
+      flattenedPlugins: [
+        {
+          name: `test-plugin-on-preinit-works`,
+          resolve: `test-plugin-on-preinit-works`,
+          nodeAPIs: [`onPreInit`, `otherTestApi`],
+        },
+        {
+          name: `test-plugin-on-preinit-fails`,
+          resolve: `test-plugin-on-preinit-fails`,
+          nodeAPIs: [`onPreInit`],
+        },
+      ],
+    }
+  })
+  await apiRunnerNode(`onPreInit`)
+  expect(getCache).not.toHaveBeenCalled()
+  expect(reporter.panicOnBuild).toBeCalledTimes(1)
+  expect(reporter.panicOnBuild.mock.calls[0][0]).toMatchObject({
+    context: {
+      api: `onPreInit`,
+      pluginName: `test-plugin-on-preinit-fails`,
+      sourceMessage: `Usage of "cache" instance in "onPreInit" API is not supported as this API runs before cache initialization (called in test-plugin-on-preinit-fails)`,
+    },
+  })
+
+  // Make sure getCache is called on other APIs:
+  await apiRunnerNode(`otherTestApi`)
+  expect(getCache).toHaveBeenCalled()
 })

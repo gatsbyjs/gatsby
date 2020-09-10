@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.23...gatsby-recipes@0.2.24) (2020-09-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** renable e2e test for npm package resource & fix dev/prod resource bug ([#26699](https://github.com/gatsbyjs/gatsby/issues/26699)) ([6d963af](https://github.com/gatsbyjs/gatsby/commit/6d963af6d86cd5e9acf4db0d4be6b1ef37fb8dcf))
+
+## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.22...gatsby-recipes@0.2.23) (2020-09-09)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Cache readme and always return string ([#26833](https://github.com/gatsbyjs/gatsby/issues/26833)) ([58dc15e](https://github.com/gatsbyjs/gatsby/commit/58dc15e))
+
 ## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.21...gatsby-recipes@0.2.22) (2020-09-08)
 
 ### Bug Fixes

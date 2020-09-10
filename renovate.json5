@@ -70,6 +70,8 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
+        // prettier updates can break CI per discussion in https://github.com/gatsbyjs/gatsby/pull/26686
+        "prettier",
       ],
     },
     // we need to replicate this so that it goes to a separate group
@@ -102,6 +104,8 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
+        // prettier updates can break CI per discussion in https://github.com/gatsbyjs/gatsby/pull/26686
+        "prettier",
       ],
     },
     {
