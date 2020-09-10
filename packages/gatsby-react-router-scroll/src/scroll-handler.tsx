@@ -40,7 +40,7 @@ export class ScrollHandler extends React.Component<
     
     try {
       decodeURI(hash)
-    } catch (e){
+    } catch (e) {
        hash = `#`
     }
 
@@ -65,7 +65,7 @@ export class ScrollHandler extends React.Component<
     
     try {
       decodeURI(hash)
-    } catch (e){
+    } catch (e) {
        hash = `#`
     }
 
