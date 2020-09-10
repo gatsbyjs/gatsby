@@ -558,6 +558,7 @@ Creating a plugin:
         } else if (pm) {
           if (pm !== `yarn` && pm !== `npm`)
             report.panic(`Package manager must be yarn or npm.`)
+
           setPackageManager(pm)
           return
         }
