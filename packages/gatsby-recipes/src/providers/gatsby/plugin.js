@@ -99,8 +99,8 @@ const getNameForPlugin = node => {
   return null
 }
 
-const getDescriptionForPlugin = async name => {
-  const pkg = await readPackageJSON({}, name)
+const getDescriptionForPlugin = async (root, name) => {
+  const pkg = await readPackageJSON(root, name)
 
   return pkg?.description || ``
 }
@@ -245,7 +245,7 @@ const read = async ({ root }, id) => {
 
     if (plugin) {
       const [description, readme] = await Promise.all([
-        getDescriptionForPlugin(id),
+        getDescriptionForPlugin(root, id),
         getReadmeForPlugin(id),
       ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
