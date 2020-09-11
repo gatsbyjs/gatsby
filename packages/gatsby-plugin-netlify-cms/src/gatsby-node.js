@@ -4,8 +4,7 @@ import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-// TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
-import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
+import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
 import CopyPlugin from "copy-webpack-plugin"
 import HtmlWebpackTagsPlugin from "html-webpack-tags-plugin"
 
