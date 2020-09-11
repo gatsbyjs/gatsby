@@ -94,7 +94,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\" tabindex=\\"0\\"><pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
     },
   ],
   "position": Object {
@@ -135,7 +135,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\"><pre class=\\"language-javascript\\"><code class=\\"language-javascript\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\" tabindex=\\"0\\"><pre class=\\"language-javascript\\"><code class=\\"language-javascript\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
     },
   ],
   "position": Object {
@@ -176,7 +176,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"foobar\\"><pre class=\\"language-foobar\\"><code class=\\"language-foobar\\">// Fake</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"foobar\\" tabindex=\\"0\\"><pre class=\\"language-foobar\\"><code class=\\"language-foobar\\">// Fake</code></pre></div>",
     },
   ],
   "position": Object {
@@ -217,7 +217,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\" tabindex=\\"0\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
     },
   ],
   "position": Object {
@@ -260,7 +260,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight has-highlighted-lines\\" data-language=\\"js\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// 1</span>
+      "value": "<div class=\\"gatsby-highlight has-highlighted-lines\\" data-language=\\"js\\" tabindex=\\"0\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// 1</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token comment\\">// 2</span></span><span class=\\"token comment\\">// 3</span></code></pre></div>",
     },
   ],
@@ -523,7 +523,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre style=\\"counter-reset: linenumber NaN\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\" tabindex=\\"0\\"><pre style=\\"counter-reset: linenumber NaN\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
 color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
  <span class=\\"token punctuation\\">}</span>\`</code><span aria-hidden=\\"true\\" class=\\"line-numbers-rows\\" style=\\"white-space: normal; width: auto; left: 0;\\"><span></span><span></span><span></span></span></pre></div>",
     },
@@ -567,7 +567,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre style=\\"counter-reset: linenumber 4\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\" tabindex=\\"0\\"><pre style=\\"counter-reset: linenumber 4\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
 color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
  <span class=\\"token punctuation\\">}</span>\`</code><span aria-hidden=\\"true\\" class=\\"line-numbers-rows\\" style=\\"white-space: normal; width: auto; left: 0;\\"><span></span><span></span><span></span></span></pre></div>",
     },
@@ -611,7 +611,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\" tabindex=\\"0\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
 color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
  <span class=\\"token punctuation\\">}</span>\`</code></pre></div>",
     },
@@ -653,7 +653,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=root data-host=server></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\" tabindex=\\"0\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=root data-host=server></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
     },
   ],
   "position": Object {
@@ -693,7 +693,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=server></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\" tabindex=\\"0\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=server></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
     },
   ],
   "position": Object {
@@ -733,7 +733,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=localhost></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\" tabindex=\\"0\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=localhost></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
     },
   ],
   "position": Object {
