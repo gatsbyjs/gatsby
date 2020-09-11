@@ -21,6 +21,7 @@ describe(`gatsby new`, () => {
   afterAll(() => clean(dir))
 
   it(`a default starter creates a gatsby site`, () => {
+    GatsbyCLI.from(cwd).invoke(`config --pm yarn`)
     const [code, logs] = GatsbyCLI.from(cwd).invoke([`new`, `gatsby-default`])
 
     logs.should.contain(
@@ -38,6 +39,7 @@ describe(`gatsby new`, () => {
   })
 
   it(`a theme starter creates a gatsby site`, () => {
+    GatsbyCLI.from(cwd).invoke(`config --pm yarn`)
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
@@ -59,6 +61,7 @@ describe(`gatsby new`, () => {
   })
 
   it(`an invalid starter fails to create a gatsby site`, () => {
+    GatsbyCLI.from(cwd).invoke(`config --pm yarn`)
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-invalid`,
