@@ -14,8 +14,8 @@ export interface IQueryRunningContext {
   parentSpan?: Span
   gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
-  pagesToBuild?: string[]
-  pagesToDelete?: string[]
+  pagesToBuild?: Array<string>
+  pagesToDelete?: Array<string>
   queryIds?: IGroupedQueryIds
   websocketManager?: WebsocketManager
   filesDirty?: boolean

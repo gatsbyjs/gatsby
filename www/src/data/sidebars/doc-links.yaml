@@ -104,6 +104,9 @@
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to Bip
+              link: /docs/deploying-to-bip/
+              breadcrumbTitle: Bip
             - title: Deploying to IIS
               link: /docs/deploying-to-iis/
               breadcrumbTitle: IIS
@@ -666,8 +669,6 @@
               link: /docs/schema-sift/
             - title: Query Filters
               link: /docs/query-filters/
-            - title: Connections
-              link: /docs/schema-connections/
         - title: Page Creation
           link: /docs/page-creation/
         - title: Page -> Node Dependencies

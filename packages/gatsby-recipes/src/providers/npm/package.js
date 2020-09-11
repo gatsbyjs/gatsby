@@ -4,18 +4,31 @@ const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)
-const resolveCwd = require(`resolve-cwd`)
+const resolveFrom = require(`resolve-from`)
+const lock = require(`../lock`)
 
 const packageMangerConfigKey = `cli.packageManager`
 const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
 
 const resourceSchema = require(`../resource-schema`)
 
+const readPackageJson = async (root, pkg) => {
+  let obj
+  try {
+    const fullPath = resolveFrom(root, path.join(pkg, `package.json`))
+    const contents = await fs.readFile(fullPath, `utf8`)
+    obj = JSON.parse(contents)
+  } catch (e) {
+    // ignore
+  }
+  return obj
+}
+
 const getPackageNames = packages => packages.map(n => `${n.name}@${n.version}`)
 
 // Generate install commands
 const generateClientComands = ({ packageManager, depType, packageNames }) => {
-  let commands = []
+  const commands = []
   if (packageManager === `yarn`) {
     commands.push(`add`)
     // Needed for Yarn Workspaces and is a no-opt elsewhere.
@@ -48,7 +61,7 @@ const executeInstalls = async root => {
   const depType = installs[0].resource.dependencyType
   const packagesToInstall = types[depType]
   installs = installs.filter(
-    i => !_.some(packagesToInstall, p => i.resource.id === p.resource.id)
+    i => !packagesToInstall.some(p => i.resource.name === p.resource.name)
   )
 
   const pkgs = packagesToInstall.map(p => p.resource)
@@ -60,6 +73,7 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
+  const release = await lock(`package.json`)
   try {
     await execa(PACKAGE_MANGER, commands, {
       cwd: root,
@@ -75,12 +89,13 @@ const executeInstalls = async root => {
       )
     })
   }
+  release()
 
   packagesToInstall.forEach(p => p.outsideResolve())
 
   // Run again if there's still more installs.
   if (installs.length > 0) {
-    executeInstalls()
+    executeInstalls(root)
   }
 
   return undefined
@@ -118,21 +133,18 @@ const create = async ({ root }, resource) => {
 }
 
 const read = async ({ root }, id) => {
-  let packageJSON
-  try {
-    packageJSON = JSON.parse(
-      await fs.readFile(resolveCwd(path.join(id, `package.json`)))
-    )
-  } catch (e) {
-    return undefined
-  }
+  const pkg = await readPackageJson(root, id)
 
-  return {
-    id: packageJSON.name,
-    name: packageJSON.name,
-    description: packageJSON.description,
-    version: packageJSON.version,
-    _message: `Installed NPM package ${packageJSON.name}@${packageJSON.version}`,
+  if (pkg) {
+    return {
+      id,
+      name: id,
+      description: pkg.description,
+      version: pkg.version,
+      _message: `Installed NPM package ${id}@${pkg.version}`,
+    }
+  } else {
+    return undefined
   }
 }
 

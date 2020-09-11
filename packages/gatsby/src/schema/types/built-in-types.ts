@@ -82,5 +82,5 @@ const sitePageType = `
   }
 `
 
-export const builtInTypeDefinitions = (): DocumentNode[] =>
+export const builtInTypeDefinitions = (): Array<DocumentNode> =>
   [fileType, directoryType, sitePageType].map(type => parse(type))

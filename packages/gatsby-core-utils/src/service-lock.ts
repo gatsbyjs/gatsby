@@ -103,7 +103,7 @@ export const getServices = async (programPath: string): Promise<any> => {
   const services = {}
   await Promise.all(
     serviceNames.map(async service => {
-      services[service] = await getService(programPath, service)
+      services[service] = await getService(programPath, service, true)
     })
   )
 

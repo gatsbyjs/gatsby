@@ -127,9 +127,9 @@ export function resolvePlugin(
 export function loadPlugins(
   config: ISiteConfig = {},
   rootDir: string | null = null
-): IPluginInfo[] {
+): Array<IPluginInfo> {
   // Instantiate plugins.
-  const plugins: IPluginInfo[] = []
+  const plugins: Array<IPluginInfo> = []
 
   // Create fake little site with a plugin for testing this
   // w/ snapshots. Move plugin processing to its own module.
@@ -158,7 +158,7 @@ export function loadPlugins(
       }
 
       // Plugins can have plugins.
-      const subplugins: IPluginInfo[] = []
+      const subplugins: Array<IPluginInfo> = []
       if (plugin.options.plugins) {
         plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))

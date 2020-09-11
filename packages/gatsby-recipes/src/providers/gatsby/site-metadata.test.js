@@ -3,6 +3,10 @@ const path = require(`path`)
 const tmp = require(`tmp-promise`)
 
 const plugin = require(`./site-metadata`)
+
+jest.mock(`node-fetch`, () => require(`fetch-mock-jest`).sandbox())
+const { mockReadmeLoader } = require(`../../test-helper`)
+mockReadmeLoader()
 const resourceTestHelper = require(`../resource-test-helper`)
 
 const STARTER_BLOG_FIXTURE = path.join(
