@@ -597,13 +597,11 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
                 setPackageManager(value)
                 return
               } else {
-                report.warn(
-                  `Please pass your desired package manager, either yarn or npm.`
-                )
+                setPackageManager(`npm`)
               }
             } else {
               reporter.warn(
-                `Currently you can only set your package manager using \`pm\`.`
+                `Please pass your desired config key and value. Currently you can only set your package manager using \`pm\`.`
               )
             }
             return
