@@ -6,7 +6,7 @@ const addLineNumbers = require(`./add-line-numbers`)
 const commandLine = require(`./command-line`)
 const loadPrismShowInvisibles = require(`./plugins/prism-show-invisibles`)
 
-const DIFF_HIGHLIGHT_SYNTAX = /^(diff)-([\d\w-]+)/i
+const DIFF_HIGHLIGHT_SYNTAX = /^(diff)-([\w-]+)/i
 
 module.exports = (
   { markdownAST },
