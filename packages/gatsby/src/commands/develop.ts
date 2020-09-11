@@ -184,9 +184,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   // So we want to early just force it to a number to ensure we always act on a correct type.
   program.port = parseInt(program.port + ``, 10)
   const developProcessPath = slash(require.resolve(`./develop-process`))
-  const telemetryServerPath = slash(
-    require.resolve(`../utils/telemetry-server`)
-  )
 
   try {
     program.port = await detectPortInUseAndPrompt(program.port)
@@ -209,13 +206,8 @@ module.exports = async (program: IProgram): Promise<void> => {
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [
-    statusServerPort,
-    developPort,
-    telemetryServerPort,
-  ] = await Promise.all([
+  const [statusServerPort, developPort] = await Promise.all([
     getRandomPort(process.env.INTERNAL_STATUS_PORT),
-    getRandomPort(),
     getRandomPort(),
   ])
 
@@ -281,13 +273,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     debugInfo
   )
 
-  const telemetryServerProcess = new ControllableScript(
-    `require(${JSON.stringify(telemetryServerPath)}).default(${JSON.stringify(
-      telemetryServerPort
-    )})`,
-    null
-  )
-
   let unlocks: Array<UnlockFn> = []
   if (!isCI()) {
     const statusUnlock = await createServiceLock(
@@ -302,13 +287,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       `developproxy`,
       {
         port: proxyPort,
-      }
-    )
-    const telemetryUnlock = await createServiceLock(
-      program.directory,
-      `telemetryserver`,
-      {
-        port: telemetryServerPort,
       }
     )
     await updateSiteMetadata({
@@ -329,7 +307,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       process.exit(1)
     }
 
-    unlocks = unlocks.concat([statusUnlock, developUnlock, telemetryUnlock])
+    unlocks = unlocks.concat([statusUnlock, developUnlock])
   }
 
   const statusServer = http.createServer().listen(statusServerPort)
@@ -366,8 +344,6 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   developProcess.start()
   developProcess.onMessage(handleChildProcessIPC)
-
-  telemetryServerProcess.start()
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
@@ -435,7 +411,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     await shutdownServices(
       {
         developProcess,
-        telemetryServerProcess,
         unlocks,
         statusServer,
         proxy,
@@ -451,7 +426,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     await shutdownServices(
       {
         developProcess,
-        telemetryServerProcess,
         unlocks,
         statusServer,
         proxy,
@@ -467,7 +441,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     shutdownServices(
       {
         developProcess,
-        telemetryServerProcess,
         unlocks,
         statusServer,
         proxy,
@@ -478,19 +451,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 }
 function shutdownServices(
-  {
-    statusServer,
-    developProcess,
-    proxy,
-    unlocks,
-    watcher,
-    telemetryServerProcess,
-  },
+  { statusServer, developProcess, proxy, unlocks, watcher },
   signal: NodeJS.Signals
 ): Promise<void> {
   const services = [
     developProcess.stop(signal),
-    telemetryServerProcess.stop(),
     watcher?.close(),
     new Promise(resolve => statusServer.close(resolve)),
     new Promise(resolve => proxy.server.close(resolve)),
