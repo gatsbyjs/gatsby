@@ -840,6 +840,72 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`warns when merging plugin-defined type with built-in type`, async () => {
+      createTypes(`type SitePage implements Node { bar: Int }`, {
+        name: `some-gatsby-plugin`,
+      })
+      const schema = await buildSchema()
+      const fields = schema.getType(`SitePage`).getFields()
+      expect(Object.keys(fields)).toEqual([
+        `path`,
+        `component`,
+        `internalComponentName`,
+        `componentChunkName`,
+        `matchPath`,
+        `bar`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`some-gatsby-plugin\` has customized the built-in Gatsby GraphQL type ` +
+          `\`SitePage\`. This is allowed, but could potentially cause conflicts.`
+      )
+    })
+
+    it(`warns when merging plugin-defined type (Type Builder) with built-in type`, async () => {
+      createTypes(
+        [
+          buildObjectType({
+            name: `SitePage`,
+            interfaces: [`Node`],
+            extensions: {
+              infer: false,
+            },
+            fields: {
+              bar: `Int`,
+            },
+          }),
+        ],
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const fields = schema.getType(`SitePage`).getFields()
+      expect(Object.keys(fields)).toEqual([
+        `path`,
+        `component`,
+        `internalComponentName`,
+        `componentChunkName`,
+        `matchPath`,
+        `bar`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`some-gatsby-plugin\` has customized the built-in Gatsby GraphQL type ` +
+          `\`SitePage\`. This is allowed, but could potentially cause conflicts.`
+      )
+    })
+
+    it.todo(
+      `warns when merging plugin-defined type (graphql-js) with built-in type`
+    )
+
     it(`extends fieldconfigs when merging types`, async () => {
       createTypes(
         buildObjectType({
