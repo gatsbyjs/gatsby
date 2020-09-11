@@ -343,7 +343,8 @@ const mergeTypes = ({
   if (
     !plugin ||
     plugin.name === `default-site-plugin` ||
-    plugin.name === typeOwner
+    plugin.name === typeOwner ||
+    typeComposer.getTypeName() === `SiteSiteMetadata`
   ) {
     if (type instanceof ObjectTypeComposer) {
       mergeFields({ typeComposer, fields: type.getFields() })
