@@ -148,9 +148,9 @@ exports.createSchemaCustomization = ({ actions }) => {
   const typeDefs = `
     type Site implements Node {
       buildTime: Date @dateformat
-      siteMetadata: InternalSiteMetadata
+      siteMetadata: SiteSiteMetadata
     }
-    type InternalSiteMetadata {
+    type SiteSiteMetadata {
       title: String
       description: String
     }
