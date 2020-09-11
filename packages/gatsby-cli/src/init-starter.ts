@@ -105,8 +105,8 @@ const install = async (rootPath: string): Promise<void> => {
       setPackageManager(`npm`)
     }
     if (getPackageManager() === `yarn` && checkForYarn()) {
-      if (fs.pathExists(`package-lock.json`) {
-        await spawn('yarnpkg import')
+      if (fs.pathExists(`package-lock.json`)) {
+        await spawn(`yarnpkg import`)
         await fs.remove(`package-lock.json`)
       }
       await spawn(`yarnpkg`)
