@@ -13,8 +13,8 @@ for folder in $GLOB; do
 
   # validate
   cd "$folder" || exit
-  npm install &&
   npm audit &&
+  npm install &&
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
   yarn &&
