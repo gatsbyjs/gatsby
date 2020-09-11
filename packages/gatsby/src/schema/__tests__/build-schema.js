@@ -717,12 +717,14 @@ describe(`Build schema`, () => {
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` has customized the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`. ` +
+          `This could potentially cause conflicts.`
       )
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` has customized the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`. ` +
+          `This could potentially cause conflicts.`
       )
     })
 
@@ -775,12 +777,14 @@ describe(`Build schema`, () => {
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` has customized the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`. ` +
+          `This could potentially cause conflicts.`
       )
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` has customized the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`. ` +
+          `This could potentially cause conflicts.`
       )
     })
 

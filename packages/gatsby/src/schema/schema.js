@@ -351,12 +351,14 @@ const mergeTypes = ({
       report.warn(
         `Plugin \`${plugin.name}\` has customized the GraphQL type ` +
           `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
-          `by the plugin \`${typeOwner}\`.`
+          `by the plugin \`${typeOwner}\`. ` +
+          `This could potentially cause conflicts.`
       )
     } else {
       report.warn(
         `Plugin \`${plugin.name}\` has customized the built-in Gatsby GraphQL type ` +
-          `\`${typeComposer.getTypeName()}\``
+          `\`${typeComposer.getTypeName()}\`. ` +
+          `This is allowed, but could potentially cause conflicts.`
       )
     }
   }
