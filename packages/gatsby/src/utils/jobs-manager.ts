@@ -1,4 +1,4 @@
-import uuid from "uuid/v4"
+import uuidv4 from "uuid/v4"
 import path from "path"
 import hasha from "hasha"
 import fs from "fs-extra"
@@ -22,7 +22,7 @@ interface IBaseJob {
 }
 
 interface IJobInput {
-  inputPaths: string[]
+  inputPaths: Array<string>
   plugin: {
     name: string
     version: string
@@ -33,10 +33,10 @@ interface IJobInput {
 interface IInternalJob {
   id: string
   contentDigest: string
-  inputPaths: {
+  inputPaths: Array<{
     path: string
     contentDigest: string
-  }[]
+  }>
   plugin: {
     name: string
     version: string
@@ -250,7 +250,7 @@ export function createInternalJob(
   })
 
   const internalJob: InternalJob = {
-    id: uuid(),
+    id: uuidv4(),
     name,
     contentDigest: ``,
     inputPaths: inputPathsWithContentDigest,

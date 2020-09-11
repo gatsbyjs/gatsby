@@ -41,6 +41,7 @@ Object {
         "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
         "compact": false,
         "configFile": true,
+        "reactRuntime": "classic",
         "stage": "develop",
       },
     },

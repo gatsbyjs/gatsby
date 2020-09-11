@@ -1,6 +1,6 @@
 {
   "name": "gatsby-graphiql-explorer",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
@@ -50,9 +50,9 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "whatwg-fetch": "^3.1.0"
+    "whatwg-fetch": "^3.4.0"
   },
   "engines": {
     "node": ">=10.13.0"

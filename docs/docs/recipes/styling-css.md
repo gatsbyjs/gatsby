@@ -230,7 +230,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 
 ### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby plugin [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/) and `node-sass`.
 
 `npm install --save node-sass gatsby-plugin-sass`
 
@@ -272,7 +272,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 - [Difference between `.sass` and `.scss`](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](/docs/sass/)
 
 ## Adding a Local Font
 

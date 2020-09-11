@@ -4,15 +4,6 @@ title: Code Contributions
 
 The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
 
-On this page:
-
-- [Repo setup](#repo-setup)
-- [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
-- [Contributing example sites](#contributing-example-sites)
-- [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
-- [Development tools](#development-tools)
-- [Official theme development](#official-theme-development)
-
 ## Repo setup
 
 This page includes details specific to the Gatsby core and ecosystem codebase.
@@ -21,7 +12,7 @@ To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-C
 
 Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
 
-To contribute to the blog, check out the setup steps on the [blog contributions](/contributing/blog-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/). To contribute to the website, see the [website contributions](/contributing/website-contributions/) page.
+To contribute to the blog, check out the setup steps on the [blog contributions](/contributing/blog-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
 
 ## Creating your own plugins and loaders
 

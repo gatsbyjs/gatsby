@@ -27,11 +27,11 @@ Content creators may be curious about how common content management systems can 
 
 ### Better audience engagement and lead conversion
 
-> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site’s load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study/).
+> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site’s load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](/blog/2018-11-16-youfit-case-study/).
 
 ### Improved search traffic
 
-> Site speed is one of the factors Google uses in its search ranking algorithm, and slow site speeds can have a negative snowball effect on your SEO. Slower sites take longer to be crawled and indexed by search engines, they have higher bounce rates, and lower conversion rates, all of which will hurt your rankings. Gatsby sites have [built-in web and mobile performance optimizations](https://www.gatsbyjs.org/blog/2018-11-07-gatsby-for-apps/#why-gatsby-for-apps). It actually takes more effort to make a Gatsby site perform badly. Learn more about [the impact of page speed on SEO on Moz](https://moz.com/learn/seo/page-speed).
+> Site speed is one of the factors Google uses in its search ranking algorithm, and slow site speeds can have a negative snowball effect on your SEO. Slower sites take longer to be crawled and indexed by search engines, they have higher bounce rates, and lower conversion rates, all of which will hurt your rankings. Gatsby sites have [built-in web and mobile performance optimizations](/blog/2018-11-07-gatsby-for-apps/#why-gatsby-for-apps). It actually takes more effort to make a Gatsby site perform badly. Learn more about [the impact of page speed on SEO on Moz](https://moz.com/learn/seo/page-speed).
 
 ### Choose the best tools for your content and your users
 

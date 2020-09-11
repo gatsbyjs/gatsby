@@ -8,6 +8,7 @@ const glob = require(`glob`)
 const prettier = require(`prettier`)
 const resolveCwd = require(`resolve-cwd`)
 const { slash } = require(`gatsby-core-utils`)
+const fetch = require(`node-fetch`)
 
 const lock = require(`../lock`)
 const getDiff = require(`../utils/get-diff`)
@@ -98,10 +99,31 @@ const getNameForPlugin = node => {
   return null
 }
 
-const getDescriptionForPlugin = async name => {
-  const pkg = await readPackageJSON({}, name)
+const getDescriptionForPlugin = async (root, name) => {
+  const pkg = await readPackageJSON(root, name)
 
-  return pkg ? pkg.description : null
+  return pkg?.description || ``
+}
+
+const readmeCache = new Map()
+
+const getReadmeForPlugin = async name => {
+  if (readmeCache.has(name)) {
+    return readmeCache.get(name)
+  }
+
+  try {
+    const readme = await fetch(`https://unpkg.com/${name}/README.md`)
+      .then(res => res.text())
+      .catch(() => null)
+
+    if (readme) {
+      readmeCache.set(name, readme)
+    }
+    return readme || ``
+  } catch (err) {
+    return ``
+  }
 }
 
 const addPluginToConfig = (src, { name, options, key }) => {
@@ -222,7 +244,10 @@ const read = async ({ root }, id) => {
     )
 
     if (plugin) {
-      const description = await getDescriptionForPlugin(id)
+      const [description, readme] = await Promise.all([
+        getDescriptionForPlugin(root, id),
+        getReadmeForPlugin(id),
+      ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
         root,
         plugin.name
@@ -230,7 +255,8 @@ const read = async ({ root }, id) => {
 
       return {
         id,
-        description: description || null,
+        description,
+        readme,
         ...plugin,
         shadowedFiles,
         shadowableFiles,
@@ -383,6 +409,7 @@ const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
+  readme: Joi.string().optional().allow(null).allow(``),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
   ...resourceSchema,

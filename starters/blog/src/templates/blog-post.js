@@ -17,9 +17,10 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <article>
+      <article itemScope itemType="http://schema.org/Article">
         <header>
           <h1
+            itemProp="headline"
             style={{
               marginTop: rhythm(1),
               marginBottom: 0,
@@ -37,7 +38,10 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             {post.frontmatter.date}
           </p>
         </header>
-        <section dangerouslySetInnerHTML={{ __html: post.html }} />
+        <section
+          dangerouslySetInnerHTML={{ __html: post.html }}
+          itemProp="articleBody"
+        />
         <hr
           style={{
             marginBottom: rhythm(1),
