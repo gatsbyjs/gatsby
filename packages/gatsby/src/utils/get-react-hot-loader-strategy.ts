@@ -12,7 +12,11 @@ export function getReactHotLoaderStrategy(): string {
   try {
     const reactVersion = require(`react/package.json`).version
 
-    if (semver.satisfies(reactVersion, `>=16.9.0`)) {
+    // TODO React components need to be named to make fast-refresh work
+    // We need to create an eslint-rule that shows this error or create a babel plugin
+    // that converts arrow functions to generated named ones.
+    // When it's available we can switch the condition to >=16.9.0
+    if (semver.satisfies(reactVersion, `>=17.0.0`)) {
       return `fast-refresh`
     }
   } catch (e) {
