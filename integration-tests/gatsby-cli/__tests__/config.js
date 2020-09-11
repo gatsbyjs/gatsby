@@ -5,12 +5,9 @@ jest.setTimeout(MAX_TIMEOUT)
 
 const cwd = `execution-folder`
 
-
 describe(`gatsby config`, () => {
   it(`Prints the config`, () => {
-    const [status, logs] = GatsbyCLI.from(cwd).invoke(
-      `config`
-    )
+    const [status, logs] = GatsbyCLI.from(cwd).invoke(`config`)
 
     logs.should.contain(`Package Manager`)
     logs.should.contain(`Telemetry enabled`)
