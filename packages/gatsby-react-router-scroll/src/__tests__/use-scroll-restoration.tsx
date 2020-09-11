@@ -124,4 +124,52 @@ describe(`useScrollRestoration`, () => {
 
     expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(`scrollTop`, 0)
   })
+
+  it(`updates scroll position on location change`, async () => {
+    const wrapper = render(
+      <LocationProvider history={history}>
+        <ScrollHandler
+          navigate={history.navigate}
+          location={history.location}
+          shouldUpdateScroll={TRUE}
+        >
+          <Fixture />
+        </ScrollHandler>
+      </LocationProvider>
+    )
+
+    fireEvent.scroll(wrapper.getByTestId(`scrollfixture`), {
+      target: { scrollTop: 356 },
+    })
+
+    await history.navigate(`/another-location`)
+
+    expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(`scrollTop`, 0)
+  })
+
+  it(`restores scroll position when navigating back`, async () => {
+    const wrapper = render(
+      <LocationProvider history={history}>
+        <ScrollHandler
+          navigate={history.navigate}
+          location={history.location}
+          shouldUpdateScroll={TRUE}
+        >
+          <Fixture />
+        </ScrollHandler>
+      </LocationProvider>
+    )
+
+    fireEvent.scroll(wrapper.getByTestId(`scrollfixture`), {
+      target: { scrollTop: 356 },
+    })
+
+    await history.navigate(`/another-location`)
+    await history.navigate(-1)
+
+    expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(
+      `scrollTop`,
+      356
+    )
+  })
 })
