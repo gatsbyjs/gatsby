@@ -477,149 +477,129 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
 
   trackCli(argv)
 
-  return (
-    cli
-      .command({
-        command: `new [rootPath] [starter]`,
-        describe: `Create new Gatsby project.`,
-        handler: handlerP(async ({ rootPath, starter }) => {
-          const starterStr = starter ? String(starter) : undefined
-          const rootPathStr = rootPath ? String(rootPath) : undefined
+  return cli
+    .command({
+      command: `new [rootPath] [starter]`,
+      describe: `Create new Gatsby project.`,
+      handler: handlerP(async ({ rootPath, starter }) => {
+        const starterStr = starter ? String(starter) : undefined
+        const rootPathStr = rootPath ? String(rootPath) : undefined
 
-          await initStarter(starterStr, rootPathStr)
-        }),
-      })
-      //     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
-      //       yargs
-      //         .command({
-      //           command: `docs`,
-      //           describe: `Helpful info about using and creating plugins`,
-      //           handler: handlerP(() =>
-      //             console.log(`
-      // Using a plugin:
-      // - What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
-      // - Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
-      // - What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for/)
-      // - Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)
-      // - Plugin Library (https://www.gatsbyjs.org/plugins/)
-
-      // Creating a plugin:
-      // - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
-      // - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
-      // - Creating a Generic Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
-      // - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
-      // - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
-      // - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
-      // - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-      // - Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/source-plugin-tutorial/)
-      // - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
-      // - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
-      //           `)
-      //           ),
-      //         })
-      //         .demandCommand(
-      //           1,
-      //           `Pass --help to see all available commands and options.`
-      //         )
-      //     )
-      .command({
-        command: `telemetry`,
-        describe: `Enable or disable Gatsby anonymous analytics collection.`,
-        builder: yargs =>
-          yargs
-            .option(`enable`, {
-              type: `boolean`,
-              description: `Enable telemetry (default)`,
-            })
-            .option(`disable`, {
-              type: `boolean`,
-              description: `Disable telemetry`,
-            }),
-
-        handler: handlerP(({ enable, disable }: yargs.Arguments) => {
-          const enabled = Boolean(enable) || !disable
-          setTelemetryEnabled(enabled)
-          report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
-        }),
-      })
-      .command({
-        command: `plugin [cmd]`,
-        describe: `Useful commands relating to Gatsby plugins`,
-        builder: yargs =>
-          yargs.positional(`cmd`, {
-            choices: [`docs`],
-            describe: "Valid commands include `docs`.",
-            type: `string`,
+        await initStarter(starterStr, rootPathStr)
+      }),
+    })
+    .command({
+      command: `telemetry`,
+      describe: `Enable or disable Gatsby anonymous analytics collection.`,
+      builder: yargs =>
+        yargs
+          .option(`enable`, {
+            type: `boolean`,
+            description: `Enable telemetry (default)`,
+          })
+          .option(`disable`, {
+            type: `boolean`,
+            description: `Disable telemetry`,
           }),
-        handler: handlerP(({ cmd }) => {
-          if (cmd === `docs`) {
-            console.log(`test`)
-          } else {
-            console.log(`Current valid subcommands are: 'docs'`) // right now this is hardcoded because we only have a single command
-          }
+
+      handler: handlerP(({ enable, disable }: yargs.Arguments) => {
+        const enabled = Boolean(enable) || !disable
+        setTelemetryEnabled(enabled)
+        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
+    })
+    .command({
+      command: `plugin [cmd]`,
+      describe: `Useful commands relating to Gatsby plugins`,
+      builder: yargs =>
+        yargs.positional(`cmd`, {
+          choices: [`docs`],
+          describe: "Valid commands include `docs`.",
+          type: `string`,
         }),
-      })
-      .command({
-        command: `config [cmd] [key] [value]`,
-        describe: `View or set your gatsby-cli configuration settings.`,
-        builder: yargs =>
-          yargs
-            .positional(`cmd`, {
-              choices: [`set`],
-              type: `string`,
-              describe: `Configure your package manager.`,
-            })
-            .positional(`key`, {
-              choices: [`pm`],
-              type: `string`,
-              describe: `Set the package manager \`gatsby new\` is using.`,
-            })
-            .positional(`value`, {
-              choices: [`npm`, `yarn`],
-              type: `string`,
-              describe: `Set package manager as \`npm\` or \`yarn\`.`,
-            }),
-
-        handler: handlerP(({ cmd, key, value }: yargs.Arguments) => {
-          if (!getPackageManager()) {
-            // @ts-ignore
-            setPackageManager(`npm`)
-          }
-
-          if (cmd === `set`) {
-            if (key === `pm`) {
-              if (value && value !== `yarn` && value !== `npm`) {
-                report.panic(`Package manager must be yarn or npm.`)
-              }
-
-              if (value) {
-                // @ts-ignore
-                setPackageManager(value)
-                return
-              } else {
-                setPackageManager(`npm`)
-              }
-            } else {
-              reporter.warn(
-                `Please pass your desired config key and value. Currently you can only set your package manager using \`pm\`.`
-              )
-            }
-            return
-          }
-
+      handler: handlerP(({ cmd }) => {
+        if (cmd === `docs`) {
           console.log(`
+      Using a plugin:
+      - What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
+      - Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
+      - What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for/)
+      - Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)
+      - Plugin Library (https://www.gatsbyjs.org/plugins/)
+
+      Creating a plugin:
+      - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
+      - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+      - Creating a Generic Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
+      - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
+      - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
+      - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
+      - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
+      - Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/source-plugin-tutorial/)
+      - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
+      - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
+                 `)
+        } else {
+          console.log(`Current valid subcommands are: 'docs'`) // right now this is hardcoded because we only have a single command
+        }
+      }),
+    })
+    .command({
+      command: `config [cmd] [key] [value]`,
+      describe: `View or set your gatsby-cli configuration settings.`,
+      builder: yargs =>
+        yargs
+          .positional(`cmd`, {
+            choices: [`set`],
+            type: `string`,
+            describe: `Configure your package manager.`,
+          })
+          .positional(`key`, {
+            choices: [`pm`],
+            type: `string`,
+            describe: `Set the package manager \`gatsby new\` is using.`,
+          })
+          .positional(`value`, {
+            choices: [`npm`, `yarn`],
+            type: `string`,
+            describe: `Set package manager as \`npm\` or \`yarn\`.`,
+          }),
+
+      handler: handlerP(({ cmd, key, value }: yargs.Arguments) => {
+        if (!getPackageManager()) {
+          setPackageManager(`npm`)
+        }
+
+        if (cmd === `set`) {
+          if (key === `pm`) {
+            if (value && value !== `yarn` && value !== `npm`) {
+              report.panic(`Package manager must be yarn or npm.`)
+            }
+
+            if (value) {
+              // @ts-ignore
+              setPackageManager(value)
+              return
+            } else {
+              setPackageManager(`npm`)
+            }
+          } else {
+            reporter.warn(
+              `Please pass your desired config key and value. Currently you can only set your package manager using \`pm\`.`
+            )
+          }
+          return
+        }
+
+        console.log(`
         Package Manager: ${getPackageManager()}
         Telemetry enabled: ${isTrackingEnabled()}
         `)
-        }),
-      })
-      .wrap(cli.terminalWidth())
-      .demandCommand(
-        1,
-        `Pass --help to see all available commands and options.`
-      )
-      .strict()
-      .recommendCommands()
-      .parse(argv.slice(2))
-  )
+      }),
+    })
+    .wrap(cli.terminalWidth())
+    .demandCommand(1, `Pass --help to see all available commands and options.`)
+    .strict()
+    .recommendCommands()
+    .parse(argv.slice(2))
 }
