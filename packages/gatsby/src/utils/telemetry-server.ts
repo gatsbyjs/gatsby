@@ -22,12 +22,19 @@ const ROUTES = {
   trackEvent: trackCli,
 }
 
-const port = process.env.PORT
-if (!port)
-  throw new Error(
-    `Please specify the PORT environment variable to use the telemetry-server.`
-  )
 const app = express()
+
+// Overview over all possible routes at /
+app.get(`/`, (req, res) => {
+  res.set(`Content-Type`, `text/html`)
+  res.send(
+    `<ul>
+      ${Object.keys(ROUTES)
+        .map(route => `<li><a href="/${route}">/${route}</a></li>`)
+        .join(`\n`)}
+    </ul>`
+  )
+})
 
 Object.keys(ROUTES).map(route => {
   app.post(`/${route}`, bodyParser.json(), (req, res) => {
@@ -51,6 +58,7 @@ Object.keys(ROUTES).map(route => {
   })
 })
 
-startBackgroundUpdate()
-app.listen(port)
-console.log(`Telemetry service listening at http://localhost:${port}.`)
+export default function startTelemetryServer(port: number): void {
+  startBackgroundUpdate()
+  app.listen(port)
+}
