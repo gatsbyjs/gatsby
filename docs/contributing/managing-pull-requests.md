@@ -174,7 +174,6 @@ Typically this is:
 - **gatsbyjs/themes** for certain features like Themes, Recipes, and Admin
 - **gatsbyjs/documentation** for documentation
 - **gatsbyjs/core** for any other code
-- **gatsbyjs/website** for anything related to GatsbyJS.com
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 
