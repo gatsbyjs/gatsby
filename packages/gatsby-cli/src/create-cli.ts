@@ -555,6 +555,7 @@ Creating a plugin:
         }
 
         if (!getPackageManager()) {
+          // @ts-ignore
           setPackageManager(`npm`)
         }
 
