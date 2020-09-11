@@ -1,7 +1,6 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 import { useStaticQuery, graphql } from "gatsby"
 
 const SiteType = () => {
@@ -9,12 +8,8 @@ const SiteType = () => {
     query SiteTypeQuery {
       site {
         buildTime
-        host
         siteMetadata {
           description
-          social {
-            twitter
-          }
           title
         }
       }
@@ -23,14 +18,8 @@ const SiteType = () => {
 
   return (
     <Layout>
-      <SEO title="Site Data" />
       <p data-testid="title">{data.site.siteMetadata.title}</p>
-      <p data-testid="description">
-        {data.site.siteMetadata.description === null
-          ? "description is null"
-          : "description is not null"}
-      </p>
-      <p data-testid="twitter">{data.site.siteMetadata.social.twitter}</p>
+      <p data-testid="description">{data.site.siteMetadata.description}</p>
       <p data-testid="buildtime">
         {new Date(data.site.buildTime).toString() !== "Invalid Date" &&
           "buildTime is valid"}
@@ -39,7 +28,6 @@ const SiteType = () => {
         {new Date("Invalid").toString() === "Invalid Date" &&
           "Invalid dates can be detected"}
       </p>
-      <p data-testid="host">{data.site.host}</p>
     </Layout>
   )
 }
