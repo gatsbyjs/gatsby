@@ -1444,52 +1444,52 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@graphql-tools/delegate@6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/delegate/-/delegate-6.2.1.tgz#97847e6d236e55a70de8fb7ece9eb615c57fbc6b"
-  integrity sha512-IsmrZ+aiT00V567PfawxvdjwMf8RrfjSuyOy7LvqJ6ABUlpcjZejYMFIl82ZjHf8m3OU1xF5Wier8G6XFYzPYw==
+"@graphql-tools/delegate@6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/delegate/-/delegate-6.2.2.tgz#3c401a06f6f7c3ef068d78217bde5e9b7b3830a0"
+  integrity sha512-8VycfZYQ+m4HgajewQT6v6BzAEFxc6mh6rO+uqewnvh143nvv3ud4nXEAfOddUm0PrE6iD3Ng2BZtPSWF5mt+w==
   dependencies:
     "@ardatan/aggregate-error" "0.0.6"
-    "@graphql-tools/schema" "6.2.1"
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/schema" "6.2.2"
+    "@graphql-tools/utils" "6.2.2"
     dataloader "2.0.0"
     is-promise "4.0.0"
     tslib "~2.0.1"
 
 "@graphql-tools/graphql-file-loader@^6.0.0":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/graphql-file-loader/-/graphql-file-loader-6.2.1.tgz#a5025a50fad233922bd36afde4bce36f57e1ca67"
-  integrity sha512-HfM6kC48KTDhVizeuJVOmh+nJD8s1SefK8aZgFBvnXVWW+HdPx2+T5MH6sSVvqgMrlCxLxuyuwcPIcXqpvYvxA==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/graphql-file-loader/-/graphql-file-loader-6.2.2.tgz#88e9d41f8fb1aac7f9f486cb61fbdb6bdc18d6f6"
+  integrity sha512-dKuOk4vH2WWzVGydL13FjdR3WEmJHMoud3MXF9uyvLcjuDm9L0r+PdSI1PSPiCYs7Ii2bJ8zgmdz32jCBHZszA==
   dependencies:
-    "@graphql-tools/import" "6.2.1"
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/import" "6.2.2"
+    "@graphql-tools/utils" "6.2.2"
     fs-extra "9.0.1"
     tslib "~2.0.1"
 
-"@graphql-tools/import@6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/import/-/import-6.2.1.tgz#e5c197f9726d0cdf98ad3b4d1c9af36e4198a11e"
-  integrity sha512-10mMCB8x4s0P010n8HHiUExg5m2NMr3Hm30WRSoP3P0m8Q0l8AmwXVwHUtykEaWhu+4xvFZ5Hl3fS+Wm0f7jdg==
+"@graphql-tools/import@6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/import/-/import-6.2.2.tgz#5f5341ff419851c1d2cf18d10d48abbb7763902e"
+  integrity sha512-fxQx+960CBzG6+MGGRaWv9tQ71ir2NZQeVC2dfieQLv5/LXH0fqKe9ltYCfJFskscAmzWeuS19Sibhdn0JMecw==
   dependencies:
     fs-extra "9.0.1"
     resolve-from "5.0.0"
     tslib "~2.0.1"
 
 "@graphql-tools/json-file-loader@^6.0.0":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/json-file-loader/-/json-file-loader-6.2.1.tgz#1afe79b9549d31dd29f784490a702d5d5ff2fc12"
-  integrity sha512-WQ4qIl8dBOg6fLh7GZZ2YzSTelBiTPZlohVCBJ8iuqzS1Tryty6c/FAbMBfscNlQ4nb4y3zb4LR0F0pbq2urcQ==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/json-file-loader/-/json-file-loader-6.2.2.tgz#d411a0195797a47028a97101a7c8059679364011"
+  integrity sha512-m/gKQGJS+4bUy/8v0uup3su9RcCLdWvmhYW9+J8WDSzDE2QEdYQMeyDFYV14x0r92IhRpftLd//JvoE3cTV5Kg==
   dependencies:
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/utils" "6.2.2"
     fs-extra "9.0.1"
     tslib "~2.0.1"
 
-"@graphql-tools/links@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/links/-/links-6.2.1.tgz#9e1a09ffc3bca8b56181cea1ed01c406ba826786"
-  integrity sha512-TKf3JcRqyD5lD9LOSAx216Ka/jBJL1YKabDeoE9irtaGt8QNXMRl5Cbjq/N1DhckB+NaLxo4SmgnHB39FdLGAw==
+"@graphql-tools/links@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/links/-/links-6.2.2.tgz#cf3620b6b68f48137637f7eee73eb0274dcda924"
+  integrity sha512-x1B75Flc10PSmF1hzar1kty9q9wfWjlwlPXYC5AYGmRIVfzbZui3SEZcEPP8cviedBCI84l9O+dX5S4dE2Oz6Q==
   dependencies:
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/utils" "6.2.2"
     apollo-link "1.2.14"
     apollo-upload-client "14.1.1"
     cross-fetch "3.0.5"
@@ -1498,12 +1498,12 @@
     tslib "~2.0.1"
 
 "@graphql-tools/load@^6.0.0":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/load/-/load-6.2.1.tgz#c5f3e1dd21b9f80b42184f1c89dfdcf41fa40d14"
-  integrity sha512-PkM2xv/bBFQIkmgCX0LsZnHBuJY5YhDrpsljdD+0mXw2b9w0zUG2qIqBoMBLfG3ncjduE9Hwl1oKSBhFUPJmyA==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/load/-/load-6.2.2.tgz#54fb6f3594e3fb4774a1adb8d7129f788512c752"
+  integrity sha512-p5fvGSvtrIjL3rmQbdESnYH5zxqdKeQOIwoPnfvx6uDqqm3HaRBzS+k5V/PkhGsFRR5VFrqA8kPAbE87BYpkqw==
   dependencies:
-    "@graphql-tools/merge" "6.2.1"
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/merge" "6.2.2"
+    "@graphql-tools/utils" "6.2.2"
     globby "11.0.1"
     import-from "3.0.0"
     is-glob "4.0.1"
@@ -1512,31 +1512,31 @@
     unixify "1.0.0"
     valid-url "1.0.9"
 
-"@graphql-tools/merge@6.2.1", "@graphql-tools/merge@^6.0.0":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-6.2.1.tgz#edce28a343776ea580e7feceb3b6557c99ce9cfe"
-  integrity sha512-GJyMOYM2JyZhvMlVwpUZUv5ocvWCh+/KdPCCzXqo3Va/kOO1ntm8lKGNf3JZpQDgpC5FvaQfsu/b5pE7TBFxyw==
+"@graphql-tools/merge@6.2.2", "@graphql-tools/merge@^6.0.0":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-6.2.2.tgz#49d8da0e706530ad484dee8ba7b91f8d80126030"
+  integrity sha512-2YyErSvq4hn5mjE6qJ/0Q8r3WU9JB3+obv2xyvb+oW+E/T1iYRJGxSFldi6lqO5IADZz8QASLJeSpRBw40gpBg==
   dependencies:
-    "@graphql-tools/schema" "6.2.1"
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/schema" "6.2.2"
+    "@graphql-tools/utils" "6.2.2"
     tslib "~2.0.1"
 
-"@graphql-tools/schema@6.2.1", "@graphql-tools/schema@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-6.2.1.tgz#6b584defa37d6649180491ae32e1bb737b1d33e5"
-  integrity sha512-SKoZmxlLwOq08/NZ8Y5aShgEHneTJ8Ksw4gU1WBSWVJGf64ROoxIxN4Uc47F0cZxwOBqVqUy/EdXWZ8Jt97uQQ==
+"@graphql-tools/schema@6.2.2", "@graphql-tools/schema@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-6.2.2.tgz#2dd7c6fbb4b6ccad239d0fefc3eb6d98a1bfcb01"
+  integrity sha512-KITlyr//1oKyxIOlGvNZDl4c6bLj2Gc+3eJXyUKWfSmgsmAZPudpQNa/8VbiVujpm7UaX0cyM3FdeCaxWFeBgg==
   dependencies:
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/utils" "6.2.2"
     tslib "~2.0.1"
 
 "@graphql-tools/url-loader@^6.0.0":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/url-loader/-/url-loader-6.2.1.tgz#9265dc6578263a79d386ea307bbb733740c9a0d2"
-  integrity sha512-6NTibFENUn02oI53VhW2Dcas0QdHYDyqRD5yxk0D+rQUP558t4eoYLJ8/hhdqbJ5t+2/lBRkzVU/5oJkZQosMQ==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/url-loader/-/url-loader-6.2.2.tgz#cd5e83f31abea8d7de40c7e569e0242f7ece5c50"
+  integrity sha512-vNDjhf7SJr9RnIDPBBEyTfKBb3aWRA3uy3jDkqQ/AFyh4hXRkg8xnECH7c6glRnWiZJeObMTxowZSUnDA68IyA==
   dependencies:
-    "@graphql-tools/delegate" "6.2.1"
-    "@graphql-tools/utils" "6.2.1"
-    "@graphql-tools/wrap" "6.2.1"
+    "@graphql-tools/delegate" "6.2.2"
+    "@graphql-tools/utils" "6.2.2"
+    "@graphql-tools/wrap" "6.2.2"
     "@types/websocket" "1.0.1"
     cross-fetch "3.0.5"
     subscriptions-transport-ws "0.9.18"
@@ -1544,23 +1544,23 @@
     valid-url "1.0.9"
     websocket "1.0.32"
 
-"@graphql-tools/utils@6.2.1", "@graphql-tools/utils@^6.0.0", "@graphql-tools/utils@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-6.2.1.tgz#07774dbcc7657d9f9b898721f10fc613ce116b56"
-  integrity sha512-DZ6a2bjOH4sWKhNUachvYy+3ocXDvDcTtComOD/z7ncszdlZPU6RXNOgBTxh/bMVHBPqlEh/VjCVMwBysZRbJw==
+"@graphql-tools/utils@6.2.2", "@graphql-tools/utils@^6.0.0", "@graphql-tools/utils@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-6.2.2.tgz#490236f539754ec59cd0490919b00ed9e0dba604"
+  integrity sha512-a0SSYF76dnKHs8te4Igfnrrq1VOO4sFG8yx3ehO7464eGUfUUYo2QmNRjhxny2HRMvqzX40xuQikyg6LBXDNLQ==
   dependencies:
     "@ardatan/aggregate-error" "0.0.6"
     camel-case "4.1.1"
     tslib "~2.0.1"
 
-"@graphql-tools/wrap@6.2.1", "@graphql-tools/wrap@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/wrap/-/wrap-6.2.1.tgz#4df858924a95fa90861a712a7578d94d8dcdd07e"
-  integrity sha512-bjmN2Xh3haRp5tMDNPpUDV/9IlvFfmG9umsAOb3WFRJBoVi/dX0YwWIyucM3WBVix4ory8Op5eT4KkoKeaFSMw==
+"@graphql-tools/wrap@6.2.2", "@graphql-tools/wrap@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/wrap/-/wrap-6.2.2.tgz#034fb885ad0812a13db3db7eec37d9dd300c7145"
+  integrity sha512-FjCE+NvMwcCiAlt9EAw9uDi2zblE4Z5CEkY+z4NRO1AmCB5THoWJKG+csPh8tGuU80mAJI51Wy9FQGyUo/EU0g==
   dependencies:
-    "@graphql-tools/delegate" "6.2.1"
-    "@graphql-tools/schema" "6.2.1"
-    "@graphql-tools/utils" "6.2.1"
+    "@graphql-tools/delegate" "6.2.2"
+    "@graphql-tools/schema" "6.2.2"
+    "@graphql-tools/utils" "6.2.2"
     is-promise "4.0.0"
     tslib "~2.0.1"
 
@@ -7483,15 +7483,15 @@ content-type@^1.0.4, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
-contentful-management@^5.26.3:
-  version "5.28.0"
-  resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-5.28.0.tgz#f3b58d60400d66e42439bbd9085cecb0e486f0bb"
-  integrity sha512-o+qihN3zrD6+/BT/e8n26jl/zQvmV6+9S6NY5QDmzM+IaiSeCk6yvPMq74s+IZT9mOS54igl6qFTbeIpdJ9FDA==
+contentful-management@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-6.1.2.tgz#d1ce75924849bc4b710b25dab51254f760034ac2"
+  integrity sha512-1USZh92hCrYXHl4fgHQ3AYOE155Aum8eBaES0vkpD/PW74vAwJC2tIBzx+uUMXc/DNwJibLEDS63XMBqXnYDpw==
   dependencies:
     axios "^0.19.0"
     contentful-sdk-core "^6.4.0"
-    lodash "^4.17.11"
-    type-fest "0.15.1"
+    lodash "^4.17.20"
+    type-fest "0.16.0"
 
 contentful-resolve-response@^1.2.2:
   version "1.2.2"
@@ -8753,10 +8753,10 @@ devcert@^1.1.3:
     tmp "^0.0.33"
     tslib "^1.10.0"
 
-devtools-protocol@0.0.781568:
-  version "0.0.781568"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.781568.tgz#4cdca90a952d2c77831096ff6cd32695d8715a04"
-  integrity sha512-9Uqnzy6m6zEStluH9iyJ3iHyaQziFnMnLeC8vK0eN6smiJmIx7+yB64d67C2lH/LZra+5cGscJAJsNXO+MdPMg==
+devtools-protocol@0.0.799653:
+  version "0.0.799653"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.799653.tgz#86fc95ce5bf4fdf4b77a58047ba9d2301078f119"
+  integrity sha512-t1CcaZbvm8pOlikqrsIM9GOa7Ipp07+4h/q9u0JXBWjPCjHdBl9KkddX87Vv9vBHoBGtwV79sYQNGnQM6iS5gg==
 
 dezalgo@^1.0.0:
   version "1.0.3"
@@ -9657,10 +9657,10 @@ eslint-plugin-prettier@^3.1.4:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react-hooks@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.1.tgz#b37e1ff622b7800cd673901de32db1103d48411d"
-  integrity sha512-vFJNwsf4MLYS0lHYfz9LqxQ+GccYsGGeKPHDxgkIaKbAhNuTLnST+q44pt81MzJZyFU5K4XLF6WiCGv3Yb6tCg==
+eslint-plugin-react-hooks@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.2.tgz#2eb53731d11c95826ef7a7272303eabb5c9a271e"
+  integrity sha512-ykUeqkGyUGgwTtk78C0o8UG2fzwmgJ0qxBGPp2WqRKsTwcLuVf01kTDRAtOsd4u6whX2XOC8749n2vPydP82fg==
 
 eslint-plugin-react@^7.20.6:
   version "7.20.6"
@@ -16474,10 +16474,10 @@ min-indent@^1.0.0:
   resolved "https://registry.yarnpkg.com/min-indent/-/min-indent-1.0.1.tgz#a63f681673b30571fbe8bc25686ae746eefa9869"
   integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
 
-mini-css-extract-plugin@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.11.1.tgz#f04048de8b4d4d7b1b1dea02363d167438c7f6dc"
-  integrity sha512-k6ijDS4ZbrTSBkrJDvbpDlXgD3rHjoKBUC3hbUNxfBr7tLv3FpjHcuvuFRNHcPNEryEKyEZL0n/Q4ZHPC2V6mA==
+mini-css-extract-plugin@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.11.2.tgz#e3af4d5e04fbcaaf11838ab230510073060b37bf"
+  integrity sha512-h2LknfX4U1kScXxH8xE9LCOqT5B+068EAj36qicMb8l4dqdJoyHcmWmpd+ueyZfgu/POvIn+teoUnTtei2ikug==
   dependencies:
     loader-utils "^1.1.0"
     normalize-url "1.9.1"
@@ -19308,13 +19308,13 @@ puppeteer-core@^3.1.0:
     unbzip2-stream "^1.3.3"
     ws "^7.2.3"
 
-puppeteer@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-5.2.1.tgz#7f0564f0a5384f352a38c8cc42af875cd87f4ea6"
-  integrity sha512-PZoZG7u+T6N1GFWBQmGVG162Ak5MAy8nYSVpeeQrwJK2oYUlDWpHEJPcd/zopyuEMTv7DiztS1blgny1txR2qw==
+puppeteer@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-5.3.0.tgz#0abf83d0f2d1273baf2b56885a813f8052903e33"
+  integrity sha512-GjqMk5GRro3TO0sw3QMsF1H7n+/jaK2OW45qMvqjYUyJ7y4oA//9auy969HHhTG3HZXaMxY/NWXF/NXlAFIvtw==
   dependencies:
     debug "^4.1.0"
-    devtools-protocol "0.0.781568"
+    devtools-protocol "0.0.799653"
     extract-zip "^2.0.0"
     https-proxy-agent "^4.0.0"
     mime "^2.0.3"
@@ -24047,10 +24047,10 @@ type-detect@4.0.8:
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
   integrity sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==
 
-type-fest@0.15.1:
-  version "0.15.1"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.15.1.tgz#d2c4e73d3e4a53cf1a906396dd460a1c5178ca00"
-  integrity sha512-n+UXrN8i5ioo7kqT/nF8xsEzLaqFra7k32SEsSPwvXVGyAcRgV/FUQN/sgfptJTR1oRmmq7z4IXMFSM7im7C9A==
+type-fest@0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.16.0.tgz#3240b891a78b0deae910dbeb86553e552a148860"
+  integrity sha512-eaBzG6MxNzEn9kiwvtre90cXaNLkmadMWa1zQMs3XORCXNbsH/OewwbxC5ia9dCxIxnTAsSxXJaa/p5y8DlvJg==
 
 type-fest@^0.10.0:
   version "0.10.0"
@@ -25829,10 +25829,10 @@ xhr@^2.0.1:
     parse-headers "^2.0.0"
     xtend "^4.0.0"
 
-xlsx@^0.16.6:
-  version "0.16.6"
-  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.16.6.tgz#ec759df166cbfe5fdf01d08636a6796db26af9a3"
-  integrity sha512-iAPNt15C2umCx7Q6h9owZvNHRYVOImLp7Mc00uA4UhJvzjfM1OV3V7TgBXIHuawGF1G6GLXZr/r75e5jsiBefg==
+xlsx@^0.16.7:
+  version "0.16.7"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.16.7.tgz#62fd6590addac7c4419daaaa2b0c5388015d5f69"
+  integrity sha512-Xc4NRjci2Grbh9NDk/XoaWycJurxEug1wwn0aJCmB0NvIMyQuHYq2muWLWGidYNZPf94aUbqm6K8Fbjd7gKTZg==
   dependencies:
     adler-32 "~1.2.0"
     cfb "^1.1.4"
