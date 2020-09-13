@@ -48,7 +48,7 @@
     "update-notifier": "^4.1.1",
     "uuid": "3.4.0",
     "yargs": "^15.4.1",
-    "yurnalist": "^1.1.2"
+    "yurnalist": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
