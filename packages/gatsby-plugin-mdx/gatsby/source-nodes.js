@@ -186,7 +186,7 @@ module.exports = (
           }
           const { mdast } = await processMDX({ node: mdxNode })
 
-          let excerptNodes = []
+          const excerptNodes = []
           visit(mdast, node => {
             if (node.type === `text` || node.type === `inlineCode`) {
               excerptNodes.push(node.value)
