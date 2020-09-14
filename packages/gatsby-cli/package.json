@@ -45,6 +45,7 @@
     "update-notifier": "^4.1.0",
     "uuid": "3.4.0",
     "yargs": "^15.3.1",
+    "yoga-layout-prebuilt": "^1.9.6",
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {

@@ -25,7 +25,6 @@ function excludeDevTools() {
   }
 }
 
-
 export default {
   input: `src/reporter/loggers/ink/index.tsx`,
   output: {
