@@ -168,6 +168,10 @@ module.exports = {
         // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
         // so disabling them in .ts(x) files
         "flowtype/no-types-missing-file-annotation": "off",
+        "@typescript-eslint/array-type": [
+          'error',
+          { default: 'generic' },
+        ],
       },
     },
   ],

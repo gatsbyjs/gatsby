@@ -24,7 +24,7 @@ export interface IStructuredStackFrame {
 export interface IStructuredError {
   code?: string
   text: string
-  stack: IStructuredStackFrame[]
+  stack: Array<IStructuredStackFrame>
   filePath?: string
   location?: {
     start: ILocationPosition

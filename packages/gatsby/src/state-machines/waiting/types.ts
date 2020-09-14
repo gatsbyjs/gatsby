@@ -3,12 +3,12 @@ import { IGatsbyState } from "../../redux/types"
 
 export interface IMutationAction {
   type: string
-  payload: unknown[]
+  payload: Array<unknown>
 }
 export interface IWaitingContext {
-  nodeMutationBatch: IMutationAction[]
+  nodeMutationBatch: Array<IMutationAction>
   store?: Store<IGatsbyState, AnyAction>
-  runningBatch: IMutationAction[]
+  runningBatch: Array<IMutationAction>
   filesDirty?: boolean
   webhookBody?: Record<string, unknown>
 }

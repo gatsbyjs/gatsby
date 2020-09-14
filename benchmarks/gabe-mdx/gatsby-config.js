@@ -3,15 +3,6 @@ module.exports = {
     siteTitle: `Gatsby MDX Benchmark`,
   },
   plugins: [
-    // Skip the plugin if NBR is set
-    ...process.env.NBR ? [] : [`gatsby-plugin-benchmark-reporting`],
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
-    },
     {
       resolve: "gatsby-source-filesystem",
       options: {

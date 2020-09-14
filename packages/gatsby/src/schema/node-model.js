@@ -688,15 +688,17 @@ async function resolveRecursive(
       ) {
         innerValue = await Promise.all(
           innerValue.map(item =>
-            resolveRecursive(
-              nodeModel,
-              schemaComposer,
-              schema,
-              item,
-              gqlFieldType,
-              queryField,
-              _.isObject(fieldToResolve) ? fieldToResolve : queryField
-            )
+            item == null
+              ? item
+              : resolveRecursive(
+                  nodeModel,
+                  schemaComposer,
+                  schema,
+                  item,
+                  gqlFieldType,
+                  queryField,
+                  _.isObject(fieldToResolve) ? fieldToResolve : queryField
+                )
           )
         )
       }

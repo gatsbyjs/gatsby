@@ -61,7 +61,7 @@ exports.onCreateWebpackConfig = ({
 
 ### Absolute imports
 
-Instead of writing `import Header from '../../components/header'` over and over again you can just write `import Header from 'components/header'` with absolute imports:
+Instead of writing `import Header from '../../components/header'` over and over again you can write `import Header from 'components/header'` with absolute imports:
 
 ```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
