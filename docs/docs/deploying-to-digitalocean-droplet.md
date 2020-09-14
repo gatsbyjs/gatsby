@@ -6,7 +6,7 @@ This guide walks through how to deploy and host your Gatsby site on a [DigitalOc
 
 DigitalOcean provides a cloud platform to deploy, manage, and scale applications of any size, removing infrastructure friction and providing predictability so developers and their teams can spend more time building better software.
 
-DigitalOcean's product droplets are scalable compute IaaS (Infrastructure as a Service) or a asdfksajdfkladfjklatest VPS (Virtual Private Server) on the cloud which has great reliability and scalability. They come with varied price ranges ideal for small apps to giant enterprise-level apps.
+DigitalOcean's product droplets are scalable compute IaaS (Infrastructure as a Service) or a VPS (Virtual Private Server) on the cloud which has great reliability and scalability. They come with varied price ranges ideal for small apps to giant enterprise-level apps.
 
 They provide service to select from various Unix-based distributions and select your technology-based platform with preinstalled pre-requisites from the marketplace. This guide will walk through the specific options that work best for deploying a Gatsby site with DigitalOcean.
 
