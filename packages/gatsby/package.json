@@ -151,7 +151,7 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.1.4",
     "webpack-stats-plugin": "^0.3.2",
-    "webpack-virtual-modules": "^0.3.0",
+    "webpack-virtual-modules": "^0.3.1",
     "xstate": "^4.11.0",
     "yaml-loader": "^0.6.0"
   },
