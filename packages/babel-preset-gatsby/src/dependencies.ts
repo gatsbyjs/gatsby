@@ -37,7 +37,7 @@ export default (_?: unknown, options: IPresetOptions = {}) => {
           // Allow importing core-js in entrypoint and use browserlist to select polyfills
           // V3 change, make this entry
           useBuiltIns: `usage`,
-          corejs: 3,
+          corejs: { version: 3, proposals: true },
           modules: false,
           // debug: true,
           targets,
