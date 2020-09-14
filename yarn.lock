@@ -2856,23 +2856,23 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.4.tgz#11d5db19bd178936ec89cd84519c4de439574398"
   integrity sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
 
-"@prefresh/core@^0.7.0":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@prefresh/core/-/core-0.7.1.tgz#75c73975dbbf66d70fc698eda26aeae1767d3c07"
-  integrity sha512-wa7M0cTV7DcBu3vw4MEtVXWFxsdHXbky8qzhBFJ/HEp7fdEmvOateYmGOjSeOn+QaKeAqUBGTMnTyVER0lamNA==
-
-"@prefresh/utils@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@prefresh/utils/-/utils-0.2.0.tgz#1d269210758346e8e1f8a6410b61ba3e4fb982f9"
-  integrity sha512-mxJraGQLPmvAuI8Br0y/pvJWI2sy5IHU5veZ5GglP1gnb4dpp5rjIVjHdlVvrXUKGtFIpB3zxrqS+vYn1cQ01A==
-
-"@prefresh/webpack@^0.8.1":
+"@prefresh/core@^0.8.1":
   version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@prefresh/webpack/-/webpack-0.8.1.tgz#b858f5c06ae4532703f79757a96e8ece2a6fffd9"
-  integrity sha512-/35IQeMpKJDJyd6FGgaPB9dHMv0WqKUZYVyKa84PgNFoDNf8EHA0DqCqA4ZtWercK3WRtVJuHoucXzuAxSSb6g==
+  resolved "https://registry.yarnpkg.com/@prefresh/core/-/core-0.8.1.tgz#d4f15d9e3ee9c16bf420405e2b422774e807a594"
+  integrity sha512-woho+Ja8w3pxnZwq68MnWzH9ffdidrpJsV6PDTNIsJOpsLYmfCNxqxGsxIqYw40d1yjg4h6HFGbb6Y9lhyTPNA==
+
+"@prefresh/utils@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@prefresh/utils/-/utils-0.3.1.tgz#f9e1a5e1fa4bc02989980733950e60520f0f9869"
+  integrity sha512-9kLzPWN4teeiKuc+Rle3SF/hyx5lzo35X4rHr+kQXnJT+BaEb1ymDWIHGkv85xjnw8+l6I1r1H7JB4BHOMJfmg==
+
+"@prefresh/webpack@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@prefresh/webpack/-/webpack-1.0.2.tgz#e59ae77f30752323456e1cc03efdfab16120f39d"
+  integrity sha512-e9r1sHsQqF0CYD5v0it7d5SvyRHvOAkkwwRzGM8CbqVTuVw6UsN2/k04nDeDd8ve10T5E6h9ry0P6cjJc8JiLg==
   dependencies:
-    "@prefresh/core" "^0.7.0"
-    "@prefresh/utils" "^0.2.0"
+    "@prefresh/core" "^0.8.1"
+    "@prefresh/utils" "^0.3.1"
 
 "@reach/alert@0.10.3":
   version "0.10.3"
