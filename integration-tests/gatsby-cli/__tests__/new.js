@@ -19,11 +19,11 @@ describe(`gatsby new`, () => {
   beforeAll(async () => {
     await clean(dir)
     await fs.ensureDir(dir)
-    GatsbyCLI.from(cwd).invoke([`config`, `set`, `pm`, `yarn`])
+    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, `yarn`])
   })
 
   afterAll(async () => {
-    GatsbyCLI.from(cwd).invoke([`config`, `set`,`pm`, originalPackageManager])
+    GatsbyCLI.from(cwd).invoke([`options`, `set`,`pm`, originalPackageManager])
     await clean(dir)
   })
 

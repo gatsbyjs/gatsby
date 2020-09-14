@@ -151,24 +151,24 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         .option(`S`, {
           alias: `https`,
           type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.com/docs/local-https/ as a guide`,
         })
         .option(`c`, {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.com/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.com/docs/local-https/`,
         })
         .option(`ca-file`, {
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.com/docs/local-https/`,
         })
         .option(`graphql-tracing`, {
           type: `boolean`,
@@ -181,11 +181,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         })
         .option(`inspect`, {
           type: `number`,
-          describe: `Opens a port for debugging. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
+          describe: `Opens a port for debugging. See https://www.gatsbyjs.com/docs/debugging-the-build-process/`,
         })
         .option(`inspect-brk`, {
           type: `number`,
-          describe: `Opens a port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
+          describe: `Opens a port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.com/docs/debugging-the-build-process/`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
@@ -354,7 +354,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
   cli.command({
     command: `repl`,
-    describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
+    describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.com/docs/gatsby-repl/)`,
     handler: getCommandHandler(
       `repl`,
       (args: yargs.Arguments, cmd: Function) => {
@@ -521,22 +521,22 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         if (cmd === `docs`) {
           console.log(`
       Using a plugin:
-      - What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
-      - Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
-      - What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for/)
-      - Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)
-      - Plugin Library (https://www.gatsbyjs.org/plugins/)
+      - What is a Plugin? (https://www.gatsbyjs.com/docs/what-is-a-plugin/)
+      - Using a Plugin in Your Site (https://www.gatsbyjs.com/docs/using-a-plugin-in-your-site/)
+      - What You Don't Need Plugins For (https://www.gatsbyjs.com/docs/what-you-dont-need-plugins-for/)
+      - Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.com/docs/loading-plugins-from-your-local-plugins-folder/)
+      - Plugin Library (https://www.gatsbyjs.com/plugins/)
 
       Creating a plugin:
-      - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
-      - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
-      - Creating a Generic Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
-      - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
-      - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
-      - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
-      - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-      - Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/source-plugin-tutorial/)
-      - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
+      - Naming a Plugin (https://www.gatsbyjs.com/docs/naming-a-plugin/)
+      - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.com/docs/files-gatsby-looks-for-in-a-plugin/)
+      - Creating a Generic Plugin (https://www.gatsbyjs.com/docs/creating-a-generic-plugin/)
+      - Creating a Local Plugin (https://www.gatsbyjs.com/docs/creating-a-local-plugin/)
+      - Creating a Source Plugin (https://www.gatsbyjs.com/docs/creating-a-source-plugin/)
+      - Creating a Transformer Plugin (https://www.gatsbyjs.com/docs/creating-a-transformer-plugin/)
+      - Submit to Plugin Library (https://www.gatsbyjs.com/contributing/submit-to-plugin-library/)
+      - Source Plugin Tutorial (https://www.gatsbyjs.com/tutorial/source-plugin-tutorial/)
+      - Maintaining a Plugin (https://www.gatsbyjs.com/docs/maintaining-a-plugin/)
       - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
                  `)
         } else {
@@ -545,7 +545,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
       }),
     })
     .command({
-      command: `config [cmd] [key] [value]`,
+      command: `options [cmd] [key] [value]`,
       describe: `View or set your gatsby-cli configuration settings.`,
       builder: yargs =>
         yargs
