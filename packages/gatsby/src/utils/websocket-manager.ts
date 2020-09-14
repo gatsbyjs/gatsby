@@ -82,17 +82,15 @@ async function getStaticQueryData(
 
       result.result = fileResult
     } catch (err) {
-      // ingore errors
+      // ignore errors
     }
   }
 
   return result
 }
 
-function hashPaths(paths: Array<string>): undefined | Array<string> {
-  return paths
-    .filter(Boolean)
-    .map(path => createHash(`sha256`).update(path).digest(`hex`))
+function hashPaths(paths: Array<string>): Array<string> {
+  return paths.map(path => createHash(`sha256`).update(path).digest(`hex`))
 }
 
 const getRoomNameFromPath = (path: string): string => `path-${path}`

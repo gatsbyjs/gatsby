@@ -4,6 +4,7 @@ import normalizePagePath from "./normalize-page-path"
 
 let socket = null
 
+const inFlightGetPageDataPromiseCache = {}
 let staticQueryData = {}
 let pageQueryData = {}
 
@@ -88,7 +89,6 @@ export default function socketIo() {
   }
 }
 
-const inFlightGetPageDataPromiseCache = {}
 function getPageData(pathname) {
   pathname = normalizePagePath(pathname)
   if (inFlightGetPageDataPromiseCache[pathname]) {
