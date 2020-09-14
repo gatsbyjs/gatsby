@@ -7,22 +7,24 @@
  */
 import express from "express"
 import bodyParser from "body-parser"
+import cors from "cors"
 import {
-  setGatsbyCliVersion,
   setDefaultComponentId,
   trackCli,
   startBackgroundUpdate,
 } from "gatsby-telemetry"
 
+setDefaultComponentId(`gatsby-admin`)
+
 // These routes will exist in the API at the keys, e.g.
 // http://localhost:1234/trackEvent
 const ROUTES = {
-  setVersion: setGatsbyCliVersion,
-  setDefaultComponentId: setDefaultComponentId,
   trackEvent: trackCli,
 }
 
 const app = express()
+
+app.use(cors())
 
 // Overview over all possible routes at /
 app.get(`/`, (req, res) => {
