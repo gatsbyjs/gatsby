@@ -11,12 +11,7 @@
     ":maintainLockFilesDisabled",
     ":disableRateLimiting",
   ],
-  includePaths: [
-    "package.json",
-    "packages/**",
-    "starters/**",
-    "examples/**",
-  ],
+  includePaths: ["package.json", "packages/**", "starters/**", "examples/**"],
   ignorePaths: [
     "**/node_modules/**",
     "**/bower_components/**",
@@ -35,6 +30,8 @@
   bumpVersion: null,
   semanticCommitScope: null,
   prHourlyLimit: 0,
+  // Wait for 3 days to update a package so we can check if it's stable
+  stabilityDays: 3,
   packageRules: [
     // these rules define group names
     {
@@ -44,6 +41,14 @@
     {
       groupName: "starters and examples",
       paths: ["starters/**", "examples/**"],
+    },
+    {
+      groupName: "babel monorepo",
+      sourceUrlPrefixes: "https://github.com/babel/babel",
+    },
+    {
+      groupName: "dev dependencies",
+      depTypeList: ["devDependencies"],
     },
     // these rules define dependencies that we have special handling for
     {
