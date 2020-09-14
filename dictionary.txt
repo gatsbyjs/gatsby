@@ -2079,8 +2079,6 @@ VoiceOver
 voilà
 Vojtech
 Vojtěch
-VPs
-VPS
 VS2015
 VS201x
 VSCode
