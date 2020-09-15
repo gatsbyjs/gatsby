@@ -10,7 +10,7 @@ interface ITelemetry {
 
 const noop = (): void => {}
 
-const errorToJSON = err => {
+const errorToJSON = (err): Record<string, any> => {
   const json = JSON.parse(JSON.stringify(err, Object.getOwnPropertyNames(err)))
   return {
     ...json,
