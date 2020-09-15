@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.0.3...gatsby-plugin-less@4.0.4) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
 ## [4.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.0.2...gatsby-plugin-less@4.0.3) (2020-07-20)
 
 ### Bug Fixes

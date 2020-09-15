@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "index.js",
   "bin": {
     "gatsby-theme": "./cli.js"

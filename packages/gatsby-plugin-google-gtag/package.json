@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-google-gtag",
   "description": "Gatsby plugin to add google gtag onto a site",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "author": "Tyler Buchea <tyler@buchea.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
-    "babel-preset-gatsby-package": "^0.5.2",
+    "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag#readme",
