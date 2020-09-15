@@ -3,7 +3,7 @@ import { useServices } from "../components/services-provider"
 interface ITelemetry {
   trackEvent: (
     input: string | Array<string>,
-    tags?: { pluginName?: string }
+    tags?: { pluginName?: string; pathname?: string }
   ) => void
 }
 
@@ -18,10 +18,10 @@ export const useTelemetry = (): ITelemetry => {
 
   const { port } = services.telemetryserver
 
-  const trackEvent: ITelemetry["trackEvent"] = input => {
+  const trackEvent: ITelemetry["trackEvent"] = (input, tags) => {
     fetch(`http://localhost:${port}/trackEvent`, {
       method: `POST`,
-      body: JSON.stringify([input]),
+      body: JSON.stringify([input, tags]),
       headers: {
         "Content-Type": `application/json`,
       },
