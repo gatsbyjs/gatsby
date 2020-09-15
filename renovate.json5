@@ -42,6 +42,14 @@
       groupName: "starters and examples",
       paths: ["starters/**", "examples/**"],
     },
+    {
+      groupName: "babel monorepo",
+      sourceUrlPrefixes: "https://github.com/babel/babel",
+    },
+    {
+      groupName: "dev dependencies",
+      depTypeList: ["devDependencies"],
+    },
     // these rules define dependencies that we have special handling for
     {
       updateTypes: ["minor"],
