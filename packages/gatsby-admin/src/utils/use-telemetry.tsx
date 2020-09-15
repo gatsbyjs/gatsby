@@ -5,15 +5,19 @@ interface ITelemetry {
     input: string | Array<string>,
     tags?: { pluginName?: string; pathname?: string }
   ) => void
+  trackError: (input: string | Array<string>, tags: { error: Error }) => void
 }
 
 const noop = (): void => {}
+
+const errorToJSON = err => JSON.stringify(err, Object.getOwnPropertyNames(err))
 
 export const useTelemetry = (): ITelemetry => {
   const services = useServices()
   if (!services.telemetryserver)
     return {
       trackEvent: noop,
+      trackError: noop,
     }
 
   const { port } = services.telemetryserver
@@ -29,7 +33,25 @@ export const useTelemetry = (): ITelemetry => {
     return
   }
 
+  const trackError: ITelemetry["trackError"] = (input, tags) => {
+    fetch(`http://localhost:${port}/trackError`, {
+      method: `POST`,
+      body: JSON.stringify([
+        input,
+        {
+          ...tags,
+          error: errorToJSON(tags.error),
+        },
+      ]),
+      headers: {
+        "Content-Type": `application/json`,
+      },
+    }).catch(() => {})
+    return
+  }
+
   return {
     trackEvent,
+    trackError,
   }
 }

@@ -6,6 +6,7 @@ import { merge } from "theme-ui"
 import { createUrqlClient } from "../urql-client"
 import "normalize.css"
 import { ServicesProvider, useServices } from "./services-provider"
+import { ErrorTracker } from "./error-tracker"
 
 const baseTheme = getTheme()
 
@@ -162,7 +163,9 @@ const Providers: React.FC<{}> = ({ children }) => (
     <ThemeProvider theme={theme}>
       {/* NOTE(@mxstbr): The GraphQLProvider needs to be in the ServicesProvider */}
       <ServicesProvider>
-        <GraphQLProvider>{children}</GraphQLProvider>
+        <ErrorTracker>
+          <GraphQLProvider>{children}</GraphQLProvider>
+        </ErrorTracker>
       </ServicesProvider>
     </ThemeProvider>
   </StrictUIProvider>

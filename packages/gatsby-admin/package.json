@@ -31,6 +31,7 @@
     "query-string": "^6.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-error-boundary": "^3.0.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.10.0",
     "react-instantsearch-dom": "^5.7.0",

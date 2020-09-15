@@ -11,6 +11,7 @@ import cors from "cors"
 import {
   setDefaultComponentId,
   trackCli,
+  trackError,
   startBackgroundUpdate,
 } from "gatsby-telemetry"
 
@@ -20,6 +21,7 @@ setDefaultComponentId(`gatsby-admin`)
 // http://localhost:1234/trackEvent
 const ROUTES = {
   trackEvent: trackCli,
+  trackError,
 }
 
 const app = express()
