@@ -1,2 +1,0 @@
-// no-op
-"use strict";
