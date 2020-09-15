@@ -690,6 +690,12 @@ module.exports = async (
     ]
   }
 
+  if (stage === `develop`) {
+    config.externals = {
+      "socket.io-client": `io`,
+    }
+  }
+
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
