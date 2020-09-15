@@ -14,7 +14,6 @@ describe(`Adds <Link> for site to head`, () => {
   it(`creates Link if createLinkInHead is true`, async () => {
     const pluginOptions = {
       createLinkInHead: true,
-      output: `sitemap.xml`,
     }
     const setHeadComponents = jest.fn()
 
@@ -31,7 +30,7 @@ describe(`Adds <Link> for site to head`, () => {
   it(`does not create Link if createLinkInHead is false`, async () => {
     const pluginOptions = {
       createLinkInHead: false,
-      output: `sitemap.xml`,
+      output: `test-folder`,
     }
     const setHeadComponents = jest.fn()
 
@@ -50,7 +49,7 @@ describe(`Adds <Link> for site to head`, () => {
 
     const pluginOptions = {
       createLinkInHead: true,
-      output: `sitemap.xml`,
+      output: `test-folder`,
     }
     const setHeadComponents = jest.fn()
 

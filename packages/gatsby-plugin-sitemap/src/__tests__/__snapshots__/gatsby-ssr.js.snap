@@ -6,7 +6,7 @@ exports[`Adds <Link> for site to head creates Link href with path prefix when __
     Array [
       Array [
         <link
-          href="/hogwarts/sitemap.xml"
+          href="/hogwarts/test-folder/sitemap-index.xml"
           rel="sitemap"
           type="application/xml"
         />,
@@ -28,7 +28,7 @@ exports[`Adds <Link> for site to head creates Link if createLinkInHead is true 1
     Array [
       Array [
         <link
-          href="/sitemap.xml"
+          href="/sitemap/sitemap-index.xml"
           rel="sitemap"
           type="application/xml"
         />,
