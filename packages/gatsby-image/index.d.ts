@@ -53,7 +53,7 @@ interface GatsbyImageOptionalProps {
   loading?: `auto` | `lazy` | `eager`
   draggable?: boolean
 }
-  
+
 interface GatsbyImageFluidProps extends GatsbyImageOptionalProps {
   fluid: FluidObject | FluidObject[]
 }
@@ -68,3 +68,11 @@ export default class GatsbyImage extends React.Component<
   GatsbyImageProps,
   any
 > {}
+
+export interface GatsbyStaticImageProps extends GatsbyImageOptionalProps {
+  src: string
+  fixed?: boolean
+  fluid?: boolean
+}
+
+export const StaticImage: React.FC<GatsbyStaticImageProps>

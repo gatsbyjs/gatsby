@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-
+export { StaticImage } from "./static-image"
 const logDeprecationNotice = (prop, replacement) => {
   if (process.env.NODE_ENV === `production`) {
     return

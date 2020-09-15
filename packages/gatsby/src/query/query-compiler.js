@@ -301,7 +301,7 @@ const processDefinitions = ({
     const filePath = definitionsByName.get(name).filePath
     if (processedQueries.has(filePath)) {
       const otherQuery = processedQueries.get(filePath)
-
+      console.log(`filepath`, filePath)
       addError(
         multipleRootQueriesError(
           filePath,

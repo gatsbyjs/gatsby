@@ -9,6 +9,7 @@ const PARSER_OPTIONS: ParserOptions = {
   plugins: [
     `jsx`,
     `flow`,
+    `estree`,
     `doExpressions`,
     `objectRestSpread`,
     [

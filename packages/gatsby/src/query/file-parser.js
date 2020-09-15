@@ -11,11 +11,14 @@ const {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  murmurhash,
 } = require(`babel-plugin-remove-graphql-queries`)
+import { getLiteralPropValue } from "jsx-ast-utils"
 
+import { queryFromProps, hashFromQuery } from "./static-image"
 const report = require(`gatsby-cli/lib/reporter`)
 
-import type { DocumentNode } from "graphql"
+import { DocumentNode, parse } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { codeFrameColumns } from "@babel/code-frame"
 
@@ -165,7 +168,6 @@ async function findGraphQLTags(
           resolve(documents)
           return
         }
-
         /**
          * A map of graphql documents to unique locations.
          *
@@ -322,6 +324,73 @@ async function findGraphQLTags(
           },
         })
 
+        // Look for static images
+
+        // Generates a query document from the component props
+        const queryFromImage = (props, nodePath) => {
+          const text = queryFromProps(props)
+          const hash = hashFromQuery(text)
+          const fakeFile = `/STATICIMAGES/${hash}`
+
+          const gqlAst = parse(text)
+
+          gqlAst.definitions.forEach(def => {
+            generateQueryName({
+              def,
+              hash,
+              file: fakeFile,
+            })
+          })
+
+          const docInFile = {
+            filePath: fakeFile,
+            doc: gqlAst,
+            text,
+            hash,
+            isStaticQuery: true,
+            isHook: true,
+            templateLoc: nodePath.node.loc,
+          }
+
+          documentLocations.set(
+            docInFile,
+            `${nodePath.node.start}-${gqlAst.loc.start}`
+          )
+
+          documents.push(docInFile)
+        }
+
+        const componentImport = `StaticImage`
+        let localName = componentImport
+        traverse(ast, {
+          ImportSpecifier(path) {
+            if (path.node.imported.name === componentImport) {
+              // Catches "import { StaticImage as Img }" etc
+              localName = path.node.local.name
+            }
+          },
+          JSXOpeningElement(path) {
+            const { name } = path.node
+            if (
+              name.type === `JSXMemberExpression` ||
+              name.name !== localName
+            ) {
+              return
+            }
+            const props = path.node.attributes.reduce((prev, next) => {
+              if (
+                next.type === `JSXSpreadAttribute` ||
+                typeof next.name.name !== `string`
+              ) {
+                return prev
+              }
+              prev[next.name.name] = getLiteralPropValue(next)
+              return prev
+            }, {})
+            queryFromImage(props, path)
+          },
+        })
+
         function TaggedTemplateExpression(innerPath) {
           const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(innerPath)
           if (!gqlAst) return
@@ -418,7 +487,9 @@ export default class FileParser {
       return null
     }
 
-    if (!text.includes(`graphql`)) return null
+    if (!text.includes(`graphql`) && !text.includes(`StaticImage`)) {
+      return null
+    }
     const hash = crypto
       .createHash(`md5`)
       .update(file)
