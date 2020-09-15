@@ -10,7 +10,16 @@ interface ITelemetry {
 
 const noop = (): void => {}
 
-const errorToJSON = err => JSON.stringify(err, Object.getOwnPropertyNames(err))
+const errorToJSON = err => {
+  const json = JSON.parse(JSON.stringify(err, Object.getOwnPropertyNames(err)))
+  return {
+    ...json,
+    stack: json.stack.replace(
+      new RegExp(`${window.location.protocol}//${window.location.host}`, `g`),
+      `$URL`
+    ),
+  }
+}
 
 export const useTelemetry = (): ITelemetry => {
   const services = useServices()
