@@ -11,12 +11,7 @@
     ":maintainLockFilesDisabled",
     ":disableRateLimiting",
   ],
-  includePaths: [
-    "package.json",
-    "packages/**",
-    "starters/**",
-    "examples/**",
-  ],
+  includePaths: ["package.json", "packages/**", "starters/**", "examples/**"],
   ignorePaths: [
     "**/node_modules/**",
     "**/bower_components/**",
@@ -27,14 +22,16 @@
     "**/__fixtures__/**",
   ],
   major: {
-    masterIssueApproval: true,
+    dependencyDashboardApproval: true,
   },
-  masterIssue: true,
+  dependencyDashboard: true,
   ignoreDeps: ["react", "react-dom"],
   rangeStrategy: "bump",
   bumpVersion: null,
   semanticCommitScope: null,
   prHourlyLimit: 0,
+  // Wait for 3 days to update a package so we can check if it's stable
+  stabilityDays: 3,
   packageRules: [
     // these rules define group names
     {
@@ -83,7 +80,7 @@
       // not grouped
       groupName: "packages (<1.0.0 minor)",
       paths: ["package.json", "packages/**"],
-      masterIssueApproval: true,
+      dependencyDashboardApproval: true,
       updateTypes: ["minor"],
       packageNames: [
         // below is list of packages that use 0.X version range, any minor bump there can contain breaking changes, so we just ignore minor bumps for those packages and will need to bump them manually
@@ -119,7 +116,7 @@
       // not grouped
       groupName: "starters and examples (<1.0.0 minor)",
       paths: ["starters/**", "examples/**"],
-      masterIssueApproval: true,
+      dependencyDashboardApproval: true,
       updateTypes: ["minor"],
       packageNames: [
         // below is list of packages that use 0.X version range, any minor bump there can contain breaking changes, so we just ignore minor bumps for those packages and will need to bump them manually
@@ -156,7 +153,7 @@
       groupName: "types",
       packagePatterns: ["^@types"],
       // only upgrade types with approval as they can break transitives
-      masterIssueApproval: true,
+      dependencyDashboardApproval: true,
     },
   ],
   timezone: "GMT",
