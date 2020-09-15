@@ -11,7 +11,6 @@ const {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
-  murmurhash,
 } = require(`babel-plugin-remove-graphql-queries`)
 import { getLiteralPropValue } from "jsx-ast-utils"
 
