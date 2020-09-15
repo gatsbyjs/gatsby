@@ -27,8 +27,6 @@
     "gatsby-recipes": "^0.2.26",
     "gatsby-telemetry": "^1.3.34",
     "hosted-git-info": "^3.0.4",
-    "ink": "^2.7.1",
-    "ink-spinner": "^3.1.0",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.20",
     "meant": "^1.0.1",
@@ -37,7 +35,6 @@
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
     "prompts": "^2.3.2",
-    "react": "^16.8.0",
     "redux": "^4.0.5",
     "resolve-cwd": "^3.0.0",
     "semver": "^7.3.2",
@@ -48,16 +45,29 @@
     "update-notifier": "^4.1.0",
     "uuid": "3.4.0",
     "yargs": "^15.3.1",
+    "yoga-layout-prebuilt": "^1.9.6",
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
+    "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-replace": "^2.3.3",
     "@types/hosted-git-info": "^3.0.0",
     "@types/yargs": "^15.0.4",
     "babel-preset-gatsby-package": "^0.5.3",
+    "concurrently": "^5.0.0",
     "cross-env": "^5.2.1",
     "rimraf": "^3.0.2",
+    "ink": "^2.7.1",
+    "ink-spinner": "^3.1.0",
+    "react": "^16.8.0",
+    "rollup": "^2.23.0",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-internal": "^1.0.0",
     "typescript": "^3.9.5"
   },
   "files": [
@@ -77,10 +87,14 @@
     "directory": "packages/gatsby-cli"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\"",
+    "build:babel": "babel --config-file ./non-rollup-babel.config.js src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
+    "build:rollup": "rollup -c",
+    "build": "concurrently \"npm run build:babel\" \"npm run build:rollup\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
-    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
+    "watch:babel": "npm run build:babel -- --watch",
+    "watch:rollup": "npm run build:rollup -- -w",
+    "watch": "concurrently \"npm run watch:babel\" \"npm run watch:rollup\"",
     "postinstall": "node scripts/postinstall.js"
   },
   "engines": {
