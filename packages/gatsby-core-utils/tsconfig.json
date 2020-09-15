@@ -6,5 +6,8 @@
     "src/__mocks__",
     "dist",
     "./node.d.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "declarationDir": "dist"
+  }
 }

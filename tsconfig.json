@@ -13,7 +13,9 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "emitDeclarationOnly": true,
+    "declaration": true
   },
   "exclude": ["peril/*", "examples/*"]
 }
