@@ -840,6 +840,58 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`merges plugin-defined type with overridable built-in type without warning`, async () => {
+      createTypes(`type SiteSiteMetadata { bar: Int }`, {
+        name: `some-gatsby-plugin`,
+      })
+      const schema = await buildSchema()
+      const fields = schema.getType(`SiteSiteMetadata`).getFields()
+      expect(Object.keys(fields)).toEqual([`title`, `description`, `bar`])
+      expect(report.warn).not.toHaveBeenCalled()
+    })
+
+    it(`merges plugin-defined type (Type Builder) with overridable built-in type without warning`, async () => {
+      createTypes(
+        [
+          buildObjectType({
+            name: `SiteSiteMetadata`,
+            fields: {
+              bar: `Int`,
+            },
+          }),
+        ],
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const fields = schema.getType(`SiteSiteMetadata`).getFields()
+      expect(Object.keys(fields)).toEqual([`title`, `description`, `bar`])
+      expect(report.warn).not.toHaveBeenCalled()
+    })
+
+    it(`warns when merging plugin-defined type with previously overridden built-in type`, async () => {
+      createTypes(`type SiteSiteMetadata { bar: Int }`, {
+        name: `some-gatsby-plugin`,
+      })
+      createTypes(`type SiteSiteMetadata { foo: String }`, {
+        name: `some-other-gatsby-plugin`,
+      })
+      const schema = await buildSchema()
+      const fields = schema.getType(`SiteSiteMetadata`).getFields()
+      expect(Object.keys(fields)).toEqual([
+        `title`,
+        `description`,
+        `bar`,
+        `foo`,
+      ])
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`some-other-gatsby-plugin\` has customized the GraphQL type \`SiteSiteMetadata\`, ` +
+          `which has already been defined by the plugin \`some-gatsby-plugin\`. ` +
+          `This could potentially cause conflicts.`
+      )
+    })
+
     it(`warns when merging plugin-defined type with built-in type`, async () => {
       createTypes(`type SitePage implements Node { bar: Int }`, {
         name: `some-gatsby-plugin`,

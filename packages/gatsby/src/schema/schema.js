@@ -23,6 +23,7 @@ const { getNode, getNodesByType } = require(`../redux/nodes`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
+const { overridableBuiltInTypeNames } = require(`./types/built-in-types`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const {
   findOne,
@@ -341,10 +342,14 @@ const mergeTypes = ({
   // The merge is considered safe when a user or a plugin owning the type extend this type
   // TODO: add proper conflicts detection and reporting (on the field level)
   const typeOwner = typeComposer.getExtension(`plugin`)
+  const isOverridableBuiltInType =
+    !typeOwner && overridableBuiltInTypeNames.has(typeComposer.getTypeName())
+
   const isSafeMerge =
     !plugin ||
     plugin.name === `default-site-plugin` ||
-    plugin.name === typeOwner
+    plugin.name === typeOwner ||
+    isOverridableBuiltInType
 
   if (!isSafeMerge) {
     if (typeOwner) {
