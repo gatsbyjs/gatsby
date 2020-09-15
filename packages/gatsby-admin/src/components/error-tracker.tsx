@@ -11,13 +11,13 @@ export function ErrorTracker({
 
   return (
     <ErrorBoundary
-      fallbackRender={() => (
+      fallbackRender={(): JSX.Element => (
         <div>
           <h1>Oops, something went wrong :(</h1>
           <p>Please refresh the page to try again.</p>
         </div>
       )}
-      onError={err =>
+      onError={(err): void =>
         trackError(`ERROR`, {
           error: err,
         })
