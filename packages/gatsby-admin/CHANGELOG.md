@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.149](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.148...gatsby-admin@0.1.149) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.148](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.147...gatsby-admin@0.1.148) (2020-09-15)
+
+### Features
+
+- **gatsby-admin:** fix logo link ([933c43d](https://github.com/gatsbyjs/gatsby/commit/933c43d9b3edb53f1d51c98e7f26648ea4d161f7))
+
+## [0.1.147](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.146...gatsby-admin@0.1.147) (2020-09-14)
+
+### Features
+
+- **gatsby-admin:** track plugin telemetry ([#26885](https://github.com/gatsbyjs/gatsby/issues/26885)) ([bf61854](https://github.com/gatsbyjs/gatsby/commit/bf61854dc5bb87911825f925fe839d67e44da986)), closes [#26853](https://github.com/gatsbyjs/gatsby/issues/26853) [#26853](https://github.com/gatsbyjs/gatsby/issues/26853) [#26853](https://github.com/gatsbyjs/gatsby/issues/26853)
+
 ## [0.1.146](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.145...gatsby-admin@0.1.146) (2020-09-10)
 
 **Note:** Version bump only for package gatsby-admin

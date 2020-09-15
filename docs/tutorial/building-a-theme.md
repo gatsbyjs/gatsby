@@ -1267,7 +1267,7 @@ yarn workspace site develop
 
 ![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)
 
-To continue applying theme styles, you can use the `Style` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
+To continue applying theme styles, you can use the `Styled` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
 
 ```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
