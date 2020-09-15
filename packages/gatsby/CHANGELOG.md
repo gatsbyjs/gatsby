@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.58](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.57...gatsby@2.24.58) (2020-09-14)
+
+### Features
+
+- **gatsby:** create telemetry service and start it during develop ([#26832](https://github.com/gatsbyjs/gatsby/issues/26832)) ([6132b95](https://github.com/gatsbyjs/gatsby/commit/6132b9517f2d4668c55e98fe63f2509fdb3d130a)), closes [#26853](https://github.com/gatsbyjs/gatsby/issues/26853)
+- **gatsby:** merge GraphQL types defined by different plugins (with a warning) ([#26864](https://github.com/gatsbyjs/gatsby/issues/26864)) ([0bc63fe](https://github.com/gatsbyjs/gatsby/commit/0bc63fe533f8419708a34b962339f43f4955355d))
+- **gatsby-admin:** track plugin telemetry ([#26885](https://github.com/gatsbyjs/gatsby/issues/26885)) ([bf61854](https://github.com/gatsbyjs/gatsby/commit/bf61854dc5bb87911825f925fe839d67e44da986)), closes [#26853](https://github.com/gatsbyjs/gatsby/issues/26853) [#26853](https://github.com/gatsbyjs/gatsby/issues/26853) [#26853](https://github.com/gatsbyjs/gatsby/issues/26853)
+
+## [2.24.57](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.56...gatsby@2.24.57) (2020-09-10)
+
+### Bug Fixes
+
+- **gatsby:** do not initialize cache in onPreInit API ([#26810](https://github.com/gatsbyjs/gatsby/issues/26810)) ([39df4fa](https://github.com/gatsbyjs/gatsby/commit/39df4fa51304bc05f5d9413da7ee80479a3ff726))
+- **gatsby:** Handle node mutations immediately after file change ([#26848](https://github.com/gatsbyjs/gatsby/issues/26848)) ([de68259](https://github.com/gatsbyjs/gatsby/commit/de68259d990d4b43660655724122d2cfbc79a7d8))
+- **gatsby:** Run actions while recreating pages and draining mutation queue ([#26847](https://github.com/gatsbyjs/gatsby/issues/26847)) ([4b494b6](https://github.com/gatsbyjs/gatsby/commit/4b494b6c259d29ec85f78fe5137036fc16e967ce))
+
+## [2.24.56](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.55...gatsby@2.24.56) (2020-09-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.55](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.54...gatsby@2.24.55) (2020-09-08)
+
+### Bug Fixes
+
+- **gatsby:** fix `$in` operator to return unique elements ([#26822](https://github.com/gatsbyjs/gatsby/issues/26822)) ([df9014d](https://github.com/gatsbyjs/gatsby/commit/df9014d))
+- **gatsby:** Run mutations during query running ([#26808](https://github.com/gatsbyjs/gatsby/issues/26808)) ([4427f13](https://github.com/gatsbyjs/gatsby/commit/4427f13))
+- **gatsby-cli:** Fix typo (repeated ://) ([#26781](https://github.com/gatsbyjs/gatsby/issues/26781)) ([6a7fcfb](https://github.com/gatsbyjs/gatsby/commit/6a7fcfb))
+
+## [2.24.54](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.53...gatsby@2.24.54) (2020-09-07)
+
+### Bug Fixes
+
+- **doc:** updated onCreateBabelConfig documentation ([#25212](https://github.com/gatsbyjs/gatsby/issues/25212)) ([5538c49](https://github.com/gatsbyjs/gatsby/commit/5538c49))
+- **gatsby:** catch when lock already unlocked ([#26805](https://github.com/gatsbyjs/gatsby/issues/26805)) ([9509d01](https://github.com/gatsbyjs/gatsby/commit/9509d01))
+- **gatsby:** tap just into main compilation in webpack-dep-tree-plugin ([#26778](https://github.com/gatsbyjs/gatsby/issues/26778)) ([bf7d633](https://github.com/gatsbyjs/gatsby/commit/bf7d633))
+
 ## [2.24.53](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.52...gatsby@2.24.53) (2020-08-31)
 
 ### Bug Fixes

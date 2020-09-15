@@ -46,9 +46,6 @@ export default {
       "ink-spinner",
       "terminal-link",
       "react-reconcilier",
-      "@mdx-js/react",
-      "@mdx-js/mdx",
-      "@mdx-js/runtime"
     ]),
   ],
   external: [

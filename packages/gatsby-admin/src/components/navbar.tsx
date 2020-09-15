@@ -15,8 +15,6 @@ function SendFeedbackButton(props): JSX.Element {
   )
 }
 
-const homepagePath = process.env.NODE_ENV === `development` ? `/` : `/___admin`
-
 function Navbar(): JSX.Element {
   const [{ data }] = useQuery({
     query: `
@@ -41,7 +39,7 @@ function Navbar(): JSX.Element {
       <Flex
         as={Link}
         // @ts-ignore
-        to={homepagePath}
+        to="/"
         gap={5}
         alignItems="baseline"
         sx={{ textDecoration: `none` }}

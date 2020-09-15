@@ -1,13 +1,13 @@
 {
   "name": "gatsby-plugin-preact",
   "description": "A Gatsby plugin which replaces React with Preact",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@prefresh/webpack": "^0.8.1",
+    "@prefresh/webpack": "^1.0.2",
     "react-refresh": "^0.8.2"
   },
   "devDependencies": {
