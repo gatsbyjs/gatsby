@@ -134,7 +134,7 @@ const rebuild = async ({ parentSpan }) =>
 const rebuildWithSitePage = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
-    `rebuild schema with SitePage context`,
+    `Rebuild schema with SitePage context`,
     spanArgs
   )
   await buildInferenceMetadata({ types: [`SitePage`] })

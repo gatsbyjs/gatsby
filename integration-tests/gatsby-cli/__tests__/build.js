@@ -12,32 +12,32 @@ describe(`gatsby build`, () => {
   it(`creates a built gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)
 
-    logs.should.contain(`success open and validate gatsby-configs`)
-    logs.should.contain(`success load plugins`)
+    logs.should.contain(`success Open and validate gatsby-configs`)
+    logs.should.contain(`success Load plugins`)
     logs.should.contain(`success onPreInit`)
     logs.should.contain(
-      `success delete html and css files from previous builds`
+      `success Delete HTML and CSS files from previous builds`
     )
-    logs.should.contain(`success initialize cache`)
-    logs.should.contain(`success copy gatsby files`)
+    logs.should.contain(`success Initialize cache`)
+    logs.should.contain(`success Copy gatsby files`)
     logs.should.contain(`success onPreBootstrap`)
     logs.should.contain(`success createSchemaCustomization`)
-    logs.should.contain(`success source and transform nodes`)
-    logs.should.contain(`success building schema`)
+    logs.should.contain(`success Source and transform nodes`)
+    logs.should.contain(`success Build schema`)
     logs.should.contain(`success createPages`)
     logs.should.contain(`success createPagesStatefully`)
     logs.should.contain(`success onPreExtractQueries`)
-    logs.should.contain(`success update schema`)
-    logs.should.contain(`success extract queries from components`)
-    logs.should.contain(`success write out requires`)
-    logs.should.contain(`success write out redirect data`)
+    logs.should.contain(`success Update schema`)
+    logs.should.contain(`success Extract queries from components`)
+    logs.should.contain(`success Write out requires`)
+    logs.should.contain(`success Write out redirect data`)
     logs.should.contain(`success onPostBootstrap`)
     logs.should.contain(`info bootstrap finished`)
     logs.should.contain(
-      `success Building production JavaScript and CSS bundles`
+      `success Build production JavaScript and CSS bundles`
     )
-    logs.should.contain(`success run page queries`)
-    logs.should.contain(`success Building static HTML for pages`)
+    logs.should.contain(`success Run page queries`)
+    logs.should.contain(`success Build static HTML for pages`)
     logs.should.contain(`success onPostBuild`)
     logs.should.contain(`info Done building`)
     expect(code).toBe(0)

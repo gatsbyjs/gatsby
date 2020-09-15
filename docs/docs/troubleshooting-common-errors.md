@@ -44,7 +44,7 @@ To resolve these errors, identify the packages that haven't been installed, the 
 
 ```shell
 ...
-success run queries - 0.095s - 8/8 84.63/s
+success Run queries - 0.095s - 8/8 84.63/s
 
  ERROR #98123  WEBPACK
 

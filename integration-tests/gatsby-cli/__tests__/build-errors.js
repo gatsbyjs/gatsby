@@ -13,7 +13,7 @@ describe(`gatsby build (errors)`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)
 
     // Generic logging header
-    logs.should.contain(`failed Building static HTML for pages`)
+    logs.should.contain(`failed Build static HTML for pages`)
     logs.should.contain(`ERROR #95313`)
     logs.should.contain(`Building static HTML failed`)
     logs.should.contain(

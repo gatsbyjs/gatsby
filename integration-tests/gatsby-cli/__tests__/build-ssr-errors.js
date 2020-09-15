@@ -13,7 +13,7 @@ describe(`gatsby build (SSR errors)`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)
 
     // Generic logging header
-    logs.should.contain(`failed Building static HTML for pages`)
+    logs.should.contain(`failed Build static HTML for pages`)
     logs.should.contain(`ERROR #95312`)
     logs.should.contain(
       `"window" is not available during server side rendering.`

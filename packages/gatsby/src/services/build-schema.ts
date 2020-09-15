@@ -12,7 +12,7 @@ export async function buildSchema({
   ) {
     return
   }
-  const activity = reporter.activityTimer(`building schema`, {
+  const activity = reporter.activityTimer(`Build schema`, {
     parentSpan,
   })
   activity.start()

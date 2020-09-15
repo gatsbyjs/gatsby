@@ -112,8 +112,8 @@ You can now navigate into the `example-site` folder and run `gatsby develop`. Yo
 
 ```shell:title=example-site
 $ gatsby develop
-success open and validate gatsby-configs - 0.033s
-success load plugins - 0.074s
+success Open and validate gatsby-configs - 0.033s
+success Load plugins - 0.074s
 Loaded gatsby-starter-plugin // highlight-line
 success onPreInit - 0.016s
 ...

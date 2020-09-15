@@ -18,7 +18,7 @@ describe(`gatsby develop`, () => {
     // 1. Start the `gatsby develop` command
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
       `develop`,
-      log => log.includes(`Building development bundle`)
+      log => log.includes(`Build development bundle`)
     )
 
     // 2. kill the `gatsby develop` command so we can get logs
@@ -26,22 +26,22 @@ describe(`gatsby develop`, () => {
 
     // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
-    logs.should.contain(`success open and validate gatsby-configs`)
-    logs.should.contain(`success load plugins`)
+    logs.should.contain(`success Open and validate gatsby-configs`)
+    logs.should.contain(`success Load plugins`)
     logs.should.contain(`success onPreInit`)
-    logs.should.contain(`success initialize cache`)
-    logs.should.contain(`success copy gatsby files`)
+    logs.should.contain(`success Initialize cache`)
+    logs.should.contain(`success Copy gatsby files`)
     logs.should.contain(`success onPreBootstrap`)
     logs.should.contain(`success createSchemaCustomization`)
-    logs.should.contain(`success source and transform nodes`)
-    logs.should.contain(`success building schema`)
+    logs.should.contain(`success Source and transform nodes`)
+    logs.should.contain(`success Build schema`)
     logs.should.contain(`success createPages`)
     logs.should.contain(`success createPagesStatefully`)
     logs.should.contain(`success onPreExtractQueries`)
-    logs.should.contain(`success update schema`)
-    logs.should.contain(`success extract queries from components`)
-    logs.should.contain(`success write out requires`)
-    logs.should.contain(`success write out redirect data`)
+    logs.should.contain(`success Update schema`)
+    logs.should.contain(`success Extract queries from components`)
+    logs.should.contain(`success Write out requires`)
+    logs.should.contain(`success Write out redirect data`)
     logs.should.contain(`success onPostBootstrap`)
     logs.should.contain(`info bootstrap finished`)
     // These don't fire in CI. Need to figure out how to make it work. Might not be possible

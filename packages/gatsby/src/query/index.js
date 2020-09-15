@@ -191,7 +191,7 @@ const createStaticQueryJob = (state, queryId) => {
  */
 const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   if (queryJobsCount) {
-    const activity = report.createProgress(`run queries`, queryJobsCount, 0, {
+    const activity = report.createProgress(`Run queries`, queryJobsCount, 0, {
       id: `query-running`,
       parentSpan,
     })

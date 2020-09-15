@@ -148,7 +148,7 @@ const updateSchemaComposer = async ({
   })
   activity.end()
 
-  activity = report.phantomActivity(`Processing types`, {
+  activity = report.phantomActivity(`Process types`, {
     parentSpan: parentSpan,
   })
   activity.start()

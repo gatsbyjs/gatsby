@@ -25,7 +25,7 @@ export async function runPageQueries({
   }
 
   const activity = reporter.createProgress(
-    `run page queries`,
+    `Run page queries`,
     pageQueryIdsCount,
     0,
     {

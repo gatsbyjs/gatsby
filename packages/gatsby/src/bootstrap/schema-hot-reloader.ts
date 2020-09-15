@@ -29,7 +29,7 @@ const maybeRebuildSchema = debounce(async (): Promise<void> => {
     return
   }
 
-  const activity = report.activityTimer(`rebuild schema`)
+  const activity = report.activityTimer(`Rebuild schema`)
   activity.start()
   await rebuild({ parentSpan: activity })
   await updateStateAndRunQueries(false, { parentSpan: activity })

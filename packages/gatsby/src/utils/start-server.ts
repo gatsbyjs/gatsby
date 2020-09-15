@@ -64,7 +64,7 @@ export async function startServer(
   app: Express,
   workerPool: JestWorker = WorkerPool.create()
 ): Promise<IServer> {
-  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
+  const indexHTMLActivity = report.phantomActivity(`Build index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
@@ -99,7 +99,7 @@ export async function startServer(
 
   // report.stateUpdate(`webpack`, `IN_PROGRESS`)
 
-  const webpackActivity = report.activityTimer(`Building development bundle`, {
+  const webpackActivity = report.activityTimer(`Build development bundle`, {
     id: `webpack-develop`,
   })
   webpackActivity.start()

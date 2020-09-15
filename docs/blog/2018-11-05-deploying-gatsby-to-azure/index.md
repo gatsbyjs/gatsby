@@ -117,14 +117,14 @@ You are now ready to produce a production build of your blog. Make sure you're i
 gatsby build
 
 success open and validate gatsby-config — 0.010 s
-success load plugins — 0.352 s
+success Load plugins — 0.352 s
 success onPreInit — 2.785 s
-success delete html and css files from previous builds — 0.041 s
-success initialize cache — 0.009 s
-success copy gatsby files — 0.139 s
+success Delete HTML and CSS files from previous builds — 0.041 s
+success Initialize cache — 0.009 s
+success Copy gatsby files — 0.139 s
 success onPreBootstrap — 0.016 s
-success source and transform nodes — 0.147 s
-success building schema — 0.521 s
+success Source and transform nodes — 0.147 s
+success Build schema — 0.521 s
 success createPages — 0.072 s
 success createPagesStatefully — 0.037 s
 ...

@@ -32,31 +32,31 @@ Using `gatsby develop` runs a server in the background, enabling useful features
 `gatsby develop` is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
 
 ```shell
-success open and validate gatsby-configs - 0.051 s
-success load plugins - 0.591 s
+success Open and validate gatsby-configs - 0.051 s
+success Load plugins - 0.591 s
 success onPreInit - 0.015 s
-success initialize cache - 0.019 s
-success copy gatsby files - 0.076 s
+success Initialize cache - 0.019 s
+success Copy gatsby files - 0.076 s
 success onPreBootstrap - 0.021 s
-success source and transform nodes - 0.082 s
+success Source and transform nodes - 0.082 s
 success Add explicit types - 0.018 s
 success Add inferred types - 0.106 s
-success Processing types - 0.080 s
-success building schema - 0.266 s
+success Process types - 0.080 s
+success Build schema - 0.266 s
 success createPages - 0.014 s
 success createPagesStatefully - 0.067 s
 success onPreExtractQueries - 0.017 s
-success update schema - 0.034 s
-success extract queries from components - 0.222 s
-success write out requires - 0.044 s
-success write out redirect data - 0.014 s
+success Update schema - 0.034 s
+success Extract queries from components - 0.222 s
+success Write out requires - 0.044 s
+success Write out redirect data - 0.014 s
 success Build manifest and related icons - 0.110 s
 success onPostBootstrap - 0.130 s
 ⠀
 info bootstrap finished - 3.674 s
 ⠀
-success run static queries - 0.057 s — 3/3 89.08 queries/second
-success run page queries - 0.033 s — 5/5 347.81 queries/second
+success Run static queries - 0.057 s — 3/3 89.08 queries/second
+success Run page queries - 0.033 s — 5/5 347.81 queries/second
 success start webpack server - 1.707 s — 1/1 6.06 pages/second
 ```
 
@@ -69,36 +69,36 @@ Gatsby's `build` command should be run when you’ve added the finishing touches
 The output of running `gatsby build` in a fresh install of the Gatsby default starter looks like this:
 
 ```shell
-success open and validate gatsby-configs - 0.062 s
-success load plugins - 0.915 s
+success Open and validate gatsby-configs - 0.062 s
+success Load plugins - 0.915 s
 success onPreInit - 0.021 s
-success delete html and css files from previous builds - 0.030 s
-success initialize cache - 0.034 s
-success copy gatsby files - 0.099 s
+success Delete HTML and CSS files from previous builds - 0.030 s
+success Initialize cache - 0.034 s
+success Copy gatsby files - 0.099 s
 success onPreBootstrap - 0.034 s
-success source and transform nodes - 0.121 s
+success Source and transform nodes - 0.121 s
 success Add explicit types - 0.025 s
 success Add inferred types - 0.144 s
-success Processing types - 0.110 s
-success building schema - 0.365 s
+success Process types - 0.110 s
+success Build schema - 0.365 s
 success createPages - 0.016 s
 success createPagesStatefully - 0.079 s
 success onPreExtractQueries - 0.025 s
-success update schema - 0.041 s
-success extract queries from components - 0.333 s
-success write out requires - 0.020 s
-success write out redirect data - 0.019 s
+success Update schema - 0.041 s
+success Extract queries from components - 0.333 s
+success Write out requires - 0.020 s
+success Write out redirect data - 0.019 s
 success Build manifest and related icons - 0.141 s
 success onPostBootstrap - 0.164 s
 ⠀
 info bootstrap finished - 6.932 s
 ⠀
-success run static queries - 0.166 s — 3/3 20.90 queries/second
+success Run static queries - 0.166 s — 3/3 20.90 queries/second
 success Generating image thumbnails — 6/6 - 1.059 s
-success Building production JavaScript and CSS bundles - 8.050 s
-success Rewriting compilation hashes - 0.021 s
-success run page queries - 0.034 s — 4/4 441.23 queries/second
-success Building static HTML for pages - 0.852 s — 4/4 23.89 pages/second
+success Build production JavaScript and CSS bundles - 8.050 s
+success Rewrite compilation hashes - 0.021 s
+success Run page queries - 0.034 s — 4/4 441.23 queries/second
+success Build static HTML for pages - 0.852 s — 4/4 23.89 pages/second
 info Done building in 16.143999152 sec
 ```
 
@@ -111,37 +111,37 @@ If you compare the outputs of the two commands (`gatsby develop` vs `gatsby buil
 The following output shows the differences between the above two examples:
 
 ```diff
-success open and validate gatsby-configs - 0.051 s
-success load plugins - 0.915 s
+success Open and validate gatsby-configs - 0.051 s
+success Load plugins - 0.915 s
 success onPreInit - 0.021 s
-+ success delete html and css files from previous builds - 0.030 s
-success initialize cache - 0.034 s
-success copy gatsby files - 0.099 s
++ success Delete HTML and CSS files from previous builds - 0.030 s
+success Initialize cache - 0.034 s
+success Copy gatsby files - 0.099 s
 success onPreBootstrap - 0.034 s
-success source and transform nodes - 0.121 s
+success Source and transform nodes - 0.121 s
 success Add explicit types - 0.025 s
 success Add inferred types - 0.144 s
-success Processing types - 0.110 s
-success building schema - 0.365 s
+success Process types - 0.110 s
+success Build schema - 0.365 s
 success createPages - 0.016 s
 success createPagesStatefully - 0.079 s
 success onPreExtractQueries - 0.025 s
-success update schema - 0.041 s
-success extract queries from components - 0.333 s
-success write out requires - 0.020 s
-success write out redirect data - 0.019 s
+success Update schema - 0.041 s
+success Extract queries from components - 0.333 s
+success Write out requires - 0.020 s
+success Write out redirect data - 0.019 s
 success Build manifest and related icons - 0.141 s
 success onPostBootstrap - 0.130 s
 ⠀
 info bootstrap finished - 3.674 s
 ⠀
-success run static queries - 0.057 s — 3/3 89.08 queries/second
-success run page queries - 0.033 s — 5/5 347.81 queries/second
+success Run static queries - 0.057 s — 3/3 89.08 queries/second
+success Run page queries - 0.033 s — 5/5 347.81 queries/second
 - success start webpack server - 1.707 s — 1/1 6.06 pages/second
 + success Generating image thumbnails — 6/6 - 1.059 s
-+ success Building production JavaScript and CSS bundles - 8.050 s
-+ success Rewriting compilation hashes - 0.021 s
-+ success Building static HTML for pages - 0.852 s — 4/4 23.89 pages/second
++ success Build production JavaScript and CSS bundles - 8.050 s
++ success Rewrite compilation hashes - 0.021 s
++ success Build static HTML for pages - 0.852 s — 4/4 23.89 pages/second
 + info Done building in 16.143999152 sec
 ```
 
@@ -185,13 +185,13 @@ For an introduction to what happens at each step throughout the process from the
 
 ### Steps of the bootstrap phase
 
-The steps of the bootstrap phase are shared between develop and build (with only one exception in the `delete html and css files from previous builds` step). This includes:
+The steps of the bootstrap phase are shared between develop and build (with only one exception in the `Delete HTML and CSS files from previous builds` step). This includes:
 
-1. `open and validate gatsby-configs`
+1. `Open and validate gatsby-configs`
 
 The `gatsby-config.js` file for the site and any installed themes are opened, ensuring that a function or object is exported for each.
 
-2. `load plugins`
+2. `Load plugins`
 
 Plugins installed and included in the config of your site and your site's themes are [loaded](/docs/how-plugins-apis-are-run/). Gatsby uses Redux for state management internally and stores info like the version, name, and what APIs are used by each plugin.
 
@@ -199,15 +199,15 @@ Plugins installed and included in the config of your site and your site's themes
 
 Runs the [`onPreInit` node API](/docs/node-apis/#onPreInit) if it has been implemented by your site or any installed plugins.
 
-4. `delete html and css files from previous builds`
+4. `Delete HTML and CSS files from previous builds`
 
 The only different step between develop and build, the HTML and CSS from previous builds is deleted to prevent problems with styles and pages that no longer exist.
 
-5. `initialize cache`
+5. `Initialize cache`
 
 Check if new dependencies have been installed in the `package.json`; if the versions of installed plugins have changed; or if the `gatsby-config.js` or the `gatsby-node.js` files have changed. Plugins can [interact with the cache](/docs/build-caching/).
 
-6. `copy gatsby files`
+6. `Copy gatsby files`
 
 Copies site files into the cache in the `.cache` folder.
 
@@ -215,7 +215,7 @@ Copies site files into the cache in the `.cache` folder.
 
 Calls the [`onPreBootstrap` node API](/docs/node-apis/#onPreBootstrap) in your site or plugins where it is implemented.
 
-8. `source and transform nodes`
+8. `Source and transform nodes`
 
 Creates Node objects from your site and all plugins implementing the [`sourceNodes` API](/docs/node-apis/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
 
@@ -229,11 +229,11 @@ Adds types to the GraphQL schema for nodes that you have defined explicitly with
 
 All other nodes not already defined are inspected and have types [inferred](/docs/schema-customization/#automatic-type-inference) by Gatsby.
 
-11. `Processing types`
+11. `Process types`
 
 Composes 3rd party schema types, child fields, custom resolve functions, and sets fields in the GraphQL schema. It then prints information about type definitions.
 
-12. `building schema`
+12. `Build schema`
 
 Imports the composed GraphQL schema and builds it.
 
@@ -251,19 +251,19 @@ Similar to the `createPages` step, but for the [`createPagesStatefully` API](/do
 
 Calls the [`onPreExtractQueries` API](/docs/node-apis/#onPreExtractQueries) for your site and all plugins implementing it.
 
-16. `update schema`
+16. `Update schema`
 
 Rebuilds the GraphQL schema, this time with [`SitePage` context](/docs/internal-data-bridge/#sitepage) -- an internal piece of Gatsby that allows you to introspect all pages created for your site.
 
-17. `extract queries from components`
+17. `Extract queries from components`
 
 All JavaScript files in the site are loaded and Gatsby determines if there are any GraphQL queries exported from them. If there are problematic queries they can be reported back with warnings or errors. All these queries get queued up for execution in a later step.
 
-18. `write out requires`
+18. `Write out requires`
 
 An internal Gatsby utility adds the code that files need to load/require.
 
-19. `write out redirect data`
+19. `Write out redirect data`
 
 An internal Gatsby utility adds code for redirects, like implemented with [`createRedirect`](/docs/actions/#createRedirect).
 
@@ -277,7 +277,7 @@ Calls the [`onPostBootstrap` API](/docs/node-apis/#onPostBootstrap) for your sit
 
 ### Steps of the build phase
 
-1. `run static queries`
+1. `Run static queries`
 
 Static queries in [non-page components](/docs/building-with-components/#non-page-components) that were queued up earlier from query extraction are run to provide data to the components that need it.
 
@@ -285,19 +285,19 @@ Static queries in [non-page components](/docs/building-with-components/#non-page
 
 Another step that is not a part of the built-in Gatsby functionality, but is the result of installing `gatsby-plugin-sharp`, which taps into the lifecycle. Sharp runs processing on images to create image assets of different sizes.
 
-3. `Building production JavaScript and CSS bundles`
+3. `Build production JavaScript and CSS bundles`
 
 Compiles JavaScript and CSS using webpack.
 
-4. `Rewriting compilation hashes`
+4. `Rewrite compilation hashes`
 
 Compilation hashes are used by [webpack for code splitting](/docs/how-code-splitting-works/#chunk-bundle-naming) and keeping the cache up to date, and all files with page data need to be updated with the new hashes since they've been recompiled.
 
-5. `run page queries`
+5. `Run page queries`
 
 Page queries that were queued up earlier from query extraction are run so the data pages need can be provided to them.
 
-6. `Building static HTML for pages`
+6. `Build static HTML for pages`
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
 
