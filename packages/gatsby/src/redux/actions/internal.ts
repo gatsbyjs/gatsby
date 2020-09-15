@@ -16,6 +16,8 @@ import {
   IPageQueryRunAction,
   IRemoveStaleJobAction,
   ISetSiteConfig,
+  IDefinitionMeta,
+  ISetDefinitionsAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -114,6 +116,23 @@ export const queryExtracted = (
     plugin,
     traceId,
     payload: { componentPath, query },
+  }
+}
+
+/**
+ * Set Definitions for fragment extraction, etc.
+ *
+ * Used by developer tools such as vscode-graphql & graphiql
+ *
+ * query-compiler.js.
+ * @private
+ */
+export const setDefinitions = (
+  definitionsByName: Map<string, IDefinitionMeta>
+): ISetDefinitionsAction => {
+  return {
+    type: `SET_DEFINITIONS`,
+    payload: definitionsByName,
   }
 }
 

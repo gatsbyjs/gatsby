@@ -7,8 +7,6 @@ import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
-import path from "path"
-import fs from "fs"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
@@ -131,33 +129,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   if (program.verbose) {
     logTransitions(service)
-  }
-
-  const cachePath = program.directory && path.join(program.directory, `.cache`)
-
-  if (cachePath && fs.existsSync(cachePath)) {
-    const configJSONString = JSON.stringify(
-      {
-        schema: `./fullschema.graphql`,
-        documents: [`../src/**/**.{ts,js,tsx,jsx,esm}`, `./fragments.graphql`],
-        extensions: {
-          endpoints: {
-            default: {
-              url: `${program.https ? `https://` : `http://`}${program.host}:${
-                program.port
-              }/___graphql`,
-            },
-          },
-        },
-      },
-      null,
-      2
-    )
-
-    fs.writeFileSync(
-      path.join(cachePath, `graphql.config.json`),
-      configJSONString
-    )
   }
 
   service.start()

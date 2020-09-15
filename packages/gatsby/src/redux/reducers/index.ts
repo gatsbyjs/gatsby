@@ -3,6 +3,7 @@ import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
+import { definitionsReducer } from "./definitions"
 import { staticQueryComponentsReducer } from "./static-query-components"
 import { statusReducer } from "./status"
 import { webpackReducer } from "./webpack"
@@ -31,6 +32,7 @@ import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
  * @property exports.nodesTouched Set<string>
  */
 export {
+  definitionsReducer as definitions,
   programReducer as program,
   nodesReducer as nodes,
   nodesByTypeReducer as nodesByType,

@@ -1,0 +1,41 @@
+{
+  "name": "gatsby-plugin-graphql-cache",
+  "description": "Gatsby plugin to persist schema and fragments to the cache directory",
+  "version": "3.2.27",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "babel-preset-gatsby-package": "^0.5.2",
+    "cpx": "^1.5.0",
+    "cross-env": "^5.2.1",
+    "rewire": "^4.0.1"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-graphql-cache#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "graphql"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": "^2.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-graphql-cache"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  }
+}
