@@ -58,6 +58,8 @@ interface IBuildArgs extends IProgram {
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
+  report.setVerbose(program.verbose)
+
   if (program.profile) {
     report.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
@@ -220,7 +222,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     } else if (cachedWebpackCompilationHash) {
       report.info(
         report.stripIndent(`
-          One or more of your source files have changed since the last time you ran Gatsby. All 
+          One or more of your source files have changed since the last time you ran Gatsby. All
           pages will be rebuilt.
         `)
       )
