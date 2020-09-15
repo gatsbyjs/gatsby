@@ -1,7 +1,6 @@
 import path from "path"
-import fs from "fs"
 import minimatch from "minimatch"
-import { writeSitemapAndIndex } from "./sitemap-writer"
+import { simpleSitemapAndIndex } from "sitemap"
 import { validateOptions } from "./options-validation"
 import {
   withoutTrailingSlash,
@@ -52,6 +51,12 @@ exports.onPostBuild = async (
   const allPages = resolvePages(queryRecords)
   const siteUrl = resolveSiteUrl(queryRecords)
 
+  if (!Array.isArray(allPages)) {
+    reporter.panic(
+      `The \`resolvePages\` function did not return an array, if you wrote a custom query you may need to provide a custom \`resolvePages\` function.`
+    )
+  }
+
   reporter.verbose(
     `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
@@ -67,7 +72,7 @@ exports.onPostBuild = async (
           })
         } catch (err) {
           reporter.panic(
-            `${reporterPrefix} default filtering of pages failed. This shouldn't really be possible, please report a bug.`
+            `${reporterPrefix} default filtering of pages failed.This shouldn't really be possible, please report a bug.`
           )
 
           return err
@@ -124,15 +129,11 @@ exports.onPostBuild = async (
 
   const sitemapPath = path.join(publicPath, output)
 
-  //create destination directory if it doesn't exist
-  if (!fs.existsSync(sitemapPath)) {
-    fs.mkdirSync(sitemapPath)
-  }
-
-  return writeSitemapAndIndex({
+  return simpleSitemapAndIndex({
     hostname: siteUrl,
     destinationDir: sitemapPath,
     sourceData: serializedPages,
     limit: entryLimit,
+    gzip: false,
   })
 }
