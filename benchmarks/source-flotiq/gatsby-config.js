@@ -1,4 +1,6 @@
-require('dotenv').config();
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
 module.exports = {
   siteMetadata: {
@@ -8,7 +10,7 @@ module.exports = {
     `gatsby-plugin-benchmark-reporting`,
     `gatsby-plugin-sharp`,
     {
-      resolve: 'gatsby-source-flotiq',
+      resolve: "gatsby-source-flotiq",
       options: {
         baseUrl: "https://api.flotiq.com",
         authToken: process.env.BENCHMARK_FLOTIQ_API_TOKEN,

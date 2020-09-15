@@ -29,7 +29,7 @@ export const query = graphql`
     articles: allArticle {
       nodes {
         title
-	id
+        id
       }
     }
   }
