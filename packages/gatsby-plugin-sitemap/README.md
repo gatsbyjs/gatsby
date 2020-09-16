@@ -41,16 +41,16 @@ You probably do not want to use the defaults in this plugin. Here's an example o
 </urlset>
 ```
 
-See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong...but that's not even the worst of it, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
+See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong. But wait, there's more, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
 
 > - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them.
 > - Google reads the `<lastmod>` value, but if you misrepresent this value, we will stop reading it.
 
-You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for anb example of how to do this.
+You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for an example of how to do this.
 
 ## Options
 
-The [`default config`](src/options-validation.js) can be overridden.
+The [`default config`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/options-validation.js) can be overridden.
 
 The options are as follows:
 
@@ -65,7 +65,7 @@ The options are as follows:
 - [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
 - [`serialize`](#serialize) (function) Takes the output of the data query and lets you return an array of sitemap entries.
 
-The following pages are _ALWAYS_ excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
+The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 
 ## Example:
 
