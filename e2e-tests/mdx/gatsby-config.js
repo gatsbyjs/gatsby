@@ -17,13 +17,23 @@ module.exports = {
         path: `${__dirname}/src/posts`,
       },
     },
-    {resolve: `gatsby-plugin-mdx`,
-    options: {
-      extensions: [`.mdx`, `.md`],
-      defaultLayouts: {
-        default: require.resolve("./src/components/layout.js"),
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        defaultLayouts: {
+          default: require.resolve("./src/components/layout.js"),
+        },
+        remarkPlugins: [remarkRequireFilePathPlugin],
       },
-    }
-  },
+    },
   ],
+}
+
+function remarkRequireFilePathPlugin() {
+  return function transformer(tree, file) {
+    if (!file.dirname) {
+      throw new Error("No directory name for this markdown file!")
+    }
+  }
 }
