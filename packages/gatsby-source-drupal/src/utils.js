@@ -15,7 +15,7 @@ const fetchLanguageConfig = async ({ translation, baseUrl, apiBase, basicAuth, h
   }
 
   const [availableLanguagesResponse, translatableEntitiesResponse] = await Promise.all([
-    axios.get(`${baseUrl}/${apiBase}/configurable_language/configurable_language`, {
+    axios.get(`${baseUrl}/${apiBase}/configurable_language/configurable_language?sort=weight`, {
       auth: basicAuth,
       headers,
       params,
