@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.151](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.150...gatsby-admin@0.1.151) (2020-09-16)
+
+### Features
+
+- **gatsby-admin:** prompt to restart develop process on config changes ([#26916](https://github.com/gatsbyjs/gatsby/issues/26916)) ([1d3ff02](https://github.com/gatsbyjs/gatsby/commit/1d3ff024cb349906373657e8e826a2ac6a415c7c))
+
 ## [0.1.150](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.149...gatsby-admin@0.1.150) (2020-09-16)
 
 ### Features
