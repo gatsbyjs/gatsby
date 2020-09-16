@@ -37,7 +37,7 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       id: `ID!`,
       parent: {
         type: `Node`,
-        resolve: (source, _args, context): Node => {
+        resolve: (source, _args, context): Node | null => {
           const { path } = context
           return context.nodeModel.getNodeById({ id: source.parent }, { path })
         },
@@ -49,7 +49,7 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       },
       children: {
         type: `[Node!]!`,
-        resolve: (source, _args, context): Node => {
+        resolve: (source, _args, context): Array<Node> => {
           const { path } = context
           return context.nodeModel.getNodesByIds(
             { ids: source.children },
