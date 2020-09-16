@@ -1,4 +1,4 @@
-import React from "react"
+import React, { EffectCallback } from "react"
 import io from "socket.io-client"
 import { useServices } from "../components/services-provider"
 
@@ -9,7 +9,13 @@ type RestartFn = () => void
 function useDevelopState(): [RestartState, RestartFn] {
   const [state, setState] = React.useState<RestartState>(`idle`)
   const [socket, setSocket] = React.useState<ReturnType<typeof io> | null>(null)
-  const [restartFn, setRestartFn] = React.useState<RestartFn>(() => null)
+
+  const restartFn = (): RestartFn => (): void => {
+    if (!socket) return
+
+    setState(`is-restarting`)
+    socket.emit(`develop:restart`)
+  }
 
   const services = useServices()
   React.useEffect(() => {
@@ -22,16 +28,9 @@ function useDevelopState(): [RestartState, RestartFn] {
     )
   }, [services])
 
-  React.useEffect((): Function => {
+  React.useEffect((): ReturnType<EffectCallback> => {
     // NOTE(@mxstbr): Have to return a function here, otherwise eslint complains.
     if (!socket) return (): void => {}
-
-    setRestartFn(
-      (): RestartFn => (): void => {
-        setState(`is-restarting`)
-        socket.emit(`develop:restart`)
-      }
-    )
 
     const structuredLogHandler = (msg): void => {
       if (
