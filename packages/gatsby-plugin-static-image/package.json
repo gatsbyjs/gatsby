@@ -18,10 +18,7 @@
     "@babel/core": "^7.8.7",
     "@types/babel__core": "^7.1.6",
     "@types/babel__traverse": "^7.0.9",
-    "@types/fs-extra": "^8.1.0",
-    "gatsby": "^2.24.62",
-    "gatsby-image": "^2.4.19",
-    "prettier": "^2.1.1"
+    "@types/fs-extra": "^8.1.0"
   },
   "peerDependencies": {
     "gatsby": ">=2",
@@ -34,11 +31,14 @@
     "@babel/parser": "^7.8.7",
     "@babel/traverse": "^7.8.6",
     "babel-plugin-remove-graphql-queries": "^2.9.19",
-    "fs-extra": "^8.1.0",
-    "normalize-path": "^3.0.0"
+    "fs-extra": "^8.1.0"
   },
   "main": "index.js",
-  "repository": "git@github.com:ascorbic/gatsby-plugin-static-image.git",
-  "author": "Matt Kane <m@mk.gg>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-static-images"
+  },
+  "author": "Matt Kane <matt@gatsbyjs.com>",
   "license": "MIT"
 }
