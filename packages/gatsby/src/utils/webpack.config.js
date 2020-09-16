@@ -17,6 +17,7 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+import semver from "semver"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -164,11 +165,14 @@ module.exports = async (
         return {
           polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
+            process.env.GATSBY_HOT_LOADER === `fast-refresh`
+              ? `react-hot-loader/patch`
+              : null,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
-          ],
+          ].filter(Boolean),
         }
       case `develop-html`:
         return {
@@ -324,19 +328,6 @@ module.exports = async (
           },
         ])
 
-        // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
-        // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        // TODO: Remove entire block when we make fast-refresh the default
-        if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
-          configRules.push({
-            include: /node_modules\/react-dom/,
-            test: /\.jsx?$/,
-            use: {
-              loader: require.resolve(`./webpack-hmr-hooks-patch`),
-            },
-          })
-        }
-
         break
       }
       case `build-html`:
@@ -421,6 +412,28 @@ module.exports = async (
         PnpWebpackPlugin,
         new CoreJSResolver(),
       ],
+    }
+
+    // if react-hot-reloading
+    if (
+      stage === `develop` &&
+      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+    ) {
+      resolve.alias[`react-hot-loader`] = path.dirname(
+        require.resolve(`react-hot-loader/package.json`)
+      )
+
+      // We need to add @hot-loader/react-dom to support hot-loader work with hooks
+      try {
+        resolve.alias[`react-dom/server$`] = require.resolve(`react-dom/server`)
+        resolve.alias[`react-dom`] = require.resolve(`@hot-loader/react-dom`)
+      } catch (err) {
+        const { version: reactDomVersion } = require(`react-dom/package.json`)
+        const { major, minor } = semver.parse(reactDomVersion)
+        console.warn(
+          `React-Hot-Loader: please install "@hot-loader/react-dom@^${major}.${minor}" to makes sure all features of React are working.`
+        )
+      }
     }
 
     const target =

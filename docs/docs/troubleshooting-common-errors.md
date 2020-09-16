@@ -256,3 +256,26 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo s
 ```
 
 You may be able to find more information for your circumstances in [the GitHub issue corresponding to this error](https://github.com/gatsbyjs/gatsby/issues/11406).
+
+## Errors during development
+
+### React-Hot-Loader: react-🔥-dom patch is not detected. React 16.6+ features may not work.
+
+Gatsby develop uses Hot-Module-Reloading (HMR) to update your webpage without refreshing the page. Gatsby uses [react-hot-loader](https://github.com/gaearon/react-hot-loader). When opening the console you might see the warning:
+
+```shell
+React-Hot-Loader: react-🔥-dom patch is not detected. React 16.6+ features may not work.
+```
+
+To make sure all React features work, you'll have to install `@hot-loader/react-dom`. You have to make sure the installed version is the same as your `react-dom` version. If `react-dom` is at version 16.13.0, you'll have to install `@hot-loader/react-dom@16.13.0`. You should see the following message in your cli:
+
+```shell
+warning React-Hot-Loader: please install "@hot-loader/react-dom@^16.13" to makes sure all features of React are working.
+```
+
+Install it by running npm install (or its yarn equivalent):
+
+```shell
+npm install @hot-loader/react-dom@^16.13
+``
+```
