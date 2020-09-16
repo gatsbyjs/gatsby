@@ -59,7 +59,7 @@ export function resolvePages(data) {
 }
 
 /**
- * @name filterPages
+ * @name defaultFilterPages
  *
  * This allows filtering any data in any way.
  *

@@ -1,176 +1,85 @@
 const {
-  filterQuery,
-  defaultOptions: { serialize },
+  withoutTrailingSlash,
+  prefixPath,
+  resolveSiteUrl,
+  resolvePagePath,
+  resolvePages,
+  defaultFilterPages,
+  serialize,
 } = require(`../internals`)
+
+const minimatch = require(`minimatch`)
 
 beforeEach(() => {
   global.__PATH_PREFIX__ = ``
 })
 
-const verifyUrlsExistInResults = (results, urls) => {
-  expect(results.map(result => result.url)).toEqual(urls)
-}
+const SiteUrl = `https://example.net`
+const TestPath = `/test/path/`
 
-describe(`results using default settings`, () => {
-  const generateQueryResultsMock = (
-    { siteUrl } = { siteUrl: `http://dummy.url` }
-  ) => {
-    return {
-      data: {
-        site: {
-          siteMetadata: {
-            siteUrl: siteUrl,
-          },
-        },
-        allSitePage: {
-          edges: [
-            {
-              node: {
-                path: `/page-1`,
-              },
-            },
-            {
-              node: {
-                path: `/page-2`,
-              },
-            },
-          ],
-        },
-      },
-    }
-  }
+describe(`sitemap internals tests`, () => {
+  it(`test withoutTrailingSlash`, () => {
+    const result = withoutTrailingSlash(`/`)
+    expect(result).toEqual(`/`)
 
-  const runTests = (pathPrefix = ``) => {
-    beforeEach(() => {
-      global.__PATH_PREFIX__ = pathPrefix
-    })
-
-    it(`prepares all urls correctly`, async () => {
-      const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const results = await graphql(``)
-      const queryRecords = filterQuery(results, [], pathPrefix)
-      const urls = serialize(queryRecords)
-
-      verifyUrlsExistInResults(urls, [
-        `http://dummy.url${pathPrefix}/page-1`,
-        `http://dummy.url${pathPrefix}/page-2`,
-      ])
-    })
-
-    it(`sanitize siteUrl`, async () => {
-      const graphql = () =>
-        Promise.resolve(
-          generateQueryResultsMock({ siteUrl: `http://dummy.url/` })
-        )
-
-      const data = await graphql(``)
-      const queryRecords = filterQuery(data, [], pathPrefix)
-      const urls = serialize(queryRecords)
-
-      verifyUrlsExistInResults(urls, [
-        `http://dummy.url${pathPrefix}/page-1`,
-        `http://dummy.url${pathPrefix}/page-2`,
-      ])
-    })
-
-    it(`excludes pages without trailing slash`, async () => {
-      const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const data = await graphql(``)
-      const queryRecords = filterQuery(data, [`/page-2`], pathPrefix)
-      const urls = serialize(queryRecords)
-
-      verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
-    })
-
-    it(`excludes pages with trailing slash`, async () => {
-      const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const data = await graphql(``)
-      const queryRecords = filterQuery(data, [`/page-2/`], pathPrefix)
-      const urls = serialize(queryRecords)
-
-      verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
-    })
-
-    it(`should fail when siteUrl is not set`, async () => {
-      const graphql = () =>
-        Promise.resolve(generateQueryResultsMock({ siteUrl: null }))
-      expect.assertions(1)
-
-      try {
-        const data = await graphql(``)
-        filterQuery(data, [], pathPrefix)
-      } catch (err) {
-        expect(err.message).toEqual(
-          expect.stringContaining(`SiteMetaData 'siteUrl' property is required`)
-        )
-      }
-    })
-  }
-
-  describe(`no path-prefix`, () => {
-    runTests()
+    const result2 = withoutTrailingSlash(TestPath)
+    expect(result2).toStrictEqual(`/test/path`)
   })
 
-  describe(`with path-prefix`, () => {
-    runTests(`/path-prefix`)
-  })
-})
-
-describe(`results using non default alternatives`, () => {
-  const generateQueryResultsMockNodes = (
-    { siteUrl } = { siteUrl: `http://dummy.url` }
-  ) => {
-    return {
-      data: {
-        site: {
-          siteMetadata: {
-            siteUrl: siteUrl,
-          },
-        },
-        allSitePage: {
-          nodes: [
-            {
-              path: `/page-1`,
-            },
-            {
-              path: `/page-2`,
-            },
-          ],
-        },
-        otherData: {
-          nodes: [
-            {
-              name: `test`,
-            },
-            {
-              name: `test 2`,
-            },
-          ],
-        },
-      },
-    }
-  }
-
-  it(`handles allSitePage.nodes type query properly`, async () => {
-    const graphql = () => Promise.resolve(generateQueryResultsMockNodes())
-    const results = await graphql(``)
-    const queryRecords = filterQuery(results, [], ``)
-    const urls = serialize(queryRecords)
-
-    verifyUrlsExistInResults(urls, [
-      `http://dummy.url/page-1`,
-      `http://dummy.url/page-2`,
-    ])
+  it(`test prefixPath`, () => {
+    const result = prefixPath({
+      url: TestPath,
+      siteUrl: SiteUrl,
+      pathPrefix: `/root`,
+    })
+    expect(result).toStrictEqual(`https://example.net/root/test/path/`)
   })
 
-  it(`handles custom siteUrl Resolver Properly type query properly`, async () => {
-    const customUrl = `https://another.dummy.url`
-    const customSiteResolver = () => customUrl
-    const graphql = () => Promise.resolve(generateQueryResultsMockNodes())
-    const results = await graphql(``)
-    const queryRecords = filterQuery(results, [], ``, customSiteResolver)
+  it(`test default resolveSiteUrl`, () => {
+    const result = resolveSiteUrl({
+      site: { siteMetadata: { siteUrl: SiteUrl } },
+    })
+    expect(result).toStrictEqual(SiteUrl)
+  })
 
-    expect(queryRecords.site.siteMetadata.siteUrl).toEqual(customUrl)
-    expect(queryRecords).toHaveProperty(`otherData`)
+  it(`test default resolvePagePath`, () => {
+    const result = resolvePagePath({ path: TestPath })
+    expect(result).toStrictEqual(TestPath)
+  })
+
+  it(`test default resolvePages`, () => {
+    const pages = [{ path: `/page-1/` }, { path: `/page-2/` }]
+    const result = resolvePages({ allSitePage: { nodes: pages } })
+    expect(result).toEqual(pages)
+  })
+
+  it(`test defaultFilterPages`, () => {
+    const page = { path: TestPath }
+    const result = defaultFilterPages(page, `/another/path/`, {
+      resolvePagePath,
+      minimatch,
+      withoutTrailingSlash,
+    })
+    expect(result).toStrictEqual(false)
+
+    const result2 = defaultFilterPages(page, TestPath, {
+      resolvePagePath,
+      minimatch,
+      withoutTrailingSlash,
+    })
+    expect(result2).toStrictEqual(true)
+  })
+
+  it(`test default serialize`, () => {
+    const page = { path: TestPath }
+    const result = serialize(page, { resolvePagePath })
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        url: TestPath,
+        changefreq: `daily`,
+        priority: 0.7,
+      })
+    )
   })
 })

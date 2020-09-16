@@ -6,8 +6,8 @@ jest.mock(`sitemap`, () => {
 
 const path = require(`path`)
 const sitemap = require(`sitemap`)
-
 const { onPostBuild } = require(`../gatsby-node`)
+
 const pathPrefix = ``
 
 const reporter = {
@@ -23,7 +23,7 @@ beforeEach(() => {
   sitemap.simpleSitemapAndIndex.mockReset()
 })
 
-describe(`Test plugin sitemap`, () => {
+describe(`sitemap Node API tests`, () => {
   it(`default settings work properly`, async () => {
     const graphql = jest.fn()
     graphql.mockResolvedValue({

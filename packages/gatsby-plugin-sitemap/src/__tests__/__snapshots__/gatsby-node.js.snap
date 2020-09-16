@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test plugin sitemap custom query runs 1`] = `
+exports[`sitemap Node API tests custom query runs 1`] = `
 Array [
   Object {
     "changefreq": "weekly",
@@ -10,7 +10,7 @@ Array [
 ]
 `;
 
-exports[`Test plugin sitemap default settings work properly 1`] = `
+exports[`sitemap Node API tests default settings work properly 1`] = `
 Array [
   Object {
     "changefreq": "daily",
