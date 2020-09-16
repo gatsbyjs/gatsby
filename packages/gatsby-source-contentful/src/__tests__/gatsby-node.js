@@ -304,10 +304,10 @@ describe(`gatsby-node`, () => {
       `syncToken`,
       startersBlogFixture.initialSync().currentSyncData.nextSyncToken
     )
-    expect(cache.set).toHaveBeenCalledWith(
-      `previousSyncData`,
-      startersBlogFixture.initialSync().currentSyncData
-    )
+    expect(cache.set).toHaveBeenCalledWith(`previousSyncData`, {
+      entries: startersBlogFixture.initialSync().currentSyncData.entries,
+      assets: startersBlogFixture.initialSync().currentSyncData.assets,
+    })
     expect(cache.set.mock.calls.length).toBe(2)
   })
 

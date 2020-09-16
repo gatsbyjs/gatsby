@@ -25,7 +25,7 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
-      currentSyncData,
+      mergedSyncData: currentSyncData,
       contentTypeItems,
     })
     expect(entryList).toMatchSnapshot()
@@ -102,7 +102,7 @@ describe(`Process contentful data (by id)`, () => {
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
-      currentSyncData,
+      mergedSyncData: currentSyncData,
       contentTypeItems,
     })
     expect(entryList).toMatchSnapshot()

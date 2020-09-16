@@ -126,38 +126,34 @@ exports.sourceNodes = async (
   })
   processingActivity.start()
 
-  // Remove deleted entries and assets from cached sync data set
-  previousSyncData.entries = previousSyncData.entries.filter(
-    entry =>
-      _.findIndex(
-        currentSyncData.deletedEntries,
-        o => o.sys.id === entry.sys.id
-      ) !== -1
-  )
+  // Create a map of up to date entries and assets
+  function mergeSyncData(previous, current, deleted) {
+    const entryMap = new Map()
+    previous.forEach(
+      e => !deleted.includes(e.sys.id) && entryMap.set(e.sys.id, e)
+    )
+    current.forEach(
+      e => !deleted.includes(e.sys.id) && entryMap.set(e.sys.id, e)
+    )
+    return [...entryMap.values()]
+  }
 
-  previousSyncData.assets = previousSyncData.assets.filter(
-    asset =>
-      _.findIndex(
-        currentSyncData.deletedAssets,
-        o => o.sys.id === asset.sys.id
-      ) !== -1
-  )
-
-  // Merge cached data with new sync data
-  // order is important here, fresh data first
-  currentSyncData.entries = _.uniqBy(
-    currentSyncData.entries.concat(previousSyncData.entries),
-    `sys.id`
-  )
-
-  currentSyncData.assets = _.uniqBy(
-    currentSyncData.assets.concat(previousSyncData.assets),
-    `sys.id`
-  )
+  const mergedSyncData = {
+    entries: mergeSyncData(
+      previousSyncData.entries,
+      currentSyncData.entries,
+      currentSyncData.deletedEntries.map(e => e.sys.id)
+    ),
+    assets: mergeSyncData(
+      previousSyncData.assets,
+      currentSyncData.assets,
+      currentSyncData.deletedAssets.map(e => e.sys.id)
+    ),
+  }
 
   // Store a raw and unresolved copy of the data for caching
   console.time(`clone deep current sync`)
-  const currentSyncDataRaw = _.cloneDeep(currentSyncData)
+  const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
   console.timeEnd(`clone deep current sync`)
 
   // Use the JS-SDK to resolve the entries and assets
@@ -165,17 +161,17 @@ exports.sourceNodes = async (
     space: `none`,
     accessToken: `fake-access-token`,
   }).parseEntries({
-    items: currentSyncData.entries,
+    items: mergedSyncData.entries,
     includes: {
-      assets: currentSyncData.assets,
-      entries: currentSyncData.entries,
+      assets: mergedSyncData.assets,
+      entries: mergedSyncData.entries,
     },
   })
 
-  currentSyncData.entries = res.items
+  mergedSyncData.entries = res.items
 
   const entryList = normalize.buildEntryList({
-    currentSyncData,
+    mergedSyncData,
     contentTypeItems,
   })
 
@@ -218,7 +214,7 @@ exports.sourceNodes = async (
   )
   existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 
-  const assets = currentSyncData.assets
+  const assets = mergedSyncData.assets
 
   reporter.info(`Updated entries ${currentSyncData.entries.length}`)
   reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
@@ -229,7 +225,7 @@ exports.sourceNodes = async (
   const nextSyncToken = currentSyncData.nextSyncToken
 
   await Promise.all([
-    cache.set(CACHE_SYNC_KEY, currentSyncDataRaw),
+    cache.set(CACHE_SYNC_KEY, mergedSyncDataRaw),
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
 
