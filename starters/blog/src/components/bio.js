@@ -35,7 +35,10 @@ const Bio = () => {
     }
   `)
 
-  const { author, social } = data.site.siteMetadata
+  // Set these values by editing "siteMetadata" in gatsby-config.js
+  const author = data.site.siteMetadata?.author
+  const social = data.site.siteMetadata?.social
+
   const avatar = data?.avatar?.childImageSharp?.fixed
 
   return (
@@ -60,13 +63,15 @@ const Bio = () => {
           }}
         />
       )}
-      <p>
-        Written by <strong>{author?.name || `Author`}</strong> {author?.summary || `Author Summary`}
-        {` `}
-        <a href={`https://twitter.com/${social?.twitter || ``}`}>
-          You should follow him on Twitter
-        </a>
-      </p>
+      {author?.name && (
+        <p>
+          Written by <strong>{author.name}</strong> {author?.summary ? author.summary : null}
+          {` `}
+          <a href={`https://twitter.com/${social?.twitter || ``}`}>
+            You should follow him on Twitter
+          </a>
+        </p>
+      )}
     </div>
   )
 }
