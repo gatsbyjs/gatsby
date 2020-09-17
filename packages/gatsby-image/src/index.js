@@ -18,23 +18,6 @@ const logDeprecationNotice = (prop, replacement) => {
   }
 }
 
-// DJB2a (XOR variant) is a simple hashing function, reduces input to 32-bits
-const SEED = 5381
-function djb2a(str) {
-  let h = SEED
-
-  for (let i = 0; i < str.length; i++) {
-    h = (h * 33) ^ str.charCodeAt(i)
-  }
-
-  // Cast to 32-bit uint
-  return h >>> 0
-}
-
-// Converts string input to a 32-bit base36 string (0-9, a-z)
-// '_' prefix to prevent invalid first chars for CSS class names
-const getShortKey = input => `_` + djb2a(input).toString(36)
-
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
   let convertedProps = { ...props }
@@ -216,32 +199,6 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without]
 }
 
-// For Art Direction: SSR + Initial load, removed upon rehydration
-// Ensures correct CSS for image variants is applied
-const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
-  const variantRule = ({ width, height, aspectRatio }) => {
-    // '!important' required due to overriding inline styles
-    // 'aspectRatio' == fluid data
-    const styleOverride = aspectRatio
-      ? `padding-bottom: ${100 / aspectRatio}% !important;`
-      : `width: ${width}px !important; height: ${height}px !important;`
-
-    return `.${selectorClass} { ${styleOverride} }`
-  }
-
-  const base = variantRule(imageVariants.find(v => !v.media))
-  return (
-    <>
-      {base && <style>{base}</style>}
-      {imageVariants
-        .filter(v => v.media)
-        .map(v => (
-          <style media={v.media}>{variantRule(v)}</style>
-        ))}
-    </>
-  )
-}
-
 function generateTracedSVGSources(imageVariants) {
   return imageVariants.map(({ src, media, tracedSVG }) => (
     <source key={src} media={media} srcSet={tracedSVG} />
@@ -408,13 +365,6 @@ class Image extends React.Component {
     this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
-
-    // Supports Art Direction feature to correctly render image variants
-    const imageVariants = props.fluid || props.fixed
-    if (hasArtDirectionSupport(imageVariants)) {
-      this.uniqueKey =
-        !isBrowser && getShortKey(imageVariants.map(v => v.srcSet).join(``))
-    }
   }
 
   componentDidMount() {
@@ -544,15 +494,10 @@ class Image extends React.Component {
       ? imageVariants[0]
       : getCurrentSrcData(imageVariants)
 
-    const activeVariant = getShortKey(image.srcSet)
-    const uniqueKey = this.uniqueKey
-
     if (fluid) {
       return (
         <Tag
-          className={`${
-            (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
-          } gatsby-image-wrapper`}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
             position: `relative`,
             overflow: `hidden`,
@@ -561,15 +506,8 @@ class Image extends React.Component {
             ...style,
           }}
           ref={this.handleRef}
-          key={activeVariant}
+          key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
-          {uniqueKey && (
-            <ResponsiveQueries
-              imageVariants={imageVariants}
-              selectorClass={uniqueKey}
-            />
-          )}
-
           {/* Preserve the aspect ratio. */}
           <Tag
             aria-hidden
@@ -677,20 +615,11 @@ class Image extends React.Component {
 
       return (
         <Tag
-          className={`${
-            (className ? className : ``) + (uniqueKey ? uniqueKey : ``)
-          } gatsby-image-wrapper`}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
           style={divStyle}
           ref={this.handleRef}
-          key={activeVariant}
+          key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
-          {uniqueKey && (
-            <ResponsiveQueries
-              imageVariants={imageVariants}
-              selectorClass={uniqueKey}
-            />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
