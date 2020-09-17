@@ -229,6 +229,55 @@
   features:
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-hello-world-demo.netlify.com/
+  repo: https://github.com/gatsbyjs/gatsby-starter-hello-world
+  description: Hello world boilerplate
+  tags:
+    - Official
+  features:
+    - Bare bones starter
+- url: https://github.com/gatsbyjs/gatsby-starter-blog-theme
+  repo: https://github.com/gatsbyjs/gatsby-starter-blog-theme
+  description: official blog theme
+  tags:
+    - Official
+    - Blog
+  features:
+    - Includes blog posts set up from a content folder
+    - Contains styling done with Theme-UI showing how to shadow a theme file
+- url: https://github.com/gatsbyjs/gatsby-starter-theme
+  repo: https://github.com/gatsbyjs/gatsby-starter-theme
+  description: official theme
+  tags:
+    - Official
+    - Theme
+  features:
+    - Preconfigured theme and site to get started developing a theme
+- url: https://github.com/gatsbyjs/gatsby-starter-theme-workspace
+  repo: https://github.com/gatsbyjs/gatsby-starter-theme-workspace
+  description: official workspace theme
+  tags:
+    - Official
+    - Workspace Theme
+  features:
+    - Official workspace theme
+- url: https://github.com/gatsbyjs/gatsby-starter-notes-theme
+  repo: https://github.com/gatsbyjs/gatsby-starter-notes-theme
+  description: gatsby notes theme
+  tags:
+    - Official
+    - Notes Theme
+  features:
+    - Official notes theme
+- url: https://github.com/gatsbyjs/gatsby-starter-minimal
+  repo: https://github.com/gatsbyjs/gatsby-starter-minimal
+  description: starter without any pages by default
+  tags:
+    - Official
+    - Minimal
+  features:
+    - Does not include pages by default
+    - Facilitates recipe installation
 - url: https://gatsby-netlify-cms.netlify.app/
   repo: https://github.com/netlify-templates/gatsby-starter-netlify-cms
   description: n/a
