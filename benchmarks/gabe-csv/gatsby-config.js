@@ -10,7 +10,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `blurp`,
-        path: __dirname,
+        path: __dirname + '/gendata.csv',
       },
     },
   ],

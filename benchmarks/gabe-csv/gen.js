@@ -5,7 +5,7 @@ const faker = require(`faker`)
 console.log("Start of gen")
 
 const N = parseInt(process.env.N, 10) || 100
-const FILE = path.resolve("data.csv")
+const FILE = path.resolve("gendata.csv")
 
 console.log("Now generating " + N + " articles into", FILE)
 fs.writeFileSync(FILE, "articleNumber,title,description,slug,date,tags,body\n")
@@ -22,27 +22,27 @@ function createArticle(n) {
     .join(`, `)
   fs.appendFileSync(
     FILE,
-    ['a','b','c','d','e','f', 'g'
-//       String(n),
-//       title,
-//       desc,
-//       slug,
-//       date,
-//       tags,
-//       `
-// # ${title}
-//
-// > ${desc}
-//
-// ${faker.lorem.paragraphs(2)}
-//       `,
+    [
+      // 'a','b','c','d','e','f', 'g'
+      String(n),
+      title,
+      desc,
+      slug,
+      date,
+      tags,
+      `
+<h1>${title}</h1>
+<blockquote>${desc}</blockquote>
+<p>${faker.lorem.paragraphs(1)}</p>
+<p>${faker.lorem.paragraphs(1)}</p>
+      `,
     ]
       .map(s =>
         s
           .trim()
           // Need to escape newlines and commas
-        .replace(/,/g, "\\,")
-        .replace(/\n/g, "\\n")
+          .replace(/,/g, "\\,")
+          .replace(/\n/g, "") // html don't care about newlines
       )
       .join(",") + "\n"
   )

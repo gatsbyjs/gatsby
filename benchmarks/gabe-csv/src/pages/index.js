@@ -7,9 +7,8 @@ import Layout from "../components/layout"
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
-    // console.log([post.allDataCsv.edges[0].node])
     const siteTitle = data.site.siteMetadata.title
-    const posts = data.allDataCsv.edges
+    const posts = data.allGendataCsv.edges
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
@@ -54,7 +53,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allDataCsv(limit: 100) {
+    allGendataCsv(limit: 100) {
       edges {
         node {
           articleNumber

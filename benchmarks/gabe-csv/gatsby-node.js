@@ -7,11 +7,12 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(
     `
       {
-        allDataCsv (sort: { fields: [date], order: DESC }) {
+        allGendataCsv (sort: { fields: [date], order: DESC }) {
           edges {
             node {
-
+              id
               slug
+              title
             }
           }
         }
@@ -24,7 +25,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allDataCsv.edges
+  const posts = result.data.allGendataCsv.edges
 
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
@@ -43,15 +44,16 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
+// Use this to keep in sync with markdown benchmark. TODO: drop this and see the difference.
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+  if (node.internal.type === `DataCsv`) {
     createNodeField({
-      name: `slug`,
+      name: `slug2`,
       node,
-      value,
+      value: './' + node.slug,
     })
   }
 }
+

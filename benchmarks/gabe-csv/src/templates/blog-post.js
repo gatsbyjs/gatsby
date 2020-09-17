@@ -7,8 +7,7 @@ import Layout from "../components/layout"
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data
-    // console.log([post.allDataCsv.edges[0].node])
-    console.log([this.props])
+    const node = post.allGendataCsv.edges[0].node
     const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next } = this.props.pageContext
 
@@ -22,7 +21,7 @@ class BlogPostTemplate extends React.Component {
                 marginBottom: 0,
               }}
             >
-              {post.title}
+              {node.title}
             </h1>
             <p
               style={{
@@ -30,10 +29,10 @@ class BlogPostTemplate extends React.Component {
                 marginBottom: '5px',
               }}
             >
-              {post.date}
+              {node.date}
             </p>
           </header>
-          <section dangerouslySetInnerHTML={{ __html: post.html }} />
+          <section dangerouslySetInnerHTML={{ __html: node.body }} />
           <hr
             style={{
               marginBottom: '5px',
@@ -56,14 +55,14 @@ class BlogPostTemplate extends React.Component {
           >
             <li>
               {previous && (
-                <Link to={previous.slug} rel="prev">
+                <Link to={'../' + previous.slug} rel="prev">
                   ← {previous.title}
                 </Link>
               )}
             </li>
             <li>
               {next && (
-                <Link to={next.slug} rel="next">
+                <Link to={'../' + next.slug} rel="next">
                   {next.title} →
                 </Link>
               )}
@@ -78,15 +77,15 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query($id: String!) {
     site {
       siteMetadata {
         title
       }
     }
-    allDataCsv(
+    allGendataCsv(
       filter: {
-         slug: { eq: $slug }
+         id: { eq: $id }
       }
     ) {
       edges {
