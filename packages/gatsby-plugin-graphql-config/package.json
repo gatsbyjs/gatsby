@@ -1,8 +1,8 @@
 {
   "name": "gatsby-plugin-graphql-config",
   "description": "Gatsby plugin to write out a graphql-config with develop process endpoint configured",
-  "version": "3.2.27",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "version": "1.0.0",
+  "author": "Rikki Schulte <rikki.schulte@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

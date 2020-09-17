@@ -1,4 +1,4 @@
-# gatsby-plugin-graphql-cache
+# gatsby-plugin-graphql-config
 
 Persists gatsby graphql schema and fragments to the .cache directory, as well as a [graphql config](https://graphql-config.com) file to enable full-featured tooling for:
 

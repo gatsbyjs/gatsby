@@ -303,7 +303,7 @@ export type ActionsUnion =
   | ISetProgramStatusAction
   | ISetResolvedNodesAction
   | ISetSchemaAction
-  | ISetDefinitionsAction
+  | ISetGraphQLDefinitionsAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
@@ -673,8 +673,8 @@ export interface ISetSchemaAction {
   payload: IGatsbyState["schema"]
 }
 
-export interface ISetDefinitionsAction {
-  type: `SET_DEFINITIONS`
+export interface ISetGraphQLDefinitionsAction {
+  type: `SET_GRAPHQL_DEFINITIONS`
   payload: IGatsbyState["definitions"]
 }
 

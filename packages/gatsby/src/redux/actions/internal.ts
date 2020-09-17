@@ -17,7 +17,7 @@ import {
   IRemoveStaleJobAction,
   ISetSiteConfig,
   IDefinitionMeta,
-  ISetDefinitionsAction,
+  ISetGraphQLDefinitionsAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -127,11 +127,11 @@ export const queryExtracted = (
  * query-compiler.js.
  * @private
  */
-export const setDefinitions = (
+export const setGraphQLDefinitions = (
   definitionsByName: Map<string, IDefinitionMeta>
-): ISetDefinitionsAction => {
+): ISetGraphQLDefinitionsAction => {
   return {
-    type: `SET_DEFINITIONS`,
+    type: `SET_GRAPHQL_DEFINITIONS`,
     payload: definitionsByName,
   }
 }

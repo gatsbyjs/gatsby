@@ -175,7 +175,7 @@ export const processQueries = ({
     parentSpan
   )
 
-  boundActionCreators.setDefinitions(definitionsByName)
+  boundActionCreators.setGraphQLDefinitions(definitionsByName)
 
   return processDefinitions({
     schema,

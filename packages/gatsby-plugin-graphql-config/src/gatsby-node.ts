@@ -1,26 +1,8 @@
 import * as fs from "fs-extra"
 import { resolve, join } from "path"
-import { printSchema, GraphQLSchema } from "graphql"
+import { GraphQLSchema, printSchema } from "graphql"
 import type { GatsbyReduxStore } from "gatsby/src/redux"
 import type { IStateProgram } from "gatsby/src/internal"
-
-async function cacheSchema(
-  cacheDirectory: string,
-  schema: GraphQLSchema
-): Promise<void> {
-  try {
-    const schemaSDLString = printSchema(schema, { commentDescriptions: true })
-
-    await fs.writeFile(join(cacheDirectory, `schema.graphql`), schemaSDLString)
-
-    console.log(`[gatsby-plugin-graphql-config] wrote SDL file to .cache`)
-  } catch (err) {
-    console.error(
-      `[gatsby-plugin-graphql-config] failed writing schema file to .cache`
-    )
-    console.error(err)
-  }
-}
 
 async function cacheGraphQLConfig(program: IStateProgram): Promise<void> {
   try {
@@ -85,6 +67,33 @@ const createFragmentCacheHandler = (
   }
 }
 
+const cacheSchema = async (
+  cacheDirectory: string,
+  schema: GraphQLSchema
+): Promise<void> => {
+  try {
+    console.log(`printing schema`)
+    const schemaSDLString = printSchema(schema, { commentDescriptions: true })
+
+    await fs.writeFile(join(cacheDirectory, `schema.graphql`), schemaSDLString)
+
+    console.log(`[gatsby-plugin-graphql-config] wrote SDL file to .cache`)
+  } catch (err) {
+    console.error(
+      `[gatsby-plugin-graphql-config] failed writing schema file to .cache`
+    )
+    console.error(err)
+  }
+}
+
+const createSchemaCacheHandler = (
+  cacheDirectory: string,
+  store: GatsbyReduxStore
+) => async (): Promise<void> => {
+  const { schema } = store.getState()
+  await cacheSchema(cacheDirectory, schema)
+}
+
 export async function onPostBootstrap({
   store,
   emitter,
@@ -92,20 +101,22 @@ export async function onPostBootstrap({
   store: GatsbyReduxStore
   emitter: any
 }): Promise<void> {
-  const { schema, program } = store.getState()
+  const { program, schema } = store.getState()
 
   const cacheDirectory = resolve(program.directory, `.cache`)
 
   if (!fs.existsSync(cacheDirectory)) {
     return
   }
-
+  // cache initial schema
   await cacheSchema(cacheDirectory, schema)
-
+  // cache graphql config file
   await cacheGraphQLConfig(program)
-
+  // Important! emitter.on is an internal Gatsby API. It is highly discouraged to use in plugins and can break without a notice.
+  // FIXME: replace it with a more appropriate API call when available.
   emitter.on(
-    `SET_DEFINITIONS`,
+    `SET_GRAPHQL_DEFINITIONS`,
     createFragmentCacheHandler(cacheDirectory, store)
   )
+  emitter.on(`SET_SCHEMA`, createSchemaCacheHandler(cacheDirectory, store))
 }

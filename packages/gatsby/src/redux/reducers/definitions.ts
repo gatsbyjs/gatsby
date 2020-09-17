@@ -5,7 +5,7 @@ export const definitionsReducer = (
   action: ActionsUnion
 ): IGatsbyState["definitions"] => {
   switch (action.type) {
-    case `SET_DEFINITIONS`:
+    case `SET_GRAPHQL_DEFINITIONS`:
       return action.payload
     default:
       return state
