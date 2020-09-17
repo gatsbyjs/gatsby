@@ -1,4 +1,4 @@
-# Markdown Benchmark; CSV version
+# Markdown Benchmark; CSV+text version
 
 This is a baseline benchmark for tracking CSV plaintext performance in the Gabe project.
 

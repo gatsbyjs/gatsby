@@ -1,5 +1,5 @@
 {
-  "name": "gabe-csv",
+  "name": "gabe-csv-text",
   "private": true,
   "description": "Benchmark site for testing baseline csv+plaintext perf",
   "author": "Peter van der Zee <pvdz@github>",
