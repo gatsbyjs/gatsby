@@ -61,7 +61,7 @@ Possible sources of great research materials:
 - blogposts (on gatsbyjs.org and other sites)
 - docs (on gatsbyjs.org and other sites)
 - video tutorials
-- Discord, Spectrum, or Twitter conversations
+- Discord or Twitter conversations
 - search engine results
 - presentations you or others have given
 - textbooks
