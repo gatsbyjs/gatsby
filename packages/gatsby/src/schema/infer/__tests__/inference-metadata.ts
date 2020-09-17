@@ -770,7 +770,7 @@ describe(`Get example value for type inference`, () => {
         },
       },
     ]
-    const nodes = (_nodes as unknown) as Node[]
+    const nodes = (_nodes as unknown) as Array<Node>
     it(`updates example value when nodes are added`, () => {
       let inferenceMetadata = {
         typeName: `IncrementalExampleValue`,
@@ -1040,7 +1040,7 @@ describe(`Type conflicts`, () => {
 describe(`Type change detection`, () => {
   let initialMetadata
 
-  const nodes = (): object[] => [
+  const nodes = (): Array<object> => [
     { foo: `foo` },
     { object: { foo: `foo`, bar: `bar` } },
     { list: [`item`], bar: `bar` },
@@ -1058,7 +1058,7 @@ describe(`Type change detection`, () => {
     deleteNode(_.cloneDeep(metadata), node as Node)
 
   beforeEach(() => {
-    initialMetadata = addNodes(undefined, nodes() as Node[])
+    initialMetadata = addNodes(undefined, nodes() as Array<Node>)
     initialMetadata.dirty = false
   })
 

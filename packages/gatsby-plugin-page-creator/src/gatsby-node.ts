@@ -15,6 +15,7 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -41,131 +42,185 @@ export async function createPagesStatefully(
   { path: pagesPath, pathCheck = true, ignore }: IOptions,
   doneCb: PluginCallback
 ): Promise<void> {
-  const { deletePage } = actions
-  const { program } = store.getState()
+  try {
+    const { deletePage } = actions
+    const { program } = store.getState()
 
-  const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
+    const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
-  if (!pagesPath) {
-    reporter.panic(`"path" is a required option for gatsby-plugin-page-creator
+    if (!pagesPath) {
+      reporter.panic(`"path" is a required option for gatsby-plugin-page-creator
 
 See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`)
-  }
+    }
 
-  // Validate that the path exists.
-  if (pathCheck && !existsSync(pagesPath)) {
-    reporter.panic(`The path passed to gatsby-plugin-page-creator does not exist on your file system:
+    // Validate that the path exists.
+    if (pathCheck && !existsSync(pagesPath)) {
+      reporter.panic(`The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
 ${pagesPath}
 
 Please pick a path to an existing directory.`)
-  }
-
-  const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
-  const pagesGlob = `**/*.{${exts}}`
-
-  // Get initial list of files.
-  let files = await glob(pagesGlob, { cwd: pagesPath })
-  files.forEach(file => {
-    createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
-  })
-
-  watchDirectory(
-    pagesPath,
-    pagesGlob,
-    addedPath => {
-      if (!_.includes(files, addedPath)) {
-        createPage(
-          addedPath,
-          pagesDirectory,
-          actions,
-          ignore,
-          graphql,
-          reporter
-        )
-        files.push(addedPath)
-      }
-    },
-    removedPath => {
-      // Delete the page for the now deleted component.
-      const componentPath = systemPath.join(pagesDirectory, removedPath)
-      store.getState().pages.forEach(page => {
-        if (page.component === componentPath) {
-          deletePage({
-            path: createPath(removedPath),
-            component: componentPath,
-          })
-        }
-      })
-      files = files.filter(f => f !== removedPath)
     }
-  ).then(() => doneCb(null, null))
+
+    const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
+    const pagesGlob = `**/*.{${exts}}`
+
+    // Get initial list of files.
+    let files = await glob(pagesGlob, { cwd: pagesPath })
+    files.forEach(file => {
+      createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
+    })
+
+    watchDirectory(
+      pagesPath,
+      pagesGlob,
+      addedPath => {
+        try {
+          if (!_.includes(files, addedPath)) {
+            createPage(
+              addedPath,
+              pagesDirectory,
+              actions,
+              ignore,
+              graphql,
+              reporter
+            )
+            files.push(addedPath)
+          }
+        } catch (e) {
+          reporter.panic(
+            e.message.startsWith(`PageCreator`)
+              ? e.message
+              : `PageCreator: ${e.message}`
+          )
+        }
+      },
+      removedPath => {
+        // Delete the page for the now deleted component.
+        try {
+          const componentPath = systemPath.join(pagesDirectory, removedPath)
+          store.getState().pages.forEach(page => {
+            if (page.component === componentPath) {
+              deletePage({
+                path: createPath(removedPath),
+                component: componentPath,
+              })
+            }
+          })
+          files = files.filter(f => f !== removedPath)
+        } catch (e) {
+          reporter.panic(
+            e.message.startsWith(`PageCreator`)
+              ? e.message
+              : `PageCreator: ${e.message}`
+          )
+        }
+      }
+    ).then(() => doneCb(null, null))
+  } catch (e) {
+    reporter.panic(
+      e.message.startsWith(`PageCreator`)
+        ? e.message
+        : `PageCreator: ${e.message}`
+    )
+  }
 }
 
 export function setFieldsOnGraphQLNodeType({
   getNode,
   type,
   store,
+  reporter,
 }: SetFieldsOnGraphQLNodeTypeArgs): object {
-  const extensions = store.getState().program.extensions
-  const collectionQuery = `all${type.name}`
-  if (knownCollections.has(collectionQuery)) {
-    return {
-      gatsbyPath: {
-        type: GraphQLString,
-        args: {
-          filePath: {
-            type: GraphQLString,
+  try {
+    const extensions = store.getState().program.extensions
+    const collectionQuery = `all${type.name}`
+    if (knownCollections.has(collectionQuery)) {
+      return {
+        gatsbyPath: {
+          type: GraphQLString,
+          args: {
+            filePath: {
+              type: GraphQLString,
+            },
+          },
+          resolve: (
+            source: object,
+            { filePath }: { filePath: string }
+          ): string => {
+            // This is a quick hack for attaching parents to the node.
+            // This may be an incomprehensive fixed for the general use case
+            // of connecting nodes together. However, I don't quite know how to
+            // fully understand the use-cases. So this is a simple fix for this
+            // one common-use, and we'll iterate as we understand.
+            const sourceCopy = { ...source }
+            // @ts-ignore
+            if (typeof source.parent === `string`) {
+              // @ts-ignore
+              sourceCopy.parent = getNode(source.parent)
+            }
+
+            validatePathQuery(filePath, extensions)
+
+            return derivePath(filePath, sourceCopy, reporter)
           },
         },
-        resolve: (
-          source: object,
-          { filePath }: { filePath: string }
-        ): string => {
-          // This is a quick hack for attaching parents to the node.
-          // This may be an incomprehensive fixed for the general use case
-          // of connecting nodes together. However, I don't quite know how to
-          // fully understand the use-cases. So this is a simple fix for this
-          // one common-use, and we'll iterate as we understand.
-          const sourceCopy = { ...source }
-          // @ts-ignore
-          if (typeof source.parent === `string`) {
-            // @ts-ignore
-            sourceCopy.parent = getNode(source.parent)
-          }
-
-          validatePathQuery(filePath, extensions)
-
-          return derivePath(filePath, sourceCopy)
-        },
-      },
+      }
     }
-  }
 
-  return {}
+    return {}
+  } catch (e) {
+    reporter.panic(
+      e.message.startsWith(`PageCreator`)
+        ? e.message
+        : `PageCreator: ${e.message}`
+    )
+    return {}
+  }
 }
 
 export async function onPreInit(
-  _args: ParentSpanPluginArgs,
+  { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
-  const pagesGlob = `**/\\{*\\}**`
+  try {
+    const pagesGlob = `**/\\{*\\}**`
 
-  const files = await glob(pagesGlob, { cwd: pagesPath })
+    const files = await glob(pagesGlob, { cwd: pagesPath })
 
-  await Promise.all(
-    files.map(async relativePath => {
-      const absolutePath = require.resolve(
-        systemPath.join(pagesPath, relativePath)
-      )
-      const queryString = await collectionExtractQueryString(absolutePath)
-      if (!queryString) return
-      const ast = parse(queryString)
-      knownCollections.set(
-        // @ts-ignore
-        ast.definitions[0].selectionSet.selections[0].name.value,
-        relativePath
-      )
-    })
-  )
+    if (files.length > 0) {
+      trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
+      if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
+        reporter.panic(
+          `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
+        )
+      }
+    }
+
+    await Promise.all(
+      files.map(async relativePath => {
+        const absolutePath = require.resolve(
+          systemPath.join(pagesPath, relativePath)
+        )
+        const queryString = await collectionExtractQueryString(
+          absolutePath,
+          reporter
+        )
+        if (!queryString) return
+        const ast = parse(queryString)
+        knownCollections.set(
+          // @ts-ignore
+          ast.definitions[0].selectionSet.selections[0].name.value,
+          relativePath
+        )
+      })
+    )
+  } catch (e) {
+    reporter.panic(
+      e.message.startsWith(`PageCreator`)
+        ? e.message
+        : `PageCreator: ${e.message}`
+    )
+  }
 }

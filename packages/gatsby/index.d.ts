@@ -817,27 +817,27 @@ export interface GatsbyGraphQLObjectType {
   config: ComposeObjectTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInputObjectType {
+export interface GatsbyGraphQLInputObjectType {
   kind: "INPUT_OBJECT"
   config: ComposeInputObjectTypeConfig
 }
 
-interface GatsbyGraphQLUnionType {
+export interface GatsbyGraphQLUnionType {
   kind: "UNION"
   config: ComposeUnionTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInterfaceType {
+export interface GatsbyGraphQLInterfaceType {
   kind: "INTERFACE"
   config: ComposeInterfaceTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLEnumType {
+export interface GatsbyGraphQLEnumType {
   kind: "ENUM"
   config: ComposeEnumTypeConfig
 }
 
-interface GatsbyGraphQLScalarType {
+export interface GatsbyGraphQLScalarType {
   kind: "SCALAR"
   config: ComposeScalarTypeConfig
 }

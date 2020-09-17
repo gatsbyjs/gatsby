@@ -1,5 +1,5 @@
 import _ from "lodash"
-import slugify from "slugify"
+import slugify from "@sindresorhus/slugify"
 import {
   compose,
   removeFileExtension,
@@ -7,12 +7,17 @@ import {
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
 } from "./path-utils"
+import { Reporter } from "gatsby"
 
 // Generates the path for the page from the file path
 // product/{Product.id}.js => /product/:id, pulls from nodes.id
 // product/{Product.sku__en} => product/:sku__en pulls from nodes.sku.en
 // blog/{MarkdownRemark.parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
-export function derivePath(path: string, node: Record<string, any>): string {
+export function derivePath(
+  path: string,
+  node: Record<string, any>,
+  reporter: Reporter
+): string {
   // 1.  Remove the extension
   let pathWithoutExtension = removeFileExtension(path)
 
@@ -33,25 +38,37 @@ export function derivePath(path: string, node: Record<string, any>): string {
 
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
-      console.error(
-        `CollectionBuilderError: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
+      reporter.error(
+        `PageCreator: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
       )
-      console.log(JSON.stringify(node, null, 4))
+      reporter.log(JSON.stringify(node, null, 4))
       return
     }
 
-    // If the node value is meant to be a slug, like `foo/bar`, the slugify
-    // function will remove the slashes. This is a hack to make sure the slashes
-    // stick around in the final url structuring
-    const replaceSlashesValue = (nodeValue + ``).replace(/\//g, `(REPLACED)`)
-    const slugifiedWithoutSlashesValue = slugify(replaceSlashesValue, {
-      lower: true,
-    })
-    const value = slugifiedWithoutSlashesValue.replace(/\(REPLACED\)/gi, `/`)
+    const value = safeSlugify(nodeValue)
 
     // 3.d  replace the part of the slug with the actual value
     pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
   })
 
   return pathWithoutExtension
+}
+
+function safeSlugify(nodeValue: string): string {
+  // If the node value is meant to be a slug, like `foo/bar`, the slugify
+  // function will remove the slashes. This is a hack to make sure the slashes
+  // stick around in the final url structuring
+  const SLASH_PRESERVING_STATIC_KEY = `-replaced-`
+
+  const replaceSlashesValue = (nodeValue + ``).replace(
+    /\//g,
+    SLASH_PRESERVING_STATIC_KEY
+  )
+
+  const slugifiedWithoutSlashesValue = slugify(replaceSlashesValue)
+
+  return slugifiedWithoutSlashesValue.replace(
+    new RegExp(SLASH_PRESERVING_STATIC_KEY, `g`),
+    `/`
+  )
 }

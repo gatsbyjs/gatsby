@@ -66,7 +66,7 @@ const renderHTMLQueue = async (
   workerPool: IWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
-  pages: string[]
+  pages: Array<string>
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -111,7 +111,7 @@ class BuildHTMLError extends Error {
 
 const doBuildPages = async (
   rendererPath: string,
-  pagePaths: string[],
+  pagePaths: Array<string>,
   activity: IActivity,
   workerPool: IWorkerPool
 ): Promise<void> => {
@@ -141,7 +141,7 @@ export const buildHTML = async ({
 }: {
   program: IProgram
   stage: Stage
-  pagePaths: string[]
+  pagePaths: Array<string>
   activity: IActivity
   workerPool: IWorkerPool
 }): Promise<void> => {

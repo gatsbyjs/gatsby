@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images-contentful",
-  "version": "2.3.13",
+  "version": "2.3.17",
   "description": "Process Images in Contentful markdown so they can use the images API.",
   "main": "index.js",
   "scripts": {
@@ -15,20 +15,20 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images-contentful#readme",
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.11.2",
     "axios": "^0.19.2",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
     "is-relative-url": "^3.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "semver": "^7.3.2",
-    "sharp": "^0.25.1",
+    "sharp": "^0.25.4",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^5.2.1"
   },
   "keywords": [

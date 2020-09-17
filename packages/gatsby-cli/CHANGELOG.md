@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.99](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.98...gatsby-cli@2.12.99) (2020-09-16)
+
+### Reverts
+
+- Revert "chore(gatsby-cli): bundle ink logger (#26887)" (#26921) ([61099b3](https://github.com/gatsbyjs/gatsby/commit/61099b31862f501c148f24aaefde75cc3d090f27)), closes [#26887](https://github.com/gatsbyjs/gatsby/issues/26887) [#26921](https://github.com/gatsbyjs/gatsby/issues/26921)
+
+## [2.12.98](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.97...gatsby-cli@2.12.98) (2020-09-16)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.97](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.96...gatsby-cli@2.12.97) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.96](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.95...gatsby-cli@2.12.96) (2020-09-14)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.95](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.94...gatsby-cli@2.12.95) (2020-09-10)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.94](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.93...gatsby-cli@2.12.94) (2020-09-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.93](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.92...gatsby-cli@2.12.93) (2020-09-08)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.92](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.91...gatsby-cli@2.12.92) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.91](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.90...gatsby-cli@2.12.91) (2020-08-31)
+
+### Bug Fixes
+
+- **gatsby:** only enable debugger when argument is given ([#26669](https://github.com/gatsbyjs/gatsby/issues/26669)) ([93fdc09](https://github.com/gatsbyjs/gatsby/commit/93fdc09))
+
+## [2.12.90](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.89...gatsby-cli@2.12.90) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.89](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.88...gatsby-cli@2.12.89) (2020-08-26)
+
+### Features
+
+- **gatsby-cli:** log what activities prevent from transitioning to idle when stuck ([#26618](https://github.com/gatsbyjs/gatsby/issues/26618)) ([b88f193](https://github.com/gatsbyjs/gatsby/commit/b88f193))
+
+## [2.12.88](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.87...gatsby-cli@2.12.88) (2020-08-24)
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
+## [2.12.87](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.86...gatsby-cli@2.12.87) (2020-08-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.86](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.85...gatsby-cli@2.12.86) (2020-08-12)
+
+### Bug Fixes
+
+- **reporter:** add missing verbose/debug log handler to yurnalist logger ([#26400](https://github.com/gatsbyjs/gatsby/issues/26400)) ([bba7d6f](https://github.com/gatsbyjs/gatsby/commit/bba7d6f))
+
+## [2.12.85](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.84...gatsby-cli@2.12.85) (2020-08-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.84](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.83...gatsby-cli@2.12.84) (2020-08-12)
+
+### Bug Fixes
+
+- **structured-logging:** fix wrongly reporting status as success when we should still be in pending state ([#26380](https://github.com/gatsbyjs/gatsby/issues/26380)) ([d74ea66](https://github.com/gatsbyjs/gatsby/commit/d74ea66))
+
 ## [2.12.83](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.82...gatsby-cli@2.12.83) (2020-08-11)
 
 **Note:** Version bump only for package gatsby-cli

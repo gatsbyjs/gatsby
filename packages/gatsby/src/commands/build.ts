@@ -36,7 +36,7 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import { updateSiteMetadata } from "gatsby-core-utils"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -58,17 +58,20 @@ interface IBuildArgs extends IProgram {
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
+  report.setVerbose(program.verbose)
+
   if (program.profile) {
     report.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
 
-  await createServiceLock(program.directory, `metadata`, {
+  await updateSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
     lastRun: Date.now(),
-  }).then(unlock => unlock?.())
+    pid: process.pid,
+  })
 
   markWebpackStatusAsPending()
 
@@ -208,14 +211,22 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
   // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    cachedWebpackCompilationHash === store.getState().webpackCompilationHash
-  ) {
-    pagePaths = buildUtils.getChangedPageDataKeys(
-      store.getState(),
-      cachedPageData
-    )
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    if (
+      cachedWebpackCompilationHash === store.getState().webpackCompilationHash
+    ) {
+      pagePaths = buildUtils.getChangedPageDataKeys(
+        store.getState(),
+        cachedPageData
+      )
+    } else if (cachedWebpackCompilationHash) {
+      report.info(
+        report.stripIndent(`
+          One or more of your source files have changed since the last time you ran Gatsby. All
+          pages will be rebuilt.
+        `)
+      )
+    }
   }
 
   const buildHTMLActivityProgress = report.createProgress(
@@ -258,7 +269,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
   buildHTMLActivityProgress.end()
 
-  let deletedPageKeys: string[] = []
+  let deletedPageKeys: Array<string> = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const deletePageDataActivityTimer = report.activityTimer(
       `Delete previous page data`

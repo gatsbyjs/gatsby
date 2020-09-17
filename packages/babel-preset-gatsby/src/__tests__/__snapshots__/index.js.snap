@@ -258,6 +258,7 @@ Object {
       Object {
         "development": false,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],
@@ -527,6 +528,7 @@ Object {
       Object {
         "development": false,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],
@@ -790,6 +792,7 @@ Object {
       Object {
         "development": false,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],
@@ -1053,6 +1056,7 @@ Object {
       Object {
         "development": true,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],

@@ -51,6 +51,7 @@ export const reducer = (
           ...state.activities,
           [id]: {
             ...activity,
+            id,
             ...rest,
           },
         },
