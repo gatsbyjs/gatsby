@@ -25,14 +25,25 @@ const getShortKey = input => `_` + djb2a(input).toString(36)
 // `emotion` does similar with `<style>`, it is not HTML5 spec compliant,
 // however web browsers do support using `<style>` outside of `<head>`.
 const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
-  const variantRule = ({ width, height, aspectRatio }) => {
+  const variantRule = variant => {
+    const { width, height, maxWidth, maxHeight, aspectRatio } = variant
+
     // '!important' required due to overriding inline styles
     // 'aspectRatio' == fluid data
-    const styleOverride = aspectRatio
-      ? `padding-bottom: ${100 / aspectRatio}% !important;`
-      : `width: ${width}px !important; height: ${height}px !important;`
-
-    return `.${selectorClass} { ${styleOverride} }`
+    if (aspectRatio) {
+      return (
+        `.${selectorClass} {\n` +
+        (maxWidth ? `${maxWidth}px !important;\n` : ``) +
+        (maxHeight ? `${maxHeight}px !important;\n` : ``) +
+        `}.${selectorClass} > :first-child {\n` +
+        `padding-bottom: ${100 / aspectRatio}% !important;\n}`
+      )
+    } else {
+      return (
+        `.${selectorClass}, .${selectorClass} > :first-child {\n` +
+        `width: ${width}px !important; height: ${height}px !important;\n}`
+      )
+    }
   }
 
   // If there is an image without a `media` condition, the first result
@@ -44,7 +55,7 @@ const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
       {imageVariants
         .filter(v => v.media)
         .map(v => (
-          <style key={`${selectorClass}-${v.media}`} media={v.media}>
+          <style key={`${selectorClass} ${v.media}`} media={v.media}>
             {variantRule(v)}
           </style>
         ))}
@@ -60,7 +71,7 @@ const withArtDirection = props => {
 
   const imageVariants = props.fluid || props.fixed
   const uniqueKey = !isBrowser
-    ? getShortKey(imageVariants.map(v => v.srcSet).join(``))
+    ? ` ` + getShortKey(imageVariants.map(v => v.srcSet).join(``))
     : ``
 
   return (
@@ -69,7 +80,7 @@ const withArtDirection = props => {
         imageVariants={imageVariants}
         selectorClass={uniqueKey}
       />
-      <GatsbyImage {...rest} className={`${uniqueKey} ${cn}`} />
+      <GatsbyImage {...rest} className={`${cn}${uniqueKey}`} />
     </>
   )
 }
