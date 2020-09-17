@@ -27,7 +27,7 @@ for folder in $GLOB; do
   cp -r "$BASE/$folder/." .
 
   if [ "$IS_WORKSPACE" = null ]; then
-    // we remove yarn.lock, our gatsby new command uses `yarn import` to create it.
+    yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
     rm -f yarn.lock
   fi
 
