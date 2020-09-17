@@ -25,12 +25,17 @@ export class ScrollHandler extends React.Component<
 
   _stateStorage: SessionStorage = new SessionStorage()
 
+  isScrolling = -1
   scrollListener = (): void => {
-    const { key } = this.props.location
+    window.clearTimeout(this.isScrolling)
 
-    if (key) {
-      this._stateStorage.save(this.props.location, key, window.scrollY)
-    }
+    this.isScrolling = window.setTimeout(() => {
+      const { key } = this.props.location
+
+      if (key) {
+        this._stateStorage.save(this.props.location, key, window.scrollY)
+      }
+    }, 150)
   }
 
   componentDidMount(): void {
