@@ -544,6 +544,7 @@ class Image extends React.Component {
       ? imageVariants[0]
       : getCurrentSrcData(imageVariants)
 
+    const activeVariant = getShortKey(image.srcSet)
     const uniqueKey = this.uniqueKey
 
     if (fluid) {
@@ -560,7 +561,7 @@ class Image extends React.Component {
             ...style,
           }}
           ref={this.handleRef}
-          key={`fluid-${JSON.stringify(image.srcSet)}`}
+          key={activeVariant}
         >
           {uniqueKey && (
             <ResponsiveQueries
@@ -681,7 +682,7 @@ class Image extends React.Component {
           } gatsby-image-wrapper`}
           style={divStyle}
           ref={this.handleRef}
-          key={`fixed-${JSON.stringify(image.srcSet)}`}
+          key={activeVariant}
         >
           {uniqueKey && (
             <ResponsiveQueries
