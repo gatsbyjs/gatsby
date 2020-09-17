@@ -7,18 +7,28 @@ import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
 
 const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata.title
-  const posts = data.allMarkdownRemark.edges
+  const siteTitle = data.site.siteMetadata?.title || `Title`
+  const posts = data.allMarkdownRemark.nodes
+
+  if (posts.length === 0) {
+    return (
+      <Layout location={location} title={siteTitle}>
+        <SEO title="All posts" />
+        <Bio />
+        <p>No blog posts found. Add markdown posts to "content/blog" (or the directory you specified for the "gatsby-source-filesystem" plugin in gatsby-config.js).</p>
+      </Layout>
+    )
+  }
 
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       <Bio />
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
+      {posts.map((post) => {
+        const title = post.frontmatter.title || post.fields.slug
         return (
           <article
-            key={node.fields.slug}
+            key={post.fields.slug}
             itemScope
             itemType="http://schema.org/Article"
           >
@@ -30,18 +40,18 @@ const BlogIndex = ({ data, location }) => {
               >
                 <Link
                   style={{ boxShadow: `none` }}
-                  to={node.fields.slug}
+                  to={post.fields.slug}
                   itemProp="url"
                 >
                   <span itemProp="headline">{title}</span>
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
+              <small>{post.frontmatter.date}</small>
             </header>
             <section>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
+                  __html: post.frontmatter.description || post.excerpt,
                 }}
                 itemProp="description"
               />
@@ -63,17 +73,15 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
+      nodes {
+        excerpt
+        fields {
+          slug
+        }
+        frontmatter {
+          date(formatString: "MMMM DD, YYYY")
+          title
+          description
         }
       }
     }
