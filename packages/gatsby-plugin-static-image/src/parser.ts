@@ -1,26 +1,26 @@
 import traverse from "@babel/traverse"
-import { parseAttributes, hashOptions } from "./utils"
+import { hashOptions, evaluateImageAttributes } from "./utils"
+import { NodePath } from "@babel/core"
+import { JSXOpeningElement } from "@babel/types"
 
 export const extractStaticImageProps = (
   ast: babel.types.File
 ): Map<string, Record<string, unknown>> => {
-  const componentImport = `StaticImage`
-  let localName = componentImport
-
   const images: Map<string, Record<string, unknown>> = new Map()
 
   traverse(ast, {
-    ImportSpecifier(path) {
-      if (path.node.imported.name === componentImport) {
-        localName = path.node.local.name
-      }
-    },
-    JSXOpeningElement(path) {
-      const { name } = path.node
-      if (name.type === `JSXMemberExpression` || name.name !== localName) {
+    JSXOpeningElement(nodePath) {
+      if (
+        !nodePath
+          .get(`name`)
+          .referencesImport(`gatsby-plugin-static-image`, `StaticImage`)
+      ) {
         return
       }
-      const image = parseAttributes(path.node.attributes)
+      const image = evaluateImageAttributes(
+        // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
+        (nodePath as unknown) as NodePath<JSXOpeningElement>
+      )
       images.set(hashOptions(image), image)
     },
   })

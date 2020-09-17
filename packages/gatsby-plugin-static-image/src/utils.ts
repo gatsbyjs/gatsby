@@ -1,74 +1,7 @@
 import murmurhash from "babel-plugin-remove-graphql-queries/murmur"
-
-import {
-  Expression,
-  SpreadElement,
-  JSXEmptyExpression,
-  JSXAttribute,
-  JSXSpreadAttribute,
-  JSXIdentifier,
-  JSXNamespacedName,
-} from "@babel/types"
-
-export function parseIdentifier(
-  identifier: JSXIdentifier | JSXNamespacedName
-): string {
-  if (identifier.type === `JSXIdentifier`) {
-    return identifier.name
-  }
-  return parseIdentifier(identifier.name)
-}
-
-export function parseJSXAttribute(
-  attribute: JSXAttribute | JSXSpreadAttribute
-): unknown {
-  if (attribute.type === `JSXSpreadAttribute`) {
-    return undefined
-  }
-  if (!attribute.value) {
-    return true
-  }
-
-  switch (attribute.value.type) {
-    case `StringLiteral`:
-      return attribute.value.value
-
-    case `JSXExpressionContainer`:
-      return parseAttributeValue(attribute.value.expression)
-
-    default:
-      console.warn(
-        `Invalid type ${attribute.value.type} for attribute ${parseIdentifier(
-          attribute.name
-        )}`
-      )
-      return undefined
-  }
-}
-
-export function parseAttributeValue(
-  value: Expression | SpreadElement | null | JSXEmptyExpression
-): unknown {
-  if (value === null) {
-    return true
-  }
-  switch (value.type) {
-    case `StringLiteral`:
-    case `NumericLiteral`:
-    case `BooleanLiteral`:
-      return value.value
-
-    case `TemplateLiteral`:
-      if (value.expressions.length || value.quasis.length !== 1) {
-        return null
-      }
-      return value.quasis[0].value.raw
-
-    case `ArrayExpression`:
-      return value.elements.map(parseAttributeValue)
-  }
-  return undefined
-}
+import { JSXOpeningElement } from "@babel/types"
+import { NodePath } from "@babel/core"
+import { evaluateAttributes } from "./jsx-utils"
 
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
@@ -91,33 +24,16 @@ export const SHARP_ATTRIBUTES = new Set([
   `width`,
   `height`,
 ])
-
-export function parseAttributes(
-  attributes: Array<JSXAttribute | JSXSpreadAttribute>
+export function evaluateImageAttributes(
+  nodePath: NodePath<JSXOpeningElement>,
+  onError?: (prop: string) => void
 ): Record<string, unknown> {
-  return attributes.reduce((prev, attribute): Record<string, unknown> => {
-    if (attribute.type == `JSXSpreadAttribute`) {
-      return prev
-    }
-    const identifier = parseIdentifier(attribute.name)
-    if (!SHARP_ATTRIBUTES.has(identifier)) {
-      return prev
-    }
-    prev[identifier] = parseJSXAttribute(attribute)
-    return prev
-  }, {} as Record<string, unknown>)
+  return evaluateAttributes(nodePath, onError, SHARP_ATTRIBUTES)
 }
 
 export function hashOptions(options: unknown): string {
   return `${murmurhash(JSON.stringify(options))}`
 }
-
-export function hashAttributes(
-  attributes: Array<JSXAttribute | JSXSpreadAttribute>
-): string {
-  return hashOptions(parseAttributes(attributes))
-}
-
 export interface ISomeGatsbyImageProps {
   fadeIn?: boolean
   durationFadeIn?: number

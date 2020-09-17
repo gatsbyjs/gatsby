@@ -1,6 +1,6 @@
 import * as types from "@babel/types"
 import { PluginObj } from "@babel/core"
-import { hashOptions, parseAttributes } from "./utils"
+import { hashOptions, evaluateImageAttributes } from "./utils"
 import fs from "fs-extra"
 import path from "path"
 import {
@@ -24,9 +24,6 @@ export default function attrs({
 }: {
   types: typeof types
 }): PluginObj {
-  const componentImport = `StaticImage`
-  let localName = componentImport
-
   function generateLiterals(val: Array<unknown>): Array<AttrType> {
     return val.map(generateLiteral).filter(Boolean) as Array<AttrType>
   }
@@ -66,33 +63,63 @@ export default function attrs({
 
   return {
     visitor: {
-      ImportSpecifier(nodePath): void {
-        if (nodePath.node.imported.name === componentImport) {
-          localName = nodePath.node.local.name
-        }
-      },
       JSXOpeningElement(nodePath): void {
-        const { name } = nodePath.node
-        if (name.type === `JSXMemberExpression` || name.name !== localName) {
+        if (
+          !nodePath
+            .get(`name`)
+            .referencesImport(`gatsby-plugin-static-image`, `StaticImage`)
+        ) {
           return
         }
 
-        const props = parseAttributes(nodePath.node.attributes)
+        const errors: Array<string> = []
+
+        const props = evaluateImageAttributes(nodePath, prop => {
+          errors.push(prop)
+        })
+
+        let error
+
+        if (errors.length) {
+          error = `Could not find values for the following props at build time: ${errors.join()}`
+          console.warn(error)
+        }
 
         const hash = hashOptions(props)
 
-        const cacheDir = (this.opts as any)?.cacheDir
+        const cacheDir = (this.opts as Record<string, string>)?.cacheDir
 
         if (!cacheDir || !hash) {
-          console.warn(`Couldn't file cache file for some reason`)
+          console.warn(`Couldn't find cache file for some reason`)
         }
 
         const filename = path.join(cacheDir, `${hash}.json`)
-
-        const data = fs.readJSONSync(filename)
+        let data: Record<string, unknown> | undefined
+        try {
+          data = fs.readJSONSync(filename)
+        } catch (e) {
+          console.warn(`Could not read file ${filename}`, e)
+        }
 
         if (!data) {
-          console.warn(`No image data found for file ${props.src}`)
+          console.warn(`No image data found for file ${props.src}`, error)
+          const newProp = t.jsxAttribute(
+            t.jsxIdentifier(`__error`),
+
+            t.jsxExpressionContainer(
+              t.stringLiteral(`No image data found for file "${props.src}"
+              ${error || ``}`)
+            )
+          )
+          nodePath.node.attributes.push(newProp)
+          return
+        }
+        if (error) {
+          const newProp = t.jsxAttribute(
+            t.jsxIdentifier(`__error`),
+            t.stringLiteral(error)
+          )
+          nodePath.node.attributes.push(newProp)
         }
 
         const expressions = Object.entries(data).map(generateProperties)
@@ -104,8 +131,6 @@ export default function attrs({
         )
 
         nodePath.node.attributes.push(newProp)
-
-        console.log(nodePath.node.attributes)
       },
     },
   }
