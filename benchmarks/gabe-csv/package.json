@@ -1,7 +1,7 @@
 {
-  "name": "markdown_gabe",
+  "name": "gabe-csv",
   "private": true,
-  "description": "Benchmark site for testing baseline markdown perf",
+  "description": "Benchmark site for testing baseline csv+plaintext perf",
   "author": "Peter van der Zee <pvdz@github>",
   "version": "0.1.0",
   "license": "MIT",
@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "faker": "^4.1.0",
-    "gatsby": "2.24.60-dev-1600181779817",
+    "gatsby": "^2",
     "gatsby-source-filesystem": "^2",
     "gatsby-transformer-remark": "^2",
     "react": "^16.12.0",

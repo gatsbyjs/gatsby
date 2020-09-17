@@ -23,13 +23,15 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "keywords": [
-    "gatsby", "benchmark", "mdx"
+    "gatsby",
+    "benchmark",
+    "mdx"
   ],
   "dependencies": {
     "@mdx-js/mdx": "^1",
     "@mdx-js/react": "^1",
     "faker": "^4.1.0",
-    "gatsby": "^2",
+    "gatsby": "2.24.60-dev-1600182478363",
     "gatsby-plugin-mdx": "^1",
     "gatsby-source-filesystem": "^2",
     "react": "^16.12.0",

@@ -23,7 +23,9 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "keywords": [
-    "gatsby", "benchmark", "markdown"
+    "gatsby",
+    "benchmark",
+    "markdown"
   ],
   "dependencies": {
     "faker": "^4.1.0",
