@@ -31,7 +31,7 @@
     "faker": "^4.1.0",
     "gatsby": "^2",
     "gatsby-source-filesystem": "^2",
-    "gatsby-transformer-remark": "^2",
+    "gatsby-transformer-csv": "^2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }
