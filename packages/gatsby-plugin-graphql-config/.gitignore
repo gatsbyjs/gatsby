@@ -30,4 +30,3 @@ decls
 dist
 
 /*.js
-!index.js
