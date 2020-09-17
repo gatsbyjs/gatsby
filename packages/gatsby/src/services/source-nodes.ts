@@ -27,14 +27,6 @@ export async function sourceNodes({
     webhookBody,
   })
 
-  reporter.verbose(
-    `Now have ${store.getState().nodes.size} nodes with ${
-      store.getState().nodesByType.size
-    } types: [${[...store.getState().nodesByType.entries()]
-      .map(([type, nodes]) => type + `:` + nodes.size)
-      .join(`, `)}]`
-  )
-
   reporter.verbose(`Checking for deleted pages`)
 
   const tim = reporter.activityTimer(`Checking for changed pages`)

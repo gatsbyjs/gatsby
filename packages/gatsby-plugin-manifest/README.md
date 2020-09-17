@@ -13,6 +13,8 @@ This plugin provides several features beyond manifest configuration to make your
 
 Each of these features has extensive configuration available so you are always in control.
 
+This guide focuses on configuring the plugin. For more information on the web app manifest, check out the additional resources below.
+
 ## Install
 
 ```shell
@@ -200,10 +202,8 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`,
         icon_options: {
-          // For all the options available, please see:
-          // https://developer.mozilla.org/en-US/docs/Web/Manifest
-          // https://w3c.github.io/manifest/#purpose-member
-          purpose: `maskable`,
+          // For all the options available, please see the additional resources below.
+          purpose: `any maskable`,
         },
       },
     },
@@ -444,7 +444,7 @@ Internet Explorer is the only other major browser that doesn't support the web a
 This article from the Chrome DevRel team is a good intro to the web app
 manifest — https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-For more information see the [W3C specification](https://www.w3.org/TR/appmanifest/) or [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/).
 
 ## Troubleshooting
 
