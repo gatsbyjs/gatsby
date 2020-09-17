@@ -44,7 +44,9 @@ const ResponsiveQueries = ({ imageVariants, selectorClass }) => {
       {imageVariants
         .filter(v => v.media)
         .map(v => (
-          <style media={v.media}>{variantRule(v)}</style>
+          <style key={`${selectorClass}-${v.media}`} media={v.media}>
+            {variantRule(v)}
+          </style>
         ))}
     </>
   )
