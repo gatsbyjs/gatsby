@@ -45,7 +45,9 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
-  Support: <a href="https://gatsby.dev/discord">Discord</a>
+  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
+  <span> & </span>	
+  <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
