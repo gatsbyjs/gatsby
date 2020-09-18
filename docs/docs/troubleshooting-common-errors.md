@@ -277,5 +277,4 @@ Install it by running npm install (or its yarn equivalent):
 
 ```shell
 npm install @hot-loader/react-dom@^16.13
-``
 ```
