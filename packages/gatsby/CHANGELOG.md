@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.63](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.62...gatsby@2.24.63) (2020-09-18)
+
+### Bug Fixes
+
+- **gatsby:** Finish running queries if source files change ([#26940](https://github.com/gatsbyjs/gatsby/issues/26940)) ([d7d2dda](https://github.com/gatsbyjs/gatsby/commit/d7d2dda329d5bf11e1f03d2a6ffb153df3a08031))
+
 ## [2.24.62](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.61...gatsby@2.24.62) (2020-09-16)
 
 ### Features
