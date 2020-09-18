@@ -1,7 +1,7 @@
-import murmurhash from "babel-plugin-remove-graphql-queries/murmur"
+import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import { JSXOpeningElement } from "@babel/types"
 import { NodePath } from "@babel/core"
-import { evaluateAttributes } from "./jsx-utils"
+import { getAttributeValues } from "babel-jsx-utils"
 
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
@@ -24,11 +24,12 @@ export const SHARP_ATTRIBUTES = new Set([
   `width`,
   `height`,
 ])
+
 export function evaluateImageAttributes(
   nodePath: NodePath<JSXOpeningElement>,
   onError?: (prop: string) => void
 ): Record<string, unknown> {
-  return evaluateAttributes(nodePath, onError, SHARP_ATTRIBUTES)
+  return getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES)
 }
 
 export function hashOptions(options: unknown): string {

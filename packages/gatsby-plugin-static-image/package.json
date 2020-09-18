@@ -15,10 +15,13 @@
   "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^14.10.2",
+    "@babel/cli": "^7.8.7",
     "@babel/core": "^7.8.7",
     "@types/babel__core": "^7.1.6",
     "@types/babel__traverse": "^7.0.9",
-    "@types/fs-extra": "^8.1.0"
+    "@types/fs-extra": "^8.1.0",
+    "cross-env": "^7.0.2",
+    "typescript": "^3.9.5"
   },
   "peerDependencies": {
     "gatsby": ">=2",
@@ -31,7 +34,8 @@
     "@babel/parser": "^7.8.7",
     "@babel/traverse": "^7.8.6",
     "babel-plugin-remove-graphql-queries": "^2.9.19",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "babel-jsx-utils": "^1.0.1"
   },
   "main": "index.js",
   "repository": {
