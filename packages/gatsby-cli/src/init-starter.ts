@@ -12,7 +12,7 @@ import url from "url"
 import { updateSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
-import reporter from "../lib/reporter"
+import reporter from "./reporter"
 
 const spawnWithArgs = (
   file: string,

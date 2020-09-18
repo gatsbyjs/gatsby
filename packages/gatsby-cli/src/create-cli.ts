@@ -17,7 +17,7 @@ import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
-import reporter from "../lib/reporter"
+import reporter from "./reporter"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
