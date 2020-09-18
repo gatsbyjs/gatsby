@@ -1,4 +1,6 @@
-import { Node, Reporter, GatsbyCache } from "gatsby"
+import { Node, GatsbyCache } from "gatsby"
+import type { reporter } from "gatsby-cli/lib/reporter"
+type Reporter = typeof reporter
 import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
 const fileCache = new Map<string, Node>()
 import fs from "fs-extra"

@@ -25,6 +25,7 @@
   },
   "peerDependencies": {
     "gatsby": ">=2",
+    "gatsby-cli": "*",
     "gatsby-core-utils": "*",
     "gatsby-image": "*",
     "gatsby-plugin-sharp": "*",
