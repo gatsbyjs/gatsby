@@ -63,7 +63,7 @@ exports.onRenderBody = (
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`/${manifestFileName}`)}
+      href={fallbackWithPrefix(`/${manifestFileName}`)}
       crossOrigin={crossOrigin}
     />
   )
