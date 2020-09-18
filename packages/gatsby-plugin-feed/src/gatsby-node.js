@@ -44,7 +44,12 @@ exports.onPreBootstrap = async function onPreBootstrap(
           warnMessage(`feeds option`, `the internal RSS feed creation`)
         )
       )
-    } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
+    } else if (
+      normalized.feeds.some(
+        feed =>
+          typeof feed.title !== `string` && typeof feed.title !== `function`
+      )
+    ) {
       reporter.warn(
         reporter.stripIndent(
           warnMessage(`title in a feed`, `the default feed title`)
@@ -95,17 +100,26 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
       ...feed,
     }
 
+    if (locals.title && typeof locals.title === `function`) {
+      locals.title = locals.title(locals)
+    }
+
     const serializer =
       feed.serialize && typeof feed.serialize === `function`
         ? feed.serialize
         : serialize
 
-    const rssFeed = (await serializer(locals)).reduce((merged, item) => {
+    const output =
+      feed.output && typeof feed.output === `function`
+        ? feed.output(locals)
+        : feed.output
+
+    const rssFeed = serializer(locals).reduce((merged, item) => {
       merged.item(item)
       return merged
     }, new RSS(setup(locals)))
 
-    const outputPath = path.join(publicPath, feed.output)
+    const outputPath = path.join(publicPath, output)
     const outputDir = path.dirname(outputPath)
     if (!(await fs.exists(outputDir))) {
       await fs.mkdirp(outputDir)

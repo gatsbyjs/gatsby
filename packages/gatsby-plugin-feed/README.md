@@ -78,6 +78,33 @@ module.exports = {
 
 Each feed must include `output`, `query`, and `title`. Additionally, it is strongly recommended to pass a custom `serialize` function, otherwise an internal serialize function will be used which may not exactly match your particular use case.
 
+Each feed's `query` and `title` values can each either be strings or functions. If either one is a function, it is executed similarly to the `serialize` function. For example:
+
+```js
+// Example options
+{
+  query: `
+    {
+      site {
+        siteMetadata {
+          title
+          description
+          siteUrl
+          feedOutput
+        }
+      }
+    }
+  `,
+  feeds: [
+    {
+      output: options => options.query.site.siteMetadata.feedOutput,
+      title: options => `${options.query.site.siteMetadata.title} | Feed`,
+      // ...the rest of the options go here
+    },
+  ],
+}
+```
+
 `match` is an optional configuration, indicating which pages will have feed reference included. The accepted types of `match` are `string` or `undefined`. By default, when `match` is not configured, all pages will have feed reference inserted. If `string` is provided, it will be used to build a RegExp and then to test whether `pathname` of current page satisfied this regular expression. Only pages that satisfied this rule will have feed reference included.
 `link` is an optional configuration that will override the default generated rss link from `output`.
 

@@ -2,9 +2,9 @@ import Joi from "@hapi/joi"
 
 // TODO: make serialize required in next major version bump
 const feed = Joi.object({
-  output: Joi.string().required(),
+  output: Joi.required([Joi.string(), Joi.func()]),
   query: Joi.string().required(),
-  title: Joi.string(),
+  title: [Joi.string(), Joi.func()],
   serialize: Joi.func(),
   match: Joi.string(),
   link: Joi.string(),
