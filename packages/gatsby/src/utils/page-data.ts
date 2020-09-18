@@ -194,7 +194,7 @@ export async function handleStalePageData(): Promise<void> {
   activity.start()
 
   const pageDataFilesFromPreviousBuilds = await new Promise<Set<string>>(
-    resolve => {
+    (resolve, reject) => {
       const results = new Set<string>()
 
       const stream = fsWalkStream(`public/page-data`)
@@ -203,6 +203,10 @@ export async function handleStalePageData(): Promise<void> {
         if (data.name === `page-data.json`) {
           results.add(data.path)
         }
+      })
+
+      stream.on(`error`, e => {
+        reject(e)
       })
 
       stream.on(`end`, () => resolve(results))
