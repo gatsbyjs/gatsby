@@ -197,9 +197,7 @@ export async function handleStalePageData(): Promise<void> {
     resolve => {
       const results = new Set<string>()
 
-      const stream = fsWalkStream(`public/page-data`, {
-        deepFilter: entry => entry.path !== `public/page-data/sq/d`,
-      })
+      const stream = fsWalkStream(`public/page-data`)
 
       stream.on(`data`, (data: Entry) => {
         if (data.name === `page-data.json`) {
