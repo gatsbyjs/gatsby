@@ -1,7 +1,7 @@
 {
-  "name": "markdown_gabe",
+  "name": "gabe-fs-markdown",
   "private": true,
-  "description": "Benchmark site for testing baseline markdown perf",
+  "description": "Benchmark site for testing baseline markdown perf with individual files per page",
   "author": "Peter van der Zee <pvdz@github>",
   "version": "0.1.0",
   "license": "MIT",
@@ -23,7 +23,9 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "keywords": [
-    "gatsby", "benchmark", "markdown"
+    "gatsby",
+    "benchmark",
+    "markdown"
   ],
   "dependencies": {
     "faker": "^4.1.0",
