@@ -1,7 +1,7 @@
 {
   "name": "gabe-csv-text",
   "private": true,
-  "description": "Benchmark site for testing baseline plaintext perf when they are generated in a single csv file",
+  "description": "Benchmark site for testing baseline csv+plaintext perf",
   "author": "Peter van der Zee <pvdz@github>",
   "version": "0.1.0",
   "license": "MIT",

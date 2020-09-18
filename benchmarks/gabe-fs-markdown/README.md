@@ -1,10 +1,10 @@
-# Markdown Benchmark
+# Baseline Gatsby Benchmark: fs + markdown
 
-This is a baseline benchmark for tracking Markdown performance in the Gabe project.
+This is a baseline benchmark site in the Gabe project.
+
+This site in particular tracks Markdown performance for individual files per page.
 
 The site can generate an arbitrary amount of super simple pages. Each page has a small header, a quote, and two small paragraphs of random text. No images, because we want to benchmark Markdown.
-
-This uses the local file system plugin, though we might switch to sourcing from csv since that has a more efficient internal representation (fewer `File` nodes).
 
 ## Install
 
