@@ -560,6 +560,7 @@ Dodds
 Doggo
 DOM
 DOMPurify
+dom
 doopoll
 dotenv
 doubleBind
