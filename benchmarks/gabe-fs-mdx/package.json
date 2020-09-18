@@ -1,7 +1,7 @@
 {
-  "name": "gabe-mdx",
+  "name": "gabe-fs-mdx",
   "private": true,
-  "description": "Benchmark site for testing baseline mdx perf",
+  "description": "Benchmark site for testing baseline mdx perf with individual files per page",
   "author": "Peter van der Zee <pvdz@github>",
   "version": "0.1.0",
   "license": "MIT",
@@ -23,7 +23,9 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "keywords": [
-    "gatsby", "benchmark", "mdx"
+    "gatsby",
+    "benchmark",
+    "mdx"
   ],
   "dependencies": {
     "@mdx-js/mdx": "^1",
