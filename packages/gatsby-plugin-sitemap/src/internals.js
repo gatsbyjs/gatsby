@@ -1,3 +1,5 @@
+import minimatch from "minimatch"
+
 /**
  *
  * @param {string} path
@@ -135,9 +137,79 @@ export function serialize(page, { resolvePagePath }) {
   }
 }
 
-export const defaultExcludes = [
-  `/ dev - 404 - page`,
-  `/ 404`,
-  `/ 404.html`,
-  `/ offline - plugin - app - shell - fallback`,
+const defaultExcludes = [
+  `/dev-404-page`,
+  `/404`,
+  `/404.html`,
+  `/offline-plugin-app-shell-fallback`,
 ]
+
+export function pageFilter(
+  { allPages, filterPages, excludes },
+  { reporter, ReporterPrefix }
+) {
+  return allPages.filter(page => {
+    // eslint-disable-next-line consistent-return
+    const defaultFilterMatches = defaultExcludes.some((exclude, i, arr) => {
+      try {
+        const match = defaultFilterPages(page, exclude, {
+          minimatch,
+          withoutTrailingSlash,
+          resolvePagePath,
+          reporter,
+        })
+
+        //default excludes can only be found once, so remove them from the arr once excluded
+        if (match) arr.splice(i, 1)
+
+        return match
+      } catch (err) {
+        reporter.panic(
+          `${ReporterPrefix} Error in default page filter`,
+          err.message
+        )
+      }
+    })
+
+    if (defaultFilterMatches) {
+      reporter.verbose(
+        `${ReporterPrefix} Default filter excluded page ${resolvePagePath(
+          page
+        )}`
+      )
+    }
+
+    //If page is marked to be excluded via defaults there's no need to check page for custom excludes
+    if (defaultFilterMatches) {
+      return !defaultFilterMatches
+    }
+
+    // eslint-disable-next-line consistent-return
+    const customFilterMatches = excludes.some(exclude => {
+      try {
+        return filterPages(page, exclude, {
+          minimatch,
+          withoutTrailingSlash,
+          resolvePagePath,
+        })
+      } catch (err) {
+        reporter.panic(
+          `${ReporterPrefix} Error in custom page filter.
+            If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
+            https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+            `
+        )
+      }
+    })
+
+    if (customFilterMatches) {
+      reporter.verbose(
+        `${ReporterPrefix} Custom filtering excluded page ${resolvePagePath(
+          page
+        )}`
+      )
+    }
+
+    return !(defaultFilterMatches || customFilterMatches)
+  })
+}
