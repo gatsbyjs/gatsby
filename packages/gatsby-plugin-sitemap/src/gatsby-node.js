@@ -9,14 +9,14 @@ import {
   defaultExcludes,
 } from "./internals"
 
-const publicPath = `./public`
+const PublicPath = `./public`
 
-const reporterPrefix = `[plugin-sitemap]:`
+const ReporterPrefix = `[gatsby-plugin-sitemap]:`
 
 exports.onPreInit = async ({ reporter }, pluginOptions) => {
   try {
     await validateOptions(pluginOptions)
-    reporter.verbose(`${reporterPrefix} Plugin options passed validation.`)
+    reporter.verbose(`${ReporterPrefix} Plugin options passed validation.`)
   } catch (err) {
     reporter.panic(err)
   }
@@ -26,8 +26,6 @@ exports.onPostBuild = async (
   { graphql, reporter, pathPrefix },
   pluginOptions
 ) => {
-  global.reporter = reporter
-
   // Schema was already validated in preInit but we use joi to get our pluginOptions with default options.
   const {
     output,
@@ -46,43 +44,47 @@ exports.onPostBuild = async (
   const { data: queryRecords } = await graphql(query)
 
   reporter.verbose(
-    `${reporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
+    `${ReporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
   )
 
-  const allPages = resolvePages(queryRecords)
-  const siteUrl = resolveSiteUrl(queryRecords)
+  // resolvePages and resolveSuteUrl are allowed to be sync or async. The IIFE handles each possibility
+  const allPages = await (async () => resolvePages(queryRecords))().catch(err =>
+    reporter.panic(`Error resolving Pages`, err)
+  )
+
+  const siteUrl = await (async () =>
+    resolveSiteUrl(queryRecords))().catch(err =>
+    reporter.panic(`Error resolving Site URL`, err)
+  )
 
   if (!Array.isArray(allPages)) {
-    reporter.panic(
-      `The \`resolvePages\` function did not return an array, if you wrote a custom query you may need to provide a custom \`resolvePages\` function.`
-    )
+    reporter.panic(`The \`resolvePages\` function did not return an array.`)
   }
 
   reporter.verbose(
-    `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
+    `${ReporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
 
+  // Improve filter performance
   const filteredPages = allPages
     .filter(page => {
+      // eslint-disable-next-line consistent-return
       const result = !defaultExcludes.some(exclude => {
         try {
           return defaultFilterPages(page, exclude, {
             minimatch,
             withoutTrailingSlash,
             resolvePagePath,
+            reporter,
           })
         } catch (err) {
-          reporter.panic(
-            `${reporterPrefix} default filtering of pages failed.This shouldn't really be possible, please report a bug.`
-          )
-
-          return err
+          reporter.panic(err.message)
         }
       })
 
       if (!result) {
         reporter.verbose(
-          `${reporterPrefix} Default filter excluded page ${resolvePagePath(
+          `${ReporterPrefix} Default filter excluded page ${resolvePagePath(
             page
           )}`
         )
@@ -91,6 +93,7 @@ exports.onPostBuild = async (
       return result
     })
     .filter(page => {
+      // eslint-disable-next-line consistent-return
       const result = !excludes.some(exclude => {
         try {
           return filterPages(page, exclude, {
@@ -100,16 +103,17 @@ exports.onPostBuild = async (
           })
         } catch (err) {
           reporter.panic(
-            `${reporterPrefix} custom page filtering failed. If you've customized your excludes you may need to provide a custom "filterPages" function in your config.`
+            `${ReporterPrefix} custom page filtering failed.
+            If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
+            https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+            `
           )
-
-          return err
         }
       })
 
       if (!result) {
         reporter.verbose(
-          `${reporterPrefix} Custom filtering excluded page ${resolvePagePath(
+          `${ReporterPrefix} Custom filtering excluded page ${resolvePagePath(
             page
           )}`
         )
@@ -119,16 +123,20 @@ exports.onPostBuild = async (
     })
 
   reporter.verbose(
-    `${reporterPrefix} ${filteredPages.length} pages remain after filtering`
+    `${ReporterPrefix} ${filteredPages.length} pages remain after filtering`
   )
 
+  // eslint-disable-next-line consistent-return
   const serializedPages = filteredPages.map(page => {
-    const { url, ...rest } = serialize(page, { resolvePagePath })
-
-    return { url: prefixPath({ url, siteUrl, pathPrefix }), ...rest }
+    try {
+      const { url, ...rest } = serialize(page, { resolvePagePath })
+      return { url: prefixPath({ url, siteUrl, pathPrefix }), ...rest }
+    } catch (err) {
+      reporter.panic(`Error serializing pages`, err)
+    }
   })
 
-  const sitemapPath = path.join(publicPath, output)
+  const sitemapPath = path.join(PublicPath, output)
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,

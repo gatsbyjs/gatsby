@@ -1,5 +1,3 @@
-/* global: reporter */
-
 import Joi from "joi"
 import {
   resolveSiteUrl,

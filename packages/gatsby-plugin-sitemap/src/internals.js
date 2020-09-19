@@ -1,4 +1,3 @@
-
 /**
  *
  * @param {string} path
@@ -16,7 +15,7 @@ export const withoutTrailingSlash = path =>
  * @param {string} siteUrl - results of the resolveSiteUrl function
  * @returns {string}
  */
-// TODO: Update for v3
+// TODO: Update for v3 - Fix janky path/asset prefixing
 export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
   return new URL(pathPrefix + url, siteUrl).toString()
 }
@@ -28,6 +27,15 @@ export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
  * @returns {string} - site URL, this can come from thegraphql query or another scope
  */
 export function resolveSiteUrl(data) {
+  if (!data?.site?.siteMetadata?.siteUrl) {
+    throw Error(
+      `\`siteUrl\` does not exist on \`siteMetadata\` in the data returned from the query. 
+      Add this to your custom query or provide a custom \`resolveSiteUrl\` function.
+      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+      `
+    )
+  }
+
   return data.site.siteMetadata.siteUrl
 }
 /**
@@ -41,7 +49,16 @@ export function resolveSiteUrl(data) {
  */
 
 export function resolvePagePath(page) {
-  return page?.path
+  if (!page?.path) {
+    throw Error(
+      `\`path\` does not exist on your page object. 
+      Make the page URI available at \`path\` or provide a custom \`resolvePagePath\` function.
+      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+      `
+    )
+  }
+
+  return page.path
 }
 /**
  * @name resolvePages
@@ -54,6 +71,15 @@ export function resolvePagePath(page) {
  * @returns {Array} - Array of objects representing each page
  */
 export function resolvePages(data) {
+  if (!data?.allSitePage?.nodes) {
+    throw Error(
+      `Page array from \`query\` wasn't found at \`data.allSitePage.nodes\`.
+      Fix the custom query or provide a custom \`resolvePages\` function.
+      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+      `
+    )
+  }
+
   return data.allSitePage.nodes
 }
 
@@ -77,15 +103,14 @@ export function defaultFilterPages(
   { minimatch, withoutTrailingSlash, resolvePagePath }
 ) {
   if (typeof excludedRoute !== `string`) {
-    reporter.error(
-      `You've passed something other than string to the exclude array. This is supported, but you'll have to write a custom filter function. Ignoring the input for now: ${JSON.stringify(
-        excludedRoute,
-        null,
-        2
-      )}`
+    throw new Error(
+      `You've passed something other than string to the exclude array. This is supported, but you'll have to write a custom filter function. 
+      Ignoring the input for now: ${JSON.stringify(excludedRoute, null, 2)}
+      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+      `
     )
-    return false
   }
+
   return minimatch(
     withoutTrailingSlash(resolvePagePath(page)),
     withoutTrailingSlash(excludedRoute)
@@ -104,15 +129,15 @@ export function defaultFilterPages(
  */
 export function serialize(page, { resolvePagePath }) {
   return {
-    url: `${resolvePagePath(page)}`,
+    url: `${resolvePagePath(page)} `,
     changefreq: `daily`,
     priority: 0.7,
   }
 }
 
 export const defaultExcludes = [
-  `/dev-404-page`,
-  `/404`,
-  `/404.html`,
-  `/offline-plugin-app-shell-fallback`,
+  `/ dev - 404 - page`,
+  `/ 404`,
+  `/ 404.html`,
+  `/ offline - plugin - app - shell - fallback`,
 ]
