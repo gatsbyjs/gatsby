@@ -114,7 +114,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
         ? feed.output(locals)
         : feed.output
 
-    const rssFeed = serializer(locals).reduce((merged, item) => {
+    const rssFeed = (await serializer(locals)).reduce((merged, item) => {
       merged.item(item)
       return merged
     }, new RSS(setup(locals)))
