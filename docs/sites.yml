@@ -11835,3 +11835,18 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Rahul Sharma Personal site and blog
+  main_url: https://rahulsrma26.github.io
+  url: https://rahulsrma26.github.io
+  source_url: https://github.com/rahulsrma26/rahulsrma26.github.io
+  featured: false
+  description: >
+    I'm Rahul Sharma, a deep learning scientist and a developer. The site includes professional blog, contact information, tutorials, projects and soon-to-come art gallary.
+  categories:
+    - Blog
+    - Portfolio
+    - Programming
+    - Education
+    - Learning
+  built_by: Rahul Sharma
+  built_by_url: https://www.linkedin.com/in/rahulsrma26/
