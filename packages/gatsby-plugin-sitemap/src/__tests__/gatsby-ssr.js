@@ -11,7 +11,7 @@ describe(`gatsby-plugin-sitemap SSR API`, () => {
     global.__PATH_PREFIX__ = defaultPathPrefix
   })
 
-  it(`creates Link if createLinkInHead is true`, async () => {
+  it(`should create a Link if createLinkInHead is true`, async () => {
     const pluginOptions = {
       createLinkInHead: true,
     }
