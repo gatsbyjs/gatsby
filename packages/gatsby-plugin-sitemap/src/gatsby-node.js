@@ -28,6 +28,7 @@ exports.onPostBuild = async (
 ) => {
   global.reporter = reporter
 
+  // Schema was already validated in preInit but we use joi to get our pluginOptions with default options.
   const {
     output,
     entryLimit,
