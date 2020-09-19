@@ -21,7 +21,7 @@ beforeEach(() => {
   sitemap.simpleSitemapAndIndex.mockReset()
 })
 
-describe(`sitemap Node API tests`, () => {
+describe(`gatsby-plugin-sitemap Node API`, () => {
   it(`default settings work properly`, async () => {
     const graphql = jest.fn()
     graphql.mockResolvedValue({
