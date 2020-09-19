@@ -22,7 +22,7 @@ beforeEach(() => {
 })
 
 describe(`gatsby-plugin-sitemap Node API`, () => {
-  it(`default settings work properly`, async () => {
+  it(`should succeed with default options`, async () => {
     const graphql = jest.fn()
     graphql.mockResolvedValue({
       data: {
