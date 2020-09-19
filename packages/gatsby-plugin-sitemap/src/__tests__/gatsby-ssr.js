@@ -2,7 +2,7 @@ const { onRenderBody } = require(`../gatsby-ssr`)
 
 const defaultPathPrefix = global.__PATH_PREFIX__
 
-describe(`sitemap SSR API tests`, () => {
+describe(`gatsby-plugin-sitemap SSR API`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
   })
