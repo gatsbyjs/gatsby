@@ -52,7 +52,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     expect(sourceData).toMatchSnapshot()
   })
 
-  it(`custom query runs`, async () => {
+  it(`should accept a custom query`, async () => {
     const graphql = jest.fn()
     const siteUrl = `http://dummy.url`
     graphql.mockResolvedValue({
