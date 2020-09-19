@@ -1,17 +1,17 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Markdown Benchmark for Gabe`,
+    title: `Gatsby CSV Markdown Benchmark for Gabe`,
     description: "A blog like no other blog",
     author: "Bob the Blogger",
   },
   plugins: [
+    `gatsby-transformer-csv`,
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/generated_articles`,
-        name: `blog`,
+        path: __dirname + '/gendata.csv',
       },
     },
-    `gatsby-transformer-remark`,
   ],
 }

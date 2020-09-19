@@ -1,10 +1,10 @@
-# MDX Benchmark
+# Baseline Gatsby Benchmark: fs + mdx
 
-This is a baseline benchmark for tracking MDX performance in the Gabe project.
+This is a baseline benchmark site in the Gabe project.
+
+This site in particular tracks MDX performance for individual files per page.
 
 The site can generate an arbitrary amount of super simple pages. Each page has a small header, imports a file, and has two small paragraphs of random text. No images, because we want to benchmark MDX.
-
-This uses the local file system plugin, though we might switch to sourcing from csv since that has a more efficient internal representation (fewer `File` nodes).
 
 ## Install
 
