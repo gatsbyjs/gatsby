@@ -27,7 +27,7 @@ describe(`gatsby-plugin-sitemap SSR API`, () => {
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
-  it(`does not create Link if createLinkInHead is false`, async () => {
+  it(`should not create Link if createLinkInHead is false`, async () => {
     const pluginOptions = {
       createLinkInHead: false,
       output: `test-folder`,
