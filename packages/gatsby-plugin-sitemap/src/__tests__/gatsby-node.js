@@ -12,9 +12,7 @@ const pathPrefix = ``
 
 const reporter = {
   verbose: jest.fn(),
-  panic: jest.fn().mockImplementation(err => {
-    console.error(err)
-  }),
+  panic: jest.fn(),
 }
 
 beforeEach(() => {

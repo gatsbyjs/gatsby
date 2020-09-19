@@ -1,4 +1,3 @@
-import reporter from "gatsby-cli/lib/reporter"
 
 /**
  *

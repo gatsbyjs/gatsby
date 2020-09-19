@@ -28,6 +28,7 @@ exports.onPostBuild = async (
 ) => {
   global.reporter = reporter
 
+  // Schema was already validated in preInit but we use joi to get our pluginOptions with default options.
   const {
     output,
     entryLimit,
@@ -45,7 +46,7 @@ exports.onPostBuild = async (
   const { data: queryRecords } = await graphql(query)
 
   reporter.verbose(
-    `${reporterPrefix} Query Results` + JSON.stringify(queryRecords, null, 2)
+    `${reporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
   )
 
   const allPages = resolvePages(queryRecords)
