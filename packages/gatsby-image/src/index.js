@@ -389,34 +389,35 @@ class Image extends React.Component {
     }
   }
 
-  // Specific to IntersectionObserver based lazy-load support
+  // Triggers when wrapper element mounts(has a ref) and after unmounting(null)
   handleRef(ref) {
-    if (this.useIOSupport && ref) {
+    // Ignore calls from unmounts
+    if (!ref) {
+      return
+    }
+
+    // Newer instances(mounts) of this image may be cached, using a different
+    // render path than Intersection Observer ('useIOSupport').
+    // 'isVisible' guard skips this for already loaded art directed images.
+    if (this.useIOSupport && !this.state.isVisible) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
-        if (
-          !this.state.isVisible &&
-          typeof this.props.onStartLoad === `function`
-        ) {
+
+        if (typeof this.props.onStartLoad === `function`) {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        // imgCached and imgLoaded must update after isVisible,
-        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
-        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
-        // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () => {
+        // 'isVisible' enables loading the real image.
+        // If internally cached, reveal image immediately, skipping transition.
+        if (imageInCache) {
           this.setState({
-            imgLoaded: imageInCache,
-            // `currentSrc` should be a string, but can be `undefined` in IE,
-            // !! operator validates the value is not undefined/null/""
-            // for lazyloaded components this might be null
-            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
-            imgCached: !!(
-              this.imageRef.current && this.imageRef.current.currentSrc
-            ),
+            isVisible: true, // render `<picture>`
+            imgLoaded: true, // skip placeholder visibility
+            imgCached: true, // skips fade-in
           })
-        })
+        } else {
+          this.setState({ isVisible: true, imgLoaded: true })
+        }
       })
     }
   }
