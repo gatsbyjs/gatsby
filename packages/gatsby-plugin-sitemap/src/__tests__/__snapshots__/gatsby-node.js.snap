@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sitemap Node API tests custom query runs 1`] = `
+exports[`gatsby-plugin-sitemap Node API should accept a custom query 1`] = `
 Array [
   Object {
     "changefreq": "weekly",
@@ -10,7 +10,7 @@ Array [
 ]
 `;
 
-exports[`sitemap Node API tests default settings work properly 1`] = `
+exports[`gatsby-plugin-sitemap Node API should succeed with default options 1`] = `
 Array [
   Object {
     "changefreq": "daily",
