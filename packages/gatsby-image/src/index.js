@@ -355,9 +355,9 @@ class Image extends React.Component {
 
     this.state = {
       isVisible,
-      imgLoaded: false,
-      imgCached: false,
-      fadeIn: !this.seenBefore && props.fadeIn,
+      imgLoaded: this.seenBefore,
+      imgCached: this.seenBefore,
+      fadeIn: props.fadeIn,
       isHydrated: false,
     }
 
@@ -400,6 +400,8 @@ class Image extends React.Component {
     // render path than Intersection Observer ('useIOSupport').
     // 'isVisible' guard skips this for already loaded art directed images.
     if (this.useIOSupport && !this.state.isVisible) {
+      // Delayed method, called when image is in viewport range.
+      // Image may be already internally cached by this time.
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
 
@@ -411,9 +413,9 @@ class Image extends React.Component {
         // If internally cached, reveal image immediately, skipping transition.
         if (imageInCache) {
           this.setState({
-            isVisible: true, // render `<picture>`
-            imgLoaded: true, // skip placeholder visibility
-            imgCached: true, // skips fade-in
+            isVisible: true, // render real image
+            imgLoaded: true, // swap visibility (opacity) with placeholder
+            imgCached: true, // skip fade-in transition
           })
         } else {
           this.setState({ isVisible: true })
