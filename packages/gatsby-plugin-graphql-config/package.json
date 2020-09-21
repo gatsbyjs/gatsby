@@ -1,18 +1,22 @@
 {
   "name": "gatsby-plugin-graphql-config",
   "description": "Gatsby plugin to write out a graphql-config with develop process endpoint configured",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Rikki Schulte <rikki.schulte@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "dependencies": {
+    "fs-extra": "^9.0.1"
+  },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.2",
-    "cpx": "^1.5.0",
-    "cross-env": "^5.2.1",
-    "rewire": "^4.0.1"
+    "cross-env": "^5.2.1"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-graphql-config#readme",
   "keywords": [

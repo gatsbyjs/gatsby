@@ -7,44 +7,48 @@ console.log("Start of gen")
 const N = parseInt(process.env.N, 10) || 100
 const FILE = path.resolve("gendata.csv")
 
+// We may want to tweak this a little but for this purpose we have a CSV with one column; the full page contents
+// We then hand that off to markdown
+
 console.log("Now generating " + N + " articles into", FILE)
-fs.writeFileSync(FILE, "articleNumber,title,description,slug,date,tags,body\n")
+fs.writeFileSync(FILE, "articleContent,a,b,c\n")
 
 function createArticle(n) {
   const title = faker.lorem.sentence()
-  const slug = faker.helpers.slugify(title).toLowerCase()
   const desc = faker.lorem.sentence()
+  const slug = faker.helpers.slugify(title).toLowerCase()
   const date = faker.date.recent(1000).toISOString().slice(0, 10)
   const tags = faker.random
     .words(3)
     .split(` `)
     .map(w => `"${w}"`)
     .join(`, `)
+
+  const pageContent = `---
+articleNumber: ${n}
+title: "${title.replace(/"/g, '\\"')}"
+description: "${desc.replace(/"/g, '\\"')}"
+slug: '${slug}'
+date: ${date}
+tags: [${tags}]
+---
+
+# ${title}
+
+> ${desc}
+${faker.lorem.paragraphs(2)}
+  `
+
+  // Note: you can only escape double quotes (by doubling them, not by backslash)
+  //       any other content needs to be wrapped in double quotes and is consumed as-is (including newlines and commas)
   fs.appendFileSync(
     FILE,
-    [
-      // 'a','b','c','d','e','f', 'g'
-      String(n),
-      title,
-      desc,
-      slug,
-      date,
-      tags,
-      `
-<h1>${title}</h1>
-<blockquote>${desc}</blockquote>
-<p>${faker.lorem.paragraphs(1)}</p>
-<p>${faker.lorem.paragraphs(1)}</p>
-      `,
-    ]
-      .map(s =>
-        s
-          .trim()
-          // Need to escape newlines and commas
-          .replace(/,/g, "\\,")
-          .replace(/\n/g, "") // html don't care about newlines
-      )
-      .join(",") + "\n"
+
+    '"' + pageContent
+      .trim()
+      .replace(/"/g, '""')
+      + '",1,2,3' +
+      "\n" // markdown does care about newlines
   )
 }
 
