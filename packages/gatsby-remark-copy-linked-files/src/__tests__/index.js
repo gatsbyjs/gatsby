@@ -35,13 +35,19 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       },
     }
   }
-  const getFiles = filePath => [
-    {
-      absolutePath: path.posix.normalize(filePath),
-      internal: {},
-      extension: filePath.split(`.`).pop().trim(),
-    },
-  ]
+  const getFiles = filePath => {
+    const absolutePath = path.posix.normalize(filePath)
+    return [
+      {
+        absolutePath,
+        name: path.basename(absolutePath, path.extname(absolutePath)),
+        internal: {
+          contentDigest: `some-hash`,
+        },
+        extension: filePath.split(`.`).pop().trim(),
+      },
+    ]
+  }
 
   describe(`images`, () => {
     ;[`svg`, `gif`].forEach(extension => {
@@ -266,7 +272,8 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   })
 
   describe(`options.destinationDir`, () => {
-    const imagePath = `images/sample-image.gif`
+    const imageName = `sample-image`
+    const imagePath = `images/${imageName}.gif`
 
     it(`throws an error if the destination supplied by destinationDir points outside of the root dir`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
@@ -303,11 +310,12 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     it(`copies file to the destination supplied by destinationDir`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const validDestinationDir = `path/to/dir`
+      const fileLocationPart = `some-hash/${imageName}.gif`
       const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
         validDestinationDir,
-        `/undefined/undefined.gif`
+        fileLocationPart
       )
       expect.assertions(3)
       await plugin(
@@ -319,7 +327,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
         expect(imageURL(markdownAST)).toEqual(
-          `/path/to/dir/undefined/undefined.gif`
+          `/path/to/dir/${fileLocationPart}`
         )
       })
     })
@@ -327,7 +335,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     it(`copies file to the destination supplied by the destinationDir function`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const customDestinationDir = f => `foo/${f.hash}--bar`
-      const expectedDestination = `foo/undefined--bar.gif`
+      const expectedDestination = `foo/some-hash--bar.gif`
       expect.assertions(3)
       await plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
@@ -346,11 +354,13 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const pathPrefix = `/blog`
       const validDestinationDir = `path/to/dir`
+
+      const fileLocationPart = `some-hash/${imageName}.gif`
       const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
         validDestinationDir,
-        `/undefined/undefined.gif`
+        fileLocationPart
       )
       expect.assertions(3)
       await plugin(
@@ -368,7 +378,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
         expect(imageURL(markdownAST)).toEqual(
-          `${pathPrefix}/path/to/dir/undefined/undefined.gif`
+          `${pathPrefix}/path/to/dir/${fileLocationPart}`
         )
       })
     })
@@ -377,7 +387,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const pathPrefix = `/blog`
       const customDestinationDir = f => `hello${f.name}123`
-      const expectedDestination = `helloundefined123.gif`
+      const expectedDestination = `hello${imageName}123.gif`
       expect.assertions(3)
       await plugin(
         {
@@ -400,12 +410,12 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       })
     })
 
-    it(`copies file to the root dir when destinationDir is not supplied'`, async () => {
+    it(`copies file to the root dir when destinationDir is not supplied`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
-        `/undefined/undefined.gif`
+        `/some-hash/${imageName}.gif`
       )
       expect.assertions(3)
       await plugin({
@@ -416,7 +426,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       }).then(v => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
-        expect(imageURL(markdownAST)).toEqual(`/undefined/undefined.gif`)
+        expect(imageURL(markdownAST)).toEqual(`/some-hash/${imageName}.gif`)
       })
     })
   })
