@@ -17,8 +17,8 @@ beforeEach(() => {
 const SiteUrl = `https://example.net`
 const TestPath = `/test/path/`
 
-describe(`sitemap internals tests`, () => {
-  it(`test withoutTrailingSlash`, () => {
+describe(`gatsby-plugin-sitemap internals tests`, () => {
+  it(`withoutTrailingSlash should correct paths without final slash`, () => {
     const result = withoutTrailingSlash(`/`)
     expect(result).toEqual(`/`)
 
@@ -26,34 +26,35 @@ describe(`sitemap internals tests`, () => {
     expect(result2).toStrictEqual(`/test/path`)
   })
 
-  it(`test prefixPath`, () => {
+  it(`prefixPath should correctly concatonate path`, () => {
     const result = prefixPath({
       url: TestPath,
       siteUrl: SiteUrl,
       pathPrefix: `/root`,
     })
+
     expect(result).toStrictEqual(`https://example.net/root/test/path/`)
   })
 
-  it(`test default resolveSiteUrl`, () => {
+  it(`resolveSiteUrl should return SiteUrl`, () => {
     const result = resolveSiteUrl({
       site: { siteMetadata: { siteUrl: SiteUrl } },
     })
     expect(result).toStrictEqual(SiteUrl)
   })
 
-  it(`test default resolvePagePath`, () => {
+  it(`resolvePagePath should return TestPath`, () => {
     const result = resolvePagePath({ path: TestPath })
     expect(result).toStrictEqual(TestPath)
   })
 
-  it(`test default resolvePages`, () => {
+  it(`resolvePages should return sample pages`, () => {
     const pages = [{ path: `/page-1/` }, { path: `/page-2/` }]
     const result = resolvePages({ allSitePage: { nodes: pages } })
     expect(result).toEqual(pages)
   })
 
-  it(`test defaultFilterPages`, () => {
+  it(`defaultFilterPages correctly detects path`, () => {
     const page = { path: TestPath }
     const result = defaultFilterPages(page, `/another/path/`, {
       resolvePagePath,
@@ -70,16 +71,16 @@ describe(`sitemap internals tests`, () => {
     expect(result2).toStrictEqual(true)
   })
 
-  it(`test default serialize`, () => {
+  it(`serialize should create expected object`, () => {
     const page = { path: TestPath }
     const result = serialize(page, { resolvePagePath })
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        url: TestPath,
-        changefreq: `daily`,
-        priority: 0.7,
-      })
-    )
+    expect(result).toEqual({
+      url: TestPath,
+      changefreq: `daily`,
+      priority: 0.7,
+    })
   })
+
+  // TODO: write tests for pageFilter
 })

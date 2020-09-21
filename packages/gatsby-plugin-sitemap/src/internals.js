@@ -1,5 +1,7 @@
 import minimatch from "minimatch"
 
+export const ReporterPrefix = `[gatsby-plugin-sitemap]:`
+
 /**
  *
  * @param {string} path
@@ -131,7 +133,7 @@ export function defaultFilterPages(
  */
 export function serialize(page, { resolvePagePath }) {
   return {
-    url: `${resolvePagePath(page)} `,
+    url: `${resolvePagePath(page)}`,
     changefreq: `daily`,
     priority: 0.7,
   }
@@ -144,15 +146,12 @@ const defaultExcludes = [
   `/offline-plugin-app-shell-fallback`,
 ]
 
-export function pageFilter(
-  { allPages, filterPages, excludes },
-  { reporter, ReporterPrefix }
-) {
+export function pageFilter({ allPages, filterPages, excludes }, { reporter }) {
   return allPages.filter(page => {
     // eslint-disable-next-line consistent-return
     const defaultFilterMatches = defaultExcludes.some((exclude, i, arr) => {
       try {
-        const match = defaultFilterPages(page, exclude, {
+        const doesMatch = defaultFilterPages(page, exclude, {
           minimatch,
           withoutTrailingSlash,
           resolvePagePath,
@@ -160,9 +159,9 @@ export function pageFilter(
         })
 
         //default excludes can only be found once, so remove them from the arr once excluded
-        if (match) arr.splice(i, 1)
+        if (doesMatch) arr.splice(i, 1)
 
-        return match
+        return doesMatch
       } catch (err) {
         reporter.panic(
           `${ReporterPrefix} Error in default page filter`,

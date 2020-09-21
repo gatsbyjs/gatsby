@@ -1,11 +1,7 @@
 import path from "path"
 import { simpleSitemapAndIndex } from "sitemap"
 import { validateOptions } from "./options-validation"
-import { prefixPath, pageFilter } from "./internals"
-
-const PublicPath = `./public`
-
-const ReporterPrefix = `[gatsby-plugin-sitemap]:`
+import { prefixPath, pageFilter, ReporterPrefix } from "./internals"
 
 exports.onPreInit = async ({ reporter }, pluginOptions) => {
   try {
@@ -68,7 +64,7 @@ exports.onPostBuild = async (
       filterPages,
       excludes,
     },
-    { reporter, ReporterPrefix }
+    { reporter }
   )
 
   reporter.verbose(
@@ -85,7 +81,7 @@ exports.onPostBuild = async (
     }
   })
 
-  const sitemapPath = path.join(PublicPath, output)
+  const sitemapPath = path.join(`public`, output)
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,

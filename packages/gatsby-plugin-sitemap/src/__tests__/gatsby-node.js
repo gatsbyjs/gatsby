@@ -109,9 +109,10 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     expect(sourceData).toMatchSnapshot()
     expect(graphql).toBeCalledWith(customQuery)
   })
-  describe(`sitemap index`, () => {
-    let graphql = null
-    const queryResult = {
+
+  it(`should include path prefix when creating creating index sitemap`, async () => {
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
       data: {
         site: {
           siteMetadata: {
@@ -129,21 +130,16 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
           ],
         },
       },
-    }
-    beforeEach(() => {
-      graphql = jest.fn()
-      graphql.mockResolvedValue(queryResult)
     })
-    it(`should include path prefix when creating creating index sitemap`, async () => {
-      const options = {
-        entryLimit: 1,
-      }
-      const prefix = `/test`
-      await onPostBuild({ graphql, pathPrefix: prefix, reporter }, options)
-      const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
-      sourceData.forEach(page => {
-        expect(page.url).toEqual(expect.stringContaining(prefix))
-      })
+
+    const options = {
+      entryLimit: 1,
+    }
+    const prefix = `/test`
+    await onPostBuild({ graphql, pathPrefix: prefix, reporter }, options)
+    const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
+    sourceData.forEach(page => {
+      expect(page.url).toEqual(expect.stringContaining(prefix))
     })
   })
 })
