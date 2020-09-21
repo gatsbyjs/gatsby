@@ -11,13 +11,13 @@ import { Compiler } from "webpack"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
 export interface IGroupedQueryIds {
-  pageQueryIds: string[]
-  staticQueryIds: string[]
+  pageQueryIds: Array<string>
+  staticQueryIds: Array<string>
 }
 
 export interface IMutationAction {
   type: string
-  payload: unknown[]
+  payload: Array<unknown>
   resolve?: (result: unknown) => void
 }
 export interface IBuildContext {
@@ -32,8 +32,9 @@ export interface IBuildContext {
   workerPool?: JestWorker
   app?: Express
   nodesMutatedDuringQueryRun?: boolean
+  nodesMutatedDuringQueryRunRecompileCount?: number
   mutationListener?: Actor<unknown, AnyEventObject>
-  nodeMutationBatch?: IMutationAction[]
+  nodeMutationBatch?: Array<IMutationAction>
   compiler?: Compiler
   websocketManager?: WebsocketManager
   webpackWatching?: IWebpackWatchingPauseResume

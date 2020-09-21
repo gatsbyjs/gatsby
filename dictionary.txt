@@ -127,7 +127,6 @@ Albright
 Alexa
 Algolia
 Allanson
-allfile-query
 allWordpressPage
 Amberley
 Ambras
@@ -225,6 +224,7 @@ bigtime
 bikeshed
 bindActionCreators
 Bing
+Bip
 Biscardi
 BitBalloon
 Bitbucket
@@ -390,7 +390,6 @@ Commentors
 CommonJS
 CommonMark
 comparator
-Comparator
 comparators
 compile-to-js
 componentChunkName
@@ -633,13 +632,11 @@ Evoq
 ex-PayPal-ers
 Ex-PayPal-ers
 exampleValue
-excited-gif
 executables
 EXIF
 ExitWP
 Expedia
 explorable
-extractFieldsToSift
 extractQueries
 F12
 F8
@@ -664,12 +661,9 @@ filepath
 filepaths
 Filestack
 filesystem
-filesystem-autocomplete
 filesystem-based
 filesystem-explorer-options
-filesystem-query
 Fillerama
-filterValue
 FindCollabs
 findDirtyIds
 findIdsWithoutDataDependencies
@@ -901,7 +895,7 @@ Graph_i_QL
 GraphCMS
 GraphiQL
 graphiql-code-exporter
-graphiql-filesystem
+graphql
 GraphQL
 GraphQL-based
 graphql-compose
@@ -1721,7 +1715,6 @@ RSS
 rsync
 RTC
 RTEs
-runInitialQuerys
 runQueries
 runQueriesForPathnames
 runtimes
@@ -1794,8 +1787,6 @@ shouldUpdateScroll
 shoutout
 Sidenotes
 Sidhartha
-siftified
-siftifyArgs
 signup
 signups
 simple-auth

@@ -143,16 +143,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   })
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
-  const typeDefs = `
-    type Site implements Node {
-      buildTime: Date @dateformat
-    }
-  `
-  createTypes(typeDefs)
-}
-
 exports.createResolvers = ({ createResolvers }) => {
   const resolvers = {
     Site: {

@@ -12,6 +12,8 @@ function regexpEscape(str: string): string {
 }
 
 export function cleanPaths(str: string, separator: string = sep): string {
+  if (!str) return str
+
   const stack = process.cwd().split(separator)
 
   while (stack.length > 1) {

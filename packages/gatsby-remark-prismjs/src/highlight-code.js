@@ -4,12 +4,16 @@ const handleDirectives = require(`./directives`)
 const escapeHTML = require(`./escape-html`)
 const unsupportedLanguages = new Set()
 
+require(`prismjs/components/prism-diff`)
+require(`prismjs/plugins/diff-highlight/prism-diff-highlight`)
+
 module.exports = (
   language,
   code,
   additionalEscapeCharacters = {},
   lineNumbersHighlight = [],
-  noInlineHighlight = false
+  noInlineHighlight = false,
+  diffLanguage = null
 ) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {
@@ -40,7 +44,11 @@ module.exports = (
   }
 
   const grammar = Prism.languages[language]
-  const highlighted = Prism.highlight(code, grammar, language)
+  const highlighted = Prism.highlight(
+    code,
+    grammar,
+    diffLanguage ? `${language}-${diffLanguage}` : language
+  )
   const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
 
   let finalCode = ``

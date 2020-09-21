@@ -80,36 +80,39 @@ module.exports = {
 Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
 
 ```graphql
-  query MyQuery {
-    # Example is for a `ContentType` with a `ContentfulAsset` field
-    # You could also query an asset directly via
-    # `allContentfulAsset { edges{ node { } } }`
-    # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
-    contentfulMyContentType {
-      myContentfulAssetField {
-        # Direct URL to Contentful CDN for this asset
-        file { url }
+query MyQuery {
+  # Example is for a `ContentType` with a `ContentfulAsset` field
+  # You could also query an asset directly via
+  # `allContentfulAsset { edges{ node { } } }`
+  # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+  contentfulMyContentType {
+    myContentfulAssetField {
+      # Direct URL to Contentful CDN for this asset
+      file {
+        url
+      }
 
-        # Query for a fluid image resource on this `ContentfulAsset` node
-        fluid(maxWidth: 500){
-          ...GatsbyContentfulFluid_withWebp
-        }
+      # Query for a fluid image resource on this `ContentfulAsset` node
+      fluid(maxWidth: 500) {
+        ...GatsbyContentfulFluid_withWebp
+      }
 
-        # Query for locally stored file(e.g. An image) - `File` node
-        localFile {
-          # Where the asset is downloaded into cache, don't use this
-          absolutePath
-          # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
-          publicURL
-          # Use `gatsby-image` to create fluid image resource
-          childImageSharp {
-            fluid(maxWidth: 500) {
-              ...GatsbyImageSharpFluid
+      # Query for locally stored file(e.g. An image) - `File` node
+      localFile {
+        # Where the asset is downloaded into cache, don't use this
+        absolutePath
+        # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
+        publicURL
+        # Use `gatsby-image` to create fluid image resource
+        childImageSharp {
+          fluid(maxWidth: 500) {
+            ...GatsbyImageSharpFluid
           }
         }
       }
     }
   }
+}
 ```
 
 Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
@@ -182,9 +185,9 @@ If you want to resolve the locales in fields of assets and entries that are refe
 
 There are currently some things to keep in mind when building your content models at Contentful.
 
-1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
+1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
