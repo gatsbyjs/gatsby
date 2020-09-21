@@ -275,7 +275,7 @@ You have to make sure the installed version of `@hot-loader/react-dom` is the sa
 warning React-Hot-Loader: please install "@hot-loader/react-dom@^16.13" to makes sure all features of React are working.
 ```
 
-Install `@hot-loader/react-dom` using `npm install` (or its Yarn equivalent, `yarn add`):
+To resolve this message, install the matching version of `@hot-loader/react-dom` using `npm install` (or its Yarn equivalent, `yarn add`):
 
 ```shell
 npm install @hot-loader/react-dom@^16.13
