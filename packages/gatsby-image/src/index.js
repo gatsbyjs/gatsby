@@ -416,7 +416,7 @@ class Image extends React.Component {
             imgCached: true, // skips fade-in
           })
         } else {
-          this.setState({ isVisible: true, imgLoaded: true })
+          this.setState({ isVisible: true })
         }
       })
     }
