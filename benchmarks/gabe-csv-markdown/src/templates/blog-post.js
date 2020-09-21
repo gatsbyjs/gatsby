@@ -6,8 +6,7 @@ import Layout from "../components/layout"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data
-    const node = post.allGendataCsv.edges[0].node
+    const post = this.props.data.markdownRemark
     const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next } = this.props.pageContext
 
@@ -21,7 +20,7 @@ class BlogPostTemplate extends React.Component {
                 marginBottom: 0,
               }}
             >
-              {node.title}
+              {post.frontmatter.title}
             </h1>
             <p
               style={{
@@ -29,10 +28,10 @@ class BlogPostTemplate extends React.Component {
                 marginBottom: '5px',
               }}
             >
-              {node.date}
+              {post.frontmatter.date}
             </p>
           </header>
-          <section dangerouslySetInnerHTML={{ __html: node.body }} />
+          <section dangerouslySetInnerHTML={{ __html: post.html }} />
           <hr
             style={{
               marginBottom: '5px',
@@ -55,15 +54,15 @@ class BlogPostTemplate extends React.Component {
           >
             <li>
               {previous && (
-                <Link to={'../' + previous.slug} rel="prev">
-                  ← {previous.title}
+                <Link to={'/' + previous.frontmatter.slug} rel="prev">
+                  ← {previous.frontmatter.title}
                 </Link>
               )}
             </li>
             <li>
               {next && (
-                <Link to={'../' + next.slug} rel="next">
-                  {next.title} →
+                <Link to={'/' + next.frontmatter.slug} rel="next">
+                  {next.frontmatter.title} →
                 </Link>
               )}
             </li>
@@ -77,28 +76,22 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query BlogPostById($id: String!) {
     site {
       siteMetadata {
         title
       }
     }
-    allGendataCsv(
-      filter: {
-         id: { eq: $id }
-      }
-    ) {
-      edges {
-        node {
-          articleNumber
-          title
-          description
-          slug
-          date
-          tags
-          body
-        }
+    markdownRemark(id: { eq: $id }) {
+      id
+      excerpt(pruneLength: 160)
+      html
+      frontmatter {
+        slug
+        title
+        date(formatString: "MMMM DD, YYYY")
+        description
       }
     }
   }
-`;
+`
