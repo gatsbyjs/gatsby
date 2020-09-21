@@ -87,7 +87,7 @@ const getImageCacheKey = ({ fluid, fixed }) => {
  * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
 const getCurrentSrcData = currentData => {
-  if (isBrowser && hasArtDirectionSupport(currentData)) {
+  if (this.isArtDirected) {
     // Do we have an image for the current Viewport?
     const foundMedia = currentData.findIndex(matchesMedia)
     if (foundMedia !== -1) {
@@ -368,28 +368,26 @@ class Image extends React.Component {
 
     // Supports Art Direction feature to correctly render image variants
     const imageVariants = props.fluid || props.fixed
-    this.isArtDirected = hasArtDirectionSupport(imageVariants)
+    this.isArtDirected = isBrowser && hasArtDirectionSupport(imageVariants)
     if (this.isArtDirected) {
       // When image variant changes, adapt via render immediately instead of delaying
       // until new image request triggers 'onload' event.
       // Can be verified on 'slow 3G' with no initial cache.
-      if (isBrowser) {
-        this.handleVariantChange = this.handleVariantChange.bind(this)
-        const base = imageVariants.find(v => !v.media)
+      this.handleVariantChange = this.handleVariantChange.bind(this)
+      const base = imageVariants.find(v => !v.media)
 
-        this.mq = { base }
-        this.mq.queries = imageVariants.filter(v => v.media)
-        this.mq.queries.forEach(v => {
-          this.mq[v.media] = v
-          const mql = window.matchMedia(v.media)
-          if (mql.addEventListener) {
-            mql.addEventListener(`change`, this.handleVariantChange)
-          } else {
-            // Deprecated 'MediaQueryList' API, <Safari 14, IE, <Edge 16
-            mql.addListener(this.handleVariantChange)
-          }
-        })
-      }
+      this.mq = { base }
+      this.mq.queries = imageVariants.filter(v => v.media)
+      this.mq.queries.forEach(v => {
+        this.mq[v.media] = v
+        const mql = window.matchMedia(v.media)
+        if (mql.addEventListener) {
+          mql.addEventListener(`change`, this.handleVariantChange)
+        } else {
+          // Deprecated 'MediaQueryList' API, <Safari 14, IE, <Edge 16
+          mql.addListener(this.handleVariantChange)
+        }
+      })
     }
   }
 
