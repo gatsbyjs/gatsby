@@ -79,7 +79,7 @@ export type PageProps<
   /** @deprecated use pageContext instead */
   pathContext: object
   /** The URL parameters when the page has a `matchPath` */
-  params?: Record<string, string>
+  params: Record<string, string>
   /** Holds information about the build process for this component */
   pageResources: {
     component: React.Component
