@@ -271,6 +271,90 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).not.toHaveBeenCalled()
   })
 
+  describe(`respects pathPrefix`, () => {
+    const imageName = `sample-image`
+    const imagePath = `images/${imageName}.svg`
+
+    // pathPrefix passed to plugins already combine pathPrefix and assetPrefix
+    it(`relative pathPrefix (no assetPrefix)`, async () => {
+      const pathPrefix = `/path-prefix`
+      const markdownAST = remark.parse(`![some image](${imagePath})`)
+
+      const expectedNewPath = path.posix.join(
+        process.cwd(),
+        `public`,
+        `some-hash`,
+        `sample-image.svg`
+      )
+
+      await plugin({
+        files: getFiles(imagePath),
+        markdownAST,
+        markdownNode,
+        getNode,
+        pathPrefix,
+      })
+
+      expect(imageURL(markdownAST)).toEqual(
+        `/path-prefix/some-hash/sample-image.svg`
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+    })
+
+    it(`absolute pathPrefix (with assetPrefix, empty base path prefix)`, async () => {
+      const pathPrefix = `https://cdn.mysiteassets.com`
+      const markdownAST = remark.parse(`![some image](${imagePath})`)
+
+      const expectedNewPath = path.posix.join(
+        process.cwd(),
+        `public`,
+        `some-hash`,
+        `sample-image.svg`
+      )
+
+      await plugin({
+        files: getFiles(imagePath),
+        markdownAST,
+        markdownNode,
+        getNode,
+        pathPrefix,
+      })
+
+      expect(imageURL(markdownAST)).toEqual(
+        `https://cdn.mysiteassets.com/some-hash/sample-image.svg`
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+    })
+
+    it(`absolute pathPrefix (with assetPrefix, and non-empty base path prefix)`, async () => {
+      const pathPrefix = `https://cdn.mysiteassets.com/path-prefix`
+      const markdownAST = remark.parse(`![some image](${imagePath})`)
+
+      const expectedNewPath = path.posix.join(
+        process.cwd(),
+        `public`,
+        `some-hash`,
+        `sample-image.svg`
+      )
+
+      await plugin({
+        files: getFiles(imagePath),
+        markdownAST,
+        markdownNode,
+        getNode,
+        pathPrefix,
+      })
+
+      expect(imageURL(markdownAST)).toEqual(
+        `https://cdn.mysiteassets.com/path-prefix/some-hash/sample-image.svg`
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+    })
+  })
+
   describe(`options.destinationDir`, () => {
     const imageName = `sample-image`
     const imagePath = `images/${imageName}.gif`
