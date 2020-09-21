@@ -6,7 +6,7 @@
   "author": "Madalyn Parker <hello@madalyn.dev>",
   "dependencies": {
     "@reach/skip-nav": "^0.8.0",
-    "gatsby": "^2.24.61",
+    "gatsby": "^2.24.63",
     "gatsby-plugin-manifest": "^2.4.30",
     "gatsby-plugin-react-helmet": "^3.3.11",
     "gatsby-source-filesystem": "^2.3.30",
