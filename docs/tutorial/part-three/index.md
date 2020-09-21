@@ -43,10 +43,10 @@ cd tutorial-part-three
 
 There are two main steps to using a plugin: Installing and configuring.
 
-1. Install the `gatsby-plugin-typography` npm package.
+1. Install the `gatsby-plugin-typography` package.
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
+yarn add gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
