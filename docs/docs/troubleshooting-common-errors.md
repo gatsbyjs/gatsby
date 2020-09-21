@@ -267,7 +267,7 @@ You may be able to find more information for your circumstances in [the GitHub i
 React-Hot-Loader: react-🔥-dom patch is not detected. React 16.6+ features may not work.
 ```
 
-To make sure all React features work, you'll have to install `@hot-loader/react-dom`.
+To make sure all React features work, you'll have to install `@hot-loader/react-dom`. It's a patched version of the original `react-dom` package that makes [React Hooks](https://reactjs.org/docs/hooks-intro.html) work with HMR. When not available, changes made in a file that contains a React hook will do a forced browser refresh instead of a hot module update.
 
 You have to make sure the installed version of `@hot-loader/react-dom` is the same as your `react-dom` version. For example, if `react-dom` is at version 16.13.0, you'll have to install `@hot-loader/react-dom@16.13.0`. In this case, you would see the following message in your CLI:
 
