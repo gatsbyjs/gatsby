@@ -7,8 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "fs-extra": "^9.0.1",
-    "graphql": "^15.3.0"
+    "fs-extra": "^9.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
