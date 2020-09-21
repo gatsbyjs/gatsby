@@ -368,7 +368,8 @@ class Image extends React.Component {
 
     // Supports Art Direction feature to correctly render image variants
     const imageVariants = props.fluid || props.fixed
-    if (hasArtDirectionSupport(imageVariants)) {
+    this.isArtDirected = hasArtDirectionSupport(imageVariants)
+    if (this.isArtDirected) {
       // When image variant changes, adapt via render immediately instead of delaying
       // until new image request triggers 'onload' event.
       // Can be verified on 'slow 3G' with no initial cache.
@@ -393,9 +394,12 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      isHydrated: isBrowser,
-    })
+    // Should only be required internally for supporting Art Direction
+    if (this.isArtDirected) {
+      this.setState({
+        isHydrated: isBrowser,
+      })
+    }
 
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
