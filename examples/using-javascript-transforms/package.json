@@ -23,7 +23,7 @@
   "dependencies": {
     "bulma": "0.9.0",
     "d3": "4.13.0",
-    "gatsby": "^2.24.61",
+    "gatsby": "^2.24.63",
     "gatsby-plugin-sass": "^2.3.13",
     "gatsby-remark-prismjs": "^3.5.13",
     "gatsby-source-filesystem": "^2.3.30",
