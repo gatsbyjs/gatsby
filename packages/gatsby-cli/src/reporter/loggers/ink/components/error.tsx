@@ -1,19 +1,20 @@
 import React, { FunctionComponent } from "react"
 import path from "path"
 import { Color, Box } from "ink"
-import { get } from "lodash"
+import { IStructuredError } from "../../../../structured-errors/types"
 
 interface IFileProps {
   filePath: string
-  location: string
+  location: IStructuredError["location"]
 }
+
 const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
-  const lineNumber = get(location, `start.line`)
+  const lineNumber = location?.start.line
 
   let locString = ``
   if (typeof lineNumber !== `undefined`) {
     locString += `:${lineNumber}`
-    const columnNumber = get(location, `start.column`)
+    const columnNumber = location?.start.column
     if (typeof columnNumber !== `undefined`) {
       locString += `:${columnNumber}`
     }
@@ -28,8 +29,9 @@ const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
 }
 
 interface IDocsLinkProps {
-  docsUrl: string
+  docsUrl: string | undefined
 }
+
 const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
   // TODO: when there's no specific docsUrl, add helpful message describing how
   // to submit an issue
@@ -41,16 +43,8 @@ const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
   )
 }
 
-interface IErrorProps {
-  details: {
-    level: string
-    code?: string
-    type?: string
-    text: string
-    filePath?: string
-    location: string
-    docsUrl: string
-  }
+export interface IErrorProps {
+  details: IStructuredError
 }
 
 export const Error: FunctionComponent<IErrorProps> = React.memo(

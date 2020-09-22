@@ -252,14 +252,14 @@ export default () => {
     const nameNode = ast[0].doc.definitions[0].name
     expect(nameNode).toEqual({
       kind: `Name`,
-      value: `zhADollarpercentandJs1646962495`,
+      value: `zhADollarpercentandJs1125018085`,
     })
 
     const ast2 = await parser.parseFile(`static-${specialChars}.js`, jest.fn())
     const nameNode2 = ast2[0].doc.definitions[0].name
     expect(nameNode2).toEqual({
       kind: `Name`,
-      value: `staticZhADollarpercentandJs1646962495`,
+      value: `staticZhADollarpercentandJs1125018085`,
     })
   })
 })

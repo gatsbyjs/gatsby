@@ -28,7 +28,7 @@ Meanwhile your entire engineering organization grinds to a halt as everyone who 
 
 If you're building a website, Gatsby puts an end to traffic-spike-induced downtime.
 
-Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS Cloudfront. And CDNs are much less likely to go down.
+Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS CloudFront. And CDNs are much less likely to go down.
 
 ## A site that's always ready for your guests
 
@@ -77,4 +77,4 @@ It's even allowed them to onboard teammates to pagerduty rotation, and made that
 
 So when Webster, Brown, Slade, Redding, and Rose moved their commercial projects over to Gatsby, they didn't just get business results. They got sites that never went down -- and slept better at night.
 
-_Brian Webster discussed more about his agency's journey on the webinar_ [_"How to Equip Your Marketing Team for Success with Gatsby and Contentful"_](https://www.gatsbyjs.com/starlight-webinar/)_. Kennedy Rose shared his story on our blog at "_[_Escalade Sports: From $5000 to $5/month in Hosting With Gatsby"_](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/). _Tim Brown shared Harry's story on the webinar_ [_"Behind the Scenes: What makes Gatsby Great"_](https://www.gatsbyjs.com/behind-the-scenes/). _Brad Redding and Thomas Slade shared Elevar and Strivectin's story on the webinar_ [_"Optimizing E-commerce with Gatsby."_](https://www.gatsbyjs.com/optimizing-ecommerce-webinar/)
+_Brian Webster discussed more about his agency's journey on the webinar_ [_"How to Equip Your Marketing Team for Success with Gatsby and Contentful"_](https://www.gatsbyjs.com/starlight-webinar/)_. Kennedy Rose shared his story on our blog at "_[_Escalade Sports: From $5000 to $5/month in Hosting With Gatsby"_](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/). _Tim Brown shared Harry's story on the webinar_ [_"Behind the Scenes: What makes Gatsby Great"_](https://www.gatsbyjs.com/behind-the-scenes/). _Brad Redding and Thomas Slade shared Elevar and StriVectin's story on the webinar_ [_"Optimizing E-commerce with Gatsby."_](https://www.gatsbyjs.com/optimizing-ecommerce-webinar/)

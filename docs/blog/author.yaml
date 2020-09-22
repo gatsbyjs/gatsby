@@ -153,7 +153,7 @@
   avatar: avatars/dennis-brotzky.jpg
   twitter: "@_brotzky"
 - id: Tony Spiro
-  bio: Cosmic JS Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
+  bio: Cosmic Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
   avatar: avatars/tony-spiro.jpg
   twitter: "@tonyspiro"
 - id: Khaled Garbaya
@@ -196,8 +196,8 @@
   bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
   avatar: avatars/chris-biscardi.png
   twitter: "@chrisbiscardi"
-- id: LekoArts
-  bio: Designer & Frontend Dev. Loves good typography & tv series. Blogs at lekoarts.de
+- id: Lennart Jörgens
+  bio: Senior Software Engineer at Gatsby. Passionate about design & 3D art. Blogs at lekoarts.de
   avatar: avatars/lekoarts.png
   twitter: "@lekoarts_de"
 - id: Tyler Barnes
@@ -270,7 +270,7 @@
   avatar: avatars/jim-ettig.jpg
   twitter: "@unclejge"
 - id: Marcy Sutton
-  bio: Head of Learning at Gatsby, cyclist, animal lover, pie baker.
+  bio: Lead DevRel/Community Software Engineer at Gatsby, cyclist, animal lover, pie baker.
   avatar: avatars/marcy-sutton.jpg
   twitter: "@marcysutton"
 - id: Allan Pooley
@@ -318,9 +318,9 @@
 - id: Thomas Wang
   bio: A social developer on the JAMStack.
   avatar: avatars/thomas-wang.jpeg
-  twitter: "@thomaswangio"
+  twitter: "@ThomasWang"
 - id: Hashim Warren
-  bio: Marketer turned Web Developer  - https://hashim.xyz
+  bio: Full Stack Marketer, writing copy and code - https://www.configmag.com
   avatar: avatars/hashim-warren.jpg
   twitter: "@hashim_warren"
 - id: Caitlin Cashin
@@ -414,3 +414,36 @@
   bio: "Dad to teens, HS football coach, president of Agility CMS."
   avatar: avatars/joel-varty.jpg
   twitter: "@joelvarty"
+- id: Paul Scanlon
+  bio: "Front End React UI Developer/UX Engineer based in Worthing, UK. After all is said and done, structure + order = fun."
+  avatar: avatars/paul-scanlon.jpg
+  twitter: "@PaulieScanlon"
+- id: Jake Lumetta
+  bio: "Jake is the CEO of ButterCMS. He loves whipping up Butter puns and building tools that make developers' lives better."
+  avatar: avatars/jake-lumetta.jpg
+  twitter: "@jakelumetta"
+- id: Maxime Castres
+  bio: "Growth Hacker @ Strapi. Gathering interesting individuals to build the best community."
+  avatar: avatars/maxime-castres.jpg
+  twitter: "@MaxCastres"
+- id: Eric Howey
+  bio: "Dad all the time, mental health therapist full time, web developer in my spare time. I listen and care."
+  avatar: avatars/eric-howey.jpg
+  twitter: "@erchwy"
+- id: Laurie Barth
+  bio: "Staff Software Engineer for Gatsby themes. Lover of all things LEGO."
+  avatar: avatars/laurie-barth.jpg
+  twitter: "@laurieontech"
+- id: Sam Larsen-Disney
+  bio: "UX Engineer and Experimenter who enjoys teaching the next generation to code."
+  avatar: avatars/sam-larsendisney.jpg
+  twitter: "@SamLarsenDisney"
+- id: Bianca Feliciano Nedjar
+  bio: "Director of Employee Engagement and Development at Gatsby; Likes consuming mass quantities of television and film, dining al fresco and Reddit."
+  avatar: avatars/bianca-nedjar.jpg
+- id: Kat Huang
+  bio: "Product Marketing Intern @ Gatsby. I like puns, drawing, squats, and digital sociology. Learned to code on Tumblr and once taught myself Latin."
+  avatar: avatars/kat-huang.jpg
+- id: Colby Fayock
+  bio: "Lead UX & Front End Astrocoder @ Element 84. Helping people learn by destructuring React & the static web"
+  avatar: avatars/colby-fayock.jpg

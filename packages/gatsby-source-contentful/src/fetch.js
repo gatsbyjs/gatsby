@@ -4,7 +4,11 @@ const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
-module.exports = async ({ syncToken, reporter, pluginConfig }) => {
+module.exports = async function contentfulFetch({
+  syncToken,
+  reporter,
+  pluginConfig,
+}) {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 
@@ -29,7 +33,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   let locales
   let defaultLocale = `en-US`
   try {
-    console.log(`Fetching default locale`)
+    reporter.info(`Fetching default locale`)
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
@@ -44,7 +48,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
         )}' were found but were filtered down to none.`
       )
     }
-    console.log(`default locale is : ${defaultLocale}`)
+    reporter.info(`default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
@@ -100,18 +104,27 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    console.log(`error fetching content types`, e)
+    reporter.panic(`error fetching content types`, e)
   }
-  console.log(`contentTypes fetched`, contentTypes.items.length)
+  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs (inline) on entries and assets, created/updated and deleted.
-  contentTypeItems.forEach(normalize.fixIds)
-  currentSyncData.entries.forEach(normalize.fixIds)
-  currentSyncData.assets.forEach(normalize.fixIds)
-  currentSyncData.deletedEntries.forEach(normalize.fixIds)
-  currentSyncData.deletedAssets.forEach(normalize.fixIds)
+  if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
+    reporter.info(
+      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful_id\``
+    )
+  } else {
+    // Traverse entire data model and enforce every `sys.id` to be a string
+    // and if that string starts with a number, to prefix it with `c`. Assigns
+    // original `id` to `contentful_id`.
+    // Expensive at scale.
+    contentTypeItems.forEach(normalize.fixIds)
+    currentSyncData.entries.forEach(normalize.fixIds)
+    currentSyncData.assets.forEach(normalize.fixIds)
+    currentSyncData.deletedEntries.forEach(normalize.fixIds)
+    currentSyncData.deletedAssets.forEach(normalize.fixIds)
+  }
 
   const result = {
     currentSyncData,

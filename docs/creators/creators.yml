@@ -1,3 +1,15 @@
+- name: Annie Taylor Chen
+  type: individual
+  description: >-
+    Full-stack developer | Photographer - enriching your digital products with
+    amazing UI/UX through clean code
+  location: Stockholm, Sweden | Worldwide (remote)
+  website: https://www.annietaylorchen.com/
+  github: https://github.com/AnnieTaylorCHEN
+  image: images/annie-taylor-chen.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
 - name: Fabian Schultz
   type: individual
   description: >-
@@ -165,9 +177,9 @@
     Feel free to contact me if you want to launch a blazingly fast website!
   location: Darmstadt, Germany
   website: https://www.lekoarts.de
-  github: https://github.com/LeKoArts
+  github: https://github.com/LekoArts
   image: images/lekoarts.jpg
-  for_hire: true
+  for_hire: false
   portfolio: true
 - name: Ventura Digitalagentur
   type: agency
@@ -518,5 +530,35 @@
     We’re looking forward to win-win cooperation with you!
   location: Ukraine
   website: https://softblues.io/
+  for_hire: true
+  portfolio: true
+- name: Amruth Pillai
+  type: individual
+  description: >-
+    I build beautiful websites and applications that help people around the world. Some of my open source works include Reactive Resume, a resume builder that has over 1k+ starts, and Be Thrifty Today, a money management app that has about 1000+ downloads on Google Play Store.
+  location: Bangalore, India
+  website: https://amruthpillai.com
+  github: https://github.com/AmruthPillai
+  image: images/amruth-pillai.png
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: John Kavanagh
+  type: individual
+  description: >-
+    John is a specialist front-end web developer based in Brighton in the UK. With close to two decades of hands-on development experience, he specialises in building fundamentally well-engineered, maintainable, testable and scalable front-end code.  He delivers carefully-crafted, semantic and intuitive websites and SPAs using React and Gatsby.
+  location: Brighton, UK
+  website: https://johnkavanagh.co.uk
+  github: https://github.com/johnkavanagh/
+  image: images/john-kavanagh.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Webplace
+  type: agency
+  image: images/webplace.png
+  description: >-
+    Webplace have been providing exceptional digital experiences for a vast range of clients since 2003. We provide digital strategy, UX / UI design, Web development, QA testing and ongoing maintenance & support. We are experts at WordPress, Drupal & Joomla and now use WordPress and Drupal as a Headless CMS with React / Gatsby as the frontend.
+  website: https://www.webplace.com.au
   for_hire: true
   portfolio: true

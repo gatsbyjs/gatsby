@@ -39,8 +39,10 @@ test/**/public
 .DS_Store
 public/
 node_modules/
+e2e-tests/gatsby-pnp/
 .cache/
 .netlify
+.Rhistory
 
 # IDE specific
 .idea/

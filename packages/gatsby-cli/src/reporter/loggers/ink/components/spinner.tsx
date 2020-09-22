@@ -2,11 +2,11 @@ import React from "react"
 import { Box } from "ink"
 import InkSpinner from "ink-spinner"
 
-interface IProps {
+interface ISpinnerProps {
   text: string
   statusText?: string
 }
-export function Spinner({ text, statusText }: IProps): JSX.Element {
+export function Spinner({ text, statusText }: ISpinnerProps): JSX.Element {
   let label = text
   if (statusText) {
     label += ` — ${statusText}`

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "./localized-link"
-import { Trans } from "@lingui/macro"
 import {
   mediaQueries,
   breakpoints,
@@ -67,15 +66,13 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
                 "&&": {
                   color: isActive ? `link.color` : `textMuted`,
                   border: 0,
-                  borderBottom: t =>
-                    isActive
-                      ? `1px solid ${t.colors.link.hoverBorder}`
-                      : `none`,
+                  borderBottom: isActive ? 1 : 0,
+                  borderColor: `link.hoverBorder`,
                   transition: t =>
                     `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
                   ":hover": {
                     color: `link.color`,
-                    borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
+                    borderColor: `link.hoverBorder`,
                   },
                 },
               }}
@@ -120,14 +117,8 @@ function TableOfContents({ items, depth, location }) {
       sx={{
         mb: [8, null, null, null, null, 0],
         pb: [6, null, null, null, null, 0],
-        borderBottom: t => [
-          `1px solid ${t.colors.ui.border}`,
-          null,
-          null,
-          null,
-          null,
-          0,
-        ],
+        borderBottom: [1, null, null, null, null, 0],
+        borderColor: `ui.border`,
       }}
     >
       <h2
@@ -139,7 +130,7 @@ function TableOfContents({ items, depth, location }) {
           textTransform: `uppercase`,
         }}
       >
-        <Trans>Table of Contents</Trans>
+        Table of Contents
       </h2>
       <ul
         sx={{

@@ -129,8 +129,8 @@ export default function Modal({
                 height: 40,
                 left: `auto`,
                 position: `absolute`,
-                right: t => t.space[7],
-                top: t => t.space[8],
+                right: 7,
+                top: 8,
                 width: 40,
                 "&:hover": {
                   bg: `ui.hover`,

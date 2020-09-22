@@ -1,0 +1,93 @@
+# Setup Gatsby with WordPress REST API 
+
+This recipes sets up and configures `gatsby-source-wordpress` and starter page templates for a WordPress-powered Gatsby site.
+
+This recipe:
+
+---
+
+Installs necessary NPM packages.
+
+<NPMPackage name="gatsby-source-wordpress" />
+
+---
+
+Installs `gatsby-source-wordpress` to pull the WordPress data into Gatsby. Note, once this recipe finishes, you will need to update the config to point to your actual WordPress URL.
+
+
+<GatsbyPlugin name="gatsby-source-wordpress" options={{
+  baseUrl: `cms.learnjam.org`,
+  protocol: `https`,
+  hostingWPCOM: false,
+  useACF: false,
+  includedRoutes: [
+      "**/posts",
+      "**/pages",
+      "**/users",
+      "**/categories",
+      "**/tags",
+  ]
+}} />
+
+---
+
+Creates a local Gatsby plugin that create pages for the WordPress data.
+
+<File
+  path="./plugins/gatsby-plugin-wordpress/gatsby-node.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/gatsby-node.restapi.js"
+/>
+
+<File
+  path="./plugins/gatsby-plugin-wordpress/package.json"
+  content="https://gist.githubusercontent.com/crock/8e310872e9b3dd6753ee4d63f33a05f8/raw/d9b5df87d7eb1f72e3724f9ba1ba4799210dabad/package.json"
+/>
+
+---
+
+Installs the local plugin.
+
+<GatsbyPlugin name="gatsby-plugin-wordpress" />
+
+---
+
+Creates basic post, page, category, tag, and user templates.
+
+<File
+  path="src/templates/post.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/post.js"
+/>
+
+<File
+  path="src/templates/page.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/page.js"
+/>
+
+<File
+  path="src/templates/category.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/category.js"
+/>
+
+<File
+  path="src/templates/tag.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/tag.js"
+/>
+
+<File
+  path="src/templates/user.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/user.js"
+/>
+
+
+---
+
+After installing this recipe, update `gatsby-config.js` to point to your WordPress instance. Then start Gatsby and check out your new pages powered by WordPress!
+
+Be sure to have one of each post type on your WordPress site for the site to build without errors: 
+- Post
+- Page
+- Category
+- Tag
+- User
+
+Also, be sure to import your custom layout component at the top of each page template.

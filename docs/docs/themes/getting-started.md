@@ -37,7 +37,7 @@ module.exports = {
     title: "My Blog Title",
     author: "My Name",
     description: "My site description...",
-    siteUrl: "https://www.gatsbyjs.org/",
+    siteUrl: "https://www.gatsbyjs.com/",
     social: [
       {
         name: "twitter",
@@ -52,7 +52,7 @@ module.exports = {
 }
 ```
 
-### 2. The starter scaffolds out example blog posts.
+### 2. The starter scaffolds out example blog posts
 
 ```mdx:title=/content/posts/hello-world.mdx
 ---

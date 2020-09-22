@@ -37,8 +37,6 @@ We are organizing issues into four different areas:
 
 We love our docs! Improving docs is a never-ending effort, and we have some [stub articles](https://www.gatsbyjs.org/contributing/stub-list/) (docs we want to exist, but haven't been written yet). If you're interested in contributing to the docs and doing some writing, check out [docs issues labelled with Hacktoberfest][docs-filter].
 
-[docs-filter]: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22Hacktoberfest%22+label%3A%22type%3A+documentation%22
-
 ### Docs localization
 
 Want to do help us translate the Gatsby docs? Consider contributing to an existing repo (we have Spanish and Russian so far!), or start a new language translation by [opening an issue](https://www.gatsbyjs.org/contributing/how-to-file-an-issue/) to create a new repo and earn Hacktoberfest credit by contributing PRs to that repo.
@@ -50,8 +48,6 @@ Want to do help us translate the Gatsby docs? Consider contributing to an existi
 ### [OSS][oss]
 
 Make OSS contributions to Gatsby plugins, transformers and core by searching [OSS Hacktoberfest issues][oss].
-
-[oss]: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22Hacktoberfest%22+-label%3A%22type%3A+documentation%22+
 
 ### Ecosystem
 
@@ -68,3 +64,6 @@ Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](h
 
 1. To provide a range of issues with a clearly defined scope, with minimal context needed outside of the issue description.
 2. To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
+
+[docs-filter]: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22Hacktoberfest%22+label%3A%22type%3A+documentation%22
+[oss]: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22Hacktoberfest%22+-label%3A%22type%3A+documentation%22+

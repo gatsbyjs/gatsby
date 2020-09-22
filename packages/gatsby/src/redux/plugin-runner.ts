@@ -33,7 +33,7 @@ interface ICreatePageAction {
       id: string
     }
     updatedAt: number
-    pluginCreator__NODE: string
+    pluginCreator___NODE: string
     pluginCreatorId: string
     componentPath: string
   }

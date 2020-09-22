@@ -127,6 +127,6 @@ Sanity already comes with a capable and easy to use image pipeline on a superfas
 
 Gatsby has already set high standards for developer experience by striking a good balance between code and configuration. We have worked hard to make it as effortless as possible to use [Sanity.io](https://www.sanity.io) as a content backend with Gatsby, and we hope that you will enjoy building websites with this combo.
 
-If you quickly want to get started with a full JAMstack combo, check out the [company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we put up. It features both a Studio configuration and a website template with projects, blog, people, and pages. With configuration files to put the website on either [Now](https://zeit.co) or [Netlify](https://netlify.com). You should be up in minutes.
+If you quickly want to get started with a full JAMstack combo, check out the [company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we put up. It features both a Studio configuration and a website template with projects, blog, people, and pages. With configuration files to put the website on either [Vercel](https://vercel.com) or [Netlify](https://netlify.com). You should be up in minutes.
 
 We're very excited to see whatever you do with it and welcome you to come with all your questions, feedback, and ideas in [our developer community](https://slack.sanity.io).

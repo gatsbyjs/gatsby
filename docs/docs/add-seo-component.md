@@ -28,7 +28,7 @@ module.exports = {
 
 First create a new component with this initial boilerplate.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
@@ -60,7 +60,7 @@ As the SEO component should also be usable in other files, e.g. a template file,
 
 Now define the query and pass it to `useStaticQuery`. You can also alias query items, so `title` gets renamed to `defaultTitle`.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
   const { location } = useLocation()
   const { site } = useStaticQuery(query)
@@ -88,7 +88,7 @@ const query = graphql`
 
 The next step is to destructure the data from the query and create an object that checks if the props were used. If not, the default values are applied. Aliasing the properties comes in handy here to avoid name collisions.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
   const { pathname } = useLocation()
   const { site } = useStaticQuery(query)
@@ -117,7 +117,7 @@ export default SEO
 
 The last step is to return this data with the help of `Helmet`. Your complete SEO component should look like this.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
@@ -215,6 +215,6 @@ const query = graphql`
 You could also put the Facebook and Twitter meta-tags into their own components, add custom favicons you placed in your `static` folder, and add [schema.org](https://schema.org/) data (Google will use that for their [Structured Data](https://developers.google.com/search/docs/guides/intro-structured-data)). To see how that works you can have a look at these two examples:
 
 - [marisamorby.com](https://github.com/marisamorby/marisamorby.com/blob/master/packages/gatsby-theme-blog-sanity/src/components/seo.js)
-- [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic/blob/master/src/components/SEO/SEO.jsx)
+- [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic/blob/master/src/components/SEO/SEO.jsx)
 
 As mentioned at the beginning you are also able to use the component in templates, like in [this example](https://github.com/jlengstorf/marisamorby.com/blob/6e86f845185f9650ff95316d3475bb8ac86b15bf/src/templates/post.js#L12-L18).

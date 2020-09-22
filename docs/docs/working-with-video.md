@@ -2,13 +2,6 @@
 title: Working with Video
 ---
 
-- [Sourcing video from a host](#sourcing-video-from-a-host)
-- [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
-- [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
-- [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
-- [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
-- [Using custom video players](#using-custom-video-players)
-
 ## Sourcing video from a host
 
 The easiest method for including video on a Gatsby site is to source an uploaded file from a site like YouTube, Vimeo, or Twitch. Using the source URL from one of those hosts, you can use Remark plugins or create a custom `<iframe>` solution to embed videos into your Gatsby site.
@@ -41,7 +34,7 @@ const Video = ({ videoSrcURL, videoTitle, ...props }) => (
 export default Video
 ```
 
-You would then include this component in a template or page with a video source URL and title passed in as props. The data for video URLs and titles can be sourced in multiple ways, such as importing JSON or [querying data from Markdown with GraphQL](#querying-data-from-markdown-with-graphql). You can also hard-code video data for something fun, like a custom 404 page with an Easter egg YouTube video:
+You would then include this component in a template or page with a video source URL and title passed in as props. The data for video URLs and titles can be sourced in multiple ways, such as importing JSON or [querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql). You can also hard-code video data for something fun, like a custom 404 page with an Easter egg YouTube video:
 
 ```jsx:title=src/pages/404.js
 import React from "react"
@@ -144,11 +137,13 @@ If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, yo
 import React from "react"
 import DogVideo from "../assets/dog.mp4"
 
-export default () => (
-  <video controls>
-    <source src={DogVideo} type="video/mp4" /> // highlight-line
-  </video>
-)
+export default function Home() {
+  return (
+    <video controls>
+      <source src={DogVideo} type="video/mp4" /> // highlight-line
+    </video>
+  );
+}
 
 ```
 
@@ -164,12 +159,14 @@ import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import DogOgg from "../assets/dog.ogg" // highlight-line
 
-export default () => (
-  <video controls>
-    <source src={DogMp4} type="video/mp4" />
-    <source src={DogOgg} type="video/ogg" /> // highlight-line
-  </video>
-)
+export default function Home() {
+  return (
+    <video controls>
+      <source src={DogMp4} type="video/mp4" />
+      <source src={DogOgg} type="video/ogg" /> // highlight-line
+    </video>
+  );
+}
 
 ```
 
@@ -197,14 +194,16 @@ import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import Captions from "file-loader!../assets/captions.vtt" // highlight-line
 
-export default () => (
-  <video controls>
-    <source src={DogMp4} type="video/mp4" />
-    // highlight-start
-    <track kind="captions" srcLang="en" src={Captions} />
-    // highlight-end
-  </video>
-)
+export default function Home() {
+  return (
+    <video controls>
+      <source src={DogMp4} type="video/mp4" />
+      // highlight-start
+      <track kind="captions" srcLang="en" src={Captions} />
+      // highlight-end
+    </video>
+  )
+}
 ```
 
 The kind attribute can be of a variety of different types including `captions`, `subtitles`, and `descriptions`, among others. The `srcLang` defines English as the language used in the captions in the example, and the captions file imported is used as the source. You can read about the specific attributes of a [`<track>` on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track).

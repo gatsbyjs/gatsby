@@ -32,7 +32,7 @@ const randomChanceToBeTrue = (): boolean => {
       // One quarter year in days (roughly)
       (30 * 3)
   )
-  const randomNumberWithinQuarter = randomNumber * currentQuarter
+  const randomNumberWithinQuarter = randomNumber + 30 * 3 * (currentQuarter - 1)
 
   return randomNumberWithinQuarter === getDayOfYear(new Date())
 }
@@ -76,16 +76,17 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   //     received a request from us.
   if (lastDateValue) {
     const lastDate = new Date(lastDateValue)
-    const monthsSinceLastRequest = lastDate.getMonth() - new Date().getMonth()
+    const threeMonthsAgo = new Date()
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 
-    if (monthsSinceLastRequest < 3) {
+    if (lastDate > threeMonthsAgo) {
       return false
     }
   }
 
   // Heuristic 5
   const versionPoints = getGatsbyVersion().split(`.`)
-  let latestVersionPoints: string[] = []
+  let latestVersionPoints: Array<string> = []
   try {
     latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
   } catch (e) {

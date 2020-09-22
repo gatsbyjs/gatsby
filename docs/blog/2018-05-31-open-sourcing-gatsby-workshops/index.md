@@ -8,7 +8,7 @@ In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC
 
 We will keep improving these workshops and hope you'll help us do that! Share your ideas and report how these workshops go for you in the [Open source repo](https://github.com/gatsbyjs/gatsby) through issues and PRs (if you ran into problems with the workshops and/or have ideas of how to improve them) or [Twitter](https://twitter.com/gatsbyjs) if you want to share an upcoming workshops you're running.
 
-# What we learned in the first few workshops
+## What we learned in the first few workshops
 
 Here is a photo of how many notes I took during our first workshop in San Francisco (I crossed out notes as I converted them to issues in GitHub):
 
@@ -24,7 +24,7 @@ And that's just one page of notes (there were many more). The biggest takeaways 
 - People wanted to know how Gatsby works with React and GraphQL, and we’re still working on diagrams to illustrate those concepts
 - If React and GraphQL are new to people, they seem to be the most difficult parts of learning to use Gatsby
 
-# New tutorials!
+## New tutorials!
 
 People are interested in tutorials that go beyond the basic [Tutorial](/tutorial/), so we created three new tutorials:
 
@@ -32,7 +32,7 @@ People are interested in tutorials that go beyond the basic [Tutorial](/tutorial
 - [Adding Images to a WordPress Site](/tutorial/wordpress-image-tutorial/)
 - [Creating a Source Plugin](/docs/creating-a-source-plugin/)
 
-## Why you might want to host a workshop
+### Why you might want to host a workshop
 
 Here are some advantages that we experienced in the workshops; if these appeal to you, you could consider hosting your own workshop at your work, a meetup, or any other setting that makes sense!
 
@@ -42,7 +42,7 @@ Here are some advantages that we experienced in the workshops; if these appeal t
 
 We'd love to hear how it goes and hope that you'll use the resources below.
 
-# Where to find workshop resources
+## Where to find workshop resources
 
 Please use the following links to find workshop materials in the Gatsby open source repo:
 
@@ -53,7 +53,7 @@ Please use the following links to find workshop materials in the Gatsby open sou
 
 We hope these workshop materials help you share Gatsby at work, meetups, and wherever else it makes sense. Let us know how it goes and how you customize or modify these workshops!
 
-# How you can contribute
+## How you can contribute
 
 If you'd like to contribute to making workshops and tutorials more awesome, here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the main [tutorials](/tutorial/) in the workshops, so edits and improvements to the tutorials also improve the workshop)
 

@@ -30,7 +30,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 
 ### ✋ Create a production build
 
-1.  Stop the development server (if it's still running) and run the following command:
+1. Stop the development server (if it's still running) and run the following command:
 
 ```shell
 gatsby build
@@ -38,7 +38,7 @@ gatsby build
 
 > 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
 
-2.  View the production site locally. Run:
+2. View the production site locally. Run:
 
 ```shell
 gatsby serve
@@ -50,13 +50,13 @@ Once this starts, you can view your site at `http://localhost:9000`.
 
 Now you're going to run your first Lighthouse test.
 
-1.  If you haven't already done so, open the site in Chrome Incognito Mode so no extensions interfere with the test. Then, open up the Chrome DevTools.
+1. If you haven't already done so, open the site in Chrome Incognito Mode so no extensions interfere with the test. Then, open up the Chrome DevTools.
 
-2.  Click on the "Audits" tab where you'll see a screen that looks like:
+2. Click on the "Audits" tab where you'll see a screen that looks like:
 
 ![Lighthouse audit start](./lighthouse-audit.png)
 
-3.  Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
+3. Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
@@ -80,7 +80,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 ### ✋ Using `gatsby-plugin-manifest`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-manifest
@@ -121,13 +121,13 @@ Another requirement for a website to qualify as a PWA is the use of a [service w
 
 ### ✋ Using `gatsby-plugin-offline`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-offline
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -166,13 +166,13 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 ### ✋ Using `React Helmet` and `gatsby-plugin-react-helmet`
 
-1.  Install both packages:
+1. Install both packages:
 
 ```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2.  Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -210,7 +210,7 @@ module.exports = {
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta, title }) {
@@ -291,9 +291,9 @@ SEO.propTypes = {
 export default SEO
 ```
 
-The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work with in the rest of your project. Pretty cool, right?
+The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work within the rest of your project. Pretty cool, right?
 
-4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
+4. Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
 
 ```jsx:title=src/templates/blog-post.js
 import React from "react"
@@ -302,7 +302,7 @@ import Layout from "../components/layout"
 // highlight-next-line
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   return (
     <Layout>
@@ -355,9 +355,9 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Starters
 
-1.  [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](https://gatsbyjs.github.io/gatsby-starter-default/)_
-2.  [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](https://gatsbyjs.github.io/gatsby-starter-blog/)_
-3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
+1. [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](https://gatsbyjs.github.io/gatsby-starter-default/)_
+2. [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](https://gatsbyjs.github.io/gatsby-starter-blog/)_
+3. [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.app/)_
 
 ## That's all, folks
 

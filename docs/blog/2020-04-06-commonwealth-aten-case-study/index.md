@@ -37,7 +37,7 @@ Gatsby also made the scorecard site project “really easy to just package up an
 
 Commonwealth Fund loved the resulting website.
 
-The client appreciated that, unlike the original site’s long, data-dense, single-page presentations, Aten’s solution created an accessible yet in-depth presentation for the data visualizations. The new [Commonwealth Fund Scorecard](https://scorecard.commonwealthfund.org/) is deeply informative without being the least bit dense orl dull, and it’s beautifully designed. The scorecard site, in fact, won in three categories in the 14th annual [W3 Awards](https://www.w3award.com/); one gold for data visualizations, and two silver awards (one for visual appeal and one in the nonprofit category).
+The client appreciated that, unlike the original site’s long, data-dense, single-page presentations, Aten’s solution created an accessible yet in-depth presentation for the data visualizations. The new [Commonwealth Fund Scorecard](https://scorecard.commonwealthfund.org/) is deeply informative without being the least bit dense or dull, and it’s beautifully designed. The scorecard site, in fact, won in three categories in the 14th annual [W3 Awards](https://www.w3award.com/); one gold for data visualizations, and two silver awards (one for visual appeal and one in the nonprofit category).
 
 Ken and his team are already building the 2020 scorecard, targeted for release in June—”Using Gatsby, of course.” Additionally, their success with the scorecard project has led to further contracts for Aten from the Commonwealth Fund.
 

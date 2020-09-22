@@ -2,7 +2,7 @@
 title: Search Engine Optimization (SEO) and Social Sharing Cards with Gatsby
 ---
 
-Perhaps you've been approached by an SEO _expert_ who can maximize your revenue and page views just by following these **Three Simple Tricks**! Relatively few people make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
+Perhaps you've been approached by an SEO _expert_ who can maximize your revenue and page views by following these **Three Simple Tricks**! Relatively few people make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
 
 - Implement SEO patterns with [react-helmet][react-helmet]
 - Create an optimized social sharing card for Twitter, Facebook, and Slack
@@ -47,7 +47,7 @@ Using the power and flexibility of React, you can create a React component to po
 ```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
@@ -82,7 +82,7 @@ This component doesn't _do_ anything yet, but it's the foundation for a useful, 
 
 ```jsx:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta }) {
@@ -151,7 +151,7 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -287,14 +287,14 @@ A canonical link is a hint to a search engine that this is the _source_ for this
 To implement this functionality, you need to do the following:
 
 1. Enable passing a `pathname` prop to your SEO component
-1. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
+2. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
    - A canonical link should be _absolute_ (e.g. `https://your-site.com/canonical-link`), so you will need to prefix with this `siteUrl`
-1. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
+3. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -492,7 +492,7 @@ Let's see how an attached image will look like. For this tutorial, you can use t
 
 The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
 
-Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond which they will simply ignore your image.
+Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond which they will ignore your image.
 
 #### Querying with GraphQL
 
@@ -612,8 +612,8 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 - Twitter uses `twitter:` keywords. See [Twitter Cards][twitter-cards] for more info
 - Slack reads tags in the following order ([source][slack-unfurl])
   1. oEmbed server
-  1. Twitter cards tags / Facebook Open Graph tags
-  1. HTML meta tags
+  2. Twitter cards tags / Facebook Open Graph tags
+  3. HTML meta tags
 - Both [Google][google-json-ld] and [Apple][apple-json-ld] offer support for JSON-LD, which is _not covered_ in this guide
   - If you'd like to learn more, check out [this excellent guide](https://nystudio107.com/blog/json-ld-structured-data-and-erotica) for more info on JSON-LD
 - Check out the [`gatsby-seo-example`][gatsby-seo-example] for a ready-to-use starter for powering your Markdown-based blog.

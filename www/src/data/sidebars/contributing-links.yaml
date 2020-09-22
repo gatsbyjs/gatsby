@@ -26,15 +26,13 @@
       link: /contributing/code-of-conduct/
     - title: Gatsby Style Guide
       link: /contributing/gatsby-style-guide/
-    - title: Translating Gatsbyjs.org
+    - title: Translating the Gatsby Documentation
       link: /contributing/translation/
       items:
         - title: Starting a New Translation
           link: /contributing/translation/new-translations/
         - title: Contributing to a Translation
           link: /contributing/translation/translators/
-        - title: Translating UI Messages
-          link: /contributing/translation/ui-messages/
         - title: Keeping Translations Up-to-date
           link: /contributing/translation/sync-guide/
         - title: Translation Maintainer Guide
@@ -87,20 +85,12 @@
           link: /contributing/blog-contributions/
         - title: Code Contributions
           link: /contributing/code-contributions/
-        - title: Website Contributions
-          link: /contributing/website-contributions/
           items:
             - title: Setting Up Your Local Dev Environment
               link: /contributing/setting-up-your-local-dev-environment/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:
-            - title: Submit to Site Showcase
-              link: /contributing/site-showcase-submissions/
-            - title: Submit to Creator Showcase
-              link: /contributing/submit-to-creator-showcase/
-            - title: Submit to Starter Library
-              link: /contributing/submit-to-starter-library/
             - title: Submit to Plugin Library
               link: /contributing/submit-to-plugin-library/
         - title: Docs & Blog Components

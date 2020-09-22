@@ -7,13 +7,13 @@ tags: ["gatsby-inc", "releases", "gatsby-cloud"]
 
 I'm excited to announce Gatsby Recipes, a new tool to automate common site building tasks.
 
-Recipes are run from the CLI and automate common tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more.
+Recipes are run from the CLI and automate common tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up TypeScript, and many more.
 
-Gatsby ships with a number of default recipes and it's easy to create your own for use on your sites. Recipes allow you to install NPM packages, add Gatsby plugins, generate pages and other code. Recipes are written using markdown and React components.
+Gatsby ships with a number of default recipes and it's easy to create your own for use on your sites. Recipes allow you to install npm packages, add Gatsby plugins, generate pages and other code. Recipes are written using Markdown and React components.
 
-To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding Typescript, ThemeUI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
+To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding TypeScript, Theme UI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
 
-**Watch me add [ThemeUI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
+**Watch me add [Theme UI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./gatsby-recipes-theme-ui.mp4" />
@@ -30,7 +30,7 @@ We want there to be 10s of thousands of recipes you can search, run, and remix p
 
 ## Human-friendly automation
 
-Recipes are written in [MDX](https://mdxjs.com/)—a combination of Markdown and React components—readable by both humans and machines. (Other “infrastructure as code” automations, like AWS CloudFormation, use kinda-sorta legible yaml templates that favor the machines). We picked MDX to make Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to _declare_ to Gatsby Recipes the desired state of the world. This means Gatsby Recipes read like actual little recipes. Writing and using them could be...dare we say it..._fun_.
+Recipes are written in [MDX](https://mdxjs.com/)—a combination of Markdown and React components—readable by both humans and machines. (Other “[infrastructure as code](/docs/glossary/infrastructure-as-code/)” automations, like AWS CloudFormation, use kinda-sorta legible YAML templates that favor the machines). We picked MDX to make Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to _declare_ to Gatsby Recipes the desired state of the world. This means Gatsby Recipes read like actual little recipes. Writing and using them could be...dare we say it..._fun_.
 
 We take a lot of inspiration from literate programming tools like [Eve](http://witheve.com/deepdives/literate.html) and [HyperCard](https://en.wikipedia.org/wiki/HyperCard).
 
@@ -51,7 +51,7 @@ We're very excited to ship Recipes. We care a lot about the Gatsby developer exp
 
 ### What does a recipe look like?
 
-Recipes are written in MDX, so a combination of Markdown and React components. The React components instruct Gatsby Recipes to make sure things exist like files or NPM packages e.g. .
+Recipes are written in MDX, so a combination of Markdown and React components. The React components instruct Gatsby Recipes to make sure things exist like files or npm packages e.g. Emotion.
 
 A full recipe for adding the CSS-in-JS library Emotion looks like the following:
 
@@ -134,6 +134,6 @@ Some links to interesting bits of code:
 - [CLI app](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/cli.js)
 - [File resource](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/providers/fs/file.js)
 - [Gatsby Plugin resource](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/providers/gatsby/plugin.js)
-- [XState Machine for running a recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/recipe-machine.js)
+- [XState Machine for running a recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/recipe-machine/index.js)
 - [Code for generating the GraphQL schema](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/create-types.js)
 - [Recipe MDX parsing](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/parser/index.js)

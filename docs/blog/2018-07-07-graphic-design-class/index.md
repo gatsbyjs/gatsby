@@ -25,13 +25,13 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 [Melany Dierks](http://mywetpaintstudio.com/) ([source](https://github.com/reguv760/mmd-site2))
 
-[![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
+[![Image of graphic designer's site](graphic-design-2.png)](https://myceevee.netlify.app/)
 
-[Khabarovsk](http://myceevee.netlify.com/) ([source](https://github.com/msergushova/myceevee))
+[Khabarovsk](https://myceevee.netlify.app/) ([source](https://github.com/msergushova/myceevee))
 
-[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.com/)
+[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.app/)
 
-[TruDesigns](https://trudesignsongatsby.netlify.com/) ([source](https://github.com/trudesigns/newStuff))
+[TruDesigns](https://trudesignsongatsby.netlify.app/) ([source](https://github.com/trudesigns/newStuff))
 
 After our initial phone conversation, Phil responded to a series of interview questions via email.
 
@@ -45,7 +45,7 @@ Patrick wanted me to find a better, more modern solution and that’s where I st
 
 The speed is lightning fast. We removed WordPress entirely from the equation and replaced it with the more user-friendly, less of a headache [Contentful](https://www.contentful.com/).
 
-He also liked the cost-effectiveness of Godaddy but when things broke, it was a huge time suck to repair. We swapped Godaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our GitHub repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
+He also liked the cost-effectiveness of GoDaddy but when things broke, it was a huge time suck to repair. We swapped GoDaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our GitHub repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
 
 Patrick loved Gatsby so much he created a new product line where he is actively looking to help companies build sites using GatsbyJS and all the other tools he used on his current site.
 
@@ -57,9 +57,9 @@ Since I just built a site using GatsbyJS, I decided this was the perfect topic t
 
 Structure of the class:
 
-1.  _Taught them React._ They loved `create-react-app` and how it magically created a server and gave them hot code push powers.
-2.  _Taught them NextJS._ They liked how routing was removed from the equation and they could just drop stuff into the pages directory and they would magically work.
-3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
+1. _Taught them React._ They loved `create-react-app` and how it magically created a server and gave them hot code push powers.
+2. _Taught them NextJS._ They liked how routing was removed from the equation and they could just drop stuff into the pages directory and they would magically work.
+3. _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
 
 <Pullquote>
   Once we jumped to learn GatsbyJS, some interesting things happened. A light
@@ -73,12 +73,12 @@ Here’s a list of what they love about Gatsby:
 - _Hot reloading_ gives them instant visual feedback like they get in Illustrator and Photoshop
 - _Coding in React_ is fun. By fun, they mean it's easy to add modules, don’t have to build everything from scratch, and they already knew enough about creating React components from Phil’s teaching to jump into Gatsby
 
-* _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
-* _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
-* _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
-* _Uses simple commands:_ They work locally and type `$ npm run develop`. A server opens up and they see and can edit their site in real time. Easy peasy. They want to build for production they use `$ gatsby build && gatsby serve`. Simple!
-* _Netlify:_ When I showed them Netlify and how they could quickly (and freely) push their site to GitHub and hook it up to Netlify so that it would automatically build it and make their site live! They were blown away.
-* _Fast to build:_ They were able to create their final projects in 3 weeks
+- _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
+- _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
+- _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
+- _Uses simple commands:_ They work locally and type `$ npm run develop`. A server opens up and they see and can edit their site in real time. Easy peasy. They want to build for production they use `$ gatsby build && gatsby serve`. Simple!
+- _Netlify:_ When I showed them Netlify and how they could quickly (and freely) push their site to GitHub and hook it up to Netlify so that it would automatically build it and make their site live! They were blown away.
+- _Fast to build:_ They were able to create their final projects in 3 weeks
 
 ### Anything they didn’t like?
 
@@ -94,7 +94,7 @@ They suggest that a link be added to the home page of Gatsby pointing to it and 
 
 It wasn’t just Gatsby but the whole collaborative team of Gatsby, Git, GitHub, and Netlify that broke through to every student this term. It was amazing to witness this as a teacher. I also tried to show them blogs and Markdown but that wasn’t super smooth and none of the students added that part to their final project.
 
-In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CAAS sites.
+In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CaaS sites.
 
 ### Phil's final thoughts:
 

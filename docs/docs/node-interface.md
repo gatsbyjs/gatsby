@@ -9,20 +9,23 @@ Gatsby is modeled using nodes.
 
 The basic node data structure is as follows:
 
-```flow
-id: String,
-children: Array[String],
-parent: String,
-fields: Object,
-internal: {
-  contentDigest: String,
-  mediaType: String,
-  type: String,
-  owner: String,
-  fieldOwners: Object,
-  content: String,
+```ts
+interface Node {
+  id: string
+  children?: Array<string>
+  parent?: string
+  fields: object
+  internal: {
+    contentDigest: string
+    mediaType?: string
+    type: string
+    owner: string
+    fieldOwners: object
+    content?: string
+    description?: string
+  }
+  [key: string]: unknown // ...other fields specific to this type of node
 }
-...other fields specific to this type of node
 ```
 
 ### `parent`
@@ -33,7 +36,7 @@ A key reserved for plugins who wish to extend other nodes.
 
 A digest "Hash", or short digital summary, of the content of this node (for example, `md5sum`).
 
-The digest should be unique to the content of this node since it's used for caching. If the content changes, this digest should also change. There's a helper function called [createContentDigest](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-core-utils/src/create-content-digest.js) to create an `md5` digest.
+The digest should be unique to the content of this node since it's used for caching. If the content changes, this digest should also change. There's a helper function called [createContentDigest](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-core-utils/src/create-content-digest.ts) to create an `md5` digest.
 
 ### `mediaType`
 
@@ -54,6 +57,10 @@ Stores which plugins created which fields. This field is added by gatsby itself 
 ### `content`
 
 Optional field exposing the raw content for this node that transformer plugins can take and further process.
+
+### `description`
+
+Text description of the node.
 
 ## Source plugins
 

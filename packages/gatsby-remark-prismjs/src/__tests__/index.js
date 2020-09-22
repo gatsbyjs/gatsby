@@ -1,4 +1,5 @@
 const remark = require(`remark`)
+const cheerio = require(`cheerio`)
 let plugin
 
 describe(`remark prism plugin`, () => {
@@ -107,6 +108,20 @@ describe(`remark prism plugin`, () => {
     })
   })
 
+  describe(`diff`, () => {
+    test(`supports language specifier`, () => {
+      const code = `\`\`\`diff-javascript
+-    let foo = bar.baz([1, 2, 3]);
+-    foo = foo + 1;
++    const foo = bar.baz([1, 2, 3]) + 1;
+     console.log(foo);
+\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+  })
+
   describe(`numberLines`, () => {
     it(`adds line-number markup when necessary`, () => {
       const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``
@@ -120,6 +135,24 @@ describe(`remark prism plugin`, () => {
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { showLineNumbers: true })
       expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`correctly counts line-numbers for markup using highlight classes`, () => {
+      const code =
+        `\`\`\`js\n` +
+        `function highlightTest() {\n` +
+        `// highlight-start\n` +
+        `return "this is a highlight test"\n` +
+        `// highlight-end\n` +
+        `}\n` +
+        `\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { showLineNumbers: true })
+
+      const htmlResult = markdownAST.children[0].value
+      const $ = cheerio.load(htmlResult)
+      const numberOfLineNumbers = $(`.line-numbers-rows > span`).length
+      expect(numberOfLineNumbers).toEqual(3)
     })
 
     it(`does not add line-number markup when not configured globally`, () => {

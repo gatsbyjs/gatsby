@@ -4,7 +4,6 @@ const traverse = require(`@babel/traverse`).default
 
 async function onCreateNode({
   node,
-  getNode,
   actions,
   loadNodeContent,
   createContentDigest,

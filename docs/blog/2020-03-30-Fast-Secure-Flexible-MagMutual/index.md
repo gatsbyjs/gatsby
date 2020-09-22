@@ -11,7 +11,7 @@ tags:
 
 MagMutual, a leading professional healthcare liability insurer, needed to redesign and re-platform the company’s [MagMutual.com](https://www.magmutual.com) website to further its core mission: to serve and protect policyholders.
 
-![Overview of the new MagMutal website UI](./MagMutual_design_sm.png)
+![Overview of the new MagMutual website UI](./MagMutual_design_sm.png)
 
 To achieve the company's vision for their new site, MagMutual collaborated with [Mediacurrent](https://www.mediacurrent.com/), the Atlanta-based open source development and digital marketing agency. The new MagMutual.com united Drupal and Gatsby to form a fully open source, enterprise-grade system that empowers MagMutual’s web team to closely yet easily manage content and customer experience.
 

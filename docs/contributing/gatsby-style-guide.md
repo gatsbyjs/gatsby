@@ -13,7 +13,7 @@ You don't have to be an expert in a
 topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
 If you’d like to help by writing an article, find a stub article in the Gatsby
-Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then
+Docs (with a gray instead of black title in the sidebar of the Docs), write the article, then
 [open a pull request (PR)](/contributing/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
 
 If you can't find a stub about the topic you'd like to write about, you can open a PR in GitHub that creates the stub and includes your draft article. Feel free to ask questions in the PR comments if you're not sure where to put a new article in the directory structure.
@@ -61,7 +61,7 @@ Possible sources of great research materials:
 - blogposts (on gatsbyjs.org and other sites)
 - docs (on gatsbyjs.org and other sites)
 - video tutorials
-- Discord, Spectrum, or Twitter conversations
+- Discord or Twitter conversations
 - search engine results
 - presentations you or others have given
 - textbooks
@@ -77,6 +77,30 @@ rounds of proofreading and editing before you're happy with your writing.
 
 Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
 [Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+
+### Use the linter
+
+Gatsby uses [`remark-lint`](https://github.com/remarkjs/remark-lint) and [`retext`](https://github.com/retextjs/retext) in order to check for common spelling, grammar, and formatting errors, including several of the suggestions in this guide. You can run the linter by typing the following on the command line:
+
+```shell
+yarn lint:docs
+```
+
+#### Updating the dictionary
+
+We use [`retext-spell`](https://github.com/retextjs/retext-spell) for spell checking the docs. Since the linter doesn't know about proper nouns, such as individual names or brand names, it may list these as errors:
+
+```text
+83:34-83:40  warning  `retext` is misspelt; did you mean `pretext`, `retest`?  retext                      retext-spell
+```
+
+You can add these words to the dictionary with the following command:
+
+```shell
+yarn update-dictionary
+```
+
+This will add all new words to the collective Gatsby dictionary, `dictionary.txt`. Commit this file along with the written docs, and be sure that actual misspellings aren't included.
 
 ## Word choice
 
@@ -153,7 +177,7 @@ Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://ww
 
 ### Mark localhost URLs as code strings
 
-Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs.
 
 ```markdown
 <!-- Good -->
@@ -195,7 +219,7 @@ Folder:
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
-Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby graphql", so the article title should ideally reflect common search terms.
+Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby GraphQL", so the article title should ideally reflect common search terms.
 
 Here are some title examples:
 
@@ -246,11 +270,25 @@ Use the following as reference when creating and editing docs:
   For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
+#### Code formatting: Inline code
+
+Ensure that variables, component names, function names, and packages that appear inline are escaped with backticks:
+
+```markdown
+<!-- Good -->
+
+The plugin `gatsby-transformer-something` provides several useful options, such as the `somethingArgs` variable that can be passed in to `createSchemaCustomization`.
+
+<!-- Bad -->
+
+The plugin gatsby-transformer-something provides several useful options, such as the somethingArgs variable that can be passed in to createSchemaCustomization.
+```
+
 #### Code formatting: Type tab
 
 Each code snippet will include a tab showing the language type the snippet contains. For example, the following YAML snippet will show a "YAML" tab...
 
-````
+````markdown
 ```yaml
 - id: John Smith
   bio: Thinks documentation is the coolest.
@@ -285,10 +323,10 @@ If a language keyword is omitted, the type will show as `TEXT` (as shown above).
 
 Where appropriate, add code titles to your code blocks. Switching between multiple files in the course of the document can confuse some readers. It's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, then add `:title=your-path-name` to it. Use it like so:
 
-````
+````markdown
 ```javascript:title=src/util/alert.js
-const s = "I solemnly swear that I'm up to no good.";
-alert(s);
+const s = "I solemnly swear that I'm up to no good."
+alert(s)
 ```
 ````
 
@@ -384,6 +422,7 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
 - Markdown
 - Node.js
+- webpack ([should always in lower-case letters, even at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
 
 A full-stack developer (adjective form with a dash) works on the full stack
 (noun form with no dash). The same goes with many other compound terms.

@@ -26,7 +26,7 @@ Let's create a `Header` component that queries for the site title from `gatsby-c
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-export default () => {
+export default function Header() {
   const data = useStaticQuery(graphql`
     query HeaderQuery {
       site {
@@ -78,13 +78,13 @@ export const useSiteMetadata = () => {
 }
 ```
 
-Then just import your newly created hook, like so:
+Then import your newly created hook, like so:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 
-export default () => {
+export default function Home() {
   const { title, siteUrl } = useSiteMetadata()
   return <h1>welcome to {title}</h1>
 }

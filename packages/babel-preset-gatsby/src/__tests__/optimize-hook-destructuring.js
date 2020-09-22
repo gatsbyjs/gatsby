@@ -1,5 +1,5 @@
 import { transform } from "@babel/core"
-import preset from "babel-preset-gatsby"
+import preset from "../index"
 import plugin from "../optimize-hook-destructuring"
 
 const trim = s => s.join(`\n`).trim().replace(/^\s+/gm, ``)
@@ -34,6 +34,18 @@ describe(`optimize-hook-destructuring`, () => {
 
     expect(output).toMatchInlineSnapshot(
       `"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"`
+    )
+  })
+
+  it(`should handle skipped items`, () => {
+    const input = trim`
+      import { useState } from 'react';
+      const [, setCount] = useState(0);
+    `
+
+    expect(() => babel(input)).not.toThrow()
+    expect(babel(input)).toMatchInlineSnapshot(
+      `"\\"use strict\\";var _react=require(\\"react\\");const{1:setCount}=(0,_react.useState)(0);"`
     )
   })
 })

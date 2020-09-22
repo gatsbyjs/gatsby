@@ -1,8 +1,13 @@
-import fs from "fs"
-import path from "path"
+import * as fs from "fs"
+import * as path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
-import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
+import {
+  defaultIcons,
+  doesIconExist,
+  addDigestToPath,
+  favicons,
+} from "./common"
 
 sharp.simd(true)
 
@@ -40,20 +45,33 @@ async function generateIcon(icon, srcIcon) {
 async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`)
 
-  let created = cache.get(cacheKey, srcIcon)
-
+  const created = cache.get(cacheKey, srcIcon)
   if (!created) {
     cache.set(cacheKey, true)
 
     try {
-      // console.log(`creating icon`, icon.src, srcIcon)
       await callback(icon, srcIcon)
     } catch (e) {
       cache.set(cacheKey, false)
       throw e
     }
-  } else {
-    // console.log(`icon exists`, icon.src, srcIcon)
+  }
+}
+
+/**
+ * Setup pluginOption defaults
+ */
+exports.onPreInit = (_, pluginOptions) => {
+  pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
+  pluginOptions.include_favicon = pluginOptions.include_favicon ?? true
+  pluginOptions.legacy = pluginOptions.legacy ?? true
+  pluginOptions.theme_color_in_head = pluginOptions.theme_color_in_head ?? true
+  pluginOptions.cacheDigest = null
+
+  if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
+    pluginOptions.cacheDigest = createContentDigest(
+      fs.readFileSync(pluginOptions.icon)
+    )
   }
 }
 
@@ -64,6 +82,7 @@ exports.onPostBootstrap = async (
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
     parentSpan,
   })
+
   activity.start()
 
   let cache = new Map()
@@ -126,6 +145,8 @@ const makeManifest = async ({
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
 
+  const faviconIsEnabled = pluginOptions.include_favicon ?? true
+
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
   delete manifest.legacy
@@ -165,7 +186,7 @@ const makeManifest = async ({
   })
 
   // Only auto-generate icons if a src icon is defined.
-  if (icon !== undefined) {
+  if (typeof icon !== `undefined`) {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
       throw new Error(
@@ -192,30 +213,50 @@ const makeManifest = async ({
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    //if cacheBusting is being done via url query icons must be generated before cache busting runs
-    if (cacheMode === `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+    /**
+     * Given an array of icon configs, generate the various output sizes from
+     * the source icon image.
+     */
+    async function processIconSet(iconSet) {
+      //if cacheBusting is being done via url query icons must be generated before cache busting runs
+      if (cacheMode === `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
         )
-      )
+      }
+
+      if (cacheMode !== `none`) {
+        iconSet = iconSet.map(icon => {
+          let newIcon = { ...icon }
+          newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
+          return newIcon
+        })
+      }
+
+      //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+      if (cacheMode !== `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
+        )
+      }
+
+      return iconSet
     }
 
-    if (cacheMode !== `none`) {
-      manifest.icons = manifest.icons.map(icon => {
-        let newIcon = { ...icon }
-        newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
-        return newIcon
-      })
-    }
+    manifest.icons = await processIconSet(manifest.icons)
 
-    //if file names are being modified by cacheBusting icons must be generated after cache busting runs
-    if (cacheMode !== `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-        )
-      )
+    // If favicon is enabled, apply the same caching policy and generate
+    // the resized image(s)
+    if (faviconIsEnabled) {
+      await processIconSet(favicons)
+
+      if (metadata.format === `svg`) {
+        fs.copyFileSync(icon, path.join(`public`, `favicon.svg`))
+      }
     }
   }
 

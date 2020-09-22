@@ -19,9 +19,9 @@ The increase in contributions means the Gatsby community makes more frequent dec
 
 This has led to two changes:
 
-1.  [@jlengstorf](https://github.com/jlengstorf) created the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) in GitHub that automatically notifies whomever is on the team whenever a PR includes edits to anything within /docs/.
+1. [@jlengstorf](https://github.com/jlengstorf) created the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) in GitHub that automatically notifies whomever is on the team whenever a PR includes edits to anything within /docs/.
 
-2.  With the help of many people, I created a “docs decision tree,” so that when the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The “docs decision tree” will be tested over Hacktoberfest with all issues labeled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
+2. With the help of many people, I created a “docs decision tree,” so that when the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The “docs decision tree” will be tested over Hacktoberfest with all issues labeled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
 
 ## Docs Decision Tree and Examples
 
@@ -33,20 +33,20 @@ Here is a summary of the “docs decision tree,” a tool we’ll use to make de
 
 A doc qualifies to be in the .org site if it:
 
-1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the [Gatsby OSS repository](https://www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
+1. Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the [Gatsby OSS repository](https://www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
 
 > **Yes** --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
 
 > **No** --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
 
-2.  Helps further something on the [developer journey](https://pronovix.com/blog/analyzing-api-docs-and-dx-patterns-best-banking-developer-portals):
+2. Helps further something on the [developer journey](https://pronovix.com/blog/analyzing-api-docs-and-dx-patterns-best-banking-developer-portals):
 
-    - Discover
-    - Evaluate
-    - Get Started
-    - Implement & Troubleshoot
-    - Celebrate & Share
-    - Contribute & Maintain
+   - Discover
+   - Evaluate
+   - Get Started
+   - Implement & Troubleshoot
+   - Celebrate & Share
+   - Contribute & Maintain
 
 > **Yes** --> Belongs in the docs
 

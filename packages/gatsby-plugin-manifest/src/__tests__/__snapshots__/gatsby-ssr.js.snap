@@ -32,50 +32,56 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does file name cache busting if "cache_busting_mode" option is set to name 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48-contentDigest.png"
+    href="/favicon-00913339321ee5a854812aea11f8a5d4.svg"
     rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    href="/favicon-32x32-00913339321ee5a854812aea11f8a5d4.png"
+    rel="icon"
+    type="image/png"
   />,
   <link
     href="/manifest.webmanifest"
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48-contentDigest.png"
+    href="/icons/icon-48x48-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72-contentDigest.png"
+    href="/icons/icon-72x72-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96-contentDigest.png"
+    href="/icons/icon-96x96-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144-contentDigest.png"
+    href="/icons/icon-144x144-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192-contentDigest.png"
+    href="/icons/icon-192x192-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256-contentDigest.png"
+    href="/icons/icon-256x256-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384-contentDigest.png"
+    href="/icons/icon-384x384-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512-contentDigest.png"
+    href="/icons/icon-512x512-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -85,50 +91,56 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to query 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/png"
   />,
   <link
     href="/manifest.webmanifest"
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/icons/icon-48x48.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png?v=contentDigest"
+    href="/icons/icon-72x72.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png?v=contentDigest"
+    href="/icons/icon-96x96.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png?v=contentDigest"
+    href="/icons/icon-144x144.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png?v=contentDigest"
+    href="/icons/icon-192x192.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png?v=contentDigest"
+    href="/icons/icon-256x256.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png?v=contentDigest"
+    href="/icons/icon-384x384.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png?v=contentDigest"
+    href="/icons/icon-512x512.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -138,50 +150,56 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to undefined 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/png"
   />,
   <link
     href="/manifest.webmanifest"
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/icons/icon-48x48.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png?v=contentDigest"
+    href="/icons/icon-72x72.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png?v=contentDigest"
+    href="/icons/icon-96x96.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png?v=contentDigest"
+    href="/icons/icon-144x144.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png?v=contentDigest"
+    href="/icons/icon-192x192.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png?v=contentDigest"
+    href="/icons/icon-256x256.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png?v=contentDigest"
+    href="/icons/icon-384x384.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png?v=contentDigest"
+    href="/icons/icon-512x512.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -191,8 +209,14 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting if "cache_busting_mode" option is set to none 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/favicon.svg"
     rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    href="/favicon-32x32.png"
+    rel="icon"
+    type="image/png"
   />,
   <link
     href="/manifest.webmanifest"
@@ -263,8 +287,14 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Adds link favicon tag if "include_favicon" is set to true 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/favicon.svg"
     rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    href="/favicon-32x32.png"
+    rel="icon"
+    type="image/png"
   />,
   <link
     href="/manifest.webmanifest"
@@ -425,8 +455,14 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds "icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/png"
   />,
   <link
     href="/manifest.webmanifest"
@@ -437,42 +473,42 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/icons/icon-48x48.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png?v=contentDigest"
+    href="/icons/icon-72x72.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png?v=contentDigest"
+    href="/icons/icon-96x96.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png?v=contentDigest"
+    href="/icons/icon-144x144.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png?v=contentDigest"
+    href="/icons/icon-192x192.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png?v=contentDigest"
+    href="/icons/icon-256x256.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png?v=contentDigest"
+    href="/icons/icon-384x384.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png?v=contentDigest"
+    href="/icons/icon-512x512.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="512x512"
   />,

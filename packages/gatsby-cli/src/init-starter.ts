@@ -9,14 +9,14 @@ import isValid from "is-valid-path"
 import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
-
+import { updateSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
-import { getPackageManager, promptPackageManager } from "./util/package-manager"
-import { isTTY } from "./util/is-tty"
+import { getPackageManager, setPackageManager } from "./util/package-manager"
+import reporter from "./reporter"
 
 const spawnWithArgs = (
   file: string,
-  args: string[],
+  args: Array<string>,
   options?: execa.Options
 ): execa.ExecaChildProcess =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
@@ -28,26 +28,13 @@ const spawn = (
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
-// Checks the existence of yarn package and user preference if it exists
+// Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-const shouldUseYarn = async (): Promise<boolean> => {
+const checkForYarn = async (): Promise<boolean> => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
-
-    let packageManager = getPackageManager()
-    if (!packageManager) {
-      // if package manager is not set:
-      //  - prompt user to pick package manager if in interactive console
-      //  - default to yarn if not in interactive console
-      if (isTTY()) {
-        packageManager = (await promptPackageManager()) || `yarn`
-      } else {
-        packageManager = `yarn`
-      }
-    }
-
-    return packageManager === `yarn`
+    return true
   } catch (e) {
     return false
   }
@@ -114,8 +101,16 @@ const install = async (rootPath: string): Promise<void> => {
   process.chdir(rootPath)
 
   try {
-    if (await shouldUseYarn()) {
-      await fs.remove(`package-lock.json`)
+    if (!getPackageManager()) {
+      setPackageManager(`npm`)
+    }
+    if (getPackageManager() === `yarn` && checkForYarn()) {
+      if (await fs.pathExists(`package-lock.json`)) {
+        if (!(await fs.pathExists(`yarn.lock`))) {
+          await spawn(`yarnpkg import`)
+        }
+        await fs.remove(`package-lock.json`)
+      }
       await spawn(`yarnpkg`)
     } else {
       await fs.remove(`yarn.lock`)
@@ -165,7 +160,10 @@ const copy = async (
 }
 
 // Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
+const clone = async (
+  hostInfo: hostedGitInfo,
+  rootPath: string
+): Promise<void> => {
   let url: string
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {
@@ -208,8 +206,8 @@ interface IGetPaths {
 }
 
 const getPaths = async (
-  starterPath: string,
-  rootPath: string
+  starterPath?: string,
+  rootPath?: string
 ): Promise<IGetPaths> => {
   let selectedOtherStarter = false
 
@@ -257,10 +255,6 @@ const getPaths = async (
   return { starterPath, rootPath, selectedOtherStarter }
 }
 
-interface IInitOptions {
-  rootPath: string
-}
-
 const successMessage = (path: string): void => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
@@ -274,12 +268,12 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
  * Main function that clones or copies the starter.
  */
 export async function initStarter(
-  starter: string,
-  options: IInitOptions
+  starter?: string,
+  root?: string
 ): Promise<void> {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
-    options.rootPath
+    root
   )
 
   const urlObject = url.parse(rootPath)
@@ -342,8 +336,31 @@ export async function initStarter(
   trackCli(`NEW_PROJECT`, {
     starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
   })
-  if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starterPath, rootPath)
+  if (hostedInfo) {
+    await clone(hostedInfo, rootPath)
+  } else {
+    await copy(starterPath, rootPath)
+  }
+
+  const sitePath = sysPath.resolve(rootPath)
+
+  const sitePackageJson = await fs
+    .readJSON(sysPath.join(sitePath, `package.json`))
+    .catch(() => {
+      reporter.verbose(
+        `Could not read "${sysPath.join(sitePath, `package.json`)}"`
+      )
+    })
+
+  await updateSiteMetadata(
+    {
+      name: sitePackageJson?.name || rootPath,
+      sitePath,
+      lastRun: Date.now(),
+    },
+    false
+  )
+
   successMessage(rootPath)
   trackCli(`NEW_PROJECT_END`)
 }

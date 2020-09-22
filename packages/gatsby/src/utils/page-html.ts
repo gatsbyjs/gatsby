@@ -23,6 +23,8 @@ export const remove = async (
   pagePath: string
 ): Promise<void> => {
   const filePath = getPageHtmlFilePath(publicDir, pagePath)
-
-  return await fs.remove(filePath)
+  if (fs.existsSync(filePath)) {
+    return await fs.remove(filePath)
+  }
+  return Promise.resolve()
 }

@@ -1,29 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-plugin-coffeescript contains coffee script extensions 1`] = `
-Array [
-  ".coffee",
-]
-`;
-
-exports[`gatsby-plugin-coffeescript modifies webpack config with cofeescript extensions 1`] = `
-Array [
-  Object {
-    "module": Object {
-      "rules": Array [
-        Object {
-          "test": /\\\\\\.coffee\\$/,
-          "use": Array [
-            "babel-loader",
-            "/resolved/path/coffee-loader",
-          ],
-        },
-      ],
-    },
-  },
-]
-`;
-
 exports[`gatsby-plugin-coffeescript pre processing transforms .coffee files 1`] = `
 "(function() {
   if (typeof elvis !== \\"undefined\\" && elvis !== null) {

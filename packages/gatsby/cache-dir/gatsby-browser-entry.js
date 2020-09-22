@@ -9,6 +9,7 @@ import Link, {
   navigateTo,
   parsePath,
 } from "gatsby-link"
+import { useScrollRestoration } from "gatsby-react-router-scroll"
 import PageRenderer from "./public-page-renderer"
 import loader from "./loader"
 
@@ -57,7 +58,20 @@ const useStaticQuery = query => {
     )
   }
   const context = React.useContext(StaticQueryContext)
-  if (context[query] && context[query].data) {
+
+  // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
+  // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
+  // catch the misuse of the API and give proper direction
+  if (isNaN(Number(query))) {
+    throw new Error(`useStaticQuery was called with a string but expects to be called using \`graphql\`. Try this:
+
+import { useStaticQuery, graphql } from 'gatsby';
+
+useStaticQuery(graphql\`${query}\`);
+`)
+  }
+
+  if (context?.[query]?.data) {
     return context[query].data
   } else {
     throw new Error(
@@ -84,6 +98,11 @@ function graphql() {
   )
 }
 
+function unstable_collectionGraphql() {
+  // TODO: Strip this out of the component and throw error if it gets called
+  return null
+}
+
 export {
   Link,
   withAssetPrefix,
@@ -94,9 +113,12 @@ export {
   push, // TODO replace for v3
   replace, // TODO remove replace for v3
   navigateTo, // TODO: remove navigateTo for v3
+  useScrollRestoration,
   StaticQueryContext,
   StaticQuery,
   PageRenderer,
   useStaticQuery,
   prefetchPathname,
+  // Experimental API
+  unstable_collectionGraphql,
 }

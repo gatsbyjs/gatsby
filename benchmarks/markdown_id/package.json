@@ -6,8 +6,10 @@
   "author": "PvdZ <pvdz@github>",
   "dependencies": {
     "del-cli": "^3.0.0",
+    "faker": "^4.1.0",
     "gatsby": "^2.19.5",
     "gatsby-image": "^2.2.39",
+    "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-feed": "^2.3.26",
     "gatsby-plugin-google-analytics": "^2.1.34",
     "gatsby-plugin-manifest": "^2.2.38",
@@ -28,14 +30,12 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-typography": "^0.16.19",
+    "ts-node": "^8.9.0",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75",
+    "typescript": "^3.8.3",
     "typography": "^0.16.19",
     "typography-theme-wordpress-2016": "^0.16.19"
-  },
-  "devDependencies": {
-    "faker": "^4.1.0",
-    "gatsby-plugin-benchmark-reporting": "*"
   },
   "keywords": [
     "gatsby"
@@ -46,10 +46,11 @@
     "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "build": "gatsby build",
+    "clean": "gatsby clean",
+    "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "postinstall": "del-cli markdown-pages && gatsby clean && NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js"
   }

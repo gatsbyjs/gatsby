@@ -20,9 +20,10 @@ export interface IProgressReporter {
   tick(increment?: number): void
   panicOnBuild(
     arg: any,
-    ...otherArgs: any[]
-  ): IStructuredError | IStructuredError[]
-  panic(arg: any, ...otherArgs: any[]): void
+    ...otherArgs: Array<any>
+  ): IStructuredError | Array<IStructuredError>
+  panic(arg: any, ...otherArgs: Array<any>): void
+  end(): void
   done(): void
   total: number
   span: Span
@@ -81,8 +82,8 @@ export const createProgressReporter = ({
 
     panicOnBuild(
       errorMeta: ErrorMeta,
-      error?: Error | Error[]
-    ): IStructuredError | IStructuredError[] {
+      error?: Error | Array<Error>
+    ): IStructuredError | Array<IStructuredError> {
       span.finish()
 
       reporterActions.setActivityErrored({
@@ -92,7 +93,7 @@ export const createProgressReporter = ({
       return reporter.panicOnBuild(errorMeta, error)
     },
 
-    panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
+    panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): void {
       span.finish()
 
       reporterActions.endActivity({
@@ -103,6 +104,16 @@ export const createProgressReporter = ({
       return reporter.panic(errorMeta, error)
     },
 
+    end(): void {
+      updateProgress(true)
+      span.finish()
+      reporterActions.endActivity({
+        id,
+        status: ActivityStatuses.Success,
+      })
+    },
+
+    // @deprecated - use end()
     done(): void {
       updateProgress(true)
       span.finish()

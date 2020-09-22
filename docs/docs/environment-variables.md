@@ -24,7 +24,7 @@ If you want to define other environments then you'll need to do a little more wo
 All of the Project and OS Env Vars are only directly available at build time, or
 when Node.js is running. They aren't immediately available at run time of the client code; they
 need to be actively captured and embedded into client-side JavaScript.
-This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
+This is achieved during the build using webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
 
 Once the environment variables have been embedded into the client-side code, they are accessible from the
 global variable `process.env`.
@@ -65,7 +65,7 @@ MY_ENV_VAR=foo npm run develop
 In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only)
 
 Project environment variables that you defined in the `.env.*` files will _NOT_ be immediately available
-in your Node.js scripts. To use those variables, use NPM package [dotenv](https://www.npmjs.com/package/dotenv) to
+in your Node.js scripts. To use those variables, use npm package [dotenv](https://www.npmjs.com/package/dotenv) to
 examine the active `.env.*` file and attach those values.
 `dotenv` is already a dependency of Gatsby, so you can require it in your `gatsby-config.js` or `gatsby-node.js` like this:
 
@@ -91,7 +91,7 @@ GATSBY_API_URL=https://example.com/api
 API_KEY=927349872349798
 ```
 
-Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+Note: since Gatsby uses the [webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
 
 `GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 
@@ -134,9 +134,7 @@ Gatsby also allows you to specify another environment variable when running the 
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
-If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
-
-You can trigger this endpoint locally, for example, on Unix-based operating systems (like Ubuntu and MacOS) using `curl -X POST http://localhost:8000/__refresh`.
+This allows you to refresh your sourced content. See [Refreshing Content](/docs/refreshing-content/).
 
 ## Build Variables
 

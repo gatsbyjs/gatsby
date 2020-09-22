@@ -2,11 +2,11 @@ import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IStructuredError } from "../../structured-errors/types"
 
 export interface IGatsbyCLIState {
-  messages: ILog[]
+  messages: Array<ILog>
   activities: {
     [id: string]: IActivity
   }
-  status: string
+  status: ActivityStatuses | ""
 }
 
 export type ActionsUnion =
@@ -61,7 +61,7 @@ export interface ICreateLog {
 
 export interface ISetStatus {
   type: Actions.SetStatus
-  payload: string
+  payload: ActivityStatuses | ""
 }
 
 export interface IPendingActivity {
@@ -70,6 +70,7 @@ export interface IPendingActivity {
     id: string
     type: ActivityTypes
     status: ActivityStatuses
+    startTime?: [number, number]
   }
 }
 

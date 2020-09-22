@@ -59,6 +59,7 @@ Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed aft
 - `removeAccents`: Boolean. Remove accents from generated headings IDs (optional)
 - `enableCustomId`: Boolean. Enable custom header IDs with `{#id}` (optional)
 - `isIconAfterHeader`: Boolean. Enable the anchor icon to be inline at the end of the header text (optional)
+- `elements`: String array. Specify which type of header tags to link (optional)
 
 ```javascript
 // In your gatsby-config.js
@@ -77,6 +78,7 @@ module.exports = {
               maintainCase: true,
               removeAccents: true,
               isIconAfterHeader: true,
+              elements: [`h1`, `h4`],
             },
           },
         ],

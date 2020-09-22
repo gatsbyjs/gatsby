@@ -1,27 +1,38 @@
 import stackTrace from "stack-trace"
+import { Span } from "opentracing"
 import { ExecutionResultDataDefault } from "graphql/execution/execute"
 import { Store } from "redux"
 
-import GraphQLRunner from "../query/graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
 import { emitter } from "../redux"
 import { Reporter } from "../.."
 import { ExecutionResult, Source } from "../../graphql"
 import { IGatsbyState } from "../redux/types"
+import { IMatch } from "../types"
 
-type Runner = (
+export type Runner = (
   query: string | Source,
   context: Record<string, any>
 ) => Promise<ExecutionResult<ExecutionResultDataDefault>>
 
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
-  reporter: Reporter
+  reporter: Reporter,
+  {
+    parentSpan,
+    graphqlTracing,
+  }: { parentSpan: Span | undefined; graphqlTracing?: boolean } = {
+    parentSpan: undefined,
+    graphqlTracing: false,
+  }
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
-  let runner = new GraphQLRunner(store)
+  let runner: GraphQLRunner | undefined = new GraphQLRunner(store, {
+    graphqlTracing,
+  })
 
-  const eventTypes: string[] = [
+  const eventTypes: Array<string> = [
     `DELETE_CACHE`,
     `CREATE_NODE`,
     `DELETE_NODE`,
@@ -34,48 +45,59 @@ export const createGraphQLRunner = (
 
   eventTypes.forEach(type => {
     emitter.on(type, () => {
-      runner = new GraphQLRunner(store)
+      runner = undefined
     })
   })
 
-  return (query, context): ReturnType<Runner> =>
-    runner.query(query, context).then(result => {
-      if (result.errors) {
-        const structuredErrors = result.errors
-          .map(e => {
-            // Find the file where graphql was called.
-            const file = stackTrace
-              .parse(e)
-              .find(file => /createPages/.test(file.getFunctionName()))
+  return (query, context): ReturnType<Runner> => {
+    if (!runner) {
+      runner = new GraphQLRunner(store, {
+        graphqlTracing,
+      })
+    }
+    return runner
+      .query(query, context, {
+        queryName: `gatsby-node query`,
+        parentSpan,
+      })
+      .then(result => {
+        if (result.errors) {
+          const structuredErrors = result.errors
+            .map(e => {
+              // Find the file where graphql was called.
+              const file = stackTrace
+                .parse(e)
+                .find(file => /createPages/.test(file.getFunctionName()))
 
-            if (file) {
-              const structuredError = errorParser({
-                message: e.message,
-                location: {
-                  start: {
-                    line: file.getLineNumber(),
-                    column: file.getColumnNumber(),
+              if (file) {
+                const structuredError = errorParser({
+                  message: e.message,
+                  location: {
+                    start: {
+                      line: file.getLineNumber(),
+                      column: file.getColumnNumber(),
+                    },
                   },
-                },
-                filePath: file.getFileName(),
-              })
-              structuredError.context = {
-                ...structuredError.context,
-                fromGraphQLFunction: true,
+                  filePath: file.getFileName(),
+                })
+                structuredError.context = {
+                  ...structuredError.context,
+                  fromGraphQLFunction: true,
+                }
+                return structuredError
               }
-              return structuredError
-            }
 
-            return null
-          })
-          .filter(Boolean)
+              return null
+            })
+            .filter((Boolean as unknown) as (match) => match is IMatch)
 
-        if (structuredErrors.length) {
-          // panic on build exits the process
-          reporter.panicOnBuild(structuredErrors)
+          if (structuredErrors.length) {
+            // panic on build exits the process
+            reporter.panicOnBuild(structuredErrors)
+          }
         }
-      }
 
-      return result
-    })
+        return result
+      })
+  }
 }

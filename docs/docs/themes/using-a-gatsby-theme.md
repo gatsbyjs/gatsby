@@ -13,14 +13,14 @@ For example, `gatsby-theme-blog` is the official Gatsby theme for creating a blo
 To install it, run in the root of your site:
 
 ```shell
-npm install --save gatsby-theme-blog
+npm install gatsby-theme-blog
 ```
 
 ## Theme options
 
 Depending on the theme, there may be theme options that can be configured via `gatsby-config.js`.
 
-For example, `gatsby-theme-blog` can take in 4 potential options: `basePath`, `contentPath`, `assetPath`, and `mdx`. These options are also documented in the [theme's README](/packages/gatsby-theme-blog/) file.
+For example, `gatsby-theme-blog` can take a number of different options. All of them are documented in the [theme's README](/packages/gatsby-theme-blog/) file.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -30,14 +30,8 @@ module.exports = {
       options: {
         /*
         - basePath defaults to `/`
-        - contentPath defaults to `content/posts`
-        - assetPath defaults to `content/assets`
-        - mdx defaults to `true`
         */
         basePath: `/blog`,
-        contentPath: `content/blogPosts`,
-        assetPath: `content/blogAssets`,
-        mdx: false,
       },
     },
   ],

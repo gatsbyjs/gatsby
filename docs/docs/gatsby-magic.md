@@ -6,7 +6,7 @@ This guide will explain the amazing features that may seem like “magic” and 
 
 ## Starters
 
-Starters are optional precompiled Gatsby sites that are maintained by Gatsby’s core team and growing open source community; they can be used for blogging, e-commerce, design, and documentation to allow users to create blazing fast sites. Gatsby offers over a hundred opinionated starters from a variety of categories such as Blog, SEO, Portfolio, WordPress, and Markdown. You can browse the selection [in Gatsby's Starter Library](https://www.gatsbyjs.org/starters/?v=2).
+Starters are optional precompiled Gatsby sites that are maintained by Gatsby’s core team and growing open source community; they can be used for blogging, e-commerce, design, and documentation to allow users to create blazing fast sites. Gatsby offers over a hundred opinionated starters from a variety of categories such as Blog, SEO, Portfolio, WordPress, and Markdown. You can browse the selection [in Gatsby's Starter Library](/starters/?v=2).
 
 A starter is a fully functional Gatsby site that can run on its own but is designed to be used by you as a jumping-off point for creating your own site. After selecting a starter, you can create your own site locally based on that project using the `gatsby new` CLI command, which handles cloning the project from Git for you. A cloned starter does not maintain a connection to the original source code, so they are helpful as starting points to customize heavily and create an entirely new Gatsby site.
 
@@ -76,6 +76,6 @@ Gatsby Cloud is a new product offering from the same team that brought you the G
 
 Features include real-time Preview, simplifying content collaboration, and Automatic Provisioning that empowers new and non-technical users to get started easily with a CMS, sample content, and a connected Gatsby starter.
 
-To learn more about Gatsby Cloud and its evolving feature set, visit [https://www.gatsbyjs.com/cloud](https://www.gatsbyjs.com/cloud).
+To learn more about Gatsby Cloud and its evolving feature set, visit https://www.gatsbyjs.com/cloud.
 
 <!-- Docs to Markdown version 1.0β17 -->

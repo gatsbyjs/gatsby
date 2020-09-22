@@ -61,25 +61,25 @@ exports.onCreateNode = args => {
 }
 ```
 
-To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally spoken, Node.js is responsible for building Gatsby pages and therefore its' built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 
 If you use VS Code and its integrated terminal, you can configure it to automatically create the debug config for you.
 
-1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
-    ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
+1. Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
+   ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/gatsby/dist/bin/gatsby develop` instead of `gatsby develop`
+2. Using VS Code's integrated terminal run `node --nolazy node_modules/.bin/gatsby develop --inspect-brk` instead of `gatsby develop` or `node --nolazy --inspect-brk node_modules/.bin/gatsby build` instead of `gatsby build`
 
-3.  Set breakpoints and debug!
+3. Set breakpoints and debug!
 
 > **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
 > try running `gatsby clean` to delete the `.cache` and `public` folder and try again.
 
 ## VS Code Debugger (Manual Config)
 
-Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
+Using built-in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
@@ -89,25 +89,21 @@ We won't go in depth here about how to debug in VS Code - for that you can check
   "configurations": [
     {
       "name": "Gatsby develop",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "protocol": "inspector",
-      "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
+      "program": "${workspaceRoot}/node_modules/.bin/gatsby",
       "args": ["develop"],
-      "stopOnEntry": false,
       "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
+      "console": "integratedTerminal"
     },
     {
       "name": "Gatsby build",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "protocol": "inspector",
-      "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
+      "program": "${workspaceRoot}/node_modules/.bin/gatsby",
       "args": ["build"],
-      "stopOnEntry": false,
       "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
+      "console": "integratedTerminal"
     }
   ]
 }
@@ -127,7 +123,7 @@ After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` c
 In your project directory instead of running `npm run develop` run the following command:
 
 ```shell
-node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop
+node --no-lazy node_modules/.bin/gatsby develop --inspect-brk
 ```
 
 - `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
@@ -171,9 +167,9 @@ You can now see the problem - `args` doesn't contain `Node` - it contains `node`
 
 ### Finishing thoughts on DevTools
 
-You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use debugger, thankfully there are other methods that make it simpler to start such as the ones outlined above.
+You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use the debugger. Thankfully there are other methods that make it simpler to start such as the ones outlined above.
 
-- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
+- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports Node.js debugging).
 - You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
 - Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
 

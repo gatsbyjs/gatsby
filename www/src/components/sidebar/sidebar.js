@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
+import React from "react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
@@ -10,202 +8,124 @@ import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-// Access to global `localStorage` property must be guarded as it
-// fails under iOS private session mode.
-var hasLocalStorage = true
-var testKey = `gatsbyjs.sidebar.testKey`
-var ls
-try {
-  ls = global.localStorage
-  ls.setItem(testKey, `test`)
-  ls.removeItem(testKey)
-} catch (e) {
-  hasLocalStorage = false
+function isItemInActiveTree(item, activeItem, activeItemParents) {
+  return (
+    activeItem.title === item.title ||
+    activeItemParents.some(parent => parent.title === item.title)
+  )
 }
 
-const isItemActive = (activeItemParents, item) => {
-  if (activeItemParents) {
-    for (let parent of activeItemParents) {
-      if (parent === item.title) return true
-    }
-  }
-
-  return false
-}
-
-const getOpenItemHash = (itemList, state) => {
-  for (let item of itemList) {
+function getOpenItemHash(itemList, activeItem, activeItemParents) {
+  let result = {}
+  for (const item of itemList) {
     if (item.items) {
-      state.openSectionHash[item.title] =
-        isItemActive(state.activeItemParents, item) ||
-        state.activeItemLink.title === item.title
-
-      getOpenItemHash(item.items, state)
+      result[item.title] = isItemInActiveTree(
+        item,
+        activeItem,
+        activeItemParents
+      )
+      result = {
+        ...result,
+        ...getOpenItemHash(item.items, activeItem, activeItemParents),
+      }
     }
   }
-
-  return false
+  return result
 }
 
-class SidebarBody extends Component {
-  constructor(props, context) {
-    super(props, context)
+const SidebarContext = React.createContext({})
 
-    this._toggleSection = this._toggleSection.bind(this)
-    this.state = { ...this._getInitialState(props) }
-    this.scrollRef = React.createRef()
-  }
+export function useSidebarContext() {
+  return React.useContext(SidebarContext)
+}
 
-  componentDidMount() {
-    const node = this.scrollRef.current
+export default function Sidebar({
+  title,
+  closeSidebar,
+  itemList,
+  location,
+  position,
+  activeItemHash,
+  disableExpandAll,
+  disableAccordions,
+}) {
+  const scrollRef = React.useRef(null)
 
-    if (hasLocalStorage) {
-      const key = this.props.sidebarKey
-      const initialState = this.state
-      const localState = this._readLocalStorage(key)
-
-      if (localState) {
-        const bar = Object.keys(initialState.openSectionHash).filter(function (
-          key
-        ) {
-          return initialState.openSectionHash[key]
-        })
-
-        const state = {
-          ...initialState,
-          openSectionHash: JSON.parse(localState).openSectionHash,
-        }
-
-        for (let item in initialState.openSectionHash) {
-          for (let parent of bar) {
-            if (parent === item) {
-              state.openSectionHash[item] = true
-            }
-          }
-        }
-
-        state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-        this.setState(state, () => {
-          if (node && this.props.position) {
-            node.scrollTop = this.props.position
-          }
-        })
-      } else {
-        this._writeLocalStorage(this.state, key)
-      }
+  // Set the scroll position if one is provided
+  React.useEffect(() => {
+    if (scrollRef.current && position) {
+      scrollRef.current.scrollTop = position
     }
-  }
+  }, [position])
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.activeItemHash !== state.activeItemHash) {
-      const activeItemLink = getActiveItem(
-        props.itemList,
-        props.location,
-        props.activeItemHash
-      )
+  const activeItem = React.useMemo(
+    () => getActiveItem(itemList, location, activeItemHash),
+    [itemList, location, activeItemHash]
+  )
 
+  const activeItemParents = React.useMemo(
+    () => getActiveItemParents(itemList, activeItem),
+    [itemList, activeItem]
+  )
+
+  // Get the hash where the only open items are
+  // the hierarchy defined in props
+  const initialHash = getOpenItemHash(itemList, activeItem, activeItemParents)
+
+  const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
+  const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
+
+  const toggleSection = React.useCallback(item => {
+    setOpenSectionHash(openSectionHash => {
       return {
-        activeItemLink: activeItemLink,
-        activeItemParents: getActiveItemParents(
-          props.itemList,
-          activeItemLink,
-          []
-        ).map(link => link.title),
-        activeItemHash: props.activeItemHash,
-      }
-    }
-
-    return null
-  }
-
-  _getInitialState(props) {
-    const activeItemLink = getActiveItem(
-      props.itemList,
-      props.location,
-      props.activeItemHash
-    )
-
-    const state = {
-      openSectionHash: {},
-      expandAll: false,
-      key: props.sidebarKey,
-      activeItemHash: props.activeItemHash,
-      activeItemLink: activeItemLink,
-      activeItemParents: getActiveItemParents(
-        props.itemList,
-        activeItemLink,
-        []
-      ).map(link => link.title),
-    }
-
-    getOpenItemHash(props.itemList, state)
-    state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-
-    return state
-  }
-
-  _readLocalStorage(key) {
-    if (hasLocalStorage) {
-      return localStorage.getItem(`gatsbyjs:sidebar:${key}`)
-    } else {
-      return false
-    }
-  }
-
-  _writeLocalStorage(state, key) {
-    if (hasLocalStorage) {
-      localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
-    }
-  }
-
-  _toggleSection(item) {
-    const { openSectionHash } = this.state
-
-    const state = {
-      openSectionHash: {
         ...openSectionHash,
         [item.title]: !openSectionHash[item.title],
-      },
-    }
+      }
+    })
+  }, [])
 
-    state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-
-    this._writeLocalStorage(state, this.state.key)
-    this.setState(state)
-  }
-
-  _expandAll = () => {
-    if (this.state.expandAll) {
-      this._writeLocalStorage(
-        { openSectionHash: this._getInitialState(this.props).openSectionHash },
-        this.state.key
-      )
-      this.setState({
-        ...this._getInitialState(this.props),
-        expandAll: false,
-      })
+  function toggleExpandAll() {
+    if (expandAll) {
+      // Close everything except the initial open section
+      setOpenSectionHash(initialHash)
     } else {
-      let openSectionHash = { ...this.state.openSectionHash }
-      Object.keys(openSectionHash).forEach(k => (openSectionHash[k] = true))
-      this._writeLocalStorage({ openSectionHash }, this.state.key)
-      this.setState({ openSectionHash, expandAll: true })
+      const newOpenSectionHash = {}
+      for (const key of Object.keys(initialHash)) {
+        newOpenSectionHash[key] = true
+      }
+      setOpenSectionHash(newOpenSectionHash)
     }
   }
 
-  render() {
-    const { i18n, closeSidebar, itemList, location } = this.props
-    const { openSectionHash, activeItemLink, activeItemParents } = this.state
+  const getItemState = React.useCallback(
+    item => {
+      return {
+        isExpanded: openSectionHash[item.title] || disableAccordions || false,
+        isActive: item.title === activeItem.title,
+        inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
+      }
+    },
+    [openSectionHash, disableAccordions, activeItem, activeItemParents]
+  )
 
-    const isSingle = itemList.filter(item => item.level === 0).length === 1
+  const context = React.useMemo(() => {
+    return {
+      getItemState,
+      disableAccordions,
+      onLinkClick: closeSidebar,
+      onSectionTitleClick: toggleSection,
+    }
+  }, [getItemState, disableAccordions, closeSidebar, toggleSection])
 
-    return (
+  return (
+    <SidebarContext.Provider value={context}>
       <section
-        aria-label={i18n._(t`Secondary Navigation`)}
+        aria-label="Secondary Navigation"
         id="SecondaryNavigation"
         className="docSearch-sidebar"
         sx={{ height: `100%` }}
       >
-        {!this.props.disableExpandAll && (
+        {!disableExpandAll && (
           <header
             sx={{
               alignItems: `center`,
@@ -219,20 +139,18 @@ class SidebarBody extends Component {
               pr: 6,
             }}
           >
-            <ExpandAllButton
-              onClick={this._expandAll}
-              expandAll={this.state.expandAll}
-            />
+            <ExpandAllButton onClick={toggleExpandAll} expandAll={expandAll} />
           </header>
         )}
         <nav
-          ref={this.scrollRef}
+          ref={scrollRef}
           sx={{
             WebkitOverflowScrolling: `touch`,
             bg: `background`,
             border: 0,
             display: `block`,
             overflowY: `auto`,
+            overscrollBehavior: `contain`,
             transition: t =>
               `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             zIndex: 10,
@@ -240,7 +158,7 @@ class SidebarBody extends Component {
             borderRightStyle: `solid`,
             borderColor: `ui.border`,
             height: t =>
-              this.props.disableExpandAll
+              disableExpandAll
                 ? `100%`
                 : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
             [mediaQueries.md]: {
@@ -261,7 +179,7 @@ class SidebarBody extends Component {
               letterSpacing: `tracked`,
             }}
           >
-            {this.props.title}
+            {title}
           </h3>
           <ul
             sx={{
@@ -278,27 +196,12 @@ class SidebarBody extends Component {
               },
             }}
           >
-            {itemList.map((item, index) => (
-              <Item
-                activeItemLink={activeItemLink}
-                activeItemParents={activeItemParents}
-                isActive={item.link === location.pathname}
-                isExpanded={openSectionHash[item.title]}
-                item={item}
-                key={index}
-                location={location}
-                onLinkClick={closeSidebar}
-                onSectionTitleClick={this._toggleSection}
-                openSectionHash={openSectionHash}
-                isSingle={isSingle}
-                disableAccordions={this.props.disableAccordions}
-              />
+            {itemList.map(item => (
+              <Item item={item} key={item.title} />
             ))}
           </ul>
         </nav>
       </section>
-    )
-  }
+    </SidebarContext.Provider>
+  )
 }
-
-export default withI18n()(SidebarBody)

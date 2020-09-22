@@ -33,6 +33,8 @@ module.exports = {
         experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
         // Set Variation ID. 0 for original 1,2,3....
         variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
+        // Defers execution of google analytics script after page load
+        defer: false,
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
@@ -136,12 +138,14 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `alwaysSendReferrer`: boolean
 - `allowAnchor`: boolean
 - `cookieName`: string
+- `cookieFlags`: string
 - `cookieDomain`: string, defaults to `'auto'` if not given
 - `cookieExpires`: number
 - `storeGac`: boolean
 - `legacyCookieDomain`: string
 - `legacyHistoryImport`: boolean
 - `allowLinker`: boolean
+- `storage`: string
 
 This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
 

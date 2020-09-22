@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
-const { getNode } = require(`../../db/nodes`)
+const { getNode } = require(`../../redux/nodes`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -87,7 +87,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       siteMetadata: {
         ...configCopy.siteMetadata,
       },
-      port: state.program.port,
+      port: state.program.proxyPort,
       host: state.program.host,
       ...configCopy,
     }
@@ -141,16 +141,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       }
     }
   })
-}
-
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
-  const typeDefs = `
-    type Site implements Node {
-      buildTime: Date @dateformat
-    }
-  `
-  createTypes(typeDefs)
 }
 
 exports.createResolvers = ({ createResolvers }) => {

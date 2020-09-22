@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-source-npm-package-search sourceNodes with readme should create a package node for each search hit 1`] = `
+Array [
+  Object {
+    "children": Array [],
+    "id": "readme foo",
+    "internal": Object {
+      "content": "readme",
+      "contentDigest": "digest",
+      "mediaType": "text/markdown",
+      "type": "NPMPackageReadme",
+    },
+    "parent": "plugin foo",
+    "slug": "/packages/en/foo",
+  },
+]
+`;
+
+exports[`gatsby-source-npm-package-search sourceNodes with readme should create readme node for each search hit 1`] = `
+Array [
+  Object {
+    "children": Array [],
+    "created": Date { NaN },
+    "deprecated": "undefined",
+    "id": "plugin foo",
+    "internal": Object {
+      "content": "",
+      "contentDigest": "digest",
+      "type": "NPMPackage",
+    },
+    "modified": Date { NaN },
+    "objectID": "foo",
+    "parent": null,
+    "readme": "readme foo",
+    "slug": "/packages/foo/",
+    "title": "foo",
+  },
+]
+`;
+
+exports[`gatsby-source-npm-package-search sourceNodes with readme should search with config keywords 1`] = `
+Array [
+  Object {
+    "filters": "(keywords:foo OR keywords:bar)",
+    "hitsPerPage": 1000,
+  },
+]
+`;

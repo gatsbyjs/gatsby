@@ -7,7 +7,7 @@ tags: ["drupal", "getting-started"]
 
 This blogpost explains how I learned to reduce the cost of maintaining a simple brochure or blog site. When using Drupal, you need at least a shared hosting platform (there is no Wordpress.com for Drupal sites). So, migrating to a static site generator, like Jekyll or Gatsby, seemed like a good idea. Gatsby is also a great opportunity to learn React and then get hosting for free using something like GitHub Pages. This post is going to describe how to migrate a simple blog--that has featured images on the posts, comments and tags--from Drupal to Gatsby.
 
-To facilitate exporting the site, the first thing I did was export the database from the mysql database server to an sqlite file that I could use locally. To do this I used the [mysql2sqlite](https://github.com/dumblob/mysql2sqlite) project, which, as described on the project page, can be done with two commands like:
+To facilitate exporting the site, the first thing I did was export the database from the mysql database server to a sqlite file that I could use locally. To do this I used the [mysql2sqlite](https://github.com/dumblob/mysql2sqlite) project, which, as described on the project page, can be done with two commands like:
 
 ```shell
 mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
@@ -25,7 +25,7 @@ npm i # to install regular gastby requirements
 npm i --save-dev better-sqlite3 # to add an sqlite javascript client
 ```
 
-The useful commands on an sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
+The useful commands on a sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
 
 Next, you will be creating a new file on your project at `src/scripts/import.js`. Initially, what you want is to iterate through all your posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. Initially, your script will look like this:
 
@@ -88,7 +88,7 @@ if (image) {
 }
 ```
 
-And now that you have all the data you need, it is just a matter of creating a file with the metadata in yaml format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
+And now that you have all the data you need, it is just a matter of creating a file with the metadata in YAML format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
 
 ```javascript
   fs.mkdir(path, (err) => { });
@@ -126,7 +126,7 @@ To have comments on your site you can use a service like [Disqus](https://disqus
 ```javascript
 const Database = require("better-sqlite3")
 const fs = require("fs")
-const yourSite = "http://username.github.io/yoursite/"
+const yourSite = "https://username.github.io/yoursite/"
 
 if (process.argv.length < 3) {
   usage()

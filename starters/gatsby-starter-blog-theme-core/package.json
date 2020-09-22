@@ -8,10 +8,11 @@
     "build": "gatsby build",
     "clean": "gatsby clean"
   },
+  "license": "0BSD",
   "dependencies": {
-    "gatsby": "^2.20.12",
-    "gatsby-theme-blog-core": "^1.3.12",
-    "@mdx-js/react": "^1.5.7",
+    "@mdx-js/react": "^1.6.17",
+    "gatsby": "^2.24.61",
+    "gatsby-theme-blog-core": "^1.5.61",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }

@@ -1,7 +1,8 @@
 jest.mock(`graphql`)
 
 import { createGraphQLRunner } from "../create-graphql-runner"
-const { execute, validate, parse } = require(`graphql`)
+import { execute, validate, parse } from "graphql"
+import { globalTracer } from "opentracing"
 
 parse.mockImplementation(() => {
   return {}
@@ -21,6 +22,11 @@ const createStore = (schema = {}) => {
   }
 }
 
+const tracingContext = {
+  graphqlTracing: false,
+  parentSpan: globalTracer().startSpan(`test`),
+}
+
 describe(`grapqhl-runner`, () => {
   let reporter
 
@@ -31,7 +37,11 @@ describe(`grapqhl-runner`, () => {
   })
 
   it(`should return the result when grapqhl has no errors`, async () => {
-    const graphqlRunner = createGraphQLRunner(createStore(), reporter)
+    const graphqlRunner = createGraphQLRunner(
+      createStore(),
+      reporter,
+      tracingContext
+    )
 
     const expectation = {
       data: {
@@ -46,7 +56,11 @@ describe(`grapqhl-runner`, () => {
   })
 
   it(`should return an errors array when structured errors found`, async () => {
-    const graphqlRunner = createGraphQLRunner(createStore(), reporter)
+    const graphqlRunner = createGraphQLRunner(
+      createStore(),
+      reporter,
+      tracingContext
+    )
 
     const expectation = {
       errors: [
@@ -64,7 +78,11 @@ describe(`grapqhl-runner`, () => {
   })
 
   it(`should throw a structured error when created from createPage file`, async () => {
-    const graphqlRunner = createGraphQLRunner(createStore(), reporter)
+    const graphqlRunner = createGraphQLRunner(
+      createStore(),
+      reporter,
+      tracingContext
+    )
 
     const errorObject = {
       stack: `Error

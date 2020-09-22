@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.16...gatsby-plugin-benchmark-reporting@0.2.17) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.15...gatsby-plugin-benchmark-reporting@0.2.16) (2020-09-08)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.14...gatsby-plugin-benchmark-reporting@0.2.15) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.13...gatsby-plugin-benchmark-reporting@0.2.14) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.12...gatsby-plugin-benchmark-reporting@0.2.13) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.11...gatsby-plugin-benchmark-reporting@0.2.12) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.10...gatsby-plugin-benchmark-reporting@0.2.11) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.9...gatsby-plugin-benchmark-reporting@0.2.10) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.8...gatsby-plugin-benchmark-reporting@0.2.9) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.7...gatsby-plugin-benchmark-reporting@0.2.8) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.6...gatsby-plugin-benchmark-reporting@0.2.7) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.5...gatsby-plugin-benchmark-reporting@0.2.6) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.4...gatsby-plugin-benchmark-reporting@0.2.5) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.3...gatsby-plugin-benchmark-reporting@0.2.4) (2020-05-13)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporter:** change type of incremental benchmark after first run ([#24052](https://github.com/gatsbyjs/gatsby/issues/24052)) ([8213570](https://github.com/gatsbyjs/gatsby/commit/8213570))
+
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.2...gatsby-plugin-benchmark-reporting@0.2.3) (2020-05-12)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.1...gatsby-plugin-benchmark-reporting@0.2.2) (2020-05-12)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporting:** allow arbitrary restart ([#23898](https://github.com/gatsbyjs/gatsby/issues/23898)) ([df4cadc](https://github.com/gatsbyjs/gatsby/commit/df4cadc))
+
+## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.0...gatsby-plugin-benchmark-reporting@0.2.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+# [0.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.5...gatsby-plugin-benchmark-reporting@0.2.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.4...gatsby-plugin-benchmark-reporting@0.1.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.3...gatsby-plugin-benchmark-reporting@0.1.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
 ## [0.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.2...gatsby-plugin-benchmark-reporting@0.1.3) (2020-04-16)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting

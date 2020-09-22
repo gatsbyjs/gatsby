@@ -1,28 +1,27 @@
 # Gatsby Recipes
 
-Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpretor, perform common actions like installing
-NPM packages, installing plugins, creating pages, etc.
+Recipes is an “infrastructure as code” system that lets users automatically manage and provision the technology stack for their Gatsby site/app through code rather than manual processes.
+
+It’s powered by React & MDX and a useful analogy is “React Native for Infrastructure”.
+
+Recipes also provides a read/write API for Desktop/Admin to build lowcode tooling on top of Gatsby & integrated services.
 
 It's designed to be extensible so new capabilities can be added which allow
 Recipes to automate more things.
 
-We chose MDX to allow for a literate programming style of writing recipes which
+We chose [MDX](https://mdxjs.com/) to allow for a literate programming style of writing recipes which
 enables us to port our dozens of recipes from
 https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
 tutorials.
 
-[Read more about Recipes on the RFC](https://github.com/gatsbyjs/gatsby/pull/22610)
+[Read more about Recipes on the launch blog post](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)
 
 There's an umbrella issue for testing / using Recipes during its incubation stage.
+Follow the issue for updates! https://github.com/gatsbyjs/gatsby/issues/22991
 
-Follow the issue for updates!
+## Get set up for running Recipes
 
-https://github.com/gatsbyjs/gatsby/issues/22991
-
-## Recipe setup
-
-Upgrade the global gatsby-cli package to the latest with recipes.
+Recipes is a new rapidly developing feature. To use it, upgrade your global gatsby-cli package to the latest.
 
 ```shell
 npm install -g gatsby-cli@latest
@@ -32,7 +31,7 @@ To confirm that this worked, run `gatsby --help` in your terminal. The output sh
 
 ### Running an example recipe
 
-Now you can test out recipes! Start with a recipe for installing `emotion` by following these steps:
+Now you can test out recipes! Start with a recipe for installing [Emotion](https://emotion.sh/docs/introduction) by following these steps:
 
 1. Create a new Hello World Gatsby site:
 
@@ -40,7 +39,7 @@ Now you can test out recipes! Start with a recipe for installing `emotion` by fo
 gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-1. Navigate into that project directory:
+1. Go to the project directory you created:
 
 ```shell
 cd try-emotion
@@ -106,72 +105,149 @@ Read more about Emotion on the official Emotion docs site:
 https://emotion.sh/docs/introduction
 ```
 
+You can browse the [source of the official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes). The [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) also has a number of recipes posted by community members.
+
 ### How to run recipes
 
 You can run built-in recipes, ones you write locally, and ones people have posted online.
 
-To run a local recipe, make sure to start the path to the recipe with a period like `gatsby recipes ./my-cool-recipe.mdx`
+To run a local recipe, make sure to start the path to the recipe with a period like:
 
-To run a remote recipe, just paste in the path to the recipe e.g. `gatsby recipes https://example.com/sweet-recipe.mdx`
+```shell
+gatsby recipes ./my-cool-recipe.mdx
+```
 
-### Recipe API
+To run a remote recipe, copy the path to the recipe and run it e.g.
 
-#### `<GatsbyPlugin>`
+```shell
+gatsby recipes https://example.com/sweet-recipe.mdx
+```
+
+## External learning resources
+
+- A free 6 min eggheadio [collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) by [Khaled Garbaya](https://twitter.com/khaled_garbaya)
+
+## Recipe API
+
+### `<GatsbyPlugin>`
 
 Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
-Soon will support options.
-
 ```jsx
-<GatsbyPlugin name="gatsby-plugin-emotion" />
+<GatsbyPlugin
+  name="gatsby-source-filesystem"
+  key="src/pages"
+  options={{
+    name: `src pages directory`,
+    path: `src/pages`,
+  }}
+/>
 ```
 
-##### props
+#### props
 
-- **name** name of the plugin
+- **name**: name of the plugin
+- **options**: object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
+- **key**: string used to distinguish between multiple plugin instances
+- **isLocal**: boolean that indicates this is a local plugin. This lets
+  recipes know it shouldn't require an NPMPackage with the plugin name
+  to be installed as well.
 
-#### `<GatsbyShadowFile>`
+### `<GatsbyShadowFile>`
 
+```jsx
 <GatsbyShadowFile theme="gatsby-theme-blog" path="src/components/seo.js" />
+```
 
-##### props
+#### props
 
-- **theme** the name of the theme (or plugin) which provides the file you'd like to shadow
-- **path** the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
+- **theme**: the name of the theme (or plugin) which provides the file you'd like to shadow
+- **path**: the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
 
-#### `<NPMPackage>`
+### `<NPMPackage>`
 
-`<NPMPackage name="lodash" version="latest" />`
+```jsx
+<NPMPackage name="lodash" version="latest" />
+```
 
-##### props
+#### props
 
-- **name**: name of the package(s) to install. Takes a string or an array of strings.
+- **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
 
-#### `<NPMScript>`
+### `<NPMPackageJson>`
 
-`<NPMScript name="test" command="jest" />`
+<!-- prettier-ignore-start -->
+```jsx
+<NPMPackageJson
+  name="lint-staged"
+  value={{
+     "src/**/*.js": [
+      "jest --findRelatedTests"
+    ],
+  }}
+/>
+```
+<!-- prettier-ignore-end -->
 
-##### props
+#### props
 
-- **name:** name of the command
-- **command** the command that's run when the script is called
+- **name**: name of the property to add to the package.json
+- **value**: the value assigned to the property. can be an object or a string.
 
-#### `<File>`
+### `<NPMScript>`
 
-<File path="test.md" content="https://raw.githubusercontent.com/KyleAMathews/test-recipes/master/gatsby-recipe-jest.mdx" />
+```jsx
+<NPMScript name="test" command="jest" />
+```
 
-##### props
+#### props
 
-- **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
-- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixees to MDX.
+- **name**: name of the command
+- **command**: the command that's run when the script is called
+
+### `<File>`
+
+```jsx
+<File
+  path="test.md"
+  content="https://raw.githubusercontent.com/KyleAMathews/test-recipes/master/gatsby-recipe-jest.mdx"
+/>
+```
+
+#### props
+
+- **path**: path to the file that should be created. The path is local to the root of the Node.js project (where the `package.json` is)
+- **content**: URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
 
+### `<Directory>`
+
+```jsx
+<Directory path="test" />
+```
+
+#### props
+
+- **path**: path to the directory that should be created. The path is local to the root of the Node.js project (where the `package.json` is)
+
+## How to set up your development environment to work on Gatsby Recipes core
+
+The Gatsby recipes codebase consists of the core framework, code for each resource, and the MDX source.
+
+### Official recipes
+
+MDX source for the official recipes lives at [https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes).
+
+We welcome PRs for new recipes and fixes/improvements to existing recipes.
+
+When you add a new recipe, please also add it to the recipes list at [https://github.com/gatsbyjs/gatsby/blob/05151c006974b7636b00f0cd608fac89ddaa1c08/packages/gatsby-recipes/src/cli.js#L60](https://github.com/gatsbyjs/gatsby/blob/05151c006974b7636b00f0cd608fac89ddaa1c08/packages/gatsby-recipes/src/cli.js#L60).
+
 ## FAQ / common issues
 
-### Q) My recipe is combining steps instead of running them seperately!
+### Q) My recipe is combining steps instead of running them separately!
 
 We use the `---` break syntax from Markdown to separate steps.
 
@@ -191,19 +267,21 @@ a step
 
 But this won't
 
+<!-- prettier-ignore-start -->
 ```mdx
 # Recipes
-
 ---
 
 a step
 
 <File src="something.txt" content="something" />
 ```
+<!-- prettier-ignore-end -->
 
 ### Q) What kind of recipe should I write?
 
-If you’d like to write a recipe, there are two great places to get an idea:
+If you’d like to write a recipe, there are a few great places to get an idea:
 
 - Think of a task that took you more time than other tasks in the last Gatsby site you built. Is there a way to automate any part of that task?
 - Look at this list of recipes in the Gatsby docs. Many of these can be partially or fully automated through creating a recipe `mdx` file. https://www.gatsbyjs.org/docs/recipes/
+- community members have posted a number of recipes in the [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991). You can browse their ideas to find inspiration for new recipes to write.

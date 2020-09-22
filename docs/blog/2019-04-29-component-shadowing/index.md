@@ -67,7 +67,9 @@ This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rend
 ```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
 
-export default () => <h1>My new bio component!</h1>
+export default function Bio() {
+  return <h1>My new bio component!</h1>
+}
 ```
 
 With a successful shadow of the `Bio` component you'll result in the following directory
@@ -123,7 +125,7 @@ user-site
 Now, blue and red will have your custom values and will be reflected in the theme wherever
 `theme.colors.blue` and `theme.colors.red` are used.
 
-#### How much shadowing is too much shadowing?
+### How much shadowing is too much shadowing?
 
 If you've found yourself shadowing a large amount of components in a particular theme it
 might make sense to use a fork instead.

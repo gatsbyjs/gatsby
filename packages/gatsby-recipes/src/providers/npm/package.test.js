@@ -8,12 +8,12 @@ const resourceTestHelper = require(`../resource-test-helper`)
 
 const root = path.join(os.tmpdir(), uuid.v4())
 fs.mkdirSync(root)
-const pkgResource = { name: `glob` }
+const pkgResource = { name: `div` }
 
 test(`plan returns a description`, async () => {
   const result = await pkg.plan({ root }, pkgResource)
 
-  expect(result.describe).toEqual(expect.stringContaining(`Install glob`))
+  expect(result.describe).toEqual(expect.stringContaining(`Install div`))
 })
 
 describe(`npm package resource`, () => {
@@ -26,6 +26,18 @@ describe(`npm package resource`, () => {
       partialUpdate: { name: `is-sorted`, version: `1.0.2` },
     })
   })
+  test(`installs 2 resources, one prod & one dev`, async () => {
+    await Promise.all([
+      pkg.create({ root }, { name: `div` }),
+      pkg.create({ root }, { name: `is-odd`, dependencyType: `development` }),
+    ])
+
+    const divResource = await pkg.read({ root }, `div`)
+    const isOddResource = await pkg.read({ root }, `is-odd`)
+
+    expect(divResource).toMatchSnapshot()
+    expect(isOddResource).toMatchSnapshot()
+  }, 20000)
 })
 
 describe(`package manager client commands`, () => {
@@ -45,6 +57,7 @@ describe(`package manager client commands`, () => {
     expect(yarnInstall).toMatchSnapshot()
     expect(yarnDevInstall).toMatchSnapshot()
   })
+
   it(`generates the correct commands for npm`, () => {
     const yarnInstall = pkg.generateClientComands({
       packageManager: `npm`,

@@ -12,7 +12,7 @@ Escalade recently started migrating its sites to Gatsby. They first chose to mig
 
 ![cajunbowfishing.com homepage](./cajun-bowfishing-homepage.jpg)
 
-# Making the decision to migrate to Gatsby
+## Making the decision to migrate to Gatsby
 
 When lead developer Kennedy Rose took responsibility for Escalade’s web stack, the first challenges he confronted were stability issues.
 
@@ -30,7 +30,7 @@ Data loading is a big deal to Rose because of the way Escalade is structured. As
 
 ![cajunbowfishing.com product categories](./cajun-bowfishing-product-categories.jpg)
 
-# Benefits they’ve found using Gatsby
+## Benefits they’ve found using Gatsby
 
 Then Rose found Gatsby. Gatsby’s plugin system solved his data problems—he was able to encapsulate data fetching into Gatsby plugins that ran at build time. It also prevented data bloat—he often didn’t need the full JSON data being returned by APIs, and with GraphQL he could query only what he needed.
 
@@ -44,7 +44,7 @@ Working with another developer, a photographer, and a graphic designer, he found
 
 Another unexpected benefit was the cost reduction of hosting static content, instead of running PHP servers. After migrating to Gatsby, Rose moved the cajunbowfishing.com website hosting over to [Netlify](https://www.netlify.com).
 
-“Our bill went from $5,000 a month to \$5,” he says.
+“Our bill went from $5,000 a month to $5,” he says.
 
 The most challenging piece of the move, Rose said, was helping others understand what the new technology stack looks like.
 

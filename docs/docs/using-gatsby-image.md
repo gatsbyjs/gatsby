@@ -2,11 +2,17 @@
 title: Using Gatsby Image to Prevent Image Bloat
 ---
 
+import ImageModel from "@components/layer-model/image-model"
+
+Using images in Gatsby components and pages requires four steps to take advantage of performance benefits.
+
+<ImageModel initialLayer="Install" />
+
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
 > _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
-[Demo](https://using-gatsby-image.gatsbyjs.org/)
+Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-image.gatsbyjs.org/)
 
 `gatsby-image` includes the tricks you’d expect from a modern image component. It:
 
@@ -86,7 +92,7 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
@@ -123,7 +129,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => {
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>

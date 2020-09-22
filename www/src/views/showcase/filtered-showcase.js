@@ -19,7 +19,7 @@ import { themedInput } from "../../utils/styles"
 
 const OPEN_SOURCE_CATEGORY = `Open Source`
 
-const filterByCategories = (list, categories) => {
+export const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, node) => {
     if (node.categories) {
       const filteredCategories = node.categories.filter(c =>
