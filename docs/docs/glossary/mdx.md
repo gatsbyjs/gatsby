@@ -14,7 +14,7 @@ Markdown defines a plain text syntax for HTML elements such as `h1`, `strong`, a
 ```markdown
 # Hello world!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
@@ -42,7 +42,7 @@ import { Figure } from './components/Figure';
 
 # Hello world!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <Figure data="chart.svg" caption="MDX adoption has increased 120% since last year." />
 ```
