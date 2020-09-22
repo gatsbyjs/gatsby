@@ -80,11 +80,11 @@ export const Dino = () => {
 
 ## How does it work?
 
-When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-static-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, loads the JSON file with the sharp object, then adds it as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop.
+When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-static-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, loads the JSON file with the sharp object, then adds it as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop. Errors don't cause the build to fail, but instead are written to the component as an `__error` prop, which is then logged in develop.
 
 ### Are there restrictions to how this is used?
 
-You cannot pass variables or expressions to the props: they must be literal values, and not spread. For example, this is forbidden:
+The props must be able to be statically-analyzed at build time. You can't pass them as props from outside the component, or use the results of function calls, for example.
 
 ```js
 //Doesn't work
@@ -96,8 +96,27 @@ You cannot pass variables or expressions to the props: they must be literal valu
 ```js
 //Doesn't work
 () => {
-    const width = 200;
+    const width = getTheWidthFromSomewhere();
     return <Img src="trex-png" width={width}>
+}
+```
+
+You can use variables and expressions if they're in the scope of the component, e.g.:
+
+```js
+//OK
+() => {
+    const width = 300
+    return <Img src="trex-png" width={width}>
+}
+```
+
+```js
+//Also OK
+() => {
+    const width = 300
+    const height = width * 16 / 9
+    return <Img src="trex-png" width={width} height={height}>
 }
 ```
 
@@ -113,6 +132,7 @@ npm install gatsby-plugin-static-image
 module.exports = {
   //...
   plugins: [
+    "gatsby-plugin-sharp",
     "gatsby-plugin-static-image",
     //...
   ],
@@ -162,8 +182,7 @@ export interface CommonImageProps {
   pngQuality?: number
   webpQuality?: number
   grayscale?: boolean
-  // Disabled for now because parsing objects is annoying. One day.
-  // duotone?: false | { highlight: string; shadow: string }
+  duotone?: false | { highlight: string; shadow: string }
   toFormat?: "NO_CHANGE" | "JPG" | "PNG" | "WEBP"
   cropFocus?:
     | "CENTER"
