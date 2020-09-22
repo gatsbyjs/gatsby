@@ -23,7 +23,7 @@ As far as pushing data out to your site goes, we suggest to you to use this fant
 ## Install
 
 ```shell
-npm install --save gatsby-source-contentful
+npm install gatsby-source-contentful
 ```
 
 ## How to use
