@@ -1,3 +1,21 @@
+- url: https://gatsby-starter-wyoming.netlify.app/
+  repo: https://github.com/stormcloud266/gatsby-starter-wyoming
+  description: Fully responsive, one-page site designed with small business website needs in mind.
+  tags:
+    - Onepage
+    - SEO
+    - Styling:SCSS
+    - PWA
+  features:
+    - Full responsive design styled with SCSS
+    - Responsive header component with desktop and mobile nav
+    - SEO component with open graph, Twitter cards, and JSON LD schema
+    - GDPR compliant Google Analytics and Facebook Pixel with cookie consent banner
+    - Netlify form with custom success page
+    - Mobile development command
+    - Robots.txt and sitemap.xml on build
+    - Offline support
+    - Lazy loaded images and background images
 - url: https://gatsby-starter-lamma.netlify.app/
   repo: https://github.com/desktopofsamuel/gatsby-starter-lamma
   description: A minimal, elegant, dark theme blog starter. Forked from Gatsby Advance Starter.
