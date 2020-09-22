@@ -14,7 +14,7 @@ const IndexPage = () => (
           </a>
         </code>
         &nbsp;
-        <a href="https://gatsbyjs.com/docs/bound-action-creators/">
+        <a href="https://www.gatsbyjs.com/docs/bound-action-creators/">
           bound action creator
         </a>
         {` `}
@@ -45,7 +45,7 @@ const IndexPage = () => (
         {` `}
         link uses
         {` `}
-        <a href="https://gatsbyjs.com/docs/gatsby-link/">
+        <a href="https://www.gatsbyjs.com/docs/gatsby-link/">
           <code>Link</code>
         </a>
         {` `}

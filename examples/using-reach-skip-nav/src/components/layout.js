@@ -2,7 +2,7 @@
  * Layout component that queries for data
  * with Gatsby's useStaticQuery component
  *
- * See: https://gatsbyjs.com/docs/use-static-query/
+ * See: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
 import React from "react"
@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
-          <a href="https://gatsbyjs.com">Gatsby</a>
+          <a href="https://www.gatsbyjs.com">Gatsby</a>
         </footer>
       </div>
     </>

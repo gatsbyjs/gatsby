@@ -2,7 +2,7 @@
  * Layout component that queries for data
  * with Gatsby's StaticQuery component
  *
- * See: https://gatsbyjs.com/docs/static-query/
+ * See: https://www.gatsbyjs.com/docs/static-query/
  */
 
 import React from "react"
