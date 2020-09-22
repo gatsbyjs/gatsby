@@ -1,5 +1,5 @@
-const { declare } = require(`@babel/helper-plugin-utils`)
-const babel = require(`@babel/standalone`)
+import { declare } from "@babel/helper-plugin-utils"
+import babel from "@babel/standalone"
 
 class BabelPluginExtractImportNames {
   constructor() {
@@ -27,7 +27,7 @@ class BabelPluginExtractImportNames {
   }
 }
 
-module.exports = src => {
+export default function ExtractImport(src) {
   try {
     const plugin = new BabelPluginExtractImportNames()
     babel.transform(src, {
@@ -41,4 +41,4 @@ module.exports = src => {
   }
 }
 
-module.exports.BabelPluginExtractImportNames = BabelPluginExtractImportNames
+export { BabelPluginExtractImportNames }

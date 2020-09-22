@@ -2,6 +2,7 @@ import resolve from "@rollup/plugin-node-resolve"
 import babel from "@rollup/plugin-babel"
 import commonjs from "@rollup/plugin-commonjs"
 import json from "@rollup/plugin-json"
+import replace from "@rollup/plugin-replace";
 import autoExternal from "rollup-plugin-auto-external"
 import internal from "rollup-plugin-internal"
 import path from "path"
@@ -24,37 +25,67 @@ function excludeDevTools() {
 }
 
 export default {
-  input: "src/index.js",
+  
+  input: {
+    index: `src/index.js`,
+    "graphql-server/server": `src/graphql-server/server.js`
+  },
   output: {
-    file: "dist/index.js",
+    dir: `dist`,
+    entryFileNames: `[name].js`,
     format: "cjs",
+    sourcemap: true,
   },
   plugins: [
+    replace({
+      values: {
+        "process.env.NODE_ENV": JSON.stringify(`production`)
+      }
+    }),
     excludeDevTools(),
     json(),
     babel({
-      babelHelpers: "runtime",
+      babelHelpers: `runtime`,
       skipPreflightCheck: true,
-      exclude: "node_modules/**",
+      exclude: `node_modules/**`,
     }),
-    resolve(),
-    commonjs(),
+        commonjs({
+          transformMixedEsModules: true
+        }),
+    resolve({
+      dedupe: [
+        `react`,
+        `ink`,
+        `ink-select-input`,
+        `ink-spinner`,
+        `terminal-link`,
+        `react-reconcilier`,
+        `@mdx-js/mdx`,
+        `@mdx-js/react`,
+        `@mdx-js/runtime`,
+        `urql`, 
+        `subscriptions-transport-ws`,
+      ]
+    }),
     autoExternal(),
     internal([
-      "ink",
-      "ink-select-input",
-      "ink-spinner",
-      "terminal-link",
-      "react-reconcilier",
+      `react`,
+      `ink`,
+      `ink-select-input`,
+      `ink-spinner`,
+      `terminal-link`,
+      `react-reconcilier`,
+      `@mdx-js/mdx`,
+      `@mdx-js/react`,
+      `@mdx-js/runtime`,
+      `urql`,
+      `subscriptions-transport-ws`,
     ]),
   ],
   external: [
-    `yoga-layout-prebuilt`,
     `ws`,
-    `urql`,
-    `node-fetch`,
-    `react`,
-    `react-devtools-core`,
-    `graphql-server`,
+    `gatsby-telemetry`,
+    `gatsby-core-utils`,
+    `yoga-layout-prebuilt`,
   ],
 }

@@ -1,17 +1,17 @@
-const fileResource = require(`./providers/fs/file`)
-const directoryResource = require(`./providers/fs/directory`)
-const gatsbyPageResource = require(`./providers/gatsby/page`)
-const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
-const gatsbyShadowFileResource = require(`./providers/gatsby/shadow-file`)
-const gatsbySiteMetadataResource = require(`./providers/gatsby/site-metadata`)
-const npmPackageResource = require(`./providers/npm/package`)
-const npmPackageScriptResource = require(`./providers/npm/script`)
-const npmPackageJsonResource = require(`./providers/npm/package-json`)
-const gitIgnoreResource = require(`./providers/git/ignore`)
-const contentfulSpace = require(`./providers/contentful/space`)
-const contentfulEnvironment = require(`./providers/contentful/environment`)
-const contentfulType = require(`./providers/contentful/type`)
-const contentfulEntry = require(`./providers/contentful/entry`)
+import * as fileResource from "./providers/fs/file"
+import * as directoryResource from "./providers/fs/directory"
+import * as gatsbyPageResource from "./providers/gatsby/page"
+import * as gatsbyPluginResource from "./providers/gatsby/plugin"
+import * as gatsbyShadowFileResource from "./providers/gatsby/shadow-file"
+import * as gatsbySiteMetadataResource from "./providers/gatsby/site-metadata"
+import * as npmPackageResource from "./providers/npm/package"
+import * as npmPackageScriptResource from "./providers/npm/script"
+import * as npmPackageJsonResource from "./providers/npm/package-json"
+import * as gitIgnoreResource from "./providers/git/ignore"
+import * as contentfulSpace from "./providers/contentful/space"
+import * as contentfulEnvironment from "./providers/contentful/environment"
+import * as contentfulType from "./providers/contentful/type"
+import * as contentfulEntry from "./providers/contentful/entry"
 
 const componentResourceMapping = {
   File: fileResource,
@@ -30,4 +30,4 @@ const componentResourceMapping = {
   ContentfulEntry: contentfulEntry,
 }
 
-module.exports = componentResourceMapping
+export default componentResourceMapping

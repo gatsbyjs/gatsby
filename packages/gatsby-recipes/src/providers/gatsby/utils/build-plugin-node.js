@@ -1,7 +1,7 @@
-const t = require(`@babel/types`)
-const template = require(`@babel/template`).default
+import * as t from "@babel/types"
+import template from "@babel/template"
 
-module.exports = ({ name, options, key }) => {
+export default function buildPluginNode({ name, options, key }) {
   if (!options && !key) {
     return t.stringLiteral(name)
   }
