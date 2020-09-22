@@ -14,6 +14,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `cropFocus`,
   `pngCompressionSpeed`,
   `rotate`,
+  `duotone`,
   `fluid`,
   `fixed`,
   `maxWidth`,
@@ -65,6 +66,7 @@ export interface ICommonImageProps {
   pngQuality?: number
   webpQuality?: number
   grayscale?: boolean
+  duotone?: false | { highlight: string; shadow: string }
   toFormat?: "NO_CHANGE" | "JPG" | "PNG" | "WEBP"
   cropFocus?:
     | "CENTER"
