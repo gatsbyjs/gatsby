@@ -8,31 +8,31 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
-    const posts = data.allGendataCsv.edges
+    const posts = data.allMarkdownRemark.edges
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <Bio />
         {posts.map(({ node }) => {
-          const title = node.title || node.slug
+          const title = node.frontmatter.title || node.frontmatter.slug
           return (
-            <article key={node.slug}>
+            <article key={node.frontmatter.slug}>
               <header>
                 <h3
                   style={{
                     marginBottom: '5px',
                   }}
                 >
-                  <Link style={{ boxShadow: `none` }} to={node.slug}>
+                  <Link style={{ boxShadow: `none` }} to={'/' + node.frontmatter.slug}>
                     {title}
                   </Link>
                 </h3>
-                <small>{node.date}</small>
+                <small>{node.frontmatter.date}</small>
               </header>
               <section>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: node.description,
+                    __html: node.frontmatter.description || node.excerpt,
                   }}
                 />
               </section>
@@ -53,16 +53,16 @@ export const pageQuery = graphql`
         title
       }
     }
-    allGendataCsv(limit: 100) {
+    allMarkdownRemark(limit: 100) {
       edges {
         node {
-          articleNumber
-          title
-          description
-          slug
-          date
-          tags
-          body
+          excerpt
+          frontmatter {
+            slug
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
         }
       }
     }
