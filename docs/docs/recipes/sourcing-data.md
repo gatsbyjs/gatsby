@@ -220,7 +220,7 @@ export const pageQuery = graphql`
 1. Install the `gatsby-source-wordpress` plugin by running the following command:
 
 ```shell
-npm install gatsby-source-wordpress --save
+npm install gatsby-source-wordpress
 ```
 
 2. Configure the plugin by modifying the `gatsby-config.js` file such that it includes the following:
