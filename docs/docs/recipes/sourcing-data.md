@@ -377,7 +377,7 @@ contentful space accesstoken create -s '<space ID>' --name 'Example token'
 5. Install the `gatsby-source-contentful` plugin in your Gatsby site:
 
 ```shell
-npm install --save gatsby-source-contentful
+npm install gatsby-source-contentful
 ```
 
 6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
@@ -550,7 +550,7 @@ export default function AllPokemon({ pageContext: { allPokemon } }) {
 1. Install the `gatsby-source-drupal` plugin.
 
 ```shell
-npm install --save gatsby-source-drupal
+npm install gatsby-source-drupal
 ```
 
 2. Edit your `gatsby-config.js` file to enable the plugin and configure it.
