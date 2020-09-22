@@ -345,7 +345,7 @@ Use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/pac
 
 #### 1. Install the dependencies
 
-`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+`npm install gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
 **NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env`.
 
