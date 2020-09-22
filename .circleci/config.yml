@@ -28,10 +28,18 @@ jobs:
       - run:
           command: yarn bootstrap -- concurrency=<< parameters.concurrency >> --stream
           name: Build monorepo
+      - run:
+          command: |
+            yarn global add verdaccio
+            echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+          name: Add verdaccio
+      - run:
+          command: node scripts/circleci-local-publish/index.js << pipeline.number >>
+          name: Publish monorepo
       - persist_to_workspace:
           paths:
             - packages/
-            - node_modules
+            - node_modules/
           root: ./
   lint:
     executor: node
@@ -100,7 +108,7 @@ jobs:
           paths:
             - ./.yarn/yarn-offline-cache/
       - run:
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\', '/'} | circleci tests split --split-by=timings)
           environment:
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
@@ -110,6 +118,161 @@ jobs:
       - store_test_results:
           path: ./test-results/jest-node/
 orbs:
+  e2e:
+    commands:
+      install-packages:
+        description: |
+          Install your Node packages with automated caching and best practices applied.
+        parameters:
+          app-dir:
+            default: ~/project
+            description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
+            type: string
+          cache-name:
+            default: node-deps
+            description: the name of the cache, by default it's node-deps.
+            type: string
+          cache-path:
+            default: node-deps
+            description: |
+              By default, this orb will utilize 'npm ci' and cache the '~/.npm' directory. Override which path to cache with this parameter.
+            type: string
+          cache-version:
+            default: v1
+            description: Change the default cache version if you need to clear the cache for any reason.
+            type: string
+          include-branch-in-cache-key:
+            default: true
+            description: |
+              If true, this cache bucket will only apply to jobs within the same branch.
+            type: boolean
+          override-ci-command:
+            default: ""
+            description: |
+              By default, packages will be installed with "npm ci" or "yarn install --frozen-lockfile".
+              Optionally supply a custom package installation command, with any additional flags needed.
+            type: string
+          pkg-manager:
+            default: npm
+            description: Select the default node package manager to use.
+            enum:
+              - npm
+              - yarn
+            type: enum
+          with-cache:
+            default: true
+            description: Cache your node packages automatically for faster install times.
+            type: boolean
+        steps:
+          - run:
+              command: |
+                if [ ! -f "package.json" ]; then
+                  echo
+                  echo "---"
+                  echo "Unable to find your package.json file. Did you forget to set the app-dir parameter?"
+                  echo "---"
+                  echo
+                  echo "Current directory: $(pwd)"
+                  echo
+                  echo
+                  echo "List directory: "
+                  echo
+                  ls
+                  exit 1
+                fi
+              name: Checking for package.json.
+              working_directory: <<parameters.app-dir>>
+          - when:
+              condition:
+                equal:
+                  - npm
+                  - << parameters.pkg-manager >>
+              steps:
+                - when:
+                    condition: << parameters.with-cache >>
+                    steps:
+                      - restore_cache:
+                          keys:
+                            - <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                - run:
+                    command: |
+                      if [[ ! -z "<< parameters.override-ci-command >>" ]]; then
+                        echo "Running override package installation command:"
+                        << parameters.override-ci-command >>
+                      else
+                        npm ci
+                      fi
+                    name: Installing NPM packages
+                    working_directory: <<parameters.app-dir>>
+                - when:
+                    condition: << parameters.with-cache >>
+                    steps:
+                      - when:
+                          condition: << parameters.cache-path >>
+                          steps:
+                            - save_cache:
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                                paths:
+                                  - <<parameters.cache-path>>
+                      - unless:
+                          condition: << parameters.cache-path >>
+                          steps:
+                            - save_cache:
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/package-lock.json" }}
+                                paths:
+                                  - ~/.npm
+          - when:
+              condition:
+                equal:
+                  - yarn
+                  - << parameters.pkg-manager >>
+              steps:
+                - when:
+                    condition: << parameters.with-cache >>
+                    steps:
+                      - restore_cache:
+                          keys:
+                            - <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                - run:
+                    command: |
+                      if [[ ! -z "<< parameters.override-ci-command >>" ]]; then
+                        echo "Running override package installation command:"
+                        << parameters.override-ci-command >>
+                      else
+                        yarn install --frozen-lockfile --prefer-offline --link-duplicates
+                      fi
+                    name: Installing YARN packages
+                    working_directory: <<parameters.app-dir>>
+                - when:
+                    condition: << parameters.with-cache >>
+                    steps:
+                      - when:
+                          condition: << parameters.cache-path >>
+                          steps:
+                            - save_cache:
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                                paths:
+                                  - <<parameters.cache-path>>
+                      - unless:
+                          condition: << parameters.cache-path >>
+                          steps:
+                            - save_cache:
+                                key: <<parameters.cache-name>>-<<parameters.cache-version>>-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "<<parameters.app-dir>>/yarn.lock" }}
+                                paths:
+                                  - <<parameters.app-dir>>/node_modules
+    executors:
+      default:
+        description: |
+          Select the version of NodeJS to use. Uses CircleCI's highly cached convenience images built for CI.
+          Any available tag from this list can be used: https://hub.docker.com/r/cimg/node/tags
+        docker:
+          - image: cimg/node:<<parameters.tag>>
+        parameters:
+          tag:
+            default: lts
+            description: |
+              Pick a specific cimg/node image version tag: https://hub.docker.com/r/cimg/node
+            type: string
   node:
     commands:
       install-packages:
@@ -231,7 +394,7 @@ orbs:
                         echo "Running override package installation command:"
                         << parameters.override-ci-command >>
                       else
-                        yarn install --frozen-lockfile --prefer-offline --link-duplicates --verbose
+                        yarn install --frozen-lockfile --prefer-offline --link-duplicates
                       fi
                     name: Installing YARN packages
                     working_directory: <<parameters.app-dir>>

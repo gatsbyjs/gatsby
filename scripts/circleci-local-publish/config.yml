@@ -1,0 +1,16 @@
+storage: ./storage
+auth:
+  htpasswd:
+    file: ./htpasswd
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+packages:
+  "**":
+    access: $all
+    proxy: npmjs
+    publish: $all
+logs:
+  - { type: stdout, format: pretty, level: debug }
+listen:
+  - localhost:4873

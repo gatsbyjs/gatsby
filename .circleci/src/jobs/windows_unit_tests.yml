@@ -15,7 +15,7 @@ steps:
       key: yarn-offline-cache-v0.0
   - run:
       name: Run tests
-      command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | circleci tests split --split-by=timings)
+      command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\', '/'} | circleci tests split --split-by=timings)
       environment:
         NODE_OPTIONS: --max-old-space-size=2048
         GENERATE_JEST_REPORT: true
