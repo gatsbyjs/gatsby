@@ -1,10 +1,9 @@
-import { Node, GatsbyCache } from "gatsby"
-import type { reporter } from "gatsby-cli/lib/reporter"
-type Reporter = typeof reporter
+import { Node, GatsbyCache, Reporter } from "gatsby"
 import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
-const fileCache = new Map<string, Node>()
 import fs from "fs-extra"
 import path from "path"
+
+const fileCache = new Map<string, Node>()
 
 export async function writeImages({
   images,
