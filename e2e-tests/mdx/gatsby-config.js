@@ -30,6 +30,10 @@ module.exports = {
   ],
 }
 
+/**
+ * This is a test to ensure that `gatsby-plugin-mdx` correctly pass the `file` argument to the underlying remark plugins.
+ * See #26914 for more info.
+ */
 function remarkRequireFilePathPlugin() {
   return function transformer(tree, file) {
     if (!file.dirname) {
