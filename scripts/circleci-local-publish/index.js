@@ -112,26 +112,28 @@ process.on(`exit`, code => {
     await waitFor(REGISTRY_URL, 1000)
 
     if (cmd === `publish` && !exitCode) {
-      const { proc: lernaProc, promise: lernaPromise } = promiseSpawn(
-        `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages.join(
-          `,`
-        )} --ignore-scripts --yes`,
-        {
-          shell: true,
-        }
-      )
+      for (let i = 0; i < packages.length; i += 50) {
+        const { proc: lernaProc, promise: lernaPromise } = promiseSpawn(
+          `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages
+            .slice(i, i + 50)
+            .join(`,`)} --ignore-scripts --yes`,
+          {
+            shell: true,
+          }
+        )
 
-      lernaProc.stdout.on(`data`, msg => {
-        console.log(msg.toString())
-      })
+        lernaProc.stdout.on(`data`, msg => {
+          console.log(msg.toString())
+        })
 
-      lernaProc.stderr.on(`data`, msg => {
-        console.log(msg.toString())
-      })
+        lernaProc.stderr.on(`data`, msg => {
+          console.log(msg.toString())
+        })
 
-      exitCode = await lernaPromise
+        exitCode = await lernaPromise
 
-      spawnSync(`git`, [`checkout`, `../..`])
+        spawnSync(`git`, [`checkout`, `../..`])
+      }
     }
 
     if (cmd === `install` && !exitCode) {
