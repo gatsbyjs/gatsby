@@ -69,3 +69,4 @@ yarn-error.log
 .yarn-integrity
 
 generated_articles
+yarn.lock

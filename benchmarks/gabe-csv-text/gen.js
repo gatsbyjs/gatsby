@@ -37,13 +37,10 @@ function createArticle(n) {
 <p>${faker.lorem.paragraphs(1)}</p>
       `,
     ]
-      .map(s =>
-        s
-          .trim()
-          // Need to escape newlines and commas
-          .replace(/,/g, "\\,")
-          .replace(/\n/g, "") // html don't care about newlines
-      )
+      // Can only escape double quotes, by doubling them
+      .map(s => s.trim().replace(/"/g, '""'))
+      // Can only use commas and newlines in text by double-quote wrapping them. Or by removing them
+      .map(s => `"${s}"`)
       .join(",") + "\n"
   )
 }

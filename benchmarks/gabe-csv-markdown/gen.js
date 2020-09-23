@@ -11,7 +11,7 @@ const FILE = path.resolve("gendata.csv")
 // We then hand that off to markdown
 
 console.log("Now generating " + N + " articles into", FILE)
-fs.writeFileSync(FILE, "articleContent,a,b,c\n")
+fs.writeFileSync(FILE, "articleContent\n")
 
 function createArticle(n) {
   const title = faker.lorem.sentence()
@@ -47,7 +47,7 @@ ${faker.lorem.paragraphs(2)}
     '"' + pageContent
       .trim()
       .replace(/"/g, '""')
-      + '",1,2,3' +
+      + '"' +
       "\n" // markdown does care about newlines
   )
 }
