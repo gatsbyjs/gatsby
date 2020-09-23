@@ -25,7 +25,7 @@ plugins: [`gatsby-plugin-graphql-config`]
 
 ### Simplest setup
 
-if you are able to configure your tools to seek a different `basePath` for loading GraphQL Config, point them to `.cache` directory.
+If you are able to configure your tools to seek a different `basePath` for loading GraphQL Config, point them to `.cache` directory.
 
 ### Manual setup for repositories with no other GraphQL projects
 
