@@ -21,3 +21,8 @@ jobs:
       requires:
         - lint
         - typecheck
+  - e2e-test:
+      name: e2e_tests_path-prefix
+      test_path: e2e-tests/path-prefix
+      requires:
+        - bootstrap

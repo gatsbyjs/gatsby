@@ -1,0 +1,17 @@
+docker:
+  - image: cypress/browsers:node10.16.0-chrome76
+
+parameters:
+  test_path:
+    type: string
+    description: path to where e2e test lives
+  test_command:
+    type: string
+    default: "yarn test"
+
+steps:
+  - checkout
+  - e2e/execute:
+      npm_tag: << pipeline.number >>
+      test_path: << parameters.test_path >>
+      test_command: << parameters.test_command >>

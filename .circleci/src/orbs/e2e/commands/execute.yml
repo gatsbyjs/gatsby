@@ -1,0 +1,31 @@
+# copied from https://github.com/CircleCI-Public/node-orb/blob/master/src/commands/install-packages.yml
+
+description: >
+  Install your Node packages with automated caching and best practices applied.
+
+parameters:
+  npm_tag:
+    type: string
+    description: The npm tag to use to install packages
+  test_path:
+    type: string
+    description: path to where e2e test lives
+  test_command:
+    type: string
+    default: "yarn test"
+
+steps:
+  - run:
+      name: Install current dependencies
+      command: |
+        node $CIRCLE_WORKING_DIRECTORY/scripts/dependencies-helper.js update "^gatsby-" << parameters.npm_tag >>
+        yarn --prefer-offline
+      working_directory: << parameters.test_path >>
+  - run:
+      name: Run test
+      command: << parameters.test_command >>
+      working_directory: << parameters.test_path >>
+  - run:
+      name: Undo changes
+      command: git checkout package.json
+      working_directory: << parameters.test_path >>

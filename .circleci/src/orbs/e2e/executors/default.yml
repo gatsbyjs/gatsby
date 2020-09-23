@@ -1,0 +1,16 @@
+# copied from https://github.com/CircleCI-Public/node-orb/blob/master/src/executors/default.yml
+
+description: |
+  Select the version of NodeJS to use. Uses CircleCI's highly cached convenience images built for CI.
+  Any available tag from this list can be used: https://hub.docker.com/r/cimg/node/tags
+
+parameters:
+  tag:
+    type: string
+    default: "lts"
+    description: >
+      Pick a specific cimg/node image version tag:
+      https://hub.docker.com/r/cimg/node
+
+docker:
+  - image: cimg/node:<<parameters.tag>>
