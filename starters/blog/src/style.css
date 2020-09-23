@@ -11,6 +11,7 @@
   --maxWidth-3xl: 48rem;
   --maxWidth-4xl: 56rem;
   --maxWidth-full: "100%";
+  --maxWidth-wrapper: var(--maxWidth-2xl);
   --spacing-px: "1px";
   --spacing-0: 0;
   --spacing-1: 0.25rem;
@@ -58,7 +59,7 @@
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
   --color-heading-black: black;
-  --color-accent: #99a8cd;
+  --color-accent: #d1dce5;
 }
 
 /* HTML elements */
@@ -83,7 +84,7 @@ body {
 }
 
 footer {
-  padding: var(--spacing-6) 0;
+  padding: var(--spacing-6) var(--spacing-0);
 }
 
 hr {
@@ -199,7 +200,7 @@ blockquote {
   color: var(--color-text-light);
   margin-left: calc(-1 * var(--spacing-6));
   margin-right: var(--spacing-8);
-  padding: 0 0 0 var(--spacing-6);
+  padding: var(--spacing-0) var(--spacing-0) var(--spacing-0) var(--spacing-6);
   border-left: var(--spacing-1) solid var(--color-primary);
   font-size: var(--fontSize-2);
   font-style: italic;
@@ -208,6 +209,22 @@ blockquote {
 
 blockquote > :last-child {
   margin-bottom: var(--spacing-0);
+}
+
+blockquote > ul,
+blockquote > ol {
+  list-style-position: inside;
+}
+
+table {
+  width: 100%;
+  margin-bottom: var(--spacing-8);
+  border-collapse: collapse;
+  border-spacing: 0.25rem;
+}
+
+table thead tr th {
+  border-bottom: 1px solid var(--color-accent);
 }
 
 /* Link */
@@ -225,7 +242,7 @@ a:focus {
 
 .global-wrapper {
   margin: var(--spacing-0) auto;
-  max-width: var(--maxWidth-2xl);
+  max-width: var(--maxWidth-wrapper);
   padding: var(--spacing-10) var(--spacing-5);
 }
 
@@ -300,4 +317,17 @@ a:focus {
 
 .gatsby-highlight {
   margin-bottom: var(--spacing-8);
+}
+
+/* Media queries */
+
+@media (max-width: 42rem) {
+  blockquote {
+    padding: var(--spacing-0) var(--spacing-0) var(--spacing-0) var(--spacing-4);
+    margin-left: var(--spacing-0);
+  }
+  ul,
+  ol {
+    list-style-position: inside;
+  }
 }
