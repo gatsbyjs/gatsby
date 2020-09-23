@@ -33,6 +33,7 @@ jobs:
             yarn global add verdaccio
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
           name: Install verdaccio
+      - run: rm -rf scripts/circleci-local-publish/storage
       - run:
           command: node scripts/circleci-local-publish/index.js publish "<< pipeline.number >>"
           name: Publish monorepo
@@ -124,6 +125,7 @@ jobs:
           shell: bash.exe
       - attach_workspace:
           at: ./
+      - run: npm i -g node-gyp
       - run: npm rebuild
       - run:
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
