@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://www.gatsbyjs.org",
+  "homepage": "https://www.gatsbyjs.com",
   "dependencies": {
     "bulma": "0.9.0",
     "d3": "4.13.0",
