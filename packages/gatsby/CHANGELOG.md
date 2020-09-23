@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.64](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.63...gatsby@2.24.64) (2020-09-23)
+
+### Features
+
+- **gatsby:** Expose typescript transpiler to default site in plugin list ([#26452](https://github.com/gatsbyjs/gatsby/issues/26452)) ([a8ce6e6](https://github.com/gatsbyjs/gatsby/commit/a8ce6e6e2ad46693a49af052cd302187d56e5943))
+
 ## [2.24.63](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.62...gatsby@2.24.63) (2020-09-18)
 
 ### Bug Fixes
