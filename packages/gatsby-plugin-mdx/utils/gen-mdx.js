@@ -241,7 +241,7 @@ async function findImports({
   }
 
   let mdast = await compiler.parse(fileOpts)
-  mdast = await compiler.run(mdast)
+  mdast = await compiler.run(mdast, fileOpts)
 
   // Assuming valid code, identifiers must be unique (they are consts) so
   // we don't need to dedupe the symbols here.
