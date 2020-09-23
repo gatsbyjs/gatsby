@@ -127,6 +127,9 @@ jobs:
           paths:
             - ./.yarn/yarn-offline-cache/
       - run:
+          command: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
+          name: Build monorepo
+      - run:
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\', '/'} | circleci tests split --split-by=timings)
           environment:
             GENERATE_JEST_REPORT: true
@@ -156,7 +159,7 @@ orbs:
           - run:
               command: |
                 node ~/project/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
-                node ~/project/scripts/circleci-local-publish.js install
+                node ~/project/scripts/circleci-local-publish/index.js install
               name: Install current dependencies
               working_directory: << parameters.test_path >>
           - run:

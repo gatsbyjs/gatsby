@@ -6,6 +6,8 @@ steps:
   - run:
       command: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       shell: bash.exe
+  # - attach_workspace:
+  #     at: ./
   - restore_cache:
       key: yarn-offline-cache-v0.0
   - run: yarn --frozen-lockfile --prefer-offline --link-duplicates
@@ -13,6 +15,9 @@ steps:
       paths:
         - ./.yarn/yarn-offline-cache/
       key: yarn-offline-cache-v0.0
+  - run:
+      name: Build monorepo
+      command: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
   - run:
       name: Run tests
       command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\', '/'} | circleci tests split --split-by=timings)
