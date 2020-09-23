@@ -15,16 +15,13 @@ function promiseSpawn(shell, options) {
 
   return {
     proc,
-    promise: new Promise(resolve => {
+    promise: new Promise((resolve, reject) => {
       proc.on(`error`, err => {
         console.log(err)
-        resolve(-1)
+        reject(-1)
       })
 
       proc.on(`exit`, exitCode => {
-        resolve(exitCode)
-      })
-      proc.on(`close`, exitCode => {
         resolve(exitCode)
       })
     }),
@@ -66,6 +63,7 @@ process.on(`exit`, code => {
 })
 ;(async () => {
   const REGISTRY_URL = `http://127.0.0.1:4873`
+  let exitCode = 0
 
   let verdaccioProc
   let verdaccioPromise
@@ -87,9 +85,10 @@ process.on(`exit`, code => {
       console.log(msg.toString())
     })
 
-    verdaccioPromise.then(exitCode => {
-      if (exitCode === -1) {
+    verdaccioPromise.then(exitC => {
+      if (exitC === -1) {
         killVerdaccio(verdaccioProc)
+        exitCode = exitC
 
         return new Promise(() => {
           setTimeout(() => {
@@ -103,7 +102,7 @@ process.on(`exit`, code => {
 
     await waitFor(REGISTRY_URL, 1000)
 
-    if (cmd === `publish`) {
+    if (cmd === `publish` && !exitCode) {
       const { proc: lernaProc, promise: lernaPromise } = promiseSpawn(
         `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish --ignore-scripts --yes`,
         {
@@ -119,12 +118,12 @@ process.on(`exit`, code => {
         console.log(msg.toString())
       })
 
-      await lernaPromise
+      exitCode = await lernaPromise
 
       spawnSync(`git`, [`checkout`, `../..`])
     }
 
-    if (cmd === `install`) {
+    if (cmd === `install` && !exitCode) {
       const { proc: installProc, promise: installPromise } = promiseSpawn(
         `${
           process.execArgv.includes(`--pm npm`) ? `npm` : `yarn`
@@ -142,14 +141,14 @@ process.on(`exit`, code => {
         console.log(msg.toString())
       })
 
-      await installPromise
+      exitCode = await installPromise
       console.log(`installation done`)
     }
   } catch (err) {
-    process.exitCode = -1
+    exitCode = -1
   } finally {
     killVerdaccio(verdaccioProc)
   }
 
-  process.exit(process.exitCode || 0)
+  process.exit(exitCode || 0)
 })()
