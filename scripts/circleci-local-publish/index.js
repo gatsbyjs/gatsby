@@ -78,7 +78,7 @@ process.on(`exit`, code => {
   )
 
   const packages = Object.keys(workspaces).filter(
-    pkg => pkg === `gatsby` // ![`gatsby-source-lever`, `gatsby-admin`].includes(pkg)
+    pkg => ![`gatsby-source-lever`, `gatsby-admin`].includes(pkg)
   )
 
   try {

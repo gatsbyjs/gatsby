@@ -161,7 +161,7 @@ orbs:
               name: Install verdaccio
           - run:
               command: |
-                node ~/project/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
+                node ~/project/scripts/dependencies-helper.js update "^gatsby-" << parameters.npm_tag >>
                 node ~/project/scripts/circleci-local-publish/index.js install
               name: Install current dependencies
               working_directory: << parameters.test_path >>
