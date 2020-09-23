@@ -70,16 +70,12 @@ process.on(`exit`, code => {
 
   // Setting a list of packages with lerna --force-publish works 100%, without it randomly fails.
   const workspaces = JSON.parse(
-    JSON.parse(
-      spawnSync(`yarn`, [`workspaces`, `info`, `--json`], {
-        shell: true,
-      }).stdout.toString()
-    ).data
+    spawnSync(`yarn`, [`-s`, `lerna`, `list`, `--json`, `--toposort`], {
+      shell: true,
+    }).stdout.toString()
   )
 
-  const packages = Object.keys(workspaces).filter(
-    pkg => ![`gatsby-source-lever`, `gatsby-admin`].includes(pkg)
-  )
+  const packages = workspaces.filter(pkg => !pkg.private).map(pkg => pkg.name)
 
   try {
     const verdaccio = promiseSpawn(`verdaccio --config config.yml`, {
