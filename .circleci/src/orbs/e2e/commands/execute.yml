@@ -18,8 +18,8 @@ steps:
   - run:
       name: Install current dependencies
       command: |
-        node ~/projects/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
-        node ~/projects/scripts/circleci-local-publish.js install
+        node ~/project/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
+        node ~/project/scripts/circleci-local-publish.js install
       working_directory: << parameters.test_path >>
   - run:
       name: Run test

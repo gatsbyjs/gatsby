@@ -34,7 +34,7 @@ jobs:
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
           name: Add verdaccio
       - run:
-          command: node scripts/circleci-local-publish/index.js "<< pipeline.number >>"
+          command: node scripts/circleci-local-publish/index.js publish "<< pipeline.number >>"
           name: Publish monorepo
       - persist_to_workspace:
           paths:
@@ -155,8 +155,8 @@ orbs:
         steps:
           - run:
               command: |
-                node ~/projects/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
-                node ~/projects/scripts/circleci-local-publish.js install
+                node ~/project/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
+                node ~/project/scripts/circleci-local-publish.js install
               name: Install current dependencies
               working_directory: << parameters.test_path >>
           - run:
