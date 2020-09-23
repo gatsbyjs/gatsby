@@ -13,14 +13,15 @@ const Layout = ({ location, title, children }) => {
       </h1>
     )
   } else {
-    header = <Link className="header-link-home" to="/">{title}</Link>
+    header = (
+      <Link className="header-link-home" to="/">
+        {title}
+      </Link>
+    )
   }
 
   return (
-    <div
-      className="global-wrapper"
-      data-is-root-path={isRootPath}
-    >
+    <div className="global-wrapper" data-is-root-path={isRootPath}>
       <header className="global-header">{header}</header>
       <main>{children}</main>
       <footer>
