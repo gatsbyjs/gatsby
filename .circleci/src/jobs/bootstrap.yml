@@ -23,6 +23,7 @@ steps:
       command: |
         yarn global add verdaccio
         echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+  - run: "rm -rf scripts/circleci-local-publish/storage"
   - run:
       name: Publish monorepo
       command: node scripts/circleci-local-publish/index.js publish "<< pipeline.number >>"
