@@ -1,3 +1,4 @@
+0BSD
 ½
 ⅓
 1000px
@@ -126,7 +127,6 @@ Albright
 Alexa
 Algolia
 Allanson
-allfile-query
 allWordpressPage
 Amberley
 Ambras
@@ -154,13 +154,14 @@ ArchieML.org
 architected
 architecting
 Archlinux
+Arellano
 arg
 args
 Arkins
+Arshad
 AsciiDoc
 Asciidoctor
 AskGatsbyJS
-ASKGatsbyJS
 Asko
 aspirational
 AST
@@ -223,6 +224,7 @@ bigtime
 bikeshed
 bindActionCreators
 Bing
+Bip
 Biscardi
 BitBalloon
 Bitbucket
@@ -242,6 +244,7 @@ bois
 Bolda
 Bölüm
 bool
+booleans
 bootcamp
 bootcamps
 bootstrapable
@@ -386,6 +389,8 @@ Commento
 Commentors
 CommonJS
 CommonMark
+comparator
+comparators
 compile-to-js
 componentChunkName
 componentChunkNames
@@ -427,6 +432,7 @@ Costa
 Costea
 Coughlan
 counterintuitive
+COVID
 COVID-19
 cowpaths
 Coyier
@@ -626,13 +632,11 @@ Evoq
 ex-PayPal-ers
 Ex-PayPal-ers
 exampleValue
-excited-gif
 executables
 EXIF
 ExitWP
 Expedia
 explorable
-extractFieldsToSift
 extractQueries
 F12
 F8
@@ -657,10 +661,8 @@ filepath
 filepaths
 Filestack
 filesystem
-filesystem-autocomplete
 filesystem-based
 filesystem-explorer-options
-filesystem-query
 Fillerama
 FindCollabs
 findDirtyIds
@@ -680,6 +682,7 @@ focusable
 FOMO
 Fonegra
 Fonnegra
+Forem
 FormatJS
 formatter
 Formik
@@ -893,7 +896,7 @@ Graph_i_QL
 GraphCMS
 GraphiQL
 graphiql-code-exporter
-graphiql-filesystem
+graphql
 GraphQL
 GraphQL-based
 graphql-compose
@@ -954,8 +957,10 @@ headlessly
 headmatter
 headmouse
 headstart
+Hernández
 heroku
 heroku-buildpack-static
+Hetman
 Hexo
 hinzufügen
 HIPAA
@@ -1084,6 +1089,7 @@ jumbotron
 JWPlayer
 JWT
 Ka
+Kadlec
 Kalin
 Kasten
 Kategorien
@@ -1107,6 +1113,7 @@ Kirkham
 Kissling
 Knut
 KNW
+Kocjan
 Koelewijn
 Koenig
 Koerselman
@@ -1213,6 +1220,7 @@ materialisation
 Materialisation
 Mateusz
 MathJax
+Matías
 Matomo
 mccrodp
 MD5
@@ -1241,10 +1249,12 @@ metacompiler
 metadescription
 metafields
 Metalsmith
+metatags
 METROGLAM
 Meuleman
 Michał
 Microfrontends
+micromatch
 microservices
 microsites
 middleware
@@ -1358,6 +1368,7 @@ observability
 Octocat
 Oduye
 oEmbed
+OG
 ok
 Ok
 OKRs
@@ -1426,6 +1437,7 @@ pathname
 pathnames
 pathPrefix
 Paulie
+Paulina
 Pavel
 PayPal
 PayPal-ers
@@ -1453,6 +1465,7 @@ pixelated
 pjax
 pleaaase
 pluggable
+pm
 PNG
 POC
 podcasters
@@ -1635,6 +1648,7 @@ redux
 Redux
 Reduxjs
 ReferenceError
+ReflexJS
 reformats
 reframe
 rehydrate
@@ -1702,7 +1716,6 @@ RSS
 rsync
 RTC
 RTEs
-runInitialQuerys
 runQueries
 runQueriesForPathnames
 runtimes
@@ -1775,8 +1788,6 @@ shouldUpdateScroll
 shoutout
 Sidenotes
 Sidhartha
-siftified
-siftifyArgs
 signup
 signups
 simple-auth
@@ -1815,6 +1826,7 @@ source-filesystem
 Sourcegraph
 sourceNodes
 SpaceX
+Spalato
 spambots
 spammy
 spelt
@@ -2130,6 +2142,7 @@ Wiseman
 wishlist
 with-navigation2
 Woah
+Wojciech
 WooCommerce
 Woodworth
 Workbox

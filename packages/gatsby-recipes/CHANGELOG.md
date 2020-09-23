@@ -3,6 +3,171 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.26...gatsby-recipes@0.2.27) (2020-09-16)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.25...gatsby-recipes@0.2.26) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.24...gatsby-recipes@0.2.25) (2020-09-14)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.23...gatsby-recipes@0.2.24) (2020-09-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** renable e2e test for npm package resource & fix dev/prod resource bug ([#26699](https://github.com/gatsbyjs/gatsby/issues/26699)) ([6d963af](https://github.com/gatsbyjs/gatsby/commit/6d963af6d86cd5e9acf4db0d4be6b1ef37fb8dcf))
+
+## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.22...gatsby-recipes@0.2.23) (2020-09-09)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Cache readme and always return string ([#26833](https://github.com/gatsbyjs/gatsby/issues/26833)) ([58dc15e](https://github.com/gatsbyjs/gatsby/commit/58dc15e))
+
+## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.21...gatsby-recipes@0.2.22) (2020-09-08)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Normalise recipes snapshots ([#26818](https://github.com/gatsbyjs/gatsby/issues/26818)) ([4610102](https://github.com/gatsbyjs/gatsby/commit/4610102))
+
+## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.20...gatsby-recipes@0.2.21) (2020-09-07)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add mdx packages to rollup ([#26660](https://github.com/gatsbyjs/gatsby/issues/26660)) ([69a93ba](https://github.com/gatsbyjs/gatsby/commit/69a93ba))
+
+## [0.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.19...gatsby-recipes@0.2.20) (2020-08-31)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.18...gatsby-recipes@0.2.19) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.17...gatsby-recipes@0.2.18) (2020-08-26)
+
+### Features
+
+- **gatsby-admin:** plugin view ([#26195](https://github.com/gatsbyjs/gatsby/issues/26195)) ([6287c73](https://github.com/gatsbyjs/gatsby/commit/6287c73))
+
+## [0.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.16...gatsby-recipes@0.2.17) (2020-08-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** some code cleanups + tests ([#26420](https://github.com/gatsbyjs/gatsby/issues/26420)) ([3d1cc4b](https://github.com/gatsbyjs/gatsby/commit/3d1cc4b))
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
+## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.15...gatsby-recipes@0.2.16) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add missing var for the recipes selector ([#26410](https://github.com/gatsbyjs/gatsby/issues/26410)) ([2be03bf](https://github.com/gatsbyjs/gatsby/commit/2be03bf))
+
+## [0.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.14...gatsby-recipes@0.2.15) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-recipe:** let resources declare dependencies & validate recipes & ensure dependencies installed first ([#26386](https://github.com/gatsbyjs/gatsby/issues/26386)) ([cc354af](https://github.com/gatsbyjs/gatsby/commit/cc354af))
+
+## [0.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.13...gatsby-recipes@0.2.14) (2020-08-12)
+
+### Bug Fixes
+
+- **deps:** install deps as devDependencies on storybook recipe ([#25991](https://github.com/gatsbyjs/gatsby/issues/25991)) ([88a8025](https://github.com/gatsbyjs/gatsby/commit/88a8025))
+- **recipes:** Install storybook dependencies with development type on typescript recipe ([#25989](https://github.com/gatsbyjs/gatsby/issues/25989)) ([e6b6268](https://github.com/gatsbyjs/gatsby/commit/e6b6268))
+
+## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.12...gatsby-recipes@0.2.13) (2020-08-11)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix NPMScript for parallel calls ([#26349](https://github.com/gatsbyjs/gatsby/issues/26349)) ([e845615](https://github.com/gatsbyjs/gatsby/commit/e845615))
+
+## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.11...gatsby-recipes@0.2.12) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** remove trailing config as we do want it to run again to ensure all resource updates are flushed ([#26341](https://github.com/gatsbyjs/gatsby/issues/26341)) ([0542c8b](https://github.com/gatsbyjs/gatsby/commit/0542c8b))
+
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.10...gatsby-recipes@0.2.11) (2020-08-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** speedup recipe runs for recipes with large numbers of resources ([#26307](https://github.com/gatsbyjs/gatsby/issues/26307)) ([07d555b](https://github.com/gatsbyjs/gatsby/commit/07d555b))
+
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.9...gatsby-recipes@0.2.10) (2020-08-08)
+
+### Features
+
+- **gatsby-recipes:** live stream updates from creating resources ([#26283](https://github.com/gatsbyjs/gatsby/issues/26283)) ([57843f7](https://github.com/gatsbyjs/gatsby/commit/57843f7))
+
+## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.8...gatsby-recipes@0.2.9) (2020-08-07)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix for when recipes have multiple NPMPackageJSON resources ([#26281](https://github.com/gatsbyjs/gatsby/issues/26281)) ([1e74b7c](https://github.com/gatsbyjs/gatsby/commit/1e74b7c))
+
+## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.7...gatsby-recipes@0.2.8) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby-recipes:** rename/remove internal fields ([#26254](https://github.com/gatsbyjs/gatsby/issues/26254)) ([3b5504f](https://github.com/gatsbyjs/gatsby/commit/3b5504f))
+
+## [0.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.6...gatsby-recipes@0.2.7) (2020-08-06)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.5...gatsby-recipes@0.2.6) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby-recipes:** also show general errors ([#26253](https://github.com/gatsbyjs/gatsby/issues/26253)) ([1cf5bc2](https://github.com/gatsbyjs/gatsby/commit/1cf5bc2))
+
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.4...gatsby-recipes@0.2.5) (2020-08-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Handle string values in NPMPackageJSON + more robust showing of validation errors on install ([#26252](https://github.com/gatsbyjs/gatsby/issues/26252)) ([3a5d46d](https://github.com/gatsbyjs/gatsby/commit/3a5d46d))
+
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.3...gatsby-recipes@0.2.4) (2020-08-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix prop validation & creation of cache keys during installs ([#26235](https://github.com/gatsbyjs/gatsby/issues/26235)) ([5aa8f25](https://github.com/gatsbyjs/gatsby/commit/5aa8f25))
+
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.2...gatsby-recipes@0.2.3) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.1...gatsby-recipes@0.2.2) (2020-08-04)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Update snapshot to reflect latest recipe text ([#26219](https://github.com/gatsbyjs/gatsby/issues/26219)) ([93e1ebd](https://github.com/gatsbyjs/gatsby/commit/93e1ebd))
+
+### Features
+
+- **gatsby-recipes:** add sitemetadata provider ([#26160](https://github.com/gatsbyjs/gatsby/issues/26160)) ([0053d24](https://github.com/gatsbyjs/gatsby/commit/0053d24))
+
+## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.0...gatsby-recipes@0.2.1) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.59...gatsby-recipes@0.2.0) (2020-08-03)
+
+### Features
+
+- **gatsby-recipes:** add recipes gui ([#24595](https://github.com/gatsbyjs/gatsby/issues/24595)) ([07085fa](https://github.com/gatsbyjs/gatsby/commit/07085fa)), closes [#24655](https://github.com/gatsbyjs/gatsby/issues/24655) [#25133](https://github.com/gatsbyjs/gatsby/issues/25133) [#25930](https://github.com/gatsbyjs/gatsby/issues/25930) [#25939](https://github.com/gatsbyjs/gatsby/issues/25939) [#26009](https://github.com/gatsbyjs/gatsby/issues/26009) [#26085](https://github.com/gatsbyjs/gatsby/issues/26085) [#26115](https://github.com/gatsbyjs/gatsby/issues/26115) [#25763](https://github.com/gatsbyjs/gatsby/issues/25763) [#25812](https://github.com/gatsbyjs/gatsby/issues/25812) [#24306](https://github.com/gatsbyjs/gatsby/issues/24306) [#25884](https://github.com/gatsbyjs/gatsby/issues/25884) [#25883](https://github.com/gatsbyjs/gatsby/issues/25883) [#25886](https://github.com/gatsbyjs/gatsby/issues/25886) [#25316](https://github.com/gatsbyjs/gatsby/issues/25316) [#25874](https://github.com/gatsbyjs/gatsby/issues/25874) [#25606](https://github.com/gatsbyjs/gatsby/issues/25606) [#25891](https://github.com/gatsbyjs/gatsby/issues/25891) [#25896](https://github.com/gatsbyjs/gatsby/issues/25896) [#25894](https://github.com/gatsbyjs/gatsby/issues/25894) [#25905](https://github.com/gatsbyjs/gatsby/issues/25905) [#25902](https://github.com/gatsbyjs/gatsby/issues/25902) [#25907](https://github.com/gatsbyjs/gatsby/issues/25907) [#25882](https://github.com/gatsbyjs/gatsby/issues/25882) [#25892](https://github.com/gatsbyjs/gatsby/issues/25892) [#25879](https://github.com/gatsbyjs/gatsby/issues/25879) [#25875](https://github.com/gatsbyjs/gatsby/issues/25875) [#25744](https://github.com/gatsbyjs/gatsby/issues/25744) [#25903](https://github.com/gatsbyjs/gatsby/issues/25903) [#25863](https://github.com/gatsbyjs/gatsby/issues/25863) [#25915](https://github.com/gatsbyjs/gatsby/issues/25915) [#25910](https://github.com/gatsbyjs/gatsby/issues/25910) [#25912](https://github.com/gatsbyjs/gatsby/issues/25912) [#25901](https://github.com/gatsbyjs/gatsby/issues/25901) [#25643](https://github.com/gatsbyjs/gatsby/issues/25643) [#25720](https://github.com/gatsbyjs/gatsby/issues/25720) [#24652](https://github.com/gatsbyjs/gatsby/issues/24652) [#24549](https://github.com/gatsbyjs/gatsby/issues/24549) [#24549](https://github.com/gatsbyjs/gatsby/issues/24549) [#11](https://github.com/gatsbyjs/gatsby/issues/11) [#25832](https://github.com/gatsbyjs/gatsby/issues/25832) [#25936](https://github.com/gatsbyjs/gatsby/issues/25936) [#25344](https://github.com/gatsbyjs/gatsby/issues/25344) [#25721](https://github.com/gatsbyjs/gatsby/issues/25721) [#25943](https://github.com/gatsbyjs/gatsby/issues/25943) [#25479](https://github.com/gatsbyjs/gatsby/issues/25479) [#25716](https://github.com/gatsbyjs/gatsby/issues/25716) [#25946](https://github.com/gatsbyjs/gatsby/issues/25946) [#25940](https://github.com/gatsbyjs/gatsby/issues/25940) [#25954](https://github.com/gatsbyjs/gatsby/issues/25954) [#25464](https://github.com/gatsbyjs/gatsby/issues/25464) [#25914](https://github.com/gatsbyjs/gatsby/issues/25914) [#25970](https://github.com/gatsbyjs/gatsby/issues/25970) [#25972](https://github.com/gatsbyjs/gatsby/issues/25972) [#25815](https://github.com/gatsbyjs/gatsby/issues/25815) [#25944](https://github.com/gatsbyjs/gatsby/issues/25944) [#25941](https://github.com/gatsbyjs/gatsby/issues/25941) [#25974](https://github.com/gatsbyjs/gatsby/issues/25974) [#25971](https://github.com/gatsbyjs/gatsby/issues/25971) [#25921](https://github.com/gatsbyjs/gatsby/issues/25921) [#25276](https://github.com/gatsbyjs/gatsby/issues/25276) [#25463](https://github.com/gatsbyjs/gatsby/issues/25463) [#25980](https://github.com/gatsbyjs/gatsby/issues/25980) [#25965](https://github.com/gatsbyjs/gatsby/issues/25965) [#25926](https://github.com/gatsbyjs/gatsby/issues/25926) [#25983](https://github.com/gatsbyjs/gatsby/issues/25983) [#25958](https://github.com/gatsbyjs/gatsby/issues/25958) [#25978](https://github.com/gatsbyjs/gatsby/issues/25978) [#25998](https://github.com/gatsbyjs/gatsby/issues/25998) [#26002](https://github.com/gatsbyjs/gatsby/issues/26002) [#25997](https://github.com/gatsbyjs/gatsby/issues/25997) [#25984](https://github.com/gatsbyjs/gatsby/issues/25984) [#26006](https://github.com/gatsbyjs/gatsby/issues/26006) [#26043](https://github.com/gatsbyjs/gatsby/issues/26043) [#26030](https://github.com/gatsbyjs/gatsby/issues/26030) [#26016](https://github.com/gatsbyjs/gatsby/issues/26016) [#25960](https://github.com/gatsbyjs/gatsby/issues/25960) [#26054](https://github.com/gatsbyjs/gatsby/issues/26054) [#25929](https://github.com/gatsbyjs/gatsby/issues/25929) [#25995](https://github.com/gatsbyjs/gatsby/issues/25995) [#26068](https://github.com/gatsbyjs/gatsby/issues/26068) [#26051](https://github.com/gatsbyjs/gatsby/issues/26051) [#25747](https://github.com/gatsbyjs/gatsby/issues/25747) [#25613](https://github.com/gatsbyjs/gatsby/issues/25613) [#26067](https://github.com/gatsbyjs/gatsby/issues/26067) [#25682](https://github.com/gatsbyjs/gatsby/issues/25682) [#25631](https://github.com/gatsbyjs/gatsby/issues/25631) [#26065](https://github.com/gatsbyjs/gatsby/issues/26065) [#25683](https://github.com/gatsbyjs/gatsby/issues/25683) [#25792](https://github.com/gatsbyjs/gatsby/issues/25792) [#26078](https://github.com/gatsbyjs/gatsby/issues/26078) [#26053](https://github.com/gatsbyjs/gatsby/issues/26053) [#26077](https://github.com/gatsbyjs/gatsby/issues/26077) [#25371](https://github.com/gatsbyjs/gatsby/issues/25371) [#26092](https://github.com/gatsbyjs/gatsby/issues/26092) [#26101](https://github.com/gatsbyjs/gatsby/issues/26101) [#25952](https://github.com/gatsbyjs/gatsby/issues/25952) [#26104](https://github.com/gatsbyjs/gatsby/issues/26104) [#25776](https://github.com/gatsbyjs/gatsby/issues/25776) [#26109](https://github.com/gatsbyjs/gatsby/issues/26109)
+
+## [0.1.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.58...gatsby-recipes@0.1.59) (2020-08-03)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## [0.1.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.57...gatsby-recipes@0.1.58) (2020-07-30)
 
 **Note:** Version bump only for package gatsby-recipes

@@ -2,9 +2,9 @@
 *                                               @gatsbyjs/core
 
 # All docs must be reviewed by the docs team.
-/docs/                                          @gatsbyjs/learning
-**/README.md                                    @gatsbyjs/learning
-dictionary.txt                                  @gatsbyjs/learning
+/docs/                                          @gatsbyjs/documentation
+**/README.md                                    @gatsbyjs/documentation
+dictionary.txt                                  @gatsbyjs/documentation
 
 # Benchmarks
 /benchmarks/                                    @duffn @pvdz @smthomas

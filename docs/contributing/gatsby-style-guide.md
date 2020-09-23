@@ -61,7 +61,7 @@ Possible sources of great research materials:
 - blogposts (on gatsbyjs.org and other sites)
 - docs (on gatsbyjs.org and other sites)
 - video tutorials
-- Discord, Spectrum, or Twitter conversations
+- Discord or Twitter conversations
 - search engine results
 - presentations you or others have given
 - textbooks
@@ -177,7 +177,7 @@ Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://ww
 
 ### Mark localhost URLs as code strings
 
-Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs.
 
 ```markdown
 <!-- Good -->

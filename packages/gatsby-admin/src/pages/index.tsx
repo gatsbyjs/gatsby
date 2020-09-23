@@ -2,14 +2,11 @@
 import { Fragment } from "react"
 import { jsx, Flex } from "strict-ui"
 import { Spinner } from "theme-ui"
-import { useQuery, useMutation } from "urql"
+import { useQuery } from "urql"
+import { Link } from "gatsby"
 import {
   Card,
   Heading,
-  DropdownMenu,
-  DropdownMenuButton,
-  DropdownMenuItem,
-  DropdownMenuItems,
   HeadingProps,
   Text,
   Badge,
@@ -23,75 +20,63 @@ import PluginSearchBar from "../components/plugin-search"
 function InstalledPluginListItem({
   plugin,
 }: {
-  plugin: { name: string; description?: string }
+  plugin: { name: string; description?: string; options?: Record<string, any> }
 }): JSX.Element {
-  const [, deleteGatsbyPlugin] = useMutation(`
-    mutation destroyGatsbyPlugin($name: String!) {
-      destroyNpmPackage(npmPackage: {
-        name: $name,
-        id: $name,
-        dependencyType: "production"
-      }) {
-        id
-        name
-      }
-      destroyGatsbyPlugin(gatsbyPlugin: {
-        name: $name,
-        id: $name
-      }) {
-        id
-        name
-      }
-    }
-  `)
-
   return (
-    <Flex
-      as="li"
-      justifyContent="space-between"
-      alignItems="center"
-      // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
-      // @ts-ignore
-      style={{
-        width: `calc(100% + 2rem)`,
-        marginLeft: `-1rem`,
-      }}
-      sx={{
-        py: 3,
-        px: 5,
-        borderRadius: 2,
-        "&:hover": { backgroundColor: `grey.10` },
-      }}
-    >
-      <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
-        {plugin.name}
-      </Heading>
-      <DropdownMenu>
-        <DropdownMenuButton
-          aria-label="Actions"
+    <Fragment>
+      <Flex
+        as="li"
+        // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
+        // @ts-ignore
+        style={{
+          width: `calc(100% + 2rem)`,
+          marginLeft: `-1rem`,
+        }}
+      >
+        <Flex
+          as={Link}
+          // NOTE(@mxstbr): TypeScript does not understand the as="" prop
+          // @ts-ignore
+          to={`/plugins/${plugin.name}`}
+          justifyContent="space-between"
+          alignItems="center"
           sx={{
+            background: `none`,
             border: `none`,
-            background: `transparent`,
-            color: `grey.60`,
+            borderRadius: 2,
+            textDecoration: `none`,
+            transition: `background-color 100ms ease-out`,
+            "&:hover": {
+              backgroundColor: `grey.10`,
+              ".hover-move": {
+                transform: `translateX(0.1em)`,
+              },
+            },
+            width: `100%`,
+            py: 3,
+            px: 5,
           }}
         >
-          ···
-        </DropdownMenuButton>
-        <DropdownMenuItems>
-          <DropdownMenuItem
-            onSelect={(): void => {
-              if (
-                window.confirm(`Are you sure you want to uninstall ${name}?`)
-              ) {
-                deleteGatsbyPlugin({ name })
-              }
-            }}
-          >
-            Uninstall
-          </DropdownMenuItem>
-        </DropdownMenuItems>
-      </DropdownMenu>
-    </Flex>
+          <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
+            {plugin.name}
+          </Heading>
+          <Text sx={{ color: `gatsby` }}>
+            Manage{` `}
+            <span
+              className="hover-move"
+              style={{
+                display: `inline-block`,
+              }}
+              sx={{
+                transition: `transform 100ms ease-out`,
+              }}
+            >
+              -&gt;
+            </span>
+          </Text>
+        </Flex>
+      </Flex>
+    </Fragment>
   )
 }
 
@@ -105,6 +90,7 @@ function Index(): JSX.Element {
       {
         allGatsbyPlugin {
           nodes {
+            options
             name
             id
           }
@@ -112,8 +98,6 @@ function Index(): JSX.Element {
       }
     `,
   })
-
-  if (fetching) return <Spinner />
 
   if (error) {
     const errMsg =
@@ -165,21 +149,29 @@ function Index(): JSX.Element {
               <img src={boltIcon} alt="" />
               <Subheading>
                 Installed plugins{` `}
-                <span sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}>
-                  ({data.allGatsbyPlugin.nodes.length})
-                </span>
+                {data?.allGatsbyPlugin?.nodes && (
+                  <span
+                    sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}
+                  >
+                    ({data.allGatsbyPlugin.nodes.length})
+                  </span>
+                )}
               </Subheading>
             </Flex>
-            <Flex
-              as="ul"
-              gap={3}
-              flexDirection="column"
-              sx={{ p: 0, listStyle: `none` }}
-            >
-              {data.allGatsbyPlugin.nodes.map(plugin => (
-                <InstalledPluginListItem key={plugin.id} plugin={plugin} />
-              ))}
-            </Flex>
+            {data?.allGatsbyPlugin?.nodes ? (
+              <Flex
+                as="ul"
+                gap={3}
+                flexDirection="column"
+                sx={{ p: 0, listStyle: `none` }}
+              >
+                {data.allGatsbyPlugin.nodes.map(plugin => (
+                  <InstalledPluginListItem key={plugin.id} plugin={plugin} />
+                ))}
+              </Flex>
+            ) : (
+              <Spinner />
+            )}
           </Flex>
         </Flex>
         <Flex flexDirection="column" gap={13} flex="1">

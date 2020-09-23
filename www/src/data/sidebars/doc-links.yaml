@@ -104,6 +104,9 @@
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to Bip
+              link: /docs/deploying-to-bip/
+              breadcrumbTitle: Bip
             - title: Deploying to IIS
               link: /docs/deploying-to-iis/
               breadcrumbTitle: IIS
@@ -228,6 +231,8 @@
             - title: Sourcing Content from JSON or YAML
               link: /docs/sourcing-content-from-json-or-yaml/
               breadcrumbTitle: JSON or YAML
+            - title: Refreshing Content
+              link: /docs/refreshing-content/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL
@@ -430,6 +435,7 @@
               link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
+          breadcrumbTitle: App and Website Functionality
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -519,6 +525,8 @@
                   link: /docs/sourcing-from-etsy/
                 - title: Sourcing from WooCommerce
                   link: /docs/sourcing-from-woocommerce/
+            - title: Adding a Redux Store
+              link: /docs/adding-redux-store/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -660,14 +668,14 @@
         - title: Schema Generation
           link: /docs/schema-generation/
           items:
-            - title: Building the GqlType
-              link: /docs/schema-gql-type/
-            - title: Building the Input Filters
-              link: /docs/schema-input-gql/
+            - title: Schema Inference
+              link: /docs/schema-inference/
+            - title: Schema Root Fields and Utility Types
+              link: /docs/schema-root-fields/
             - title: Querying with Sift
               link: /docs/schema-sift/
-            - title: Connections
-              link: /docs/schema-connections/
+            - title: Query Filters
+              link: /docs/query-filters/
         - title: Page Creation
           link: /docs/page-creation/
         - title: Page -> Node Dependencies
@@ -777,11 +785,6 @@
           link: /contributing/how-to-contribute/
     - title: Partnering With Gatsby
       link: /docs/partnering-with-gatsby/
-      items:
-        - title: Integrating & Partnering For Vendors
-          link: /docs/gatsby-vendor-partnership/
-        - title: Agency Partnership Program
-          link: /docs/gatsby-agency-partnership/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet

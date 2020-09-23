@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.18...gatsby-image@2.4.19) (2020-09-16)
+
+### Bug Fixes
+
+- **gatsby-image:** Don't assume DOM state is valid at hydration stage ([#26097](https://github.com/gatsbyjs/gatsby/issues/26097)) ([cf34304](https://github.com/gatsbyjs/gatsby/commit/cf3430462748cecdfb4b9f6b61285534fb4a2ea9))
+
+## [2.4.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.17...gatsby-image@2.4.18) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.16...gatsby-image@2.4.17) (2020-09-07)
+
+### Bug Fixes
+
+- **gatsby-image:** do not render the source tag if no srcSet is provided ([#26766](https://github.com/gatsbyjs/gatsby/issues/26766)) ([268d982](https://github.com/gatsbyjs/gatsby/commit/268d982))
+
+## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.15...gatsby-image@2.4.16) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix typings for fixed and fluid props ([#24767](https://github.com/gatsbyjs/gatsby/issues/24767)) ([08e0aa1](https://github.com/gatsbyjs/gatsby/commit/08e0aa1))
+
+## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.14...gatsby-image@2.4.15) (2020-08-10)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.13...gatsby-image@2.4.14) (2020-07-29)
 
 ### Bug Fixes

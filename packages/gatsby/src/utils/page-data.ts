@@ -11,7 +11,7 @@ interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
-  staticQueryHashes: string[]
+  staticQueryHashes: Array<string>
 }
 
 export interface IPageDataWithQueryResult extends IPageData {

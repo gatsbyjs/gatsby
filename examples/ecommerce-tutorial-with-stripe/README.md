@@ -1,7 +1,7 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  <a href="https://www.gatsbyjs.com">
+    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
 <h1 align="center">
@@ -13,7 +13,7 @@ This is a Gatsby e-commerce example based on https://www.gatsbyjs.org/tutorial/e
 ## Setup
 
 - First, you must enable client-only Checkout in your Stripe Dashboard: https://dashboard.stripe.com/account/checkout/settings
-- Next, create a product and SKU from the Stripe Dashboard: https://dashboard.stripe.com/test/products
+- Next, create a product and price from the Stripe Dashboard: https://dashboard.stripe.com/test/products
 
 ### Run locally
 

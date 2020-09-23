@@ -21,7 +21,7 @@
     - Update any references, if relevant. This includes Guides and Gatsby Internals docs.
   - If no docs exist:
     - Create a stub for documentation including bullet points for how to use the feature, code snippets (including from happy path tests), etc.
-  - Tag @gatsbyjs/learning for review, pairing, polishing of the documentation
+  - Tag @gatsbyjs/documentation for review, pairing, polishing of the documentation
 -->
 
 ## Related Issues

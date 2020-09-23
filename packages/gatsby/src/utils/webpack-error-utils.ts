@@ -102,7 +102,7 @@ const transformWebpackError = (
 export const structureWebpackErrors = (
   stage: Stage,
   webpackError: any
-): ITransformedWebpackError[] | ITransformedWebpackError => {
+): Array<ITransformedWebpackError> | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
   }
