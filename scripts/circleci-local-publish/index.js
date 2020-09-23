@@ -45,7 +45,7 @@ function waitFor(url, interval = 1000) {
             return
           }
 
-          setTimeout(onDone, 2000)
+          setTimeout(onDone, 5000)
         }
       )
       .on(`error`, () => {
@@ -78,7 +78,7 @@ process.on(`exit`, code => {
   )
 
   const packages = Object.keys(workspaces).filter(
-    pkg => ![`gatsby-source-lever`, `gatsby-admin`].includes(pkg)
+    pkg => pkg === `gatsby` // ![`gatsby-source-lever`, `gatsby-admin`].includes(pkg)
   )
 
   try {
