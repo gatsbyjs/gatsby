@@ -8,6 +8,7 @@ steps:
       shell: bash.exe
   - attach_workspace:
       at: ./
+  - run: npm i -g node-gyp
   - run: npm rebuild
   - run:
       name: Run tests
