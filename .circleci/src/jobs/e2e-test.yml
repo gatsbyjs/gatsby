@@ -12,6 +12,6 @@ parameters:
 steps:
   - checkout
   - e2e/execute:
-      npm_tag: << pipeline.number >>
+      npm_tag: "<< pipeline.number >>"
       test_path: << parameters.test_path >>
       test_command: << parameters.test_command >>

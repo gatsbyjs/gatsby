@@ -34,7 +34,7 @@ jobs:
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
           name: Add verdaccio
       - run:
-          command: node scripts/circleci-local-publish/index.js << pipeline.number >>
+          command: node scripts/circleci-local-publish/index.js "<< pipeline.number >>"
           name: Publish monorepo
       - persist_to_workspace:
           paths:

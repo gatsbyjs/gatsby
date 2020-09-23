@@ -25,7 +25,7 @@ steps:
         echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
   - run:
       name: Publish monorepo
-      command: node scripts/circleci-local-publish/index.js << pipeline.number >>
+      command: node scripts/circleci-local-publish/index.js "<< pipeline.number >>"
   # Persist the workspace with all packages already built
   - persist_to_workspace:
       root: ./
