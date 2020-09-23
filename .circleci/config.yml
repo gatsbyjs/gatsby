@@ -32,13 +32,16 @@ jobs:
           command: |
             yarn global add verdaccio
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
-          name: Add verdaccio
+          name: Install verdaccio
       - run:
           command: node scripts/circleci-local-publish/index.js publish "<< pipeline.number >>"
           name: Publish monorepo
-      - persist_to_workspace:
+      - save_cache:
+          key: verdaccio-cache-<< pipeline.number >>
           paths:
             - scripts/circleci-local-publish/storage
+      - persist_to_workspace:
+          paths:
             - packages/
             - node_modules/
           root: ./
@@ -54,8 +57,8 @@ jobs:
         type: string
     steps:
       - checkout
-      - attach_workspace:
-          at: ./
+      - restore_cache:
+          key: verdaccio-cache-<< pipeline.number >>
       - e2e/execute:
           npm_tag: '"<< pipeline.number >>"'
           test_command: << parameters.test_command >>
@@ -119,18 +122,11 @@ jobs:
       - run:
           command: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
           shell: bash.exe
-      - restore_cache:
-          key: yarn-offline-cache-v0.0
-      - run: yarn --frozen-lockfile --prefer-offline --link-duplicates
-      - save_cache:
-          key: yarn-offline-cache-v0.0
-          paths:
-            - ./.yarn/yarn-offline-cache/
+      - attach_workspace:
+          at: ./
+      - run: npm rebuild
       - run:
-          command: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
-          name: Build monorepo
-      - run:
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\', '/'} | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
           environment:
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
@@ -156,6 +152,11 @@ orbs:
             description: path to where e2e test lives
             type: string
         steps:
+          - run:
+              command: |
+                yarn global add verdaccio
+                echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+              name: Install verdaccio
           - run:
               command: |
                 node ~/project/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"

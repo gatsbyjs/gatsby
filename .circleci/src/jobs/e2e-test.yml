@@ -11,8 +11,8 @@ parameters:
 
 steps:
   - checkout
-  - attach_workspace:
-      at: ./
+  - restore_cache:
+      key: verdaccio-cache-<< pipeline.number >>
   - e2e/execute:
       npm_tag: '"<< pipeline.number >>"'
       test_path: << parameters.test_path >>
