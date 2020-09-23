@@ -43,7 +43,7 @@ Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explor
 First, install the plugin at the root of the project:
 
 ```shell
-npm install --save gatsby-source-filesystem
+npm install gatsby-source-filesystem
 ```
 
 Then add it to your `gatsby-config.js`:
