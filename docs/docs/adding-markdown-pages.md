@@ -19,7 +19,7 @@ Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#
 
 ### Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ### Add plugin
 
@@ -47,7 +47,7 @@ You'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer
 
 ### Install transformer plugin
 
-`npm install --save gatsby-transformer-remark`
+`npm install gatsby-transformer-remark`
 
 ### Configure plugin
 

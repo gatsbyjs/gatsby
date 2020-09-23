@@ -21,7 +21,7 @@ If multiple plugins implement `replaceRenderer`, the build script will warn you:
 ```text
 warning replaceRenderer API found in these plugins:
 warning plugin-name-a, default-site-plugin
-warning This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/
+warning This might be an error, see: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/
 
 warning Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: plugin-name-a
 ```

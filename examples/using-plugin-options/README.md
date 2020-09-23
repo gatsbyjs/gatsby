@@ -34,4 +34,4 @@ If you refer to the `gatsby-config` in this example site, you'll see two plugins
 
 In the first instance, `gatsby-plugin-console-log` is configured with options passed in and will display the custom message.
 
-The second configuration does not include options, so the plugin will log a default message. You can read about adding local plugins [in the Gatsby docs](https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/).
+The second configuration does not include options, so the plugin will log a default message. You can read about adding local plugins [in the Gatsby docs](https://www.gatsbyjs.com/docs/loading-plugins-from-your-local-plugins-folder/).

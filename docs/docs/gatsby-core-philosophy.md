@@ -81,9 +81,9 @@ We believe the most high-impact way to make the web better is to make it high-qu
 
 One key way Gatsby makes the content web high-quality by default is to neatly bundle the modern JavaScript ecosystem.
 
-Traditional CMS development [presents many challenges](https://www.gatsbyjs.org/blog/2018-10-11-rise-of-modern-web-development/#traditional-cms-development-presents-challenges) such as walled-garden development, difficult-to-maintain local environments, and a challenging target environment.
+Traditional CMS development [presents many challenges](https://www.gatsbyjs.com/blog/2018-10-11-rise-of-modern-web-development/#traditional-cms-development-presents-challenges) such as walled-garden development, difficult-to-maintain local environments, and a challenging target environment.
 
-Modern web development [bundles advances](https://www.gatsbyjs.org/blog/2018-10-11-rise-of-modern-web-development/#modern-frameworks-offer-stability-and-faster-development) in **performance** (bundle splitting, asset prefetching, offline support, image optimization, or server side rendering), **developer experience** (componentization via React, transpilation via Babel, webpack, hot reloading), **accessibility**, and **security** together.
+Modern web development [bundles advances](https://www.gatsbyjs.com/blog/2018-10-11-rise-of-modern-web-development/#modern-frameworks-offer-stability-and-faster-development) in **performance** (bundle splitting, asset prefetching, offline support, image optimization, or server side rendering), **developer experience** (componentization via React, transpilation via Babel, webpack, hot reloading), **accessibility**, and **security** together.
 
 Gatsby's goal is to bundle these advances in an easy to use package. We're open to any and all advances being made in the modern JavaScript world and would love to incorporate them into Gatsby!
 

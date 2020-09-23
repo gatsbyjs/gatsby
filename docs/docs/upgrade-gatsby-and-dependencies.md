@@ -70,14 +70,14 @@ This will upgrade all your packages to the latest [wanted version](https://docs.
 You can also update one package at the time with the `install` command in npm, alongside the version that you want to install:
 
 ```shell
-npm install <package-name>@<version> --save
+npm install <package-name>@<version>
 ```
 
 You can specify the version you want to install or upgrade to, in the following formats:
 
 - A specific version after the `@`
 - An annotated version with `*`,`^`,`~` to indicate that you want the latest major, minor or patch release respectively.
-- Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x --save`
+- Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x`
 
 For major upgrades, remember to follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
 
