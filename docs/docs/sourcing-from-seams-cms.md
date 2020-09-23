@@ -17,7 +17,7 @@ Run this in your terminal:
 ```shell
 gatsby new seamscms-site
 cd seamscms-site
-npm install --save  seams-cms-gatsby-source
+npm install seams-cms-gatsby-source
 ```
 
 ### Configuring the source plugin

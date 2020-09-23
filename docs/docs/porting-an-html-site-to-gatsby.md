@@ -134,7 +134,7 @@ export default function Home() {
 You might have noticed that the component in `/src/pages/index.js` doesn't include `<html>`, `<head>` or `<body>`. Gatsby makes a default HTML structure for each page and places the output from `/src/pages/index.js` into its body. More `<head>` child elements and HTML attributes are added to the output page with a module called [React Helmet](https://github.com/nfl/react-helmet). React Helmet is added to a Gatsby project in the command line with npm and then to the Gatsby config file:
 
 ```shell
-npm install --save react-helmet gatsby-plugin-react-helmet
+npm install react-helmet gatsby-plugin-react-helmet
 ```
 
 Gatsby projects have a config file at `/gatsby-config.js` where site metadata and options can be specified and plugins added. Add a plugin line with `gatsby-plugin-react-helmet` to your config file:

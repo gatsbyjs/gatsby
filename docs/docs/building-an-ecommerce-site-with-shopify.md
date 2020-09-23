@@ -20,7 +20,7 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
 
 ```shell
-npm install --save gatsby-source-shopify shopify-buy
+npm install gatsby-source-shopify shopify-buy
 ```
 
 3. Enable and configure the plugin in your `gatsby-config.js` file, replacing [some-shop] with your shop name and [token] with your Storefront access token.
