@@ -38,6 +38,7 @@ jobs:
           name: Publish monorepo
       - persist_to_workspace:
           paths:
+            - scripts/circleci-local-publish/storage
             - packages/
             - node_modules/
           root: ./
@@ -53,8 +54,10 @@ jobs:
         type: string
     steps:
       - checkout
+      - attach_workspace:
+          at: ./
       - e2e/execute:
-          npm_tag: << pipeline.number >>
+          npm_tag: '"<< pipeline.number >>"'
           test_command: << parameters.test_command >>
           test_path: << parameters.test_path >>
   lint:
@@ -152,8 +155,8 @@ orbs:
         steps:
           - run:
               command: |
-                node $CIRCLE_WORKING_DIRECTORY/scripts/dependencies-helper.js update "^gatsby-" << parameters.npm_tag >>
-                yarn --prefer-offline
+                node $CIRCLE_WORKING_DIRECTORY/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
+                node $CIRCLE_WORKING_DIRECTORY/scripts/circleci-local-publish.js install
               name: Install current dependencies
               working_directory: << parameters.test_path >>
           - run:

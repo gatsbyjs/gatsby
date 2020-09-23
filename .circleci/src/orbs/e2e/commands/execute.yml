@@ -18,8 +18,8 @@ steps:
   - run:
       name: Install current dependencies
       command: |
-        node $CIRCLE_WORKING_DIRECTORY/scripts/dependencies-helper.js update "^gatsby-" << parameters.npm_tag >>
-        yarn --prefer-offline
+        node $CIRCLE_WORKING_DIRECTORY/scripts/dependencies-helper.js update "^gatsby-" "<< parameters.npm_tag >>"
+        node $CIRCLE_WORKING_DIRECTORY/scripts/circleci-local-publish.js install
       working_directory: << parameters.test_path >>
   - run:
       name: Run test

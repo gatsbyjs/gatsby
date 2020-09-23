@@ -30,5 +30,6 @@ steps:
   - persist_to_workspace:
       root: ./
       paths:
+        - "scripts/circleci-local-publish/storage"
         - "packages/"
         - "node_modules/"
