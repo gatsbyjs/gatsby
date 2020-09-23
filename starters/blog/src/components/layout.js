@@ -3,58 +3,25 @@ import { Link } from "gatsby"
 
 const Layout = ({ location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`
+  const isRootPath = location.pathname === rootPath
   let header
 
-  if (location.pathname === rootPath) {
+  if (isRootPath) {
     header = (
-      <h1
-        style={{
-          fontSize: `unset`,
-          marginBottom: `unset`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
+      <h1 className="main-heading">
+        <Link to="/">{title}</Link>
       </h1>
     )
   } else {
-    header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h3>
-    )
+    header = <Link className="header-link-home" to="/">{title}</Link>
   }
+
   return (
     <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: `unset`,
-        padding: `unset`,
-      }}
+      className="global-wrapper"
+      data-is-root-path={isRootPath}
     >
-      <header>{header}</header>
+      <header className="global-header">{header}</header>
       <main>{children}</main>
       <footer>
         © {new Date().getFullYear()}, Built with

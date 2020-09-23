@@ -16,24 +16,14 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <article itemScope itemType="http://schema.org/Article">
+      <article className="blog-post" itemScope itemType="http://schema.org/Article">
         <header>
           <h1
             itemProp="headline"
-            style={{
-              marginTop: `unset`,
-              marginBottom: 0,
-            }}
           >
             {post.frontmatter.title}
           </h1>
-          <p
-            style={{
-              fontSize: `unset`,
-              display: `block`,
-              marginBottom: `unset`,
-            }}
-          >
+          <p>
             {post.frontmatter.date}
           </p>
         </header>
@@ -41,17 +31,12 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
         />
-        <hr
-          style={{
-            marginBottom: `unset`,
-          }}
-        />
+        <hr />
         <footer>
           <Bio />
         </footer>
       </article>
-
-      <nav>
+      <nav className="blog-post-nav">
         <ul
           style={{
             display: `flex`,
