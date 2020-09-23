@@ -129,7 +129,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => (props.theme === "purple" ? "purple" : "white")};
   }
 `
-export default function Layout({ children }) {
+export default function Layout() {
   return (
     <React.Fragment>
       <GlobalStyle theme="purple" />
