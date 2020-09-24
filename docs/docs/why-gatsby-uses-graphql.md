@@ -20,7 +20,6 @@ All that’s required to create a page is a `path` where it should be created an
 For example, if you had the following component:
 
 ```jsx:title=src/templates/no-data.js
-import React from "react"
 
 const NoData = () => (
   <section>
@@ -82,7 +81,6 @@ The `context` property accepts an object, and you can pass in any data you want 
 When Gatsby creates pages, it includes a prop called `pageContext` and sets its value to `context`, so you can access any of the values in your component:
 
 ```jsx:title=src/templates/with-context.js
-import React from "react"
 
 const WithContext = ({ pageContext }) => (
   <section>
@@ -162,7 +160,6 @@ exports.createPages = ({ actions: { createPage } }) => {
 The product template still uses `pageContext` to display the product data:
 
 ```jsx:title=src/templates/product.js
-import React from "react"
 
 const Product = ({ pageContext }) => (
   <div>
@@ -328,7 +325,6 @@ As you’ve already seen, the `context` argument is made available to the templa
 Here’s what that looks like in practice:
 
 ```jsx:title=src/templates/product-graphql.js
-import React from "react"
 import { graphql } from "gatsby"
 import Image from "gatsby-image"
 
