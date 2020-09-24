@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "eslint": "5.16.0",
-    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react": "^7.21.2",
     "gh-pages": "2.2.0"
   },
   "license": "MIT",

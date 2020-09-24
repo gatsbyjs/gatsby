@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "cypress": "^3.8.3",
-    "gatsby-cypress": "^0.4.10",
-    "start-server-and-test": "^1.11.3"
+    "gatsby-cypress": "^0.4.11",
+    "start-server-and-test": "^1.11.4"
   }
 }

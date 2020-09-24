@@ -36,7 +36,7 @@
     "cypress": "^4.12.1",
     "cypress-axe": "^0.8.1",
     "prettier": "2.1.1",
-    "start-server-and-test": "^1.11.3"
+    "start-server-and-test": "^1.11.4"
   },
   "keywords": [
     "gatsby"
