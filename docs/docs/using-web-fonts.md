@@ -70,7 +70,13 @@ Or with yarn:
 yard add gatsby-plugin-web-font-loader
 ```
 
-Add this plugin to your `gatsby-config.js` file located in your root directory. Set your plugin configuration, passing in your `typekit id` options as an [environment variable](/docs/environment-variables/).
+Then, create an [environment variable](/docs/environment-variables/) to store your Adobe Fonts project ID. (Make sure this file is in your `.gitignore` file so your ID doesn't get committed!) For example, if your Adobe Fonts project ID is `abcdefg`, your `.env` file will look like this:
+
+```text:title=.env
+TYPEKIT_ID=abcdefg
+```
+
+Now you can add the `gatsby-plugin-web-font-loader` plugin to your `gatsby-config.js` file, located in your root directory. In your plugin configuration, pass in the environment variable you created.
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config()
