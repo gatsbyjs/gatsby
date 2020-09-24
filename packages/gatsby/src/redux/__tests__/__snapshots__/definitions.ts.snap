@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Definitions actions/reducer allows setting definitionsByName Map 1`] = `
+Object {
+  "payload": Map {
+    "[object Object]" => Object {
+      "def": Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "name": Object {
+          "kind": "Name",
+          "value": "Example",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "name": Object {
+                "kind": "Name",
+                "value": "example",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "name": Object {
+            "kind": "Name",
+            "value": "Query",
+          },
+        },
+      },
+      "filePath": "uri/example",
+      "hash": "234234",
+      "isFragment": true,
+      "isHook": false,
+      "isStaticQuery": true,
+      "name": "[object Object]",
+      "printedAst": "fragment Example on Query {
+  example
+}",
+      "templateLoc": 0,
+      "text": "",
+    },
+  },
+  "type": "SET_GRAPHQL_DEFINITIONS",
+}
+`;

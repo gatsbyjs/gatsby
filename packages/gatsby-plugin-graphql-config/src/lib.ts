@@ -2,7 +2,7 @@ import { resolve, join } from "path"
 import * as fs from "fs-extra"
 import { GraphQLSchema, printSchema } from "gatsby/graphql"
 import type { GatsbyReduxStore } from "gatsby/src/redux"
-import type { IStateProgram } from "gatsby/src/internal"
+import type { IDefinitionMeta, IStateProgram } from "gatsby/src/internal"
 
 export async function cacheGraphQLConfig(
   program: IStateProgram
@@ -43,13 +43,12 @@ export async function cacheGraphQLConfig(
   }
 }
 
-export const createFragmentCacheHandler = (
+export async function cacheFragments(
   cacheDirectory: string,
-  store: GatsbyReduxStore
-) => async (): Promise<void> => {
+  definitions: Map<string, IDefinitionMeta>
+): Promise<void> {
   try {
-    const currentDefinitions = store.getState().definitions
-    const fragmentString = Array.from(currentDefinitions.entries())
+    const fragmentString = Array.from(definitions.entries())
       .filter(([_, def]) => def.isFragment)
       .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
       .join(`\n`)
@@ -66,6 +65,14 @@ export const createFragmentCacheHandler = (
     )
     console.error(err)
   }
+}
+
+export const createFragmentCacheHandler = (
+  cacheDirectory: string,
+  store: GatsbyReduxStore
+) => async (): Promise<void> => {
+  const currentDefinitions = store.getState().definitions
+  await cacheFragments(cacheDirectory, currentDefinitions)
 }
 
 export const cacheSchema = async (

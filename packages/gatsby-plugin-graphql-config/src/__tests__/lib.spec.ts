@@ -1,13 +1,15 @@
 import fs from "fs-extra"
 import path from "path"
-import { IStateProgram } from "gatsby/src/internal"
+import gql from "graphql-tag"
+import { IDefinitionMeta, IStateProgram } from "gatsby/src/internal"
 import {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
   printSchema,
+  print,
 } from "graphql"
-import { cacheSchema, cacheGraphQLConfig } from "../lib"
+import { cacheSchema, cacheGraphQLConfig, cacheFragments } from "../lib"
 
 jest.mock(`fs-extra`)
 
@@ -16,6 +18,26 @@ const cwd = process.cwd()
 const cacheDirectory = `.cache`
 
 const cachePath = path.join(cwd, cacheDirectory)
+const mockDefinitions = new Map<string, IDefinitionMeta>()
+
+const parsedExample = gql`
+  type DummyType {
+    nothing: String
+  }
+  fragment Example on Query {
+    example
+  }
+`
+parsedExample.definitions.map(d => {
+  if (!(`name` in d) || d.name === undefined) {
+    return
+  }
+  mockDefinitions.set(d?.name.toString(), {
+    filePath: `uri/example`,
+    isFragment: Boolean(d.kind === `FragmentDefinition`),
+    printedAst: print(d),
+  } as IDefinitionMeta)
+})
 
 if (!fs.pathExistsSync(cachePath)) {
   fs.mkdirpSync(cachePath)
@@ -37,15 +59,6 @@ const mockProgram = {
   port: 8080,
 } as IStateProgram
 
-// const mockStore = {
-//   getStore: () => {
-//     return {
-//       schema: mockSchema,
-//       program: mockProgram,
-//     }
-//   },
-// }
-
 describe(`cacheSchema`, () => {
   afterEach(() => {
     jest.resetAllMocks()
@@ -55,6 +68,22 @@ describe(`cacheSchema`, () => {
     expect(fs.writeFile).toBeCalledWith(
       path.join(`.cache`, `schema.graphql`),
       printSchema(mockSchema)
+    )
+  })
+})
+
+describe(`cacheFragments`, () => {
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+  it(`will cache the printed fragments output`, async () => {
+    await cacheFragments(cacheDirectory, mockDefinitions)
+    expect(fs.writeFile).toBeCalledWith(
+      path.join(`.cache`, `fragments.graphql`),
+      `# uri/example
+fragment Example on Query {
+  example
+}`
     )
   })
 })
