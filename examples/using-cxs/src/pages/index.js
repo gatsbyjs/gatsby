@@ -41,7 +41,7 @@ class IndexPage extends React.Component {
               Hello World, this is my first styled component!
             </div>
             <p>
-              <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
+              <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-styled-components/">
                 gatsby-plugin-styled-component docs
               </a>
             </p>

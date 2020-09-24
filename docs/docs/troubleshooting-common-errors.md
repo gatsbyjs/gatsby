@@ -58,7 +58,7 @@ File: .cache/develop-static-entry.js
 This error is a result of Gatsby having failed to find `@emotion/core` because `gatsby-plugin-emotion` has been installed and added to the `gatsby-config`, without installing the emotion library. Install it like this:
 
 ```shell
-npm install --save @emotion/core
+npm install @emotion/core
 ```
 
 Or replace `@emotion/core` with the name of the library that is missing. Installing the plugin and any necessary libraries as well as adding the plugin to your `gatsby-config` should resolve this error.

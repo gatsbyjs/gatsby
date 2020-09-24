@@ -18,7 +18,7 @@ For an introduction on what Pull Requests are and how to file one, check out the
 
 Some general things we verify in a pull request are:
 
-- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
+- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.com/docs/some-reference/`)
 - Language ought to be inclusive and accessible
 - Issues and Requests for Comments (RFCs) (if any) that this PR addresses ought to be linked to
 
@@ -73,7 +73,7 @@ For PRs that add a blog post, we ought to check:
 
 ## Automated Checks
 
-Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.org).
+Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.com).
 
 We want all of these checks to pass. While we'll sometimes review a work in progress PR with some failed checks, a PR is only ready to ship when all the tests have passed.
 

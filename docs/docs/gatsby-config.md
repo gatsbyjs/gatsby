@@ -26,7 +26,7 @@ When you want to reuse common pieces of data across the site (for example, your 
 module.exports = {
   siteMetadata: {
     title: `Gatsby`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
     description: `Blazing fast modern site generator for React`,
   },
 }

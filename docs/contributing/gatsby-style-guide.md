@@ -161,7 +161,7 @@ In tutorials that are meant for beginners, use as few hyperlinks as possible to 
 
 ### Use relative hyperlinks for local links
 
-When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) hyperlinks should use relative paths (not include the full domain). This guarantees that all links function when running locally or in preview.
+When referencing another page within [gatsbyjs.com](https://www.gatsbyjs.com/) hyperlinks should use relative paths (not include the full domain). This guarantees that all links function when running locally or in preview.
 
 ```markdown
 <!-- Good -->
@@ -170,7 +170,7 @@ When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) h
 
 <!-- Bad -->
 
-[Gatsby's glossary](https://www.gatsbyjs.org/docs/glossary)
+[Gatsby's glossary](https://www.gatsbyjs.com/docs/glossary)
 ```
 
 Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
@@ -348,7 +348,7 @@ You may also choose to include line highlighting in your code snippets, using th
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`, // highlight-line
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
 }
 ```
@@ -358,7 +358,7 @@ module.exports = {
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`, // highlight-line
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
 }
 ```
@@ -371,7 +371,7 @@ module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
     // highlight-next-line
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
 }
 ```
@@ -382,7 +382,7 @@ module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
     // highlight-next-line
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
 }
 ```
@@ -395,7 +395,7 @@ module.exports = {
   // highlight-start
   siteMetadata: {
     title: `GatsbyJS`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
   // highlight-end
 }
@@ -407,7 +407,7 @@ module.exports = {
   // highlight-start
   siteMetadata: {
     title: `GatsbyJS`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
   // highlight-end
 }
