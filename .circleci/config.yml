@@ -33,7 +33,6 @@ jobs:
             yarn global add verdaccio
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
           name: Install verdaccio
-      - run: rm -rf scripts/circleci-local-publish/storage
       - run:
           command: node scripts/circleci-local-publish/index.js publish "<< pipeline.number >>"
           name: Publish monorepo

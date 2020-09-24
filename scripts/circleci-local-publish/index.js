@@ -21,7 +21,6 @@ function fetch(url, options) {
         resolve(res.statusCode)
       })
       .on(`error`, err => {
-        console.log(err)
         reject(err)
       })
       .end()
@@ -74,7 +73,7 @@ process.on(`exit`, code => {
   console.log(`Process exit event with code: `, code)
 })
 ;(async () => {
-  const REGISTRY_URL = `http://127.0.0.1:4873`
+  const REGISTRY_URL = `http://localhost:4873`
   let exitCode = 0
 
   let verdaccioProc
