@@ -41,9 +41,6 @@ import "typeface-open-sans"
 Next, add the typeface name to the appropriate place in your CSS. In this case, you will override the `body` element's `font-family` default values.
 
 ```css:title=src/components/layout.css
-// highlight-next-line
-@import "../css/typography.css";
-
 body {
   color: hsla(0, 0%, 0%, 0.8);
   // highlight-next-line
@@ -98,9 +95,6 @@ module.exports = {
 Next, add the typeface name to the appropriate `font-family` value in your CSS.
 
 ```css:title=src/components/layout.css
-// highlight-next-line
-@import "../css/typography.css";
-
 body {
   color: hsla(0, 0%, 0%, 0.8);
   // highlight-next-line
