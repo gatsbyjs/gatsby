@@ -59,7 +59,7 @@ module.exports = (
     patch(data, `htmlAttributes`, {})
     patch(data, `hProperties`, {})
     patch(data.htmlAttributes, `id`, id)
-    patch(data.hProperties, `id`, id)    
+    patch(data.hProperties, `id`, id)
 
     if (icon !== false) {
       patch(data.hProperties, `style`, `position:relative;`)
