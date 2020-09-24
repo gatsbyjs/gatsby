@@ -1,4 +1,5 @@
 import fs from "fs-extra"
+import path from "path"
 import { IStateProgram } from "gatsby/src/internal"
 import {
   GraphQLObjectType,
@@ -46,7 +47,7 @@ describe(`cacheSchema`, () => {
   it(`will cache the printed schema output`, async () => {
     await cacheSchema(cacheDirectory, mockSchema)
     expect(fs.writeFile).toBeCalledWith(
-      `.cache/schema.graphql`,
+      path.join(`.cache`, `schema.graphql`),
       printSchema(mockSchema)
     )
   })
@@ -57,10 +58,10 @@ describe(`cacheGraphQLConfig`, () => {
     await cacheGraphQLConfig(mockProgram)
     const config = JSON.stringify(
       {
-        schema: `${cwd}/.cache/schema.graphql`,
+        schema: path.join(cwd, `.cache`, `schema.graphql`),
         documents: [
-          `${cwd}/src/**/**.{ts,js,tsx,jsx,esm}`,
-          `${cwd}/.cache/fragments.graphql`,
+          path.join(cwd, `src/**/**.{ts,js,tsx,jsx,esm}`),
+          path.join(cwd, `.cache`, `fragments.graphql`),
         ],
         extensions: {
           endpoints: {
@@ -74,7 +75,7 @@ describe(`cacheGraphQLConfig`, () => {
       2
     )
     expect(fs.writeFile).toBeCalledWith(
-      `${cwd}/.cache/graphql.config.json`,
+      path.join(cwd, `.cache`, `graphql.config.json`),
       config
     )
   })
