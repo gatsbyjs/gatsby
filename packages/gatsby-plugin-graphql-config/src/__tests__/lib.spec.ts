@@ -15,6 +15,12 @@ const cwd = process.cwd()
 
 const cacheDirectory = `.cache`
 
+const cachePath = path.join(cwd, cacheDirectory)
+
+if (!fs.pathExistsSync(cachePath)) {
+  fs.mkdirpSync(cachePath)
+}
+
 const mockSchema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: `Query`,
