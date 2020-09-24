@@ -104,7 +104,7 @@ const install = async (rootPath: string): Promise<void> => {
 
   try {
     if (!getPackageManager()) {
-      if (npmConfigUserAgent.includes(`yarn`)) {
+      if (npmConfigUserAgent?.includes(`yarn`)) {
         setPackageManager(`yarn`)
       } else {
         setPackageManager(`npm`)
