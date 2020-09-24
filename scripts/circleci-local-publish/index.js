@@ -131,7 +131,7 @@ process.on(`exit`, code => {
 
     if (cmd === `publish` && !exitCode) {
       // Fill up the verdaccio registry so it knows all packages
-      // Without this lerna errored on missing packages ¯\_(ツ)_/¯
+      // Without this lerna errored on missing packgitages ¯\_(ツ)_/¯
       // => lerna ERR! E404 no such package available
       await Promise.all(
         packages.map(pkg => fetch(`${REGISTRY_URL}/${pkg}`), {
@@ -147,11 +147,11 @@ process.on(`exit`, code => {
       )
 
       lernaProc.stdout.on(`data`, msg => {
-        console.log(msg.toString())
+        // console.log(msg.toString())
       })
 
       lernaProc.stderr.on(`data`, msg => {
-        console.log(msg.toString())
+        // console.log(msg.toString())
       })
 
       exitCode = await lernaPromise
@@ -160,6 +160,7 @@ process.on(`exit`, code => {
     }
 
     if (cmd === `install` && !exitCode) {
+      console.log(`install`)
       const packageJson = require(path.join(process.cwd(), `package.json`))
       const { dependencies, devDependencies } = packageJson
 
@@ -174,6 +175,7 @@ process.on(`exit`, code => {
         }
       }
 
+      console.log(JSON.stringify(packageJson, null, 2))
       fs.writeFileSync(
         path.join(process.cwd(), `package.json`),
         JSON.stringify(packageJson, null, 2)
