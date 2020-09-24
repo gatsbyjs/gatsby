@@ -59,10 +59,10 @@ module.exports = (
     patch(data, `htmlAttributes`, {})
     patch(data, `hProperties`, {})
     patch(data.htmlAttributes, `id`, id)
-    patch(data.hProperties, `id`, id)
-    patch(data.hProperties, `style`, `position:relative;`)
+    patch(data.hProperties, `id`, id)    
 
     if (icon !== false) {
+      patch(data.hProperties, `style`, `position:relative;`)
       const label = id.split(`-`).join(` `)
       const method = isIconAfterHeader ? `push` : `unshift`
       node.children[method]({
