@@ -85,12 +85,14 @@ describe(`gatsby-plugin resource`, () => {
   let helloWorldRoot
   let configPath
   let emptyRoot
+  let edgyRoot
   beforeAll(async () => {
     tmpDir = await tmp.dir({
       unsafeCleanup: true,
     })
     starterBlogRoot = path.join(tmpDir.path, `gatsby-starter-blog`)
     helloWorldRoot = path.join(tmpDir.path, `gatsby-starter-hello-world`)
+    edgyRoot = path.join(tmpDir.path, `gatsby-starter-edgy`)
     configPath = path.join(helloWorldRoot, `gatsby-config.js`)
     emptyRoot = path.join(tmpDir.path, `empty-site-directory`)
     await fs.ensureDir(emptyRoot)
@@ -98,6 +100,8 @@ describe(`gatsby-plugin resource`, () => {
     await fs.copy(STARTER_BLOG_FIXTURE, starterBlogRoot)
     await fs.ensureDir(helloWorldRoot)
     await fs.copy(HELLO_WORLD_FIXTURE, helloWorldRoot)
+    await fs.ensureDir(edgyRoot)
+    await fs.copy(EDGY_FIXTURE, edgyRoot)
   })
   afterAll(async () => {
     if (tmpDir) {
