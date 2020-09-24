@@ -121,7 +121,6 @@ export const query = graphql`
 Also in the Markdown post template, import the `gatsby-image` package and pass the results of the GraphQL query into an `<Img />` component.
 
 ```jsx:title=src/templates/blog-post.js
-import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 // highlight-start
