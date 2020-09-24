@@ -22,6 +22,7 @@ const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-hello-world`
 )
+const EDGY_FIXTURE = path.join(__dirname, `./fixtures/gatsby-starter-edgy`)
 const name = `gatsby-source-filesystem`
 
 // Some of these are slow tests, because they hit the network

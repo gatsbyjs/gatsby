@@ -45,13 +45,19 @@ const listShadowableFilesForTheme = (directory, theme) => {
 }
 
 const getOptionsForPlugin = node => {
-  if (!t.isObjectExpression(node)) {
+  if (!t.isObjectExpression(node) && !t.isLogicalExpression(node)) {
     return undefined
   }
 
-  const options = node.properties.find(
-    property => property.key.name === `options`
-  )
+  let options
+
+  if (t.isLogicalExpression(node)) {
+    options = node.right.properties.find(
+      property => property.key.name === `options`
+    )
+  } else {
+    options = node.properties.find(property => property.key.name === `options`)
+  }
 
   if (options) {
     return getObjectFromNode(options.value)
@@ -82,6 +88,12 @@ const getKeyForPlugin = node => {
     return key ? getValueFromNode(key.value) : null
   }
 
+  if (t.isLogicalExpression(node)) {
+    const key = node.right.properties.find(p => p.key.name === `__key`)
+
+    return key ? getValueFromNode(key.value) : null
+  }
+
   return null
 }
 
@@ -92,6 +104,12 @@ const getNameForPlugin = node => {
 
   if (t.isObjectExpression(node)) {
     const resolve = node.properties.find(p => p.key.name === `resolve`)
+
+    return resolve ? getValueFromNode(resolve.value) : null
+  }
+
+  if (t.isLogicalExpression(node)) {
+    const resolve = node.right.properties.find(p => p.key.name === `resolve`)
 
     return resolve ? getValueFromNode(resolve.value) : null
   }
@@ -243,7 +261,7 @@ const read = async ({ root }, id) => {
       plugin => plugin.key === id || plugin.name === id
     )
 
-    if (plugin) {
+    if (plugin?.name) {
       const [description, readme] = await Promise.all([
         getDescriptionForPlugin(root, id),
         getReadmeForPlugin(id),
@@ -378,7 +396,15 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
             const plugins = right.properties.find(p => p.key.name === `plugins`)
 
-            plugins.value.elements.map(node => {
+            let pluginsList = []
+
+            if (t.isCallExpression(plugins.value)) {
+              pluginsList = plugins.value.callee.object.elements
+            } else {
+              pluginsList = plugins.value.elements
+            }
+
+            pluginsList.map(node => {
               this.state.push(getPlugin(node))
             })
           },
