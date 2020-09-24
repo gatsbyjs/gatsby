@@ -11,6 +11,6 @@ packages:
     proxy: npmjs
     publish: $all
 logs:
-  - { type: stdout, format: pretty, level: debug }
+  - { type: stdout, format: pretty, level: error }
 listen:
   - localhost:4873

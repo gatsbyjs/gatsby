@@ -9,6 +9,24 @@ function killVerdaccio(proc) {
   proc.kill(`SIGINT`)
 }
 
+function sleep(timeout) {
+  return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
+function fetch(url, options) {
+  return new Promise((resolve, reject) => {
+    http
+      .request(url, options, res => {
+        resolve(res.statusCode)
+      })
+      .on(`error`, err => {
+        console.log(err)
+        reject(err)
+      })
+      .end()
+  })
+}
+
 function promiseSpawn(shell, options) {
   const [command, ...args] = shell.split(` `)
   const proc = spawn(command, args, options)
@@ -30,25 +48,18 @@ function promiseSpawn(shell, options) {
 
 function waitFor(url, interval = 1000) {
   function exec(url, onDone) {
-    const { hostname, port } = parseUrl(url)
-    http
-      .get(
-        {
-          hostname,
-          port,
-          path: `/`,
-          agent: false, // Create a new agent just for this one request
-        },
-        ({ statusCode }) => {
-          if (statusCode !== 200) {
-            setTimeout(() => exec(url, onDone), interval)
-            return
-          }
-
-          setTimeout(onDone, 5000)
+    fetch(url, {
+      options: `HEAD`,
+    })
+      .then(statusCode => {
+        if (statusCode !== 200) {
+          setTimeout(() => exec(url, onDone), interval)
+          return
         }
-      )
-      .on(`error`, () => {
+
+        onDone()
+      })
+      .catch(() => {
         setTimeout(() => exec(url, onDone), interval)
       })
   }
@@ -75,7 +86,9 @@ process.on(`exit`, code => {
     }).stdout.toString()
   )
 
-  const packages = workspaces.filter(pkg => !pkg.private).map(pkg => pkg.name)
+  const packages = workspaces
+    .filter(pkg => !pkg.private && pkg.name !== `gatsby-admin`)
+    .map(pkg => pkg.name)
 
   try {
     const verdaccio = promiseSpawn(`verdaccio --config config.yml`, {
@@ -94,47 +107,61 @@ process.on(`exit`, code => {
       console.log(msg.toString())
     })
 
-    verdaccioPromise.then(exitC => {
-      if (exitC === -1) {
-        killVerdaccio(verdaccioProc)
-        exitCode = exitC
+    await Promise.race([
+      verdaccioPromise.then(exitC => {
+        if (exitC === -1) {
+          killVerdaccio(verdaccioProc)
+          exitCode = exitC
 
-        return new Promise(() => {
-          setTimeout(() => {
-            process.exit(-1)
-          }, 1000)
-        })
-      }
+          return new Promise(() => {
+            setTimeout(() => {
+              process.exit(-1)
+            }, 1000)
+          })
+        }
 
-      return Promise.resolve()
-    })
+        return Promise.resolve()
+      }),
+      sleep(1000),
+    ])
 
     await waitFor(REGISTRY_URL, 1000)
 
+    // Fill up the verdaccio registry so it knows all packages
+    // Without this lerna errored on missing packages ¯\_(ツ)_/¯
+    // => lerna ERR! E404 no such package available
+    await Promise.all(
+      packages.map(pkg => fetch(`${REGISTRY_URL}/${pkg}`), {
+        method: `HEAD`,
+      })
+    )
+
     if (cmd === `publish` && !exitCode) {
-      for (let i = 0; i < packages.length; i += 50) {
-        const { proc: lernaProc, promise: lernaPromise } = promiseSpawn(
-          `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages
-            .slice(i, i + 50)
-            .join(`,`)} --ignore-scripts --yes`,
-          {
-            shell: true,
-          }
-        )
+      console.log(
+        `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages} --ignore-scripts`
+      )
+      // for (let i = 0; i < packages.length; i += 50) {
+      //   console.log(packages.slice(i, i + 50).join(`,`))
+      const { proc: lernaProc, promise: lernaPromise } = promiseSpawn(
+        `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages} --ignore-scripts --yes`,
+        {
+          shell: true,
+        }
+      )
 
-        lernaProc.stdout.on(`data`, msg => {
-          console.log(msg.toString())
-        })
+      lernaProc.stdout.on(`data`, msg => {
+        // console.log(msg.toString())
+      })
 
-        lernaProc.stderr.on(`data`, msg => {
-          console.log(msg.toString())
-        })
+      lernaProc.stderr.on(`data`, msg => {
+        console.log(msg.toString())
+      })
 
-        exitCode = await lernaPromise
+      exitCode = await lernaPromise
 
-        spawnSync(`git`, [`checkout`, `../..`])
-      }
+      spawnSync(`git`, [`checkout`, `../..`])
     }
+    // }
 
     if (cmd === `install` && !exitCode) {
       const { proc: installProc, promise: installPromise } = promiseSpawn(
