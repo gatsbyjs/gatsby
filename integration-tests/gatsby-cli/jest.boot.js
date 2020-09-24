@@ -34,5 +34,9 @@ module.exports = async () => {
   await execa.node(gatsbyDevLocation, [`--force-install`, `--scan-once`], {
     cwd: process.env.GLOBAL_GATSBY_CLI_LOCATION,
     stdio: `inherit`,
+    env: {
+      // we don't want to run gatsby-dev in with NODE_ENV=test
+      NODE_ENV: `production`,
+    },
   })
 }

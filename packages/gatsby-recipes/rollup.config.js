@@ -64,6 +64,7 @@ export default [
           `@mdx-js/react`,
           `@mdx-js/runtime`,
           `urql`, 
+          `@urql/core`,
           `subscriptions-transport-ws`,
         ]
       }),
@@ -79,6 +80,7 @@ export default [
         `@mdx-js/react`,
         `@mdx-js/runtime`,
         `urql`,
+        `@urql/core`,
         `subscriptions-transport-ws`,
       ]),
     ],
