@@ -147,11 +147,11 @@ process.on(`exit`, code => {
       )
 
       lernaProc.stdout.on(`data`, msg => {
-        // console.log(msg.toString())
+        console.log(msg.toString())
       })
 
       lernaProc.stderr.on(`data`, msg => {
-        // console.log(msg.toString())
+        console.log(msg.toString())
       })
 
       exitCode = await lernaPromise
