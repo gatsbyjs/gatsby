@@ -15,7 +15,7 @@ In the processing, it makes images responsive by:
 
 ## Install
 
-`npm install --save gatsby-remark-images gatsby-plugin-sharp`
+`npm install gatsby-remark-images gatsby-plugin-sharp`
 
 ## How to use
 

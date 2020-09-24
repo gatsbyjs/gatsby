@@ -5,7 +5,7 @@ Replaces “dumb” punctuation marks with “smart” punctuation marks using t
 
 ## Install
 
-`npm install --save gatsby-remark-smartypants`
+`npm install gatsby-remark-smartypants`
 
 ## How to use
 

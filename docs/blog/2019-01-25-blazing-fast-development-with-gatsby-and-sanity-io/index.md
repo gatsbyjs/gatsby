@@ -24,7 +24,7 @@ The Gatsby source plugin for Sanity comes with the ability to easily overlay dra
 Add the source plugin to your Gatsby project:
 
 ```shell
-npm install --save gatsby-source-sanity
+npm install gatsby-source-sanity
 ```
 
 The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
