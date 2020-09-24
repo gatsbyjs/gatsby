@@ -160,9 +160,7 @@ orbs:
                 echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
               name: Install verdaccio
           - run:
-              command: |
-                node ~/project/scripts/dependencies-helper.js update "^gatsby-" << parameters.npm_tag >>
-                node ~/project/scripts/circleci-local-publish/index.js install
+              command: node ~/project/scripts/circleci-local-publish/index.js install << parameters.npm_tag >>
               name: Install current dependencies
               working_directory: << parameters.test_path >>
           - run:

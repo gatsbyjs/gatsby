@@ -1,5 +1,6 @@
 const http = require(`http`)
-const { parse: parseUrl } = require(`url`)
+const path = require(`path`)
+const fs = require(`fs`)
 const { spawn, spawnSync } = require(`child_process`)
 
 const [, , cmd, preid] = process.argv
@@ -79,17 +80,6 @@ process.on(`exit`, code => {
   let verdaccioProc
   let verdaccioPromise
 
-  // Setting a list of packages with lerna --force-publish works 100%, without it randomly fails.
-  const workspaces = JSON.parse(
-    spawnSync(`yarn`, [`-s`, `lerna`, `list`, `--json`, `--toposort`], {
-      shell: true,
-    }).stdout.toString()
-  )
-
-  const packages = workspaces
-    .filter(pkg => !pkg.private && pkg.name !== `gatsby-admin`)
-    .map(pkg => pkg.name)
-
   try {
     const verdaccio = promiseSpawn(`verdaccio --config config.yml`, {
       shell: true,
@@ -127,21 +117,29 @@ process.on(`exit`, code => {
 
     await waitFor(REGISTRY_URL, 1000)
 
-    // Fill up the verdaccio registry so it knows all packages
-    // Without this lerna errored on missing packages ¯\_(ツ)_/¯
-    // => lerna ERR! E404 no such package available
-    await Promise.all(
-      packages.map(pkg => fetch(`${REGISTRY_URL}/${pkg}`), {
-        method: `HEAD`,
-      })
+    // Setting a list of packages with lerna --force-publish works 100%, without it randomly fails.
+    const workspaces = JSON.parse(
+      spawnSync(`yarn`, [`-s`, `lerna`, `list`, `--json`, `--toposort`], {
+        shell: true,
+        cwd: path.resolve(__dirname, `../../`),
+      }).stdout.toString()
     )
 
+    // monorepo packages
+    const packages = workspaces
+      // .filter(pkg => !pkg.private && pkg.name !== `gatsby-admin`)
+      .map(pkg => pkg.name)
+
     if (cmd === `publish` && !exitCode) {
-      console.log(
-        `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages} --ignore-scripts`
+      // Fill up the verdaccio registry so it knows all packages
+      // Without this lerna errored on missing packages ¯\_(ツ)_/¯
+      // => lerna ERR! E404 no such package available
+      await Promise.all(
+        packages.map(pkg => fetch(`${REGISTRY_URL}/${pkg}`), {
+          method: `HEAD`,
+        })
       )
-      // for (let i = 0; i < packages.length; i += 50) {
-      //   console.log(packages.slice(i, i + 50).join(`,`))
+
       const { proc: lernaProc, promise: lernaPromise } = promiseSpawn(
         `yarn lerna publish --registry ${REGISTRY_URL} --canary --preid ${preid} --dist-tag ${preid} --force-publish=${packages} --ignore-scripts --yes`,
         {
@@ -154,16 +152,34 @@ process.on(`exit`, code => {
       })
 
       lernaProc.stderr.on(`data`, msg => {
-        console.log(msg.toString())
+        // console.log(msg.toString())
       })
 
       exitCode = await lernaPromise
 
       spawnSync(`git`, [`checkout`, `../..`])
     }
-    // }
 
     if (cmd === `install` && !exitCode) {
+      const packageJson = require(path.join(process.cwd(), `package.json`))
+      const { dependencies, devDependencies } = packageJson
+
+      for (const pkg in dependencies) {
+        if (packages.includes(pkg)) {
+          dependencies[pkg] = preid
+        }
+      }
+      for (const pkg in devDependencies) {
+        if (packages.includes(pkg)) {
+          devDependencies[pkg] = preid
+        }
+      }
+
+      fs.writeFileSync(
+        path.join(process.cwd(), `package.json`),
+        JSON.stringify(packageJson, null, 2)
+      )
+
       const { proc: installProc, promise: installPromise } = promiseSpawn(
         `${
           process.execArgv.includes(`--pm npm`) ? `npm` : `yarn`
