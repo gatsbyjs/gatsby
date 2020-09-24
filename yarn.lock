@@ -10844,30 +10844,10 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
-gatsby-interface@0.0.183:
-  version "0.0.183"
-  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.183.tgz#cc1c7a655edd623635458a632bbf39d0b11f0eb9"
-  integrity sha512-SXmmyCiTC4xDmDF0ChHywchF3kfoPv2IazWhopBZzEpYR0RP8BmMQVIdXVS+FoEgG5SI0YBRKF6BPf+gRMslnw==
-  dependencies:
-    "@mdx-js/react" "^1.5.2"
-    "@reach/alert" "0.10.3"
-    "@reach/combobox" "0.10.3"
-    "@reach/dialog" "0.10.3"
-    "@reach/menu-button" "0.10.3"
-    "@reach/popover" "0.10.3"
-    "@reach/tabs" "0.10.3"
-    "@reach/tooltip" "0.10.3"
-    "@types/lodash.sample" "^4.2.6"
-    case "^1.6.2"
-    date-fns "^2.8.1"
-    gatsby-design-tokens "^2.0.2"
-    lodash.sample "^4.2.1"
-    theme-ui "^0.2.49"
-
-gatsby-interface@^0.0.166:
-  version "0.0.166"
-  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.166.tgz#ce970498fa0b36767595d423a30ed16a4832ac1e"
-  integrity sha512-PN0lTVOKu50zfY7kfjgHvT5jsYZIOdSxuWrV/WVxDXo4O3oifLiWUyfFy8zg9T8S1G+TwRyfzhWT9Pfj1CZ2Dg==
+gatsby-interface@^0.0.193:
+  version "0.0.193"
+  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.193.tgz#132bb3edb847bfddbf66073279526afda7687490"
+  integrity sha512-4rSk8MLTtJXivKy2Znd6OgMBzEN7FRuhPd3/MZ99Te6ZG/3v0hHQ+GdtDu2fyMuaeznMSBDTfeipi7BO6mR9Eg==
   dependencies:
     "@mdx-js/react" "^1.5.2"
     "@reach/alert" "0.10.3"
