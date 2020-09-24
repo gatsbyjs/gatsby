@@ -124,7 +124,6 @@ export const query = graphql`
 5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
 
 ```jsx:title=src/pages/my-dogs.js
-import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
