@@ -10,8 +10,8 @@ GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../..}"
 
 # setting up child integration test link to gatsby packages
 cd "$SRC_PATH" &&
-"${GATSBY_PATH}/node_modules/.bin/gatsby-dev" --set-path-to-repo "$GATSBY_PATH" &&
-"${GATSBY_PATH}/node_modules/.bin/gatsby-dev" --force-install --scan-once  && # install _all_ files in gatsby/packages
+node "${GATSBY_PATH}/packages/gatsby-dev-cli/dist/index.js" --set-path-to-repo "$GATSBY_PATH" &&
+node "${GATSBY_PATH}/packages/gatsby-dev-cli/dist/index.js" --force-install --scan-once  && # install _all_ files in gatsby/packages
 ((test -f  ./node_modules/.bin/gatsby && chmod +x ./node_modules/.bin/gatsby && echo "Gatsby bin chmoded") || echo "Gatsby bin doesn't exist. Skipping chmod.") && # this is sometimes necessary to ensure executable
 sh -c "$CUSTOM_COMMAND" &&
 echo "e2e test run succeeded"
