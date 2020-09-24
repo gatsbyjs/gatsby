@@ -104,7 +104,6 @@ query {
 With the source plugin installed and added to your config, you can write a [static query](/docs/use-static-query/) that will retrieve the necessary data from Gatsby's data layer while building the site.
 
 ```jsx:title=src/pages/index.js
-import React from "react"
 import { graphql, useStaticQuery } from "gatsby" // highlight-line
 
 const IndexPage = () => {
@@ -156,7 +155,7 @@ The `fetch` API is a modern implementation of the older, well-supported `XMLHttp
 With the `useState` and `useEffect` hooks from React, you can query for the data once when the page loads, and save the data returned to a variable called `starsCount`. Every time the page is refreshed, `fetch` will go to the GitHub API to retrieve the most up-to-date version of the data.
 
 ```jsx:title=src/pages/index.js
-import React, { useState, useEffect } from "react" // highlight-line
+import { useState, useEffect } from "react" // highlight-line
 import { graphql, useStaticQuery } from "gatsby"
 
 const IndexPage = () => {
