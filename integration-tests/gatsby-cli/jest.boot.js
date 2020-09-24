@@ -21,15 +21,18 @@ module.exports = async () => {
     }
   )
 
-  await execa(
-    `gatsby-dev`,
-    [
-      `--packages`,
-      `gatsby-cli`,
-      `gatsby-recipes`,
-      `gatsby-telemetry`,
-      `--force-install`,
-    ],
-    { cwd: process.env.GLOBAL_GATSBY_CLI_LOCATION, stdio: `inherit` }
+  const gatsbyDevLocation = path.join(
+    __dirname,
+    `..`,
+    `..`,
+    `packages`,
+    `gatsby-dev-cli`,
+    `dist`,
+    `index.js`
   )
+
+  await execa.node(gatsbyDevLocation, [`--force-install`, `--scan-once`], {
+    cwd: process.env.GLOBAL_GATSBY_CLI_LOCATION,
+    stdio: `inherit`,
+  })
 }
