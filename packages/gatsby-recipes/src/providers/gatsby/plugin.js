@@ -51,6 +51,7 @@ const getOptionsForPlugin = node => {
 
   let options
 
+  // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
     options = node.right.properties.find(
       property => property.key.name === `options`
@@ -88,6 +89,7 @@ const getKeyForPlugin = node => {
     return key ? getValueFromNode(key.value) : null
   }
 
+  // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
     const key = node.right.properties.find(p => p.key.name === `__key`)
 
@@ -108,6 +110,7 @@ const getNameForPlugin = node => {
     return resolve ? getValueFromNode(resolve.value) : null
   }
 
+  // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
     const resolve = node.right.properties.find(p => p.key.name === `resolve`)
 
@@ -191,7 +194,7 @@ const getConfigPath = root => path.join(root, `gatsby-config.js`)
 const defaultConfig = `/**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
 
 module.exports = {
