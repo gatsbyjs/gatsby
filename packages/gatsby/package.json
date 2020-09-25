@@ -102,7 +102,7 @@
     "lodash": "^4.17.20",
     "md5-file": "^3.2.3",
     "meant": "^1.0.1",
-    "micromatch": "^3.1.10",
+    "micromatch": "^4.0.2",
     "mime": "^2.4.6",
     "mini-css-extract-plugin": "^0.8.2",
     "mitt": "^1.2.0",
