@@ -110,18 +110,20 @@ function Index(): JSX.Element {
 
   return (
     <Fragment>
-      <Spacer size={9} />
       {error && (
-        <div
-          sx={{
-            p: 4,
-            backgroundColor: `red.10`,
-            border: t => `1px solid ${t.colors.red[`80`]}`,
-            borderRadius: 2,
-          }}
-        >
-          <strong>Error:</strong> {errMsg}
-        </div>
+        <Fragment>
+          <Spacer size={9} />
+          <div
+            sx={{
+              p: 4,
+              backgroundColor: `red.10`,
+              border: t => `1px solid ${t.colors.red[`80`]}`,
+              borderRadius: 2,
+            }}
+          >
+            <strong>Error:</strong> {errMsg}
+          </div>
+        </Fragment>
       )}
       <Spacer size={9} />
       <Flex gap={13}>
