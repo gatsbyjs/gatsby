@@ -41,4 +41,4 @@ Note: your DNS might take some time to update your domain.
 
 ## Support
 
-Chat with KintoHub developers on [Discord](https://discordapp.com/invite/QVgqWuw).
+Chat with KintoHub developers on [Discord](https://discord.com/invite/E2CMjKP).
