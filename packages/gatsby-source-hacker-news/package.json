@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

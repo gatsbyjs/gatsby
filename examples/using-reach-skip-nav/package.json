@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Madalyn Parker <hello@madalyn.dev>",
   "dependencies": {
-    "@reach/skip-nav": "^0.8.0",
+    "@reach/skip-nav": "^0.11.2",
     "gatsby": "^2.24.63",
     "gatsby-plugin-manifest": "^2.4.30",
     "gatsby-plugin-react-helmet": "^3.3.11",

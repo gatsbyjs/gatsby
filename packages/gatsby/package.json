@@ -27,7 +27,7 @@
     "@typescript-eslint/parser": "^2.24.0",
     "address": "1.1.2",
     "autoprefixer": "^9.8.4",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -104,7 +104,7 @@
     "meant": "^1.0.1",
     "micromatch": "^3.1.10",
     "mime": "^2.4.6",
-    "mini-css-extract-plugin": "^0.8.2",
+    "mini-css-extract-plugin": "^0.11.2",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.27.0",
@@ -126,7 +126,7 @@
     "react-dev-utils": "^4.2.3",
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^4.12.21",
-    "react-refresh": "^0.7.0",
+    "react-refresh": "^0.8.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "semver": "^7.3.2",
@@ -152,7 +152,7 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
-    "webpack-stats-plugin": "^0.3.1",
+    "webpack-stats-plugin": "^0.3.2",
     "webpack-virtual-modules": "^0.2.2",
     "xstate": "^4.11.0",
     "yaml-loader": "^0.6.0"
@@ -180,9 +180,9 @@
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5",
     "xhr-mock": "^2.5.1",
-    "zipkin": "^0.19.2",
-    "zipkin-javascript-opentracing": "^2.1.0",
-    "zipkin-transport-http": "^0.19.2"
+    "zipkin": "^0.22.0",
+    "zipkin-javascript-opentracing": "^3.0.0",
+    "zipkin-transport-http": "^0.22.0"
   },
   "engines": {
     "node": ">=10.13.0"
