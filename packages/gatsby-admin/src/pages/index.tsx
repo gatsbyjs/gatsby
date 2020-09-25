@@ -117,7 +117,7 @@ function Index(): JSX.Element {
             sx={{
               p: 4,
               backgroundColor: `red.10`,
-              border: t => `1px solid ${t.colors.red[`80`]}`,
+              border: (t: any): string => `1px solid ${t.colors.red[`80`]}`,
               borderRadius: 2,
             }}
           >
