@@ -1,2 +1,9 @@
-exports.transmuteType = exports.type = require(`./methods/compose-type`)
-exports.transmuteSchema = exports.schema = require(`./methods/compose-schema`)
+import transmuteType from "./methods/compose-type"
+import transmuteSchema from "./methods/compose-schema"
+
+export {
+  transmuteType,
+  transmuteType as type,
+  transmuteSchema,
+  transmuteSchema as schema,
+}
