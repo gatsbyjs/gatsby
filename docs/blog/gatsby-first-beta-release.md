@@ -82,7 +82,7 @@ these infrastructure providers.
 
 - Allow for gatsby-remark-smartypants options
   [#1166](https://github.com/gatsbyjs/gatsby/pull/1166) @mitchejj
-- New design (for gatsbyjs.org) + new home page
+- New design (for gatsbyjs.com) + new home page
   [#1170](https://github.com/gatsbyjs/gatsby/pull/1170) @kyleamathews
 - Add ability to locally define plugins
   [#1126](https://github.com/gatsbyjs/gatsby/pull/1126) @0x80
