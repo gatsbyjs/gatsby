@@ -317,56 +317,113 @@ class BabelPluginAddPluginsToGatsbyConfig {
             )
 
             if (shouldAdd) {
-              const plugins = pluginNodes.value.elements.map(getPlugin)
-              const matches = plugins.filter(plugin => {
-                if (!key) {
-                  return plugin.name === pluginOrThemeName
-                }
+              if (t.isCallExpression(pluginNodes.value)) {
+                const plugins = pluginNodes.value.callee.object.elements.map(
+                  getPlugin
+                )
+                const matches = plugins.filter(plugin => {
+                  if (!key) {
+                    return plugin.name === pluginOrThemeName
+                  }
 
-                return plugin.key === key
-              })
-
-              if (!matches.length) {
-                const pluginNode = buildPluginNode({
-                  name: pluginOrThemeName,
-                  options,
-                  key,
+                  return plugin.key === key
                 })
 
-                pluginNodes.value.elements.push(pluginNode)
+                if (!matches.length) {
+                  const pluginNode = buildPluginNode({
+                    name: pluginOrThemeName,
+                    options,
+                    key,
+                  })
+
+                  pluginNodes.value.callee.object.elements.push(pluginNode)
+                } else {
+                  pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.map(
+                    node => {
+                      const plugin = getPlugin(node)
+
+                      if (plugin.key !== key) {
+                        return node
+                      }
+
+                      if (!plugin.key && plugin.name !== pluginOrThemeName) {
+                        return node
+                      }
+
+                      return buildPluginNode({
+                        name: pluginOrThemeName,
+                        options,
+                        key,
+                      })
+                    }
+                  )
+                }
               } else {
-                pluginNodes.value.elements = pluginNodes.value.elements.map(
+                const plugins = pluginNodes.value.elements.map(getPlugin)
+                const matches = plugins.filter(plugin => {
+                  if (!key) {
+                    return plugin.name === pluginOrThemeName
+                  }
+
+                  return plugin.key === key
+                })
+
+                if (!matches.length) {
+                  const pluginNode = buildPluginNode({
+                    name: pluginOrThemeName,
+                    options,
+                    key,
+                  })
+
+                  pluginNodes.value.elements.push(pluginNode)
+                } else {
+                  pluginNodes.value.elements = pluginNodes.value.elements.map(
+                    node => {
+                      const plugin = getPlugin(node)
+
+                      if (plugin.key !== key) {
+                        return node
+                      }
+
+                      if (!plugin.key && plugin.name !== pluginOrThemeName) {
+                        return node
+                      }
+
+                      return buildPluginNode({
+                        name: pluginOrThemeName,
+                        options,
+                        key,
+                      })
+                    }
+                  )
+                }
+              }
+            } else {
+              if (t.isCallExpression(pluginNodes.value)) {
+                pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.filter(
                   node => {
                     const plugin = getPlugin(node)
 
-                    if (plugin.key !== key) {
-                      return node
+                    if (key) {
+                      return plugin.key !== key
                     }
 
-                    if (!plugin.key && plugin.name !== pluginOrThemeName) {
-                      return node
+                    return plugin.name !== pluginOrThemeName
+                  }
+                )
+              } else {
+                pluginNodes.value.elements = pluginNodes.value.elements.filter(
+                  node => {
+                    const plugin = getPlugin(node)
+
+                    if (key) {
+                      return plugin.key !== key
                     }
 
-                    return buildPluginNode({
-                      name: pluginOrThemeName,
-                      options,
-                      key,
-                    })
+                    return plugin.name !== pluginOrThemeName
                   }
                 )
               }
-            } else {
-              pluginNodes.value.elements = pluginNodes.value.elements.filter(
-                node => {
-                  const plugin = getPlugin(node)
-
-                  if (key) {
-                    return plugin.key !== key
-                  }
-
-                  return plugin.name !== pluginOrThemeName
-                }
-              )
             }
 
             path.stop()

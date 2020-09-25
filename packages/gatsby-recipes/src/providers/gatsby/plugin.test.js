@@ -22,7 +22,10 @@ const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-hello-world`
 )
-const EDGY_FIXTURE = path.join(__dirname, `./fixtures/gatsby-starter-edgy`)
+const EDGE_CASY_FIXTURE = path.join(
+  __dirname,
+  `./fixtures/gatsby-starter-edge-casy`
+)
 const name = `gatsby-source-filesystem`
 
 // Some of these are slow tests, because they hit the network
@@ -85,14 +88,14 @@ describe(`gatsby-plugin resource`, () => {
   let helloWorldRoot
   let configPath
   let emptyRoot
-  let edgyRoot
+  let edgeCasyRoot
   beforeAll(async () => {
     tmpDir = await tmp.dir({
       unsafeCleanup: true,
     })
     starterBlogRoot = path.join(tmpDir.path, `gatsby-starter-blog`)
     helloWorldRoot = path.join(tmpDir.path, `gatsby-starter-hello-world`)
-    edgyRoot = path.join(tmpDir.path, `gatsby-starter-edgy`)
+    edgeCasyRoot = path.join(tmpDir.path, `gatsby-starter-edge-casy`)
     configPath = path.join(helloWorldRoot, `gatsby-config.js`)
     emptyRoot = path.join(tmpDir.path, `empty-site-directory`)
     await fs.ensureDir(emptyRoot)
@@ -100,8 +103,8 @@ describe(`gatsby-plugin resource`, () => {
     await fs.copy(STARTER_BLOG_FIXTURE, starterBlogRoot)
     await fs.ensureDir(helloWorldRoot)
     await fs.copy(HELLO_WORLD_FIXTURE, helloWorldRoot)
-    await fs.ensureDir(edgyRoot)
-    await fs.copy(EDGY_FIXTURE, edgyRoot)
+    await fs.ensureDir(edgeCasyRoot)
+    await fs.copy(EDGE_CASY_FIXTURE, edgeCasyRoot)
   })
   afterAll(async () => {
     if (tmpDir) {
@@ -115,6 +118,10 @@ describe(`gatsby-plugin resource`, () => {
 
   test(`e2e plugin resource test with hello world starter`, async () => {
     await testPluginResource(helloWorldRoot)
+  })
+
+  test(`e2e plugin resource test with edge-casy starter`, async () => {
+    await testPluginResource(edgeCasyRoot)
   })
 
   test(`all returns plugins as array`, async () => {
