@@ -30,7 +30,7 @@ You can install this component with:
 
 ```shell
   # Optionally with `npm install`
-  npm install --save gatsby-source-graphql
+  npm install gatsby-source-graphql
 ```
 
 ### Configure the plugin

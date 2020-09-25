@@ -200,6 +200,7 @@ export function loadPlugins(
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
+    `../../internal-plugins/bundle-optimisations`,
   ]
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
@@ -229,6 +230,21 @@ export function loadPlugins(
       })
     )
   })
+
+  // TypeScript support by default! use the user-provided one if it exists
+  const typescriptPlugin = (config.plugins || []).find(
+    plugin =>
+      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
+      plugin === `gatsby-plugin-typescript`
+  )
+
+  if (typescriptPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-typescript`),
+      })
+    )
+  }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
@@ -261,21 +277,6 @@ export function loadPlugins(
       // override the options if there are any user specified options
       pageCreatorOptions = pageCreatorPlugin.options
     }
-  }
-
-  // TypeScript support by default! use the user-provided one if it exists
-  const typescriptPlugin = (config.plugins || []).find(
-    plugin =>
-      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
-      plugin === `gatsby-plugin-typescript`
-  )
-
-  if (typescriptPlugin === undefined) {
-    plugins.push(
-      processPlugin({
-        resolve: require.resolve(`gatsby-plugin-typescript`),
-      })
-    )
   }
 
   plugins.push(

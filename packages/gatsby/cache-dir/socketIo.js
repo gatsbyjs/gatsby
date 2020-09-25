@@ -1,23 +1,30 @@
+import io from "socket.io-client"
 import { reportError, clearError } from "./error-overlay-handler"
 import normalizePagePath from "./normalize-page-path"
 
 let socket = null
 
+const inFlightGetPageDataPromiseCache = {}
 let staticQueryData = {}
 let pageQueryData = {}
-let isInitialized = false
 
 export const getStaticQueryData = () => staticQueryData
 export const getPageQueryData = () => pageQueryData
-export const getIsInitialized = () => isInitialized
 
 export default function socketIo() {
   if (process.env.NODE_ENV !== `production`) {
     if (!socket) {
       // Try to initialize web socket if we didn't do it already
       try {
-        // eslint-disable-next-line no-undef
-        socket = io()
+        // force websocket as transport
+        socket = io({
+          transports: [`websocket`],
+        })
+
+        // when websocket fails, we'll try polling
+        socket.on(`reconnect_attempt`, () => {
+          socket.io.opts.transports = [`polling`, `websocket`]
+        })
 
         const didDataChange = (msg, queryData) => {
           const id =
@@ -29,6 +36,14 @@ export default function socketIo() {
             JSON.stringify(msg.payload.result) !== JSON.stringify(queryData[id])
           )
         }
+
+        socket.on(`connect`, () => {
+          // we might have disconnected so we loop over the page-data requests in flight
+          // so we can get the data again
+          Object.keys(inFlightGetPageDataPromiseCache).forEach(pathname => {
+            socket.emit(`getDataForPath`, pathname)
+          })
+        })
 
         socket.on(`message`, msg => {
           if (msg.type === `staticQueryResult`) {
@@ -74,7 +89,6 @@ export default function socketIo() {
   }
 }
 
-const inFlightGetPageDataPromiseCache = {}
 function getPageData(pathname) {
   pathname = normalizePagePath(pathname)
   if (inFlightGetPageDataPromiseCache[pathname]) {

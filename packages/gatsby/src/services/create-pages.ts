@@ -21,7 +21,6 @@ export async function createPages({
   activity.start()
   const timestamp = Date.now()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
-
   await apiRunnerNode(
     `createPages`,
     {
@@ -33,13 +32,21 @@ export async function createPages({
     },
     { activity }
   )
-  reporter.verbose(
-    `Now have ${store.getState().nodes.size} nodes with ${
-      store.getState().nodesByType.size
-    } types, and ${
+
+  reporter.info(
+    `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
       store.getState().nodesByType?.get(`SitePage`)?.size
-    } SitePage nodes`
+    } (use --verbose for breakdown)`
   )
+
+  reporter.verbose(
+    `Number of node types: ${
+      store.getState().nodesByType.size
+    }. Nodes per type: ${[...store.getState().nodesByType.entries()]
+      .map(([type, nodes]) => type + `: ` + nodes.size)
+      .join(`, `)}`
+  )
+
   activity.end()
 
   reporter.verbose(`Checking for deleted pages`)

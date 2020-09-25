@@ -390,6 +390,14 @@ unless explicitly overridden by the `promptUser` and `promptHost` options in the
 ```shell{promptUser: alice}{promptHost: dev.localhost}
 ````
 
+### Diff code blocks
+
+You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs:
+
+````
+```diff-javascript
+````
+
 ### Line hiding
 
 As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).

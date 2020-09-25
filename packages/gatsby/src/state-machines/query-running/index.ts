@@ -12,7 +12,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   id: `queryRunningMachine`,
   on: {
     SOURCE_FILE_CHANGED: {
-      target: `extractingQueries`,
+      actions: `markSourceFilesDirty`,
     },
   },
   context: {},
@@ -24,6 +24,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         src: `extractQueries`,
         onDone: {
           target: `writingRequires`,
+          actions: `markSourceFilesClean`,
         },
       },
     },
@@ -67,6 +68,11 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     },
     // This waits for the jobs API to finish
     waitingForJobs: {
+      // If files are dirty go and extract again
+      always: {
+        cond: (ctx): boolean => !!ctx.filesDirty,
+        target: `extractingQueries`,
+      },
       invoke: {
         src: `waitUntilAllJobsComplete`,
         id: `waiting-for-jobs`,

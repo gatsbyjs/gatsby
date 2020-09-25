@@ -6,16 +6,25 @@ import { FeedbackForm } from "feedback-fish"
 import externalLinkIcon from "../external-link.svg"
 import graphqlIcon from "../graphql.svg"
 import { Link } from "gatsby"
+import useDevelopState from "../utils/use-develop-logs"
+import { useTelemetry } from "gatsby-admin/src/utils/use-telemetry"
 
 function SendFeedbackButton(props): JSX.Element {
+  const telemetry = useTelemetry()
   return (
-    <Button variant="GHOST" size="S" {...props}>
+    <Button
+      variant="GHOST"
+      size="S"
+      {...props}
+      onClick={(evt): void => {
+        telemetry.trackEvent(`FEEDBACK_WIDGET_OPEN`)
+        props.onClick(evt)
+      }}
+    >
       Send feedback
     </Button>
   )
 }
-
-const homepagePath = process.env.NODE_ENV === `development` ? `/` : `/___admin`
 
 function Navbar(): JSX.Element {
   const [{ data }] = useQuery({
@@ -27,6 +36,8 @@ function Navbar(): JSX.Element {
       }
     `,
   })
+
+  const [developState, restartDevelop] = useDevelopState()
 
   return (
     <Flex
@@ -41,7 +52,7 @@ function Navbar(): JSX.Element {
       <Flex
         as={Link}
         // @ts-ignore
-        to={homepagePath}
+        to="/"
         gap={5}
         alignItems="baseline"
         sx={{ textDecoration: `none` }}
@@ -69,10 +80,24 @@ function Navbar(): JSX.Element {
           GraphiQL&nbsp;
           <img src={graphqlIcon} />
         </AnchorButton>
-        <AnchorButton size="S" href="/" target="_blank">
-          View localhost&nbsp;
-          <img src={externalLinkIcon} />
-        </AnchorButton>
+        {developState === `needs-restart` && (
+          <Button size="S" onClick={restartDevelop}>
+            Restart develop process
+          </Button>
+        )}
+        {developState === `is-restarting` && (
+          <Button
+            size="S"
+            loading
+            loadingLabel="Restarting develop process..."
+          />
+        )}
+        {developState === `idle` && (
+          <AnchorButton size="S" href="/" target="_blank">
+            View localhost&nbsp;
+            <img src={externalLinkIcon} />
+          </AnchorButton>
+        )}
       </Flex>
     </Flex>
   )
