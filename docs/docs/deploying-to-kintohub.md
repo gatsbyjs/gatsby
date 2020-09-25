@@ -14,11 +14,12 @@ This guide assumes you already have a Gatsby project to deploy. If you need a pr
 
 1. Navigate to [KintoHub](https://app.kintohub.com/) and login/sign-up your account.
 
-2. Create a new service of type `Static Website`.
+2. Create a new service of type **Static Website**.
 
 3. Grant the permission needed for accessing the repo that we created in the previous step. Or if you prefer not to connect your GitHub account, you may select **Import URL** and provide your access token.
 
 4. Configure the service. Add the build command `yarn && yarn build` This command is actually doing the following:
+
    - Install the dependencies
    - Run the gatsby build
    - Generate the contents to `./public` which is the default value of “Build Output Path”
