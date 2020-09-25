@@ -6,12 +6,8 @@ import Layout from "../components/layout"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const {
-      site: {
-        siteMetadata: { title: siteTitle },
-      },
-      texto: { date, the_text },
-    } = this.props.data
+    const { date, html } = this.props.data.texto
+    const siteTitle = this.props.data.site.siteMetadata.title
 
     const { previous, next } = this.props.pageContext
 
@@ -19,21 +15,10 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <article>
           <header>
-            <p
-              style={{
-                display: `block`,
-                marginBottom: "5px",
-              }}
-            >
-              {date}
-            </p>
+            <p style={{ display: `block`, marginBottom: "5px" }}>{date}</p>
           </header>
-          <section dangerouslySetInnerHTML={{ __html: the_text }} />
-          <hr
-            style={{
-              marginBottom: "5px",
-            }}
-          />
+          <section dangerouslySetInnerHTML={{ __html: html }} />
+          <hr style={{ marginBottom: "5px" }} />
           <footer>
             <Bio />
           </footer>
@@ -51,14 +36,14 @@ class BlogPostTemplate extends React.Component {
           >
             <li>
               {previous && (
-                <Link to={"../" + previous.slug} rel="prev">
+                <Link to={"/" + previous.slug} rel="prev">
                   ← {previous.slug}
                 </Link>
               )}
             </li>
             <li>
               {next && (
-                <Link to={"../" + next.slug} rel="next">
+                <Link to={"/" + next.slug} rel="next">
                   {next.slug} →
                 </Link>
               )}
@@ -80,8 +65,10 @@ export const pageQuery = graphql`
       }
     }
     texto(id: { eq: $id }) {
-      date
-      the_text
+      title
+      description
+      date(formatString: "MMMM DD, YYYY")
+      html
     }
   }
 `

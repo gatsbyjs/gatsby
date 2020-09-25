@@ -8,12 +8,11 @@ function createArticle(n, sentence, slug) {
 
   return {
     articleNumber: String(n),
-    title: sentence.replace(/"/g, '\\"'),
-    description: desc.replace(/"/g, '\\"'),
+    title: sentence,
+    description: desc,
     slug,
     date: faker.date.recent(1000).toISOString().slice(0, 10),
-    // tags: [faker.random.words(3).split(` `)],
-    body: [faker.lorem.paragraphs(), faker.lorem.paragraphs()],
+    html: [faker.lorem.paragraphs(), faker.lorem.paragraphs()],
   }
 }
 
