@@ -11,7 +11,6 @@ import {
   Text,
   Badge,
   Spacer,
-  Theme,
 } from "gatsby-interface"
 import skaterIllustration from "../skaterboi.svg"
 import boltIcon from "../bolt.svg"
