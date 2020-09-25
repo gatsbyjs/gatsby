@@ -272,7 +272,7 @@ To make sure all React features work, you'll have to install `@hot-loader/react-
 You have to make sure the installed version of `@hot-loader/react-dom` is the same as your `react-dom` version. For example, if `react-dom` is at version 16.13.0, you'll have to install `@hot-loader/react-dom@16.13.0`. In this case, you would see the following message in your CLI:
 
 ```shell
-warning React-Hot-Loader: please install "@hot-loader/react-dom@^16.13" to makes sure all features of React are working.
+warning React-Hot-Loader: please install "@hot-loader/react-dom@^16.13" to make sure all features of React are working.
 ```
 
 To resolve this message, install the matching version of `@hot-loader/react-dom` using `npm install` (or its Yarn equivalent, `yarn add`):
