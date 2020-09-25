@@ -19,7 +19,6 @@
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
     "@types/lodash": "^4.14.149",
-    "@types/micromatch": "^4.0.1",
     "@types/node": "^12.12.30",
     "@types/node-fetch": "^2.5.5",
     "@types/normalize-path": "^3.0.0",
