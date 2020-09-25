@@ -52,7 +52,7 @@ For the latest news about Gatsby,
 ### Stack Overflow
 
 Many members of the community use Stack Overflow to ask questions. Read through
-the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
+the [existing questions](https://stackoverflow.com/questions/tagged/gatsby)
 tagged with `gatsby` or
 [ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 
