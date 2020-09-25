@@ -13,15 +13,11 @@ class BlogIndex extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <Bio />
-        {posts.map(({ id, slug, date, title, desc }) => {
+        {posts.map(({ title, slug, date, description }) => {
           return (
-            <article key={id}>
+            <article key={slug}>
               <header>
-                <h3
-                  style={{
-                    marginBottom: "5px",
-                  }}
-                >
+                <h3 style={{ marginBottom: "5px" }}>
                   <Link style={{ boxShadow: `none` }} to={slug}>
                     {title}
                   </Link>
@@ -29,11 +25,7 @@ class BlogIndex extends React.Component {
                 <small>{date}</small>
               </header>
               <section>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: desc,
-                  }}
-                />
+                <p dangerouslySetInnerHTML={{ __html: description }} />
               </section>
             </article>
           )
@@ -52,13 +44,12 @@ export const pageQuery = graphql`
         title
       }
     }
-    allTexto {
+    allTexto(limit: 100, sort: { fields: date, order: DESC }) {
       nodes {
-        id
-        slug
-        date
         title
-        desc
+        slug
+        date(formatString: "MMMM DD, YYYY")
+        description
       }
     }
   }

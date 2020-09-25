@@ -1,42 +1,38 @@
 const fs = require("fs")
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+
+const blogPost = path.resolve(`./src/templates/blog-post.js`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const result = await graphql(
-    `
-      {
-        allTexto(sort: { fields: date, order: ASC }) {
-          edges {
-            node {
-              id
-              slug
-            }
-          }
+  const result = await graphql(`
+    query {
+      allTexto {
+        nodes {
+          id
+          slug
+          title # used in prev/next
         }
       }
-    `
-  )
+    }
+  `)
 
   if (result.errors) {
     throw result.errors
   }
 
-  // Create blog posts pages.
-  const posts = result.data.allTexto.edges
+  const posts = result.data.allTexto.nodes
 
-  posts.forEach(({ node }, index) => {
+  posts.forEach(({ id, slug }, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
 
     createPage({
-      path: node.slug,
+      path: slug,
       component: blogPost,
       context: {
-        id: node.id,
-        slug: node.slug,
+        id,
+        slug,
         previous,
         next,
       },
@@ -44,7 +40,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, actions }) => {
+exports.onCreateNode = ({ node, actions , createNodeId}) => {
   if (node.internal.type === "File") {
     // Do minimal processing to get some key pieces. This could be gatsby-transformer-text or -html :p
 
@@ -61,23 +57,23 @@ exports.onCreateNode = ({ node, actions }) => {
     )
 
     const offset2 = html.indexOf("<blockquote>", offset1)
-    const desc = html.slice(
+    const description = html.slice(
       offset2 + "<blockquote>".length,
       html.indexOf("</blockquote>", offset2)
     )
 
     actions.createNode({
-      id: slug,
+      id: createNodeId(slug),
       slug,
       date,
       title,
-      desc,
-      the_text: html,
+      description,
+      html,
       internal: {
         type: "Texto",
         contentDigest: html,
       },
-      parent: node.id, // Required otherwise the node is not cached and a warm build screws up
+      parent: node.id, // Required otherwise the node is not cached and a warm build screws up. TODO: is touchNode faster?
     })
   }
 }
