@@ -171,7 +171,7 @@
     "@types/webpack-dev-middleware": "^3.7.1",
     "@types/webpack-virtual-modules": "^0.1.0",
     "babel-preset-gatsby-package": "^0.5.3",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.2",
     "documentation": "^12.3.0",
     "enhanced-resolve": "^4.2.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",

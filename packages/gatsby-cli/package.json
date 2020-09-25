@@ -56,7 +56,7 @@
     "@types/hosted-git-info": "^3.0.0",
     "@types/yargs": "^15.0.4",
     "babel-preset-gatsby-package": "^0.5.3",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.2",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5"
   },
