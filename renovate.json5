@@ -72,6 +72,7 @@
         "graphiql-explorer",
         "guess-webpack",
         "jest-silent-reporter",
+        "js-combinatorics",
         "jscodeshift",
         "mini-css-extract-plugin",
         "react-refresh",
@@ -81,6 +82,8 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
+        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
+        "react-docgen",
         // prettier updates can break CI per discussion in https://github.com/gatsbyjs/gatsby/pull/26686
         "prettier",
       ],
@@ -106,6 +109,7 @@
         "graphiql-explorer",
         "guess-webpack",
         "jest-silent-reporter",
+        "js-combinatorics",
         "jscodeshift",
         "mini-css-extract-plugin",
         "react-refresh",
@@ -115,6 +119,8 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
+        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
+        "react-docgen",
         // prettier updates can break CI per discussion in https://github.com/gatsbyjs/gatsby/pull/26686
         "prettier",
       ],
@@ -139,6 +145,7 @@
         "graphiql-explorer",
         "guess-webpack",
         "jest-silent-reporter",
+        "js-combinatorics",
         "jscodeshift",
         "mini-css-extract-plugin",
         "react-refresh",
@@ -148,6 +155,8 @@
         "xlsx",
         "zipkin",
         "zipkin-transport-http",
+        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
+        "react-docgen",
       ],
     },
     {
