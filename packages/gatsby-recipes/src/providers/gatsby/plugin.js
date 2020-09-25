@@ -451,17 +451,27 @@ class BabelPluginGetPluginsFromGatsbyConfig {
               return
             }
 
+            // Only allow module.exports = {}
+            // Not things like module.exports = () => ({})
+            if (!t.isObjectExpression(right)) {
+              return
+            }
+
             const plugins = right.properties.find(p => p.key.name === `plugins`)
 
             let pluginsList = []
 
             if (t.isCallExpression(plugins.value)) {
-              pluginsList = plugins.value.callee.object.elements
+              pluginsList = plugins?.value?.callee?.object?.elements
             } else {
-              pluginsList = plugins.value.elements
+              pluginsList = plugins?.value?.elements
             }
 
-            pluginsList.map(node => {
+            if (!pluginsList) {
+              throw new Error(`Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`)
+            }
+
+            pluginsList?.map(node => {
               this.state.push(getPlugin(node))
             })
           },

@@ -99,17 +99,21 @@ function Index(): JSX.Element {
     `,
   })
 
+  let errMsg: string | false = false
+
   if (error) {
-    const errMsg =
+    errMsg =
       (error.networkError && error.networkError.message) ||
       (Array.isArray(error.graphQLErrors) &&
         error.graphQLErrors.map(e => e.message).join(` | `))
-
-    return <p>Error: {errMsg}</p>
   }
 
   return (
     <Fragment>
+      <Spacer size={9} />
+      {error && (
+        <div sx={{ p: 4, backgroundColor: `red.10`, border: t => `1px solid ${t.colors.red["80"]}`, borderRadius: 2 }}><strong>Error:</strong> {errMsg}</div>
+      )}
       <Spacer size={9} />
       <Flex gap={13}>
         <Flex flexDirection="column" gap={13} flex="1">

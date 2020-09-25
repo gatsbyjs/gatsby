@@ -26,6 +26,7 @@ const EDGE_CASY_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-edge-casy`
 )
+const NOPE_FIXTURE = path.join(__dirname, `./fixtures/gatsby-starter-nope`)
 const name = `gatsby-source-filesystem`
 
 // Some of these are slow tests, because they hit the network
@@ -89,6 +90,8 @@ describe(`gatsby-plugin resource`, () => {
   let configPath
   let emptyRoot
   let edgeCasyRoot
+  let nopeRoot
+  let nopePath
   beforeAll(async () => {
     tmpDir = await tmp.dir({
       unsafeCleanup: true,
@@ -98,6 +101,8 @@ describe(`gatsby-plugin resource`, () => {
     edgeCasyRoot = path.join(tmpDir.path, `gatsby-starter-edge-casy`)
     configPath = path.join(helloWorldRoot, `gatsby-config.js`)
     emptyRoot = path.join(tmpDir.path, `empty-site-directory`)
+    nopeRoot = path.join(tmpDir.path, `gatsby-starter-nope`)
+    nopePath = path.join(nopeRoot, `gatsby-config.js`)
     await fs.ensureDir(emptyRoot)
     await fs.ensureDir(starterBlogRoot)
     await fs.copy(STARTER_BLOG_FIXTURE, starterBlogRoot)
@@ -105,6 +110,8 @@ describe(`gatsby-plugin resource`, () => {
     await fs.copy(HELLO_WORLD_FIXTURE, helloWorldRoot)
     await fs.ensureDir(edgeCasyRoot)
     await fs.copy(EDGE_CASY_FIXTURE, edgeCasyRoot)
+    await fs.ensureDir(nopeRoot)
+    await fs.copy(NOPE_FIXTURE, nopeRoot)
   })
   afterAll(async () => {
     if (tmpDir) {
@@ -280,5 +287,20 @@ describe(`gatsby-plugin resource`, () => {
       { name: `gatsby-source-filesystem` }
     )
     expect(result).toMatchSnapshot(pluginSnapshotMatcher)
+  })
+
+  test(`returns empty array for empty plugins array`, async () => {
+    const configSrc = await fs.readFile(configPath, `utf8`)
+    const plugins = getPluginsFromConfig(configSrc)
+
+    expect(plugins).toEqual([])
+  })
+
+  test(`throws error for invalid gatsby-config.js`, async () => {
+    const configSrc = await fs.readFile(nopePath, `utf8`)
+
+    expect(() => {
+      getPluginsFromConfig(configSrc)
+    }).toThrow(`Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`)
   })
 })
