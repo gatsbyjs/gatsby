@@ -468,10 +468,12 @@ class BabelPluginGetPluginsFromGatsbyConfig {
             }
 
             if (!pluginsList) {
-              throw new Error(`Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`)
+              throw new Error(
+                `Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`
+              )
             }
 
-            pluginsList?.map(node => {
+            pluginsList.map(node => {
               this.state.push(getPlugin(node))
             })
           },

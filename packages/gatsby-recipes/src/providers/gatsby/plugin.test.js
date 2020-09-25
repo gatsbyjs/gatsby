@@ -301,6 +301,8 @@ describe(`gatsby-plugin resource`, () => {
 
     expect(() => {
       getPluginsFromConfig(configSrc)
-    }).toThrow(`Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`)
+    }).toThrow(
+      `Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`
+    )
   })
 })
