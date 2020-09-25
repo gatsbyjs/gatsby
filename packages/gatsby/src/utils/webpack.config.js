@@ -431,7 +431,7 @@ module.exports = async (
         const { version: reactDomVersion } = require(`react-dom/package.json`)
         const { major, minor } = semver.parse(reactDomVersion)
         console.warn(
-          `React-Hot-Loader: please install "@hot-loader/react-dom@^${major}.${minor}" to makes sure all features of React are working.`
+          `React-Hot-Loader: please install "@hot-loader/react-dom@^${major}.${minor}" to make sure all features of React are working.`
         )
       }
     }
