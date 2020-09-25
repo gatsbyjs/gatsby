@@ -7,10 +7,20 @@ import externalLinkIcon from "../external-link.svg"
 import graphqlIcon from "../graphql.svg"
 import { Link } from "gatsby"
 import useDevelopState from "../utils/use-develop-logs"
+import { useTelemetry } from "gatsby-admin/src/utils/use-telemetry"
 
 function SendFeedbackButton(props): JSX.Element {
+  const telemetry = useTelemetry()
   return (
-    <Button variant="GHOST" size="S" {...props}>
+    <Button
+      variant="GHOST"
+      size="S"
+      {...props}
+      onClick={(evt): void => {
+        telemetry.trackEvent(`FEEDBACK_WIDGET_OPEN`)
+        props.onClick(evt)
+      }}
+    >
       Send feedback
     </Button>
   )

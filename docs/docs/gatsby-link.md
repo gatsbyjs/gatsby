@@ -407,4 +407,4 @@ However, if the page has previously loaded, it will not re-request `app-data.jso
 
 - [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
 - [Routing: Getting Location Data from Props](/docs/location-data-from-props/)
-- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior
+- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior

@@ -1,69 +1,43 @@
 const path = require("path")
-const { createFilePath } = require("gatsby-source-filesystem")
 
-exports.onCreateNode = (args) => {
-  const { node, actions, getNode, ...rest } = args;
-  const { createNodeField } = actions
+const blogPost = path.resolve(`./src/templates/blog-post.js`)
 
-  if (node.internal.type === "Mdx") {
-    const value = createFilePath({ node, getNode })
-
-    createNodeField({
-      name: "path",
-      node,
-      value,
-    })
-  }
-}
-
-
-exports.createPages = async ({ graphql, actions, reporter }) => {
-  const progress = reporter.createProgress(`(userland gatsby-node) createPages`)
-  console.time("(userland gatsby-node) total exports.createPages")
-  progress.setStatus("initial graphl query")
-
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  console.time("(userland gatsby-node) initial graphql query")
   const result = await graphql(`
     query {
       allMdx {
-        edges {
-          node {
-            id
-            fields {
-              path
-            }
+        nodes {
+          id
+          slug
+          frontmatter {
+            title # used in prev/next
           }
         }
       }
     }
   `)
-  console.timeEnd("(userland gatsby-node) initial graphql query")
 
   if (result.errors) {
-    reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query')
+    throw result.errors
   }
 
-  console.time("(userland gatsby-node) created pages")
+  const posts = result.data.allMdx.nodes
 
-  const posts = result.data.allMdx.edges
+  posts.forEach(({ id, slug }, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1].node
+    const next = index === 0 ? null : posts[index - 1].node
 
-  progress.start()
-  progress.total = posts.length
-  progress.setStatus("Calling createPage for all pages")
-
-  posts.forEach(({ node }) => {
     createPage({
-      path: node.fields.path,
-      component: path.resolve(`./src/templates/article.js`),
-      context: { id: node.id },
+      path: slug,
+      component: blogPost,
+      context: {
+        id,
+        slug,
+        previous,
+        next,
+      },
     })
-    progress.tick(1)
   })
-
-  console.timeEnd("(userland gatsby-node) created pages")
-  console.timeEnd("(userland gatsby-node) total exports.createPages")
-
-  progress.done()
 }

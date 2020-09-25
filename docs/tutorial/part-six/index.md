@@ -38,7 +38,7 @@ Once you save the file, look at `/my-files/` again—the new markdown file is in
 Add a transformer plugin that can transform markdown files:
 
 ```shell
-npm install --save gatsby-transformer-remark
+npm install gatsby-transformer-remark
 ```
 
 Then add it to the `gatsby-config.js` like normal:

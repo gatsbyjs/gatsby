@@ -5,7 +5,7 @@
 exports.createPages = ({ actions, graphql }) => {
   // need createRedirect action in actions collection
   // to make the redirection magic happen.
-  // https://www.gatsbyjs.org/docs/bound-action-creators/
+  // https://www.gatsbyjs.com/docs/bound-action-creators/
   const { createRedirect } = actions
 
   // Let’s set up some string consts to use thoroughout the following.
@@ -32,10 +32,10 @@ exports.createPages = ({ actions, graphql }) => {
   // at either version by default, but we need to explicitly redirect
   // both versions independently, more on page components:
   // Docs > Building with Components
-  // https://www.gatsbyjs.org/docs/building-with-components/
+  // https://www.gatsbyjs.com/docs/building-with-components/
   // and handling trailing slashes:
   // Docs > Creating and modifying pages > Removing trailing slashes
-  // https://www.gatsbyjs.org/docs/creating-and-modifying-pages/#removing-trailing-slashes
+  // https://www.gatsbyjs.com/docs/creating-and-modifying-pages/#removing-trailing-slashes
   createRedirect({
     fromPath: `/page2/`,
     isPermanent: true,

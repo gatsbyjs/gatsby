@@ -12,7 +12,7 @@ const Index = () => (
         This is a simple example of creating dynamic apps with Gatsby that
         require user authentication. It uses concepts from the
         {` `}
-        <a href="https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/">
+        <a href="https://www.gatsbyjs.com/docs/client-only-routes-and-user-authentication/">
           client-only routes section
         </a>
         {` `}
