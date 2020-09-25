@@ -6,7 +6,7 @@ import Layout from "../components/layout"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const node = this.props.data.gendataJson
+    const { title, description, date, html } = this.props.data.gendataJson
     const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next } = this.props.pageContext
 
@@ -14,35 +14,15 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <article>
           <header>
-            <h1
-              style={{
-                marginTop: "5px",
-                marginBottom: 0,
-              }}
-            >
-              {node.title}
-            </h1>
-            <p
-              style={{
-                display: `block`,
-                marginBottom: "5px",
-              }}
-            >
-              {node.date}
-            </p>
+            <h1 style={{ marginTop: "5px", marginBottom: 0 }}>{title}</h1>
+            <p style={{ display: `block`, marginBottom: "5px" }}>{date}</p>
           </header>
           <section>
-            <blockquote
-              dangerouslySetInnerHTML={{ __html: node.description }}
-            />
-            <p dangerouslySetInnerHTML={{ __html: node.body[0] }} />
-            <p dangerouslySetInnerHTML={{ __html: node.body[1] }} />
+            <blockquote dangerouslySetInnerHTML={{ __html: description }} />
+            <p dangerouslySetInnerHTML={{ __html: html[0] }} />
+            <p dangerouslySetInnerHTML={{ __html: html[1] }} />
           </section>
-          <hr
-            style={{
-              marginBottom: "5px",
-            }}
-          />
+          <hr style={{ marginBottom: "5px" }} />
           <footer>
             <Bio />
           </footer>
@@ -92,7 +72,7 @@ export const pageQuery = graphql`
       title
       description
       date(formatString: "MMMM DD, YYYY")
-      body
+      html
     }
   }
 `

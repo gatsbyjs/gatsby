@@ -8,31 +8,30 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+    const posts = data.allMarkdownRemark.nodes
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <Bio />
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.frontmatter.slug
+        {posts.map(({ frontmatter: { title, slug, date, description } }) => {
           return (
-            <article key={node.frontmatter.slug}>
+            <article key={slug}>
               <header>
                 <h3
                   style={{
-                    marginBottom: '5px',
+                    marginBottom: "5px",
                   }}
                 >
-                  <Link style={{ boxShadow: `none` }} to={'/' + node.frontmatter.slug}>
+                  <Link style={{ boxShadow: `none` }} to={"/" + slug}>
                     {title}
                   </Link>
                 </h3>
-                <small>{node.frontmatter.date}</small>
+                <small>{date}</small>
               </header>
               <section>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
+                    __html: description,
                   }}
                 />
               </section>
@@ -53,16 +52,16 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(limit: 100) {
-      edges {
-        node {
-          excerpt
-          frontmatter {
-            slug
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
+    allMarkdownRemark(
+      limit: 100
+      sort: { fields: frontmatter___date, order: DESC }
+    ) {
+      nodes {
+        frontmatter {
+          title
+          slug
+          date(formatString: "MMMM DD, YYYY")
+          description
         }
       }
     }
