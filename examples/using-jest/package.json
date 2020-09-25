@@ -33,7 +33,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "babel-jest": "^24.9.0",
-    "babel-preset-gatsby": "^0.1.6",
+    "babel-preset-gatsby": "^0.5.10",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0"
   },
