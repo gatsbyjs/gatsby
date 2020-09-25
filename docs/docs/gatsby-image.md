@@ -15,7 +15,7 @@ To start working with Gatsby Image, install the `gatsby-image` package along wit
 A common way to source images is to install and use `gatsby-source-filesystem` to connect your local files, but other source plugins can be used as well, such as `gatsby-source-contentful`, `gatsby-source-datocms` and `gatsby-source-sanity`.
 
 ```shell
-npm install --save gatsby-image gatsby-plugin-sharp gatsby-transformer-sharp
+npm install gatsby-image gatsby-plugin-sharp gatsby-transformer-sharp
 ```
 
 ```js:title=gatsby-config.js

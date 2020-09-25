@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.3.15...gatsby-remark-copy-linked-files@2.3.16) (2020-09-23)
+
+### Bug Fixes
+
+- **gatsby-remark-copy-linked-files:** respect assetPrefix ([#26976](https://github.com/gatsbyjs/gatsby/issues/26976)) ([6270c3d](https://github.com/gatsbyjs/gatsby/commit/6270c3d09ba5abfcd73197a3632bdbc737e96768))
+
 ## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.3.14...gatsby-remark-copy-linked-files@2.3.15) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files

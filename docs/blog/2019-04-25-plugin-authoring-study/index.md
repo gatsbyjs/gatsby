@@ -26,6 +26,8 @@ Thanks to all for taking the time to give thoughtful interviews!
 > Are you a plugin author/maintainer? If you have additional feedback that is not covered by this article, please [let us know here](https://docs.google.com/forms/d/e/1FAIpQLSfhZOKcnbGvAYAzwWUXuVNkeGFGDHZP8DNdabj7CUG27kBngg/viewform?usp=sf_link)
 > If you're thinking of creating a plugin, [sign up for a CLI usability test](https://calendly.com/shannon-soper/gatsby-research-call-gatsby-cli). You'll get to try out some new things in the CLI!
 
+<!-- markdownlint-disable no-trailing-punctuation -->
+
 ## Why do people decide to create a plugin?
 
 We asked people what motivated them to create and maintain a plugin so we can make sure to support them in their goals. Most plugin authors we interviewed said something like: “I created the plugin to solve a problem I had that other plugins couldn’t solve". Typically, other plugins couldn't solve the problem because they weren’t v2 compatible, weren’t being maintained, or didn’t exist.

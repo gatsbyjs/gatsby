@@ -1,4 +1,6 @@
+import { walkStream as fsWalkStream, Entry } from "@nodelib/fs.walk"
 import fs from "fs-extra"
+import reporter from "gatsby-cli/lib/reporter"
 import path from "path"
 import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
@@ -177,4 +179,53 @@ export function enqueueFlush(): void {
   } else {
     flush()
   }
+}
+
+export async function handleStalePageData(): Promise<void> {
+  if (!(await fs.pathExists(`public/page-data`))) {
+    return
+  }
+
+  // public directory might have stale page-data files from previous builds
+  // we get the list of those and compare against expected page-data files
+  // and remove ones that shouldn't be there anymore
+
+  const activity = reporter.activityTimer(`Cleaning up stale page-data`)
+  activity.start()
+
+  const pageDataFilesFromPreviousBuilds = await new Promise<Set<string>>(
+    (resolve, reject) => {
+      const results = new Set<string>()
+
+      const stream = fsWalkStream(`public/page-data`)
+
+      stream.on(`data`, (data: Entry) => {
+        if (data.name === `page-data.json`) {
+          results.add(data.path)
+        }
+      })
+
+      stream.on(`error`, e => {
+        reject(e)
+      })
+
+      stream.on(`end`, () => resolve(results))
+    }
+  )
+
+  const expectedPageDataFiles = new Set<string>()
+  store.getState().pages.forEach(page => {
+    expectedPageDataFiles.add(getFilePath(`public`, page.path))
+  })
+
+  const deletionPromises: Array<Promise<void>> = []
+  pageDataFilesFromPreviousBuilds.forEach(pageDataFilePath => {
+    if (!expectedPageDataFiles.has(pageDataFilePath)) {
+      deletionPromises.push(fs.remove(pageDataFilePath))
+    }
+  })
+
+  await Promise.all(deletionPromises)
+
+  activity.end()
 }

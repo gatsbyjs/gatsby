@@ -25,7 +25,7 @@ After the process is complete, some additional packages are needed.
 Change directories to the `js-search-example` folder and issue the following command:
 
 ```shell
-npm install --save js-search axios
+npm install js-search axios
 ```
 
 Or if Yarn is being used:

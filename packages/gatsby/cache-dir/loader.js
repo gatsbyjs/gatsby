@@ -394,7 +394,7 @@ export class BaseLoader {
   isPageNotFound(rawPath) {
     const pagePath = findPath(rawPath)
     const page = this.pageDb.get(pagePath)
-    return page && page.notFound === true
+    return !page || page.notFound
   }
 
   loadAppData(retries = 0) {

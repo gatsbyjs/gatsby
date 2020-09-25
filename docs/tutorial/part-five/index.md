@@ -43,7 +43,7 @@ Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explor
 First, install the plugin at the root of the project:
 
 ```shell
-npm install --save gatsby-source-filesystem
+npm install gatsby-source-filesystem
 ```
 
 Then add it to your `gatsby-config.js`:
@@ -94,7 +94,7 @@ Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl 
 
 Try adding a number of fields to your query, press <kbd>Ctrl + Enter</kbd> each time to re-run the query. You'll see the updated query results:
 
-![The GraphiQL IDE showing the results of the query](./images/allfile-query.png)
+![The GraphiQL IDE showing the results of the query](allfile-query.png)
 
 The result is an array of `File` "nodes" (node is a fancy name for an object in a "graph"). Each `File` node object has the fields you queried for.
 

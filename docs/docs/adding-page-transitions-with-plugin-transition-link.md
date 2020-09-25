@@ -17,7 +17,7 @@ For other page transition options, see the [overview on adding page animations](
 First, install the plugin:
 
 ```shell
-npm install --save gatsby-plugin-transition-link
+npm install gatsby-plugin-transition-link
 ```
 
 Make sure to add the plugin to your `gatsby-config.js`:
@@ -43,7 +43,7 @@ You can use the `AniLink` component to add page transitions without having to de
 To use AniLink, you will need to install the `gsap` animation library:
 
 ```shell
-npm install --save gsap
+npm install gsap
 ```
 
 Then, import the AniLink component:

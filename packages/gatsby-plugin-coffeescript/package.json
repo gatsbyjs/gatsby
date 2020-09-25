@@ -32,7 +32,6 @@
   "peerDependencies": {
     "gatsby": "^2.0.0"
   },
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",

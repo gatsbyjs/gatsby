@@ -32,7 +32,7 @@ In order to fetch data at build time, you can use a source plugin or source data
 To source data using an existing source plugin you need to install a plugin and add it to your [config](/docs/api-files-gatsby-config/). To use `gatsby-source-graphql`, first install it:
 
 ```shell
-npm install --save gatsby-source-graphql
+npm install gatsby-source-graphql
 ```
 
 Then, add the plugin to your `gatsby-config`:

@@ -1,6 +1,6 @@
 import * as fs from "fs-extra"
 import { resolve, join } from "path"
-import { GraphQLSchema, printSchema } from "graphql"
+import { GraphQLSchema, printSchema } from "gatsby/graphql"
 import type { GatsbyReduxStore } from "gatsby/src/redux"
 import type { IStateProgram } from "gatsby/src/internal"
 

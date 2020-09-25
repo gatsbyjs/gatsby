@@ -29,7 +29,6 @@
     "gatsby": "^2.0.0",
     "node-sass": "^4.9.0"
   },
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
