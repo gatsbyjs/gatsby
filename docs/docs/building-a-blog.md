@@ -4,7 +4,11 @@ title: Building a Blog Site With Gaysby
 
 Now create the Gatsby App first
 ```
-$ gatsby new my-awesome-site
+$ gatsby new my-blog-site
+```
+Now Enter in directory
+```
+$ cd new-blog-site
 ```
 
 Now start the app in browser
