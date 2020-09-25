@@ -30,7 +30,7 @@
     "fs-exists-cached": "^1.0.0",
     "gatsby-page-utils": "^0.2.25",
     "globby": "^11.0.1",
-    "graphql": "^14.6.0",
+    "graphql": "^14.7.0",
     "lodash": "^4.17.20"
   },
   "devDependencies": {

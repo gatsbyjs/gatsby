@@ -8,14 +8,14 @@
   },
   "dependencies": {
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^5.1.2",
     "html-webpack-exclude-assets-plugin": "^0.0.7",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-tags-plugin": "^2.0.17",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^0.8.2",
-    "netlify-identity-widget": "^1.6.0",
-    "webpack": "^4.44.1"
+    "netlify-identity-widget": "^1.9.1",
+    "webpack": "^4.44.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",

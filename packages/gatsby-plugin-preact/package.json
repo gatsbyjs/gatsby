@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@prefresh/webpack": "^1.0.2",
+    "@prefresh/webpack": "^1.1.0",
     "react-refresh": "^0.8.2"
   },
   "devDependencies": {

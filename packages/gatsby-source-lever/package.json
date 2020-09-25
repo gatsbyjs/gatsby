@@ -14,7 +14,7 @@
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.20"
   },
   "deprecated": false,
   "devDependencies": {

@@ -10,7 +10,7 @@
     "@babel/code-frame": "^7.10.4",
     "@babel/runtime": "^7.11.2",
     "@babel/types": "^7.11.5",
-    "ast-types": "^0.13.3",
+    "ast-types": "^0.13.4",
     "common-tags": "^1.8.0",
     "react-docgen": "^5.0.0"
   },

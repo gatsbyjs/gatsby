@@ -20,7 +20,7 @@
     "git-up": "^4.0.2",
     "is-docker": "^2.1.1",
     "lodash": "^4.17.20",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "uuid": "3.4.0"
   },
   "devDependencies": {
