@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "postcss": "^8.0.5",
     "postcss-loader": "^4.0.2"
   },
   "devDependencies": {
@@ -26,7 +25,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^2.0.0",
+    "postcss": "^8.0.5"
   },
   "readme": "README.md",
   "repository": {
