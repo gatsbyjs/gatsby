@@ -11,7 +11,7 @@ const FILE = path.resolve("gendata.csv")
 // We then hand that off to markdown
 
 console.log("Now generating " + N + " articles into", FILE)
-fs.writeFileSync(FILE, "articleContent,a,b,c\n")
+fs.writeFileSync(FILE, "articleContent\n")
 
 function createArticle(n) {
   const title = faker.lorem.sentence()
@@ -30,13 +30,15 @@ title: "${title.replace(/"/g, '\\"')}"
 description: "${desc.replace(/"/g, '\\"')}"
 slug: '${slug}'
 date: ${date}
-tags: [${tags}]
 ---
 
 # ${title}
 
 > ${desc}
-${faker.lorem.paragraphs(2)}
+
+${faker.lorem.paragraphs()}
+
+${faker.lorem.paragraphs()}
   `
 
   // Note: you can only escape double quotes (by doubling them, not by backslash)
@@ -47,7 +49,7 @@ ${faker.lorem.paragraphs(2)}
     '"' + pageContent
       .trim()
       .replace(/"/g, '""')
-      + '",1,2,3' +
+      + '"' +
       "\n" // markdown does care about newlines
   )
 }

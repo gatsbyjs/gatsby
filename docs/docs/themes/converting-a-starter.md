@@ -71,7 +71,7 @@ There may be other locations where you will need to update the path resolution l
 Gatsby by default sources pages relative from `src/pages`, like a regular Gatsby site does. However, if you would like to source pages from a different directory you'll have to setup [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
 
 ```shell
-npm install --save gatsby-plugin-page-creator
+npm install gatsby-plugin-page-creator
 ```
 
 Then, tell the plugin to look in your theme's `src/<custom-directory>` directory.
@@ -94,7 +94,7 @@ From the root of your newly created theme run `npm publish`.
 Once you've published, you can install the theme in your starter.
 
 ```shell
-npm install --save gatsby-theme-NAME
+npm install gatsby-theme-NAME
 ```
 
 ## Walkthrough

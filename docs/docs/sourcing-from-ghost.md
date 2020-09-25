@@ -26,7 +26,7 @@ The fastest way to get started is with the official **Gatsby Starter Ghost** rep
 If you prefer to start from scratch or integrate the Ghost Content API into an existing site, you can set up the **Gatsby Source Ghost** plugin.
 
 ```shell
-npm install --save gatsby-source-ghost
+npm install gatsby-source-ghost
 ```
 
 ### Configuration

@@ -7,7 +7,7 @@ path: "/using-gatsby-remark-copy-linked-files/"
 ---
 
 Plugin documentation:
-[gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/)--_"Copies
+[gatsby-remark-copy-linked-files](https://www.gatsbyjs.com/plugins/gatsby-remark-copy-linked-files/)--_"Copies
 local files linked to/from markdown to your `public` folder."_
 
 HTML small test (see the

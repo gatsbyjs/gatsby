@@ -2,7 +2,7 @@
 
 This is a baseline benchmark for tracking CSV plaintext performance in the Gabe project.
 
-This will produce the same site as `gabe-markdown` without using any markdown. It also generates one giant csv file containing all the data, rather than an individual file per page.
+This will produce the same site as `gabe-fs-markdown` without using any markdown. It also generates one giant csv file containing all the data, rather than an individual file per page.
 
 The site can generate an arbitrary amount of super simple pages. Each page has a small header, a quote, and two small paragraphs of random text. No images, because that's a fixed cost we're not interested in.
 
