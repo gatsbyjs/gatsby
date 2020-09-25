@@ -17,7 +17,7 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.3",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.2",
     "remark": "^10.0.1",
     "remark-mdx": "^1.6.6",
     "unist-util-find": "^1.0.1"
