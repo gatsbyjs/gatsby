@@ -101,7 +101,7 @@ Abhishek
 Abramov
 ACF
 Acquia
-Acroyoga
+acroyoga
 Acroyoga-focused
 acroyogis
 actualGitSvg
