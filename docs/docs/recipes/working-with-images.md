@@ -313,7 +313,7 @@ To inline images in markdown (using the `![]()` syntax), consider using a plugin
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
 - [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 - Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
-- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](https://www.gatsbyjs.com/docs/node-apis/#createPages)
 
 ### Directions
 

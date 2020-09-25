@@ -39,7 +39,7 @@ Now move into the newly created directory and install the Gatsby plugin for Pris
 
 ```shell
 cd prismic-tutorial
-npm install --save gatsby-source-prismic
+npm install gatsby-source-prismic
 ```
 
 In addition to installing the Prismic plugin, you also have to install the package `dotenv` to securely use your access tokens locally as you should never commit secret API keys to your repository!

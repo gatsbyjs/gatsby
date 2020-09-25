@@ -104,10 +104,34 @@ exports.createPages = async function createPages({
 }
 
 exports.onCreatePage = async ({ page, actions }) => {
-  const { createPage } = actions
+  const { createPage, createRedirect, deletePage } = actions
 
   if (page.path.match(/^\/client-only-paths/)) {
     page.matchPath = `/client-only-paths/*`
     createPage(page)
+  }
+
+  if (page.path === `/redirect-me/`) {
+    const toPath = `/pt${page.path}`
+
+    deletePage(page)
+
+    createRedirect({
+      fromPath: page.path,
+      toPath,
+      isPermanent: false,
+      redirectInBrowser: true,
+      Language: `pt`,
+      statusCode: 301,
+    })
+
+    createPage({
+      ...page,
+      path: toPath,
+      context: {
+        ...page.context,
+        lang: `pt`,
+      },
+    })
   }
 }

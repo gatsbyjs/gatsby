@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.34...gatsby-telemetry@1.3.35) (2020-09-16)
+
+### Features
+
+- **gatsby-admin:** track errors ([#26903](https://github.com/gatsbyjs/gatsby/issues/26903)) ([617cc1d](https://github.com/gatsbyjs/gatsby/commit/617cc1dd0e16d60abbea1caec8d3a63f8dbe4142))
+
 ## [1.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.33...gatsby-telemetry@1.3.34) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-telemetry

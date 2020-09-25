@@ -29,4 +29,4 @@ If you are already familiar with Gatsby's APIs and conventions, and want a more 
 
 ### What to Do If You Need Help
 
-If you get stuck during the challenge, you can ask for help from the [Gatsby community](https://www.gatsbyjs.org/contributing/community/). You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+If you get stuck during the challenge, you can ask for help from the [Gatsby community](https://www.gatsbyjs.org/contributing/community/). You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), and [Dev](https://dev.to/t/gatsby).

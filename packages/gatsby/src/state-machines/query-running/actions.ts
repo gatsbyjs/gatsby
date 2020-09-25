@@ -16,10 +16,17 @@ export const assignDirtyQueries = assign<
   }
 })
 
-export const queryActions: ActionFunctionMap<
-  IQueryRunningContext,
-  DoneInvokeEvent<any>
-> = {
+export const markSourceFilesDirty = assign<IQueryRunningContext>({
+  filesDirty: true,
+})
+
+export const markSourceFilesClean = assign<IQueryRunningContext>({
+  filesDirty: false,
+})
+
+export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   assignDirtyQueries,
   flushPageData,
+  markSourceFilesDirty,
+  markSourceFilesClean,
 }

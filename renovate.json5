@@ -52,6 +52,12 @@
     },
     // these rules define dependencies that we have special handling for
     {
+      packageNames: ["gatsby-interface"],
+      sourceUrlPrefixes: ["https://github.com/gatsbyjs/gatsby"],
+      // update internal packages immediately after publish instead of waiting 3 days
+      stabilityDays: 0,
+    },
+    {
       updateTypes: ["minor"],
       excludePackageNames: [
         // below is list of packages that use 0.X version range, any minor bump there can contain breaking changes, so we just ignore minor bumps for those packages and will need to bump them manually

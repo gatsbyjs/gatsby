@@ -39,7 +39,7 @@ Additionally, you need the `gatsby-source-graphql` plugin. Because Gentics Mesh 
 Install the plugin:
 
 ```shell
-npm install --save gatsby-source-graphql
+npm install gatsby-source-graphql
 ```
 
 ### Configure the plugin

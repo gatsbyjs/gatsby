@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.65](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.64...gatsby@2.24.65) (2020-09-24)
+
+### Bug Fixes
+
+- **build:** remove stale page-data files ([#26937](https://github.com/gatsbyjs/gatsby/issues/26937)) ([dfe9fb0](https://github.com/gatsbyjs/gatsby/commit/dfe9fb00fa9d1bc5dce740c49901a6398638b742))
+- **gatsby:** Recognise null pages as not found ([#27003](https://github.com/gatsbyjs/gatsby/issues/27003)) ([18944ce](https://github.com/gatsbyjs/gatsby/commit/18944cec9d87af4744b5583736cc9ed7adf0df0b))
+
+## [2.24.64](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.63...gatsby@2.24.64) (2020-09-23)
+
+### Features
+
+- **gatsby:** Expose typescript transpiler to default site in plugin list ([#26452](https://github.com/gatsbyjs/gatsby/issues/26452)) ([a8ce6e6](https://github.com/gatsbyjs/gatsby/commit/a8ce6e6e2ad46693a49af052cd302187d56e5943))
+
+## [2.24.63](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.62...gatsby@2.24.63) (2020-09-18)
+
+### Bug Fixes
+
+- **gatsby:** Finish running queries if source files change ([#26940](https://github.com/gatsbyjs/gatsby/issues/26940)) ([d7d2dda](https://github.com/gatsbyjs/gatsby/commit/d7d2dda329d5bf11e1f03d2a6ffb153df3a08031))
+
+## [2.24.62](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.61...gatsby@2.24.62) (2020-09-16)
+
+### Features
+
+- **gatsby:** add babel-lodash plugin to reduce lodash filesize ([#26611](https://github.com/gatsbyjs/gatsby/issues/26611)) ([ede2fd9](https://github.com/gatsbyjs/gatsby/commit/ede2fd9eb89b08d97e5eab0883af819621d7f55f))
+
+## [2.24.61](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.60...gatsby@2.24.61) (2020-09-16)
+
+### Bug Fixes
+
+- **gatsby-cli:** pass --verbose flag to gatsby build properly ([#26904](https://github.com/gatsbyjs/gatsby/issues/26904)) ([55e82f3](https://github.com/gatsbyjs/gatsby/commit/55e82f3e90adc87750aedcc00fe52ec1ca9de38f))
+
+### Features
+
+- **gatsby:** add `Site` and `SiteSiteMetadata` to built-in GraphQL types ([#26866](https://github.com/gatsbyjs/gatsby/issues/26866)) ([8636370](https://github.com/gatsbyjs/gatsby/commit/8636370ceeb0443f56dea4797157ec8887301e6b))
+- **gatsby:** print node counts in CLI ([#26907](https://github.com/gatsbyjs/gatsby/issues/26907)) ([34f7a5a](https://github.com/gatsbyjs/gatsby/commit/34f7a5a1ed79cd2cc167502f2f07dffff3088766))
+- **gatsby-admin:** track errors ([#26903](https://github.com/gatsbyjs/gatsby/issues/26903)) ([617cc1d](https://github.com/gatsbyjs/gatsby/commit/617cc1dd0e16d60abbea1caec8d3a63f8dbe4142))
+
 ## [2.24.60](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.59...gatsby@2.24.60) (2020-09-15)
 
 ### Bug Fixes
