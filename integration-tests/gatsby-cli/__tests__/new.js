@@ -14,7 +14,8 @@ const clean = dir => execa(`yarn`, ["del-cli", dir])
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
   const dir = join(__dirname, "../execution-folder")
-  const originalPackageManager = getConfigStore().get("cli.packageManager")
+  const originalPackageManager =
+    getConfigStore().get("cli.packageManager") || `npm`
 
   beforeAll(async () => {
     await clean(dir)
@@ -23,7 +24,7 @@ describe(`gatsby new`, () => {
   })
 
   afterAll(async () => {
-    GatsbyCLI.from(cwd).invoke([`options`, `set`,`pm`, originalPackageManager])
+    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, originalPackageManager])
     await clean(dir)
   })
 
