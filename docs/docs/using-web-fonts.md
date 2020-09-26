@@ -29,7 +29,7 @@ npm install --save typeface-open-sans
 Or with yarn:
 
 ```bash
-yard add typeface-open-sans
+yarn add typeface-open-sans
 ```
 
 In your `layout.js` file, import the typeface.
@@ -64,7 +64,7 @@ npm install --save gatsby-plugin-web-font-loader
 Or with yarn:
 
 ```bash
-yard add gatsby-plugin-web-font-loader
+yarn add gatsby-plugin-web-font-loader
 ```
 
 Then, create an [environment variable](/docs/environment-variables/) to store your Adobe Fonts project ID. (Make sure this file is in your `.gitignore` file so your ID doesn't get committed!) For example, if your Adobe Fonts project ID is `abcdefg`, your `.env` file will look like this:
