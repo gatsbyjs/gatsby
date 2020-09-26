@@ -13975,10 +13975,10 @@ jest-matcher-utils@^24.9.0:
     jest-get-type "^24.9.0"
     pretty-format "^24.9.0"
 
-jest-matchmedia-mock@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/jest-matchmedia-mock/-/jest-matchmedia-mock-1.0.1.tgz#da1c75be82a3b3e46e6c8ae195aa54e4a6032eb4"
-  integrity sha512-IXk2AnldfsCRmhB4pFY0Eb9mk2NxFqOgOwA4DxKOJ22T5bn/j3DzM5s3cdKxuEowmpuXK1gPXAIlVGIC+kb/fA==
+jest-matchmedia-mock@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/jest-matchmedia-mock/-/jest-matchmedia-mock-1.1.0.tgz#eaae8c5d1dee4e4f7c59f8cb1b38b5d7ea842552"
+  integrity sha512-REnJRsOSCMpGAlkxmvVTqEBpregyFVi9MPEH3N83W1yLKzDdNehtCkcdDZduXq74PLtfI+11NyM4zKCK5ynV9g==
 
 jest-message-util@^22.4.0, jest-message-util@^22.4.3:
   version "22.4.3"
