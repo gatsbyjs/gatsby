@@ -17,7 +17,7 @@ It will also be useful if you are familiar with [GraphiQL](/docs/introducing-gra
 Install the plugin at the root of your Gatsby project:
 
 ```shell
-npm install --save gatsby-source-filesystem
+npm install gatsby-source-filesystem
 ```
 
 Then add it to your project's `gatsby-config.js` file:

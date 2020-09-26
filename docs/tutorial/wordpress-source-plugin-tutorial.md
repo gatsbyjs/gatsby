@@ -247,7 +247,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-Next, [stop and restart](https://www.gatsbyjs.org/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
+Next, [stop and restart](https://www.gatsbyjs.com/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
 
 ![Two posts logged to the terminal](./images/wordpress-source-plugin-log.jpg)
 

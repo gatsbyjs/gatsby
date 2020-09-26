@@ -42,7 +42,7 @@
     "@babel/core": "^7.11.6",
     "@types/ci-info": "2.0.0",
     "babel-preset-gatsby-package": "^0.5.3",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.2",
     "typescript": "^3.9.5"
   },
   "engines": {

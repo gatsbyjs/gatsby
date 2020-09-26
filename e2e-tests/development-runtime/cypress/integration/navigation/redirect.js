@@ -40,6 +40,21 @@ const runTests = () => {
       )
     })
   })
+
+  it(`should redirect to a dynamically-created replacement page`, () => {
+    cy.visit(`/redirect-me/`).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/pt/redirect-me/`)
+    cy.then(() => {
+      expect(spy).not.to.be.calledWith(
+        `The route "/redirect" matches both a page and a redirect; this is probably not intentional.`
+      )
+
+      cy.findByText("This should be at /pt/redirect-me/", {
+        exact: false,
+      }).should(`exist`)
+    })
+  })
 }
 
 describe(`redirect`, () => {

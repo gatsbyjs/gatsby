@@ -1,42 +1,40 @@
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+
+const blogPost = path.resolve(`./src/templates/blog-post.js`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const result = await graphql(
-    `
-      {
-        allGendataCsv (sort: { fields: [date], order: DESC }) {
-          edges {
-            node {
-              id
-              slug
-              title
-            }
+
+  const result = await graphql(`
+    query {
+      allMarkdownRemark {
+        nodes {
+          id
+          frontmatter {
+            slug
+            title # used in prev/next
           }
         }
       }
-    `
-  )
+    }
+  `)
 
   if (result.errors) {
     throw result.errors
   }
 
-  // Create blog posts pages.
-  const posts = result.data.allGendataCsv.edges
+  const posts = result.data.allMarkdownRemark.nodes
 
-  posts.forEach((post, index) => {
+  posts.forEach(({ id, frontmatter: { slug } }, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
 
     createPage({
-      path: post.node.slug,
+      path: slug,
       component: blogPost,
       context: {
-        slug: post.node.slug,
-        id: post.node.id,
+        id,
+        slug,
         previous,
         next,
       },
@@ -44,16 +42,21 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-// Use this to keep in sync with markdown benchmark. TODO: drop this and see the difference.
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+// Not sure if there is a better way than to create a proxy node for markdown to pick up
+// I certainly can't get remark to to pick up csv nodes :(
+exports.onCreateNode = ({ node, actions }) => {
+  const { createNode } = actions
 
-  if (node.internal.type === `DataCsv`) {
-    createNodeField({
-      name: `slug2`,
-      node,
-      value: './' + node.slug,
+  if (node.internal.type === `GendataCsv`) {
+    createNode({
+      id: `${node.id}-MarkdownProxy`,
+      parent: node.id,
+      internal: {
+        type: `MarkdownProxy`,
+        mediaType: "text/markdown",
+        content: node.articleContent,
+        contentDigest: node.articleContent,
+      },
     })
   }
 }
-

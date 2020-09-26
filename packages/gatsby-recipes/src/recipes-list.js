@@ -7,6 +7,10 @@ export default [
     label: `Add Jest`,
     value: `jest`,
   },
+  {
+    label: `Add Gatsby Image`,
+    value: `gatsby-image`,
+  },
   // Waiting on joi2graphql support for Joi.object().unknown()
   // with a JSON type.
   // {

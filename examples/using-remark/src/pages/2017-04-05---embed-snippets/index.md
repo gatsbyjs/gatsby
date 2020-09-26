@@ -111,7 +111,7 @@ You've learnt how to embed the contents of existing files into your Markdown usi
 
 If you'd prefer to write your code blocks directly within your Markdown, take a look at the example [Code and Syntax Highlighting with PrismJS][4].
 
-[1]: https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/
-[2]: https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
+[1]: https://www.gatsbyjs.com/plugins/gatsby-remark-embed-snippet/
+[2]: https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/
 [3]: http://prismjs.com/
 [4]: /code-and-syntax-highlighting/
