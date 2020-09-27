@@ -2,7 +2,11 @@ const axios = require(`axios`)
 const _ = require(`lodash`)
 
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
-const { handleReferences, handleWebhookUpdate, fetchLanguageConfig } = require(`./utils`)
+const {
+  handleReferences,
+  handleWebhookUpdate,
+  fetchLanguageConfig,
+} = require(`./utils`)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
@@ -66,11 +70,20 @@ exports.sourceNodes = async (
   skipFileDownloads = skipFileDownloads || false
 
   // Determine what entities can be translated and what languages are enabled.
-  
-  const languageConfig = (
-    store.getState().status.plugins?.[`gatsby-source-drupal`]?.languageConfig
-    || await fetchLanguageConfig({ translation, baseUrl, apiBase, basicAuth, headers, params })
-  )
+  let languageConfig = store.getState().status.plugins?.[`gatsby-source-drupal`]
+    ?.languageConfig
+
+  if (!languageConfig) {
+    languageConfig = await fetchLanguageConfig({
+      translation,
+      baseUrl,
+      apiBase,
+      basicAuth,
+      headers,
+      params,
+    })
+  }
+
   setPluginStatus({ languageConfig })
 
   if (webhookBody && Object.keys(webhookBody).length) {
@@ -233,10 +246,8 @@ exports.sourceNodes = async (
         if (!type) return
 
         // Lookup this type in our list of language alterable entities.
-        const isTranslatable = (
-          languageConfig
-          .translatableEntities
-          .some(entity => entity.id === type)
+        const isTranslatable = languageConfig.translatableEntities.some(
+          entity => entity.id === type
         )
 
         const getNext = async (url, data = []) => {
@@ -298,10 +309,15 @@ exports.sourceNodes = async (
               dataForLanguage = await getNext(url)
             } else {
               const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
-              const urlPath = url.href.replace(`${baseUrlWithoutTrailingSlash}/${apiBase}/`, ``)
-              dataForLanguage = await getNext(`${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`)
+              const urlPath = url.href.replace(
+                `${baseUrlWithoutTrailingSlash}/${apiBase}/`,
+                ``
+              )
+              dataForLanguage = await getNext(
+                `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
+              )
             }
-            
+
             data = data.concat(dataForLanguage)
           }
         }

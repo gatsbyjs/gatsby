@@ -1,60 +1,65 @@
 const _ = require(`lodash`)
-const axios = require('axios')
+const axios = require(`axios`)
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
-const fetchLanguageConfig = async ({ translation, baseUrl, apiBase, basicAuth, headers, params }) => {
+const fetchLanguageConfig = async ({
+  translation,
+  baseUrl,
+  apiBase,
+  basicAuth,
+  headers,
+  params,
+}) => {
   if (!translation) {
     return {
-      defaultLanguage: 'und',
-      enabledLanguages: ['und'],
+      defaultLanguage: `und`,
+      enabledLanguages: [`und`],
       translatableEntities: [],
     }
   }
 
-  const [availableLanguagesResponse, translatableEntitiesResponse] = await Promise.all([
-    axios.get(`${baseUrl}/${apiBase}/configurable_language/configurable_language`, {
-      auth: basicAuth,
-      headers,
-      params,
-    }),
-    axios.get(`${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`, {
-      auth: basicAuth,
-      headers,
-      params,
-    }),
+  const [
+    availableLanguagesResponse,
+    translatableEntitiesResponse,
+  ] = await Promise.all([
+    axios.get(
+      `${baseUrl}/${apiBase}/configurable_language/configurable_language`,
+      {
+        auth: basicAuth,
+        headers,
+        params,
+      }
+    ),
+    axios.get(
+      `${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`,
+      {
+        auth: basicAuth,
+        headers,
+        params,
+      }
+    ),
   ])
 
-  const enabledLanguages = (
-    availableLanguagesResponse
-    .data
-    .data
+  const enabledLanguages = availableLanguagesResponse.data.data
     .filter(
-      language => [
-        `und`,
-        `zxx`
-      ].indexOf(language.attributes.drupal_internal__id) === -1
+      language =>
+        [`und`, `zxx`].indexOf(language.attributes.drupal_internal__id) === -1
     )
     .map(language => language.attributes.drupal_internal__id)
-  )
 
   const defaultLanguage = enabledLanguages[0]
 
-  const translatableEntities = (
-    translatableEntitiesResponse
-    .data
-    .data
-    .map(entity => ({
-      type: entity.attributes.target_entity_type_id,
-      bundle: entity.attributes.target_bundle,
-      id: `${
-        entity.attributes.target_entity_type_id
-      }--${
-        entity.attributes.target_bundle
-      }`
-    }))
+  const translatableEntities = translatableEntitiesResponse.data.data.map(
+    entity => {
+      return {
+        type: entity.attributes.target_entity_type_id,
+        bundle: entity.attributes.target_bundle,
+        id: `${entity.attributes.target_entity_type_id}--${entity.attributes.target_bundle}`,
+      }
+    }
   )
 
   return {
@@ -78,15 +83,15 @@ const handleReferences = (node, languageConfig, { getNode, createNodeId }) => {
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
           v.data.map(data => {
-            const isTranslatableReferencedNodeType = (
-              languageConfig
-              .translatableEntities
-              .some(entity => entity.id === data.type)
+            const isTranslatableReferencedNodeType = languageConfig.translatableEntities.some(
+              entity => entity.id === data.type
             )
             const referenceLanguagePrefix = isTranslatableReferencedNodeType
               ? rootNodeLanguage
               : languageConfig.defaultLanguage
-            const referencedNodeId = createNodeId(`${referenceLanguagePrefix}${data.id}`)
+            const referencedNodeId = createNodeId(
+              `${referenceLanguagePrefix}${data.id}`
+            )
             if (!getNode(referencedNodeId)) {
               return null
             }
@@ -106,15 +111,15 @@ const handleReferences = (node, languageConfig, { getNode, createNodeId }) => {
           node[k] = meta
         }
       } else {
-        const isTranslatableReferencedNodeType = (
-          languageConfig
-          .translatableEntities
-          .some(entity => entity.id === v.data.type)
+        const isTranslatableReferencedNodeType = languageConfig.translatableEntities.some(
+          entity => entity.id === v.data.type
         )
         const referenceLanguagePrefix = isTranslatableReferencedNodeType
           ? rootNodeLanguage
           : languageConfig.defaultLanguage
-        const referencedNodeId = createNodeId(`${referenceLanguagePrefix}${v.data.id}`)
+        const referencedNodeId = createNodeId(
+          `${referenceLanguagePrefix}${v.data.id}`
+        )
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)
