@@ -31,7 +31,7 @@ const TracedSVG = ({ data, location }) => (
       To make use of this technique, you can apply processing to an image with a
       GraphQL query by applying a <code>traceSVG</code> argument and the
       appropriate{` `}
-      <a href="https://www.gatsbyjs.org/packages/gatsby-image/#gatsby-transformer-sharp">
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-image/#gatsby-transformer-sharp">
         fragment applied
       </a>
       .

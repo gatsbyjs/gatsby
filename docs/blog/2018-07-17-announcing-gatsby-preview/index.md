@@ -29,7 +29,7 @@ Over the next few months, we’ll be adding integration with other CMSs like Dru
 
 We’re incredibly excited to launch our first commercial service and to continue to push forward the Gatsby experience! We’re looking forward to meeting more of you and working together to push forward the modern web.
 
-Before you go, take a look at a GIF of Gatsby Preview in action on [our own website](https://gatsbyjs.com):
+Before you go, take a look at a GIF of Gatsby Preview in action on [our own website](https://www.gatsbyjs.com/):
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./gatsby-contentful-preview.mp4" />

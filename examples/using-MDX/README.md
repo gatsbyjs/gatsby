@@ -81,13 +81,13 @@ The site is now running at `http://localhost:8000`, you can see the MDX example 
 ## 🧰 Resources used to create this project
 
 - [Gatsby default starter repo](https://github.com/gatsbyjs/gatsby-starter-default)
-- [Gatsby plugin MDX](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/)
+- [Gatsby plugin MDX](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/)
 - [Bar chart from react-charts](https://react-charts.js.org/examples/bar)
 
 ## 🎓 More Guides for Learning Gatsby and MDX
 
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
+Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/). Here are some places to start:
 
-- **For most developers, it's recommended to start with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, it's recommended to start with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples, head [to the official Gatsby documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the [MDX section of the sidebar](https://www.gatsbyjs.com/docs/mdx/).
+- **To dive straight into code samples, head [to the official Gatsby documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the [MDX section of the sidebar](https://www.gatsbyjs.com/docs/mdx/).

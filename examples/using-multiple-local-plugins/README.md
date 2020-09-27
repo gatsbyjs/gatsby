@@ -101,7 +101,7 @@ The 4 ways the code is run are:
 3. In a separate project folder but included with `require.resolve` in the config (`gatsby-plugin-console-log-b`)
 4. In a separate project folder but included via `npm link` (`gatsby-plugin-console-log-c`)
 
-You can read about these methods in the [loading local plugins doc](https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/).
+You can read about these methods in the [loading local plugins doc](https://www.gatsbyjs.com/docs/loading-plugins-from-your-local-plugins-folder/).
 
 ## More advanced local plugin example
 

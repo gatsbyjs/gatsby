@@ -6,8 +6,10 @@ import Layout from "../components/layout"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data
-    const node = post.allGendataCsv.edges[0].node
+    const {
+      html,
+      frontmatter: { title, date },
+    } = this.props.data.markdownRemark
     const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next } = this.props.pageContext
 
@@ -15,29 +17,11 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <article>
           <header>
-            <h1
-              style={{
-                marginTop: '5px',
-                marginBottom: 0,
-              }}
-            >
-              {node.title}
-            </h1>
-            <p
-              style={{
-                display: `block`,
-                marginBottom: '5px',
-              }}
-            >
-              {node.date}
-            </p>
+            <h1 style={{ marginTop: "5px", marginBottom: 0 }}>{title}</h1>
+            <p style={{ display: `block`, marginBottom: "5px" }}>{date}</p>
           </header>
-          <section dangerouslySetInnerHTML={{ __html: node.body }} />
-          <hr
-            style={{
-              marginBottom: '5px',
-            }}
-          />
+          <section dangerouslySetInnerHTML={{ __html: html }} />
+          <hr style={{ marginBottom: "5px" }} />
           <footer>
             <Bio />
           </footer>
@@ -55,15 +39,15 @@ class BlogPostTemplate extends React.Component {
           >
             <li>
               {previous && (
-                <Link to={'../' + previous.slug} rel="prev">
-                  ← {previous.title}
+                <Link to={"/" + previous.frontmatter.slug} rel="prev">
+                  ← {previous.frontmatter.title}
                 </Link>
               )}
             </li>
             <li>
               {next && (
-                <Link to={'../' + next.slug} rel="next">
-                  {next.title} →
+                <Link to={"/" + next.frontmatter.slug} rel="next">
+                  {next.frontmatter.title} →
                 </Link>
               )}
             </li>
@@ -77,28 +61,18 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query BlogPostById($id: String!) {
     site {
       siteMetadata {
         title
       }
     }
-    allGendataCsv(
-      filter: {
-         id: { eq: $id }
-      }
-    ) {
-      edges {
-        node {
-          articleNumber
-          title
-          description
-          slug
-          date
-          tags
-          body
-        }
+    markdownRemark(id: { eq: $id }) {
+      html
+      frontmatter {
+        title
+        date(formatString: "MMMM DD, YYYY")
       }
     }
   }
-`;
+`

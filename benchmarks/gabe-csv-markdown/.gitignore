@@ -69,3 +69,4 @@ yarn-error.log
 .yarn-integrity
 
 gendata.csv
+yarn.lock

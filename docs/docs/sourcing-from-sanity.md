@@ -19,7 +19,7 @@ This guide will cover how configure and use the [`gatsby-source-sanity`](https:/
 ## Basic usage
 
 ```shell
-npm install --save gatsby-source-sanity
+npm install gatsby-source-sanity
 ```
 
 ```js:title=gatsby-config.js

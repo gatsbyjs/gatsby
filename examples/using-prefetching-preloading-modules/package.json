@@ -6,7 +6,7 @@
   "author": "Nuttapol Laoticharoen <pistachio.uss@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.11.1",
-    "gatsby": "^2.24.61",
+    "gatsby": "^2.24.63",
     "gatsby-plugin-offline": "^2.2.10",
     "gatsby-plugin-react-helmet": "^3.3.11",
     "gatsby-plugin-styled-components": "^3.3.11",
