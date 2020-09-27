@@ -21,7 +21,7 @@ const fetchLanguageConfig = async ({
     }
   }
 
-  let next = `${baseUrl}/${apiBase}/configurable_language/configurable_language`
+  let next = `${baseUrl}/${apiBase}/configurable_language/configurable_language?sort=weight`
   let availableLanguagesResponses = []
   let translatableEntitiesResponses = []
 
