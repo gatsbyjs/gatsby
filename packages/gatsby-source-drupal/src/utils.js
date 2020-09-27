@@ -21,29 +21,34 @@ const fetchLanguageConfig = async ({
     }
   }
 
-  const [
-    availableLanguagesResponse,
-    translatableEntitiesResponse,
-  ] = await Promise.all([
-    axios.get(
-      `${baseUrl}/${apiBase}/configurable_language/configurable_language`,
-      {
-        auth: basicAuth,
-        headers,
-        params,
-      }
-    ),
-    axios.get(
-      `${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`,
-      {
-        auth: basicAuth,
-        headers,
-        params,
-      }
-    ),
-  ])
+  let next = `${baseUrl}/${apiBase}/configurable_language/configurable_language`
+  let availableLanguagesResponses = []
+  let translatableEntitiesResponses = []
 
-  const enabledLanguages = availableLanguagesResponse.data.data
+  while (next) {
+    const response = axios.get(next, {
+      auth: basicAuth,
+      headers,
+      params,
+    })
+
+    availableLanguagesResponses.concat(response.data.data)
+    next = response.data.links.next
+  }
+
+  next = `${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`
+  while (next) {
+    const response = axios.get(next, {
+      auth: basicAuth,
+      headers,
+      params,
+    })
+
+    translatableEntitiesResponses.concat(response.data.data)
+    next = response.data.links.next
+  }
+
+  const enabledLanguages = availableLanguagesResponses
     .filter(
       language =>
         [`und`, `zxx`].indexOf(language.attributes.drupal_internal__id) === -1
@@ -52,15 +57,13 @@ const fetchLanguageConfig = async ({
 
   const defaultLanguage = enabledLanguages[0]
 
-  const translatableEntities = translatableEntitiesResponse.data.data.map(
-    entity => {
-      return {
-        type: entity.attributes.target_entity_type_id,
-        bundle: entity.attributes.target_bundle,
-        id: `${entity.attributes.target_entity_type_id}--${entity.attributes.target_bundle}`,
-      }
+  const translatableEntities = translatableEntitiesResponses.map(entity => {
+    return {
+      type: entity.attributes.target_entity_type_id,
+      bundle: entity.attributes.target_bundle,
+      id: `${entity.attributes.target_entity_type_id}--${entity.attributes.target_bundle}`,
     }
-  )
+  })
 
   return {
     defaultLanguage,
