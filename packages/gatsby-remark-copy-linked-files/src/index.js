@@ -39,6 +39,7 @@ const getDestination = (linkNode, dir) => {
       ? `${dir({
           name: linkNode.name,
           hash: linkNode.internal.contentDigest,
+          relativeDirectory: linkNode.relativeDirectory,
         })}.${linkNode.extension}`
       : `${dir()}/${defaultDestination(linkNode)}`
   } else if (_.isString(dir)) {
