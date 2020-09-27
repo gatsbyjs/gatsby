@@ -58,7 +58,7 @@ exports.onPostBuild = async (
   )
 
   // eslint-disable-next-line consistent-return
-  const filteredPages = pageFilter(
+  const { filteredPages, messages } = pageFilter(
     {
       allPages,
       filterPages,
@@ -66,6 +66,8 @@ exports.onPostBuild = async (
     },
     { reporter }
   )
+
+  messages.forEach(message => reporter.verbose(message))
 
   reporter.verbose(
     `${ReporterPrefix} ${filteredPages.length} pages remain after filtering`

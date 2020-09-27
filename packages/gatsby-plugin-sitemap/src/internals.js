@@ -146,8 +146,18 @@ const defaultExcludes = [
   `/offline-plugin-app-shell-fallback`,
 ]
 
-export function pageFilter({ allPages, filterPages, excludes }, { reporter }) {
-  return allPages.filter(page => {
+export function pageFilter({ allPages, filterPages, excludes }) {
+  const messages = []
+
+  if (
+    !Array.isArray(allPages) ||
+    typeof filterPages !== `function` ||
+    !Array.isArray(excludes)
+  ) {
+    throw new Error(`Invalid options passed to page Filter function`)
+  }
+
+  const filteredPages = allPages.filter(page => {
     // eslint-disable-next-line consistent-return
     const defaultFilterMatches = defaultExcludes.some((exclude, i, arr) => {
       try {
@@ -155,23 +165,19 @@ export function pageFilter({ allPages, filterPages, excludes }, { reporter }) {
           minimatch,
           withoutTrailingSlash,
           resolvePagePath,
-          reporter,
         })
 
         //default excludes can only be found once, so remove them from the arr once excluded
         if (doesMatch) arr.splice(i, 1)
 
         return doesMatch
-      } catch (err) {
-        reporter.panic(
-          `${ReporterPrefix} Error in default page filter`,
-          err.message
-        )
+      } catch {
+        throw new Error(`${ReporterPrefix} Error in default page filter`)
       }
     })
 
     if (defaultFilterMatches) {
-      reporter.verbose(
+      messages.push(
         `${ReporterPrefix} Default filter excluded page ${resolvePagePath(
           page
         )}`
@@ -191,8 +197,8 @@ export function pageFilter({ allPages, filterPages, excludes }, { reporter }) {
           withoutTrailingSlash,
           resolvePagePath,
         })
-      } catch (err) {
-        reporter.panic(
+      } catch {
+        throw new Error(
           `${ReporterPrefix} Error in custom page filter.
             If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
             https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
@@ -202,7 +208,7 @@ export function pageFilter({ allPages, filterPages, excludes }, { reporter }) {
     })
 
     if (customFilterMatches) {
-      reporter.verbose(
+      messages.push(
         `${ReporterPrefix} Custom filtering excluded page ${resolvePagePath(
           page
         )}`
@@ -211,4 +217,6 @@ export function pageFilter({ allPages, filterPages, excludes }, { reporter }) {
 
     return !(defaultFilterMatches || customFilterMatches)
   })
+
+  return { filteredPages, messages }
 }

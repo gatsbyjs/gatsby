@@ -6,6 +6,7 @@ const {
   resolvePages,
   defaultFilterPages,
   serialize,
+  pageFilter,
 } = require(`../internals`)
 
 const minimatch = require(`minimatch`)
@@ -82,5 +83,18 @@ describe(`gatsby-plugin-sitemap internals tests`, () => {
     })
   })
 
-  // TODO: write tests for pageFilter
+  it(`pageFilter should filter correctly`, () => {
+    const { filteredPages: results } = pageFilter({
+      allPages: [
+        { path: `/404.html` },
+        { path: `/to/be/removed` },
+        { path: `/to/keep/1` },
+        { path: `/to/keep/2` },
+      ],
+      filterPages: defaultFilterPages,
+      excludes: [`/to/be/removed/`],
+    })
+
+    expect(results).toMatchSnapshot()
+  })
 })
