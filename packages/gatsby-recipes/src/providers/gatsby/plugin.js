@@ -465,7 +465,7 @@ class BabelPluginGetPluginsFromGatsbyConfig {
             let pluginsList = []
 
             if (t.isCallExpression(plugins.value)) {
-              pluginsList = plugins?.value?.callee?.object?.elements
+              pluginsList = plugins.value.callee.object?.elements
             } else {
               pluginsList = plugins?.value?.elements
             }
