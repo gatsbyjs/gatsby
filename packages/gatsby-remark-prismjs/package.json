@@ -17,7 +17,7 @@
     "babel-preset-gatsby-package": "^0.5.3",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.2",
-    "prismjs": "^1.20.0",
+    "prismjs": "^1.21.0",
     "remark": "^9.0.0"
   },
   "peerDependencies": {
