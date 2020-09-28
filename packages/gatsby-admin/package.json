@@ -21,7 +21,7 @@
     "csstype": "^2.6.13",
     "formik": "^2.1.5",
     "gatsby": "^2.24.65",
-    "gatsby-interface": "^0.0.201",
+    "gatsby-interface": "^0.0.193",
     "gatsby-plugin-typescript": "^2.4.20",
     "gatsby-plugin-webfonts": "^1.1.3",
     "gatsby-source-graphql": "^2.7.4",
