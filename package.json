@@ -28,7 +28,7 @@
     "@types/stack-trace": "^0.0.29",
     "@types/webpack": "^4.41.18",
     "@types/webpack-merge": "^4.1.5",
-    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^24.9.0",
