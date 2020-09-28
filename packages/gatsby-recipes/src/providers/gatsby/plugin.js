@@ -454,12 +454,6 @@ class BabelPluginGetPluginsFromGatsbyConfig {
               return
             }
 
-            // Only allow module.exports = {}
-            // Not things like module.exports = () => ({})
-            if (!t.isObjectExpression(right)) {
-              return
-            }
-
             const plugins = right.properties.find(p => p.key.name === `plugins`)
 
             let pluginsList = []
