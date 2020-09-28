@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-mongodb",
   "description": "Source plugin for pulling data into Gatsby from MongoDB collections",
-  "version": "2.3.11",
+  "version": "2.3.12",
   "authors": [
     "jhermans85@hotmail.com",
     "hi@elmar.codes"
@@ -13,8 +13,8 @@
     "@babel/runtime": "^7.11.2",
     "lodash.camelcase": "^4.3.0",
     "lodash.isstring": "^4.0.1",
-    "mongodb": "^3.5.9",
-    "query-string": "^6.13.1"
+    "mongodb": "^3.6.2",
+    "query-string": "^6.13.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",

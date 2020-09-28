@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.3.13...gatsby-plugin-sass@2.3.14) (2020-09-28)
+
+### Bug Fixes
+
+- **docs:** remove README.md not displaying on Gatsby plugin library ([#27040](https://github.com/gatsbyjs/gatsby/issues/27040)) ([6987edb](https://github.com/gatsbyjs/gatsby/commit/6987edb84d9cfa79c7f60a4656e1048d13d5f6d8))
+
 ## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.3.12...gatsby-plugin-sass@2.3.13) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-plugin-sass

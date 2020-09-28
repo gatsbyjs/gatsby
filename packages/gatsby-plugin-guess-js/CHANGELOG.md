@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.12...gatsby-plugin-guess-js@1.3.13) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-guess-js ([#27121](https://github.com/gatsbyjs/gatsby/issues/27121)) ([d343ac9](https://github.com/gatsbyjs/gatsby/commit/d343ac9c442ed78d734ccfa8fdcbe768fb547029))
+
 ## [1.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.11...gatsby-plugin-guess-js@1.3.12) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-plugin-guess-js
