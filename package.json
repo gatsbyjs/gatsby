@@ -5,7 +5,7 @@
     "@babel/plugin-transform-typescript": "^7.11.0",
     "@babel/runtime": "^7.11.2",
     "@lerna/prompt": "3.18.5",
-    "@types/babel__code-frame": "^7.0.1",
+    "@types/babel__code-frame": "^7.0.2",
     "@types/better-queue": "^3.8.2",
     "@types/bluebird": "^3.5.32",
     "@types/cache-manager": "^2.10.2",
