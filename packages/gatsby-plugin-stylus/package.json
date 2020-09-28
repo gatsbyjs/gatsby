@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "stylus": "^0.54.7",
+    "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2"
   },
   "devDependencies": {
