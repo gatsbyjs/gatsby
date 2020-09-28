@@ -1,3 +1,17 @@
+- url: https://kerry-blog-gatsby-starter.netlify.app
+  repo: https://github.com/kerry-tokyo/kerry-blog-gatsby-starter
+  description: Kerry Blog Gatsby Starter allows you to build a simple blog.
+  tags:
+    - Blog
+    - Markdown
+    - TypeScript
+    - CSS Modules
+  features:
+    - Gatsby v2
+    - Create pages and posts in markup language
+    - Syntax highlighting for easy customization
+    - Simple and crisp typography
+    - Responsive design
 - url: https://gatsby-starter-lamma.netlify.app/
   repo: https://github.com/desktopofsamuel/gatsby-starter-lamma
   description: A minimal, elegant, dark theme blog starter. Forked from Gatsby Advance Starter.
