@@ -387,8 +387,16 @@ export interface GatsbyNode {
   resolvableExtensions?(
     args: ResolvableExtensionsArgs,
     options: PluginOptions,
-    callback?: PluginCallback<string[]>
   ): string[]
+  resolvableExtensions?(
+    args: ResolvableExtensionsArgs,
+    options: PluginOptions,
+  ): Promise<string[]>
+  resolvableExtensions?(
+    args: ResolvableExtensionsArgs,
+    options: PluginOptions,
+    callback?: PluginCallback<string[]>
+  ): void
 
   /**
    * Called during the creation of the GraphQL schema. Allows plugins
