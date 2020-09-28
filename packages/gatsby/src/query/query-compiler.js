@@ -31,6 +31,8 @@ const {
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
 import * as actions from "../redux/actions/internal"
+import { boundActionCreators } from "../redux/actions"
+
 import { websocketManager } from "../utils/websocket-manager"
 const { default: FileParser } = require(`./file-parser`)
 const {
@@ -172,6 +174,8 @@ export const processQueries = ({
     addError,
     parentSpan
   )
+
+  boundActionCreators.setGraphQLDefinitions(definitionsByName)
 
   return processDefinitions({
     schema,

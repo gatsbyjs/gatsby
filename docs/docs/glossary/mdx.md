@@ -14,7 +14,7 @@ Markdown defines a plain text syntax for HTML elements such as `h1`, `strong`, a
 ```markdown
 # Hello world!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
@@ -42,7 +42,7 @@ import { Figure } from './components/Figure';
 
 # Hello world!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <Figure data="chart.svg" caption="MDX adoption has increased 120% since last year." />
 ```
@@ -56,7 +56,7 @@ gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-
 To use MDX with an existing Gatsby site, add the [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/?=gatsby-plugin-mdx) plugin. As with Gatsby itself, you can install it using [npm](/docs/glossary/#npm). You'll also need to install MDX itself, and the React implementation of MDX.
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Then add `gatsby-plugin-mdx` to your plugins list in `gatsby-config.js`, and set the [configuration options](/packages/gatsby-plugin-mdx/?=gatsby-plugin-mdx#configuration) you prefer.

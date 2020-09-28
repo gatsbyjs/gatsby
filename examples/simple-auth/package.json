@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Jason Lengstorf <jason@lengstorf.com>",
   "dependencies": {
-    "gatsby": "^2.24.61",
+    "gatsby": "^2.24.63",
     "gatsby-plugin-react-helmet": "^3.3.11",
     "prop-types": "^15.7.2",
     "react": "^16.4.0",

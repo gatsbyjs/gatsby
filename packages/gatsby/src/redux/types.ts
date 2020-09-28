@@ -1,6 +1,6 @@
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema } from "graphql"
+import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
@@ -97,6 +97,18 @@ export interface IGatsbyStaticQueryComponents {
   query: string
   hash: string
 }
+export interface IDefinitionMeta {
+  name: string
+  def: DefinitionNode
+  filePath: string
+  text: string
+  templateLoc: any
+  printedAst: string
+  isHook: boolean
+  isStaticQuery: boolean
+  isFragment: boolean
+  hash: string
+}
 
 type GatsbyNodes = Map<string, IGatsbyNode>
 
@@ -178,6 +190,7 @@ export interface IGatsbyState {
   config: IGatsbyConfig
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
+  definitions: Map<string, IDefinitionMeta>
   status: {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
@@ -290,6 +303,7 @@ export type ActionsUnion =
   | ISetProgramStatusAction
   | ISetResolvedNodesAction
   | ISetSchemaAction
+  | ISetGraphQLDefinitionsAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
@@ -657,6 +671,11 @@ export interface ISetWebpackConfigAction {
 export interface ISetSchemaAction {
   type: `SET_SCHEMA`
   payload: IGatsbyState["schema"]
+}
+
+export interface ISetGraphQLDefinitionsAction {
+  type: `SET_GRAPHQL_DEFINITIONS`
+  payload: IGatsbyState["definitions"]
 }
 
 export interface ISetSiteConfig {

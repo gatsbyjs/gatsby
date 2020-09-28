@@ -225,7 +225,6 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
-      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",

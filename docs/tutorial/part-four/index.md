@@ -76,7 +76,7 @@ cd tutorial-part-four
 Then install some other needed dependencies at the root of the project. You'll use the Typography theme "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
+npm install gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
 ```
 
 Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:

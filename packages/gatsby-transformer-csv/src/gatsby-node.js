@@ -1,20 +1,12 @@
-const Promise = require(`bluebird`)
 const csv = require(`csvtojson`)
 const _ = require(`lodash`)
 
 const { typeNameFromFile } = require(`./index`)
 
 const convertToJson = (data, options) =>
-  new Promise((res, rej) => {
-    csv(options)
-      .fromString(data)
-      .on(`end_parsed`, jsonData => {
-        if (!jsonData) {
-          rej(`CSV to JSON conversion failed!`)
-        }
-        res(jsonData)
-      })
-  })
+  csv(options)
+    .fromString(data)
+    .then(jsonData => jsonData, new Error(`CSV to JSON conversion failed!`))
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
