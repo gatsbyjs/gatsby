@@ -43,5 +43,65 @@
   "engines": {
     "node": ">=10.13.0"
   },
-  "types": "./index.d.ts"
+  "types": "./index.d.ts",
+  "gatsbyPlugin": {
+    "optionsSchema": {
+      "type": "options",
+      "properties": {
+        "trackingId": {
+          "description": "The property ID; the tracking code won't be generated without it",
+          "type": "string"
+        },
+        "head": {
+          "description": "Defines where to place the tracking script - `true` in the head and `false` in the body",
+          "type": "boolean"
+        },
+        "anonymize": {
+          "description": "Setting this parameter is optional",
+          "type": "boolean"
+        },
+        "respectDNT": {
+          "description": "Setting this parameter is also optional",
+          "type": "boolean"
+        },
+        "exclude": {
+          "description": "Avoids sending pageview hits from custom paths",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pageTransitionDelay": {
+          "description": "Delays sending pageview hits on route update (in milliseconds)",
+          "type": "number"
+        },
+        "optimizeId": {
+          "description": "Enables Google Optimize using your container Id",
+          "type": "string"
+        },
+        "experimentId": {
+          "description": "Enables Google Optimize Experiment ID",
+          "type": "string"
+        },
+        "variationId": {
+          "description": "Set Variation ID. 0 for original 1,2,3....",
+          "type": "string"
+        },
+        "defer": {
+          "description": "Defers execution of google analytics script after page load",
+          "type": "boolean"
+        },
+        "sampleRate": {
+          "type": "number"
+        },
+        "siteSpeedSampleRate": {
+          "type": "number"
+        },
+        "cookieDomain": {
+          "type": "string"
+        }
+      },
+      "required": ["trackingId"]
+    }
+  }
 }
