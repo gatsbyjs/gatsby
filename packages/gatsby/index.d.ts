@@ -230,6 +230,18 @@ export interface GatsbyNode {
       traceId: "initial-createPages"
     },
     options?: PluginOptions,
+  ): void
+  createPages?(
+    args: CreatePagesArgs & {
+      traceId: "initial-createPages"
+    },
+    options?: PluginOptions,
+  ): Promise<void>
+  createPages?(
+    args: CreatePagesArgs & {
+      traceId: "initial-createPages"
+    },
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
@@ -252,6 +264,18 @@ export interface GatsbyNode {
       traceId: "initial-createPagesStatefully"
     },
     options?: PluginOptions,
+  ): void
+  createPagesStatefully?(
+    args: CreatePagesArgs & {
+      traceId: "initial-createPagesStatefully"
+    },
+    options?: PluginOptions,
+  ): Promise<void>
+  createPagesStatefully?(
+    args: CreatePagesArgs & {
+      traceId: "initial-createPagesStatefully"
+    },
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
@@ -260,6 +284,14 @@ export interface GatsbyNode {
    * This API will change before 2.0 as it needs still to be converted to use
    * Redux actions.
    */
+  onCreateBabelConfig?(
+    args: CreateBabelConfigArgs,
+    options?: PluginOptions,
+  ): void
+  onCreateBabelConfig?(
+    args: CreateBabelConfigArgs,
+    options?: PluginOptions,
+  ): Promise<void>
   onCreateBabelConfig?(
     args: CreateBabelConfigArgs,
     options?: PluginOptions,
@@ -283,6 +315,14 @@ export interface GatsbyNode {
   onCreateDevServer?(
     args: CreateDevServerArgs,
     options?: PluginOptions,
+  ): void
+  onCreateDevServer?(
+    args: CreateDevServerArgs,
+    options?: PluginOptions,
+  ): Promise<void>
+  onCreateDevServer?(
+    args: CreateDevServerArgs,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
@@ -302,6 +342,14 @@ export interface GatsbyNode {
   onCreateNode?<TNode extends object = {}>(
     args: CreateNodeArgs<TNode>,
     options?: PluginOptions,
+  ): void
+  onCreateNode?<TNode extends object = {}>(
+    args: CreateNodeArgs<TNode>,
+    options?: PluginOptions,
+  ): Promise<void>
+  onCreateNode?<TNode extends object = {}>(
+    args: CreateNodeArgs<TNode>,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
@@ -316,6 +364,14 @@ export interface GatsbyNode {
   onCreatePage?<TContext = Record<string, unknown>>(
     args: CreatePageArgs<TContext>,
     options?: PluginOptions,
+  ): void
+  onCreatePage?<TContext = Record<string, unknown>>(
+    args: CreatePageArgs<TContext>,
+    options?: PluginOptions,
+  ): Promise<void>
+  onCreatePage?<TContext = Record<string, unknown>>(
+    args: CreatePageArgs<TContext>,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
@@ -326,10 +382,26 @@ export interface GatsbyNode {
   onCreateWebpackConfig?(
     args: CreateWebpackConfigArgs,
     options?: PluginOptions,
+  ): void
+  onCreateWebpackConfig?(
+    args: CreateWebpackConfigArgs,
+    options?: PluginOptions,
+  ): Promise<void>
+  onCreateWebpackConfig?(
+    args: CreateWebpackConfigArgs,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
+  onPostBootstrap?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): void
+  onPostBootstrap?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): Promise<void>
   onPostBootstrap?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
@@ -340,10 +412,26 @@ export interface GatsbyNode {
   onPostBuild?(
     args: BuildArgs,
     options?: PluginOptions,
+  ): void
+  onPostBuild?(
+    args: BuildArgs,
+    options?: PluginOptions,
+  ): Promise<void>
+  onPostBuild?(
+    args: BuildArgs,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
+  onPreBootstrap?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): void
+  onPreBootstrap?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): Promise<void>
   onPreBootstrap?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
@@ -354,10 +442,26 @@ export interface GatsbyNode {
   onPreBuild?(
     args: BuildArgs,
     options?: PluginOptions,
+  ): void
+  onPreBuild?(
+    args: BuildArgs,
+    options?: PluginOptions,
+  ): Promise<void>
+  onPreBuild?(
+    args: BuildArgs,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
+  onPreExtractQueries?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): void
+  onPreExtractQueries?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): Promise<void>
   onPreExtractQueries?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
@@ -368,6 +472,14 @@ export interface GatsbyNode {
   onPreInit?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
+  ): void
+  onPreInit?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+  ): Promise<void>
+  onPreInit?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
     callback?: PluginCallback<void>
   ): void
 
@@ -375,6 +487,14 @@ export interface GatsbyNode {
    * Ask compile-to-js plugins to process source to JavaScript so the query
    * runner can extract out GraphQL queries for running.
    */
+  preprocessSource?(
+    args: PreprocessSourceArgs,
+    options?: PluginOptions,
+  ): void
+  preprocessSource?(
+    args: PreprocessSourceArgs,
+    options?: PluginOptions,
+  ): Promise<void>
   preprocessSource?(
     args: PreprocessSourceArgs,
     options?: PluginOptions,
