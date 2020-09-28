@@ -596,16 +596,7 @@ export interface GatsbySSR {
    *   replaceHeadComponents(headComponents)
    * }
    */
-  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): void
-  onPreRenderHTML?(
-    args: PreRenderHTMLArgs,
-    options: PluginOptions
-  ): Promise<void>
-  onPreRenderHTML?(
-    args: PreRenderHTMLArgs,
-    options: PluginOptions,
-    callback: PluginCallback<void>
-  ): void
+  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): void | Promise<void>
 
   /**
    * Called after every page Gatsby server renders while building HTML so you can
@@ -644,13 +635,7 @@ export interface GatsbySSR {
    *   ])
    * }
    */
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): void
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): Promise<void>
-  onRenderBody?(
-    args: RenderBodyArgs,
-    options: PluginOptions,
-    callback: PluginCallback<void>
-  ): void
+  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): void | Promise<void>
 
   /**
    * Replace the default server renderer. This is useful for integration with
@@ -668,16 +653,7 @@ export interface GatsbySSR {
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void
-  replaceRenderer?(
-    args: ReplaceRendererArgs,
-    options: PluginOptions
-  ): Promise<void>
-  replaceRenderer?(
-    args: ReplaceRendererArgs,
-    options: PluginOptions,
-    callback: PluginCallback<void>
-  ): void
+  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.
@@ -696,16 +672,8 @@ export interface GatsbySSR {
    *   return <Layout {...props}>{element}</Layout>
    * }
    */
-  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): React.ReactNode
-  wrapPageElement?(
-    args: WrapPageElementNodeArgs,
-    options: PluginOptions
-  ): Promise<React.ReactNode>
-  wrapPageElement?(
-    args: WrapPageElementNodeArgs,
-    options: PluginOptions,
-    callback: PluginCallback<React.ReactNode>
-  ): void
+  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): React.ReactNode | Promise<React.ReactNode>
+
   /**
    * Allow a plugin to wrap the root element.
    *
@@ -728,16 +696,7 @@ export interface GatsbySSR {
    *   )
    * }
    */
-  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): React.ReactNode
-  wrapRootElement?(
-    args: WrapRootElementNodeArgs,
-    options: PluginOptions
-  ): Promise<React.ReactNode>
-  wrapRootElement?(
-    args: WrapRootElementNodeArgs,
-    options: PluginOptions,
-    callback: PluginCallback<React.ReactNode>
-  ): void
+  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): React.ReactNode | Promise<React.ReactNode>
 }
 
 export interface PluginOptions {
