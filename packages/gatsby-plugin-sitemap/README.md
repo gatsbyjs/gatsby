@@ -197,7 +197,7 @@ allPages.filter(
 This function is executed by:
 
 ```javascript
-allPages.map(page => thisFunc(page, siteUrl, tools))
+allPages.map(page => thisFunc(page, tools))
 ```
 
 `allpages` is the result of the [`filterPages`](#filterPages) function.
@@ -206,5 +206,5 @@ allPages.map(page => thisFunc(page, siteUrl, tools))
 
 | Param | Type                | Description                                          |
 | ----- | ------------------- | ---------------------------------------------------- |
-| page  | <code>object</code> | results of the resolvePages function                 |
+| page  | <code>object</code> | A single element from the results of the `resolvePages` function                 |
 | tools | <code>object</code> | contains tools for serializing `{ resolvePagePath }` |
