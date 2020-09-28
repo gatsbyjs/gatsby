@@ -40,7 +40,7 @@ export async function createPagesStatefully(
     traceId: "initial-createPages"
   },
   { path: pagesPath, pathCheck = true, ignore }: IOptions,
-  doneCb: PluginCallback
+  doneCb: PluginCallback<null>
 ): Promise<void> {
   try {
     const { deletePage } = actions

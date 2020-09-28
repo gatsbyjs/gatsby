@@ -704,7 +704,7 @@ export interface GatsbySSR {
   wrapPageElement?(
     args: WrapPageElementNodeArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<React.ReactNode>
   ): void
   /**
    * Allow a plugin to wrap the root element.
