@@ -13,12 +13,12 @@
   "devDependencies": {
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
+    "@feedback-fish/react": "^1.0.0",
     "@types/react-instantsearch-dom": "^5.2.6",
     "@types/socket.io-client": "^1.4.33",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "csstype": "^2.6.13",
-    "feedback-fish": "^0.2.3",
     "formik": "^2.1.5",
     "gatsby": "^2.24.65",
     "gatsby-interface": "^0.0.201",
