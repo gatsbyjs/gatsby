@@ -2105,6 +2105,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-recipes",
       excludePackageNames: ["cross-env"],
+      packageNames: ["express-graphql"],
     },
     {
       groupName: "minor and patch for gatsby-source-contentful",
@@ -2245,6 +2246,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby",
       excludePackageNames: ["cross-env"],
+      packageNames: ["express-graphql"],
     },
     {
       groupName: "minor and patch for gatsby-admin",
