@@ -1054,7 +1054,7 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
-"@babel/preset-env@^7.10.2", "@babel/preset-env@^7.11.5", "@babel/preset-env@^7.9.0":
+"@babel/preset-env@^7.11.0", "@babel/preset-env@^7.11.5", "@babel/preset-env@^7.9.0":
   version "7.11.5"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.11.5.tgz#18cb4b9379e3e92ffea92c07471a99a2914e4272"
   integrity sha512-kXqmW1jVcnB2cdueV+fyBM8estd5mlNfaQi6lwLgRwCby4edpavgbFhiBNjmWA3JpB/yZGSISa7Srf+TwxDQoA==
@@ -16245,10 +16245,10 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-microbundle@^0.12.0, microbundle@^0.12.2:
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.12.2.tgz#3d79941291ef919dd280ecdffd4c8ee15ad394e3"
-  integrity sha512-6/48HlmDPq/Q1HyS5liFFSvcU0v8n8NROH3K1Z/saU+TRaxCe38eNNqZwjitOyTKilXqnp1yHEEjZGYWVvr7WQ==
+microbundle@^0.12.2, microbundle@^0.12.4:
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.12.4.tgz#b0cf10b7dbcf9424a13b04086aef9cbf416756a4"
+  integrity sha512-KskaxaeJc2X/AnohtdYo97L55nZZiNGPIS/ngXuDsIVnPfwHdtZWYJAJLAG+08E9VBr+eLa6N6VX+e2uoj/cNQ==
   dependencies:
     "@babel/core" "^7.10.2"
     "@babel/plugin-proposal-class-properties" "7.7.4"
@@ -16257,9 +16257,9 @@ microbundle@^0.12.0, microbundle@^0.12.2:
     "@babel/plugin-transform-flow-strip-types" "^7.10.1"
     "@babel/plugin-transform-react-jsx" "^7.10.1"
     "@babel/plugin-transform-regenerator" "^7.10.1"
-    "@babel/preset-env" "^7.10.2"
+    "@babel/preset-env" "^7.11.0"
     "@babel/preset-flow" "^7.10.1"
-    "@babel/preset-modules" "^0.1.3"
+    "@babel/preset-react" "^7.10.4"
     "@rollup/plugin-alias" "^3.1.1"
     "@rollup/plugin-babel" "^5.0.3"
     "@rollup/plugin-commonjs" "^13.0.0"
@@ -16271,6 +16271,7 @@ microbundle@^0.12.0, microbundle@^0.12.2:
     babel-plugin-transform-async-to-promises "^0.8.15"
     babel-plugin-transform-replace-expressions "^0.2.0"
     brotli-size "^4.0.0"
+    builtin-modules "^3.1.0"
     camelcase "^5.3.1"
     cssnano "^4.1.10"
     es6-promisify "^6.1.1"
@@ -24792,10 +24793,10 @@ url-parse@^1.1.8, url-parse@^1.4.3:
     querystringify "^2.0.0"
     requires-port "^1.0.0"
 
-url-polyfill@^1.1.9:
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.9.tgz#2c8d4224889a5c942800f708f5585368085603d9"
-  integrity sha512-q/R5sowGuRfKHm497swkV+s9cPYtZRkHxzpDjRhqLO58FwdWTIkt6Y/fJlznUD/exaKx/XnDzCYXz0V16ND7ow==
+url-polyfill@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.10.tgz#fd5bbcf66c9491fa682b0cb6d6a855e1643a9281"
+  integrity sha512-vSaPpaRgBrf41+Uky1myiSh6gpcbw8FpwHYnEy0abxndojOBnIs+yh/49gKYFLtUMP9qoNWjn6j9aUVy23Ie2A==
 
 url-template@^2.0.8:
   version "2.0.8"
@@ -25441,10 +25442,10 @@ whatwg-fetch@2.0.4:
   version "2.0.4"
   resolved "http://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
-whatwg-fetch@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.4.0.tgz#e11de14f4878f773fbebcde8871b2c0699af8b30"
-  integrity sha512-rsum2ulz2iuZH08mJkT0Yi6JnKhwdw4oeyMjokgxd+mmqYSd9cPpOQf01TIWgjxG/U4+QR+AwKq6lSbXVxkyoQ==
+whatwg-fetch@^3.4.0, whatwg-fetch@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.4.1.tgz#e5f871572d6879663fa5674c8f833f15a8425ab3"
+  integrity sha512-sofZVzE1wKwO+EYPbWfiwzaKovWiZXf4coEzjGP9b2GBVgQRLQUZ2QcuPpQExGDAW5GItpEm6Tl4OU5mywnAoQ==
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0, whatwg-mimetype@^2.3.0:
   version "2.3.0"
