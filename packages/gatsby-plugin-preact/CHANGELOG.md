@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.12...gatsby-plugin-preact@4.0.13) (2020-09-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-preact:** use new babel plugin for better context compat ([#26956](https://github.com/gatsbyjs/gatsby/issues/26956)) ([7f38209](https://github.com/gatsbyjs/gatsby/commit/7f382097c37c2b3133727729480134abc84bf9c1))
+
 ## [4.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.11...gatsby-plugin-preact@4.0.12) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-plugin-preact
