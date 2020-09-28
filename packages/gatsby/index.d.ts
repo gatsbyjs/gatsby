@@ -520,55 +520,55 @@ export interface GatsbyNode {
  * @see https://www.gatsbyjs.org/docs/browser-apis/
  */
 export interface GatsbyBrowser {
-  disableCorePrefetching?(args: BrowserPluginArgs, options: PluginOptions): any
-  onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): any
-  onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): any
+  disableCorePrefetching?(args: BrowserPluginArgs, options: PluginOptions): boolean
+  onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): void
+  onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): void
   onPostPrefetchPathname?(
     args: PrefetchPathnameArgs,
     options: PluginOptions
-  ): any
-  onPreRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any
-  onPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): any
-  onRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any
+  ): void
+  onPreRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): void
+  onPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): void
+  onRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): void
   onRouteUpdateDelayed?(
     args: RouteUpdateDelayedArgs,
     options: PluginOptions
-  ): any
-  onServiceWorkerActive?(args: ServiceWorkerArgs, options: PluginOptions): any
+  ): void
+  onServiceWorkerActive?(args: ServiceWorkerArgs, options: PluginOptions): void
   onServiceWorkerInstalled?(
     args: ServiceWorkerArgs,
     options: PluginOptions
-  ): any
+  ): void
   onServiceWorkerRedundant?(
     args: ServiceWorkerArgs,
     options: PluginOptions
-  ): any
+  ): void
   onServiceWorkerUpdateFound?(
     args: ServiceWorkerArgs,
     options: PluginOptions
-  ): any
+  ): void
   onServiceWorkerUpdateReady?(
     args: ServiceWorkerArgs,
     options: PluginOptions
-  ): any
-  registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
+  ): void
+  registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): boolean
   replaceComponentRenderer?(
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
-  ): any
+  ): React.ReactNode
   replaceHydrateFunction?(
     args: BrowserPluginArgs,
     options: PluginOptions
   ): Renderer
-  shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
+  shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): boolean | string | number[]
   wrapPageElement?(
     args: WrapPageElementBrowserArgs,
     options: PluginOptions
-  ): any
+  ): React.ReactNode
   wrapRootElement?(
     args: WrapRootElementBrowserArgs,
     options: PluginOptions
-  ): any
+  ): React.ReactNode
 }
 
 /**
