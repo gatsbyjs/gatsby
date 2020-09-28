@@ -29,7 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "guess-webpack": "^0.4.19"
+    "guess-webpack": "^0.4.20"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
