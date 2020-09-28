@@ -704,7 +704,7 @@ export interface PluginOptions {
   [key: string]: unknown
 }
 
-export type PluginCallback<T> = (err: Error | null, result?: T) => void
+export type PluginCallback<T> = (err: Error | null, result?: T) => void | Promise<void>
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
   graphql<TData, TVariables = any>(
