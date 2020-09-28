@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wikipedia@2.3.12...gatsby-source-wikipedia@2.3.13) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-wikipedia ([#27144](https://github.com/gatsbyjs/gatsby/issues/27144)) ([01846ed](https://github.com/gatsbyjs/gatsby/commit/01846ed2ee30d7d56cf41689872eae96b5235bde))
+
 ## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wikipedia@2.3.11...gatsby-source-wikipedia@2.3.12) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-source-wikipedia

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-fullstory",
-  "version": "2.3.12",
+  "version": "2.3.13",
   "description": "Plugin to add the tracking code for Fullstory.com",
   "main": "index.js",
   "scripts": {

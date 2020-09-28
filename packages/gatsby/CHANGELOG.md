@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.66](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.65...gatsby@2.24.66) (2020-09-28)
+
+### Bug Fixes
+
+- **gatsby:** PageProps TS type: add `params` ([#26974](https://github.com/gatsbyjs/gatsby/issues/26974)) ([026d49d](https://github.com/gatsbyjs/gatsby/commit/026d49dee032c98f87fa88c85b4f8a1393258b28))
+- **gatsby:** set proper cacheIdentifier for babel ([#26809](https://github.com/gatsbyjs/gatsby/issues/26809)) ([e28d9ba](https://github.com/gatsbyjs/gatsby/commit/e28d9ba3a70ad5936dc6ee171da38c2caf192ae7))
+
 ## [2.24.65](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.64...gatsby@2.24.65) (2020-09-24)
 
 ### Bug Fixes
