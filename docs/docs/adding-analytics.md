@@ -43,7 +43,7 @@ module.exports = {
       resolve: `gatsby-plugin-gtag`,
       options: {
         // your google analytics tracking id
-        trackingId: `UA-XXXXXXXX-X`
+        trackingId: `UA-XXXXXXXX-X`,
       },
     },
   ],
@@ -83,7 +83,6 @@ module.exports = {
 > Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
 
 Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
-
 
 ## Other Gatsby analytics plugins
 
