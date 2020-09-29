@@ -72,6 +72,7 @@ export interface IStructuredErrorV2 {
 export interface ITelemetryTagsPayload {
   name?: string
   starterName?: string
+  siteName?: string
   pluginName?: string
   exitCode?: number
   duration?: number
