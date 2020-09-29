@@ -1,18 +1,12 @@
-import Ajv from "ajv"
+import { Schema } from "joi"
 
-const ajv = new Ajv({
-  allErrors: true,
-})
+export function validateOptionsSchema<Options = object>(
+  pluginSchema: Schema,
+  pluginOptions: Options
+): Options {
+  const result = pluginSchema.validate(pluginOptions)
+  // TODO: Better error system
+  if (result.error) throw result.error
 
-export const validateOptionsSchema = async (
-  // NOTE(@mxstbr): currently unused but will be used to cache compiled schemas for performance
-  pluginName: string,
-  pluginSchema: object,
-  pluginOptions: object
-): Promise<boolean> => {
-  const validate = ajv.compile(pluginSchema)
-
-  const valid = validate(pluginOptions)
-
-  return valid
+  return result.value
 }

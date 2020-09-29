@@ -1,22 +1,21 @@
+import Joi from "joi"
 import { validateOptionsSchema } from "../"
 
-it(`validates a basic JSON schema`, async () => {
-  const pluginName = `gatsby-plugin-test`
-  const pluginSchema = {
-    type: `object`,
-    properties: {
-      str: { type: `string` },
-    },
-  }
+it(`validates a basic schema`, async () => {
+  const pluginSchema = Joi.object({
+    str: Joi.string(),
+  })
 
-  expect(
-    await validateOptionsSchema(pluginName, pluginSchema, {
-      str: `is a string`,
-    })
-  ).toEqual(true)
-  expect(
-    await validateOptionsSchema(pluginName, pluginSchema, {
+  const validOptions = {
+    str: `is a string`,
+  }
+  expect(validateOptionsSchema(pluginSchema, validOptions)).toEqual(
+    validOptions
+  )
+
+  expect(() =>
+    validateOptionsSchema(pluginSchema, {
       str: 43,
     })
-  ).toEqual(false)
+  ).toThrowErrorMatchingInlineSnapshot(`"\\"str\\" must be a string"`)
 })
