@@ -12,17 +12,22 @@ exports.pluginOptionsSchema = ({ Joi }) =>
         `The property ID; the tracking code won't be generated without it`
       )
       .external(async value => isTrackingId(value)),
-    head: Joi.boolean().description(
-      `Defines where to place the tracking script - \`true\` in the head and \`false\` in the body`
-    ),
-    anonymize: Joi.boolean(),
-    respectDNT: Joi.boolean(),
+    head: Joi.boolean()
+      .default(false)
+      .description(
+        `Defines where to place the tracking script - \`true\` in the head and \`false\` in the body`
+      ),
+    anonymize: Joi.boolean().default(false),
+    respectDNT: Joi.boolean().default(false),
     exclude: Joi.array()
       .items(Joi.string())
+      .default([])
       .description(`Avoids sending pageview hits from custom paths`),
-    pageTransitionDelay: Joi.number().description(
-      `Delays sending pageview hits on route update (in milliseconds)`
-    ),
+    pageTransitionDelay: Joi.number()
+      .default(0)
+      .description(
+        `Delays sending pageview hits on route update (in milliseconds)`
+      ),
     optimizeId: Joi.string().description(
       `Enables Google Optimize using your container Id`
     ),
