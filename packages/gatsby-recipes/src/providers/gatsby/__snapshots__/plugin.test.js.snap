@@ -176,6 +176,333 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin create 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin create plan 1`] = `
+Object {
+  "currentState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+  ].filter(Boolean),
+};
+",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 1
++ Modified  + 5
+
+@@ -3,7 +3,6 @@
+  });
+
+  const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+-
+  module.exports = {
+    siteMetadata: {
+      siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+@@ -50,6 +49,11 @@
+          reportFilename: \`_bundle.html\`,
+          openAnalyzer: false,
+        },
++     },
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
+      },
+    ].filter(Boolean),
+  };",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ].filter(Boolean),
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin update 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin update plan 1`] = `
+Object {
+  "currentState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    \\"gatsby-source-filesystem\\",
+  ].filter(Boolean),
+};
+",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 0
++ Modified  + 5
+
+@@ -51,6 +51,11 @@
+        },
+      },
+      \\"gatsby-source-filesystem\\",
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ].filter(Boolean),
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    \\"gatsby-source-filesystem\\",
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ].filter(Boolean),
+};
+",
+}
+`;
+
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",

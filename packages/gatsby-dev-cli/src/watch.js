@@ -140,13 +140,22 @@ async function watch(
 
   if (forceInstall) {
     try {
-      await publishPackagesLocallyAndInstall({
-        packagesToPublish: allPackagesToWatch,
-        root,
-        localPackages,
-        ignorePackageJSONChanges,
-        yarnWorkspaceRoot,
-      })
+      if (allPackagesToWatch.length > 0) {
+        await publishPackagesLocallyAndInstall({
+          packagesToPublish: allPackagesToWatch,
+          root,
+          localPackages,
+          ignorePackageJSONChanges,
+          yarnWorkspaceRoot,
+        })
+      } else {
+        // run `yarn`
+        const yarnInstallCmd = [`yarn`]
+
+        console.log(`Installing packages from public NPM registry`)
+        await promisifiedSpawn(yarnInstallCmd)
+        console.log(`Installation complete`)
+      }
     } catch (e) {
       console.log(e)
     }

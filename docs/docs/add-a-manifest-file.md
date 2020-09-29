@@ -21,7 +21,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 1. Install the plugin:
 
 ```shell
-npm install --save gatsby-plugin-manifest
+npm install gatsby-plugin-manifest
 ```
 
 2. Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information look at the docs of [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).

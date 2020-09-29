@@ -100,9 +100,15 @@ const install = async (rootPath: string): Promise<void> => {
   report.info(`Installing packages...`)
   process.chdir(rootPath)
 
+  const npmConfigUserAgent = process.env.npm_config_user_agent
+
   try {
     if (!getPackageManager()) {
-      setPackageManager(`npm`)
+      if (npmConfigUserAgent?.includes(`yarn`)) {
+        setPackageManager(`yarn`)
+      } else {
+        setPackageManager(`npm`)
+      }
     }
     if (getPackageManager() === `yarn` && checkForYarn()) {
       if (await fs.pathExists(`package-lock.json`)) {

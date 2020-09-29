@@ -228,7 +228,7 @@ const ImageAPI = props => {
         and {`you'll`} want to fall back to another format for other clients.
         When this query is used with
         {` `}
-        <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+        <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
           <code>gatsby-image</code>
         </a>
         {` `}

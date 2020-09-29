@@ -200,8 +200,12 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -212,12 +216,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "gatsby-plugin-typescript",
-    "nodeAPIs": Array [
-      "resolvableExtensions",
-      "onCreateBabelConfig",
-      "onCreateWebpackConfig",
-    ],
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -476,8 +476,12 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -488,12 +492,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "gatsby-plugin-typescript",
-    "nodeAPIs": Array [
-      "resolvableExtensions",
-      "onCreateBabelConfig",
-      "onCreateWebpackConfig",
-    ],
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -760,8 +760,12 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -772,12 +776,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "gatsby-plugin-typescript",
-    "nodeAPIs": Array [
-      "resolvableExtensions",
-      "onCreateBabelConfig",
-      "onCreateWebpackConfig",
-    ],
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },

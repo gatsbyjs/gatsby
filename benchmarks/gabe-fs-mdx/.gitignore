@@ -4,3 +4,4 @@ public/
 .env
 generated_articles
 .DS_Store
+yarn.lock

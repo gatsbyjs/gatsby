@@ -706,6 +706,7 @@ Fujihara
 full-throated
 fully-customizable
 Funston
+Futura
 Futurama
 G4
 gamechanger
@@ -1985,6 +1986,7 @@ TXT
 typeBuilder
 typecheck
 typechecking
+Typekit
 typeName
 typeOwners
 Udacity

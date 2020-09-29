@@ -14,7 +14,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 1. Install the Gatsby plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass/) and `node-sass`, a required peer dependency as of v2.0.0.
 
-`npm install --save node-sass gatsby-plugin-sass`
+`npm install node-sass gatsby-plugin-sass`
 
 2. Include the plugin in your `gatsby-config.js` file.
 

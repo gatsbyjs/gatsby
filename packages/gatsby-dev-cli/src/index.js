@@ -105,7 +105,13 @@ If you prefer to place them in your package.json dependencies instead,
 gatsby-dev will pick them up.
 `
   )
-  process.exit()
+  if (!argv.forceInstall) {
+    process.exit()
+  } else {
+    console.log(
+      `Continuing other dependencies installation due to "--forceInstall" flag`
+    )
+  }
 }
 
 watch(gatsbyLocation, argv.packages, {

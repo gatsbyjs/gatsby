@@ -13,13 +13,8 @@ function createArticle(n, sentence, slug) {
 articleNumber: ${n}
 title: "${sentence.replace(/"/g, '\\"')}"
 description: "${desc.replace(/"/g, '\\"')}"
-path: '${slug}'
+slug: '${slug}'
 date: ${faker.date.recent(1000).toISOString().slice(0, 10)}
-tags: [${faker.random
-    .words(3)
-    .split(` `)
-    .map(w => `"${w}"`)
-    .join(`, `)}]
 ---
 
 # ${sentence}
