@@ -170,7 +170,7 @@
     "@types/fast-levenshtein": "^0.0.1",
     "@types/fs-extra": "^8.1.0",
     "@types/got": "^8.3.2",
-    "@types/hapi__joi": "^15.0.4",
+    "@types/hapi__joi": "^16.0.12",
     "@types/http-proxy": "^1.17.4",
     "@types/jaeger-client": "^3.15.4",
     "@types/lodash": "^4.14.161",
