@@ -32,7 +32,8 @@
     "typescript": "^3.9.5"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "src/"
   ],
   "engines": {
     "node": ">=10.13.0"
