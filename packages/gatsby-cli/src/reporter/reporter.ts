@@ -7,6 +7,7 @@ import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
+import { ErrorId, IErrorMapEntry } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
@@ -87,7 +88,8 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | Array<ErrorMeta>,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    errorMap?: Record<ErrorId, IErrorMapEntry>
   ): IStructuredError | Array<IStructuredError> => {
     let details: {
       error?: Error
@@ -136,7 +138,7 @@ class Reporter {
       }
     }
 
-    const structuredError = constructError({ details })
+    const structuredError = constructError({ details }, errorMap)
     if (structuredError) {
       reporterActions.createLog(structuredError)
     }
