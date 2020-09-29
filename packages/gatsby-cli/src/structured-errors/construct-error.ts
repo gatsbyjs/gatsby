@@ -7,7 +7,7 @@ import { IConstructError, IStructuredError } from "./types"
 // Validate the constructed object against an error schema
 const constructError = (
   { details: { id, ...otherDetails } }: IConstructError,
-  suppliedErrorMap: Record<ErrorId, IErrorMapEntry>
+  suppliedErrorMap?: Record<ErrorId, IErrorMapEntry>
 ): IStructuredError => {
   const finalErrorMap = {
     ...suppliedErrorMap,
