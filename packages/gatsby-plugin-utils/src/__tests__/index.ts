@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import Joi from "joi"
-import { validate } from "joi"
 import { validateOptionsSchema } from "../"
 
 it(`validates a basic schema`, async () => {
