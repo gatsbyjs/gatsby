@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.3.13...gatsby-remark-autolink-headers@2.3.14) (2020-09-28)
+
+### Bug Fixes
+
+- **gatsby-remark-autolink-headers:** option to disable "position: relative" when icon is not present ([#27022](https://github.com/gatsbyjs/gatsby/issues/27022)) ([8807fea](https://github.com/gatsbyjs/gatsby/commit/8807fea05a53e85958ea50851a8ea66e7b664b02))
+
 ## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.3.12...gatsby-remark-autolink-headers@2.3.13) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-remark-autolink-headers

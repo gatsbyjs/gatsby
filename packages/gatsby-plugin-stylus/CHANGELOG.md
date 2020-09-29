@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.11...gatsby-plugin-stylus@2.3.12) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-stylus ([#27133](https://github.com/gatsbyjs/gatsby/issues/27133)) ([bce4713](https://github.com/gatsbyjs/gatsby/commit/bce4713cc4498c9d774017d49cb57796b0efcbda))
+- **docs:** remove README.md not displaying on Gatsby plugin library ([#27040](https://github.com/gatsbyjs/gatsby/issues/27040)) ([6987edb](https://github.com/gatsbyjs/gatsby/commit/6987edb84d9cfa79c7f60a4656e1048d13d5f6d8))
+
 ## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.10...gatsby-plugin-stylus@2.3.11) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-plugin-stylus

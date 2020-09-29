@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.35...gatsby-transformer-remark@2.8.36) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-remark ([#27148](https://github.com/gatsbyjs/gatsby/issues/27148)) ([2cab85a](https://github.com/gatsbyjs/gatsby/commit/2cab85ae25c3a4e57afc432e5c164e52fa363101))
+
 ## [2.8.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.34...gatsby-transformer-remark@2.8.35) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-transformer-remark
