@@ -38,14 +38,21 @@ it(`asynchronously validates the external validation rules`, () => {
   )
 })
 
-it(`does not validate async external validation rules`, async () => {
+it(`does not validate async external validation rules when validateExternalRules is set to false`, async () => {
   const failingAsyncValidationRule = async () => {
     throw new Error(`This failed for some unknown reason.`)
   }
 
   const schema = Joi.object({}).external(failingAsyncValidationRule)
 
-  const invalid = () => validateOptionsSchema(schema, {}, false)
+  const invalid = () =>
+    validateOptionsSchema(
+      schema,
+      {},
+      {
+        validateExternalRules: false,
+      }
+    )
 
   expect(await invalid()).toMatchInlineSnapshot(`Object {}`)
 })

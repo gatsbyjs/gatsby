@@ -9,12 +9,16 @@ const validationOptions: BaseValidationOptions = {
   stripUnknown: true,
 }
 
-export async function validateOptionsSchema<Options = object>(
+interface IOptions {
+  validateExternalRules?: boolean
+}
+
+export async function validateOptionsSchema<PluginOptions = object>(
   pluginSchema: Schema,
-  pluginOptions: Options,
-  externalRules: boolean = true
-): Promise<Options> {
-  if (!externalRules) {
+  pluginOptions: PluginOptions,
+  options: IOptions = {}
+): Promise<PluginOptions> {
+  if (options.validateExternalRules === false) {
     const result = pluginSchema.validate(pluginOptions, {
       ...validationOptions,
       externals: false,
