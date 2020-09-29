@@ -1,4 +1,3 @@
-
 # gatsby-plugin-guess-js
 
 Gatsby plugin for integrating [Guess.js](https://github.com/guess-js/guess) with Gatsby.
