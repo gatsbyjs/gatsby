@@ -11835,3 +11835,18 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Softup Technologies
+  main_url: https://softup.co
+  url: https://softup.co
+  source_url: https://github.com/SoftupTechnologies/softup-web-landing-page
+  categories:
+    - Web Development
+    - Consulting
+    - Agency
+    - Landing Page
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Softup Technologies
+  built_by_url: https://softup.co
+  featured: false
