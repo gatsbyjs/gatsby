@@ -371,7 +371,7 @@ export class AnalyticsTracker {
     return osInfo
   }
 
-  trackActivity(source: string): void {
+  trackActivity(source: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -381,7 +381,7 @@ export class AnalyticsTracker {
     const debounceTime = 5 * 1000 // 5 sec
 
     if (now - last > debounceTime) {
-      this.captureEvent(source)
+      this.captureEvent(source, tags)
     }
     this.debouncer[source] = now
   }
