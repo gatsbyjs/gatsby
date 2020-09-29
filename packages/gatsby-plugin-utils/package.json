@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build"
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
   "keywords": [
     "gatsby"
@@ -26,7 +27,9 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.3",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
   },
   "files": [
     "dist/"

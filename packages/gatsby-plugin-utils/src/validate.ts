@@ -27,5 +27,5 @@ export async function validateOptionsSchema<PluginOptions = object>(
     return result.value
   }
 
-  return await pluginSchema.validateAsync(pluginOptions, validationOptions)
+  return pluginSchema.validateAsync(pluginOptions, validationOptions)
 }
