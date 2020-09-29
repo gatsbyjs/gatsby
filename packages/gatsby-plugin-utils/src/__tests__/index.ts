@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import Joi from "joi"
+import { validate } from "joi"
 import { validateOptionsSchema } from "../"
 
 it(`validates a basic schema`, async () => {
@@ -55,4 +56,20 @@ it(`does not validate async external validation rules when validateExternalRules
     )
 
   expect(invalid).not.toThrowError()
+})
+
+it(`throws an error on unknown values`, async () => {
+  const schema = Joi.object({
+    str: Joi.string(),
+  })
+
+  const invalid = () =>
+    validateOptionsSchema(schema, {
+      str: `bla`,
+      notInSchema: true,
+    })
+
+  expect(invalid()).rejects.toThrowErrorMatchingInlineSnapshot(
+    `"\\"notInSchema\\" is not allowed"`
+  )
 })

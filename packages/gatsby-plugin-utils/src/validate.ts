@@ -4,9 +4,6 @@ const validationOptions: BaseValidationOptions = {
   // Show all errors at once, rather than only the first one every time
   abortEarly: false,
   cache: true,
-  // Strip unknown values, this makes sure plugin authors define an extensive schema
-  // TODO: Discuss whether we want this, maybe not a great developer experience...
-  stripUnknown: true,
 }
 
 interface IOptions {
