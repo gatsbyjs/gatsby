@@ -73,6 +73,8 @@ export interface ITelemetryTagsPayload {
   name?: string
   starterName?: string
   siteName?: string
+  siteHash?: string
+  userAgent?: string
   pluginName?: string
   exitCode?: number
   duration?: number
