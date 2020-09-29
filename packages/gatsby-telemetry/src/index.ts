@@ -41,6 +41,14 @@ export function trackCli(
   instance.captureEvent(input, tags, opts)
 }
 
+export function captureEvent(
+  input: string | Array<string>,
+  tags?: ITelemetryTagsPayload,
+  opts?: ITelemetryOptsPayload
+): void {
+  instance.captureEvent(input, tags, opts)
+}
+
 export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
   instance.captureError(input, tags)
 }
@@ -101,6 +109,14 @@ export function setDefaultComponentId(componentId: string): void {
 
 export function setGatsbyCliVersion(version: string): void {
   instance.gatsbyCliVersion = version
+}
+
+export {
+  AnalyticsTracker,
+  IAggregateStats,
+  ITelemetryTagsPayload,
+  ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
 }
 
 module.exports = {
