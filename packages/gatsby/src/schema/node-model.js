@@ -445,7 +445,10 @@ class LocalNodeModel {
       const id = this._rootNodeMap.get(node)
       const trackedParent = getNodeById(id)
 
-      if (!parent && !trackedParent) return node
+      if (!parent && !trackedParent) {
+        const isMatchingRoot = !predicate || predicate(node)
+        return isMatchingRoot ? node : null
+      }
 
       node = parent || trackedParent
     }
@@ -685,15 +688,17 @@ async function resolveRecursive(
       ) {
         innerValue = await Promise.all(
           innerValue.map(item =>
-            resolveRecursive(
-              nodeModel,
-              schemaComposer,
-              schema,
-              item,
-              gqlFieldType,
-              queryField,
-              _.isObject(fieldToResolve) ? fieldToResolve : queryField
-            )
+            item == null
+              ? item
+              : resolveRecursive(
+                  nodeModel,
+                  schemaComposer,
+                  schema,
+                  item,
+                  gqlFieldType,
+                  queryField,
+                  _.isObject(fieldToResolve) ? fieldToResolve : queryField
+                )
           )
         )
       }
@@ -745,7 +750,8 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames
+  nodeTypeNames,
+  isNestedType = false
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
@@ -772,7 +778,8 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType)
+        toNodeTypeNames(schema, gqlFieldType),
+        true
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -780,6 +787,11 @@ const determineResolvableFields = (
     }
 
     if (!fieldsToResolve[fieldName] && needsResolve) {
+      fieldsToResolve[fieldName] = true
+    }
+    if (!fieldsToResolve[fieldName] && isNestedType) {
+      // If parent field needs to be resolved - all nested fields should be added as well
+      // See https://github.com/gatsbyjs/gatsby/issues/26056
       fieldsToResolve[fieldName] = true
     }
   })

@@ -10,7 +10,7 @@ import Img from "gatsby-image"
  *
  * For more information, see the docs:
  * - `gatsby-image`: https://gatsby.dev/gatsby-image
- * - `useStaticQuery`: https://www.gatsbyjs.org/docs/use-static-query/
+ * - `useStaticQuery`: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
 const Image = () => {
@@ -25,6 +25,10 @@ const Image = () => {
       }
     }
   `)
+
+  if (!data?.placeholderImage?.childImageSharp?.fluid) {
+    return <div>Picture not found</div>
+  }
 
   return <Img fluid={data.placeholderImage.childImageSharp.fluid} />
 }

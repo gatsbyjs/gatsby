@@ -16,7 +16,7 @@ Let's get started.
 
 ## Creating slugs for pages
 
-A ‘slug’ is the unique identifying part of a web address, such as the `/tutorial/part-seven` part of the page `https://www.gatsbyjs.org/tutorial/part-seven/`.
+A ‘slug’ is the unique identifying part of a web address, such as the `/tutorial/part-seven` part of the page `https://www.gatsbyjs.com/tutorial/part-seven/`.
 
 It is also referred to as the ‘path’ but this tutorial will use the term ‘slug’ for consistency.
 
@@ -35,7 +35,7 @@ So, here's where you'll do that. In the root of your site, create a file named `
 
 ```javascript:title=gatsby-node.js
 exports.onCreateNode = ({ node }) => {
-  console.log(node.internal.type)
+  console.log(`Node created of type "${node.internal.type}"`)
 }
 ```
 
@@ -369,11 +369,11 @@ export const query = graphql`
             title
             date(formatString: "DD MMMM, YYYY")
           }
-          // highlight-start
+          # highlight-start
           fields {
             slug
           }
-          // highlight-end
+          # highlight-end
           excerpt
         }
       }

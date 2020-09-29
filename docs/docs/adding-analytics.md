@@ -33,7 +33,7 @@ Now, it's time to configure Gatsby to send page views to your Google Analytics a
 We are going to use `gatsby-plugin-google-analytics`. For other analytics options (including Google Analytics gtag.js and Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
 
 ```shell
-npm install --save gatsby-plugin-google-analytics
+npm install gatsby-plugin-google-analytics
 ```
 
 ```js:title=gatsby-config.js

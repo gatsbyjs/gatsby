@@ -60,7 +60,7 @@ We create an `html` React component that will eventually be rendered to a file. 
 
 ### 3. Load Page and Data
 
-The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achieved by simply looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
+The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achieved by looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
 
 ### 4. Create Page Component
 

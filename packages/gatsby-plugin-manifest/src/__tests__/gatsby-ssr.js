@@ -1,5 +1,6 @@
 jest.mock(`fs`, () => {
   return {
+    ...jest.requireActual(`fs`),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
   }
 })
@@ -15,7 +16,8 @@ const onRenderBody = (args, pluginOptions) => {
 let headComponents
 const setHeadComponents = args => (headComponents = headComponents.concat(args))
 
-const defaultIcon = `pretend/this/exists.png`
+const defaultIcon = `pretend/this/exists.svg`
+
 const ssrArgs = {
   setHeadComponents,
   pathname: `/`,
@@ -28,8 +30,9 @@ describe(`gatsby-plugin-manifest`, () => {
     headComponents = []
   })
 
-  it(`Creates href attributes using pathPrefix`, () => {
-    global.__PATH_PREFIX__ = `/path-prefix`
+  it(`Creates href attributes using full pathPrefix for non-webmanifest links`, () => {
+    global.__BASE_PATH__ = `/base-path`
+    global.__PATH_PREFIX__ = `http://path-prefix.com${global.__BASE_PATH__}`
 
     onRenderBody(ssrArgs, {
       icon: defaultIcon,
@@ -37,12 +40,34 @@ describe(`gatsby-plugin-manifest`, () => {
     })
 
     headComponents
-      .filter(component => component.type === `link`)
+      .filter(
+        component =>
+          component.type === `link` && component.props.rel !== `manifest`
+      )
       .forEach(component => {
         expect(component.props.href).toEqual(
-          expect.stringMatching(/^\/path-prefix\//)
+          expect.stringMatching(new RegExp(`^${global.__PATH_PREFIX__}`))
         )
       })
+  })
+
+  it(`Creates href attributes using pathPrefix without assetPrefix for the webmanifest link`, () => {
+    global.__BASE_PATH__ = `/base-path`
+    global.__PATH_PREFIX__ = `http://path-prefix.com${global.__BASE_PATH__}`
+
+    onRenderBody(ssrArgs, {
+      icon: defaultIcon,
+      theme_color: `#000000`,
+    })
+
+    const component = headComponents.find(
+      component =>
+        component.type === `link` && component.props.rel === `manifest`
+    )
+
+    expect(component.props.href).toEqual(
+      expect.stringMatching(new RegExp(`^${global.__BASE_PATH__}`))
+    )
   })
 
   describe(`Manifest Link Generation`, () => {
@@ -276,7 +301,7 @@ describe(`gatsby-plugin-manifest`, () => {
     })
 
     it(`Does query cache busting if "cache_busting_mode" option is set to undefined`, () => {
-      onRenderBody(ssrArgs, { icon: true })
+      onRenderBody(ssrArgs, { icon: defaultIcon })
       expect(headComponents).toMatchSnapshot()
     })
   })
@@ -285,7 +310,7 @@ describe(`gatsby-plugin-manifest`, () => {
     it(`Adds link favicon tag if "include_favicon" is set to true`, () => {
       onRenderBody(ssrArgs, {
         icon: defaultIcon,
-        include_favicon: defaultIcon,
+        include_favicon: true,
         legacy: false,
         cache_busting_mode: `none`,
       })

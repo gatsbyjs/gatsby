@@ -10,8 +10,8 @@ describe(`Load plugins`, () => {
    * Both will cause snapshots to differ.
    */
   const replaceFieldsThatCanVary = (
-    plugins: IFlattenedPlugin[]
-  ): IFlattenedPlugin[] =>
+    plugins: Array<IFlattenedPlugin>
+  ): Array<IFlattenedPlugin> =>
     plugins.map(plugin => {
       if (plugin.pluginOptions && plugin.pluginOptions.path) {
         plugin.pluginOptions = {

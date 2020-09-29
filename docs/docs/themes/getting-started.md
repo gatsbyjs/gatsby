@@ -37,7 +37,7 @@ module.exports = {
     title: "My Blog Title",
     author: "My Name",
     description: "My site description...",
-    siteUrl: "https://www.gatsbyjs.org/",
+    siteUrl: "https://www.gatsbyjs.com/",
     social: [
       {
         name: "twitter",
@@ -69,4 +69,4 @@ Once you've made some edits, run `gatsby develop` to start a development server 
 
 To pull in the latest updates of your theme you can update the `gatsby-theme-blog` version in your site's `package.json`.
 
-You can do this by running the install of the theme package again: `npm install --save gatsby-theme-blog`.
+You can do this by running the install of the theme package again: `npm install gatsby-theme-blog`.

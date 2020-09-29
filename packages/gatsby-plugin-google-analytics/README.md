@@ -138,6 +138,7 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `alwaysSendReferrer`: boolean
 - `allowAnchor`: boolean
 - `cookieName`: string
+- `cookieFlags`: string
 - `cookieDomain`: string, defaults to `'auto'` if not given
 - `cookieExpires`: number
 - `storeGac`: boolean

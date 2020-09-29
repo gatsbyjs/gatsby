@@ -263,4 +263,4 @@ Page context is serialized before being passed to pages. This means it can't be 
 
 ## Creating Client-only routes
 
-In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/).
+In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](https://www.gatsbyjs.com/docs/client-only-routes-and-user-authentication/).

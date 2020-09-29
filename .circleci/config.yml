@@ -182,7 +182,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
@@ -213,7 +213,7 @@ jobs:
     steps:
       - checkout
       # We should always assert on master
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|yarn.lock"
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
@@ -267,7 +267,7 @@ jobs:
     executor: node
     steps:
       - e2e-test:
-          test_path: integration-tests/gatsby-pipeline
+          test_path: integration-tests/gatsby-cli
           trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
 
   integration_tests_structured_logging:

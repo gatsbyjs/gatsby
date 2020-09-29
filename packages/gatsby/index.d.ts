@@ -2,7 +2,8 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+export { Reporter }
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -77,6 +78,8 @@ export type PageProps<
   children: undefined
   /** @deprecated use pageContext instead */
   pathContext: object
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
   /** Holds information about the build process for this component */
   pageResources: {
     component: React.Component
@@ -170,6 +173,15 @@ export class StaticQuery<T = any> extends React.Component<
  * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
  */
 export const graphql: (query: TemplateStringsArray) => void
+
+/**
+ * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+ *
+ * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+ *
+ * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ */
+export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
 
 /**
  * Gatsby configuration API.
@@ -807,27 +819,27 @@ export interface GatsbyGraphQLObjectType {
   config: ComposeObjectTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInputObjectType {
+export interface GatsbyGraphQLInputObjectType {
   kind: "INPUT_OBJECT"
   config: ComposeInputObjectTypeConfig
 }
 
-interface GatsbyGraphQLUnionType {
+export interface GatsbyGraphQLUnionType {
   kind: "UNION"
   config: ComposeUnionTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInterfaceType {
+export interface GatsbyGraphQLInterfaceType {
   kind: "INTERFACE"
   config: ComposeInterfaceTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLEnumType {
+export interface GatsbyGraphQLEnumType {
   kind: "ENUM"
   config: ComposeEnumTypeConfig
 }
 
-interface GatsbyGraphQLScalarType {
+export interface GatsbyGraphQLScalarType {
   kind: "SCALAR"
   config: ComposeScalarTypeConfig
 }
@@ -1268,8 +1280,6 @@ export interface Store {
   getState: Function
   replaceReducer: Function
 }
-
-export type Reporter = typeof reporter
 
 export type ActivityTracker = {
   start(): () => void

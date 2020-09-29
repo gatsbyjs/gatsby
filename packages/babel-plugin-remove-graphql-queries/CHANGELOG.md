@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.20](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.19...babel-plugin-remove-graphql-queries@2.9.20) (2020-09-28)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [2.9.19](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.18...babel-plugin-remove-graphql-queries@2.9.19) (2020-09-15)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [2.9.18](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.17...babel-plugin-remove-graphql-queries@2.9.18) (2020-09-08)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [2.9.17](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.16...babel-plugin-remove-graphql-queries@2.9.17) (2020-08-10)
+
+### Features
+
+- **gatsby:** Extend support for file system pages to build client-only and collections of pages! ([#25204](https://github.com/gatsbyjs/gatsby/issues/25204)) ([61d8849](https://github.com/gatsbyjs/gatsby/commit/61d8849))
+
+## [2.9.16](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.15...babel-plugin-remove-graphql-queries@2.9.16) (2020-08-06)
+
+### Bug Fixes
+
+- **gatsby:** Move static queries to page data dir ([#26242](https://github.com/gatsbyjs/gatsby/issues/26242)) ([de979d3](https://github.com/gatsbyjs/gatsby/commit/de979d3))
+
 ## [2.9.15](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.14...babel-plugin-remove-graphql-queries@2.9.15) (2020-07-20)
 
 ### Features

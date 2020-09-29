@@ -47,7 +47,6 @@ Object {
         "corejs": 3,
         "exclude": Array [
           "transform-typeof-symbol",
-          "transform-regenerator",
           "transform-spread",
           "proposal-nullish-coalescing-operator",
           "proposal-optional-chaining",
@@ -259,6 +258,7 @@ Object {
       Object {
         "development": false,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],
@@ -319,7 +319,6 @@ Object {
         "corejs": 3,
         "exclude": Array [
           "transform-typeof-symbol",
-          "transform-regenerator",
           "transform-spread",
           "proposal-nullish-coalescing-operator",
           "proposal-optional-chaining",
@@ -529,6 +528,7 @@ Object {
       Object {
         "development": false,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],
@@ -583,7 +583,6 @@ Object {
         "corejs": 3,
         "exclude": Array [
           "transform-typeof-symbol",
-          "transform-regenerator",
           "transform-spread",
           "proposal-nullish-coalescing-operator",
           "proposal-optional-chaining",
@@ -793,6 +792,7 @@ Object {
       Object {
         "development": false,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],
@@ -847,7 +847,6 @@ Object {
         "corejs": 3,
         "exclude": Array [
           "transform-typeof-symbol",
-          "transform-regenerator",
           "transform-spread",
           "proposal-nullish-coalescing-operator",
           "proposal-optional-chaining",
@@ -1057,6 +1056,7 @@ Object {
       Object {
         "development": true,
         "pragma": "React.createElement",
+        "runtime": "classic",
         "useBuiltIns": true,
       },
     ],

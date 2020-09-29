@@ -17,13 +17,27 @@ module.exports = {
         path: `${__dirname}/src/posts`,
       },
     },
-    {resolve: `gatsby-plugin-mdx`,
-    options: {
-      extensions: [`.mdx`, `.md`],
-      defaultLayouts: {
-        default: require.resolve("./src/components/layout.js"),
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        defaultLayouts: {
+          default: require.resolve("./src/components/layout.js"),
+        },
+        remarkPlugins: [remarkRequireFilePathPlugin],
       },
-    }
-  },
+    },
   ],
+}
+
+/**
+ * This is a test to ensure that `gatsby-plugin-mdx` correctly pass the `file` argument to the underlying remark plugins.
+ * See #26914 for more info.
+ */
+function remarkRequireFilePathPlugin() {
+  return function transformer(tree, file) {
+    if (!file.dirname) {
+      throw new Error("No directory name for this markdown file!")
+    }
+  }
 }
