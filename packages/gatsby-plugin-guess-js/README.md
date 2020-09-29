@@ -87,30 +87,28 @@ module.exports = {
 
 > Excerpt from https://developers.google.com/identity/protocols/oauth2/service-account
 
-
-1.  Open the  [Google developer console IAM & admin](https://console.developers.google.com/iam-admin)
+1.  Open the [Google developer console IAM & admin](https://console.developers.google.com/iam-admin)
 2.  If prompted, select a project, or create a new one.
-3.  Click  add **service account**.
-4.  on top click **Create service account**, type a name, ID, and description for the service account, then click  **Create**.
-5.  Optional: Under  **Service account permissions**, select the IAM roles to grant to the service account, then click  **Continue**.
-6.  Optional: Under  **Grant users access to this service account**, add the users or groups that are allowed to use and manage the service account.
-7.  Click  on **three dots under actions** , then click  **Create**.
+3.  Click add **service account**.
+4.  on top click **Create service account**, type a name, ID, and description for the service account, then click **Create**.
+5.  Optional: Under **Service account permissions**, select the IAM roles to grant to the service account, then click **Continue**.
+6.  Optional: Under **Grant users access to this service account**, add the users or groups that are allowed to use and manage the service account.
+7.  Click on **three dots under actions** , then click **Create**.
 
-  - Put that file into a directory node_modules that is inside one of the parent directories of the script that we’ll create later. That means that you can keep it out of the repository with analytics.js. For example, the following path is perfectly fine:
-    `\$HOME/node_modules/myproject-3126e4caac6a.json`
-    - The credentials that you created have an `client_email` address (which is displayed in the user interface and stored inside the JSON file). Copy that email address.
+- Put that file into a directory node_modules that is inside one of the parent directories of the script that we’ll create later. That means that you can keep it out of the repository with analytics.js. For example, the following path is perfectly fine:
+  `\$HOME/node_modules/myproject-3126e4caac6a.json`
+  - The credentials that you created have an `client_email` address (which is displayed in the user interface and stored inside the JSON file). Copy that email address.
 
 Go to the Admin panel in Google Analytics:
-
 
 - Analytics has three scopes:
   - Account
   - Property
   - View
-- Create a new user in scope “Property”, via  “Admin -> View User Management -> plus icon -> add user”.
+- Create a new user in scope “Property”, via “Admin -> View User Management -> plus icon -> add user”.
   - That user has the email address that you copied previously from the json file `client_email`.
   - Its permissions are “Read & Analyze”.
 - In scope “View settings”, go to “View Settings” and write down the “View ID” (e.g. 97675673) for later.
-> If you get error [User don't have analytics account,](https://stackoverflow.com/questions/12837748/analytics-google-api-error-403-user-does-not-have-any-google-analytics-account/62998591#62998591) 
+  > If you get error [User don't have analytics account,](https://stackoverflow.com/questions/12837748/analytics-google-api-error-403-user-does-not-have-any-google-analytics-account/62998591#62998591)
 
 > This JWT will only be valid for a finite amount of time. If you would like to generate a token that will not expire, please follow further instructions in https://2ality.com/2015/10/google-analytics-api.html
