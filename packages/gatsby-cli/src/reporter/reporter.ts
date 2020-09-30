@@ -114,8 +114,7 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | Array<ErrorMeta>,
-    error?: Error | Array<Error>,
-    errorMap?: Record<string, IErrorMapEntry>
+    error?: Error | Array<Error>
   ): IStructuredError | Array<IStructuredError> => {
     let details: {
       error?: Error
