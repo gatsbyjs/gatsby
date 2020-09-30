@@ -66,10 +66,10 @@ brew install node
 
 - Download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
 
-#### Verify Nodejs on your windows computer:
+#### Verify Node.js on your windows computer:
 
 1. Restart your computer.
-2. Open your Command Prompt or Powershell.
+2. Open your Command Prompt or powershell.
 3. Run below command, to test Node and npm is successfully installed or not.
 
 ```shell
@@ -79,7 +79,6 @@ npm -v
 >> 6.14.6
 
 ```
-
 
 ### Linux Instructions
 
