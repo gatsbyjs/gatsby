@@ -24,6 +24,8 @@ export const SHARP_ATTRIBUTES = new Set([
   `background`,
   `width`,
   `height`,
+  `tracedSVG`,
+  `webP`,
 ])
 
 export function evaluateImageAttributes(
