@@ -165,7 +165,7 @@ module.exports = async (
         return {
           polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            process.env.GATSBY_HOT_LOADER === `fast-refresh`
+            process.env.GATSBY_HOT_LOADER !== `fast-refresh`
               ? `react-hot-loader/patch`
               : null,
             `${require.resolve(
@@ -415,6 +415,7 @@ module.exports = async (
     }
 
     // if react-hot-reloading
+    // @see https://github.com/gaearon/react-hot-loader#getting-started
     if (
       stage === `develop` &&
       process.env.GATSBY_HOT_LOADER !== `fast-refresh`
@@ -423,16 +424,29 @@ module.exports = async (
         require.resolve(`react-hot-loader/package.json`)
       )
 
-      // We need to add @hot-loader/react-dom to support hot-loader work with hooks
+      const { version: reactDomVersion } = require(`react-dom/package.json`)
+      const { major, minor } = semver.parse(reactDomVersion)
+
+      // We need to add @hot-loader/react-dom alias to have react-hot-loader support for React Hooks
       try {
         resolve.alias[`react-dom/server$`] = require.resolve(`react-dom/server`)
         resolve.alias[`react-dom`] = require.resolve(`@hot-loader/react-dom`)
+
+        const {
+          version: patchedReactDomVersion,
+        } = require(`@hot-loader/react-dom/package.json`)
+        if (!semver.satisfies(patchedReactDomVersion, `~${major}.${minor}`)) {
+          console.warn(
+            `React-Hot-Loader: it seems like your version of "@hot-loader/react-dom" does not match the version range "~${major}.${minor}" (found ${patchedReactDomVersion}). To make sure your application is working as intended. We suggest installing the correct version of @hot-loader/react-dom.`
+          )
+        }
       } catch (err) {
-        const { version: reactDomVersion } = require(`react-dom/package.json`)
-        const { major, minor } = semver.parse(reactDomVersion)
-        console.warn(
-          `React-Hot-Loader: please install "@hot-loader/react-dom@${major}.${minor}" to make sure all features of React are working.`
-        )
+        // The react-dom patch is only needed starting from 16.7.0
+        if (semver.satisfies(reactDomVersion, `>=16.7.0`)) {
+          console.warn(
+            `React-Hot-Loader: please install "@hot-loader/react-dom@~${major}.${minor}" to make sure all features of React are working.`
+          )
+        }
       }
     }
 

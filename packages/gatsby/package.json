@@ -216,7 +216,8 @@
   "module": "cache-dir/gatsby-browser-entry.js",
   "peerDependencies": {
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "@hot-loader/react-dom": "*"
   },
   "repository": {
     "type": "git",
