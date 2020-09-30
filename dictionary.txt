@@ -1249,7 +1249,6 @@ metacompiler
 metadescription
 metafields
 Metalsmith
-metatags
 METROGLAM
 Meuleman
 Michał
@@ -1648,7 +1647,6 @@ redux
 Redux
 Reduxjs
 ReferenceError
-ReflexJS
 reformats
 reframe
 rehydrate
