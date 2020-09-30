@@ -18,7 +18,7 @@ _**Note:** If you’re new to the command line, "running" a command, means "writ
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js either.
 
-- [**Node.js on Mac**](#mac-instructions) 
+- [**Node.js on Mac**](#mac-instructions)
 - [**Node.js on Windows**](#windows-instructions)
 - [**Node.js on Linux**](#linux-instructions)
 
@@ -79,6 +79,7 @@ npm -v
 >> 6.14.6
 
 ```
+
 > 💡 If an error occurs, uninstall Node.js and reinstall the Node.js.
 
 ### Linux Instructions
