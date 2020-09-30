@@ -5,7 +5,7 @@ describe(`hot-reloading hooks`, () => {
     cy.visit(`/hooks`).waitForRouteChange()
   })
 
-  it.skip(`can update component`, () => {
+  it(`can update component`, () => {
     const amount = 100
     cy.exec(
       `npm run update -- --file src/pages/hooks.js --replacements "count + 1:count + ${amount}" --exact`

@@ -10,7 +10,7 @@ describe(`hot reloading non-js file`, () => {
     cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, TEMPLATE)
   })
 
-  it.skip(`hot reloads with new content`, () => {
+  it(`hot reloads with new content`, () => {
     const message = `This is a sub-title`
     cy.exec(
       `npm run update -- --file content/2018-12-14-hello-world.md --replacements "${TEMPLATE}:${message}"`
