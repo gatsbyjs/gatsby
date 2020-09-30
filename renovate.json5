@@ -28,7 +28,7 @@
   stabilityDays: 2,
   postUpdateOptions: ["yarnDedupeHighest"],
   timezone: "GMT",
-  schedule: ["before 7am on Monday""],
+  schedule: ["before 7am on Monday"],
   packageRules: [
     {
       depTypeList: ["engines"],
