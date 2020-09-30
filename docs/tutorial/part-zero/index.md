@@ -81,7 +81,6 @@ npm -v
 ```
 > 💡 If an error occurs, uninstall Node.js and reinstall the Node.js.
 
-
 ### Linux Instructions
 
 Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
