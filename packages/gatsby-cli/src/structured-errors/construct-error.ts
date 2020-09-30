@@ -20,7 +20,7 @@ const constructError = (
     stack: otherDetails.error
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
       : [],
-    docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`
+    docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
   }
 
   if (id) {

@@ -43,13 +43,13 @@ test(`it passes through on valid error schema`, () => {
 
 test(`it constructs an error from the supplied errorMap`, () => {
   const error = constructError(
-    { details: { id: "TEST_ERROR", context: { someProp: `Error!` } } },
+    { details: { id: `TEST_ERROR`, context: { someProp: `Error!` } } },
     {
       TEST_ERROR: {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`
-      }
+        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+      },
     }
   )
 
