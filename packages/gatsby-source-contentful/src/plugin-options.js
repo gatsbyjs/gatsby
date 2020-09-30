@@ -28,7 +28,20 @@ const createPluginConfig = pluginOptions => {
 const Joi = joi.extend({
   type: /^s/,
   rules: {
-    secret: {},
+    dotenv: {
+      args: [`name`],
+      validate(value, helpers, args) {
+        if (!args.name) {
+          return helpers.error(
+            `any.dotenv requires the environment variable name`
+          )
+        }
+        return value
+      },
+      method(name) {
+        return this.$_addRule({ name: `dotenv`, args: { name } })
+      },
+    },
   },
 })
 
@@ -63,14 +76,14 @@ const validateContentfulAccess = async pluginOptions => {
 const optionsSchema = Joi.object()
   .keys({
     accessToken: Joi.string()
-      .secret()
+      .dotenv(`CONTENTFUL_ACCESS_TOKEN`)
       .description(
         `Contentful delivery api key, when using the Preview API use your Preview API key`
       )
       .required()
       .empty(),
     spaceId: Joi.string()
-      .secret()
+      .dotenv(`CONTENTFUL_SPACE_ID`)
       .description(`Contentful spaceId`)
       .required()
       .empty(),

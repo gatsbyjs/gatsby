@@ -237,13 +237,29 @@ describe(`Joi schema`, () => {
   it(`Knows which options are secret when described`, () => {
     const json = optionsSchema.describe()
     expect(
-      Object.keys(json.keys).filter(key =>
-        json.keys[key].rules?.find(rule => rule.name === `secret`)
-      )
+      Object.keys(json.keys)
+        .filter(key =>
+          json.keys[key].rules?.find(rule => rule.name === `dotenv`)
+        )
+        .map(key => json.keys[key].rules)
     ).toMatchInlineSnapshot(`
       Array [
-        "accessToken",
-        "spaceId",
+        Array [
+          Object {
+            "args": Object {
+              "name": "CONTENTFUL_ACCESS_TOKEN",
+            },
+            "name": "dotenv",
+          },
+        ],
+        Array [
+          Object {
+            "args": Object {
+              "name": "CONTENTFUL_SPACE_ID",
+            },
+            "name": "dotenv",
+          },
+        ],
       ]
     `)
   })
