@@ -9,6 +9,10 @@ describe(`gatsby build`, () => {
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
   afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
+  it(`will fail the test`, () => {
+    expect(false).toBe(true)
+  })
+
   it(`creates a built gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)
 
