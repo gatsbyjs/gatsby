@@ -109,6 +109,9 @@ Go to the Admin panel in Google Analytics:
   - That user has the email address that you copied previously from the json file `client_email`.
   - Its permissions are “Read & Analyze”.
 - In scope “View settings”, go to “View Settings” and write down the “View ID” (e.g. 97675673) for later.
-  > If you get error [User don't have analytics account,](https://stackoverflow.com/questions/12837748/analytics-google-api-error-403-user-does-not-have-any-google-analytics-account/62998591#62998591)
 
-> This JWT will only be valid for a finite amount of time. If you would like to generate a token that will not expire, please follow further instructions in https://2ality.com/2015/10/google-analytics-api.html
+**Note:** This JWT will only be valid for a finite amount of time. If you would like to generate a token that will not expire, please follow further instructions in https://2ality.com/2015/10/google-analytics-api.html
+
+#### Troubleshooting
+
+- "User does not have any Google Analytics Account": [StackOverflow answer](https://stackoverflow.com/questions/12837748/analytics-google-api-error-403-user-does-not-have-any-google-analytics-account/62998591#62998591)
