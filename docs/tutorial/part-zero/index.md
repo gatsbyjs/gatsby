@@ -79,6 +79,8 @@ npm -v
 >> 6.14.6
 
 ```
+> 💡 If an error occurs, uninstall Node.js and reinstall the Node.js.
+
 
 ### Linux Instructions
 
