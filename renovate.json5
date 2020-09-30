@@ -10,7 +10,8 @@
     ":disablePeerDependencies",
     ":maintainLockFilesDisabled",
     ":disableRateLimiting",
-    ":label(maintenance)",
+    ":label(type: maintenance)",
+    ":label(topic: automation)",
     ":ignoreModulesAndTests",
     ":enableVulnerabilityAlerts",
   ],
@@ -27,7 +28,7 @@
   stabilityDays: 2,
   postUpdateOptions: ["yarnDedupeHighest"],
   timezone: "GMT",
-  schedule: ["before 7am"],
+  schedule: ["before 7am on Monday""],
   packageRules: [
     {
       depTypeList: ["engines"],
@@ -42,7 +43,7 @@
     {
       groupName: "starters and examples",
       paths: ["starters/**", "examples/**"],
-      schedule: "before 3am on Monday",
+      schedule: "before 7am on Monday",
     },
     {
       extends: ["monorepo:gatsby"],
@@ -51,6 +52,7 @@
       automerge: true,
       stabilityDays: 0,
       prPriority: 50,
+      schedule: "at any time",
     },
     {
       groupName: "remark docs linting",
