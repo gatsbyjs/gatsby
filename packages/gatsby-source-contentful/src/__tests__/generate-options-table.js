@@ -1,20 +1,9 @@
 import { pluginOptionsSchema } from "../gatsby-node"
-import table from "markdown-table"
-
-const generateMarkdownTable = schema => {
-  const json = schema.describe()
-  const array = [
-    [`Key`, `Description`, `Default`],
-    ...Object.keys(json.keys).map(key => {
-      const field = json.keys[key]
-      return [key, field.flags?.description, field.flags?.default]
-    }),
-  ]
-  return table(array)
-}
+import { generateMarkdownTableFromJoiSchema } from "../generate-options-table"
 
 it(`should generate a markdown table with all options`, () => {
-  expect(generateMarkdownTable(pluginOptionsSchema)).toMatchInlineSnapshot(`
+  expect(generateMarkdownTableFromJoiSchema(pluginOptionsSchema))
+    .toMatchInlineSnapshot(`
     "| Key           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Default            |
     | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
     | accessToken   | Contentful delivery api key, when using the Preview API use your Preview API key                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |                    |
