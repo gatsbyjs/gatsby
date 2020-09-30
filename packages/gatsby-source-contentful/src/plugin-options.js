@@ -1,5 +1,6 @@
-const Joi = require(`@hapi/joi`)
+const joi = require(`joi`)
 const chalk = require(`chalk`)
+const fetch = require(`node-fetch`)
 
 const _ = require(`lodash`)
 
@@ -24,40 +25,76 @@ const createPluginConfig = pluginOptions => {
   }
 }
 
-const optionsSchema = Joi.object().keys({
-  accessToken: Joi.string().required().empty(),
-  spaceId: Joi.string().required().empty(),
-  host: Joi.string().empty(),
-  environment: Joi.string().empty(),
-  downloadLocal: Joi.boolean(),
-  localeFilter: Joi.func(),
-  forceFullSync: Joi.boolean(),
-  pageLimit: Joi.number().integer(),
-  proxy: Joi.object().keys({
-    host: Joi.string().required(),
-    port: Joi.number().required(),
-    auth: Joi.object().keys({
-      username: Joi.string(),
-      password: Joi.string(),
-    }),
-  }),
-  useNameForId: Joi.boolean(),
-  // default plugins passed by gatsby
-  plugins: Joi.array(),
-  richText: Joi.object()
-    .keys({
-      resolveFieldLocales: Joi.boolean(),
-    })
-    .default({}),
+const Joi = joi.extend({
+  base: joi.string(),
+  type: `secret`,
 })
+
+const validateContentfulAccess = async pluginOptions => {
+  if (process.env.NODE_ENV === `test`) return undefined
+
+  await fetch(
+    `https://${pluginOptions.host || defaultOptions.host}/content/v1/spaces/${
+      pluginOptions.spaceId
+    }`,
+    {
+      headers: {
+        Authorization: `Bearer ${pluginOptions.accessToken}`,
+        "Content-Type": `application/json`,
+      },
+    }
+  )
+    .then(res => res.json())
+    .then(json => {
+      if (json.errors)
+        throw new Error(
+          `Cannot access Contentful Space ${maskText(pluginOptions.spaceId)}`
+        )
+    })
+    .catch(err => {
+      throw new Error(`Fetch call to check Contentful access failed.`)
+    })
+
+  return undefined
+}
+
+const optionsSchema = Joi.object()
+  .keys({
+    accessToken: Joi.secret().required().empty(),
+    spaceId: Joi.secret().required().empty(),
+    host: Joi.string().empty(),
+    environment: Joi.string().empty(),
+    downloadLocal: Joi.boolean(),
+    localeFilter: Joi.func(),
+    forceFullSync: Joi.boolean(),
+    pageLimit: Joi.number().integer(),
+    proxy: Joi.object().keys({
+      host: Joi.string().required(),
+      port: Joi.number().required(),
+      auth: Joi.object().keys({
+        username: Joi.string(),
+        password: Joi.string(),
+      }),
+    }),
+    useNameForId: Joi.boolean(),
+    // default plugins passed by gatsby
+    plugins: Joi.array(),
+    richText: Joi.object()
+      .keys({
+        resolveFieldLocales: Joi.boolean(),
+      })
+      .default({}),
+  })
+  .external(validateContentfulAccess)
 
 const maskedFields = [`accessToken`, `spaceId`]
 
-const validateOptions = ({ reporter }, options) => {
-  const result = optionsSchema.validate(options, { abortEarly: false })
-  if (result.error) {
+const validateOptions = async ({ reporter }, options) => {
+  try {
+    await optionsSchema.validateAsync(options, { abortEarly: false })
+  } catch (error) {
     const errors = {}
-    result.error.details.forEach(detail => {
+    error.details.forEach(detail => {
       errors[detail.path[0]] = detail.message
     })
     reporter.panic(`Problems with gatsby-source-contentful plugin options:

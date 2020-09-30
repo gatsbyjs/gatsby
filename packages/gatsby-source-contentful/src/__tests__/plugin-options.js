@@ -88,8 +88,8 @@ describe(`Options validation`, () => {
     reporter.panic.mockClear()
   })
 
-  it(`Passes with valid options`, () => {
-    validateOptions(
+  it(`Passes with valid options`, async () => {
+    await validateOptions(
       {
         reporter,
       },
@@ -104,8 +104,8 @@ describe(`Options validation`, () => {
     expect(reporter.panic).not.toBeCalled()
   })
 
-  it(`Fails with missing required options`, () => {
-    validateOptions(
+  it(`Fails with missing required options`, async () => {
+    await validateOptions(
       {
         reporter,
       },
@@ -125,8 +125,8 @@ describe(`Options validation`, () => {
     )
   })
 
-  it(`Fails with empty options`, () => {
-    validateOptions(
+  it(`Fails with empty options`, async () => {
+    await validateOptions(
       {
         reporter,
       },
@@ -157,8 +157,8 @@ describe(`Options validation`, () => {
     )
   })
 
-  it(`Fails with options of wrong types`, () => {
-    validateOptions(
+  it(`Fails with options of wrong types`, async () => {
+    await validateOptions(
       {
         reporter,
       },
@@ -193,7 +193,7 @@ describe(`Options validation`, () => {
       expect.stringContaining(`"spaceId" must be a string`)
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"localeFilter" must be a Function`)
+      expect.stringContaining(`"localeFilter" must be of type function`)
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"downloadLocal" must be a boolean`)
@@ -205,12 +205,12 @@ describe(`Options validation`, () => {
       expect.stringContaining(`"pageLimit" must be a number`)
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"richText" must be an object`)
+      expect.stringContaining(`"richText" must be of type object`)
     )
   })
 
-  it(`Fails with undefined option keys`, () => {
-    validateOptions(
+  it(`Fails with undefined option keys`, async () => {
+    await validateOptions(
       {
         reporter,
       },
