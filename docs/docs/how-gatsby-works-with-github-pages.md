@@ -54,6 +54,15 @@ Then add a `deploy` script to `package.json` in your repository's codebase:
 }
 ```
 
+If you are using a custom domain, edit the deploy script to output a CNAME file to the public directory before publishing to preserve your custom domain:
+```json:title=package.json
+{
+  "scripts": {
+    "deploy": "gatsby build --prefix-paths && echo 'example.com' > public/CNAME && gh-pages -d public"
+  }
+}
+```
+
 When you run `npm run deploy` all contents of the `public` folder will be moved to your repository's `gh-pages` branch. Make sure that your repository's settings has the `gh-pages` branch set as the source to deploy from.
 
 **Note**: to select master or gh-pages as your publishing source, you must have the branch present in your repository. If you don't have a master or gh-pages branch, you can create them and then return to source settings to change your publishing source.
