@@ -1,20 +1,15 @@
 import stackTrace from "stack-trace"
 import { errorSchema } from "./error-schema"
-import { errorMap, defaultError, ErrorId, IErrorMapEntry } from "./error-map"
+import { defaultError, ErrorId, IErrorMapEntry } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
 import { IConstructError, IStructuredError } from "./types"
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
 const constructError = (
   { details: { id, ...otherDetails } }: IConstructError,
-  suppliedErrorMap?: Record<ErrorId, IErrorMapEntry>
+  suppliedErrorMap: Record<ErrorId, IErrorMapEntry>
 ): IStructuredError => {
-  const finalErrorMap = {
-    ...suppliedErrorMap,
-    ...errorMap
-  }
-
-  const result: IErrorMapEntry = (id && finalErrorMap[id]) || defaultError
+  const result: IErrorMapEntry = (id && suppliedErrorMap[id]) || defaultError
 
   // merge
   const structuredError: IStructuredError = {

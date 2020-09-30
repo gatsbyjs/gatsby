@@ -1,4 +1,6 @@
 import constructError from "../construct-error"
+import { errorMap } from "../error-map"
+import { Level } from "../types"
 
 let log
 let processExit
@@ -19,13 +21,13 @@ afterAll(() => {
 })
 
 test(`it exits on invalid error schema`, () => {
-  constructError({ details: { context: {}, lol: `invalid` } })
+  constructError({ details: { context: {}, lol: `invalid` } }, errorMap)
 
   expect(processExit).toHaveBeenCalledWith(1)
 })
 
 test(`it logs error on invalid schema`, () => {
-  constructError({ details: { context: {}, lol: `invalid` } })
+  constructError({ details: { context: {}, lol: `invalid` } }, errorMap)
 
   expect(log).toHaveBeenCalledWith(
     `Failed to validate error`,
@@ -34,7 +36,23 @@ test(`it logs error on invalid schema`, () => {
 })
 
 test(`it passes through on valid error schema`, () => {
-  constructError({ details: { context: {} } })
+  constructError({ details: { context: {} } }, errorMap)
 
   expect(log).not.toHaveBeenCalled()
+})
+
+test(`it constructs an error from the supplied errorMap`, () => {
+  const error = constructError(
+    { details: { id: "TEST_ERROR", context: { someProp: `Error!` } } },
+    {
+      TEST_ERROR: {
+        text: (context): string => `Error text is ${context.someProp} `,
+        level: Level.ERROR,
+        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`
+      }
+    }
+  )
+
+  expect(error.code).toBe(`TEST_ERROR`)
+  expect(error.docsUrl).toBe(`https://www.gatsbyjs.org/docs/gatsby-cli/#new`)
 })
