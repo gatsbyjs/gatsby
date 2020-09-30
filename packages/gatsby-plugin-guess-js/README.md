@@ -105,10 +105,10 @@ Go to the Admin panel in Google Analytics:
   - Account
   - Property
   - View
-- Create a new user in scope “Property”, via “Admin -> View User Management -> plus icon -> add user”.
+- Create a new user in scope “Property”, via “Admin -> View User Management -> Plus icon -> Add User”.
   - That user has the email address that you copied previously from the json file `client_email`.
   - Its permissions are “Read & Analyze”.
-- In scope “View settings”, go to “View Settings” and write down the “View ID” (e.g. 97675673) for later.
+- In scope “View”, go to “View Settings” and write down the “View ID” (e.g. 97675673) for later.
 
 **Note:** This JWT will only be valid for a finite amount of time. If you would like to generate a token that will not expire, please follow further instructions in https://2ality.com/2015/10/google-analytics-api.html
 
