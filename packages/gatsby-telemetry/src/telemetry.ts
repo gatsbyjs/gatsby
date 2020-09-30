@@ -1,6 +1,6 @@
 import uuidv4 from "uuid/v4"
 import os from "os"
-import { isCI, getCIName } from "gatsby-core-utils"
+import { isCI, getCIName, createContentDigest } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
@@ -120,6 +120,7 @@ export class AnalyticsTracker {
   repositoryId?: IRepositoryId
   features = new Set<string>()
   machineId: string
+  siteHash?: string = createContentDigest(process.cwd())
 
   constructor({
     componentId,
@@ -202,6 +203,20 @@ export class AnalyticsTracker {
       // ignore
     }
     return `-0.0.0`
+  }
+
+  trackCli(
+    type: string | Array<string> = ``,
+    tags: ITelemetryTagsPayload = {},
+    opts: ITelemetryOptsPayload = { debounce: false }
+  ): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    if (typeof tags.siteHash === `undefined`) {
+      tags.siteHash = this.siteHash
+    }
+    this.captureEvent(type, tags, opts)
   }
 
   captureEvent(

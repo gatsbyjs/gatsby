@@ -38,7 +38,7 @@ export function trackCli(
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload
 ): void {
-  instance.captureEvent(input, tags, opts)
+  instance.trackCli(input, tags, opts)
 }
 
 export function captureEvent(
