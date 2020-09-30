@@ -95,7 +95,7 @@
   },
   "resolutions": {
     "theme-ui": "0.4.0-rc.1",
-    "csstype": "2.6.10"
+    "csstype": "2.6.13"
   },
   "engines": {
     "yarn": "^1.17.3",
