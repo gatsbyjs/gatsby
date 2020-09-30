@@ -1,5 +1,5 @@
 ---
-title: Free Swag for Gatsby Contributors!
+title: Win Free Swag for Gatsby Contributors!!!
 ---
 
 Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/contributing/how-to-contribute/).
@@ -12,7 +12,7 @@ To show our appreciation, _**everyone who contributes to Gatsby is eligible to r
 
 If you contribute to the Gatsby organization on GitHub, you can claim your swag by [logging into the Gatsby Store](https://store.gatsbyjs.org/) and requesting a discount code. With five or more contributions, you can claim your _**Level 2**_ swag.
 
-If you’ve contributed in other ways, such as giving talks about Gatsby, teaching others to use it, writing Gatsby articles/tutorials, participating in a Gatsby research project, or any other way, please fill out [this short form](https://forms.gle/zBnybrZNjsdpXvDx8) to let us know!
+If you’ve contributed in other ways, such as giving talks about Gatsby, facilitating others how to use it, writing Gatsby articles/tutorials/blogs, participating in a Gatsby research project, or any other way, please fill out [this short form](https://forms.gle/zBnybrZNjsdpXvDx8) to let us know!
 
 ## Details about free swag
 
