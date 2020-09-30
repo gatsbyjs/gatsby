@@ -42,7 +42,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     sampleRate: Joi.number(),
     siteSpeedSampleRate: Joi.number(),
-    cookieDomain: Joi.string(0),
+    cookieDomain: Joi.string(),
   })
 
 exports.onPreInit = ({ reporter }, options) => {
