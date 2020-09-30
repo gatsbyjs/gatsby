@@ -68,16 +68,18 @@ brew install node
 
 #### Verify Nodejs on your windows computer:
 
-1. Open your Command Prompt or Powershell.
-2. Run below command, to test Node and npm is successfully installed or not.
+1. Restart your computer.
+2. Open your Command Prompt or Powershell.
+3. Run below command, to test Node and npm is successfully installed or not.
 
-```Command Prompt
+```shell
 node -v
 >> v12.18.4
 npm -v
 >> 6.14.6
 
 ```
+
 
 ### Linux Instructions
 
