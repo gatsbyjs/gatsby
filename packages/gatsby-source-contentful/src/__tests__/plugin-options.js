@@ -5,6 +5,7 @@ const {
   maskText,
   validateOptions,
   formatPluginOptionsForCLI,
+  optionsSchema,
 } = require(`../plugin-options`)
 
 const maskedCharacterCount = input =>
@@ -229,5 +230,21 @@ describe(`Options validation`, () => {
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"wat" is not allowed`)
     )
+  })
+})
+
+describe(`Joi schema`, () => {
+  it(`Knows which options are secret when described`, () => {
+    const json = optionsSchema.describe()
+    expect(
+      Object.keys(json.keys).filter(key =>
+        json.keys[key].rules?.find(rule => rule.name === `secret`)
+      )
+    ).toMatchInlineSnapshot(`
+      Array [
+        "accessToken",
+        "spaceId",
+      ]
+    `)
   })
 })

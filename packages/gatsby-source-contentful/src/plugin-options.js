@@ -26,8 +26,10 @@ const createPluginConfig = pluginOptions => {
 }
 
 const Joi = joi.extend({
-  base: joi.string(),
-  type: `secret`,
+  type: /^s/,
+  rules: {
+    secret: {},
+  },
 })
 
 const validateContentfulAccess = async pluginOptions => {
@@ -60,13 +62,18 @@ const validateContentfulAccess = async pluginOptions => {
 
 const optionsSchema = Joi.object()
   .keys({
-    accessToken: Joi.secret()
+    accessToken: Joi.string()
+      .secret()
       .description(
         `Contentful delivery api key, when using the Preview API use your Preview API key`
       )
       .required()
       .empty(),
-    spaceId: Joi.secret().description(`Contentful spaceId`).required().empty(),
+    spaceId: Joi.string()
+      .secret()
+      .description(`Contentful spaceId`)
+      .required()
+      .empty(),
     host: Joi.string()
       .description(
         `The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the Preview API set it to 'preview.contentful.com'. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.`
