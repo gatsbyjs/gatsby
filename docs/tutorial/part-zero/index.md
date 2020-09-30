@@ -66,6 +66,19 @@ brew install node
 
 - Download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
 
+#### Verify Nodejs on your windows computer:
+
+1. Open your Command Prompt or Powershell.
+2. Run below command, to test Node and npm is successfully installed or not.
+
+```Command Prompt
+node -v
+>> v12.18.4
+npm -v
+>> 6.14.6
+
+```
+
 ### Linux Instructions
 
 Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
