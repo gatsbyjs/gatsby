@@ -20,7 +20,7 @@ export async function writeImages({
   cache: GatsbyCache
 }): Promise<void> {
   const promises = [...images.entries()].map(
-    async ([hash, { src, fluid, fixed, webP, tracedSVG, ...args }]) => {
+    async ([hash, { src, fluid, fixed, ...args }]) => {
       const isFixed = fixed ?? !fluid
 
       let file = fileCache.get(src as string)

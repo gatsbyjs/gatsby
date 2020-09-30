@@ -2,7 +2,7 @@ import { Node, GatsbyCache, Reporter } from "gatsby"
 import { fluid, fixed, traceSVG } from "gatsby-plugin-sharp"
 
 export async function getCustomSharpFields({
-  isFixed, // make sure fluid is also handled
+  isFixed,
   file,
   args,
   reporter,
@@ -10,7 +10,7 @@ export async function getCustomSharpFields({
 }: {
   isFixed: boolean
   file: Node
-  args: any // TODO type this correctly
+  args: any // TODO: type this correctly
   reporter: Reporter
   cache: GatsbyCache
 }): Promise<{
@@ -29,14 +29,22 @@ export async function getCustomSharpFields({
     // If the file is already in webp format or should explicitly
     // be converted to webp, we do not create additional webp files
     if (file.extension !== `webp`) {
-      const fixedWebP = await fixed({
-        file,
-        args: { ...args, toFormat: `webp` },
-        reporter,
-        cache,
-      })
-      customSharpFields.srcWebP = fixedWebP.src
-      customSharpFields.srcSetWebP = fixedWebP.srcSet
+      const generatedWebP = await (isFixed
+        ? fixed({
+            file,
+            // TODO: need to get access to pathPrefix into these invocations
+            args: { ...args, toFormat: `webp` },
+            reporter,
+            cache,
+          })
+        : fluid({
+            file,
+            args: { ...args, toFormat: `webp` },
+            reporter,
+            cache,
+          }))
+      customSharpFields.srcWebP = generatedWebP.src
+      customSharpFields.srcSetWebP = generatedWebP.srcSet
     }
   }
 
