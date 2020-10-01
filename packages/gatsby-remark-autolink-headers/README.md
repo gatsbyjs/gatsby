@@ -87,3 +87,19 @@ module.exports = {
   ],
 }
 ```
+
+## Styling
+
+To style the generated SVG you can use the following css to add currentColor
+
+```
+a.anchor {
+  fill: currentColor
+}
+```
+
+Or if you want to only target the svg (note that the first selector is faster than the one below but that's micro optimisations)
+
+```
+a.anchor > svg
+```
