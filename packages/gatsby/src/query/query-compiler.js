@@ -157,6 +157,13 @@ export const parseQueries = async ({
 
   files = _.uniq(files)
 
+  if (process.env.QUERY_COMPILER_EXCLUDE) {
+    const excludePaths = process.env.QUERY_COMPILER_EXCLUDE.split(`,`)
+    files = files.filter(
+      file => !excludePaths.some(excluded => file.indexOf(excluded) !== -1)
+    )
+  }
+
   const parser = new FileParser({ parentSpan: parentSpan })
 
   return await parser.parseFiles(files, addError)
