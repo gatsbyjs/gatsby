@@ -1,4 +1,6 @@
 {
+  //Marvelous Project
+  
   extends: [
     ":separateMajorReleases",
     ":combinePatchMinorReleases",
