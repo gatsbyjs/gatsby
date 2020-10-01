@@ -119,12 +119,12 @@ describe(`report.error`, () => {
   })
 
   it(`logFailureWithPluginName`, () => {
-    const errorSpy = jest.spyOn(reporter, "error")
+    const errorSpy = jest.spyOn(reporter, `error`)
 
     reporter.logFailureWithPluginName({
       methodName: `error`,
       pluginName: `tester`,
-    })({ id: "test", context: { sourceMessage: `test` } })
+    })({ id: `test`, context: { sourceMessage: `test` } })
 
     expect(errorSpy).toHaveBeenCalledWith(
       expect.objectContaining({

@@ -119,7 +119,7 @@ class Reporter {
   }: {
     methodName: string
     pluginName: string
-  }) => (errorMeta: ErrorMeta, error?: Error | Array<Error>) => {
+  }) => (errorMeta: ErrorMeta, error?: Error | Array<Error>): void => {
     if (typeof errorMeta === `object`) {
       const id = errorMeta && errorMeta[`id`]
 
