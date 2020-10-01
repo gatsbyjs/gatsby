@@ -1,5 +1,6 @@
 import { Node, GatsbyCache, Reporter } from "gatsby"
 import { fluid, fixed, traceSVG } from "gatsby-plugin-sharp"
+import { SharpProps } from "./utils"
 
 export async function getCustomSharpFields({
   isFixed,
@@ -10,54 +11,50 @@ export async function getCustomSharpFields({
 }: {
   isFixed: boolean
   file: Node
-  args: any // TODO: type this correctly
+  args: SharpProps
   reporter: Reporter
   cache: GatsbyCache
 }): Promise<{
-  srcWebP: string | null
-  srcSetWebP: string | null
-  tracedSVG: string | null
+  srcWebP?: string
+  srcSetWebP?: string
+  tracedSVG?: string
 }> {
-  const { webP, tracedSVG } = args
-  const customSharpFields = {
-    srcWebP: null,
-    srcSetWebP: null,
-    tracedSVG: null,
-  }
+  const { webP, tracedSVG: createTracedSVG } = args
 
-  if (webP) {
+  let srcWebP: string | undefined
+  let tracedSVG: string | undefined
+  let srcSetWebP: string | undefined
+
+  if (webP && file.extension !== `webp`) {
     // If the file is already in webp format or should explicitly
     // be converted to webp, we do not create additional webp files
-    if (file.extension !== `webp`) {
-      const generatedWebP = await (isFixed
-        ? fixed({
-            file,
-            // TODO: need to get access to pathPrefix into these invocations
-            args: { ...args, toFormat: `webp` },
-            reporter,
-            cache,
-          })
-        : fluid({
-            file,
-            args: { ...args, toFormat: `webp` },
-            reporter,
-            cache,
-          }))
-      customSharpFields.srcWebP = generatedWebP.src
-      customSharpFields.srcSetWebP = generatedWebP.srcSet
-    }
+    const { src, srcSet } = await (isFixed
+      ? fixed({
+          file,
+          // TODO: need to get access to pathPrefix into these invocations
+          args: { ...args, toFormat: `webp` },
+          reporter,
+          cache,
+        })
+      : fluid({
+          file,
+          args: { ...args, toFormat: `webp` },
+          reporter,
+          cache,
+        }))
+    srcWebP = src
+    srcSetWebP = srcSet
   }
 
-  if (tracedSVG) {
-    const tracedSVG = await traceSVG({
+  if (createTracedSVG) {
+    tracedSVG = await traceSVG({
       file,
       args: { ...args, traceSVG: true },
       fileArgs: args,
       cache,
       reporter,
     })
-    customSharpFields.tracedSVG = tracedSVG
   }
 
-  return customSharpFields
+  return { srcSetWebP, srcWebP, tracedSVG }
 }

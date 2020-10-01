@@ -38,6 +38,10 @@ export function evaluateImageAttributes(
 export function hashOptions(options: unknown): string {
   return `${murmurhash(JSON.stringify(options))}`
 }
+
+/**
+ * Props that are passed to gatsby-image, rather than being used by Sharp
+ */
 export interface ISomeGatsbyImageProps {
   fadeIn?: boolean
   durationFadeIn?: number
@@ -99,14 +103,15 @@ export interface IFixedImageProps extends ICommonImageProps {
   height?: number
 }
 
-export type ImageProps = IFluidImageProps & IFixedImageProps & { src: string }
-export type AnyImageProps = (IFluidImageProps | IFixedImageProps) &
-  ICommonImageProps
-
 export type AllProps = IImageOptions &
   IFluidImageProps &
   IFixedImageProps &
   ISomeGatsbyImageProps & { src: string }
+
+export type ImageProps = Omit<AllProps, keyof ISomeGatsbyImageProps>
+export type SharpProps = Omit<ImageProps, "src" | "fixed" | "fluid">
+export type AnyImageProps = (IFluidImageProps | IFixedImageProps) &
+  ICommonImageProps
 
 export interface IImageOptions {
   webP?: boolean

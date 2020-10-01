@@ -3,7 +3,7 @@ import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
 import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
-import { ImageProps } from "./utils"
+import { ImageProps, SharpProps } from "./utils"
 import { getCustomSharpFields } from "./get-custom-sharp-fields"
 
 export interface IImageMetadata {
@@ -69,7 +69,7 @@ export async function writeImages({
 
 export async function writeImage(
   file: Node,
-  args: Omit<ImageProps, "src" | "fixed" | "fluid">,
+  args: SharpProps,
   reporter: Reporter,
   cache: GatsbyCache,
   isFixed: boolean,
