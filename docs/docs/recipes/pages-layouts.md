@@ -53,7 +53,7 @@ For example, components at `src/pages/index.js` and `src/pages/about.js` would a
 2. Add a component file to the pages directory:
 
 ```jsx:title=src/pages/about.js
-import React from "react"
+import React from "react";
 
 const AboutPage = () => (
   <main>
@@ -86,8 +86,8 @@ Routing for links internal to your Gatsby site relies on the `<Link />` componen
 1. Open the index page component (`src/pages/index.js`) and import the `<Link />` component from Gatsby. Add a `<Link />` component to the JSX code and give it a `to` property with the pathname value of `"/contact/"` to output an HTML link with Gatsby powers:
 
 ```jsx:title=src/pages/index.js
-import React from "react"
-import { Link } from "gatsby" // highlight-line
+import React from "react";
+import { Link } from "gatsby"; // highlight-line
 
 export default function Home() {
   return (
@@ -123,7 +123,7 @@ It's common to wrap pages with a React layout component, which makes it possible
 1. Create a layout component in `src/components`, where child components will be passed in as props:
 
 ```jsx:title=src/components/layout.js
-import React from "react"
+import React from "react";
 
 export default function Layout({ children }) {
   return (
@@ -137,9 +137,9 @@ export default function Layout({ children }) {
 2. Import and use the layout component in a page:
 
 ```jsx:title=src/pages/index.js
-import React from "react"
-import { Link } from "gatsby"
-import Layout from "../components/layout"
+import React from "react";
+import { Link } from "gatsby";
+import Layout from "../components/layout";
 
 export default function Home() {
   return (
@@ -229,7 +229,7 @@ exports.createPages = ({ actions }) => {
 4. Create a React component to serve as the template for your page that was used in `createPage`
 
 ```jsx:title=src/templates/dog-template.js
-import React from "react"
+import React from "react";
 
 export default function DogTemplate({ pageContext: { dog } }) {
   return (
