@@ -26,6 +26,8 @@ const createPluginConfig = pluginOptions => {
 }
 
 const Joi = joi.extend({
+  // This tells Joi to extend _all_ types with .dotenv(), see
+  // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
   type: /^s/,
   rules: {
     dotenv: {
