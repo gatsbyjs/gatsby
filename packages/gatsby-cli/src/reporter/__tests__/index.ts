@@ -117,4 +117,20 @@ describe(`report.error`, () => {
 
     expect(reporter.getErrorMap()[`TEST_PLUGIN_TEST_ERROR`]).toBeTruthy()
   })
+
+  it(`logFailureWithPluginName`, () => {
+    const errorSpy = jest.spyOn(reporter, "error")
+
+    reporter.logFailureWithPluginName({
+      methodName: `error`,
+      pluginName: `tester`,
+    })({ id: "test", context: { sourceMessage: `test` } })
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: `tester_test`,
+      }),
+      undefined
+    )
+  })
 })

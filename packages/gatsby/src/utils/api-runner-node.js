@@ -143,27 +143,14 @@ function extendLocalReporterToCatchPluginErrors({
   if (pluginName && reporter?.setErrorMapWithPluginName) {
     setErrorMap = reporter?.setErrorMapWithPluginName(pluginName)
 
-    function formatErrorMeta(method) {
-      return (errorMeta, error) => {
-        // if the plugin emits an id, we need to convert that into the namespaced
-        // id
-        const id = errorMeta?.id
+    error = reporter.logFailureWithPluginName({ method: `error`, pluginName })
 
-        if (id) {
-          errorMeta[`id`] = `${pluginName}_${id}`
-        }
+    panic = reporter.logFailureWithPluginName({ method: `panic`, pluginName })
 
-        console.log(`YOOOO`, errorMeta)
-
-        return reporter[method](errorMeta, error)
-      }
-    }
-
-    error = formatErrorMeta(`error`)
-
-    panic = formatErrorMeta(`panic`)
-
-    panicOnBuild = formatErrorMeta(`panicOnBuild`)
+    panicOnBuild = reporter.logFailureWithPluginName({
+      method: `panicOnBuild`,
+      pluginName,
+    })
   }
 
   return {

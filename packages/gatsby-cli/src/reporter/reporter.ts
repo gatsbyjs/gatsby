@@ -113,6 +113,24 @@ class Reporter {
     return process.exit(1)
   }
 
+  logFailureWithPluginName = ({
+    methodName,
+    pluginName,
+  }: {
+    methodName: string
+    pluginName: string
+  }) => (errorMeta: ErrorMeta, error?: Error | Array<Error>) => {
+    if (typeof errorMeta === `object`) {
+      const id = errorMeta && errorMeta[`id`]
+
+      if (id) {
+        errorMeta[`id`] = `${pluginName}_${id}`
+      }
+    }
+
+    this[methodName](errorMeta, error)
+  }
+
   panicOnBuild = (
     errorMeta: ErrorMeta,
     error?: Error | Array<Error>
