@@ -8,12 +8,11 @@ const extensions: Array<string> = [`.js`, `.jsx`, `.tsx`]
 export async function preprocessSource({
   filename,
   contents,
-  getNodesByType,
   cache,
   reporter,
   store,
+  createNodeId,
 }: PreprocessSourceArgs): Promise<string> {
-  console.log(`preprocess`)
   if (
     !contents.includes(`StaticImage`) ||
     !contents.includes(`gatsby-plugin-static-image`) ||
@@ -34,9 +33,15 @@ export async function preprocessSource({
 
   const images = extractStaticImageProps(ast)
 
-  const files = getNodesByType(`File`)
-
-  await writeImages({ images, cache, reporter, files, cacheDir })
+  const sourceDir = path.dirname(filename)
+  await writeImages({
+    images,
+    cache,
+    reporter,
+    cacheDir,
+    sourceDir,
+    createNodeId,
+  })
 
   return contents
 }

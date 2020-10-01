@@ -1,12 +1,12 @@
 import traverse from "@babel/traverse"
-import { hashOptions, evaluateImageAttributes } from "./utils"
+import { hashOptions, evaluateImageAttributes, ImageProps } from "./utils"
 import { NodePath } from "@babel/core"
 import { JSXOpeningElement } from "@babel/types"
 
 export const extractStaticImageProps = (
   ast: babel.types.File
-): Map<string, Record<string, unknown>> => {
-  const images: Map<string, Record<string, unknown>> = new Map()
+): Map<string, ImageProps> => {
+  const images: Map<string, ImageProps> = new Map()
 
   traverse(ast, {
     JSXOpeningElement(nodePath) {

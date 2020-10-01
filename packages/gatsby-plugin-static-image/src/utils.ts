@@ -97,7 +97,7 @@ export interface IFixedImageProps extends ICommonImageProps {
   height?: number
 }
 
-export type ImageProps = IFluidImageProps | IFixedImageProps
+export type ImageProps = IFluidImageProps & IFixedImageProps & { src: string }
 export type AnyImageProps = (IFluidImageProps | IFixedImageProps) &
   ICommonImageProps
 
