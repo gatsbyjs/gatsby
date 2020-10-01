@@ -84,7 +84,7 @@ Note that `gatsby-source-cloudinary` takes the following options:
 
 Here's a [link to the README](https://github.com/Chuloo/gatsby-source-cloudinary#query-parameters) for more information.
 
-## Gatsby-transformer-cloudinary
+## gatsby-transformer-cloudinary
 
 After sourcing media files from Cloudinary, you will be able to leverage Cloudinary’s media transformation capabilities. To do so, use `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/creating-a-transformer-plugin/) that is used to change image formats, styles and dimensions. It also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
 
