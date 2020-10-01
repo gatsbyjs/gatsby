@@ -88,20 +88,22 @@ module.exports = {
 }
 ```
 
-## How to style generated svg
+## How to style the anchor link
 
-Sometimes you would want to change the generated svg to better fit you website theme
+Sometimes you would like to style the generated anchor link because it does not fit the theme of your website.
 
-To style the generated SVG you can use the following css to add currentColor
+To style the generated anchor link you can use the following css to make it red
 
 ```
 a.anchor {
-  fill: currentColor
+  fill: 'red'
 }
 ```
 
-Or if you want to only target the svg (note that the first selector is faster than the one below but that's micro optimisations)
+If you want to only target the svg (note that the first selector is faster than the one below but that's micro optimisations)
 
 ```
-a.anchor > svg
+a.anchor > svg {
+    fill: 'red'
+}
 ```
