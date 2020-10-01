@@ -21,6 +21,7 @@ describe(`hot-reloading hooks`, () => {
     })
 
     cy.on("log:changed", e => {
+      // wait until gatsby tells us hot update is complete
       if (e.name === "xhr" && e.consoleProps.URL.includes("hot-update")) {
         deferred.resolve()
       }
@@ -30,7 +31,7 @@ describe(`hot-reloading hooks`, () => {
       `npm run update -- --file src/pages/hooks.js --replacements "count + 1:count + ${amount}" --exact`
     )
 
-    cy.log(deferred.promise)
+    // wait for hot update to complete
     cy.wrap(null).then(() => deferred.promise)
 
     cy.getTestElement(`increment`).click()
