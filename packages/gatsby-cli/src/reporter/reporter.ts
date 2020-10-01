@@ -48,17 +48,31 @@ class Reporter {
    * the reporter to extend the internal error map
    */
 
-  setErrorMap(entry: Record<ErrorId, IErrorMapEntry>): void {
+  setErrorMap = (entry: Record<ErrorId, IErrorMapEntry>): void => {
     this.errorMap = {
       ...this.errorMap,
       ...entry,
     }
   }
 
+  setErrorMapWithPluginName = name => {
+    return errorMap => {
+      const entries = Object.entries(errorMap)
+
+      const newErrorMap = entries.reduce((memo, [key, val]) => {
+        memo[`${name}_${key}`] = val
+
+        return memo
+      }, {})
+
+      return this.setErrorMap(newErrorMap)
+    }
+  }
+
   /**
    * Retrieve error map
    */
-  getErrorMap(): Record<ErrorId, IErrorMapEntry> {
+  getErrorMap = (): Record<ErrorId, IErrorMapEntry> => {
     // TODO: We always spread the internal error map to ensure our keys do not get overwritten
     return { ...this.errorMap, ...errorMap }
   }
