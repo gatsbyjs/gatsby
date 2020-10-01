@@ -153,7 +153,7 @@ function extendLocalReporterToCatchPluginErrors({
           errorMeta[`id`] = `${pluginName}_${id}`
         }
 
-        console.log("YOOOO", errorMeta)
+        console.log(`YOOOO`, errorMeta)
 
         return reporter[method](errorMeta, error)
       }

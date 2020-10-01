@@ -55,18 +55,18 @@ class Reporter {
     }
   }
 
-  setErrorMapWithPluginName = name => {
-    return errorMap => {
-      const entries = Object.entries(errorMap)
+  setErrorMapWithPluginName = (name: string) => (
+    entry: Record<ErrorId, IErrorMapEntry>
+  ): void => {
+    const entries = Object.entries(entry)
 
-      const newErrorMap = entries.reduce((memo, [key, val]) => {
-        memo[`${name}_${key}`] = val
+    const newErrorMap = entries.reduce((memo, [key, val]) => {
+      memo[`${name}_${key}`] = val
 
-        return memo
-      }, {})
+      return memo
+    }, {})
 
-      return this.setErrorMap(newErrorMap)
-    }
+    this.setErrorMap(newErrorMap)
   }
 
   /**

@@ -107,7 +107,7 @@ describe(`report.error`, () => {
   })
 
   it(`sets an errorMap by plugin name`, () => {
-    reporter.setErrorMapWithPluginName("TEST_PLUGIN")({
+    reporter.setErrorMapWithPluginName(`TEST_PLUGIN`)({
       TEST_ERROR: {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
