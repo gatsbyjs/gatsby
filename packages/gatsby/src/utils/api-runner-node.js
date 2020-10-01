@@ -129,8 +129,6 @@ function getLocalReporter({ activity, reporter }) {
   return reporter
 }
 
-
-
 function extendLocalReporterToCatchPluginErrors({ reporter, pluginName }) {
   let setErrorMap
 
@@ -158,14 +156,14 @@ function extendLocalReporterToCatchPluginErrors({ reporter, pluginName }) {
         if (args?.errorMeta?.id) {
           args.errorMeta.id = `${pluginName}_${id}`
         }
-    
+
         return reporter[method](...args)
       }
     }
 
     error = formatErrorMeta(`error`)
 
-    panic = formatErrorMeta(`panic`))
+    panic = formatErrorMeta(`panic`)
 
     panicOnBuild = formatErrorMeta(`panicOnBuild`)
   }
