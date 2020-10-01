@@ -88,7 +88,9 @@ module.exports = {
 }
 ```
 
-## Styling
+## How to style generated svg
+
+Sometimes you would want to change the generated svg to better fit you website theme
 
 To style the generated SVG you can use the following css to add currentColor
 
