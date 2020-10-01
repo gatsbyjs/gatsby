@@ -129,7 +129,11 @@ function getLocalReporter({ activity, reporter }) {
   return reporter
 }
 
-function extendLocalReporterToCatchPluginErrors({ reporter, pluginName }) {
+function extendLocalReporterToCatchPluginErrors({
+  reporter,
+  pluginName,
+  runningActivities,
+}) {
   let setErrorMap
 
   let error = reporter.error
@@ -345,6 +349,7 @@ const runAPI = async (plugin, api, args, activity) => {
     const extendedLocalReporter = extendLocalReporterToCatchPluginErrors({
       reporter: localReporter,
       pluginName: plugin.name,
+      runningActivities,
     })
 
     const endInProgressActivitiesCreatedByThisRun = () => {
