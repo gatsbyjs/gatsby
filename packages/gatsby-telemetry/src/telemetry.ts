@@ -1,6 +1,6 @@
 import uuidv4 from "uuid/v4"
 import os from "os"
-import { isCI, getCIName } from "gatsby-core-utils"
+import { isCI, getCIName, createContentDigest } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
@@ -73,6 +73,8 @@ export interface ITelemetryTagsPayload {
   name?: string
   starterName?: string
   siteName?: string
+  siteHash?: string
+  userAgent?: string
   pluginName?: string
   exitCode?: number
   duration?: number
@@ -118,6 +120,7 @@ export class AnalyticsTracker {
   repositoryId?: IRepositoryId
   features = new Set<string>()
   machineId: string
+  siteHash?: string = createContentDigest(process.cwd())
 
   constructor({
     componentId,
@@ -200,6 +203,20 @@ export class AnalyticsTracker {
       // ignore
     }
     return `-0.0.0`
+  }
+
+  trackCli(
+    type: string | Array<string> = ``,
+    tags: ITelemetryTagsPayload = {},
+    opts: ITelemetryOptsPayload = { debounce: false }
+  ): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    if (typeof tags.siteHash === `undefined`) {
+      tags.siteHash = this.siteHash
+    }
+    this.captureEvent(type, tags, opts)
   }
 
   captureEvent(
@@ -369,7 +386,7 @@ export class AnalyticsTracker {
     return osInfo
   }
 
-  trackActivity(source: string): void {
+  trackActivity(source: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -379,7 +396,7 @@ export class AnalyticsTracker {
     const debounceTime = 5 * 1000 // 5 sec
 
     if (now - last > debounceTime) {
-      this.captureEvent(source)
+      this.captureEvent(source, tags)
     }
     this.debouncer[source] = now
   }
