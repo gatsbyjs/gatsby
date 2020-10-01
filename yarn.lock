@@ -10306,12 +10306,13 @@ file-entry-cache@^5.0.1:
   dependencies:
     flat-cache "^2.0.1"
 
-file-loader@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-1.1.11.tgz#6fe886449b0f2a936e43cabaac0cdbfb369506f8"
+file-loader@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-6.1.0.tgz#65b9fcfb0ea7f65a234a1f10cdd7f1ab9a33f253"
+  integrity sha512-26qPdHyTsArQ6gU4P1HJbAbnFTyT2r0pG7czh1GFAd9TZbj0n94wWbupgixZH/ET/meqi2/5+F7DhW4OAXD+Lg==
   dependencies:
-    loader-utils "^1.0.2"
-    schema-utils "^0.4.5"
+    loader-utils "^2.0.0"
+    schema-utils "^2.7.1"
 
 file-match@^1.0.1:
   version "1.0.2"
@@ -21923,13 +21924,6 @@ scheduler@^0.19.1:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-
-schema-utils@^0.4.5:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.4.7.tgz#ba74f597d2be2ea880131746ee17d0a093c68187"
-  dependencies:
-    ajv "^6.1.0"
-    ajv-keywords "^3.1.0"
 
 schema-utils@^1.0.0:
   version "1.0.0"
