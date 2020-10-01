@@ -4,6 +4,7 @@ import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
 import { ImageProps } from "./utils"
+import { getCustomSharpFields } from "./get-custom-sharp-fields"
 
 export interface IImageMetadata {
   isFixed: boolean
@@ -76,9 +77,21 @@ export async function writeImage(
 ): Promise<void> {
   try {
     const options = { file, args, reporter, cache }
-    const data = await (isFixed ? fixedSharp(options) : fluidSharp(options))
+    // get standard set of fields from sharp
+    const sharpData = await (isFixed
+      ? fixedSharp(options)
+      : fluidSharp(options))
+    if (sharpData) {
+      // get the equivalent webP and tracedSVG fields gatsby-transformer-sharp handles normally
+      const customSharpFields = await getCustomSharpFields({
+        isFixed,
+        file,
+        args,
+        reporter,
+        cache,
+      })
+      const data = { ...sharpData, ...customSharpFields }
 
-    if (data) {
       await fs.writeJSON(filename, data)
     } else {
       console.log(`Could not process image`)
