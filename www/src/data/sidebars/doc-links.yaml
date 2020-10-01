@@ -122,6 +122,9 @@
             - title: Deploying to 21YunBox
               link: /docs/deploying-to-21yunbox/
               breadcrumbTitle: 21YunBox Hosting
+            - title: Deploying to the Moovweb XDN
+              link: /docs/deploying-to-moovweb-xdn/
+              breadcrumbTitle: Moovweb XDN
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
