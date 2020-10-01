@@ -39,7 +39,7 @@ Before file nodes are created, Cloudinary optimizes media files queried from its
 
 ## gatsby-transformer-cloudinary Plugin
 
-[`gatsby-image`](/docs/using-gatsby-image/) is a React component that delivers optimized images in Gatsby apps through GraphQL queries. The gatsby-transformer-cloudinary plugin uploads local files to Cloudinary, which then creates `CloudinaryAsset` nodes that are compatible for use in `gatsby-image`. This plugin can also apply Cloudinary media transformations in the GraphQL queries for the queried media assets.
+[`gatsby-image`](/docs/using-gatsby-image/) is a React component that delivers optimized images in Gatsby apps through GraphQL queries. The `gatsby-transformer-cloudinary` plugin uploads local files to Cloudinary, which then creates `CloudinaryAsset` nodes that are compatible for use in `gatsby-image`. This plugin can also apply Cloudinary media transformations in the GraphQL queries for the queried media assets.
 
 ## Preliminary Steps
 
