@@ -9,9 +9,8 @@ import {
   BooleanLiteral,
   ArrayExpression,
   TemplateLiteral,
-  ObjectProperty,
 } from "@babel/types"
-
+import template from "@babel/template"
 type AttrType =
   | StringLiteral
   | NumericLiteral
@@ -57,10 +56,6 @@ export default function attrs({
     )
   }
 
-  function generateProperties([key, val]): ObjectProperty {
-    return t.objectProperty(t.stringLiteral(key), generateLiteral(val))
-  }
-
   return {
     visitor: {
       JSXOpeningElement(nodePath): void {
@@ -85,6 +80,8 @@ export default function attrs({
           console.warn(error)
         }
 
+        const noSrc = errors.includes(`src`)
+
         const hash = hashOptions(props)
 
         const cacheDir = (this.opts as Record<string, string>)?.cacheDir
@@ -95,10 +92,12 @@ export default function attrs({
 
         const filename = path.join(cacheDir, `${hash}.json`)
         let data: Record<string, unknown> | undefined
-        try {
-          data = fs.readJSONSync(filename)
-        } catch (e) {
-          console.warn(`Could not read file ${filename}`, e)
+        if (!noSrc) {
+          try {
+            data = fs.readJSONSync(filename)
+          } catch (e) {
+            console.warn(`Could not read file ${filename}`, e)
+          }
         }
 
         if (!data) {
@@ -122,12 +121,12 @@ export default function attrs({
           nodePath.node.attributes.push(newProp)
         }
 
-        const expressions = Object.entries(data).map(generateProperties)
+        const makeRequire = template.expression(`require("${filename}")`)
 
         const newProp = t.jsxAttribute(
           t.jsxIdentifier(`parsedValues`),
 
-          t.jsxExpressionContainer(t.objectExpression(expressions))
+          t.jsxExpressionContainer(makeRequire())
         )
 
         nodePath.node.attributes.push(newProp)

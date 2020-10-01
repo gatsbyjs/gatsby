@@ -19,7 +19,6 @@ export async function preprocessSource({
     !contents.includes(`gatsby-plugin-static-image`) ||
     !extensions.includes(path.extname(filename))
   ) {
-    console.log(`not found in`, filename)
     return contents
   }
   const root = store.getState().program.directory
@@ -30,8 +29,6 @@ export async function preprocessSource({
     `caches`,
     `gatsby-plugin-static-image`
   )
-
-  console.log(`yes found in`, filename)
 
   const ast = babelParseToAst(contents, filename)
 
