@@ -164,6 +164,7 @@ class Reporter {
     }
 
     const structuredError = constructError({ details }, this.getErrorMap())
+
     if (structuredError) {
       reporterActions.createLog(structuredError)
     }
