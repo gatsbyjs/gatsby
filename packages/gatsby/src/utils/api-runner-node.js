@@ -157,8 +157,9 @@ function extendLocalReporterToCatchPluginErrors({
       return (...args) => {
         // if the plugin emits an id, we need to convert that into the namespaced
         // id
-        if (args?.errorMeta?.id) {
-          args.errorMeta.id = `${pluginName}_${id}`
+        const id = args?.errorMeta?.id
+        if (id) {
+          args.errorMeta[`id`] = `${pluginName}_${id}`
         }
 
         return reporter[method](...args)
