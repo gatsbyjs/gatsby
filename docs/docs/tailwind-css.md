@@ -39,7 +39,7 @@ npx tailwindcss init
 1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
 
 ```shell
-npm install gatsby-plugin-postcss
+npm install postcss gatsby-plugin-postcss
 ```
 
 2. Include the plugin in your `gatsby-config.js` file.
