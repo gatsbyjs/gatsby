@@ -55,6 +55,7 @@ Then add a `deploy` script to `package.json` in your repository's codebase:
 ```
 
 If you are using a custom domain, edit the deploy script to output a CNAME file to the public directory before publishing to preserve your custom domain:
+
 ```json:title=package.json
 {
   "scripts": {
