@@ -232,7 +232,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 
 1. Install the Gatsby plugin [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/) and `node-sass`.
 
-`npm install node-sass gatsby-plugin-sass`
+`npm i node-sass gatsby-plugin-sass`
 
 2. Include the plugin in your `gatsby-config.js` file.
 
@@ -323,7 +323,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
-npm install gatsby-plugin-emotion @emotion/core @emotion/styled
+npm i gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
