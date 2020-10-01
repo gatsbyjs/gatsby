@@ -32,7 +32,7 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dt/gatsby.svg" alt="Total downloads on npm." />
   </a>
-  <a href="https://gatsbyjs.com/contributing/how-to-contribute/">
+  <a href="https://www.gatsbyjs.com/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
@@ -124,7 +124,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
-At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
+At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://www.gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
 
 ## 🎓 Learning Gatsby
 
