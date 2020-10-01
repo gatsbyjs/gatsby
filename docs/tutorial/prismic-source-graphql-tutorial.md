@@ -333,7 +333,7 @@ Finally, return to your Gatsby configuration file to activate the feature.
 }
 ```
 
-Your blog is ready to handle previews now. Just edit any of your blog posts in your Prismic repository and preview the changes you've made instead of publishing it. Previews are not limited to the development environment, you can adjust the endpoint configuration to work for the hosted version you deploy. Content writers can use it as a staging environment to preview their content changes without having to rebuild your site, and before publishing.
+Your blog is ready to handle previews now. Edit any of your blog posts in your Prismic repository and preview the changes you've made instead of publishing it. Previews are not limited to the development environment, you can adjust the endpoint configuration to work for the hosted version you deploy. Content writers can use it as a staging environment to preview their content changes without having to rebuild your site, and before publishing.
 
 ## What did you just build?
 
