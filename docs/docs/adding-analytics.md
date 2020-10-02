@@ -30,7 +30,7 @@ You can find this tracking ID later by going to `Admin > Tracking Info > Trackin
 
 Now, it's time to configure Gatsby to send page views to your Google Analytics account.
 
-We are going to use `gatsby-plugin-gtag`. For the other analytics option (that uses the older `analytics.js` instead of `gtag.js`), check [`gatsby-plugin-google-analytics`](#using-raw-gatsbyplugingoogleanalytics-endraw-).
+We are going to use `gatsby-plugin-gtag`.
 
 ```shell
 npm install --save gatsby-plugin-gtag
@@ -58,34 +58,9 @@ There are a number of extra configuration options--both with the Gatsby plugin a
 
 Once this is configured you can deploy your site to test! If you navigate to the homepage of Google Analytics, you should see a dashboard with different statistics.
 
-## Using `gatsby-plugin-google-analytics`
-
-This is one of the other plugins to implement Google Analytics to your website, What makes this plugin different from the above one is that it uses `analytics.js`. Google is recommending developers to upgrade from `analytics.js` to `gtag.js`, you can read more on this on [this article](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs)
-
-```shell
-npm install gatsby-plugin-google-analytics
-```
-
-```js:title=gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
-        trackingId: "UA-XXXXXXXXX-X",
-      },
-    },
-  ],
-}
-```
-
-> Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
-
-Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
-
 ## Other Gatsby analytics plugins
 
+- [Google Analytics](/packages/gatsby-plugin-google-analytics/)
 - [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
 - [Segment](/packages/gatsby-plugin-segment-js)
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
