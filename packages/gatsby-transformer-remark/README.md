@@ -1,4 +1,4 @@
-# gatsby-transformer-remark
+# `gatsby-transformer-remark`
 
 Parses Markdown files using [Remark](http://remark.js.org/).
 

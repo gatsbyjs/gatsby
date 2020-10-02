@@ -11,7 +11,7 @@ Plugin documentation:
 local files linked to/from markdown to your `public` folder."_
 
 HTML small test (see the
-[gatsby/#2696](https://github.com/gatsbyjs/gatsby/issues/2696)--_"[gatsby-transformer-remark]
+[gatsby/#2696](https://github.com/gatsbyjs/gatsby/issues/2696)--_"[`gatsby-transformer-remark`]
 Content of inline HTML tags from markdown source is outside of tags in HTML
 output."_):
 

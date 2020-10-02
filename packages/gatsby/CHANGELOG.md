@@ -4425,7 +4425,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Add babel-plugin-macros for custom babel config (#7129) @porfirioribeiro
 - Upgrade webpack to v3, improve webpack utils (#3126) @jquense
 - Add gatsby-remark-graphviz plugin to render dot (graphviz) code blocks to SVG (#7341) @Moocar
-- Improve support for non-latin language content in gatsby-transformer-remark (#6992) @youngboy
+- Improve support for non-latin language content in `gatsby-transformer-remark` (#6992) @youngboy
 - Improve support for Drupal relationships in gatsby-source-drupal (#5020) @pieh
 - Add support for extra connection string params in gatsby-source-mongodb (#5972) @lcostea
 - Add support for additional options supplied to gatsby-plugin-styled-components (#5240) @nihgwu

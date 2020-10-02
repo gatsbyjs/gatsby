@@ -19,7 +19,7 @@ with anchor links for us.
 
 ## Markdown in Gatsby
 
-Markdown parsing in Gatsby is done with [gatsby-transformer-remark][1], which
+Markdown parsing in Gatsby is done with [`gatsby-transformer-remark`][1], which
 uses the excellent [remark][2] under the hood.\
 Alongside remark we also use [gatsby-remark-smartypants][6], which provides smart
 punctuation through [retext-smartypants][7].

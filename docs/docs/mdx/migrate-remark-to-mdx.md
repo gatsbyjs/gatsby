@@ -17,7 +17,7 @@ npm install @mdx-js/mdx @mdx-js/react gatsby-plugin-mdx
 npm remove gatsby-transformer-remark
 ```
 
-## Replacing gatsby-transformer-remark with gatsby-plugin-mdx
+## Replacing `gatsby-transformer-remark` with gatsby-plugin-mdx
 
 In your `gatsby-config.js` file, replace `gatsby-transformer-remark` with `gatsby-plugin-mdx`. Most sub-plugins of `gatsby-transformer-remark` can still work with `gatsby-plugin-mdx` by updating the plugins option to `gatsbyRemarkPlugins`.
 

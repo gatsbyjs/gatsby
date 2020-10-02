@@ -73,7 +73,7 @@ This recipe shows how to create pages from Markdown files on your local filesyst
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 - The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
-- The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
+- The [`gatsby-transformer-remark` plugin](/packages/gatsby-transformer-remark) installed
 - A `gatsby-node.js` file
 
 ### Directions

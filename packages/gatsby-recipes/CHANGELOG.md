@@ -476,7 +476,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - update packages ([#23525](https://github.com/gatsbyjs/gatsby/issues/23525)) ([e65dd1e](https://github.com/gatsbyjs/gatsby/commit/e65dd1e))
-- **gatsby-recipes:** remove gatsby-transformer-remark package from mdx-images recipe ([#23511](https://github.com/gatsbyjs/gatsby/issues/23511)) ([f261d6e](https://github.com/gatsbyjs/gatsby/commit/f261d6e))
+- **gatsby-recipes:** remove `gatsby-transformer-remark` package from mdx-images recipe ([#23511](https://github.com/gatsbyjs/gatsby/issues/23511)) ([f261d6e](https://github.com/gatsbyjs/gatsby/commit/f261d6e))
 
 ### Features
 
