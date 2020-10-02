@@ -29,21 +29,23 @@ This component lets you write this instead:
 
 ```js
 import React from "react"
-import { StaticImage as Img } from "gatsby-plugin-static-image"
+import { StaticImage } from "gatsby-plugin-static-image"
 
-export const Dino = () => <Img height={100} src="trex.png" alt="T-Rex" />
+export const Dino = () => (
+  <StaticImage height={100} src="trex.png" alt="T-Rex" />
+)
 ```
 
-The `src` prop is an image `relativePath`, so you need to ensure it's in a folder that is parsed by gatsby-source-filesystem.
+The `src` prop is relative to the source file, like in static HTML
 
 You can pass in options that match ones passed to the `ImageSharp` query:
 
 ```js
 import React from "react"
-import { StaticImage as Img } from "gatsby-plugin-static-image"
+import { StaticImage } from "gatsby-plugin-static-image"
 
 export const Dino = () => (
-  <Img
+  <StaticImage
     src="trex.png"
     base64={false}
     fluid
@@ -80,7 +82,7 @@ export const Dino = () => {
 
 ## How does it work?
 
-When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-static-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, loads the JSON file with the sharp object, then adds it as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop. Errors don't cause the build to fail, but instead are written to the component as an `__error` prop, which is then logged in develop.
+When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-static-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, then adds a `require()` to that JSON file it as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop. Errors don't cause the build to fail, but instead are written to the component as an `__error` prop, which is then logged in develop.
 
 ### Are there restrictions to how this is used?
 
@@ -101,7 +103,7 @@ The props must be able to be statically-analyzed at build time. You can't pass t
 }
 ```
 
-You can use variables and expressions if they're in the scope of the component, e.g.:
+You can use variables and expressions if they're in the scope of the file, e.g.:
 
 ```js
 //OK
@@ -113,8 +115,10 @@ You can use variables and expressions if they're in the scope of the component, 
 
 ```js
 //Also OK
+
+const width = 300
+
 () => {
-    const width = 300
     const height = width * 16 / 9
     return <Img src="trex-png" width={width} height={height}>
 }
@@ -123,7 +127,7 @@ You can use variables and expressions if they're in the scope of the component, 
 ## Installation
 
 ```bash
-npm install gatsby-plugin-static-image
+npm install gatsby@static-image gatsby-plugin-static-image@static-image
 ```
 
 ...then add it to your `gatsby-config.js`:
