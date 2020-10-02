@@ -13,6 +13,8 @@ const normalize = require(`../normalize`)
 
 const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
 
+const pluginOptions = { spaceId: `testSpaceId` }
+
 const createMockCache = () => {
   return {
     get: jest.fn(),
@@ -271,17 +273,20 @@ describe(`gatsby-node`, () => {
     fetch.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     testIfContentTypesExists(startersBlogFixture.initialSync().contentTypeItems)
     testIfEntriesExists(
@@ -295,19 +300,26 @@ describe(`gatsby-node`, () => {
     )
 
     // Tries to load data from cache
-    expect(cache.get).toHaveBeenCalledWith(`syncToken`)
-    expect(cache.get).toHaveBeenCalledWith(`previousSyncData`)
+    expect(cache.get).toHaveBeenCalledWith(
+      `contentful-sync-token-testSpaceId-master`
+    )
+    expect(cache.get).toHaveBeenCalledWith(
+      `contentful-sync-data-testSpaceId-master`
+    )
     expect(cache.get.mock.calls.length).toBe(2)
 
     // Stores sync token and raw/unparsed data to the cache
     expect(cache.set).toHaveBeenCalledWith(
-      `syncToken`,
+      `contentful-sync-token-testSpaceId-master`,
       startersBlogFixture.initialSync().currentSyncData.nextSyncToken
     )
-    expect(cache.set).toHaveBeenCalledWith(`previousSyncData`, {
-      entries: startersBlogFixture.initialSync().currentSyncData.entries,
-      assets: startersBlogFixture.initialSync().currentSyncData.assets,
-    })
+    expect(cache.set).toHaveBeenCalledWith(
+      `contentful-sync-data-testSpaceId-master`,
+      {
+        entries: startersBlogFixture.initialSync().currentSyncData.entries,
+        assets: startersBlogFixture.initialSync().currentSyncData.assets,
+      }
+    )
     expect(cache.set.mock.calls.length).toBe(2)
   })
 
@@ -331,17 +343,20 @@ describe(`gatsby-node`, () => {
     )
 
     // initial sync
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     // check if blog posts do not exists
     createdBlogEntryIds.forEach(entryId => {
@@ -349,17 +364,20 @@ describe(`gatsby-node`, () => {
     })
 
     // add new blog post
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
     testIfContentTypesExists(
       startersBlogFixture.createBlogPost().contentTypeItems
     )
@@ -400,47 +418,56 @@ describe(`gatsby-node`, () => {
     )
 
     // initial sync
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     // create blog post
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     updatedBlogEntryIds.forEach(blogEntryId => {
       expect(getNode(blogEntryId).title).toBe(`Integration tests`)
     })
 
     // updated blog post
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     testIfContentTypesExists(
       startersBlogFixture.updateBlogPost().contentTypeItems
@@ -486,30 +513,36 @@ describe(`gatsby-node`, () => {
     )
 
     // initial sync
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     // create blog post
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     let authorIds = []
     // check if blog post exists
@@ -520,17 +553,20 @@ describe(`gatsby-node`, () => {
     })
 
     // remove blog post
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     testIfContentTypesExists(
       startersBlogFixture.removeBlogPost().contentTypeItems
@@ -567,17 +603,20 @@ describe(`gatsby-node`, () => {
     )
 
     // initial sync
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     // create blog post
     await gatsbyNode.sourceNodes({
@@ -604,17 +643,20 @@ describe(`gatsby-node`, () => {
     )
 
     // remove asset
-    await gatsbyNode.sourceNodes({
-      actions,
-      store,
-      getNodes,
-      getNode,
-      reporter,
-      createNodeId,
-      cache,
-      getCache,
-      schema,
-    })
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
 
     testIfContentTypesExists(startersBlogFixture.removeAsset().contentTypeItems)
     testIfEntriesExists(
