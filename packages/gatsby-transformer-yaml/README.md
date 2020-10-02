@@ -1,4 +1,4 @@
-# gatsby-transformer-yaml
+# `gatsby-transformer-yaml`
 
 Parses YAML files. Supports arrays of objects and single objects.
 
