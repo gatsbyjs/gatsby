@@ -420,6 +420,18 @@ const errors = {
     type: Type.PLUGIN,
     level: Level.ERROR,
   },
+  // Invalid plugin options
+  "11331": {
+    text: (context): string =>
+      [
+        stripIndent(`
+          Invalid plugin options.
+        `),
+      ]
+        .concat([``].concat(context.errors))
+        .join(`\n`),
+    level: Level.ERROR,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
