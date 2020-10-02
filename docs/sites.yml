@@ -11835,3 +11835,13 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Tanay Pratap Website
+  url: https://tanaypratap.com
+  main_url: https://tanaypratap.com
+  description: >
+    TanayPratap builds Teams for Microsoft by the day & learn stuff from Internet by the night.
+  categories:
+    - Blog
+  built_by: Tanay Pratap
+  built_by_url: https://tanaypratap.com
+  featured: false
