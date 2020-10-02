@@ -79,7 +79,7 @@ Then install some other needed dependencies at the root of the project. You'll u
 npm install gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
 ```
 
-Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
+Set up a site similar to what you ended within [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
