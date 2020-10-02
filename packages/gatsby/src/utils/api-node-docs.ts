@@ -1,3 +1,5 @@
+import { JoiObject } from "joi"
+
 /**
  * Lets plugins implementing support for other compile-to-js add to the list
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
@@ -428,3 +430,10 @@ export const onPreExtractQueries = true
  * }
  */
 export const onCreateDevServer = true
+
+/**
+ * Called during `gatsby develop` bootstrap to get and validate a plugins options schema
+ * @param {Joi} $0.Joi The instance of Joi to define the schema with
+ *
+ */
+export const pluginOptionsSchema = true
