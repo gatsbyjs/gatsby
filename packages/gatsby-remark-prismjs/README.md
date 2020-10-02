@@ -92,7 +92,7 @@ plugins: [
 #### Required: Pick a PrismJS theme or create your own
 
 PrismJS ships with a number of [themes][5] (previewable on the [PrismJS
-website][6]) that you can easily include in your Gatsby site, or you can build
+website][6]) that you can include in your Gatsby site, or you can build
 your own by copying and modifying an example (which is what we've done for
 [gatsbyjs.org](https://gatsbyjs.org)).
 

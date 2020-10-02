@@ -1,6 +1,10 @@
 # gatsby-plugin-google-tagmanager
 
+<<<<<<< HEAD
 Add Google Tag Manager to your Gatsby site.
+=======
+How to add Google Tag Manager to your Gatsby site.
+>>>>>>> 7309868e5609126751edc5b14c2b0c115ed1d0ed
 
 ## Install
 
