@@ -133,7 +133,7 @@ export const query = graphql`
 
 ### Available fragments
 
-These are the fragments available on image assets, which allows easy lookup of the fields required by gatsby-image in various modes:
+These are the fragments available on image assets, which allows lookup of the fields required by gatsby-image in various modes:
 
 - `GatsbySanityImageFixed`
 - `GatsbySanityImageFixed_noBase64`
@@ -228,7 +228,7 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 ## Using .env variables
 
-If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
+If you don't want to attach your Sanity project's ID to the repo, you can store it in .env files by doing the following:
 
 ```text:title=.env
 SANITY_PROJECT_ID = abc123

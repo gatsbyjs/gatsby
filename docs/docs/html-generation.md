@@ -99,6 +99,6 @@ So, we've built the means to generate HTML for a page. This webpack bundle is sa
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. By default, the [render-html.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker/render-html.ts) creates a pool of workers equal to the number of physical cores on your machine. You can configure the number of pools by passing an optional environment variable, [`GATSBY_CPU_COUNT`](/docs/multi-core-builds). It then partitions the pages into groups and sends them to the workers, which run [worker](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker).
 
-The workers simply iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the HTML for the page's path in `/public`.
+The workers iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the HTML for the page's path in `/public`.
 
 Once all workers have finished, we're done!

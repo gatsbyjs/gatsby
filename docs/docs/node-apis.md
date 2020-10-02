@@ -32,7 +32,7 @@ exports.createPages = (_, pluginOptions, cb) => {
 }
 ```
 
-If your plugin does not do async work, you can just return directly.
+If your plugin does not do async work, you can return directly.
 
 ## Usage
 
