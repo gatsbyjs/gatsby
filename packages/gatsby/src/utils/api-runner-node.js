@@ -129,7 +129,7 @@ function getLocalReporter({ activity, reporter }) {
   return reporter
 }
 
-function extendErrorIdWithPluginName(errorMeta) {
+function extendErrorIdWithPluginName(pluginName, errorMeta) {
   if (typeof errorMeta === `object`) {
     const id = errorMeta && errorMeta[`id`]
 
@@ -168,19 +168,19 @@ function extendLocalReporterToCatchPluginErrors({
     }
 
     error = (errorMeta, error) => {
-      extendErrorIdWithPluginName(errorMeta)
+      extendErrorIdWithPluginName(pluginName, errorMeta)
 
       return reporter.error(errorMeta, error)
     }
 
     panic = (errorMeta, error) => {
-      extendErrorIdWithPluginName(errorMeta)
+      extendErrorIdWithPluginName(pluginName, errorMeta)
 
       return reporter.panic(errorMeta, error)
     }
 
     panicOnBuild = (errorMeta, error) => {
-      extendErrorIdWithPluginName(errorMeta)
+      extendErrorIdWithPluginName(pluginName, errorMeta)
 
       return reporter.panicOnBuild(errorMeta, error)
     }

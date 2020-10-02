@@ -30,33 +30,16 @@ describe(`Plugin Errors`, () => {
 
     await new Promise(resolve => {
       gatsbyProcess.on(`message`, msg => {
-        console.log(msg)
         events.push(msg)
       })
 
       gatsbyProcess.on(`exit`, exitCode => {
-        console.log(exitCode)
         resolve()
       })
     })
   })
 
   it(`Sets up errorMap inPreInit and panic with structured error`, () => {
-    expect(events).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          type: `LOG_ACTION`,
-          action: expect.objectContaining({
-            type: `LOG`,
-            payload: expect.objectContaining({
-              text: "setErrorMap",
-              level: "INFO",
-            }),
-          }),
-        }),
-      ])
-    )
-
     expect(events).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
