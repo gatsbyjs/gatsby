@@ -2,7 +2,7 @@
 title: Creating Pages from the File System
 ---
 
-This page roughly documents the APIs and conventions available with the new file-based page creation features.
+This page documents the APIs and conventions available with "Unified Routes", a suite of new APIs and conventions to make the file system the primary way of creating pages. While the [`createPage`](/docs/actions/#createPage) Node API won't go away you should be able to accomplish most common tasks with this file-based API.
 
 For now, these features are marked as experimental and require a flag to utilize. Start your Gatsby site locally with the following flag:
 
@@ -16,29 +16,29 @@ Use client-only routes if you have dynamic data that does not live in Gatsby. Th
 
 For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL. You can now use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL.
 
-- `/src/pages/users/[id].js => /users/:id`
-- `/src/pages/users/[id]/group/[groupId].js => /users/:id/group/:groupId`
+- `src/pages/users/[id].js => /users/:id`
+- `src/pages/users/[id]/group/[groupId].js => /users/:id/group/:groupId`
 
 Gatsby also supports _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
-- `/src/pages/image/[...awsKey].js => /users/*awsKey`
-- `/src/pages/image/[...].js => /app/*`
+- `src/pages/image/[...awsKey].js => /image/*awsKey`
+- `src/pages/image/[...].js => /image/*`
 
 Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
-```js:title=/src/pages/users/[id].js
+```js:title=src/pages/users/[id].js
 function UserPage(props) {
   const id = props.params.id
 }
 ```
 
-```js:title=/src/pages/image/[...awsKey].js
+```js:title=src/pages/image/[...awsKey].js
 function ProductsPage(props) {
   const splat = props.params.awsKey
 }
 ```
 
-```js:title=/src/pages/image/[...].js
+```js:title=src/pages/image/[...].js
 function AppPage(props) {
   const splat = props.params[‘*’]
 }
@@ -48,13 +48,13 @@ function AppPage(props) {
 
 Developers can create multiple pages from a model based on the collection of nodes within it. To do that, use curly braces (`{ }`) to signify dynamic URL segments that relate to a field within the node. There is some special logic that can happen in here. Here are a few examples:
 
-- `/src/pages/products/{Product.name}.js => /products/burger`
-- `/src/pages/products/{Product.fields__sku}.js => /products/001923`
-- `/src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js => /blog/learning-gatsby`
+- `src/pages/products/{Product.name}.js => /products/burger`
+- `src/pages/products/{Product.fields__sku}.js => /products/001923`
+- `src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js => /blog/learning-gatsby`
 
 Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. For example:
 
-`/src/pages/products/{Product.name}.js` generates the following query:
+`src/pages/products/{Product.name}.js` generates the following query:
 
 ```graphql
 allProduct {
@@ -65,7 +65,7 @@ allProduct {
 }
 ```
 
-`/src/pages/products/{Product.fields__sku}.js` generates the following query:
+`src/pages/products/{Product.fields__sku}.js` generates the following query:
 
 ```graphql
 allProduct {
@@ -78,7 +78,7 @@ allProduct {
 }
 ```
 
-`/src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js` generates the following query:
+`src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js` generates the following query:
 
 ```graphql
 allMarkdownRemark {
@@ -99,7 +99,7 @@ This is the query that Gatsby uses to grab all the nodes and create a page for e
 
 Page components act the exact same way. Gatsby will create an instance of it for each node it finds in it’s querying. If a user needs to customize the query used for collecting the nodes, that can be done with a special export. Much akin to page queries. Here’s an example.
 
-```jsx:title=/src/pages/products/{Product.name}.js
+```jsx:title=src/pages/products/{Product.name}.js
 import { unstable_collectionGraphql } from "gatsby"
 
 export default function Component(props) {
@@ -137,12 +137,12 @@ To address this issue, Gatsby automatically includes a `gatsbyPath` field on eve
 
 Assume that a `Product` model is used in two pages:
 
-- `/src/pages/products/{Product.name}.js`
-- `/src/pages/discounts/{Product.name}.js`
+- `src/pages/products/{Product.name}.js`
+- `src/pages/discounts/{Product.name}.js`
 
 If you wanted to link to the `products/{Product.name}` route from your home page, you would have a component like this:
 
-```jsx:title=/src/pages/index.js
+```jsx:title=src/pages/index.js
 import { Link, graphql } from "gatsby"
 
 export default function HomePage(props) {
@@ -167,7 +167,7 @@ export const query = graphql`
 
 By using a combination of a collection route with a client only route, you can create a great experience when a user tries to visit a URL from the collection route that doesn’t exist for the collection item. Consider these two file paths:
 
-- `/src/pages/products/{Product.name}.js`
-- `/src/pages/products/[name].js`
+- `src/pages/products/{Product.name}.js`
+- `src/pages/products/[name].js`
 
 If the user visits a product that wasn’t built from the data in your site, they will hit the client-only route, which can be used to show the user that the product doesn’t exist.
