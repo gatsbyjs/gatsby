@@ -2,6 +2,8 @@
 title: Environment Variables
 ---
 
+> :warning: **Gatsby does not support .env files by default**: You can add support by following the [Server-side Node.js](https://www.gatsbyjs.com/docs/environment-variables/#server-side-nodejs) section below.
+
 You can provide environment variables to your site to customize its behavior in different environments.
 
 Environment variables can be distinguished between different types.
