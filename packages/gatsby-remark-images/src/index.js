@@ -1,5 +1,6 @@
 const {
   DEFAULT_OPTIONS,
+  EMPTY_ALT,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -35,7 +36,7 @@ module.exports = (
   },
   pluginOptions
 ) => {
-  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
+  const options = _.defaults({}, pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -168,10 +169,13 @@ module.exports = (
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    const isEmptyAlt = node.alt === EMPTY_ALT
 
-    const alt = _.escape(
-      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
-    )
+    const alt = isEmptyAlt
+      ? ``
+      : _.escape(
+          overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+        )
 
     const title = node.title ? _.escape(node.title) : alt
 
@@ -218,8 +222,7 @@ module.exports = (
           { toFormat: `WEBP` },
           // override options if it's an object, otherwise just pass through defaults
           options.withWebp === true ? {} : options.withWebp,
-          pluginOptions,
-          DEFAULT_OPTIONS
+          options
         ),
         reporter,
       })

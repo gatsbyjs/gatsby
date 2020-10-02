@@ -61,7 +61,7 @@ const getBase64Image = imageProps => {
   // TODO: Find the best place for this step. This is definitely not it.
   fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
 
-  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha)
+  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
 
   if (fs.existsSync(cacheFile)) {
     // TODO: against dogma, confirm whether readFileSync is indeed slower
@@ -123,6 +123,11 @@ const resolveFixed = (image, options) => {
   // If no dimension is given, set a default width
   if (options.width === undefined && options.height === undefined) {
     options.width = 400
+  }
+
+  // If only a height is given, calculate the width based on the height and the aspect ratio
+  if (options.height !== undefined && options.width === undefined) {
+    options.width = Math.round(options.height * desiredAspectRatio)
   }
 
   // If we're cropping, calculate the specified aspect ratio.

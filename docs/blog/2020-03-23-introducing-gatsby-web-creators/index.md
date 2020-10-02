@@ -40,4 +40,4 @@ All streams will run Fridays at 1pm ET/10am PT, on these dates:
 
 For more information including the up-to-date content schedule, visit https://gatsbyjs.com/gatsby-web-creators.
 
-Parents and participants can also ask us questions anytime by contacting [web-creators@gatsbyjs.com](mailto:web-creators@gatsbyjs.com) or on Twitter with [@AskGatsbyjs](https://twitter.com/askgatsbyjs).
+Parents and participants can also ask us questions anytime by contacting [web-creators@gatsbyjs.com](mailto:web-creators@gatsbyjs.com) or on Twitter with [@AskGatsbyJS](https://twitter.com/askgatsbyjs).

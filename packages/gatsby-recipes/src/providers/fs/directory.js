@@ -18,7 +18,7 @@ const directoryExists = fullPath => {
 const create = async ({ root }, { id, path: directoryPath }) => {
   const fullPath = makePath(root, directoryPath)
   await fs.ensureDir(fullPath)
-  return await read({ root }, directoryPath)
+  return read({ root }, directoryPath)
 }
 
 const update = async (context, resource) => {
@@ -29,7 +29,7 @@ const update = async (context, resource) => {
   // Also Directory needs a key.
   const fullPath = makePath(context.root, resource.id)
   await fs.ensureDir(fullPath)
-  return await read(context, resource.id)
+  return read(context, resource.id)
 }
 
 const read = async (context, id) => {

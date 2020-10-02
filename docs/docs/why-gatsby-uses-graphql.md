@@ -225,7 +225,7 @@ In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image/
 Install these packages using the command line:
 
 ```shell
-npm install --save gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-image
+npm install gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-image
 ```
 
 Then add them to `gatsby-config.js`:

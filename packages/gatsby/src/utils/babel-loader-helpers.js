@@ -24,12 +24,15 @@ const getCustomOptions = stage => {
 const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   const pluginBabelConfig = loadCachedConfig()
 
-  const { stage } = options
+  const { stage, reactRuntime } = options
 
   // Required plugins/presets
   const requiredPlugins = [
     babel.createConfigItem(
-      [resolve(`babel-plugin-remove-graphql-queries`), { stage }],
+      [
+        resolve(`babel-plugin-remove-graphql-queries`),
+        { stage, staticQueryDir: `page-data/sq/d` },
+      ],
       {
         type: `plugin`,
       }
@@ -64,6 +67,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         resolve(`babel-preset-gatsby`),
         {
           stage,
+          reactRuntime,
         },
       ],
       {

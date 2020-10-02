@@ -3,20 +3,29 @@ import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
 
+/**
+ * This is a child state machine, spawned to perform the query running
+ */
+
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
+  id: `queryRunningMachine`,
+  on: {
+    SOURCE_FILE_CHANGED: {
+      actions: `markSourceFilesDirty`,
+    },
+  },
+  context: {},
   states: {
     extractingQueries: {
       id: `extracting-queries`,
       invoke: {
         id: `extracting-queries`,
         src: `extractQueries`,
-        onDone: [
-          {
-            actions: `resetGraphQLRunner`,
-            target: `writingRequires`,
-          },
-        ],
+        onDone: {
+          target: `writingRequires`,
+          actions: `markSourceFilesClean`,
+        },
       },
     },
     writingRequires: {
@@ -57,8 +66,13 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         },
       },
     },
-
+    // This waits for the jobs API to finish
     waitingForJobs: {
+      // If files are dirty go and extract again
+      always: {
+        cond: (ctx): boolean => !!ctx.filesDirty,
+        target: `extractingQueries`,
+      },
       invoke: {
         src: `waitUntilAllJobsComplete`,
         id: `waiting-for-jobs`,

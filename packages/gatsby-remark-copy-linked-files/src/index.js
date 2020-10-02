@@ -58,10 +58,7 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
-    lpath ? true : false
-  )
-  return path.posix.join(...linkPaths)
+  return `${pathPrefix ? pathPrefix : ``}/${destination}`
 }
 
 function toArray(buf) {
@@ -85,7 +82,7 @@ module.exports = (
   if (!validateDestinationDir(destinationDir))
     return Promise.reject(invalidDestinationDirMessage(destinationDir))
 
-  const options = _.defaults(pluginOptions, defaults)
+  const options = _.defaults({}, pluginOptions, defaults)
 
   const filesToCopy = new Map()
   // Copy linked files to the destination directory and modify the AST to point

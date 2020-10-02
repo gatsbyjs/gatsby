@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
 <h1 align="center">
@@ -45,7 +45,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
-  Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
+  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
 </h3>

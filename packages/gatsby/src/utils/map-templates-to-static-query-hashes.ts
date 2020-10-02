@@ -1,9 +1,11 @@
 import { uniqBy, List } from "lodash"
+import path from "path"
+import { slash } from "gatsby-core-utils"
 import { IGatsbyState } from "../redux/types"
 import { Stats } from "webpack"
 
 interface ICompilation {
-  modules: IModule[]
+  modules: Array<IModule>
 }
 
 interface IReason extends Omit<Stats.Reason, "module"> {
@@ -14,7 +16,7 @@ interface IModule extends Omit<Stats.FnModules, "identifier" | "reasons"> {
   hasReasons: () => boolean
   resource?: string
   identifier: () => string
-  reasons: IReason[]
+  reasons: Array<IReason>
 }
 
 /* When we traverse upwards, we need to know where to stop. We'll call these terminal nodes.
@@ -23,7 +25,7 @@ interface IModule extends Omit<Stats.FnModules, "identifier" | "reasons"> {
  */
 const entryNodes = [
   `.cache/api-runner-browser-plugins.js`,
-  `.cache/async-requires.js`,
+  `.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`,
 ]
 
 /* This function takes the current Redux state and a compilation
@@ -107,11 +109,11 @@ export default function mapTemplatesToStaticQueryHashes(
 
       for (const uniqDependent of uniqDependents) {
         if (uniqDependent.resource) {
-          result.add(uniqDependent.resource)
+          result.add(slash(uniqDependent.resource))
           // Queries used in gatsby-browser are global and should be added to all pages
           if (isGatsbyBrowser(uniqDependent)) {
             if (staticQueryModuleComponentPath) {
-              globalStaticQueries.add(staticQueryModuleComponentPath)
+              globalStaticQueries.add(slash(staticQueryModuleComponentPath))
             }
           } else {
             seen.add(uniqDependent.resource)
@@ -131,10 +133,12 @@ export default function mapTemplatesToStaticQueryHashes(
 
   // For every known static query, we get its dependents.
   staticQueryComponents.forEach(({ componentPath }) => {
-    const staticQueryComponentModule = modules.find(
-      m => m.resource === componentPath
-    )
+    // componentPaths are slashed by gatsby-core-utils we undo it
+    const nonSlashedPath = path.resolve(componentPath)
 
+    const staticQueryComponentModule = modules.find(
+      m => m.resource === nonSlashedPath
+    )
     const dependants = staticQueryComponentModule
       ? getDeps(staticQueryComponentModule)
       : new Set()
@@ -146,7 +150,7 @@ export default function mapTemplatesToStaticQueryHashes(
     staticQueryComponents
   )
 
-  const globalStaticQueryHashes: string[] = []
+  const globalStaticQueryHashes: Array<string> = []
 
   globalStaticQueries.forEach(q => {
     const hash = mapOfComponentsToStaticQueryHashes.get(q)

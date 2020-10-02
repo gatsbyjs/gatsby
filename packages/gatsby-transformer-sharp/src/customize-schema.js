@@ -17,8 +17,7 @@ const {
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
-const fs = require(`fs`)
-const fsExtra = require(`fs-extra`)
+const fs = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
@@ -434,14 +433,11 @@ const createFields = ({
           imageName
         )
 
-        if (
-          !fsExtra.existsSync(publicPath) &&
-          !inProgressCopy.has(publicPath)
-        ) {
+        if (!fs.existsSync(publicPath) && !inProgressCopy.has(publicPath)) {
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
           inProgressCopy.add(publicPath)
-          fsExtra.copy(details.absolutePath, publicPath, err => {
+          fs.copy(details.absolutePath, publicPath, err => {
             // this is no longer in progress
             inProgressCopy.delete(publicPath)
             if (err) {

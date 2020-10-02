@@ -1,16 +1,18 @@
 # Setup Gatsby with WordPress REST API 
 
-This recipes setups and configures gatsby-source-wordpress and starter page templates for a WordPress-powered Gatsby site.
+This recipes sets up and configures `gatsby-source-wordpress` and starter page templates for a WordPress-powered Gatsby site.
+
+This recipe:
 
 ---
 
-Install necessary NPM packages
+Installs necessary NPM packages.
 
 <NPMPackage name="gatsby-source-wordpress" />
 
 ---
 
-Install `gatsby-source-wordpress` to pull the WordPress data into Gatsby. Note, once this recipe finishes, you will need to update the config to point to your actual WordPress URL
+Installs `gatsby-source-wordpress` to pull the WordPress data into Gatsby. Note, once this recipe finishes, you will need to update the config to point to your actual WordPress URL.
 
 
 <GatsbyPlugin name="gatsby-source-wordpress" options={{
@@ -29,7 +31,7 @@ Install `gatsby-source-wordpress` to pull the WordPress data into Gatsby. Note, 
 
 ---
 
-Create a local Gatsby plugin to create pages for the WordPress data
+Creates a local Gatsby plugin that create pages for the WordPress data.
 
 <File
   path="./plugins/gatsby-plugin-wordpress/gatsby-node.js"
@@ -43,13 +45,13 @@ Create a local Gatsby plugin to create pages for the WordPress data
 
 ---
 
-Install the local plugin
+Installs the local plugin.
 
 <GatsbyPlugin name="gatsby-plugin-wordpress" />
 
 ---
 
-Create basic post/page/category/tag/user templates
+Creates basic post, page, category, tag, and user templates.
 
 <File
   path="src/templates/post.js"
@@ -79,9 +81,7 @@ Create basic post/page/category/tag/user templates
 
 ---
 
-Recipe served!
-
-Update `gatsby-config.js` to point to your WordPress instance & then start Gatsby and check out your new pages powered by WordPress!
+After installing this recipe, update `gatsby-config.js` to point to your WordPress instance. Then start Gatsby and check out your new pages powered by WordPress!
 
 Be sure to have one of each post type on your WordPress site for the site to build without errors: 
 - Post

@@ -64,8 +64,6 @@ export default function preset(_, options = {}) {
           exclude: [
             // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
             `transform-typeof-symbol`,
-            // we have @babel/plugin-transform-runtime that takes care of this
-            `transform-regenerator`,
             // we already have transforms for these
             `transform-spread`,
             `proposal-nullish-coalescing-operator`,
@@ -79,8 +77,12 @@ export default function preset(_, options = {}) {
         resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
-          pragma: `React.createElement`,
+          pragma:
+            options.reactRuntime === `automatic`
+              ? undefined
+              : `React.createElement`,
           development: stage === `develop`,
+          runtime: options.reactRuntime || `classic`,
         },
       ],
     ],

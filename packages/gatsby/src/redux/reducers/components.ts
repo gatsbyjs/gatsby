@@ -1,10 +1,16 @@
 import normalize from "normalize-path"
-import { interpret } from "xstate"
+import { interpret, Interpreter } from "xstate"
+import _ from "lodash"
 
-import { componentMachine } from "../machines/page-component"
+import {
+  componentMachine,
+  IContext,
+  IEvent,
+  IState,
+} from "../machines/page-component"
 import { IGatsbyState, ActionsUnion } from "../types"
 
-const services = new Map()
+const services = new Map<string, Interpreter<IContext, IState, IEvent>>()
 let programStatus = `BOOTSTRAPPING`
 
 export const componentsReducer = (
@@ -65,7 +71,7 @@ export const componentsReducer = (
     }
     case `QUERY_EXTRACTED`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
-      const service = services.get(action.payload.componentPath)
+      const service = services.get(action.payload.componentPath)!
 
       if (service.state.value === `queryExtractionBabelError`) {
         // Do nothing until the babel error is fixed.
@@ -81,9 +87,9 @@ export const componentsReducer = (
           query: action.payload.query,
         })
       }
-
       state.set(action.payload.componentPath, {
         ...service.state.context,
+        ...action.payload,
       })
       return state
     }
@@ -116,7 +122,7 @@ export const componentsReducer = (
     case `PAGE_QUERY_RUN`: {
       if (action.payload.isPage) {
         action.payload.componentPath = normalize(action.payload.componentPath)
-        const service = services.get(action.payload.componentPath)
+        const service = services.get(action.payload.componentPath)!
         // TODO we want to keep track of whether there's any outstanding queries still
         // running as this will mark queries as complete immediately even though
         // a page component could have thousands of pages will processing.
@@ -133,7 +139,7 @@ export const componentsReducer = (
       return state
     }
     case `DELETE_PAGE`: {
-      const service = services.get(normalize(action.payload.component))
+      const service = services.get(normalize(action.payload.component))!
       service.send({
         type: `DELETE_PAGE`,
         page: action.payload,

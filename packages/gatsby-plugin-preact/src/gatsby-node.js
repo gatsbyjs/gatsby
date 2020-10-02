@@ -20,7 +20,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     // enable react-refresh babel plugin to enable hooks
     // @see https://github.com/JoviDeCroock/prefresh/tree/master/packages/webpack#using-hooks
     actions.setBabelPlugin({
-      name: `react-refresh/babel`,
+      name: `@prefresh/babel-plugin`,
     })
   }
 

@@ -16,6 +16,7 @@ import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
+import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -409,6 +410,7 @@ module.exports = async (
         "socket.io-client": path.dirname(
           require.resolve(`socket.io-client/package.json`)
         ),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -424,12 +426,6 @@ module.exports = async (
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      const noOp = directoryPath(`.cache/polyfills/no-op.js`)
-      const objectAssignStub = directoryPath(
-        `.cache/polyfills/object-assign.js`
-      )
-      const fetchStub = directoryPath(`.cache/polyfills/fetch.js`)
-      const whatwgFetchStub = directoryPath(`.cache/polyfills/whatwg-fetch.js`)
       resolve.alias = Object.assign(
         {},
         {
@@ -439,19 +435,6 @@ module.exports = async (
             path.dirname(require.resolve(`@reach/router/package.json`)),
             `es`
           ),
-
-          // These files are already polyfilled so these should return in a no-op
-          // Stub Package: object.assign & object-assign
-          "object.assign": objectAssignStub,
-          "object-assign$": objectAssignStub,
-          "@babel/runtime/helpers/extends.js$": objectAssignStub,
-          // Stub package: fetch
-          unfetch$: fetchStub,
-          "unfetch/polyfill$": noOp,
-          "isomorphic-unfetch$": fetchStub,
-          "whatwg-fetch$": whatwgFetchStub,
-          // Stub package: url-polyfill
-          "url-polyfill$": noOp,
         },
         resolve.alias
       )
@@ -686,6 +669,12 @@ module.exports = async (
         }
       },
     ]
+  }
+
+  if (stage === `develop`) {
+    config.externals = {
+      "socket.io-client": `io`,
+    }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

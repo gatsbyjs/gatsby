@@ -1,11 +1,11 @@
 const ignore = require(`ignore`)
 const fs = require(`fs-extra`)
-const glob = require(`glob`)
 const yargs = require(`yargs`)
 const chalk = require(`chalk`)
 const PromptUtilities = require(`@lerna/prompt`)
 const _ = require(`lodash`)
 const path = require(`path`)
+const packlist = require(`npm-packlist`)
 const { execSync } = require(`child_process`)
 
 let argv = yargs
@@ -46,11 +46,7 @@ const buildIgnoreArray = str =>
       return acc
     }, [])
 
-const getListOfFilesToClear = ({ location, name }) => {
-  if (verbose) {
-    console.log(`Files that will be packed for ${chalk.bold(name)}:`)
-  }
-
+const getListOfFilesToClear = async ({ location, name }) => {
   let gitignore = []
   try {
     gitignore = buildIgnoreArray(
@@ -69,38 +65,23 @@ const getListOfFilesToClear = ({ location, name }) => {
       .split(`\n`)
 
     gitignore = gitignore.concat(notTrackedFiles)
-
-    // we need main file - for now hardcode index
-    // that is used in most of our packages
-    // it should actually be in each package .gitignore
-    gitignore.push(`!/index.js`)
   }
 
-  let npmignore = []
-  try {
-    npmignore = buildIgnoreArray(
-      fs.readFileSync(path.join(location, `.npmignore`), `utf-8`)
-    )
-  } catch {
-    // not all packages have .npmignore - see gatsby-plugin-no-sourcemap
-  } finally {
-    npmignore = npmignore.concat([`node_modules/**`])
-  }
-
-  const result = glob.sync(`**/*`, {
-    nodir: true,
-    ignore: npmignore,
-    cwd: location,
-  })
+  const result = await packlist({ path: location })
 
   const ig = ignore().add(gitignore)
 
+  if (verbose) {
+    console.log(`Files that will be packed for ${chalk.bold(name)}:`)
+  }
   const filesToDelete = result
     .filter(file => {
       const willBeDeleted = ig.ignores(file)
       if (verbose) {
         console.log(
-          `[ ${willBeDeleted ? chalk.red(`DEL`) : chalk.green(` - `)} ] ${file}`
+          `[ ${
+            willBeDeleted ? chalk.red(`DEL`) : chalk.green(` - `)
+          } ] ${path.posix.join(file)}`
         )
       }
 
@@ -120,7 +101,10 @@ const run = async () => {
         )} changed --json --loglevel=silent`
       ).toString()
     )
-    const filesToDelete = _.flatten(changed.map(getListOfFilesToClear))
+
+    const filesToDelete = _.flatten(
+      await Promise.all(changed.map(getListOfFilesToClear))
+    )
 
     if (!argv[`dry-run`] && filesToDelete.length > 0) {
       if (

@@ -189,7 +189,7 @@ const Navigation = () => (
         <NavItem to="/prefer-webp/" title="WebP" />
         <NavListItem>
           <a
-            href="https://www.gatsbyjs.org/packages/gatsby-image/"
+            href="https://www.gatsbyjs.com/plugins/gatsby-image/"
             css={css`
               ${linkStyle};
             `}

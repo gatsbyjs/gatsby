@@ -67,7 +67,7 @@ plugins: [
           }
       }`,
       resolveSiteUrl: ({site, allSitePage}) => {
-        //Alternativly, you may also pass in an environment variable (or any location) at the beginning of your `gatsby-config.js`.
+        //Alternatively, you may also pass in an environment variable (or any location) at the beginning of your `gatsby-config.js`.
         return site.wp.generalSettings.siteUrl
       },
       serialize: ({ site, allSitePage }) =>

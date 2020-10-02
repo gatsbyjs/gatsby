@@ -52,7 +52,7 @@ export const sourceNodes = async (
   {
     shopName,
     accessToken,
-    apiVersion = `2019-07`,
+    apiVersion = `2020-07`,
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],

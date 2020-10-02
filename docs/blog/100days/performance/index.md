@@ -42,6 +42,6 @@ Rich media like images, can have a negative impact on your build times when not 
 
 #### What to Do If You Need Help
 
-If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [AskGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [AskGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), and [Dev](https://dev.to/t/gatsby).
 
 The subreddits for [React](https://www.reddit.com/r/reactjs/) and [Web Development](https://www.reddit.com/r/webdev/) are also good resources to discover and share web performance best practices.

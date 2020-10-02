@@ -2,7 +2,7 @@ import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IStructuredError } from "../../structured-errors/types"
 
 export interface IGatsbyCLIState {
-  messages: ILog[]
+  messages: Array<ILog>
   activities: {
     [id: string]: IActivity
   }
@@ -70,6 +70,7 @@ export interface IPendingActivity {
     id: string
     type: ActivityTypes
     status: ActivityStatuses
+    startTime?: [number, number]
   }
 }
 

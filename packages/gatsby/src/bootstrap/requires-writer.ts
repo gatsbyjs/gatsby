@@ -8,7 +8,10 @@ import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
-import { writeModule } from "../utils/gatsby-webpack-virtual-modules"
+import {
+  writeModule,
+  getAbsolutePathForVirtualModule,
+} from "../utils/gatsby-webpack-virtual-modules"
 
 interface IGatsbyPageComponent {
   component: string
@@ -34,7 +37,7 @@ const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
 
-const segmentize = (uri: string): string[] =>
+const segmentize = (uri: string): Array<string> =>
   uri
     // strip starting/ending slashes
     .replace(/(^\/+|\/+$)/g, ``)
@@ -60,7 +63,9 @@ export const resetLastHash = (): void => {
 const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
   _.pick(page, [`component`, `componentChunkName`])
 
-export const getComponents = (pages: IGatsbyPage[]): IGatsbyPageComponent[] =>
+export const getComponents = (
+  pages: Array<IGatsbyPage>
+): Array<IGatsbyPageComponent> =>
   _(pages)
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
@@ -71,7 +76,9 @@ export const getComponents = (pages: IGatsbyPage[]): IGatsbyPageComponent[] =>
  * Get all dynamic routes and sort them by most specific at the top
  * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
  */
-const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
+const getMatchPaths = (
+  pages: Array<IGatsbyPage>
+): Array<IGatsbyPageMatchPath> => {
   interface IMatchPathEntry extends IGatsbyPage {
     index: number
     score: number
@@ -98,7 +105,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
     }
   }
 
-  const matchPathPages: IMatchPathEntry[] = []
+  const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
     if (page.matchPath) {
@@ -112,7 +119,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
   // More info in https://github.com/gatsbyjs/gatsby/issues/16097
   // small speedup: don't bother traversing when no matchPaths found.
   if (matchPathPages.length) {
-    const newMatches: IMatchPathEntry[] = []
+    const newMatches: Array<IMatchPathEntry> = []
 
     pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
@@ -154,8 +161,8 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
 }
 
 const createHash = (
-  matchPaths: IGatsbyPageMatchPath[],
-  components: IGatsbyPageComponent[]
+  matchPaths: Array<IGatsbyPageMatchPath>,
+  components: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
@@ -192,7 +199,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   let syncRequires = `${hotImport}
 
 // prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
@@ -206,13 +213,13 @@ const preferDefault = m => m && m.default || m
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n`
   asyncRequires += `exports.components = {\n${components
     .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
-        path.join(program.directory, `node_modules`, `$virtual`),
+        getAbsolutePathForVirtualModule(`$virtual`),
         c.component
       )
 
