@@ -199,7 +199,6 @@ gatsby-source-sanity
 gatsby-source-tmdb
 gatsby-starter-blog
 gatsby-starter-prismic
-gatsby-transformer-remark
 gatsbybot
 Gatsbybot
 gatsbyjs
