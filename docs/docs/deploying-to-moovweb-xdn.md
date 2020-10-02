@@ -64,8 +64,7 @@ When the deployment finishes, the output will confirm the final deployment URL. 
 
 If you want to customize the domain or add HTTPS/SSL/TLS certificates refer to the [Production guide](https://developer.moovweb.com/guides/production).
 
-## Additional Resources 
-
+## Additional Resources
 
 - [Moovweb XDN Gatsby guide](https://developer.moovweb.com/guides/gatsby)
 - [Moovweb XDN Deploying guide](https://developer.moovweb.com/guides/deploying)
