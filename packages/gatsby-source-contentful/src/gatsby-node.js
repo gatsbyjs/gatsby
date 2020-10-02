@@ -1,4 +1,5 @@
 const path = require(`path`)
+const { performance } = require(`perf_hooks`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -119,12 +120,11 @@ exports.sourceNodes = async (
     parentSpan,
   })
 
-  console.time(`ctf data processing`)
-
   const processingActivity = reporter.activityTimer(`process Contentful data`, {
     parentSpan,
   })
   processingActivity.start()
+  const processingStart = performance.now()
 
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deleted) {
@@ -152,9 +152,7 @@ exports.sourceNodes = async (
   }
 
   // Store a raw and unresolved copy of the data for caching
-  console.time(`clone deep current sync`)
   const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
-  console.timeEnd(`clone deep current sync`)
 
   // Use the JS-SDK to resolve the entries and assets
   const res = createClient({
@@ -229,10 +227,6 @@ exports.sourceNodes = async (
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
 
-  console.timeEnd(`ctf data processing`)
-
-  console.time(`ctf node creation`)
-
   reporter.verbose(`Building Contentful reference map`)
 
   // Create map of resolvable ids so we can check links against them while creating
@@ -290,11 +284,16 @@ exports.sourceNodes = async (
     })
 
   processingActivity.end()
+  const processingEnd = performance.now()
+  reporter.verbose(
+    `Processing Contentful API data took ${processingEnd - processingStart}ms`
+  )
 
   const creationActivity = reporter.activityTimer(`create Contentful nodes`, {
     parentSpan,
   })
   creationActivity.start()
+  const nodeCreationStart = performance.now()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
@@ -351,8 +350,11 @@ exports.sourceNodes = async (
   }
 
   creationActivity.end()
+  const nodeCreationEnd = performance.now()
 
-  console.timeEnd(`ctf node creation`)
+  reporter.verbose(
+    `Creating Contentful nodes ${nodeCreationEnd - nodeCreationStart}ms`
+  )
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
