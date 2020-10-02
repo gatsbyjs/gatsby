@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.36...gatsby-telemetry@1.3.37) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** export typescript types, add captureEvent ([#27167](https://github.com/gatsbyjs/gatsby/issues/27167)) ([78abe26](https://github.com/gatsbyjs/gatsby/commit/78abe269e185969b22a51efa5eabe1cf87c0fca6))
+
 ## [1.3.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.35...gatsby-telemetry@1.3.36) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-telemetry

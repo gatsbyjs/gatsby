@@ -59,6 +59,14 @@ by Gatsby image processing.
 ![my image](./my-awesome-image.png)
 ```
 
+By default, the text `my image` will be used as the alt attribute of the
+generated `img` tag. If an empty alt attribute like `alt=""` is wished,
+a reserved keyword `GATSBY_EMPTY_ALT` can be used.
+
+```markdown
+![GATSBY_EMPTY_ALT](./my-awesome-image.png)
+```
+
 ## Remark plugins
 
 You can use [remark plugins](https://github.com/remarkjs/remark/blob/master/doc/plugins.md)

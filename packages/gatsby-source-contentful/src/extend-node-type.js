@@ -61,7 +61,7 @@ const getBase64Image = imageProps => {
   // TODO: Find the best place for this step. This is definitely not it.
   fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
 
-  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha)
+  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
 
   if (fs.existsSync(cacheFile)) {
     // TODO: against dogma, confirm whether readFileSync is indeed slower
