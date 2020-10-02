@@ -3,7 +3,7 @@ title: Gatsby Style Guide
 ---
 
 The Gatsby community is building out a more comprehensive Docs section. It
-will be full of relevant articles written to be easily understood by the many people who love building with Gatsby.
+will be full of relevant articles written to be more understood by the many people who love building with Gatsby.
 
 The community plans, writes, and maintains these Docs on GitHub.
 

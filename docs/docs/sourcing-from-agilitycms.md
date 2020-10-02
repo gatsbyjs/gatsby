@@ -52,11 +52,7 @@ Once you've the infrastructure set up, run the site in development mode:
 gatsby develop
 ```
 
-<<<<<<< HEAD
 The site is not only a starter, but it has a bunch of interesting features that you can use to build from. The next step is to hook this code up to your new Agility CMS instance that you just created.
-=======
-The site is a starter, but it has a bunch of interesting features that you can use to build from. The next step is to hook this code up to your new Agility CMS instance that you have created.
->>>>>>> 7309868e5609126751edc5b14c2b0c115ed1d0ed
 
 ## Hook it up to your Agility CMS instance
 
