@@ -8,18 +8,8 @@ module.exports = async function contentfulFetch({
   syncToken,
   reporter,
   pluginConfig,
-  parentSpan,
 }) {
-  const fetchActivity = reporter.activityTimer(
-    `fetching data from Contentful`,
-    {
-      parentSpan,
-    }
-  )
-  fetchActivity.start()
-
   // Fetch articles.
-
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
@@ -143,8 +133,6 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     locales,
     space,
   }
-
-  fetchActivity.end()
 
   return result
 }

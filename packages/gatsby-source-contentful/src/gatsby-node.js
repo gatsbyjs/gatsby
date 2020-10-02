@@ -11,9 +11,6 @@ const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
 
-const CACHE_SYNC_KEY = `previousSyncData`
-const CACHE_SYNC_TOKEN = `syncToken`
-
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [
   `children`,
@@ -84,6 +81,11 @@ exports.sourceNodes = async (
   }
 
   const pluginConfig = createPluginConfig(pluginOptions)
+  const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+    `environment`
+  )}`
+  const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
+  const CACHE_SYNC_DATA = `contentful-sync-data-${sourceId}`
 
   /*
    * Subsequent calls of Contentfuls sync API return only changed data.
@@ -100,11 +102,19 @@ exports.sourceNodes = async (
     assets: [],
     entries: [],
   }
-  let cachedData = await cache.get(CACHE_SYNC_KEY)
+  let cachedData = await cache.get(CACHE_SYNC_DATA)
 
   if (cachedData) {
     previousSyncData = cachedData
   }
+
+  const fetchActivity = reporter.activityTimer(
+    `Contentful: Fetch data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+  fetchActivity.start()
 
   let {
     currentSyncData,
@@ -118,10 +128,14 @@ exports.sourceNodes = async (
     pluginConfig,
     parentSpan,
   })
+  fetchActivity.end()
 
-  const processingActivity = reporter.activityTimer(`process Contentful data`, {
-    parentSpan,
-  })
+  const processingActivity = reporter.activityTimer(
+    `Contentful: Proccess data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
   processingActivity.start()
 
   // Create a map of up to date entries and assets
@@ -221,7 +235,7 @@ exports.sourceNodes = async (
   const nextSyncToken = currentSyncData.nextSyncToken
 
   await Promise.all([
-    cache.set(CACHE_SYNC_KEY, mergedSyncDataRaw),
+    cache.set(CACHE_SYNC_DATA, mergedSyncDataRaw),
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
 
@@ -282,9 +296,13 @@ exports.sourceNodes = async (
     })
 
   processingActivity.end()
-  const creationActivity = reporter.activityTimer(`create Contentful nodes`, {
-    parentSpan,
-  })
+
+  const creationActivity = reporter.activityTimer(
+    `Contentful: Create nodes (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
   creationActivity.start()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
