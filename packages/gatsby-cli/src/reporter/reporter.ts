@@ -7,11 +7,7 @@ import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import {
-  IErrorMapEntry,
-  errorMap,
-  ErrorId,
-} from "../structured-errors/error-map"
+import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
@@ -58,10 +54,9 @@ class Reporter {
   /**
    * Retrieve error map
    */
-  getErrorMap = (): Record<ErrorId, IErrorMapEntry> => {
+  getErrorMap = (): Record<ErrorId, IErrorMapEntry> =>
     // TODO: We always spread the internal error map to ensure our keys do not get overwritten
-    return { ...this.errorMap, ...errorMap }
-  }
+    this.errorMap
 
   /**
    * Toggle verbosity.

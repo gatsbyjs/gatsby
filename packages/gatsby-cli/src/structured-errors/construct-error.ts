@@ -1,6 +1,6 @@
 import stackTrace from "stack-trace"
 import { errorSchema } from "./error-schema"
-import { defaultError, ErrorId, IErrorMapEntry } from "./error-map"
+import { defaultError, ErrorId, errorMap, IErrorMapEntry } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
 import { IConstructError, IStructuredError } from "./types"
 // Merge partial error details with information from the errorMap
@@ -9,18 +9,29 @@ const constructError = (
   { details: { id, ...otherDetails } }: IConstructError,
   suppliedErrorMap: Record<ErrorId, IErrorMapEntry>
 ): IStructuredError => {
-  const result: IErrorMapEntry = (id && suppliedErrorMap[id]) || defaultError
+  let errorMapEntry = defaultError
+
+  if (id) {
+    // Look at original errorMap, ids cannot be overwritten
+    if (errorMap[id]) {
+      errorMapEntry = errorMap[id]
+    }
+
+    if (suppliedErrorMap[id]) {
+      errorMapEntry = suppliedErrorMap[id]
+    }
+  }
 
   // merge
   const structuredError: IStructuredError = {
     context: {},
     ...otherDetails,
-    ...result,
-    text: result.text(otherDetails.context),
+    ...errorMapEntry,
+    text: errorMapEntry.text(otherDetails.context),
     stack: otherDetails.error
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
       : [],
-    docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
+    docsUrl: errorMapEntry.docsUrl || `https://gatsby.dev/issue-how-to`,
   }
 
   if (id) {
