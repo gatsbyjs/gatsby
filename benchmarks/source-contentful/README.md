@@ -23,7 +23,7 @@ Use following approach to fix those:
 
 1. Run `yarn site find-broken-images`
 2. Change image URLs in will-it-build dataset for this site to some other images
-   (or just use one of the larger sites and set `BENCHMARK_SITE_ID` appropriately)
+   (or use one of the larger sites and set `BENCHMARK_SITE_ID` appropriately)
 3. Run `yarn site fix-broken-images imageid1 imageid2 imageid3`
    This command updates broken images with images from the `BENCHMARK_SITE_ID` dataset
 

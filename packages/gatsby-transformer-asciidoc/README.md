@@ -75,7 +75,7 @@ plugins: [
 ]
 ```
 
-In the asciidoc file you can insert your image just by using:
+In the asciidoc file you can insert your image by using:
 `image::myimage.png[]`
 
 **NOTE**

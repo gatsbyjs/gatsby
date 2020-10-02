@@ -282,7 +282,7 @@ When you do that, you’ve changed the reference to the query object available i
 }
 ```
 
-Giving it an alias does not add a level of complexity to the response object, it just replaces it. So you end up with the same structure, referenced like this (note the alias `talks` in place of the longer `allSpeakingYaml`):
+Giving it an alias does not add a level of complexity to the response object, it just replaced it. So you end up with the same structure, referenced like this (note the alias `talks` in place of the longer `allSpeakingYaml`):
 
 ```jsx
 {

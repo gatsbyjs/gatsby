@@ -179,7 +179,7 @@ export default function About() {
 
 ![New about page](05-about-page.png)
 
-Just by putting a React component in the `src/pages/about.js` file, you now have a page accessible at `/about`.
+By putting a React component in the `src/pages/about.js` file, you now have a page accessible at `/about`.
 
 ### ✋ Using sub-components
 

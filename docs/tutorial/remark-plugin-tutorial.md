@@ -121,7 +121,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-The first parameter is all of the default properties that can be used in plugins (actions, store, getNodes, schema, etc.) plus a couple just for gatsby-transformer-remark plugins. The most relevant field for our purposes is the `markdownAST` field which is destructured in the code snippet above.
+The first parameter is all of the default properties that can be used in plugins (actions, store, getNodes, schema, etc.) plus a couple for gatsby-transformer-remark plugins. The most relevant field for our purposes is the `markdownAST` field which is destructured in the code snippet above.
 
 As with other Gatsby plugins, the 2nd parameter is the `pluginOptions` which is obtained from the definition in `gatsby-config.js` file.
 
