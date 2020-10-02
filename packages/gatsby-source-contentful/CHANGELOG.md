@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.48...gatsby-source-contentful@2.3.49) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Add file-extension to remote cached items ([#25924](https://github.com/gatsbyjs/gatsby/issues/25924)) ([bfd46f8](https://github.com/gatsbyjs/gatsby/commit/bfd46f8edf18a49cda1b2731733bae88144540aa))
+
 ## [2.3.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.47...gatsby-source-contentful@2.3.48) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-source-contentful

@@ -38,7 +38,7 @@ export function trackCli(
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload
 ): void {
-  instance.captureEvent(input, tags, opts)
+  instance.trackCli(input, tags, opts)
 }
 
 export function captureEvent(
@@ -92,9 +92,11 @@ export function addSiteMeasurement(event: string, obj): void {
 }
 
 export function expressMiddleware(source: string) {
-  return function (_req: Request, _res: Response, next): void {
+  return function (req: Request, _res: Response, next): void {
     try {
-      instance.trackActivity(`${source}_ACTIVE`)
+      instance.trackActivity(`${source}_ACTIVE`, {
+        userAgent: req.headers[`user-agent`],
+      })
     } catch (e) {
       // ignore
     }
