@@ -1,16 +1,48 @@
-import { Node, GatsbyCache, Reporter, ParentSpanPluginArgs } from "gatsby"
+import {
+  Node,
+  GatsbyCache,
+  Reporter,
+  ParentSpanPluginArgs,
+  Actions,
+} from "gatsby"
 import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
 import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
 import { ImageProps, SharpProps } from "./utils"
 import { getCustomSharpFields } from "./get-custom-sharp-fields"
+import { watchImage } from "./watcher"
 
 export interface IImageMetadata {
   isFixed: boolean
   contentDigest?: string
   args: Record<string, unknown>
   cacheFilename: string
+}
+
+export async function createImageNode({
+  fullPath,
+  createNodeId,
+  createNode,
+}: {
+  fullPath: string
+  createNodeId: ParentSpanPluginArgs["createNodeId"]
+  createNode: Actions["createNode"]
+}): Promise<Node | undefined> {
+  if (!fs.existsSync(fullPath)) {
+    return undefined
+  }
+  const file: Node = await createFileNode(fullPath, createNodeId, {})
+
+  if (!file) {
+    return undefined
+  }
+
+  file.internal.type = `StaticImage`
+
+  createNode(file)
+
+  return file
 }
 
 export async function writeImages({
@@ -20,6 +52,7 @@ export async function writeImages({
   cache,
   sourceDir,
   createNodeId,
+  createNode,
 }: {
   images: Map<string, ImageProps>
   cacheDir: string
@@ -27,6 +60,7 @@ export async function writeImages({
   cache: GatsbyCache
   sourceDir: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
+  createNode: Actions["createNode"]
 }): Promise<void> {
   const promises = [...images.entries()].map(
     async ([hash, { src, fluid, fixed, ...args }]) => {
@@ -38,19 +72,25 @@ export async function writeImages({
         reporter.warn(`Could not find image "${src}". Looked for ${fullPath}`)
         return
       }
-      const file = await createFileNode(fullPath, createNodeId, {})
+      const file: Node = await createFileNode(fullPath, createNodeId, {})
 
       if (!file) {
         reporter.warn(`Could not create node for image ${src}`)
         return
       }
 
-      // This is a cache of file node to static image mappings
+      // We need our own type, because `File` belongs to the filesystem plugin
+      file.internal.type = `StaticImage`
+
+      createNode(file)
+
       const cacheKey = `ref-${file.id}`
 
+      // This is a cache of file node to static image mappings
       const imageRefs: Map<string, IImageMetadata> =
         (await cache.get(cacheKey)) || {}
 
+      // Different cache: this is the one with the image properties
       const cacheFilename = path.join(cacheDir, `${hash}.json`)
       imageRefs[hash] = {
         isFixed,
@@ -61,6 +101,9 @@ export async function writeImages({
       await cache.set(cacheKey, imageRefs)
 
       await writeImage(file, args, reporter, cache, isFixed, cacheFilename)
+
+      // Watch the source image for changes
+      watchImage({ createNode, createNodeId, fullPath, cache, reporter })
     }
   )
 
@@ -91,13 +134,12 @@ export async function writeImage(
         cache,
       })
       const data = { ...sharpData, ...customSharpFields }
-
+      // Write the image properties to the cache
       await fs.writeJSON(filename, data)
     } else {
-      console.log(`Could not process image`)
+      reporter.warn(`Could not process image`)
     }
   } catch (e) {
-    // TODO: Report errors properly
-    console.log(`Error processing image`, e)
+    reporter.warn(`Error processing image`)
   }
 }

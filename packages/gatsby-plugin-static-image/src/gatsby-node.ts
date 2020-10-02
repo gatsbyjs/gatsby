@@ -1,5 +1,4 @@
 export * from "./preprocess-source"
-export * from "./on-create-node"
 
 import { GatsbyNode } from "gatsby"
 import path from "path"

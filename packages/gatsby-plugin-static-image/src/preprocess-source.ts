@@ -12,6 +12,7 @@ export async function preprocessSource({
   reporter,
   store,
   createNodeId,
+  actions: { createNode },
 }: PreprocessSourceArgs): Promise<string> {
   if (
     !contents.includes(`StaticImage`) ||
@@ -41,6 +42,7 @@ export async function preprocessSource({
     cacheDir,
     sourceDir,
     createNodeId,
+    createNode,
   })
 
   return contents
