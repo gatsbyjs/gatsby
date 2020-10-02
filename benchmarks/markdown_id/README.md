@@ -31,4 +31,4 @@ gatsby clean
 node --max_old_space_size=2000 node_modules/.bin/gatsby build
 ```
 
-The last step could also just be `gatsby build` if the number of pages is small enough. The example will increase the maximum reserved "old object space" which you'll need for a larger number of pages.
+The last step you could also use `gatsby build` if the number of pages is small enough. The example will increase the maximum reserved "old object space" which you'll need for a larger number of pages.

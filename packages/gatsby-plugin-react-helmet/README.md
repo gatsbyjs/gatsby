@@ -17,7 +17,7 @@ This is important not just for site viewers, but also for SEO -- title and descr
 
 ## How to use
 
-Just add the plugin to the plugins array in your `gatsby-config.js`
+Add the plugin to the plugins array in your `gatsby-config.js`
 
 ```javascript
 plugins: [`gatsby-plugin-react-helmet`]

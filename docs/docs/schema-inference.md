@@ -142,7 +142,7 @@ Gatsby stores these children in redux as IDs in the parent's `children` field. A
 }
 ```
 
-An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. The benefit of this is that we can easily create a `File.children` field that returns all children, regardless of type. The downside is that the creation of fields such as `File.childMarkdownRemark` and `File.childrenPostsJson` is more complicated. This is what [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) does.
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. The benefit of this is that we can create a `File.children` field that returns all children, regardless of type. The downside is that the creation of fields such as `File.childMarkdownRemark` and `File.childrenPostsJson` is more complicated. This is what [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) does.
 
 Another convenience Gatsby provides is the ability to query a node's `child` or `children`, depending on whether a parent node has 1 or more children of that type.
 

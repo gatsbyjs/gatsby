@@ -26,7 +26,7 @@ An example site for this plugin is available.
 - Pulls data from self-hosted WordPress sites, or sites hosted on [WordPress.com](https://wordpress.com)
 - Should work with any number of posts (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
-- Easily create responsive images in Gatsby from WordPress images. See [image
+- Create responsive images in Gatsby from WordPress images. See [image
   processing](#image-processing) section.
 
 ## WordPress and custom entities

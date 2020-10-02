@@ -1,6 +1,6 @@
 # gatsby-plugin-google-analytics
 
-Easily add Google Analytics to your Gatsby site.
+Add Google Analytics to your Gatsby site.
 
 ## Install
 

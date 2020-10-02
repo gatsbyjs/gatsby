@@ -3,7 +3,7 @@
 Automatically generates a `_headers` file and a `_redirects` file at the root of the public folder to configure
 [HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth/) and [redirects](https://www.netlify.com/docs/redirects/) on Netlify.
 
-By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
+By default, the plugin will add some basic security headers. You can add or replace headers through the plugin config.
 
 ## Install
 

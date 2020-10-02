@@ -96,7 +96,7 @@ const Layout = ({ children }) => {
 // ...
 ```
 
-If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can easily change this title in Kentico Kontent to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
+If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can change this title in Kentico Kontent to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
 
 So you've seen how to add content to existing pages in Gatsby using Kentico Kontent. Next, you will start creating new pages of your own.
 

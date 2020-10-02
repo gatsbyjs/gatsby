@@ -199,7 +199,7 @@ object called `fluid`.
 GraphQL includes a concept called "query fragments". Which, as the name
 suggests, are a part of a query that can be used in multiple queries. To ease
 building with `gatsby-image`, Gatsby image processing plugins which support
-`gatsby-image` ship with fragments which you can easily include in your queries.
+`gatsby-image` ship with fragments which you can include in your queries.
 
 Note,
 [due to a limitation of GraphiQL](https://github.com/graphql/graphiql/issues/612),

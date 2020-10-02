@@ -228,7 +228,7 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 ## Using .env variables
 
-If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
+If you don't want to attach your Sanity project's ID to the repo, you can store it in .env files by doing the following:
 
 ```text:title=.env
 SANITY_PROJECT_ID = abc123

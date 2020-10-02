@@ -96,7 +96,7 @@ website][6]) that you can easily include in your Gatsby site, or you can build
 your own by copying and modifying an example (which is what we've done for
 [gatsbyjs.org](https://gatsbyjs.org)).
 
-To load a theme, just require its CSS file in your `gatsby-browser.js` file, e.g.
+To load a theme, you require its CSS file in your `gatsby-browser.js` file, e.g.
 
 ```javascript
 // gatsby-browser.js
@@ -129,7 +129,7 @@ highlighted line runs wider than the surrounding code block container (causing a
 horizontal scrollbar), its background won't be drawn for the initially hidden,
 overflowing part. :(
 
-We saw others fix that problem and decided to do so, too. Just add the following
+We saw others fix that problem and decided to do so, too. Add the following
 CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 
 ```css

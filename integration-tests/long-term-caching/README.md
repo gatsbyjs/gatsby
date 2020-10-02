@@ -6,7 +6,7 @@ changes between builds, to test that the bundle names change correctly.
 
 After each run, move the public folder to `public-${runNumber}`.
 
-You can easily compare run outputs with the tool Meld. `meld public-1 public-2`.
+You can compare run outputs with the tool Meld. `meld public-1 public-2`.
 
 It'd be nice to automate this but a manual check works for now.
 

@@ -61,7 +61,7 @@ Guide topics should be chosen based on these priorities:
 
 ### Length of a reference guide
 
-Ideally, a guide's table of contents would fit above the fold on a desktop computer screen. This means the outline is easily consumable, so the person can quickly determine if that section of the docs contains the information they need to complete a task.
+Ideally, a guide's table of contents would fit above the fold on a desktop computer screen. This means the outline is more consumable, so the person can quickly determine if that section of the docs contains the information they need to complete a task.
 
 The content of a reference guide should provide just enough information to be actionable. Linking out to other materials and guides outside of Gatsby's core concepts is recommended to limit the scope to critical and unique parts of Gatsby development.
 

@@ -1,6 +1,6 @@
 # gatsby-plugin-facebook-analytics
 
-Easily add Facebook Analytics to your Gatsby site.
+Add Facebook Analytics to your Gatsby site.
 
 You must have a [Facebook App](https://developers.facebook.com/apps) ID to use this plugin.
 
