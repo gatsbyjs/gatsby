@@ -12,7 +12,7 @@ exports.DEFAULT_OPTIONS = {
   disableBgImage: false,
 }
 
-exports.EMPTY_ALT = `_SKIP_`
+exports.EMPTY_ALT = `GATSBY_EMPTY_ALT`
 
 exports.imageClass = `gatsby-resp-image-image`
 exports.imageWrapperClass = `gatsby-resp-image-wrapper`

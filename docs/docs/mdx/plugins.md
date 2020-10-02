@@ -61,10 +61,10 @@ by Gatsby image processing.
 
 By default, the text `my image` will be used as the alt attribute of the
 generated `img` tag. If an empty alt attribute like `alt=""` is wished,
-a reserved keyword `_SKIP_` can be used.
+a reserved keyword `GATSBY_EMPTY_ALT` can be used.
 
 ```markdown
-![_SKIP_](./my-awesome-image.png)
+![GATSBY_EMPTY_ALT](./my-awesome-image.png)
 ```
 
 ## Remark plugins

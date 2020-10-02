@@ -51,10 +51,10 @@ You can reference an image using the relative path, where that path is relative 
 ```
 
 By default, the text `Alt text here` will be used as the alt attribute of the generated `img` tag. If an empty alt attribute like `alt=""` is wished,
-a reserved keyword `_SKIP_` can be used.
+a reserved keyword `GATSBY_EMPTY_ALT` can be used.
 
 ```markdown
-![_SKIP_](./image.png)
+![GATSBY_EMPTY_ALT](./image.png)
 ```
 
 ## Options
