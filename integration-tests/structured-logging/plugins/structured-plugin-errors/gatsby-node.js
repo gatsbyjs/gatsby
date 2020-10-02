@@ -1,6 +1,6 @@
 exports.onPreInit = ({ reporter }) => {
   reporter.setErrorMap({
-    TEST_ERROR: {
+    "1337": {
       text: context => `Error text is ${context && context.someProp}`,
       level: "ERROR",
       docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
@@ -10,6 +10,6 @@ exports.onPreInit = ({ reporter }) => {
   reporter.info("setErrorMap")
 
   if (process.env.PANIC_IN_PLUGIN) {
-    reporter.panic({ id: "TEST_ERROR", context: { someProp: `PANIC!` } })
+    reporter.panic({ id: "1337", context: { someProp: `PANIC!` } })
   }
 }

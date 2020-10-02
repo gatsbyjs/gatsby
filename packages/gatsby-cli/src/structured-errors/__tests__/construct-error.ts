@@ -43,9 +43,9 @@ test(`it passes through on valid error schema`, () => {
 
 test(`it constructs an error from the supplied errorMap`, () => {
   const error = constructError(
-    { details: { id: `TEST_ERROR`, context: { someProp: `Error!` } } },
+    { details: { id: `1337`, context: { someProp: `Error!` } } },
     {
-      TEST_ERROR: {
+      "1337": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
@@ -53,6 +53,6 @@ test(`it constructs an error from the supplied errorMap`, () => {
     }
   )
 
-  expect(error.code).toBe(`TEST_ERROR`)
+  expect(error.code).toBe(`1337`)
   expect(error.docsUrl).toBe(`https://www.gatsbyjs.org/docs/gatsby-cli/#new`)
 })

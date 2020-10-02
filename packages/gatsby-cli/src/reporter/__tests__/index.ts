@@ -96,13 +96,13 @@ describe(`report.error`, () => {
 
   it(`sets an error map if setErrorMap is called`, () => {
     reporter.setErrorMap({
-      TEST_ERROR: {
+      "1337": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
       },
     })
 
-    expect(reporter.getErrorMap()[`TEST_ERROR`]).toBeTruthy()
+    expect(reporter.getErrorMap()[`1337`]).toBeTruthy()
   })
 })
