@@ -55,20 +55,6 @@ class Reporter {
     }
   }
 
-  setErrorMapWithPluginName = (name: string) => (
-    entry: Record<ErrorId, IErrorMapEntry>
-  ): void => {
-    const entries = Object.entries(entry)
-
-    const newErrorMap = entries.reduce((memo, [key, val]) => {
-      memo[`${name}_${key}`] = val
-
-      return memo
-    }, {})
-
-    this.setErrorMap(newErrorMap)
-  }
-
   /**
    * Retrieve error map
    */
@@ -111,24 +97,6 @@ class Reporter {
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
     return process.exit(1)
-  }
-
-  logFailureWithPluginName = ({
-    methodName,
-    pluginName,
-  }: {
-    methodName: string
-    pluginName: string
-  }) => (errorMeta: ErrorMeta, error?: Error | Array<Error>): void => {
-    if (typeof errorMeta === `object`) {
-      const id = errorMeta && errorMeta[`id`]
-
-      if (id) {
-        errorMeta[`id`] = `${pluginName}_${id}`
-      }
-    }
-
-    this[methodName](errorMeta, error)
   }
 
   panicOnBuild = (

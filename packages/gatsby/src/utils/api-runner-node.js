@@ -129,6 +129,26 @@ function getLocalReporter({ activity, reporter }) {
   return reporter
 }
 
+function extendErrorIdWithPluginName(errorMeta) {
+  if (typeof errorMeta === `object`) {
+    const id = errorMeta && errorMeta[`id`]
+
+    if (id) {
+      errorMeta[`id`] = `${pluginName}_${id}`
+    }
+  }
+}
+
+function getErrorMapWthPluginName(pluginName, errorMap) {
+  const entries = Object.entries(errorMap)
+
+  return entries.reduce((memo, [key, val]) => {
+    memo[`${pluginName}_${key}`] = val
+
+    return memo
+  }, {})
+}
+
 function extendLocalReporterToCatchPluginErrors({
   reporter,
   pluginName,
@@ -140,17 +160,30 @@ function extendLocalReporterToCatchPluginErrors({
   let panic = reporter.panic
   let panicOnBuild = reporter.panicOnBuild
 
-  if (pluginName && reporter?.setErrorMapWithPluginName) {
-    setErrorMap = reporter?.setErrorMapWithPluginName(pluginName)
+  if (pluginName && reporter?.setErrorMap) {
+    setErrorMap = errorMap => {
+      const newErrorMap = getErrorMapWthPluginName(pluginName, errorMap)
 
-    error = reporter.logFailureWithPluginName({ method: `error`, pluginName })
+      return reporter.setErrorMap(newErrorMap)
+    }
 
-    panic = reporter.logFailureWithPluginName({ method: `panic`, pluginName })
+    error = (errorMeta, error) => {
+      extendErrorIdWithPluginName(errorMeta)
 
-    panicOnBuild = reporter.logFailureWithPluginName({
-      method: `panicOnBuild`,
-      pluginName,
-    })
+      return reporter.error(errorMeta, error)
+    }
+
+    panic = (errorMeta, error) => {
+      extendErrorIdWithPluginName(errorMeta)
+
+      return reporter.panic(errorMeta, error)
+    }
+
+    panicOnBuild = (errorMeta, error) => {
+      extendErrorIdWithPluginName(errorMeta)
+
+      return reporter.panicOnBuild(errorMeta, error)
+    }
   }
 
   return {

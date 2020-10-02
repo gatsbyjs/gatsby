@@ -105,32 +105,4 @@ describe(`report.error`, () => {
 
     expect(reporter.getErrorMap()[`TEST_ERROR`]).toBeTruthy()
   })
-
-  it(`sets an errorMap by plugin name`, () => {
-    reporter.setErrorMapWithPluginName(`TEST_PLUGIN`)({
-      TEST_ERROR: {
-        text: (context): string => `Error text is ${context.someProp} `,
-        level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
-      },
-    })
-
-    expect(reporter.getErrorMap()[`TEST_PLUGIN_TEST_ERROR`]).toBeTruthy()
-  })
-
-  it(`logFailureWithPluginName`, () => {
-    const errorSpy = jest.spyOn(reporter, `error`)
-
-    reporter.logFailureWithPluginName({
-      methodName: `error`,
-      pluginName: `tester`,
-    })({ id: `test`, context: { sourceMessage: `test` } })
-
-    expect(errorSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: `tester_test`,
-      }),
-      undefined
-    )
-  })
 })

@@ -30,10 +30,12 @@ describe(`Plugin Errors`, () => {
 
     await new Promise(resolve => {
       gatsbyProcess.on(`message`, msg => {
+        console.log(msg)
         events.push(msg)
       })
 
       gatsbyProcess.on(`exit`, exitCode => {
+        console.log(exitCode)
         resolve()
       })
     })
