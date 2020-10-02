@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.67](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.66...gatsby@2.24.67) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby:** retry socket when connection closes ([#27060](https://github.com/gatsbyjs/gatsby/issues/27060)) ([8d62b2c](https://github.com/gatsbyjs/gatsby/commit/8d62b2c21acbac64c715e957b50aeaec1b906fac))
+
 ## [2.24.66](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.65...gatsby@2.24.66) (2020-09-28)
 
 ### Bug Fixes

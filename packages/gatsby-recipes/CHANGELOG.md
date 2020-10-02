@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.29...gatsby-recipes@0.2.30) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Allow `.filter(Boolean)` and `&&` in gatsby-config.js ([#27041](https://github.com/gatsbyjs/gatsby/issues/27041)) ([ecd69c8](https://github.com/gatsbyjs/gatsby/commit/ecd69c8d9c8f5fed0245c7718aedc2304a16df89))
+
 ## [0.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.28...gatsby-recipes@0.2.29) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-recipes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.156](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.155...gatsby-admin@0.1.156) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Allow `.filter(Boolean)` and `&&` in gatsby-config.js ([#27041](https://github.com/gatsbyjs/gatsby/issues/27041)) ([ecd69c8](https://github.com/gatsbyjs/gatsby/commit/ecd69c8d9c8f5fed0245c7718aedc2304a16df89))
+
 ## [0.1.155](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.154...gatsby-admin@0.1.155) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-admin
