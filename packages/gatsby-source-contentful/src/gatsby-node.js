@@ -1,5 +1,4 @@
 const path = require(`path`)
-const { performance } = require(`perf_hooks`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -124,7 +123,6 @@ exports.sourceNodes = async (
     parentSpan,
   })
   processingActivity.start()
-  const processingStart = performance.now()
 
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deleted) {
@@ -284,16 +282,10 @@ exports.sourceNodes = async (
     })
 
   processingActivity.end()
-  const processingEnd = performance.now()
-  reporter.verbose(
-    `Processing Contentful API data took ${processingEnd - processingStart}ms`
-  )
-
   const creationActivity = reporter.activityTimer(`create Contentful nodes`, {
     parentSpan,
   })
   creationActivity.start()
-  const nodeCreationStart = performance.now()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
@@ -350,11 +342,6 @@ exports.sourceNodes = async (
   }
 
   creationActivity.end()
-  const nodeCreationEnd = performance.now()
-
-  reporter.verbose(
-    `Creating Contentful nodes ${nodeCreationEnd - nodeCreationStart}ms`
-  )
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
