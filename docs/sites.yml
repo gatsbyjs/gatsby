@@ -11835,3 +11835,14 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Bevy
+  url: https://www.bevy.com
+  main_url: https://www.bevy.com
+  description: >
+    Helping brands build,grow,and scale their communities
+  categories:
+    - Business
+    - Community
+  built_by: Bevy Labs, Inc
+  built_by_url: https://www.bevy.com
+  featured: false
