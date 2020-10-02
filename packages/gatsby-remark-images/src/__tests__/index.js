@@ -685,7 +685,7 @@ describe(`image alt attribute`, () => {
     expect($(`img`).attr(`alt`)).toEqual(`testing-if-alt-is-correct`)
   })
 
-  it(`should use filename as fallback`, async () => {
+  it(`should use escaped filename as fallback`, async () => {
     const imagePath = `images/my-image.jpeg`
     const content = `![](./${imagePath} "some title")`
 
@@ -694,7 +694,7 @@ describe(`image alt attribute`, () => {
 
     const node = nodes.pop()
     const $ = cheerio.load(node.value)
-    expect($(`img`).attr(`alt`)).toEqual(`my-image`)
+    expect($(`img`).attr(`alt`)).toEqual(`my image`)
   })
 
   it(`should be able to consider EMPTY_ALT`, async () => {
