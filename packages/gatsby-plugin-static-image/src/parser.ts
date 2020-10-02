@@ -3,6 +3,10 @@ import { hashOptions, evaluateImageAttributes, ImageProps } from "./utils"
 import { NodePath } from "@babel/core"
 import { JSXOpeningElement } from "@babel/types"
 
+/**
+ * Traverses the parsed source, looking for StaticImage components.
+ * Extracts and returns the props from any that are found
+ */
 export const extractStaticImageProps = (
   ast: babel.types.File
 ): Map<string, ImageProps> => {
@@ -10,6 +14,7 @@ export const extractStaticImageProps = (
 
   traverse(ast, {
     JSXOpeningElement(nodePath) {
+      // Is this a StaticImage?
       if (
         !nodePath
           .get(`name`)

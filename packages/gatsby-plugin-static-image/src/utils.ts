@@ -32,6 +32,7 @@ export function evaluateImageAttributes(
   nodePath: NodePath<JSXOpeningElement>,
   onError?: (prop: string) => void
 ): Record<string, unknown> {
+  // Only get attributes that we need for generating the images
   return getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES)
 }
 

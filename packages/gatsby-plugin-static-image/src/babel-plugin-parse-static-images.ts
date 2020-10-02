@@ -3,59 +3,19 @@ import { PluginObj } from "@babel/core"
 import { hashOptions, evaluateImageAttributes } from "./utils"
 import fs from "fs-extra"
 import path from "path"
-import {
-  StringLiteral,
-  NumericLiteral,
-  BooleanLiteral,
-  ArrayExpression,
-  TemplateLiteral,
-} from "@babel/types"
+
 import template from "@babel/template"
-type AttrType =
-  | StringLiteral
-  | NumericLiteral
-  | BooleanLiteral
-  | ArrayExpression
-  | TemplateLiteral
+
+/**
+ * This is a plugin that finds StaticImage components and injects the image props into the component.
+ * These props contain the image URLs etc, and were created earlier in the build process
+ */
 
 export default function attrs({
   types: t,
 }: {
   types: typeof types
 }): PluginObj {
-  function generateLiterals(val: Array<unknown>): Array<AttrType> {
-    return val.map(generateLiteral).filter(Boolean) as Array<AttrType>
-  }
-
-  function generateLiteral(
-    val
-  ):
-    | StringLiteral
-    | NumericLiteral
-    | BooleanLiteral
-    | ArrayExpression
-    | TemplateLiteral {
-    switch (typeof val) {
-      case `string`:
-        return t.stringLiteral(val)
-
-      case `number`:
-        return t.numericLiteral(val)
-
-      case `boolean`:
-        return t.booleanLiteral(val)
-
-      case `object`:
-        if (Array.isArray(val)) {
-          return t.arrayExpression(generateLiterals(val))
-        }
-    }
-    return t.templateLiteral(
-      [t.templateElement({ raw: JSON.stringify(val) })],
-      []
-    )
-  }
-
   return {
     visitor: {
       JSXOpeningElement(nodePath): void {
@@ -67,20 +27,20 @@ export default function attrs({
           return
         }
 
-        const errors: Array<string> = []
+        const unresolvedProps: Array<string> = []
 
         const props = evaluateImageAttributes(nodePath, prop => {
-          errors.push(prop)
+          unresolvedProps.push(prop)
         })
 
         let error
 
-        if (errors.length) {
-          error = `Could not find values for the following props at build time: ${errors.join()}`
+        if (unresolvedProps.length) {
+          error = `Could not find values for the following props at build time: ${unresolvedProps.join()}`
           console.warn(error)
         }
 
-        const noSrc = errors.includes(`src`)
+        const noSrc = unresolvedProps.includes(`src`)
 
         const hash = hashOptions(props)
 
@@ -92,6 +52,8 @@ export default function attrs({
 
         const filename = path.join(cacheDir, `${hash}.json`)
         let data: Record<string, unknown> | undefined
+
+        // If there's no src prop there's no point in checking if it exists
         if (!noSrc) {
           try {
             data = fs.readJSONSync(filename)
@@ -101,7 +63,9 @@ export default function attrs({
         }
 
         if (!data) {
-          console.warn(`No image data found for file ${props.src}`, error)
+          console.warn(`No image data found for file ${props.src}`)
+
+          // Add the error message to the component so we can show it in the browser
           const newProp = t.jsxAttribute(
             t.jsxIdentifier(`__error`),
 
@@ -114,6 +78,8 @@ export default function attrs({
           return
         }
         if (error) {
+          // Add the error message to the component so we can show it in the browser
+
           const newProp = t.jsxAttribute(
             t.jsxIdentifier(`__error`),
             t.stringLiteral(error)
@@ -121,6 +87,7 @@ export default function attrs({
           nodePath.node.attributes.push(newProp)
         }
 
+        //  `require()` the image data into a component prop
         const makeRequire = template.expression(`require("${filename}")`)
 
         const newProp = t.jsxAttribute(
