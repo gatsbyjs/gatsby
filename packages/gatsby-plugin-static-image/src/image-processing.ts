@@ -102,8 +102,10 @@ export async function writeImages({
 
       await writeImage(file, args, reporter, cache, isFixed, cacheFilename)
 
-      // Watch the source image for changes
-      watchImage({ createNode, createNodeId, fullPath, cache, reporter })
+      if (process.env.NODE_ENV === `development`) {
+        // Watch the source image for changes
+        watchImage({ createNode, createNodeId, fullPath, cache, reporter })
+      }
     }
   )
 

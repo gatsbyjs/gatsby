@@ -11,7 +11,7 @@ import { createImageNode, IImageMetadata, writeImage } from "./image-processing"
 let watcher: FSWatcher | undefined
 
 /**
- * Watch a static source image for changes
+ * Watch a static source image for changes during develop
  */
 export function watchImage({
   fullPath,
