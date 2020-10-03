@@ -34,11 +34,11 @@ Here's how those tags render in HTML:
 
 ###### heading 6
 
-- each heading gets converted to their HTML equivalent
+- Each heading gets converted to their HTML equivalent
   - i.e. `# heading 1` is `<h1>heading 1</h1>`
 - Correct usage of each heading should follow the
   [accessibility guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings/) set by the World Wide Web Consortium (W3C)
-  _Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are already included from `title` entries in frontmatter metadata, and contributions in Markdown should begin with h2._
+  _Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are already included from `title` entries in frontmatter metadata, and contributions in Markdown should begin with `h2`._
 
 ## Emphasized text
 
