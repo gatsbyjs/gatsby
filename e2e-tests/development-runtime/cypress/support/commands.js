@@ -24,20 +24,13 @@ Cypress.Commands.add(`lifecycleCallOrder`, expectedActionCallOrder =>
     if (expectedActionCallOrderLength > actionsLength) {
       return false
     }
-
-    // get loop starting point from the first actions index
-    const firstOccurrence = actions.findIndex(
-      action => action.action === expectedActionCallOrder[0]
-    )
-    if (firstOccurrence === -1) return false
     
-    let prevActionIndex = 0
-    for (let i = 1; i < actionsLength; i += 1) {
-      const currentIndex = i + firstOccurrence
+    let prevActionIndex = -1
+    for (let i = 0; i < actionsLength; i += 1) {
       const nextActionIndex = prevActionIndex + 1
 
       // if the next action is found in the correct order
-      if (actions[currentIndex].action === expectedActionCallOrder[nextActionIndex]) {
+      if (actions[i].action === expectedActionCallOrder[nextActionIndex]) {
         prevActionIndex = nextActionIndex
       }
     }
