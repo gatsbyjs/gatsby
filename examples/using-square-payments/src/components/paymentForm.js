@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import "./paymentForm.css"
-
+import axios from 'axios'
+import { navigate } from "gatsby"
 const styles = {
   name: {
     verticalAlign: "top",
@@ -159,6 +160,20 @@ export default class PaymentForm extends Component {
             nonce: nonce,
           })
           console.log(nonce)
+          // use axios to make a POST request to the netlify function to process the payment
+          axios.post(process.env.NODE_ENV==='development'?'http://localhost:9000/processpay':'https://your-website/.netlify/functions/processpay',{
+            paymentAmmount:this.props.ammount*100, 
+            currency:"USD",
+            cardNounce:nonce
+          }).then(result=>{
+            // navigates to the paymentreciept page
+            navigate("/paymentreciept/",{
+              state:result.data
+            })
+          }).catch(error=>{
+            console.log(`error in processing payment:${error}`)
+            this.setState({error:true})
+          })
         },
         unsupportedBrowserDetected: () => {},
         inputEventReceived: inputEvent => {

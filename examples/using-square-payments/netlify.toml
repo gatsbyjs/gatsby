@@ -1,0 +1,4 @@
+[build]
+  Command = "yarn build"
+  Functions = "functions-build"
+  Publish = "public"

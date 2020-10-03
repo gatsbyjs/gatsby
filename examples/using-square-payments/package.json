@@ -5,39 +5,44 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.41",
-    "gatsby-image": "^2.4.15",
-    "gatsby-plugin-manifest": "^2.4.22",
-    "gatsby-plugin-offline": "^3.2.23",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-sharp": "^2.6.26",
-    "gatsby-plugin-square-payment-form": "^1.0.3",
-    "gatsby-source-filesystem": "^2.3.24",
-    "gatsby-transformer-sharp": "^2.5.12",
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.24.67",
+    "gatsby-plugin-manifest": "^2.4.33",
+    "gatsby-plugin-offline": "^3.2.30",
+    "gatsby-plugin-react-helmet": "^3.3.12",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "serverless-http": "^2.3.1",
+    "square-connect": "^4.20200923.4"
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "netlify-lambda": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "run-p build:**",
+    "build:app": "gatsby build",
+    "build:lambda": "netlify-lambda -c ./config/webpack.functions.js build functions",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
+    "start": "run-p start:**",
+    "start:app": "npm run develop",
+    "start:lambda": "netlify-lambda -c ./config/webpack.functions.js serve functions",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
