@@ -14,7 +14,7 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 _**Note:** If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute._
 
-## Install Node.js for your appropriate operating system
+## 🚀 Install Node.js for your appropriate operating system
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js either.
 
@@ -171,7 +171,7 @@ The output should look similar to the screenshot below, showing version numbers 
 
 Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step.
 
-## Install Git
+## 🚦 Install Git
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
 
@@ -203,7 +203,7 @@ gatsby --help
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
-## Create a Gatsby site
+## 🕸 Create a Gatsby site
 
 Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
 
@@ -255,7 +255,7 @@ You’ll be able to visit the site locally at `http://localhost:8000/` for as lo
 
 _**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both `http://localhost` and your local IP._
 
-## Set up a code editor
+## 🔨 Set up a code editor
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there.
 
@@ -288,7 +288,7 @@ To summarize, in this section you:
 
 Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
 
-## References
+## 🗝 References
 
 ### Overview of core technologies
 
