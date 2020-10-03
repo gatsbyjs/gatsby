@@ -15,3 +15,16 @@ The screenshot below shows the default 404 page that Gatsby creates. It also lis
 
 The screenshot below shows the custom 404 page.
 ![Gatsby Custom 404 Page](./images/gatsby-custom-404.png)
+
+> 💡 Note: The 404 Page must have 404 HTTP status code in header not 200 or any other status code.
+
+To use custom 404 page with iis write following rules in web.config
+
+```
+<system.webServer>
+  <httpErrors>
+    <remove statusCode="404" subStatusCode="-1" />
+    <error statusCode="404" prefixLanguageFilePath="" path="error\404.html" responseMode="File" />
+  </httpErrors>
+</system.webServer>
+```
