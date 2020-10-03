@@ -1,6 +1,4 @@
-export const parsePath = (
-  path: string = `/`
-): { pathname: string; search: string; hash: string } => {
+export const parsePath = (path: string = `/`) => {
   let pathname = path
   let search = ``
   let hash = ``
