@@ -454,8 +454,9 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
         if (file) {
           const { fileName, lineNumber: line, columnNumber: column } = file
+          const strippedFileName = fileName.match(/^(async )?(.*)/)[2]
 
-          const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+          const code = fs.readFileSync(strippedFileName, { encoding: `utf-8` })
           codeFrame = codeFrameColumns(
             code,
             {
