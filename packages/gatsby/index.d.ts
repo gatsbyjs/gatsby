@@ -210,6 +210,11 @@ export interface GatsbyConfig {
   }
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
+  /**
+   * Same as plugins, but kept to allow time to migrate.
+   * @deprecated Please use `plugins` instead.
+   */
+  __experimentalThemes?: Array<PluginRef>,
 }
 
 /**
