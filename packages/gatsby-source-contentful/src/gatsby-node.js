@@ -5,7 +5,11 @@ const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const { createPluginConfig, validateOptions } = require(`./plugin-options`)
+const {
+  createPluginConfig,
+  validateOptions,
+  initializeErrorMap,
+} = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -21,6 +25,8 @@ const restrictedNodeFields = [
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
+
+exports.onPreInit = initializeErrorMap
 
 exports.onPreBootstrap = validateOptions
 /***

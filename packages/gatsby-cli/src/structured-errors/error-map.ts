@@ -480,9 +480,15 @@ export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
 
 export const defaultError = errorMap[``]
 
+export enum ErrorType {
+  User = `USER`,
+  System = `SYSTEM`,
+}
+
 export interface IErrorMapEntry {
   text: (context) => string
   level: Level
   type?: Type
+  errorType?: ErrorType
   docsUrl?: string
 }

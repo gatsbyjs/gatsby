@@ -60,8 +60,13 @@ const validateOptions = ({ reporter }, options) => {
     result.error.details.forEach(detail => {
       errors[detail.path[0]] = detail.message
     })
-    reporter.panic(`Problems with gatsby-source-contentful plugin options:
-${exports.formatPluginOptionsForCLI(options, errors)}`)
+
+    if (reporter.setErrorMap) {
+      reporter.panic({ id: `TODO_NUMBER`, context: { errors, options } })
+    } else {
+      reporter.panic(`Problems with gatsby-source-contentful plugin options:
+      ${exports.formatPluginOptionsForCLI(options, errors)}`)
+    }
   }
 }
 
@@ -112,6 +117,23 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
   return lines.join(`\n`)
 }
 
+const initializeErrorMap = ({ reporter }) => {
+  if (reporter?.setErrorMap) {
+    reporter.setErrorMap({
+      TODO_NUMBER: {
+        text: context =>
+          `Problems with gatsby-source-contentful plugin options: ${formatPluginOptionsForCLI(
+            context.options,
+            context.errors
+          )}`,
+        errorType: `USER`,
+        level: `ERROR`,
+        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+      },
+    })
+  }
+}
+
 /**
  * Mask majority of input to not leak any secrets
  * @param {string} input
@@ -130,6 +152,7 @@ const maskText = input => {
 export {
   defaultOptions,
   validateOptions,
+  initializeErrorMap,
   formatPluginOptionsForCLI,
   maskText,
   createPluginConfig,
