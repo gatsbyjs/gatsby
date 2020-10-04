@@ -147,21 +147,21 @@ const processTheme = (
   }
 }
 
-interface LoadThemesOptions {
+interface ILoadThemesOptions {
   useLegacyThemes?: boolean
   configFilePath: string
   rootDir: string
 }
 
-interface LoadedThemes {
+interface ILoadedThemes {
   config: GatsbyConfig
   themes: Array<IProcessedTheme>
 }
 
 export default async function loadThemes(
   config: GatsbyConfig,
-  { useLegacyThemes = false, configFilePath, rootDir }: LoadThemesOptions
-): globalThis.Promise<LoadedThemes> {
+  { useLegacyThemes = false, configFilePath, rootDir }: ILoadThemesOptions
+): globalThis.Promise<ILoadedThemes> {
   const themesA = await Promise.mapSeries(
     (useLegacyThemes ? config.__experimentalThemes : config.plugins) || [],
     async themeSpec => {
