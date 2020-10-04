@@ -165,38 +165,20 @@ function extendLocalReporterToCatchPluginErrors({
   let panicOnBuild = reporter.panicOnBuild
 
   if (pluginName && reporter?.setErrorMap) {
-    setErrorMap = errorMap => {
-      const newErrorMap = getErrorMapWthPluginName(pluginName, errorMap)
+    setErrorMap = errorMap =>
+      reporter.setErrorMap(getErrorMapWthPluginName(pluginName, errorMap))
 
-      return reporter.setErrorMap(newErrorMap)
-    }
+    error = (errorMeta, error) =>
+      reporter.error(extendErrorIdWithPluginName(pluginName, errorMeta), error)
 
-    error = (errorMeta, error) => {
-      const errorMetaExtended = extendErrorIdWithPluginName(
-        pluginName,
-        errorMeta
+    panic = (errorMeta, error) =>
+      reporter.panic(extendErrorIdWithPluginName(pluginName, errorMeta), error)
+
+    panicOnBuild = (errorMeta, error) =>
+      reporter.panicOnBuild(
+        extendErrorIdWithPluginName(pluginName, errorMeta),
+        error
       )
-
-      return reporter.error(errorMeta, errorMetaExtended)
-    }
-
-    panic = (errorMeta, error) => {
-      const errorMetaExtended = extendErrorIdWithPluginName(
-        pluginName,
-        errorMeta
-      )
-
-      return reporter.panic(errorMeta, errorMetaExtended)
-    }
-
-    panicOnBuild = (errorMeta, error) => {
-      const errorMetaExtended = extendErrorIdWithPluginName(
-        pluginName,
-        errorMeta
-      )
-
-      return reporter.panicOnBuild(errorMeta, errorMetaExtended)
-    }
   }
 
   return {
