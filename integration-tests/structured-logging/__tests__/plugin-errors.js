@@ -60,6 +60,7 @@ describe(`Plugin Errors`, () => {
             type: `LOG`,
             payload: expect.objectContaining({
               level: "ERROR",
+              errorCategory: `SYSTEM`,
               text: `Error text is PANIC!`,
               code: `structured-plugin-errors_1337`,
             }),
