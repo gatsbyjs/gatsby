@@ -12,7 +12,7 @@ import { GatsbyConfig, PluginRef } from "../../../index"
 
 const debug = Debug(`gatsby:load-themes`)
 
-type ResolvedTheme = {
+interface IResolvedTheme {
   themeName: string
   themeConfig: GatsbyConfig
   themeSpec: PluginRef
@@ -26,10 +26,10 @@ const resolveTheme = async (
   configFileThatDeclaredTheme: string,
   isMainConfig = false,
   rootDir: string
-): globalThis.Promise<ResolvedTheme> => {
+): globalThis.Promise<IResolvedTheme> => {
   const themeName =
-    typeof themeSpec === "string" ? themeSpec : themeSpec.resolve
-  let themeDir = ""
+    typeof themeSpec === `string` ? themeSpec : themeSpec.resolve
+  let themeDir = ``
   try {
     const scopedRequire = createRequireFromPath(
       `${rootDir}/:internal:`
@@ -37,7 +37,7 @@ const resolveTheme = async (
     // theme is an node-resolvable module
     themeDir = path.dirname(scopedRequire.resolve(themeName))
   } catch (e) {
-    let pathToLocalTheme = ""
+    let pathToLocalTheme = ``
 
     // only try to look for local theme in main site
     // local themes nested in other themes is potential source of problems:
@@ -78,7 +78,7 @@ const resolveTheme = async (
   // if theme is a function, call it with the themeConfig
   let themeConfig: GatsbyConfig = theme
   if (_.isFunction(theme)) {
-    themeConfig = theme(typeof themeSpec === "string" ? {} : themeSpec.options)
+    themeConfig = theme(typeof themeSpec === `string` ? {} : themeSpec.options)
   }
   return {
     themeName,
@@ -90,12 +90,12 @@ const resolveTheme = async (
   }
 }
 
-type ProcessThemeOptions = {
+interface IProcessThemeOptions {
   useLegacyThemes: boolean
   rootDir: string
 }
 
-type ProcessedTheme = {
+interface IProcessedTheme {
   themeName: string
   themeConfig: GatsbyConfig
   themeSpec: PluginRef
@@ -103,7 +103,7 @@ type ProcessedTheme = {
   parentDir: string
 }
 
-type ProcessedThemes = (ProcessedTheme | ProcessedThemes)[]
+type ProcessedThemes = Array<IProcessedTheme | ProcessedThemes>
 
 // single iteration of a recursive function that resolve parent themes
 // It's recursive because we support child themes declaring parents and
@@ -119,8 +119,8 @@ const processTheme = (
     themeSpec,
     themeDir,
     configFilePath,
-  }: ResolvedTheme,
-  { useLegacyThemes, rootDir }: ProcessThemeOptions
+  }: IResolvedTheme,
+  { useLegacyThemes, rootDir }: IProcessThemeOptions
 ): Promise<ProcessedThemes> => {
   const themesList = useLegacyThemes
     ? themeConfig && themeConfig.__experimentalThemes
@@ -147,15 +147,15 @@ const processTheme = (
   }
 }
 
-type LoadThemesOptions = {
+interface LoadThemesOptions {
   useLegacyThemes?: boolean
   configFilePath: string
   rootDir: string
 }
 
-type LoadedThemes = {
+interface LoadedThemes {
   config: GatsbyConfig
-  themes: ProcessedTheme[]
+  themes: Array<IProcessedTheme>
 }
 
 export default async function loadThemes(
