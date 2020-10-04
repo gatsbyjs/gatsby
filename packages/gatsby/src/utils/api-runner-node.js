@@ -132,11 +132,15 @@ function getLocalReporter({ activity, reporter }) {
 function extendErrorIdWithPluginName(pluginName, errorMeta) {
   if (typeof errorMeta === `object`) {
     const id = errorMeta && errorMeta[`id`]
-
     if (id) {
-      errorMeta[`id`] = `${pluginName}_${id}`
+      return {
+        ...errorMeta,
+        id: `${pluginName}_${id}`,
+      }
     }
   }
+
+  return errorMeta
 }
 
 function getErrorMapWthPluginName(pluginName, errorMap) {
@@ -168,21 +172,30 @@ function extendLocalReporterToCatchPluginErrors({
     }
 
     error = (errorMeta, error) => {
-      extendErrorIdWithPluginName(pluginName, errorMeta)
+      const errorMetaExtended = extendErrorIdWithPluginName(
+        pluginName,
+        errorMeta
+      )
 
-      return reporter.error(errorMeta, error)
+      return reporter.error(errorMeta, errorMetaExtended)
     }
 
     panic = (errorMeta, error) => {
-      extendErrorIdWithPluginName(pluginName, errorMeta)
+      const errorMetaExtended = extendErrorIdWithPluginName(
+        pluginName,
+        errorMeta
+      )
 
-      return reporter.panic(errorMeta, error)
+      return reporter.panic(errorMeta, errorMetaExtended)
     }
 
     panicOnBuild = (errorMeta, error) => {
-      extendErrorIdWithPluginName(pluginName, errorMeta)
+      const errorMetaExtended = extendErrorIdWithPluginName(
+        pluginName,
+        errorMeta
+      )
 
-      return reporter.panicOnBuild(errorMeta, error)
+      return reporter.panicOnBuild(errorMeta, errorMetaExtended)
     }
   }
 

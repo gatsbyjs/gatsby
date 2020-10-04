@@ -15,9 +15,7 @@ const constructError = (
     // Look at original errorMap, ids cannot be overwritten
     if (errorMap[id]) {
       errorMapEntry = errorMap[id]
-    }
-
-    if (suppliedErrorMap[id]) {
+    } else if (suppliedErrorMap[id]) {
       errorMapEntry = suppliedErrorMap[id]
     }
   }
