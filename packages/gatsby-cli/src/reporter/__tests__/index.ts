@@ -103,6 +103,6 @@ describe(`report.error`, () => {
       },
     })
 
-    expect(reporter.getErrorMap()[`1337`]).toBeTruthy()
+    expect(reporter.errorMap[`1337`]).toBeTruthy()
   })
 })

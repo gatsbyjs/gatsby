@@ -52,13 +52,6 @@ class Reporter {
   }
 
   /**
-   * Retrieve error map
-   */
-  getErrorMap = (): Record<ErrorId, IErrorMapEntry> =>
-    // TODO: We always spread the internal error map to ensure our keys do not get overwritten
-    this.errorMap
-
-  /**
    * Toggle verbosity.
    */
   setVerbose = (_isVerbose: boolean = true): void => {
@@ -158,7 +151,7 @@ class Reporter {
       }
     }
 
-    const structuredError = constructError({ details }, this.getErrorMap())
+    const structuredError = constructError({ details }, this.errorMap)
 
     if (structuredError) {
       reporterActions.createLog(structuredError)
