@@ -1298,6 +1298,29 @@ describe(`Extra fields`, () => {
   })
 })
 
+describe(`Exclude Runner`, () => {
+  beforeAll(() => {
+    jest.unmock(`glob`)
+  })
+
+  describe(`excludes directories`, () => {
+    it(`excludes src directory`, async () => {
+      process.env.GATSBY_EXCLUDE_PATHS = `src`
+      const errors = []
+      const files = await parseQueries({
+        base,
+        additional: [],
+        addError: e => {
+          errors.push(e)
+        },
+      })
+
+      expect(errors).toEqual([])
+      expect(files).toEqual([])
+    })
+  })
+})
+
 const createGatsbyDoc = (
   filePath,
   query,
