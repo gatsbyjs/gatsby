@@ -9,7 +9,7 @@ import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
 import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
-import { ImageProps, SharpProps } from "./utils"
+import { ImageProps, SharpProps } from "../utils"
 import { getCustomSharpFields } from "./get-custom-sharp-fields"
 import { watchImage } from "./watcher"
 

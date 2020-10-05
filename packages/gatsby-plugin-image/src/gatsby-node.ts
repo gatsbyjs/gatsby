@@ -1,4 +1,4 @@
-export * from "./preprocess-source"
+export * from "./node-apis/preprocess-source"
 
 import { GatsbyNode } from "gatsby"
 import path from "path"

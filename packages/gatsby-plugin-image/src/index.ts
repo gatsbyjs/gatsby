@@ -1,1 +1,1 @@
-export { StaticImage } from "./static-image"
+export { StaticImage } from "./components/static-image"

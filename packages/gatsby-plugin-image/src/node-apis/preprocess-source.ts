@@ -1,5 +1,5 @@
 import { PreprocessSourceArgs } from "gatsby"
-import { babelParseToAst } from "./babel-parse-to-ast"
+import { babelParseToAst } from "./parser"
 import path from "path"
 import { extractStaticImageProps } from "./parser"
 import { writeImages } from "./image-processing"

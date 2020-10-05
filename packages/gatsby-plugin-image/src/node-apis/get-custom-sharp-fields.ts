@@ -1,6 +1,6 @@
 import { Node, GatsbyCache, Reporter } from "gatsby"
 import { fluid, fixed, traceSVG } from "gatsby-plugin-sharp"
-import { SharpProps } from "./utils"
+import { SharpProps } from "../utils"
 
 /**
  * By default the gatsby-plugin-sharp functions don't create webP or SVG

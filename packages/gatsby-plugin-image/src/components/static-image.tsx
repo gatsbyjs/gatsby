@@ -1,5 +1,5 @@
 import React from "react"
-import { splitProps, AllProps } from "./utils"
+import { splitProps, AllProps } from "../utils"
 import Image, { FluidObject, FixedObject } from "gatsby-image"
 
 // These values are added by Babel. Do not add them manually
