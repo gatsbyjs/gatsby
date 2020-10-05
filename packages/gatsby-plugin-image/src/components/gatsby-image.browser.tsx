@@ -61,7 +61,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   if (!global.GATSBY___IMAGE && !shownWarning) {
     shownWarning = true
     console.warn(
-      `[gatsby-image] You're missing out on some cool performance features. Please add "gatsby-image" to your gatsby-config.js`
+      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   }
 
