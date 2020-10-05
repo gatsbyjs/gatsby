@@ -34,6 +34,10 @@ Now, login to Netlify and you will see a `New site from git` button at the top r
 
 Click on the `Deploy site` button and Netlify will start the build and deploy process you have specified. You can go to the `Deploys` tab and see the process unfold in the `Deploy log`. After a few moments, it will give you the live site URL, e.g., `random-name.netlify.com`.
 
+#### Continuous deployment
+
+Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo. Continous deployment is only possible when using a Git repository.
+
 ### Upload site folder
 
 There is also the option to upload your site to Netlify without using git.
@@ -54,10 +58,6 @@ Once the build is complete, you are ready to upload your site to Netlify. Go to 
 To start the deploy process, you need only drag and drop the `public` folder over the above area on the Netlify website. Netlify will create a new site with a random name, then start uploading and hosting the application files. After a few moments, it will give you a live site URL e.g. `random-name.netlify.com`.
 
 ![alt text](./images/gatsby-default-starter.png "Gatsby Default Starter")
-
-## Continuous deployment
-
-Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo.
 
 ## Domain setup
 

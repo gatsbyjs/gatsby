@@ -80,12 +80,12 @@ effect as well as lazy loading of images further down the screen.
 
 ## Install
 
-`npm install --save gatsby-image`
+`npm install gatsby-image`
 
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
 ```shell
-npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
+npm install gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 Then in your `gatsby-config.js`:

@@ -12,7 +12,7 @@ guide](https://emotion.sh/docs/migrating-to-emotion-10#incremental-migration) fo
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+npm install gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 ## How to use

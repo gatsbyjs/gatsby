@@ -10,7 +10,7 @@ in the service worker.
 
 ## Install
 
-`npm install --save gatsby-plugin-offline`
+`npm install gatsby-plugin-offline`
 
 ## How to use
 

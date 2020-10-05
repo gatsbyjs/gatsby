@@ -7,7 +7,7 @@ By default, the plugin will add some basic security headers. You can easily add 
 
 ## Install
 
-`npm install --save gatsby-plugin-netlify`
+`npm install gatsby-plugin-netlify`
 
 ## How to use
 

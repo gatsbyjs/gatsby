@@ -4,7 +4,7 @@ Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
-`npm install --save node-sass gatsby-plugin-sass`
+`npm install node-sass gatsby-plugin-sass`
 
 ## How to use
 
@@ -213,6 +213,6 @@ plugins: [
 ### v2.0.0
 
 - `node-sass` is moved to a peer dependency. Installing the package
-  alongside `gatsby-plugin-sass` is now required. Use `npm install --save node-sass`
+  alongside `gatsby-plugin-sass` is now required. Use `npm install node-sass`
 
 - support Gatsby v2 only

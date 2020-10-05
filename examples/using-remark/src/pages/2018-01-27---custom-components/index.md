@@ -74,7 +74,7 @@ In order to display this component within a Markdown file, you'll need to add a 
     yarn add rehype-react
 
     # If you use npm
-    npm install --save rehype-react
+    npm install rehype-react
     ```
 
 2.  Import `rehype-react` and whichever components you wish to use

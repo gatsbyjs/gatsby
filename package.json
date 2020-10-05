@@ -46,7 +46,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react": "^7.21.3",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "husky": "3.1.0",

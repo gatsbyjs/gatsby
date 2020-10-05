@@ -11,7 +11,7 @@ Two weeks ago, we announced our plans for a [new schema customization API](/blog
 First, install the latest and greatest version of `gatsby`, like so:
 
 ```shell
-npm install gatsby --save
+npm install gatsby
 ```
 
 Next, continue reading below to see if any of the great, new features we've enabled scratch a particular itch. We feel very confident they will 💜
