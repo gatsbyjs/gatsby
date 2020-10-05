@@ -91,7 +91,7 @@ Try out recipes today! Install the latest version of `gatsby-cli` and gatsby to 
 
 ```shell
 npm install -g gatsby-cli@latest
-npm i gatsby@latest
+npm install gatsby@latest
 ```
 
 To stay current with future developments, follow the [Gatsby Recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991).

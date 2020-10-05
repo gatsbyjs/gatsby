@@ -7,7 +7,7 @@ Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas
 
 ## Install
 
-`npm install --save gatsby-source-graphql`
+`npm install gatsby-source-graphql`
 
 ## How to use
 

@@ -12,7 +12,7 @@ stores via the [Shopify Storefront API][shopify-storefront-api].
 ## Install
 
 ```shell
-npm install --save gatsby-source-shopify
+npm install gatsby-source-shopify
 ```
 
 ## How to use

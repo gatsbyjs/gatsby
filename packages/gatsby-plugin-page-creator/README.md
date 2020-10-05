@@ -21,7 +21,7 @@ To exclude custom patterns, see [Ignoring Specific Files](#ignoring-specific-fil
 
 ## Install
 
-`npm install --save gatsby-plugin-page-creator`
+`npm install gatsby-plugin-page-creator`
 
 ## How to use
 
