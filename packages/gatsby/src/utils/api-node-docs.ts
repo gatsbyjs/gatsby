@@ -1,5 +1,3 @@
-import { JoiObject } from "joi"
-
 /**
  * Lets plugins implementing support for other compile-to-js add to the list
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.

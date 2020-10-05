@@ -3,6 +3,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     error: jest.fn(),
   }
 })
+const mockProcessExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
 import { loadPlugins } from "../index"
 import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
@@ -214,6 +215,7 @@ describe(`Load plugins`, () => {
           [ValidationError: "trackingId" must be a string. "anonymize" must be a boolean],
         ]
       `)
+      expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
   })
 })

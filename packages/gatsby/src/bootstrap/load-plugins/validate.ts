@@ -247,6 +247,7 @@ export async function validatePluginOptions({
         errors,
       },
     })
+    process.exit(1)
   }
 }
 
