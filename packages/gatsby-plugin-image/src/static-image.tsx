@@ -32,7 +32,7 @@ export const StaticImage: React.FC<AllProps & IPrivateProps> = ({
   console.warn(`Image not loaded`, src)
   if (!__error && process.env.NODE_ENV === `development`) {
     console.warn(
-      `Please ensure that "gatsby-plugin-static-image" is included in the plugins array in gatsby-config.js`
+      `Please ensure that "gatsby-plugin-image" is included in the plugins array in gatsby-config.js`
     )
   }
   return null

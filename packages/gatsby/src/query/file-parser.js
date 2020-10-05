@@ -418,10 +418,7 @@ export default class FileParser {
       return null
     }
 
-    if (
-      !text.includes(`graphql`) &&
-      !text.includes(`gatsby-plugin-static-image`)
-    )
+    if (!text.includes(`graphql`) && !text.includes(`gatsby-plugin-image`))
       return null
     const hash = crypto
       .createHash(`md5`)

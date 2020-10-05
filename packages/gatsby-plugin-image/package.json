@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-plugin-static-image",
+  "name": "gatsby-plugin-image",
   "version": "1.0.0",
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts,.tsx\"",
@@ -13,7 +13,7 @@
     "gatsby-node.js"
   ],
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-static-image#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#readme",
   "devDependencies": {
     "@types/node": "^14.10.2",
     "@babel/cli": "^7.8.7",
@@ -44,7 +44,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-static-image"
+    "directory": "packages/gatsby-plugin-image"
   },
   "author": "Matt Kane <matt@gatsbyjs.com>",
   "license": "MIT"

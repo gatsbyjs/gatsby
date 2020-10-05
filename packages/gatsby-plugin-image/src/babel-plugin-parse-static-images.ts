@@ -22,7 +22,7 @@ export default function attrs({
         if (
           !nodePath
             .get(`name`)
-            .referencesImport(`gatsby-plugin-static-image`, `StaticImage`)
+            .referencesImport(`gatsby-plugin-image`, `StaticImage`)
         ) {
           return
         }

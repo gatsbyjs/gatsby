@@ -9,12 +9,7 @@ export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
 }) => {
   const root = store.getState().program.directory
 
-  const cacheDir = path.join(
-    root,
-    `.cache`,
-    `caches`,
-    `gatsby-plugin-static-image`
-  )
+  const cacheDir = path.join(root, `.cache`, `caches`, `gatsby-plugin-image`)
 
   actions.setBabelPlugin({
     name: require.resolve(`./babel-plugin-parse-static-images`),

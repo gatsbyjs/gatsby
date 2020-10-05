@@ -16,19 +16,14 @@ export async function preprocessSource({
 }: PreprocessSourceArgs): Promise<string> {
   if (
     !contents.includes(`StaticImage`) ||
-    !contents.includes(`gatsby-plugin-static-image`) ||
+    !contents.includes(`gatsby-plugin-image`) ||
     !extensions.includes(path.extname(filename))
   ) {
     return contents
   }
   const root = store.getState().program.directory
 
-  const cacheDir = path.join(
-    root,
-    `.cache`,
-    `caches`,
-    `gatsby-plugin-static-image`
-  )
+  const cacheDir = path.join(root, `.cache`, `caches`, `gatsby-plugin-image`)
 
   const ast = babelParseToAst(contents, filename)
 
