@@ -215,11 +215,12 @@ export async function validatePluginOptions({
           )
 
           // Validate correct usage of pluginOptionsSchema
-          // TODO: Structured errors for these
-          if (!Joi.isSchema(optionsSchema))
-            throw new Error(`TODO NICE ERROR MESSAGE`)
-          if (optionsSchema.type !== `object`)
-            throw new Error(`TODO NICE ERROR MESSAGE`)
+          if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
+            reporter.warn(
+              `Plugin "${plugin.name}" has an invalid options schema, hence we cannot verify your configuration for it.`
+            )
+            return null
+          }
 
           try {
             // All plugins have plugins: [] added to their options by core, no need to validate it
@@ -244,7 +245,6 @@ export async function validatePluginOptions({
               return true
             }
 
-            // TODO: Maybe structured error for this?
             throw error
           }
 
