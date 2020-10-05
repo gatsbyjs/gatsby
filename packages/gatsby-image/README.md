@@ -244,10 +244,10 @@ Their fragments are:
 
 - `GatsbyDatoCmsFixed`
 - `GatsbyDatoCmsFixed_noBase64`
+- `GatsbyDatoCmsFixed_tracedSVG`
 - `GatsbyDatoCmsFluid`
 - `GatsbyDatoCmsFluid_noBase64`
 - `GatsbyDatoCmsFluid_tracedSVG`
-- `GatsbyDatoCmsFixed_tracedSVG`
 
 ### gatsby-source-sanity
 
