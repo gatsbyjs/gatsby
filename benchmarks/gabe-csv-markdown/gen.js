@@ -30,13 +30,15 @@ title: "${title.replace(/"/g, '\\"')}"
 description: "${desc.replace(/"/g, '\\"')}"
 slug: '${slug}'
 date: ${date}
-tags: [${tags}]
 ---
 
 # ${title}
 
 > ${desc}
-${faker.lorem.paragraphs(2)}
+
+${faker.lorem.paragraphs()}
+
+${faker.lorem.paragraphs()}
   `
 
   // Note: you can only escape double quotes (by doubling them, not by backslash)

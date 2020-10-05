@@ -1,7 +1,7 @@
 # gatsby-remark-smartypants
 
 Replaces “dumb” punctuation marks with “smart” punctuation marks using the
-[retext-smartypants](https://github.com/wooorm/retext-smartypants) plugin.
+[retext-smartypants](https://github.com/retextjs/retext-smartypants) plugin.
 
 ## Install
 
@@ -25,7 +25,7 @@ plugins: [
 
 Valid `remark-smartypants` options may passed to the plugin. For more on valid
 options refer to the
-[remark-smartypants API](https://github.com/wooorm/retext-smartypants#api) .
+[retext-smartypants API](https://github.com/retextjs/retext-smartypants#api) .
 
 ```javascript
 // In your gatsby-config.js

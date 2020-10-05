@@ -31,7 +31,7 @@ describe(`gatsby-plugin-preact`, () => {
     expect(getConfig).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledWith({
-      name: `react-refresh/babel`,
+      name: `@prefresh/babel-plugin`,
     })
     expect(actions.replaceWebpackConfig).toMatchInlineSnapshot(`
       [MockFunction] {
