@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "npm-run-all -s clean build:server build:browser build:server-compat build:browser-compat build:gatsby",
-    "build:gatsby": "tsc --jsx react --downlevelIteration true --declaration --declarationDir dist/ --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-*",
+    "build:gatsby": "tsc --jsx react --downlevelIteration true --declaration --declarationDir dist/ --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-* src/babel-plugin-parse-static-images.ts",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --define SERVER=true",
     "build:browser": "microbundle -i src/index.browser.tsx -f cjs,modern,es --jsx React.createElement -o dist/gatsby-image.browser --define SERVER=false",
     "build:server-compat": "microbundle -i src/compat.tsx -f cjs,es --jsx React.createElement -o dist/gatsby-image.compat --define SERVER=true",
