@@ -4,6 +4,7 @@ import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import joi, { Schema } from "joi"
 import reporter from "gatsby-cli/lib/reporter"
+import { IStructuredError } from "gatsby-cli"
 import { validateOptionsSchema } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
@@ -167,6 +168,29 @@ export async function handleBadExports({
   }
 }
 
+const Joi: joi.Root = joi.extend({
+  // This tells Joi to extend _all_ types with .dotenv(), see
+  // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
+  // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
+  type: /^s/,
+  rules: {
+    dotenv: {
+      args: [`name`],
+      validate(value, helpers, args): void {
+        if (!args.name) {
+          return helpers.error(
+            `any.dotenv requires the environment variable name`
+          )
+        }
+        return value
+      },
+      method(name): Schema {
+        return this.$_addRule({ name: `dotenv`, args: { name } })
+      },
+    },
+  },
+})
+
 export async function validatePluginOptions({
   flattenedPlugins,
 }: {
@@ -175,7 +199,7 @@ export async function validatePluginOptions({
   const errors = (
     await Promise.all(
       flattenedPlugins.map(
-        async (plugin): Promise<Error | null> => {
+        async (plugin): Promise<boolean | null> => {
           if (
             !plugin.nodeAPIs ||
             plugin.nodeAPIs?.indexOf(`pluginOptionsSchema`) === -1
@@ -185,29 +209,6 @@ export async function validatePluginOptions({
           const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
           if (!gatsbyNode.pluginOptionsSchema) return null
 
-          const Joi: joi.Root = joi.extend({
-            // This tells Joi to extend _all_ types with .dotenv(), see
-            // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
-            // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
-            type: /^s/,
-            rules: {
-              dotenv: {
-                args: [`name`],
-                validate(value, helpers, args): void {
-                  if (!args.name) {
-                    return helpers.error(
-                      `any.dotenv requires the environment variable name`
-                    )
-                  }
-                  return value
-                },
-                method(name): Schema {
-                  return this.$_addRule({ name: `dotenv`, args: { name } })
-                },
-              },
-            },
-          })
-
           const optionsSchema: joi.ObjectSchema = gatsbyNode.pluginOptionsSchema(
             {
               Joi,
@@ -215,6 +216,7 @@ export async function validatePluginOptions({
           )
 
           // Validate correct usage of pluginOptionsSchema
+          // TODO: Structured errors for these
           if (!Joi.isSchema(optionsSchema))
             throw new Error(`TODO NICE ERROR MESSAGE`)
           if (optionsSchema.type !== `object`)
@@ -230,8 +232,21 @@ export async function validatePluginOptions({
               optionsSchemaWithPlugins,
               plugin.pluginOptions
             )
-          } catch (err) {
-            return err
+          } catch (error) {
+            if (error instanceof Joi.ValidationError) {
+              reporter.error({
+                id: `11331`,
+                context: {
+                  validationErrors: error.details,
+                  pluginName: plugin.name,
+                },
+              })
+
+              // TODO: Maybe structured error for this?
+              return true
+            }
+
+            throw error
           }
 
           return null
@@ -240,13 +255,7 @@ export async function validatePluginOptions({
     )
   ).filter(Boolean)
 
-  if (errors.filter(item => item instanceof Error).length > 0) {
-    reporter.error({
-      id: `11331`,
-      context: {
-        errors,
-      },
-    })
+  if (errors.length > 0) {
     process.exit(1)
   }
 }

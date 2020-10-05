@@ -197,22 +197,99 @@ describe(`Load plugins`, () => {
 
   describe(`plugin options validation`, () => {
     it(`throws a structured error with invalid plugin options`, async () => {
-      await loadPlugins({
-        plugins: [
-          {
-            resolve: `gatsby-plugin-google-analytics`,
-            options: {
-              trackingId: 123,
-              anonymize: `not a boolean`,
-            },
+      const invalidPlugins = [
+        {
+          resolve: `gatsby-plugin-google-analytics`,
+          options: {
+            trackingId: 123,
+            anonymize: `not a boolean`,
           },
-        ],
+        },
+        {
+          resolve: `gatsby-plugin-google-analytics`,
+          options: {
+            anonymize: `still not a boolean`,
+          },
+        },
+      ]
+      await loadPlugins({
+        plugins: invalidPlugins,
       })
 
-      expect((reporter.error as jest.Mock).mock.calls[0][0].context.errors)
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(
+        invalidPlugins.length
+      )
+      expect((reporter.error as jest.Mock).mock.calls[0])
         .toMatchInlineSnapshot(`
         Array [
-          [ValidationError: "trackingId" must be a string. "anonymize" must be a boolean],
+          Object {
+            "context": Object {
+              "pluginName": "gatsby-plugin-google-analytics",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "trackingId",
+                    "label": "trackingId",
+                    "value": 123,
+                  },
+                  "message": "\\"trackingId\\" must be a string",
+                  "path": Array [
+                    "trackingId",
+                  ],
+                  "type": "string.base",
+                },
+                Object {
+                  "context": Object {
+                    "key": "anonymize",
+                    "label": "anonymize",
+                    "value": "not a boolean",
+                  },
+                  "message": "\\"anonymize\\" must be a boolean",
+                  "path": Array [
+                    "anonymize",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
+      expect((reporter.error as jest.Mock).mock.calls[1])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "pluginName": "gatsby-plugin-google-analytics",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "trackingId",
+                    "label": "trackingId",
+                  },
+                  "message": "\\"trackingId\\" is required",
+                  "path": Array [
+                    "trackingId",
+                  ],
+                  "type": "any.required",
+                },
+                Object {
+                  "context": Object {
+                    "key": "anonymize",
+                    "label": "anonymize",
+                    "value": "still not a boolean",
+                  },
+                  "message": "\\"anonymize\\" must be a boolean",
+                  "path": Array [
+                    "anonymize",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
         ]
       `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)

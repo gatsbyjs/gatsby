@@ -425,11 +425,15 @@ const errors = {
     text: (context): string =>
       [
         stripIndent(`
-          Invalid plugin options.
+          Invalid plugin options for "${context.pluginName}":
         `),
       ]
-        .concat([``].concat(context.errors))
+        .concat([``])
+        .concat(
+          context.validationErrors.map(error => `- ${error.message}`).join(`\n`)
+        )
         .join(`\n`),
+    type: Type.PLUGIN,
     level: Level.ERROR,
   },
   // node object didn't pass validation
