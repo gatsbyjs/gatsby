@@ -172,53 +172,73 @@ export async function validatePluginOptions({
 }: {
   flattenedPlugins: Array<IPluginInfo & Partial<IFlattenedPlugin>>
 }): Promise<void> {
-  console.log(flattenedPlugins)
-  const errors = await Promise.all(
-    flattenedPlugins.map(
-      async (plugin): Promise<Error | null> => {
-        if (
-          !plugin.nodeAPIs ||
-          plugin.nodeAPIs?.indexOf(`pluginOptionsSchema`) === -1
-        )
-          return null
+  const errors = (
+    await Promise.all(
+      flattenedPlugins.map(
+        async (plugin): Promise<Error | null> => {
+          if (
+            !plugin.nodeAPIs ||
+            plugin.nodeAPIs?.indexOf(`pluginOptionsSchema`) === -1
+          )
+            return null
 
-        const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-        if (!gatsbyNode.pluginOptionsSchema) return null
+          const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+          if (!gatsbyNode.pluginOptionsSchema) return null
 
-        const Joi = joi.extend({
-          // This tells Joi to extend _all_ types with .dotenv(), see
-          // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
-          // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
-          type: /^s/,
-          rules: {
-            dotenv: {
-              args: [`name`],
-              validate(value, helpers, args): void {
-                if (!args.name) {
-                  return helpers.error(
-                    `any.dotenv requires the environment variable name`
-                  )
-                }
-                return value
-              },
-              method(name): Schema {
-                return this.$_addRule({ name: `dotenv`, args: { name } })
+          const Joi: joi.Root = joi.extend({
+            // This tells Joi to extend _all_ types with .dotenv(), see
+            // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
+            // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
+            type: /^s/,
+            rules: {
+              dotenv: {
+                args: [`name`],
+                validate(value, helpers, args): void {
+                  if (!args.name) {
+                    return helpers.error(
+                      `any.dotenv requires the environment variable name`
+                    )
+                  }
+                  return value
+                },
+                method(name): Schema {
+                  return this.$_addRule({ name: `dotenv`, args: { name } })
+                },
               },
             },
-          },
-        })
+          })
 
-        const optionsSchema = gatsbyNode.pluginOptionsSchema({ Joi })
-        try {
-          await validateOptionsSchema(optionsSchema, plugin.pluginOptions)
-        } catch (err) {
-          return err
+          const optionsSchema: joi.ObjectSchema = gatsbyNode.pluginOptionsSchema(
+            {
+              Joi,
+            }
+          )
+
+          // Validate correct usage of pluginOptionsSchema
+          if (!Joi.isSchema(optionsSchema))
+            throw new Error(`TODO NICE ERROR MESSAGE`)
+          if (optionsSchema.type !== `object`)
+            throw new Error(`TODO NICE ERROR MESSAGE`)
+
+          try {
+            // All plugins have plugins: [] added to their options by core, no need to validate it
+            const optionsSchemaWithPlugins = optionsSchema.append({
+              plugins: Joi.any(),
+            })
+
+            await validateOptionsSchema(
+              optionsSchemaWithPlugins,
+              plugin.pluginOptions
+            )
+          } catch (err) {
+            return err
+          }
+
+          return null
         }
-
-        return null
-      }
+      )
     )
-  )
+  ).filter(Boolean)
 
   if (errors.filter(item => item instanceof Error).length > 0) {
     reporter.error({

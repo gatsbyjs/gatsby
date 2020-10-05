@@ -1,5 +1,11 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    error: jest.fn(),
+  }
+})
 import { loadPlugins } from "../index"
 import { slash } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
 import { IFlattenedPlugin } from "../types"
 
 describe(`Load plugins`, () => {
@@ -185,6 +191,29 @@ describe(`Load plugins`, () => {
       // TODO: I think we should probably be de-duping, so this should be 1.
       // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
       expect(tsplugins.length).toEqual(2)
+    })
+  })
+
+  describe(`plugin options validation`, () => {
+    it(`throws a structured error with invalid plugin options`, async () => {
+      await loadPlugins({
+        plugins: [
+          {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+              trackingId: 123,
+              anonymize: `not a boolean`,
+            },
+          },
+        ],
+      })
+
+      expect((reporter.error as jest.Mock).mock.calls[0][0].context.errors)
+        .toMatchInlineSnapshot(`
+        Array [
+          [ValidationError: "trackingId" must be a string. "anonymize" must be a boolean],
+        ]
+      `)
     })
   })
 })
