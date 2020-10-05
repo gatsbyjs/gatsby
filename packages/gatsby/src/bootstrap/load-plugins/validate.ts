@@ -242,10 +242,10 @@ export async function validatePluginOptions({
                 },
               })
 
-              // TODO: Maybe structured error for this?
               return true
             }
 
+            // TODO: Maybe structured error for this?
             throw error
           }
 
