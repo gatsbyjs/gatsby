@@ -1,4 +1,15 @@
-import { useState, CSSProperties, useEffect, useRef, RefObject } from "react"
+import {
+  useState,
+  CSSProperties,
+  useEffect,
+  HTMLAttributes,
+  ReactEventHandler,
+  SetStateAction,
+  Dispatch,
+} from "react"
+import { PlaceholderProps } from "./placeholder"
+import { ImgHTMLAttributes } from "react"
+import { MainImageProps } from "./main-image"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -6,8 +17,10 @@ export const hasNativeLazyLoadSupport =
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
-export function storeImageloaded(cacheKey: string): void {
-  imageCache.add(cacheKey)
+export function storeImageloaded(cacheKey?: string): void {
+  if (cacheKey) {
+    imageCache.add(cacheKey)
+  }
 }
 
 export function hasImageLoaded(cacheKey: string): boolean {
@@ -18,7 +31,7 @@ export function getWrapperProps(
   width: number,
   height: number,
   layout: "intrinsic" | "responsive" | "fixed"
-) {
+): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
   }
@@ -42,11 +55,37 @@ export function getMainProps(
   isLoading: boolean,
   isLoaded: boolean,
   images: any,
-  loading: "eager" | "lazy",
+  loading?: "eager" | "lazy",
   toggleLoaded?: any,
   cacheKey?: string,
   ref?: any
-): any {
+): MainImageProps {
+  const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
+    if (isLoaded) {
+      return
+    }
+
+    storeImageloaded(cacheKey)
+
+    const target = e.currentTarget
+    const img = new Image()
+    img.src = target.currentSrc
+
+    if (img.decode) {
+      // Decode the image through javascript to support our transition
+      img
+        .decode()
+        .catch(() => {
+          // ignore error, we just go forward
+        })
+        .then(() => {
+          toggleLoaded(true)
+        })
+    } else {
+      toggleLoaded(true)
+    }
+  }
+
   const result = {
     ...images,
     loading,
@@ -55,35 +94,10 @@ export function getMainProps(
     style: {
       opacity: isLoaded ? 1 : 0,
     },
-    onLoad: function (e: any) {
-      if (isLoaded) {
-        return
-      }
-
-      storeImageloaded(cacheKey)
-
-      const target = e.target
-      const img = new Image()
-      img.src = target.currentSrc
-
-      if (img.decode) {
-        // Decode the image through javascript to support our transition
-        img
-          .decode()
-          .catch(err => {
-            // ignore error, we just go forward
-          })
-          .then(() => {
-            toggleLoaded(true)
-          })
-      } else {
-        toggleLoaded(true)
-      }
-    },
+    onLoad,
     ref,
   }
 
-  // @ts-ignore
   if (!global.GATSBY___IMAGE) {
     result.style.height = `100%`
     result.style.left = 0
@@ -98,13 +112,17 @@ export function getMainProps(
   return result
 }
 
-export function getPlaceHolderProps(placeholder: any) {
-  const result = {
+export type PlaceholderImageAttrs = ImgHTMLAttributes<HTMLImageElement> &
+  Pick<PlaceholderProps, "sources" | "fallback">
+
+export function getPlaceHolderProps(
+  placeholder: PlaceholderImageAttrs
+): PlaceholderImageAttrs {
+  const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,
   }
 
-  // @ts-ignore
   if (!global.GATSBY___IMAGE) {
     result.style = {
       height: `100%`,
@@ -122,14 +140,18 @@ export function useImageLoaded(
   cacheKey: string,
   loading: "lazy" | "eager",
   ref: any
-) {
+): {
+  isLoaded: boolean
+  isLoading: boolean
+  toggleLoaded: Dispatch<SetStateAction<boolean>>
+} {
   const [isLoaded, toggleLoaded] = useState(false)
   const [isLoading, toggleIsLoading] = useState(loading === `eager`)
 
   const rAF =
     typeof window !== `undefined` && `requestAnimationFrame` in window
       ? requestAnimationFrame
-      : function (cb: Function) {
+      : function (cb: TimerHandler): number {
           return setTimeout(cb, 16)
         }
   const cRAF =
@@ -138,9 +160,9 @@ export function useImageLoaded(
       : clearTimeout
 
   useEffect(() => {
-    let interval: any
+    let interval: number
     // @see https://stackoverflow.com/questions/44074747/componentdidmount-called-before-ref-callback/50019873#50019873
-    function toggleIfRefExists() {
+    function toggleIfRefExists(): void {
       if (ref.current) {
         if (loading === `eager` && ref.current.complete) {
           storeImageloaded(cacheKey)
@@ -154,7 +176,7 @@ export function useImageLoaded(
     }
     toggleIfRefExists()
 
-    return () => {
+    return (): void => {
       cRAF(interval)
     }
   }, [])

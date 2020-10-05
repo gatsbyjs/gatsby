@@ -2,12 +2,16 @@ import { RefObject } from "react"
 
 let intersectionObserver: IntersectionObserver
 
-export function createIntersectionObserver(callback: Function): any {
+type Unobserver = () => void
+
+export function createIntersectionObserver(
+  callback: () => void
+): (element: RefObject<HTMLElement | undefined>) => Unobserver {
   // if we don't support intersectionObserver we don't lazy load (Sorry IE 11).
   if (!(`IntersectionObserver` in window)) {
-    return function observe() {
+    return function observe(): Unobserver {
       callback()
-      return function unobserve() {}
+      return function unobserve(): void {}
     }
   }
 
@@ -27,10 +31,14 @@ export function createIntersectionObserver(callback: Function): any {
     )
   }
 
-  return function observe(element: RefObject<HTMLElement>) {
-    intersectionObserver.observe(element.current)
+  return function observe(
+    element: RefObject<HTMLElement | undefined>
+  ): Unobserver {
+    if (element.current) {
+      intersectionObserver.observe(element.current)
+    }
 
-    return function unobserve() {
+    return function unobserve(): void {
       if (intersectionObserver && element.current) {
         intersectionObserver.unobserve(element.current)
       }

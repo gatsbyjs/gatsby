@@ -1,4 +1,4 @@
-import { createElement, FunctionComponent, ImgHTMLAttributes } from "react"
+import React, { FunctionComponent, ImgHTMLAttributes } from "react"
 import * as PropTypes from "prop-types"
 import { Picture, SourceProps } from "./picture"
 
@@ -26,17 +26,13 @@ export const Placeholder: FunctionComponent<PlaceholderProps> = function Placeho
 Placeholder.displayName = `Placeholder`
 Placeholder.propTypes = {
   fallback: PropTypes.string.isRequired,
-  sources: Picture.propTypes.sources,
-  alt: function (props, propName, componentName) {
-    if (props[propName]) {
-      return new Error(
-        `Invalid prop \`` +
-          propName +
-          `\` supplied to` +
-          ` \`` +
-          componentName +
-          `\`. Validation failed.`
-      )
+  sources: Picture.propTypes?.sources,
+  alt: function (props, propName, componentName): Error | null {
+    if (!props[propName]) {
+      return null
     }
+    return new Error(
+      `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`
+    )
   },
 }

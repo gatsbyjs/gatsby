@@ -1,5 +1,4 @@
-import { createElement, forwardRef, Fragment } from "react"
-import * as PropTypes from "prop-types"
+import React, { forwardRef } from "react"
 import { Picture, PictureProps } from "./picture"
 
 export type MainImageProps = PictureProps

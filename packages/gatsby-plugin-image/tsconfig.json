@@ -1,7 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "jsx": "react",
+    "target": "es5",
+    "outDir": "./dist",
+    "declarationDir": "./dist",
+    "lib": ["es2016", "dom"],
+    "esModuleInterop": true,
     "skipLibCheck": true
+    // "jsxFactory": "createElement"
   },
-  "exclude": ["node_modules", "src/__tests__", "src/__mocks__", "dist"]
+  "include": ["./src/global.d.ts", "./src/index.ts", "./src/index.browser.ts"]
 }

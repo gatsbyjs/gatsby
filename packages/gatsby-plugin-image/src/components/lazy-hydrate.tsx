@@ -1,4 +1,4 @@
-import { createElement, RefObject, MutableRefObject } from "react"
+import React, { MutableRefObject } from "react"
 import { hydrate, render } from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
@@ -10,12 +10,15 @@ import {
   hasNativeLazyLoadSupport,
   hasImageLoaded,
 } from "./hooks"
+import { ReactElement } from "react"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
+  width: number
+  height: number
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
   toggleIsLoaded: Function
-  ref: MutableRefObject<HTMLImageElement>
+  ref: MutableRefObject<HTMLImageElement | undefined>
 }
 
 export function lazyHydrate(
@@ -32,17 +35,17 @@ export function lazyHydrate(
     ref,
     ...props
   }: LazyHydrateProps,
-  root: RefObject<HTMLElement>,
+  root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>
-) {
+): (() => void) | null {
   if (!root.current) {
-    return
+    return null
   }
 
   const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
   // On first server hydration do nothing
   if (hasNativeLazyLoadSupport && hasSSRHtml && !hydrated.current) {
-    return
+    return null
   }
 
   const cacheKey = JSON.stringify(images)
@@ -72,9 +75,9 @@ export function lazyHydrate(
   doRender(component, root.current)
   hydrated.current = true
 
-  return () => {
+  return (): void => {
     if (root.current) {
-      render(null, root.current)
+      render((null as unknown) as ReactElement, root.current)
     }
   }
 }

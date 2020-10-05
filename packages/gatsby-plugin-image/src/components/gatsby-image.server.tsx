@@ -1,9 +1,4 @@
-import React, {
-  createElement,
-  ElementType,
-  FunctionComponent,
-  CSSProperties,
-} from "react"
+import React, { ElementType, FunctionComponent, CSSProperties } from "react"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { getWrapperProps, getMainProps, getPlaceHolderProps } from "./hooks"
 import { Placeholder } from "./placeholder"
@@ -39,7 +34,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   )
 
   const cleanedImages: GatsbyImageProps["images"] = {
-    fallback: null,
+    fallback: undefined,
     sources: [],
   }
   if (images.fallback) {
@@ -47,7 +42,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
       src: images.fallback.src,
       srcSet: images.fallback.srcSet
         ? removeNewLines(images.fallback.srcSet)
-        : null,
+        : undefined,
     }
   }
 

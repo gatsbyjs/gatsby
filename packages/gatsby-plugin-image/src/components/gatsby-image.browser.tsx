@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, {
   ElementType,
   useEffect,
@@ -5,34 +6,35 @@ import React, {
   FunctionComponent,
   ImgHTMLAttributes,
   useState,
+  RefObject,
 } from "react"
 import {
   getWrapperProps,
   hasNativeLazyLoadSupport,
   storeImageloaded,
 } from "./hooks"
-import { LayoutWrapperProps } from "./layout-wrapper"
+import { ILayoutWrapperProps } from "./layout-wrapper"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 
 export type GatsbyImageProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder"
+  "placeholder" | "onLoad"
 > & {
   alt: string
   as?: ElementType
-  layout: LayoutWrapperProps["layout"]
+  layout: ILayoutWrapperProps["layout"]
   className?: string
-  height?: number
+  height: number
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder: Pick<PlaceholderProps, "sources" | "fallback">
-  width?: number
-  onLoad?: Function
-  onError?: Function
+  width: number
+  onLoad?: () => void
+  onError?: () => void
   onStartLoad?: Function
 }
 
-let showedWarning = false
+let shownWarning = false
 
 export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function GatsbyImageHydrator({
   as: Type = `div`,
@@ -48,14 +50,16 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
 }) {
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
-  const unobserveRef = useRef(null)
-  const lazyHydrator = useRef(null)
-  const ref = useRef()
+  const unobserveRef = useRef<
+    ((element: RefObject<HTMLElement | undefined>) => void) | null
+  >(null)
+  const lazyHydrator = useRef<(() => void) | null>(null)
+  const ref = useRef<HTMLImageElement | undefined>()
   const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport)
   const [isLoaded, toggleIsLoaded] = useState(false)
 
-  if (!global.GATSBY___IMAGE && !showedWarning) {
-    showedWarning = true
+  if (!global.GATSBY___IMAGE && !shownWarning) {
+    shownWarning = true
     console.warn(
       `[gatsby-image] You're missing out on some cool performance features. Please add "gatsby-image" to your gatsby-config.js`
     )
@@ -67,25 +71,27 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     layout
   )
 
-  useEffect(() => {
+  useEffect((): (() => void) | undefined => {
     if (root.current) {
-      const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
+      const hasSSRHtml = root.current.querySelector(
+        `[data-gatsby-image-ssr]`
+      ) as HTMLImageElement
 
       // when SSR and native lazyload is supported we'll do nothing ;)
       if (hasNativeLazyLoadSupport && hasSSRHtml && global.GATSBY___IMAGE) {
-        onStartLoad && onStartLoad({ wasCached: false })
+        onStartLoad?.({ wasCached: false })
 
-        if ((hasSSRHtml as HTMLImageElement).complete) {
-          customOnLoad && (customOnLoad as Function)()
+        if (hasSSRHtml.complete) {
+          customOnLoad?.()
           storeImageloaded(JSON.stringify(images))
         }
-        hasSSRHtml.addEventListener(`load`, function onLoad(e) {
+        hasSSRHtml.addEventListener(`load`, function onLoad() {
           hasSSRHtml.removeEventListener(`load`, onLoad)
 
-          customOnLoad && (customOnLoad as Function)()
+          customOnLoad?.()
           storeImageloaded(JSON.stringify(images))
         })
-        return
+        return undefined
       }
 
       // Fallback to custom lazy loading (intersection observer)
@@ -93,7 +99,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
         ({ createIntersectionObserver }) => {
           const intersectionObserver = createIntersectionObserver(() => {
             if (root.current) {
-              onStartLoad && onStartLoad({ wasCached: false })
+              onStartLoad?.({ wasCached: false })
               toggleIsLoading(true)
             }
           })
@@ -105,7 +111,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       )
     }
 
-    return () => {
+    return (): void => {
       if (unobserveRef.current) {
         unobserveRef.current(root)
 
@@ -135,7 +141,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
             isLoading,
             isLoaded,
             toggleIsLoaded: () => {
-              customOnLoad && (customOnLoad as Function)()
+              customOnLoad?.()
               toggleIsLoaded(true)
             },
             ref,

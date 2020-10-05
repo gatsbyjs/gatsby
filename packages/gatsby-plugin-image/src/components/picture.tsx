@@ -1,5 +1,4 @@
-import {
-  createElement,
+import React, {
   FunctionComponent,
   ImgHTMLAttributes,
   forwardRef,
@@ -7,12 +6,12 @@ import {
 } from "react"
 import * as PropTypes from "prop-types"
 
-interface ResponsiveImageProps {
+export interface IResponsiveImageProps {
   sizes?: string
   srcSet: string
 }
 
-export type SourceProps = ResponsiveImageProps &
+export type SourceProps = IResponsiveImageProps &
   (
     | {
         media: string
@@ -24,17 +23,17 @@ export type SourceProps = ResponsiveImageProps &
       }
   )
 
-type FallbackProps = { src: string } & Partial<ResponsiveImageProps>
+type FallbackProps = { src: string } & Partial<IResponsiveImageProps>
 
-type ImageProps = ImgHTMLAttributes<{}> & {
+type ImageProps = ImgHTMLAttributes<HTMLImageElement> & {
   src: string
   alt: string
   shouldLoad: boolean
   innerRef: LegacyRef<HTMLImageElement>
 }
 
-export type PictureProps = ImgHTMLAttributes<{}> & {
-  fallback: FallbackProps
+export type PictureProps = ImgHTMLAttributes<HTMLImageElement> & {
+  fallback?: FallbackProps
   sources?: Array<SourceProps>
   alt: string
   shouldLoad?: boolean
@@ -54,12 +53,11 @@ const Image: FunctionComponent<ImageProps> = function Image({
       {...props}
       decoding="async"
       loading={loading}
-      src={shouldLoad ? src : null}
-      data-src={!shouldLoad ? src : null}
-      srcSet={shouldLoad ? srcSet : null}
-      data-srcset={!shouldLoad ? srcSet : null}
+      src={shouldLoad ? src : undefined}
+      data-src={!shouldLoad ? src : undefined}
+      srcSet={shouldLoad ? srcSet : undefined}
+      data-srcset={!shouldLoad ? srcSet : undefined}
       alt={alt}
-      // @ts-ignore
       ref={innerRef}
     />
   )

@@ -1,20 +1,15 @@
 /* global SERVER */
-import React, {
-  createElement,
-  Fragment,
-  FunctionComponent,
-  ReactNode,
-} from "react"
+import React, { Fragment, FunctionComponent } from "react"
 
 const terserMacro = require(`../macros/terser.macro`)
 
-export interface LayoutWrapperProps {
+export interface ILayoutWrapperProps {
   layout: "intrinsic" | "responsive" | "fixed"
   width: number
   height: number
 }
 
-const NativeScriptLoading = () => (
+const NativeScriptLoading: FunctionComponent = () => (
   <script
     type="module"
     dangerouslySetInnerHTML={{
@@ -42,13 +37,13 @@ if (hasNativeLazyLoadSupport) {
   />
 )
 
-export const LayoutWrapper: FunctionComponent<LayoutWrapperProps> = function LayoutWrapper({
+export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
   layout,
   width,
   height,
   children,
 }) {
-  let sizer = null
+  let sizer: JSX.Element | null = null
   if (layout === `responsive`) {
     sizer = <div style={{ paddingTop: `${(width / height) * 100}%` }} />
   }
