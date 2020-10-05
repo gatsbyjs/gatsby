@@ -489,6 +489,6 @@ export interface IErrorMapEntry {
   text: (context) => string
   level: Level
   type?: Type
-  errorCategory?: ErrorCategory
+  category?: ErrorCategory
   docsUrl?: string
 }

@@ -94,7 +94,7 @@ export const createLog = ({
   group,
   code,
   type,
-  errorCategory,
+  category,
   filePath,
   location,
   docsUrl,
@@ -112,7 +112,7 @@ export const createLog = ({
   group?: string
   code?: string
   type?: string
-  errorCategory?: ErrorCategory
+  category?: ErrorCategory
   filePath?: string
   location?: IStructuredError["location"]
   docsUrl?: string
@@ -133,7 +133,7 @@ export const createLog = ({
       group,
       code,
       type,
-      errorCategory,
+      category,
       filePath,
       location,
       docsUrl,

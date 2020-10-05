@@ -3,7 +3,7 @@ exports.onPreInit = ({ reporter }) => {
     "1337": {
       text: context => `Error text is ${context && context.someProp}`,
       level: "ERROR",
-      errorCategory: "SYSTEM",
+      category: "SYSTEM",
       docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
     },
   })

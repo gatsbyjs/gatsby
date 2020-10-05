@@ -43,7 +43,7 @@ interface ILog {
   group: string | undefined
   code: string | undefined
   type: string | undefined
-  errorCategory?: ErrorCategory
+  category?: ErrorCategory
   filePath: string | undefined
   location: IStructuredError["location"] | undefined
   docsUrl: string | undefined
