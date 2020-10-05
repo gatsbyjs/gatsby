@@ -483,6 +483,7 @@ export const defaultError = errorMap[``]
 export enum ErrorCategory {
   USER = `USER`,
   SYSTEM = `SYSTEM`,
+  THIRD_PARTY = `THIRD_PARTY`,
 }
 
 export interface IErrorMapEntry {
