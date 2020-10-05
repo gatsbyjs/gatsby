@@ -55,7 +55,7 @@ export interface ISomeGatsbyImageProps {
   imgStyle?: object
   placeholderStyle?: object
   placeholderClassName?: string
-  backgroundColor?: string | boolean
+  backgroundColor?: string | true
   onLoad?: () => void
   onError?: (event: Event) => void
   onStartLoad?: (param: { wasCached: boolean }) => void

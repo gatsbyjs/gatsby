@@ -1,6 +1,7 @@
 import React from "react"
 import { splitProps, AllProps } from "../utils"
-import Image, { FluidObject, FixedObject } from "gatsby-image"
+import { FluidObject, FixedObject } from "gatsby-image"
+import { GatsbyImage } from "./compat"
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
@@ -27,7 +28,7 @@ export const StaticImage: React.FC<AllProps & IPrivateProps> = ({
       ? { fixed: parsedValues }
       : { fluid: parsedValues }
 
-    return <Image {...gatsbyImageProps} {...imageProps} />
+    return <GatsbyImage {...gatsbyImageProps} {...imageProps} />
   }
   console.warn(`Image not loaded`, src)
   if (!__error && process.env.NODE_ENV === `development`) {
