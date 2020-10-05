@@ -217,7 +217,7 @@ export async function validatePluginOptions({
           // Validate correct usage of pluginOptionsSchema
           if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
             reporter.warn(
-              `Plugin "${plugin.name}" has an invalid options schema, hence we cannot verify your configuration for it.`
+              `Plugin "${plugin.name}" has an invalid options schema so we cannot verify your configuration for it.`
             )
             return null
           }
