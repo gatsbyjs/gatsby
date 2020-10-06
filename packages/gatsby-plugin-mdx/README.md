@@ -376,7 +376,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        remarkPlugins: [require("remark-abbr")],
+        remarkPlugins: [
+          require("remark-abbr"),
+          // To pass options, use a 2-element array with the
+          // configuration in an object in the second element
+          [require("remark-external-links"), { target: false }],
+        ],
       },
     },
   ],
@@ -398,7 +403,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        rehypePlugins: [require("rehype-slug")],
+        rehypePlugins: [
+          require("rehype-slug"),
+          // To pass options, use a 2-element array with the
+          // configuration in an object in the second element
+          [require("rehype-autolink-headings"), { behavior: "wrap" }],
+        ],
       },
     },
   ],
