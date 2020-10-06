@@ -199,20 +199,15 @@ export async function validatePluginOptions({
     await Promise.all(
       flattenedPlugins.map(
         async (plugin): Promise<boolean | null> => {
-          if (
-            !plugin.nodeAPIs ||
-            plugin.nodeAPIs?.indexOf(`pluginOptionsSchema`) === -1
-          )
+          if (plugin.nodeAPIs?.indexOf(`pluginOptionsSchema`) === -1)
             return null
 
           const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
           if (!gatsbyNode.pluginOptionsSchema) return null
 
-          const optionsSchema: joi.ObjectSchema = gatsbyNode.pluginOptionsSchema(
-            {
-              Joi,
-            }
-          )
+          let optionsSchema: joi.ObjectSchema = gatsbyNode.pluginOptionsSchema({
+            Joi,
+          })
 
           // Validate correct usage of pluginOptionsSchema
           if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
@@ -223,15 +218,16 @@ export async function validatePluginOptions({
           }
 
           try {
-            // All plugins have plugins: [] added to their options by core, no need to validate it
-            const optionsSchemaWithPlugins = optionsSchema.append({
-              plugins: Joi.any(),
-            })
+            // All plugins have "plugins: []"" added to their options in load.ts, even if they
+            // do not have subplugins. We add plugins to the schema if it does not exist already
+            // to make sure they pass validation.
+            if (!optionsSchema.describe().keys.plugins) {
+              optionsSchema = optionsSchema.append({
+                plugins: Joi.array().length(0),
+              })
+            }
 
-            await validateOptionsSchema(
-              optionsSchemaWithPlugins,
-              plugin.pluginOptions
-            )
+            await validateOptionsSchema(optionsSchema, plugin.pluginOptions)
           } catch (error) {
             if (error instanceof Joi.ValidationError) {
               reporter.error({
