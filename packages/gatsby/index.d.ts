@@ -13,10 +13,7 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
-import {
-  PluginOptionsSchemaJoi,
-  ObjectSchema,
-} from "./src/plugin-options-schema-joi-type"
+import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 
 export {
   default as Link,

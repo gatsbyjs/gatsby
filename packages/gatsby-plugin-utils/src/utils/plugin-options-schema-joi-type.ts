@@ -686,7 +686,7 @@ type SchemaMap<TSchema = any> = {
   [key in keyof TSchema]?: SchemaLike | SchemaLike[]
 }
 
-type Schema =
+export type Schema =
   | AnySchema
   | ArraySchema
   | AlternativesSchema
@@ -1945,7 +1945,7 @@ interface Extension {
   properties?: Record<string, any>
 }
 
-type ExtensionFactory = (joi: Root) => Extension
+type ExtensionFactory = (joi: PluginOptionsSchemaJoi) => Extension
 
 interface Err {
   toString(): string
@@ -2109,7 +2109,7 @@ export interface PluginOptionsSchemaJoi {
    *
    * @param fn - The function must always return a schema, even if untransformed.
    */
-  defaults(fn: SchemaFunction): Root
+  defaults(fn: SchemaFunction): PluginOptionsSchemaJoi
 
   /**
    * Generates a dynamic expression using a template string.
@@ -2144,7 +2144,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Checks whether or not the provided argument is a joi schema.
    */
-  isSchema(schema: any, options?: CompileOptions): boolean
+  isSchema(schema: any, options?: IsSchemaOptions): boolean
 
   /**
    * A special value used with `any.allow()`, `any.invalid()`, and `any.valid()` as the first value to reset any previously set values.

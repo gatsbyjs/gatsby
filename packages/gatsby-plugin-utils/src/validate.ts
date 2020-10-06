@@ -1,4 +1,5 @@
-import { BaseValidationOptions, Schema } from "joi"
+import { BaseValidationOptions } from "joi"
+import { ObjectSchema } from "./utils/plugin-options-schema-joi-type"
 
 const validationOptions: BaseValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -11,7 +12,7 @@ interface IOptions {
 }
 
 export async function validateOptionsSchema<PluginOptions = object>(
-  pluginSchema: Schema,
+  pluginSchema: ObjectSchema,
   pluginOptions: PluginOptions,
   options: IOptions = {}
 ): Promise<PluginOptions> {

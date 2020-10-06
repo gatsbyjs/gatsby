@@ -2,14 +2,12 @@ import _ from "lodash"
 import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
-import joi, { Schema } from "joi"
 import reporter from "gatsby-cli/lib/reporter"
-import { validateOptionsSchema } from "gatsby-plugin-utils"
+import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { GatsbyNode } from "../../../"
 import { IPluginInfo, IFlattenedPlugin } from "./types"
-import { PluginOptionsSchemaJoi } from "../../plugin-options-schema-joi-type"
 
 interface IApi {
   version?: string
@@ -168,29 +166,6 @@ export async function handleBadExports({
     })
   }
 }
-
-const Joi: PluginOptionsSchemaJoi = joi.extend({
-  // This tells Joi to extend _all_ types with .dotenv(), see
-  // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
-  // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
-  type: /^s/,
-  rules: {
-    dotenv: {
-      args: [`name`],
-      validate(value, helpers, args): void {
-        if (!args.name) {
-          return helpers.error(
-            `any.dotenv requires the environment variable name`
-          )
-        }
-        return value
-      },
-      method(name): Schema {
-        return this.$_addRule({ name: `dotenv`, args: { name } })
-      },
-    },
-  },
-})
 
 export async function validatePluginOptions({
   flattenedPlugins,
