@@ -1,7 +1,6 @@
 /* global SERVER */
 import React, { Fragment, FunctionComponent } from "react"
-
-const terserMacro = require(`../macros/terser.macro`)
+import terserMacro from "../../macros/terser.macro"
 
 export interface ILayoutWrapperProps {
   layout: "intrinsic" | "responsive" | "fixed"
