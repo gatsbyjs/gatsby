@@ -1,12 +1,10 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import ProductView from '../../views/product-view'
+import ProductView from "../../views/product-view"
 
 function Product(props) {
   const { product } = props.data
-  return (
-    <ProductView product={product} />
-  )
+  return <ProductView product={product} />
 }
 
 export default Product

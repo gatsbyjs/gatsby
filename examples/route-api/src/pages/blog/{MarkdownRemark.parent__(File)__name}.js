@@ -6,7 +6,9 @@ function BlogPost({ data }) {
 
   return (
     <div className="wrapper">
-      <header><Link to="/">Go back to "Home"</Link></header>
+      <header>
+        <Link to="/">Go back to "Home"</Link>
+      </header>
       <main>
         <h1>{post.title}</h1>
         <em>{post.date}</em> - {post.topic}
