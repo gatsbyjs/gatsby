@@ -21,8 +21,8 @@ To do this yourself, you'll build a simple blog using the excellent [gatsby-star
 ```shell
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
 git init # so you can keep track of the changes
-npm i # to install regular gastby requirements
-npm i --save-dev better-sqlite3 # to add an sqlite javascript client
+npm install # to install regular gastby requirements
+npm install --save-dev better-sqlite3 # to add an sqlite javascript client
 ```
 
 The useful commands on a sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.

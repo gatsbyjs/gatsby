@@ -10,7 +10,7 @@ https://using-contentful.gatsbyjs.org/
 ## Install
 
 ```shell
-npm install --save gatsby-source-contentful
+npm install gatsby-source-contentful
 ```
 
 ## How to use

@@ -6,7 +6,7 @@ This is a sub-plugin for `gatsby-transformer-remark`. As demoed below, add this 
 
 ## Install
 
-`npm install --save gatsby-remark-autolink-headers`
+`npm install gatsby-remark-autolink-headers`
 
 ## How to use
 
