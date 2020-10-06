@@ -395,35 +395,37 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli/) installed
-- Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
+- Choosing a font package from [Fontsource](https://github.com/fontsource/fontsource)
 
 ### Directions
 
-1. Run `npm install typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+This is an installation example using Open Sans, applicable to all other fonts searchable via [NPM](https://www.npmjs.com/) or the [packages](https://github.com/fontsource/fontsource/tree/master/packages) directory in the repository.
 
-An example to load the popular 'Source Sans Pro' font would be: `npm install typeface-source-sans-pro`.
+1. Run `npm install fontsource-open-sans` to download the necessary package files. If you wish to use a different typeface, search up `fontsource-<insert font name>` on [NPM](https://www.npmjs.com/) for specific instructions tailored to that font.
 
-2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
+2. Then within your app entry file or site component, import it in. In Gatsby, you could choose to import it into a layout template (`layout.js`), page component (`index.js`), or `gatsby-browser.js`.
 
 ```jsx:title=src/components/layout.js
-import "typeface-your-chosen-font"
+import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
+import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
+import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
 ```
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  font-family: "Your Chosen Font";
+  font-family: "Open Sans";
 }
 ```
 
-_NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
+_NOTE: The range of supported weights and styles a font may support is shown on each package README file._
 
 ### Additional resources
 
+- [Fontsource](https://github.com/fontsource/fontsource) - Main monorepo
+- [[WIP] Search Directory](https://fontsource.github.io/search-directory/) - Currently open to contributions improving the user experience
 - [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
-- [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
-- [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
 
 ## Using Font Awesome
 

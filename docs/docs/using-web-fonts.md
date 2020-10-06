@@ -18,38 +18,29 @@ Some examples of web font services include [Google Fonts](https://fonts.google.c
 
 ### Using Google Fonts
 
-The fastest way to get started using Google Fonts is by choosing a font from [the typefaces project](https://github.com/KyleAMathews/typefaces). This example shows how you can add Open Sans to your project.
+The fastest way to get started using Google Fonts is by choosing a font from [Fontsource](https://github.com/fontsource/fontsource).
 
-First, install the typeface package with npm:
+This is an installation example using Open Sans, applicable to all other fonts searchable via [NPM](https://www.npmjs.com/) or the [packages](https://github.com/fontsource/fontsource/tree/master/packages) directory in the repository.
 
-```bash
-npm install --save typeface-open-sans
-```
+1. Run `npm install fontsource-open-sans` to download the necessary package files. If you wish to use a different typeface, search up `fontsource-<insert font name>` on [NPM](https://www.npmjs.com/) for specific instructions tailored to that font.
 
-Or with yarn:
-
-```bash
-yarn add typeface-open-sans
-```
-
-In your `layout.js` file, import the typeface.
+2. Then within your app entry file or site component, import it in. In Gatsby, you could choose to import it into a layout template (`layout.js`), page component (`index.js`), or `gatsby-browser.js`.
 
 ```jsx:title=src/components/layout.js
-import "typeface-open-sans"
+import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
+import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
+import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
 ```
 
-Next, add the typeface name to the appropriate place in your CSS. In this case, you will override the `body` element's `font-family` default values.
+3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  color: hsla(0, 0%, 0%, 0.8);
-  // highlight-next-line
-  font-family: "Open Sans", georgia, serif;
-  font-weight: normal;
-  word-wrap: break-word;
-  font-kerning: normal;
+  font-family: "Open Sans";
 }
 ```
+
+_NOTE: The range of supported weights and styles a font may support is shown on each package README file._
 
 ### Using Typekit Web Fonts
 
