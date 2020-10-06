@@ -100,7 +100,7 @@ _Requirements: please make sure [Node 10](https://nodejs.org/en/download/) (or h
 Install Strapi using npm:
 
 ```shell
-npm i strapi@alpha -g
+npm install strapi@alpha -g
 ```
 
 _Note: Strapi v3 is still an alpha version, but it will be fine for this tutorial._
@@ -256,7 +256,7 @@ In this example, we are using Strapi. Obviously, we are going to need a source p
 Let's install it:
 
 ```shell
-npm install --save gatsby-source-strapi
+npm install gatsby-source-strapi
 ```
 
 This plugin needs to be configured. Replace the content of `gatsby-config.js` with:

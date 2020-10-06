@@ -47,7 +47,7 @@ There are a couple of useful tools that can help with keeping dependencies up to
 1. Install the tool
 
 ```shell
- npm i -g npm-check-updates
+ npm install -g npm-check-updates
 ```
 
 2. Run the command to update dependencies

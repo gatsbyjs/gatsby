@@ -20,7 +20,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms-app gatsby-plugin-netlify-cms
+npm install netlify-cms-app gatsby-plugin-netlify-cms
 ```
 
 ## How to use

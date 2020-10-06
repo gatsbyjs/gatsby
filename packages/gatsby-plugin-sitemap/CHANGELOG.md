@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.4.14...gatsby-plugin-sitemap@2.4.15) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
 ## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.4.13...gatsby-plugin-sitemap@2.4.14) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

@@ -23,7 +23,7 @@ https://guess-gatsby-wikipedia-demo.firebaseapp.com
 
 ## Install
 
-`npm install --save gatsby-plugin-guess-js`
+`npm install gatsby-plugin-guess-js`
 
 ## How to use
 
