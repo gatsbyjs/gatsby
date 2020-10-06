@@ -13,7 +13,10 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
-import { Root as Joi, ObjectSchema } from "joi"
+import {
+  PluginOptionsSchemaJoi,
+  ObjectSchema,
+} from "./src/plugin-options-schema-joi-type"
 
 export {
   default as Link,
@@ -1556,5 +1559,5 @@ export interface IPluginRefOptions {
 }
 
 export interface PluginOptionsSchemaArgs {
-  Joi: Joi
+  Joi: PluginOptionsSchemaJoi
 }

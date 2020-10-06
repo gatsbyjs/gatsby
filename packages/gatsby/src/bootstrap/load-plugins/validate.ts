@@ -9,6 +9,7 @@ import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { GatsbyNode } from "../../../"
 import { IPluginInfo, IFlattenedPlugin } from "./types"
+import { PluginOptionsSchemaJoi } from "../../plugin-options-schema-joi-type"
 
 interface IApi {
   version?: string
@@ -168,7 +169,7 @@ export async function handleBadExports({
   }
 }
 
-const Joi: joi.Root = joi.extend({
+const Joi: PluginOptionsSchemaJoi = joi.extend({
   // This tells Joi to extend _all_ types with .dotenv(), see
   // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
   // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
