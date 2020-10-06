@@ -34,7 +34,7 @@ export type GatsbyImageProps = Omit<
   onStartLoad?: Function
 }
 
-let shownWarning = false
+let hasShownWarning = false
 
 export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function GatsbyImageHydrator({
   as: Type = `div`,
@@ -58,8 +58,8 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport)
   const [isLoaded, toggleIsLoaded] = useState(false)
 
-  if (!global.GATSBY___IMAGE && !shownWarning) {
-    shownWarning = true
+  if (!global.GATSBY___IMAGE && !hasShownWarning) {
+    hasShownWarning = true
     console.warn(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )

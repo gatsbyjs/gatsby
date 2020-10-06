@@ -3,12 +3,12 @@ import {
   CSSProperties,
   useEffect,
   HTMLAttributes,
+  ImgHTMLAttributes,
   ReactEventHandler,
   SetStateAction,
   Dispatch,
 } from "react"
 import { PlaceholderProps } from "./placeholder"
-import { ImgHTMLAttributes } from "react"
 import { MainImageProps } from "./main-image"
 const imageCache = new Set<string>()
 
@@ -187,46 +187,3 @@ export function useImageLoaded(
     toggleLoaded,
   }
 }
-
-// return () => {
-//   if (root.current) {
-//     render(null, root.current);
-//   }
-// };
-// }
-
-// export function useGatsbyImage({
-//   placeholder,
-//   images,
-//   width,
-//   height,
-//   aspectRatio,
-//   maxWidth,
-//   maxHeight,
-//   loading = 'lazy',
-// }: any): any {
-//   const cacheKey = JSON.stringify(images);
-//   const ref = useRef();
-//   const { isLoading, isLoaded, toggleLoaded } = useImageLoaded(
-//     cacheKey,
-//     loading,
-//     ref
-//   );
-
-//   return {
-//     getWrapperProps: () =>
-//       getWrapperProps(width, height, layout),
-//     getMainImageProps: () =>
-//       getMainProps(
-//         isLoading || hasNativeLazyLoadSupport,
-//         isLoaded,
-//         images,
-//         loading,
-//         aspectRatio,
-//         toggleLoaded,
-//         cacheKey,
-//         ref
-//       ),
-//     getPlaceholderProps: () => getPlaceHolderProps(placeholder),
-//   };
-// }
