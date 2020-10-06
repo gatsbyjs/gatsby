@@ -17,6 +17,8 @@ npm install gatsby-source-shopify
 
 ## How to use
 
+[See the Shopify tutorial on gatsbyjs.com for a full getting started guide](https://www.gatsbyjs.com/docs/building-an-ecommerce-site-with-shopify/)
+
 Ensure you have an access token for the [Shopify Storefront API][shopify-storefront-api]. The token should have the following permissions:
 
 - Read products, variants, and collections
