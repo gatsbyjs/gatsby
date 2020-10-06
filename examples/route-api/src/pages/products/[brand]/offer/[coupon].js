@@ -1,16 +1,16 @@
 import * as React from "react"
 import { Link } from "gatsby"
 
-function ProductCatchAll({ params }) {
+function BrandOfferCoupon({ params }) {
   return (
     <div className="wrapper">
       <header><Link to="/">Go back to "Home"</Link></header>
       <main>
-        <h1>Couldn't find product</h1>
-        <p>We couldn't locate the product "{params.name}"</p>
+        <h1>Brand: {params.brand}</h1>
+        <p>Lucky you! Here's your custom coupon code: <em>{params.coupon}</em></p>
       </main>
     </div>
   )
 }
 
-export default ProductCatchAll
+export default BrandOfferCoupon

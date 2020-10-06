@@ -15,7 +15,7 @@ Or in the `scripts` section of your `package.json`:
 ```json:title=package.json
 {
   "develop": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
-  "build": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build",
+  "build": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build"
 }
 ```
 
@@ -29,7 +29,7 @@ You can create multiple pages from a model based on the collection of nodes with
 
 - `src/pages/products/{Product.name}.js => /products/burger`
 - `src/pages/products/{Product.fields__sku}.js => /products/001923`
-- `src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js => /blog/learning-gatsby`
+- `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js => /blog/learning-gatsby`
 
 Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. For example:
 
@@ -57,7 +57,7 @@ allProduct {
 }
 ```
 
-`src/pages/blog/{MarkdownRemark.parent__(File)__relativePath}.js` generates the following query:
+`src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` generates the following query:
 
 ```graphql
 allMarkdownRemark {
@@ -65,7 +65,7 @@ allMarkdownRemark {
     id # Gatsby always queries for id
     parent {
       … on File {
-        relativePath
+        name
       }
     }
   }
@@ -76,7 +76,31 @@ This is the query that Gatsby uses to grab all the nodes and create a page for e
 
 ### Component implementation
 
-Page components act the exact same way. Gatsby will create an instance of it for each node it finds in it’s querying. If you need to customize the query used for collecting the nodes, that can be done with a special export. Much akin to page queries. Here’s an example.
+Page components act the exact same way. Gatsby will create an instance of it for each node it finds in it’s querying. In the component itself (e.g. `src/pages/products/{Product.name}.js`) you're then able to access the `name` via props and as a variable in the GraphQL query. However, we recommend filtering by `id` as this is the fastest way to filter.
+
+```jsx:title=src/pages/products/{Product.name}.js
+import { unstable_collectionGraphql } from "gatsby"
+
+export default function Component(props) {
+  return props.data.fields.sku + props.params.name
+}
+
+// This is the page query that connects the data to the actual component. Here you can query for any and all fields
+// you need access to within your code. Again, since Gatsby always queries for `id` in the collection, you can use that
+// to connect to this GraphQL query.
+
+export const query = graphql`
+  query ($id: String) {
+    product(id: { eq: $id }) {
+      fields {
+        sku
+      }
+    }
+  }
+}
+```
+
+If you need to customize the query used for collecting the nodes, that can be done with a special export. Much akin to page queries. In the example below you filter out every product that is of type "Burger" for the collection route:
 
 ```jsx:title=src/pages/products/{Product.name}.js
 import { unstable_collectionGraphql } from "gatsby"
@@ -94,10 +118,6 @@ export const collectionQuery = unstable_collectionGraphql`
     ...CollectionPagesQueryFragment
   }
 }`
-
-// This is the page query that connects the data to the actual component. Here you can query for any and all fields
-// you need access to within your code. Again, since Gatsby always queries for `id` in the collection, you can use that
-// to connect to this GraphQL query.
 
 export const query = graphql`
   query ($id: String) {

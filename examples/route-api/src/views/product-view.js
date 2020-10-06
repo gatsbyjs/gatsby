@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 
 function ProductView({ product }) {
   return (
-    <React.Fragment>
+    <div className="wrapper">
       <header><Link to="/">Go back to "Home"</Link></header>
       <main>
         <h1>{product.name}</h1>
@@ -11,7 +11,7 @@ function ProductView({ product }) {
         <p>SKU: {product.meta.sku}</p>
       </main>
       <footer>Product provided by Incite.</footer>
-    </React.Fragment>
+    </div>
   )
 }
 
