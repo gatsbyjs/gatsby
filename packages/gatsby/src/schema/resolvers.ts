@@ -253,29 +253,29 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const equals = (value: string): any => {
-      return { eq: value }
-    }
-    const oneOf = (value: string): any => {
-      return { in: value }
-    }
-
     // Return early if fieldValue is [] since { in: [] } doesn't make sense
     if (Array.isArray(fieldValue) && fieldValue.length === 0) {
       return fieldValue
     }
 
-    const operator = Array.isArray(fieldValue) ? oneOf : equals
-    const runQueryArgs = args as TArgs & { filter: any }
-    runQueryArgs.filter = options.by
-      .split(`.`)
-      .reduceRight((acc, key, i, { length }) => {
-        return {
-          [key]: i === length - 1 ? operator(acc) : acc,
-        }
-      }, fieldValue)
+    const runQueryArgs = args as any
+    const filterParts: Array<string> = options.by.split(`.`)
 
     const firstOnly = !(returnType instanceof GraphQLList)
+
+    // Construct a filter that uses the proper operator (in/eq) and elemMatch if necessary.
+    const filterTail = Array.isArray(fieldValue)
+      ? { in: fieldValue }
+      : { eq: fieldValue }
+    // Note: firstOnly basically means the field that is being read/returned is not an array
+    runQueryArgs.filter =
+      firstOnly || filterParts.length === 1
+        ? { [filterParts.pop()!]: filterTail }
+        : { elemMatch: { [filterParts.pop()!]: filterTail } }
+
+    while (filterParts.length) {
+      runQueryArgs.filter = { [filterParts.pop()!]: runQueryArgs.filter }
+    }
 
     if (context.stats) {
       context.stats.totalRunQuery++
