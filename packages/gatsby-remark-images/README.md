@@ -15,7 +15,7 @@ In the processing, it makes images responsive by:
 
 ## Install
 
-`npm install --save gatsby-remark-images gatsby-plugin-sharp`
+`npm install gatsby-remark-images gatsby-plugin-sharp`
 
 ## How to use
 
@@ -48,6 +48,13 @@ You can reference an image using the relative path, where that path is relative 
 
 ```md
 ![Alt text here](./image.jpg)
+```
+
+By default, the text `Alt text here` will be used as the alt attribute of the generated `img` tag. If an empty alt attribute like `alt=""` is wished,
+a reserved keyword `GATSBY_EMPTY_ALT` can be used.
+
+```markdown
+![GATSBY_EMPTY_ALT](./image.png)
 ```
 
 ## Options

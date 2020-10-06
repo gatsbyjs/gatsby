@@ -14,7 +14,7 @@ NOTE: This plugin only works in production mode! To test your Global Site Tag is
 
 ## Install
 
-`npm install --save gatsby-plugin-google-gtag`
+`npm install gatsby-plugin-google-gtag`
 
 ## How to use
 

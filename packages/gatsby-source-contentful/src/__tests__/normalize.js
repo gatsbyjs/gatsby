@@ -25,7 +25,7 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
-      currentSyncData,
+      mergedSyncData: currentSyncData,
       contentTypeItems,
     })
     expect(entryList).toMatchSnapshot()
@@ -102,7 +102,7 @@ describe(`Process contentful data (by id)`, () => {
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
-      currentSyncData,
+      mergedSyncData: currentSyncData,
       contentTypeItems,
     })
     expect(entryList).toMatchSnapshot()
@@ -445,19 +445,21 @@ describe(`Make IDs`, () => {
       normalize.makeId({
         spaceId: `spaceId`,
         id: `id`,
+        type: `type`,
         defaultLocale: `en-US`,
         currentLocale: `en-US`,
       })
-    ).toBe(`spaceId___id`)
+    ).toBe(`spaceId___id___type`)
   })
   it(`It does postfix the spaceId and the id if its not the default locale`, () => {
     expect(
       normalize.makeId({
         spaceId: `spaceId`,
         id: `id`,
+        type: `type`,
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,
       })
-    ).toBe(`spaceId___id___en-GB`)
+    ).toBe(`spaceId___id___type___en-GB`)
   })
 })

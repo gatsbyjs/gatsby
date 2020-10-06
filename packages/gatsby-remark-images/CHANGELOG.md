@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.32...gatsby-remark-images@3.3.33) (2020-10-06)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** enable creating img tag with empty alt attribute ([#27218](https://github.com/gatsbyjs/gatsby/issues/27218)) ([9f0b545](https://github.com/gatsbyjs/gatsby/commit/9f0b545204b50f976094c9086374bb1f8021039e))
+
 ## [3.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.31...gatsby-remark-images@3.3.32) (2020-10-01)
 
 **Note:** Version bump only for package gatsby-remark-images
