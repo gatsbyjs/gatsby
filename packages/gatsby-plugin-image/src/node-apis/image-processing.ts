@@ -47,6 +47,7 @@ export async function createImageNode({
 
 export async function writeImages({
   images,
+  pathPrefix,
   cacheDir,
   reporter,
   cache,
@@ -55,6 +56,7 @@ export async function writeImages({
   createNode,
 }: {
   images: Map<string, ImageProps>
+  pathPrefix: string
   cacheDir: string
   reporter: Reporter
   cache: GatsbyCache
@@ -100,11 +102,26 @@ export async function writeImages({
       }
       await cache.set(cacheKey, imageRefs)
 
-      await writeImage(file, args, reporter, cache, isFixed, cacheFilename)
+      await writeImage(
+        file,
+        pathPrefix,
+        args,
+        reporter,
+        cache,
+        isFixed,
+        cacheFilename
+      )
 
       if (process.env.NODE_ENV === `development`) {
         // Watch the source image for changes
-        watchImage({ createNode, createNodeId, fullPath, cache, reporter })
+        watchImage({
+          createNode,
+          pathPrefix,
+          createNodeId,
+          fullPath,
+          cache,
+          reporter,
+        })
       }
     }
   )
@@ -114,6 +131,7 @@ export async function writeImages({
 
 export async function writeImage(
   file: Node,
+  pathPrefix: string,
   args: SharpProps,
   reporter: Reporter,
   cache: GatsbyCache,
@@ -131,6 +149,7 @@ export async function writeImage(
       const customSharpFields = await getCustomSharpFields({
         isFixed,
         file,
+        pathPrefix,
         args,
         reporter,
         cache,

@@ -8,6 +8,7 @@ const extensions: Array<string> = [`.js`, `.jsx`, `.tsx`]
 export async function preprocessSource({
   filename,
   contents,
+  pathPrefix,
   cache,
   reporter,
   store,
@@ -32,6 +33,7 @@ export async function preprocessSource({
   const sourceDir = path.dirname(filename)
   await writeImages({
     images,
+    pathPrefix,
     cache,
     reporter,
     cacheDir,

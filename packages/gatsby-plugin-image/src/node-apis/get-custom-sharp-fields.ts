@@ -10,12 +10,14 @@ import { SharpProps } from "../utils"
 export async function getCustomSharpFields({
   isFixed,
   file,
+  pathPrefix,
   args,
   reporter,
   cache,
 }: {
   isFixed: boolean
   file: Node
+  pathPrefix: string
   args: SharpProps
   reporter: Reporter
   cache: GatsbyCache
@@ -36,14 +38,14 @@ export async function getCustomSharpFields({
     const { src, srcSet } = await (isFixed
       ? fixed({
           file,
-          // TODO: need to get access to pathPrefix into these invocations
-          args: { ...args, toFormat: `webp` },
+
+          args: { ...args, pathPrefix, toFormat: `webp` },
           reporter,
           cache,
         })
       : fluid({
           file,
-          args: { ...args, toFormat: `webp` },
+          args: { ...args, pathPrefix, toFormat: `webp` },
           reporter,
           cache,
         }))
