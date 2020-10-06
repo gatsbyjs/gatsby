@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Unified Routes`,
+    title: `File System Route API`,
   },
   plugins: [
     `gatsby-transformer-remark`,

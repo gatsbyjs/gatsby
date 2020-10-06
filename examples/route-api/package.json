@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-example-unified-routes",
+  "name": "gatsby-example-file-system-route-api",
   "private": true,
-  "description": "Gatsby example site demoing Unified Routes",
+  "description": "Gatsby example site demoing File System Route API",
   "version": "1.0.0",
   "author": "LekoArts <lekoarts@gmail.com>",
   "dependencies": {
