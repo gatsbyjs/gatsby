@@ -1,5 +1,4 @@
 const { createMacro } = require(`babel-plugin-macros`);
-// const printAST = require(`ast-pretty-print`);
 const { doSync } = require(`do-sync`);
 
 module.exports = createMacro(cssNanoMacro);
