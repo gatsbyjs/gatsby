@@ -36,7 +36,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (services.developstatusserver) {
         let isRestarting = false
         const parentSocket = io(
-          `http://${window.location.hostname}:${services.developstatusserver.port}`
+          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
         )
 
         parentSocket.on(`structured-log`, msg => {
