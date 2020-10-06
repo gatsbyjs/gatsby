@@ -7,6 +7,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
+import { GatsbyNode } from "../../../"
 import { IPluginInfo, IFlattenedPlugin } from "./types"
 
 interface IApi {
@@ -205,9 +206,11 @@ export async function validatePluginOptions({
           const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
           if (!gatsbyNode.pluginOptionsSchema) return null
 
-          let optionsSchema: joi.ObjectSchema = gatsbyNode.pluginOptionsSchema({
-            Joi,
-          })
+          let optionsSchema = (gatsbyNode.pluginOptionsSchema as GatsbyNode["pluginOptionsSchema"])(
+            {
+              Joi,
+            }
+          )
 
           // Validate correct usage of pluginOptionsSchema
           if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
