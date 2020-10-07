@@ -19,6 +19,14 @@ Or in the `scripts` section of your `package.json`:
 }
 ```
 
+**Note:** If you're on Windows you should install [`cross-env`](https://www.npmjs.com/package/cross-env) and prepend your scripts, e.g.:
+
+```json:title=package.json
+{
+  "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
+}
+```
+
 Files created in `src/pages` were always automatically converted to single-page routes, now you're also able to define client-only and dynamic collection-based routes there.
 
 A complete example using all options below can be found in [Gatsby's "examples" folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api).
