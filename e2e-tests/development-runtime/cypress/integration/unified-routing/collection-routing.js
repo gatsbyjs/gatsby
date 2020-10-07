@@ -3,6 +3,15 @@ describe(`collection-routing`, () => {
     cy.visit(`/collection-routing/root`).waitForRouteChange()
   })
 
+  it(`can create simplest collection route that also has a number as an identifier`, () => {
+    cy.visit(`/collection-routing/1/`)
+      .waitForRouteChange()
+    cy.findByTestId(`slug`)
+      .should(`have.text`, `/preview/1`)
+    cy.findByTestId(`pagecontext`)
+      .should(`have.text`, `1`)
+  })
+
   it(`can navigate to a collection route and see its content rendered`, () => {
     cy.findByTestId(`collection-routing-blog`)
     cy.should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)

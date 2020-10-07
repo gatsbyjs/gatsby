@@ -63,8 +63,11 @@ export function derivePath(
 // function will remove the slashes. This is a hack to make sure the slashes
 // stick around in the final url structuring
 function safeSlugify(nodeValue: string): string {
-  return nodeValue
-    .split(`/`)
-    .map(v => slugify(v))
-    .join(`/`)
+  return (
+    nodeValue +
+    ``
+      .split(`/`)
+      .map(v => slugify(v))
+      .join(`/`)
+  )
 }
