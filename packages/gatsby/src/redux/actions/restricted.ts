@@ -318,11 +318,12 @@ export const actions = {
    * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
    * @example
    * exports.createSchemaCustomization = ({ actions }) => {
-   * // This code writes a GraphQL schema to a file named `schema.gql`.
+   *   // This code writes a GraphQL schema to a file named `schema.gql`.
    *   actions.printTypeDefinitions({})
    * }
    * @example
    * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`, but this time it does not include field types.
    *   actions.printTypeDefinitions({ withFieldTypes: false })
    * }
    */
