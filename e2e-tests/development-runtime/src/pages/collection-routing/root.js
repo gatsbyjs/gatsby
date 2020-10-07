@@ -17,12 +17,12 @@ export default function Root(props) {
           </Link>
         )
       })}
-      {props.data.images.nodes.map(node => {
+      {props.data.images.nodes.map((node, index) => {
         return (
           <Link
             key={node.gatsbyPath}
             to={node.gatsbyPath}
-            data-testid="collection-routing-image"
+            data-testid={`collection-routing-image-${index}`}
             data-testimagename={node.parent.name}
           >
             {node.parent.name}

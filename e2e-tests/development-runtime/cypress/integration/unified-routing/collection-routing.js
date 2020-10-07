@@ -11,15 +11,24 @@ describe(`collection-routing`, () => {
       .assertRoute(`/collection-routing/2018-12-14-hello-world/`)
     cy.findByTestId(`slug`)
     cy.should(`have.text`, `/2018-12-14-hello-world/`)
+    cy.findByTestId(`pagecontext`)
+    cy.should(`have.text`, `/2018-12-14-hello-world/`)
   })
 
   it(`can navigate to a collection route that uses unions and collectionGraphql query and see its content rendered`, () => {
-    cy.findByTestId(`collection-routing-image`)
+    cy.findByTestId(`collection-routing-image-0`)
     cy.should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
       .click()
     cy.waitForRouteChange()
       .assertRoute(`/collection-routing/gatsby-astronaut`)
     cy.findByTestId(`name`)
     cy.should(`have.text`, `gatsby-astronaut`)
+    cy.findByTestId(`pagecontext`)
+    cy.should(`have.text`, `gatsby-astronaut`)
+  })
+
+  it(`should respect collectionGraphql and only show one image instance`, () => {
+    cy.findByTestId(`collection-routing-image-1`)
+      .should(`not.exist`)
   })
 })
