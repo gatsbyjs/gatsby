@@ -11823,6 +11823,21 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
+- title: Wreel Collective
+  url: https://wreelcollective.com/
+  main_url: https://wreelcollective.com/
+  description: >
+    Digital creative, website design, apps, branding, campaigns, UX, development, strategy. Digital brand experiences. UK.
+  categories:
+    - Agency
+    - Media
+    - Consulting
+    - Design
+    - Portfolio
+    - Web Development
+  built_by: John Kavanagh
+  built_by_url: https://johnkavanagh.co.uk/
+  featured: false
 - title: Alex Perronnet Personal Website
   url: https://alexperronnet.io
   main_url: https://alexperronnet.io
