@@ -6,7 +6,7 @@ In the Gatsby ecosystem, there's more than one way to build a site. To help you 
 
 ## What is a plugin?
 
-Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly installed through a registry like npm. There are many types of [plugins](/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps and RSS, Google Analytics, and more. You can also [make your own plugins](/docs/creating-plugins/) and either distribute them for Gatsby developers to use or [install them locally](/docs/loading-plugins-from-your-local-plugins-folder/).
+Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly installed through a registry like npm. There are many types of [plugins](/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps and RSS, Google Analytics, and more. You can also [make your own plugins](/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](/docs/loading-plugins-from-your-local-plugins-folder/).
 
 - [Plugin docs](/docs/plugins/)
 - [Using a plugin](/docs/using-a-plugin-in-your-site/)
