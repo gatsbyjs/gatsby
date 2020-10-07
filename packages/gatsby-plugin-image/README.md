@@ -8,9 +8,9 @@ Install `gatsby-plugin-image`, then add it to your `gatsby-config.js`.
 
 # Static images
 
-The [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/), component combined with the sharp plugin, as an awesome way to automatically resize and optimise your images and serve them on the most performant way. This plugin is a proof of concept for a simpler way to use Gatsby's image processing tools without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
+The [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) component, combined with the sharp plugin, is a great way to automatically resize and optimize your images and serve them in the most performant way. This plugin is a proof of concept for a simpler way to use Gatsby's image processing tools without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
 
-The normal way to do this now is with `useStaticQuery`:
+The current way to do this is with `useStaticQuery`:
 
 ```js
 import React from "react"
@@ -33,7 +33,7 @@ export const Dino = () => {
 }
 ```
 
-This component lets you write this instead:
+Using this plugin, the code above can be written as follows:
 
 ```js
 import React from "react"
@@ -44,9 +44,9 @@ export const Dino = () => (
 )
 ```
 
-The `src` prop is relative to the source file, like in static HTML
+The `src` prop is relative to the source file, like in static HTML.
 
-You can pass in options that match ones passed to the `ImageSharp` query:
+You can pass the same options as those available via `ImageSharp` queries:
 
 ```js
 import React from "react"
@@ -90,7 +90,7 @@ export const Dino = () => {
 
 ## How does it work?
 
-When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, then adds a `require()` to that JSON file it as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop. Errors don't cause the build to fail, but instead are written to the component as an `__error` prop, which is then logged in develop.
+When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, then adds a `require()` to that JSON file as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop. Errors don't cause the build to fail, but instead are written to the component as an `__error` prop, which is then logged in develop.
 
 ### Are there restrictions to how this is used?
 
@@ -135,7 +135,7 @@ const width = 300
 ## Installation
 
 ```bash
-npm install gatsby@static-image gatsby-plugin-image@static-image
+npm install gatsby@static-image gatsby-plugin-image@static-image gatsby-plugin-sharp
 ```
 
 ...then add it to your `gatsby-config.js`:
@@ -315,7 +315,7 @@ plugins: [
 ]
 ```
 
-Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+Also, make sure you have set up a source plugin, so your images are available in GraphQL queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
 
 ```js
 const path = require(`path`)
@@ -437,7 +437,7 @@ resolutions -- in other words, create retina images.
 For the second scenario, you want to create multiple sizes of thumbnails for
 devices with widths stretching from smartphone to wide desktop monitors.
 
-To decide between the two, ask yourself: "do I know the exact size this image
+To decide between the two, ask yourself: "do I know what the exact size of this image
 will be?" If yes, it's the first type. If no and its width and/or height need to
 vary depending on the size of the screen, then it's the second type.
 
