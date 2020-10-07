@@ -15,7 +15,7 @@ exports.onCreateNode = function onCreateNode({
 
       createNodeField({
         name: `slug`,
-        value: slug.replace("/", ""),
+        value: slug,
         node,
       })
       break

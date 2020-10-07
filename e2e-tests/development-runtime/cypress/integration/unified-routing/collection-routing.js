@@ -1,39 +1,25 @@
 describe(`collection-routing`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForRouteChange()
+    cy.visit(`/collection-routing/root`).waitForRouteChange()
   })
 
   it(`can navigate to a collection route and see its content rendered`, () => {
-    cy.visit(`/collection-routing/root`).waitForRouteChange()
-
-    cy.getTestElement(`collection-routing-blog`)
-      .invoke(`attr`, `data-testslug`)
-      .then(slug => {
-        // should navigate us to an actual collection builder route.
-        cy.getTestElement(`collection-routing-blog`)
-          .first()
-          .click()
-          .waitForRouteChange()
-          .getTestElement(`slug`)
-          .invoke(`text`)
-          .should(`equal`, slug)
-      })
+    cy.findByTestId(`collection-routing-blog`)
+    cy.should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
+      .click()
+    cy.waitForRouteChange()
+      .assertRoute(`/collection-routing/2018-12-14-hello-world/`)
+    cy.findByTestId(`slug`)
+    cy.should(`have.text`, `/2018-12-14-hello-world/`)
   })
 
   it(`can navigate to a collection route that uses unions and collectionGraphql query and see its content rendered`, () => {
-    cy.visit(`/collection-routing/root`).waitForRouteChange()
-
-    cy.getTestElement(`collection-routing-image`)
-      .invoke(`attr`, `data-testimagename`)
-      .then(name => {
-        // should navigate us to an actual collection builder route.
-        cy.getTestElement(`collection-routing-image`)
-          .first()
-          .click()
-          .waitForRouteChange()
-          .getTestElement(`name`)
-          .invoke(`text`)
-          .should(`equal`, name)
-      })
+    cy.findByTestId(`collection-routing-image`)
+    cy.should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
+      .click()
+    cy.waitForRouteChange()
+      .assertRoute(`/collection-routing/gatsby-astronaut`)
+    cy.findByTestId(`name`)
+    cy.should(`have.text`, `gatsby-astronaut`)
   })
 })
