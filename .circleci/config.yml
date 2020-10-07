@@ -116,8 +116,8 @@ aliases:
           skip_file_change_test: << parameters.nightly >>
       - notify-status:
           condition: << parameters.nightly >>
-  
-  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-static-image_alias
+
+  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
     <<: *e2e-executor
     parameters:
       nightly:
@@ -128,7 +128,7 @@ aliases:
       CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
     steps:
       - e2e-test:
-          test_path: e2e-tests/gatsby-static-image
+          test_path: e2e-tests/gatsby-image
           skip_file_change_test: << parameters.nightly >>
       - notify-status:
           condition: << parameters.nightly >>
