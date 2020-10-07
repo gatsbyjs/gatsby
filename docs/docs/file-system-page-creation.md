@@ -23,7 +23,7 @@ Or in the `scripts` section of your `package.json`:
 
 ```json:title=package.json
 {
-  "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
+  "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop"
 }
 ```
 
