@@ -24,6 +24,7 @@
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.3.23",
+    "gatsby-plugin-utils": "^0.2.27",
     "gatsby-recipes": "^0.2.31",
     "gatsby-telemetry": "^1.3.38",
     "hosted-git-info": "^3.0.5",
@@ -57,6 +58,7 @@
     "@types/yargs": "^15.0.7",
     "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^7.0.2",
+    "jest": "^26.5.2",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.7"
   },
@@ -81,7 +83,8 @@
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "test": "jest"
   },
   "engines": {
     "node": ">=10.13.0"
