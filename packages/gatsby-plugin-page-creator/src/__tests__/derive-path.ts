@@ -56,4 +56,18 @@ describe(`derive-path`, () => {
       )
     ).toEqual(`/film/mrs-doubtfire/`)
   })
+
+  it(`slugify's has working slash replacement for e.g. createFilePath`, () => {
+    expect(
+      derivePath(
+        `blog/{MarkdownRemark.fields__slug}.js`,
+        {
+          fields: {
+            slug: `/fire-and-powder/`,
+          },
+        },
+        reporter
+      )
+    ).toEqual(`blog/fire-and-powder/`)
+  })
 })
