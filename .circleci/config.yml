@@ -116,8 +116,8 @@ aliases:
           skip_file_change_test: << parameters.nightly >>
       - notify-status:
           condition: << parameters.nightly >>
-
-  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
+  
+  e2e_tests_gatsby-static-image_alias: &e2e_tests_gatsby-static-image_alias
     <<: *e2e-executor
     parameters:
       nightly:
@@ -128,7 +128,7 @@ aliases:
       CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
     steps:
       - e2e-test:
-          test_path: e2e-tests/gatsby-image
+          test_path: e2e-tests/gatsby-static-image
           skip_file_change_test: << parameters.nightly >>
       - notify-status:
           condition: << parameters.nightly >>
@@ -368,6 +368,13 @@ jobs:
           test_path: e2e-tests/mdx
           test_command: yarn test
 
+  e2e_tests_gatsby-static-image:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-static-image
+          test_command: yarn test
+
   starters_validate:
     executor: node
     steps:
@@ -572,6 +579,8 @@ workflows:
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
