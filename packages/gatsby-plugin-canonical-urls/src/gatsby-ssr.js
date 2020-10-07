@@ -26,7 +26,7 @@ exports.onRenderBody = (
         rel="canonical"
         key={pageUrl}
         href={pageUrl}
-        data-baseprotocol={parsed.protocol}
+        data-baseprotocol={parsed.protocol.slice(0, -1)}
         data-basehost={parsed.host}
       />,
     ])
