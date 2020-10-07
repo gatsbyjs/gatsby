@@ -65,9 +65,8 @@ export async function writeImages({
   createNode: Actions["createNode"]
 }): Promise<void> {
   const promises = [...images.entries()].map(
-    async ([hash, { src, fluid, fixed, ...args }]) => {
-      // Default to fixed, but allow specifying either
-      const isFixed = Boolean(fixed ?? !fluid)
+    async ([hash, { src, layout, ...args }]) => {
+      const isFixed = layout !== `responsive`
       const fullPath = path.resolve(sourceDir, src)
 
       if (!fs.existsSync(fullPath)) {

@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react"
 import { splitProps, AllProps } from "../utils"
 import { FluidObject, FixedObject } from "gatsby-image"
-import { GatsbyImage as GatsbyImageServer } from "./compat"
-import { ICompatProps } from "./compat.browser"
+import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
+import { GatsbyImageProps } from "./gatsby-image.browser"
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
@@ -11,28 +11,54 @@ interface IPrivateProps {
 }
 
 export function _getStaticImage(
-  GatsbyImage: FunctionComponent<ICompatProps>
+  GatsbyImage: FunctionComponent<GatsbyImageProps>
 ): React.FC<AllProps & IPrivateProps> {
   return function StaticImage({
     src,
     parsedValues,
-    fluid,
-    fixed,
     __error,
     ...props
   }): JSX.Element {
-    const isFixed = fixed ?? !fluid
     if (__error) {
       console.warn(__error)
     }
 
-    const { gatsbyImageProps } = splitProps({ src, ...props })
+    const { gatsbyImageProps, layout } = splitProps({ src, ...props })
     if (parsedValues) {
-      const imageProps = isFixed
-        ? { fixed: parsedValues }
-        : { fluid: parsedValues }
+      const isResponsive = layout === `responsive`
+      const props: Pick<
+        GatsbyImageProps,
+        "layout" | "width" | "height" | "images" | "placeholder"
+      > = {
+        layout,
+        placeholder: null,
+        width: isResponsive ? 1 : parsedValues.width,
+        height: isResponsive ? parsedValues.aspectRatio : parsedValues.height,
+        images: {
+          fallback: {
+            src: parsedValues.src,
+            srcSet: parsedValues.srcSet,
+          },
+          sources: [],
+        },
+      }
 
-      return <GatsbyImage {...gatsbyImageProps} {...imageProps} />
+      const placeholder = parsedValues.tracedSVG || parsedValues.base64
+
+      if (placeholder) {
+        props.placeholder = {
+          fallback: placeholder,
+        }
+      }
+
+      if (parsedValues.srcWebp) {
+        props.images.sources.push({
+          srcSet: parsedValues.srcSetWebp,
+          type: `image/webp`,
+        })
+      }
+
+      return <GatsbyImage {...gatsbyImageProps} {...props} />
     }
     console.warn(`Image not loaded`, src)
     if (!__error && process.env.NODE_ENV === `development`) {

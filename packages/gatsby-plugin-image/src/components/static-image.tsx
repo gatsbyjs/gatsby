@@ -1,5 +1,5 @@
 import { FluidObject, FixedObject } from "gatsby-image"
-import { GatsbyImage as GatsbyImageBrowser } from "./compat.browser"
+import { GatsbyImage as GatsbyImageBrowser } from "./gatsby-image.browser"
 import { _getStaticImage } from "./static-image.server"
 import { AllProps } from "../utils"
 // These values are added by Babel. Do not add them manually

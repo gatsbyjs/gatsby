@@ -2,7 +2,7 @@ import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import { JSXOpeningElement } from "@babel/types"
 import { NodePath } from "@babel/core"
 import { getAttributeValues } from "babel-jsx-utils"
-import { ElementType } from "react"
+import { GatsbyImageProps } from "./components/gatsby-image.browser"
 
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
@@ -16,8 +16,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `pngCompressionSpeed`,
   `rotate`,
   `duotone`,
-  `fluid`,
-  `fixed`,
+  `layout`,
   `maxWidth`,
   `maxHeight`,
   `srcSetBreakpoints`,
@@ -41,34 +40,10 @@ export function hashOptions(options: unknown): string {
   return `${murmurhash(JSON.stringify(options))}`
 }
 
-/**
- * Props that are passed to gatsby-image, rather than being used by Sharp
- */
-export interface ISomeGatsbyImageProps {
-  fadeIn?: boolean
-  durationFadeIn?: number
-  title?: string
-  alt?: string
-  className?: string | object
-  critical?: boolean
-  crossOrigin?: string | boolean
-  style?: object
-  imgStyle?: object
-  placeholderStyle?: object
-  placeholderClassName?: string
-  backgroundColor?: string | true
-  onLoad?: () => void
-  onError?: (event: Event) => void
-  onStartLoad?: (param: { wasCached: boolean }) => void
-  Tag?: ElementType
-  itemProp?: string
-  loading?: `auto` | `lazy` | `eager`
-  draggable?: boolean
-}
+export type Layout = "fixed" | "responsive" | "intrinsic"
 
 export interface ICommonImageProps {
-  fixed?: boolean
-  fluid?: boolean
+  layout?: Layout
   quality?: number
   jpegQuality?: number
   pngQuality?: number
@@ -108,10 +83,12 @@ export interface IFixedImageProps extends ICommonImageProps {
 export type AllProps = IImageOptions &
   IFluidImageProps &
   IFixedImageProps &
-  ISomeGatsbyImageProps & { src: string }
+  Omit<GatsbyImageProps, "width" | "height"> & { src: string }
 
-export type ImageProps = Omit<AllProps, keyof ISomeGatsbyImageProps>
-export type SharpProps = Omit<ImageProps, "src" | "fixed" | "fluid">
+export type ImageProps = IImageOptions &
+  IFluidImageProps &
+  IFixedImageProps & { src: string }
+export type SharpProps = Omit<ImageProps, "src" | "layout">
 export type AnyImageProps = (IFluidImageProps | IFixedImageProps) &
   ICommonImageProps
 
@@ -127,15 +104,13 @@ export const splitProps = (
   commonOptions: ICommonImageProps
   fluidOptions: IFluidImageProps
   fixedOptions: IFixedImageProps
-  isFluid: boolean
-  isFixed: boolean
+  layout: Layout
   imageOptions: IImageOptions
-  gatsbyImageProps: ISomeGatsbyImageProps
+  gatsbyImageProps: Omit<GatsbyImageProps, "width" | "height">
   src: string
 } => {
   const {
-    fluid,
-    fixed,
+    layout,
     quality,
     jpegQuality,
     pngQuality,
@@ -154,12 +129,11 @@ export const splitProps = (
     webP,
     base64,
     tracedSVG,
+    duotone,
+    rotate,
     src,
     ...gatsbyImageProps
   } = props
-
-  const isFixed = fixed ?? true
-  const isFluid = isFixed ?? !fluid
 
   const commonOptions: ICommonImageProps = {
     quality,
@@ -170,10 +144,12 @@ export const splitProps = (
     toFormat,
     cropFocus,
     pngCompressionSpeed,
+    duotone,
+    rotate,
   }
 
   const fluidOptions: IFluidImageProps = {
-    fluid: isFluid,
+    layout,
     maxWidth,
     maxHeight,
     srcSetBreakpoints,
@@ -187,16 +163,15 @@ export const splitProps = (
     tracedSVG,
   }
 
-  const fixedOptions: IFixedImageProps = { fixed: isFixed, width, height }
+  const fixedOptions: IFixedImageProps = { layout, width, height }
 
   return {
     src,
     commonOptions,
     fluidOptions,
     fixedOptions,
-    isFluid,
-    isFixed,
+    layout,
     imageOptions,
-    gatsbyImageProps,
+    gatsbyImageProps: { layout, ...gatsbyImageProps },
   }
 }

@@ -56,7 +56,7 @@ export function _createCompatLayer(
 
     if (backgroundColor) {
       rewiredProps.style = rewiredProps.style || {}
-      backgroundColor =
+      rewiredProps.style.backgroundColor =
         backgroundColor === true ? `light-gray` : backgroundColor
     }
 
