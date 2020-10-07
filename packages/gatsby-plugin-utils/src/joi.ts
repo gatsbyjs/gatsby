@@ -1,4 +1,4 @@
-import joi, { Schema } from "joi"
+import joi from "joi"
 import { PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type"
 
 export * from "./utils/plugin-options-schema-joi-type"
@@ -8,19 +8,20 @@ export const Joi: PluginOptionsSchemaJoi = joi.extend({
   // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
   type: /^s/,
   rules: {
-    dotenv: {
-      args: [`name`],
-      validate(value, helpers, args): void {
-        if (!args.name) {
-          return helpers.error(
-            `any.dotenv requires the environment variable name`
-          )
-        }
-        return value
-      },
-      method(name): Schema {
-        return this.$_addRule({ name: `dotenv`, args: { name } })
-      },
-    },
+    // NOTE(@mxstbr): Disabled until we decide on the necessity for this API.
+    // dotenv: {
+    //   args: [`name`],
+    //   validate(value, helpers, args): void {
+    //     if (!args.name) {
+    //       return helpers.error(
+    //         `any.dotenv requires the environment variable name`
+    //       )
+    //     }
+    //     return value
+    //   },
+    //   method(name): Schema {
+    //     return this.$_addRule({ name: `dotenv`, args: { name } })
+    //   },
+    // },
   },
 })
