@@ -32,6 +32,8 @@
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
+    "@types/bluebird": "^3.5.32",
+    "@types/lodash": "^4.14.161",
     "@types/micromatch": "^4.0.1",
     "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^7.0.2"
