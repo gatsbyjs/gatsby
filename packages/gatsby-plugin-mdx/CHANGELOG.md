@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.44...gatsby-plugin-mdx@1.2.45) (2020-10-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** babel.transform requires filename field now ([#27305](https://github.com/gatsbyjs/gatsby/issues/27305)) ([8e07dfd](https://github.com/gatsbyjs/gatsby/commit/8e07dfd745db960163d936a8bef98d4d46808c1e))
+
 ## [1.2.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.43...gatsby-plugin-mdx@1.2.44) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

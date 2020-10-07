@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "scripts": {

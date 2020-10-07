@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.103...gatsby-cli@2.12.104) (2020-10-07)
+
+### Features
+
+- **gatsby:** plugin option validation ([#27242](https://github.com/gatsbyjs/gatsby/issues/27242)) ([9b01ca7](https://github.com/gatsbyjs/gatsby/commit/9b01ca7926efa1c4c6d58b33a137c2f0a0ef99b7))
+
 ## [2.12.103](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.102...gatsby-cli@2.12.103) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-cli

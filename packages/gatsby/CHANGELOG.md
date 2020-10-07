@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.69](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.68...gatsby@2.24.69) (2020-10-07)
+
+### Bug Fixes
+
+- **gatsby:** support `--https` develop ([#27302](https://github.com/gatsbyjs/gatsby/issues/27302)) ([17cdc22](https://github.com/gatsbyjs/gatsby/commit/17cdc223ed2b9ce362f2718dfaac7f21a3a5b60e)), closes [#27294](https://github.com/gatsbyjs/gatsby/issues/27294)
+
+### Features
+
+- **gatsby:** plugin option validation ([#27242](https://github.com/gatsbyjs/gatsby/issues/27242)) ([9b01ca7](https://github.com/gatsbyjs/gatsby/commit/9b01ca7926efa1c4c6d58b33a137c2f0a0ef99b7))
+
 ## [2.24.68](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.67...gatsby@2.24.68) (2020-10-06)
 
 **Note:** Version bump only for package gatsby
