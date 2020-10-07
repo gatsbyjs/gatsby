@@ -2,6 +2,7 @@ import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import { JSXOpeningElement } from "@babel/types"
 import { NodePath } from "@babel/core"
 import { getAttributeValues } from "babel-jsx-utils"
+import { ElementType } from "react"
 
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
@@ -59,7 +60,7 @@ export interface ISomeGatsbyImageProps {
   onLoad?: () => void
   onError?: (event: Event) => void
   onStartLoad?: (param: { wasCached: boolean }) => void
-  Tag?: string
+  Tag?: ElementType
   itemProp?: string
   loading?: `auto` | `lazy` | `eager`
   draggable?: boolean
