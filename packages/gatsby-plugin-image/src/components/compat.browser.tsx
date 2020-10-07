@@ -1,11 +1,11 @@
-import React, { FunctionComponent, ComponentType } from "react"
+import React, { FunctionComponent, ComponentType, ElementType } from "react"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { GatsbyImage as GatsbyImageOriginal } from "./gatsby-image.browser"
 
 export interface ICompatProps {
   backgroundColor?: string | true
   critical?: boolean
-  Tag?: any
+  Tag?: ElementType
   fixed?: {
     base64?: string
     tracedSVG?: string
@@ -26,6 +26,14 @@ export interface ICompatProps {
     srcSetWebp?: string
     maxWidth?: number
     maxHeight?: number
+  }
+}
+
+function warnForArtDirection(): void {
+  if (process?.env?.NODE_ENV === `development`) {
+    console.warn(
+      `gatsby-plugin-image/compat does not support passing arrays to "fixed" or "fluid"`
+    )
   }
 }
 
@@ -58,6 +66,7 @@ export function _createCompatLayer(
 
     if (fixed) {
       if (Array.isArray(fixed)) {
+        warnForArtDirection()
         fixed = fixed[0]
       }
 
@@ -77,7 +86,7 @@ export function _createCompatLayer(
 
       if (fixed.base64 || fixed.tracedSVG) {
         rewiredProps.placeholder = {
-          fallback: fixed.base64 || fixed.tracedSVG,
+          fallback: fixed.tracedSVG || fixed.base64,
         }
       }
 
@@ -91,6 +100,7 @@ export function _createCompatLayer(
 
     if (fluid) {
       if (Array.isArray(fluid)) {
+        warnForArtDirection()
         fluid = fluid[0]
       }
 
@@ -110,7 +120,7 @@ export function _createCompatLayer(
 
       if (fluid.base64 || fluid.tracedSVG) {
         rewiredProps.placeholder = {
-          fallback: fluid.base64 || fluid.tracedSVG,
+          fallback: fluid.tracedSVG || fluid.base64,
         }
       }
 

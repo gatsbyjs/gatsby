@@ -139,7 +139,12 @@ export async function writeImage(
   filename: string
 ): Promise<void> {
   try {
+    if (args.tracedSVG) {
+      // These are mutually-exclusive options
+      args.base64 = false
+    }
     const options = { file, args, reporter, cache }
+
     // get standard set of fields from sharp
     const sharpData = await (isFixed
       ? fixedSharp(options)
