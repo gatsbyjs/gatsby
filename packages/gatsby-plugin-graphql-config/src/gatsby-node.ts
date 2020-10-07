@@ -12,7 +12,7 @@ async function cacheGraphQLConfig(program: IStateProgram): Promise<void> {
         schema: resolve(base, `.cache/schema.graphql`),
         documents: [
           resolve(base, `src/**/**.{ts,js,tsx,jsx,esm}`),
-          resolve(base, `.cache/fragments.graphql`),
+          `./.cache/fragments.graphql`,
         ],
         extensions: {
           endpoints: {
