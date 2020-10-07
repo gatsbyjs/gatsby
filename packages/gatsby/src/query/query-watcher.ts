@@ -62,7 +62,7 @@ const getQueriesSnapshot = (): IQuerySnapshot => {
 
 const handleComponentsWithRemovedQueries = (
   { staticQueryComponents }: IQuerySnapshot,
-  queries: Set<string>
+  queries: Map<string, IQuery>
 ): void => {
   // If a component had static query and it doesn't have it
   // anymore - update the store
@@ -81,7 +81,7 @@ const handleComponentsWithRemovedQueries = (
 const handleQuery = (
   { staticQueryComponents }: IQuerySnapshot,
   query: IQuery,
-  component: IComponent
+  component: string
 ): boolean => {
   // If this is a static query
   // Add action / reducer + watch staticquery files
@@ -170,74 +170,6 @@ const watchComponent = (componentPath: string): void => {
   }
 }
 
-const updateStateAndRunQueries = (
-  isFirstRun: boolean,
-  { parentSpan }: { parentSpan?: Span } = {}
-): Promise<Set<string>> => {
-  const snapshot = getQueriesSnapshot()
-  return queryCompiler({ parentSpan }).then(queries => {
-    // If there's an error while extracting queries, the queryCompiler returns false
-    // or zero results.
-    // Yeah, should probably be an error but don't feel like threading the error
-    // all the way here.
-    if (!queries || queries.size === 0) {
-      return null
-    }
-    handleComponentsWithRemovedQueries(snapshot, queries)
-
-    // Run action for each component
-    const { components } = snapshot
-    components.forEach(c => {
-      const { isStaticQuery = false, text = `` } =
-        queries.get(c.componentPath) || {}
-
-      boundActionCreators.queryExtracted({
-        componentPath: c.componentPath,
-        query: isStaticQuery ? `` : text,
-      })
-    })
-
-    let queriesWillNotRun = false
-    queries.forEach((query, component) => {
-      const queryWillRun = handleQuery(snapshot, query, component)
-
-      if (queryWillRun) {
-        watchComponent(component)
-        // Check if this is a page component.
-        // If it is and this is our first run during bootstrap,
-        // show a warning about having a query in a non-page component.
-      } else if (isFirstRun && !snapshot.components.has(component)) {
-        report.warn(
-          `The GraphQL query in the non-page component "${component}" will not be run.`
-        )
-        queriesWillNotRun = true
-      }
-    })
-
-    if (queriesWillNotRun) {
-      report.log(report.stripIndent`
-
-        Exported queries are only executed for Page components. It's possible you're
-        trying to create pages in your gatsby-node.js and that's failing for some
-        reason.
-
-        If the failing component(s) is a regular component and not intended to be a page
-        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
-        instead of exporting a page query.
-
-        If you're more experienced with GraphQL, you can also export GraphQL
-        fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
-
-      `)
-    }
-
-    queryUtil.runQueuedQueries()
-
-    return null
-  })
-}
-
 /**
  * Removes components templates that aren't used by any page from redux store.
  */
@@ -263,7 +195,7 @@ const clearInactiveComponents = (): void => {
   })
 }
 
-exports.startWatchDeletePage = (): void => {
+export const startWatchDeletePage = (): void => {
   emitter.on(`DELETE_PAGE`, action => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
@@ -285,9 +217,74 @@ exports.startWatchDeletePage = (): void => {
   })
 }
 
-exports.extractQueries = ({ parentSpan }: { parentSpan?: Span } = {}): Promise<
-  void
-> => {
+export const updateStateAndRunQueries = async (
+  isFirstRun: boolean,
+  { parentSpan }: { parentSpan?: Span } = {}
+): Promise<void> => {
+  const snapshot = getQueriesSnapshot()
+  const queries: Map<string, IQuery> = await queryCompiler({ parentSpan })
+  // If there's an error while extracting queries, the queryCompiler returns false
+  // or zero results.
+  // Yeah, should probably be an error but don't feel like threading the error
+  // all the way here.
+  if (!queries || queries.size === 0) {
+    return
+  }
+  handleComponentsWithRemovedQueries(snapshot, queries)
+
+  // Run action for each component
+  const { components } = snapshot
+  components.forEach(c => {
+    const { isStaticQuery = false, text = `` } =
+      queries.get(c.componentPath) || {}
+
+    boundActionCreators.queryExtracted({
+      componentPath: c.componentPath,
+      query: isStaticQuery ? `` : text,
+    })
+  })
+
+  let queriesWillNotRun = false
+  queries.forEach((query, component) => {
+    const queryWillRun = handleQuery(snapshot, query, component)
+
+    if (queryWillRun) {
+      watchComponent(component)
+      // Check if this is a page component.
+      // If it is and this is our first run during bootstrap,
+      // show a warning about having a query in a non-page component.
+    } else if (isFirstRun && !snapshot.components.has(component)) {
+      report.warn(
+        `The GraphQL query in the non-page component "${component}" will not be run.`
+      )
+      queriesWillNotRun = true
+    }
+  })
+
+  if (queriesWillNotRun) {
+    report.log(report.stripIndent`
+
+        Exported queries are only executed for Page components. It's possible you're
+        trying to create pages in your gatsby-node.js and that's failing for some
+        reason.
+
+        If the failing component(s) is a regular component and not intended to be a page
+        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
+        instead of exporting a page query.
+
+        If you're more experienced with GraphQL, you can also export GraphQL
+        fragments from components and compose the fragments in the Page component
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
+
+      `)
+  }
+
+  queryUtil.runQueuedQueries()
+}
+
+export const extractQueries = ({
+  parentSpan,
+}: { parentSpan?: Span } = {}): Promise<void> => {
   // Remove template components that point to not existing page templates.
   // We need to do this, because components data is cached and there might
   // be changes applied when development server isn't running. This is needed
@@ -304,5 +301,3 @@ exports.extractQueries = ({ parentSpan }: { parentSpan?: Span } = {}): Promise<
     }
   })
 }
-
-exports.updateStateAndRunQueries = updateStateAndRunQueries
