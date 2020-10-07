@@ -1,4 +1,4 @@
-import { IErrorMapEntry, ErrorId } from "./error-map"
+import { IErrorMapEntry, ErrorId, ErrorCategory } from "./error-map"
 
 export interface IConstructError {
   details: {
@@ -30,6 +30,7 @@ export interface IStructuredError {
     start: ILocationPosition
     end?: ILocationPosition
   }
+  category?: ErrorCategory
   error?: Error
   group?: string
   level: IErrorMapEntry["level"]

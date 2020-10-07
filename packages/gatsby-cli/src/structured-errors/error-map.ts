@@ -490,15 +490,22 @@ const errors = {
   },
 }
 
-export type ErrorId = keyof typeof errors
+export type ErrorId = string | keyof typeof errors
 
 export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
 
 export const defaultError = errorMap[``]
 
+export enum ErrorCategory {
+  USER = `USER`,
+  SYSTEM = `SYSTEM`,
+  THIRD_PARTY = `THIRD_PARTY`,
+}
+
 export interface IErrorMapEntry {
   text: (context) => string
   level: Level
   type?: Type
+  category?: ErrorCategory
   docsUrl?: string
 }
