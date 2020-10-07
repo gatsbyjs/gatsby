@@ -36,8 +36,11 @@ export default function attrs({
         let error
 
         if (unresolvedProps.length) {
-          error = `Could not find values for the following props at build time: ${unresolvedProps.join()}`
-          console.warn(error)
+          // TODO: Add a shortlink to docs on the plugin
+          error = `Could not find values for the following props at build time: ${unresolvedProps.join(
+            `, `
+          )}`
+          console.warn(`[gatsby-plugin-image] ${error}`)
         }
 
         const noSrc = unresolvedProps.includes(`src`)
@@ -47,7 +50,9 @@ export default function attrs({
         const cacheDir = (this.opts as Record<string, string>)?.cacheDir
 
         if (!cacheDir || !hash) {
-          console.warn(`Couldn't find cache file for some reason`)
+          console.warn(
+            `[gatsby-plugin-image] Couldn't find image data cache file`
+          )
         }
 
         const filename = path.join(cacheDir, `${hash}.json`)
@@ -58,19 +63,24 @@ export default function attrs({
           try {
             data = fs.readJSONSync(filename)
           } catch (e) {
-            console.warn(`Could not read file ${filename}`, e)
+            // TODO add info about minimum Gatsby version once this is merged
+            console.warn(
+              `[gatsby-plugin-image] Could not read image data file "${filename}". This may mean that the images in "${this.filename}" were not processed.`
+            )
           }
         }
 
         if (!data) {
-          console.warn(`No image data found for file ${props.src}`)
+          console.warn(
+            `[gatsby-plugin-image] No data found for image "${props.src}"`
+          )
 
           // Add the error message to the component so we can show it in the browser
           const newProp = t.jsxAttribute(
             t.jsxIdentifier(`__error`),
 
             t.jsxExpressionContainer(
-              t.stringLiteral(`No image data found for file "${props.src}"
+              t.stringLiteral(`No data found for image "${props.src}"
               ${error || ``}`)
             )
           )
