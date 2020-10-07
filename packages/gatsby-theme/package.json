@@ -18,7 +18,7 @@
     "@babel/helper-plugin-utils": "^7.10.4",
     "@babel/plugin-syntax-jsx": "^7.10.4",
     "commander": "^2.20.3",
-    "fast-levenshtein": "^2.0.6",
+    "fastest-levenshtein": "^1.0.12",
     "glob": "^7.1.6",
     "globby": "^10.0.2",
     "inquirer": "^6.5.2",
