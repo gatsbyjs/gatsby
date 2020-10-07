@@ -91,7 +91,7 @@ You need to update your `package.json` to use the latest version of Gatsby.
 Or run
 
 ```shell
-npm i gatsby@latest
+npm install gatsby@latest
 ```
 
 ### Update Gatsby related packages
@@ -105,7 +105,7 @@ npm outdated
 And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
 
 ```shell
-npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
+npm install gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
 **NOTE**: The above command is only an example - adjust packages to ones you are using.
@@ -115,7 +115,7 @@ npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-
 In v1, the `react` and `react-dom` packages were a part of the `gatsby` package. They are now `peerDependencies` in v2, so you need to install them into your project.
 
 ```shell
-npm i react react-dom
+npm install react react-dom
 ```
 
 ### Install plugins' peer dependencies
@@ -123,7 +123,7 @@ npm i react react-dom
 Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
 
 ```shell
-npm i typography react-typography
+npm install typography react-typography
 ```
 
 You should search for the plugins that you use in the [plugin library](/plugins). Then, check their installation instructions for extra packages that may need installation.
@@ -132,7 +132,7 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 
 ### Remove or refactor layout components
 
-[Gatsby's layout components (`src/layouts/index.js`) are gone now](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/). The "top-level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
+[Gatsby's layout components (`src/layouts/index.js`) are gone now](https://www.gatsbyjs.com/blog/2018-06-08-life-after-layouts/). The "top-level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
 
 There are some implications to this change:
 
@@ -345,7 +345,7 @@ Use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/pac
 
 #### 1. Install the dependencies
 
-`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+`npm install gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
 **NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env`.
 
@@ -1019,7 +1019,7 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behavior we now validate against it for v2. Node data should be added as fields on the top-level node object.
 
-[Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface/) for allowed fields.
+[Check the Node interface docs](https://www.gatsbyjs.com/docs/node-interface/) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 

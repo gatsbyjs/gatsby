@@ -202,8 +202,10 @@ export class WebsocketManager {
 
       socket.on(`registerPath`, (path: string): void => {
         socket.join(getRoomNameFromPath(path))
-        activePath = path
-        this.activePaths.add(path)
+        if (path) {
+          activePath = path
+          this.activePaths.add(path)
+        }
       })
 
       socket.on(`disconnect`, (): void => {

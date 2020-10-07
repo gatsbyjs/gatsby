@@ -6,7 +6,7 @@ Processes [graphviz](https://www.graphviz.org/) (`dot` and `circo`) code blocks 
 
 ## Install
 
-`npm install --save gatsby-remark-graphviz`
+`npm install gatsby-remark-graphviz`
 
 Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure JavaScript port of graphviz.
 

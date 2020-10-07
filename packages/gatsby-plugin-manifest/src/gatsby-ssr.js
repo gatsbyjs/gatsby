@@ -18,7 +18,7 @@ exports.onRenderBody = (
     include_favicon: insertFaviconLinkTag,
     theme_color_in_head: insertMetaTag,
     theme_color,
-    crossOrigin,
+    crossOrigin = `anonymous`,
   }
 ) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
@@ -63,7 +63,7 @@ exports.onRenderBody = (
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`/${manifestFileName}`)}
+      href={fallbackWithPrefix(`/${manifestFileName}`)}
       crossOrigin={crossOrigin}
     />
   )

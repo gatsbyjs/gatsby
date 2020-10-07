@@ -11,7 +11,7 @@ nodes from which you can query an HTML representation of the markdown.
 
 ## Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ## How to use
 

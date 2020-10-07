@@ -87,7 +87,7 @@ The `<PrivateRoute />` component would look something like this one (taken from 
 
 ```jsx:title=src/components/PrivateRoute.js
 // import ...
-import React, { Component } from "react"
+import React from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 

@@ -348,11 +348,18 @@
                   link: /docs/emotion/
                 - title: Styled-Components
                   link: /docs/styled-components/
+            - title: Working with Fonts & Typography
+              link: /docs/working-with-fonts-and-typography/
+              items:
+                - title: Using Local Fonts
+                  link: /docs/using-local-fonts/
+                - title: Using Web Fonts
+                  link: /docs/using-web-fonts/
+                - title: Using Typography.js
+                  link: /docs/using-typography-js/
             - title: CSS Libraries & Frameworks
               link: /docs/css-libraries-and-frameworks/
               items:
-                - title: Typography.js
-                  link: /docs/typography-js/
                 - title: Using Sass
                   link: /docs/sass/
                 - title: Using PostCSS

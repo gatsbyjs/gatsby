@@ -64,7 +64,7 @@ const IndexPage = () => (
         }}
       >
         <a
-          href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/"
+          href="https://www.gatsbyjs.com/plugins/gatsby-plugin-emotion/"
           // Styling “inline” via css prop and a template literal
           css={css`
             color: inherit;

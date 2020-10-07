@@ -342,21 +342,23 @@ module.exports = async (program: IProgram): Promise<void> => {
       process.send(msg)
     }
 
+    io.emit(`structured-log`, msg)
+
     if (
       msg.type === `LOG_ACTION` &&
       msg.action.type === `SET_STATUS` &&
       msg.action.payload === `SUCCESS`
     ) {
       proxy.serveSite()
-      io.emit(`develop:started`)
     }
   }
 
   io.on(`connection`, socket => {
-    socket.on(`develop:restart`, async () => {
+    socket.on(`develop:restart`, async respond => {
       isRestarting = true
       proxy.serveRestartingScreen()
-      io.emit(`develop:is-starting`)
+      // respond() responds to the client, which in our case prompts it to reload the page to show the restarting screen
+      if (respond) respond(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
       developProcess.onMessage(handleChildProcessIPC)
@@ -420,8 +422,13 @@ module.exports = async (program: IProgram): Promise<void> => {
       console.warn(
         `develop process needs to be restarted to apply the changes to ${file}`
       )
-      io.emit(`develop:needs-restart`, {
-        dirtyFile: file,
+      io.emit(`structured-log`, {
+        type: `LOG_ACTION`,
+        action: {
+          type: `DEVELOP`,
+          payload: `RESTART_REQUIRED`,
+          dirtyFile: file,
+        },
       })
     })
   }

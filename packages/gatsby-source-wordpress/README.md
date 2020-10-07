@@ -46,7 +46,7 @@ Note : If some fields are missing, check [troubleshooting missing fields](#missi
 
 ## Install
 
-`npm install --save gatsby-source-wordpress`
+`npm install gatsby-source-wordpress`
 
 ## How to use
 

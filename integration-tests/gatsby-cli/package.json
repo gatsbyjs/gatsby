@@ -2,12 +2,11 @@
   "name": "gatsby-cli-tests",
   "version": "1.0.0",
   "dependencies": {
-    "gatsby-cli": "^2.12.29",
     "strip-ansi": "^6.0.0"
   },
   "license": "MIT",
   "scripts": {
-    "test": "jest --config=../jest.config.js gatsby-cli/"
+    "test": "jest --config=./jest.config.js gatsby-cli/"
   },
   "devDependencies": {
     "del-cli": "^3.0.1",
