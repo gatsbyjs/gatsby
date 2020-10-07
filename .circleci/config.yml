@@ -117,7 +117,7 @@ aliases:
       - notify-status:
           condition: << parameters.nightly >>
   
-  e2e_tests_gatsby-static-image_alias: &e2e_tests_gatsby-static-image_alias
+  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-static-image_alias
     <<: *e2e-executor
     parameters:
       nightly:
