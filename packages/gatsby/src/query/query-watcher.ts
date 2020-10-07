@@ -8,34 +8,62 @@
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
 
-const chokidar = require(`chokidar`)
+import chokidar, { FSWatcher } from "chokidar"
+import { Span } from "opentracing"
 
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
+import path from "path"
+import { slash } from "gatsby-core-utils"
 
-const { store, emitter } = require(`../redux/`)
-const { boundActionCreators } = require(`../redux/actions`)
-const queryCompiler = require(`./query-compiler`).default
-const report = require(`gatsby-cli/lib/reporter`)
-const queryUtil = require(`./index`)
-const debug = require(`debug`)(`gatsby:query-watcher`)
+import { store, emitter } from "../redux/"
+import { boundActionCreators } from "../redux/actions"
+import { IGatsbyStaticQueryComponents } from "../redux/types"
+import queryCompiler from "./query-compiler"
+import report from "gatsby-cli/lib/reporter"
+import queryUtil from "./index"
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 
-const getQueriesSnapshot = () => {
+const debug = require(`debug`)(`gatsby:query-watcher`)
+
+interface IComponent {
+  componentPath: string
+  query: string
+  pages: Set<string>
+  isInBootstrap: boolean
+}
+
+interface IQuery {
+  id: string
+  name: string
+  text: string
+  originalText: string
+  path: string
+  isHook: boolean
+  isStaticQuery: boolean
+  hash: string
+}
+
+interface IQuerySnapshot {
+  components: Map<string, IComponent>
+  staticQueryComponents: Map<string, IGatsbyStaticQueryComponents>
+}
+
+const getQueriesSnapshot = (): IQuerySnapshot => {
   const state = store.getState()
 
-  const snapshot = {
-    components: new Map(state.components),
-    staticQueryComponents: new Map(state.staticQueryComponents),
+  const snapshot: IQuerySnapshot = {
+    components: new Map<string, IComponent>(state.components),
+    staticQueryComponents: new Map<string, IGatsbyStaticQueryComponents>(
+      state.staticQueryComponents
+    ),
   }
 
   return snapshot
 }
 
 const handleComponentsWithRemovedQueries = (
-  { components, staticQueryComponents },
-  queries
-) => {
+  { staticQueryComponents }: IQuerySnapshot,
+  queries: Set<string>
+): void => {
   // If a component had static query and it doesn't have it
   // anymore - update the store
   staticQueryComponents.forEach(c => {
@@ -51,10 +79,10 @@ const handleComponentsWithRemovedQueries = (
 }
 
 const handleQuery = (
-  { components, staticQueryComponents },
-  query,
-  component
-) => {
+  { staticQueryComponents }: IQuerySnapshot,
+  query: IQuery,
+  component: IComponent
+): boolean => {
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
@@ -68,8 +96,8 @@ const handleQuery = (
     // format query text, but it doesn't mean that compiled text will change.
     if (
       isNewQuery ||
-      oldQuery.hash !== query.hash ||
-      oldQuery.query !== query.text
+      (oldQuery &&
+        (oldQuery.hash !== query.hash || oldQuery.query !== query.text))
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
@@ -94,7 +122,58 @@ const handleQuery = (
   return false
 }
 
-const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
+const filesToWatch = new Set<string>()
+let watcher: FSWatcher
+
+const watch = async (rootDir: string): Promise<void> => {
+  if (watcher) return
+
+  const modulesThatUseGatsby = await getGatsbyDependents()
+
+  const packagePaths = modulesThatUseGatsby.map(module => {
+    const filesRegex = `*.+(t|j)s?(x)`
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
+    return slash(path.join(module.path, pathRegex))
+  })
+
+  watcher = chokidar
+    .watch(
+      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
+      { ignoreInitial: true }
+    )
+    .on(`change`, path => {
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
+    })
+    .on(`add`, path => {
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
+    })
+    .on(`unlink`, path => {
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
+    })
+
+  filesToWatch.forEach(filePath => watcher.add(filePath))
+}
+
+const watchComponent = (componentPath: string): void => {
+  // We don't start watching until mid-way through the bootstrap so ignore
+  // new components being added until then. This doesn't affect anything as
+  // when extractQueries is called from bootstrap, we make sure that all
+  // components are being watched.
+  if (
+    process.env.NODE_ENV !== `production` &&
+    !filesToWatch.has(componentPath)
+  ) {
+    filesToWatch.add(componentPath)
+    if (watcher) {
+      watcher.add(componentPath)
+    }
+  }
+}
+
+const updateStateAndRunQueries = (
+  isFirstRun: boolean,
+  { parentSpan }: { parentSpan?: Span } = {}
+): Promise<Set<string>> => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler({ parentSpan }).then(queries => {
     // If there's an error while extracting queries, the queryCompiler returns false
@@ -162,7 +241,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 /**
  * Removes components templates that aren't used by any page from redux store.
  */
-const clearInactiveComponents = () => {
+const clearInactiveComponents = (): void => {
   const { components, pages } = store.getState()
 
   const activeTemplates = new Set()
@@ -184,72 +263,7 @@ const clearInactiveComponents = () => {
   })
 }
 
-exports.extractQueries = ({ parentSpan } = {}) => {
-  // Remove template components that point to not existing page templates.
-  // We need to do this, because components data is cached and there might
-  // be changes applied when development server isn't running. This is needed
-  // only in initial run, because during development state will be adjusted.
-  clearInactiveComponents()
-
-  return updateStateAndRunQueries(true, { parentSpan }).then(() => {
-    // During development start watching files to recompile & run
-    // queries on the fly.
-
-    // TODO: move this into a spawned service
-    if (process.env.NODE_ENV !== `production`) {
-      watch(store.getState().program.directory)
-    }
-  })
-}
-
-const filesToWatch = new Set()
-let watcher
-const watchComponent = componentPath => {
-  // We don't start watching until mid-way through the bootstrap so ignore
-  // new components being added until then. This doesn't affect anything as
-  // when extractQueries is called from bootstrap, we make sure that all
-  // components are being watched.
-  if (
-    process.env.NODE_ENV !== `production` &&
-    !filesToWatch.has(componentPath)
-  ) {
-    filesToWatch.add(componentPath)
-    if (watcher) {
-      watcher.add(componentPath)
-    }
-  }
-}
-
-const watch = async rootDir => {
-  if (watcher) return
-
-  const modulesThatUseGatsby = await getGatsbyDependents()
-
-  const packagePaths = modulesThatUseGatsby.map(module => {
-    const filesRegex = `*.+(t|j)s?(x)`
-    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
-    return slash(path.join(module.path, pathRegex))
-  })
-
-  watcher = chokidar
-    .watch(
-      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      { ignoreInitial: true }
-    )
-    .on(`change`, path => {
-      emitter.emit(`SOURCE_FILE_CHANGED`, path)
-    })
-    .on(`add`, path => {
-      emitter.emit(`SOURCE_FILE_CHANGED`, path)
-    })
-    .on(`unlink`, path => {
-      emitter.emit(`SOURCE_FILE_CHANGED`, path)
-    })
-
-  filesToWatch.forEach(filePath => watcher.add(filePath))
-}
-
-exports.startWatchDeletePage = () => {
+exports.startWatchDeletePage = (): void => {
   emitter.on(`DELETE_PAGE`, action => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
@@ -267,6 +281,26 @@ exports.startWatchDeletePage = () => {
           componentPath,
         },
       })
+    }
+  })
+}
+
+exports.extractQueries = ({ parentSpan }: { parentSpan?: Span } = {}): Promise<
+  void
+> => {
+  // Remove template components that point to not existing page templates.
+  // We need to do this, because components data is cached and there might
+  // be changes applied when development server isn't running. This is needed
+  // only in initial run, because during development state will be adjusted.
+  clearInactiveComponents()
+
+  return updateStateAndRunQueries(true, { parentSpan }).then(() => {
+    // During development start watching files to recompile & run
+    // queries on the fly.
+
+    // TODO: move this into a spawned service
+    if (process.env.NODE_ENV !== `production`) {
+      watch(store.getState().program.directory)
     }
   })
 }
