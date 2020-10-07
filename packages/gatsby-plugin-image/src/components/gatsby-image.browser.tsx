@@ -13,9 +13,9 @@ import {
   hasNativeLazyLoadSupport,
   storeImageloaded,
 } from "./hooks"
-import { ILayoutWrapperProps } from "./layout-wrapper"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
+import { Layout } from "../utils"
 
 export type GatsbyImageProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
@@ -23,7 +23,7 @@ export type GatsbyImageProps = Omit<
 > & {
   alt: string
   as?: ElementType
-  layout: ILayoutWrapperProps["layout"]
+  layout: Layout
   className?: string
   height: number
   images: Pick<MainImageProps, "sources" | "fallback">

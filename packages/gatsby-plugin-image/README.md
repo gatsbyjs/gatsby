@@ -90,7 +90,7 @@ export const Dino = () => {
 
 ## How does it work?
 
-When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, then adds a `require()` to that JSON file as a new `parsedValues` prop. It then returns a GatsbyImage, passing the parsedValues as the fixed or fluid prop. Errors don't cause the build to fail, but instead are written to the component as an `__error` prop, which is then logged in develop.
+When your site is compiled, any references to StaticImage components are extracted, the images are resized by Sharp in a similar way to `gatsby-transformer-sharp`, and then the resulting sharp object is written to `.cache/caches/gatsby-plugin-image/`, with the filename generated as a hash of the normalized image props. Next, a Babel plugin finds any references to StaticImage, calculates the same hash, then adds a `require()` to that JSON file as a new `__imageData` prop. It then returns a GatsbyImage using that **imageData. Errors don't cause the build to fail, but instead are written to the component as an `**error` prop, which is then logged in develop.
 
 ### Are there restrictions to how this is used?
 

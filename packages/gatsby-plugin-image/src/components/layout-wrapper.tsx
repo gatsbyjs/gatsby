@@ -1,9 +1,10 @@
 /* global SERVER */
 import React, { Fragment, FunctionComponent } from "react"
 import terserMacro from "../../macros/terser.macro"
+import { Layout } from "../utils"
 
 export interface ILayoutWrapperProps {
-  layout: "intrinsic" | "responsive" | "fixed"
+  layout: Layout
   width: number
   height: number
 }

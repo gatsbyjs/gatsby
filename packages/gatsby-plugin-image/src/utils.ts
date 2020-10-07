@@ -1,44 +1,4 @@
-import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
-import { JSXOpeningElement } from "@babel/types"
-import { NodePath } from "@babel/core"
-import { getAttributeValues } from "babel-jsx-utils"
-import { GatsbyImageProps } from "./components/gatsby-image.browser"
-
-export const SHARP_ATTRIBUTES = new Set([
-  `src`,
-  `quality`,
-  `jpegQuality`,
-  `pngQuality`,
-  `webpQuality`,
-  `grayscale`,
-  `toFormat`,
-  `cropFocus`,
-  `pngCompressionSpeed`,
-  `rotate`,
-  `duotone`,
-  `layout`,
-  `maxWidth`,
-  `maxHeight`,
-  `srcSetBreakpoints`,
-  `fit`,
-  `background`,
-  `width`,
-  `height`,
-  `tracedSVG`,
-  `webP`,
-])
-
-export function evaluateImageAttributes(
-  nodePath: NodePath<JSXOpeningElement>,
-  onError?: (prop: string) => void
-): Record<string, unknown> {
-  // Only get attributes that we need for generating the images
-  return getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES)
-}
-
-export function hashOptions(options: unknown): string {
-  return `${murmurhash(JSON.stringify(options))}`
-}
+import { ImgHTMLAttributes, ElementType } from "react"
 
 export type Layout = "fixed" | "responsive" | "intrinsic"
 
@@ -80,10 +40,22 @@ export interface IFixedImageProps extends ICommonImageProps {
   height?: number
 }
 
-export type AllProps = IImageOptions &
+export type ImageComponentProps = Omit<
+  ImgHTMLAttributes<HTMLImageElement>,
+  "placeholder" | "onLoad"
+> & {
+  alt: string
+  as?: ElementType
+  layout: Layout
+  onLoad?: () => void
+  onError?: () => void
+  onStartLoad?: () => void
+}
+
+export type StaticImageProps = IImageOptions &
   IFluidImageProps &
   IFixedImageProps &
-  Omit<GatsbyImageProps, "width" | "height"> & { src: string }
+  ImageComponentProps & { src: string }
 
 export type ImageProps = IImageOptions &
   IFluidImageProps &
@@ -99,14 +71,14 @@ export interface IImageOptions {
 }
 
 export const splitProps = (
-  props: AllProps
+  props: StaticImageProps
 ): {
   commonOptions: ICommonImageProps
   fluidOptions: IFluidImageProps
   fixedOptions: IFixedImageProps
   layout: Layout
   imageOptions: IImageOptions
-  gatsbyImageProps: Omit<GatsbyImageProps, "width" | "height">
+  gatsbyImageProps: ImageComponentProps
   src: string
 } => {
   const {

@@ -1,21 +1,21 @@
 import React, { FunctionComponent } from "react"
-import { splitProps, AllProps } from "../utils"
+import { splitProps, StaticImageProps } from "../utils"
 import { FluidObject, FixedObject } from "gatsby-image"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
-  parsedValues?: FluidObject & FixedObject
+  __imageData?: FluidObject & FixedObject
   __error?: string
 }
 
 export function _getStaticImage(
   GatsbyImage: FunctionComponent<GatsbyImageProps>
-): React.FC<AllProps & IPrivateProps> {
+): React.FC<StaticImageProps & IPrivateProps> {
   return function StaticImage({
     src,
-    parsedValues,
+    __imageData: imageData,
     __error,
     ...props
   }): JSX.Element {
@@ -24,7 +24,7 @@ export function _getStaticImage(
     }
 
     const { gatsbyImageProps, layout } = splitProps({ src, ...props })
-    if (parsedValues) {
+    if (imageData) {
       const isResponsive = layout === `responsive`
       const props: Pick<
         GatsbyImageProps,
@@ -32,18 +32,18 @@ export function _getStaticImage(
       > = {
         layout,
         placeholder: null,
-        width: isResponsive ? 1 : parsedValues.width,
-        height: isResponsive ? parsedValues.aspectRatio : parsedValues.height,
+        width: isResponsive ? 1 : imageData.width,
+        height: isResponsive ? imageData.aspectRatio : imageData.height,
         images: {
           fallback: {
-            src: parsedValues.src,
-            srcSet: parsedValues.srcSet,
+            src: imageData.src,
+            srcSet: imageData.srcSet,
           },
           sources: [],
         },
       }
 
-      const placeholder = parsedValues.tracedSVG || parsedValues.base64
+      const placeholder = imageData.tracedSVG || imageData.base64
 
       if (placeholder) {
         props.placeholder = {
@@ -51,9 +51,9 @@ export function _getStaticImage(
         }
       }
 
-      if (parsedValues.srcWebp) {
+      if (imageData.srcWebp) {
         props.images.sources.push({
-          srcSet: parsedValues.srcSetWebp,
+          srcSet: imageData.srcSetWebp,
           type: `image/webp`,
         })
       }
@@ -70,6 +70,6 @@ export function _getStaticImage(
   }
 }
 
-export const StaticImage: React.FC<AllProps & IPrivateProps> = _getStaticImage(
-  GatsbyImageServer
-)
+export const StaticImage: React.FC<
+  StaticImageProps & IPrivateProps
+> = _getStaticImage(GatsbyImageServer)

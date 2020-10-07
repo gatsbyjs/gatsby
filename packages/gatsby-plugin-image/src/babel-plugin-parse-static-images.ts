@@ -1,6 +1,6 @@
 import * as types from "@babel/types"
 import { PluginObj } from "@babel/core"
-import { hashOptions, evaluateImageAttributes } from "./utils"
+import { hashOptions, evaluateImageAttributes } from "./babel-helpers"
 import fs from "fs-extra"
 import path from "path"
 
@@ -101,7 +101,7 @@ export default function attrs({
         const makeRequire = template.expression(`require("${filename}")`)
 
         const newProp = t.jsxAttribute(
-          t.jsxIdentifier(`parsedValues`),
+          t.jsxIdentifier(`__imageData`),
 
           t.jsxExpressionContainer(makeRequire())
         )

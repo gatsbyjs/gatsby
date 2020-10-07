@@ -1,9 +1,10 @@
 import traverse from "@babel/traverse"
-import { hashOptions, evaluateImageAttributes, ImageProps } from "../utils"
+import { ImageProps } from "../utils"
 import { NodePath } from "@babel/core"
 import { JSXOpeningElement } from "@babel/types"
 import { parse, ParserOptions } from "@babel/parser"
 import babel from "@babel/core"
+import { evaluateImageAttributes, hashOptions } from "../babel-helpers"
 
 const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
@@ -86,10 +87,10 @@ export const extractStaticImageProps = (
       ) {
         return
       }
-      const image = evaluateImageAttributes(
+      const image = (evaluateImageAttributes(
         // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
         (nodePath as unknown) as NodePath<JSXOpeningElement>
-      ) as ImageProps
+      ) as unknown) as ImageProps
       images.set(hashOptions(image), image)
     },
   })
