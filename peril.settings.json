@@ -32,6 +32,18 @@
       ],
       "check_run": [
         "gatsbyjs/gatsby@peril/rules/validate-yaml.ts"
+      ],
+      "pull_request.labeled": [
+        "gatsbyjs/gatsby@peril/rules/merge-on-green.ts"
+      ],
+      "pull_request_review.submitted": [
+        "gatsbyjs/gatsby@peril/rules/merge-on-green.ts"
+      ],
+      "check_suite.completed": [
+        "gatsbyjs/gatsby@peril/rules/merge-on-green.ts"
+      ],
+      "status.success": [
+        "gatsbyjs/gatsby@peril/rules/merge-on-green.ts"
       ]
     },
     "gatsbyjs/gatsby-starter-default": {
