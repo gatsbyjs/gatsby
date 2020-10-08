@@ -8,7 +8,7 @@ import { getConfigFile } from "../get-config-file"
 import { resolvePlugin } from "../load-plugins/load"
 import reporter from "gatsby-cli/lib/reporter"
 import Debug from "debug"
-import { GatsbyConfig, PluginRef } from "../../../index"
+import { GatsbyConfig, PluginRef } from "../../../"
 
 const debug = Debug(`gatsby:load-themes`)
 
