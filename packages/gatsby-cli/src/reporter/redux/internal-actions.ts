@@ -31,7 +31,7 @@ import {
   getGlobalStatus,
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
-import { ErrorCategory } from "gatsby-cli/src/structured-errors/error-map"
+import { ErrorCategory } from "../../structured-errors/error-map"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
