@@ -43,7 +43,7 @@
     "gatsby-node.js",
     "gatsby-ssr.js"
   ],
-  "types": "dist/gatsby-image.d.ts",
+  "types": "dist/src/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#readme",
   "devDependencies": {
     "@types/react": "^16.9.50",
