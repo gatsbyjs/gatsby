@@ -187,16 +187,25 @@ module.exports = (
       )
     }
 
-    const imageStyle = `
+    // TODO move to react component & React.render
+    let imageStyle = `
       width: 100%;
       height: 100%;
       margin: 0;
       vertical-align: middle;
       position: absolute;
       top: 0;
-      left: 0;
-      object-fit:cover;
-      object-position:center;`.replace(/\s*(\S+:)\s*/g, `$1`)
+      left: 0;`
+
+    // convert json style to css
+    for (const prop in options.style) {
+      imageStyle += `${prop.replace(
+        /[A-Z]/g,
+        match => `-${match.toLowerCase()}`
+      )}:${options.style[prop]};`
+    }
+
+    imageStyle = imageStyle.replace(/\s*(\S+:)\s*/g, `$1`)
 
     // Create our base image tag
     let imageTag = `
