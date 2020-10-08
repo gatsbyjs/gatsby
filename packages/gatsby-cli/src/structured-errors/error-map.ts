@@ -8,6 +8,12 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
+export enum ErrorCategory {
+  USER = `USER`,
+  SYSTEM = `SYSTEM`,
+  THIRD_PARTY = `THIRD_PARTY`,
+}
+
 const errors = {
   "": {
     text: (context): string => {
@@ -435,6 +441,7 @@ const errors = {
         .join(`\n`),
     type: Type.PLUGIN,
     level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   // node object didn't pass validation
   "11467": {
@@ -495,12 +502,6 @@ export type ErrorId = string | keyof typeof errors
 export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
 
 export const defaultError = errorMap[``]
-
-export enum ErrorCategory {
-  USER = `USER`,
-  SYSTEM = `SYSTEM`,
-  THIRD_PARTY = `THIRD_PARTY`,
-}
 
 export interface IErrorMapEntry {
   text: (context) => string
