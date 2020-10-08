@@ -4,7 +4,7 @@ title: Community Contributions
 
 A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
 
-We welcome all contributions from you in the community, and would be thrilled to amplify your voice. Contributions are not limited to code, and can take all shapes and forms:
+We welcome all contributions from you in the community and would be thrilled to amplify your voice. Contributions are not limited to code, and can take all shapes and forms:
 
 - Your wonderful Gatsby.js website!
 - Gatsby starters

@@ -2,13 +2,13 @@
 title: Code Contributions
 ---
 
-The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
+The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real-time! Way to feel like a wizard.
 
 ## Repo setup
 
 This page includes details specific to the Gatsby core and ecosystem codebase.
 
-To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
+To start setting up the Gatsby repo on your machine using git, Yarn, and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
 
 Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
 
@@ -30,7 +30,7 @@ With all of the possible Gatsby integrations, it might help to spin up a Docker 
 
 > Do you have a setup not listed here? Let us know by adding it to this file and opening a PR.
 
-### Docker, WordPress and Gatsby
+### Docker, WordPress, and Gatsby
 
 To install WordPress to use with Gatsby, this `docker-compose.yml` file will come in handy:
 
@@ -99,7 +99,7 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 This section is for official theme development. If you are looking
 to build your own theme, see [building themes](/docs/themes/building-themes/).
 
-Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes themselves live in the `packages` directory and starters using them are in the `starters` directory. In order to work on a theme, find the starter that uses it and do the following:
+Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes themselves live in the `packages` directory and starters using them are in the `starters` directory. In order to work on a theme, find the starter that uses it, and do the following:
 
 1. Run `yarn` in your terminal in the root of the repo.
 2. Still in the repo root, run `yarn workspace <starter name> develop`.
@@ -108,4 +108,4 @@ From there, you can make changes in the theme and see them reflected in the runn
 
 ## Feedback
 
-At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
+At any point during the contributing process, the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.

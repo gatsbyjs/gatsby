@@ -14,7 +14,7 @@
   Fast in every way that matters
 </h3>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
+  Gatsby is a free and open-source framework based on React that helps developers build blazing-fast websites and apps
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -58,7 +58,7 @@
   <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
-Gatsby is a modern web framework for blazing fast websites.
+Gatsby is a modern web framework for blazing-fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps so you can create high-quality,
@@ -72,8 +72,7 @@ Gatsby is a modern web framework for blazing fast websites.
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
   to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
-- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code-splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
   and more to ensure your site is fast — no manual tuning required.
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
@@ -122,7 +121,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 4. **Open the source code and start editing!**
 
-   Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
+   Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real-time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
 

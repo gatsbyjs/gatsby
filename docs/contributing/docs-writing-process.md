@@ -4,7 +4,7 @@ title: Docs Writing Process
 
 When a new feature or integration is released that Gatsby developers can take advantage of, documentation should be added to improve the learning experience. Gatsby also needs docs for topic areas that exist in other technologies but are under-documented or under-tooled in the Gatsby ecosystem.
 
-The knowledge of how to work with a technique, source plugin, or varied use case may be known internally to Gatsby team members, but it also may only exist on the web at large. This contributing doc is intended to provide a written process for producing docs without prior information, a critical function of the Gatsby Documentation team and open source community.
+The knowledge of how to work with a technique, source plugin, or varied use case may be known internally to Gatsby team members, but it also may only exist on the web at large. This contributing doc is intended to provide a written process for producing docs without prior information, a critical function of the Gatsby Documentation team, and the open-source community.
 
 ## Identifying a topic
 
@@ -18,7 +18,7 @@ When identifying a topic, start by:
 
 3. Look at the [learning workflow meta issue](https://github.com/gatsbyjs/gatsby/issues/13708) to find active areas looking for docs.
 
-4. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement in a PR.
+4. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement it in a PR.
 
 5. Observe common points of confusion or rough edges through user feedback and recommend solutions.
 

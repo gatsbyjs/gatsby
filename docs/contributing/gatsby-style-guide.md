@@ -110,7 +110,7 @@ In English, your articles should use the second person ("you") to provide a conv
 
 For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
 
-Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third-person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
 
 When updating a doc to adhere to this part of the Gatsby Style Guide, one exception in English is when "we" refers to Gatsby's core processes. The subject is the code in this case, rather than a teacher/reader connotation, and should be rewritten or restructured to not confuse the reader about what they are responsible for doing when something is happening automatically behind the scenes.
 
@@ -122,7 +122,7 @@ For even more inclusive docs, avoid phrases that assume a reader's experience or
 
 ### Avoid emojis, slang, and metaphors
 
-Avoid using emojis or emoticons in the Docs and idiomatic expressions / slang, or metaphors. Gatsby has a global community, and
+Avoid using emojis or emoticons in the Docs and idiomatic expressions/slang, or metaphors. Gatsby has a global community, and
 the cultural meaning of an emoji, emoticon, or slang may be different around the world. Use your best judgment!
 Also, emojis can render differently on different systems.
 
@@ -244,7 +244,7 @@ what-is-graphql).
 
 ### Format titles and headers
 
-Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither need punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of “and.” Article headings do take the Oxford comma and use the word “and.”
+Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither needs punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of “and.” Article headings do take the Oxford comma and use the word “and.”
 
 Titles are automatically formatted as h1. Mark up article headings as h2 and subheads as h3 or h4 as needed. Most article headings are conceptually and rhetorically at the same level as each other; avoid unnecessary complexity and mark them up as h2 unless they’re true subheads.
 
@@ -266,7 +266,7 @@ Use the following as reference when creating and editing docs:
 - [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
   If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself.
   A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
-  Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
+  Then you can right-click the image and copy its image source. And don't forget image alt text for accessibility!
   For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
@@ -277,11 +277,11 @@ Ensure that variables, component names, function names, and packages that appear
 ```markdown
 <!-- Good -->
 
-The plugin `gatsby-transformer-something` provides several useful options, such as the `somethingArgs` variable that can be passed in to `createSchemaCustomization`.
+The plugin `gatsby-transformer-something` provides several useful options, such as the `somethingArgs` variable that can be passed into `createSchemaCustomization`.
 
 <!-- Bad -->
 
-The plugin gatsby-transformer-something provides several useful options, such as the somethingArgs variable that can be passed in to createSchemaCustomization.
+The plugin gatsby-transformer-something provides several useful options, such as the somethingArgs variable that can be passed into createSchemaCustomization.
 ```
 
 #### Code formatting: Type tab
@@ -425,10 +425,10 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - webpack ([should always in lower-case letters, even at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
 
 A full-stack developer (adjective form with a dash) works on the full stack
-(noun form with no dash). The same goes with many other compound terms.
+(noun form with no dash). The same goes for many other compound terms.
 
 Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example,
-a frontend developer works on the frontend. The same goes for backend.
+a frontend developer works on the frontend. The same goes for the backend.
 
 End users are spelled out with two words, rather than hyphenating with a dash.
 
@@ -481,11 +481,11 @@ The guidelines for doing so are as follows:
 - If possible, Gatsby Cloud should be accompanied by other relevant technologies.
 - If Gatsby Cloud does something by default, the docs should still include instructions for accessing that functionality manually.
 
-The spirit of these guidelines is to ensure that users are aware of multiple options for running their Gatsby site. With the exception of `gatsby-cli`, the open source documentation should generally preclude assumptions about technology choices.
+The spirit of these guidelines is to ensure that users are aware of multiple options for running their Gatsby site. With the exception of `gatsby-cli`, the open-source documentation should generally preclude assumptions about technology choices.
 
 ### Support software versions
 
-When Gatsby commits to support a specific version of software (e.g. Node 8 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
+When Gatsby commits to support a specific version of software (e.g. Node 8 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to supporting. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
 
 ### Share best practices whenever possible
 
@@ -553,7 +553,7 @@ The main tutorial ought to use the same personal “you” like the rest of the 
 
 ### Don't make users think more than is necessary
 
-Because the audience of the tutorial is people who do not consider themselves experts in React, it's important to reduce the amount of new information to bare minimum. The goal: give people only the information necessary to complete a task and to know how to repeat the task again, outside of the context of the tutorial.
+Because the audience of the tutorial is people who do not consider themselves experts in React, it's important to reduce the amount of new information to the bare minimum. The goal: give people only the information necessary to complete a task and to know how to repeat the task again, outside of the context of the tutorial.
 
 In practice, you can reach this goal by two rules of thumb:
 
@@ -564,7 +564,7 @@ In practice, you can reach this goal by two rules of thumb:
 
 ### Recipes audience
 
-Recipes are for anyone looking to complete a common Gatsby task, however they may appeal to intermediate to advanced learners due to their brevity and focus on Gatsby-specific details without going through every setup step.
+Recipes are for anyone looking to complete a common Gatsby task, however, they may appeal to intermediate to advanced learners due to their brevity and focus on Gatsby-specific details without going through every setup step.
 
 ### Recipes purpose
 
@@ -618,7 +618,7 @@ Looking for:
 - they usually already have strong opinions or requirements about what they want to use as their CMS or data source and want to know best practices for their workflow
 - signs that Gatsby is a reliable, long-term choice (signs that it is growing and improving and evidence it will be around for a long time)
 - ways to check their project’s requirements against what Gatsby offers
-- open source code from well-built example sites
+- open-source code from well-built example sites
 
 ### Docs purpose
 

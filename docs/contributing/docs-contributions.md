@@ -31,9 +31,9 @@ Keep in mind that some links in here are already correct because they work on ga
 
 ## Headings
 
-Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading in the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.
+Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading on the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.
 
-For the purposes of an accessible document outline, content headings should go in order from h2-h4 (`####`) until all levels have been established. This will ensure the Gatsby docs have a content hierarchy that works well for users of assistive technology. Read more about the importance of [headings and semantic structure in HTML](https://webaim.org/techniques/semanticstructure/).
+To provide an accessible document outline, content headings should go in order from h2-h4 (`####`) until all levels have been established. This will ensure the Gatsby docs have a content hierarchy that works well for users of assistive technology. Read more about the importance of [headings and semantic structure in HTML](https://webaim.org/techniques/semanticstructure/).
 
 ## Modifying Markdown files
 
@@ -128,7 +128,7 @@ description: Learn about other events happening around the globe to connect with
 
 ## Configuring site navigation
 
-The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
+The docs include custom-built components to aid with navigation. To customize the navigation experience, these components allow some configurations without changing any of the React code.
 
 ### Adjusting breadcrumb titles
 
@@ -144,7 +144,7 @@ To alter the title of a doc that is displayed in the Breadcrumb component, `brea
 
 ### Disabling or shortening Table of Contents
 
-The `<TableOfContents />` component is used to render a list of subheaders from a docs page and automatically provide deep links to them. It can be tweaked by values set in the frontmatter of a doc's markdown.
+The `<TableOfContents />` component is used to render a list of subheaders from a docs page and automatically provide deep links to them. It can be tweaked by values set in the front matter of a doc's markdown.
 
 In docs where the Table of Contents isn't required and should be disabled, a key in the frontmatter called `disableTableOfContents` can be set to `true` like this:
 
@@ -157,7 +157,7 @@ disableTableOfContents: true
 When you're new to Gatsby there can be a lot of words to learn...
 ```
 
-In other docs where the Table of Contents is extremely long it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
+In other docs where the Table of Contents is extremely long, it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
 
 ```markdown
 ---
@@ -200,7 +200,7 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 
 ## Claim your swag
 
-After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
+After your first code contribution to the Gatsby repo (including documentation), you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
 
 ## Want more?
 
