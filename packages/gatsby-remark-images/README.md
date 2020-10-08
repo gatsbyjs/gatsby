@@ -59,6 +59,7 @@ plugins: [
 | `loading`               | `lazy`  | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `disableBgImageOnAlpha` | `false` | Images containing transparent pixels around the edges results in images with blurry edges. As a result, these images do not work well with the "blur up" technique used in this plugin. As a workaround to disable background images with blurry edges on images containing transparent pixels, enable this setting.                                                                                                                                                                                                                                                                                                               |
 | `disableBgImage`        | `false` | Remove background image and its' inline style. Useful to prevent `Stylesheet too long` error on AMP.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `style`                 | `{}`    | Add custom styling to your image.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 ## dynamic wrapperStyle example
 
@@ -68,6 +69,10 @@ plugins: [
   options: {
     maxWidth: 800,
     wrapperStyle: fluidResult => `flex:${_.round(fluidResult.aspectRatio, 2)};`,
+    style: {
+      objectFit: 'cover',
+      objectPosition: 'center',
+    }
   },
 }
 ```
