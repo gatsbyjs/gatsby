@@ -9,6 +9,12 @@ describe(`derive-path`, () => {
     ).toEqual(`product/1`)
   })
 
+  it(`converts number to string in URL`, () => {
+    expect(derivePath(`product/{Product.id}.js`, { id: 1 }, reporter)).toEqual(
+      `product/1`
+    )
+  })
+
   it(`has nested value support`, () => {
     expect(
       derivePath(
