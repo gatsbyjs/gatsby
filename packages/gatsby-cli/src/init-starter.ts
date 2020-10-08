@@ -33,7 +33,7 @@ const spawn = (
 // Refer to https://github.com/yarnpkg/yarn/issues/673
 const checkForYarn = async (): Promise<boolean> => {
   try {
-    const version = execSync(`yarnpkg --version`, { stdio: `ignore` })
+    const version = execSync(`yarnpkg --version`)
     return !!version
   } catch (e) {
     return false
