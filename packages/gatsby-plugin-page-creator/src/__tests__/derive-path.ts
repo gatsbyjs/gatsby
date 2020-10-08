@@ -63,7 +63,10 @@ describe(`derive-path`, () => {
     ).toEqual(`/film/mrs-doubtfire/`)
   })
 
-  it(`slugify's has working slash replacement for e.g. createFilePath`, () => {
+  it(`keeps existing slashes around and handles possible double forward slashes`, () => {
+    // This tests two things
+    // 1) The trailing slash should be transferred (normally "@sindresorhus/slugify" would remove that)
+    // 2) There shouldn't be a double forward slash in the final URL => blog//fire-and-powder/
     expect(
       derivePath(
         `blog/{MarkdownRemark.fields__slug}.js`,
