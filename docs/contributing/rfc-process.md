@@ -4,7 +4,7 @@ title: RFC process
 
 ## What is the RFC process?
 
-Many changes, including bug fixes and documentation improvements can be
+Many changes, including bug fixes and documentation improvements, can be
 implemented and reviewed via the normal GitHub pull request workflow.
 
 Some changes, however, are "substantial", and we ask that these be put through
@@ -39,12 +39,12 @@ of interested people have a chance to weigh in.
 
 The RFC process can also be helpful to encourage discussions about a proposed
 feature as it is being designed, and incorporate important constraints into the
-design while it's easier to change, before the design has been fully
+design while it's easier to change before the design has been fully
 implemented.
 
 Some changes do not require an RFC:
 
-- Rephrasing, reorganizing or refactoring addition or removal of warnings
+- Rephrasing, reorganizing, or refactoring addition or removal of warnings
 - Additions that strictly improve objective, numerical quality
   criteria (speedup, better browser support)
 - Additions only likely to be _noticed by_ other implements-of-Gatsby,
@@ -53,7 +53,7 @@ Some changes do not require an RFC:
 ## What the process is
 
 In short, to get a major feature added to Gatsby, one usually first gets the
-RFC merged into the RFC repo as a markdown file. At that point the RFC is
+RFC merged into the RFC repo as a markdown file. At that point, the RFC is
 'active' and may be implemented with the goal of eventual inclusion into
 Gatsby.
 
@@ -61,11 +61,11 @@ Gatsby.
 - `text/0000-my-feature.md` (where
   'my-feature' is descriptive. Don't assign an RFC number yet).
 - Fill in the RFC. Put care into the details: **RFCs that do not
-  present convincing motivation, demonstrate understanding of the impact of the
+  present convincing motivation, demonstrate an understanding of the impact of the
   design, or are disingenuous about the drawbacks or alternatives tend to be
   poorly-received**.
-- Submit a pull request. As a pull request the RFC will receive design
-  feedback from the larger community, and the author should be prepared to revise
+- Submit a pull request. As a pull request, the RFC will receive design
+  feedback from the larger community and the author should be prepared to revise
   it in response.
 - Build consensus and integrate feedback. RFCs that have broad support
   are much more likely to make progress than those that don't receive any

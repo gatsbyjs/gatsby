@@ -62,7 +62,7 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
   - Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 
-- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory or run:
+- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with currently published packages. In order to undo this, you can remove the `node_modules` directory or run:
 
 ```shell
 git checkout package.json; yarn --force
@@ -84,7 +84,7 @@ If you're adding e2e tests and want to run them against local changes:
 
 ### Troubleshooting
 
-At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
+At any point during the contributing process, the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
 
 - When you went through the initial setup some time ago and now want to contribute something new, you should make sure to [sync your fork](#sync-your-fork) with the latest changes from the primary branch on [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby). Otherwise, you might run into issues where files are not found as they were renamed, moved, or deleted.
 - After syncing your fork, run `yarn run bootstrap` to compile all packages. When files or tests depend on the build output (files in `/dist` directories) they might fail otherwise.

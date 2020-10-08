@@ -27,7 +27,7 @@ We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) b
 
 For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself. This is somewhat subjective so if you have any questions, [feel free to ask us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
 
-The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/), if you're interested in learning more about how that works.
+The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/) if you're interested in learning more about how that works.
 
 ## Opening PRs in Gatsby
 
@@ -103,9 +103,9 @@ For the Gatsby blog, it's necessary to run your content idea by the Gatsby team 
 
 After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
-Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo and to find opportunities for improvement to your PR changes.
 
-These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
+These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page, you can use the suggestions UI to:
 
 - Review the suggested changes using the "View changes" button.
 - [Commit](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) the suggestions.

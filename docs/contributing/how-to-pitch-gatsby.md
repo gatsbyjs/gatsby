@@ -2,9 +2,9 @@
 title: How to Pitch Gatsby
 ---
 
-If you love Gatsby.js as much as we do, you might want to pitch your colleagues, managers or anyone in your life about its value. As such, we've put together some talking points that could help you make a case for building with Gatsby:
+If you love Gatsby.js as much as we do, you might want to pitch your colleagues, managers, or anyone in your life about its value. As such, we've put together some talking points that could help you make a case for building with Gatsby:
 
-Build blazing-fast websites without the hosting hassles of managing complex, costly infrastructure or fear that your site might go down. **Gatsby is a website development tool for React, the most modern way to build reliable, lightning fast websites.**
+Build blazing-fast websites without the hosting hassles of managing complex, costly infrastructure or fear that your site might go down. **Gatsby is a website development tool for React, the most modern way to build reliable, lightning-fast websites.**
 
 ## A website built with Gatsby is:
 
@@ -15,7 +15,7 @@ Build blazing-fast websites without the hosting hassles of managing complex, cos
 
 - **Simple:** No servers. No databases. Traditional hosting is time consuming, costly, complex, and puts your site at risk of crashing if your content goes viral. Avoid the pitfalls of hosting with a serverless architecture. A site that never goes down because it’s built on the edge, instantly scaling for traffic spikes.
 
-- **Trusted:** Leverage the power of the latest web technologies including React, webpack, GraphQL, modern JavaScript, and more. Get the best of both worlds—all the power and conveniences from React and its ecosystem with a really slick and responsive user experience.
+- **Trusted:** Leverage the power of the latest web technologies including React, Webpack, GraphQL, modern JavaScript, and more. Get the best of both worlds—all the power and conveniences from React and its ecosystem with a really slick and responsive user experience.
 
 - **Flexible with the Content Mesh:** Build websites quickly and deploy them safely, no matter where your content lives. Load data from your CMS, static files, a database, or from multiple places at once. Your marketing team is happy because they can use the content management tools they’re familiar with (WordPress, Drupal, Contentful, Shopify).
 

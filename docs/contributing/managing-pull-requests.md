@@ -10,7 +10,7 @@ Needless to say, we get a lot of PRs and we've been merging over a [100 contribu
 
 Let's talk a little about how we manage pull requests in the Gatsby repo.
 
-For an introduction on what Pull Requests are and how to file one, check out the contributing doc on [How to Open a Pull Request](/contributing/how-to-open-a-pull-request).
+For an introduction to what Pull Requests are and how to file one, check out the contributing doc on [How to Open a Pull Request](/contributing/how-to-open-a-pull-request).
 
 ## Verifying a Pull Request
 
@@ -69,11 +69,11 @@ For PRs that add a blog post, we ought to check:
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
-- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should go in the [Reference Guides](/docs/guides/) or [Tutorials](/tutorial/) section of the docs.
+- Time Sensitivity — blog posts are more time-dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should go in the [Reference Guides](/docs/guides/) or [Tutorials](/tutorial/) section of the docs.
 
 ## Automated Checks
 
-Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.com).
+Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting, and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.com).
 
 We want all of these checks to pass. While we'll sometimes review a work in progress PR with some failed checks, a PR is only ready to ship when all the tests have passed.
 
@@ -125,7 +125,7 @@ Let's look at some examples of good and bad PR titles:
 - feat(gatsby): Add support for per page manifests
 - fix(gatsby-plugin-sharp): Ensure images exist before attempting conversion
 
-These are good PR titles because they are concise, specific and use the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0-beta.3) format.
+These are good PR titles because they are concise, specific, and use the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0-beta.3) format.
 
 #### Bad PR Titles ❌
 

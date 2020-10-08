@@ -9,7 +9,7 @@ This page outlines how to use Gitpod, a free online dev environment, to contribu
 Gitpod makes contributions on GitHub easier, by allowing automated development environment setups. Instead of writing lengthy
 documentation of what to install and configure and letting every contributor go through this adventure, the setup is automated and reproducible.
 
-Furthermore, Gitpod prebuilds any branch of a repository so that you don't need to wait for installation, cloning and building.
+Furthermore, Gitpod prebuilds any branch of a repository so that you don't need to wait for installation, cloning, and building.
 
 ## Get Started
 
@@ -36,13 +36,13 @@ To start working on an issue, you can prefix the issue URL with `gitpod.io/#`.
 > Example: https://gitpod.io/#https://github.com/gatsbyjs/gatsby/issues/1199
 
 This will open a fresh environment with a local branch named after the issue.
-You can now code, test, commit, push and create a PR from within the workspace.
+You can now code, test, commit, push, and create a PR from within the workspace.
 
 ## Code Reviews
 
 Some code changes need a deeper review than what is possible on GitHub. Prefixing a PR with `gitpod.io/#` will open that branch in code review mode.
 
-In this mode you see the list of file changes on the left and can navigate through them. You can run the app and use the editing features to explore the changed code base. You can see existing comments or add new comments in the editor and submit your review result as well.
+In this mode, you see the list of file changes on the left and can navigate through them. You can run the app and use the editing features to explore the changed code base. You can see existing comments or add new comments in the editor and submit your review result as well.
 
 ## How to Run Another Example
 

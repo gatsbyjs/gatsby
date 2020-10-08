@@ -4,7 +4,7 @@ title: How to Write a Recipe
 
 [Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live in the [Recipes section](/docs/recipes/) in the docs, the source of which can be found in the [`docs/docs/recipes.md` landing page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) and [`docs/docs/recipes/*` folder](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes/) in the GitHub repo.
 
-A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
+A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however, the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
 The components of a recipe are:
 
@@ -16,7 +16,7 @@ The components of a recipe are:
   - Optional embedded examples
 - Links to additional resources
 
-Recipes should be short. This is accomplished by limiting steps to what is unique to the task at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
+Recipes should be short. This is accomplished by limiting steps to what is unique to the task-at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to the full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
 
 If you're finding a recipe is becoming too long to fit on the Docs Recipes page due to including many prerequisites or steps, consider writing a tutorial instead.
 
@@ -86,7 +86,7 @@ When writing a recipe, try to include each of the below items wherever relevant.
 
 #### Prerequisites
 
-- A Gatsby site with two page components: `index.js` and `contact.js`
+- A Gatsby site with two-page components: `index.js` and `contact.js`
 - The Gatsby <Link /> component
 - The Gatsby CLI method `gatsby develop`
 
