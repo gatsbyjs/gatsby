@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.70](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.69...gatsby@2.24.70) (2020-10-08)
+
+### Bug Fixes
+
+- **gatsby:** route lifecycle ordering ([#27261](https://github.com/gatsbyjs/gatsby/issues/27261)) ([b64f89e](https://github.com/gatsbyjs/gatsby/commit/b64f89e4fc22fdfbe8c7edf670a4b25d757db7a3))
+
+### Features
+
+- **gatsby,gatsby-cli:** Pass an errorMap to reporter.error ([#27176](https://github.com/gatsbyjs/gatsby/issues/27176)) ([56402db](https://github.com/gatsbyjs/gatsby/commit/56402dbb26aa56f8f1d69a0d4e2d079efccec669))
+
+### Performance Improvements
+
+- **redirect:** minified redirect file size ([#27160](https://github.com/gatsbyjs/gatsby/issues/27160)) ([41f0881](https://github.com/gatsbyjs/gatsby/commit/41f08814fa016683d9bb1c1aa064e6e9519d38fc))
+
 ## [2.24.69](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.68...gatsby@2.24.69) (2020-10-07)
 
 ### Bug Fixes

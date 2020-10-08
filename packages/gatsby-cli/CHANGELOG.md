@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.105](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.104...gatsby-cli@2.12.105) (2020-10-08)
+
+### Features
+
+- **gatsby,gatsby-cli:** Pass an errorMap to reporter.error ([#27176](https://github.com/gatsbyjs/gatsby/issues/27176)) ([56402db](https://github.com/gatsbyjs/gatsby/commit/56402dbb26aa56f8f1d69a0d4e2d079efccec669))
+
 ## [2.12.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.103...gatsby-cli@2.12.104) (2020-10-07)
 
 ### Features
