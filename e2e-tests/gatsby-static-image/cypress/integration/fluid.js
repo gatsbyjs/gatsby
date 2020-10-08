@@ -5,17 +5,6 @@ describe(`fluid`, () => {
     cy.visit(`/fluid`).waitForRouteChange()
   })
 
-  it(`applies height and width to wrapper`, () => {
-    cy.getTestElement(fluidTestId)
-      .find(`.gatsby-image`)
-      .should(`have.attr`, `style`)
-      .and(style => {
-        ;[`height:`, `width:`].forEach(part => {
-          expect(style).contains(part)
-        })
-      })
-  })
-
   it(`works on png files`, () => {
     cy.getTestElement(`image-fluid-png`).find(`.gatsby-image`).should(`exist`)
   })
