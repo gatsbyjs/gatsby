@@ -5,14 +5,20 @@ jest.mock(`fs-extra`, () => {
     readFile: jest.fn(),
   }
 })
-jest.mock(`../../utils/api-runner-node`, () => () => [])
+jest.mock(`../../utils/api-runner-node`, () => (): Array<unknown> => [])
 jest.mock(`gatsby-cli/lib/reporter/index`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const fs = require(`fs-extra`)
 
-const FileParser = require(`../file-parser`).default
+import fs from "fs-extra"
+import { NameNode, OperationDefinitionNode } from "graphql"
+import reporter from "gatsby-cli/lib/reporter"
+import { FileParser, IGraphQLDocumentInFile } from "../file-parser"
 
 const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
+
+const getNodeName = (
+  ast: Array<IGraphQLDocumentInFile> | null
+): NameNode | undefined =>
+  ast ? (ast[0].doc.definitions[0] as OperationDefinitionNode).name : undefined
 
 describe(`File parser`, () => {
   const MOCK_FILE_INFO = {
@@ -230,13 +236,13 @@ export default () => {
   const parser = new FileParser()
 
   beforeAll(() => {
-    fs.readFile.mockImplementation(file =>
+    ;(fs.readFile as jest.Mock).mockImplementation(file =>
       Promise.resolve(MOCK_FILE_INFO[file])
     )
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    const errors = []
+    const errors: Array<unknown> = []
     const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
       Object.keys(MOCK_FILE_INFO),
@@ -249,14 +255,14 @@ export default () => {
 
   it(`generates spec-compliant query names out of path`, async () => {
     const ast = await parser.parseFile(`${specialChars}.js`, jest.fn())
-    const nameNode = ast[0].doc.definitions[0].name
+    const nameNode = getNodeName(ast)
     expect(nameNode).toEqual({
       kind: `Name`,
       value: `zhADollarpercentandJs1125018085`,
     })
 
     const ast2 = await parser.parseFile(`static-${specialChars}.js`, jest.fn())
-    const nameNode2 = ast2[0].doc.definitions[0].name
+    const nameNode2 = getNodeName(ast2)
     expect(nameNode2).toEqual({
       kind: `Name`,
       value: `staticZhADollarpercentandJs1125018085`,

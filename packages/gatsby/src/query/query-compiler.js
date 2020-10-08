@@ -34,7 +34,7 @@ import * as actions from "../redux/actions/internal"
 import { boundActionCreators } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
-const { default: FileParser } = require(`./file-parser`)
+import { FileParser } from "./file-parser"
 const {
   graphqlError,
   multipleRootQueriesError,
@@ -157,7 +157,7 @@ export const parseQueries = async ({
 
   files = _.uniq(files)
 
-  const parser = new FileParser({ parentSpan: parentSpan })
+  const parser = new FileParser(parentSpan)
 
   return await parser.parseFiles(files, addError)
 }

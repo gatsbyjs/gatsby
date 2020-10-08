@@ -139,7 +139,7 @@ During the Gatsby build process, GraphQL queries are pulled out of the original 
 ### The longer answer
 
 The longer answer is a little more involved: Gatsby borrows a technique from
-[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
+[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.ts`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/file-parser.ts) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
 
 _More information about [how queries work](/docs/query-behind-the-scenes/) is included in the Gatsby Internals section of the docs._
 
