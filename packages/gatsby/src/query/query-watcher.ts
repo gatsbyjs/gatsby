@@ -96,8 +96,8 @@ const handleQuery = (
     // format query text, but it doesn't mean that compiled text will change.
     if (
       isNewQuery ||
-      (oldQuery &&
-        (oldQuery.hash !== query.hash || oldQuery.query !== query.text))
+      oldQuery?.hash !== query.hash ||
+      oldQuery?.query !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
