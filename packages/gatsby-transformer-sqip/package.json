@@ -8,10 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "bluebird": "^3.7.2",
     "fs-extra": "^8.1.0",
     "gatsby-plugin-sharp": "^2.6.39",
-    "md5-file": "^4.0.0",
+    "md5-file": "^5.0.0",
     "mini-svg-data-uri": "^1.2.3",
     "p-queue": "^2.4.2",
     "sqip": "^0.3.3"
