@@ -18,7 +18,6 @@ import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
-import { verifyCommand } from "./commands/plugins/verify"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
@@ -514,15 +513,12 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
       describe: `Useful commands relating to Gatsby plugins`,
       builder: yargs =>
         yargs.positional(`cmd`, {
-          choices: [`docs`, `verify`],
-          describe: "Valid commands include `docs`, `verify`.",
+          choices: [`docs`],
+          describe: "Valid commands include `docs`.",
           type: `string`,
         }),
-      handler: handlerP(async ({ cmd }) => {
-        if (cmd === `verify`) {
-          const message = await verifyCommand()
-          console.log(message)
-        } else if (cmd === `docs`) {
+      handler: handlerP(({ cmd }) => {
+        if (cmd === `docs`) {
           console.log(`
       Using a plugin:
       - What is a Plugin? (https://www.gatsbyjs.com/docs/what-is-a-plugin/)
