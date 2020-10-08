@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.106](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.105...gatsby-cli@2.12.106) (2020-10-08)
+
+### Bug Fixes
+
+- **gatsby-cli:** Categorize plugin validation error ([#27340](https://github.com/gatsbyjs/gatsby/issues/27340)) ([4b24d7f](https://github.com/gatsbyjs/gatsby/commit/4b24d7fb274ab27b8650eb10aa46e5d7157d171e))
+
 ## [2.12.105](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.104...gatsby-cli@2.12.105) (2020-10-08)
 
 ### Features

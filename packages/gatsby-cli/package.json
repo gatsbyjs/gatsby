@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.12.105",
+  "version": "2.12.106",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
