@@ -28,7 +28,7 @@ For example, `gatsby-plugin-console-log` can access the `message` in order to lo
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.onPreInit = (_, pluginOptions) => {
   console.log(
-    `logging: "${pluginOptions.message || `default message`}" to the console` // highlight-line
+    `logging: "${pluginOptions.message}" to the console` // highlight-line
   )
 }
 ```
@@ -53,6 +53,24 @@ The following table lists possible options values and an example plugin that mak
 | Object    | `{ default: "./src/layout.js" }` | [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/)               |
 
 **Note**: Themes (which are a type of plugin) are able to receive options from a site's `gatsby-config` to be used in its `gatsby-config` in order to allow themes to be composed together. This is done by exporting the `gatsby-config` as a function instead of an object. You can see an example of this in the [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog) and [`gatsby-theme-blog-core`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog-core) repositories. Plugins are not capable of this functionality.
+
+## How to validate options
+
+A Gatsby plugin can define a [Joi](https://joi.dev) schema for their options using the `pluginOptionsSchema` API in `gatsby-node.js`. Gatsby validates that the options users of the plugin pass to it match the schema.
+
+For example, here is what the schema for `gatsby-plugin-console-log` looks like:
+
+```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
+exports.pluginOptionsSchema = ({ Joi }) => {
+  return Joi.object({
+    optionA: Joi.boolean().required(),
+    message: Joi.string().required().default(`default message`),
+    optionB: Joi.boolean(),
+  })
+}
+```
+
+This ensures users pass a boolean to `optionA` and `optionB`, and a string to `message`. It also defaults the `message` option to "default message" in case users do not pass their own.
 
 ## Additional resources
 
