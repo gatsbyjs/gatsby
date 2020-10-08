@@ -22,11 +22,10 @@ export function _getStaticImage(
     if (__error) {
       console.warn(__error)
     }
-
     const { gatsbyImageProps, layout } = splitProps({ src, ...props })
     if (imageData) {
       const isResponsive = layout === `responsive`
-      const props: Pick<
+      const childProps: Pick<
         GatsbyImageProps,
         "layout" | "width" | "height" | "images" | "placeholder"
       > = {
@@ -46,19 +45,18 @@ export function _getStaticImage(
       const placeholder = imageData.tracedSVG || imageData.base64
 
       if (placeholder) {
-        props.placeholder = {
+        childProps.placeholder = {
           fallback: placeholder,
         }
       }
 
       if (imageData.srcWebp) {
-        props.images.sources.push({
+        childProps.images.sources.push({
           srcSet: imageData.srcSetWebp,
           type: `image/webp`,
         })
       }
-
-      return <GatsbyImage {...gatsbyImageProps} {...props} />
+      return <GatsbyImage {...gatsbyImageProps} {...childProps} />
     }
     console.warn(`Image not loaded`, src)
     if (!__error && process.env.NODE_ENV === `development`) {
