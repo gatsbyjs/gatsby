@@ -43,17 +43,17 @@ Begin with Gatsby Cloud. Once you have an account, you can log in and follow the
 
 At this point, you'll need to come up with a name for your project. This won't be customer-facing. This name will identify your site in Gatsby Cloud and your repository (repo) on GitHub. For now, associate this site with your personal GitHub account. If you're building this site for your company, you can always transfer the project over to a [GitHub organization](https://help.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-organizations) later.
 
-![Gatsby menu where you can create a new site asks What should we call your new project and choose a destination](/images/gatsby-new-site.png)
+![Gatsby menu where you can create a new site asks What should we call your new project and choose a destination](./images/gatsby-new-site.png)
 
 ### Connecting to DatoCMS
 
 Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site" button. Once this is done, you should see a link to the corresponding project in DatoCMS and repository on GitHub, both of which have been created for you.
 
-![Log into DatoCMS overlaid on top of the Gatsby UI](/images/dato-log-in.png)
+![Log into DatoCMS overlaid on top of the Gatsby UI](./images/dato-log-in.png)
 
 > This automatic provisioning of your website is one of Gatsby Cloud's strengths. Integrations with content management systems like this make it possible for you to spin up and begin publishing content to new sites without ever touching any code.
 
-![Celebratory screen titled successfully set up Gatsby provisioned Snipcart!](/images/successfully-set-up.png)
+![Celebratory screen titled successfully set up Gatsby provisioned Snipcart!](./images/successfully-set-up.png)
 
 ## Exploring the DatoCMS Project
 
@@ -62,7 +62,7 @@ follow the link in Gatsby Cloud to go straight to your project in DatoCMS.
 
 Click on "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
 
-![Edit product screen featuring a single sock product called street faces](/images/edit-product.png)
+![Edit product screen featuring a single sock product called street faces](./images/edit-product.png)
 
 ### Editing models in DatoCMS
 
@@ -70,7 +70,7 @@ Clicking on "Settings" in the primary navigation menu reveals the "Models" menu 
 
 Maybe you also want each product to have a description or a release date. You can edit this model to be whatever you want it to be by adding and customizing fields. DatoCMS provides a wide variety of options that you can tweak to fit your needs.
 
-![Choose a field type menu featuring options for text, modular content, media, data and timeline, number, boolean, location, color, SEO, links, and JSON](/images/choose-field-type.png)
+![Choose a field type menu featuring options for text, modular content, media, data and timeline, number, boolean, location, color, SEO, links, and JSON](./images/choose-field-type.png)
 
 If you already have items you know you want to sell, replace the sample products with a few of your own to get a feel for the interface. If not, you can continue on without making any changes in the CMS for now.
 
@@ -84,7 +84,7 @@ Even if you've never used Git/GitHub, there's no need to fear. You can edit indi
 
 You can make small changes to the code from your browser by editing files directly in GitHub. Say, for example, that you always want to display prices in some other currency besides euros. To switch the symbols, head to your repository's page on GitHub and navigate to `src/pages/index.js`.
 
-![GitHub menu shows the current branch and file location as well as the first few lines of code in this file. Also includes view options raw, blame, and history](/images/github-menu.png)
+![GitHub menu shows the current branch and file location as well as the first few lines of code in this file. Also includes view options raw, blame, and history](./images/github-menu.png)
 
 Select "Edit this file" (the pencil icon) from the menu. Where `product.price` is being displayed, you'll need to update the currency symbol.
 
@@ -94,7 +94,7 @@ Select "Edit this file" (the pencil icon) from the menu. Where `product.price` i
 
 Once you've made your change, you'll need to commit that change. A commit is like a snapshot in time or a save point in a video game. Add a message that concisely describes the changes you've made and then commit those changes.
 
-![Commit changes menu with message 'Euro to dollar'. Email address is blurred and there's a big, green 'Commit changes' button](/images/commit-change.png)
+![Commit changes menu with message 'Euro to dollar'. Email address is blurred and there's a big, green 'Commit changes' button](./images/commit-change.png)
 
 You've made a change to your master branch, which means Gatsby will build a new version of your site!
 
@@ -137,7 +137,7 @@ DATO_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Now you should be able to run `gatsby develop` to run your site. If you're using Visual Studio Code, you can open a terminal within the text editor (control + \`) and keep everything in one window. Navigate to `http://locahost:8000/` in your browser to see the example site. It should include whatever products you created in DatoCMS.
 
-![Sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
+![Sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](./images/sample-with-products.png)
 
 ## Modifying styles
 
@@ -145,7 +145,7 @@ Chances are you'll want to apply your own branding to this site, so try making s
 
 If you're not sure where to look for the code you'll need to change, search for the term "background" and see what comes up! In this case, you'll find one entry in the results that _also_ says something about a gradient...
 
-![Searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](/images/background.png)
+![Searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](./images/background.png)
 
 Remove the following CSS from `src/style/reset.scss`. The result should be a plain white background for your store.
 
@@ -167,7 +167,7 @@ body {
 
 There's also an interesting, sort of 90s animation going on with the title of the page. The words "My Shop" are constantly "glitching" to reveal blue and red bits underneath. This is a cool effect but not super practical and may be too distracting for many of your customers. Right click (or control + click) on the title and select "Inspect" to open the developer tools. You'll find that the title has a class and you can use that to search the code again.
 
-![My Shop is highlighted in the browser with the corresponding HTML highlighted in a separate window](/images/inspect-title.png)
+![My Shop is highlighted in the browser with the corresponding HTML highlighted in a separate window](./images/inspect-title.png)
 
 Once you've found it (in `src/style/Header.scss`), delete the following CSS to remove the animation.
 
@@ -253,7 +253,7 @@ module.exports = {
 
 The page should now be a little more sedate and you hopefully have a better idea of how to customize the site's styles. You can poke around from here to change the colors and fonts to better fit your brand.
 
-![The sample site, now with a plain white background, jewelry products, and a plain white title reading Zuri Jewelry](/images/updated-styles.png)
+![The sample site, now with a plain white background, jewelry products, and a plain white title reading Zuri Jewelry](./images/updated-styles.png)
 
 ## Configuring the Shopping Cart
 
@@ -389,7 +389,7 @@ Once that's done, kick off another build by navigating to the Deploys tab and se
 
 Back in your Gatsby dashboard, head over to Site Settings > Integrations > Hosting and connect to Netlify. Choose the site you just set up and hit "Save". Now you've got everything all hooked up and any change to your code or content will trigger a new build and, if that build is successful, deploy a new version of your site!
 
-![Netlify integration overlay prompts the user to choose a team and a site](/images/netlify-integration.png)
+![Netlify integration overlay prompts the user to choose a team and a site](./images/netlify-integration.png)
 
 ## Setting Up a Custom Domain
 
