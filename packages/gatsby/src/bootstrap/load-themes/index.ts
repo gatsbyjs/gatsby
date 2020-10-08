@@ -1,14 +1,14 @@
 import { createRequireFromPath } from "gatsby-core-utils"
-import * as path from "path"
+import path from "path"
 import { mergeGatsbyConfig } from "../../utils/merge-gatsby-config"
-import Promise from "bluebird"
+import Bluebird from "bluebird"
 import _ from "lodash"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 import { resolvePlugin } from "../load-plugins/load"
 import reporter from "gatsby-cli/lib/reporter"
 import Debug from "debug"
-import { GatsbyConfig, PluginRef } from "../../../"
+import { GatsbyConfig, IPluginRefOptions, PluginRef } from "../../../"
 
 const debug = Debug(`gatsby:load-themes`)
 
@@ -26,7 +26,7 @@ const resolveTheme = async (
   configFileThatDeclaredTheme: string,
   isMainConfig = false,
   rootDir: string
-): globalThis.Promise<IResolvedTheme> => {
+): Promise<IResolvedTheme> => {
   const themeName =
     typeof themeSpec === `string` ? themeSpec : themeSpec.resolve
   let themeDir = ``
@@ -73,13 +73,16 @@ const resolveTheme = async (
     themeDir,
     `gatsby-config`
   )
-  const theme = preferDefault(configModule) as GatsbyConfig
+  const theme = preferDefault(configModule) as
+    | GatsbyConfig
+    | ((options?: IPluginRefOptions) => GatsbyConfig)
 
   // if theme is a function, call it with the themeConfig
-  let themeConfig: GatsbyConfig = theme
-  if (_.isFunction(theme)) {
-    themeConfig = theme(typeof themeSpec === `string` ? {} : themeSpec.options)
-  }
+  const themeConfig =
+    typeof theme === `function`
+      ? theme(typeof themeSpec === `string` ? {} : themeSpec.options)
+      : theme
+
   return {
     themeName,
     themeConfig,
@@ -123,15 +126,15 @@ const processTheme = (
   { useLegacyThemes, rootDir }: IProcessThemeOptions
 ): Promise<ProcessedThemes> => {
   const themesList = useLegacyThemes
-    ? themeConfig && themeConfig.__experimentalThemes
-    : themeConfig && themeConfig.plugins
+    ? themeConfig?.__experimentalThemes
+    : themeConfig?.plugins
   // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
   if (themeConfig && themesList) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
-    return Promise.mapSeries(themesList, async spec => {
+    return Bluebird.mapSeries(themesList, async spec => {
       const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
       return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
     }).then(arr =>
@@ -161,10 +164,11 @@ interface ILoadedThemes {
 export default async function loadThemes(
   config: GatsbyConfig,
   { useLegacyThemes = false, configFilePath, rootDir }: ILoadThemesOptions
-): globalThis.Promise<ILoadedThemes> {
-  const themesA = await Promise.mapSeries(
-    (useLegacyThemes ? config.__experimentalThemes : config.plugins) || [],
-    async themeSpec => {
+): Promise<ILoadedThemes> {
+  const plugins = useLegacyThemes ? config.__experimentalThemes : config.plugins
+  const themesA = await Bluebird.mapSeries(
+    plugins || [],
+    async (themeSpec): Promise<ProcessedThemes> => {
       const themeObj = await resolveTheme(
         themeSpec,
         configFilePath,
@@ -182,7 +186,7 @@ export default async function loadThemes(
   // list in the config for the theme. This enables the usage of
   // gatsby-node, etc in themes.
   return (
-    Promise.mapSeries(
+    Bluebird.mapSeries(
       themesA,
       ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
         return {
