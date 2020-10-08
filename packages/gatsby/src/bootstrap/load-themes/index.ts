@@ -56,7 +56,9 @@ const resolveTheme = async (
     }
 
     if (!themeDir) {
-      const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
+      const nodeResolutionPaths = module.paths.map((p: string): string =>
+        path.join(p, themeName)
+      )
       reporter.panic({
         id: `10226`,
         context: {
@@ -134,13 +136,22 @@ const processTheme = (
   if (themeConfig && themesList) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
-    return Bluebird.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
-      return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
-    }).then(arr =>
-      arr.concat([
-        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
-      ])
+    return Bluebird.mapSeries(
+      themesList,
+      async (spec: PluginRef): Promise<ProcessedThemes> => {
+        const themeObj = await resolveTheme(
+          spec,
+          configFilePath,
+          false,
+          themeDir
+        )
+        return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
+      }
+    ).then(
+      (arr: ProcessedThemes): ProcessedThemes =>
+        arr.concat([
+          { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
+        ])
     )
   } else {
     // if a theme doesn't define additional themes, return the original theme
@@ -177,7 +188,9 @@ export default async function loadThemes(
       )
       return processTheme(themeObj, { useLegacyThemes, rootDir })
     }
-  ).then(arr => _.flattenDeep(arr))
+  ).then(
+    (arr: Array<ProcessedThemes>): Array<IProcessedTheme> => _.flattenDeep(arr)
+  )
 
   // log out flattened themes list to aid in debugging
   debug(themesA)
@@ -188,17 +201,25 @@ export default async function loadThemes(
   return (
     Bluebird.mapSeries(
       themesA,
-      ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
+      ({
+        themeName,
+        themeConfig = {},
+        themeSpec,
+        themeDir,
+        parentDir,
+      }: IProcessedTheme): GatsbyConfig => {
         return {
           ...themeConfig,
           plugins: [
-            ...(themeConfig.plugins || []).map(plugin => {
-              return {
-                resolve: typeof plugin === `string` ? plugin : plugin.resolve,
-                options: typeof plugin === `string` ? {} : plugin.options,
-                parentDir: themeDir,
+            ...(themeConfig.plugins || []).map(
+              (plugin: PluginRef): PluginRef => {
+                return {
+                  resolve: typeof plugin === `string` ? plugin : plugin.resolve,
+                  options: typeof plugin === `string` ? {} : plugin.options,
+                  parentDir: themeDir,
+                }
               }
-            }),
+            ),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
             {
               resolve: themeName,
@@ -216,11 +237,13 @@ export default async function loadThemes(
        * children, can override functionality in earlier themes.
        */
       .reduce(mergeGatsbyConfig, {})
-      .then(newConfig => {
-        return {
-          config: mergeGatsbyConfig(newConfig, config),
-          themes: themesA,
+      .then(
+        (newConfig: GatsbyConfig): ILoadedThemes => {
+          return {
+            config: mergeGatsbyConfig(newConfig, config),
+            themes: themesA,
+          }
         }
-      })
+      )
   )
 }
