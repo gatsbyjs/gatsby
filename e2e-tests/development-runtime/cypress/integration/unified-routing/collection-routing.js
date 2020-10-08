@@ -1,6 +1,6 @@
 describe(`collection-routing`, () => {
   beforeEach(() => {
-    cy.visit(`/collection-routing/root`).waitForRouteChange()
+    cy.visit(`/collection-routing`).waitForRouteChange()
   })
 
   it(`can create simplest collection route that also has a number as an identifier`, () => {
@@ -13,7 +13,7 @@ describe(`collection-routing`, () => {
   })
 
   it(`can navigate to a collection route and see its content rendered`, () => {
-    cy.findByTestId(`collection-routing-blog`)
+    cy.findByTestId(`collection-routing-blog-0`)
     cy.should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
       .click()
     cy.waitForRouteChange()
@@ -36,8 +36,10 @@ describe(`collection-routing`, () => {
     cy.should(`have.text`, `gatsby-astronaut`)
   })
 
-  it(`should respect collectionGraphql and only show one image instance`, () => {
-    cy.findByTestId(`collection-routing-image-1`)
-      .should(`not.exist`)
+  it(`should respect collectionGraphql and create only one image instance`, () => {
+    cy.visit(`/collection-routing/gatsby-icon`)
+    cy.waitForRouteChange()
+    cy.findByTestId(`name`)
+    cy.should(`not.exist`)
   })
 })
