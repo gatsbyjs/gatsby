@@ -34,6 +34,9 @@ describe(`hot-reloading hooks`, () => {
     // wait for hot update to complete
     cy.wrap(null).then(() => deferred.promise)
 
+    // wait 1s to make sure changes are done
+    cy.wait(1000)
+
     cy.getTestElement(`increment`).click()
 
     cy.getTestElement(COUNT_ID).should(`have.text`, `${amount}`)
