@@ -1,3 +1,3 @@
 export * from "./validate"
-export * from "./validatePluginOptionsSchema"
+export * from "./validate-plugin-options-schema"
 export * from "./joi"

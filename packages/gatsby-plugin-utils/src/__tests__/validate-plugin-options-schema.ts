@@ -1,9 +1,8 @@
-import { util } from "prettier"
 import { Joi } from ".."
-import { validatePluginOptionsSchema } from "../validatePluginOptionsSchema"
+import { validatePluginOptionsSchema } from "../validate-plugin-options-schema"
 
-describe("validateOptionsSchema", () => {
-  it("should partially validate one value of a schema", () => {
+describe(`validateOptionsSchema`, () => {
+  it(`should partially validate one value of a schema`, () => {
     const pluginSchema = Joi.object({
       str: Joi.string(),
       nb: Joi.number(),
@@ -12,7 +11,7 @@ describe("validateOptionsSchema", () => {
 
     expect(() =>
       validatePluginOptionsSchema(pluginSchema, {
-        toVerify: "abcd",
+        toVerify: `abcd`,
       })
     ).toThrowErrorMatchingInlineSnapshot(`
       "Schema validation failed for the following reasons:
@@ -22,7 +21,7 @@ describe("validateOptionsSchema", () => {
     `)
   })
 
-  it("should partially validate multiples value of a schema", () => {
+  it(`should partially validate multiples value of a schema`, () => {
     const pluginSchema = Joi.object({
       str: Joi.string(),
       nb: Joi.number(),
@@ -31,8 +30,8 @@ describe("validateOptionsSchema", () => {
 
     expect(() =>
       validatePluginOptionsSchema(pluginSchema, {
-        toVerify: "abcd",
-        nb: "invalid value",
+        toVerify: `abcd`,
+        nb: `invalid value`,
       })
     ).toThrowErrorMatchingInlineSnapshot(`
       "Schema validation failed for the following reasons:
@@ -43,7 +42,7 @@ describe("validateOptionsSchema", () => {
     `)
   })
 
-  it("should validate half of a real world plugin schema", () => {
+  it(`should validate half of a real world plugin schema`, () => {
     const pluginSchema = Joi.object({
       trackingId: Joi.string()
         .required()
@@ -86,9 +85,9 @@ describe("validateOptionsSchema", () => {
     expect(() =>
       validatePluginOptionsSchema(pluginSchema, {
         trackingId: undefined,
-        head: "invalid boolean value",
-        anonymize: "invalid boolean value",
-        respectDNT: "invalid boolean value",
+        head: `invalid boolean value`,
+        anonymize: `invalid boolean value`,
+        respectDNT: `invalid boolean value`,
         exclude: [0, 1, 2],
       })
     ).toThrowErrorMatchingInlineSnapshot(`
@@ -103,7 +102,7 @@ describe("validateOptionsSchema", () => {
     `)
   })
 
-  it("should validate an entire real world plugin schema", () => {
+  it(`should validate an entire real world plugin schema`, () => {
     const pluginSchema = Joi.object({
       trackingId: Joi.string()
         .required()
@@ -146,17 +145,17 @@ describe("validateOptionsSchema", () => {
     expect(() =>
       validatePluginOptionsSchema(pluginSchema, {
         trackingId: undefined,
-        head: "invalid boolean value",
-        anonymize: "invalid boolean value",
-        respectDNT: "invalid boolean value",
+        head: `invalid boolean value`,
+        anonymize: `invalid boolean value`,
+        respectDNT: `invalid boolean value`,
         exclude: [0, 1, 2],
-        pageTransitionDelay: "invalid number value",
+        pageTransitionDelay: `invalid number value`,
         optimizeId: 123,
         experimentId: 456,
         variationId: 789,
-        defer: "invalid boolean value",
-        sampleRate: "invalid number value",
-        siteSpeedSampleRate: "invalid number value",
+        defer: `invalid boolean value`,
+        sampleRate: `invalid number value`,
+        siteSpeedSampleRate: `invalid number value`,
         cookieDomain: 9797,
       })
     ).toThrowErrorMatchingInlineSnapshot(`
