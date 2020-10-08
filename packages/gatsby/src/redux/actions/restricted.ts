@@ -1,5 +1,5 @@
 import { camelCase } from "lodash"
-import { GraphQLSchema, GraphQLOutputType } from "graphql"
+import { GraphQLSchema, GraphQLOutputType, DocumentNode } from "graphql"
 import { ActionCreator } from "redux"
 import { ThunkAction } from "redux-thunk"
 import report from "gatsby-cli/lib/reporter"
@@ -209,13 +209,14 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateTypes => {
+    const payload = Array.isArray(types)
+      ? (types.map(parseTypeDef) as Array<DocumentNode>)
+      : (parseTypeDef(types) as DocumentNode)
     return {
       type: `CREATE_TYPES`,
       plugin,
       traceId,
-      payload: Array.isArray(types)
-        ? types.map(parseTypeDef)
-        : parseTypeDef(types),
+      payload,
     }
   },
 
