@@ -1,5 +1,5 @@
 import loadThemes from "../"
-import * as path from "path"
+import path from "path"
 
 describe(`loadThemes`, () => {
   test(`resolves themes and plugins from location of gatsby-config`, async () => {
