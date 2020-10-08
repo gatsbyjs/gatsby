@@ -10,6 +10,7 @@ exports.DEFAULT_OPTIONS = {
   loading: `lazy`,
   disableBgImageOnAlpha: false,
   disableBgImage: false,
+  style: {},
 }
 
 exports.EMPTY_ALT = `GATSBY_EMPTY_ALT`

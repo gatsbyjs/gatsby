@@ -369,6 +369,25 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
   )
 })
 
+test(`it supports custom styling`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    style: { objectFit: `cover` },
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
 describe(`showCaptions`, () => {
   it(`display title as caption when showCaptions === true`, async () => {
     const imagePath = `images/my-image.jpeg`
