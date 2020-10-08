@@ -158,10 +158,18 @@ export const parseQueries = async ({
   files = _.uniq(files)
 
   if (process.env.GATSBY_EXCLUDE_PATHS) {
-    const excludePaths = process.env.GATSBY_EXCLUDE_PATHS.split(`,`)
-    files = files.filter(
-      file => !excludePaths.some(excluded => file.indexOf(excluded) !== -1)
+    const excludedFiles = process.env.GATSBY_EXCLUDE_PATHS.split(`,`).reduce(
+      (merged, excludeGlobPattern) => {
+        merged.push(
+          ...glob.sync(path.join(base, excludeGlobPattern), {
+            nodir: true,
+          })
+        )
+        return merged
+      },
+      []
     )
+    files = _.difference(files, excludedFiles)
   }
 
   const parser = new FileParser({ parentSpan: parentSpan })

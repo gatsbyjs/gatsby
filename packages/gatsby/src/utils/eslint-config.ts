@@ -16,6 +16,9 @@ export const eslintConfig = (
       },
       extends: [require.resolve(`eslint-config-react-app`)],
       plugins: [`graphql`],
+      ignorePatterns: process.env.GATSBY_EXCLUDE_PATHS
+        ? process.env.GATSBY_EXCLUDE_PATHS.split(`,`)
+        : [],
       rules: {
         // New versions of react use a special jsx runtime that remove the requirement
         // for having react in scope for jsx. Once the jsx runtime is backported to all
