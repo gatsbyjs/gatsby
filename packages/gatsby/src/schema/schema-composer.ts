@@ -1,3 +1,4 @@
+import { GraphQLDirective } from "graphql"
 import { SchemaComposer, GraphQLJSON } from "graphql-compose"
 import { getNodeInterface } from "./types/node-interface"
 import { GraphQLDate } from "./types/date"
@@ -15,10 +16,9 @@ export const createSchemaComposer = (
   // See https://github.com/graphql-compose/graphql-compose/commit/70995f7f4a07996cfbe92ebf19cae5ee4fa74ea2
   // This is fixed in v7, so can be removed once we upgrade
   const { BUILT_IN_DIRECTIVES } = require(`graphql-compose/lib/SchemaComposer`)
-  schemaComposer.buildSchema({
-    directives: [...BUILT_IN_DIRECTIVES],
+  BUILT_IN_DIRECTIVES.forEach((directive: GraphQLDirective) => {
+    schemaComposer.addDirective(directive)
   })
-
   getNodeInterface({ schemaComposer })
   schemaComposer.addAsComposer(GraphQLDate)
   schemaComposer.addAsComposer(GraphQLJSON)
