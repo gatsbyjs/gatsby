@@ -5,10 +5,10 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
+const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata?.title || `Title`
-  const { previous, next } = pageContext
+  const { previous, next } = data
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -67,13 +67,21 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  fragment PrevNextFields on MarkdownRemark {
+    fields {
+      slug
+    }
+    frontmatter {
+      title
+    }
+  }
+  query BlogPostBySlug($id: String!, $next: String, $previous: String) {
     site {
       siteMetadata {
         title
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
       html
@@ -82,6 +90,12 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         description
       }
+    }
+    previous: markdownRemark(id: { eq: $previous }) {
+      ...PrevNextFields
+    }
+    next: markdownRemark(id: { eq: $next }) {
+      ...PrevNextFields
     }
   }
 `
