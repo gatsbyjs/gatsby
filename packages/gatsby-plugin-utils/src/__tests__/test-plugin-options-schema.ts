@@ -182,7 +182,7 @@ describe(`testPluginOptionsSchema`, () => {
     `)
   })
 
-  it("should check the validity of a schema", () => {
+  it(`should check the validity of a schema`, () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         toVerify: Joi.boolean(),
