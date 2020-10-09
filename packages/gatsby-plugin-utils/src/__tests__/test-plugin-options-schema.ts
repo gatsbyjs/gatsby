@@ -1,8 +1,9 @@
 import { testPluginOptionsSchema } from "../test-plugin-options-schema"
+import { ObjectSchema } from "../utils/plugin-options-schema-joi-type"
 
 describe(`testPluginOptionsSchema`, () => {
   it(`should partially validate one value of a schema`, () => {
-    const pluginSchema = ({ Joi }) =>
+    const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         str: Joi.string(),
         nb: Joi.number(),
@@ -22,7 +23,7 @@ describe(`testPluginOptionsSchema`, () => {
   })
 
   it(`should partially validate multiples value of a schema`, () => {
-    const pluginSchema = ({ Joi }) =>
+    const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         str: Joi.string(),
         nb: Joi.number(),
@@ -44,7 +45,7 @@ describe(`testPluginOptionsSchema`, () => {
   })
 
   it(`should validate half of a real world plugin schema`, () => {
-    const pluginSchema = ({ Joi }) =>
+    const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         trackingId: Joi.string()
           .required()
@@ -105,7 +106,7 @@ describe(`testPluginOptionsSchema`, () => {
   })
 
   it(`should validate an entire real world plugin schema`, () => {
-    const pluginSchema = ({ Joi }) =>
+    const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         trackingId: Joi.string()
           .required()
