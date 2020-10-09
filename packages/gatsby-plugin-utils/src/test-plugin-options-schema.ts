@@ -1,10 +1,8 @@
-import Joi from "joi"
-import { ObjectSchema } from "./utils/plugin-options-schema-joi-type"
-
-type PluginSchemaFunction = ({ Joi }) => ObjectSchema
+import { Joi } from "./joi"
+import { GatsbyNode } from "gatsby"
 
 export function testPluginOptionsSchema<PluginOptions = object>(
-  pluginSchemaFunction: PluginSchemaFunction,
+  pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
   pluginOptions: PluginOptions
 ): Array<string> {
   const pluginOptionsNames = Object.keys(pluginOptions)
