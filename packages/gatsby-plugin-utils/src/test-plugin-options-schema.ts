@@ -1,7 +1,7 @@
 import { Joi } from "./joi"
 import { GatsbyNode } from "gatsby"
 
-type TestPluginOptionsSchemaReturnType = {
+interface ITestPluginOptionsSchemaReturnType {
   errors: Array<string>
   isValid: boolean
 }
@@ -9,7 +9,7 @@ type TestPluginOptionsSchemaReturnType = {
 export function testPluginOptionsSchema<PluginOptions = object>(
   pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
   pluginOptions: PluginOptions
-): TestPluginOptionsSchemaReturnType {
+): ITestPluginOptionsSchemaReturnType {
   const pluginOptionsNames = Object.keys(pluginOptions)
   const pluginSchema = pluginSchemaFunction({ Joi })
   const errors: Array<string> = []
