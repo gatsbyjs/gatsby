@@ -68,11 +68,12 @@ export function _createCompatLayer(
     if (fixed) {
       if (Array.isArray(fixed)) {
         warnForArtDirection()
-        fixed = fixed[0]
+        fixed = fixed[0] as Exclude<ICompatProps["fixed"], undefined>
       }
 
       rewiredProps = {
-        placeholder: null,
+        ...rewiredProps,
+        placeholder: undefined,
         layout: `fixed`,
         width: fixed.width,
         height: fixed.height,
@@ -85,14 +86,17 @@ export function _createCompatLayer(
         },
       }
 
-      if (fixed.base64 || fixed.tracedSVG) {
+      const placeholder = fixed.tracedSVG || fixed.base64
+
+      if (placeholder) {
         rewiredProps.placeholder = {
-          fallback: fixed.tracedSVG || fixed.base64,
+          fallback: placeholder,
         }
       }
 
-      if (fixed.srcWebp) {
-        rewiredProps.images.sources.push({
+      if (fixed.srcSetWebp) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        rewiredProps.images!.sources!.push({
           srcSet: fixed.srcSetWebp,
           type: `image/webp`,
         })
@@ -102,11 +106,12 @@ export function _createCompatLayer(
     if (fluid) {
       if (Array.isArray(fluid)) {
         warnForArtDirection()
-        fluid = fluid[0]
+        fluid = fluid[0] as Exclude<ICompatProps["fluid"], undefined>
       }
 
       rewiredProps = {
-        placeholder: null,
+        ...rewiredProps,
+        placeholder: undefined,
         width: 1,
         height: fluid.aspectRatio,
         layout: `responsive`,
@@ -117,17 +122,20 @@ export function _createCompatLayer(
             sizes: fluid.sizes,
           },
           sources: [],
+          forceWrapper: true,
         },
       }
+      const placeholder = fluid.tracedSVG || fluid.base64
 
-      if (fluid.base64 || fluid.tracedSVG) {
+      if (placeholder) {
         rewiredProps.placeholder = {
-          fallback: fluid.tracedSVG || fluid.base64,
+          fallback: placeholder,
         }
       }
 
-      if (fluid.srcWebp) {
-        rewiredProps.images.sources.push({
+      if (fluid.srcSetWebp) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        rewiredProps.images!.sources!.push({
           srcSet: fluid.srcSetWebp,
           type: `image/webp`,
           sizes: fluid.sizes,
@@ -135,9 +143,7 @@ export function _createCompatLayer(
       }
     }
 
-    return (
-      <Component alt="" {...props} {...(rewiredProps as GatsbyImageProps)} />
-    )
+    return <Component {...props} {...(rewiredProps as GatsbyImageProps)} />
   }
 
   return GatsbyImageCompat

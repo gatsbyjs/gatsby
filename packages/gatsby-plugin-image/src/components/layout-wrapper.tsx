@@ -45,7 +45,9 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
 }) {
   let sizer: JSX.Element | null = null
   if (layout === `responsive`) {
-    sizer = <div style={{ paddingTop: `${(width / height) * 100}%` }} />
+    sizer = (
+      <div aria-hidden style={{ paddingTop: `${(width / height) * 100}%` }} />
+    )
   }
   if (layout === `intrinsic`) {
     sizer = (

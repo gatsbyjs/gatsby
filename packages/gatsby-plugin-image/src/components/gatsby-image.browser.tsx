@@ -26,7 +26,7 @@ export type GatsbyImageProps = Omit<
   layout: Layout
   className?: string
   height: number
-  images: Pick<MainImageProps, "sources" | "fallback">
+  images: Pick<MainImageProps, "sources" | "fallback" | "forceWrapper">
   placeholder: Pick<PlaceholderProps, "sources" | "fallback">
   width: number
   onLoad?: () => void
