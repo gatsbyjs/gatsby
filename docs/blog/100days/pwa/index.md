@@ -36,7 +36,7 @@ First, read our doc about [what makes a PWA](/docs/progressive-web-app/), a true
 
 Next, add [gatsby-plugin-manifest](/packages/gatsby-plugin-manifest) to your site. THis makes it possible for users to save your site to their home screen.
 
-Now, add [gatsby-plugin-offline](/packages/gatsby-plugin-offline) to your project. As the name suggests, this plugin will give your site’s users the ability to still navigate to different pages, even in airplane mode, or with a poor internet connection.
+Now, add [```gatsby-plugin-offline```](/packages/gatsby-plugin-offline) to your project. As the name suggests, this plugin will give your site’s users the ability to still navigate to different pages, even in airplane mode, or with a poor internet connection.
 
 ### What to Do If You Need Help
 
