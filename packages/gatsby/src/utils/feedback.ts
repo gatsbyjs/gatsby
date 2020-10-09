@@ -86,7 +86,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
 
   // Heuristic 5
   const versionPoints = getGatsbyVersion().split(`.`)
-  let latestVersionPoints: string[] = []
+  let latestVersionPoints: Array<string> = []
   try {
     latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
   } catch (e) {

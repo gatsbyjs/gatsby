@@ -34,24 +34,45 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     .then(res => res.json())
     .then(services => {
       if (services.developstatusserver) {
+        let isRestarting = false
         const parentSocket = io(
-          `http://${window.location.hostname}:${services.developstatusserver.port}`
+          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
         )
 
-        parentSocket.on(`develop:needs-restart`, msg => {
+        parentSocket.on(`structured-log`, msg => {
           if (
+            !isRestarting &&
+            msg.type === `LOG_ACTION` &&
+            msg.action.type === `DEVELOP` &&
+            msg.action.payload === `RESTART_REQUIRED` &&
             window.confirm(
-              `The develop process needs to be restarted for the changes to ${msg.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
+              `The develop process needs to be restarted for the changes to ${msg.action.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
             )
           ) {
-            parentSocket.once(`develop:is-starting`, msg => {
+            isRestarting = true
+            parentSocket.emit(`develop:restart`, () => {
               window.location.reload()
             })
-            parentSocket.once(`develop:started`, msg => {
-              window.location.reload()
-            })
-            parentSocket.emit(`develop:restart`)
           }
+
+          if (
+            isRestarting &&
+            msg.type === `LOG_ACTION` &&
+            msg.action.type === `SET_STATUS` &&
+            msg.action.payload === `SUCCESS`
+          ) {
+            isRestarting = false
+            window.location.reload()
+          }
+        })
+
+        // Prevents certain browsers spamming XHR 'ERR_CONNECTION_REFUSED'
+        // errors within the console, such as when exiting the develop process.
+        parentSocket.on(`disconnect`, () => {
+          console.warn(
+            `[socket.io] Disconnected. Unable to perform health-check.`
+          )
+          parentSocket.close()
         })
       }
     })

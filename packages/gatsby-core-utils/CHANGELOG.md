@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.22...gatsby-core-utils@1.3.23) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.21...gatsby-core-utils@1.3.22) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.20...gatsby-core-utils@1.3.21) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.19...gatsby-core-utils@1.3.20) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.18...gatsby-core-utils@1.3.19) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.17...gatsby-core-utils@1.3.18) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.16...gatsby-core-utils@1.3.17) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.15...gatsby-core-utils@1.3.16) (2020-08-24)
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
+## [1.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.14...gatsby-core-utils@1.3.15) (2020-08-05)
+
+### Features
+
+- **gatsby:** Store site metadata ([#26162](https://github.com/gatsbyjs/gatsby/issues/26162)) ([36367c4](https://github.com/gatsbyjs/gatsby/commit/36367c4))
+
 ## [1.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.13...gatsby-core-utils@1.3.14) (2020-07-24)
 
 **Note:** Version bump only for package gatsby-core-utils

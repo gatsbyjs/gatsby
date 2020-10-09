@@ -7,7 +7,7 @@ title: MDX Plugins
 `gatsby-plugin-mdx` is compatible with all of the [gatsby-remark
 plugins](/packages/gatsby-remark-images/?=gatsby-remark),
 including
-[`gatsby-remark-images`](https://next.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark).
+[`gatsby-remark-images`](/plugins/gatsby-remark-images/?=gatsby-remark).
 
 To enable `gatsby-remark-images`, you first need to install the relevant
 image plugins:
@@ -57,6 +57,14 @@ by Gatsby image processing.
 
 ```markdown
 ![my image](./my-awesome-image.png)
+```
+
+By default, the text `my image` will be used as the alt attribute of the
+generated `img` tag. If an empty alt attribute like `alt=""` is wished,
+a reserved keyword `GATSBY_EMPTY_ALT` can be used.
+
+```markdown
+![GATSBY_EMPTY_ALT](./my-awesome-image.png)
 ```
 
 ## Remark plugins

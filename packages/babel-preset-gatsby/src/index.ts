@@ -82,8 +82,12 @@ export default function preset(_, options: IOptions = {}): TransformOptions {
         resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
-          pragma: `React.createElement`,
+          pragma:
+            options.reactRuntime === `automatic`
+              ? undefined
+              : `React.createElement`,
           development: stage === `develop`,
+          runtime: options.reactRuntime || `classic`,
         },
       ],
     ],
@@ -129,6 +133,6 @@ export default function preset(_, options: IOptions = {}): TransformOptions {
           removeImport: true,
         },
       ],
-    ].filter(Boolean) as PluginItem[],
+    ].filter(Boolean) as Array<PluginItem>,
   }
 }

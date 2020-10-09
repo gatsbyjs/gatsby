@@ -1,4 +1,4 @@
-import { IErrorMapEntry, ErrorId } from "./error-map"
+import { IErrorMapEntry, ErrorId, ErrorCategory } from "./error-map"
 
 export interface IConstructError {
   details: {
@@ -24,12 +24,13 @@ export interface IStructuredStackFrame {
 export interface IStructuredError {
   code?: string
   text: string
-  stack: IStructuredStackFrame[]
+  stack: Array<IStructuredStackFrame>
   filePath?: string
   location?: {
     start: ILocationPosition
     end?: ILocationPosition
   }
+  category?: ErrorCategory
   error?: Error
   group?: string
   level: IErrorMapEntry["level"]

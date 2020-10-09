@@ -1,5 +1,5 @@
 export interface ISiteConfig {
-  plugins?: PluginRef[]
+  plugins?: Array<PluginRef>
 }
 
 // There are two top-level "Plugin" concepts:
@@ -24,16 +24,16 @@ export interface IPluginInfo {
 }
 
 export interface IPluginInfoOptions {
-  plugins?: IPluginInfo[]
+  plugins?: Array<IPluginInfo>
   path?: string
   [option: string]: unknown
 }
 
 export interface IFlattenedPlugin extends IPluginInfo {
   skipSSR?: boolean
-  ssrAPIs: string[]
-  nodeAPIs: string[]
-  browserAPIs: string[]
+  ssrAPIs: Array<string>
+  nodeAPIs: Array<string>
+  browserAPIs: Array<string>
 }
 
 export interface IPluginRefObject {
@@ -45,7 +45,7 @@ export interface IPluginRefObject {
 export type PluginRef = string | IPluginRefObject
 
 export interface IPluginRefOptions {
-  plugins?: PluginRef[]
+  plugins?: Array<PluginRef>
   path?: string
   [option: string]: unknown
 }

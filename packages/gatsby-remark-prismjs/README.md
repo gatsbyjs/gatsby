@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
+`npm install gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
 ## How to use
 
@@ -388,6 +388,14 @@ unless explicitly overridden by the `promptUser` and `promptHost` options in the
 
 ````
 ```shell{promptUser: alice}{promptHost: dev.localhost}
+````
+
+### Diff code blocks
+
+You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs:
+
+````
+```diff-javascript
 ````
 
 ### Line hiding

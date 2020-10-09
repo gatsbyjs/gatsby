@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import fs from "fs-extra"
-import md5File from "md5-file/promise"
+import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
 import path from "path"
@@ -226,15 +226,11 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes = await Promise.all([
+  const hashes: any = await Promise.all([
     !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
-    ), // ignore as this file isn't required),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
-    ), // ignore as this file isn't required),
+    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
+    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
@@ -267,6 +263,15 @@ export async function initialize({
     // been loaded from the file system cache).
     store.dispatch({
       type: `DELETE_CACHE`,
+    })
+
+    // in future this should show which plugin's caches are purged
+    // possibly should also have which plugins had caches
+    telemetry.decorateEvent(`BUILD_END`, {
+      pluginCachesPurged: [`*`],
+    })
+    telemetry.decorateEvent(`DEVELOP_STOP`, {
+      pluginCachesPurged: [`*`],
     })
   }
 
@@ -334,7 +339,7 @@ export async function initialize({
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
 
-  const ssrPlugins: IPluginResolution[] = flattenedPlugins
+  const ssrPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
       return {
         resolve: hasAPIFile(`ssr`, plugin),
@@ -343,7 +348,7 @@ export async function initialize({
     })
     .filter(isResolved)
 
-  const browserPlugins: IPluginResolution[] = flattenedPlugins
+  const browserPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
       return {
         resolve: hasAPIFile(`browser`, plugin),

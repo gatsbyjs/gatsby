@@ -5,7 +5,7 @@ A list of utilities used in multiple gatsby packages.
 ## Usage
 
 ```shell
-npm install --save gatsby-core-utils
+npm install gatsby-core-utils
 ```
 
 ### createContentDigest
@@ -87,7 +87,7 @@ const { getCIName } = require("gatsby-core-utils")
 const CI_NAME = getCIName()
 console.log({ CI_NAME })
 // {CI_NAME: null}, or
-// {CI_NAME: "ZEIT Now"}
+// {CI_NAME: "Vercel"}
 // ...
 ```
 

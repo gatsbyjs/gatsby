@@ -20,13 +20,13 @@ A Droplet can be spun up in less than a minute for as little as \$5/month.
 
 ## How to deploy your Gatsby site to DigitalOcean
 
-### Install Node, npm and Gatsby-CLI onto your droplet
+### Install Node.js, npm and Gatsby-CLI onto your droplet
 
 Follow these instructions for installs on an Ubuntu droplet.
 
 1. Log in to your droplet as a non-root user.
 
-2. Install Node
+2. Install Node.js
 
    ```shell
    sudo apt-get update
@@ -39,7 +39,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    sudo apt-get install npm
    ```
 
-   To view the version of Node and npm installed, run,
+   To view the version of Node.js and npm installed, run,
 
    ```shell
    node -v
@@ -53,15 +53,15 @@ Follow these instructions for installs on an Ubuntu droplet.
    sudo n stable
    ```
 
-   `Note`: If you check the version now, you would see the older versions of node and npm from the cache.
-   You can either exit and restart your terminal or refresh the cache by following commands,
+   > **Note:** If you check the version now, you would see the older versions of Node.js and npm from the cache.
+   > You can either exit and restart your terminal or refresh the cache by running the following commands:
 
    ```shell
    hash node
    hash npm
    ```
 
-5. Install the gatsby-cli now globally. This will be useful ahead in building the Gatsby site for production.
+5. Install the Gatsby CLI globally. This will be useful ahead in building the Gatsby site for production.
 
    ```shell
    sudo npm install -g gatsby-cli
@@ -75,7 +75,7 @@ The next step is to clone the repository containing your Gatsby app (Replace `<y
 git clone <your-github-repo-site>
 ```
 
-> Note: Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
+> **Note:** Copy the path where your `<your-github-repo-site>` is cloned, for future reference.
 
 ```shell
 pwd
@@ -88,13 +88,13 @@ cd ~/
 sudo chown -R $(whoami) .config
 ```
 
-> Note: This guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
+> **Note:** This guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
 
 ### Generate your Gatsby site for production
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
 
-> Note: Go to the path where `<my-gatsby-app>` is. You can used the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
+> **Note:** Go to the path where `<my-gatsby-app>` is. You can used the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
 
 1. Install dependencies.
 
@@ -156,7 +156,7 @@ Change the root directory configuration of Nginx in the default server block fil
    cd /etc/nginx/sites-available/
    ```
 
-2. Open the file default in Vim ([shortcut cheat sheet](https://devhints.io/vim))
+2. Open the file `default` in Vim ([shortcut cheat sheet](https://devhints.io/vim))
 
    ```shell
    sudo vim default
@@ -164,7 +164,7 @@ Change the root directory configuration of Nginx in the default server block fil
 
 3. Edit the file and make the following changes for below-mentioned fields, leave the rest of the fields as is. Your exact path may vary, but it may resemble `/home/<your non-root user>/<my-gatsby-app>/public`.
 
-   ```bash
+   ```text:title=default
    server {
      root <path to my-gatsby-app>/public;
 
@@ -186,11 +186,11 @@ Change the root directory configuration of Nginx in the default server block fil
 
    You should now be able to view your built Gatsby site at your DigitalOcean IP address, before configuring a domain.
 
-5. Configure your domain to point to the IP address of your droplet. Go to the Advanced DNS settings in your domain provider's console and put an A record that points to the IP address of the droplet.
+5. Configure your domain to point to the IP address of your droplet. Go to the Advanced DNS settings in your domain provider's console and put an `A` record that points to the IP address of the droplet.
 
 6. By this time, you can view your site live at `<your-domain>`.
 
-### Configuring HTTPS for your Gatsby Site
+### Configuring HTTPS for your Gatsby site
 
 Follow the below steps to configure your site with a free SSL/TLS certificate from Lets Encrypt using their Certbot CLI tool.
 
@@ -222,10 +222,10 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
 4. Agree to the license agreement on prompt.
 
-   `Note`: You will be prompted to select the domain for which you want to generate the certificate. Select the domain configured in a [previous step](#configuring-nginx-to-point-to-your-gatsby-site's-`public`-directory-and-add-your-domain).
+   > **Note:** You will be prompted to select the domain for which you want to generate the certificate. Select the domain configured in a [previous step](#configure-nginx-to-point-to-your-gatsby-sites-public-directory-and-add-your-domain).
 
-   `Note`: You will be prompted to choose the option to redirect HTTP requests to HTTPS, which you may choose on your needs.
-   (It is recommended to choose to redirect HTTP to HTTPS)
+   > **Note:** You will be prompted to choose the option to redirect HTTP requests to HTTPS, which you may choose on your needs.
+   > (It is recommended to choose to redirect HTTP to HTTPS)
 
 5. Restart the Nginx service.
 

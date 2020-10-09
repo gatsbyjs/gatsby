@@ -4,7 +4,7 @@ title: How to Run a Gatsby Workshop
 
 Running a workshop focused on Gatsby.js is a fantastic way to teach a group of people how to create fast, accessible websites with in-person (or virtual) instruction.
 
-We on the Gatsby team have run a number of in-person workshops, and you can read about some of our [initial findings](https://www.gatsbyjs.org/blog/2018-05-31-open-sourcing-gatsby-workshops/). If you are interested in running a workshop yourself, we welcome you to do so and offer this page of resources to help you.
+We on the Gatsby team have run a number of in-person workshops, and you can read about some of our [initial findings](https://www.gatsbyjs.com/blog/2018-05-31-open-sourcing-gatsby-workshops/). If you are interested in running a workshop yourself, we welcome you to do so and offer this page of resources to help you.
 
 Share your ideas and report how these workshops go for you in the [Open source repo](https://github.com/gatsbyjs/gatsby) through issues and PRs (if you ran into problems with the workshops and/or have ideas of how to improve them) or [Twitter](https://twitter.com/gatsbyjs) if you want to share an upcoming workshop you're running.
 

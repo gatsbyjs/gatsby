@@ -12,6 +12,7 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
+import { store } from "../redux"
 
 import { IProgram, IDebugInfo } from "./types"
 import { interpret } from "xstate"
@@ -45,7 +46,11 @@ if (process.send) {
 }
 
 onExit(() => {
-  telemetry.trackCli(`DEVELOP_STOP`)
+  telemetry.trackCli(`DEVELOP_STOP`, {
+    siteMeasurements: {
+      pagesCount: store.getState().pages.size,
+    },
+  })
 })
 
 process.on(`message`, msg => {

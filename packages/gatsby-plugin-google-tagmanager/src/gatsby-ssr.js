@@ -9,7 +9,7 @@ const generateGTM = ({ id, environmentParamStr, dataLayerName }) => stripIndent`
   })(window,document,'script','${dataLayerName}', '${id}');`
 
 const generateGTMIframe = ({ id, environmentParamStr }) =>
-  oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
+  oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden" aria-hidden="true"></iframe>`
 
 const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
   let result = `window.${dataLayerName} = window.${dataLayerName} || [];`

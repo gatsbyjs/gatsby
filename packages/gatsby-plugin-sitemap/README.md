@@ -6,7 +6,7 @@ _NOTE: This plugin only generates output when run in `production` mode! To test 
 
 ## Install
 
-`npm install --save gatsby-plugin-sitemap`
+`npm install gatsby-plugin-sitemap`
 
 ## How to Use
 
@@ -67,7 +67,7 @@ plugins: [
           }
       }`,
       resolveSiteUrl: ({site, allSitePage}) => {
-        //Alternativly, you may also pass in an environment variable (or any location) at the beginning of your `gatsby-config.js`.
+        //Alternatively, you may also pass in an environment variable (or any location) at the beginning of your `gatsby-config.js`.
         return site.wp.generalSettings.siteUrl
       },
       serialize: ({ site, allSitePage }) =>

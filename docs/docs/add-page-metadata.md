@@ -15,7 +15,7 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 1. Install both packages:
 
 ```shell
-npm install --save gatsby-plugin-react-helmet react-helmet
+npm install gatsby-plugin-react-helmet react-helmet
 ```
 
 2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
