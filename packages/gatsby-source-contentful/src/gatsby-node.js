@@ -4,6 +4,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
+const fetch = require(`node-fetch`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -36,15 +37,16 @@ const validateContentfulAccess = async pluginOptions => {
       },
     }
   )
-    .then(res => res.json())
-    .then(json => {
-      if (json.errors)
+    .then(res => res.ok)
+    .then(ok => {
+      if (!ok)
         throw new Error(
-          `Cannot access Contentful Space ${maskText(pluginOptions.spaceId)}`
+          `Cannot access Contentful space "${maskText(
+            pluginOptions.spaceId
+          )}" with access token "${maskText(
+            pluginOptions.accessToken
+          )}". Make sure to double check them!`
         )
-    })
-    .catch(err => {
-      throw new Error(`Fetch call to check Contentful access failed.`)
     })
 
   return undefined
@@ -85,7 +87,7 @@ You can pass in any other options available in the [contentful.js SDK](https://g
         .description(
           `Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
 For example, to filter locales on only germany \`localeFilter: locale => locale.code === 'de-DE'\`
-    
+
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
         .default(() => true),
@@ -116,9 +118,9 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .description(
           `Use the content's \`name\` when generating the GraphQL schema e.g. a Content Type called \`[Component] Navigation bar\` will be named \`contentfulComponentNavigationBar\`.
     When set to \`false\`, the content's internal ID will be used instead e.g. a Content Type with the ID \`navigationBar\` will be called \`contentfulNavigationBar\`.
-    
+
     Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like \`contentfulC6XwpTaSiiI2Ak2Ww0oi6qa\`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
-    
+
     If you are confident your Content Types will have natural-language IDs (e.g. \`blogPost\`), then you should set this option to \`false\`. If you are unable to ensure this, then you should leave this option set to \`true\` (the default).`
         )
         .default(true),
