@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.16...gatsby-plugin-google-analytics@2.3.17) (2020-10-07)
+
+### Features
+
+- **gatsby:** plugin option validation ([#27242](https://github.com/gatsbyjs/gatsby/issues/27242)) ([9b01ca7](https://github.com/gatsbyjs/gatsby/commit/9b01ca7926efa1c4c6d58b33a137c2f0a0ef99b7))
+
 ## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.15...gatsby-plugin-google-analytics@2.3.16) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

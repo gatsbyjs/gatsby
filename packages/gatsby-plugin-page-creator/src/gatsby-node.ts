@@ -1,5 +1,4 @@
 import glob from "globby"
-import _ from "lodash"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import {
@@ -67,17 +66,19 @@ Please pick a path to an existing directory.`)
     const pagesGlob = `**/*.{${exts}}`
 
     // Get initial list of files.
-    let files = await glob(pagesGlob, { cwd: pagesPath })
+    const files = await glob(pagesGlob, { cwd: pagesPath })
     files.forEach(file => {
       createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
     })
+
+    const knownFiles = new Set(files)
 
     watchDirectory(
       pagesPath,
       pagesGlob,
       addedPath => {
         try {
-          if (!_.includes(files, addedPath)) {
+          if (!knownFiles.has(addedPath)) {
             createPage(
               addedPath,
               pagesDirectory,
@@ -86,7 +87,7 @@ Please pick a path to an existing directory.`)
               graphql,
               reporter
             )
-            files.push(addedPath)
+            knownFiles.add(addedPath)
           }
         } catch (e) {
           reporter.panic(
@@ -108,7 +109,7 @@ Please pick a path to an existing directory.`)
               })
             }
           })
-          files = files.filter(f => f !== removedPath)
+          knownFiles.delete(removedPath)
         } catch (e) {
           reporter.panic(
             e.message.startsWith(`PageCreator`)

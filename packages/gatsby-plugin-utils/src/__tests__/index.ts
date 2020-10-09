@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import Joi from "joi"
-import { validateOptionsSchema } from "../"
+import { validateOptionsSchema, Joi } from "../"
 
 it(`validates a basic schema`, async () => {
   const pluginSchema = Joi.object({

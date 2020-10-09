@@ -142,4 +142,42 @@ describe(`navigation`, () => {
       cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
     })
   })
+
+  describe(`Route lifecycle update order`, () => {
+    it(`calls onPreRouteUpdate, render and onRouteUpdate the correct amount of times on route change`, () => {
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
+      cy.lifecycleCallCount(`render`).should(`eq`, 1)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 1)
+      cy.getTestElement(`page-two`).click().waitForRouteChange()
+      cy.getTestElement(`page-2-message`).should(`exist`)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`render`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+    })
+
+    it(`renders the component after onPreRouteUpdate on route change`, () => {
+      cy.getTestElement(`page-component`).should(`exist`)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
+      cy.lifecycleCallCount(`render`).should(`eq`, 1)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 1)
+      cy.lifecycleCallOrder([
+        `onPreRouteUpdate`,
+        `render`,
+        `onRouteUpdate`,
+      ]).should(`eq`, true)
+      cy.getTestElement(`page-two`).click().waitForRouteChange()
+      cy.getTestElement(`page-2-message`).should(`exist`)
+      cy.lifecycleCallOrder([
+        `onPreRouteUpdate`,
+        `render`,
+        `onRouteUpdate`,
+        `onPreRouteUpdate`,
+        `render`,
+        `onRouteUpdate`,
+      ]).should(`eq`, true)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`render`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+    })
+  })
 })

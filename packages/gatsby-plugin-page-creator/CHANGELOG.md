@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.31...gatsby-plugin-page-creator@2.3.32) (2020-10-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** Update Route API tests & Fix slash replacement ([#27335](https://github.com/gatsbyjs/gatsby/issues/27335)) ([2f878d1](https://github.com/gatsbyjs/gatsby/commit/2f878d1e17a170f3c7a0574fda2932237a55a57f))
+
+### Performance Improvements
+
+- **gatsby-plugin-page-creator:** use set for tracking existing files ([#27336](https://github.com/gatsbyjs/gatsby/issues/27336)) ([843259e](https://github.com/gatsbyjs/gatsby/commit/843259e3ef06c1444f9f88919a3625800004f5e0))
+
 ## [2.3.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.30...gatsby-plugin-page-creator@2.3.31) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
