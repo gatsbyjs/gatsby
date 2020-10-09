@@ -12,11 +12,11 @@ GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
 
 You can then visit `localhost:8000/___admin` to view Admin for your Gatsby site!
 
-![Screenshot 2020-10-02 at 16 03 08 (1)](https://user-images.githubusercontent.com/7525670/95580804-36df9200-0a38-11eb-80a7-fbd847a13da1.png)
+![Gatsby Admin homepage showing a list of installed plugins, as well as a search input to search for plugins to install](https://user-images.githubusercontent.com/7525670/95580804-36df9200-0a38-11eb-80a7-fbd847a13da1.png)
 
 When you select an installed plugin or search for a new one, you will be able to install/uninstall/configure it:
 
-![Screenshot 2020-10-02 at 16 03 23 (1)](https://user-images.githubusercontent.com/7525670/95580764-27f8df80-0a38-11eb-9f26-8a2cbbc4b07d.png)
+![Gatsby Admin plugin page showing the README of the gatsby-plugin-sitemap, as well as an input field to configure the options for said plugin](https://user-images.githubusercontent.com/7525670/95580764-27f8df80-0a38-11eb-9f26-8a2cbbc4b07d.png)
 
 Let us know what you think by hitting the "Send feedback" button in Admin!
 
