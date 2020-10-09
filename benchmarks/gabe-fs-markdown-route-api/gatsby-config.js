@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby FS Markdown Benchmark for Gabe`,
+    title: `Gatsby FS Markdown & Route API Benchmark for Gabe`,
     description: "A blog like no other blog",
     author: "Bob the Blogger",
   },
