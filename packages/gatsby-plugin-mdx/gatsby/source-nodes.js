@@ -50,6 +50,16 @@ async function getCounts({ mdast }) {
   }
 }
 
+function getModuleMappingFromImports(imports, registerModule) {
+  return imports.map(({ local, ...importSpec }) => {
+    const moduleID = registerModule(importSpec)
+    return {
+      local,
+      moduleID,
+    }
+  })
+}
+
 module.exports = (
   {
     store,
@@ -162,10 +172,18 @@ module.exports = (
         },
       },
       body: {
-        type: `String!`,
-        async resolve(mdxNode) {
-          const { body } = await processMDX({ node: mdxNode })
-          return body
+        type: `JSON!`,
+        async resolve(mdxNode, args, context) {
+          const { body, importSpecs } = await processMDX({ node: mdxNode })
+          if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+            const moduleMapping = getModuleMappingFromImports(
+              importSpecs,
+              context.pageModel.setModule
+            )
+            return { body, moduleMapping }
+          } else {
+            return { body }
+          }
         },
       },
       excerpt: {

@@ -54,28 +54,29 @@ module.exports = async (
 
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })
-
-  // write scope files into .cache for later consumption
-  const { scopeImports, scopeIdentifiers } = await findImports({
-    node: mdxNode,
-    getNode,
-    getNodes,
-    reporter,
-    cache,
-    pathPrefix,
-    options,
-    loadNodeContent,
-    actions,
-    createNodeId,
-    ...helpers,
-  })
-  await cacheScope({
-    cache,
-    scopeIdentifiers,
-    scopeImports,
-    createContentDigest: contentDigest,
-    parentNode: node,
-  })
+  if (!process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+    // write scope files into .cache for later consumption if query modules is not used
+    const { scopeImports, scopeIdentifiers } = await findImports({
+      node: mdxNode,
+      getNode,
+      getNodes,
+      reporter,
+      cache,
+      pathPrefix,
+      options,
+      loadNodeContent,
+      actions,
+      createNodeId,
+      ...helpers,
+    })
+    await cacheScope({
+      cache,
+      scopeIdentifiers,
+      scopeImports,
+      createContentDigest: contentDigest,
+      parentNode: node,
+    })
+  }
 }
 
 async function cacheScope({
