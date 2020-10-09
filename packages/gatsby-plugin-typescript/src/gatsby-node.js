@@ -42,7 +42,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
       .description(`Replace the function used when compiling JSX expressions.`)
       .default(`React`),
     allExtensions: Joi.boolean()
-      .description(`Indicates that every file shoudl be parsed as TS or TSX.`)
+      .description(`Indicates that every file should be parsed as TS or TSX.`)
       .default(false),
   })
 }
