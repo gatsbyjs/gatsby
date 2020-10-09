@@ -46,7 +46,7 @@ export function getWrapperProps(
   }
 
   return {
-    className: `gatsby-image`,
+    className: `gatsby-image-wrapper`,
     style: wrapperStyle,
   }
 }
