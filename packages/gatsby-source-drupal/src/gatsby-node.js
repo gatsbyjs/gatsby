@@ -180,7 +180,11 @@ exports.sourceNodes = async (
         let nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode({ node: getNode(createNodeId(nodeSyncData.id)) })
+            actions.deleteNode({
+              node: getNode(
+                createNodeId(`${nodeSyncData.langcode}${nodeSyncData.id}`)
+              ),
+            })
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
@@ -303,20 +307,11 @@ exports.sourceNodes = async (
         } else {
           for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
             let currentLanguage = languageConfig.enabledLanguages[i]
-            let dataForLanguage
-
-            if (currentLanguage === languageConfig.defaultLanguage) {
-              dataForLanguage = await getNext(url)
-            } else {
-              const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
-              const urlPath = url.href.replace(
-                `${baseUrlWithoutTrailingSlash}/${apiBase}/`,
-                ``
-              )
-              dataForLanguage = await getNext(
-                `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
-              )
-            }
+            const urlPath = url.href.split(`${apiBase}/`).pop()
+            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+            let dataForLanguage = await getNext(
+              `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
+            )
 
             data = data.concat(dataForLanguage)
           }
