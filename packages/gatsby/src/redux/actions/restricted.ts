@@ -302,6 +302,8 @@ export const actions = {
    * types for filtering, sorting, pagination etc. Optionally, you can define a
    * list of types to include/exclude. This is recommended to avoid including
    * definitions for plugin-created types.
+   * The first object parameter is required, however all the fields in the object are optional.
+   * 
    *
    * @availableIn [createSchemaCustomization]
    *
@@ -313,7 +315,17 @@ export const actions = {
    * @param {object} [$0.exclude] Configure types to exclude
    * @param {string[]} [$0.exclude.types] Do not include these types
    * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
-   * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+   * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`.
+   *   actions.printTypeDefinitions({})
+   * }
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`, but this time it does not include field types.
+   *   actions.printTypeDefinitions({ withFieldTypes: false })
+   * }
    */
   printTypeDefinitions: (
     {
