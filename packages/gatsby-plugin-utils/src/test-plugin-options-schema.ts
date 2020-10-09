@@ -1,10 +1,14 @@
+import Joi from "joi"
 import { ObjectSchema } from "./utils/plugin-options-schema-joi-type"
 
-export function validatePluginOptionsSchema<PluginOptions = object>(
-  pluginSchema: ObjectSchema,
+type PluginSchemaFunction = ({ Joi }) => ObjectSchema
+
+export function testPluginOptionsSchema<PluginOptions = object>(
+  pluginSchemaFunction: PluginSchemaFunction,
   pluginOptions: PluginOptions
 ): void {
   const pluginOptionsNames = Object.keys(pluginOptions)
+  const pluginSchema = pluginSchemaFunction({ Joi })
   const errors: Array<string> = []
 
   pluginOptionsNames.forEach(pluginOptionName => {
