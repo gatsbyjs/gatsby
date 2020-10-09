@@ -24,7 +24,7 @@ export function _getStaticImage(
     }
     const { gatsbyImageProps, layout } = splitProps({ src, ...props })
     if (imageData) {
-      const isResponsive = layout === `responsive`
+      const isResponsive = layout !== `fixed`
       const childProps: Pick<
         GatsbyImageProps,
         "layout" | "width" | "height" | "images" | "placeholder"
@@ -37,6 +37,7 @@ export function _getStaticImage(
           fallback: {
             src: imageData.src,
             srcSet: imageData.srcSet,
+            sizes: isResponsive ? imageData.sizes : undefined,
           },
           sources: [],
         },
@@ -54,6 +55,7 @@ export function _getStaticImage(
         childProps.images.sources.push({
           srcSet: imageData.srcSetWebp,
           type: `image/webp`,
+          sizes: isResponsive ? imageData.sizes : undefined,
         })
       }
       return <GatsbyImage {...gatsbyImageProps} {...childProps} />

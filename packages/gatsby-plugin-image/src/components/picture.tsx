@@ -72,10 +72,6 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
       <Image {...props} {...fallback} shouldLoad={shouldLoad} innerRef={ref} />
     )
 
-    if (!sources.length) {
-      return fallbackImage
-    }
-
     return (
       <picture>
         {sources.map(({ media, srcSet, type }) => (

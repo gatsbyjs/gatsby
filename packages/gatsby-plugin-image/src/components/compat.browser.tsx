@@ -26,6 +26,7 @@ export interface ICompatProps {
     srcSetWebp?: string
     maxWidth?: number
     maxHeight?: number
+    sizes?: string
   }
 }
 
@@ -113,6 +114,7 @@ export function _createCompatLayer(
           fallback: {
             src: fluid.src,
             srcSet: fluid.srcSet,
+            sizes: fluid.sizes,
           },
           sources: [],
         },
@@ -128,6 +130,7 @@ export function _createCompatLayer(
         rewiredProps.images.sources.push({
           srcSet: fluid.srcSetWebp,
           type: `image/webp`,
+          sizes: fluid.sizes,
         })
       }
     }
