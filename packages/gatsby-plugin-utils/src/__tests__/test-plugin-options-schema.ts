@@ -10,11 +10,12 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    expect(
-      testPluginOptionsSchema(pluginSchema, {
-        toVerify: `abcd`,
-      })
-    ).toMatchInlineSnapshot(`
+    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+      toVerify: `abcd`,
+    })
+
+    expect(isValid).toBe(false)
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         "\\"toVerify\\" must be a boolean",
       ]
@@ -29,12 +30,13 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    expect(
-      testPluginOptionsSchema(pluginSchema, {
-        toVerify: `abcd`,
-        nb: `invalid value`,
-      })
-    ).toMatchInlineSnapshot(`
+    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+      toVerify: `abcd`,
+      nb: `invalid value`,
+    })
+
+    expect(isValid).toBe(false)
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         "\\"toVerify\\" must be a boolean",
         "\\"nb\\" must be a number",
@@ -83,15 +85,16 @@ describe(`testPluginOptionsSchema`, () => {
         cookieDomain: Joi.string(),
       })
 
-    expect(
-      testPluginOptionsSchema(pluginSchema, {
-        trackingId: undefined,
-        head: `invalid boolean value`,
-        anonymize: `invalid boolean value`,
-        respectDNT: `invalid boolean value`,
-        exclude: [0, 1, 2],
-      })
-    ).toMatchInlineSnapshot(`
+    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+      trackingId: undefined,
+      head: `invalid boolean value`,
+      anonymize: `invalid boolean value`,
+      respectDNT: `invalid boolean value`,
+      exclude: [0, 1, 2],
+    })
+
+    expect(isValid).toBe(false)
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         "\\"trackingId\\" is required",
         "\\"head\\" must be a boolean",
@@ -143,23 +146,24 @@ describe(`testPluginOptionsSchema`, () => {
         cookieDomain: Joi.string(),
       })
 
-    expect(
-      testPluginOptionsSchema(pluginSchema, {
-        trackingId: undefined,
-        head: `invalid boolean value`,
-        anonymize: `invalid boolean value`,
-        respectDNT: `invalid boolean value`,
-        exclude: [0, 1, 2],
-        pageTransitionDelay: `invalid number value`,
-        optimizeId: 123,
-        experimentId: 456,
-        variationId: 789,
-        defer: `invalid boolean value`,
-        sampleRate: `invalid number value`,
-        siteSpeedSampleRate: `invalid number value`,
-        cookieDomain: 9797,
-      })
-    ).toMatchInlineSnapshot(`
+    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+      trackingId: undefined,
+      head: `invalid boolean value`,
+      anonymize: `invalid boolean value`,
+      respectDNT: `invalid boolean value`,
+      exclude: [0, 1, 2],
+      pageTransitionDelay: `invalid number value`,
+      optimizeId: 123,
+      experimentId: 456,
+      variationId: 789,
+      defer: `invalid boolean value`,
+      sampleRate: `invalid number value`,
+      siteSpeedSampleRate: `invalid number value`,
+      cookieDomain: 9797,
+    })
+
+    expect(isValid).toBe(false)
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         "\\"trackingId\\" is required",
         "\\"head\\" must be a boolean",
@@ -176,5 +180,19 @@ describe(`testPluginOptionsSchema`, () => {
         "\\"cookieDomain\\" must be a string",
       ]
     `)
+  })
+
+  it("should check the validity of a schema", () => {
+    const pluginSchema = ({ Joi }): ObjectSchema =>
+      Joi.object({
+        toVerify: Joi.boolean(),
+      })
+
+    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+      toVerify: false,
+    })
+
+    expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

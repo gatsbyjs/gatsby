@@ -1,10 +1,15 @@
 import { Joi } from "./joi"
 import { GatsbyNode } from "gatsby"
 
+type TestPluginOptionsSchemaReturnType = {
+  errors: Array<string>
+  isValid: boolean
+}
+
 export function testPluginOptionsSchema<PluginOptions = object>(
   pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
   pluginOptions: PluginOptions
-): Array<string> {
+): TestPluginOptionsSchemaReturnType {
   const pluginOptionsNames = Object.keys(pluginOptions)
   const pluginSchema = pluginSchemaFunction({ Joi })
   const errors: Array<string> = []
@@ -29,5 +34,5 @@ export function testPluginOptionsSchema<PluginOptions = object>(
     }
   })
 
-  return errors
+  return { isValid: errors.length === 0, errors }
 }
