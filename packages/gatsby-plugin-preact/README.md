@@ -10,7 +10,7 @@ React.
 
 ## Install
 
-`npm install --save gatsby-plugin-preact preact preact-render-to-string`
+`npm install gatsby-plugin-preact preact preact-render-to-string`
 
 ## How to use
 

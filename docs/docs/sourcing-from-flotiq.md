@@ -74,7 +74,7 @@ Here are the steps to use this source plugin in other Gatsby projects:
 
 1. Install the plugin:
    ```shell
-   npm install --save gatsby-source-flotiq
+   npm install gatsby-source-flotiq
    ```
 2. Provide API credentials in `.env` (see above for more details)
 3. Register the source plugin in `gatsby-config.js`:

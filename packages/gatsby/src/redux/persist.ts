@@ -55,7 +55,7 @@ export function readFromCache(): ICachedReduxState {
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
+  const nodes: Array<[string, IGatsbyNode]> = [].concat(...chunks)
 
   if (!chunks.length) {
     report.info(
@@ -70,7 +70,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
+function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -114,7 +114,7 @@ function prepareCacheFolder(
 
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: [string, IGatsbyNode][] = [...map.entries()]
+    const values: Array<[string, IGatsbyNode]> = [...map.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 

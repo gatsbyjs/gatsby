@@ -5,7 +5,7 @@ import { IGatsbyState } from "../redux/types"
 import { Stats } from "webpack"
 
 interface ICompilation {
-  modules: IModule[]
+  modules: Array<IModule>
 }
 
 interface IReason extends Omit<Stats.Reason, "module"> {
@@ -16,7 +16,7 @@ interface IModule extends Omit<Stats.FnModules, "identifier" | "reasons"> {
   hasReasons: () => boolean
   resource?: string
   identifier: () => string
-  reasons: IReason[]
+  reasons: Array<IReason>
 }
 
 /* When we traverse upwards, we need to know where to stop. We'll call these terminal nodes.
@@ -25,7 +25,7 @@ interface IModule extends Omit<Stats.FnModules, "identifier" | "reasons"> {
  */
 const entryNodes = [
   `.cache/api-runner-browser-plugins.js`,
-  `.cache/async-requires.js`,
+  `.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`,
 ]
 
 /* This function takes the current Redux state and a compilation
@@ -150,7 +150,7 @@ export default function mapTemplatesToStaticQueryHashes(
     staticQueryComponents
   )
 
-  const globalStaticQueryHashes: string[] = []
+  const globalStaticQueryHashes: Array<string> = []
 
   globalStaticQueries.forEach(q => {
     const hash = mapOfComponentsToStaticQueryHashes.get(q)

@@ -2,7 +2,7 @@ const execa = require(`execa`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const glob = require(`glob`)
-const request = require(`request-promise-native`)
+const fetch = require(`node-fetch`)
 const createDevServer = require(`../../utils/create-devserver`)
 const basePath = path.resolve(__dirname, `../../`)
 
@@ -23,16 +23,13 @@ describe(`Lazy images`, () => {
   test(`should process images on demand`, async () => {
     const { kill } = await createDevServer()
 
-    const response = await request(
-      `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/e4795/gatsby-astronaut.png`,
-      {
-        resolveWithFullResponse: true,
-      }
+    const response = await fetch(
+      `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/e4795/gatsby-astronaut.png`
     )
 
     await kill()
 
-    expect(response.statusCode).toBe(200)
+    expect(response.status).toBe(200)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
     expect(images.length).toBe(6)

@@ -6,7 +6,7 @@ Many applications are hosted at something other than the root (`/`) of their dom
 
 For example, a Gatsby blog could live at `example.com/blog/`, or a site could be hosted on GitHub Pages at `example.github.io/my-gatsby-site/`.
 
-Each of these sites need a prefix added to all paths on the site. So a link to
+Each of these sites needs a prefix added to all paths on the site. So a link to
 `/my-sweet-blog-post/` should be rewritten as `/blog/my-sweet-blog-post`.
 
 In addition, links to various resources (JavaScript, CSS, images, and other static content) need the same prefix, so that the site continues to function correctly when served with the path prefix in place.

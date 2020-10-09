@@ -1,5 +1,5 @@
 const Joi = require(`@hapi/joi`)
-const { getService } = require(`gatsby-core-utils/dist/service-lock`)
+const { getService } = require(`gatsby-core-utils`)
 const fetch = require(`node-fetch`)
 
 const { REQUIRES_KEYS } = require(`./utils/constants`)
@@ -21,6 +21,9 @@ module.exports.read = async ({ root }, id) => {
         id
         componentPath
         isCreatedByStatefulCreatePages
+        pluginCreator {
+          name
+        }
   }
   }
   `
@@ -64,6 +67,9 @@ module.exports.all = async ({ root }) => {
         id
         componentPath
         isCreatedByStatefulCreatePages
+        pluginCreator {
+          name
+        }
       }
     }
   }
@@ -72,6 +78,7 @@ module.exports.all = async ({ root }) => {
 
   return result.data.allSitePage.nodes
 }
+
 const schema = {
   internalComponentName: Joi.string(),
   path: Joi.string(),
@@ -81,6 +88,9 @@ const schema = {
   isCreatedByStatefulCreatePages: Joi.boolean(),
   pluginCreatorId: Joi.string(),
   componentPath: Joi.string(),
+  pluginCreator: Joi.object({
+    name: Joi.string(),
+  }),
   ...resourceSchema,
 }
 

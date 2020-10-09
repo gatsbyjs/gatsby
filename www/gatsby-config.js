@@ -241,7 +241,7 @@ module.exports = {
         icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
-    `gatsby-plugin-offline`,
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
@@ -329,6 +329,19 @@ module.exports = {
       options: {
         headers: {
           "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+          "/sw.js": [
+            `Cache-Control: max-age=0,no-cache,no-store,must-revalidate`,
+          ],
+        },
+        transformHeaders: (headers, path) => {
+          if (path === `/sw.js`) {
+            // remove last cache-control as it's set by the plugin itself
+            headers.splice(1, 1)
+          }
+
+          return headers.filter(
+            header => !header.toLowerCase().includes(`link:`)
+          )
         },
       },
     },

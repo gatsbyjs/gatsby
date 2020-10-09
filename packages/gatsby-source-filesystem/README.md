@@ -11,7 +11,7 @@ nodes from which you can query an HTML representation of the markdown.
 
 ## Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ## How to use
 
@@ -119,6 +119,7 @@ createFilePath({
   // The parameter from `onCreateNode` should be passed in here
   getNode,
   // The base path for your files.
+  // It is relative to the `options.path` setting in the `gatsby-source-filesystem` entries of your `gatsby-config.js`.
   // Defaults to `src/pages`. For the example above, you'd use `src/content`.
   basePath,
   // Whether you want your file paths to contain a trailing `/` slash

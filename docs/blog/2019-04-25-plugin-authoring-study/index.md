@@ -26,6 +26,8 @@ Thanks to all for taking the time to give thoughtful interviews!
 > Are you a plugin author/maintainer? If you have additional feedback that is not covered by this article, please [let us know here](https://docs.google.com/forms/d/e/1FAIpQLSfhZOKcnbGvAYAzwWUXuVNkeGFGDHZP8DNdabj7CUG27kBngg/viewform?usp=sf_link)
 > If you're thinking of creating a plugin, [sign up for a CLI usability test](https://calendly.com/shannon-soper/gatsby-research-call-gatsby-cli). You'll get to try out some new things in the CLI!
 
+<!-- markdownlint-disable no-trailing-punctuation -->
+
 ## Why do people decide to create a plugin?
 
 We asked people what motivated them to create and maintain a plugin so we can make sure to support them in their goals. Most plugin authors we interviewed said something like: “I created the plugin to solve a problem I had that other plugins couldn’t solve". Typically, other plugins couldn't solve the problem because they weren’t v2 compatible, weren’t being maintained, or didn’t exist.
@@ -49,7 +51,7 @@ ANSWER: make time-consuming things take less time, and make frustrating things l
 
 People who use plugin authoring docs say they are super helpful; however, most people don’t know about them and solve challenges through looking at the source code of other plugins. While this works for many people, we think making this even easier is a positive change.
 
-## Solution
+## Solution to make things less time consuming
 
 - [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
 - [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)
@@ -66,7 +68,7 @@ Examples of things that are confusing:
 - Most people don’t know how to write automated tests for plugins and mentioned building a site just to test the plugin, which they felt wasn't the most ideal way to test
 - Rebuilding for every change often “feels wrong” to people
 
-## Solution
+## Solution to reduce frustration
 
 [Redesigned the plugin docs](https://github.com/gatsbyjs/gatsby/pull/13261/files) to include a category called "Creating Plugins" where we can document answers to people's concerns; for example, ideas for how to test plugins and advice to use yarn workspaces to avoid yarn link inconsistencies.
 

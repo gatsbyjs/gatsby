@@ -13,6 +13,7 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
+import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 
 export {
   default as Link,
@@ -78,6 +79,8 @@ export type PageProps<
   children: undefined
   /** @deprecated use pageContext instead */
   pathContext: object
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
   /** Holds information about the build process for this component */
   pageResources: {
     component: React.Component
@@ -171,6 +174,15 @@ export class StaticQuery<T = any> extends React.Component<
  * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
  */
 export const graphql: (query: TemplateStringsArray) => void
+
+/**
+ * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+ *
+ * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+ *
+ * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ */
+export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
 
 /**
  * Gatsby configuration API.
@@ -501,6 +513,12 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+
+  /**
+   * Add a Joi schema for the possible options of your plugin.
+   * Currently experimental and not enabled by default.
+   */
+  pluginOptionsSchema(args: PluginOptionsSchemaArgs): ObjectSchema
 }
 
 /**
@@ -808,27 +826,27 @@ export interface GatsbyGraphQLObjectType {
   config: ComposeObjectTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInputObjectType {
+export interface GatsbyGraphQLInputObjectType {
   kind: "INPUT_OBJECT"
   config: ComposeInputObjectTypeConfig
 }
 
-interface GatsbyGraphQLUnionType {
+export interface GatsbyGraphQLUnionType {
   kind: "UNION"
   config: ComposeUnionTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInterfaceType {
+export interface GatsbyGraphQLInterfaceType {
   kind: "INTERFACE"
   config: ComposeInterfaceTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLEnumType {
+export interface GatsbyGraphQLEnumType {
   kind: "ENUM"
   config: ComposeEnumTypeConfig
 }
 
-interface GatsbyGraphQLScalarType {
+export interface GatsbyGraphQLScalarType {
   kind: "SCALAR"
   config: ComposeScalarTypeConfig
 }
@@ -1535,4 +1553,8 @@ export interface IPluginRefOptions {
   plugins?: PluginRef[]
   path?: string
   [option: string]: unknown
+}
+
+export interface PluginOptionsSchemaArgs {
+  Joi: PluginOptionsSchemaJoi
 }

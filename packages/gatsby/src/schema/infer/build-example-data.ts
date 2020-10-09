@@ -130,7 +130,7 @@ const resolveWinnerType = (
 const prepareConflictExamples = (
   descriptor: IValueDescriptor,
   isArrayItem: boolean
-): ITypeConflictExample[] => {
+): Array<ITypeConflictExample> => {
   const typeNameMapper = (typeName: ValueType): string => {
     if (typeName === `relatedNode`) {
       return `string`
@@ -204,9 +204,9 @@ const hasOnlyEmptyStrings = (descriptor: IValueDescriptor): boolean => {
   return string !== undefined && string?.empty === string?.total
 }
 
-const possibleTypes = (descriptor: IValueDescriptor = {}): ValueType[] =>
-  Object.keys(descriptor).filter(
-    type => descriptor[type].total > 0
-  ) as ValueType[]
+const possibleTypes = (descriptor: IValueDescriptor = {}): Array<ValueType> =>
+  Object.keys(descriptor).filter(type => descriptor[type].total > 0) as Array<
+    ValueType
+  >
 
 export { getExampleObject }

@@ -10,7 +10,7 @@ Once a language repository is created and someone on the Gatsby team has assigne
 
 ### Use English as the source
 
-The [gatsbyjs.org](https://gatsbyjs.org) website is written first in English and should be considered the source material for all translations (as opposed to starting from another translation). When a repository is created, it will provide a copy of the docs to be translated which you can then update through [pull requests](/contributing/how-to-open-a-pull-request/) against them in the relevant language.
+The [gatsbyjs.com](https://www.gatsbyjs.com) website is written first in English and should be considered the source material for all translations (as opposed to starting from another translation). When a repository is created, it will provide a copy of the docs to be translated which you can then update through [pull requests](/contributing/how-to-open-a-pull-request/) against them in the relevant language.
 
 Changes to the meaning of a text or code example should be done in the main [English repo](https://github.com/gatsbyjs/gatsby/), and then translated afterwards to keep the content aligned across languages.
 

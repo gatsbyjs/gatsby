@@ -74,7 +74,7 @@ implementation in other projects.
 
 To get started, you'll need to install a few packages:
 
-`npm i -S i18next i18next-xhr-backend i18next-browser-languagedetector react-i18next`
+`npm install i18next i18next-xhr-backend i18next-browser-languagedetector react-i18next`
 
 ## Setting up
 

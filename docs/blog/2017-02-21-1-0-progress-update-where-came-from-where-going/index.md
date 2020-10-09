@@ -230,7 +230,7 @@ Themes (like plugins) will be published on npm. So soon, starting a new Gatsby
 blog will be as simple as:
 
 ```shell
-npm install --save gatsby-super-cool-theme
+npm install gatsby-super-cool-theme
 gatsby build --theme gatsby-super-cool-theme
 ```
 

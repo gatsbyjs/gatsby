@@ -193,7 +193,7 @@ Instead, Gatsby exports a `navigate` helper function that accepts `to` and `opti
 
 | Argument          | Required | Description                                                                                     |
 | ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`). Note: it needs to be a pathname, not a full URL.       |
 | `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
 | `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
@@ -407,4 +407,4 @@ However, if the page has previously loaded, it will not re-request `app-data.jso
 
 - [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
 - [Routing: Getting Location Data from Props](/docs/location-data-from-props/)
-- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior
+- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior
