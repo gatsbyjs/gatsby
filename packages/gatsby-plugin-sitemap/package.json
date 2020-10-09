@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "common-tags": "^1.8.0",
     "minimatch": "^3.0.4",
     "pify": "^3.0.0",
     "sitemap": "^1.13.0"
