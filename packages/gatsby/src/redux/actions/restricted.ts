@@ -302,8 +302,8 @@ export const actions = {
    * types for filtering, sorting, pagination etc. Optionally, you can define a
    * list of types to include/exclude. This is recommended to avoid including
    * definitions for plugin-created types.
+   *
    * The first object parameter is required, however all the fields in the object are optional.
-   * 
    *
    * @availableIn [createSchemaCustomization]
    *
