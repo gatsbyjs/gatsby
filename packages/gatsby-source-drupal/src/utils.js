@@ -26,25 +26,29 @@ const fetchLanguageConfig = async ({
   let translatableEntitiesResponses = []
 
   while (next) {
-    const response = axios.get(next, {
+    const response = await axios.get(next, {
       auth: basicAuth,
       headers,
       params,
     })
 
-    availableLanguagesResponses.concat(response.data.data)
+    availableLanguagesResponses = availableLanguagesResponses.concat(
+      response.data.data
+    )
     next = response.data.links.next
   }
 
   next = `${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`
   while (next) {
-    const response = axios.get(next, {
+    const response = await axios.get(next, {
       auth: basicAuth,
       headers,
       params,
     })
 
-    translatableEntitiesResponses.concat(response.data.data)
+    translatableEntitiesResponses = translatableEntitiesResponses.concat(
+      response.data.data
+    )
     next = response.data.links.next
   }
 
