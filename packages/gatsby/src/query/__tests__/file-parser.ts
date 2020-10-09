@@ -5,13 +5,13 @@ jest.mock(`fs-extra`, () => {
     readFile: jest.fn(),
   }
 })
-jest.mock(`../../utils/api-runner-node`, () => (): Array<unknown> => [])
+jest.mock(`../../utils/api-runner-node`, () => (): Array<IParseError> => [])
 jest.mock(`gatsby-cli/lib/reporter/index`)
 
 import fs from "fs-extra"
 import { NameNode, OperationDefinitionNode } from "graphql"
 import reporter from "gatsby-cli/lib/reporter"
-import { FileParser, IGraphQLDocumentInFile } from "../file-parser"
+import { FileParser, IGraphQLDocumentInFile, IParseError } from "../file-parser"
 
 const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
 
@@ -242,7 +242,7 @@ export default () => {
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    const errors: Array<unknown> = []
+    const errors: Array<IParseError> = []
     const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
       Object.keys(MOCK_FILE_INFO),
