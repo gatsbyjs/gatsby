@@ -67,14 +67,6 @@ const BlogPostTemplate = ({ data, location }) => {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  fragment PrevNextFields on MarkdownRemark {
-    fields {
-      slug
-    }
-    frontmatter {
-      title
-    }
-  }
   query BlogPostBySlug($id: String!, $next: String, $previous: String) {
     site {
       siteMetadata {
@@ -92,10 +84,20 @@ export const pageQuery = graphql`
       }
     }
     previous: markdownRemark(id: { eq: $previous }) {
-      ...PrevNextFields
+      fields {
+        slug
+      }
+      frontmatter {
+        title
+      }
     }
     next: markdownRemark(id: { eq: $next }) {
-      ...PrevNextFields
+      fields {
+        slug
+      }
+      frontmatter {
+        title
+      }
     }
   }
 `
