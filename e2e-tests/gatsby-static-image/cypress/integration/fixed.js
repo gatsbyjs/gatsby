@@ -7,13 +7,13 @@ describe(`fixed`, () => {
 
   it(`does not render a spacer div`, () => {
     cy.getTestElement(fixedTestId)
-      .find(`.gatsby-image > div`)
+      .find(`.gatsby-image-wrapper > div`)
       .should(`not.exist`)
   })
 
   it(`applies height and width to wrapper`, () => {
     cy.getTestElement(fixedTestId)
-      .find(`.gatsby-image`)
+      .find(`.gatsby-image-wrapper`)
       .should(`have.attr`, `style`)
       .and(style => {
         ;[`height:`, `width:`].forEach(part => {
@@ -24,13 +24,13 @@ describe(`fixed`, () => {
 
   it(`works on png files`, () => {
     cy.getTestElement(`image-fixed-png`)
-      .find(`.gatsby-image`)
+      .find(`.gatsby-image-wrapper`)
       .should(`exist`)
   })
 
   it(`works on relative paths outside of src`, () => {
     cy.getTestElement(`image-fixed-relative`)
-      .find(`.gatsby-image`)
+      .find(`.gatsby-image-wrapper`)
       .should(`exist`)
   })
 

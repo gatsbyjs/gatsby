@@ -9,14 +9,14 @@ describe(`Production gatsby-image`, () => {
     describe(`outer div`, () => {
       it(`exists`, () => {
         cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image`)
+          .find(`.gatsby-image-wrapper`)
           .its(`length`)
           .should(`eq`, 1)
       })
 
       it(`contains position relative`, () => {
         cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image`)
+          .find(`.gatsby-image-wrapper`)
           .should(`have.attr`, `style`)
           .and(`contains`, `position:relative`)
       })
@@ -26,7 +26,7 @@ describe(`Production gatsby-image`, () => {
   describe(`invalid image`, () => {
     it(`will not appear`, () => {
       cy.getTestElement(`invalid-image`)
-        .find(`.gatsby-image`)
+        .find(`.gatsby-image-wrapper`)
         .should(`not.exist`)
     })
   })
@@ -34,7 +34,7 @@ describe(`Production gatsby-image`, () => {
   describe(`fallback image`, () => {
     it(`renders base-64 src`, () => {
       cy.getTestElement(fluidTestId)
-        .find(`.gatsby-image > img`)
+        .find(`.gatsby-image-wrapper > img`)
         .should(`have.attr`, `src`)
         .and(`contains`, `base64`)
     })

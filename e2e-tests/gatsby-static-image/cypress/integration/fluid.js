@@ -6,18 +6,20 @@ describe(`fluid`, () => {
   })
 
   it(`works on png files`, () => {
-    cy.getTestElement(`image-fluid-png`).find(`.gatsby-image`).should(`exist`)
+    cy.getTestElement(`image-fluid-png`)
+      .find(`.gatsby-image-wrapper`)
+      .should(`exist`)
   })
 
   it(`works on relative paths outside of src`, () => {
     cy.getTestElement(`image-fluid-relative`)
-      .find(`.gatsby-image`)
+      .find(`.gatsby-image-wrapper`)
       .should(`exist`)
   })
 
   it(`renders a spacer div`, () => {
     cy.getTestElement(fluidTestId)
-      .find(`.gatsby-image > div`)
+      .find(`.gatsby-image-wrapper > div`)
       .should(`have.attr`, `style`)
       .and(`match`, /padding/)
   })
