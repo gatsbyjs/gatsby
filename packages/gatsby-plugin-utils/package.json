@@ -7,8 +7,7 @@
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "test": "jest"
+    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
   "keywords": [
     "gatsby"
