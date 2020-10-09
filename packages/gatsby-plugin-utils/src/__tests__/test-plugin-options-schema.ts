@@ -10,15 +10,14 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    expect(() =>
+    expect(
       testPluginOptionsSchema(pluginSchema, {
         toVerify: `abcd`,
       })
-    ).toThrowErrorMatchingInlineSnapshot(`
-      "Schema validation failed for the following reasons:
-
-            - \\"toVerify\\" must be a boolean
-          "
+    ).toMatchInlineSnapshot(`
+      Array [
+        "\\"toVerify\\" must be a boolean",
+      ]
     `)
   })
 
@@ -30,17 +29,16 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    expect(() =>
+    expect(
       testPluginOptionsSchema(pluginSchema, {
         toVerify: `abcd`,
         nb: `invalid value`,
       })
-    ).toThrowErrorMatchingInlineSnapshot(`
-      "Schema validation failed for the following reasons:
-
-            - \\"toVerify\\" must be a boolean
-            - \\"nb\\" must be a number
-          "
+    ).toMatchInlineSnapshot(`
+      Array [
+        "\\"toVerify\\" must be a boolean",
+        "\\"nb\\" must be a number",
+      ]
     `)
   })
 
@@ -85,7 +83,7 @@ describe(`testPluginOptionsSchema`, () => {
         cookieDomain: Joi.string(),
       })
 
-    expect(() =>
+    expect(
       testPluginOptionsSchema(pluginSchema, {
         trackingId: undefined,
         head: `invalid boolean value`,
@@ -93,15 +91,14 @@ describe(`testPluginOptionsSchema`, () => {
         respectDNT: `invalid boolean value`,
         exclude: [0, 1, 2],
       })
-    ).toThrowErrorMatchingInlineSnapshot(`
-      "Schema validation failed for the following reasons:
-
-            - \\"trackingId\\" is required
-            - \\"head\\" must be a boolean
-            - \\"anonymize\\" must be a boolean
-            - \\"respectDNT\\" must be a boolean
-            - \\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string
-          "
+    ).toMatchInlineSnapshot(`
+      Array [
+        "\\"trackingId\\" is required",
+        "\\"head\\" must be a boolean",
+        "\\"anonymize\\" must be a boolean",
+        "\\"respectDNT\\" must be a boolean",
+        "\\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string",
+      ]
     `)
   })
 
@@ -146,7 +143,7 @@ describe(`testPluginOptionsSchema`, () => {
         cookieDomain: Joi.string(),
       })
 
-    expect(() =>
+    expect(
       testPluginOptionsSchema(pluginSchema, {
         trackingId: undefined,
         head: `invalid boolean value`,
@@ -162,23 +159,22 @@ describe(`testPluginOptionsSchema`, () => {
         siteSpeedSampleRate: `invalid number value`,
         cookieDomain: 9797,
       })
-    ).toThrowErrorMatchingInlineSnapshot(`
-      "Schema validation failed for the following reasons:
-
-            - \\"trackingId\\" is required
-            - \\"head\\" must be a boolean
-            - \\"anonymize\\" must be a boolean
-            - \\"respectDNT\\" must be a boolean
-            - \\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string
-            - \\"pageTransitionDelay\\" must be a number
-            - \\"optimizeId\\" must be a string
-            - \\"experimentId\\" must be a string
-            - \\"variationId\\" must be a string
-            - \\"defer\\" must be a boolean
-            - \\"sampleRate\\" must be a number
-            - \\"siteSpeedSampleRate\\" must be a number
-            - \\"cookieDomain\\" must be a string
-          "
+    ).toMatchInlineSnapshot(`
+      Array [
+        "\\"trackingId\\" is required",
+        "\\"head\\" must be a boolean",
+        "\\"anonymize\\" must be a boolean",
+        "\\"respectDNT\\" must be a boolean",
+        "\\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string",
+        "\\"pageTransitionDelay\\" must be a number",
+        "\\"optimizeId\\" must be a string",
+        "\\"experimentId\\" must be a string",
+        "\\"variationId\\" must be a string",
+        "\\"defer\\" must be a boolean",
+        "\\"sampleRate\\" must be a number",
+        "\\"siteSpeedSampleRate\\" must be a number",
+        "\\"cookieDomain\\" must be a string",
+      ]
     `)
   })
 })

@@ -6,7 +6,7 @@ type PluginSchemaFunction = ({ Joi }) => ObjectSchema
 export function testPluginOptionsSchema<PluginOptions = object>(
   pluginSchemaFunction: PluginSchemaFunction,
   pluginOptions: PluginOptions
-): void {
+): Array<string> {
   const pluginOptionsNames = Object.keys(pluginOptions)
   const pluginSchema = pluginSchemaFunction({ Joi })
   const errors: Array<string> = []
@@ -31,10 +31,5 @@ export function testPluginOptionsSchema<PluginOptions = object>(
     }
   })
 
-  if (errors.length > 0) {
-    throw new Error(`Schema validation failed for the following reasons:
-
-      - ${errors.join(`\n      - `)}
-    `)
-  }
+  return errors
 }
