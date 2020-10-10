@@ -28,7 +28,7 @@ exports.onCreatePage = ({ page, actions }, { prefixes }) => {
     const path = page.path.match(/\/$/) ? page.path : `${page.path}/`
 
     if (path.match(re[prefix])) {
-      page.matchPath = prefix.replace(/\*$/, `*`)
+      page.matchPath = prefix
       createPage(page)
     }
   })
