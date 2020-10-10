@@ -90,9 +90,9 @@ module.exports = {
 
 ## How to style the anchor link
 
-Sometimes you would like to style the generated anchor link because it does not fit the theme of your website.
+By default, the anchor link has no additional styling. To make it fit your website, we'll have to write some extra CSS rules. 
 
-To style the generated anchor link you can use the following css to make it red
+If you want to make the anchor icon red, you can add the following CSS rule:
 
 ```
 a.anchor {
@@ -100,10 +100,4 @@ a.anchor {
 }
 ```
 
-If you want to only target the svg (note that the first selector is faster than the one below but that's micro optimisations)
-
-```
-a.anchor > svg {
-    fill: 'red'
-}
-```
+note: Not sure how to add custom css? You can visit our [tutorial][https://www.gatsbyjs.com/tutorial/part-two/).
