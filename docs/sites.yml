@@ -854,9 +854,9 @@
     - Marketing
     - Finance
 - title: Alec Lomas's Portfolio / Blog
-  main_url: https://www.lowmess.com/
-  url: https://www.lowmess.com/
-  source_url: https://github.com/lowmess/lowmess.com
+  main_url: https://v4.lowmess.com/
+  url: https://v4.lowmess.com/
+  source_url: https://github.com/lowmess/lowmess.com/tree/v4
   featured: false
   categories:
     - Web Development
