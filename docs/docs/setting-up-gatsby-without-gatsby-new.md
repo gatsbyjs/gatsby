@@ -34,6 +34,13 @@ Now, you'll need to install the necessary packages that Gatsby relies on to work
 npm install gatsby react react-dom
 ```
 
+After installing `gatsby` `react` and `react-dom`, you need to add:
+
+`"dev": "GATSBY_GRAPHQL_IDE=playground gatsby develop",`
+
+Adding this command will allow you run your gatsby app with the command `gatsby run dev`
+
+
 Next, you'll add a `src` directory and a `pages` directory inside your project.
 
 ```shell
