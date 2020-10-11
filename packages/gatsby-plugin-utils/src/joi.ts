@@ -1,7 +1,16 @@
 import joi from "joi"
 import { Root } from "joi"
 
-export type GatsbyPluginOptionsJoi = Root
+export interface GatsbyPluginOptionsJoi extends Root {
+  // see note from @mxstbr on line 21 in rules
+  // /**
+  //  * Specifies that a value should be stored in a .env file with ${name}
+  //  * instead of inlined into the gatsby-config.js
+  //  * @param name - string
+  //  */
+  // dotenv(name: string): this
+
+}
 
 export const Joi: GatsbyPluginOptionsJoi = joi.extend({
   // This tells Joi to extend _all_ types with .dotenv(), see
@@ -26,3 +35,5 @@ export const Joi: GatsbyPluginOptionsJoi = joi.extend({
     // },
   },
 })
+
+
