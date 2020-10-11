@@ -100,4 +100,4 @@ a.anchor {
 }
 ```
 
-note: Nor sure how to add custom css? You can visit out [tutorial][https://www.gatsbyjs.com/tutorial/part-two/].
+note: Not sure how to add custom css? You can visit our [tutorial][https://www.gatsbyjs.com/tutorial/part-two/].
