@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.41...gatsby-plugin-sharp@2.6.42) (2020-10-12)
+
+### Features
+
+- **gatsby-plugin-sharp:** added option to allow sharp process to continue with errors ([#27345](https://github.com/gatsbyjs/gatsby/issues/27345)) ([1da5926](https://github.com/gatsbyjs/gatsby/commit/1da5926959b1c451ce1c0e6444a195a6c5616e82))
+
 ## [2.6.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.40...gatsby-plugin-sharp@2.6.41) (2020-10-12)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
