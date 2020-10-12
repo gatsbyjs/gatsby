@@ -164,7 +164,7 @@ export const sourceNodes = async (
         createNodes(ARTICLE, queries.articles, ArticleNode, args, async x => {
           if (x.comments)
             await forEach(x.comments.edges, async edge =>
-              createNode(await CommentNode(imageArgs, locale)(edge.node))
+              createNode(await CommentNode(imageArgs)(edge.node))
             )
         }),
         createPageNodes(PAGE, queries.pages, PageNode, args),

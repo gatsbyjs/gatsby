@@ -24,11 +24,13 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
 
 const makeId = (id, locale) => `${id}___${locale}`
 
-const createLocaleNode = (node, locale) => ({
-  ...node,
-  locale,
-  id: makeId(node.id, locale),
-})
+const createLocaleNode = (node, locale) => {
+  return {
+    ...node,
+    locale,
+    id: makeId(node.id, locale),
+  }
+}
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
@@ -71,7 +73,7 @@ export const ArticleNode = (imageArgs, locale) =>
 
     if (node.comments)
       node.comments___NODE = node.comments.edges.map(edge =>
-        generateNodeId(COMMENT, makeId(edge.node.id, locale))
+        generateNodeId(COMMENT, edge.node.id)
       )
 
     if (node.image)
@@ -107,8 +109,7 @@ export const CollectionNode = (imageArgs, locale) =>
     return createLocaleNode(node, locale)
   })
 
-export const CommentNode = (_imageArgs, locale) =>
-  createNodeFactory(COMMENT, async node => createLocaleNode(node, locale))
+export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
 
 export const ProductNode = (imageArgs, locale) =>
   createNodeFactory(PRODUCT, async node => {
@@ -194,12 +195,12 @@ export const ProductVariantMetafieldNode = (_imageArgs, locale) =>
   )
 
 export const ShopPolicyNode = (locale, type) =>
-  createNodeFactory(SHOP_POLICY, async node => ({
-    ...createLocaleNode(node, locale),
-    type,
-  }))
-
-export const ShopDetailsNode = createNodeFactory(SHOP_DETAILS)
+  createNodeFactory(SHOP_POLICY, async node => {
+    return {
+      ...createLocaleNode(node, locale),
+      type,
+    }
+  })
 
 export const ShopDetailsNode = locale =>
   createNodeFactory(SHOP_DETAILS, async node => createLocaleNode(node, locale))
