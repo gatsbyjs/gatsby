@@ -55,11 +55,13 @@ export const sourceNodes = async (
     apiVersion = `2020-07`,
     verbose = true,
     paginationSize = 250,
+    languages = [`en`],
     includeCollections = [SHOP, CONTENT],
     shopifyQueries = {},
   }
 ) => {
-  const client = createClient(shopName, accessToken, apiVersion)
+  const client = locale =>
+    createClient(shopName, accessToken, apiVersion, locale)
 
   const defaultQueries = {
     articles: ARTICLES_QUERY,
@@ -101,6 +103,7 @@ export const sourceNodes = async (
       imageArgs,
       paginationSize,
       queries,
+      languages,
     }
 
     // Message printed when fetching is complete.
@@ -115,29 +118,39 @@ export const sourceNodes = async (
           queries.products,
           ProductNode,
           args,
-          async (product, productNode) => {
+          async (product, productNode, locale) => {
             if (product.variants)
               await forEach(product.variants.edges, async edge => {
                 const v = edge.node
                 if (v.metafields)
                   await forEach(v.metafields.edges, async edge =>
                     createNode(
-                      await ProductVariantMetafieldNode(imageArgs)(edge.node)
+                      await ProductVariantMetafieldNode(
+                        imageArgs,
+                        locale
+                      )(edge.node)
                     )
                   )
+
                 return createNode(
-                  await ProductVariantNode(imageArgs, productNode)(edge.node)
+                  await ProductVariantNode(
+                    imageArgs,
+                    productNode,
+                    locale
+                  )(edge.node)
                 )
               })
 
             if (product.metafields)
               await forEach(product.metafields.edges, async edge =>
-                createNode(await ProductMetafieldNode(imageArgs)(edge.node))
+                createNode(
+                  await ProductMetafieldNode(imageArgs, locale)(edge.node)
+                )
               )
 
             if (product.options)
               await forEach(product.options, async option =>
-                createNode(await ProductOptionNode(imageArgs)(option))
+                createNode(await ProductOptionNode(imageArgs, locale)(option))
               )
           }
         ),
@@ -151,7 +164,7 @@ export const sourceNodes = async (
         createNodes(ARTICLE, queries.articles, ArticleNode, args, async x => {
           if (x.comments)
             await forEach(x.comments.edges, async edge =>
-              createNode(await CommentNode(imageArgs)(edge.node))
+              createNode(await CommentNode(imageArgs, locale)(edge.node))
             )
         }),
         createPageNodes(PAGE, queries.pages, PageNode, args),
@@ -174,11 +187,20 @@ export const sourceNodes = async (
 /**
  * Fetch and create nodes for the provided endpoint, query, and node factory.
  */
+// createNodes(COLLECTION, queries.collections, CollectionNode, args),
 const createNodes = async (
   endpoint,
   query,
   nodeFactory,
-  { client, createNode, formatMsg, verbose, imageArgs, paginationSize },
+  {
+    client,
+    createNode,
+    formatMsg,
+    verbose,
+    imageArgs,
+    paginationSize,
+    languages,
+  },
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
@@ -186,17 +208,21 @@ const createNodes = async (
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(
-      client,
-      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
-      query,
-      paginationSize
-    ),
-    async entity => {
-      const node = await nodeFactory(imageArgs)(entity)
-      createNode(node)
-      await f(entity, node)
-    }
+    languages,
+    async locale =>
+      await forEach(
+        await queryAll(
+          client(locale),
+          [NODE_TO_ENDPOINT_MAPPING[endpoint]],
+          query,
+          paginationSize
+        ),
+        async entity => {
+          const node = await nodeFactory(imageArgs, locale)(entity)
+          createNode(node)
+          await f(entity, node, locale)
+        }
+      )
   )
   if (verbose) console.timeEnd(msg)
 }
@@ -210,13 +236,17 @@ const createShopDetails = async ({
   formatMsg,
   verbose,
   queries,
+  languages,
 }) => {
   // // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${SHOP_DETAILS} nodes`)
 
   if (verbose) console.time(msg)
-  const { shop } = await queryOnce(client, queries.shopDetails)
-  createNode(ShopDetailsNode(shop))
+  await forEach(languages, async locale => {
+    const { shop } = await queryOnce(client(locale), queries.shopDetails)
+    const node = await ShopDetailsNode(locale)(shop)
+    createNode(node)
+  })
   if (verbose) console.timeEnd(msg)
 }
 
@@ -229,17 +259,27 @@ const createShopPolicies = async ({
   formatMsg,
   verbose,
   queries,
+  languages,
 }) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${SHOP_POLICY} nodes`)
 
   if (verbose) console.time(msg)
-  const { shop: policies } = await queryOnce(client, queries.shopPolicies)
-  Object.entries(policies)
-    .filter(([_, policy]) => Boolean(policy))
-    .forEach(
-      pipe(([type, policy]) => ShopPolicyNode(policy, { type }), createNode)
+  await forEach(languages, async locale => {
+    const { shop: policies } = await queryOnce(
+      client(locale),
+      queries.shopPolicies
     )
+
+    Object.entries(policies)
+      .filter(([_, policy]) => Boolean(policy))
+      .forEach(
+        pipe(async ([type, policy]) => {
+          const node = await ShopPolicyNode(locale, type)(policy)
+          createNode(node)
+        })
+      )
+  })
   if (verbose) console.timeEnd(msg)
 }
 
@@ -247,25 +287,27 @@ const createPageNodes = async (
   endpoint,
   query,
   nodeFactory,
-  { client, createNode, formatMsg, verbose, paginationSize },
+  { client, createNode, formatMsg, verbose, paginationSize, languages },
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${endpoint} nodes`)
 
   if (verbose) console.time(msg)
-  await forEach(
-    await queryAll(
-      client,
-      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
-      query,
-      paginationSize
-    ),
-    async entity => {
-      const node = await nodeFactory(entity)
-      createNode(node)
-      await f(entity)
-    }
-  )
+  await forEach(languages, async locale => {
+    await forEach(
+      await queryAll(
+        client(locale),
+        [NODE_TO_ENDPOINT_MAPPING[endpoint]],
+        query,
+        paginationSize
+      ),
+      async entity => {
+        const node = await nodeFactory(locale)(entity)
+        createNode(node)
+        await f(entity)
+      }
+    )
+  })
   if (verbose) console.timeEnd(msg)
 }

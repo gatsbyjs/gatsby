@@ -22,6 +22,14 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
 
+const makeId = (id, locale) => `${id}___${locale}`
+
+const createLocaleNode = (node, locale) => ({
+  ...node,
+  locale,
+  id: makeId(node.id, locale),
+})
+
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
   { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
@@ -57,13 +65,13 @@ const downloadImageAndCreateFileNode = async (
   return undefined
 }
 
-export const ArticleNode = imageArgs =>
+export const ArticleNode = (imageArgs, locale) =>
   createNodeFactory(ARTICLE, async node => {
     if (node.blog) node.blog___NODE = generateNodeId(BLOG, node.blog.id)
 
     if (node.comments)
       node.comments___NODE = node.comments.edges.map(edge =>
-        generateNodeId(COMMENT, edge.node.id)
+        generateNodeId(COMMENT, makeId(edge.node.id, locale))
       )
 
     if (node.image)
@@ -72,16 +80,17 @@ export const ArticleNode = imageArgs =>
         imageArgs
       )
 
-    return node
+    return createLocaleNode(node, locale)
   })
 
-export const BlogNode = _imageArgs => createNodeFactory(BLOG)
+export const BlogNode = (_imageArgs, locale) =>
+  createNodeFactory(BLOG, async node => createLocaleNode(node, locale))
 
-export const CollectionNode = imageArgs =>
+export const CollectionNode = (imageArgs, locale) =>
   createNodeFactory(COLLECTION, async node => {
     if (node.products) {
       node.products___NODE = node.products.edges.map(edge =>
-        generateNodeId(PRODUCT, edge.node.id)
+        generateNodeId(PRODUCT, makeId(edge.node.id, locale))
       )
       delete node.products
     }
@@ -94,18 +103,20 @@ export const CollectionNode = imageArgs =>
         },
         imageArgs
       )
-    return node
+
+    return createLocaleNode(node, locale)
   })
 
-export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
+export const CommentNode = (_imageArgs, locale) =>
+  createNodeFactory(COMMENT, async node => createLocaleNode(node, locale))
 
-export const ProductNode = imageArgs =>
+export const ProductNode = (imageArgs, locale) =>
   createNodeFactory(PRODUCT, async node => {
     if (node.variants) {
       const variants = node.variants.edges.map(edge => edge.node)
 
       node.variants___NODE = variants.map(variant =>
-        generateNodeId(PRODUCT_VARIANT, variant.id)
+        generateNodeId(PRODUCT_VARIANT, makeId(variant.id, locale))
       )
 
       delete node.variants
@@ -115,14 +126,14 @@ export const ProductNode = imageArgs =>
       const metafields = node.metafields.edges.map(edge => edge.node)
 
       node.metafields___NODE = metafields.map(metafield =>
-        generateNodeId(PRODUCT_METAFIELD, metafield.id)
+        generateNodeId(PRODUCT_METAFIELD, makeId(metafield.id, locale))
       )
       delete node.metafields
     }
 
     if (node.options) {
       node.options___NODE = node.options.map(option =>
-        generateNodeId(PRODUCT_OPTION, option.id)
+        generateNodeId(PRODUCT_OPTION, makeId(option.id, locale))
       )
       delete node.options
     }
@@ -139,21 +150,26 @@ export const ProductNode = imageArgs =>
         return edge.node
       })
 
-    return node
+    return createLocaleNode(node, locale)
   })
 
-export const ProductMetafieldNode = _imageArgs =>
-  createNodeFactory(PRODUCT_METAFIELD)
+export const ProductMetafieldNode = (_imageArgs, locale) =>
+  createNodeFactory(PRODUCT_METAFIELD, async node =>
+    createLocaleNode(node, locale)
+  )
 
-export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
+export const ProductOptionNode = (_imageArgs, locale) =>
+  createNodeFactory(PRODUCT_OPTION, async node =>
+    createLocaleNode(node, locale)
+  )
 
-export const ProductVariantNode = (imageArgs, productNode) =>
+export const ProductVariantNode = (imageArgs, productNode, locale) =>
   createNodeFactory(PRODUCT_VARIANT, async node => {
     if (node.metafields) {
       const metafields = node.metafields.edges.map(edge => edge.node)
 
       node.metafields___NODE = metafields.map(metafield =>
-        generateNodeId(PRODUCT_VARIANT_METAFIELD, metafield.id)
+        generateNodeId(PRODUCT_VARIANT_METAFIELD, makeId(metafield.id, locale))
       )
       delete node.metafields
     }
@@ -168,14 +184,25 @@ export const ProductVariantNode = (imageArgs, productNode) =>
       )
 
     node.product___NODE = productNode.id
-    return node
+
+    return createLocaleNode(node, locale)
   })
 
-export const ProductVariantMetafieldNode = _imageArgs =>
-  createNodeFactory(PRODUCT_VARIANT_METAFIELD)
+export const ProductVariantMetafieldNode = (_imageArgs, locale) =>
+  createNodeFactory(PRODUCT_VARIANT_METAFIELD, async node =>
+    createLocaleNode(node, locale)
+  )
 
-export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
+export const ShopPolicyNode = (locale, type) =>
+  createNodeFactory(SHOP_POLICY, async node => ({
+    ...createLocaleNode(node, locale),
+    type,
+  }))
 
 export const ShopDetailsNode = createNodeFactory(SHOP_DETAILS)
 
-export const PageNode = createNodeFactory(PAGE)
+export const ShopDetailsNode = locale =>
+  createNodeFactory(SHOP_DETAILS, async node => createLocaleNode(node, locale))
+
+export const PageNode = locale =>
+  createNodeFactory(PAGE, async node => createLocaleNode(node, locale))
