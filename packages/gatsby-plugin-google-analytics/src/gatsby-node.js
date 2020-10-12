@@ -1,10 +1,9 @@
 exports.pluginOptionsSchema = ({ Joi }) =>
+  // TODO: make sure that trackingId gets required() when releasing a major version
   Joi.object({
-    trackingId: Joi.string()
-      .required()
-      .description(
-        `The property ID; the tracking code won't be generated without it`
-      ),
+    trackingId: Joi.string().description(
+      `The property ID; the tracking code won't be generated without it`
+    ),
     head: Joi.boolean()
       .default(false)
       .description(
