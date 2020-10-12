@@ -29,7 +29,7 @@ const createPageDataUrl = path => {
   return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
 }
 
-function doFetch(url, method = `GET`) {
+function doFetch(url, method = `GET`, noCache = false) {
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
@@ -37,6 +37,10 @@ function doFetch(url, method = `GET`) {
       if (req.readyState == 4) {
         resolve(req)
       }
+    }
+    // Ensure responses are not cached. Usefull if page-data.json files are accidentally cached for example
+    if (noCache) {
+      req.setRequestHeader(`Cache-Control`, `no-store`)
     }
     req.send(null)
   })
@@ -106,7 +110,7 @@ export class BaseLoader {
     let inFlightPromise = this.inFlightNetworkRequests.get(url)
 
     if (!inFlightPromise) {
-      inFlightPromise = doFetch(url, `GET`)
+      inFlightPromise = doFetch(url, `GET`, true)
       this.inFlightNetworkRequests.set(url, inFlightPromise)
     }
 
@@ -476,7 +480,7 @@ export class ProdLoader extends BaseLoader {
       if (data.notFound) {
         // check if html file exist using HEAD request:
         // if it does we should navigate to it instead of showing 404
-        return doFetch(rawPath, `HEAD`).then(req => {
+        return doFetch(rawPath, `HEAD`, true).then(req => {
           if (req.status === 200) {
             // page (.html file) actually exist (or we asked for 404 )
             // returning page resources status as errored to trigger
