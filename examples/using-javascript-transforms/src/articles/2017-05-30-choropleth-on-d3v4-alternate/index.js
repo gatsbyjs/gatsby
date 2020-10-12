@@ -22,9 +22,9 @@ class choroplethAltBase extends React.Component {
     }
     let space = graph.setup(this.d3Node, measurements)
 
-    /*
-       we begin drawing here, grab the data and use it to draw
-      */
+    /**
+    * we begin drawing here, grab the data and use it to draw
+    */
 
     d3.queue()
       .defer(d3.json, stateDataURL)
@@ -90,15 +90,15 @@ graph.setup = (selection, measurements) => {
 }
 
 graph.draw = (svg, data, measurements) => {
-  /*
-our data expects an array of objects
-each object is expected to have:
-name: tooltip - the full name of the state
-abbrev: mergeData - used as the key to merge the json and csv
-low: tooltip, color domain
-high: tooltip, color domain
-average: tooltip, path fill
-*/
+  /**
+  * our data expects an array of objects
+  * each object is expected to have:
+  * name: tooltip - the full name of the state
+  * abbrev: mergeData - used as the key to merge the json and csv
+  * low: tooltip, color domain
+  * high: tooltip, color domain
+  * average: tooltip, path fill
+  */
   let color = d3
     .scaleQuantize()
     .range([
@@ -191,11 +191,11 @@ let mergeData = (d1, d1key, d2, d2key) => {
 }
 
 // We want to keep this component mostly about the code
-//  so we write our explanation with markdown and manually pull it in here.
-//  Within the config, we loop all of the markdown and createPages. However,
-//  it will ignore any files appended with an _underscore. We can still manually
-//  query for it here, and get the transformed html though because remark transforms
-//  any markdown based node.
+// so we write our explanation with markdown and manually pull it in here.
+// Within the config, we loop all of the markdown and createPages. However,
+// it will ignore any files appended with an _underscore. We can still manually
+// query for it here, and get the transformed html though because remark transforms
+// any markdown based node.
 export const pageQuery = graphql`
   query choroplethOnD3v4Alt {
     markdownRemark(

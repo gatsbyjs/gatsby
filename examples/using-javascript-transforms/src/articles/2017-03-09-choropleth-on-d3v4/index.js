@@ -191,7 +191,7 @@ let mergeData = (d1, d1key, d2, d2key) => {
   return data
 }
 
-// We want to keep this component mostly about the code
+//  We want to keep this component mostly about the code
 //  so we write our explanation with markdown and manually pull it in here.
 //  Within the config, we loop all of the markdown and createPages. However,
 //  it will ignore any files appended with an _underscore. We can still manually

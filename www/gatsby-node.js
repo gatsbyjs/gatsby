@@ -164,7 +164,7 @@ exports.createPages = async helpers => {
   })
 
   // catch all redirect
-  //  this needs to be the last redirect created or it'll match everything
+  // this needs to be the last redirect created or it'll match everything
   await createRedirect({
     fromPath: `/*`,
     toPath: `https://www.gatsbyjs.com/:splat`,
