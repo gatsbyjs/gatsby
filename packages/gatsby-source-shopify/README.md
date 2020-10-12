@@ -73,6 +73,10 @@ plugins: [
       // Defaults to ['shop', 'content'].
       includeCollections: ["shop", "content"],
 
+      // List of languages you want to fetch.
+      // Defaults to ['en'].
+      languages: ["en"],
+
       // Allow overriding the default queries
       // This allows you to include/exclude extra fields when sourcing nodes
       // Available keys are: articles, blogs, collections, products, shopPolicies, and pages

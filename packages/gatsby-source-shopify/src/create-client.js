@@ -2,7 +2,7 @@ import { GraphQLClient } from "graphql-request"
 /**
  * Create a Shopify Storefront GraphQL client for the provided name and token.
  */
-export const createClient = (shopName, accessToken, apiVersion) => {
+export const createClient = (shopName, accessToken, apiVersion, locale) => {
   let url
   if (shopName.includes(`.`)) {
     url = `https://${shopName}/api/${apiVersion}/graphql.json`
@@ -12,6 +12,7 @@ export const createClient = (shopName, accessToken, apiVersion) => {
   return new GraphQLClient(url, {
     headers: {
       "X-Shopify-Storefront-Access-Token": accessToken,
+      "Accept-Language": locale,
     },
   })
 }
