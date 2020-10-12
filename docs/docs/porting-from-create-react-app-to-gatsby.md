@@ -44,7 +44,7 @@ In order to transition your codebase over to using Gatsby, a few things need to 
 In order to use Gatsby, you have to install it:
 
 ```shell
-npm install --save gatsby
+npm install gatsby
 ```
 
 > **Note**: rather than using the `gatsby new` command like you would initializing a new Gatsby site, this will install Gatsby as a dependency in your project

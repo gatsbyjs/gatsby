@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.20...gatsby-image@2.4.21) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.19...gatsby-image@2.4.20) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.18...gatsby-image@2.4.19) (2020-09-16)
+
+### Bug Fixes
+
+- **gatsby-image:** Don't assume DOM state is valid at hydration stage ([#26097](https://github.com/gatsbyjs/gatsby/issues/26097)) ([cf34304](https://github.com/gatsbyjs/gatsby/commit/cf3430462748cecdfb4b9f6b61285534fb4a2ea9))
+
+## [2.4.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.17...gatsby-image@2.4.18) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.16...gatsby-image@2.4.17) (2020-09-07)
 
 ### Bug Fixes

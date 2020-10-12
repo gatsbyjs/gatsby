@@ -7,12 +7,14 @@ import { queryActions } from "./actions"
  * This is a child state machine, spawned to perform the query running
  */
 
+const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
+
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
   on: {
     SOURCE_FILE_CHANGED: {
-      target: `extractingQueries`,
+      actions: `markSourceFilesDirty`,
     },
   },
   context: {},
@@ -23,7 +25,27 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         id: `extracting-queries`,
         src: `extractQueries`,
         onDone: {
+          target: `waitingPendingQueries`,
+        },
+      },
+    },
+    // This state exists solely because "extractQueries" finishes too early.
+    // It finishes before extracted queries are enqueued for execution.
+    // As a result calculateDirtyQueries doesn't see them and they are not executed.
+    //
+    // This happens because extracted queries are enqueued for execution with setTimeout(x, 0)
+    // wrapper in actions of redux/machines/page-component which fires after "extractQueries" finishes.
+    //
+    // see https://github.com/gatsbyjs/gatsby/issues/26580
+    //
+    // FIXME: this has to be fixed properly by not leaving "extractingQueries" state
+    //   until all extracted queries are enqueued for execution (but requires a refactor)
+    waitingPendingQueries: {
+      id: `waiting-pending-queries`,
+      after: {
+        [PAGE_QUERY_ENQUEUING_TIMEOUT]: {
           target: `writingRequires`,
+          actions: `markSourceFilesClean`,
         },
       },
     },
@@ -67,6 +89,11 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     },
     // This waits for the jobs API to finish
     waitingForJobs: {
+      // If files are dirty go and extract again
+      always: {
+        cond: (ctx): boolean => !!ctx.filesDirty,
+        target: `extractingQueries`,
+      },
       invoke: {
         src: `waitUntilAllJobsComplete`,
         id: `waiting-for-jobs`,

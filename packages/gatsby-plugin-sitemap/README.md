@@ -6,7 +6,7 @@ _NOTE: This plugin only generates output when run in `production` mode! To test 
 
 ## Install
 
-`npm install --save gatsby-plugin-sitemap`
+`npm install gatsby-plugin-sitemap`
 
 ## How to Use
 
