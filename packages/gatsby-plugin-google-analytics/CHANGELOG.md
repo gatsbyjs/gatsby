@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.17...gatsby-plugin-google-analytics@2.3.18) (2020-10-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** remove required on trackingId ([#27398](https://github.com/gatsbyjs/gatsby/issues/27398)) ([3518d10](https://github.com/gatsbyjs/gatsby/commit/3518d10c3541277a3ba2da5bb099a54d02179257))
+
 ## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.16...gatsby-plugin-google-analytics@2.3.17) (2020-10-07)
 
 ### Features
