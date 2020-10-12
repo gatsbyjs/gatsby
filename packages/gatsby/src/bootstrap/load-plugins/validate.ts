@@ -182,11 +182,12 @@ export async function validatePluginOptions({
           const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
           if (!gatsbyNode.pluginOptionsSchema) return null
 
-          let optionsSchema = (gatsbyNode.pluginOptionsSchema as GatsbyNode["pluginOptionsSchema"])(
-            {
-              Joi,
-            }
-          )
+          let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
+            GatsbyNode["pluginOptionsSchema"],
+            undefined
+          >)({
+            Joi,
+          })
 
           // Validate correct usage of pluginOptionsSchema
           if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {

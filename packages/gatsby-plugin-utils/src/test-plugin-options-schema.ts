@@ -7,7 +7,7 @@ interface ITestPluginOptionsSchemaReturnType {
 }
 
 export function testPluginOptionsSchema<PluginOptions = object>(
-  pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
+  pluginSchemaFunction: Exclude<GatsbyNode["pluginOptionsSchema"], undefined>,
   pluginOptions: PluginOptions
 ): ITestPluginOptionsSchemaReturnType {
   const pluginOptionsNames = Object.keys(pluginOptions)
