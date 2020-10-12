@@ -396,7 +396,7 @@ describe(`Dev loader`, () => {
       const expectation = devLoader.pageDb.get(`/mypage`)
       expect(expectation).toHaveProperty(`status`, `error`)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
-    })
+    }, 30000)
 
     it(`should return an error pageData contains an error`, async () => {
       const syncRequires = createSyncRequires({

@@ -33,3 +33,7 @@ export type PageContext = any
 export interface IExecutionResult extends ExecutionResult {
   pageContext?: PageContext
 }
+
+export interface IQueryMeta {
+  moduleDependencies: Set<string>
+}

@@ -6,6 +6,21 @@ import { Stats } from "webpack"
 
 interface ICompilation {
   modules: Array<IModule>
+  resolverFactory: IResolverFactory
+}
+
+interface IResolverFactory {
+  get: (type: string) => IResolver | undefined
+}
+
+interface IResolver {
+  resolve: (
+    context: any,
+    path: string,
+    request: string,
+    resolveContext: any,
+    callback: (error: Error | null, resolvedPath: string) => void
+  ) => void
 }
 
 interface IReason extends Omit<Stats.Reason, "module"> {
@@ -43,10 +58,10 @@ const entryNodes = [
  *
  * Let's go through the implementation step by step.
  */
-export default function mapTemplatesToStaticQueryHashes(
+export default async function mapTemplatesToStaticQueryHashes(
   reduxState: IGatsbyState,
   compilation: ICompilation
-): Map<string, Array<number>> {
+): Promise<Map<string, Array<number>>> {
   /* The `staticQueryComponents` slice of state is useful because
    * it is a pre extracted collection of all static queries found in a Gatsby site.
    * This lets us traverse upwards from those to templates that
@@ -54,7 +69,11 @@ export default function mapTemplatesToStaticQueryHashes(
    * Note that this upward traversal is much shallower (and hence more performant)
    * than an equivalent downward one from an entry point.
    */
-  const { components, staticQueryComponents } = reduxState
+  const {
+    components,
+    staticQueryComponents,
+    modules: queryModules,
+  } = reduxState
   const { modules } = compilation
 
   /* We call the queries included above a page (via wrapRootElement or wrapPageElement APIs)
@@ -129,7 +148,7 @@ export default function mapTemplatesToStaticQueryHashes(
     return getDepsRec(mod, seen)
   }
 
-  const mapOfStaticQueryComponentsToDependants = new Map()
+  const mapOfStaticQueryComponentsToDependants = new Map<string, Set<string>>()
 
   // For every known static query, we get its dependents.
   staticQueryComponents.forEach(({ componentPath }) => {
@@ -141,7 +160,7 @@ export default function mapTemplatesToStaticQueryHashes(
     )
     const dependants = staticQueryComponentModule
       ? getDeps(staticQueryComponentModule)
-      : new Set()
+      : new Set<string>()
 
     mapOfStaticQueryComponentsToDependants.set(componentPath, dependants)
   })
@@ -192,6 +211,58 @@ export default function mapTemplatesToStaticQueryHashes(
       staticQueryHashes.sort().map(String)
     )
   })
+
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_MODULES) {
+    for (const [_moduleId, queryModule] of queryModules) {
+      const staticQueryHashes: Array<string> = []
+
+      let resolvedSource = queryModule.source
+
+      const resolver = compilation.resolverFactory.get(`normal`)
+      if (resolver) {
+        await new Promise(resolve => {
+          resolver.resolve(
+            {},
+            process.cwd(),
+            resolvedSource,
+            {},
+            (_error, resolvedPath) => {
+              if (resolvedPath) {
+                resolvedSource = resolvedPath
+              }
+
+              resolve()
+            }
+          )
+        })
+      }
+
+      // Does this module contain an inline static query?
+      if (mapOfComponentsToStaticQueryHashes.has(resolvedSource)) {
+        const hash = mapOfComponentsToStaticQueryHashes.get(resolvedSource)
+        if (hash) {
+          staticQueryHashes.push(hash)
+        }
+      }
+
+      // Check dependencies
+      mapOfStaticQueryComponentsToDependants.forEach(
+        (setOfDependants, moduleSource) => {
+          if (setOfDependants.has(resolvedSource)) {
+            const hash = mapOfComponentsToStaticQueryHashes.get(moduleSource)
+            if (hash) {
+              staticQueryHashes.push(hash)
+            }
+          }
+        }
+      )
+
+      mapOfTemplatesToStaticQueryHashes.set(
+        queryModule.source,
+        staticQueryHashes.sort().map(String)
+      )
+    }
+  }
 
   return mapOfTemplatesToStaticQueryHashes
 }

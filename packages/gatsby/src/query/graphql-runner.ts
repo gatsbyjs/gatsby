@@ -17,7 +17,11 @@ import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
 import { IGatsbyState } from "../redux/types"
-import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import {
+  IGraphQLRunnerStatResults,
+  IGraphQLRunnerStats,
+  IQueryMeta,
+} from "./types"
 import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
@@ -137,7 +141,12 @@ export class GraphQLRunner {
     {
       parentSpan,
       queryName,
-    }: { parentSpan: Span | undefined; queryName: string }
+      meta,
+    }: {
+      parentSpan: Span | undefined
+      queryName: string
+      meta?: IQueryMeta
+    }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -189,6 +198,7 @@ export class GraphQLRunner {
                 nodeModel: this.nodeModel,
                 stats: this.stats,
                 tracer,
+                meta,
               }),
               variableValues: context,
             })

@@ -27,6 +27,7 @@ jest.mock(`fs-extra`, () => {
 const mockFsExtra = require(`fs-extra`)
 
 describe(`requires-writer`, () => {
+  const modules = new Map()
   const program = {
     directory: `/dir`,
   }
@@ -61,6 +62,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       expect(spy).toBeCalledWith(
@@ -108,6 +110,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -141,6 +144,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -165,6 +169,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -219,6 +224,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -245,6 +251,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       const matchPathsForInvertedInput = matchPaths
@@ -252,6 +259,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        modules,
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -263,6 +271,7 @@ describe(`requires-writer`, () => {
         await requiresWriter.writeAll({
           pages,
           program,
+          modules,
         })
 
         const allMatchingPages = matchPaths

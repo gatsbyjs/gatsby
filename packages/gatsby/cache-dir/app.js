@@ -15,6 +15,23 @@ import matchPaths from "$virtual/match-paths.json"
 window.___emitter = emitter
 
 const loader = new DevLoader(syncRequires, matchPaths)
+
+if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
+  module.hot.accept(`$virtual/sync-requires`, () => {
+    loader.updateSyncRequires(syncRequires)
+  })
+} else {
+  // "react-hot-loader" intercepts module.hot.accept
+  // so we can't use it. For now using
+  // hot status handler listener as a workaround.
+  // can be removed in v3 when we drop react-hot-loader
+  module.hot.addStatusHandler(status => {
+    if (status === `idle`) {
+      loader.updateSyncRequires(require(`$virtual/sync-requires`))
+    }
+  })
+}
+
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 

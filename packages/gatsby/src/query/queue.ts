@@ -61,7 +61,12 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
         result => {
           if (!queryJob.isPage) {
             websocketManager.emitStaticQueryData({
-              result,
+              result: {
+                ...result,
+                moduleDependencies: Array.from(
+                  queryJob.meta.moduleDependencies || new Set()
+                ),
+              },
               id: queryJob.id,
             })
           }

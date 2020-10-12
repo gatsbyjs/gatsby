@@ -1,6 +1,7 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
+import { addModule } from "./modules"
 
 /**
  * Available resource loading statuses
@@ -228,7 +229,11 @@ export class BaseLoader {
       }
 
       let pageData = result.payload
-      const { componentChunkName, staticQueryHashes = [] } = pageData
+      const {
+        componentChunkName,
+        staticQueryHashes = [],
+        moduleDependencies = [],
+      } = pageData
 
       const finalResult = {}
 
@@ -281,23 +286,29 @@ export class BaseLoader {
         return staticQueryResultsMap
       })
 
-      return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
-        ([pageResources, staticQueryResults]) => {
-          let payload
-          if (pageResources) {
-            payload = { ...pageResources, staticQueryResults }
-            finalResult.payload = payload
-            emitter.emit(`onPostLoadPageResources`, {
-              page: payload,
-              pageResources: payload,
-            })
-          }
-
-          this.pageDb.set(pagePath, finalResult)
-
-          return payload
-        }
+      const modulesBatchPromise = this.fetchModuleDependencies(
+        moduleDependencies
       )
+
+      return Promise.all([
+        componentChunkPromise,
+        staticQueryBatchPromise,
+        modulesBatchPromise,
+      ]).then(([pageResources, staticQueryResults]) => {
+        let payload
+        if (pageResources) {
+          payload = { ...pageResources, staticQueryResults }
+          finalResult.payload = payload
+          emitter.emit(`onPostLoadPageResources`, {
+            page: payload,
+            pageResources: payload,
+          })
+        }
+
+        this.pageDb.set(pagePath, finalResult)
+
+        return payload
+      })
     })
 
     inFlightPromise
@@ -427,6 +438,18 @@ export class BaseLoader {
       }
     )
   }
+
+  fetchModuleDependencies(moduleDependencies = []) {
+    return Promise.all(
+      moduleDependencies.map(moduleId =>
+        // webpack runtime handles in-flight and loaded modules cache
+        // internally, so we don't have to add handling of those ourselves
+        this.loadComponent(moduleId, `modules`).then(m => {
+          addModule(moduleId, m)
+        })
+      )
+    )
+  }
 }
 
 const createComponentUrls = componentChunkName =>
@@ -436,9 +459,9 @@ const createComponentUrls = componentChunkName =>
 
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]
-        ? asyncRequires.components[chunkName]()
+    const loadComponent = (chunkName, key = `components`) =>
+      asyncRequires[key][chunkName]
+        ? asyncRequires[key][chunkName]()
             .then(preferDefault)
             // loader will handle the case when component is null
             .catch(() => null)
@@ -535,4 +558,13 @@ export default publicLoader
 
 export function getStaticQueryResults() {
   return instance.staticQueryDb
+}
+
+// separate export so it gets tree-shaken in production build
+export function processHotPageDataUpdate(pageData) {
+  // We don't need to update `pageDB` or `pageDataDb` because modules
+  // are not stored in page resources. This function only triggers fetching
+  // and updating modules store.
+
+  return instance.fetchModuleDependencies(pageData.moduleDependencies)
 }

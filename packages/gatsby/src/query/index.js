@@ -9,6 +9,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
 const { GraphQLRunner } = require(`./graphql-runner`)
 const pageDataUtil = require(`../utils/page-data`)
+import { initQueryMeta } from "./utils"
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -181,6 +182,7 @@ const createStaticQueryJob = (state, queryId) => {
     query,
     componentPath,
     context: { path: id },
+    meta: initQueryMeta(),
   }
 }
 
@@ -255,6 +257,7 @@ const createPageQueryJob = (state, page) => {
       ...page,
       ...context,
     },
+    meta: initQueryMeta(),
   }
 }
 

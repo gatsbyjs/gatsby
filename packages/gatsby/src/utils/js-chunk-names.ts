@@ -32,10 +32,13 @@ function replaceUnifiedRoutesKeys(
   return newString
 }
 
-export function generateComponentChunkName(componentPath: string): string {
+export function generateComponentChunkName(
+  componentPath: string,
+  prefix: string = `component`
+): string {
   const { program } = store.getState()
   const directory = program?.directory || `/`
   const name = path.relative(directory, componentPath)
 
-  return `component---${replaceUnifiedRoutesKeys(kebabCase(name), name)}`
+  return `${prefix}---${replaceUnifiedRoutesKeys(kebabCase(name), name)}`
 }

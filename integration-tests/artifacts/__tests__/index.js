@@ -1,4 +1,4 @@
-const { spawn } = require(`child_process`)
+const { spawn, spawnSync } = require(`child_process`)
 const path = require(`path`)
 const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const { readPageData } = require(`gatsby/dist/utils/page-data`)
@@ -106,11 +106,16 @@ beforeAll(async done => {
 
 describe(`First run`, () => {
   beforeAll(async done => {
+    spawnSync(gatsbyBin, [`clean`], {
+      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+    })
+
     const gatsbyProcess = spawn(gatsbyBin, [`build`], {
       stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
       env: {
         ...process.env,
         NODE_ENV: `production`,
+        GATSBY_EXPERIMENTAL_QUERY_MODULES: `1`,
         RUN_FOR_STALE_PAGE_ARTIFICATS: `1`,
       },
     })
@@ -284,6 +289,7 @@ describe(`Second run`, () => {
       env: {
         ...process.env,
         NODE_ENV: `production`,
+        GATSBY_EXPERIMENTAL_QUERY_MODULES: `1`,
         RUN_FOR_STALE_PAGE_ARTIFICATS: `2`,
       },
     })
@@ -331,5 +337,30 @@ describe(`Second run`, () => {
         shouldExist: false,
       })
     })
+  })
+})
+
+describe(`Modules`, () => {
+  test(`are written when added via page query`, async () => {
+    const pagePath = `/page-query-modules/`
+
+    const { moduleDependencies } = await readPageData(publicDir, pagePath)
+
+    expect(moduleDependencies).toMatchInlineSnapshot(`
+      Array [
+        "module---src-query-modules-module-a-js-default-",
+      ]
+    `)
+  })
+  test(`are written when added via static query`, async () => {
+    const pagePath = `/static-query-modules/`
+
+    const { moduleDependencies } = await readPageData(publicDir, pagePath)
+
+    expect(moduleDependencies).toMatchInlineSnapshot(`
+      Array [
+        "module---src-query-modules-module-b-js-default-",
+      ]
+    `)
   })
 })

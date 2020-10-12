@@ -1,11 +1,41 @@
 import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
+import pDefer from "p-defer"
+
+const WAITING_FOR_HOT_UPDATE_TIMEOUT = 1000
+const COMPONENT_GRABBING_RETRY_LIMIT = 5
 
 class DevLoader extends BaseLoader {
+  waitingForHotUpdatePromise = pDefer()
+
   constructor(syncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      Promise.resolve(syncRequires.components[chunkName])
+    const loadComponent = (chunkName, key = `components`, retry = 0) => {
+      const module = this.syncRequires[key][chunkName]
+
+      if (!module && retry < COMPONENT_GRABBING_RETRY_LIMIT) {
+        return new Promise(resolve => {
+          const checkAgain = () => loadComponent(chunkName, key, retry + 1)
+
+          let waitingForHotUpdate = setTimeout(() => {
+            waitingForHotUpdate = undefined
+            resolve(checkAgain())
+          }, WAITING_FOR_HOT_UPDATE_TIMEOUT)
+
+          this.waitingForHotUpdatePromise.promise.then(() => {
+            if (waitingForHotUpdate) {
+              clearTimeout(waitingForHotUpdate)
+              resolve(checkAgain())
+            }
+          })
+        })
+      }
+
+      return Promise.resolve(module)
+    }
+
     super(loadComponent, matchPaths)
+
+    this.syncRequires = syncRequires
   }
 
   loadPage(pagePath) {
@@ -39,6 +69,12 @@ class DevLoader extends BaseLoader {
 
   doPrefetch(pagePath) {
     return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
+  }
+
+  updateSyncRequires(syncRequires) {
+    this.syncRequires = syncRequires
+    this.waitingForHotUpdatePromise.resolve()
+    this.waitingForHotUpdatePromise = pDefer()
   }
 }
 
