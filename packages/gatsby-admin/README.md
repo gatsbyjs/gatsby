@@ -4,13 +4,29 @@ A visual interface to configure your Gatsby site. Currently alpha testing.
 
 ## Getting started
 
-To enable Admin for your local Gatsby site, run `gatsby develop` with the `GATSBY_EXPERIMENTAL_ENABLE_ADMIN` environment variable enabled:
+For now, Gatsby Admin is marked as experimental and requires a flag to enable. Add the following flag when using `gatsby develop`:
 
 ```sh
 GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
 ```
 
-You can then visit `localhost:8000/___admin` to view Admin for your Gatsby site!
+Or in the `scripts` section of your `package.json`:
+
+```json
+{
+  "develop": "GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop"
+}
+```
+
+**Note**: If you’re on Windows you should install [`cross-env`](https://www.npmjs.com/package/cross-env) and prepend your script, e.g.:
+
+```json
+{
+  "develop": "cross-env GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop"
+}
+```
+
+Once you run `gatsby develop` with the flag enabled, you can visit `localhost:8000/___admin` to view Admin for your Gatsby site!
 
 ![Gatsby Admin homepage showing a list of installed plugins, as well as a search input to search for plugins to install](https://user-images.githubusercontent.com/7525670/95580804-36df9200-0a38-11eb-80a7-fbd847a13da1.png)
 
@@ -18,7 +34,11 @@ When you select an installed plugin or search for a new one, you will be able to
 
 ![Gatsby Admin plugin page showing the README of the gatsby-plugin-sitemap, as well as an input field to configure the options for said plugin](https://user-images.githubusercontent.com/7525670/95580764-27f8df80-0a38-11eb-9f26-8a2cbbc4b07d.png)
 
-Let us know what you think by hitting the "Send feedback" button in Admin!
+Let us know what you think by hitting the "Send feedback" button in Admin or commenting in [the Admin umbrella issue](https://github.com/gatsbyjs/gatsby/issues/27402)!
+
+## Troubleshooting
+
+Admin does not support all `gatsby-config.js` formats. If yours is not supported, we'd love if you could share what it looks like in the [umbrella issue](https://github.com/gatsbyjs/gatsby/issues/27402)!
 
 ## Technical documentation
 
