@@ -518,7 +518,7 @@ export interface GatsbyNode {
    * Add a Joi schema for the possible options of your plugin.
    * Currently experimental and not enabled by default.
    */
-  pluginOptionsSchema(args: PluginOptionsSchemaArgs): ObjectSchema
+  pluginOptionsSchema?(args: PluginOptionsSchemaArgs): ObjectSchema
 }
 
 /**
