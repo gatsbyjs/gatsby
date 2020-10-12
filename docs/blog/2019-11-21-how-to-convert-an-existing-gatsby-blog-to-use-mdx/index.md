@@ -30,7 +30,7 @@ gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also install `gatsby-plugin-feed-mdx` for our RSS feeds. Finally, install `@mdx-js/mdx` and `@mdx-js/react`.
 
 ```shell
-npm install --save gatsby-plugin-mdx gatsby-plugin-feed-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx gatsby-plugin-feed-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 ### Step 2
@@ -103,7 +103,7 @@ Then, replace `gatsby-plugin-feed` with `gatsby-plugin-feed-mdx`. This will allo
 Now, since we're no longer using `gatsby-transformer-remark` and `gatsby-plugin-feed`, you can uninstall them.
 
 ```shell
-npm uninstall --save gatsby-transformer-remark gatsby-plugin-feed
+npm uninstall gatsby-transformer-remark gatsby-plugin-feed
 ```
 
 ### Step 3

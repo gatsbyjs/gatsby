@@ -20,7 +20,7 @@ of PNGs then it can significantly reduce build times.
 
 ## Install
 
-`npm install --save gatsby-plugin-sharp`
+`npm install gatsby-plugin-sharp`
 
 ## How to use
 

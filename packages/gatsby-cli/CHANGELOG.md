@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.107](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.106...gatsby-cli@2.12.107) (2020-10-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.106](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.105...gatsby-cli@2.12.106) (2020-10-08)
+
+### Bug Fixes
+
+- **gatsby-cli:** Categorize plugin validation error ([#27340](https://github.com/gatsbyjs/gatsby/issues/27340)) ([4b24d7f](https://github.com/gatsbyjs/gatsby/commit/4b24d7fb274ab27b8650eb10aa46e5d7157d171e))
+
+## [2.12.105](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.104...gatsby-cli@2.12.105) (2020-10-08)
+
+### Features
+
+- **gatsby,gatsby-cli:** Pass an errorMap to reporter.error ([#27176](https://github.com/gatsbyjs/gatsby/issues/27176)) ([56402db](https://github.com/gatsbyjs/gatsby/commit/56402dbb26aa56f8f1d69a0d4e2d079efccec669))
+
+## [2.12.104](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.103...gatsby-cli@2.12.104) (2020-10-07)
+
+### Features
+
+- **gatsby:** plugin option validation ([#27242](https://github.com/gatsbyjs/gatsby/issues/27242)) ([9b01ca7](https://github.com/gatsbyjs/gatsby/commit/9b01ca7926efa1c4c6d58b33a137c2f0a0ef99b7))
+
+## [2.12.103](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.102...gatsby-cli@2.12.103) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.102](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.101...gatsby-cli@2.12.102) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.12.101](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.100...gatsby-cli@2.12.101) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-cli

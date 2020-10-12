@@ -54,6 +54,7 @@ it("generates the expected api output", done => {
           "onPreBuild": Object {},
           "onPreExtractQueries": Object {},
           "onPreInit": Object {},
+          "pluginOptionsSchema": Object {},
           "preprocessSource": Object {},
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},

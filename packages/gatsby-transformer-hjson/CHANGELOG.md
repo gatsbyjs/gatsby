@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.12...gatsby-transformer-hjson@2.4.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
 ## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.11...gatsby-transformer-hjson@2.4.12) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-transformer-hjson

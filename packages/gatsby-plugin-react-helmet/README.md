@@ -13,7 +13,7 @@ This is important not just for site viewers, but also for SEO -- title and descr
 
 ## Install
 
-`npm install --save gatsby-plugin-react-helmet react-helmet`
+`npm install gatsby-plugin-react-helmet react-helmet`
 
 ## How to use
 

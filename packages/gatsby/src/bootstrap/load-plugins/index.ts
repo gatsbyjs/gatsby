@@ -11,6 +11,7 @@ import {
   handleMultipleReplaceRenderers,
   ExportType,
   ICurrentAPIs,
+  validatePluginOptions,
 } from "./validate"
 import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
 
@@ -70,6 +71,11 @@ export async function loadPlugins(
 
   // Show errors for any non-Gatsby APIs exported from plugins
   await handleBadExports({ currentAPIs, badExports })
+
+  // Show errors for invalid plugin configuration
+  if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+    await validatePluginOptions({ flattenedPlugins })
+  }
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({

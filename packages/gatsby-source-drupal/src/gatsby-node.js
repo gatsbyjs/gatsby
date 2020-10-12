@@ -67,11 +67,13 @@ exports.sourceNodes = async (
         reporter.warn(
           `The secret in this request did not match your plugin options secret.`
         )
+        changesActivity.end()
         return
       }
       if (action === `delete`) {
         actions.deleteNode({ node: getNode(createNodeId(id)) })
         reporter.log(`Deleted node: ${id}`)
+        changesActivity.end()
         return
       }
 
