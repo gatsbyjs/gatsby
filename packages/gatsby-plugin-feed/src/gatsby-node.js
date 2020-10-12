@@ -2,6 +2,7 @@ import fs from "fs-extra"
 import path from "path"
 import RSS from "rss"
 import merge from "lodash.merge"
+import Joi from "@hapi/joi"
 
 import { defaultOptions, runQuery } from "./internals"
 import pluginOptionsSchema from "./plugin-options"
@@ -14,6 +15,8 @@ const warnMessage = (error, behavior) => `
   This behavior will be removed in the next major release of gatsby-plugin-feed.
   For more info, check out: https://gatsby.dev/adding-rss-feed
 `
+
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 // TODO: remove in the next major release
 // A default function to transform query data into feed entries.
@@ -35,9 +38,14 @@ exports.onPreBootstrap = async function onPreBootstrap(
   delete pluginOptions.plugins
 
   try {
-    const normalized = await pluginOptionsSchema.validate(pluginOptions)
+    // TODO: remove this once pluginOptionsSchema is stable
+    const normalized = await pluginOptionsSchema({ Joi }).validate(
+      pluginOptions,
+      {
+        externals: false,
+      }
+    )
 
-    // TODO: remove these checks in the next major release
     if (!normalized.feeds) {
       reporter.warn(
         reporter.stripIndent(
