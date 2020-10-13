@@ -40,7 +40,7 @@ function doFetch(url, method = `GET`, noCache = false) {
     }
     // Ensure responses are not cached. Usefull if page-data.json files are accidentally cached for example
     if (noCache) {
-      req.setRequestHeader(`Cache-Control`, `no-store`)
+      req.setRequestHeader(`Cache-Control`, `no-cache`)
     }
     req.send(null)
   })
