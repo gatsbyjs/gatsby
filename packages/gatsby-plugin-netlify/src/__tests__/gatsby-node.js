@@ -29,7 +29,7 @@ describe(`gatsby-node.js`, () => {
       mergeSecurityHeaders: `this should be a boolean`,
       mergeLinkHeaders: `this should be a boolean`,
       mergeCachingHeaders: `this should be a boolean`,
-      transformHeaders: (too, much, args) => ``,
+      transformHeaders: (too, many, args) => ``,
       generateMatchPathRewrites: `this should be a boolean`,
     })
 
