@@ -1,13 +1,14 @@
 {
   "name": "gatsby-plugin-sitemap",
   "description": "Gatsby plugin that automatically creates a sitemap for your site",
-  "version": "2.4.15",
+  "version": "2.4.16",
   "author": "Nicholas Young &lt;nicholas@nicholaswyoung.com&gt;",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "common-tags": "^1.8.0",
     "minimatch": "^3.0.4",
     "pify": "^3.0.0",
     "sitemap": "^1.13.0"

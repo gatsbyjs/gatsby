@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.27...gatsby-plugin-utils@0.2.28) (2020-10-12)
+
+### Bug Fixes
+
+- **gatsby:** Make pluginOptionsSchema optional ([#27397](https://github.com/gatsbyjs/gatsby/issues/27397)) ([a67fb02](https://github.com/gatsbyjs/gatsby/commit/a67fb0212ac9bd94964d8d5c256beebe6cb6f253)), closes [#27242](https://github.com/gatsbyjs/gatsby/issues/27242)
+
+### Features
+
+- **gatsby-plugin-utils:** add testPluginOptionsSchema to verify plugin schema options ([#27334](https://github.com/gatsbyjs/gatsby/issues/27334)) ([6f842fb](https://github.com/gatsbyjs/gatsby/commit/6f842fb534d204590ca86e1c297edd4438969ac0))
+
 ## [0.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.26...gatsby-plugin-utils@0.2.27) (2020-10-07)
 
 ### Features
