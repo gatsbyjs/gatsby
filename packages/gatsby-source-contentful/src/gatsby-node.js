@@ -5,10 +5,15 @@ const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
 const fetch = require(`node-fetch`)
+const { Joi } = require(`gatsby-plugin-utils`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const { createPluginConfig, maskText } = require(`./plugin-options`)
+const {
+  createPluginConfig,
+  maskText,
+  formatPluginOptionsForCLI,
+} = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -24,6 +29,22 @@ const restrictedNodeFields = [
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
+
+// TODO: Remove once pluginOptionsSchema is stable
+exports.onPreBootstrap = ({ reporter }, options) => {
+  const result = pluginOptionsSchema({ Joi }).validate(options, {
+    abortEarly: false,
+    externals: false,
+  })
+  if (result.error) {
+    const errors = {}
+    result.error.details.forEach(detail => {
+      errors[detail.path[0]] = detail.message
+    })
+    reporter.panic(`Problems with gatsby-source-contentful plugin options:	
+${formatPluginOptionsForCLI(options, errors)}`)
+  }
+}
 
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
@@ -52,7 +73,7 @@ const validateContentfulAccess = async pluginOptions => {
   return undefined
 }
 
-exports.pluginOptionsSchema = ({ Joi }) =>
+const pluginOptionsSchema = ({ Joi }) =>
   Joi.object()
     .keys({
       accessToken: Joi.string()
@@ -137,6 +158,10 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .default({}),
     })
     .external(validateContentfulAccess)
+
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  exports.pluginOptionsSchema = pluginOptionsSchema
+}
 
 /***
  * Localization algorithm
