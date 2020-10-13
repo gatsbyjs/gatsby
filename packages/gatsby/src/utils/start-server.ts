@@ -9,6 +9,10 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
+import path from "path"
+import fs from "fs"
+import { codeFrameColumns } from "@babel/code-frame"
+import ansiHTML from "ansi-html"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
@@ -247,6 +251,87 @@ export async function startServer(
   //     id: `webpack-renderer`,
   //   }
   // )
+  const getPosition = function (stackObject) {
+    var filename, line, row
+    // Because the JavaScript error stack has not yet been standardized,
+    // wrap the stack parsing in a try/catch for a soft fail if an
+    // unexpected stack is encountered.
+    try {
+      var filteredStack = stackObject.filter(function (s) {
+        return /\(.+?\)$/.test(s)
+      })
+      var splitLine
+      // For current Node & Chromium Error stacks
+      if (filteredStack.length > 0) {
+        splitLine = filteredStack[0].match(/(?:\()(.+?)(?:\))$/)[1].split(":")
+        // For older, future, or otherwise unexpected stacks
+      } else {
+        splitLine = stackObject[0].split(":")
+      }
+      var splitLength = splitLine.length
+      filename = splitLine[splitLength - 3]
+      line = Number(splitLine[splitLength - 2])
+      row = Number(splitLine[splitLength - 1])
+    } catch (err) {
+      filename = ""
+      line = 0
+      row = 0
+    }
+    return {
+      filename: filename,
+      line: line,
+      row: row,
+    }
+  }
+  const parseError = function (err) {
+    var stack = err.stack ? err.stack : ""
+    var stackObject = stack.split("\n")
+    var position = getPosition(stackObject)
+    // Remove the `/lib/` added by webpack
+    var filename = path.join(
+      directory,
+      ...position.filename.split(path.sep).slice(2)
+    )
+    var code = require(`fs`).readFileSync(filename, `utf-8`)
+    var line = position.line
+    var row = position.row
+    ansiHTML.setColors({
+      reset: ["555", "fff"], // FOREGROUND-COLOR or [FOREGROUND-COLOR] or [, BACKGROUND-COLOR] or [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      black: "aaa", // String
+      red: "bbb",
+      green: "ccc",
+      yellow: "ddd",
+      blue: "eee",
+      magenta: "fff",
+      cyan: "999",
+      lightgrey: "888",
+      darkgrey: "777",
+    })
+    var codeFrame = ansiHTML(
+      codeFrameColumns(
+        code,
+        {
+          start: { line: row, column: line },
+        },
+        { forceColor: true }
+      )
+    )
+    var splitMessage = err.message ? err.message.split("\n") : [""]
+    var message = splitMessage[splitMessage.length - 1]
+    var type = err.type ? err.type : err.name
+    var data = {
+      filename: filename,
+      code,
+      codeFrame,
+      line: line,
+      row: row,
+      message: message,
+      type: type,
+      stack: stack,
+      arguments: err.arguments,
+    }
+    return data
+  }
 
   // Render an HTML page and serve it.
   app.use(async (req, res, next) => {
@@ -262,22 +347,38 @@ export async function startServer(
     )
     htmlActivity.start()
 
-    const [response] = await renderHTML({
-      htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
-      paths: [req.path],
-      envVars: [
-        [`NODE_ENV`, process.env.NODE_ENV || ``],
-        [
-          `gatsby_executing_command`,
-          process.env.gatsby_executing_command || ``,
+    let response = `error`
+    try {
+      let renderResponse = await renderHTML({
+        htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+        paths: [req.path],
+        envVars: [
+          [`NODE_ENV`, process.env.NODE_ENV || ``],
+          [
+            `gatsby_executing_command`,
+            process.env.gatsby_executing_command || ``,
+          ],
+          [`gatsby_log_level`, process.env.gatsby_log_level || ``],
         ],
-        [`gatsby_log_level`, process.env.gatsby_log_level || ``],
-      ],
-    })
+      })
+      response = renderResponse[0]
+      res.status(200).send(response)
+    } catch (e) {
+      let error = parseError(e)
+      console.log(error)
+      res.status(500).send(`<h1>Error<h1>
+        <h2>The page didn't SSR correctly</h2>
+        <ul>
+          <li><strong>URL path:</strong> ${req.path}</li>
+          <li><strong>File path:</strong> ${error.filename}</li>
+        </ul>
+        <h3>error message</h3>
+        <p><code>${error.message}</code></p>
+        <pre>${error.codeFrame}</pre>`)
+    }
 
     // TODO add support for 404 and general rendering errors
     htmlActivity.end()
-    res.status(200).send(response)
   })
 
   // Disable directory indexing i.e. serving index.html from a directory.
