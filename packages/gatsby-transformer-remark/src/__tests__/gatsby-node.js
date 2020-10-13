@@ -23,7 +23,7 @@ describe(`gatsby-node.js`, () => {
   })
 
   it(`should validate the schema`, () => {
-    const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
       commonmark: false,
       footnotes: false,
       pedantic: false,
