@@ -15,22 +15,25 @@ const findCssRules = config =>
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
-  { cssLoaderOptions = {}, postCssPlugins, ...postcssOptions }
+  { cssLoaderOptions = {}, postCssPlugins, ...postcssLoaderOptions }
 ) => {
   const isProduction = !stage.includes(`develop`)
   const isSSR = stage.includes(`html`)
   const config = getConfig()
   const cssRules = findCssRules(config)
 
-  delete postcssOptions.plugins
+  if (!postcssLoaderOptions.postcssOptions) {
+    postcssLoaderOptions.postcssOptions = {}
+  }
+  delete postcssLoaderOptions.postcssOptions.plugins
 
   if (postCssPlugins) {
-    postcssOptions.plugins = postCssPlugins
+    postcssLoaderOptions.postcssOptions.plugins = postCssPlugins
   }
 
   const postcssLoader = {
     loader: resolve(`postcss-loader`),
-    options: { sourceMap: !isProduction, ...postcssOptions },
+    options: { sourceMap: !isProduction, ...postcssLoaderOptions },
   }
   const postcssRule = {
     test: CSS_PATTERN,
