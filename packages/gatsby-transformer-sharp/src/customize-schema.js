@@ -7,6 +7,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -14,6 +15,7 @@ const {
   fluid,
   fixed,
   traceSVG,
+  gatsbyImageProps,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
@@ -30,6 +32,7 @@ const {
   PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
+  ImageLayoutType,
 } = require(`./types`)
 
 function toArray(buf) {
@@ -374,6 +377,136 @@ const fluidNodeType = ({
   }
 }
 
+const imageNodeType = ({
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+  cache,
+}) => {
+  return {
+    type: new GraphQLObjectType({
+      name: `ImageSharpGatsbyImage`,
+      fields: {
+        componentProps: {
+          type: new GraphQLNonNull(GraphQLJSON),
+        },
+      },
+    }),
+    args: {
+      layout: {
+        type: ImageLayoutType,
+      },
+      maxWidth: {
+        type: GraphQLInt,
+      },
+      maxHeight: {
+        type: GraphQLInt,
+      },
+      width: {
+        type: GraphQLInt,
+      },
+      height: {
+        type: GraphQLInt,
+      },
+      base64Width: {
+        type: GraphQLInt,
+      },
+      grayscale: {
+        type: GraphQLBoolean,
+        defaultValue: false,
+      },
+      jpegProgressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
+      duotone: {
+        type: DuotoneGradientType,
+        defaultValue: false,
+      },
+      traceSVG: {
+        type: PotraceType,
+        defaultValue: false,
+      },
+      quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
+        type: GraphQLInt,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: sharp.strategy.attention,
+      },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
+      rotate: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
+      },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
+      },
+      srcSetBreakpoints: {
+        type: GraphQLList(GraphQLInt),
+        defaultValue: [],
+        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
+      },
+    },
+    resolve: async (image, fieldArgs, context) => {
+      const file = getNodeAndSavePathDependency(image.parent, context.path)
+      const args = { ...fieldArgs, pathPrefix }
+
+      if (!gatsbyImageProps) {
+        reporter.warn(`Please upgrade gatsby-plugin-sharp`)
+        return null
+      }
+
+      const componentProps = await gatsbyImageProps({
+        file,
+        args,
+        reporter,
+        cache,
+      })
+
+      return {
+        componentProps,
+        fieldArgs: args,
+        image,
+        file,
+      }
+    },
+  }
+}
+
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the
  * underlying fs-extra module during parallel copies of the same file
@@ -405,11 +538,14 @@ const createFields = ({
   const sizesNode = fluidNodeType({ name: `ImageSharpSizes`, ...nodeOptions })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
+  const imageNode = imageNodeType(nodeOptions)
+
   return {
     fixed: fixedNode,
     resolutions: resolutionsNode,
     fluid: fluidNode,
     sizes: sizesNode,
+    gatsbyImage: imageNode,
     original: {
       type: new GraphQLObjectType({
         name: `ImageSharpOriginal`,
@@ -609,6 +745,7 @@ module.exports = ({
     createTypes([
       ImageFormatType,
       ImageFitType,
+      ImageLayoutType,
       ImageCropFocusType,
       DuotoneGradientType,
       PotraceTurnPolicyType,

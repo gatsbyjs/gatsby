@@ -20,6 +20,15 @@ const ImageFormatType = new GraphQLEnumType({
   },
 })
 
+const ImageLayoutType = new GraphQLEnumType({
+  name: `ImageLayout`,
+  values: {
+    FIXED: { value: `fixed` },
+    RESPONSIVE: { value: `responsive` },
+    INTRINSIC: { value: `intrinsic` },
+  },
+})
+
 const ImageFitType = new GraphQLEnumType({
   name: `ImageFit`,
   values: {
@@ -97,4 +106,5 @@ module.exports = {
   DuotoneGradientType,
   PotraceTurnPolicyType,
   PotraceType,
+  ImageLayoutType,
 }

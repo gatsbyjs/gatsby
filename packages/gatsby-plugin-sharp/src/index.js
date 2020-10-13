@@ -1,5 +1,5 @@
 const sharp = require(`./safe-sharp`)
-
+const { gatsbyImageProps } = require(`./image-props`)
 const imageSize = require(`probe-image-size`)
 
 const _ = require(`lodash`)
@@ -52,6 +52,8 @@ let boundActionCreators
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
+
+exports.gatsbyImageProps = gatsbyImageProps
 
 function calculateImageDimensionsAndAspectRatio(file, options) {
   // Calculate the eventual width/height of the image.
