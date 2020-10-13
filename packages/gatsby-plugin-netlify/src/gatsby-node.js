@@ -65,13 +65,13 @@ const pluginOptionsSchema = function ({ Joi }) {
       .items(Joi.string())
       .description(`Add more headers to all the pages`),
     mergeSecurityHeaders: Joi.boolean().description(
-      `When true, turn off the default security headers`
+      `When set to true, turns off the default security headers`
     ),
     mergeLinkHeaders: Joi.boolean().description(
-      `When true, turn off the default gatsby js headers`
+      `When set to true, turns off the default gatsby js headers`
     ),
     mergeCachingHeaders: Joi.boolean().description(
-      `When true, turn off the default caching headers`
+      `When set to true, turns off the default caching headers`
     ),
     transformHeaders: Joi.function()
       .maxArity(2)
@@ -79,7 +79,7 @@ const pluginOptionsSchema = function ({ Joi }) {
         `Transform function for manipulating headers under each path (e.g.sorting), etc. This should return an object of type: { key: Array<string> }`
       ),
     generateMatchPathRewrites: Joi.boolean().description(
-      `When true, turn off automatic creation of redirect rules for client only paths`
+      `When set to true, turns off automatic creation of redirect rules for client only paths`
     ),
   })
 }
