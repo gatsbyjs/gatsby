@@ -729,7 +729,7 @@ function resolveField(
   gqlField,
   fieldName
 ) {
-  if (!gqlField || !gqlField.resolve) {
+  if (!gqlField?.resolve) {
     return node[fieldName]
   }
   const withResolverContext = require(`./context`)
