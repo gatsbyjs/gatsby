@@ -2,96 +2,101 @@
 
 exports[`gatsby-source-shopify Generates nodes 1`] = `
 Object {
-  "Shopify__Blog__Z2lkOi8vc2hvcGlmeS9CbG9nLzEyNzIzNDg2OTc=": Object {
+  "Shopify__Blog__Z2lkOi8vc2hvcGlmeS9CbG9nLzEyNzIzNDg2OTc=___en": Object {
     "children": Array [],
-    "id": "Shopify__Blog__Z2lkOi8vc2hvcGlmeS9CbG9nLzEyNzIzNDg2OTc=",
+    "id": "Shopify__Blog__Z2lkOi8vc2hvcGlmeS9CbG9nLzEyNzIzNDg2OTc=___en",
     "internal": Object {
-      "contentDigest": "b796c451cadc7db2c68166806ef0a774",
+      "contentDigest": "e3e0271f29d050eb608dfcfc8df7f00c",
       "type": "ShopifyBlog",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9CbG9nLzEyNzIzNDg2OTc=",
     "title": "News",
     "url": "https://gatsby-swag.myshopify.com/blogs/news",
   },
-  "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzMzNzc1NzQ3MTYw": Object {
+  "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzMzNzc1NzQ3MTYw___en": Object {
     "children": Array [],
     "description": "The items in this collection are offered to contributors for free as a token of our appreciate for contributing to Gatsby.",
     "descriptionHtml": "The items in this collection are offered to contributors for free as a token of our appreciate for contributing to Gatsby.",
     "handle": "contributor-swag",
-    "id": "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzMzNzc1NzQ3MTYw",
+    "id": "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzMzNzc1NzQ3MTYw___en",
     "image": null,
     "internal": Object {
-      "contentDigest": "26722d264ec8614eee54f73815a1a509",
+      "contentDigest": "8b3121ed9c25f78e6d6167083e045eda",
       "type": "ShopifyCollection",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "products___NODE": Array [
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=___en",
     ],
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzMzNzc1NzQ3MTYw",
     "title": "Contributor Swag",
     "updatedAt": "2019-08-09T07:35:01Z",
   },
-  "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzcwNTQwMDAxNTM=": Object {
+  "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzcwNTQwMDAxNTM=___en": Object {
     "children": Array [],
     "description": "",
     "descriptionHtml": "",
     "handle": "frontpage",
-    "id": "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzcwNTQwMDAxNTM=",
+    "id": "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzcwNTQwMDAxNTM=___en",
     "image": null,
     "internal": Object {
-      "contentDigest": "edd8cca27a08ef6a2e844638aa6e8db5",
+      "contentDigest": "8c2b44b1fcf3b01ede527697e0a4dca2",
       "type": "ShopifyCollection",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "products___NODE": Array [
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==___en",
     ],
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzcwNTQwMDAxNTM=",
     "title": "Home page",
     "updatedAt": "2019-08-09T07:35:01Z",
   },
-  "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzg4MjE2NzY0NTA0": Object {
+  "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzg4MjE2NzY0NTA0___en": Object {
     "children": Array [],
     "description": "",
     "descriptionHtml": "",
     "handle": "level-2",
-    "id": "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzg4MjE2NzY0NTA0",
+    "id": "Shopify__Collection__Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzg4MjE2NzY0NTA0___en",
     "image": null,
     "internal": Object {
-      "contentDigest": "2f9de13f7b583e455579c10d1a26c2e9",
+      "contentDigest": "1deafe22035ebb2a4737ef91e0c9d42f",
       "type": "ShopifyCollection",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "products___NODE": Array [
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
-      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
+      "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=___en",
     ],
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzg4MjE2NzY0NTA0",
     "title": "Level 2",
     "updatedAt": "2019-08-08T16:05:04Z",
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=___en",
     "internal": Object {
-      "contentDigest": "4d8c66df4e7da219ce29b45d2051fad1",
+      "contentDigest": "7f429de3647bd044f128a6b10b51d491",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=",
@@ -99,13 +104,14 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=___en",
     "internal": Object {
-      "contentDigest": "2e9069356a7e121c17168852f34a24e0",
+      "contentDigest": "028d6b8542ccf960aec02fdf0318f60b",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=",
@@ -113,13 +119,14 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=___en",
     "internal": Object {
-      "contentDigest": "0818971c1f5532b744e30bc94cd79fa9",
+      "contentDigest": "d539cd5bf0af5744be836cdfab1315b2",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=",
@@ -127,13 +134,14 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=___en",
     "internal": Object {
-      "contentDigest": "3ff8a67ed3695804a8d2577d2a6db2f7",
+      "contentDigest": "3d447a55a24eacdb5788a863110569a8",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=",
@@ -149,13 +157,14 @@ Object {
       "2XL — Unisex",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=___en",
     "internal": Object {
-      "contentDigest": "90568d8f206a4614bd438239597a3489",
+      "contentDigest": "12376c4691e042fa01737a8e0896033e",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=",
@@ -163,13 +172,14 @@ Object {
       "One size fits most",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=___en",
     "internal": Object {
-      "contentDigest": "c2e66d7f53c9456a2f5625ad29afeae1",
+      "contentDigest": "b26e241db056827ce170288a67f6dc8d",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=",
@@ -177,13 +187,14 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=___en",
     "internal": Object {
-      "contentDigest": "3a4835fa4ae571f43550cdd98a7f62ab",
+      "contentDigest": "5bbc42318e3f809b295836277f64ca4f",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=",
@@ -196,13 +207,14 @@ Object {
       "2XL - Unisex",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=___en",
     "internal": Object {
-      "contentDigest": "b8195058dbbf0e598fb855afefc887ae",
+      "contentDigest": "ab7d91a6e6f381d2026bc2fe9ecc3c2e",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=",
@@ -215,13 +227,14 @@ Object {
       "2XL - Unisex",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=___en",
     "internal": Object {
-      "contentDigest": "da26fd3cb460052d35cb8321a34d4df2",
+      "contentDigest": "d99a28d05523d89eef7abc07bf54166a",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=",
@@ -234,13 +247,14 @@ Object {
       "2XL - Unisex",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=___en",
     "internal": Object {
-      "contentDigest": "75c0d5cbea3abf149d39cbbaadc9497c",
+      "contentDigest": "78e5ec35a43dd575b6a691f3af0698cc",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=",
@@ -257,13 +271,14 @@ Object {
       "XL - Womens",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=___en",
     "internal": Object {
-      "contentDigest": "38bb3f25c9d97a273cf437717cdd725b",
+      "contentDigest": "ac5b23a1a18f9c9469aabab513b940c1",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=",
@@ -276,13 +291,14 @@ Object {
       "XX-Large",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=___en",
     "internal": Object {
-      "contentDigest": "985a9913d4cda3f1e32cb352cd2efe55",
+      "contentDigest": "c3f33c80d2f111c1d51ed40d5ed001bf",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=",
@@ -290,13 +306,14 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=___en",
     "internal": Object {
-      "contentDigest": "aeb018e8694217e289c7591351f67fba",
+      "contentDigest": "4886e883993e1824b25c00b3d84cf6e8",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=",
@@ -304,13 +321,14 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==___en",
     "internal": Object {
-      "contentDigest": "b50652dfd63bcb98c4ab73149d72246f",
+      "contentDigest": "1f372994482a5587b170e3f943648ce9",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Size",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==",
@@ -326,13 +344,14 @@ Object {
       "2XL — Unisex",
     ],
   },
-  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=": Object {
+  "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=___en": Object {
     "children": Array [],
-    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=",
+    "id": "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=___en",
     "internal": Object {
-      "contentDigest": "f987805fb7889d847d4b96f366b93e9a",
+      "contentDigest": "b9b390385f42c4ffa6dcccdd0a7481ac",
       "type": "ShopifyProductOption",
     },
+    "locale": "en",
     "name": "Title",
     "parent": "__SOURCE__",
     "shopifyId": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=",
@@ -340,11 +359,11 @@ Object {
       "Default Title",
     ],
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjA5MTc2": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjA5MTc2___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjA5MTc2",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjA5MTc2___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -352,12 +371,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "b736d3dec3818a427de40e2dceccc0b8",
+      "contentDigest": "bff3232570bfdd64ccf4f93f55a9c5d3",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -370,11 +390,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjQxOTQ0": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjQxOTQ0___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjQxOTQ0",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjQxOTQ0___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -382,12 +402,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "4641c428031a714706870e88110e49a4",
+      "contentDigest": "66531db55f37c7263da12a72dc61a5f7",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -400,11 +421,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzA3NDgw": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzA3NDgw___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzA3NDgw",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzA3NDgw___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -412,12 +433,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "88bfa40e3f5625bbd9cf63b35e54f226",
+      "contentDigest": "c2267e76cad66b5195f5bf9644104d36",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -430,11 +452,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzczMDE2": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzczMDE2___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzczMDE2",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzczMDE2___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -442,12 +464,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "910a3abea936904c9d930401b5534689",
+      "contentDigest": "28411ba7c52626388c5a4550e6584f37",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -460,11 +483,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzNDA1Nzg0": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzNDA1Nzg0___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzNDA1Nzg0",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzNDA1Nzg0___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -472,12 +495,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "bbfd2ef0033a2ac3158bf1b4094c6e46",
+      "contentDigest": "e10095e8ba1a1a10dff67d1f74847552",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -490,11 +514,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjAwMjk0NzYwNTM2": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjAwMjk0NzYwNTM2___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjAwMjk0NzYwNTM2",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjAwMjk0NzYwNTM2___en",
     "image": Object {
       "altText": "Mockup of the Gatsby socks.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjIzMjYyNTI0MA==",
@@ -502,12 +526,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/sock-mockup_1.jpg?v=1531343345",
     },
     "internal": Object {
-      "contentDigest": "9dab325ac003feb3df04b04e4897fd04",
+      "contentDigest": "22f1de79a010a1861dba68efb9476b1d",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -520,11 +545,11 @@ Object {
     "weight": 3,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzI0OTA0MDI0": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzI0OTA0MDI0___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzI0OTA0MDI0",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzI0OTA0MDI0___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -532,12 +557,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "01d81fec84b8c407dc0257afbae4a492",
+      "contentDigest": "7e6c98184658a2ad55ae0d60bf7a5bde",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -550,11 +576,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzIwODQwNzky": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzIwODQwNzky___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzIwODQwNzky",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzIwODQwNzky___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -562,12 +588,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "90b28f9ad99c8e83f50cec7e98ba4f03",
+      "contentDigest": "e645a345314f2d98cfcf0037924d6cb2",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -580,11 +607,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjIzOTc3Mjg3Njg4OA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjIzOTc3Mjg3Njg4OA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjIzOTc3Mjg3Njg4OA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjIzOTc3Mjg3Njg4OA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDYzMjM1Mjg1Ng==",
@@ -592,12 +619,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6208.jpg?v=1555548544",
     },
     "internal": Object {
-      "contentDigest": "eded7022aa10c1402e53d73d48b1008f",
+      "contentDigest": "136db410236c2b66fd5052645fe0769e",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "2.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -610,11 +638,11 @@ Object {
     "weight": 1,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM3NjMyMTUyMzgwMA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM3NjMyMTUyMzgwMA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM3NjMyMTUyMzgwMA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM3NjMyMTUyMzgwMA==___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -622,12 +650,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "8bdd2b8d71b3507e98a41e211f28b4b2",
+      "contentDigest": "41b77877263606078e6f7a62990629d9",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -640,11 +669,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjQ0NTY4NzcwOTc4NA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjQ0NTY4NzcwOTc4NA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjQ0NTY4NzcwOTc4NA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjQ0NTY4NzcwOTc4NA==___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -652,12 +681,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "8a2e8826f5e05fb3e2d614b049f14a70",
+      "contentDigest": "1e385af5a7afe4aff51f5f3816669cec",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -670,11 +700,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0MjA4ODc5Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0MjA4ODc5Mg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0MjA4ODc5Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0MjA4ODc5Mg==___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -682,12 +712,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "459409b3b681d9babb9ca010ef7dc245",
+      "contentDigest": "c1842c519e806d1c315b1aaed402bfdf",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -700,11 +731,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0NTg1NzExMg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0NTg1NzExMg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0NTg1NzExMg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0NTg1NzExMg==___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -712,12 +743,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "bdb4422dd29a42a2389c1e05c96c9689",
+      "contentDigest": "4c8d972c7bddab4fe36a635b5ec38c73",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -730,11 +762,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDMyNjUyMzk5Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDMyNjUyMzk5Mg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDMyNjUyMzk5Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDMyNjUyMzk5Mg==___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -742,12 +774,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "42967b1918662760252e8135e419ef52",
+      "contentDigest": "8cae43afea6c8df6a69185ad84e7f26d",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -760,11 +793,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2MTYzMzExMg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2MTYzMzExMg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2MTYzMzExMg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2MTYzMzExMg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzkxNTc5NzEzNTQ0OA==",
@@ -772,12 +805,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_4839_002.jpg?v=1546015349",
     },
     "internal": Object {
-      "contentDigest": "aa01cdf0bd7fa080049540378d8786ad",
+      "contentDigest": "d2ad6e5bf0fc0131f5d98fba42865dcc",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -790,11 +824,11 @@ Object {
     "weight": 4,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2NTIwNDgyNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2NTIwNDgyNA==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2NTIwNDgyNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2NTIwNDgyNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzkxNTc5ODA4NTcyMA==",
@@ -802,12 +836,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_4862.jpg?v=1540860991",
     },
     "internal": Object {
-      "contentDigest": "6e969e4c040ae42e2c049307527db056",
+      "contentDigest": "645285ba628d91527b5489611557c3e0",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -820,11 +855,11 @@ Object {
     "weight": 4,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNTM5ODYzOTc5NjMxMg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNTM5ODYzOTc5NjMxMg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNTM5ODYzOTc5NjMxMg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNTM5ODYzOTc5NjMxMg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNDQ5ODk5NTI4MjAwOA==",
@@ -832,12 +867,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_4947.png?v=1542402545",
     },
     "internal": Object {
-      "contentDigest": "deb7326b3cfc10f9364d1174b1677da6",
+      "contentDigest": "ad83e3bd286e58016e465c8051dbadb1",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "2.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -850,11 +886,11 @@ Object {
     "weight": 0.5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTA2ODQx": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTA2ODQx___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTA2ODQx",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTA2ODQx___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -862,12 +898,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "b8c5bea4326b23577e6b634f1f268ef2",
+      "contentDigest": "558fbe2fd1ce80c9ee991830adef64ac",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -880,11 +917,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTM5NjA5": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTM5NjA5___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTM5NjA5",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTM5NjA5___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -892,12 +929,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "57f3899acc9b134fd6c2e7b49a85a1d7",
+      "contentDigest": "f2124a32f85f6a8631f9cae5f666b589",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -910,11 +948,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MjcwNjgx": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MjcwNjgx___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MjcwNjgx",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MjcwNjgx___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -922,12 +960,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "5dd78df83251893dd69c80690b014596",
+      "contentDigest": "a252c8cb7f7bb4a12bf3573295b490c9",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -940,11 +979,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MzAzNDQ5": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MzAzNDQ5___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MzAzNDQ5",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MzAzNDQ5___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -952,12 +991,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "292b2815d6762525d8e7c7bd4845d4a8",
+      "contentDigest": "9c7580f75acc5205fd5515fb389dd92e",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -970,11 +1010,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTQ1MjAwMDczMTIyNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTQ1MjAwMDczMTIyNA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTQ1MjAwMDczMTIyNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTQ1MjAwMDczMTIyNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjYwMTc4ODM5MTUxMg==",
@@ -982,12 +1022,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG-5659.png?v=1543972353",
     },
     "internal": Object {
-      "contentDigest": "57b25ab9dd87006f3135c2845de94df6",
+      "contentDigest": "ef2b524ea6f9a4269e6817b84a85e7a4",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -1000,11 +1041,11 @@ Object {
     "weight": 6,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTg5Mjk1Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTg5Mjk1Mg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTg5Mjk1Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTg5Mjk1Mg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTA4NDUwNA==",
@@ -1012,12 +1053,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "e2b4ae16a883d2f32acf4aeb5ded731e",
+      "contentDigest": "4a754c583f7223de650f3ed00f394baf",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1030,11 +1072,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk1ODQ4OA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk1ODQ4OA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk1ODQ4OA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk1ODQ4OA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTA4NDUwNA==",
@@ -1042,12 +1084,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "efa92e1509c258eee0b91ddaf22d24b2",
+      "contentDigest": "5a1f60004d859953c0e262e8fae8d1bd",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1060,11 +1103,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk5MTI1Ng==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk5MTI1Ng==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk5MTI1Ng==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk5MTI1Ng==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTA4NDUwNA==",
@@ -1072,12 +1115,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "4d1298feb5ebade79ceba66c42d8c035",
+      "contentDigest": "ca9b1effcff2a4e9b1f2fd6279630c9c",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1090,11 +1134,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTkyNTcyMA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTkyNTcyMA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTkyNTcyMA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTkyNTcyMA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTA4NDUwNA==",
@@ -1102,12 +1146,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "b6339bff75242de05e13b2ddf6c01b39",
+      "contentDigest": "9fc2f1aacb76305ec5fd264766f3d95c",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1120,11 +1165,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjA1Njc5Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjA1Njc5Mg==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjA1Njc5Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjA1Njc5Mg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTA4NDUwNA==",
@@ -1132,12 +1177,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "9214cb1a932fa04f6aea625ebdd1ea91",
+      "contentDigest": "8ba79c09818c6d9b55ddc32d96fd7d83",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1150,11 +1196,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjAyNDAyNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjAyNDAyNA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjAyNDAyNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjAyNDAyNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTA4NDUwNA==",
@@ -1162,12 +1208,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "61a6f0d5d00d03d0cf9e96f3fc761739",
+      "contentDigest": "a7b485e669280922ac137afb2fb1e755",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1180,11 +1227,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzA3MjYwMA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzA3MjYwMA==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzA3MjYwMA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzA3MjYwMA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTkzNjQ3Mg==",
@@ -1192,12 +1239,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "48fa33236abc34623eb79b26c24c54e0",
+      "contentDigest": "41e0ce51e5b8ebc1d80ca7628d656219",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1210,11 +1258,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzE3MDkwNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzE3MDkwNA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzE3MDkwNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzE3MDkwNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTkzNjQ3Mg==",
@@ -1222,12 +1270,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "267a7ca34e204ebd8d4a4758441cd70c",
+      "contentDigest": "4a49fe07c97573890aedcdd1bf9dab67",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1240,11 +1289,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEwNTM2OA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEwNTM2OA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEwNTM2OA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEwNTM2OA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTkzNjQ3Mg==",
@@ -1252,12 +1301,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "992918cb3bace8cdee27772a2f4582b6",
+      "contentDigest": "244c54383e9af17470cb9ed8d5b174d3",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1270,11 +1320,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEzODEzNg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEzODEzNg==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEzODEzNg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEzODEzNg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTkzNjQ3Mg==",
@@ -1282,12 +1332,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "2d9f7cedadddfd41e6289f49dcdcd110",
+      "contentDigest": "cd123f89bfe00782fe4ece098e47e0fe",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1300,11 +1351,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIwMzY3Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIwMzY3Mg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIwMzY3Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIwMzY3Mg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTkzNjQ3Mg==",
@@ -1312,12 +1363,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "8b639e3d1ffe6dabe6296c706973ac3a",
+      "contentDigest": "542e0314598668320b95f14767b2b6af",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1330,11 +1382,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIzNjQ0MA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIzNjQ0MA==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIzNjQ0MA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIzNjQ0MA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjY0NjYwOTkzNjQ3Mg==",
@@ -1342,12 +1394,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "f82263c6b9136747d46d62a2af0a8dc3",
+      "contentDigest": "ec8a6a39dca23c786c18b4720826ebf7",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1360,11 +1413,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjQ3MzAwMTA0OA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjQ3MzAwMTA0OA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjQ3MzAwMTA0OA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjQ3MzAwMTA0OA==___en",
     "image": Object {
       "altText": "Mockup of the Purple Logo tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0NjA2MDEyMA==",
@@ -1372,12 +1425,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "0480138ca6dc11ef78644d1716e39b96",
+      "contentDigest": "8487342195acfd5f64c858884c59e0b4",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1390,11 +1444,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjUyMjgwODQwOA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjUyMjgwODQwOA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjUyMjgwODQwOA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjUyMjgwODQwOA==___en",
     "image": Object {
       "altText": "Mockup of the Dark Deploy tee.",
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY0NjI0MDM5MTI1Ng==",
@@ -1402,12 +1456,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "78231dc9bbeb0985f03547ca7100d434",
+      "contentDigest": "421b6cd4cdfb5e235889dea0abdef614",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1420,11 +1475,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MTc0MzcwNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MTc0MzcwNA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MTc0MzcwNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MTc0MzcwNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE5NTYzODA3MTM4NA==",
@@ -1432,12 +1487,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "c3d17ff9bceed8407baf1c7f00d035cb",
+      "contentDigest": "656f37fbc8855922b20bb3221fae50d8",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1450,11 +1506,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MjU5NTY3Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MjU5NTY3Mg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MjU5NTY3Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MjU5NTY3Mg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE5NTYzODA3MTM4NA==",
@@ -1462,12 +1518,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "589f85471b454ba85ed4aeee765674d7",
+      "contentDigest": "77bd94e49cf82454d168cea31516b4de",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1480,11 +1537,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NjM5Njc2MA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NjM5Njc2MA==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NjM5Njc2MA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NjM5Njc2MA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE5NTYzODA3MTM4NA==",
@@ -1492,12 +1549,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "6baaa462ef2fe94502d47ef2d5d18891",
+      "contentDigest": "39e04e70dbfe367a14e861f05d80d89a",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1510,11 +1568,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0Njc4OTk3Ng==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0Njc4OTk3Ng==___en": Object {
     "availableForSale": false,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0Njc4OTk3Ng==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0Njc4OTk3Ng==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE5NTYzODA3MTM4NA==",
@@ -1522,12 +1580,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "4fb8929c41b620a8afe1ac1ba66c5cf1",
+      "contentDigest": "c91413bcae60ae83c4397460ba19270a",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1540,11 +1599,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NzI4MTQ5Ng==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NzI4MTQ5Ng==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NzI4MTQ5Ng==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NzI4MTQ5Ng==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE5NTYzODA3MTM4NA==",
@@ -1552,12 +1611,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "58923b035cc3cc0527c1ede5ad97067b",
+      "contentDigest": "53ace6f037dcc3ec91f33cf37016ea00",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1570,11 +1630,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0ODEzMzQ2NA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0ODEzMzQ2NA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0ODEzMzQ2NA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0ODEzMzQ2NA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE5NTYzODA3MTM4NA==",
@@ -1582,12 +1642,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "fb4de5059f2a615c19519ed80c2d8320",
+      "contentDigest": "410d1240545aa018f05b59c8fc6244e8",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1600,11 +1661,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTU5OTk2MA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTU5OTk2MA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTU5OTk2MA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTU5OTk2MA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1612,12 +1673,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "525c8b92cf76606cb76271bca9bca501",
+      "contentDigest": "2202d40029cc6f6e6f8b82ca63e56405",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1630,11 +1692,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTUzNDQyNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTUzNDQyNA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTUzNDQyNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTUzNDQyNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1642,12 +1704,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "ec5f65b4aa6fc2b4a9ec798bd01df46f",
+      "contentDigest": "bdad98dc79392bda6ab2e5e9d51c83ce",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1660,11 +1723,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY2NTQ5Ng==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY2NTQ5Ng==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY2NTQ5Ng==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY2NTQ5Ng==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1672,12 +1735,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "8ceef969dc9f2209ce7f0fc84e00508c",
+      "contentDigest": "438f1a23eb52c7fc6f8afd1585c96cfc",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1690,11 +1754,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY5ODI2NA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY5ODI2NA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY5ODI2NA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY5ODI2NA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1702,12 +1766,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "102b4b49f5719e2bbdcd91ee4ef9e945",
+      "contentDigest": "4c33e36a4297d61cbdc78c56c4ab83c7",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1720,11 +1785,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTc2MzgwMA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTc2MzgwMA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTc2MzgwMA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTc2MzgwMA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1732,12 +1797,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "551963b82f62d3481aa4f08617d3979a",
+      "contentDigest": "c6ab6e1f215cb66377f390a47d4d8ea6",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1750,11 +1816,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY0NTk4MzMyMA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY0NTk4MzMyMA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY0NTk4MzMyMA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY0NTk4MzMyMA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1762,12 +1828,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "ed424de85a783895801b8e40b493fd51",
+      "contentDigest": "36de4cc58d6515409e7450d0408fcab7",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1780,11 +1847,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY1ODUzMzQ2NA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY1ODUzMzQ2NA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY1ODUzMzQ2NA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY1ODUzMzQ2NA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1792,12 +1859,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "b60cdd8eed821afef58d7b73ee344edd",
+      "contentDigest": "e3a4f3250a138a7d1fe8fdd45bfc3e9b",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1810,11 +1878,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY3MjQ1OTg2NA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY3MjQ1OTg2NA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY3MjQ1OTg2NA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY3MjQ1OTg2NA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1822,12 +1890,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "f2664118c59e4e9872dd05e4e9e5180b",
+      "contentDigest": "d9085263fbc2221c6a3084e07d57d085",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1840,11 +1909,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY4MDU1MzU2MA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY4MDU1MzU2MA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY4MDU1MzU2MA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY4MDU1MzU2MA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1852,12 +1921,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "950e2711eacf85ba433d69d51e93fd5c",
+      "contentDigest": "8e98a0e54ed2ead6cf26ed952ebb746b",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1870,11 +1940,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0Mjc0NTA3Mzc1Mg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0Mjc0NTA3Mzc1Mg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0Mjc0NTA3Mzc1Mg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0Mjc0NTA3Mzc1Mg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNjg5NzUxMTk1NjU2OA==",
@@ -1882,12 +1952,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "2253119f3555909a773546fb36b57db8",
+      "contentDigest": "2ec74046623ae92e634a155da755c38d",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "26.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1900,11 +1971,11 @@ Object {
     "weight": 7,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY0ODUzNg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY0ODUzNg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY0ODUzNg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY0ODUzNg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDM0MDMyNDQ0MA==",
@@ -1912,12 +1983,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "c34ce19886b224fcfc082fdfbca44159",
+      "contentDigest": "49f7ebed939eb72ad2426f39db57a431",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1930,11 +2002,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY4MTMwNA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY4MTMwNA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY4MTMwNA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY4MTMwNA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDM0MDMyNDQ0MA==",
@@ -1942,12 +2014,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "fe89a8d895ed0d07d13b98487c878b3f",
+      "contentDigest": "1f320481affa9d79c9fe66b6af74d1c1",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1960,11 +2033,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjYxNTc2OA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjYxNTc2OA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjYxNTc2OA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjYxNTc2OA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDM0MDMyNDQ0MA==",
@@ -1972,12 +2045,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "88512ba4b9050f4aa5a36f4ccce544e5",
+      "contentDigest": "a467ed810ed914e0c02e1fc265d56425",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -1990,11 +2064,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc0Njg0MA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc0Njg0MA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc0Njg0MA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc0Njg0MA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDM0MDMyNDQ0MA==",
@@ -2002,12 +2076,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "8d1ee73313a2a84167c3d50470621e4c",
+      "contentDigest": "234b4c359f35a61a5ee9597cf2df0a63",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -2020,11 +2095,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc3OTYwOA==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc3OTYwOA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc3OTYwOA==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc3OTYwOA==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDM0MDMyNDQ0MA==",
@@ -2032,12 +2107,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "2af95bfec1a54522a6a1352625194e5b",
+      "contentDigest": "86cfd65740d2331b8c5a0ed25adaf109",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -2050,11 +2126,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjgxMjM3Ng==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjgxMjM3Ng==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjgxMjM3Ng==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjgxMjM3Ng==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0NDM0MDMyNDQ0MA==",
@@ -2062,12 +2138,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "a0e148d581cc342789fcaec24b57d9bf",
+      "contentDigest": "6e44855a29d0a1950487946560b507a8",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "selectedOptions": Array [
       Object {
         "name": "Size",
@@ -2080,11 +2157,11 @@ Object {
     "weight": 5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDMxNTMyMDA5MDcxMg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDMxNTMyMDA5MDcxMg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDMxNTMyMDA5MDcxMg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDMxNTMyMDA5MDcxMg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvNzE0Mzc1NjcyNjM2MA==",
@@ -2092,12 +2169,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6192.jpg?v=1555695177",
     },
     "internal": Object {
-      "contentDigest": "0bfe11b8c254c470ec886709d14c9135",
+      "contentDigest": "2a6f52c75e9a10d2c5309f78144af5bb",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -2110,11 +2188,11 @@ Object {
     "weight": 0.5,
     "weightUnit": "OUNCES",
   },
-  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTAyOTE1MzQzOTgzMg==": Object {
+  "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTAyOTE1MzQzOTgzMg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "compareAtPrice": null,
-    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTAyOTE1MzQzOTgzMg==",
+    "id": "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTAyOTE1MzQzOTgzMg==___en",
     "image": Object {
       "altText": null,
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMTE2NzQ3MjcyMTkyODg=",
@@ -2122,12 +2200,13 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6689.jpg?v=1560443279",
     },
     "internal": Object {
-      "contentDigest": "ba638faae306da36c4e20d1fd64ab345",
+      "contentDigest": "3951dfc39924f31c246203d9bf179d91",
       "type": "ShopifyProductVariant",
     },
+    "locale": "en",
     "parent": "__SOURCE__",
     "price": "10.00",
-    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=",
+    "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=___en",
     "selectedOptions": Array [
       Object {
         "name": "Title",
@@ -2140,7 +2219,7 @@ Object {
     "weight": 4,
     "weightUnit": "OUNCES",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=___en": Object {
     "availableForSale": false,
     "children": Array [],
     "createdAt": "2018-10-30T00:55:50Z",
@@ -2148,7 +2227,7 @@ Object {
     "descriptionHtml": "<p>Dark grey and black, mesh, 6-panel trucker hat with snapback closure. Made of 100% polyester linen front panels and bill.</p>
 <p><strong>Care Instructions</strong>: Spot clean with a damp cloth.</p>",
     "handle": "monogram-trucker-hat",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2170,13 +2249,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "819881f63ae1dcd3c5810ef75268fcb5",
+      "contentDigest": "d4f2acc6482ac29859666564e8c3cf02",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODMyNjQzNDQ=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2196,11 +2276,11 @@ Object {
     "title": "Monogram Trucker Hat",
     "updatedAt": "2019-08-05T22:55:26Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2NTIwNDgyNA==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2NTIwNDgyNA==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-10-30T00:52:49Z",
@@ -2208,7 +2288,7 @@ Object {
     "descriptionHtml": "<p>Add more blazingly blazing speed to your wardrobe with this solid purple laundered chino twill hat. (Fine print: this is just a hat. It will not affect your speed.)</p>
 <p><strong>Care Instructions</strong>: Spot clean with a damp cloth.</p>",
     "handle": "blazing-purple-hat",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2230,13 +2310,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "e3147e4ed64dd3d27402beb7d22da986",
+      "contentDigest": "1e1eb5c5da5ad42e432e8d420ad51fa8",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE4ODQ1ODI3MDcyODg=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2256,11 +2337,11 @@ Object {
     "title": "This Purple Hat Is Blazing Fast",
     "updatedAt": "2019-08-07T17:39:01Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2MTYzMzExMg==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjk4NzA2MTYzMzExMg==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-11-16T19:36:04Z",
@@ -2268,7 +2349,7 @@ Object {
     "descriptionHtml": "<p>Show us how you rock your custom Gatsby lapel pin! Silver plating, clois-tech lapel pin with a clutch attachment. Size – 0.835”</p>
 <p><strong>Care Instructions: </strong>Please do not machine wash.</p>",
     "handle": "gatsby-lapel-pin",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2290,13 +2371,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "2d0002a3d40b64e5d81dc86f9e9aee47",
+      "contentDigest": "44593788401b05262094a6ed7392f668",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzIxMzUwODQ1NjQ1Njg=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2316,11 +2398,11 @@ Object {
     "title": "Gatsby Lapel Pin",
     "updatedAt": "2019-08-07T13:10:10Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNTM5ODYzOTc5NjMxMg==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNTM5ODYzOTc5NjMxMg==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-12-05T01:12:21Z",
@@ -2328,7 +2410,7 @@ Object {
     "descriptionHtml": "<p>Keep your hot beverages BLAZING hot for hours with this stainless vacuum-insulated Fifty/Fifty 12 oz/345mL bottle. Also works to keep cold beverages, er, blazing cold?</p>
 <p><strong>Care Instructions:</strong> Do not put in microwave, freezer, or dishwasher. Hand wash with hot soapy water. Leave cap off and allow to air dry. Do not use cleaners containing bleach or chlorine.</p>",
     "handle": "12oz-travel-mug",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2350,13 +2432,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "332cd4baa31218f8ec5e9c7088fc5138",
+      "contentDigest": "0bd917c6cadaecf8611167daef773f40",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI2OTk3ODgzODYzOTI=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2376,18 +2459,18 @@ Object {
     "title": "Mug for (Blazing) Hot Beverages",
     "updatedAt": "2019-08-06T11:22:51Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTQ1MjAwMDczMTIyNA==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTQ1MjAwMDczMTIyNA==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-12-28T22:36:24Z",
     "description": "For the work-from-home professional, Gatsby's Freelance Pants take “business casual” to a whole new level. These slick black pants will help you stay calm and reach #maximumcomf even when you're under pressure.",
     "descriptionHtml": "For the work-from-home professional, Gatsby's Freelance Pants take “business casual” to a whole new level. These slick black pants will help you stay calm and reach #maximumcomf even when you're under pressure.",
     "handle": "freelance-pants",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2397,13 +2480,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "e0714d0bd6c30f33792f3682cd9be41d",
+      "contentDigest": "15b686918acd2eab1ae603133c587a1f",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjg2ODMwOTY=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2423,23 +2507,23 @@ Object {
     "title": "Freelance Pants",
     "updatedAt": "2019-08-07T07:53:05Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTg5Mjk1Mg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTkyNTcyMA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk1ODQ4OA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk5MTI1Ng==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjAyNDAyNA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjA1Njc5Mg==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTg5Mjk1Mg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTkyNTcyMA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk1ODQ4OA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NTk5MTI1Ng==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjAyNDAyNA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NjA1Njc5Mg==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-12-28T22:43:00Z",
     "description": "Be the life of your own comfy party with these purple and playful JAMstack Jammies. Did we mention they have pockets?",
     "descriptionHtml": "Be the life of your own comfy party with these purple and playful JAMstack Jammies. Did we mention they have <em>pockets</em>?",
     "handle": "jamstack-jammies",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2449,13 +2533,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "c7a8763c58abee73f3a7615d9e5e0dec",
+      "contentDigest": "2161e2b8ad424357b8b03f59e6f7685e",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3MTI1Mjk2MzMzNjg=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2475,16 +2560,16 @@ Object {
     "title": "JAMstack Jammies",
     "updatedAt": "2019-08-08T16:03:30Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzA3MjYwMA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEwNTM2OA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEzODEzNg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzE3MDkwNA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIwMzY3Mg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIzNjQ0MA==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzA3MjYwMA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEwNTM2OA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzEzODEzNg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzE3MDkwNA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIwMzY3Mg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUwOTk0NzIzNjQ0MA==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2019-03-01T16:53:32Z",
@@ -2492,7 +2577,7 @@ Object {
     "descriptionHtml": "<p>This fleece zip hoodie is perfect for keeping cozy! Featured with drawcords and split kangaroo pockets. Material: <span>52/48 </span><span>Airlume combed and ringspun cotton/poly fleece.</span></p>
 <p><strong>Care Instructions</strong>: Machine wash cold, tumble dry low.</p>",
     "handle": "dark-monogram-hoodie",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2502,13 +2587,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "1d17cea33a8247b0c6e1136bcae34396",
+      "contentDigest": "0afc914a0e5ca634b6252d79d18aef83",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3NzExMDcwODY0MjQ=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2528,16 +2614,16 @@ Object {
     "title": "Dark Monogram Hoodie",
     "updatedAt": "2019-08-07T18:18:24Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MTc0MzcwNA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MjU5NTY3Mg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NjM5Njc2MA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0Njc4OTk3Ng==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NzI4MTQ5Ng==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0ODEzMzQ2NA==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MTc0MzcwNA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0MjU5NTY3Mg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NjM5Njc2MA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0Njc4OTk3Ng==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0NzI4MTQ5Ng==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTcwOTk0ODEzMzQ2NA==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2019-03-13T23:30:56Z",
@@ -2545,7 +2631,7 @@ Object {
     "descriptionHtml": "<p>Say “no” to boring colors and go all purple everything with this comfy cotton-poly blend hoodie. Rib knit cuff with thumb exits, a rib knit hem, an interior phone pocket, and headphone cord port. </p>
 <p><strong>Care Instructions</strong>: <span>Super hot water and high dryer heat may shrink the sweatshirt due to the cotton content. Suggested to turn inside out while washing to protect the wear of the printed logo.</span></p>",
     "handle": "all-purple-everything-full-zip-hoodie",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2555,13 +2641,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "7662506f16af28d2c6e20919de3cc7c2",
+      "contentDigest": "d2887ab0123c8c666ab601534b446e3e",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI3OTYxNTk3NjI1MjA=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2581,27 +2668,27 @@ Object {
     "title": "All Purple Everything Full-Zip Hoodie",
     "updatedAt": "2019-08-07T17:42:00Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0Mjc0NTA3Mzc1Mg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTUzNDQyNA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTU5OTk2MA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY2NTQ5Ng==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY5ODI2NA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTc2MzgwMA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY0NTk4MzMyMA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY1ODUzMzQ2NA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY3MjQ1OTg2NA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY4MDU1MzU2MA==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0Mjc0NTA3Mzc1Mg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTUzNDQyNA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTU5OTk2MA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY2NTQ5Ng==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTY5ODI2NA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjU3MTc2MzgwMA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY0NTk4MzMyMA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY1ODUzMzQ2NA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY3MjQ1OTg2NA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTg0MjY4MDU1MzU2MA==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-07-13T22:13:27Z",
     "description": "This 6-pack of die-cut Gatsby stickers is a great way to show off how fast your websites are. Stickers range in size from 1\\" (2.54 cm) to 3\\" (7.62 cm).",
     "descriptionHtml": "This 6-pack of die-cut Gatsby stickers is a great way to show off how fast your websites are. Stickers range in size from 1\\" (2.54 cm) to 3\\" (7.62 cm).",
     "handle": "gatsby-sticker-6-pack",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2611,13 +2698,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "52c444feb5908793a4a63eeca79ff8b4",
+      "contentDigest": "305b3d17a559fb12b425ce575937d0c2",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzE3NTY2ODU1MDA1MDQ=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2639,11 +2727,11 @@ Object {
     "title": "Gatsby Sticker Pack",
     "updatedAt": "2019-08-09T07:52:40Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjIzOTc3Mjg3Njg4OA==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjIzOTc3Mjg3Njg4OA==___en",
     ],
     "vendor": "Gatsby Swag",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2019-04-05T18:30:25Z",
@@ -2651,7 +2739,7 @@ Object {
     "descriptionHtml": "<p>A perfect triblend tank dress that is incredibly soft. Featured with our Gatsby monogram logo on the back of the dress!</p>
 <p>Care: Machine wash cold, tumble dry low.</p>",
     "handle": "gatsby-racerback-tank-dress",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2667,13 +2755,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "352ea0e791a31273e2c181b987f5a812",
+      "contentDigest": "81c972650cc927b76fe3c5c395268c04",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4NTY2MDg5ODkyNzI=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2693,16 +2782,16 @@ Object {
     "title": "Gatsby Racerback Tank Dress",
     "updatedAt": "2019-08-05T23:01:56Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjYxNTc2OA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY0ODUzNg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY4MTMwNA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc0Njg0MA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc3OTYwOA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjgxMjM3Ng==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjYxNTc2OA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY0ODUzNg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjY4MTMwNA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc0Njg0MA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5Mjc3OTYwOA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDIwNjA5MjgxMjM3Ng==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2019-04-17T22:38:22Z",
@@ -2710,7 +2799,7 @@ Object {
     "descriptionHtml": "<p>Put your hair up in style with our satin JAMstack scrunchies!</p>
 <p>Care: Hand wash with cold water, lay flat to dry.</p>",
     "handle": "jamstack-scrunchie",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2726,13 +2815,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "58fd339adc87b0aa51c30f9a4697dbb1",
+      "contentDigest": "378dae4ae5e6423c57d83330aca1bad8",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzI4ODQ2NjU2NzE3Njg=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2752,11 +2842,11 @@ Object {
     "title": "JAMstack Scrunchie",
     "updatedAt": "2019-08-05T23:17:40Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDMxNTMyMDA5MDcxMg==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yMDMxNTMyMDA5MDcxMg==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-05-19T11:38:50Z",
@@ -2767,7 +2857,7 @@ Object {
 <meta charset=\\"utf-8\\">
 <p><strong>Don't see your size? </strong><span>Send us an email team@gatsbyjs.com and we'll see if we can help!</span></p>",
     "handle": "dark-deploy-tee",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==___en",
     "images": Array [
       Object {
         "altText": "Mockup of the Dark Deploy tee.",
@@ -2783,13 +2873,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "8c5ecba23dee023edbe135bff4eba651",
+      "contentDigest": "9d5ceca208eb221fb8713afaa2cc08d1",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzMwNTEwMTk5NjA1Nw==___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2809,26 +2900,26 @@ Object {
     "title": "Dark Deploy Tee",
     "updatedAt": "2019-08-08T23:41:15Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTA2ODQx",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTM5NjA5",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM3NjMyMTUyMzgwMA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjUyMjgwODQwOA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0NTg1NzExMg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0MjA4ODc5Mg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MjcwNjgx",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MzAzNDQ5",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzIwODQwNzky",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTA2ODQx___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MTM5NjA5___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM3NjMyMTUyMzgwMA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjUyMjgwODQwOA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0NTg1NzExMg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDM0MjA4ODc5Mg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MjcwNjgx___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xODAwNTQ3MzAzNDQ5___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzIwODQwNzky___en",
     ],
     "vendor": "Gatsby Swag",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2019-06-13T16:27:53Z",
     "description": "Subtle in the front, JAMstack party under the cap! Get your JAM on in this trucker hat.",
     "descriptionHtml": "Subtle in the front, JAMstack party under the cap! Get your JAM on in this trucker hat.",
     "handle": "jamstack-hat",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=___en",
     "images": Array [
       Object {
         "altText": null,
@@ -2844,13 +2935,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "e31bda0218e5fc546ce40a35235cef24",
+      "contentDigest": "2f0e0c7de62a07722f661e262f28bdf0",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzQ5OTgzMjAzMjQ2OTY=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2870,11 +2962,11 @@ Object {
     "title": "JAMstack Hat",
     "updatedAt": "2019-08-06T15:49:35Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTAyOTE1MzQzOTgzMg==",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTAyOTE1MzQzOTgzMg==___en",
     ],
     "vendor": "Gatsby Store",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-06-04T00:51:11Z",
@@ -2885,7 +2977,7 @@ Object {
 <meta charset=\\"utf-8\\">
 <p><strong>Don't see your size? </strong><span>Send us an email team@gatsbyjs.com and we'll see if we can help!</span></p>",
     "handle": "vintage-purple-tee",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==___en",
     "images": Array [
       Object {
         "altText": "Mockup of the Purple Logo tee.",
@@ -2901,13 +2993,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "fe0346d30001661fcb81713d203ac952",
+      "contentDigest": "ae86bc2abdfbd7883677f1bac7fc4862",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNDY4ODA2Njc3MzY=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -2927,19 +3020,19 @@ Object {
     "title": "Vintage Purple Tee",
     "updatedAt": "2019-08-09T07:52:40Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjA5MTc2",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjQ0NTY4NzcwOTc4NA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjQxOTQ0",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjQ3MzAwMTA0OA==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzA3NDgw",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDMyNjUyMzk5Mg==",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzczMDE2",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzNDA1Nzg0",
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzI0OTA0MDI0",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjA5MTc2___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjQ0NTY4NzcwOTc4NA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMjQxOTQ0___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xOTUyMjQ3MzAwMTA0OA==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzA3NDgw___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjcxNDMyNjUyMzk5Mg==___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzMzczMDE2___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MTkxODkzNDA1Nzg0___en",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjE0MzI0OTA0MDI0___en",
     ],
     "vendor": "Gatsby Swag",
   },
-  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==": Object {
+  "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==___en": Object {
     "availableForSale": true,
     "children": Array [],
     "createdAt": "2018-06-12T07:00:09Z",
@@ -2949,7 +3042,7 @@ Object {
 <p>Keep those socks comfy on your feet and looking bright by washing them in cold water with darker colors. Tumble dry on low so they don't shrink!</p>
 <p><strong>Don't see your size? </strong>Send us an email team@gatsbyjs.com and we'll see if we can help!</p>",
     "handle": "space-socks",
-    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==",
+    "id": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==___en",
     "images": Array [
       Object {
         "altText": "Mockup of the Gatsby socks.",
@@ -2977,13 +3070,14 @@ Object {
       },
     ],
     "internal": Object {
-      "contentDigest": "d38f44a19a212480a9111e291f125c4c",
+      "contentDigest": "fd9c74849fa4f0d06c4e9e4c05abbe33",
       "type": "ShopifyProduct",
     },
+    "locale": "en",
     "metafields___NODE": Array [],
     "onlineStoreUrl": null,
     "options___NODE": Array [
-      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=",
+      "Shopify__ProductOption__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzEzNTAwNjU2ODQ1Njg=___en",
     ],
     "parent": "__SOURCE__",
     "priceRange": Object {
@@ -3003,18 +3097,19 @@ Object {
     "title": "Space Socks",
     "updatedAt": "2019-08-09T07:32:15Z",
     "variants___NODE": Array [
-      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjAwMjk0NzYwNTM2",
+      "Shopify__ProductVariant__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC84MjAwMjk0NzYwNTM2___en",
     ],
     "vendor": "Gatsby Swag",
   },
-  "Shopify__Shop__undefined": Object {
+  "Shopify__Shop__undefined___en": Object {
     "children": Array [],
     "description": "",
-    "id": "Shopify__Shop__undefined",
+    "id": "Shopify__Shop__undefined___en",
     "internal": Object {
-      "contentDigest": "7e8bd622d5376313766d087914010149",
+      "contentDigest": "893105b4e3906b5bf5bce8e1d04add76",
       "type": "ShopifyShop",
     },
+    "locale": "en",
     "moneyFormat": "",
     "name": "",
     "parent": "__SOURCE__",
