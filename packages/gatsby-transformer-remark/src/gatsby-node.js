@@ -12,7 +12,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         `Activates Footnotes mode (default: true)`
       ),
       pedantic: Joi.boolean().description(
-        `Activates Pandemic mode (default: true)`
+        `Activates pedantic mode (default: true)`
       ),
       gfm: Joi.boolean().description(
         `Activates GitHub Flavored Markdown mode (default: true)`
