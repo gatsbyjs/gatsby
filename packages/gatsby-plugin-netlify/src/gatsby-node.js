@@ -52,3 +52,15 @@ exports.onPostBuild = async (
     createRedirects(pluginData, redirects, rewrites),
   ])
 }
+
+exports.pluginOptionsSchema = function ({ Joi }) {
+  return Joi.object({
+    headers: Joi.object(),
+    allPageHeaders: Joi.array(),
+    mergeSecurityHeaders: Joi.boolean(),
+    mergeLinkHeaders: Joi.boolean(),
+    mergeCachingHeaders: Joi.boolean(),
+    transformHeaders: Joi.function(),
+    generateMatchPathRewrites: Joi.boolean(),
+  })
+}
