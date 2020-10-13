@@ -2,6 +2,8 @@
 
 This plugin is a replacement for gatsby-image. It adds [static images](#static-images), and a [new higher-performance gatsby-image component](#gatsby-image-next-generation).
 
+This package is in alpha, and the API will change. It is not ready for production use yet.
+
 ## Usage
 
 Install `gatsby-plugin-image`, then add it to your `gatsby-config.js`.
