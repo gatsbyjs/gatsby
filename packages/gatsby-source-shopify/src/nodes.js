@@ -24,7 +24,7 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
 
 const makeId = (id, locale) => `${id}___${locale}`
 
-const createLocaleNode = (node, locale) => {
+const createLocalizedNode = (node, locale) => {
   return {
     ...node,
     locale,
@@ -83,11 +83,11 @@ export const ArticleNode = (imageArgs, locale) =>
         imageArgs
       )
 
-    return createLocaleNode(node, locale)
+    return createLocalizedNode(node, locale)
   })
 
 export const BlogNode = (_imageArgs, locale) =>
-  createNodeFactory(BLOG, async node => createLocaleNode(node, locale))
+  createNodeFactory(BLOG, async node => createLocalizedNode(node, locale))
 
 export const CollectionNode = (imageArgs, locale) =>
   createNodeFactory(COLLECTION, async node => {
@@ -107,11 +107,11 @@ export const CollectionNode = (imageArgs, locale) =>
         imageArgs
       )
 
-    return createLocaleNode(node, locale)
+    return createLocalizedNode(node, locale)
   })
 
 export const CommentNode = (_imageArgs, locale) =>
-  createNodeFactory(COMMENT, async node => createLocaleNode(node, locale))
+  createNodeFactory(COMMENT, async node => createLocalizedNode(node, locale))
 
 export const ProductNode = (imageArgs, locale) =>
   createNodeFactory(PRODUCT, async node => {
@@ -153,17 +153,17 @@ export const ProductNode = (imageArgs, locale) =>
         return edge.node
       })
 
-    return createLocaleNode(node, locale)
+    return createLocalizedNode(node, locale)
   })
 
 export const ProductMetafieldNode = (_imageArgs, locale) =>
   createNodeFactory(PRODUCT_METAFIELD, async node =>
-    createLocaleNode(node, locale)
+    createLocalizedNode(node, locale)
   )
 
 export const ProductOptionNode = (_imageArgs, locale) =>
   createNodeFactory(PRODUCT_OPTION, async node =>
-    createLocaleNode(node, locale)
+    createLocalizedNode(node, locale)
   )
 
 export const ProductVariantNode = (imageArgs, productNode, locale) =>
@@ -188,24 +188,26 @@ export const ProductVariantNode = (imageArgs, productNode, locale) =>
 
     node.product___NODE = productNode.id
 
-    return createLocaleNode(node, locale)
+    return createLocalizedNode(node, locale)
   })
 
 export const ProductVariantMetafieldNode = (_imageArgs, locale) =>
   createNodeFactory(PRODUCT_VARIANT_METAFIELD, async node =>
-    createLocaleNode(node, locale)
+    createLocalizedNode(node, locale)
   )
 
 export const ShopPolicyNode = (locale, type) =>
   createNodeFactory(SHOP_POLICY, async node => {
     return {
-      ...createLocaleNode(node, locale),
+      ...createLocalizedNode(node, locale),
       type,
     }
   })
 
 export const ShopDetailsNode = locale =>
-  createNodeFactory(SHOP_DETAILS, async node => createLocaleNode(node, locale))
+  createNodeFactory(SHOP_DETAILS, async node =>
+    createLocalizedNode(node, locale)
+  )
 
 export const PageNode = locale =>
-  createNodeFactory(PAGE, async node => createLocaleNode(node, locale))
+  createNodeFactory(PAGE, async node => createLocalizedNode(node, locale))
