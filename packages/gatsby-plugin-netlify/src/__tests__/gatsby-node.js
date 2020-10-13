@@ -29,8 +29,8 @@ describe(`gatsby-node.js`, () => {
   it(`should validate the schema`, () => {
     const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
       headers: {
-        Authorization: [`Bearer: Some-Magic-Token`],
-        otherHeader: [`some`, `great`, `headers`],
+        "/some-page": [`Bearer: Some-Magic-Token`],
+        "/some-other-page": [`some`, `great`, `headers`],
       },
       allPageHeaders: [`First header`, `Second header`],
       mergeSecurityHeaders: true,
