@@ -38,7 +38,6 @@ export type PictureProps = ImgHTMLAttributes<HTMLImageElement> & {
   sources?: Array<SourceProps>
   alt: string
   shouldLoad?: boolean
-  forceWrapper?: boolean
 }
 
 const Image: FunctionComponent<ImageProps> = function Image({
@@ -67,14 +66,14 @@ const Image: FunctionComponent<ImageProps> = function Image({
 
 export const Picture = forwardRef<HTMLImageElement, PictureProps>(
   function Picture(
-    { fallback, sources = [], shouldLoad = true, forceWrapper, ...props },
+    { fallback, sources = [], shouldLoad = true, ...props },
     ref
   ) {
     const fallbackImage = (
       <Image {...props} {...fallback} shouldLoad={shouldLoad} innerRef={ref} />
     )
 
-    if (!sources.length && !forceWrapper) {
+    if (!sources.length) {
       return fallbackImage
     }
 

@@ -122,7 +122,6 @@ export function _createCompatLayer(
             sizes: fluid.sizes,
           },
           sources: [],
-          forceWrapper: true,
         },
       }
       const placeholder = fluid.tracedSVG || fluid.base64
