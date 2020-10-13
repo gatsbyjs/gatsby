@@ -59,12 +59,21 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 }
 
 if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = ({ Joi }) =>
+  exports.pluginOptionsSchema = ({ Joi }) => {
     Joi.object({
       name: Joi.string(),
       short_name: Joi.string(),
       description: Joi.string(),
       lang: Joi.string(),
+      localize: Joi.array().items(
+        Joi.object({
+          start_url: Joi.string(),
+          name: Joi.string(),
+          short_name: Joi.string(),
+          description: Joi.string(),
+          lang: Joi.string(),
+        })
+      ),
       start_url: Joi.string(),
       background_color: Joi.string(),
       theme_color: Joi.string(),
@@ -86,6 +95,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         purpose: Joi.string(),
       }),
     })
+  }
 }
 
 /**
