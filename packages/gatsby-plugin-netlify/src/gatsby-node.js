@@ -54,13 +54,19 @@ exports.onPostBuild = async (
 }
 
 exports.pluginOptionsSchema = function ({ Joi }) {
+  // headers is a specific type used by Netlify: https://www.gatsbyjs.com/plugins/gatsby-plugin-netlify/#headers
+  const headersSchema = Joi.object().pattern(
+    /^/,
+    Joi.array().items(Joi.string())
+  )
+
   return Joi.object({
-    headers: Joi.object(),
-    allPageHeaders: Joi.array(),
+    headers: headersSchema,
+    allPageHeaders: Joi.array().items(Joi.string()),
     mergeSecurityHeaders: Joi.boolean(),
     mergeLinkHeaders: Joi.boolean(),
     mergeCachingHeaders: Joi.boolean(),
-    transformHeaders: Joi.function(),
+    transformHeaders: Joi.function().maxArity(2), // This should return a "headersSchema" type defined at line 58
     generateMatchPathRewrites: Joi.boolean(),
   })
 }

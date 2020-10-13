@@ -19,7 +19,7 @@ describe(`gatsby-node.js`, () => {
       `"mergeSecurityHeaders" must be a boolean`,
       `"mergeLinkHeaders" must be a boolean`,
       `"mergeCachingHeaders" must be a boolean`,
-      `"transformHeaders" must be of type function`,
+      `"transformHeaders" must have an arity lesser or equal to 2`,
       `"generateMatchPathRewrites" must be a boolean`,
     ]
 
@@ -29,7 +29,7 @@ describe(`gatsby-node.js`, () => {
       mergeSecurityHeaders: `this should be a boolean`,
       mergeLinkHeaders: `this should be a boolean`,
       mergeCachingHeaders: `this should be a boolean`,
-      transformHeaders: `this should be a function`,
+      transformHeaders: (too, much, args) => ``,
       generateMatchPathRewrites: `this should be a boolean`,
     })
 
@@ -39,8 +39,15 @@ describe(`gatsby-node.js`, () => {
   it(`should validate the schema`, () => {
     const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
       headers: {
-        Authorization: `Bearer: Some-Magic-Token`,
+        Authorization: [`Bearer: Some-Magic-Token`],
+        otherHeader: [`some`, `great`, `headers`],
       },
+      allPageHeaders: [`First header`, `Second header`],
+      mergeSecurityHeaders: true,
+      mergeLinkHeaders: false,
+      mergeCachingHeaders: true,
+      transformHeaders: () => null,
+      generateMatchPathRewrites: false,
     })
 
     expect(isValid).toBe(true)
