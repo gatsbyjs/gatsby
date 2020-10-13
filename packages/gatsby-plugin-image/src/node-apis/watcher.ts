@@ -15,14 +15,12 @@ let watcher: FSWatcher | undefined
  */
 export function watchImage({
   fullPath,
-  pathPrefix,
   createNodeId,
   createNode,
   cache,
   reporter,
 }: {
   fullPath: string
-  pathPrefix: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
   cache: GatsbyCache
@@ -44,7 +42,7 @@ export function watchImage({
           reporter.warn(`Could not process image ${path}`)
           return
         }
-        await updateImages({ node, pathPrefix, cache, reporter })
+        await updateImages({ node, cache, reporter })
       }
     )
   } else {
@@ -57,12 +55,10 @@ export function watchImage({
  */
 async function updateImages({
   cache,
-  pathPrefix,
   node,
   reporter,
 }: {
   cache: GatsbyCache
-  pathPrefix: string
   node: Node
   reporter: Reporter
 }): Promise<void> {
@@ -77,21 +73,13 @@ async function updateImages({
 
   await Promise.all(
     Object.values(imageRefs).map(
-      async ({ isFixed, contentDigest, args, cacheFilename }) => {
+      async ({ contentDigest, args, cacheFilename }) => {
         if (contentDigest && contentDigest === node.internal.contentDigest) {
           // Skipping, because the file is unchanged
           return
         }
         // Update the image
-        await writeImage(
-          node,
-          pathPrefix,
-          args,
-          reporter,
-          cache,
-          isFixed,
-          cacheFilename
-        )
+        await writeImage(node, args, reporter, cache, cacheFilename)
       }
     )
   )

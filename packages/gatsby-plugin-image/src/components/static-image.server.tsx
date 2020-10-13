@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { splitProps, StaticImageProps } from "../utils"
+import { StaticImageProps } from "../utils"
 import { FluidObject, FixedObject } from "gatsby-image"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
 import { GatsbyImageProps } from "./gatsby-image.browser"
@@ -22,43 +22,10 @@ export function _getStaticImage(
     if (__error) {
       console.warn(__error)
     }
-    const { gatsbyImageProps, layout } = splitProps({ src, ...props })
+
     if (imageData) {
-      const isResponsive = layout !== `fixed`
-      const childProps: Pick<
-        GatsbyImageProps,
-        "layout" | "width" | "height" | "images" | "placeholder"
-      > = {
-        layout,
-        placeholder: null,
-        width: isResponsive ? 1 : imageData.width,
-        height: isResponsive ? imageData.aspectRatio : imageData.height,
-        images: {
-          fallback: {
-            src: imageData.src,
-            srcSet: imageData.srcSet,
-            sizes: isResponsive ? imageData.sizes : undefined,
-          },
-          sources: [],
-        },
-      }
-
-      const placeholder = imageData.tracedSVG || imageData.base64
-
-      if (placeholder) {
-        childProps.placeholder = {
-          fallback: placeholder,
-        }
-      }
-
-      if (imageData.srcWebp) {
-        childProps.images.sources.push({
-          srcSet: imageData.srcSetWebp,
-          type: `image/webp`,
-          sizes: isResponsive ? imageData.sizes : undefined,
-        })
-      }
-      return <GatsbyImage {...gatsbyImageProps} {...childProps} />
+      //@ts-ignore
+      return <GatsbyImage {...imageData} {...props} />
     }
     console.warn(`Image not loaded`, src)
     if (!__error && process.env.NODE_ENV === `development`) {
