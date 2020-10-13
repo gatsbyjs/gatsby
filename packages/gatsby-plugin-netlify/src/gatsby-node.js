@@ -53,10 +53,11 @@ exports.onPostBuild = async (
   ])
 }
 
+const MATH_ALL_KEYS = /^/
 const pluginOptionsSchema = function ({ Joi }) {
   // headers is a specific type used by Netlify: https://www.gatsbyjs.com/plugins/gatsby-plugin-netlify/#headers
   const headersSchema = Joi.object()
-    .pattern(/^/, Joi.array().items(Joi.string()))
+    .pattern(MATH_ALL_KEYS, Joi.array().items(Joi.string()))
     .description(`Add more Netlify headers to specific pages`)
 
   return Joi.object({
