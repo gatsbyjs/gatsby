@@ -55,15 +55,15 @@ exports.sourceNodes = async (
   const { createNode, deleteNode, touchNode } = actions
 
   let currentSyncData, contentTypeItems, defaultLocale, locales, space
-  if (process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE) {
+  if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
-      `GATSBY_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
-        process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE +
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE +
         `\` so Remote changes CAN NOT be detected!`
     )
   }
   const forceCache = await fs.exists(
-    process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE
+    process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
   )
 
   const pluginConfig = createPluginConfig(pluginOptions)
@@ -99,8 +99,8 @@ exports.sourceNodes = async (
     // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
     // If present, do NOT contact contentful, skip the round trips entirely
     reporter.info(
-      `GATSBY_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
-      process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
+      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
     )
     ;({
       currentSyncData,
@@ -109,7 +109,7 @@ exports.sourceNodes = async (
       locales,
       space,
     } = v8.deserialize(
-      fs.readFileSync(process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE)
+      fs.readFileSync(process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE)
     ))
   } else {
     const online = await isOnline()
@@ -166,13 +166,13 @@ exports.sourceNodes = async (
       parentSpan,
     }))
 
-    if (process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE) {
+    if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
       reporter.info(
-        `GATSBY_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
-          process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE
+        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+          process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
       )
       fs.writeFileSync(
-        process.env.GATSBY_EXPERIMENTAL_FORCE_CACHE,
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
         v8.serialize({
           currentSyncData,
           contentTypeItems,
