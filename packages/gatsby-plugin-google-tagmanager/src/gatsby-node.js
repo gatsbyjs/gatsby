@@ -15,7 +15,6 @@ exports.onPreInit = (args, options) => {
 exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     id: Joi.string()
-      .required()
       .description(
         `Google Tag Manager ID that can be found in your Tag Manager dashboard.`
       ),
