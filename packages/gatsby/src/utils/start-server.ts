@@ -256,8 +256,11 @@ export async function startServer(
       return next()
     }
 
-    // const htmlActivity = report.phantomActivity(`building index.html`, {})
-    // htmlActivity.start()
+    const htmlActivity = report.activityTimer(
+      `building HTML for path "${req.path}"`,
+      {}
+    )
+    htmlActivity.start()
 
     const [response] = await renderHTML({
       htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
@@ -272,9 +275,9 @@ export async function startServer(
       ],
     })
 
-    return res.status(200).send(response)
-
-    // htmlActivity.end()
+    // TODO add support for 404 and general rendering errors
+    htmlActivity.end()
+    res.status(200).send(response)
   })
 
   // Disable directory indexing i.e. serving index.html from a directory.
@@ -288,7 +291,7 @@ export async function startServer(
    **/
   const server = new http.Server(app)
 
-  // const socket = websocketManager.init({ server, directory: program.directory })
+  const socket = websocketManager.init({ server, directory: program.directory })
 
   // hardcoded `localhost`, because host should match `target` we set
   // in http proxy in `develop-proxy`
