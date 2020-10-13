@@ -5987,6 +5987,19 @@
     - Lots of built-in templates, widgets, or bring in your own custom components.
     - Uses @builder.io/gatsby plugin to dynamically create pages published on the editor.
     - SEO
+- url: https://builder-shopify-starter.firebaseapp.com/
+  repo: https://github.com/BuilderIO/gatsby-builder-shopify
+  description: Gatsby + Shopify + Builder.io starter template
+  tags:
+    - E-commerce
+    - Shopify
+    - CMS:Other
+    - CMS:Headless
+  features:
+    - Builder.io integration with sample product page template, cart, header and custom components.
+    - Drag and drop page editing and creations.
+    - Lots of built-in templates, widgets, or bring in your own custom components.
+    - Analytics, A/B testing, product augmentation, and heatmaps out of the box.
 - url: https://gatsby-starter-reason-blog.netlify.app/
   repo: https://github.com/mukul-rathi/gatsby-starter-reason-blog
   description: The Gatsby Starter Blog using ReasonML!
