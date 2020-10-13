@@ -69,11 +69,12 @@ const downloadImageAndCreateFileNode = async (
 
 export const ArticleNode = (imageArgs, locale) =>
   createNodeFactory(ARTICLE, async node => {
-    if (node.blog) node.blog___NODE = generateNodeId(BLOG, node.blog.id)
+    if (node.blog)
+      node.blog___NODE = generateNodeId(BLOG, makeId(node.blog.id, locale))
 
     if (node.comments)
       node.comments___NODE = node.comments.edges.map(edge =>
-        generateNodeId(COMMENT, edge.node.id)
+        generateNodeId(COMMENT, makeId(edge.node.id, locale))
       )
 
     if (node.image)
@@ -109,7 +110,8 @@ export const CollectionNode = (imageArgs, locale) =>
     return createLocaleNode(node, locale)
   })
 
-export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
+export const CommentNode = (_imageArgs, locale) =>
+  createNodeFactory(COMMENT, async node => createLocaleNode(node, locale))
 
 export const ProductNode = (imageArgs, locale) =>
   createNodeFactory(PRODUCT, async node => {
