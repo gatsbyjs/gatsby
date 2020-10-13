@@ -2,7 +2,7 @@ import fs from "fs-extra"
 import path from "path"
 import RSS from "rss"
 import merge from "lodash.merge"
-import Joi from "@hapi/joi"
+import { Joi } from "gatsby-plugin-utils"
 
 import { defaultOptions, runQuery } from "./internals"
 import pluginOptionsSchema from "./plugin-options"
@@ -16,7 +16,9 @@ const warnMessage = (error, behavior) => `
   For more info, check out: https://gatsby.dev/adding-rss-feed
 `
 
-exports.pluginOptionsSchema = pluginOptionsSchema
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  exports.pluginOptionsSchema = pluginOptionsSchema
+}
 
 // TODO: remove in the next major release
 // A default function to transform query data into feed entries.
