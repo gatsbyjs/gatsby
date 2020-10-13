@@ -1,5 +1,17 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    error: jest.fn(),
+    panic: jest.fn(),
+    log: jest.fn(),
+    warn: jest.fn(),
+    success: jest.fn(),
+    info: jest.fn(),
+  }
+})
+const mockProcessExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
 import { loadPlugins } from "../index"
 import { slash } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
 import { IFlattenedPlugin } from "../types"
 
 describe(`Load plugins`, () => {
@@ -10,8 +22,8 @@ describe(`Load plugins`, () => {
    * Both will cause snapshots to differ.
    */
   const replaceFieldsThatCanVary = (
-    plugins: IFlattenedPlugin[]
-  ): IFlattenedPlugin[] =>
+    plugins: Array<IFlattenedPlugin>
+  ): Array<IFlattenedPlugin> =>
     plugins.map(plugin => {
       if (plugin.pluginOptions && plugin.pluginOptions.path) {
         plugin.pluginOptions = {
@@ -185,6 +197,96 @@ describe(`Load plugins`, () => {
       // TODO: I think we should probably be de-duping, so this should be 1.
       // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
       expect(tsplugins.length).toEqual(2)
+    })
+  })
+
+  describe(`plugin options validation`, () => {
+    it(`throws a structured error with invalid plugin options`, async () => {
+      const invalidPlugins = [
+        {
+          resolve: `gatsby-plugin-google-analytics`,
+          options: {
+            trackingId: 123,
+            anonymize: `not a boolean`,
+          },
+        },
+        {
+          resolve: `gatsby-plugin-google-analytics`,
+          options: {
+            anonymize: `still not a boolean`,
+          },
+        },
+      ]
+      await loadPlugins({
+        plugins: invalidPlugins,
+      })
+
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(
+        invalidPlugins.length
+      )
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "pluginName": "gatsby-plugin-google-analytics",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "trackingId",
+                    "label": "trackingId",
+                    "value": 123,
+                  },
+                  "message": "\\"trackingId\\" must be a string",
+                  "path": Array [
+                    "trackingId",
+                  ],
+                  "type": "string.base",
+                },
+                Object {
+                  "context": Object {
+                    "key": "anonymize",
+                    "label": "anonymize",
+                    "value": "not a boolean",
+                  },
+                  "message": "\\"anonymize\\" must be a boolean",
+                  "path": Array [
+                    "anonymize",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
+      expect((reporter.error as jest.Mock).mock.calls[1])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "pluginName": "gatsby-plugin-google-analytics",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "anonymize",
+                    "label": "anonymize",
+                    "value": "still not a boolean",
+                  },
+                  "message": "\\"anonymize\\" must be a boolean",
+                  "path": Array [
+                    "anonymize",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
+      expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
   })
 })

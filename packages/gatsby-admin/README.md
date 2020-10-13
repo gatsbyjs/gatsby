@@ -1,8 +1,48 @@
 # Gatsby Admin
 
-A visual interface to configure your Gatsby site.
+A visual interface to configure your Gatsby site. Currently alpha testing.
 
-## Architecture
+## Getting started
+
+For now, Gatsby Admin is marked as experimental and requires a flag to enable. Add the following flag when using `gatsby develop`:
+
+```sh
+GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
+```
+
+Or in the `scripts` section of your `package.json`:
+
+```json
+{
+  "develop": "GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop"
+}
+```
+
+**Note**: If you’re on Windows you should install [`cross-env`](https://www.npmjs.com/package/cross-env) and prepend your script, e.g.:
+
+```json
+{
+  "develop": "cross-env GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop"
+}
+```
+
+Once you run `gatsby develop` with the flag enabled, you can visit `localhost:8000/___admin` to view Admin for your Gatsby site!
+
+![Gatsby Admin homepage showing a list of installed plugins, as well as a search input to search for plugins to install](https://user-images.githubusercontent.com/7525670/95580804-36df9200-0a38-11eb-80a7-fbd847a13da1.png)
+
+When you select an installed plugin or search for a new one, you will be able to install/uninstall/configure it:
+
+![Gatsby Admin plugin page showing the README of the gatsby-plugin-sitemap, as well as an input field to configure the options for said plugin](https://user-images.githubusercontent.com/7525670/95580764-27f8df80-0a38-11eb-9f26-8a2cbbc4b07d.png)
+
+Let us know what you think by hitting the "Send feedback" button in Admin or commenting in [the Admin umbrella issue](https://github.com/gatsbyjs/gatsby/issues/27402)!
+
+## Troubleshooting
+
+Admin does not support all `gatsby-config.js` formats. If yours is not supported, we'd love if you could share what it looks like in the [umbrella issue](https://github.com/gatsbyjs/gatsby/issues/27402)!
+
+## Technical documentation
+
+### Architecture
 
 The Gatsby Admin interface (this package) is a standard Gatsby site.
 
@@ -12,7 +52,7 @@ It fetches its data from the [gatsby-recipes GraphQL server](https://github.com/
 
 It also listens to the [`gatsby develop` status server](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/develop.ts), which exposes information about whether you changed the config files and need to restart the develop process.
 
-### Service Discovery
+#### Service Discovery
 
 `gatsby develop` automatically starts both the GraphQL and status server. However, both of these use random ports.
 
@@ -37,15 +77,15 @@ $ curl http://localhost:8000/___services | jq
 
 That's how the Admin frontend knows to connect to `localhost:50400/graphql` to connect to the GraphQL server, and `localhost:60731` to connect to the develop status server.
 
-### Production Deployment
+#### Production Deployment
 
 To avoid clashing with the local site and potential issues with shadowing, `gatsby develop` statically serves the built files from the [develop parent proxy](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/develop-proxy.ts).
 
 To avoid issues with yarn, lerna, and circular dependencies, `gatsby-admin` copies its built files to `gatsby/gatsby-admin-public` which is then published to npm. While not an ideal solution, it fixes the issue and works relatively reliably.
 
-## Development
+### Development
 
-### Running it locally
+#### Running it locally
 
 The easiest way to work on Admin locally is to develop Admin itself.
 
@@ -54,7 +94,7 @@ The easiest way to work on Admin locally is to develop Admin itself.
 
 > If you see eslint errors you'll need to temporarily replace all references to `___loader` with `window.___loader` in `packages/gatsby-link/index.js`.
 
-### Running it on a local site
+#### Running it on a local site
 
 To try Admin with one of your sites locally, use the `gatsby-dev-cli` to copy the local versions of `gatsby`, `gatsby-cli`, `gatsby-recipes`, `gatsby-core-utils` and `gatsby-admin` into your project:
 

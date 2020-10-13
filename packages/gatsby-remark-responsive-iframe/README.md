@@ -7,7 +7,7 @@ container.
 
 ## Install
 
-`npm install --save gatsby-remark-responsive-iframe`
+`npm install gatsby-remark-responsive-iframe`
 
 ## How to use
 

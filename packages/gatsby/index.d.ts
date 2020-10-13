@@ -13,6 +13,7 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
+import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 
 export {
   default as Link,
@@ -78,6 +79,8 @@ export type PageProps<
   children: undefined
   /** @deprecated use pageContext instead */
   pathContext: object
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
   /** Holds information about the build process for this component */
   pageResources: {
     component: React.Component
@@ -510,6 +513,12 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+
+  /**
+   * Add a Joi schema for the possible options of your plugin.
+   * Currently experimental and not enabled by default.
+   */
+  pluginOptionsSchema?(args: PluginOptionsSchemaArgs): ObjectSchema
 }
 
 /**
@@ -1544,4 +1553,8 @@ export interface IPluginRefOptions {
   plugins?: PluginRef[]
   path?: string
   [option: string]: unknown
+}
+
+export interface PluginOptionsSchemaArgs {
+  Joi: PluginOptionsSchemaJoi
 }

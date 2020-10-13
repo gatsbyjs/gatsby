@@ -3,8 +3,10 @@ import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
+import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
+import { GatsbyNode } from "../../../"
 import { IPluginInfo, IFlattenedPlugin } from "./types"
 
 interface IApi {
@@ -21,14 +23,14 @@ export interface IEntry {
 export type ExportType = "node" | "browser" | "ssr"
 
 type IEntryMap = {
-  [exportType in ExportType]: IEntry[]
+  [exportType in ExportType]: Array<IEntry>
 }
 
 export type ICurrentAPIs = {
-  [exportType in ExportType]: string[]
+  [exportType in ExportType]: Array<string>
 }
 
-const getGatsbyUpgradeVersion = (entries: readonly IEntry[]): string =>
+const getGatsbyUpgradeVersion = (entries: ReadonlyArray<IEntry>): string =>
   entries.reduce((version, entry) => {
     if (entry.api && entry.api.version) {
       return semver.gt(entry.api.version, version || `0.0.0`)
@@ -42,10 +44,10 @@ const getGatsbyUpgradeVersion = (entries: readonly IEntry[]): string =>
 // array of valid API names, return an array of invalid API exports.
 function getBadExports(
   plugin: IPluginInfo,
-  pluginAPIKeys: readonly string[],
-  apis: readonly string[]
-): IEntry[] {
-  let badExports: IEntry[] = []
+  pluginAPIKeys: ReadonlyArray<string>,
+  apis: ReadonlyArray<string>
+): Array<IEntry> {
+  let badExports: Array<IEntry> = []
   // Discover any exports from plugins which are not "known"
   badExports = badExports.concat(
     _.difference(pluginAPIKeys, apis).map(e => {
@@ -60,15 +62,15 @@ function getBadExports(
 }
 
 function getErrorContext(
-  badExports: IEntry[],
+  badExports: Array<IEntry>,
   exportType: ExportType,
   currentAPIs: ICurrentAPIs,
   latestAPIs: { [exportType in ExportType]: { [exportName: string]: IApi } }
 ): {
-  errors: string[]
-  entries: IEntry[]
+  errors: Array<string>
+  entries: Array<IEntry>
   exportType: ExportType
-  fixes: string[]
+  fixes: Array<string>
   sourceMessage: string
 } {
   const entries = badExports.map(ex => {
@@ -79,7 +81,7 @@ function getErrorContext(
   })
 
   const gatsbyUpgradeVersion = getGatsbyUpgradeVersion(entries)
-  const errors: string[] = []
+  const errors: Array<string> = []
   const fixes = gatsbyUpgradeVersion
     ? [`npm install gatsby@^${gatsbyUpgradeVersion}`]
     : []
@@ -139,7 +141,7 @@ export async function handleBadExports({
   badExports,
 }: {
   currentAPIs: ICurrentAPIs
-  badExports: { [api in ExportType]: IEntry[] }
+  badExports: { [api in ExportType]: Array<IEntry> }
 }): Promise<void> {
   const hasBadExports = Object.keys(badExports).find(
     api => badExports[api].length > 0
@@ -165,6 +167,74 @@ export async function handleBadExports({
   }
 }
 
+export async function validatePluginOptions({
+  flattenedPlugins,
+}: {
+  flattenedPlugins: Array<IPluginInfo & Partial<IFlattenedPlugin>>
+}): Promise<void> {
+  const errors = (
+    await Promise.all(
+      flattenedPlugins.map(
+        async (plugin): Promise<boolean | null> => {
+          if (plugin.nodeAPIs?.indexOf(`pluginOptionsSchema`) === -1)
+            return null
+
+          const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+          if (!gatsbyNode.pluginOptionsSchema) return null
+
+          let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
+            GatsbyNode["pluginOptionsSchema"],
+            undefined
+          >)({
+            Joi,
+          })
+
+          // Validate correct usage of pluginOptionsSchema
+          if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
+            reporter.warn(
+              `Plugin "${plugin.name}" has an invalid options schema so we cannot verify your configuration for it.`
+            )
+            return null
+          }
+
+          try {
+            // All plugins have "plugins: []"" added to their options in load.ts, even if they
+            // do not have subplugins. We add plugins to the schema if it does not exist already
+            // to make sure they pass validation.
+            if (!optionsSchema.describe().keys.plugins) {
+              optionsSchema = optionsSchema.append({
+                plugins: Joi.array().length(0),
+              })
+            }
+
+            await validateOptionsSchema(optionsSchema, plugin.pluginOptions)
+          } catch (error) {
+            if (error instanceof Joi.ValidationError) {
+              reporter.error({
+                id: `11331`,
+                context: {
+                  validationErrors: error.details,
+                  pluginName: plugin.name,
+                },
+              })
+
+              return true
+            }
+
+            throw error
+          }
+
+          return null
+        }
+      )
+    )
+  ).filter(Boolean)
+
+  if (errors.length > 0) {
+    process.exit(1)
+  }
+}
+
 /**
  * Identify which APIs each plugin exports
  */
@@ -173,8 +243,8 @@ export function collatePluginAPIs({
   flattenedPlugins,
 }: {
   currentAPIs: ICurrentAPIs
-  flattenedPlugins: (IPluginInfo & Partial<IFlattenedPlugin>)[]
-}): { flattenedPlugins: IFlattenedPlugin[]; badExports: IEntryMap } {
+  flattenedPlugins: Array<IPluginInfo & Partial<IFlattenedPlugin>>
+}): { flattenedPlugins: Array<IFlattenedPlugin>; badExports: IEntryMap } {
   // Get a list of bad exports
   const badExports: IEntryMap = {
     node: [],
@@ -229,7 +299,7 @@ export function collatePluginAPIs({
   })
 
   return {
-    flattenedPlugins: flattenedPlugins as IFlattenedPlugin[],
+    flattenedPlugins: flattenedPlugins as Array<IFlattenedPlugin>,
     badExports,
   }
 }
@@ -237,8 +307,8 @@ export function collatePluginAPIs({
 export const handleMultipleReplaceRenderers = ({
   flattenedPlugins,
 }: {
-  flattenedPlugins: IFlattenedPlugin[]
-}): IFlattenedPlugin[] => {
+  flattenedPlugins: Array<IFlattenedPlugin>
+}): Array<IFlattenedPlugin> => {
   // multiple replaceRenderers may cause problems at build time
   const rendererPlugins = flattenedPlugins
     .filter(plugin => plugin.ssrAPIs.includes(`replaceRenderer`))
@@ -268,7 +338,7 @@ export const handleMultipleReplaceRenderers = ({
 
     // For each plugin in ignorable, set a skipSSR flag to true
     // This prevents apiRunnerSSR() from attempting to run it later
-    const messages: string[] = []
+    const messages: Array<string> = []
     flattenedPlugins.forEach((fp, i) => {
       if (ignorable.includes(fp.name)) {
         messages.push(

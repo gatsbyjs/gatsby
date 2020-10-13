@@ -34,7 +34,6 @@ The Peril instance can also be configured to run events on a schedule.
 ### What is this project?
 
 - [EmptyBody](./rules/emptybody.ts): Automatically requests more information from a user who opens a new issue with a blank body.
-- [InviteCollaborator](./rules/invite-collaborator.ts): Automatically invite all contributors who merge a PR into the GatsbyJS org to become members of the [@gatsbyjs/maintainers](https://github.com/orgs/gatsbyjs/teams/maintainers) team.
 
 ### To Develop
 

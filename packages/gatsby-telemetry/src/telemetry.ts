@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from "uuid"
+import uuidv4 from "uuid/v4"
 import os from "os"
-import { isCI, getCIName } from "gatsby-core-utils"
+import { isCI, getCIName, createContentDigest } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
@@ -48,39 +48,57 @@ interface IAnalyticsTrackerConstructorParameters {
   gatsbyCliVersion?: SemVer
 }
 
+export interface IStructuredError {
+  id?: string
+  code?: string
+  text: string
+  level?: string
+  type?: string
+  context?: unknown
+  error?: {
+    stack?: string
+  }
+}
+
+export interface IStructuredErrorV2 {
+  id?: string
+  text: string
+  level?: string
+  type?: string
+  context?: string
+  stack?: string
+}
+
 export interface ITelemetryTagsPayload {
   name?: string
   starterName?: string
+  siteName?: string
+  siteHash?: string
+  userAgent?: string
   pluginName?: string
   exitCode?: number
   duration?: number
   uiSource?: string
   valid?: boolean
-  plugins?: string[]
+  plugins?: Array<string>
   pathname?: string
-  error?: {
-    id?: string
-    code?: string
-    text: string
-    level?: string
-    type?: string
-    stack?: string
-    context?: string
-    error?: {
-      stack?: string
-    }
-  }
+  error?: IStructuredError | Array<IStructuredError>
   cacheStatus?: string
   pluginCachePurged?: string
   siteMeasurements?: {
     pagesCount?: number
     clientsCount?: number
-    paths?: string[]
+    paths?: Array<string | undefined>
     bundleStats?: unknown
     pageDataStats?: unknown
     queryStats?: unknown
   }
-  errorV2?: unknown
+  errorV2?: IStructuredErrorV2
+}
+
+export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {
+  gatsbyCliVersion?: SemVer
+  installedGatsbyVersion?: SemVer
 }
 
 export interface ITelemetryOptsPayload {
@@ -102,6 +120,7 @@ export class AnalyticsTracker {
   repositoryId?: IRepositoryId
   features = new Set<string>()
   machineId: string
+  siteHash?: string = createContentDigest(process.cwd())
 
   constructor({
     componentId,
@@ -186,8 +205,22 @@ export class AnalyticsTracker {
     return `-0.0.0`
   }
 
+  trackCli(
+    type: string | Array<string> = ``,
+    tags: ITelemetryTagsPayload = {},
+    opts: ITelemetryOptsPayload = { debounce: false }
+  ): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    if (typeof tags.siteHash === `undefined`) {
+      tags.siteHash = this.siteHash
+    }
+    this.captureEvent(type, tags, opts)
+  }
+
   captureEvent(
-    type: string | string[] = ``,
+    type: string | Array<string> = ``,
     tags: ITelemetryTagsPayload = {},
     opts: ITelemetryOptsPayload = { debounce: false }
   ): void {
@@ -353,7 +386,7 @@ export class AnalyticsTracker {
     return osInfo
   }
 
-  trackActivity(source: string): void {
+  trackActivity(source: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -363,7 +396,7 @@ export class AnalyticsTracker {
     const debounceTime = 5 * 1000 // 5 sec
 
     if (now - last > debounceTime) {
-      this.captureEvent(source)
+      this.captureEvent(source, tags)
     }
     this.debouncer[source] = now
   }
@@ -390,7 +423,7 @@ export class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
-  aggregateStats(data): IAggregateStats {
+  aggregateStats(data: Array<number>): IAggregateStats {
     const sum = data.reduce((acc, x) => acc + x, 0)
     const mean = sum / data.length || 0
     const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
@@ -419,14 +452,13 @@ export class AnalyticsTracker {
 
   async sendEvents(): Promise<boolean> {
     if (!this.isTrackingEnabled()) {
-      return Promise.resolve(true)
+      return true
     }
 
     return this.store.sendEvents()
   }
 
   trackFeatureIsUsed(name: string): void {
-    if (this.features.has(name)) return
     this.features.add(name)
   }
 }

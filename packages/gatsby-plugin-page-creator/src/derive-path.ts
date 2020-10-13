@@ -1,5 +1,6 @@
 import _ from "lodash"
-import slugify from "slugify"
+import slugify from "@sindresorhus/slugify"
+import { Reporter } from "gatsby"
 import {
   compose,
   removeFileExtension,
@@ -7,7 +8,8 @@ import {
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
 } from "./path-utils"
-import { Reporter } from "gatsby"
+
+const doubleForwardSlashes = /\/\/+/g
 
 // Generates the path for the page from the file path
 // product/{Product.id}.js => /product/:id, pulls from nodes.id
@@ -26,7 +28,7 @@ export function derivePath(
 
   // 3.  For each slug parts get the actual value from the node data
   slugParts.forEach(slugPart => {
-    // 3.a. this transforms foo__bar into foo.bar
+    // 3.a.  this transforms foo__bar into foo.bar
     const key = compose(
       extractFieldWithoutUnion,
       switchToPeriodDelimiters
@@ -45,18 +47,25 @@ export function derivePath(
       return
     }
 
-    // If the node value is meant to be a slug, like `foo/bar`, the slugify
-    // function will remove the slashes. This is a hack to make sure the slashes
-    // stick around in the final url structuring
-    const replaceSlashesValue = (nodeValue + ``).replace(/\//g, `(REPLACED)`)
-    const slugifiedWithoutSlashesValue = slugify(replaceSlashesValue, {
-      lower: true,
-    })
-    const value = slugifiedWithoutSlashesValue.replace(/\(REPLACED\)/gi, `/`)
+    const value = safeSlugify(nodeValue)
 
     // 3.d  replace the part of the slug with the actual value
     pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
   })
 
-  return pathWithoutExtension
+  // 4.  Remove double forward slashes that could occur in the final URL
+  const derivedPath = pathWithoutExtension.replace(doubleForwardSlashes, `/`)
+
+  return derivedPath
+}
+
+// If the node value is meant to be a slug, like `foo/bar`, the slugify
+// function will remove the slashes. This is a hack to make sure the slashes
+// stick around in the final url structuring
+function safeSlugify(nodeValue: string): string {
+  // The incoming GraphQL data can also be a number
+  const input = String(nodeValue)
+  const tempArr = input.split(`/`)
+
+  return tempArr.map(v => slugify(v)).join(`/`)
 }

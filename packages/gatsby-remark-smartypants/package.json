@@ -1,22 +1,22 @@
 {
   "name": "gatsby-remark-smartypants",
   "description": "Use retext-smartypants to auto-enhance typography of markdown",
-  "version": "2.3.10",
+  "version": "2.3.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.11.2",
     "retext": "^5.0.0",
     "retext-smartypants": "^3.0.3",
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.5.3",
+    "cross-env": "^7.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-smartypants#readme",
   "keywords": [

@@ -8,6 +8,7 @@ const pluginDefaults = {
   stripMetadata: true,
   lazyImageGeneration: true,
   defaultQuality: 50,
+  failOnError: true, // matches default of the sharp api constructor (https://sharp.pixelplumbing.com/api-constructor)
 }
 
 const generalArgs = {

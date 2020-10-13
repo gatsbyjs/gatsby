@@ -27,8 +27,8 @@ for folder in $GLOB; do
   cp -r "$BASE/$folder/." .
 
   if [ "$IS_WORKSPACE" = null ]; then
-    rm -rf yarn.lock
-    yarn import # generate a new yarn.lock file based on package-lock.json
+    rm -f yarn.lock
+    yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
   fi
 
   if [ -n "$(git status --porcelain)" ]; then

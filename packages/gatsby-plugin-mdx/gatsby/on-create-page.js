@@ -20,7 +20,7 @@ module.exports = async ({ page, actions }, pluginOptions) => {
     })
 
     // grab the exported frontmatter
-    const { frontmatter } = extractExports(code)
+    const { frontmatter } = extractExports(code, page.component)
 
     deletePage(page)
     createPage(

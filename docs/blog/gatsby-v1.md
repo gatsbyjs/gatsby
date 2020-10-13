@@ -293,7 +293,7 @@ _same Gatsby codebase_.
 The marketing pages of their site are built using markdown and React components
 along with a modern CSS-in-JS library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
-uses [Redux](http://redux.js.org/) to communicate with their Django API.
+uses [Redux](https://redux.js.org/) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a
 potential customer goes to sign-up for the app, there's no _awkward jump from

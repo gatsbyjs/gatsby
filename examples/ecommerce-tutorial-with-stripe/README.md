@@ -8,7 +8,7 @@
   Gatsby E-Commerce Starter
 </h1>
 
-This is a Gatsby e-commerce example based on https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/
+This is a Gatsby e-commerce example based on https://www.gatsbyjs.com/tutorial/ecommerce-tutorial/
 
 ## Setup
 

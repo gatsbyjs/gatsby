@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.14...gatsby-transformer-excel@2.4.15) (2020-10-13)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-excel ([#27394](https://github.com/gatsbyjs/gatsby/issues/27394)) ([3a3c3e7](https://github.com/gatsbyjs/gatsby/commit/3a3c3e7f0942578b5ee113056d4883c7c277bdd3))
+
+## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.13...gatsby-transformer-excel@2.4.14) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.12...gatsby-transformer-excel@2.4.13) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.11...gatsby-transformer-excel@2.4.12) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+## [2.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.10...gatsby-transformer-excel@2.4.11) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
 ## [2.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.9...gatsby-transformer-excel@2.4.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-transformer-excel

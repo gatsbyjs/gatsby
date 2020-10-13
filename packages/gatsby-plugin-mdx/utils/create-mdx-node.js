@@ -14,7 +14,10 @@ module.exports = async ({ id, node, content }) => {
   }
 
   // extract all the exports
-  const { frontmatter, ...nodeExports } = extractExports(code)
+  const { frontmatter, ...nodeExports } = extractExports(
+    code,
+    node.absolutePath
+  )
 
   const mdxNode = {
     id,
