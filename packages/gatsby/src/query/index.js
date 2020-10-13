@@ -1,14 +1,10 @@
 // @flow
 
 const _ = require(`lodash`)
-const Queue = require(`better-queue`)
 // const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
-const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
-const { GraphQLRunner } = require(`./graphql-runner`)
-const pageDataUtil = require(`../utils/page-data`)
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -184,29 +180,6 @@ const createStaticQueryJob = (state, queryId) => {
   }
 }
 
-/**
- * Creates activity object which:
- *  - creates actual progress activity if there are any queries that need to be run
- *  - creates activity-like object that just cancels pending activity if there are no queries to run
- */
-const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
-  if (queryJobsCount) {
-    const activity = report.createProgress(`run queries`, queryJobsCount, 0, {
-      id: `query-running`,
-      parentSpan,
-    })
-    activity.start()
-    return activity
-  } else {
-    return {
-      done: () => {
-        report.completeActivity(`query-running`)
-      },
-      tick: () => {},
-    }
-  }
-}
-
 const processStaticQueries = async (
   queryIds,
   { state, activity, graphqlRunner, graphqlTracing }
@@ -261,85 +234,11 @@ const createPageQueryJob = (state, page) => {
 // ///////////////////////////////////////////////////////////////////
 // Listener for gatsby develop
 
-// Initialized via `startListening`
-let listenerQueue
-
 /**
  * Run any dirty queries. See `calcQueries` for what constitutes a
  * dirty query
  */
-const runQueuedQueries = () => {
-  if (listenerQueue) {
-    const state = store.getState()
-    const { staticQueryIds, pageQueryIds } = groupQueryIds(
-      calcDirtyQueryIds(state)
-    )
-    const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
-    const queryJobs = [
-      ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
-      ...pages.map(page => createPageQueryJob(state, page)),
-    ]
-    listenerQueue.push(queryJobs)
-  }
-}
-
-/**
- * Starts a background process that processes any dirty queries
- * whenever one of the following occurs:
- *
- * 1. A node has changed (but only after the api call has finished
- * running)
- * 2. A component query (e.g. by editing a React Component) has
- * changed
- *
- * For what constitutes a dirty query, see `calcQueries`
- */
-
-const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
-  // We use a queue to process batches of queries so that they are
-  // processed consecutively
-  let graphqlRunner = null
-  const developQueue = queryQueue.createDevelopQueue(() => {
-    if (!graphqlRunner) {
-      graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
-    }
-    return graphqlRunner
-  })
-  listenerQueue = new Queue((queryJobs, callback) => {
-    const activity = createQueryRunningActivity(queryJobs.length)
-
-    const onFinish = (...arg) => {
-      pageDataUtil.enqueueFlush()
-      activity.done()
-      return callback(...arg)
-    }
-
-    return queryQueue
-      .processBatch(developQueue, queryJobs, activity)
-      .then(() => onFinish(null))
-      .catch(onFinish)
-  })
-
-  emitter.on(`API_RUNNING_START`, () => {
-    report.pendingActivity({ id: `query-running` })
-  })
-
-  emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
-  ;[
-    `DELETE_CACHE`,
-    `CREATE_NODE`,
-    `DELETE_NODE`,
-    `DELETE_NODES`,
-    `SET_SCHEMA_COMPOSER`,
-    `SET_SCHEMA`,
-    `ADD_FIELD_TO_NODE`,
-    `ADD_CHILD_NODE_TO_PARENT_NODE`,
-  ].forEach(eventType => {
-    emitter.on(eventType, event => {
-      graphqlRunner = null
-    })
-  })
-}
+const runQueuedQueries = () => {}
 
 const enqueueExtractedQueryId = pathname => {
   extractedQueryIds.add(pathname)
@@ -370,7 +269,6 @@ module.exports = {
   processPageQueries,
   processStaticQueries,
   groupQueryIds,
-  startListeningToDevelopQueue,
   runQueuedQueries,
   enqueueExtractedQueryId,
   enqueueExtractedPageComponent,
