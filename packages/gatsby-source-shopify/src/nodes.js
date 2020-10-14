@@ -27,7 +27,7 @@ const makeId = (id, locale) => `${id}___${locale}`
 const createLocalizedNode = (node, locale) => {
   return {
     ...node,
-    locale,
+    node_locale: locale,
     id: makeId(node.id, locale),
   }
 }
@@ -69,13 +69,21 @@ const downloadImageAndCreateFileNode = async (
 
 export const ArticleNode = (imageArgs, locale) =>
   createNodeFactory(ARTICLE, async node => {
-    if (node.blog)
+    if (node.blog) {
       node.blog___NODE = generateNodeId(BLOG, makeId(node.blog.id, locale))
 
-    if (node.comments)
-      node.comments___NODE = node.comments.edges.map(edge =>
-        generateNodeId(COMMENT, makeId(edge.node.id, locale))
+      delete node.blog
+    }
+
+    if (node.comments) {
+      const comments = node.comments.edges.map(edge => edge.node)
+
+      node.comments___NODE = comments.map(comment =>
+        generateNodeId(COMMENT, makeId(comment.id, locale))
       )
+
+      delete node.comments
+    }
 
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
