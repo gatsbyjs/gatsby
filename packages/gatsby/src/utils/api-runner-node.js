@@ -143,7 +143,7 @@ function extendErrorIdWithPluginName(pluginName, errorMeta) {
   return errorMeta
 }
 
-function getErrorMapWthPluginName(pluginName, errorMap) {
+function getErrorMapWithPluginName(pluginName, errorMap) {
   const entries = Object.entries(errorMap)
 
   return entries.reduce((memo, [key, val]) => {
@@ -166,17 +166,23 @@ function extendLocalReporterToCatchPluginErrors({
 
   if (pluginName && reporter?.setErrorMap) {
     setErrorMap = errorMap =>
-      reporter.setErrorMap(getErrorMapWthPluginName(pluginName, errorMap))
+      reporter.setErrorMap(getErrorMapWithPluginName(pluginName, errorMap))
 
     error = (errorMeta, error) =>
-      reporter.error(extendErrorIdWithPluginName(pluginName, errorMeta), error)
+      reporter.error(
+        extendErrorIdWithPluginName(pluginName, { ...errorMeta, pluginName }),
+        error
+      )
 
     panic = (errorMeta, error) =>
-      reporter.panic(extendErrorIdWithPluginName(pluginName, errorMeta), error)
+      reporter.panic(
+        extendErrorIdWithPluginName(pluginName, { ...errorMeta, pluginName }),
+        error
+      )
 
     panicOnBuild = (errorMeta, error) =>
       reporter.panicOnBuild(
-        extendErrorIdWithPluginName(pluginName, errorMeta),
+        extendErrorIdWithPluginName(pluginName, { ...errorMeta, pluginName }),
         error
       )
   }

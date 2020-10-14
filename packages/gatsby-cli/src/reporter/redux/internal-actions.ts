@@ -104,6 +104,7 @@ export const createLog = ({
   activity_type,
   activity_uuid,
   stack,
+  pluginName,
 }: {
   level: string
   text?: string
@@ -122,6 +123,7 @@ export const createLog = ({
   activity_type?: string
   activity_uuid?: string
   stack?: IStructuredError["stack"]
+  pluginName?: string
 }): ICreateLog => {
   return {
     type: Actions.Log,
@@ -144,6 +146,7 @@ export const createLog = ({
       activity_uuid,
       timestamp: new Date().toJSON(),
       stack,
+      pluginName,
     },
   }
 }
