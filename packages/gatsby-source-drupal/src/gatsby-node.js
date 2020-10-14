@@ -226,10 +226,12 @@ exports.sourceNodes = async (
         // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
         if (typeof filters === `object`) {
           if (filters.hasOwnProperty(type)) {
-            const href = typeof url === `object` ? url.href : url
+            let href = typeof url === `object` ? url.href : url
             const separator = href.indexOf("?") === -1 ? "?" : "&"
+            href = `${href}${separator}${filters[type]}`
+
             if (typeof url === `object`) {
-              url.href = `${url.href}${separator}${filters[type]}`
+              url.href = href
             } else {
               url = href
             }
