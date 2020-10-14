@@ -254,7 +254,7 @@ export async function startServer(
   //     id: `webpack-renderer`,
   //   }
   // )
-  const getPosition = function (stackObject) {
+  const getPosition = function (stackObject): object {
     let filename
     let line
     let row
@@ -299,7 +299,7 @@ export async function startServer(
     keyword: `096fb3`,
     yellow: `DB3A00`,
   }
-  const parseError = function (err) {
+  const parseError = function (err): object {
     const stack = err.stack ? err.stack : ``
     const stackObject = stack.split(`\n`)
     const position = getPosition(stackObject)
