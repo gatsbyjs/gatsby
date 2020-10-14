@@ -249,7 +249,9 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         ),
         skipWaiting: Joi.boolean(),
         clientsClaim: Joi.boolean(),
-      }),
+      })
+        .description(`Overrides workbox configuration. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#overriding-workbox-configuration
+      `),
     })
   }
 }
