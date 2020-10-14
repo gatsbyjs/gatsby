@@ -505,6 +505,7 @@ export const defaultError = errorMap[``]
 
 export interface IErrorMapEntry {
   text: (context) => string
+  // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
   level: keyof typeof Level
   type?: keyof typeof Type
   category?: ErrorCategory
