@@ -135,6 +135,7 @@ export function queriesReducer(
     case `PAGE_QUERY_RUN`: {
       const { path } = action.payload
       const query = registerQuery(state, path)
+      console.log(`PAGE_QUERY_RUN`, path, query)
       query.dirty = 0
       return state
     }
