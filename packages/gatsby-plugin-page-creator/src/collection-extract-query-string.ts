@@ -39,13 +39,15 @@ export function collectionExtractQueryString(
             if (!text) return
 
             if (text.includes(`...CollectionPagesQueryFragment`) === false) {
-              reporter.error(
-                `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
+              reporter.error({
+                id: `3`,
+                context: {
+                  sourceMessage: `Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
 
-Please fix the query from ${absolutePath.split(`src/pages`)[1]}.
-
-Offending query: ${text}`
-              )
+Offending query: ${text}`,
+                },
+                filePath: absolutePath,
+              })
               queryString = ``
               modelType = ``
               return

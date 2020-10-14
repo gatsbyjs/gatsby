@@ -55,7 +55,7 @@ export async function createPagesFromCollectionBuilder(
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     reporter.error(
-      `PageCreator: Tried to create pages from the collection builder.
+      `Tried to create pages from the collection builder.
 Unfortunately, the query came back empty. There may be an error in your query.
 
 file: ${absolutePath}
@@ -89,7 +89,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
   >
 
   if (nodes) {
-    reporter.info(
+    reporter.verbose(
       `   PageCreator: Creating ${nodes.length} page${
         nodes.length > 1 ? `s` : ``
       } from ${filePath}`
