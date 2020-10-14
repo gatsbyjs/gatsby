@@ -1,12 +1,11 @@
 import React, { FunctionComponent } from "react"
 import { StaticImageProps } from "../utils"
-import { FluidObject, FixedObject } from "gatsby-image"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
-  __imageData?: FluidObject & FixedObject
+  __imageData?: GatsbyImageProps
   __error?: string
 }
 
@@ -24,7 +23,6 @@ export function _getStaticImage(
     }
 
     if (imageData) {
-      //@ts-ignore
       return <GatsbyImage {...imageData} {...props} />
     }
     console.warn(`Image not loaded`, src)
