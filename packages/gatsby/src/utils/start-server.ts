@@ -357,7 +357,7 @@ export async function startServer(
       return next()
     }
 
-    const htmlActivity = report.activityTimer(`building HTML`, {})
+    const htmlActivity = report.phantomActivity(`building HTML for path`, {})
     htmlActivity.start()
 
     let response = `error`
