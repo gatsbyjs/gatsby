@@ -3,6 +3,7 @@ import { babelParseToAst } from "./parser"
 import path from "path"
 import { extractStaticImageProps } from "./parser"
 import { writeImages } from "./image-processing"
+import { getCacheDir } from "./node-utils"
 const extensions: Array<string> = [`.js`, `.jsx`, `.tsx`]
 
 export async function preprocessSource({
@@ -24,7 +25,7 @@ export async function preprocessSource({
   }
   const root = store.getState().program.directory
 
-  const cacheDir = path.join(root, `.cache`, `caches`, `gatsby-plugin-image`)
+  const cacheDir = getCacheDir(root)
 
   const ast = babelParseToAst(contents, filename)
 

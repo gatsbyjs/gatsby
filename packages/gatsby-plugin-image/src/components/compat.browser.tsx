@@ -31,7 +31,7 @@ export interface ICompatProps {
 }
 
 function warnForArtDirection(): void {
-  if (process?.env?.NODE_ENV === `development`) {
+  if (process.env.NODE_ENV === `development`) {
     console.warn(
       `gatsby-plugin-image/compat does not support passing arrays to "fixed" or "fluid"`
     )

@@ -43,13 +43,11 @@ export default function attrs({
           console.warn(`[gatsby-plugin-image] ${error}`)
         }
 
-        const noSrc = unresolvedProps.includes(`src`)
-
         const hash = hashOptions(props)
 
         const cacheDir = (this.opts as Record<string, string>)?.cacheDir
 
-        if (!cacheDir || !hash) {
+        if (!cacheDir) {
           console.warn(
             `[gatsby-plugin-image] Couldn't find image data cache file`
           )
@@ -59,7 +57,7 @@ export default function attrs({
         let data: Record<string, unknown> | undefined
 
         // If there's no src prop there's no point in checking if it exists
-        if (!noSrc) {
+        if (!unresolvedProps.includes(`src`)) {
           try {
             data = fs.readJSONSync(filename)
           } catch (e) {

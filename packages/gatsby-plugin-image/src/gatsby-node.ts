@@ -1,7 +1,7 @@
-export * from "./node-apis/preprocess-source"
-
 import { GatsbyNode } from "gatsby"
-import path from "path"
+import { getCacheDir } from "./node-apis/node-utils"
+
+export * from "./node-apis/preprocess-source"
 
 export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
   actions,
@@ -9,7 +9,7 @@ export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
 }) => {
   const root = store.getState().program.directory
 
-  const cacheDir = path.join(root, `.cache`, `caches`, `gatsby-plugin-image`)
+  const cacheDir = getCacheDir(root)
 
   actions.setBabelPlugin({
     name: require.resolve(`./babel-plugin-parse-static-images`),
