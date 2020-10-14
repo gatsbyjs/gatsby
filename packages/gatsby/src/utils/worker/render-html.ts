@@ -1,7 +1,7 @@
-// import fs from "fs-extra"
+import fs from "fs-extra"
 import Promise from "bluebird"
-// import { join } from "path"
-// import { getPageHtmlFilePath } from "../../utils/page-html"
+import { join } from "path"
+import { getPageHtmlFilePath } from "../../utils/page-html"
 
 export const renderHTML = ({
   htmlComponentRendererPath,

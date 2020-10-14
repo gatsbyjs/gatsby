@@ -11,7 +11,7 @@ import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
 import path from "path"
-import fs from "fs"
+import fs from "fs-extra"
 import { codeFrameColumns } from "@babel/code-frame"
 import ansiHTML from "ansi-html"
 import { slash } from "gatsby-core-utils"
@@ -255,7 +255,9 @@ export async function startServer(
   //   }
   // )
   const getPosition = function (stackObject) {
-    let filename, line, row
+    let filename
+    let line
+    let row
     // Because the JavaScript error stack has not yet been standardized,
     // wrap the stack parsing in a try/catch for a soft fail if an
     // unexpected stack is encountered.
@@ -297,7 +299,7 @@ export async function startServer(
       ...position.filename.split(path.sep).slice(2)
     )
     console.log(filename, position.filename)
-    const code = require(`fs`).readFileSync(filename, `utf-8`)
+    const code = fs.readFileSync(filename, `utf-8`)
     const line = position.line
     const row = position.row
     ansiHTML.setColors({
@@ -381,6 +383,9 @@ export async function startServer(
 
     // TODO add support for 404 and general rendering errors
     htmlActivity.end()
+
+    // Make eslint happy
+    return null
   })
 
   // Disable directory indexing i.e. serving index.html from a directory.
