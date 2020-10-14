@@ -357,6 +357,20 @@ export async function startServer(
       return next()
     }
 
+    // Sleep until any work the server is doing has finished.
+    await new Promise(resolve => {
+      if (program.developMachineService._state.value == `waiting`) {
+        resolve()
+      } else {
+        const intervalId = setInterval(() => {
+          if (program.developMachineService._state.value == `waiting`) {
+            clearInterval(intervalId)
+            resolve()
+          }
+        }, 50)
+      }
+    })
+
     const htmlActivity = report.phantomActivity(`building HTML for path`, {})
     htmlActivity.start()
 
