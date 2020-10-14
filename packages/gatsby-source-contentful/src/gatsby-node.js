@@ -291,7 +291,7 @@ exports.sourceNodes = async (
         parentSpan,
       }
     )
-    console.log(`runs through this part anyways`)
+
     fetchActivity.start()
     ;({
       currentSyncData,
