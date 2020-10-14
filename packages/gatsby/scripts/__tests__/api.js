@@ -46,6 +46,7 @@ it("generates the expected api output", done => {
           "onCreateBabelConfig": Object {},
           "onCreateDevServer": Object {},
           "onCreateNode": Object {},
+          "onCreateNodeSyncTest": Object {},
           "onCreatePage": Object {},
           "onCreateWebpackConfig": Object {},
           "onPostBootstrap": Object {},
