@@ -238,7 +238,13 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         runtimeCaching: Joi.array().items(
           Joi.object({
             urlPattern: Joi.object().instance(RegExp),
-            handler: Joi.string(),
+            handler: Joi.string().valid(
+              `StaleWhileRevalidate`,
+              `CacheFirst`,
+              `NetworkFirst`,
+              `NetworkOnly`,
+              `CacheOnly`
+            ),
           })
         ),
         skipWaiting: Joi.boolean(),

@@ -116,19 +116,74 @@ describe.only(`pluginOptionsSchema`, () => {
       `"precachePages" "[0]" must be a string. "[1]" must be a string. "[2]" must be a string`,
       `"appendScript" must be a string`,
       `"debug" must be a boolean`,
+      `"workboxConfig" "importWorkboxFrom" must be a string. "globDirectory" must be a string. "globPatterns[0]" must be a string. "globPatterns[1]" must be a string. "globPatterns[2]" must be a string. "modifyURLPrefix./" must be a string. "cacheId" must be a string. "dontCacheBustURLsMatching" must be of type object. "runtimeCaching[0].handler" must be one of [StaleWhileRevalidate, CacheFirst, NetworkFirst, NetworkOnly, CacheOnly]. "runtimeCaching[1]" must be of type object. "runtimeCaching[2]" must be of type object. "skipWaiting" must be a boolean. "clientsClaim" must be a boolean`,
     ]
 
     const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
       precachePages: [1, 2, 3],
       appendScript: 1223,
       debug: `This should be a boolean`,
+      workboxConfig: {
+        importWorkboxFrom: 123,
+        globDirectory: 456,
+        globPatterns: [1, 2, 3],
+        modifyURLPrefix: {
+          "/": 123,
+        },
+        cacheId: 123,
+        dontCacheBustURLsMatching: `This should be a regexp`,
+        runtimeCaching: [
+          {
+            urlPattern: /(\.js$|\.css$|static\/)/,
+            handler: `Something Invalid`,
+          },
+          2,
+          3,
+        ],
+        skipWaiting: `This should be a boolean`,
+        clientsClaim: `This should be a boolean`,
+      },
     })
 
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {})
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+      precachePages: [`/about-us/`, `/projects/*`],
+      appendScript: `src/custom-sw-code.js`,
+      debug: true,
+      workboxConfig: {
+        importWorkboxFrom: `local`,
+        globDirectory: `rootDir`,
+        globPatterns: [`a`, `b`, `c`],
+        modifyURLPrefix: {
+          "/": `pathPrefix/`,
+        },
+        cacheId: `gatsby-plugin-offline`,
+        dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
+        runtimeCaching: [
+          {
+            urlPattern: /(\.js$|\.css$|static\/)/,
+            handler: `CacheFirst`,
+          },
+          {
+            urlPattern: /^https?:.*\/page-data\/.*\.json/,
+            handler: `StaleWhileRevalidate`,
+          },
+          {
+            urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+            handler: `StaleWhileRevalidate`,
+          },
+          {
+            urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+            handler: `StaleWhileRevalidate`,
+          },
+        ],
+        skipWaiting: true,
+        clientsClaim: true,
+      },
+    })
 
     expect(isValid).toBe(true)
   })
