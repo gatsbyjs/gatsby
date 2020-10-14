@@ -220,19 +220,26 @@ exports.sourceNodes = async (
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
+
+        // Apply any filters configured in gatsby-config.js. Filters
+        // can be any valid JSON API filter query string.
+        // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
+        if (typeof filters === `object`) {
+          if (filters.hasOwnProperty(type)) {
+            const href = typeof url === `object` ? url.href : url
+            const separator = href.indexOf("?") === -1 ? "?" : "&"
+            if (typeof url === `object`) {
+              url.href = `${url.href}${separator}${filters[type]}`
+            } else {
+              url = href
+            }
+          }
+        }
+
         const getNext = async (url, data = []) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
             url = url.href
-
-            // Apply any filters configured in gatsby-config.js. Filters
-            // can be any valid JSON API filter query string.
-            // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
-            if (typeof filters === `object`) {
-              if (filters.hasOwnProperty(type)) {
-                url = url + `?${filters[type]}`
-              }
-            }
           }
 
           let d
