@@ -41,7 +41,22 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {})
+    const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+      maxWidth: 700,
+      linkImagesToOriginal: false,
+      showCaptions: true,
+      markdownCaptions: true,
+      sizeByPixelDensity: true,
+      wrapperStyle: { marginTop: `1rem`, padding: `1.5rem`, color: `blue` },
+      backgroundColor: `red`,
+      quality: 77,
+      withWebp: true,
+      tracedSVG: true,
+      loading: `eager`,
+      disableBgImageOnAlpha: true,
+      disableBgImage: true,
+      srcSetBreakpoints: [400, 600, 800],
+    })
 
     expect(isValid).toBe(true)
   })

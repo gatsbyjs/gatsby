@@ -26,7 +26,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         .description(
           `[deprecated] Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.`
         ),
-      wrapperStyle: Joi.object({}),
+      wrapperStyle: Joi.object({}).unknown(true),
       backgroundColor: Joi.string().default(`white`)
         .description(`Set the background color of the image to match the background image of your design.
 
