@@ -30,8 +30,10 @@ describe(`isValidCollectionPathImplementation`, () => {
     const part = path.split(`/`)[2]
 
     isValidCollectionPathImplementation(compatiblePath(path), reporter)
-    expect(reporter.panicOnBuild)
-      .toBeCalledWith(`PageCreator: Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-filePath: ${compatiblePath(path)}`)
+    expect(reporter.panicOnBuild).toBeCalledWith({
+      context: { part: part },
+      filePath: compatiblePath(path),
+      id: `5`,
+    })
   })
 })
