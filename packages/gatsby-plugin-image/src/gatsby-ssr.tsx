@@ -8,7 +8,6 @@ const generateHtml = (
   str: string
 ): React.DOMAttributes<Element>["dangerouslySetInnerHTML"] => {
   return {
-    // TODO switch to proper cssminification
     __html: oneLine(str),
   }
 }
@@ -47,7 +46,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
       )}
     />,
     <script
-      key="gatsby-image-style-noscript"
+      key="gatsby-image-style-script"
       type="module"
       dangerouslySetInnerHTML={generateHtml(terserMacro`
   const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
