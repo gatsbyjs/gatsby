@@ -82,11 +82,21 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         .default([])
         .description(`Use Gatsby-specific remark plugins`),
       remarkPlugins: Joi.array()
-        .items(Joi.object({}).unknown(true))
+        .items(
+          Joi.alternatives().try(
+            Joi.object({}).unknown(true),
+            Joi.array().items(Joi.object({}).unknown(true))
+          )
+        )
         .default([])
         .description(`Specify remark plugins`),
       rehypePlugins: Joi.array()
-        .items(Joi.object({}).unknown(true))
+        .items(
+          Joi.alternatives().try(
+            Joi.object({}).unknown(true),
+            Joi.array().items(Joi.object({}).unknown(true))
+          )
+        )
         .default([])
         .description(`Specify rehype plugins`),
       mediaTypes: Joi.array()

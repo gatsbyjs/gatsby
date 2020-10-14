@@ -54,8 +54,6 @@ describe(`pluginOptionsSchema`, () => {
       shouldBlockNodeFromTransformation: node => Boolean(node),
     })
 
-    console.log(`???`, errors)
-
     expect(isValid).toBe(true)
   })
 })
