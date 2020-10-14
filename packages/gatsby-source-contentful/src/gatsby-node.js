@@ -31,7 +31,7 @@ const restrictedNodeFields = [
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
 // TODO: Remove once pluginOptionsSchema is stable
-exports.onPreBootstrap = ({ reporter }, options) => {
+exports.onPreInit = ({ reporter }, options) => {
   const result = pluginOptionsSchema({ Joi }).validate(options, {
     abortEarly: false,
     externals: false,
@@ -41,9 +41,11 @@ exports.onPreBootstrap = ({ reporter }, options) => {
     result.error.details.forEach(detail => {
       errors[detail.path[0]] = detail.message
     })
-    reporter.panic(`Problems with gatsby-source-contentful plugin options:	
+    reporter.panic(`Problems with gatsby-source-contentful plugin options:
 ${formatPluginOptionsForCLI(options, errors)}`)
   }
+
+  options = result.value
 }
 
 const validateContentfulAccess = async pluginOptions => {
