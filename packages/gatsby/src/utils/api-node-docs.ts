@@ -134,6 +134,16 @@ export const sourceNodes = true
 export const onCreateNode = true
 
 /**
+ * Called when a new node is created before the `onCreateNode` handler is called.
+ * This is an optimization that can prevent the `onCreateNode` handler to be scheduled
+ * if the plugin already knows it's not interested in processing this node.
+ *
+ * @example
+ * exports.onCreateNodeSyncTest = (node) => node.internal.type === 'Image'
+ */
+export const onCreateNodeSyncTest = true
+
+/**
  * Called when a new page is created. This extension API is useful
  * for programmatically manipulating pages created by other plugins e.g.
  * if you want paths without trailing slashes.

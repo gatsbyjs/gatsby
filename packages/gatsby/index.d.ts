@@ -307,6 +307,17 @@ export interface GatsbyNode {
   ): void
 
   /**
+   * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+   * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+   *
+   * @example
+   * exports.onCreateNodeSyncTest = node => node.internal.type === 'SharpNode'
+   */
+  onCreateNodeSyncTest?<TNode extends object = {}>(
+    node: TNode,
+  ): boolean
+
+  /**
    * Called when a new page is created. This extension API is useful
    * for programmatically manipulating pages created by other plugins e.g.
    * if you want paths without trailing slashes.
