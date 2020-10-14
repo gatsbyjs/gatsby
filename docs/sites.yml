@@ -11835,3 +11835,15 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Oplon
+  main_url: https://www.oplon.net
+  url: https://www.oplon.net
+  description: >
+    We create our own software technologies to make your applications safe, performing and constantly usable.
+  categories:
+    - Programming
+    - Technology
+    - Security
+  built_by: Oplon
+  built_by_url: https://www.oplon.net
+  featured: false
