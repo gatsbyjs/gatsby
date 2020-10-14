@@ -9,7 +9,7 @@ describe(`pluginOptionsSchema`, () => {
       `"showCaptions" must be a boolean`,
       `"markdownCaptions" must be a boolean`,
       `"sizeByPixelDensity" must be a boolean`,
-      `"wrapperStyle" must be of type object`,
+      `"wrapperStyle" must be one of [object]`,
       `"backgroundColor" must be a string`,
       `"quality" must be a number`,
       `"withWebp" must be a boolean`,
