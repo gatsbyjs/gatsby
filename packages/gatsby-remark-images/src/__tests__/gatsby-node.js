@@ -41,7 +41,7 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should validate the schema`, () => {
-    const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
       maxWidth: 700,
       linkImagesToOriginal: false,
       showCaptions: true,
