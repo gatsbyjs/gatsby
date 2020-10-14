@@ -248,13 +248,12 @@ export async function startServer(
     res.status(404).end()
   })
 
-  // const buildRendererActivity = report.activityTimer(
-  //   `Building renderer bundle`,
-  //   {
-  //     id: `webpack-renderer`,
-  //   }
-  // )
-  const getPosition = function (stackObject): object {
+  interface IErrorPosition {
+    filename: string
+    line: number
+    row: number
+  }
+  const getPosition = function (stackObject): IErrorPosition {
     let filename
     let line
     let row
@@ -299,7 +298,19 @@ export async function startServer(
     keyword: `096fb3`,
     yellow: `DB3A00`,
   }
-  const parseError = function (err): object {
+
+  interface IParsedError {
+    filename: string
+    code: string
+    codeFrame: string
+    line: number
+    row: number
+    message: string
+    type: string
+    stack: [string]
+  }
+
+  const parseError = function (err): IParsedError {
     const stack = err.stack ? err.stack : ``
     const stackObject = stack.split(`\n`)
     const position = getPosition(stackObject)
@@ -344,7 +355,6 @@ export async function startServer(
       message: message,
       type: type,
       stack: stack,
-      arguments: err.arguments,
     }
     return data
   }

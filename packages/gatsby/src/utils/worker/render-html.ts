@@ -2,6 +2,7 @@ import fs from "fs-extra"
 import Promise from "bluebird"
 import { join } from "path"
 import { getPageHtmlFilePath } from "../../utils/page-html"
+import { Stage } from "../../commands/types"
 
 export const renderHTML = ({
   htmlComponentRendererPath,
@@ -11,6 +12,7 @@ export const renderHTML = ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
+  stage: Stage
   envVars: Array<Array<string>>
 }): Promise<Array<unknown>> => {
   // This is being executed in child process, so we need to set some vars
