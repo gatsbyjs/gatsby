@@ -2,12 +2,15 @@ const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
+const { makeContentfulReporter, CODES } = require(`./report`)
 
 module.exports = async function contentfulFetch({
   syncToken,
-  reporter,
   pluginConfig,
+  reporter,
 }) {
+  const contentfulReporter = makeContentfulReporter(reporter)
+
   // Fetch articles.
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
@@ -40,7 +43,7 @@ module.exports = async function contentfulFetch({
   let locales
   let defaultLocale = `en-US`
   try {
-    reporter.verbose(`Fetching default locale`)
+    contentfulReporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
@@ -48,23 +51,24 @@ module.exports = async function contentfulFetch({
     defaultLocale = _.find(contentfulLocales, { default: true }).code
     locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
     if (locales.length === 0) {
-      reporter.panic(
+      contentfulReporter.panic(
         `Please check if your localeFilter is configured properly. Locales '${_.join(
           contentfulLocales.map(item => item.code),
           `,`
-        )}' were found but were filtered down to none.`
+        )}' were found but were filtered down to none.`,
+        { code: CODES.LocalesMissing }
       )
     }
-    reporter.verbose(`Default locale is: ${defaultLocale}`)
+    contentfulReporter.verbose(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      reporter.panic(
+      contentfulReporter.panic(
         `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-        e
+        { code: CODES.SelfSignedCertificate, err: e }
       )
     } else if (e.response) {
       if (e.response.status === 404) {
@@ -88,7 +92,7 @@ module.exports = async function contentfulFetch({
       }
     }
 
-    reporter.panic(`Accessing your Contentful space failed.
+    contentfulReporter.panic(`Accessing your Contentful space failed.
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
@@ -106,7 +110,10 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    reporter.panic(`Fetching contentful data failed`, e)
+    contentfulReporter.panic(`Fetching contentful data failed`, {
+      err: e,
+      code: CODES.SyncError,
+    })
   }
 
   // We need to fetch content types with the non-sync API as the sync API
@@ -115,9 +122,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(`Error fetching content types`, e)
+    contentfulReporter.panic(`error fetching content types`, {
+      error: e,
+      code: CODES.FetchContentTypes,
+    })
   }
-  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
+  contentfulReporter.verbose(
+    `Content types fetched ${contentTypes.items.length}`
+  )
 
   let contentTypeItems = contentTypes.items
 
