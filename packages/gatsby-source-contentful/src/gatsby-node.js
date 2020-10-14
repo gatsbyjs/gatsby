@@ -3,6 +3,7 @@ const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
+const v8 = require(`v8`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -52,38 +53,24 @@ exports.sourceNodes = async (
   pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode } = actions
-  const online = await isOnline()
 
-  // If the user knows they are offline, serve them cached result
-  // For prod builds though always fail if we can't get the latest data
-  if (
-    !online &&
-    process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
-    process.env.NODE_ENV !== `production`
-  ) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode({ nodeId: node.id })
-      if (node.localFile___NODE) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode({ nodeId: node.localFile___NODE })
-      }
-    })
-
-    reporter.info(`Using Contentful Offline cache ⚠️`)
+  let currentSyncData, contentTypeItems, defaultLocale, locales, space
+  if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
-      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE +
+        `\` so Remote changes CAN NOT be detected!`
     )
-
-    return
   }
+  const forceCache = await fs.exists(
+    process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+  )
 
   const pluginConfig = createPluginConfig(pluginOptions)
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
     `environment`
   )}`
+
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
   const CACHE_SYNC_DATA = `contentful-sync-data-${sourceId}`
 
@@ -108,27 +95,95 @@ exports.sourceNodes = async (
     previousSyncData = cachedData
   }
 
-  const fetchActivity = reporter.activityTimer(
-    `Contentful: Fetch data (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
-  fetchActivity.start()
+  if (forceCache) {
+    // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
+    // If present, do NOT contact contentful, skip the round trips entirely
+    reporter.info(
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
+      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+    )
+    ;({
+      currentSyncData,
+      contentTypeItems,
+      defaultLocale,
+      locales,
+      space,
+    } = v8.deserialize(
+      fs.readFileSync(process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE)
+    ))
+  } else {
+    const online = await isOnline()
 
-  let {
-    currentSyncData,
-    contentTypeItems,
-    defaultLocale,
-    locales,
-    space,
-  } = await fetchData({
-    syncToken,
-    reporter,
-    pluginConfig,
-    parentSpan,
-  })
-  fetchActivity.end()
+    // If the user knows they are offline, serve them cached result
+    // For prod builds though always fail if we can't get the latest data
+    if (
+      !online &&
+      process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
+      process.env.NODE_ENV !== `production`
+    ) {
+      getNodes().forEach(node => {
+        if (node.internal.owner !== `gatsby-source-contentful`) {
+          return
+        }
+        touchNode({ nodeId: node.id })
+        if (node.localFile___NODE) {
+          // Prevent GraphQL type inference from crashing on this property
+          touchNode({ nodeId: node.localFile___NODE })
+        }
+      })
+
+      reporter.info(`Using Contentful Offline cache ⚠️`)
+      reporter.info(
+        `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+      )
+
+      return
+    }
+    if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
+      reporter.info(
+        `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
+      )
+    }
+
+    const fetchActivity = reporter.activityTimer(
+      `Contentful: Fetch data (${sourceId})`,
+      {
+        parentSpan,
+      }
+    )
+    console.log(`runs through this part anyways`)
+    fetchActivity.start()
+    ;({
+      currentSyncData,
+      contentTypeItems,
+      defaultLocale,
+      locales,
+      space,
+    } = await fetchData({
+      syncToken,
+      reporter,
+      pluginConfig,
+      parentSpan,
+    }))
+
+    if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
+      reporter.info(
+        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+          process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      )
+      fs.writeFileSync(
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
+        v8.serialize({
+          currentSyncData,
+          contentTypeItems,
+          defaultLocale,
+          locales,
+          space,
+        })
+      )
+    }
+    fetchActivity.end()
+  }
 
   const processingActivity = reporter.activityTimer(
     `Contentful: Proccess data (${sourceId})`,
