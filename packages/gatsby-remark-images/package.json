@@ -24,6 +24,7 @@
     "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^7.0.2",
+    "gatsby-plugin-utils": "^0.2.31",
     "hast-util-to-html": "^6.1.0",
     "mdast-util-to-hast": "^6.0.2"
   },
