@@ -100,6 +100,7 @@ export const saveState = (): void => {
     pageData: state.pageData,
     pendingPageDataWrites: state.pendingPageDataWrites,
     staticQueriesByTemplate: state.staticQueriesByTemplate,
+    queries: state.queries,
   })
 }
 

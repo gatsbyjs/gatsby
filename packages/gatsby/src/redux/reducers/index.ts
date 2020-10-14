@@ -27,6 +27,7 @@ import { pendingPageDataWritesReducer } from "./pending-page-data-writes"
 import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
 import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
+import { queriesReducer } from "./queries"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -61,4 +62,5 @@ export {
   pageDataReducer as pageData,
   pendingPageDataWritesReducer as pendingPageDataWrites,
   staticQueriesByTemplateReducer as staticQueriesByTemplate,
+  queriesReducer as queries,
 }

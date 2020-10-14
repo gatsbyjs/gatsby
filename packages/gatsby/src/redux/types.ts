@@ -152,6 +152,15 @@ export interface IStateProgram extends IProgram {
   extensions: Array<string>
 }
 
+export interface IQueryState {
+  dirty: number
+}
+
+export interface IComponentQueryState {
+  queryText: string
+  queries: Set<Identifier>
+}
+
 export interface IGatsbyState {
   program: IStateProgram
   nodes: GatsbyNodes
@@ -198,6 +207,12 @@ export interface IGatsbyState {
   componentDataDependencies: {
     nodes: Map<string, Set<string>>
     connections: Map<string, Set<string>>
+  }
+  queries: {
+    byNode: Map<Identifier, Set<Identifier>>
+    byConnection: Map<string, Set<Identifier>>
+    trackedQueries: Map<Identifier, IQueryState>
+    trackedComponents: Map<string, IComponentQueryState>
   }
   components: Map<
     SystemPath,
@@ -273,6 +288,7 @@ export interface ICachedReduxState {
   pageData: IGatsbyState["pageData"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
+  queries: IGatsbyState["queries"]
 }
 
 export type ActionsUnion =
