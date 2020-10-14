@@ -172,7 +172,7 @@ const createStaticQueryJob = (state, queryId) => {
   const component = state.staticQueryComponents.get(queryId)
   const { hash, id, query, componentPath } = component
   return {
-    id: hash,
+    id: queryId,
     hash,
     query,
     componentPath,

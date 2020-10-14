@@ -62,7 +62,7 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
           if (!queryJob.isPage) {
             websocketManager.emitStaticQueryData({
               result,
-              id: queryJob.id,
+              id: queryJob.hash,
             })
           }
 
