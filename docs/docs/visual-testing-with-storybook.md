@@ -100,6 +100,7 @@ module.exports = {
   // highlight-end
 }
 ```
+Supporting CSS modules in storybook requires a few more changes to your webpack config - see [this issue](https://github.com/gatsbyjs/gatsby/issues/26714) for details. 
 
 Next create a new file under `.storybook` called `preview.js`. This configuration file preview.js is not responsible for loading any stories. Its main purpose is to add global parameters and [decorators](https://storybook.js.org/docs/addons/introduction/#1-decorators).
 
