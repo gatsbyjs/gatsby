@@ -110,7 +110,7 @@ describe(`onPostBuild`, () => {
   })
 })
 
-describe.only(`pluginOptionsSchema`, () => {
+describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, () => {
     const expectedErrors = [
       `"precachePages" "[0]" must be a string. "[1]" must be a string. "[2]" must be a string`,
