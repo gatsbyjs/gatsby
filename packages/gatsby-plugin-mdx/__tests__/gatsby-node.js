@@ -27,7 +27,7 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should validate the schema`, () => {
-    const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
       extensions: [`.mdx`, `.mdxx`],
       defaultLayout: {
         posts: `../post-layout.js`,
