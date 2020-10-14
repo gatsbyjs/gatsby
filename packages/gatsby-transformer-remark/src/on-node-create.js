@@ -1,7 +1,7 @@
 const grayMatter = require(`gray-matter`)
 const _ = require(`lodash`)
 
-function onCreateNodeSyncTest({ node }) {
+function onCreateNodeSyncTest(node) {
   return (
     node.internal.mediaType === `text/markdown` ||
     node.internal.mediaType === `text/x-markdown`
@@ -22,7 +22,7 @@ module.exports.onCreateNode = async function onCreateNode(
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
-  if (!onCreateNodeSyncTest({ node })) {
+  if (!onCreateNodeSyncTest(node)) {
     return {}
   }
 

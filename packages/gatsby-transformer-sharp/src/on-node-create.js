@@ -1,6 +1,6 @@
 const { supportedExtensions } = require(`./supported-extensions`)
 
-function onCreateNodeSyncTest({ node }) {
+function onCreateNodeSyncTest(node) {
   return !!supportedExtensions[node.extension]
 }
 
@@ -11,7 +11,7 @@ module.exports.onCreateNode = async function onCreateNode({
 }) {
   const { createNode, createParentChildLink } = actions
 
-  if (!onCreateNodeSyncTest({ node })) {
+  if (!onCreateNodeSyncTest(node)) {
     return
   }
 

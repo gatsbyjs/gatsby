@@ -527,15 +527,22 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         return null
       }
 
+      let gatsbyNode = pluginNodeCache.get(plugin.name)
+      if (!gatsbyNode) {
+        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+        pluginNodeCache.set(plugin.name, gatsbyNode)
+      }
+
       const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
-      // if (api === 'onCreateNode') {
-      //   if (plugin.nodeAPIs.includes('onCreateNodeSyncTest') && !require(plugin.resolve + '/gatsby-node.js')?.onCreateNodeSyncTest(args)) {
-      //     // Do not try to schedule an async event for this node for this plugin
-      //     return null;
-      //   }
-      // }
+      if (
+        api === `onCreateNode` &&
+        gatsbyNode?.onCreateNodeSyncTest(args.node)
+      ) {
+        // Do not try to schedule an async event for this node for this plugin
+        return null
+      }
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
