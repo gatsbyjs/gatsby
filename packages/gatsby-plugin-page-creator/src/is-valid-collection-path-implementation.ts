@@ -23,15 +23,15 @@ export function isValidCollectionPathImplementation(
     const closer = part.match(/\}/)?.[0]!
 
     try {
-      assert(opener, `{`, ``) // This is a noop because of the opening check, but here for posterity
-      assert(model, /^[A-Z][a-zA-Z]+$/, errorMessage(part))
-      assert(field, /^[a-zA-Z_()]+$/, errorMessage(part))
-      assert(closer, `}`, errorMessage(part))
+      assert(opener, `{`) // This is a noop because of the opening check, but here for posterity
+      assert(model, /^[A-Z][a-zA-Z]+$/)
+      assert(field, /^[a-zA-Z_()]+$/)
+      assert(closer, `}`)
     } catch (e) {
       reporter.panicOnBuild({
-        id: `6`,
+        id: `5`,
         context: {
-          sourceMessage: e.message,
+          part: part,
         },
         filePath: filePath,
       })
@@ -41,14 +41,10 @@ export function isValidCollectionPathImplementation(
   return passing
 }
 
-function errorMessage(part: string): string {
-  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`
-}
-
-function assert(part: string, matches: string | RegExp, message: string): void {
+function assert(part: string, matches: string | RegExp): void {
   const regexp = matches instanceof RegExp ? matches : new RegExp(matches)
 
   if (!part || regexp.test(part) === false) {
-    throw new Error(message)
+    throw new Error()
   }
 }

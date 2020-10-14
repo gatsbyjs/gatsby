@@ -41,9 +41,10 @@ export function derivePath(
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
       reporter.error({
-        id: `5`,
+        id: `4`,
         context: {
-          sourceMessage: `Could not find value in the following node for key ${slugPart} (transformed to ${key})`,
+          slugPart: slugPart,
+          key: key,
         },
       })
       return

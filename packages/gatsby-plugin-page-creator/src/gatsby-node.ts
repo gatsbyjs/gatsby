@@ -187,7 +187,7 @@ export function setFieldsOnGraphQLNodeType({
     return {}
   } catch (e) {
     reporter.panic({
-      id: `7`,
+      id: `6`,
       context: {
         sourceMessage: e.message,
       },
@@ -208,31 +208,36 @@ export async function onPreInit(
       level: `ERROR`,
     },
     "2": {
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
+      text: (
+        context
+      ): string => `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
+
+Offending query: ${context.queryString}`,
       type: `PLUGIN`,
       level: `ERROR`,
     },
     "3": {
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
+      text: (context): string =>
+        `PageCreator: Tried to create pages from the collection builder.
+Unfortunately, the query came back empty. There may be an error in your query:
+
+${context.errors.map(error => error.message).join(`\n`)}`.trim(),
       type: `PLUGIN`,
       level: `ERROR`,
     },
     "4": {
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
+      text: (context): string =>
+        `PageCreator: Could not find value in the following node for key ${context.slugPart} (transformed to ${context.key})`,
       type: `PLUGIN`,
       level: `ERROR`,
     },
     "5": {
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
+      text: (context): string =>
+        `PageCreator: Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${context.part}.`,
       type: `PLUGIN`,
       level: `ERROR`,
     },
     "6": {
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-    "7": {
       text: (context): string => `PageCreator: ${context.sourceMessage}`,
       type: `PLUGIN`,
       level: `ERROR`,
