@@ -95,6 +95,14 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 
 - **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
 
+## ​⚒️​Build with Gatsby Cloud
+
+For the fastest Gatsby builds
+
+[![Build with Gatsby Cloud](gatsby-cloud.svg)](https://www.gatsbyjs.com/dashboard/signup/)
+
+[Gatsby Cloud](https://www.gatsbyjs.com/cloud/) is custom-built cloud infrastructure that gives your Gatsby site superpowers: Intelligent caching and true incremental builds to take speed and performance to a whole new level
+
 ## 💫 Deploy
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-blog)

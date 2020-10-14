@@ -1,0 +1,18 @@
+<svg width="70" height="70" viewBox="0 0 148 148" fill="none" xmlns="http://www.w3.org/2000/svg" class="css-1k9m0r8" focusable="false">
+  <circle cx="51.375" cy="58.375" r="13.875" fill="#159BF3" stroke="#159BF3" stroke-width="6.938"/>
+  <circle cx="56" cy="30.625" r="4.625" fill="#159BF3"/>
+  <circle cx="23.625" cy="58.375" r="4.625" fill="#159BF3"/>
+  <circle cx="32.875" cy="35.25" r="4.625" fill="#159BF3"/>
+  <path d="M52.531 71.097a27.723 27.723 0 000 0c.007-1.742.182-3.48.523-5.189" stroke="#639" stroke-width="6.938" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M107.54 65.87a27.75 27.75 0 00-54.487.037 17.321 17.321 0 10-7.46 32.94h20.813" fill="#fff"/>
+  <path d="M107.54 65.87a27.75 27.75 0 00-54.487.037 17.321 17.321 0 10-7.46 32.94h20.813" stroke="url(#3d5f37d7-a4ea-4f23-9fb6-6ba2eeaab1de)" stroke-width="6" stroke-linejoin="round"/>
+  <circle r="33.531" transform="matrix(-1 0 0 1 98.438 91.938)" fill="#fff" stroke="#fff" stroke-width="6.938"/>
+  <path d="M120.5 91.875h-14v4h9.6c-1.4 6-5.8 11-11.6 13l-23-23c2.4-7 9.2-12 17-12 6 0 11.4 3 14.8 7.6l3-2.6c-4-5.4-10.4-9-17.8-9-10.4 0-19.2 7.4-21.4 17.2l26.4 26.4c9.6-2.4 17-11.2 17-21.6zm-44 .2c0 5.6 2.2 11 6.4 15.2 4.2 4.2 9.8 6.4 15.2 6.4l-21.6-21.6z" fill="#fff"/>
+  <path d="M98.5 63.875c-15.4 0-28 12.6-28 28s12.6 28 28 28 28-12.6 28-28-12.6-28-28-28zm-15.6 43.6c-4.2-4.2-6.4-9.8-6.4-15.2l21.8 21.6c-5.6-.2-11.2-2.2-15.4-6.4zm20.4 5.8l-26.2-26.2c2.2-9.8 11-17.2 21.4-17.2 7.4 0 13.8 3.6 17.8 9l-3 2.6c-3.4-4.6-8.8-7.6-14.8-7.6-7.8 0-14.4 5-17 12l23 23c5.8-2 10.2-7 11.6-13h-9.6v-4h14c0 10.4-7.4 19.2-17.2 21.4z" fill="#639"/>
+  <defs>
+    <linearGradient id="3d5f37d7-a4ea-4f23-9fb6-6ba2eeaab1de" x1="106.875" y1="58.378" x2="60.625" y2="58.378" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#639"/>
+      <stop offset="1" stop-color="#159BF3"/>
+    </linearGradient>
+  </defs>
+</svg>
