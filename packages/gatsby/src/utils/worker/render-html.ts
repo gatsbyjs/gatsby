@@ -27,17 +27,21 @@ export const renderHTML = ({
         }
         const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
-          htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-            if (stage === `develop-html`) {
-              resolve(htmlString)
-            } else {
-              resolve(
-                fs.outputFile(
-                  getPageHtmlFilePath(join(process.cwd(), `public`), path)
+          htmlComponentRenderer.default(
+            path,
+            async (_throwAway, htmlString) => {
+              if (stage === `develop-html`) {
+                resolve(htmlString)
+              } else {
+                resolve(
+                  fs.outputFile(
+                    getPageHtmlFilePath(join(process.cwd(), `public`), path),
+                    htmlString
+                  )
                 )
-              )
+              }
             }
-          })
+          )
         } catch (e) {
           // add some context to error so we can display more helpful message
           e.context = {

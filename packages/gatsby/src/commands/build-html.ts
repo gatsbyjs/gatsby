@@ -85,7 +85,6 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  // const start = process.hrtime()
   const segments = chunk(pages, 50)
 
   await Bluebird.map(segments, async pageSegment => {
