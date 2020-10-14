@@ -398,6 +398,12 @@ const imageNodeType = ({
       layout: {
         type: ImageLayoutType,
         defaultValue: `fixed`,
+        description: stripIndent`
+        The layout for the image.
+        FIXED: A static image sized, that does not resize according to the screen width
+        RESPONSIVE: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        INTRINSIC: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+        `,
       },
       maxWidth: {
         type: GraphQLInt,
@@ -457,7 +463,8 @@ const imageNodeType = ({
         defaultValue: ``,
         description: stripIndent`
         The "sizes" property, passed to the img tag. This describes the display size of the image. 
-        This does not affect the generated images, but is used by the browser to decide which images to download.
+        This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
+        container will be the full width of the screen. In these cases we will generate an appropriate value.
         `,
       },
       base64Width: {
