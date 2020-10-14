@@ -1,3 +1,5 @@
+import { testPluginOptionsSchema } from "gatsby-plugin-utils"
+import { pluginOptionsSchema } from "../gatsby-node"
 const rewire = require(`rewire`)
 const fs = require(`fs`)
 const path = require(`path`)
@@ -105,5 +107,29 @@ describe(`onPostBuild`, () => {
     )
 
     expect(swText).toContain(`debug: true`)
+  })
+})
+
+describe.only(`pluginOptionsSchema`, () => {
+  it(`should provide meaningful errors when fields are invalid`, () => {
+    const expectedErrors = [
+      `"precachePages" "[0]" must be a string. "[1]" must be a string. "[2]" must be a string`,
+      `"appendScript" must be a string`,
+      `"debug" must be a boolean`,
+    ]
+
+    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+      precachePages: [1, 2, 3],
+      appendScript: 1223,
+      debug: `This should be a boolean`,
+    })
+
+    expect(errors).toEqual(expectedErrors)
+  })
+
+  it(`should validate the schema`, () => {
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {})
+
+    expect(isValid).toBe(true)
   })
 })
