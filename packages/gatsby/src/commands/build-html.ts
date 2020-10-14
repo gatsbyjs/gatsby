@@ -14,26 +14,35 @@ import { IProgram, Stage } from "./types"
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
-const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
+const runWebpack = (compilerConfig, stage: Stage): Bluebird<webpack.Stats> =>
   new Bluebird((resolve, reject) => {
-    webpack(compilerConfig).run((err, stats) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(stats)
-      }
-    })
+    if (stage === `build-html`) {
+      webpack(compilerConfig).run((err, stats) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(stats)
+        }
+      })
+    } else if (stage === `develop-html`) {
+      webpack(compilerConfig).watch({}, (err, stats) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(stats)
+        }
+      })
+    }
   })
 
 const doBuildRenderer = async (
   { directory }: IProgram,
-  webpackConfig: webpack.Configuration
+  webpackConfig: webpack.Configuration,
+  stage: Stage
 ): Promise<string> => {
-  const stats = await runWebpack(webpackConfig)
+  const stats = await runWebpack(webpackConfig, stage)
   if (stats.hasErrors()) {
-    reporter.panic(
-      structureWebpackErrors(`build-html`, stats.compilation.errors)
-    )
+    reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
   // render-page.js is hard coded in webpack.config
@@ -50,7 +59,7 @@ export const buildRenderer = async (
     parentSpan,
   })
 
-  return doBuildRenderer(program, config)
+  return doBuildRenderer(program, config, stage)
 }
 
 const deleteRenderer = async (rendererPath: string): Promise<void> => {

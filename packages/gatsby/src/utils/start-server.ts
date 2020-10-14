@@ -3,6 +3,7 @@ import webpackDevMiddleware, {
   WebpackDevMiddleware,
 } from "webpack-dev-middleware"
 import got from "got"
+import chokidar from "chokidar"
 import webpack from "webpack"
 import express from "express"
 import graphqlHTTP from "express-graphql"
@@ -13,11 +14,12 @@ import path from "path"
 import fs from "fs"
 import { codeFrameColumns } from "@babel/code-frame"
 import ansiHTML from "ansi-html"
+import { slash } from "gatsby-core-utils"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
 import { buildRenderer } from "../commands/build-html"
-// import { withBasePath } from "../utils/path"
+import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import cors from "cors"
@@ -67,6 +69,7 @@ export async function startServer(
   workerPool: JestWorker = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
+  const directoryPath = withBasePath(directory)
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     id: `webpack-develop`,
@@ -252,28 +255,28 @@ export async function startServer(
   //   }
   // )
   const getPosition = function (stackObject) {
-    var filename, line, row
+    let filename, line, row
     // Because the JavaScript error stack has not yet been standardized,
     // wrap the stack parsing in a try/catch for a soft fail if an
     // unexpected stack is encountered.
     try {
-      var filteredStack = stackObject.filter(function (s) {
+      const filteredStack = stackObject.filter(function (s) {
         return /\(.+?\)$/.test(s)
       })
-      var splitLine
+      let splitLine
       // For current Node & Chromium Error stacks
       if (filteredStack.length > 0) {
-        splitLine = filteredStack[0].match(/(?:\()(.+?)(?:\))$/)[1].split(":")
+        splitLine = filteredStack[0].match(/(?:\()(.+?)(?:\))$/)[1].split(`:`)
         // For older, future, or otherwise unexpected stacks
       } else {
-        splitLine = stackObject[0].split(":")
+        splitLine = stackObject[0].split(`:`)
       }
-      var splitLength = splitLine.length
+      const splitLength = splitLine.length
       filename = splitLine[splitLength - 3]
       line = Number(splitLine[splitLength - 2])
       row = Number(splitLine[splitLength - 1])
     } catch (err) {
-      filename = ""
+      filename = ``
       line = 0
       row = 0
     }
@@ -284,30 +287,32 @@ export async function startServer(
     }
   }
   const parseError = function (err) {
-    var stack = err.stack ? err.stack : ""
-    var stackObject = stack.split("\n")
-    var position = getPosition(stackObject)
+    console.log(`raw err`, err)
+    const stack = err.stack ? err.stack : ``
+    const stackObject = stack.split(`\n`)
+    const position = getPosition(stackObject)
     // Remove the `/lib/` added by webpack
-    var filename = path.join(
+    const filename = path.join(
       directory,
       ...position.filename.split(path.sep).slice(2)
     )
-    var code = require(`fs`).readFileSync(filename, `utf-8`)
-    var line = position.line
-    var row = position.row
+    console.log(filename, position.filename)
+    const code = require(`fs`).readFileSync(filename, `utf-8`)
+    const line = position.line
+    const row = position.row
     ansiHTML.setColors({
-      reset: ["555", "fff"], // FOREGROUND-COLOR or [FOREGROUND-COLOR] or [, BACKGROUND-COLOR] or [FOREGROUND-COLOR, BACKGROUND-COLOR]
-      black: "aaa", // String
-      red: "bbb",
-      green: "ccc",
-      yellow: "ddd",
-      blue: "eee",
-      magenta: "fff",
-      cyan: "999",
-      lightgrey: "888",
-      darkgrey: "777",
+      reset: [`542C85`, `fff`], // FOREGROUND-COLOR or [FOREGROUND-COLOR] or [, BACKGROUND-COLOR] or [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      black: `aaa`, // String
+      red: `bbb`,
+      green: `ccc`,
+      yellow: `DB3A00`,
+      blue: `eee`,
+      magenta: `fff`,
+      cyan: `008577`,
+      lightgrey: `888`,
+      darkgrey: `777`,
     })
-    var codeFrame = ansiHTML(
+    const codeFrame = ansiHTML(
       codeFrameColumns(
         code,
         {
@@ -316,10 +321,10 @@ export async function startServer(
         { forceColor: true }
       )
     )
-    var splitMessage = err.message ? err.message.split("\n") : [""]
-    var message = splitMessage[splitMessage.length - 1]
-    var type = err.type ? err.type : err.name
-    var data = {
+    const splitMessage = err.message ? err.message.split(`\n`) : [``]
+    const message = splitMessage[splitMessage.length - 1]
+    const type = err.type ? err.type : err.name
+    const data = {
       filename: filename,
       code,
       codeFrame,
@@ -341,17 +346,15 @@ export async function startServer(
       return next()
     }
 
-    const htmlActivity = report.activityTimer(
-      `building HTML for path "${req.path}"`,
-      {}
-    )
+    const htmlActivity = report.activityTimer(`building HTML`, {})
     htmlActivity.start()
 
     let response = `error`
     try {
-      let renderResponse = await renderHTML({
+      const renderResponse = await renderHTML({
         htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
         paths: [req.path],
+        stage: Stage.DevelopHTML,
         envVars: [
           [`NODE_ENV`, process.env.NODE_ENV || ``],
           [
@@ -364,13 +367,12 @@ export async function startServer(
       response = renderResponse[0]
       res.status(200).send(response)
     } catch (e) {
-      let error = parseError(e)
-      console.log(error)
+      const error = parseError(e)
       res.status(500).send(`<h1>Error<h1>
         <h2>The page didn't SSR correctly</h2>
         <ul>
-          <li><strong>URL path:</strong> ${req.path}</li>
-          <li><strong>File path:</strong> ${error.filename}</li>
+          <li><strong>URL path:</strong> <code>${req.path}</code></li>
+          <li><strong>File path:</strong> <code>${error.filename}</code></li>
         </ul>
         <h3>error message</h3>
         <p><code>${error.message}</code></p>
@@ -399,17 +401,17 @@ export async function startServer(
   const listener = server.listen(program.port, `localhost`)
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  // const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-  //   slash(directoryPath(path))
-  // )
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+    slash(directoryPath(path))
+  )
 
-  // chokidar.watch(watchGlobs).on(`change`, async () => {
-  //   // console.log(`Time to build a renderer`)
-  //   // await buildRenderer(program, Stage.DevelopHTML, webpackActivity)
-  //   // console.log(`We built a renderer`)
-  //   // eslint-disable-next-line no-unused-expressions
-  //   socket?.to(`clients`).emit(`reload`)
-  // })
+  chokidar.watch(watchGlobs).on(`change`, async () => {
+    console.log(`Time to build a renderer`)
+    await buildRenderer(program, Stage.DevelopHTML, webpackActivity)
+    console.log(`We built a renderer`)
+    // eslint-disable-next-line no-unused-expressions
+    socket?.to(`clients`).emit(`reload`)
+  })
 
   return {
     compiler,

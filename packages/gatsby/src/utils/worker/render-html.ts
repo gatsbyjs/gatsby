@@ -6,6 +6,7 @@ import Promise from "bluebird"
 export const renderHTML = ({
   htmlComponentRendererPath,
   paths,
+  stage,
   envVars,
 }: {
   htmlComponentRendererPath: string
@@ -20,15 +21,22 @@ export const renderHTML = ({
     paths,
     path =>
       new Promise((resolve, reject) => {
+        // Make sure we get the latest version during development
+        if (stage === `develop-html`) {
+          delete require.cache[require.resolve(htmlComponentRendererPath)]
+        }
         const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
           htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-            // resolve(
-            //   fs.outputFile(
-            //     getPageHtmlFilePath(join(process.cwd(), `public`), path),
-            resolve(htmlString)
-            // )
-            // )
+            if (stage === `develop-html`) {
+              resolve(htmlString)
+            } else {
+              resolve(
+                fs.outputFile(
+                  getPageHtmlFilePath(join(process.cwd(), `public`), path)
+                )
+              )
+            }
           })
         } catch (e) {
           // add some context to error so we can display more helpful message
