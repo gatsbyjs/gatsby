@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.2...gatsby-plugin-postcss@3.0.3) (2020-10-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-postcss:** Delete invalid plugins property from outer options object. ([#27430](https://github.com/gatsbyjs/gatsby/issues/27430)) ([2fd07f9](https://github.com/gatsbyjs/gatsby/commit/2fd07f925113b4e1f578480bf68c93282a7e3dca))
+
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.1...gatsby-plugin-postcss@3.0.2) (2020-10-13)
 
 ### Bug Fixes
