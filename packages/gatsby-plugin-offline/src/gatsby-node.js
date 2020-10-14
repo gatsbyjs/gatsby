@@ -211,3 +211,47 @@ exports.onPostBuild = (
       )
     })
 }
+
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  const MATH_ALL_KEYS = /^/
+  exports.pluginOptionsSchema = function ({ Joi }) {
+    // These are the options of the v3: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#available-options
+    return Joi.object({
+      precachePages: Joi.array()
+        .items(Joi.string())
+        .description(
+          `An array of pages whose resources should be precached by the service worker, using an array of globs`
+        ),
+      appendScript: Joi.string().description(
+        `A file (path) to be appended at the end of the generated service worker`
+      ),
+      debug: Joi.boolean().description(
+        `Specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on localhost only`
+      ),
+      workboxConfig: Joi.object({
+        importWorkboxFrom: Joi.string(),
+        globDirectory: Joi.string(),
+        globPatterns: Joi.array().items(Joi.string()),
+        modifyURLPrefix: Joi.object().pattern(MATH_ALL_KEYS, Joi.string()),
+        cacheId: Joi.string(),
+        dontCacheBustURLsMatching: Joi.object().instance(RegExp),
+        runtimeCaching: Joi.array().items(
+          Joi.object({
+            urlPattern: Joi.object().instance(RegExp),
+            handler: Joi.string().valid(
+              `StaleWhileRevalidate`,
+              `CacheFirst`,
+              `NetworkFirst`,
+              `NetworkOnly`,
+              `CacheOnly`
+            ),
+          })
+        ),
+        skipWaiting: Joi.boolean(),
+        clientsClaim: Joi.boolean(),
+      })
+        .description(`Overrides workbox configuration. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#overriding-workbox-configuration
+      `),
+    })
+  }
+}
