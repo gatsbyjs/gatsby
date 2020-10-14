@@ -431,6 +431,7 @@ export const onCreateDevServer = true
 
 /**
  * Called during `gatsby develop` bootstrap to get and validate a plugins options schema
+ * @gatsbyVersion 2.24.69
  * @param {Joi} $0.Joi The instance of Joi to define the schema with
  *
  */
