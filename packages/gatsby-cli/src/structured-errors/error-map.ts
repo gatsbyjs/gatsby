@@ -505,8 +505,8 @@ export const defaultError = errorMap[``]
 
 export interface IErrorMapEntry {
   text: (context) => string
-  level: Level
-  type?: Type
+  level: keyof typeof Level
+  type?: keyof typeof Type
   category?: ErrorCategory
   docsUrl?: string
 }

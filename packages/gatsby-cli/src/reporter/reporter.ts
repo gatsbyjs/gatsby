@@ -7,7 +7,7 @@ import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
+import { IErrorMapEntry } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
@@ -37,14 +37,14 @@ class Reporter {
   stripIndent = stripIndent
   format = chalk
 
-  errorMap: Record<ErrorId, IErrorMapEntry> = {}
+  errorMap: Record<string, IErrorMapEntry> = {}
 
   /**
    * Set a custom error map to the reporter. This allows
    * the reporter to extend the internal error map
    */
 
-  setErrorMap = (entry: Record<ErrorId, IErrorMapEntry>): void => {
+  setErrorMap = (entry: Record<string, IErrorMapEntry>): void => {
     this.errorMap = {
       ...this.errorMap,
       ...entry,
