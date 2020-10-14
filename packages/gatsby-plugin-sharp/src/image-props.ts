@@ -1,12 +1,15 @@
 /* eslint-disable no-unused-expressions */
-// import { GatsbyImageProps } from "gatsby-plugin-image"
-// import { GatsbyCache } from "gatsby"
-// import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { GatsbyImageProps } from "gatsby-plugin-image"
+import { GatsbyCache } from "gatsby"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { fixed, fluid, traceSVG } from "."
 
-// export interface ISharpGatsbyImageArgs {
-//   layout?: "fixed" | "responsive" | "intrinsic"
-// }
+export interface ISharpGatsbyImageArgs {
+  layout?: "fixed" | "responsive" | "intrinsic"
+  placeholder?: "tracedSVG" | "dominantColor" | "base64" | "none"
+  tracedSVGOptions?: Record<string, unknown>
+  [key: string]: unknown
+}
 
 export async function gatsbyImageProps({
   file,
@@ -18,13 +21,12 @@ export async function gatsbyImageProps({
   },
   reporter,
   cache,
-}) {
-  // }: {
-  //   file: string
-  //   args: ISharpGatsbyImageArgs
-  //   cache: GatsbyCache
-  //   reporter: Reporter
-  // }): Promise<Omit<GatsbyImageProps, "alt"> | undefined> {
+}: {
+  file: string
+  args: ISharpGatsbyImageArgs
+  cache: GatsbyCache
+  reporter: Reporter
+}): Promise<Omit<GatsbyImageProps, "alt"> | undefined> {
   // TODO: fancy stuff
 
   const isResponsive = layout !== `fixed`
@@ -44,13 +46,14 @@ export async function gatsbyImageProps({
   if (!imageData) {
     return undefined
   }
-  // const imageProps: Pick<
-  //   GatsbyImageProps,
-  //   "layout" | "width" | "height" | "images" | "placeholder"
-  // > = {
-  const imageProps = {
+  const imageProps: Pick<
+    GatsbyImageProps,
+    "layout" | "width" | "height" | "images" | "placeholder" | "style"
+  > = {
+    // const imageProps = {
     layout,
-    placeholder: null,
+    placeholder: undefined,
+    style: undefined,
     width: isResponsive ? 1 : imageData.width,
     height: isResponsive ? imageData.aspectRatio : imageData.height,
     images: {
@@ -64,7 +67,7 @@ export async function gatsbyImageProps({
   }
 
   if (placeholder === `tracedSVG`) {
-    const fallback = await traceSVG({
+    const fallback: string = await traceSVG({
       file,
       args: tracedSVGOptions,
       fileArgs: args,
