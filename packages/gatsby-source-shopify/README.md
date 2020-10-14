@@ -138,6 +138,31 @@ GraphQL model.
 }
 ```
 
+### Duplicated entries
+
+When Shopify pulls the data, all localizations will be pulled. Therefore, if you have a localization active, it will duplicate the entries. Narrow the search by filtering the query with `node_locale` filter:
+
+```graphql
+{
+  allShopifyProduct(filter: { node_locale: { eq: "en" } }) {
+    edges {
+      node {
+        id
+        title
+        handle
+        productType
+        vendor
+        variants {
+          id
+          title
+          price
+        }
+      }
+    }
+  }
+}
+```
+
 All Shopify data is pulled using the [Shopify Storefront
 API][shopify-storefront-api]. Data is made available in the same structure as
 provided by the API, with a few exceptions noted below.
