@@ -5,6 +5,13 @@ const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
+const getHref = link => {
+  if (typeof link === `object`) {
+    return link.href
+  }
+  return link
+}
+
 const fetchLanguageConfig = async ({
   translation,
   baseUrl,
@@ -35,7 +42,7 @@ const fetchLanguageConfig = async ({
     availableLanguagesResponses = availableLanguagesResponses.concat(
       response.data.data
     )
-    next = response.data.links.next
+    next = getHref(response.data.links.next)
   }
 
   next = `${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`
@@ -49,7 +56,7 @@ const fetchLanguageConfig = async ({
     translatableEntitiesResponses = translatableEntitiesResponses.concat(
       response.data.data
     )
-    next = response.data.links.next
+    next = getHref(response.data.links.next)
   }
 
   const enabledLanguages = availableLanguagesResponses
