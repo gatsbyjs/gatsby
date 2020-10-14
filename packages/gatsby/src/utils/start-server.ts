@@ -288,8 +288,18 @@ export async function startServer(
       row: row,
     }
   }
+  // Colors taken from Gatsby's design tokens
+  // https://github.com/gatsbyjs/gatsby/blob/d8acab3a135fa8250a0eb3a47c67300dde6eae32/packages/gatsby-design-tokens/src/colors.js#L185-L205
+  const colors = {
+    background: `fdfaf6`,
+    text: `452475`,
+    green: `137886`,
+    darkGreen: `006500`,
+    comment: `527713`,
+    keyword: `096fb3`,
+    yellow: `DB3A00`,
+  }
   const parseError = function (err) {
-    console.log(`raw err`, err)
     const stack = err.stack ? err.stack : ``
     const stackObject = stack.split(`\n`)
     const position = getPosition(stackObject)
@@ -298,27 +308,26 @@ export async function startServer(
       directory,
       ...position.filename.split(path.sep).slice(2)
     )
-    console.log(filename, position.filename)
     const code = fs.readFileSync(filename, `utf-8`)
     const line = position.line
     const row = position.row
     ansiHTML.setColors({
-      reset: [`542C85`, `fff`], // FOREGROUND-COLOR or [FOREGROUND-COLOR] or [, BACKGROUND-COLOR] or [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      reset: [colors.text, colors.background], // FOREGROUND-COLOR or [FOREGROUND-COLOR] or [, BACKGROUND-COLOR] or [FOREGROUND-COLOR, BACKGROUND-COLOR]
       black: `aaa`, // String
-      red: `bbb`,
-      green: `ccc`,
-      yellow: `DB3A00`,
+      red: colors.keyword,
+      green: colors.green,
+      yellow: colors.yellow,
       blue: `eee`,
       magenta: `fff`,
-      cyan: `008577`,
+      cyan: colors.darkGreen,
       lightgrey: `888`,
-      darkgrey: `777`,
+      darkgrey: colors.comment,
     })
     const codeFrame = ansiHTML(
       codeFrameColumns(
         code,
         {
-          start: { line: row, column: line },
+          start: { line: line, column: row },
         },
         { forceColor: true }
       )
@@ -370,7 +379,7 @@ export async function startServer(
       res.status(200).send(response)
     } catch (e) {
       const error = parseError(e)
-      res.status(500).send(`<h1>Error<h1>
+      res.status(500).send(`<title>Develop SSR Error</title><h1>Error<h1>
         <h2>The page didn't SSR correctly</h2>
         <ul>
           <li><strong>URL path:</strong> <code>${req.path}</code></li>
@@ -378,7 +387,7 @@ export async function startServer(
         </ul>
         <h3>error message</h3>
         <p><code>${error.message}</code></p>
-        <pre>${error.codeFrame}</pre>`)
+        <pre style="background:#${colors.background};padding:8px;">${error.codeFrame}</pre>`)
     }
 
     // TODO add support for 404 and general rendering errors
