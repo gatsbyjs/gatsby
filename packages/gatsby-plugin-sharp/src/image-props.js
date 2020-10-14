@@ -1,13 +1,24 @@
-import { GatsbyImageProps } from "gatsby-plugin-image"
-import { GatsbyCache } from "gatsby"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
-import { fixed, fluid } from "."
+/* eslint-disable no-unused-expressions */
+// import { GatsbyImageProps } from "gatsby-plugin-image"
+// import { GatsbyCache } from "gatsby"
+// import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { fixed, fluid, traceSVG } from "."
 
 // export interface ISharpGatsbyImageArgs {
 //   layout?: "fixed" | "responsive" | "intrinsic"
 // }
 
-export async function gatsbyImageProps({ file, args = {}, reporter, cache }) {
+export async function gatsbyImageProps({
+  file,
+  args: {
+    layout = `fixed`,
+    placeholder = `dominantColor`,
+    tracedSVGOptions = {},
+    ...args
+  },
+  reporter,
+  cache,
+}) {
   // }: {
   //   file: string
   //   args: ISharpGatsbyImageArgs
@@ -16,11 +27,17 @@ export async function gatsbyImageProps({ file, args = {}, reporter, cache }) {
   // }): Promise<Omit<GatsbyImageProps, "alt"> | undefined> {
   // TODO: fancy stuff
 
-  const layout = args.layout || `fixed`
-
   const isResponsive = layout !== `fixed`
 
   const resize = isResponsive ? fluid : fixed
+
+  if (placeholder !== `base64`) {
+    args.base64 = false
+  }
+
+  if (placeholder === `dominantColor`) {
+    args.dominantColor = true
+  }
 
   const imageData = await resize({ file, args, reporter, cache })
 
@@ -46,23 +63,33 @@ export async function gatsbyImageProps({ file, args = {}, reporter, cache }) {
     },
   }
 
-  const placeholder = imageData.tracedSVG || imageData.base64
-
-  if (placeholder) {
+  if (placeholder === `tracedSVG`) {
+    const fallback = await traceSVG({
+      file,
+      args: tracedSVGOptions,
+      fileArgs: args,
+      cache,
+      reporter,
+    })
     imageProps.placeholder = {
-      fallback: placeholder,
+      fallback,
     }
+  } else if (imageData.base64) {
+    imageProps.placeholder = {
+      fallback: imageData.base64,
+    }
+  } else if (placeholder === `dominantColor`) {
+    imageProps.style = { backgroundColor: imageData.dominantColor }
   }
 
-  const webp = await resize({
-    file,
-    args: { ...args, toFormat: `webp` },
-    reporter,
-    cache,
-  })
+  if (args.webP) {
+    const webp = await resize({
+      file,
+      args: { ...args, base64: false, dominantColor: false, toFormat: `webp` },
+      reporter,
+      cache,
+    })
 
-  if (imageData.srcWebp) {
-    // eslint-disable-next-line no-unused-expressions
     imageProps.images.sources?.push({
       srcSet: webp.srcSet,
       type: `image/webp`,

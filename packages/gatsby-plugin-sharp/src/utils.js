@@ -1,7 +1,7 @@
 const ProgressBar = require(`progress`)
 
 // TODO remove in V3
-function createGatsbyProgressOrFallbackToExternalProgressBar(
+export function createGatsbyProgressOrFallbackToExternalProgressBar(
   message,
   reporter
 ) {
@@ -33,7 +33,7 @@ function createGatsbyProgressOrFallbackToExternalProgressBar(
 let progressBar
 let pendingImagesCounter = 0
 let firstPass = true
-const createOrGetProgressBar = reporter => {
+export const createOrGetProgressBar = reporter => {
   if (!progressBar) {
     progressBar = createGatsbyProgressOrFallbackToExternalProgressBar(
       `Generating image thumbnails`,
@@ -80,6 +80,10 @@ const createOrGetProgressBar = reporter => {
   return progressBar
 }
 
-exports.createGatsbyProgressOrFallbackToExternalProgressBar = createGatsbyProgressOrFallbackToExternalProgressBar
-exports.createOrGetProgressBar = createOrGetProgressBar
-exports.getProgressBar = () => progressBar
+export const getProgressBar = () => progressBar
+
+export function rgbToHex(red, green, blue) {
+  return `#${(blue | (green << 8) | (red << 16) | (1 << 24))
+    .toString(16)
+    .slice(1)}`
+}

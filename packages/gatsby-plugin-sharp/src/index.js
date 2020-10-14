@@ -18,6 +18,7 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
+const { rgbToHex } = require(`./utils`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -434,7 +435,7 @@ async function stats({ file, reporter }) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
-
+  console.log({ args })
   if (options.sizeByPixelDensity) {
     /*
      * We learned that `sizeByPixelDensity` is only valid for vector images,
@@ -454,8 +455,16 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
+  let dominantColor
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    const pipeline = sharp(file.absolutePath)
+    metadata = await pipeline.metadata()
+    if (args.dominantColor) {
+      const {
+        dominant: { r, g, b },
+      } = await pipeline.stats()
+      dominantColor = rgbToHex(r, g, b)
+    }
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -645,6 +654,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     presentationWidth,
     presentationHeight,
     tracedSVG,
+    dominantColor,
   }
 }
 
@@ -660,6 +670,20 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
   const dimensions = getImageSize(file)
+
+  let dominantColor
+  try {
+    if (args.dominantColor) {
+      const {
+        dominant: { r, g, b },
+      } = await sharp(file.absolutePath).stats()
+      dominantColor = rgbToHex(r, g, b)
+    }
+  } catch (err) {
+    reporter.warn(
+      `Could not calculate dominant color for "${file.relativePath}"`
+    )
+  }
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
@@ -762,6 +786,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     srcSet,
     originalName: originalName,
     tracedSVG,
+    dominantColor,
   }
 }
 

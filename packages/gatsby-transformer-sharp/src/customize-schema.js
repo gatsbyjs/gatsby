@@ -33,7 +33,9 @@ const {
   PotraceType,
   ImageFitType,
   ImageLayoutType,
+  ImagePlaceholderType,
 } = require(`./types`)
+const { stripIndent } = require(`common-tags`)
 
 function toArray(buf) {
   const arr = new Array(buf.length)
@@ -395,18 +397,68 @@ const imageNodeType = ({
     args: {
       layout: {
         type: ImageLayoutType,
+        defaultValue: `fixed`,
       },
       maxWidth: {
         type: GraphQLInt,
+        description: stripIndent`
+        Maximum display width of generated files. 
+        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+        This only applies when layout = RESPONSIVE. For other layout types, use "width"`,
       },
       maxHeight: {
         type: GraphQLInt,
       },
       width: {
         type: GraphQLInt,
+        description: stripIndent`
+        The display width of the generated image. 
+        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+        Ignored if layout = RESPONSIVE, where you should use "maxWidth" instead.
+        `,
+      },
+      placeholder: {
+        type: ImagePlaceholderType,
+        defaultValue: `base64`,
+        description: stripIndent`
+        Format of generated placeholder image. 
+        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
+        BASE64: a blurred, low resolution image, encoded as a base64 data URI
+        TRACED_SVG: a low-resolution traced SVG of the image.
+        NONE: no placeholder. Set "background" to use a fixed background color.`,
       },
       height: {
         type: GraphQLInt,
+      },
+      base64: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+        description: `Generate low-res base64 placeholder image.`,
+      },
+      tracedSVGOptions: {
+        type: PotraceType,
+        defaultValue: false,
+        description: `Options for traced placeholder SVGs. You also should set placeholder to SVG.`,
+      },
+      webP: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+        description: `Generate images in WebP format as well as matching the input format. This is the default (and strongly recommended), but will add to processing time.`,
+      },
+      outputPixelDensities: {
+        type: GraphQLList(GraphQLInt),
+        defaultValue: [1, 2, 3],
+        description: stripIndent`
+        A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always a 1x image. 
+        Default is [ 1, 2, 3 ], meaning 1x, 2x, 3x. In this case, an image with a fixed layout and width = 600 would generate images at 600, 1200 and 1800px wide`,
+      },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
+        description: stripIndent`
+        The "sizes" property, passed to the img tag. This describes the display size of the image. 
+        This does not affect the generated images, but is used by the browser to decide which images to download.
+        `,
       },
       base64Width: {
         type: GraphQLInt,
@@ -427,10 +479,7 @@ const imageNodeType = ({
         type: DuotoneGradientType,
         defaultValue: false,
       },
-      traceSVG: {
-        type: PotraceType,
-        defaultValue: false,
-      },
+
       quality: {
         type: GraphQLInt,
       },
@@ -450,6 +499,7 @@ const imageNodeType = ({
       toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
+        description: `Force output format. Default is to use the same as the input format`,
       },
       cropFocus: {
         type: ImageCropFocusType,
@@ -471,14 +521,12 @@ const imageNodeType = ({
         type: GraphQLFloat,
         defaultValue: false,
       },
-      sizes: {
-        type: GraphQLString,
-        defaultValue: ``,
-      },
       srcSetBreakpoints: {
         type: GraphQLList(GraphQLInt),
         defaultValue: [],
-        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
+        description: stripIndent`\
+        A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]. 
+        You should usually leave this blank and allow it to be generated from the width/maxWidth and outputPixelDensities`,
       },
     },
     resolve: async (image, fieldArgs, context) => {

@@ -10,7 +10,6 @@ import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
 import { ImageProps, SharpProps } from "../utils"
-import { getCustomSharpFields } from "./get-custom-sharp-fields"
 import { watchImage } from "./watcher"
 
 export interface IImageMetadata {
@@ -123,29 +122,18 @@ export async function writeImage(
   filename: string
 ): Promise<void> {
   try {
-    if (args.tracedSVG) {
-      // These are mutually-exclusive options
-      args.base64 = false
-    }
     const options = { file, args, reporter, cache }
 
     if (!PluginSharp.gatsbyImageProps) {
       reporter.warn(`Please upgrade gatsby-plugin-sharp`)
+      return
     }
     // get standard set of fields from sharp
     const sharpData = await PluginSharp.gatsbyImageProps(options)
 
     if (sharpData) {
-      // get the equivalent webP and tracedSVG fields gatsby-transformer-sharp handles normally
-      const customSharpFields = await getCustomSharpFields({
-        file,
-        args,
-        reporter,
-        cache,
-      })
-      const data = { ...sharpData, ...customSharpFields }
       // Write the image properties to the cache
-      await fs.writeJSON(filename, data)
+      await fs.writeJSON(filename, sharpData)
     } else {
       reporter.warn(`Could not process image`)
     }

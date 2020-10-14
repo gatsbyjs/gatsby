@@ -10,7 +10,7 @@ const {
 const sharp = require(`./safe-sharp`)
 const { Potrace } = require(`potrace`)
 
-const ImageFormatType = new GraphQLEnumType({
+export const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
   values: {
     NO_CHANGE: { value: `` },
@@ -20,7 +20,7 @@ const ImageFormatType = new GraphQLEnumType({
   },
 })
 
-const ImageLayoutType = new GraphQLEnumType({
+export const ImageLayoutType = new GraphQLEnumType({
   name: `ImageLayout`,
   values: {
     FIXED: { value: `fixed` },
@@ -29,7 +29,17 @@ const ImageLayoutType = new GraphQLEnumType({
   },
 })
 
-const ImageFitType = new GraphQLEnumType({
+export const ImagePlaceholderType = new GraphQLEnumType({
+  name: `ImagePlaceholder`,
+  values: {
+    DOMINANT_COLOR: { value: `dominantColor` },
+    TRACED_SVG: { value: `tracedSVG` },
+    BASE64: { value: `base64` },
+    NONE: { value: `none` },
+  },
+})
+
+export const ImageFitType = new GraphQLEnumType({
   name: `ImageFit`,
   values: {
     COVER: { value: sharp.fit.cover },
@@ -40,7 +50,7 @@ const ImageFitType = new GraphQLEnumType({
   },
 })
 
-const ImageCropFocusType = new GraphQLEnumType({
+export const ImageCropFocusType = new GraphQLEnumType({
   name: `ImageCropFocus`,
   values: {
     CENTER: { value: sharp.gravity.center },
@@ -57,7 +67,7 @@ const ImageCropFocusType = new GraphQLEnumType({
   },
 })
 
-const DuotoneGradientType = new GraphQLInputObjectType({
+export const DuotoneGradientType = new GraphQLInputObjectType({
   name: `DuotoneGradient`,
   fields: () => {
     return {
@@ -68,7 +78,7 @@ const DuotoneGradientType = new GraphQLInputObjectType({
   },
 })
 
-const PotraceTurnPolicyType = new GraphQLEnumType({
+export const PotraceTurnPolicyType = new GraphQLEnumType({
   name: `PotraceTurnPolicy`,
   values: {
     TURNPOLICY_BLACK: { value: Potrace.TURNPOLICY_BLACK },
@@ -80,7 +90,7 @@ const PotraceTurnPolicyType = new GraphQLEnumType({
   },
 })
 
-const PotraceType = new GraphQLInputObjectType({
+export const PotraceType = new GraphQLInputObjectType({
   name: `Potrace`,
   fields: () => {
     return {
@@ -98,13 +108,3 @@ const PotraceType = new GraphQLInputObjectType({
     }
   },
 })
-
-module.exports = {
-  ImageFormatType,
-  ImageFitType,
-  ImageCropFocusType,
-  DuotoneGradientType,
-  PotraceTurnPolicyType,
-  PotraceType,
-  ImageLayoutType,
-}
