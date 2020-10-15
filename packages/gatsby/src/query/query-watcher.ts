@@ -72,7 +72,6 @@ const handleComponentsWithRemovedQueries = (
         type: `REMOVE_STATIC_QUERY`,
         payload: c.id,
       })
-      boundActionCreators.deleteComponentsDependencies([c.id])
     }
   })
 }
@@ -111,8 +110,6 @@ const handleQuery = (
           isNewQuery ? `was added` : `has changed`
         }.`
       )
-
-      boundActionCreators.deleteComponentsDependencies([query.id])
     }
     return true
   }

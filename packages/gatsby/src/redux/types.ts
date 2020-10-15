@@ -435,13 +435,6 @@ export interface ICreatePageDependencyAction {
   }
 }
 
-export interface IDeleteComponentDependenciesAction {
-  type: "DELETE_COMPONENTS_DEPENDENCIES"
-  payload: {
-    paths: Array<string>
-  }
-}
-
 export interface IReplaceComponentQueryAction {
   type: "REPLACE_COMPONENT_QUERY"
   payload: {
