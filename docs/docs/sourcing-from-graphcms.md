@@ -74,7 +74,6 @@ Query fields also follow a similar naming convention and are prefixed by the sam
 - `allGraphCmsPost` for querying multiple `Post` entries
 - `graphCmsPost` for querying a single `Post` entry
 
-
 ### Querying for content
 
 ![GraphCMS Query](./images/graphcms-query.png)
@@ -99,8 +98,6 @@ Using the generated schema, we can begin to write GraphQL queries for Gatsby dat
   }
 }
 ```
-
-
 
 ```json
 {
@@ -150,8 +147,8 @@ Page queries run at build time and can accept GraphQL variables via page context
 The resulting data is available via the page props `data` key.
 
 ```jsx
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from "react"
+import { graphql } from "gatsby"
 
 function IndexPage({ data: { posts } }) {
   return (
@@ -162,7 +159,7 @@ function IndexPage({ data: { posts } }) {
         </li>
       ))}
     </ul>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -182,9 +179,9 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 
-export default IndexPage;
+export default IndexPage
 ```
 
 #### Static query hook
@@ -192,8 +189,8 @@ export default IndexPage;
 Static queries also run at build time, but can be used in all components via the `useStaticQuery` hook or `<StaticQuery />` component. However they do **not** accept GraphQL variables.
 
 ```jsx
-import React from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
 
 function IndexPage() {
   const { posts } = useStaticQuery(graphql`
@@ -213,7 +210,7 @@ function IndexPage() {
         }
       }
     }
-  `);
+  `)
 
   return (
     <ul>
@@ -223,10 +220,10 @@ function IndexPage() {
         </li>
       ))}
     </ul>
-  );
+  )
 }
 
-export default IndexPage;
+export default IndexPage
 ```
 
 ## Learn more
