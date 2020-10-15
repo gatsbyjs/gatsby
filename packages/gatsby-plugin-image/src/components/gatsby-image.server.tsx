@@ -1,8 +1,5 @@
 import React, { ElementType, FunctionComponent, CSSProperties } from "react"
-import {
-  GatsbyImageProps,
-  ISharpGatsbyImageProps,
-} from "./gatsby-image.browser"
+import { GatsbyImageProps, ISharpGatsbyImageData } from "./gatsby-image.browser"
 import { getWrapperProps, getMainProps, getPlaceHolderProps } from "./hooks"
 import { Placeholder } from "./placeholder"
 import { MainImage, MainImageProps } from "./main-image"
@@ -34,7 +31,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     layout
   )
 
-  const cleanedImages: ISharpGatsbyImageProps["images"] = {
+  const cleanedImages: ISharpGatsbyImageData["images"] = {
     fallback: undefined,
     sources: [],
   }

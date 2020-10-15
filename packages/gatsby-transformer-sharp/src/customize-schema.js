@@ -15,7 +15,7 @@ const {
   fluid,
   fixed,
   traceSVG,
-  gatsbyImageProps,
+  generateImageData,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
@@ -401,8 +401,8 @@ const imageNodeType = ({
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
-        RESPONSIVE: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
-        INTRINSIC: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+        FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
         `,
       },
       maxWidth: {
@@ -540,12 +540,12 @@ const imageNodeType = ({
       const file = getNodeAndSavePathDependency(image.parent, context.path)
       const args = { ...fieldArgs, pathPrefix }
 
-      if (!gatsbyImageProps) {
+      if (!generateImageData) {
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
       }
 
-      const componentProps = await gatsbyImageProps({
+      const imageData = await generateImageData({
         file,
         args,
         reporter,
@@ -553,7 +553,7 @@ const imageNodeType = ({
       })
 
       return {
-        componentProps,
+        imageData,
         fieldArgs: args,
         image,
         file,

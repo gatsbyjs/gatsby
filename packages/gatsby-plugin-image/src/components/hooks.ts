@@ -10,6 +10,7 @@ import {
 } from "react"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
+import { Layout } from "../utils"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -30,7 +31,7 @@ export function hasImageLoaded(cacheKey: string): boolean {
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: "intrinsic" | "responsive" | "fixed"
+  layout: Layout
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
@@ -41,7 +42,7 @@ export function getWrapperProps(
     wrapperStyle.height = height
   }
 
-  if (layout === `intrinsic`) {
+  if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
   }
 

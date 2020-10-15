@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-expressions */
-import { GatsbyImageProps } from "gatsby-plugin-image"
+import { ISharpGatsbyImageData } from "gatsby-plugin-image"
 import { GatsbyCache } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { fixed, fluid, traceSVG } from "."
 
 export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "responsive" | "intrinsic"
+  layout?: "fixed" | "fluid" | "constrained"
   placeholder?: "tracedSVG" | "dominantColor" | "base64" | "none"
   tracedSVGOptions?: Record<string, unknown>
   [key: string]: unknown
 }
 
-export async function gatsbyImageProps({
+export async function generateImageData({
   file,
   args: {
     layout = `fixed`,
@@ -26,7 +26,7 @@ export async function gatsbyImageProps({
   args: ISharpGatsbyImageArgs
   cache: GatsbyCache
   reporter: Reporter
-}): Promise<Omit<GatsbyImageProps, "alt"> | undefined> {
+}): Promise<ISharpGatsbyImageData | undefined> {
   // TODO: fancy stuff
 
   const isResponsive = layout !== `fixed`
@@ -46,14 +46,9 @@ export async function gatsbyImageProps({
   if (!imageData) {
     return undefined
   }
-  const imageProps: Pick<
-    GatsbyImageProps,
-    "layout" | "width" | "height" | "images" | "placeholder" | "style"
-  > = {
-    // const imageProps = {
+  const imageProps: ISharpGatsbyImageData = {
     layout,
     placeholder: undefined,
-    style: undefined,
     width: isResponsive ? 1 : imageData.width,
     height: isResponsive ? imageData.aspectRatio : imageData.height,
     images: {
@@ -82,7 +77,7 @@ export async function gatsbyImageProps({
       fallback: imageData.base64,
     }
   } else if (placeholder === `dominantColor`) {
-    imageProps.style = { backgroundColor: imageData.dominantColor }
+    imageProps.backgroundColor = imageData.dominantColor
   }
 
   if (args.webP) {

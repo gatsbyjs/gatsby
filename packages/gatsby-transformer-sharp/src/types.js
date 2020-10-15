@@ -24,8 +24,8 @@ export const ImageLayoutType = new GraphQLEnumType({
   name: `ImageLayout`,
   values: {
     FIXED: { value: `fixed` },
-    RESPONSIVE: { value: `responsive` },
-    INTRINSIC: { value: `intrinsic` },
+    FLUID: { value: `fluid` },
+    CONSTRAINED: { value: `constrained` },
   },
 })
 

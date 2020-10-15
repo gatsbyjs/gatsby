@@ -19,18 +19,18 @@ import { Layout } from "../utils"
 
 export type GatsbyImageProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad" | "src" | "srcSet"
+  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
 > & {
   alt: string
   as?: ElementType
   className?: string
-  image: ISharpGatsbyImageProps
+  image: ISharpGatsbyImageData
   onLoad?: () => void
   onError?: () => void
   onStartLoad?: Function
 }
 
-export interface ISharpGatsbyImageProps {
+export interface ISharpGatsbyImageData {
   layout: Layout
   height?: number
   backgroundColor?: string
@@ -48,14 +48,13 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   as: Type = `div`,
   style,
   className,
-  layout = `fixed`,
-  width,
-  height,
-  images,
   onStartLoad,
+  image,
   onLoad: customOnLoad,
   ...props
 }) {
+  const { width, height, layout, images } = image
+
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
   const unobserveRef = useRef<
@@ -142,10 +141,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
         lazyHydrator.current = lazyHydrate(
           {
-            layout,
-            width,
-            height,
-            images,
+            image,
             isLoading,
             isLoaded,
             toggleIsLoaded: () => {

@@ -1,6 +1,6 @@
 import { ImgHTMLAttributes, ElementType } from "react"
 
-export type Layout = "fixed" | "responsive" | "intrinsic"
+export type Layout = "fixed" | "fluid" | "constrained"
 
 export interface ICommonImageProps {
   layout?: Layout
