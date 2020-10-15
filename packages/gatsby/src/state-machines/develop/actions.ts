@@ -1,10 +1,12 @@
 import {
+  actions
   assign,
   AnyEventObject,
   ActionFunction,
   spawn,
   ActionFunctionMap,
   DoneEventObject,
+  send,
 } from "xstate"
 import { IBuildContext } from "../../services"
 import { boundActionCreators } from "../../redux/actions"
@@ -14,7 +16,11 @@ import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
+import { createDevelopHTMLRoute } from "../../services/develop-html-route"
 import { callRealApi } from "../../utils/call-deferred-api"
+
+const { pure } = actions;
+
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
  * Instead of queueing, we call it right away
@@ -118,6 +124,27 @@ export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
   },
 })
 
+export const spawnDevelopHtmlRouteHandler = assign<
+  IBuildContext,
+  AnyEventObject
+>({
+  developHTMLRoute: ({ app, program, store }) => {
+    return spawn(createDevelopHTMLRoute({ app, program, store }))
+  },
+})
+
+export const sendDevHtmlResponses = pure(() => {
+  console.log(`hi?? sendDevHtmlResponses`)
+  const sendAction = send("SEND_DEVELOP_HTML_RESPONSES", {
+    to: context => {
+      console.log(Object.keys(context))
+      return context.developHTMLRoute
+    },
+  })
+  console.log(sendAction)
+  return sendAction
+})
+
 export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: (_context, { payload }) => payload?.webhookBody,
 })
@@ -170,6 +197,8 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   clearWebhookBody,
   finishParentSpan,
   spawnWebpackListener,
+  spawnDevelopHtmlRouteHandler,
+  sendDevHtmlResponses,
   markSourceFilesDirty,
   markSourceFilesClean,
   markNodesClean,

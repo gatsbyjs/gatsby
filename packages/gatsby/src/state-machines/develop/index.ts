@@ -1,4 +1,4 @@
-import { MachineConfig, AnyEventObject, forwardTo, Machine } from "xstate"
+import { MachineConfig, AnyEventObject, forwardTo, Machine, send } from "xstate"
 import { IDataLayerContext } from "../data-layer/types"
 import { IQueryRunningContext } from "../query-running/types"
 import { IWaitingContext } from "../waiting/types"
@@ -30,6 +30,19 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     WEBHOOK_RECEIVED: {
       target: `reloadingData`,
       actions: `assignWebhookBody`,
+    },
+    // Global handler for event — make sure we never wait more than 1 second
+    // to respond to requests to the develop server. We'd prefer to wait
+    // for all sourcing/transforming/query running to finish but if this is taking
+    // awhile, we'll show a stale version of the page and trust hot reloading
+    // to push the work in progress once it finishes.
+    DEVELOP_HTML_REQUEST_RECEIVED: {
+      actions: [
+        send("SEND_DEVELOP_HTML_RESPONSES", {
+          to: context => context.developHTMLRoute,
+          delay: 1000,
+        }),
+      ],
     },
   },
   states: {
@@ -194,6 +207,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           actions: [
             `assignServers`,
             `spawnWebpackListener`,
+            `spawnDevelopHtmlRouteHandler`,
             `markSourceFilesClean`,
           ],
         },
@@ -205,7 +219,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Idle, waiting for events that make us rebuild
     waiting: {
-      entry: [`saveDbState`, `resetRecompileCount`],
+      entry: [`saveDbState`, `resetRecompileCount`, `sendDevHtmlResponses`],
       on: {
         // Forward these events to the child machine, so it can handle batching
         ADD_NODE_MUTATION: {
@@ -217,6 +231,15 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         // This event is sent from the child
         EXTRACT_QUERIES_NOW: {
           target: `runningQueries`,
+        },
+        DEVELOP_HTML_REQUEST_RECEIVED: {
+          actions: [
+            // I don't get why this isn't working.
+            `sendDevHtmlResponses`,
+            send("SEND_DEVELOP_HTML_RESPONSES", {
+              to: context => context.developHTMLRoute,
+            }),
+          ],
         },
       },
       invoke: {
