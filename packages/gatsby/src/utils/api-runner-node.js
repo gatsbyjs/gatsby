@@ -538,7 +538,8 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
       if (
         api === `onCreateNode` &&
-        gatsbyNode?.onCreateNodeSyncTest?.(args.node)
+        gatsbyNode?.onCreateNodeSyncTest && // Don't bail if this api is not exported
+        !gatsbyNode.onCreateNodeSyncTest(args.node)
       ) {
         // Do not try to schedule an async event for this node for this plugin
         return null
