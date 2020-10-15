@@ -6,7 +6,7 @@
   "dependencies": {
     "cypress": "^3.1.0",
     "gatsby": "^2.0.118",
-    "gatsby-plugin-image": "^0.0.1",
+    "gatsby-plugin-image": "^0.0.2",
     "gatsby-plugin-sharp": "^2.0.20",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
