@@ -38,6 +38,7 @@ gatsby develop
 ```
 
 Gatsby will start a hot-reloading development environment accessible by default at `http://localhost:8000`.
+> Please notice that some antivirus may be blocking the webpack socket that takes care of the hot-reloading of changes
 
 Try editing the home page in `src/pages/index.js`. Saved changes will live reload in the browser.
 
