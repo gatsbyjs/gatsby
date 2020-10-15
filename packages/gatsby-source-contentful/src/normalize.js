@@ -37,19 +37,6 @@ const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
 exports.getLocalizedField = getLocalizedField
 exports.buildFallbackChain = buildFallbackChain
 
-// If the id starts with a number, left-pad it with a c (for Contentful of
-// course :-))
-const fixId = id => {
-  if (!_.isString(id)) {
-    id = id.toString()
-  }
-  if (!isNaN(id.slice(0, 1))) {
-    return `c${id}`
-  }
-  return id
-}
-exports.fixId = fixId
-
 const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
