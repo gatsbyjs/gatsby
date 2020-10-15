@@ -138,10 +138,11 @@ export const onCreateNode = true
  * This is an optimization that can prevent the `onCreateNode` handler to be scheduled
  * if the plugin already knows it's not interested in processing this node.
  *
+ * @gatsbyVersion 2.24.78
  * @example
- * exports.onCreateNodeSyncTest = (node) => node.internal.type === 'Image'
+ * exports.shouldOnCreateNode = (node) => node.internal.type === 'Image'
  */
-export const onCreateNodeSyncTest = true
+export const shouldOnCreateNode = true
 
 /**
  * Called when a new page is created. This extension API is useful

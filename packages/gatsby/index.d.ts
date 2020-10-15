@@ -311,9 +311,9 @@ export interface GatsbyNode {
    * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
    *
    * @example
-   * exports.onCreateNodeSyncTest = node => node.internal.type === 'SharpNode'
+   * exports.shouldOnCreateNode = node => node.internal.type === 'SharpNode'
    */
-  onCreateNodeSyncTest?<TNode extends object = {}>(
+  shouldOnCreateNode?<TNode extends object = {}>(
     node: TNode,
   ): boolean
 

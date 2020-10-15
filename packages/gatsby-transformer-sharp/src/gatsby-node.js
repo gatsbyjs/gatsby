@@ -1,5 +1,5 @@
-const { onCreateNode, onCreateNodeSyncTest } = require(`./on-node-create`)
+const { onCreateNode, shouldOnCreateNode } = require(`./on-node-create`)
 exports.onCreateNode = onCreateNode
-exports.onCreateNodeSyncTest = onCreateNodeSyncTest
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.createSchemaCustomization = require(`./customize-schema`)
 exports.createResolvers = require(`./create-resolvers`)

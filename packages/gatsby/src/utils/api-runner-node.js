@@ -536,10 +536,11 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
+      // TODO: rethink createNode API to handle this better
       if (
         api === `onCreateNode` &&
-        gatsbyNode?.onCreateNodeSyncTest && // Don't bail if this api is not exported
-        !gatsbyNode.onCreateNodeSyncTest(args.node)
+        gatsbyNode?.shouldOnCreateNode && // Don't bail if this api is not exported
+        !gatsbyNode.shouldOnCreateNode(args.node)
       ) {
         // Do not try to schedule an async event for this node for this plugin
         return null
