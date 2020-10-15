@@ -58,6 +58,7 @@
   "devDependencies": {
     "@mdx-js/mdx": "^1.6.16",
     "@mdx-js/react": "^1.6.16",
+    "gatsby-plugin-utils": "^0.2.31",
     "jest": "^24.9.0",
     "js-combinatorics": "^1.4.5",
     "react-test-renderer": "^16.13.1"
