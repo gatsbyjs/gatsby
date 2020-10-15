@@ -37,19 +37,6 @@ const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
 exports.getLocalizedField = getLocalizedField
 exports.buildFallbackChain = buildFallbackChain
 
-// If the id starts with a number, left-pad it with a c (for Contentful of
-// course :-))
-const fixId = id => {
-  if (!_.isString(id)) {
-    id = id.toString()
-  }
-  if (!isNaN(id.slice(0, 1))) {
-    return `c${id}`
-  }
-  return id
-}
-exports.fixId = fixId
-
 const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
@@ -86,24 +73,18 @@ exports.buildResolvableSet = ({
     if (node.internal.owner === `gatsby-source-contentful`) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      const key = `${node.contentful_id}___${
-        node.sys.linkType || node.sys.type
-      }`
-      resolvable.add(key)
+      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry => {
-      resolvable.add(
-        `${entry.sys.id}___${entry.sys.linkType || entry.sys.type}`
-      )
-    })
-  })
-  assets.forEach(assetItem =>
-    resolvable.add(
-      `${assetItem.sys.id}___${assetItem.sys.linkType || assetItem.sys.type}`
+    entries.forEach(entry =>
+      resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
     )
+  })
+
+  assets.forEach(assetItem =>
+    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
   )
 
   return resolvable
