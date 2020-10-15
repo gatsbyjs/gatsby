@@ -57,9 +57,14 @@ describe(`gatsby-plugin-sass`, () => {
   })
 })
 
-describe.only(`pluginOptionsSchema`, () => {
+describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, () => {
     const expectedErrors = [
+      `"implementation" must be of type object`,
+      `"postCssPlugins" must be an array`,
+      `"sassRuleTest" must be of type object`,
+      `"sassRuleModulesTest" must be of type object`,
+      `"useResolveUrlLoader" must be one of [boolean, object]`,
       `"file" must be a string`,
       `"data" must be a string`,
       `"importer" must be of type function`,
@@ -81,12 +86,17 @@ describe.only(`pluginOptionsSchema`, () => {
     ]
 
     const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+      implementation: `This should be a require() thing`,
+      postCssPlugins: `This should be an array of postCss plugins`,
+      sassRuleTest: `This should be a regexp`,
+      sassRuleModulesTest: `This should be a regexp`,
+      useResolveUrlLoader: `This should be a boolean`,
       file: 123, // should be a string
       data: 123, // should be a string
       importer: `This should be a function`,
       functions: `This should be an object of { string: function }`,
       includePaths: 123, // should be an array of string
-      indentedSyntax: `This should be a boolean`,
+      indentedSyntax: `"useResolveUrlLoader" must be a boolean`,
       indentType: 123, // this should be a string
       indentWidth: 40,
       linefeed: `This should be cr, crlf, lf or lfcr`,
@@ -106,6 +116,11 @@ describe.only(`pluginOptionsSchema`, () => {
 
   it(`should validate the schema`, () => {
     const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+      implementation: require(`../gatsby-node.js`),
+      postCssPlugins: [{ post: `CSS plugin` }],
+      sassRuleTest: /\.global\.s(a|c)ss$/,
+      sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
+      useResolveUrlLoader: false,
       file: `../path-to-file`,
       data: `{ some: data }`,
       importer: function () {

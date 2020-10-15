@@ -80,6 +80,27 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
   const MATH_ALL_KEYS = /^/
   exports.pluginOptionsSchema = function ({ Joi }) {
     return Joi.object({
+      implementation: Joi.object({})
+        .unknown(true)
+        .description(
+          `By default the node implementation of Sass (node-sass) is used. To use the implementation written in Dart (dart-sass), you can install sass instead of node-sass and pass it into the options as the implementation`
+        ),
+      postCssPlugins: Joi.array()
+        .items(Joi.object({}).unknown(true))
+        .description(`An array of postCss plugins`),
+      sassRuleTest: Joi.object()
+        .instance(RegExp)
+        .description(`Override the file regex for SASS`),
+      sassRuleModulesTest: Joi.object()
+        .instance(RegExp)
+        .description(`Override the file regex for SASS`),
+      useResolveUrlLoader: Joi.alternatives().try(
+        Joi.boolean(),
+        Joi.object({}).unknown(true)
+      )
+        .description(`This plugin resolves url() paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of sass-loader and this is documented in the readme.
+
+        Using resolve-url-loader provides a workaround, if you want to use relative url just install the plugin and then add it to your sass plugin options configuration.`),
       file: Joi.string()
         .allow(null)
         .description(`Path to a file for LibSass to compile.`)
