@@ -2,15 +2,13 @@ const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
-const { makeContentfulReporter, CODES } = require(`./report`)
+const { CODES } = require(`./report`)
 
 module.exports = async function contentfulFetch({
   syncToken,
   pluginConfig,
   reporter,
 }) {
-  const contentfulReporter = makeContentfulReporter(reporter)
-
   // Fetch articles.
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
@@ -43,7 +41,7 @@ module.exports = async function contentfulFetch({
   let locales
   let defaultLocale = `en-US`
   try {
-    contentfulReporter.verbose(`Fetching default locale`)
+    reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
@@ -51,24 +49,31 @@ module.exports = async function contentfulFetch({
     defaultLocale = _.find(contentfulLocales, { default: true }).code
     locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
     if (locales.length === 0) {
-      contentfulReporter.panic(
-        `Please check if your localeFilter is configured properly. Locales '${_.join(
-          contentfulLocales.map(item => item.code),
-          `,`
-        )}' were found but were filtered down to none.`,
-        { code: CODES.LocalesMissing }
-      )
+      reporter.panic({
+        id: CODES.LocalesMissing,
+        context: {
+          sourceMessage: `Please check if your localeFilter is configured properly. Locales '${_.join(
+            contentfulLocales.map(item => item.code),
+            `,`
+          )}' were found but were filtered down to none.`,
+        },
+      })
     }
-    contentfulReporter.verbose(`Default locale is: ${defaultLocale}`)
+    reporter.verbose(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      contentfulReporter.panic(
-        `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-        { code: CODES.SelfSignedCertificate, err: e }
+      reporter.panic(
+        {
+          id: CODES.SelfSignedCertificate,
+          context: {
+            sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+          },
+        },
+        e
       )
     } else if (e.response) {
       if (e.response.status === 404) {
@@ -92,11 +97,15 @@ module.exports = async function contentfulFetch({
       }
     }
 
-    contentfulReporter.panic(`Accessing your Contentful space failed.
+    reporter.panic({
+      context: {
+        sourceMessage: `Accessing your Contentful space failed.
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
+${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
+      },
+    })
   }
 
   let currentSyncData
@@ -110,10 +119,15 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    contentfulReporter.panic(`Fetching contentful data failed`, {
-      err: e,
-      code: CODES.SyncError,
-    })
+    reporter.panic(
+      {
+        id: CODES.SyncError,
+        context: {
+          sourceMessage: `Fetching contentful data failed`,
+        },
+      },
+      e
+    )
   }
 
   // We need to fetch content types with the non-sync API as the sync API
@@ -122,14 +136,17 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    contentfulReporter.panic(`error fetching content types`, {
-      error: e,
-      code: CODES.FetchContentTypes,
-    })
+    reporter.panic(
+      {
+        id: CODES.FetchContentTypes,
+        context: {
+          sourceMessage: `error fetching content types`,
+        },
+      },
+      e
+    )
   }
-  contentfulReporter.verbose(
-    `Content types fetched ${contentTypes.items.length}`
-  )
+  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
