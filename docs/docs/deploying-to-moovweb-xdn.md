@@ -20,7 +20,7 @@ Install the XDN CLI via `npm`:
 npm install -g @xdn/cli
 ```
 
-## Step 3: Run XDN init
+## Step 3: Run XDN `init`
 
 Run the XDN `init` command in your project directory:
 
