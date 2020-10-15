@@ -167,6 +167,6 @@ We are currently only accepting bug fixes for Gatsby v1. No new features will be
 
 Licensed under the [MIT License](./LICENSE).
 
-## 💜 Thanks
+Thanks💜 
 
 Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [GatsbyJs](https://www.gatsbyjs.com) and our example sites.
