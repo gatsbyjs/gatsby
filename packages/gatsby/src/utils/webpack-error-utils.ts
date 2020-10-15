@@ -1,16 +1,16 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { Stats } from "webpack"
 import { IMatch } from "../types"
-import { Stage } from "../commands/types"
+import { Stage as StageEnum } from "../commands/types"
 
 const stageCodeToReadableLabel = {
-  "build-javascript": `Generating JavaScript bundles`,
-  "build-html": `Generating SSR bundle`,
-  "develop-html": `Generating development SSR bundle`,
-  develop: `Generating development JavaScript bundle`,
+  BuildJavascript: `Generating JavaScript bundles`,
+  BuildHTML: `Generating SSR bundle`,
+  DevelopHTML: `Generating development SSR bundle`,
+  Develop: `Generating development JavaScript bundle`,
 } as const
 
-// type Stage = keyof typeof stageCodeToReadableLabel
+type Stage = keyof typeof StageEnum
 type StageLabel = typeof stageCodeToReadableLabel[Stage]
 
 interface ITransformedWebpackError {
