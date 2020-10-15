@@ -13,6 +13,7 @@
     "gatsby-plugin-sharp": "^2.0.37",
     "gatsby-seo": "^0.1.0",
     "gatsby-source-filesystem": "^2.0.33",
+    "gatsby-transformer-json": "^2.4.14",
     "gatsby-transformer-remark": "^2.3.12",
     "gatsby-transformer-sharp": "^2.1.19",
     "isomorphic-fetch": "^2.2.1",
