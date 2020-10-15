@@ -311,6 +311,7 @@ export type ActionsUnion =
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
   | IQueryExtractionGraphQLErrorAction
+  | IQueryStartAction
   | IRemoveStaticQuery
   | IReplaceComponentQueryAction
   | IReplaceStaticQueryAction
@@ -505,6 +506,17 @@ export interface ISetProgramStatusAction {
 
 export interface IPageQueryRunAction {
   type: `PAGE_QUERY_RUN`
+  plugin: IGatsbyPlugin
+  traceId: string | undefined
+  payload: {
+    path: string
+    componentPath: string
+    isPage: boolean
+  }
+}
+
+export interface IQueryStartAction {
+  type: `QUERY_START`
   plugin: IGatsbyPlugin
   traceId: string | undefined
   payload: { path: string; componentPath: string; isPage: boolean }

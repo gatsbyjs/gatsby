@@ -98,16 +98,14 @@ export function queriesReducer(
       }
       return state
     }
-    case `DELETE_COMPONENTS_DEPENDENCIES`: {
+    case `QUERY_START`: {
+      // Reset data dependencies as they will be updated when running the query
+      const { path } = action.payload
       state.byNode.forEach(queryIds => {
-        for (const path of action.payload.paths) {
-          queryIds.delete(path)
-        }
+        queryIds.delete(path)
       })
       state.byConnection.forEach(queryIds => {
-        for (const path of action.payload.paths) {
-          queryIds.delete(path)
-        }
+        queryIds.delete(path)
       })
       return state
     }
