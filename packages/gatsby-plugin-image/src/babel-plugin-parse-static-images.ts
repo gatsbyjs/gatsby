@@ -3,6 +3,7 @@ import { PluginObj } from "@babel/core"
 import { hashOptions, evaluateImageAttributes } from "./babel-helpers"
 import fs from "fs-extra"
 import path from "path"
+import { slash } from "gatsby-core-utils"
 
 import template from "@babel/template"
 
@@ -96,7 +97,7 @@ export default function attrs({
         }
 
         //  `require()` the image data into a component prop
-        const makeRequire = template.expression(`require("${filename}")`)
+        const makeRequire = template.expression(`require("${slash(filename)}")`)
 
         const newProp = t.jsxAttribute(
           t.jsxIdentifier(`__imageData`),
