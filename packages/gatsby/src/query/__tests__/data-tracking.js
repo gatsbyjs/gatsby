@@ -200,14 +200,18 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   })
 
   Object.entries(staticQueries).forEach(([id, query]) => {
-    store.dispatch({
-      type: `REPLACE_STATIC_QUERY`,
-      payload: {
-        id: `sq--${id}`,
-        hash: `sq--${id}`,
-        query,
-      },
-    })
+    // Mimic real code behavior by only calling this action when static query text changes
+    const lastQuery = mockPersistedState.staticQueryComponents?.get(`sq--${id}`)
+    if (lastQuery?.query !== query) {
+      store.dispatch({
+        type: `REPLACE_STATIC_QUERY`,
+        payload: {
+          id: `sq--${id}`,
+          hash: `sq--${id}`,
+          query,
+        },
+      })
+    }
   })
 
   const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
