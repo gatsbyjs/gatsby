@@ -424,7 +424,7 @@ exports.sourceNodes = async (
     }
   }, {})
 
-  mergedSyncDataRaw.entries.forEach(entry => {
+  mergedSyncData.entries.forEach(entry => {
     richTextFields[entry.sys.contentType.sys.id].forEach(richTextFieldId => {
       if (entry.fields[richTextFieldId]) {
         Object.keys(entry.fields[richTextFieldId]).map(locale => {
@@ -640,7 +640,7 @@ exports.sourceNodes = async (
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
+exports.onPreExtractQueries = async ({ store }) => {
   const program = store.getState().program
 
   const CACHE_DIR = path.resolve(
