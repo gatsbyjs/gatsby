@@ -1,4 +1,8 @@
 const ProgressBar = require(`progress`)
+const imageSize = require(`probe-image-size`)
+const fs = require(`fs-extra`)
+
+const { reportError } = require(`./report-error`)
 
 // TODO remove in V3
 export function createGatsbyProgressOrFallbackToExternalProgressBar(
@@ -88,6 +92,39 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
+}
+const imageSizeCache = new Map()
+export const getImageSize = file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  } else {
+    const dimensions = imageSize.sync(
+      toArray(fs.readFileSync(file.absolutePath))
+    )
+
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
+
+    imageSizeCache.set(file.internal.contentDigest, dimensions)
+    return dimensions
+  }
+}
+
 export const calculateImageSizes = ({
   file,
   width,
@@ -95,26 +132,34 @@ export const calculateImageSizes = ({
   height,
   maxHeight,
   layout,
-  outputPixelDensities,
+  outputPixelDensities = [1, 2, 3],
   srcSetBreakpoints,
 }) => {
-  // Sort, dedupe and ensure there's a 1
+  // Sort, dedupe and ensure there's a
+  const options = { width, height }
+  const dimensions = getImageSize(file)
+  const aspectRatio = dimensions.width / dimensions.height
   const densities = Array.from(new Set([1, ...outputPixelDensities])).sort()
   let sizes
+
   if (layout === `fixed`) {
     // FIXED
     // if no width is passed, we need to resize the image based on the passed height
     const fixedDimension = width === undefined ? `height` : `width`
-
-    if (!width) {
-      width = height * file.aspectRatio
+    if (options[fixedDimension] < 1) {
+      throw new Error(
+        `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${dimensions[fixedDimension]}`
+      )
     }
 
-    sizes = densities
-      .map(density => density * width)
-      .filter(size => size <= width)
+    if (!width) {
+      width = height * aspectRatio
+    }
 
-    // If there's no fluid images after filtering (e.g. image is smaller than what's
+    sizes = densities.map(density => density * width)
+    sizes = sizes.filter(size => size <= width)
+
+    // If there's no fixed images after filtering (e.g. image is smaller than what's
     // requested, add back the original so there's at least something)
     if (sizes.length === 0) {
       sizes.push(width)
@@ -124,7 +169,7 @@ export const calculateImageSizes = ({
       }px" for a resolutions field for
                      the file ${file.absolutePath}
                      was larger than the actual image ${fixedDimension} of ${
-        file[fixedDimension]
+        dimensions[fixedDimension]
       }px!
                      If possible, replace the current image with a larger one.
                      `)
