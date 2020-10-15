@@ -435,7 +435,6 @@ async function stats({ file, reporter }) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
-  console.log({ args })
   if (options.sizeByPixelDensity) {
     /*
      * We learned that `sizeByPixelDensity` is only valid for vector images,
