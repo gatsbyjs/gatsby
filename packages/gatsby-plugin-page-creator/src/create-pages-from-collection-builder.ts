@@ -1,14 +1,15 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
+import { createPath } from "gatsby-page-utils"
+import { Reporter } from "gatsby"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "./get-match-path"
-import { createPath } from "gatsby-page-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
 import { derivePath } from "./derive-path"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
-import { Reporter } from "gatsby"
+import { CODES } from "./error-utils"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
@@ -55,9 +56,12 @@ export async function createPagesFromCollectionBuilder(
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     reporter.error({
-      id: `3`,
+      id: CODES.CollectionBuilder,
       context: {
-        errors: errors,
+        sourceMessage: `Tried to create pages from the collection builder.
+Unfortunately, the query came back empty. There may be an error in your query:
+
+${errors.map(error => error.message).join(`\n`)}`.trim(),
       },
       filePath: absolutePath,
     })

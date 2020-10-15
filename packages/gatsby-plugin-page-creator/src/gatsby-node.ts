@@ -9,13 +9,14 @@ import {
   PluginOptions,
   PluginCallback,
 } from "gatsby"
-import { createPage } from "./create-page-wrapper"
-import { createPath, watchDirectory } from "gatsby-page-utils"
-import { collectionExtractQueryString } from "./collection-extract-query-string"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
 import { parse, GraphQLString } from "graphql"
+import { createPath, watchDirectory } from "gatsby-page-utils"
+import { createPage } from "./create-page-wrapper"
+import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { CODES, ERROR_MAP } from "./error-utils"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -50,7 +51,7 @@ export async function createPagesStatefully(
 
     if (!pagesPath) {
       reporter.panic({
-        id: `1`,
+        id: CODES.RequiredPath,
         context: {
           sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
@@ -62,7 +63,7 @@ See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`,
     // Validate that the path exists.
     if (pathCheck && !existsSync(pagesPath)) {
       reporter.panic({
-        id: `1`,
+        id: CODES.NonExistingPath,
         context: {
           sourceMessage: `The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
@@ -102,7 +103,7 @@ Please pick a path to an existing directory.`,
           }
         } catch (e) {
           reporter.panic({
-            id: `1`,
+            id: CODES.Generic,
             context: {
               sourceMessage: e.message,
             },
@@ -124,7 +125,7 @@ Please pick a path to an existing directory.`,
           knownFiles.delete(removedPath)
         } catch (e) {
           reporter.panic({
-            id: `1`,
+            id: CODES.Generic,
             context: {
               sourceMessage: e.message,
             },
@@ -134,7 +135,7 @@ Please pick a path to an existing directory.`,
     ).then(() => doneCb(null, null))
   } catch (e) {
     reporter.panic({
-      id: `1`,
+      id: CODES.Generic,
       context: {
         sourceMessage: e.message,
       },
@@ -187,7 +188,7 @@ export function setFieldsOnGraphQLNodeType({
     return {}
   } catch (e) {
     reporter.panic({
-      id: `6`,
+      id: CODES.GraphQLResolver,
       context: {
         sourceMessage: e.message,
       },
@@ -200,49 +201,9 @@ export async function onPreInit(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
-  reporter.setErrorMap({
-    "1": {
-      // Generic/Catch-all error
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-    "2": {
-      text: (
-        context
-      ): string => `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
-
-Offending query: ${context.queryString}`,
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-    "3": {
-      text: (context): string =>
-        `PageCreator: Tried to create pages from the collection builder.
-Unfortunately, the query came back empty. There may be an error in your query:
-
-${context.errors.map(error => error.message).join(`\n`)}`.trim(),
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-    "4": {
-      text: (context): string =>
-        `PageCreator: Could not find value in the following node for key ${context.slugPart} (transformed to ${context.key})`,
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-    "5": {
-      text: (context): string =>
-        `PageCreator: Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${context.part}.`,
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-    "6": {
-      text: (context): string => `PageCreator: ${context.sourceMessage}`,
-      type: `PLUGIN`,
-      level: `ERROR`,
-    },
-  })
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
 
   try {
     const pagesGlob = `**/\\{*\\}**`
@@ -273,7 +234,7 @@ ${context.errors.map(error => error.message).join(`\n`)}`.trim(),
     )
   } catch (e) {
     reporter.panic({
-      id: `1`,
+      id: CODES.Generic,
       context: {
         sourceMessage: e.message,
       },
