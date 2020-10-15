@@ -33,12 +33,6 @@ describe(`onRenderBody`, () => {
     ])
   })
 
-  it(`only invokes setHeadComponents if BUILD_STAGE is build-html`, () => {
-    const api = setup({}, `develop`)
-
-    expect(api.setHeadComponents).not.toHaveBeenCalled()
-  })
-
   it(`does not add google font if omitGoogleFont is passed`, () => {
     const api = setup({
       omitGoogleFont: true,
