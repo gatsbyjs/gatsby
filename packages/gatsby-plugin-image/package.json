@@ -69,7 +69,6 @@
   },
   "peerDependencies": {
     "gatsby": ">=2",
-    "babel-plugin-remove-graphql-queries": "*",
     "gatsby-image": "*",
     "gatsby-plugin-sharp": "*",
     "react": ">=16.8.0",
@@ -79,6 +78,7 @@
     "@babel/parser": "^7.8.7",
     "@babel/traverse": "^7.8.6",
     "babel-jsx-utils": "^1.0.1",
+    "babel-plugin-remove-graphql-queries": "^2.9.19",
     "chokidar": "^3.4.2",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.3.20",
