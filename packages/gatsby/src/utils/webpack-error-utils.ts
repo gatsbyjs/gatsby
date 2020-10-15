@@ -20,7 +20,7 @@ interface ITransformedWebpackError {
     start: string
   }
   context: {
-    stage: Stage
+    stage: StageEnum
     stageLabel: StageLabel
     sourceMessage?: string
     [key: string]: unknown
@@ -28,7 +28,7 @@ interface ITransformedWebpackError {
 }
 
 const transformWebpackError = (
-  stage: keyof typeof stageCodeToReadableLabel,
+  stage: StageEnum,
   webpackError: any
 ): ITransformedWebpackError => {
   const handlers = [
@@ -102,7 +102,7 @@ const transformWebpackError = (
 }
 
 export const structureWebpackErrors = (
-  stage: Stage,
+  stage: StageEnum,
   webpackError: any
 ): Array<ITransformedWebpackError> | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
