@@ -2,15 +2,15 @@
 
 This plugin is a replacement for gatsby-image. It adds [static images](#static-images), and a [new higher-performance gatsby-image component](#gatsby-image-next-generation).
 
-This package is in alpha, and the API will change. It is not ready for production use yet.
+This package is in alpha, and the API will change. It is not ready for production use yet, but feedback would be great.
 
 ## Usage
 
-Install `gatsby-plugin-image`, then add it to your `gatsby-config.js`.
+Install `gatsby-plugin-image` and `gatsby-plugin-sharp`, then add them to your `gatsby-config.js`. Upgrade `gatsby` to at least `2.24.78`.
 
 # Static images
 
-The [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) component, combined with the sharp plugin, is a great way to automatically resize and optimize your images and serve them in the most performant way. This plugin is a proof of concept for a simpler way to use Gatsby's image processing tools without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
+This plugin is a proof of concept for a simpler way to use Gatsby's image processing tools and components without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
 
 The current way to do this is with `useStaticQuery`:
 
@@ -58,8 +58,6 @@ export const Dino = () => (
   <StaticImage
     src="trex.png"
     base64={false}
-    fluid
-    webP
     grayscale
     maxWidth={200}
     alt="T-Rex"
@@ -109,7 +107,7 @@ The props must be able to be statically-analyzed at build time. You can't pass t
 //Doesn't work
 () => {
     const width = getTheWidthFromSomewhere();
-    return <Img src="trex-png" width={width}>
+    return <Img src="trex.png" width={width}>
 }
 ```
 
@@ -119,7 +117,7 @@ You can use variables and expressions if they're in the scope of the file, e.g.:
 //OK
 () => {
     const width = 300
-    return <Img src="trex-png" width={width}>
+    return <Img src="trex.png" width={width}>
 }
 ```
 
@@ -130,7 +128,7 @@ const width = 300
 
 () => {
     const height = width * 16 / 9
-    return <Img src="trex-png" width={width} height={height}>
+    return <Img src="trex.png" width={width} height={height}>
 }
 ```
 
@@ -155,7 +153,7 @@ module.exports = {
 
 ### API
 
-The only required prop is `src`. The default type is `fixed`.
+The only required prop is `src`. The default type is `fixed`. The other props match those of [the new GatsbyImage component](#gatsby-image-next-generation)
 
 ## gatsby-image next generation
 
