@@ -389,7 +389,7 @@ const imageNodeType = ({
     type: new GraphQLObjectType({
       name: `ImageSharpGatsbyImage`,
       fields: {
-        componentProps: {
+        imageData: {
           type: new GraphQLNonNull(GraphQLJSON),
         },
       },
