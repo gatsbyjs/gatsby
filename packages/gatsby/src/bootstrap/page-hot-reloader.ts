@@ -1,19 +1,25 @@
-const { emitter, store } = require(`../redux`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
-const { boundActionCreators } = require(`../redux/actions`)
+import { emitter, store } from "../redux"
+import apiRunnerNode from "../utils/api-runner-node"
+import { boundActionCreators } from "../redux/actions"
 const { deletePage, deleteComponentsDependencies } = boundActionCreators
-const report = require(`gatsby-cli/lib/reporter`)
+import report from "gatsby-cli/lib/reporter"
+import {
+  ICreateNodeAction,
+  IDeleteNodeAction,
+  IGatsbyPage,
+} from "../redux/types"
+import { GraphQLRunner } from "../query/graphql-runner"
 
 let pagesDirty = false
-let graphql
+let graphql: GraphQLRunner
 
-const runCreatePages = async () => {
+const runCreatePages = async (): Promise<void> => {
   pagesDirty = false
 
   const timestamp = Date.now()
 
   // Collect pages.
-  let activity = report.activityTimer(`createPages`)
+  const activity = report.activityTimer(`createPages`)
   activity.start()
   await apiRunnerNode(
     `createPages`,
@@ -27,7 +33,7 @@ const runCreatePages = async () => {
   activity.end()
 
   // Delete pages that weren't updated when running createPages.
-  Array.from(store.getState().pages.values()).forEach(page => {
+  Array.from(store.getState().pages.values()).forEach((page: IGatsbyPage) => {
     if (
       !page.isCreatedByStatefulCreatePages &&
       page.updatedAt < timestamp &&
@@ -41,14 +47,14 @@ const runCreatePages = async () => {
   emitter.emit(`CREATE_PAGE_END`)
 }
 
-module.exports = graphqlRunner => {
+export const PageHotReloader = (graphqlRunner: GraphQLRunner): void => {
   graphql = graphqlRunner
-  emitter.on(`CREATE_NODE`, action => {
+  emitter.on(`CREATE_NODE`, (action: ICreateNodeAction) => {
     if (action.payload.internal.type !== `SitePage`) {
       pagesDirty = true
     }
   })
-  emitter.on(`DELETE_NODE`, action => {
+  emitter.on(`DELETE_NODE`, (action: IDeleteNodeAction) => {
     if (action.payload.internal.type !== `SitePage`) {
       pagesDirty = true
       // Make a fake API call to trigger `API_RUNNING_QUEUE_EMPTY` being called.
@@ -59,7 +65,7 @@ module.exports = graphqlRunner => {
     }
   })
 
-  emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
+  emitter.on(`API_RUNNING_QUEUE_EMPTY`, (): void => {
     if (pagesDirty) {
       runCreatePages()
     }

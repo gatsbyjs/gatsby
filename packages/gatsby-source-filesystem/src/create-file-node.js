@@ -3,7 +3,7 @@ const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
-const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const md5File = require(`md5-file`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 exports.createFileNode = async (

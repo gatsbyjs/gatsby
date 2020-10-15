@@ -8,6 +8,12 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
+export enum ErrorCategory {
+  USER = `USER`,
+  SYSTEM = `SYSTEM`,
+  THIRD_PARTY = `THIRD_PARTY`,
+}
+
 const errors = {
   "": {
     text: (context): string => {
@@ -420,6 +426,23 @@ const errors = {
     type: Type.PLUGIN,
     level: Level.ERROR,
   },
+  // Invalid plugin options
+  "11331": {
+    text: (context): string =>
+      [
+        stripIndent(`
+          Invalid plugin options for "${context.pluginName}":
+        `),
+      ]
+        .concat([``])
+        .concat(
+          context.validationErrors.map(error => `- ${error.message}`).join(`\n`)
+        )
+        .join(`\n`),
+    type: Type.PLUGIN,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
@@ -474,7 +497,7 @@ const errors = {
   },
 }
 
-export type ErrorId = keyof typeof errors
+export type ErrorId = string | keyof typeof errors
 
 export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
 
@@ -482,7 +505,9 @@ export const defaultError = errorMap[``]
 
 export interface IErrorMapEntry {
   text: (context) => string
-  level: Level
-  type?: Type
+  // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
+  level: keyof typeof Level
+  type?: keyof typeof Type
+  category?: ErrorCategory
   docsUrl?: string
 }

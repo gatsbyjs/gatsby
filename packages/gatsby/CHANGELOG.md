@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.77...gatsby@2.24.78) (2020-10-15)
+
+### Features
+
+- **gatsby-plugin-typescript:** Add schema ([#27361](https://github.com/gatsbyjs/gatsby/issues/27361)) ([072ef6c](https://github.com/gatsbyjs/gatsby/commit/072ef6c992168c89505143670013d5d8147f4ab4))
+
+## [2.24.77](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.76...gatsby@2.24.77) (2020-10-14)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.76](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.75...gatsby@2.24.76) (2020-10-13)
+
+### Bug Fixes
+
+- **gatsby:** Error context for 11328 ([#27419](https://github.com/gatsbyjs/gatsby/issues/27419)) ([3dcde6e](https://github.com/gatsbyjs/gatsby/commit/3dcde6e9973ff36143d1e43f3f2d00d7016c966c))
+- **gatsby:** materialization should always use resolver when defined ([#27411](https://github.com/gatsbyjs/gatsby/issues/27411)) ([1ceb0c3](https://github.com/gatsbyjs/gatsby/commit/1ceb0c3ba836d027632e51822f2acb4010275b63))
+
+## [2.24.75](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.74...gatsby@2.24.75) (2020-10-13)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.74](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.73...gatsby@2.24.74) (2020-10-12)
+
+### Bug Fixes
+
+- **gatsby:** Make pluginOptionsSchema optional ([#27397](https://github.com/gatsbyjs/gatsby/issues/27397)) ([a67fb02](https://github.com/gatsbyjs/gatsby/commit/a67fb0212ac9bd94964d8d5c256beebe6cb6f253)), closes [#27242](https://github.com/gatsbyjs/gatsby/issues/27242)
+- **gatsby:** wait for extracted query enqueuing before running queries ([#27408](https://github.com/gatsbyjs/gatsby/issues/27408)) ([f50093e](https://github.com/gatsbyjs/gatsby/commit/f50093e90c07a9447f72c968a349711806b4f897))
+- **gatsby-plugin-google-analytics:** remove required on trackingId ([#27398](https://github.com/gatsbyjs/gatsby/issues/27398)) ([3518d10](https://github.com/gatsbyjs/gatsby/commit/3518d10c3541277a3ba2da5bb099a54d02179257))
+- lint ([#27371](https://github.com/gatsbyjs/gatsby/issues/27371)) ([6b37713](https://github.com/gatsbyjs/gatsby/commit/6b3771309459f76071ea239cdd62fda902836d80))
+
+## [2.24.73](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.72...gatsby@2.24.73) (2020-10-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.72](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.71...gatsby@2.24.72) (2020-10-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.71](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.70...gatsby@2.24.71) (2020-10-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.70](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.69...gatsby@2.24.70) (2020-10-08)
+
+### Bug Fixes
+
+- **gatsby:** route lifecycle ordering ([#27261](https://github.com/gatsbyjs/gatsby/issues/27261)) ([b64f89e](https://github.com/gatsbyjs/gatsby/commit/b64f89e4fc22fdfbe8c7edf670a4b25d757db7a3))
+
+### Features
+
+- **gatsby,gatsby-cli:** Pass an errorMap to reporter.error ([#27176](https://github.com/gatsbyjs/gatsby/issues/27176)) ([56402db](https://github.com/gatsbyjs/gatsby/commit/56402dbb26aa56f8f1d69a0d4e2d079efccec669))
+
+### Performance Improvements
+
+- **redirect:** minified redirect file size ([#27160](https://github.com/gatsbyjs/gatsby/issues/27160)) ([41f0881](https://github.com/gatsbyjs/gatsby/commit/41f08814fa016683d9bb1c1aa064e6e9519d38fc))
+
+## [2.24.69](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.68...gatsby@2.24.69) (2020-10-07)
+
+### Bug Fixes
+
+- **gatsby:** support `--https` develop ([#27302](https://github.com/gatsbyjs/gatsby/issues/27302)) ([17cdc22](https://github.com/gatsbyjs/gatsby/commit/17cdc223ed2b9ce362f2718dfaac7f21a3a5b60e)), closes [#27294](https://github.com/gatsbyjs/gatsby/issues/27294)
+
+### Features
+
+- **gatsby:** plugin option validation ([#27242](https://github.com/gatsbyjs/gatsby/issues/27242)) ([9b01ca7](https://github.com/gatsbyjs/gatsby/commit/9b01ca7926efa1c4c6d58b33a137c2f0a0ef99b7))
+
 ## [2.24.68](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.67...gatsby@2.24.68) (2020-10-06)
 
 **Note:** Version bump only for package gatsby
