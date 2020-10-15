@@ -67,7 +67,9 @@ describe.only(`pluginOptionsSchema`, () => {
   })
 
   it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {})
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+      sourceComments: undefined,
+    })
 
     expect(isValid).toBe(true)
   })
