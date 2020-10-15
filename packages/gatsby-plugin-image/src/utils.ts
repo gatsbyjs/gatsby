@@ -82,7 +82,7 @@ export const splitProps = (
   src: string
 } => {
   const {
-    layout,
+    layout = `fixed`,
     quality,
     jpegQuality,
     pngQuality,

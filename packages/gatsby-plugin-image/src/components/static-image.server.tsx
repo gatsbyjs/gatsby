@@ -31,8 +31,8 @@ export function _getStaticImage(
       > = {
         layout,
         placeholder: null,
-        width: isResponsive ? 1 : imageData.width,
-        height: isResponsive ? imageData.aspectRatio : imageData.height,
+        width: imageData.width,
+        height: imageData.height,
         images: {
           fallback: {
             src: imageData.src,
@@ -41,6 +41,16 @@ export function _getStaticImage(
           },
           sources: [],
         },
+      }
+
+      if (layout === `responsive`) {
+        childProps.width = 1
+        childProps.height = imageData.aspectRatio
+      }
+
+      if (layout === `intrinsic`) {
+        childProps.width = imageData.width
+        childProps.height = imageData.height
       }
 
       const placeholder = imageData.tracedSVG || imageData.base64
