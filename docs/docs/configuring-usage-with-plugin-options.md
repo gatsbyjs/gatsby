@@ -56,7 +56,7 @@ The following table lists possible options values and an example plugin that mak
 
 ## How to validate options
 
-A Gatsby plugin can define a [Joi](https://joi.dev) schema for their options using the `pluginOptionsSchema` API in `gatsby-node.js`. Gatsby validates that the options users of the plugin pass to it match the schema.
+In order to make configuration easier for users, plugins can optionally define a [Joi](https://joi.dev) schema to enforce data types for each option using the [`pluginOptionsSchema` API](/docs/node-apis/#pluginOptionsSchema) in `gatsby-node.js`. Gatsby validates that the options users of the plugin pass to it match the schema.
 
 For example, here is what the schema for `gatsby-plugin-console-log` looks like:
 
@@ -70,7 +70,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 }
 ```
 
-This ensures users pass a boolean to `optionA` and `optionB`, and a string to `message`. It also defaults the `message` option to "default message" in case users do not pass their own.
+This ensures users pass a boolean to `optionA` and `optionB`, and a string to `message`. If they pass options that do not match the schema, the validation will show an error when they run `gatsby develop`. It also defaults the `message` option to "default message" in case users do not pass their own.
 
 ## Additional resources
 
