@@ -46,7 +46,6 @@ it("generates the expected api output", done => {
           "onCreateBabelConfig": Object {},
           "onCreateDevServer": Object {},
           "onCreateNode": Object {},
-          "shouldOnCreateNode": Object {},
           "onCreatePage": Object {},
           "onCreateWebpackConfig": Object {},
           "onPostBootstrap": Object {},
@@ -59,6 +58,9 @@ it("generates the expected api output", done => {
           "preprocessSource": Object {},
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
+          "shouldOnCreateNode": Object {
+            "version": "2.24.79",
+          },
           "sourceNodes": Object {},
         },
         "ssr": Object {

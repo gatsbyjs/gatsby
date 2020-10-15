@@ -138,7 +138,7 @@ export const onCreateNode = true
  * This is an optimization that can prevent the `onCreateNode` handler to be scheduled
  * if the plugin already knows it's not interested in processing this node.
  *
- * @gatsbyVersion 2.24.78
+ * @gatsbyVersion 2.24.79
  * @example
  * exports.shouldOnCreateNode = (node) => node.internal.type === 'Image'
  */
