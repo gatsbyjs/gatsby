@@ -1,11 +1,14 @@
 import React, { FunctionComponent } from "react"
 import { StaticImageProps } from "../utils"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
-import { GatsbyImageProps } from "./gatsby-image.browser"
+import {
+  GatsbyImageProps,
+  ISharpGatsbyImageProps,
+} from "./gatsby-image.browser"
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
-  __imageData?: GatsbyImageProps
+  __imageData?: ISharpGatsbyImageProps
   __error?: string
 }
 
@@ -23,7 +26,7 @@ export function _getStaticImage(
     }
 
     if (imageData) {
-      return <GatsbyImage {...imageData} {...props} />
+      return <GatsbyImage image={imageData} {...props} />
     }
     console.warn(`Image not loaded`, src)
     if (!__error && process.env.NODE_ENV === `development`) {
