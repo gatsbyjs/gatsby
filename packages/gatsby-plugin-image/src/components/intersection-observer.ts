@@ -25,7 +25,7 @@ export function createIntersectionObserver(
         })
       },
       {
-        // TODO tweak
+        // TODO look at lighthouse & amp-image on what values they are using
         rootMargin: `150%`,
       }
     )

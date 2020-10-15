@@ -3,6 +3,7 @@ import { PluginObj } from "@babel/core"
 import { hashOptions, evaluateImageAttributes } from "./babel-helpers"
 import fs from "fs-extra"
 import path from "path"
+import { slash } from "gatsby-core-utils"
 
 import template from "@babel/template"
 
@@ -43,13 +44,11 @@ export default function attrs({
           console.warn(`[gatsby-plugin-image] ${error}`)
         }
 
-        const noSrc = unresolvedProps.includes(`src`)
-
         const hash = hashOptions(props)
 
         const cacheDir = (this.opts as Record<string, string>)?.cacheDir
 
-        if (!cacheDir || !hash) {
+        if (!cacheDir) {
           console.warn(
             `[gatsby-plugin-image] Couldn't find image data cache file`
           )
@@ -59,7 +58,7 @@ export default function attrs({
         let data: Record<string, unknown> | undefined
 
         // If there's no src prop there's no point in checking if it exists
-        if (!noSrc) {
+        if (!unresolvedProps.includes(`src`)) {
           try {
             data = fs.readJSONSync(filename)
           } catch (e) {
@@ -98,7 +97,7 @@ export default function attrs({
         }
 
         //  `require()` the image data into a component prop
-        const makeRequire = template.expression(`require("${filename}")`)
+        const makeRequire = template.expression(`require("${slash(filename)}")`)
 
         const newProp = t.jsxAttribute(
           t.jsxIdentifier(`__imageData`),

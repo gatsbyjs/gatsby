@@ -137,7 +137,7 @@ const width = 300
 ## Installation
 
 ```bash
-npm install gatsby@static-image gatsby-plugin-image@static-image gatsby-plugin-sharp
+npm install gatsby-plugin-image gatsby-plugin-sharp
 ```
 
 ...then add it to your `gatsby-config.js`:
@@ -156,86 +156,6 @@ module.exports = {
 ### API
 
 The only required prop is `src`. The default type is `fixed`.
-
-For now:
-
-```typescript
-export interface ImageOptions {
-  fixed?: boolean //Default true
-  fluid?: boolean
-  webP?: boolean
-  base64?: boolean // Default true
-  tracedSVG?: boolean
-}
-
-export interface SomeGatsbyImageProps {
-  fadeIn?: boolean
-  durationFadeIn?: number
-  title?: string
-  alt?: string
-  className?: string | object
-  critical?: boolean
-  crossOrigin?: string | boolean
-  style?: object
-  imgStyle?: object
-  placeholderStyle?: object
-  placeholderClassName?: string
-  backgroundColor?: string | boolean
-  onLoad?: () => void
-  onError?: (event: Event) => void
-  onStartLoad?: (param: { wasCached: boolean }) => void
-  Tag?: string
-  itemProp?: string
-  loading?: `auto` | `lazy` | `eager`
-  draggable?: boolean
-}
-
-export interface CommonImageProps {
-  quality?: number
-  jpegQuality?: number
-  pngQuality?: number
-  webpQuality?: number
-  grayscale?: boolean
-  duotone?: false | { highlight: string; shadow: string }
-  toFormat?: "NO_CHANGE" | "JPG" | "PNG" | "WEBP"
-  cropFocus?:
-    | "CENTER"
-    | "NORTH"
-    | "NORTHEAST"
-    | "EAST"
-    | "SOUTHEAST"
-    | "SOUTH"
-    | "SOUTHWEST"
-    | "WEST"
-    | "NORTHWEST"
-    | "ENTROPY"
-    | "ATTENTION"
-  pngCompressionSpeed?: number
-  rotate?: number
-}
-
-export interface FluidImageProps extends CommonImageProps {
-  fluid?: true
-  fixed?: false
-  maxWidth?: number
-  maxHeight?: number
-  srcSetBreakpoints?: number[]
-  fit?: number
-  background?: number
-}
-
-export interface FixedImageProps extends CommonImageProps {
-  fixed?: true
-  fluid?: false
-  width?: number
-  height?: number
-}
-
-export type AllProps = ImageOptions &
-  FluidImageProps &
-  FixedImageProps &
-  SomeGatsbyImageProps & { src: string }
-```
 
 ## gatsby-image next generation
 

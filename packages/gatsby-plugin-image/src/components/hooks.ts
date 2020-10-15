@@ -98,6 +98,7 @@ export function getMainProps(
     ref,
   }
 
+  // fallback when it's not configured in gatsby-config.
   if (!global.GATSBY___IMAGE) {
     result.style.height = `100%`
     result.style.left = 0
@@ -123,6 +124,7 @@ export function getPlaceHolderProps(
     "aria-hidden": true,
   }
 
+  // fallback when it's not configured in gatsby-config.
   if (!global.GATSBY___IMAGE) {
     result.style = {
       height: `100%`,

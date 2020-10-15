@@ -58,8 +58,9 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
           aria-hidden="true"
           src={`data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E`}
           style={{
-            width: `100%`,
-            display: `inline-block`,
+            maxWidth: `100%`,
+            display: `block`,
+            position: `static`,
           }}
         />
       </div>
