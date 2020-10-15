@@ -126,7 +126,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         // Wait a bit as calling this function immediately triggers
         // an Action call which Redux squawks about.
         setTimeout(() => {
-          queryUtil.enqueueExtractedQueryId(event.path)
+          // queryUtil.enqueueExtractedQueryId(event.path)
         }, 0)
       },
       runPageComponentQueries: (context): void => {
@@ -134,7 +134,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         // Wait a bit as calling this function immediately triggers
         // an Action call which Redux squawks about.
         setTimeout(() => {
-          queryUtil.enqueueExtractedPageComponent(context.componentPath)
+          // queryUtil.enqueueExtractedPageComponent(context.componentPath)
         }, 0)
       },
       setQuery: assign({
@@ -154,8 +154,8 @@ export const componentMachine = machine<IContext, IState, IEvent>(
             // an Action call which Redux squawks about.
             setTimeout(() => {
               if (!ctx.isInBootstrap) {
-                queryUtil.enqueueExtractedQueryId(event.path)
-                queryUtil.runQueuedQueries(event.path)
+                // queryUtil.enqueueExtractedQueryId(event.path)
+                // queryUtil.runQueuedQueries(event.path)
               }
             }, 0)
             ctx.pages.add(event.path)

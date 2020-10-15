@@ -36,6 +36,17 @@ const initialComponentState = (): IComponentQueryState => {
   }
 }
 
+/**
+ * Tracks query dirtiness. Dirty queries are queries that:
+ *
+ * - depend on nodes or node collections (via `actions.createPageDependency`) that have changed.
+ * - have been recently extracted (or their query text has changed)
+ * - belong to newly created pages (or pages with modified context)
+ *
+ * Dirty queries must be re-ran.
+ *
+ * @todo handle babel errors during query extraction
+ */
 export function queriesReducer(
   state: IGatsbyState["queries"] = initialState(),
   action: ActionsUnion
