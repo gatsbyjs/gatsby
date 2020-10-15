@@ -18,7 +18,7 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
-const { rgbToHex } = require(`./utils`)
+// const { rgbToHex } = require(`./utils`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
