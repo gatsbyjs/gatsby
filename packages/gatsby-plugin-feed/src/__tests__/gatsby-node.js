@@ -226,6 +226,83 @@ describe(`Test plugin feed`, () => {
     expect(contents).toMatchSnapshot()
   })
 
+  it(`function properties work properly`, async () => {
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue(true)
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: {
+        site: {
+          siteMetadata: {
+            title: `site title`,
+            description: `a description`,
+            siteUrl: `http://dummy.url/`,
+            feedOutput: `custom-output.xml`,
+          },
+        },
+        allMarkdownRemark: {
+          edges: [
+            {
+              node: {
+                frontmatter: {
+                  path: `a-custom-path`,
+                },
+                excerpt: `post description`,
+              },
+            },
+            {
+              node: {
+                frontmatter: {
+                  path: `another-custom-path`,
+                },
+                excerpt: `post description`,
+              },
+            },
+          ],
+        },
+      },
+    })
+    const customQuery = `
+    {
+      allMarkdownRemark(
+        limit: 1000,
+      ) {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
+            excerpt
+          }
+        }
+      }
+    }
+  `
+    const options = {
+      feeds: [
+        {
+          output: options => options.query.site.siteMetadata.feedOutput,
+          title: options => `${options.query.site.siteMetadata.title} | feed`,
+          language: `en`,
+          generator: `custom generator`,
+          query: customQuery,
+          serialize: ({ query: { site, allMarkdownRemark } }) =>
+            allMarkdownRemark.edges.map(edge => {
+              return {
+                ...edge.node.frontmatter,
+                description: edge.node.excerpt,
+                url: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
+              }
+            }),
+        },
+      ],
+    }
+    await onPostBuild({ graphql }, options)
+    const [filePath, contents] = fs.writeFile.mock.calls[0]
+    expect(filePath).toEqual(path.join(`public`, `custom-output.xml`))
+    expect(contents).toMatchSnapshot()
+  })
+
   it(`custom query runs`, async () => {
     fs.writeFile = jest.fn()
     fs.writeFile.mockResolvedValue(true)
