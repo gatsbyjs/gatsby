@@ -384,7 +384,6 @@ export async function startServer(
     const htmlActivity = report.phantomActivity(`building HTML for path`, {})
     htmlActivity.start()
 
-    let response = `error`
     try {
       const renderResponse = await renderHTML({
         htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
@@ -399,8 +398,7 @@ export async function startServer(
           [`gatsby_log_level`, process.env.gatsby_log_level || ``],
         ],
       })
-      response = renderResponse[0]
-      res.status(200).send(response)
+      res.status(200).send(renderResponse[0])
     } catch (e) {
       const error = parseError(e)
       res.status(500).send(`<title>Develop SSR Error</title><h1>Error<h1>

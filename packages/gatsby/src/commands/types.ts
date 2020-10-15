@@ -26,7 +26,7 @@ export interface IProgram {
   [`key-file`]?: string
   directory: string
   https?: boolean
-  developMachineService: any
+  developMachineService?: any
   sitePackageJson: PackageJson
   ssl?: ICert
   inspect?: number
