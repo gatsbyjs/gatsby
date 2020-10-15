@@ -5,27 +5,27 @@ import Layout from "../components/layout"
 
 const FluidPage = () => (
   <Layout>
-    <span data-testid="image-traced">
+    <div data-testid="image-traced">
       <StaticImage
         src="../images/citrus-fruits.jpg"
         tracedSVG
         alt="Citrus fruits"
       />
-    </span>
-    <span data-testid="image-traced-png">
+    </div>
+    <div data-testid="image-traced-png">
       <StaticImage
         src="../images/gatsby-icon.png"
         tracedSVG
         alt="Gatsby icon"
       />
-    </span>
-    <span data-testid="image-traced-relative">
+    </div>
+    <div data-testid="image-traced-relative">
       <StaticImage
         src="../../content/relative.jpg"
         tracedSVG
         alt="Citrus fruits"
       />
-    </span>
+    </div>
   </Layout>
 )
 

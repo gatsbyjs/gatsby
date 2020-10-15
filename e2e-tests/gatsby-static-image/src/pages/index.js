@@ -8,7 +8,9 @@ const IndexPage = () => (
     <h1>Gatsby Image integration test</h1>
     <h2>
       Please navigate to <Link to="/fixed">/fixed</Link>,{` `}
-      <Link to="/fluid">/fluid</Link>, or <Link to="/traced">/traced</Link>.
+      <Link to="/fluid">/fluid</Link>, <Link to="/traced">/traced</Link>, or
+      {` `}
+      <Link to="/intrinsic">/intrinsic</Link>.
     </h2>
   </Layout>
 )
