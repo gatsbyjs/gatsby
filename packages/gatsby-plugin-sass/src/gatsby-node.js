@@ -75,3 +75,9 @@ exports.onCreateWebpackConfig = (
     },
   })
 }
+
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  exports.pluginOptionsSchema = function ({ Joi }) {
+    return Joi.object({})
+  }
+}

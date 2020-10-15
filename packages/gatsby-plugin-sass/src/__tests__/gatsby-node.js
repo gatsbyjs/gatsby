@@ -1,3 +1,6 @@
+import { testPluginOptionsSchema } from "gatsby-plugin-utils"
+import { pluginOptionsSchema } from "../gatsby-node"
+
 describe(`gatsby-plugin-sass`, () => {
   jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
@@ -51,5 +54,21 @@ describe(`gatsby-plugin-sass`, () => {
         expect(actions.setWebpackConfig).toMatchSnapshot()
       })
     }
+  })
+})
+
+describe.only(`pluginOptionsSchema`, () => {
+  it(`should provide meaningful errors when fields are invalid`, () => {
+    const expectedErrors = []
+
+    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {})
+
+    expect(errors).toEqual(expectedErrors)
+  })
+
+  it(`should validate the schema`, () => {
+    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {})
+
+    expect(isValid).toBe(true)
   })
 })
