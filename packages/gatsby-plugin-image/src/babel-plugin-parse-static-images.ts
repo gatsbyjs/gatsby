@@ -6,6 +6,7 @@ import path from "path"
 import { slash } from "gatsby-core-utils"
 
 import template from "@babel/template"
+import { stripIndent } from "common-tags"
 
 /**
  * This is a plugin that finds StaticImage components and injects the image props into the component.
@@ -63,9 +64,12 @@ export default function attrs({
             data = fs.readJSONSync(filename)
           } catch (e) {
             // TODO add info about minimum Gatsby version once this is merged
-            console.warn(
-              `[gatsby-plugin-image] Could not read image data file "${filename}". This may mean that the images in "${this.filename}" were not processed.`
-            )
+            const msg = stripIndent`
+            Could not read image data file "${filename}". 
+            This may mean that the images in "${this.filename}" were not processed.
+            Please ensure that your gatsby version is at least 2.24.78.`
+            error += msg
+            console.warn(`[gatsby-plugin-image] ${msg}`)
           }
         }
 
