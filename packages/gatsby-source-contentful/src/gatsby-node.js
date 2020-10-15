@@ -333,25 +333,23 @@ exports.sourceNodes = async (
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deleted) {
     const entryMap = new Map()
-    previous.forEach(
-      e => !deleted.includes(e.sys.id) && entryMap.set(e.sys.id, e)
-    )
-    current.forEach(
-      e => !deleted.includes(e.sys.id) && entryMap.set(e.sys.id, e)
-    )
+    previous.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
+    current.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
     return [...entryMap.values()]
   }
+
+  const deletedSet = new Set(currentSyncData.deletedEntries.map(e => e.sys.id))
 
   const mergedSyncData = {
     entries: mergeSyncData(
       previousSyncData.entries,
       currentSyncData.entries,
-      currentSyncData.deletedEntries.map(e => e.sys.id)
+      deletedSet
     ),
     assets: mergeSyncData(
       previousSyncData.assets,
       currentSyncData.assets,
-      currentSyncData.deletedAssets.map(e => e.sys.id)
+      deletedSet
     ),
   }
 
