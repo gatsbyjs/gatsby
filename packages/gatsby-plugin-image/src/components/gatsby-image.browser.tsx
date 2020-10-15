@@ -19,19 +19,27 @@ import { Layout } from "../utils"
 
 export type GatsbyImageProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad"
+  "placeholder" | "onLoad" | "src" | "srcSet"
 > & {
   alt: string
   as?: ElementType
-  layout: Layout
   className?: string
-  height: number
-  images: Pick<MainImageProps, "sources" | "fallback">
-  placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
-  width: number
+  image: ISharpGatsbyImageProps
   onLoad?: () => void
   onError?: () => void
   onStartLoad?: Function
+}
+
+export interface ISharpGatsbyImageProps {
+  layout: Layout
+  height?: number
+  backgroundColor?: string
+  sizes?: string
+  images: Pick<MainImageProps, "sources" | "fallback">
+  placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
+  width?: number
+  maxHeight?: number
+  maxWidth?: number
 }
 
 let hasShownWarning = false
