@@ -101,7 +101,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
           `functions is an Object that holds a collection of custom functions that may be invoked by the sass files being compiled.`
         ),
       includePaths: Joi.array()
-        .items(Joi.string)
+        .items(Joi.string())
         .default([])
         .description(
           `An array of paths that LibSass can look in to attempt to resolve your @import declarations. When using data, it is recommended that you use this.`
