@@ -134,13 +134,13 @@ export const sourceNodes = true
 export const onCreateNode = true
 
 /**
- * Called when a new node is created before the `onCreateNode` handler is called.
- * This is an optimization that can prevent the `onCreateNode` handler to be scheduled
- * if the plugin already knows it's not interested in processing this node.
+ * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+ * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+ * Note: this API does not receive the regular `api` that other callbacks get as first arg.
  *
  * @gatsbyVersion 2.24.79
  * @example
- * exports.shouldOnCreateNode = (node) => node.internal.type === 'Image'
+ * exports.shouldOnCreateNode = (node, pluginOptions) => node.internal.type === 'Image'
  */
 export const shouldOnCreateNode = true
 
