@@ -15,7 +15,6 @@ import { lastActionReducer } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
 import { pageDataStatsReducer } from "./page-data-stats"
 import { componentsReducer } from "./components"
-import { componentDataDependenciesReducer } from "./component-data-dependencies"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
 import { nodesByTypeReducer } from "./nodes-by-type"
@@ -45,7 +44,6 @@ export {
   schemaReducer as schema,
   pagesReducer as pages,
   statusReducer as status,
-  componentDataDependenciesReducer as componentDataDependencies,
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,
   jobsReducer as jobs,

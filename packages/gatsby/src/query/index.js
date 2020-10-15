@@ -36,14 +36,12 @@ const popExtractedQueries = () => {
 const findIdsWithoutDataDependencies = state => {
   const allTrackedIds = new Set()
   const boundAddToTrackedIds = allTrackedIds.add.bind(allTrackedIds)
-  state.componentDataDependencies.nodes.forEach(dependenciesOnNode => {
+  state.queries.byNode.forEach(dependenciesOnNode => {
     dependenciesOnNode.forEach(boundAddToTrackedIds)
   })
-  state.componentDataDependencies.connections.forEach(
-    dependenciesOnConnection => {
-      dependenciesOnConnection.forEach(boundAddToTrackedIds)
-    }
-  )
+  state.queries.byConnection.forEach(dependenciesOnConnection => {
+    dependenciesOnConnection.forEach(boundAddToTrackedIds)
+  })
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
@@ -73,8 +71,8 @@ const popNodeQueries = state => {
     if (!node || !node.id || !node.internal.type) return dirtyIds
 
     // Find components that depend on this node so are now dirty.
-    if (state.componentDataDependencies.nodes.has(node.id)) {
-      state.componentDataDependencies.nodes.get(node.id).forEach(n => {
+    if (state.queries.byNode.has(node.id)) {
+      state.queries.byNode.get(node.id).forEach(n => {
         if (n) {
           dirtyIds.add(n)
         }
@@ -82,14 +80,12 @@ const popNodeQueries = state => {
     }
 
     // Find connections that depend on this node so are now invalid.
-    if (state.componentDataDependencies.connections.has(node.internal.type)) {
-      state.componentDataDependencies.connections
-        .get(node.internal.type)
-        .forEach(n => {
-          if (n) {
-            dirtyIds.add(n)
-          }
-        })
+    if (state.queries.byConnection.has(node.internal.type)) {
+      state.queries.byConnection.get(node.internal.type).forEach(n => {
+        if (n) {
+          dirtyIds.add(n)
+        }
+      })
     }
 
     return dirtyIds

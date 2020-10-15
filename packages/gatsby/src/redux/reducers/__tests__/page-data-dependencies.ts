@@ -1,4 +1,4 @@
-import { componentDataDependenciesReducer as reducer } from "../component-data-dependencies"
+import { queriesReducer as reducer } from "../queries"
 
 import { ICreatePageDependencyAction } from "../../types"
 
@@ -12,9 +12,9 @@ describe(`add page data dependency`, () => {
       },
     }
 
-    expect(reducer(undefined, action)).toEqual({
-      connections: new Map(),
-      nodes: new Map([[`123`, new Set([`/hi/`])]]),
+    expect(reducer(undefined, action)).toMatchObject({
+      byConnection: new Map(),
+      byNode: new Map([[`123`, new Set([`/hi/`])]]),
     })
   })
   it(`lets you add a node dependency to multiple paths`, () => {
@@ -44,9 +44,9 @@ describe(`add page data dependency`, () => {
     state = reducer(state, action2)
     state = reducer(state, action3)
 
-    expect(state).toEqual({
-      connections: new Map(),
-      nodes: new Map([[`1.2.3`, new Set([`/hi/`, `/hi2/`, `/blog/`])]]),
+    expect(state).toMatchObject({
+      byConnection: new Map(),
+      byNode: new Map([[`1.2.3`, new Set([`/hi/`, `/hi2/`, `/blog/`])]]),
     })
   })
   it(`lets you add a connection dependency`, () => {
@@ -68,9 +68,9 @@ describe(`add page data dependency`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
 
-    expect(state).toEqual({
-      connections: new Map([[`Markdown.Remark`, new Set([`/hi/`, `/hi2/`])]]),
-      nodes: new Map(),
+    expect(state).toMatchObject({
+      byConnection: new Map([[`Markdown.Remark`, new Set([`/hi/`, `/hi2/`])]]),
+      byNode: new Map(),
     })
   })
   it(`removes duplicate paths`, () => {
@@ -97,8 +97,8 @@ describe(`add page data dependency`, () => {
     // Add different action
     state = reducer(state, action2)
 
-    expect(state.connections.get(`MarkdownRemark`)?.size).toEqual(2)
-    expect(state.nodes.get(`1`)?.size).toEqual(2)
+    expect(state.byConnection.get(`MarkdownRemark`)?.size).toEqual(2)
+    expect(state.byNode.get(`1`)?.size).toEqual(2)
   })
   it(`lets you add both a node and connection in one action`, () => {
     const action: ICreatePageDependencyAction = {
@@ -114,58 +114,4 @@ describe(`add page data dependency`, () => {
 
     expect(state).toMatchSnapshot()
   })
-  // it(`removes node/page connections when the node is deleted`, () => {
-  // const action = {
-  // type: `CREATE_COMPONENT_DEPENDENCY`,
-  // payload: {
-  // path: `/hi/`,
-  // nodeId: `123`,
-  // },
-  // }
-
-  // let state = reducer(undefined, action)
-
-  // const deleteNodeAction = {
-  // type: `DELETE_NODE`,
-  // payload: 123,
-  // }
-
-  // state = reducer(state, deleteNodeAction)
-
-  // expect(state).toEqual({
-  // connections: {},
-  // nodes: {},
-  // })
-  // })
-  // it(`removes node/page connections when multiple nodes are deleted`, () => {
-  // const action = {
-  // type: `CREATE_COMPONENT_DEPENDENCY`,
-  // payload: {
-  // path: `/hi/`,
-  // nodeId: `123`,
-  // },
-  // }
-  // const action2 = {
-  // type: `CREATE_COMPONENT_DEPENDENCY`,
-  // payload: {
-  // path: `/hi2/`,
-  // nodeId: `1234`,
-  // },
-  // }
-
-  // let state = reducer(undefined, action)
-  // state = reducer(state, action2)
-
-  // const deleteNodeAction = {
-  // type: `DELETE_NODES`,
-  // payload: [123, 1234],
-  // }
-
-  // state = reducer(state, deleteNodeAction)
-
-  // expect(state).toEqual({
-  // connections: {},
-  // nodes: {},
-  // })
-  // })
 })
