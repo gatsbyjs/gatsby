@@ -25,7 +25,7 @@ after(() => {
 const errorPlaceholder = `false`
 const errorReplacement = `true`
 
-describe(`testing error overlay and ability to automatically recover from runtime errors`, () => {
+describe(`testing error overlay and ability to automatically recover runtime errors cause by content changes (page queries variant)`, () => {
   it(`displays content initially (no errors yet)`, () => {
     cy.visit(
       `/error-handling/page-query-result-runtime-error/`

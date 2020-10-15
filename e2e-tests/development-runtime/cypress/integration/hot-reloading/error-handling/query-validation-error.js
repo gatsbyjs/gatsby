@@ -13,7 +13,7 @@ after(() => {
 const errorPlaceholder = `# query-validation-error`
 const errorReplacement = `fieldThatDoesNotExistOnSiteMapType`
 
-describe(`testing error overlay and ability to automatically recover from webpack compile errors`, () => {
+describe(`testing error overlay and ability to automatically recover from query extraction validation errors`, () => {
   it(`displays content initially (no errors yet)`, () => {
     cy.visit(`/error-handling/query-validation-error/`).waitForRouteChange()
     cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Working`)
