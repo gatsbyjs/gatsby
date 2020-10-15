@@ -31,9 +31,11 @@ describe(`isValidCollectionPathImplementation`, () => {
 
     isValidCollectionPathImplementation(compatiblePath(path), reporter)
     expect(reporter.panicOnBuild).toBeCalledWith({
-      context: { part: part },
+      context: {
+        sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`,
+      },
       filePath: compatiblePath(path),
-      id: `5`,
+      id: `12105`,
     })
   })
 })
