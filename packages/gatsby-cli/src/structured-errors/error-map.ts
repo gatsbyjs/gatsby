@@ -225,7 +225,16 @@ const errors = {
   },
   "85922": {
     text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen if you e.g. accidentally added { } to the field "${context.fieldName}". If you didn't expect "${context.fieldName}" to be of type "${context.fieldType}" make sure that your input source and/or plugin is correct.`,
+      `There was an error in your GraphQL query:
+
+      ${context.sourceMessage}
+
+      This can happen if you e.g. accidentally added { } to the field "${context.fieldName}". If you didn't expect "${context.fieldName}" to be of type "${context.fieldType}" make sure that your input source and/or plugin is correct.
+      However, if you expect "value" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have.
+
+      It is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned
+      "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":
+      https://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
