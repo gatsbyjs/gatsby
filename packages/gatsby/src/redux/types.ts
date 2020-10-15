@@ -156,9 +156,10 @@ export interface IQueryState {
   dirty: number
 }
 
-export interface IComponentQueryState {
-  queryText: string
-  queries: Set<Identifier>
+export interface IComponentState {
+  componentPath: string
+  query: string
+  pages: Set<Identifier>
 }
 
 export interface IGatsbyState {
@@ -208,7 +209,7 @@ export interface IGatsbyState {
     byNode: Map<Identifier, Set<Identifier>>
     byConnection: Map<string, Set<Identifier>>
     trackedQueries: Map<Identifier, IQueryState>
-    trackedComponents: Map<string, IComponentQueryState>
+    trackedComponents: Map<string, IComponentState>
   }
   components: Map<
     SystemPath,

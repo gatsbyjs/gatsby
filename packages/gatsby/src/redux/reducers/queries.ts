@@ -1,6 +1,6 @@
 import {
   ActionsUnion,
-  IComponentQueryState,
+  IComponentState,
   IGatsbyState,
   IQueryState,
 } from "../types"
@@ -19,7 +19,7 @@ const initialState = (): IGatsbyState["queries"] => {
     byNode: new Map<NodeId, Set<QueryId>>(),
     byConnection: new Map<ConnectionName, Set<QueryId>>(),
     trackedQueries: new Map<QueryId, IQueryState>(),
-    trackedComponents: new Map<ComponentPath, IComponentQueryState>(),
+    trackedComponents: new Map<ComponentPath, IComponentState>(),
   }
 }
 
@@ -29,10 +29,11 @@ const initialQueryState = (): IQueryState => {
   }
 }
 
-const initialComponentState = (): IComponentQueryState => {
+const initialComponentState = (): IComponentState => {
   return {
-    queryText: ``,
-    queries: new Set<QueryId>(),
+    componentPath: ``,
+    query: ``,
+    pages: new Set<QueryId>(),
   }
 }
 
@@ -61,14 +62,14 @@ export function queriesReducer(
         const query = registerQuery(state, path)
         setDirtyFlag(query, FLAG_DIRTY_PAGE)
       }
-      registerComponent(state, componentPath).queries.add(path)
+      registerComponent(state, componentPath).pages.add(path)
       return state
     }
     case `DELETE_PAGE`: {
       const { path, componentPath } = action.payload
       const component = state.trackedComponents.get(componentPath)
       if (component) {
-        component.queries.delete(path)
+        component.pages.delete(path)
       }
       state.trackedQueries.delete(path)
       return state
@@ -77,15 +78,15 @@ export function queriesReducer(
       // TODO: use hash instead of a query text
       const { componentPath, query } = action.payload
       const component = registerComponent(state, componentPath)
-      if (component.queryText !== query) {
+      if (component.query !== query) {
         // Invalidate all pages associated with a component when query text changes
-        component.queries.forEach(queryId => {
+        component.pages.forEach(queryId => {
           const query = state.trackedQueries.get(queryId)
           if (query) {
             setDirtyFlag(query, FLAG_DIRTY_TEXT)
           }
         })
-        component.queryText = query
+        component.query = query
       }
       return state
     }
@@ -176,10 +177,11 @@ function registerQuery(
 function registerComponent(
   state: IGatsbyState["queries"],
   componentPath: string
-): IComponentQueryState {
+): IComponentState {
   let component = state.trackedComponents.get(componentPath)
   if (!component) {
     component = initialComponentState()
+    component.componentPath = componentPath
     state.trackedComponents.set(componentPath, component)
   }
   return component
