@@ -23,12 +23,21 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   loading = `lazy`,
   ...props
 }) {
-  const { width, height, layout, images, placeholder, sizes } = image
+  const {
+    width,
+    height,
+    layout,
+    images,
+    placeholder,
+    sizes,
+    backgroundColor,
+  } = image
 
   const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
     width,
     height,
-    layout
+    layout,
+    backgroundColor
   )
 
   const cleanedImages: ISharpGatsbyImageData["images"] = {

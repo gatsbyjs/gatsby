@@ -59,7 +59,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     }
     return null
   }
-  const { width, height, layout, images } = image
+  const { width, height, layout, images, backgroundColor } = image
 
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
@@ -81,7 +81,8 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
     width,
     height,
-    layout
+    layout,
+    backgroundColor
   )
 
   useEffect((): (() => void) | undefined => {

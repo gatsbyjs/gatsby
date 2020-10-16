@@ -44,7 +44,8 @@ export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: Layout
+  layout: Layout,
+  backgroundColor?: string
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
@@ -57,6 +58,10 @@ export function getWrapperProps(
 
   if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
+  }
+
+  if (backgroundColor && typeof backgroundColor === `string`) {
+    wrapperStyle.backgroundColor = backgroundColor
   }
 
   return {
