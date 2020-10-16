@@ -313,10 +313,11 @@ export interface GatsbyNode {
    *
    * @gatsbyVersion 2.24.80
    * @example
-   * exports.unstable_shouldOnCreateNode = (node, pluginOptions) => node.internal.type === 'Image'
+   * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
    */
   unstable_shouldOnCreateNode?<TNode extends object = {}>(
-    node: TNode,
+    args: { node: TNode },
+    options?: PluginOptions
   ): boolean
 
   /**

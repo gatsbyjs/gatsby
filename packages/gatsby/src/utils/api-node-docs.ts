@@ -140,7 +140,7 @@ export const onCreateNode = true
  *
  * @gatsbyVersion 2.24.80
  * @example
- * exports.unstable_shouldOnCreateNode = (node, pluginOptions) => node.internal.type === 'Image'
+ * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
 export const unstable_shouldOnCreateNode = true
 
