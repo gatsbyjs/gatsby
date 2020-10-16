@@ -205,28 +205,6 @@ function prepareTextNode(node, key, text, createNodeId) {
   return textNode
 }
 
-function prepareRichTextNode(node, key, content, createNodeId) {
-  const raw = stringify(content)
-  const richTextNode = {
-    id: createNodeId(`${node.id}${key}RichTextNode`),
-    parent: node.id,
-    children: [],
-    raw,
-    internal: {
-      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
-      mediaType: `text/richtext`,
-      content: raw,
-      contentDigest: digest(raw),
-    },
-    sys: {
-      type: node.sys.type,
-    },
-  }
-
-  node.children = node.children.concat([richTextNode.id])
-
-  return richTextNode
-}
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
@@ -473,17 +451,39 @@ exports.createNodesForContentType = ({
           fieldType === `RichText` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
-          const richTextNode = prepareRichTextNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
+          const fieldValue = entryItemFields[entryItemFieldKey]
 
-          childrenNodes.push(richTextNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
+          const rawReferences = []
 
-          delete entryItemFields[entryItemFieldKey]
+          // Locate all Contentful Links within the rich text data
+          const traverse = obj => {
+            for (let k in obj) {
+              const v = obj[k]
+              if (v && v.sys && v.sys.type === `Link`) {
+                rawReferences.push(v)
+              } else if (v && typeof v === `object`) {
+                traverse(v)
+              }
+            }
+          }
+
+          traverse(fieldValue)
+
+          // Build up resolvable reference list
+          const resolvableReferenceIds = rawReferences
+            .filter(function (v) {
+              return resolvable.has(
+                `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+              )
+            })
+            .map(function (v) {
+              return mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
+            })
+
+          entryItemFields[entryItemFieldKey] = {
+            raw: stringify(fieldValue),
+            [`references___NODE`]: resolvableReferenceIds,
+          }
         } else if (
           fieldType === `Object` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
