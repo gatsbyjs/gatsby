@@ -299,7 +299,6 @@ export type ActionsUnion =
   | IDeleteCacheAction
   | IDeleteNodeAction
   | IDeleteNodesAction
-  | IDeleteComponentDependenciesAction
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
