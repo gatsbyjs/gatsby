@@ -120,21 +120,7 @@ describe(`Load plugins`, () => {
       expect(plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            browserAPIs: [],
-            id: ``,
             name: `gatsby-plugin-typescript`,
-            nodeAPIs: [
-              `pluginOptionsSchema`,
-              `resolvableExtensions`,
-              `onCreateBabelConfig`,
-              `onCreateWebpackConfig`,
-            ],
-            pluginOptions: {
-              plugins: [],
-            },
-            resolve: ``,
-            ssrAPIs: [],
-            version: `1.0.0`,
           }),
         ])
       )
@@ -169,8 +155,10 @@ describe(`Load plugins`, () => {
               `onCreateWebpackConfig`,
             ],
             pluginOptions: {
-              plugins: [],
+              allExtensions: false,
+              isTSX: true,
               jsxPragma: `h`,
+              plugins: [],
             },
             resolve: ``,
             ssrAPIs: [],
