@@ -96,9 +96,13 @@ export const calculateImageSizes = ({
   height,
   maxHeight,
   layout,
-  outputPixelDensities = [1, 2, 3],
+  outputPixelDensities = [0.25, 0.5, 1, 2, 3],
   srcSetBreakpoints,
 }) => {
+  if ((maxWidth === 0) | (width === 0) | (maxHeight === 0) | (height === 0)) {
+    throw new Error(`provided image dimensions must be positive numbers (> 0)`)
+  }
+
   let sizes
   const aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1
@@ -118,10 +122,9 @@ export const calculateImageSizes = ({
     if (!width) {
       width = height * aspectRatio
     }
-    console.log(width)
-    console.log(densities)
 
     sizes = densities
+      .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
       .map(density => density * width)
       .filter(size => size <= imgDimensions.width)
 
@@ -144,20 +147,12 @@ export const calculateImageSizes = ({
     // FLUID
     // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
     const fixedDimension = maxWidth === undefined ? `maxHeight` : `maxWidth`
-    if (maxWidth) {
-      maxWidth = Math.min(maxWidth, imgDimensions.width)
-    } else if (maxWidth === 0) {
-      // 0 is falsy, don't let it get reassigned so we can provide a clear error
-    } else {
-      maxWidth = maxHeight * aspectRatio
-    }
-    if (maxHeight) {
-      Math.min(maxHeight, imgDimensions.height)
-    } else if (maxWidth === 0) {
-      // 0 is falsy, don't let it get reassigned so we can provide a clear error
-    } else {
-      maxHeight = undefined
-    }
+    maxWidth = maxWidth
+      ? Math.min(maxWidth, imgDimensions.width)
+      : maxHeight * aspectRatio
+    maxHeight = maxHeight
+      ? Math.min(maxHeight, imgDimensions.height)
+      : (maxHeight = undefined)
 
     const fixedValue = fixedDimension === `maxHeight` ? maxHeight : maxWidth
     if (fixedValue < 1) {
@@ -168,22 +163,23 @@ export const calculateImageSizes = ({
 
     // Create sizes (in width) for the image if no custom breakpoints are
     // provided. If the max width of the container for the rendered markdown file
-    // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600.
+    // is 800px, the sizes would then be: 200, 400, 800, 1600, 2400 (based off of
+    // the default outputPixelDensities)
     //
     // This is enough sizes to provide close to the optimal image size for every
     // device size / screen resolution while (hopefully) not requiring too much
     // image processing time (Sharp has optimizations thankfully for creating
     // multiple sizes of the same input file)
 
-    // use standard breakpoints if no custom breakpoints are specified
+    // use default pixel densities if no custom breakpoints are specified
     if (!srcSetBreakpoints || !srcSetBreakpoints.length) {
-      sizes = densities.map(density => density * imgDimensions.width)
-      sizes = sizes.filter(size => size <= maxWidth)
+      sizes = densities.map(density => density * fixedValue)
+      sizes = sizes.filter(size => size <= imgDimensions.width)
     } else {
-      sizes = srcSetBreakpoints.filter(size => size <= maxWidth)
+      sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
     }
 
-    // ensure that the passed in size is included in the final output
+    // ensure that the size passed in is included in the final output
     if (!sizes.includes(maxWidth)) {
       sizes.push(maxWidth)
     }
