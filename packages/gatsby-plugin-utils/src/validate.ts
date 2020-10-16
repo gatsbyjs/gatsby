@@ -1,4 +1,5 @@
-import { ValidationOptions, ObjectSchema } from "joi"
+import { ValidationOptions } from "joi"
+import { ObjectSchema } from "./joi"
 import { IPluginInfoOptions } from "gatsby/dist/bootstrap/load-plugins/types"
 
 const validationOptions: ValidationOptions = {

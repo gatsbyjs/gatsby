@@ -1,18 +1,8 @@
 import joi from "joi"
-import { Root } from "joi"
+import { PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type"
 
-export interface GatsbyPluginOptionsJoi extends Root {
-  // see note from @mxstbr on line 21 in rules
-  // /**
-  //  * Specifies that a value should be stored in a .env file with ${name}
-  //  * instead of inlined into the gatsby-config.js
-  //  * @param name - string
-  //  */
-  // dotenv(name: string): this
-
-}
-
-export const Joi: GatsbyPluginOptionsJoi = joi.extend({
+export * from "./utils/plugin-options-schema-joi-type"
+export const Joi: PluginOptionsSchemaJoi = joi.extend({
   // This tells Joi to extend _all_ types with .dotenv(), see
   // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
   // @ts-ignore Joi types weren't updated with that commit, PR: https://github.com/sideway/joi/pull/2477
@@ -35,5 +25,3 @@ export const Joi: GatsbyPluginOptionsJoi = joi.extend({
     // },
   },
 })
-
-
