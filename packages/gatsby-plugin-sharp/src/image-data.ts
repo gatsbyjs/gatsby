@@ -6,7 +6,7 @@ import { fixed, fluid, traceSVG } from "."
 
 export interface ISharpGatsbyImageArgs {
   layout?: "fixed" | "fluid" | "constrained"
-  placeholder?: "tracedSVG" | "dominantColor" | "base64" | "none"
+  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
   tracedSVGOptions?: Record<string, unknown>
   [key: string]: unknown
 }
@@ -27,13 +27,11 @@ export async function generateImageData({
   cache: GatsbyCache
   reporter: Reporter
 }): Promise<ISharpGatsbyImageData | undefined> {
-  // TODO: fancy stuff
-
   const isResponsive = layout !== `fixed`
 
   const resize = isResponsive ? fluid : fixed
 
-  if (placeholder !== `base64`) {
+  if (placeholder !== `blurred`) {
     args.base64 = false
   }
 

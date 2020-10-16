@@ -410,7 +410,7 @@ const imageNodeType = ({
         description: stripIndent`
         Maximum display width of generated files. 
         The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-        This only applies when layout = RESPONSIVE. For other layout types, use "width"`,
+        This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
       },
       maxHeight: {
         type: GraphQLInt,
@@ -420,26 +420,21 @@ const imageNodeType = ({
         description: stripIndent`
         The display width of the generated image. 
         The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-        Ignored if layout = RESPONSIVE, where you should use "maxWidth" instead.
+        Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
         `,
+      },
+      height: {
+        type: GraphQLInt,
       },
       placeholder: {
         type: ImagePlaceholderType,
-        defaultValue: `base64`,
+        defaultValue: `blurred`,
         description: stripIndent`
         Format of generated placeholder image. 
         DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
         BASE64: a blurred, low resolution image, encoded as a base64 data URI
         TRACED_SVG: a low-resolution traced SVG of the image.
         NONE: no placeholder. Set "background" to use a fixed background color.`,
-      },
-      height: {
-        type: GraphQLInt,
-      },
-      base64: {
-        type: GraphQLBoolean,
-        defaultValue: true,
-        description: `Generate low-res base64 placeholder image.`,
       },
       tracedSVGOptions: {
         type: PotraceType,
@@ -486,7 +481,6 @@ const imageNodeType = ({
         type: DuotoneGradientType,
         defaultValue: false,
       },
-
       quality: {
         type: GraphQLInt,
       },
