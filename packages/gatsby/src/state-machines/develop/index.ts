@@ -31,19 +31,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       target: `reloadingData`,
       actions: `assignWebhookBody`,
     },
-    // Global handler for event — make sure we never wait more than 1 second
-    // to respond to requests to the develop server. We'd prefer to wait
-    // for all sourcing/transforming/query running to finish but if this is taking
-    // awhile, we'll show a stale version of the page and trust hot reloading
-    // to push the work in progress once it finishes.
-    DEVELOP_HTML_REQUEST_RECEIVED: {
-      actions: [
-        send("SEND_DEVELOP_HTML_RESPONSES", {
-          to: context => context.developHTMLRoute,
-          delay: 1000,
-        }),
-      ],
-    },
   },
   states: {
     // Here we handle the initial bootstrap
@@ -207,7 +194,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           actions: [
             `assignServers`,
             `spawnWebpackListener`,
-            `spawnDevelopHtmlRouteHandler`,
             `markSourceFilesClean`,
           ],
         },
@@ -219,7 +205,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Idle, waiting for events that make us rebuild
     waiting: {
-      entry: [`saveDbState`, `resetRecompileCount`, `sendDevHtmlResponses`],
+      entry: [`saveDbState`, `resetRecompileCount`],
       on: {
         // Forward these events to the child machine, so it can handle batching
         ADD_NODE_MUTATION: {
@@ -231,15 +217,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         // This event is sent from the child
         EXTRACT_QUERIES_NOW: {
           target: `runningQueries`,
-        },
-        DEVELOP_HTML_REQUEST_RECEIVED: {
-          actions: [
-            // I don't get why this isn't working.
-            `sendDevHtmlResponses`,
-            send("SEND_DEVELOP_HTML_RESPONSES", {
-              to: context => context.developHTMLRoute,
-            }),
-          ],
         },
       },
       invoke: {

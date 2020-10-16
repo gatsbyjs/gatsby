@@ -16,7 +16,6 @@ import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
-import { createDevelopHTMLRoute } from "../../services/develop-html-route"
 import { callRealApi } from "../../utils/call-deferred-api"
 
 const { pure } = actions;
@@ -124,15 +123,6 @@ export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
   },
 })
 
-export const spawnDevelopHtmlRouteHandler = assign<
-  IBuildContext,
-  AnyEventObject
->({
-  developHTMLRoute: ({ app, program, store }) => {
-    return spawn(createDevelopHTMLRoute({ app, program, store }))
-  },
-})
-
 export const sendDevHtmlResponses = pure(() => {
   console.log(`hi?? sendDevHtmlResponses`)
   const sendAction = send("SEND_DEVELOP_HTML_RESPONSES", {
@@ -197,7 +187,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   clearWebhookBody,
   finishParentSpan,
   spawnWebpackListener,
-  spawnDevelopHtmlRouteHandler,
   sendDevHtmlResponses,
   markSourceFilesDirty,
   markSourceFilesClean,

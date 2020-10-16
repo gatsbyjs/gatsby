@@ -11,6 +11,9 @@ import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
 import { slash } from "gatsby-core-utils"
+import telemetry from "gatsby-telemetry"
+import http from "http"
+import https from "https"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
@@ -19,10 +22,8 @@ import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import cors from "cors"
-import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
-import http from "http"
-import https from "https"
+import { route as developHtmlRoute } from "./develop-html-route"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
@@ -176,6 +177,9 @@ export async function startServer(
     }
     res.end()
   })
+
+  // Setup HTML route.
+  developHtmlRoute({ app, program, directory, store })
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
