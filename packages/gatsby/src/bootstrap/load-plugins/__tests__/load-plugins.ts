@@ -124,6 +124,7 @@ describe(`Load plugins`, () => {
             id: ``,
             name: `gatsby-plugin-typescript`,
             nodeAPIs: [
+              `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
               `onCreateWebpackConfig`,
@@ -162,6 +163,7 @@ describe(`Load plugins`, () => {
             id: ``,
             name: `gatsby-plugin-typescript`,
             nodeAPIs: [
+              `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
               `onCreateWebpackConfig`,

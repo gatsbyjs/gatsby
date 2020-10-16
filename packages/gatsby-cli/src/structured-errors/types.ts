@@ -30,7 +30,7 @@ export interface IStructuredError {
     start: ILocationPosition
     end?: ILocationPosition
   }
-  category?: ErrorCategory
+  category?: keyof typeof ErrorCategory
   error?: Error
   group?: string
   level: IErrorMapEntry["level"]
