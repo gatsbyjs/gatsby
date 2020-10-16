@@ -1,5 +1,6 @@
 const sharp = require(`./safe-sharp`)
 const { gatsbyImageProps } = require(`./image-props`)
+const imageSize = require(`probe-image-size`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -17,7 +18,31 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
-const { rgbToHex, getImageSize } = require(`./utils`)
+const { rgbToHex } = require(`./utils`)
+
+const imageSizeCache = new Map()
+export const getImageSize = file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  } else {
+    const dimensions = imageSize.sync(
+      toArray(fs.readFileSync(file.absolutePath))
+    )
+
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
+
+    imageSizeCache.set(file.internal.contentDigest, dimensions)
+    return dimensions
+  }
+}
 
 // Bound action creators should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
@@ -763,6 +788,16 @@ async function fixed({ file, args = {}, reporter, cache }) {
     tracedSVG,
     dominantColor,
   }
+}
+
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
 }
 
 exports.queueImageResizing = queueImageResizing

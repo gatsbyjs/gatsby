@@ -42,30 +42,21 @@ describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
   })
 })
 
-function getFileObject(absolutePath, name = `test`, contentDigest = `1234`) {
-  const parsedPath = path.parse(absolutePath)
-  return {
-    id: `${absolutePath} absPath of file`,
-    name: name,
-    base: parsedPath.base,
-    absolutePath,
-    extension: `png`,
-    internal: {
-      contentDigest,
-    },
-  }
+const file = {
+  absolutePath: `~/Usr/gatsby-sites/src/img/photo.png`,
 }
-const smallFile = getFileObject(path.join(__dirname, `images/144-density.png`))
-const largeFile = getFileObject(
-  path.join(__dirname, `images/padding-bytes.jpg`)
-)
+const imgDimensions = {
+  width: 1200,
+  height: 800,
+}
 
 describe(`calculateImageSizes (fixed)`, () => {
   it(`should throw if width is less than 1`, () => {
     const args = {
       layout: `fixed`,
       width: 0,
-      file: smallFile,
+      file,
+      imgDimensions,
     }
     const getSizes = () => calculateImageSizes(args)
     expect(getSizes).toThrow()
@@ -75,7 +66,8 @@ describe(`calculateImageSizes (fixed)`, () => {
     const args = {
       layout: `fixed`,
       width: 600,
-      file: largeFile,
+      file,
+      imgDimensions,
     }
     const sizes = calculateImageSizes(args)
     expect(sizes).toContain(600)
@@ -85,22 +77,24 @@ describe(`calculateImageSizes (fixed)`, () => {
     const args = {
       layout: `fixed`,
       height: 500,
-      file: largeFile,
+      file,
+      imgDimensions,
     }
     const sizes = calculateImageSizes(args)
-    expect(sizes).toContain(373)
+    expect(sizes).toContain(500 * (imgDimensions.width / imgDimensions.height))
   })
 
   // TODO: should fixed create more than the one image?
-  // it(`should create images of different sizes (1x, 2x, and 3x)`, () => {
-  //   const args = {
-  //     layout: `fixed`,
-  //     width: 240,
-  //     file: largeFile,
-  //   }
-  //   const sizes = calculateImageSizes(args)
-  //   expect(sizes).toContain(0)
-  // })
+  it.only(`should create images of different sizes (1x, 1.5x, and 2x)`, () => {
+    const args = {
+      layout: `fixed`,
+      width: 120,
+      file,
+      imgDimensions,
+    }
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toEqual(expect.arrayContaining([120, 240, 360]))
+  })
 })
 
 describe(`calculateImageSizes (fluid)`, () => {
@@ -108,7 +102,8 @@ describe(`calculateImageSizes (fluid)`, () => {
     const args = {
       layout: `fluid`,
       maxWidth: 0,
-      file: smallFile,
+      file,
+      imgDimensions,
     }
     const getSizes = () => calculateImageSizes(args)
     expect(getSizes).toThrow()
@@ -118,7 +113,8 @@ describe(`calculateImageSizes (fluid)`, () => {
     const args = {
       layout: `fluid`,
       maxWidth: 400,
-      file: largeFile,
+      file,
+      imgDimensions,
     }
     const sizes = calculateImageSizes(args)
     expect(sizes).toContain(400)
@@ -130,7 +126,8 @@ describe(`calculateImageSizes (fluid)`, () => {
     const args = {
       layout: `fluid`,
       maxWidth: 320,
-      file: largeFile,
+      file,
+      imgDimensions,
     }
     const sizes = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([320]))
@@ -143,7 +140,8 @@ describe(`calculateImageSizes (fluid)`, () => {
       layout: `fluid`,
       maxWidth,
       srcSetBreakpoints,
-      file: largeFile,
+      file,
+      imgDimensions,
     }
 
     const sizes = calculateImageSizes(args)
@@ -163,7 +161,8 @@ describe(`calculateImageSizes (fluid)`, () => {
       layout: `fluid`,
       maxWidth,
       srcSetBreakpoints,
-      file: largeFile,
+      file,
+      imgDimensions,
     }
 
     const sizes = calculateImageSizes(args)

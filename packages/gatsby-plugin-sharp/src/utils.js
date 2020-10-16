@@ -1,8 +1,4 @@
 const ProgressBar = require(`progress`)
-const imageSize = require(`probe-image-size`)
-const fs = require(`fs-extra`)
-
-const { reportError } = require(`./report-error`)
 
 // TODO remove in V3
 export function createGatsbyProgressOrFallbackToExternalProgressBar(
@@ -92,41 +88,9 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
-  }
-
-  return arr
-}
-const imageSizeCache = new Map()
-export const getImageSize = file => {
-  if (
-    process.env.NODE_ENV !== `test` &&
-    imageSizeCache.has(file.internal.contentDigest)
-  ) {
-    return imageSizeCache.get(file.internal.contentDigest)
-  } else {
-    const dimensions = imageSize.sync(
-      toArray(fs.readFileSync(file.absolutePath))
-    )
-
-    if (!dimensions) {
-      reportError(
-        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
-        ``
-      )
-    }
-
-    imageSizeCache.set(file.internal.contentDigest, dimensions)
-    return dimensions
-  }
-}
-
 export const calculateImageSizes = ({
   file,
+  imgDimensions,
   width,
   maxWidth,
   height,
@@ -136,8 +100,7 @@ export const calculateImageSizes = ({
   srcSetBreakpoints,
 }) => {
   let sizes
-  const dimensions = getImageSize(file)
-  const aspectRatio = dimensions.width / dimensions.height
+  const aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1
   const densities = Array.from(new Set([1, ...outputPixelDensities])).sort()
 
@@ -155,10 +118,12 @@ export const calculateImageSizes = ({
     if (!width) {
       width = height * aspectRatio
     }
+    console.log(width)
+    console.log(densities)
 
     sizes = densities
       .map(density => density * width)
-      .filter(size => size <= width)
+      .filter(size => size <= imgDimensions.width)
 
     // If there's no fixed images after filtering (e.g. image is smaller than what's
     // requested, add back the original so there's at least something)
@@ -170,7 +135,7 @@ export const calculateImageSizes = ({
       }px" for a resolutions field for
                      the file ${file.absolutePath}
                      was larger than the actual image ${fixedDimension} of ${
-        dimensions[fixedDimension]
+        imgDimensions[fixedDimension]
       }px!
                      If possible, replace the current image with a larger one.
                      `)
@@ -180,14 +145,14 @@ export const calculateImageSizes = ({
     // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
     const fixedDimension = maxWidth === undefined ? `maxHeight` : `maxWidth`
     if (maxWidth) {
-      maxWidth = Math.min(maxWidth, dimensions.width)
+      maxWidth = Math.min(maxWidth, imgDimensions.width)
     } else if (maxWidth === 0) {
       // 0 is falsy, don't let it get reassigned so we can provide a clear error
     } else {
       maxWidth = maxHeight * aspectRatio
     }
     if (maxHeight) {
-      Math.min(maxHeight, dimensions.height)
+      Math.min(maxHeight, imgDimensions.height)
     } else if (maxWidth === 0) {
       // 0 is falsy, don't let it get reassigned so we can provide a clear error
     } else {
@@ -212,7 +177,7 @@ export const calculateImageSizes = ({
 
     // use standard breakpoints if no custom breakpoints are specified
     if (!srcSetBreakpoints || !srcSetBreakpoints.length) {
-      sizes = densities.map(density => density * dimensions.width)
+      sizes = densities.map(density => density * imgDimensions.width)
       sizes = sizes.filter(size => size <= maxWidth)
     } else {
       sizes = srcSetBreakpoints.filter(size => size <= maxWidth)
