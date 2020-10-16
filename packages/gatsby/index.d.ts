@@ -293,12 +293,33 @@ export interface GatsbyNode {
    *
    * See also the documentation for `createNode`
    * and [`createNodeField`](https://www.gatsbyjs.org/docs/actions/#createNodeField)
-   * @example
-   * exports.onCreateNode = ({ node, actions }) => {
-   *   const { createNode, createNodeField } = actions
-   *   // Transform the new node here and create a new node or
-   *   // create a new node field.
-   * }
+ * @param {object} $0
+ * @param {object} $0.node A node object.
+ * @param {object} $0.actions
+ * @param {function} $0.actions.createNode Create a new node.
+ * @param {function} $0.actions.createNodeField Extend another node. The new node field is placed under the fields key on the extended node object.
+ * exports.onCreateNode = ({ node, getNode, actions }) => {
+ *   const { createNodeField } = actions;
+ *
+ *   if (node.internal.type === `Mdx`) {
+ *     const nodePath = node.fileAbsolutePath;
+ *
+ *     if (nodePath.match(/\/blog\//)) {
+ *       const postSlug = createFilePath({
+ *         node,
+ *         getNode,
+ *         basePath: `src/content`,
+ *         trailingSlash: true,
+ *       });
+ *
+ *       createNodeField({
+ *         node,
+ *         name: `slug`,
+ *         value: polishSlug(`/blog/${postSlug}/`),
+ *       });
+ *     }
+ *   }
+ * }
    */
   onCreateNode?<TNode extends object = {}>(
     args: CreateNodeArgs<TNode>,
