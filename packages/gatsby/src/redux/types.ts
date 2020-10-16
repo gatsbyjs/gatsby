@@ -154,6 +154,7 @@ export interface IStateProgram extends IProgram {
 
 export interface IQueryState {
   dirty: number
+  errors: number
 }
 
 export interface IComponentState {

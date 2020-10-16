@@ -10,9 +10,11 @@ type ComponentPath = string
 type NodeId = string
 type ConnectionName = string
 
-const FLAG_DIRTY_PAGE = 1
-const FLAG_DIRTY_TEXT = 2
-const FLAG_DIRTY_DATA = 4
+export const FLAG_DIRTY_PAGE = 0b0001
+export const FLAG_DIRTY_TEXT = 0b0010
+export const FLAG_DIRTY_DATA = 0b0100
+
+export const FLAG_ERROR_BABEL = 0b0001
 
 const initialState = (): IGatsbyState["queries"] => {
   return {
@@ -26,6 +28,7 @@ const initialState = (): IGatsbyState["queries"] => {
 const initialQueryState = (): IQueryState => {
   return {
     dirty: -1, // unknown, must be set right after init
+    errors: 0,
   }
 }
 
@@ -34,6 +37,7 @@ const initialComponentState = (): IComponentState => {
     componentPath: ``,
     query: ``,
     pages: new Set<QueryId>(),
+    // TODO: staticQueries: new Set<QueryId>()
   }
 }
 
@@ -45,8 +49,6 @@ const initialComponentState = (): IComponentState => {
  * - belong to newly created pages (or pages with modified context)
  *
  * Dirty queries must be re-ran.
- *
- * @todo handle babel errors during query extraction
  */
 export function queriesReducer(
   state: IGatsbyState["queries"] = initialState(),
@@ -60,7 +62,7 @@ export function queriesReducer(
       const { path, componentPath } = action.payload
       if (!state.trackedQueries.has(path) || action.contextModified) {
         const query = registerQuery(state, path)
-        setDirtyFlag(query, FLAG_DIRTY_PAGE)
+        query.dirty = setFlag(query.dirty, FLAG_DIRTY_PAGE)
       }
       registerComponent(state, componentPath).pages.add(path)
       return state
@@ -83,17 +85,35 @@ export function queriesReducer(
         component.pages.forEach(queryId => {
           const query = state.trackedQueries.get(queryId)
           if (query) {
-            setDirtyFlag(query, FLAG_DIRTY_TEXT)
+            query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
           }
         })
         component.query = query
       }
       return state
     }
+    case `QUERY_EXTRACTION_BABEL_ERROR`:
+    case `QUERY_EXTRACTION_BABEL_SUCCESS`: {
+      const { componentPath } = action.payload
+      const component = registerComponent(state, componentPath)
+
+      component.pages.forEach(queryId => {
+        const query = state.trackedQueries.get(queryId)
+        if (query) {
+          const set = action.type === `QUERY_EXTRACTION_BABEL_ERROR`
+          query.errors = setFlag(query.errors, FLAG_ERROR_BABEL, set)
+          console.log(`Babel error for ${queryId}: `, set)
+        }
+      })
+      return state
+    }
     case `REPLACE_STATIC_QUERY`: {
       // Only called when static query text has changed, so no need to compare
-      const { id } = action.payload
-      setDirtyFlag(registerQuery(state, id), FLAG_DIRTY_TEXT)
+      // TODO: unify the behavior?
+      //   registerComponent(state, action.payload.componentPath)
+      //     .staticQueries.add(action.payload.id)
+      const query = registerQuery(state, action.payload.id)
+      query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
       return state
     }
     case `REMOVE_STATIC_QUERY`: {
@@ -103,10 +123,15 @@ export function queriesReducer(
     case `CREATE_COMPONENT_DEPENDENCY`: {
       const { path: queryId, nodeId, connection } = action.payload
       if (nodeId) {
-        getQueryIds(state.byNode, nodeId).add(queryId)
+        const queryIds = state.byNode.get(nodeId) ?? new Set<QueryId>()
+        queryIds.add(queryId)
+        state.byNode.set(nodeId, queryIds)
       }
       if (connection) {
-        getQueryIds(state.byConnection, connection).add(queryId)
+        const queryIds =
+          state.byConnection.get(connection) ?? new Set<QueryId>()
+        queryIds.add(queryId)
+        state.byConnection.set(connection, queryIds)
       }
       return state
     }
@@ -131,13 +156,13 @@ export function queriesReducer(
       queriesByNode.forEach(queryId => {
         const query = state.trackedQueries.get(queryId)
         if (query) {
-          setDirtyFlag(query, FLAG_DIRTY_DATA)
+          query.dirty = setFlag(query.dirty, FLAG_DIRTY_DATA)
         }
       })
       queriesByConnection.forEach(queryId => {
         const query = state.trackedQueries.get(queryId)
         if (query) {
-          setDirtyFlag(query, FLAG_DIRTY_DATA)
+          query.dirty = setFlag(query.dirty, FLAG_DIRTY_DATA)
         }
       })
       return state
@@ -154,12 +179,15 @@ export function queriesReducer(
   }
 }
 
-function setDirtyFlag(query: IQueryState, dirtyFlag: number): void {
-  if (query.dirty === -1) {
-    query.dirty = dirtyFlag
-  } else {
-    query.dirty = query.dirty | dirtyFlag
+function setFlag(allFlags: number, flag: number, set = true): number {
+  if (allFlags < 0) {
+    allFlags = 0
   }
+  return set ? allFlags | flag : allFlags & ~flag
+}
+
+export function hasFlag(allFlags: number, flag: number): boolean {
+  return allFlags >= 0 && (allFlags & flag) > 0
 }
 
 function registerQuery(
@@ -185,13 +213,4 @@ function registerComponent(
     state.trackedComponents.set(componentPath, component)
   }
   return component
-}
-
-function getQueryIds(map: Map<string, Set<string>>, key: string): Set<string> {
-  let set = map.get(key)
-  if (!set) {
-    set = new Set<string>()
-    map.set(key, set)
-  }
-  return set
 }

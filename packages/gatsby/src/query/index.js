@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
+const { hasFlag, FLAG_ERROR_BABEL } = require(`../redux/reducers/queries`)
 const queryQueue = require(`./queue`)
 
 /**
@@ -9,13 +10,14 @@ const queryQueue = require(`./queue`)
  * them from all tracked queries.
  */
 const calcDirtyQueryIds = state => {
-  const newDirtyQueryIds = []
+  const dirtyQueryIds = []
   state.queries.trackedQueries.forEach((query, queryId) => {
-    if (query.dirty !== 0) {
-      newDirtyQueryIds.push(queryId)
+    const hasBabelError = hasFlag(query.errors, FLAG_ERROR_BABEL)
+    if (query.dirty !== 0 && !hasBabelError) {
+      dirtyQueryIds.push(queryId)
     }
   })
-  return newDirtyQueryIds
+  return dirtyQueryIds
 }
 
 /**
