@@ -21,7 +21,7 @@ export async function validateOptionsSchema(
 ): Promise<IPluginInfoOptions> {
   const { validateExternalRules } = options
 
-  const { value } = await pluginSchema.validateAsync(pluginOptions, {
+  const value = await pluginSchema.validateAsync(pluginOptions, {
     ...validationOptions,
     externals: validateExternalRules,
   })

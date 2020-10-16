@@ -290,5 +290,34 @@ describe(`Load plugins`, () => {
       `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
+
+    it(`defaults plugin options to the ones defined in the schema`, async () => {
+      let plugins = await loadPlugins({
+        plugins: [
+          {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+              trackingId: `fake`,
+            },
+          },
+        ],
+      })
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(
+        plugins.find(plugin => plugin.name === `gatsby-plugin-google-analytics`)
+          .pluginOptions
+      ).toEqual({
+        // All the options that have defaults are defined
+        anonymize: false,
+        exclude: [],
+        head: false,
+        pageTransitionDelay: 0,
+        plugins: [],
+        respectDNT: false,
+        trackingId: `fake`,
+      })
+    })
   })
 })
