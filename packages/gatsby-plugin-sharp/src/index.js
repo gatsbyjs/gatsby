@@ -88,7 +88,7 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
   return {
     width,
     height,
-    aspectRatio: Math.round(width / height),
+    aspectRatio: width / height,
   }
 }
 

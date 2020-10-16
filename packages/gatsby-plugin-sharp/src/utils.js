@@ -135,20 +135,20 @@ export const calculateImageSizes = ({
   outputPixelDensities = [1, 2, 3],
   srcSetBreakpoints,
 }) => {
-  // Sort, dedupe and ensure there's a
-  const options = { width, height }
+  let sizes
   const dimensions = getImageSize(file)
   const aspectRatio = dimensions.width / dimensions.height
+  // Sort, dedupe and ensure there's a 1
   const densities = Array.from(new Set([1, ...outputPixelDensities])).sort()
-  let sizes
 
   if (layout === `fixed`) {
     // FIXED
     // if no width is passed, we need to resize the image based on the passed height
     const fixedDimension = width === undefined ? `height` : `width`
-    if (options[fixedDimension] < 1) {
+    const fixedValue = fixedDimension === `height` ? height : width
+    if (fixedValue < 1) {
       throw new Error(
-        `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${dimensions[fixedDimension]}`
+        `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${fixedValue}`
       )
     }
 
@@ -156,8 +156,9 @@ export const calculateImageSizes = ({
       width = height * aspectRatio
     }
 
-    sizes = densities.map(density => density * width)
-    sizes = sizes.filter(size => size <= width)
+    sizes = densities
+      .map(density => density * width)
+      .filter(size => size <= width)
 
     // If there's no fixed images after filtering (e.g. image is smaller than what's
     // requested, add back the original so there's at least something)
@@ -174,14 +175,25 @@ export const calculateImageSizes = ({
                      If possible, replace the current image with a larger one.
                      `)
     }
-  } else {
+  } else if (layout === `fluid`) {
     // FLUID
     // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
     const fixedDimension = maxWidth === undefined ? `maxHeight` : `maxWidth`
-    maxWidth = maxWidth
-      ? Math.min(maxWidth, width)
-      : maxHeight * file.aspectRatio
-    maxHeight = maxHeight ? Math.min(maxHeight, height) : undefined
+    if (maxWidth) {
+      maxWidth = Math.min(maxWidth, dimensions.width)
+    } else if (maxWidth === 0) {
+      // 0 is falsy, don't let it get reassigned so we can provide a clear error
+    } else {
+      maxWidth = maxHeight * aspectRatio
+    }
+    if (maxHeight) {
+      Math.min(maxHeight, dimensions.height)
+    } else if (maxWidth === 0) {
+      // 0 is falsy, don't let it get reassigned so we can provide a clear error
+    } else {
+      maxHeight = undefined
+    }
+
     const fixedValue = fixedDimension === `maxHeight` ? maxHeight : maxWidth
     if (fixedValue < 1) {
       throw new Error(
@@ -200,20 +212,23 @@ export const calculateImageSizes = ({
 
     // use standard breakpoints if no custom breakpoints are specified
     if (!srcSetBreakpoints || !srcSetBreakpoints.length) {
-      sizes = densities
-        .map(density => density * width)
-        .filter(size => size <= maxWidth)
-      if (!sizes.includes(maxWidth)) {
-        sizes.push(maxWidth)
-      }
-      sizes = sizes.sort()
+      sizes = densities.map(density => density * dimensions.width)
+      sizes = sizes.filter(size => size <= maxWidth)
     } else {
-      let sizes = srcSetBreakpoints.filter(size => size <= maxWidth)
-      if (!sizes.includes(maxWidth)) {
-        sizes.push(maxWidth)
-      }
-      sizes = sizes.sort()
+      sizes = srcSetBreakpoints.filter(size => size <= maxWidth)
     }
+
+    // ensure that the passed in size is included in the final output
+    if (!sizes.includes(maxWidth)) {
+      sizes.push(maxWidth)
+    }
+    sizes = sizes.sort((a, b) => a - b)
+  } else if (layout === `constrained`) {
+    // TODO
+  } else {
+    console.warn(
+      `No valid layout was provided. Valid image layouts are fixed, fluid, and constrained.`
+    )
   }
   return sizes
 }

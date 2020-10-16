@@ -8,7 +8,7 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const progress = require(`progress`)
 const path = require(`path`)
 
-describe.skip(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
+describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
   beforeEach(() => {
     progress.mockClear()
   })
@@ -60,7 +60,7 @@ const largeFile = getFileObject(
   path.join(__dirname, `images/padding-bytes.jpg`)
 )
 
-describe.only(`calculateImageSizes (fixed)`, () => {
+describe(`calculateImageSizes (fixed)`, () => {
   it(`should throw if width is less than 1`, () => {
     const args = {
       layout: `fixed`,
@@ -71,54 +71,108 @@ describe.only(`calculateImageSizes (fixed)`, () => {
     expect(getSizes).toThrow()
   })
 
-  it(`should always return the original width of the image when only width is provided`, () => {
+  it(`should return the original width of the image when only width is provided`, () => {
     const args = {
       layout: `fixed`,
       width: 600,
       file: largeFile,
     }
     const sizes = calculateImageSizes(args)
-    console.log(sizes)
     expect(sizes).toContain(600)
   })
 
-  it(`should always return the original width of the image when only height is provided`, () => {
+  it(`should return the original width of the image when only height is provided`, () => {
     const args = {
       layout: `fixed`,
       height: 500,
       file: largeFile,
     }
     const sizes = calculateImageSizes(args)
-    console.log(sizes)
     expect(sizes).toContain(373)
   })
 
+  // TODO: should fixed create more than the one image?
   // it(`should create images of different sizes (1x, 2x, and 3x)`, () => {
-  //   const sizes = calculateImageSizes()
-  //   return
+  //   const args = {
+  //     layout: `fixed`,
+  //     width: 240,
+  //     file: largeFile,
+  //   }
+  //   const sizes = calculateImageSizes(args)
+  //   expect(sizes).toContain(0)
   // })
 })
 
 describe(`calculateImageSizes (fluid)`, () => {
   it(`should throw if maxWidth is less than 1`, () => {
-    const sizes = calculateImageSizes()
-    return
+    const args = {
+      layout: `fluid`,
+      maxWidth: 0,
+      file: smallFile,
+    }
+    const getSizes = () => calculateImageSizes(args)
+    expect(getSizes).toThrow()
   })
 
   it(`should include the original size of the image`, () => {
-    const sizes = calculateImageSizes()
-    return
+    const args = {
+      layout: `fluid`,
+      maxWidth: 400,
+      file: largeFile,
+    }
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toContain(400)
   })
 
-  it(`should create images of different sizes (1/4, 1/2, 1, 1.5, 2)`, () => {
-    const sizes = calculateImageSizes()
-    return
+  // TODO: this seems incorrect, wouldn't we want larger sizes than the maxWidth provided?
+  // and what scale instead? (vs 1x, 2x, 3x)
+  it(`should create images of different sizes (1x, 2x, and 3x) based off of the provided pixel densities with no srcSetBreakpoints provided`, () => {
+    const args = {
+      layout: `fluid`,
+      maxWidth: 320,
+      file: largeFile,
+    }
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toEqual(expect.arrayContaining([320]))
+  })
+
+  it(`should return provided srcSetBreakpoints`, () => {
+    const srcSetBreakpoints = [50, 70, 150, 250, 300]
+    const maxWidth = 500
+    const args = {
+      layout: `fluid`,
+      maxWidth,
+      srcSetBreakpoints,
+      file: largeFile,
+    }
+
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toEqual(expect.arrayContaining([50, 70, 150, 250, 300, 500]))
+  })
+
+  it(`should reject any srcSetBreakpoints larger than the original width`, () => {
+    const srcSetBreakpoints = [
+      50,
+      70,
+      150,
+      250,
+      1000, // shouldn't be included, larger than original width
+    ]
+    const maxWidth = 1200 // also shouldn't be included
+    const args = {
+      layout: `fluid`,
+      maxWidth,
+      srcSetBreakpoints,
+      file: largeFile,
+    }
+
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toEqual(expect.arrayContaining([50, 70, 150, 250]))
   })
 })
 
 describe(`calculateImageSizes (constrained)`, () => {
   it(`should throw if maxWidth is less than 1`, () => {
-    const sizes = calculateImageSizes()
     return
   })
 })
