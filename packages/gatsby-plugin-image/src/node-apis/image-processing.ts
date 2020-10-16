@@ -124,12 +124,12 @@ export async function writeImage(
   try {
     const options = { file, args, reporter, cache }
 
-    if (!PluginSharp.gatsbyImageProps) {
+    if (!PluginSharp.generateImageData) {
       reporter.warn(`Please upgrade gatsby-plugin-sharp`)
       return
     }
     // get standard set of fields from sharp
-    const sharpData = await PluginSharp.gatsbyImageProps(options)
+    const sharpData = await PluginSharp.generateImageData(options)
 
     if (sharpData) {
       // Write the image properties to the cache

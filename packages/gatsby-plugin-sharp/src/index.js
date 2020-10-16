@@ -1,5 +1,5 @@
 const sharp = require(`./safe-sharp`)
-const { generateImageData } = require(`./image-props`)
+const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
 
 const _ = require(`lodash`)
