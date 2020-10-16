@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.52...gatsby-source-contentful@2.3.53) (2020-10-15)
+
+### Features
+
+- **gatsby-source-contentful:** add tool to force-cache remote data to debug ([#27404](https://github.com/gatsbyjs/gatsby/issues/27404)) ([2964b62](https://github.com/gatsbyjs/gatsby/commit/2964b62962f51a738d907bbcd03811595907fc18))
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** change O(n\*m) loop to O(n+m) ([#27448](https://github.com/gatsbyjs/gatsby/issues/27448)) ([e6162dd](https://github.com/gatsbyjs/gatsby/commit/e6162dd97ee90d4f1ffab58ea8a70e1c8bbff292))
+- **gatsby-source-contentful:** do not linear search on a potentially large set ([#27447](https://github.com/gatsbyjs/gatsby/issues/27447)) ([9d304ed](https://github.com/gatsbyjs/gatsby/commit/9d304ed3c63069a976bc4be85df2e876512149e0))
+
 ## [2.3.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.51...gatsby-source-contentful@2.3.52) (2020-10-13)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.77...gatsby@2.24.78) (2020-10-15)
+
+### Features
+
+- **gatsby-plugin-typescript:** Add schema ([#27361](https://github.com/gatsbyjs/gatsby/issues/27361)) ([072ef6c](https://github.com/gatsbyjs/gatsby/commit/072ef6c992168c89505143670013d5d8147f4ab4))
+
 ## [2.24.77](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.76...gatsby@2.24.77) (2020-10-14)
 
 **Note:** Version bump only for package gatsby
