@@ -5,7 +5,6 @@ import {
   spawn,
   ActionFunctionMap,
   DoneEventObject,
-  send,
 } from "xstate"
 import { IBuildContext } from "../../services"
 import { boundActionCreators } from "../../redux/actions"
@@ -172,7 +171,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   clearWebhookBody,
   finishParentSpan,
   spawnWebpackListener,
-  sendDevHtmlResponses,
   markSourceFilesDirty,
   markSourceFilesClean,
   markNodesClean,
