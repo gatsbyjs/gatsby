@@ -12,7 +12,7 @@ Install `gatsby-plugin-image`, then add it to your `gatsby-config.js`.
 
 The [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) component, combined with the sharp plugin, is a great way to automatically resize and optimize your images and serve them in the most performant way. This plugin is a proof of concept for a simpler way to use Gatsby's image processing tools without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
 
-The current way to do this is with `useStaticQuery`:
+The old way to do this is with `useStaticQuery`:
 
 ```js
 import React from "react"
@@ -57,9 +57,8 @@ import { StaticImage } from "gatsby-plugin-image"
 export const Dino = () => (
   <StaticImage
     src="trex.png"
-    base64={false}
-    fluid
-    webP
+    placeholder="none"
+    layout="fluid"
     grayscale
     maxWidth={200}
     alt="T-Rex"
@@ -263,36 +262,20 @@ module.exports = {
 This is what a component using `gatsby-plugin-image` looks like:
 
 ```jsx
-// TODO We don't have proper Fragments yet so this isn't user friendly yet
 import * as React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <GatsbyImage
-      placeholder={{ fallback: data.file.childImageSharp.fixed.fallback }}
-      images={{
-        fallback: {
-          src: data.file.childImageSharp.fixed.src,
-          srcSet: data.file.childImageSharp.fixed.srcSet,
-        },
-        sources: [
-          {
-            src: data.file.childImageSharp.fixed.srcWebp,
-            srcSet: data.file.childImageSharp.fixed.srcSetWebp,
-            type: "image/webp",
-          },
-        ],
-      }}
-      width={data.file.childImageSharp.fixed.width}
-      height={data.file.childImageSharp.fixed.height}
-      layout="fixed"
-      alt="my gatsby image"
-    />
-  </div>
-)
+export default ({ data }) => {
+  const imageData = data.file.childImageSharp.gatsbyImage.imageData
+
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <GatsbyImage image={imageData} alt="my gatsby image" />
+    </div>
+  )
+}
 
 export const query = graphql`
   query {
@@ -300,14 +283,8 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        fixed(width: 125, height: 125) {
-          fallback: base64
-          width
-          height
-          src
-          srcSet
-          srcWebp
-          srcSetWebp
+        gatsbyImage(layout: FIXED, width: 125, height: 125) {
+          imageData
         }
       }
     }
@@ -346,46 +323,32 @@ export const query = graphql`
 `
 ```
 
-## Two types of responsive images
+## Three types of responsive images
 
-There are two types of responsive images supported by gatsby-image.
+There are three types of responsive images supported by gatsby-image.
 
 1. Images that have a _fixed_ width and height
 1. Images that stretch across a _fluid_ container
+1. Images that stretch across a container but are _constrained_ to a maximum width
 
 In the first scenario, you want to vary the image's size for different screen
 resolutions -- in other words, create retina images.
 
-For the second scenario, you want to create multiple sizes of thumbnails for
+For the second and third scenario, you want to create multiple sizes of thumbnails for
 devices with widths stretching from smartphone to wide desktop monitors.
 
 To decide between the two, ask yourself: "do I know what the exact size of this image
-will be?" If yes, it's the first type. If no and its width and/or height need to
-vary depending on the size of the screen, then it's the second type.
+will be?" If yes, it's "fixed". If no and its width and/or height need to
+vary depending on the size of the screen, then it's "fluid". If you want it to shrink
+to fit on smaller screens, but not to expand larger than a maximum, then use "constrained"
 
-In Gatsby's GraphQL implementation, you query for the first type by querying a
-child object of an image called `fixed` — which you can see in the sample
-component above. For the second type, you do a similar query but for a child
-object called `fluid`.
+In Gatsby's GraphQL implementation, you specify the type of image with the `layout` argument
 
-## `gatsby-plugin-image` props
+## `GatsbyImage` props
 
-| Name                    | Type            | Description                                                 |
-| ----------------------- | --------------- | ----------------------------------------------------------- |
-| placeholder             | object          | Object holding the placeholder image                        |
-| placeholder.fallback    | string          | Source for the image                                        |
-| images                  | array           | List of different image sources (WebP, ...)                 |
-| images.fallback         | object          |                                                             |
-| images.fallback.src     | string          | The image src if srcset is not supported                    |
-| images.fallback.srcSet  | string          |                                                             |
-| images.fallback.sizes   | string          |                                                             |
-| images.sources          | array           | List of different image sources (WebP, ...)                 |
-| images.sources[].srcSet | string          |                                                             |
-| images.sources[].sizes  | string          |                                                             |
-| images.sources[].type   | string          |                                                             |
-| images.sources[].media  | string          |                                                             |
-| layout                  | string          | "fixed", "responsive" or "intrinsic" are values for layout. |
-| alt                     | string          | Passed to the `img` element. Defaults to an empty string    |
-| width                   | number          | Width of the image                                          |
-| height                  | number          | Height of the image                                         |
-| as                      | React Component | The component that wraps the Gatsby Image.                  |
+| Name  | Type            | Description                                                                                                                |
+| ----- | --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| image | object          | The image data object returned from a GraphQL query                                                                        |
+| alt   | string          | Passed to the `img` element. Defaults to an empty string                                                                   |
+| sizes | string          | An HTML "sizes" argument, which is passed-though to the image. Can be left blank, when it will be calculated automatically |
+| as    | React Component | The component that wraps the Gatsby Image. Default is `div`                                                                |
