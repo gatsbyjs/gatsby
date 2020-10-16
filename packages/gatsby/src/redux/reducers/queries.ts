@@ -28,7 +28,6 @@ const initialState = (): IGatsbyState["queries"] => {
 const initialQueryState = (): IQueryState => {
   return {
     dirty: -1, // unknown, must be set right after init
-    errors: 0,
   }
 }
 
@@ -37,6 +36,7 @@ const initialComponentState = (): IComponentState => {
     componentPath: ``,
     query: ``,
     pages: new Set<QueryId>(),
+    errors: 0,
     // TODO: staticQueries: new Set<QueryId>()
   }
 }
@@ -77,6 +77,8 @@ export function queriesReducer(
       return state
     }
     case `QUERY_EXTRACTED`: {
+      // Note: this action is called even in case of
+      // extraction error or missing query (with query === ``)
       // TODO: use hash instead of a query text
       const { componentPath, query } = action.payload
       const component = registerComponent(state, componentPath)
@@ -92,26 +94,18 @@ export function queriesReducer(
       }
       return state
     }
+    case `QUERY_EXTRACTION_GRAPHQL_ERROR`:
     case `QUERY_EXTRACTION_BABEL_ERROR`:
     case `QUERY_EXTRACTION_BABEL_SUCCESS`: {
       const { componentPath } = action.payload
       const component = registerComponent(state, componentPath)
-
-      component.pages.forEach(queryId => {
-        const query = state.trackedQueries.get(queryId)
-        if (query) {
-          const set = action.type === `QUERY_EXTRACTION_BABEL_ERROR`
-          query.errors = setFlag(query.errors, FLAG_ERROR_BABEL, set)
-          console.log(`Babel error for ${queryId}: `, set)
-        }
-      })
+      const set = action.type !== `QUERY_EXTRACTION_BABEL_SUCCESS`
+      component.errors = setFlag(component.errors, FLAG_ERROR_BABEL, set)
       return state
     }
     case `REPLACE_STATIC_QUERY`: {
       // Only called when static query text has changed, so no need to compare
       // TODO: unify the behavior?
-      //   registerComponent(state, action.payload.componentPath)
-      //     .staticQueries.add(action.payload.id)
       const query = registerQuery(state, action.payload.id)
       query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
       return state
