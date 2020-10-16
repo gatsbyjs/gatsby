@@ -1,6 +1,6 @@
 const { supportedExtensions } = require(`./supported-extensions`)
 
-function shouldOnCreateNode(node) {
+function unstable_shouldOnCreateNode(node) {
   return !!supportedExtensions[node.extension]
 }
 
@@ -11,7 +11,7 @@ module.exports.onCreateNode = async function onCreateNode({
 }) {
   const { createNode, createParentChildLink } = actions
 
-  if (!shouldOnCreateNode(node)) {
+  if (!unstable_shouldOnCreateNode(node)) {
     return
   }
 
@@ -31,4 +31,4 @@ module.exports.onCreateNode = async function onCreateNode({
   return
 }
 
-module.exports.shouldOnCreateNode = shouldOnCreateNode
+module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode

@@ -311,11 +311,11 @@ export interface GatsbyNode {
    * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
    * Note: this API does not receive the regular `api` that other callbacks get as first arg.
    *
-   * @gatsbyVersion 2.24.79
+   * @gatsbyVersion 2.24.80
    * @example
-   * exports.shouldOnCreateNode = (node, pluginOptions) => node.internal.type === 'Image'
+   * exports.unstable_shouldOnCreateNode = (node, pluginOptions) => node.internal.type === 'Image'
    */
-  shouldOnCreateNode?<TNode extends object = {}>(
+  unstable_shouldOnCreateNode?<TNode extends object = {}>(
     node: TNode,
   ): boolean
 

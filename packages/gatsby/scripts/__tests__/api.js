@@ -58,8 +58,8 @@ it("generates the expected api output", done => {
           "preprocessSource": Object {},
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
-          "shouldOnCreateNode": Object {
-            "version": "2.24.79",
+          "unstable_shouldOnCreateNode": Object {
+            "version": "2.24.80",
           },
           "sourceNodes": Object {},
         },
