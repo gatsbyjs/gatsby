@@ -286,7 +286,7 @@ export async function startServer(
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Setup HTML route.
-    developHtmlRoute({ app, program, directory, store })
+    developHtmlRoute({ app, program, store })
   } else {
     app.use((_, res) => {
       res.sendFile(directoryPath(`public/index.html`), err => {
