@@ -50,12 +50,11 @@ exports.createTransformObject = args => {
   const options = { ...generalArgs, ...args }
 
   // get all non falsey values
-  const filteredObject = Object.keys(options).reduce((obj, key) => {
-    if (options[key]) obj[key] = test[key]
+  const filteredOptions = Object.keys(options).reduce((obj, key) => {
+    if (test[key]) obj[key] = options[key]
     return obj
   }, {})
-
-  return filteredObject
+  return filteredOptions
 }
 
 exports.healOptions = (
@@ -64,13 +63,7 @@ exports.healOptions = (
   fileExtension = ``,
   defaultArgs = {}
 ) => {
-  let options = {
-    base64Width,
-    ...args,
-    quality,
-    ...defaultArgs,
-    ...generalArgs,
-  }
+  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
