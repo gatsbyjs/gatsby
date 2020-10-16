@@ -395,17 +395,22 @@ exports.sourceNodes = async (
     )
   })
 
+  const rawEntries = new Map()
+  mergedSyncDataRaw.entries.forEach(rawEntry =>
+    rawEntries.set(rawEntry.sys.id, rawEntry)
+  )
+
   mergedSyncData.entries.forEach(entry => {
     const contentTypeId = entry.sys.contentType.sys.id
-    if (richTextFieldMap.has(contentTypeId)) {
-      richTextFieldMap.get(contentTypeId).forEach(richTextFieldId => {
+    const richTextFieldIds = richTextFieldMap.get(contentTypeId)
+    if (richTextFieldIds) {
+      richTextFieldIds.forEach(richTextFieldId => {
         if (!entry.fields[richTextFieldId]) {
           return
         }
-        const rawEntry = mergedSyncDataRaw.entries.find(
-          rawEntry => entry.sys.id === rawEntry.sys.id
-        )
-        entry.fields[richTextFieldId] = rawEntry.fields[richTextFieldId]
+        entry.fields[richTextFieldId] = rawEntries.get(entry.sys.id).fields[
+          richTextFieldId
+        ]
       })
     }
   })

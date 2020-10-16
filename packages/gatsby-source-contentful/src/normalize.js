@@ -470,19 +470,22 @@ exports.createNodesForContentType = ({
           traverse(fieldValue)
 
           // Build up resolvable reference list
-          const resolvableReferenceIds = rawReferences
+          const resolvableReferenceIds = new Set()
+          rawReferences
             .filter(function (v) {
               return resolvable.has(
                 `${v.sys.id}___${v.sys.linkType || v.sys.type}`
               )
             })
-            .map(function (v) {
-              return mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
+            .forEach(function (v) {
+              resolvableReferenceIds.add(
+                mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
+              )
             })
 
           entryItemFields[entryItemFieldKey] = {
             raw: stringify(fieldValue),
-            [`references___NODE`]: resolvableReferenceIds,
+            references___NODE: [...resolvableReferenceIds],
           }
         } else if (
           fieldType === `Object` &&
