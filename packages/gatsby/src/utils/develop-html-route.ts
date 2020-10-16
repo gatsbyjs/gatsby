@@ -70,15 +70,18 @@ interface IParsedError {
   stack: [string]
 }
 
-const parseError = function (err, directory): IParsedError {
+// Code borrowed and modified from https://github.com/watilde/parse-error
+export const parseError = function (err, directory): IParsedError {
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)
+
   // Remove the `/lib/` added by webpack
   const filename = path.join(
     directory,
     ...position.filename.split(path.sep).slice(2)
   )
+
   const code = fs.readFileSync(filename, `utf-8`)
   const line = position.line
   const row = position.row

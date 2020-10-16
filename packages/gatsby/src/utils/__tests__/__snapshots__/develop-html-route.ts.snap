@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`error parsing returns an object w/ the parsed error & codeframe 1`] = `
+Object {
+  "code": "import React from \\"react\\"
+import Helmet from \\"react-helmet\\"
+import { Link, graphql } from \\"gatsby\\"
+import typography from \\"../utils/typography\\"
+import ReadNext from \\"../components/ReadNext\\"
+import Layout from \\"../layouts/index.js\\"
+import profilePic from \\"../images/kyle-round-small-pantheon.jpg\\"
+
+const { rhythm, scale } = typography
+
+class BlogPostRoute extends React.Component {
+  render() {
+    const post = this.props.data.markdownRemark
+    //console.log(post)
+
+    let pizza = window.width2
+    let tags
+    let tagsSection
+    if (this.props.data.markdownRemark.fields.tagSlugs) {
+      const tagsArray = this.props.data.markdownRemark.fields.tagSlugs
+      tags = tagsArray.map((tag, i) => {
+        const divider = i < tagsArray.length - 1 && <span>{\\" | \\"}</span>
+        return (
+          <span key={tag}>
+            <Link to={tag}>
+              {this.props.data.markdownRemark.frontmatter.tags[i]}
+            </Link>
+            {divider}
+          </span>
+        )
+      })
+      tagsSection = (
+        <em
+          style={{
+            ...scale(-1 / 5),
+            display: \\"block\\",
+            marginBottom: rhythm(1),
+          }}
+        >
+          Tagged with {tags}
+        </em>
+      )
+    }
+
+    return (
+      <Layout location={this.props.location}>
+        <Helmet
+          title={\`\${post.frontmatter.title}\`}
+          meta={[{ name: \\"description\\", content: post.excerpt }]}
+        />
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        {tagsSection}
+        <p
+          style={{
+            ...scale(-1 / 5),
+            display: \\"block\\",
+            marginBottom: rhythm(1),
+          }}
+        >
+          Posted {post.frontmatter.date}
+        </p>
+        <hr
+          style={{
+            marginBottom: rhythm(1),
+          }}
+        />
+        <ReadNext nextPost={post.frontmatter.readNext} />
+        <p
+          style={{
+            marginBottom: 0,
+          }}
+        >
+          <img
+            src={profilePic}
+            alt=\\"Kyle's profile pic\\"
+            style={{
+              borderRadius: \`100%\`,
+              float: \\"left\\",
+              marginRight: rhythm(1 / 4),
+              marginBottom: 0,
+              width: rhythm(2),
+              height: rhythm(2),
+            }}
+          />
+          <strong>{this.props.data.site.siteMetadata.author}</strong> lives and
+          works in {this.props.data.site.siteMetadata.homeCity} building useful
+          things.{\\" \\"}
+          <a href=\\"https://twitter.com/kylemathews\\">
+            You should follow him on Twitter
+          </a>
+        </p>
+      </Layout>
+    )
+  }
+}
+
+export default BlogPostRoute
+
+export const pageQuery = graphql\`
+  query BlogPostBySlug($slug: String!) {
+    site {
+      siteMetadata {
+        author
+        homeCity
+      }
+    }
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      excerpt
+      fields {
+        tagSlugs
+      }
+      frontmatter {
+        title
+        tags
+        date(formatString: \\"MMMM DD, YYYY\\")
+      }
+    }
+  }
+\`
+",
+  "codeFrame": "<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 14 | </span>    <span style=\\"color:#527713;\\">//console.log(post)</span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 15 | </span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 16 | </span>    let pizza <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width2</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\">    | </span>                <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 17 | </span>    let tags</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 18 | </span>    let tagsSection</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 19 | </span>    <span style=\\"color:#006500;\\">if</span> (<span style=\\"color:#006500;\\">this</span><span style=\\"color:#DB3A00;\\">.</span>props<span style=\\"color:#DB3A00;\\">.</span>data<span style=\\"color:#DB3A00;\\">.</span>markdownRemark<span style=\\"color:#DB3A00;\\">.</span>fields<span style=\\"color:#DB3A00;\\">.</span>tagSlugs) {</span>",
+  "filename": "<PROJECT_ROOT>/packages/gatsby/src/utils/__tests__/fixtures/blog-post.js",
+  "line": 16,
+  "message": "window is not defined",
+  "row": 17,
+  "stack": "ReferenceError: window is not defined
+    at BlogPostRoute.render (<HOME_DIR>/programs/blog/public/webpack:/lib/fixtures/blog-post.js:16:17)
+    at processChild (<HOME_DIR>/programs/blog/node_modules/react-dom/cjs/react-dom-server.node.development.js:3134:18)
+    at resolve (<HOME_DIR>/programs/blog/node_modules/react-dom/cjs/react-dom-server.node.development.js:2960:5)
+    at ReactDOMServerRenderer.render (<HOME_DIR>/programs/blog/node_modules/react-dom/cjs/react-dom-server.node.development.js:3435:22)
+    at ReactDOMServerRenderer.read (<HOME_DIR>/programs/blog/node_modules/react-dom/cjs/react-dom-server.node.development.js:3373:29)
+    at renderToString (<HOME_DIR>/programs/blog/node_modules/react-dom/cjs/react-dom-server.node.development.js:3988:27)
+    at Module.default (<HOME_DIR>/programs/blog/public/webpack:/lib/.cache/develop-static-entry.js:248:32)
+    at <HOME_DIR>/programs/blog/node_modules/gatsby/src/utils/worker/render-html.ts:32:11
+    at <HOME_DIR>/programs/blog/node_modules/gatsby/src/utils/worker/render-html.ts:25:7
+From previous event:
+    at renderHTML (<HOME_DIR>/programs/blog/node_modules/gatsby/src/utils/worker/render-html.ts:22:18)
+    at <HOME_DIR>/programs/blog/node_modules/gatsby/src/utils/develop-html-route.ts:140:36
+    at Layer.handle [as handle_request] (<HOME_DIR>/programs/blog/node_modules/express/lib/router/layer.js:95:5)
+    at next (<HOME_DIR>/programs/blog/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (<HOME_DIR>/programs/blog/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (<HOME_DIR>/programs/blog/node_modules/express/lib/router/layer.js:95:5)
+    at <HOME_DIR>/programs/blog/node_modules/express/lib/router/index.js:281:22
+    at param (<HOME_DIR>/programs/blog/node_modules/express/lib/router/index.js:354:14)
+    at param (<HOME_DIR>/programs/blog/node_modules/express/lib/router/index.js:365:14)
+    at Function.process_params (<HOME_DIR>/programs/blog/node_modules/express/lib/router/index.js:410:3)
+    at next (<HOME_DIR>/programs/blog/node_modules/express/lib/router/index.js:275:10)
+    at cors (<HOME_DIR>/programs/blog/node_modules/cors/lib/index.js:188:7)
+    at <HOME_DIR>/programs/blog/node_modules/cors/lib/index.js:224:17
+    at originCallback (<HOME_DIR>/programs/blog/node_modules/cors/lib/index.js:214:15)
+    at <HOME_DIR>/programs/blog/node_modules/cors/lib/index.js:219:13
+    at optionsCallback (<HOME_DIR>/programs/blog/node_modules/cors/lib/index.js:199:9)
+    at corsMiddleware (<HOME_DIR>/programs/blog/node_modules/cors/lib/index.js:204:7)
+    at Layer.handle [as handle_request] (<HOME_DIR>/programs/blog/node_modules/express/lib/router/layer.js:95:5)",
+  "type": "ReferenceError",
+}
+`;
