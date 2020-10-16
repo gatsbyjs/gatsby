@@ -96,11 +96,6 @@ export default (pagePath, callback) => {
     return join(`page-data`, fixedPagePath, `page-data.json`)
   }
 
-  // const getPageDataUrl = pagePath => {
-  //   const pageDataPath = getPageDataPath(pagePath)
-  //   return `${__PATH_PREFIX__}/${pageDataPath}`
-  // }
-
   const getPageData = pagePath => {
     const pageDataPath = getPageDataPath(pagePath)
     const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
@@ -113,65 +108,12 @@ export default (pagePath, callback) => {
     }
   }
 
-  // const getStaticQueryPath = hash => `page-data/sq/d/${hash}.json`
-
-  // const getStaticQueryResults = staticQueryHashes =>
-  //   staticQueryHashes.map(hash => {
-  //     const absoluteStaticQueryDataPath = join(
-  //       process.cwd(),
-  //       `public`,
-  //       getStaticQueryPath(hash)
-  //     )
-  //     try {
-  //       return JSON.parse(
-  //         fs.readFileSync(absoluteStaticQueryDataPath).toString()
-  //       )
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   })
-
-  // const appDataPath = join(`page-data`, `app-data.json`)
-
-  // const getAppDataUrl = memoize(() => {
-  //   let appData
-
-  //   try {
-  //     const absoluteAppDataPath = join(process.cwd(), `public`, appDataPath)
-  //     const appDataRaw = fs.readFileSync(absoluteAppDataPath)
-  //     appData = JSON.parse(appDataRaw.toString())
-
-  //     if (!appData) {
-  //       return null
-  //     }
-  //   } catch (err) {
-  //     return null
-  //   }
-
-  //   return `${__PATH_PREFIX__}/${appDataPath}`
-  // })
-
   const pageData = getPageData(pagePath)
-  // const pageDataUrl = getPageDataUrl(pagePath)
-
-  // const appDataUrl = getAppDataUrl()
 
   const {
     componentChunkName,
     //  staticQueryHashes = []
   } = pageData
-
-  // const staticQueryData = getStaticQueryResults(staticQueryHashes)
-
-  // console.log({
-  //   staticQueryData,
-  //   pageData,
-  // })
-
-  // const pageDataResult = {
-  //   ...pageData,
-  //   staticQueryResults: staticQueryData,
-  // }
 
   const createElement = React.createElement
 
@@ -192,10 +134,6 @@ export default (pagePath, callback) => {
         syncRequires.components[componentChunkName],
         props
       )
-
-      // console.log({
-      //   element: syncRequires.components[componentChunkName].toString(),
-      // })
 
       const wrappedPage = apiRunner(
         `wrapPageElement`,
