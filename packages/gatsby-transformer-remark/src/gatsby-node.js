@@ -1,5 +1,10 @@
+const {
+  onCreateNode,
+  unstable_shouldOnCreateNode,
+} = require(`./on-node-create`)
+exports.onCreateNode = onCreateNode
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 exports.createSchemaCustomization = require(`./create-schema-customization`)
-exports.onCreateNode = require(`./on-node-create`)
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 
 if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
