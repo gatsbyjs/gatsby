@@ -593,17 +593,18 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
 
           // Query for referenced nodes
           const nodeLocale = parent.node_locale
-          const references = []
 
-          getNodesByType(`ContentfulEntry`).forEach(node => {
-            if (
-              node.node_locale === nodeLocale &&
-              rawEntries.includes(node.contentful_id)
-            ) {
-              references.push(node)
-            }
+          const references = await context.nodeModel.runQuery({
+            query: {
+              filter: {
+                contentful_id: { in: rawEntries },
+                node_locale: { eq: nodeLocale },
+              },
+            },
+            type: `ContentfulEntry`,
           })
 
+          // Add asset referencees
           getNodesByType(`ContentfulAsset`).forEach(node => {
             if (
               node.node_locale === nodeLocale &&

@@ -314,6 +314,7 @@ exports.sourceNodes = async (
   interface ContentfulEntry @nodeInterface {
     contentful_id: String!
     id: ID!
+    node_locale: String!
   }
 `)
 
@@ -341,6 +342,7 @@ exports.sourceNodes = async (
       fields: {
         contentful_id: { type: `String!` },
         id: { type: `ID!` },
+        node_locale: { type: `String!` },
       },
       interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
     })
