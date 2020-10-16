@@ -459,7 +459,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     const pipeline = sharp(file.absolutePath)
     metadata = await pipeline.metadata()
     if (args.dominantColor) {
-      dominantColor = `000000`
+      dominantColor = `#000000`
       // const {
       //   dominant: { r, g, b },
       // } = await pipeline.stats()
@@ -678,7 +678,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
       //   dominant: { r, g, b },
       // } = await sharp(file.absolutePath).stats()
       // dominantColor = rgbToHex(r, g, b)
-      dominantColor = `000000`
+      dominantColor = `#000000`
     }
   } catch (err) {
     reporter.warn(

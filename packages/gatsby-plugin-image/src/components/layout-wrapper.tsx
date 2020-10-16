@@ -46,7 +46,7 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
   let sizer: JSX.Element | null = null
   if (layout === `fluid`) {
     sizer = (
-      <div aria-hidden style={{ paddingTop: `${(width / height) * 100}%` }} />
+      <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
   }
   if (layout === `constrained`) {

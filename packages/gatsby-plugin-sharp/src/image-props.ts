@@ -49,8 +49,6 @@ export async function generateImageData({
   const imageProps: ISharpGatsbyImageData = {
     layout,
     placeholder: undefined,
-    width: imageData.width,
-    height: imageData.height,
     images: {
       fallback: {
         src: imageData.src,
@@ -61,9 +59,22 @@ export async function generateImageData({
     },
   }
 
-  if (layout === `fluid`) {
-    imageProps.width = 1
-    imageProps.height = imageData.aspectRatio
+  imageData.aspectRatio = imageData.aspectRatio || 1
+
+  switch (layout) {
+    case `fixed`:
+      imageProps.width = imageData.width
+      imageProps.height = imageData.height
+      break
+
+    case `fluid`:
+      imageProps.width = 1
+      imageProps.height = 1 / imageData.aspectRatio
+      break
+
+    case `constrained`:
+      imageProps.width = args.maxWidth || imageData.presentationWidth || 1
+      imageProps.height = (imageProps.width || 1) / imageData.aspectRatio
   }
 
   if (placeholder === `tracedSVG`) {

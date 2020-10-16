@@ -53,6 +53,12 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   onLoad: customOnLoad,
   ...props
 }) {
+  if (!image) {
+    if (process.env.NODE_ENV === `development`) {
+      console.warn(`[gatsby-plugin-image] Missing image prop`)
+    }
+    return null
+  }
   const { width, height, layout, images } = image
 
   const root = useRef<HTMLElement>()
