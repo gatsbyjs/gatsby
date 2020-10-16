@@ -18,6 +18,7 @@ import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
+  userGets7DayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
@@ -352,7 +353,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     report.info(`.cache/deletedPages.txt created`)
   }
 
-  if (await userPassesFeedbackRequestHeuristic()) {
+  if (
+    (await userPassesFeedbackRequestHeuristic()) ||
+    (await userGets7DayFeedback())
+  ) {
     showFeedbackRequest()
   }
 }

@@ -8,6 +8,7 @@ import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
+  userGets7DayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
@@ -86,7 +87,10 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   process.on(
     `SIGINT`,
     async (): Promise<void> => {
-      if (await userPassesFeedbackRequestHeuristic()) {
+      if (
+        (await userPassesFeedbackRequestHeuristic()) ||
+        (await userGets7DayFeedback())
+      ) {
         showFeedbackRequest()
       }
       process.exit(0)

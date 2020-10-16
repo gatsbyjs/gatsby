@@ -1,10 +1,12 @@
 import report from "gatsby-cli/lib/reporter"
-import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
+import { getConfigStore, getGatsbyVersion, isCI } from "gatsby-core-utils"
 import latestVersion from "latest-version"
 import getDayOfYear from "date-fns/getDayOfYear"
 
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
+const firstDateKey = `feedback.firstCheckDate`
+const sevenDayKey = `feedback.hadSevenDayFeedback`
 
 // This function is designed to be used by `gatsby feedback --disable`
 // and `gatsby feedback --enable`. This key is used to determine
@@ -59,13 +61,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     return false
   }
 
-  // Heuristic 2
-  if (getConfigStore().get(feedbackKey) === true) {
-    return false
-  }
-
-  // Heuristic 3
-  if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
+  if (isFeedbackDisabled()) {
     return false
   }
 
@@ -109,5 +105,41 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
 
   // If all of the above passed, then the user is able to be prompted
   // for feedback
+  return true
+}
+
+function isFeedbackDisabled(): boolean {
+  // Heuristic 2
+  if (getConfigStore().get(feedbackKey) === true) {
+    return true
+  }
+
+  // Heuristic 3
+  if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
+    return true
+  }
+  return false
+}
+
+export async function userGets7DayFeedback(): Promise<boolean> {
+  if (isCI || isFeedbackDisabled()) return false
+
+  if (getConfigStore().get(sevenDayKey)) return false
+
+  const firstDateValue = getConfigStore().get(firstDateKey)
+
+  if (!firstDateValue) {
+    getConfigStore().set(firstDateKey, Date.now()) // set this for the first time
+    return false
+  } else {
+    const lastDate = new Date(firstDateValue)
+    const sevenDaysAgo = new Date()
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+    if (lastDate > sevenDaysAgo) {
+      return false
+    }
+  }
+  getConfigStore().set(sevenDayKey, true) // ensure they don't get this survey again
   return true
 }
