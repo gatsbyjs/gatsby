@@ -1,4 +1,4 @@
-import { MachineConfig, AnyEventObject, forwardTo, Machine, send } from "xstate"
+import { MachineConfig, AnyEventObject, forwardTo, Machine } from "xstate"
 import { IDataLayerContext } from "../data-layer/types"
 import { IQueryRunningContext } from "../query-running/types"
 import { IWaitingContext } from "../waiting/types"

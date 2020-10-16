@@ -1,4 +1,3 @@
-import { InvokeCallback } from "xstate"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
 import fs from "fs-extra"
@@ -120,9 +119,9 @@ const parseError = function (err, directory): IParsedError {
   return data
 }
 
-export const route = ({ app, program, directory, store }) => {
+export const route = ({ app, program, store }) => {
   // Render an HTML page and serve it.
-  app.get(`*`, async (req, res, next) => {
+  return app.get(`*`, async (req, res, next) => {
     const { pages } = store.getState()
 
     if (!pages.has(req.path)) {

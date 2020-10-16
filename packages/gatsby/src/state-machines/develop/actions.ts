@@ -1,5 +1,4 @@
 import {
-  actions
   assign,
   AnyEventObject,
   ActionFunction,
@@ -17,8 +16,6 @@ import reporter from "gatsby-cli/lib/reporter"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
-
-const { pure } = actions;
 
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
