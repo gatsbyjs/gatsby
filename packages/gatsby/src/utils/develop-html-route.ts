@@ -122,7 +122,7 @@ export const parseError = function (err, directory): IParsedError {
   return data
 }
 
-export const route = ({ app, program, store }) =>
+export const route = ({ app, program, store }): any =>
   // Render an HTML page and serve it.
   app.get(`*`, async (req, res, next) => {
     const { pages } = store.getState()
