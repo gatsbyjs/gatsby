@@ -228,24 +228,28 @@ export default (pagePath, callback) => {
     }
   ).pop()
 
-  // Let the site or plugin render the page component.
-  apiRunner(`replaceRenderer`, {
-    bodyComponent,
-    replaceBodyHTMLString,
-    setHeadComponents,
-    setHtmlAttributes,
-    setBodyAttributes,
-    setPreBodyComponents,
-    setPostBodyComponents,
-    setBodyProps,
-    pathname: pagePath,
-    pathPrefix: __PATH_PREFIX__,
-  })
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    // Let the site or plugin render the page component.
+    apiRunner(`replaceRenderer`, {
+      bodyComponent,
+      replaceBodyHTMLString,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      setPreBodyComponents,
+      setPostBodyComponents,
+      setBodyProps,
+      pathname: pagePath,
+      pathPrefix: __PATH_PREFIX__,
+    })
+  }
 
   // If no one stepped up, we'll handle it.
   if (!bodyHtml) {
     try {
-      bodyHtml = renderToString(bodyComponent)
+      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        bodyHtml = renderToString(bodyComponent)
+      }
     } catch (e) {
       // ignore @reach/router redirect errors
       if (!isRedirect(e)) throw e
@@ -274,7 +278,7 @@ export default (pagePath, callback) => {
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
-    body: bodyHtml,
+    body: process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? bodyHtml : ``,
     headComponents: headComponents.concat([
       <script key={`io`} src="/socket.io/socket.io.js" />,
     ]),
