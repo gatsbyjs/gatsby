@@ -53,6 +53,7 @@ Object {
 
 exports[`report.error handles "structuredError" signature correctly 1`] = `
 Object {
+  "category": "USER",
   "code": "95312",
   "context": Object {
     "ref": "navigator",

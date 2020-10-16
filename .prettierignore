@@ -10,7 +10,7 @@ benchmarks/**/public
 e2e-tests/**/public
 examples/**/public
 integration-tests/**/public
-www/public
+www
 
 # cache-dirs
 **/.cache

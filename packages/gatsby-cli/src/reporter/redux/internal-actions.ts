@@ -112,7 +112,7 @@ export const createLog = ({
   group?: string
   code?: string
   type?: string
-  category?: ErrorCategory
+  category?: keyof typeof ErrorCategory
   filePath?: string
   location?: IStructuredError["location"]
   docsUrl?: string

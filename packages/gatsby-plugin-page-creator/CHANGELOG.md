@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.32...gatsby-plugin-page-creator@2.3.33) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** Use correct queryAll name ([#27487](https://github.com/gatsbyjs/gatsby/issues/27487)) ([a70a66e](https://github.com/gatsbyjs/gatsby/commit/a70a66e98ed0a7f8d8af4490d8bfa3fb2e8cb8db))
+
 ## [2.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.31...gatsby-plugin-page-creator@2.3.32) (2020-10-08)
 
 ### Bug Fixes
