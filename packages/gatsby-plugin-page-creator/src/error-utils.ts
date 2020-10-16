@@ -11,6 +11,12 @@ export const CODES = {
   NonExistingPath: `12108`,
 }
 
+export const pluginPrefix = `gatsby-plugin-page-creator`
+
+export function prefixId(id: string, reporter: Reporter): string {
+  return reporter.setErrorMap ? id : `${pluginPrefix}_${id}`
+}
+
 // TODO: Refactor to use contextual data instead of only context.sourceMessage
 // once reporter.setErrorMap is guaranteed to be available
 export const ERROR_MAP = {

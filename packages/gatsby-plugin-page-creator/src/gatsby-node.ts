@@ -16,7 +16,7 @@ import { createPage } from "./create-page-wrapper"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
-import { CODES, ERROR_MAP } from "./error-utils"
+import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -51,7 +51,7 @@ export async function createPagesStatefully(
 
     if (!pagesPath) {
       reporter.panic({
-        id: CODES.RequiredPath,
+        id: prefixId(CODES.RequiredPath, reporter),
         context: {
           sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
@@ -63,7 +63,7 @@ See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`,
     // Validate that the path exists.
     if (pathCheck && !existsSync(pagesPath)) {
       reporter.panic({
-        id: CODES.NonExistingPath,
+        id: prefixId(CODES.NonExistingPath, reporter),
         context: {
           sourceMessage: `The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
@@ -103,7 +103,7 @@ Please pick a path to an existing directory.`,
           }
         } catch (e) {
           reporter.panic({
-            id: CODES.Generic,
+            id: prefixId(CODES.Generic, reporter),
             context: {
               sourceMessage: e.message,
             },
@@ -125,7 +125,7 @@ Please pick a path to an existing directory.`,
           knownFiles.delete(removedPath)
         } catch (e) {
           reporter.panic({
-            id: CODES.Generic,
+            id: prefixId(CODES.Generic, reporter),
             context: {
               sourceMessage: e.message,
             },
@@ -135,7 +135,7 @@ Please pick a path to an existing directory.`,
     ).then(() => doneCb(null, null))
   } catch (e) {
     reporter.panic({
-      id: CODES.Generic,
+      id: prefixId(CODES.Generic, reporter),
       context: {
         sourceMessage: e.message,
       },
@@ -188,7 +188,7 @@ export function setFieldsOnGraphQLNodeType({
     return {}
   } catch (e) {
     reporter.panic({
-      id: CODES.GraphQLResolver,
+      id: prefixId(CODES.GraphQLResolver, reporter),
       context: {
         sourceMessage: e.message,
       },
@@ -234,7 +234,7 @@ export async function onPreInit(
     )
   } catch (e) {
     reporter.panic({
-      id: CODES.Generic,
+      id: prefixId(CODES.Generic, reporter),
       context: {
         sourceMessage: e.message,
       },

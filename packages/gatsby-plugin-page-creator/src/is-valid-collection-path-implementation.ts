@@ -1,6 +1,6 @@
 import sysPath from "path"
 import { Reporter } from "gatsby"
-import { CODES } from "./error-utils"
+import { CODES, prefixId } from "./error-utils"
 
 // This file is a helper for consumers. It's going to log an error to them if they
 // in any way have an incorrect filepath setup for us to predictably use collection
@@ -30,7 +30,7 @@ export function isValidCollectionPathImplementation(
       assert(closer, `}`)
     } catch (e) {
       reporter.panicOnBuild({
-        id: CODES.CollectionPath,
+        id: prefixId(CODES.CollectionPath, reporter),
         context: {
           sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`,
         },

@@ -9,7 +9,7 @@ import { derivePath } from "./derive-path"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
-import { CODES } from "./error-utils"
+import { CODES, prefixId } from "./error-utils"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
@@ -56,7 +56,7 @@ export async function createPagesFromCollectionBuilder(
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     reporter.error({
-      id: CODES.CollectionBuilder,
+      id: prefixId(CODES.CollectionBuilder, reporter),
       context: {
         sourceMessage: `Tried to create pages from the collection builder.
 Unfortunately, the query came back empty. There may be an error in your query:
