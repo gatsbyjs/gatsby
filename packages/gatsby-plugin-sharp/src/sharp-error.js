@@ -23,3 +23,5 @@ ${err.message}`
     Error.captureStackTrace(this, SharpError)
   }
 }
+
+console.log(`...`)
