@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.79...gatsby@2.24.80) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby:** refresh browser when receiving update and runtime errored ([#27467](https://github.com/gatsbyjs/gatsby/issues/27467)) ([f227e85](https://github.com/gatsbyjs/gatsby/commit/f227e85728168d104ed0a7982823923dcd3bba62))
+
+### Performance Improvements
+
+- **gatsby:** test sync before calling onCreateNode ([#27442](https://github.com/gatsbyjs/gatsby/issues/27442)) ([6400383](https://github.com/gatsbyjs/gatsby/commit/6400383287db9967a7124df7fb0d096408372b95))
+
 ## [2.24.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.78...gatsby@2.24.79) (2020-10-16)
 
 ### Bug Fixes

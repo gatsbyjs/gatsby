@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.41...gatsby-transformer-remark@2.8.42) (2020-10-16)
+
+### Performance Improvements
+
+- **gatsby:** test sync before calling onCreateNode ([#27442](https://github.com/gatsbyjs/gatsby/issues/27442)) ([6400383](https://github.com/gatsbyjs/gatsby/commit/6400383287db9967a7124df7fb0d096408372b95))
+
 ## [2.8.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.40...gatsby-transformer-remark@2.8.41) (2020-10-16)
 
 **Note:** Version bump only for package gatsby-transformer-remark
