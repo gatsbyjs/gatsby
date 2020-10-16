@@ -152,15 +152,6 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .default(true),
       // default plugins passed by gatsby
       plugins: Joi.array(),
-      richText: Joi.object()
-        .keys({
-          resolveFieldLocales: Joi.boolean()
-            .description(
-              `If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to \`true\`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.`
-            )
-            .default(false),
-        })
-        .default({}),
     })
     .external(validateContentfulAccess)
 
