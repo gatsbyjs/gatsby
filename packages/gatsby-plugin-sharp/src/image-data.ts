@@ -29,15 +29,22 @@ export async function generateImageData({
 }): Promise<ISharpGatsbyImageData | undefined> {
   const isResponsive = layout !== `fixed`
 
+  // TODO: remove this and replace with:
+  // const pipeline = sharp(file)
   const resize = isResponsive ? fluid : fixed
-
+  // TODO: actually call-out to get the base64, if needed
   if (placeholder !== `blurred`) {
     args.base64 = false
   }
+  // TODO: Do the actual dominantColor calculation here
 
   if (placeholder === `dominantColor`) {
     args.dominantColor = true
   }
+
+  // TODO: use pipeline.metadata() to get source image sizes
+  // then use calculateImageSizes() to get output sizes
+  // then do everything else in fluid() except the size calculations
 
   const imageData = await resize({ file, args, reporter, cache })
 
