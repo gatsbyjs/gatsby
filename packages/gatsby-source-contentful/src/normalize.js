@@ -206,7 +206,7 @@ function prepareTextNode(node, key, text, createNodeId) {
 }
 
 function prepareRichTextNode(node, key, content, createNodeId) {
-  const raw = stringify(content.raw)
+  const raw = stringify(content)
   const richTextNode = {
     id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,

@@ -417,28 +417,29 @@ exports.sourceNodes = async (
   mergedSyncData.entries = res.items
 
   // Inject raw API output to rich text fields
-  const richTextFields = contentTypeItems.reduce((fields, contentType) => {
-    return {
-      ...fields,
-      [contentType.sys.id]: contentType.fields
+  const richTextFieldMap = new Map()
+  contentTypeItems.forEach(contentType => {
+    richTextFieldMap.set(
+      contentType.sys.id,
+      contentType.fields
         .filter(field => field.type === `RichText`)
-        .map(field => field.id),
-    }
-  }, {})
+        .map(field => field.id)
+    )
+  })
 
   mergedSyncData.entries.forEach(entry => {
-    richTextFields[entry.sys.contentType.sys.id].forEach(richTextFieldId => {
-      if (entry.fields[richTextFieldId]) {
-        Object.keys(entry.fields[richTextFieldId]).map(locale => {
-          const rawEntry = mergedSyncDataRaw.entries.find(
-            rawEntry => entry.sys.id === rawEntry.sys.id
-          )
-          const rawValue = rawEntry.fields[richTextFieldId][locale]
-
-          entry.fields[richTextFieldId][locale].raw = rawValue
-        })
-      }
-    })
+    const contentTypeId = entry.sys.contentType.sys.id
+    if (richTextFieldMap.has(contentTypeId)) {
+      richTextFieldMap.get(contentTypeId).forEach(richTextFieldId => {
+        if (!entry.fields[richTextFieldId]) {
+          return
+        }
+        const rawEntry = mergedSyncDataRaw.entries.find(
+          rawEntry => entry.sys.id === rawEntry.sys.id
+        )
+        entry.fields[richTextFieldId] = rawEntry.fields[richTextFieldId]
+      })
+    }
   })
 
   const entryList = normalize.buildEntryList({
