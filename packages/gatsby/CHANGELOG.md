@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.78...gatsby@2.24.79) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby:** add runtime check for react 17 ([#27468](https://github.com/gatsbyjs/gatsby/issues/27468)) ([239d539](https://github.com/gatsbyjs/gatsby/commit/239d539b76421f210a0db901786021ac45a42ac7))
+
 ## [2.24.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.77...gatsby@2.24.78) (2020-10-15)
 
 ### Features
