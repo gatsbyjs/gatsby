@@ -3,6 +3,7 @@ import path from "path"
 import fs from "fs-extra"
 import { codeFrameColumns } from "@babel/code-frame"
 import ansiHTML from "ansi-html"
+const { trackCli } = require(`gatsby-telemetry`)
 
 import { renderHTML } from "./worker/render-html"
 import { Stage } from "../commands/types"
@@ -125,6 +126,7 @@ export const parseError = function (err, directory): IParsedError {
 export const route = ({ app, program, store }): any =>
   // Render an HTML page and serve it.
   app.get(`*`, async (req, res, next) => {
+    trackCli(`GATSBY_EXPERIMENTAL_DEV_SSR`)
     const { pages } = store.getState()
 
     if (!pages.has(req.path)) {
