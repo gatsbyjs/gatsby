@@ -124,6 +124,7 @@ describe(`Load plugins`, () => {
             id: ``,
             name: `gatsby-plugin-typescript`,
             nodeAPIs: [
+              `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
               `onCreateWebpackConfig`,
@@ -162,6 +163,7 @@ describe(`Load plugins`, () => {
             id: ``,
             name: `gatsby-plugin-typescript`,
             nodeAPIs: [
+              `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
               `onCreateWebpackConfig`,
@@ -268,17 +270,6 @@ describe(`Load plugins`, () => {
             "context": Object {
               "pluginName": "gatsby-plugin-google-analytics",
               "validationErrors": Array [
-                Object {
-                  "context": Object {
-                    "key": "trackingId",
-                    "label": "trackingId",
-                  },
-                  "message": "\\"trackingId\\" is required",
-                  "path": Array [
-                    "trackingId",
-                  ],
-                  "type": "any.required",
-                },
                 Object {
                   "context": Object {
                     "key": "anonymize",

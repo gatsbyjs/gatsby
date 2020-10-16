@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "0.2.27",
+  "version": "0.2.33",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "gatsby": "^2.24.73"
+    "gatsby": "^2.24.79"
   },
   "files": [
     "dist/",

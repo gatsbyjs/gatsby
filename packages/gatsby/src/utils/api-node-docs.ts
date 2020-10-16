@@ -430,8 +430,16 @@ export const onPreExtractQueries = true
 export const onCreateDevServer = true
 
 /**
- * Called during `gatsby develop` bootstrap to get and validate a plugins options schema
- * @param {Joi} $0.Joi The instance of Joi to define the schema with
- *
+ * Run during the bootstrap phase. Plugins can use this to define a schema for their options using
+ * [Joi](https://joi.dev) to validate the options users pass to the plugin.
+ * @param {object} $0
+ * @param {Joi} $0.Joi The instance of [Joi](https://joi.dev) to define the schema
+ * @example
+ * exports.pluginOptionsSchema = ({ Joi }) => {
+ *   return Joi.object({
+ *     // Validate that the anonymize option is defined by the user and is a boolean
+ *     anonymize: Joi.boolean().required(),
+ *   })
+ * }
  */
 export const pluginOptionsSchema = true
