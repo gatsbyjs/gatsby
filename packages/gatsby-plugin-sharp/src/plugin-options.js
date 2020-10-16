@@ -51,7 +51,7 @@ exports.createTransformObject = args => {
 
   // get all non falsey values
   const filteredOptions = Object.keys(options).reduce((obj, key) => {
-    if (test[key]) obj[key] = options[key]
+    if (options[key]) obj[key] = options[key]
     return obj
   }, {})
   return filteredOptions
