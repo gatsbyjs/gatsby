@@ -11,6 +11,5 @@ export async function calculateDirtyQueries({
   assertStore(store)
   const state = store.getState()
   const queryIds = calcDirtyQueryIds(state)
-  console.log(`Dirty queries: `, queryIds)
   return { queryIds: groupQueryIds(queryIds) }
 }

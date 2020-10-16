@@ -59,10 +59,12 @@ Object {
     "byNode": Map {},
     "trackedComponents": Map {
       "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
-        "queries": Set {
+        "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+        "errors": 0,
+        "pages": Set {
           "/my-sweet-new-page/",
         },
-        "queryText": "",
+        "query": "",
       },
     },
     "trackedQueries": Map {
