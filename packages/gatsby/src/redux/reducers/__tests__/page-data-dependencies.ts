@@ -3,6 +3,10 @@ import {
   queryStart,
   pageQueryRun,
   replaceStaticQuery,
+  queryExtracted,
+  queryExtractionBabelError,
+  queryExtractionGraphQLError,
+  queryExtractedBabelSuccess,
 } from "../../actions/internal"
 
 import {
@@ -19,6 +23,7 @@ type QueriesState = IGatsbyState["queries"]
 let state: QueriesState
 let Pages
 let StaticQueries
+let ComponentQueries
 beforeEach(() => {
   state = reducer(undefined, `@@setup` as any)
   Pages = {
@@ -32,20 +37,39 @@ beforeEach(() => {
       componentPath: `/bar.js`,
       component: `/bar.js`,
     },
+    bar2: {
+      path: `/bar2`,
+      componentPath: `/bar.js`,
+      component: `/bar.js`,
+    },
+  }
+  ComponentQueries = {
+    foo: {
+      componentPath: `/foo.js`,
+      query: `{ allFoo { nodes { foo } } }`,
+    },
+    fooEdited: {
+      componentPath: `/foo.js`,
+      query: `{ allFoo { edges { nodes { foo } } } }`,
+    },
+    bar: {
+      componentPath: `/bar.js`,
+      query: `{ allBar { nodes { bar } } }`,
+    },
   }
   StaticQueries = {
     q1: {
       id: `sq--q1`,
       name: `q1-name`,
       componentPath: `/static-query-component1.js`,
-      query: `{ allFoo { nodes { foo } } }`,
+      query: `{ allFooStatic { nodes { foo } } }`,
       hash: `q1-hash`,
     },
     q2: {
       id: `sq--q2`,
       name: `q2-name`,
       componentPath: `/static-query-component2.js`,
-      query: `{ allBar { nodes { bar } } }`,
+      query: `{ allBarStatic { nodes { bar } } }`,
       hash: `q2-hash`,
     },
   }
@@ -74,8 +98,8 @@ describe(`create page`, () => {
 
     expect(state).toMatchObject({
       trackedQueries: new Map([
-        [`/foo`, { dirty: 1, errors: 0 }],
-        [`/bar`, { dirty: 1, errors: 0 }],
+        [`/foo`, { dirty: 1 }],
+        [`/bar`, { dirty: 1 }],
       ]),
     })
   })
@@ -83,24 +107,22 @@ describe(`create page`, () => {
   it(`does not mark existing page query as dirty`, () => {
     state = createPage(state, Pages.foo)
     state = runQuery(state, { path: Pages.foo.path })
-    expect(state.trackedQueries.get(`/foo`)!.dirty).toEqual(0) // sanity-check
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
     state = createPage(state, Pages.foo)
 
     expect(state.trackedQueries.get(`/foo`)).toEqual({
       dirty: 0,
-      errors: 0,
     })
   })
 
   it(`marks existing page query with modified context as dirty`, () => {
     state = createPage(state, Pages.foo)
     state = runQuery(state, { path: Pages.foo.path })
-    expect(state.trackedQueries.get(`/foo`)!.dirty).toEqual(0) // sanity-check
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
     state = createPage(state, Pages.foo, { contextModified: true })
 
     expect(state.trackedQueries.get(`/foo`)).toEqual({
       dirty: 1,
-      errors: 0,
     })
   })
 
@@ -116,11 +138,13 @@ describe(`create page`, () => {
       componentPath: `/foo.js`,
       pages: new Set([`/foo`]),
       query: ``,
+      errors: 0,
     })
     expect(state.trackedComponents.get(`/bar.js`)).toEqual({
       componentPath: `/bar.js`,
       pages: new Set([`/bar`]),
       query: ``,
+      errors: 0,
     })
   })
 
@@ -174,14 +198,17 @@ describe(`replace static query`, () => {
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
     state = reducer(state, replaceStaticQuery(StaticQueries.q2))
 
-    expect([...state.trackedQueries.keys()]).toEqual([`sq--q1`, `sq--q2`])
+    expect(Array.from(state.trackedQueries.keys())).toEqual([
+      `sq--q1`,
+      `sq--q2`,
+    ])
   })
 
   it(`marks new static query text as dirty`, () => {
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
 
     expect(state).toMatchObject({
-      trackedQueries: new Map([[`sq--q1`, { dirty: 2, errors: 0 }]]),
+      trackedQueries: new Map([[`sq--q1`, { dirty: 2 }]]),
     })
   })
 
@@ -195,12 +222,11 @@ describe(`replace static query`, () => {
       componentPath: StaticQueries.q1.componentPath,
       isPage: false,
     })
-    expect(state.trackedQueries.get(`sq--q1`)!.dirty).toEqual(0) // sanity-check
+    expect(state.trackedQueries.get(`sq--q1`)?.dirty).toEqual(0) // sanity-check
 
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
     expect(state.trackedQueries.get(`sq--q1`)).toEqual({
       dirty: 2,
-      errors: 0,
     })
   })
 
@@ -238,7 +264,7 @@ describe(`remove static query`, () => {
 
   it(`removes static query from tracked queries`, () => {
     state = removeStaticQuery(state, StaticQueries.q1.id)
-    expect([...state.trackedQueries.keys()]).toEqual([`sq--q2`])
+    expect(Array.from(state.trackedQueries.keys())).toEqual([`sq--q2`])
   })
 
   // TODO: see a note in the "replace static query"
@@ -259,7 +285,166 @@ describe(`remove static query`, () => {
   })
 })
 
-describe(`query extraction`, () => {})
+describe(`query extraction`, () => {
+  // QUERY_EXTRACTED is only called for page queries
+  // static queries are handled separately via REPLACE_STATIC_QUERY 🤷‍
+
+  beforeEach(() => {
+    state = createPage(state, Pages.foo)
+    state = createPage(state, Pages.bar)
+    state = createPage(state, Pages.bar2)
+  })
+
+  it(`saves query text on the first extraction`, () => {
+    state = reducer(state, queryExtracted(ComponentQueries.foo, {} as any))
+
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      componentPath: `/foo.js`,
+      query: `{ allFoo { nodes { foo } } }`,
+    })
+  })
+
+  it(`marks all page queries associated with the component as dirty on the first run`, () => {
+    state = reducer(state, queryExtracted(ComponentQueries.bar, {} as any))
+
+    expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: 3 })
+    expect(state.trackedQueries.get(`/bar2`)).toEqual({ dirty: 3 })
+    // Sanity check
+    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 1 })
+  })
+
+  it(`doesn't mark page query as dirty if query text didn't change`, () => {
+    state = editFooQuery(state, ComponentQueries.foo)
+
+    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 0 })
+    // sanity-check (we didn't run or extract /bar)
+    expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: 1 })
+  })
+
+  it(`marks all page queries associated with the component as dirty when query text changes`, () => {
+    state = editFooQuery(state, ComponentQueries.fooEdited)
+
+    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 2 })
+  })
+
+  it.skip(`marks all static queries associated with this component as dirty`, () => {
+    // TODO: when we merge static queries and page queries together
+  })
+
+  it(`saves query text when it changes`, () => {
+    state = editFooQuery(state, ComponentQueries.fooEdited)
+
+    expect(state.trackedComponents.get(`/foo.js`)?.query).toEqual(
+      ComponentQueries.fooEdited.query
+    )
+  })
+
+  it(`does not change error status of the component (GraphQL)`, () => {
+    // We call both actions in the real world on extraction failure
+    state = reducer(
+      state,
+      queryExtractionGraphQLError(
+        { componentPath: `/foo.js`, error: `GraphQL syntax error` },
+        {} as any
+      )
+    )
+    state = reducer(
+      state,
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+    )
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      errors: 1,
+      query: ``,
+    })
+  })
+
+  it(`does not change error status of the component (babel)`, () => {
+    state = reducer(
+      state,
+      queryExtractionBabelError(
+        { componentPath: `/foo.js`, error: new Error(`Babel error`) },
+        {} as any
+      )
+    )
+    state = reducer(
+      state,
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+    )
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      errors: 1,
+      query: ``,
+    })
+  })
+
+  function editFooQuery(state, newFoo): QueriesState {
+    state = reducer(state, queryExtracted(ComponentQueries.foo, {} as any))
+    state = runQuery(state, { path: Pages.foo.path })
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
+    return reducer(state, queryExtracted(newFoo, {} as any))
+  }
+})
+
+describe(`query extraction error`, () => {
+  it(`marks component with error (babel)`, () => {
+    state = reducer(
+      state,
+      queryExtractionBabelError(
+        { componentPath: `/foo.js`, error: new Error(`babel error`) },
+        {} as any
+      )
+    )
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      errors: 1,
+    })
+  })
+
+  it(`marks component with error (GraphQL)`, () => {
+    state = reducer(
+      state,
+      queryExtractionGraphQLError(
+        { componentPath: `/foo.js`, error: `GraphQL syntax error` },
+        {} as any
+      )
+    )
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      errors: 1,
+    })
+  })
+
+  it(`resets the error on successful extraction (babel)`, () => {
+    state = reducer(
+      state,
+      queryExtractionBabelError(
+        { componentPath: `/foo.js`, error: new Error(`babel error`) },
+        {} as any
+      )
+    )
+    state = reducer(
+      state,
+      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any)
+    )
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      errors: 0,
+    })
+  })
+
+  it(`resets the error on successful extraction (GraphQL)`, () => {
+    state = reducer(
+      state,
+      queryExtractionGraphQLError(
+        { componentPath: `/foo.js`, error: `GraphQL syntax error` },
+        {} as any
+      )
+    )
+    state = reducer(
+      state,
+      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any)
+    )
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      errors: 0,
+    })
+  })
+})
 
 describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {
@@ -373,14 +558,6 @@ describe(`add page data dependency`, () => {
 
     expect(state).toMatchSnapshot()
   })
-})
-
-describe(`TODO`, () => {
-  it.todo(`handles not running queries during bootstrap`)
-  it.todo(`won't run queries if the page component has a JS error`)
-  it.todo(`won't queue extra query if new page is created in bootstrap`)
-  it.todo(`will queue query if new page is created after bootstrap`)
-  it.todo(`will queue query when page context is changed`)
 })
 
 function createPage(
