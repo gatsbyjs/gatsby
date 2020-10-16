@@ -88,6 +88,7 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
+const DEFAULT_FLUID_SIZE = 800
 export const calculateImageSizes = ({
   file,
   imgDimensions,
@@ -99,7 +100,7 @@ export const calculateImageSizes = ({
   outputPixelDensities = [0.25, 0.5, 1, 2, 3],
   srcSetBreakpoints,
 }) => {
-  if ((maxWidth === 0) | (width === 0) | (maxHeight === 0) | (height === 0)) {
+  if (maxWidth === 0 || width === 0 || maxHeight === 0 || height === 0) {
     throw new Error(`provided image dimensions must be positive numbers (> 0)`)
   }
 
@@ -143,7 +144,7 @@ export const calculateImageSizes = ({
                      If possible, replace the current image with a larger one.
                      `)
     }
-  } else if (layout === `fluid`) {
+  } else if (layout === `fluid` || layout === `constrained`) {
     // FLUID
     // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
     const fixedDimension = maxWidth === undefined ? `maxHeight` : `maxWidth`
@@ -152,7 +153,7 @@ export const calculateImageSizes = ({
       : maxHeight * aspectRatio
     maxHeight = maxHeight
       ? Math.min(maxHeight, imgDimensions.height)
-      : (maxHeight = undefined)
+      : DEFAULT_FLUID_SIZE // if all else fails, use this size
 
     const fixedValue = fixedDimension === `maxHeight` ? maxHeight : maxWidth
     if (fixedValue < 1) {
@@ -171,21 +172,18 @@ export const calculateImageSizes = ({
     // image processing time (Sharp has optimizations thankfully for creating
     // multiple sizes of the same input file)
 
-    // use default pixel densities if no custom breakpoints are specified
-    if (!srcSetBreakpoints || !srcSetBreakpoints.length) {
-      sizes = densities.map(density => density * fixedValue)
-      sizes = sizes.filter(size => size <= imgDimensions.width)
-    } else {
-      sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
+    sizes = densities.map(density => density * fixedValue)
+    // add breakpoint set to sizes if they are specified
+    if (srcSetBreakpoints) {
+      srcSetBreakpoints.forEach(breakpoint => sizes.push(breakpoint))
     }
+    sizes = sizes.filter(size => size <= imgDimensions.width)
 
     // ensure that the size passed in is included in the final output
     if (!sizes.includes(maxWidth)) {
       sizes.push(maxWidth)
     }
     sizes = sizes.sort((a, b) => a - b)
-  } else if (layout === `constrained`) {
-    // TODO
   } else {
     console.warn(
       `No valid layout was provided. Valid image layouts are fixed, fluid, and constrained.`

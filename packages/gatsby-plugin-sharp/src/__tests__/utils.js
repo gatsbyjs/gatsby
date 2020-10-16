@@ -106,7 +106,7 @@ describe(`calculateImageSizes (fixed)`, () => {
   })
 })
 
-describe(`calculateImageSizes (fluid)`, () => {
+describe(`calculateImageSizes (fluid & constrained)`, () => {
   it(`should throw if maxWidth is less than 1`, () => {
     const args = {
       layout: `fluid`,
@@ -118,7 +118,7 @@ describe(`calculateImageSizes (fluid)`, () => {
     expect(getSizes).toThrow()
   })
 
-  it(`should include the original size of the image`, () => {
+  it(`should include the original size of the image when maxWidth is passed`, () => {
     const args = {
       layout: `fluid`,
       maxWidth: 400,
@@ -129,8 +129,28 @@ describe(`calculateImageSizes (fluid)`, () => {
     expect(sizes).toContain(400)
   })
 
-  // TODO: this seems incorrect, wouldn't we want larger sizes than the maxWidth provided?
-  // and what scale instead? (vs 1x, 2x, 3x)
+  it(`should include the original size of the image when maxWidth is passed for a constrained image`, () => {
+    const args = {
+      layout: `constrained`,
+      maxWidth: 400,
+      file,
+      imgDimensions,
+    }
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toContain(400)
+  })
+
+  it(`should include the original size of the image when maxHeight is passed`, () => {
+    const args = {
+      layout: `fluid`,
+      maxHeight: 300,
+      file,
+      imgDimensions,
+    }
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toContain(450)
+  })
+
   it(`should create images of different sizes (0.25x, 0.5x, 1x, 2x, and 3x) from a maxWidth`, () => {
     const args = {
       layout: `fluid`,
@@ -142,7 +162,17 @@ describe(`calculateImageSizes (fluid)`, () => {
     expect(sizes).toEqual(expect.arrayContaining([80, 160, 320, 640, 960]))
   })
 
-  it(`should return provided srcSetBreakpoints`, () => {
+  it(`should create images of different sizes (0.25x, 0.5x, 1x) without any defined size`, () => {
+    const args = {
+      layout: `fluid`,
+      file,
+      imgDimensions,
+    }
+    const sizes = calculateImageSizes(args)
+    expect(sizes).toEqual(expect.arrayContaining([200, 400, 800]))
+  })
+
+  it(`should return sizes of provided srcSetBreakpoints`, () => {
     const srcSetBreakpoints = [50, 70, 150, 250, 300]
     const maxWidth = 500
     const args = {
@@ -179,7 +209,8 @@ describe(`calculateImageSizes (fluid)`, () => {
     expect(sizes).toEqual(expect.not.arrayContaining([1250, 1500]))
   })
 
-  it(`should ignore outputPixelDensities when srcSetBreakpoints are passed in`, () => {
+  it(`should also include sizes from srcSetBreakpoints when outputPixelDensities are also passed in`, () => {
+    // global.console = { warn: jest.fn(), log: jest.fn() }
     const srcSetBreakpoints = [400, 800]
     const maxWidth = 500
     const args = {
@@ -192,13 +223,7 @@ describe(`calculateImageSizes (fluid)`, () => {
     }
 
     const sizes = calculateImageSizes(args)
-    expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
-    expect(sizes).toEqual(expect.not.arrayContaining([1000])) // 500 should be included and 2000 is too large
-  })
-})
-
-describe(`calculateImageSizes (constrained)`, () => {
-  it(`should throw if maxWidth is less than 1`, () => {
-    return
+    expect(sizes).toEqual(expect.arrayContaining([400, 500, 800, 1000]))
+    // expect(console.warn).toBeCalled()
   })
 })
