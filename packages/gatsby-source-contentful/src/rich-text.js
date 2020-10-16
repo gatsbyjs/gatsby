@@ -4,6 +4,7 @@ import resolveResponse from "contentful-resolve-response"
 // We need the original id from contentful as id attribute
 // This code can be simplified as soon we properly replicate
 // Contentful's sys object
+// Remove this as soon https://github.com/gatsbyjs/gatsby/pull/27318 is merged
 const prepareIdsForResolving = obj => {
   for (let k in obj) {
     const value = obj[k]
