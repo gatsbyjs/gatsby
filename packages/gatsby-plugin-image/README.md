@@ -264,10 +264,12 @@ This is what a component using `gatsby-plugin-image` looks like:
 ```jsx
 import * as React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 export default ({ data }) => {
-  const imageData = data.file.childImageSharp.gatsbyImage.imageData
+  // You can use the helper function `getImage`, which is equivalent to:
+  // const imageData = data.file.childImageSharp.gatsbyImage.imageData
+  const imageData = getImage(data.file)
 
   return (
     <div>
