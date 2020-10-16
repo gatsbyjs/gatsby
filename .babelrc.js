@@ -5,7 +5,7 @@ let ignore = [`**/dist`]
 if (process.env.NODE_ENV !== `test`) {
   ignore.push(`**/__tests__`)
 }
-
+// Export sourcsMap
 module.exports = {
   sourceMaps: true,
   presets: ["babel-preset-gatsby-package"],
