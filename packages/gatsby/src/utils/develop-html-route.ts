@@ -72,7 +72,6 @@ interface IParsedError {
 
 // Code borrowed and modified from https://github.com/watilde/parse-error
 export const parseError = function (err, directory): IParsedError {
-  console.log(err)
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)

@@ -25,13 +25,18 @@ const runWebpack = (compilerConfig, stage: Stage): Bluebird<webpack.Stats> =>
         }
       })
     } else if (stage === `develop-html`) {
-      webpack(compilerConfig).watch({}, (err, stats) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(stats)
+      webpack(compilerConfig).watch(
+        {
+          ignored: /node_modules/,
+        },
+        (err, stats) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(stats)
+          }
         }
-      })
+      )
     }
   })
 
