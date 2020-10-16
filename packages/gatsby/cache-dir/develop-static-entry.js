@@ -214,9 +214,14 @@ export default (pagePath, callback) => {
     pathname: pagePath,
   })
 
+  let bodyStr = ``
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR && pagePath !== `/dev-404/`) {
+    bodyStr = bodyHtml
+  }
+
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
-    body: process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? bodyHtml : ``,
+    body: bodyStr,
     headComponents: headComponents.concat([
       <script key={`io`} src="/socket.io/socket.io.js" />,
     ]),

@@ -70,11 +70,14 @@ export async function startServer(
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
+    const genericHtmlPath = process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+      ? `/dev-404-page/`
+      : `/`
     try {
       await buildHTML({
         program,
         stage: Stage.DevelopHTML,
-        pagePaths: [`/`],
+        pagePaths: [genericHtmlPath],
         workerPool,
         activity,
       })
@@ -287,15 +290,19 @@ export async function startServer(
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Setup HTML route.
     developHtmlRoute({ app, program, store })
-  } else {
-    app.use((_, res) => {
-      res.sendFile(directoryPath(`public/index.html`), err => {
-        if (err) {
-          res.status(500).end()
-        }
-      })
-    })
   }
+
+  // We still need this even w/ ssr for the dev 404 page.
+  const genericHtmlPath = process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+    ? `/public/dev-404-page/index.html`
+    : `/public/index.html`
+  app.use((_, res) => {
+    res.sendFile(directoryPath(genericHtmlPath), err => {
+      if (err) {
+        res.status(500).end()
+      }
+    })
+  })
 
   /**
    * Set up the HTTP server and socket.io.
