@@ -47,28 +47,15 @@ exports.getPluginOptionsDefaults = () => pluginDefaults
  * @param {Partial<import('./process-file').TransformArgs>} args
  */
 exports.createTransformObject = args => {
-  const options = {
-    height: args.height,
-    width: args.width,
-    cropFocus: args.cropFocus,
-    toFormat: args.toFormat,
-    pngCompressionLevel:
-      args.pngCompressionLevel || generalArgs.pngCompressionLevel,
-    quality: args.quality,
-    jpegQuality: args.jpegQuality,
-    pngQuality: args.pngQuality,
-    webpQuality: args.webpQuality,
-    jpegProgressive: args.jpegProgressive || generalArgs.jpegProgressive,
-    grayscale: args.grayscale || generalArgs.grayscale,
-    rotate: args.rotate,
-    trim: args.trim ? args.trim : undefined,
-    duotone: args.duotone ? args.duotone : null,
-    fit: args.fit,
-    background: args.background,
-  }
+  const options = { ...generalArgs, ...args }
 
   // get all non falsey values
-  return _.pickBy(options, _.identity)
+  const filteredObject = Object.keys(options).reduce((obj, key) => {
+    if (options[key]) obj[key] = test[key]
+    return obj
+  }, {})
+
+  return filteredObject
 }
 
 exports.healOptions = (
@@ -77,7 +64,13 @@ exports.healOptions = (
   fileExtension = ``,
   defaultArgs = {}
 ) => {
-  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
+  let options = {
+    base64Width,
+    ...args,
+    quality,
+    ...defaultArgs,
+    ...generalArgs,
+  }
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
