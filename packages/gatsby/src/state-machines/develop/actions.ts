@@ -120,18 +120,6 @@ export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
   },
 })
 
-export const sendDevHtmlResponses = pure(() => {
-  console.log(`hi?? sendDevHtmlResponses`)
-  const sendAction = send("SEND_DEVELOP_HTML_RESPONSES", {
-    to: context => {
-      console.log(Object.keys(context))
-      return context.developHTMLRoute
-    },
-  })
-  console.log(sendAction)
-  return sendAction
-})
-
 export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: (_context, { payload }) => payload?.webhookBody,
 })

@@ -119,9 +119,9 @@ const parseError = function (err, directory): IParsedError {
   return data
 }
 
-export const route = ({ app, program, store }) => {
+export const route = ({ app, program, store }) =>
   // Render an HTML page and serve it.
-  return app.get(`*`, async (req, res, next) => {
+  app.get(`*`, async (req, res, next) => {
     const { pages } = store.getState()
 
     if (!pages.has(req.path)) {
@@ -165,4 +165,3 @@ export const route = ({ app, program, store }) => {
     // Make eslint happy
     return null
   })
-}
