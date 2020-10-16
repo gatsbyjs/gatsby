@@ -2,15 +2,15 @@
 title: Deploying to the Moovweb XDN
 ---
 
-This guide will cover deploying a Gatsby site to the Moovweb XDN.
+This guide will cover deploying a Gatsby site to the Moovweb eXperience Delivery Network (XDN).
 
-The [Moovweb XDN](https://www.moovweb.com/) is an all-in-one platform to develop, deploy, preview, experiment on, monitor, and run your headless frontend with a focus on support large. The XDN is focused on large, dynamic websites and best in class performance through an integrated CDN, CDN-as-JavaScript, predictive prefetching, and performance monitoring. Moovweb offers a free tier.
+The [Moovweb XDN](https://www.moovweb.com/) is an all-in-one platform to develop, deploy, preview, experiment on, monitor, and run your headless frontend. The XDN is focused on large, dynamic websites and best-in-class performance through an integrated Content Delivery Network (CDN), CDN-as-JavaScript, predictive prefetching, and performance monitoring. Moovweb offers a free tier.
 
 This page summarizes the content in the XDN developer docs [Gatsby](https://developer.moovweb.com/guides/gatsby) guide. Refer to that guide for additional details.
 
 ## Step 1: Sign up for a free XDN account
 
-You can sign up for free [here](https://moovweb.app/signup).
+In order to deploy you will need an account. You can sign up for a free account on the [Moovweb XDN Sign Up page](https://moovweb.app/signup).
 
 ## Step 2: Install the XDN CLI
 
@@ -39,6 +39,8 @@ XDN CLI will emulate the XDN's integrated CDN locally. You can test the XDN inte
 xdn run
 ```
 
+Once you run the above command, you should be able to see your local changes by going to `localhost:3001` in your browser.
+
 ## Step 5: Deploy
 
 To deploy your app on the XDN run:
@@ -46,6 +48,8 @@ To deploy your app on the XDN run:
 ```shell
 xdn deploy
 ```
+
+If this is your first time deploying, the `deploy` command will prompt you to sign into your Moovweb account.
 
 When the deployment finishes, the output will confirm the final deployment URL. Below is an example:
 
