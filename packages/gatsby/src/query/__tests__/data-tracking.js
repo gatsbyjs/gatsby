@@ -1242,9 +1242,7 @@ describe(`query caching between builds`, () => {
       expect(staticQueriesThatRan).toEqual([])
     }, 999999)
 
-    // TO-DO: this is known issue - we always rerun queries for pages with no dependencies
-    // this mean that we will retry to rerun them every time we restart gatsby
-    it.skip(`rerunning should not run any queries (with restart)`, async () => {
+    it(`rerunning should not run any queries (with restart)`, async () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
