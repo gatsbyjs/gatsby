@@ -108,11 +108,11 @@ Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which 
 
 #### Foreign Key reference (`___NODE`)
 
-If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/tutorial/source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [`inferFromFieldName`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
+If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in Redux. Check out the [Source Plugin Tutorial](/tutorial/source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [`inferFromFieldName`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
-This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g. `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g. for `author___NODE___name`, the linkedField would be `name` instead of `id`.
+This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g. `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in Redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g. for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 
-Now we can return a new GraphQL Field object, whose type is the one found above. Its resolver searches through all redux nodes until it finds one with the matching ID. As usual, it also creates a [page dependency](/docs/page-node-dependencies/), from the query context's path to the node ID.
+Now we can return a new GraphQL Field object, whose type is the one found above. Its resolver searches through all Redux nodes until it finds one with the matching ID. As usual, it also creates a [page dependency](/docs/page-node-dependencies/), from the query context's path to the node ID.
 
 If the foreign key value is an array of IDs, then instead of returning a Field declaration for a single field, we return a `GraphQLUnionType`, which is a union of all the distinct linked types in the array.
 
@@ -132,7 +132,7 @@ In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js
 
 Let's continue with the `File` type example. There are many transformer plugins that implement `onCreateNode` for `File` nodes. These produce `File` children that are of their own type. E.g. `markdownRemark`, `postsJson`.
 
-Gatsby stores these children in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves (see [Node Creation](/docs/node-creation/#node-relationship-storage-model) for more). E.g. for a File node with two children, it will be stored in the redux `nodes` namespace as:
+Gatsby stores these children in Redux as IDs in the parent's `children` field. And then stores those child nodes as full Redux nodes themselves (see [Node Creation](/docs/node-creation/#node-relationship-storage-model) for more). E.g. for a File node with two children, it will be stored in the Redux `nodes` namespace as:
 
 ```javascript
 {
@@ -164,13 +164,13 @@ query {
 }
 ```
 
-To resolve `file.childMarkdownRemark`, we take the node we're resolving, and filter over all of its `children` until we find one of type `markdownRemark`, which is returned. Remember that `children` is a collection of IDs. So as part of this, we lookup the node by ID in redux too.
+To resolve `file.childMarkdownRemark`, we take the node we're resolving, and filter over all of its `children` until we find one of type `markdownRemark`, which is returned. Remember that `children` is a collection of IDs. So as part of this, we lookup the node by ID in Redux too.
 
 But before we return from the resolve function, remember that we might be running this query within the context of a page. If that's the case, then whenever the node changes, the page will need to be rerendered. To record that fact, we call [createPageDependency](/docs/page-node-dependencies/) with the node ID and the page, which is a field in the `context` object in the resolve function signature.
 
 #### parent field
 
-When a node is created as a child of some node (parent), that fact is stored in the child's `parent` field. The value of which is the ID of the parent. The [GraphQL resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L57) for this field looks up the parent by that ID in redux and returns it. It also creates a [page dependency](/docs/page-node-dependencies/), to record that the page being queried depends on the parent node.
+When a node is created as a child of some node (parent), that fact is stored in the child's `parent` field. The value of which is the ID of the parent. The [GraphQL resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L57) for this field looks up the parent by that ID in Redux and returns it. It also creates a [page dependency](/docs/page-node-dependencies/), to record that the page being queried depends on the parent node.
 
 ### Plugin fields
 
@@ -211,4 +211,4 @@ The [File type resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages
 
 I.e `data` + `images/BdiU-TTFP4h.jpg` = `data/images/BdiU-TTFP4h.jpg`.
 
-And then finally it searches redux for the first `File` node whose path matches this one. This is our proper resolved node. We're done!
+And then finally it searches Redux for the first `File` node whose path matches this one. This is our proper resolved node. We're done!

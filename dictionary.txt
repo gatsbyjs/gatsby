@@ -363,7 +363,6 @@ README
 reCAPTCHA
 reconciler
 Reddit
-redux
 Redux
 rehydrate
 reimplement
