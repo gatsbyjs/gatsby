@@ -26,6 +26,8 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
+export { IPluginInfoOptions } from "./src/bootstrap/load-plugins/types"
+
 export const useScrollRestoration: (
   key: string
 ) => {

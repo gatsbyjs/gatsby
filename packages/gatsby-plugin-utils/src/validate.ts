@@ -1,6 +1,6 @@
 import { ValidationOptions } from "joi"
 import { ObjectSchema } from "./joi"
-import { IPluginInfoOptions } from "gatsby/dist/bootstrap/load-plugins/types"
+import { IPluginInfoOptions } from "gatsby"
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
