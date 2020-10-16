@@ -41,12 +41,13 @@ exports.onPreBootstrap = async function onPreBootstrap(
 
   try {
     // TODO: remove this once pluginOptionsSchema is stable
-    const normalized = await pluginOptionsSchema({ Joi }).validate(
-      pluginOptions,
-      {
-        externals: false,
-      }
-    )
+    const { value: normalized, error } = await pluginOptionsSchema({
+      Joi,
+    }).validate(pluginOptions, {
+      externals: false,
+    })
+
+    if (error) throw error
 
     if (!normalized.feeds) {
       reporter.warn(
