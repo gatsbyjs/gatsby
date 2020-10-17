@@ -38,5 +38,12 @@
       "nodeField": "Drupal",
       "description": "Drupal is a free and open-source content management framework written in PHP and distributed under the GNU General Public License. Drupal provides a back-end framework for sites ranging from personal blogs to corporate, political, and government sites. Systems also use Drupal for knowledge management and for business collaboration."
     }
+    
+     {
+      "key": "Joomla",
+      "display": "Joomla",
+      "nodeField": "Joomla",
+      "description": "Joomla is a free and open-source content management system for publishing web content, developed by Open Source Matters, Inc. It is built on a model–view–controller web application framework that can be used independently of the CMS."
+    }
   ]
 }
