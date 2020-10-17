@@ -194,3 +194,36 @@ class CustomConverter {
 
 gatsby-transformer-asciidoc takes then this class, **not** a instance of `CustomConverter`, as the `converterFactory` option.
 You can also reuse the internal converter of gatsby-transformer-asciidoc, since the constructor of a given `CustomConverter` will be call with it as parameter.
+
+## Define a Macro Extension
+
+You can define custom extensions by adding the `macroExtension` option.
+
+```javascript
+// In your gatsby-config.js, make sure to import or declare MacroExtensions
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      macroExtensions: MacroExtensions,
+    },
+  },
+]
+```
+
+`MacroExtensions` is an array of `MacroExtension`. A `MacroExtension` is a custom javascript class you'll need to create. Information on how to write a `MacroExtension` for [Block Elements](https://asciidoctor-docs.netlify.app/asciidoctor.js/extend/extensions/block-macro-processor/) and [Inline Elements](https://asciidoctor-docs.netlify.app/asciidoctor.js/extend/extensions/inline-macro-processor/i) can be found at the [asciidoctor docs].
+
+In the example below, we will use a macro to generate hello world paragraphs:
+
+```javascript
+function myAwesomeBlockMacro(registry) {
+  registry.blockMacro(function () {
+    var self = this
+    self.named("helloWorld")
+    self.process(function (parent, target, attrs) {
+      var size = parseInt(attrs.size)
+      return self.createBlock(parent, "paragraph", "hello world")
+    })
+  })
+}
+```

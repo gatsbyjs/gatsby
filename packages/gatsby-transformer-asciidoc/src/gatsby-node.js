@@ -38,6 +38,13 @@ async function onCreateNode(
   // changes the incoming imagesdir option to take the
   const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
 
+  // register custom macros/extensions if given
+  if (pluginOptions.macroExtensions) {
+    const registry = asciidoc.Extensions.create()
+    pluginOptions.macroExtensions.forEach(extension => extension(registry))
+    asciidocOptions[`extension_registry`] = registry
+  }
+
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
   const content = await loadNodeContent(node)

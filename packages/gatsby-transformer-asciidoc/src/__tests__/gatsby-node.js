@@ -1,29 +1,31 @@
+const mockAsciidoctor = {
+  load: jest.fn(() => {
+    return {
+      hasRevisionInfo: jest.fn(),
+      getAuthor: jest.fn(),
+      getAttributes: jest.fn(() => {
+        return {}
+      }),
+      getAttribute: jest.fn(),
+      convert: jest.fn(() => `html generated`),
+      getDocumentTitle: jest.fn(() => {
+        return {
+          getCombined: jest.fn(() => `title`),
+          hasSubtitle: jest.fn(() => true),
+          getSubtitle: jest.fn(() => `subtitle`),
+          getMain: jest.fn(() => `main`),
+        }
+      }),
+    }
+  }),
+  ConverterFactory: {},
+  Extensions: {},
+}
+
+jest.mock(`asciidoctor`, () => () => mockAsciidoctor)
+
 const path = require(`path`)
 const { onCreateNode } = require(`../gatsby-node`)
-
-jest.mock(`asciidoctor`, () => () => {
-  return {
-    load: jest.fn(() => {
-      return {
-        hasRevisionInfo: jest.fn(),
-        getAuthor: jest.fn(),
-        getAttributes: jest.fn(() => {
-          return {}
-        }),
-        getAttribute: jest.fn(),
-        convert: jest.fn(() => `html generated`),
-        getDocumentTitle: jest.fn(() => {
-          return {
-            getCombined: jest.fn(() => `title`),
-            hasSubtitle: jest.fn(() => true),
-            getSubtitle: jest.fn(() => `subtitle`),
-            getMain: jest.fn(() => `main`),
-          }
-        }),
-      }
-    }),
-  }
-})
 
 describe(`gatsby-transformer-asciidoc`, () => {
   let node
@@ -31,6 +33,8 @@ describe(`gatsby-transformer-asciidoc`, () => {
   let loadNodeContent
   let createNodeId
   let createContentDigest
+  let register
+  let create
 
   beforeEach(() => {
     node = {
@@ -45,6 +49,44 @@ describe(`gatsby-transformer-asciidoc`, () => {
     loadNodeContent = jest.fn(node => node)
     createNodeId = jest.fn(node => node)
     createContentDigest = jest.fn(() => `digest`)
+    register = jest.fn()
+    create = jest.fn()
+    mockAsciidoctor.ConverterFactory = {
+      register,
+    }
+    mockAsciidoctor.Extensions = {
+      create,
+    }
+  })
+
+  it(`should load a CustomConverter`, async () => {
+    const customConverter = jest.fn()
+    await onCreateNode(
+      { node, actions, loadNodeContent, createNodeId, createContentDigest },
+      { converterFactory: jest.fn(() => customConverter) }
+    )
+
+    expect(register).toHaveBeenCalledWith(customConverter, [`html5`])
+  })
+
+  it(`should load MacroExtensions`, async () => {
+    const macroExtensions = [jest.fn(), jest.fn()]
+    const registry = jest.fn()
+    create.mockImplementationOnce(() => registry)
+
+    await onCreateNode(
+      { node, actions, loadNodeContent, createNodeId, createContentDigest },
+      { macroExtensions }
+    )
+
+    expect(macroExtensions[0]).toHaveBeenCalledWith(registry)
+    expect(macroExtensions[1]).toHaveBeenCalledWith(registry)
+    expect(mockAsciidoctor.load).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        extension_registry: registry,
+      })
+    )
   })
 
   it(`should do nothing when extension is not whitelisted`, async () => {
