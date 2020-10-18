@@ -1,3 +1,4 @@
+// all basic terminologies
 0BSD
 10KB
 1200px
