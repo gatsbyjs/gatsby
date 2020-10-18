@@ -1,15 +1,16 @@
-import { resolve, parse } from "path"
+import { parse, resolve } from "path"
 import { performance } from "perf_hooks"
+import { tmpdir } from "os"
 
 import { createContentDigest } from "gatsby-core-utils"
-import { pathExists, stat, copy, writeFile } from "fs-extra"
+import { pathExists, stat, copy, ensureDir, remove, access } from "fs-extra"
 import ffmpeg from "fluent-ffmpeg"
-import fg from "fast-glob"
 import imagemin from "imagemin"
 import imageminGiflossy from "imagemin-giflossy"
 import imageminMozjpeg from "imagemin-mozjpeg"
 import PQueue from "p-queue"
 import sharp from "sharp"
+import { createFileNodeFromBuffer } from "gatsby-source-filesystem"
 
 import { cacheContentfulVideo } from "./helpers"
 
@@ -128,16 +129,14 @@ export default class FFMPEG {
   }
 
   // Queue video for conversion
-  convertVideo = async (...args) => {
-    const videoData = await this.queue.add(() =>
-      this.queuedConvertVideo(...args)
-    )
+  queueConvertVideo = async (...args) => {
+    const videoData = await this.queue.add(() => this.convertVideo(...args))
 
     return videoData
   }
 
   // Converts a video based on a given profile, populates cache and public dir
-  queuedConvertVideo = async ({
+  convertVideo = async ({
     profile,
     sourcePath,
     cachePath,
@@ -174,94 +173,122 @@ export default class FFMPEG {
       await copy(cachePath, publicPath, { overwrite: true })
     }
 
-    // Take screenshots
-    const screenshots = await this.takeScreenshots({ fieldArgs, publicPath })
-
-    return { screenshots, publicPath }
+    return { publicPath }
   }
 
-  takeScreenshots = async ({ fieldArgs, publicPath }) => {
-    const { screenshots, screenshotWidth } = fieldArgs
+  takeScreenshots = async (
+    video,
+    fieldArgs,
+    { getCache, createNode, createNodeId }
+  ) => {
+    const { type } = video.internal
 
-    if (!screenshots) {
+    let fileType = null
+    if (type === `File`) {
+      fileType = video.internal.mediaType
+    }
+
+    if (type === `ContentfulAsset`) {
+      fileType = video.file.contentType
+    }
+
+    if (fileType.indexOf(`video/`) === -1) {
       return null
     }
 
-    const { dir: publicDir, name } = parse(publicPath)
+    let path, fileName
 
-    const screenshotPatternCache = resolve(
-      this.cacheDirConverted,
-      `${name}-screenshot-*.png`
-    )
-    const screenshotPatternPublic = resolve(
-      publicDir,
-      `${name}-screenshot-*.jpg`
-    )
-
-    const screenshotsCache = await fg([screenshotPatternCache])
-    const screenshotsPublic = await fg([screenshotPatternPublic])
-
-    if (!screenshotsCache.length) {
-      const timestamps = screenshots.split(`,`)
-
-      await new Promise((resolve, reject) => {
-        ffmpeg(publicPath)
-          .on(`filenames`, function (filenames) {
-            console.log(`[FFMPEG] Taking ${filenames.length} screenshots`)
-          })
-          .on(`error`, (err, stdout, stderr) => {
-            console.log(`[FFMPEG] Failed to take screenshots:`)
-            console.error(err)
-            reject(err)
-          })
-          .on(`end`, () => {
-            resolve()
-          })
-          .screenshots({
-            timestamps,
-            filename: `${name}-screenshot-%ss.png`,
-            folder: this.cacheDirConverted,
-            size: `${screenshotWidth}x?`,
-          })
-      })
+    if (type === `File`) {
+      path = video.absolutePath
+      fileName = video.name
     }
 
-    if (!screenshotsPublic.length) {
-      const screenshotsLatest = await fg([screenshotPatternCache])
-      for (const rawScreenshotPath of screenshotsLatest) {
-        const { name: screenshotName } = parse(rawScreenshotPath)
-        const publicScreenshotPath = resolve(publicDir, `${screenshotName}.jpg`)
+    if (type === `ContentfulAsset`) {
+      path = await cacheContentfulVideo({
+        video,
+        cacheDir: this.cacheDirOriginal,
+      })
+      fileName = video.file.fileName
+    }
+
+    const { timestamps, width } = fieldArgs
+    const { name } = parse(fileName)
+
+    const tmpDir = resolve(tmpdir(), `gatsby-transformer-video`, name)
+
+    await ensureDir(tmpDir)
+
+    let screenshotRawNames
+
+    await new Promise((resolve, reject) => {
+      ffmpeg(path)
+        .on(`filenames`, function (filenames) {
+          screenshotRawNames = filenames
+          console.log(`[FFMPEG] Taking ${filenames.length} screenshots`)
+        })
+        .on(`error`, (err, stdout, stderr) => {
+          console.log(`[FFMPEG] Failed to take screenshots:`)
+          console.error(err)
+          reject(err)
+        })
+        .on(`end`, () => {
+          resolve()
+        })
+        .screenshots({
+          timestamps,
+          filename: `${name}-%ss.png`,
+          folder: tmpDir,
+          size: `${width}x?`,
+        })
+    })
+
+    const screenshotNodes = []
+
+    console.log({ screenshotRawNames, tmpDir })
+
+    for (const screenshotRawName of screenshotRawNames) {
+      try {
+        const rawScreenshotPath = resolve(tmpDir, screenshotRawName)
+        const { name } = parse(rawScreenshotPath)
 
         try {
-          const jpgBuffer = await sharp(rawScreenshotPath)
-            .jpeg({
-              quality: 60,
-              progressive: true,
-            })
-            .toBuffer()
-
-          const optimizedBuffer = await imagemin.buffer(jpgBuffer, {
-            plugins: [imageminMozjpeg()],
-          })
-
-          await writeFile(publicScreenshotPath, optimizedBuffer)
-        } catch (err) {
-          console.log(`Unable to convert png screenshots to jpegs`)
-          throw err
+          await access(rawScreenshotPath)
+        } catch {
+          console.warn(`Screenshot ${rawScreenshotPath} could not be found!`)
+          continue
         }
-      }
 
-      console.log(`[FFMPEG] Finished copying screenshots`)
+        const jpgBuffer = await sharp(rawScreenshotPath)
+          .jpeg({
+            quality: 80,
+            progressive: true,
+          })
+          .toBuffer()
+
+        const optimizedBuffer = await imagemin.buffer(jpgBuffer, {
+          plugins: [imageminMozjpeg()],
+        })
+
+        const node = await createFileNodeFromBuffer({
+          ext: `.jpg`,
+          name,
+          buffer: optimizedBuffer,
+          getCache,
+          createNode,
+          createNodeId,
+        })
+
+        screenshotNodes.push(node)
+      } catch (err) {
+        console.log(`Failed to take screenshots:`)
+        console.error(err)
+        throw err
+      }
     }
 
-    const latestFiles = await fg([screenshotPatternPublic])
+    await remove(tmpDir)
 
-    return latestFiles.map(absolutePath => {
-      return {
-        absolutePath,
-        path: absolutePath.replace(resolve(this.rootDir, `public`), ``),
-      }
-    })
+    return screenshotNodes
   }
 
   createFromProfile = async ({ publicDir, path, name, fieldArgs, info }) => {
@@ -288,7 +315,7 @@ export default class FFMPEG {
     const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
-    return this.convertVideo({
+    return this.queueConvertVideo({
       profile: profile.converter,
       sourcePath: path,
       cachePath,
@@ -303,7 +330,7 @@ export default class FFMPEG {
     const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
-    return this.convertVideo({
+    return this.queueConvertVideo({
       profile: profileH264,
       sourcePath: path,
       cachePath,
@@ -318,7 +345,7 @@ export default class FFMPEG {
     const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
-    return this.convertVideo({
+    return this.queueConvertVideo({
       profile: profileH265,
       sourcePath: path,
       cachePath,
@@ -333,7 +360,7 @@ export default class FFMPEG {
     const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
-    return this.convertVideo({
+    return this.queueConvertVideo({
       profile: profileVP9,
       sourcePath: path,
       cachePath,
@@ -348,7 +375,7 @@ export default class FFMPEG {
     const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
-    return this.convertVideo({
+    return this.queueConvertVideo({
       profile: profileWebP,
       sourcePath: path,
       cachePath,
@@ -363,7 +390,7 @@ export default class FFMPEG {
     const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
-    const absolutePath = await this.convertVideo({
+    const absolutePath = await this.queueConvertVideo({
       profile: profileGif,
       sourcePath: path,
       cachePath,

@@ -39,8 +39,6 @@ const DEFAULT_ARGS = {
     type: GraphQLString,
     defaultValue: `assets/videos`,
   },
-  screenshots: { type: GraphQLString },
-  screenshotWidth: { type: GraphQLInt, defaultValue: 600 },
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
@@ -61,14 +59,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         duration: GraphQLFloat,
         size: GraphQLInt,
         bitRate: GraphQLInt,
-        screenshots: `[GatsbyVideoScreenshot]`,
-      },
-    }),
-    schema.buildObjectType({
-      name: `GatsbyVideoScreenshot`,
-      fields: {
-        path: GraphQLString,
-        absolutePath: GraphQLString,
       },
     }),
   ]
@@ -77,7 +67,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 }
 
 exports.createResolvers = async (
-  { createResolvers, store },
+  { createResolvers, store, getCache, createNodeId, actions: { createNode } },
   { ffmpegPath, ffprobePath, downloadBinaries = true, profiles = {} }
 ) => {
   const program = store.getState().program
@@ -162,7 +152,7 @@ exports.createResolvers = async (
   }
 
   // Analyze the resulting video and prepare field return values
-  async function processResult({ publicPath, screenshots }) {
+  async function processResult({ publicPath }) {
     const result = await ffmpeg.executeFfprobe(publicPath)
 
     const {
@@ -189,7 +179,6 @@ exports.createResolvers = async (
       duration: duration === `N/A` ? null : duration,
       size: size === `N/A` ? null : size,
       bitRate: bitRate === `N/A` ? null : bitRate,
-      screenshots,
     }
   }
 
@@ -289,6 +278,19 @@ exports.createResolvers = async (
       resolve: transformVideo({
         transformer: ffmpeg.createFromProfile,
       }),
+    },
+    videoScreenshots: {
+      type: `[File]`,
+      args: {
+        timestamps: { type: [GraphQLString], defaultValue: [`0`] },
+        width: { type: GraphQLInt, defaultValue: 600 },
+      },
+      resolve: (video, fieldArgs) =>
+        ffmpeg.takeScreenshots(video, fieldArgs, {
+          getCache,
+          createNode,
+          createNodeId,
+        }),
     },
   }
 
