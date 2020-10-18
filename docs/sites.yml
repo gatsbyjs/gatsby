@@ -11835,3 +11835,19 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: devhost 2020
+  url: https://devhost2020.tech/
+  main_url: https://devhost2020.tech/
+  source_url: https://github.com/so-sc/devhost2020
+  description: >
+    devhost is the annual flagship event of SOSC. Our prime goal is to bring young and skilled student developers from anywhere across the globe under the same umbrella.
+  categories:
+    - Event
+    - Education
+    - Open Source
+    - Nonprofit
+    - Conference
+    - Learning
+  built_by: Sahyadri Open Source Community
+  built_by_url: https://sosc.org.in/
+  featured: false
