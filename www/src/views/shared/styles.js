@@ -42,8 +42,7 @@ export const screenshot = {
   borderRadius: 1,
   boxShadow: `raised`,
   mb: 3,
-  transition: t =>
-    `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+  transition: `default`,
 }
 
 export const screenshotHover = {

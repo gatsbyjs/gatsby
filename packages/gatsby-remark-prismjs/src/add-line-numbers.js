@@ -1,3 +1,5 @@
+const GATSBY_HIGHLIGHT_LINE_CLASS = /gatsby-highlight-code-line/g
+
 module.exports = (code = []) => {
   // Generate as many `<span></span>` as there are code lines
   const generateSpans = numberOfLines => {
@@ -8,7 +10,11 @@ module.exports = (code = []) => {
     return spans
   }
 
-  const numberOfLines = code.length === 0 ? 0 : code.split(`\n`).length
+  const numberOfLines =
+    code.length === 0
+      ? 0
+      : code.split(`\n`).length +
+        (code.match(GATSBY_HIGHLIGHT_LINE_CLASS) || []).length
 
   // Generate the container for the line numbers.
   // Relevant code in the Prism Line Numbers plugin can be found here:

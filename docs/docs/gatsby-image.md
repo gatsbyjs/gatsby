@@ -6,18 +6,7 @@ Part of what makes Gatsby sites so fast is its recommended approach to handling 
 
 > _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
 
-Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
-
-## In this doc
-
-- [Setting up Gatsby Image](#setting-up-gatsby-image)
-- [Types of images with gatsby-image](#types-of-images-with-gatsby-image)
-  - [Fixed images and parameters](#images-with-a-fixed-width-and-height)
-  - [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
-  - [Resized images](#resized-images)
-  - [Shared query parameters](#shared-query-parameters)
-- [Image query fragments](#image-query-fragments)
-- [Gatsby Image props](#gatsby-image-props)
+Demo: https://using-gatsby-image.gatsbyjs.org/
 
 ## Setting up Gatsby Image
 
@@ -25,8 +14,8 @@ To start working with Gatsby Image, install the `gatsby-image` package along wit
 
 A common way to source images is to install and use `gatsby-source-filesystem` to connect your local files, but other source plugins can be used as well, such as `gatsby-source-contentful`, `gatsby-source-datocms` and `gatsby-source-sanity`.
 
-```bash
-npm install --save gatsby-image gatsby-plugin-sharp gatsby-transformer-sharp
+```shell
+npm install gatsby-image gatsby-plugin-sharp gatsby-transformer-sharp
 ```
 
 ```js:title=gatsby-config.js
@@ -70,7 +59,7 @@ Once you've queried for a `fixed` image to retrieve its data, you can pass that 
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export default () => {
+export default function Image() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "images/default.jpg" }) {
@@ -129,7 +118,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-Read more in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/?=#fixed) README.
+Read more about fixed image queries in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#fixed) README.
 
 ### Images that stretch across a _fluid_ container
 
@@ -141,7 +130,7 @@ Once you've queried for a `fluid` image to retrieve its data, you can pass that 
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export default () => {
+export default function Image() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "images/default.jpg" }) {
@@ -176,19 +165,18 @@ In a query, you can specify options for fluid images.
 - `maxWidth` (int, default: 800)
 - `maxHeight`(int)
 - `quality` (int, default: 50)
-- `srcSetBreakpoints` (array of int, default: [])
-- `fit` (string, default: `[sharp.fit.cover][6]`)
+- `srcSetBreakpoints` (array of int, default: \[])
 - `background` (string, default: `rgba(0,0,0,1)`)
 
 #### Returns
 
 - `base64` (string)
-- `src` (string)
-- `width` (int)
-- `height` (int)
 - `aspectRatio` (float)
 - `src` (string)
 - `srcSet` (string)
+- `srcSetType` (string)
+- `sizes` (string)
+- `originalImg` (string)
 
 This is where fragments like `GatsbyImageSharpFluid` come in handy, as they'll return all the above items in one line without having to type them all out:
 
@@ -204,7 +192,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-Read more in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/?=#fluid) README.
+Read more about fluid image queries in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#fluid) README.
 
 ### Resized images
 
@@ -240,15 +228,19 @@ allImageSharp {
 }
 ```
 
+Read more about resized image queries in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#resize) README.
+
 ### Shared query parameters
 
-In addition to `gatsby-plugin-sharp` settings in `gatsby-config.js`, there are additional query options that apply to both _fluid_ and _fixed_ images:
+In addition to `gatsby-plugin-sharp` settings in `gatsby-config.js`, there are additional query options that apply to _fluid_, _fixed_, and _resized_ images:
 
-- `grayscale` (bool, default: false)
-- `duotone` (bool|obj, default: false)
-- `toFormat` (string, default: \`\`)
-- `cropFocus` (string, default: `[sharp.strategy.attention][6]`)
-- `pngCompressionSpeed` (int, default: 4)
+- [`grayscale`](/packages/gatsby-plugin-sharp/#grayscale) (bool, default: false)
+- [`duotone`](/packages/gatsby-plugin-sharp/#duotone) (bool|obj, default: false)
+- [`toFormat`](/packages/gatsby-plugin-sharp/#toformat) (string, default: \`\`)
+- [`cropFocus`](/packages/gatsby-plugin-sharp/#cropfocus) (string, default: `ATTENTION`)
+- [`fit`](/packages/gatsby-plugin-sharp/#fit) (string, default: `COVER`)
+- [`pngCompressionSpeed`](/packages/gatsby-plugin-sharp/#pngcompressionspeed) (int, default: 4)
+- [`rotate`](/packages/gatsby-plugin-sharp/#rotate) (int, default: 0)
 
 Here's an example of using the `duotone` option with a fixed image:
 
@@ -263,10 +255,11 @@ fixed(
 ```
 
 <figure>
-  <img alt="Jay Gatsby holding wine class in normal color and duotone." src="./images/duotone-before-after.png" />
-  <figcaption>
-    Duotone | Before - After
-  </figcaption>
+  <img
+    alt="Jay Gatsby holding wine class in normal color and duotone."
+    src="./images/duotone-before-after.png"
+  />
+  <figcaption>Duotone | Before - After</figcaption>
 </figure>
 
 And an example of using the `grayscale` option with a fixed image:
@@ -278,19 +271,20 @@ fixed(
 ```
 
 <figure>
-  <img alt="Jay Gatsby holding wine class in normal color and duotone." src="./images/grayscale-before-after.png" />
-  <figcaption>
-    Grayscale | Before - After
-  </figcaption>
+  <img
+    alt="Jay Gatsby holding wine class in normal color and duotone."
+    src="./images/grayscale-before-after.png"
+  />
+  <figcaption>Grayscale | Before - After</figcaption>
 </figure>
 
-Read more in the [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) README.
+Read more about shared image query parameters in the [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/#shared-options) README.
 
 ## Image query fragments
 
 GraphQL includes a concept called "query fragments", which are a part of a query that can be reused. To ease building with `gatsby-image`, Gatsby image processing plugins which support `gatsby-image` ship with fragments which you can easily include in your queries.
 
-> Note: using fragments in your queries depends on which data source(s) you have configured. Read more in the [gatsby-image](/packages/gatsby-image#fragments) README.
+> Note: using fragments in your queries depends on which data source(s) you have configured. Read more about image query fragments in the [gatsby-image](/packages/gatsby-image/#fragments) README.
 
 ### Common fragments with `gatsby-transformer-sharp`
 
@@ -320,7 +314,7 @@ If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyj
 
 If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg/), choose the fragment with `tracedSVG` at the end.
 
-#### About `withWebP`
+#### About `withWebp`
 
 If you want to automatically use [WebP images](https://developers.google.com/speed/webp/) when the browser supports the file format, use the `withWebp` fragments. If the browser doesn't support WebP, `gatsby-image` will fall back to the default image format.
 
@@ -337,7 +331,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-For more info on how these options work, check out the Gatsby Image demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+For more info on how these options work, check out the Gatsby Image demo: https://using-gatsby-image.gatsbyjs.org/
 
 #### Additional plugin fragments
 
@@ -377,7 +371,7 @@ Here are some usage examples:
 <Img
   fluid={data.file.childImageSharp.fluid}
   alt="Cat taking up an entire chair"
-  fadeIn="false"
+  fadeIn={false}
   className="customImg"
   placeholderStyle={{ `backgroundColor`: `black` }}
   onLoad={() => {

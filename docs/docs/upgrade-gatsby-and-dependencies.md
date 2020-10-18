@@ -6,7 +6,7 @@ To keep up with the latest bug fixes, security patches, and minor releases from 
 
 ## Semantic versioning
 
-As many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
+Like many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
 
 This guide is meant to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to the [Release and Migrations](/docs/releases-and-migration/) reference guide overview for the corresponding guide to upgrade.
 
@@ -26,7 +26,7 @@ npm outdated
 
 This will output a table indicating which packages have new versions available and what is the latest version for each one.
 
-```
+```shell
 Package                            Current   Wanted   Latest  Location
 gatsby                             2.15.13  2.15.13  2.15.20
 ```
@@ -70,14 +70,14 @@ This will upgrade all your packages to the latest [wanted version](https://docs.
 You can also update one package at the time with the `install` command in npm, alongside the version that you want to install:
 
 ```shell
-npm install <package-name>@<version> --save
+npm install <package-name>@<version>
 ```
 
 You can specify the version you want to install or upgrade to, in the following formats:
 
 - A specific version after the `@`
 - An annotated version with `*`,`^`,`~` to indicate that you want the latest major, minor or patch release respectively.
-- Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x --save`
+- Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x`
 
 For major upgrades, remember to follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
 
@@ -99,7 +99,7 @@ Then add the corresponding script to your package.json file:
 }
 ```
 
-And finally run the recently added command:
+And finally, run the recently added command:
 
 ```shell
 npm run upgrade-interactive

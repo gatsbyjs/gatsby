@@ -1,12 +1,11 @@
 const { graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
-const { buildObjectType } = require(`../../types/type-builders`)
+import { buildObjectType } from "../../types/type-builders"
 const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
 const { createTypes } = actions
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
@@ -176,12 +175,12 @@ describe(`Define parent-child relationships with field extensions`, () => {
     await buildSchema()
     expect(report.warn).toBeCalledTimes(1)
     expect(report.warn).toBeCalledWith(
-      `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+      `The type \`Parent\` does not explicitly define the field \`childChild\`.\n` +
+        `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +
         `children types is deprecated.\n` +
         `In Gatsby v3, only children fields explicitly set with the ` +
-        `\`childOf\` extension will be added.\n` +
-        `For example, in Gatsby v3, \`Parent\` will not get a \`childChild\` field.`
+        `\`childOf\` extension will be added.\n`
     )
   })
 

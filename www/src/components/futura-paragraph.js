@@ -4,7 +4,7 @@ import { jsx } from "theme-ui"
 const FuturaParagraph = ({ children }) => (
   <p
     sx={{
-      fontFamily: `header`,
+      fontFamily: `heading`,
       fontSize: 3,
       mb: 0,
     }}

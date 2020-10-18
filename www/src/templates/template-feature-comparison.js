@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
-import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
-import Layout from "../components/layout"
+import PageWithSidebar from "../components/page-with-sidebar"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
@@ -12,101 +11,86 @@ import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import Breadcrumb from "../components/docs-breadcrumb"
 
-import { itemListFeatures } from "../utils/sidebar/item-list"
 import { getFeaturesData } from "../utils/get-csv-features-data"
 
 import { graphql } from "gatsby"
 
-class FeatureComparison extends Component {
-  render() {
-    const {
-      pageContext: { options, featureType },
-      location,
-      data,
-    } = this.props
-    const optionsDisplay = options.map(o => o.display)
-    const titleString = `Comparison of Gatsby vs ${optionsDisplay.join(` vs `)}`
+export default function FeatureComparison({ pageContext, location, data }) {
+  const { options, featureType } = pageContext
+  const optionsDisplay = options.map(o => o.display)
+  const titleString = `Comparison of Gatsby vs ${optionsDisplay.join(` vs `)}`
 
-    const { sections, sectionHeaders } =
-      featureType === `cms`
-        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.edges)
-        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
+  const { sections, sectionHeaders } =
+    featureType === `cms`
+      ? getFeaturesData(data.allGatsbyCmsSpecsCsv.nodes)
+      : getFeaturesData(data.allGatsbyJamstackSpecsCsv.nodes)
 
-    return (
-      <Layout location={location} itemList={itemListFeatures}>
-        <Helmet>
-          <title>{titleString}</title>
-        </Helmet>
-        <Container>
-          <main>
-            <Breadcrumb location={location} itemList={itemListFeatures} />
-            <h1>{titleString}</h1>
-            {options.map(o => (
-              <section key={o.key} sx={{ mb: 6 }}>
-                <h2
+  return (
+    <PageWithSidebar location={location}>
+      <PageMetadata title={titleString} />
+      <Container>
+        <main>
+          <Breadcrumb location={location} />
+          <h1>{titleString}</h1>
+          {options.map(o => (
+            <section key={o.key} sx={{ mb: 6 }}>
+              <h2
+                css={css`
+                  display: flex;
+                  align-items: center;
+                `}
+              >
+                <img
+                  src={LogoDictionary[o.key]}
                   css={css`
-                    display: flex;
-                    align-items: center;
+                    height: 25px;
+                    margin-bottom: 0;
+                    margin-right: 10px;
                   `}
-                >
-                  <img
-                    src={LogoDictionary[o.key]}
-                    css={css`
-                      height: 25px;
-                      margin-bottom: 0;
-                      margin-right: 10px;
-                    `}
-                  />
-                  {o.display}
-                </h2>
-                {o.description}
-              </section>
-            ))}
-            <LegendTable />
-            <EvaluationTable
-              options={options}
-              sections={sections}
-              sectionHeaders={sectionHeaders}
-            />
-          </main>
-          <FeaturesFooter />
-          <FooterLinks />
-        </Container>
-      </Layout>
-    )
-  }
+                />
+                {o.display}
+              </h2>
+              {o.description}
+            </section>
+          ))}
+          <LegendTable />
+          <EvaluationTable
+            options={options}
+            sections={sections}
+            sectionHeaders={sectionHeaders}
+          />
+        </main>
+        <FeaturesFooter />
+        <FooterLinks />
+      </Container>
+    </PageWithSidebar>
+  )
 }
-
-export default FeatureComparison
 
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
     allGatsbyJamstackSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          Nextjs
-          Jekyll
-          Hugo
-          Nuxtjs
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        Nextjs
+        Jekyll
+        Hugo
+        Nuxtjs
+        Description
       }
     }
   }

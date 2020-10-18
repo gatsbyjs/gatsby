@@ -6,6 +6,9 @@
     "node--article": "http://fixture/jsonapi/node/article",
     "taxonomy_term--tags": {
       "href": "http://fixture/jsonapi/taxonomy_term/tags"
+    },
+    "describedby": {
+      "href":"http://fixture/jsonapi/schema"
     }
   }
 }

@@ -4,7 +4,7 @@ Parses AsciiDoc files using [Asciidoctor.js](https://asciidoctor.org/docs/asciid
 
 ## Install
 
-`npm install --save gatsby-transformer-asciidoc`
+`npm install gatsby-transformer-asciidoc`
 
 ## How to use
 
@@ -15,7 +15,7 @@ plugins: [`gatsby-transformer-asciidoc`]
 
 A full explanation of asciidoc can be found here: [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js)
 
-You can also pass all [Asciidoctor's convert options](https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/convert-options/) to the transformer. An example would be:
+You can also pass all [Asciidoctor's convert options](https://asciidoctor-docs.netlify.app/asciidoctor.js/processor/convert-options/) to the transformer. An example would be:
 
 ```javascript
 // In your gatsby-config.js
@@ -170,12 +170,12 @@ plugins: [
 ]
 ```
 
-`TemplateConverter` is a custom javascript class you'll need to create. Information on how to write a custom `TemplateConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.com/asciidoctor.js/extend/converter/custom-converter/).
+`TemplateConverter` is a custom javascript class you'll need to create. Information on how to write a custom `TemplateConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.app/asciidoctor.js/extend/converter/custom-converter/).
 
 In the example below, we will use a custom converter to convert paragraphs but the other nodes will be converted using the built-in HTML5 converter:
 
 ```javascript
-const asciidoc = require(`asciidoctor.js`)()
+const asciidoc = require(`asciidoctor`)()
 
 class TemplateConverter {
   constructor() {

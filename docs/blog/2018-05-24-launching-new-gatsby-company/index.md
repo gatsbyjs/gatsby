@@ -41,7 +41,7 @@ During my years building Drupal sites, I’d occasionally cast envious eyes at a
 
 Then, in late 2010, the initial version of Backbone.js was released. I started playing with it and got super excited because things finally clicked for me: this was how to build rich, real-time JavaScript apps. The next year, I started my first full-time software development job at [Pantheon.io](https://pantheon.io/) and had a fantastic time building the Pantheon dashboard with Backbone.js to support Drupal & WordPress developers. I attended Backbone.js meetups and the first few Backbone.js conferences. Developer excitement online and at meetups was palpable. We could all feel that the world of web applications was starting to change dramatically.
 
-Node.js, then only a couple of years old, was gaining traction fast. For the first time, NPM enabled the easy sharing of JavaScript libraries. Consequently, the number of libraries exploded. With a server runtime and ecosystem developing around JS, more and more web development tools started being written in JavaScript.
+Node.js, then only a couple of years old, was gaining traction fast. For the first time, npm enabled the easy sharing of JavaScript libraries. Consequently, the number of libraries exploded. With a server runtime and ecosystem developing around JS, more and more web development tools started being written in JavaScript.
 
 The fast paced world of the web was reinventing itself again.
 
@@ -55,7 +55,7 @@ I was hooked on being able to ship production code so quickly. Life was good.
 
 Then in 2013, React.js was released.
 
-I first heard about React from [David Nolen’s blog post introducing his ClojureScript wrapper of React Om](http://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs). I was completely fascinated by his analysis; his identification of DOM manipulation code as a major contributor to application complexity and slowdowns resonated with me. I started reading everything I could find on React and soon became a huge fan.
+I first heard about React from [David Nolen’s blog post introducing his ClojureScript wrapper of React Om](https://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs). I was completely fascinated by his analysis; his identification of DOM manipulation code as a major contributor to application complexity and slowdowns resonated with me. I started reading everything I could find on React and soon became a huge fan.
 
 Early in 2014, I left Pantheon to explore new opportunities. I dove deeper into React and built a number of sample applications and was astounded at how productive I was. Problems that used to take me weeks to solve in Backbone.js took me hours in React.js. Not only was I productive; my code felt remarkably simple. With Backbone.js, I always felt I was one or two slip-ups from the whole application spiraling out of control. With React, elegant and simple solutions seemed to come naturally from using the library. Again, I could feel things in web land were changing in a very big way.
 
@@ -96,15 +96,17 @@ But static sites, despite how much developers love them, have never gained wides
 
 As I thought deeply about this problem, it occurred to me that there were strong parallels between this problem and everything I’d learned about event sourcing and building cloud-native applications.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Static sites are the materialized views of websites.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/825512417337544705?ref_src=twsrc%5Etfw">January 29, 2017</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Event sourcing potentially fantastic model for static site builder. Continually rebuilding website on events.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/825513977329307648?ref_src=twsrc%5Etfw">January 29, 2017</a></blockquote>
+https://twitter.com/kylemathews/status/825512417337544705
+
+https://twitter.com/kylemathews/status/825513977329307648
 
 I realized you could view a website as the current computed state of a long stream of content and code changes. When viewed through that lens, the architecture became clear for a new version of Gatsby that would glue Gatsby to various data sources & solve the really hard problems of static sites: fast incremental builds and parallelizing builds for large and complex sites.
 
 This architecture would enable Gatsby to eliminate the build step entirely—any code or content change would be quickly incorporated into the site and go live immediately. We could port the ideas of real-time event processing to building websites.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Building for the web in the future will revolve entirely around thinking about design and data structures.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/916165920359198720?ref_src=twsrc%5Etfw">October 6, 2017</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Everything else can be automated</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/916165988772487168?ref_src=twsrc%5Etfw">October 6, 2017</a></blockquote>
+https://twitter.com/kylemathews/status/916165920359198720
+
+https://twitter.com/kylemathews/status/916165988772487168
 
 ### Launching new version of Gatsby
 

@@ -6,7 +6,7 @@ This is a sub-plugin for `gatsby-transformer-remark`. As demoed below, add this 
 
 ## Install
 
-`npm install --save gatsby-remark-autolink-headers`
+`npm install gatsby-remark-autolink-headers`
 
 ## How to use
 
@@ -58,6 +58,8 @@ Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed aft
 - `maintainCase`: Boolean. Maintains the case for markdown header (optional)
 - `removeAccents`: Boolean. Remove accents from generated headings IDs (optional)
 - `enableCustomId`: Boolean. Enable custom header IDs with `{#id}` (optional)
+- `isIconAfterHeader`: Boolean. Enable the anchor icon to be inline at the end of the header text (optional)
+- `elements`: String array. Specify which type of header tags to link (optional)
 
 ```javascript
 // In your gatsby-config.js
@@ -75,6 +77,8 @@ module.exports = {
               className: `custom-class`,
               maintainCase: true,
               removeAccents: true,
+              isIconAfterHeader: true,
+              elements: [`h1`, `h4`],
             },
           },
         ],

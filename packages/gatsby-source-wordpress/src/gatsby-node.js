@@ -2,6 +2,31 @@ const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 const normalizeBaseUrl = require(`./normalize-base-url`)
 
+exports.onPreBootstrap = ({ reporter }, { minimizeDeprecationNotice }) => {
+  if (!minimizeDeprecationNotice) {
+    reporter.log(`\n`)
+    reporter.warn(`[gatsby-source-wordpress]\n\nThis version of \`gatsby-source-wordpress\` will be deprecated soon.\nThe next major version (v4) is a complete rewrite in order to take advantage of WPGraphQL.\nThis allows us to support features like Preview and incremental builds and provides a much more stable experience.\n\nPlease upgrade to the BETA of \`gatsby-source-wordpress@v4\` by installing \`gatsby-source-wordpress-experimental\`.\nThese two packages are currently published under separate names to allow activating them side-by-side.\nThis makes migration between the two simpler.\nOnce the new plugin is stable it will be merged back in and published as \`gatsby-source-wordpress\` going forward.
+
+Read this blog post for the beta announcement:\nhttps://www.gatsbyjs.org/blog/2020-07-07-wordpress-source-beta/
+
+Or get started with the new plugin here:\nhttps://github.com/gatsbyjs/gatsby-source-wordpress-experimental/#readme
+
+You can minimize this notice using the minimizeDeprecationNotice plugin option:
+
+{
+  resolve: "gatsby-source-wordpress",
+  options: {
+    minimizeDeprecationNotice: true
+  },
+},
+\n\n`)
+  } else {
+    reporter.warn(
+      `[gatsby-source-wordpress] This version of gatsby-source-wordpress will soon be deprecated.\n\thttps://www.gatsbyjs.org/blog/2020-07-07-wordpress-source-beta/`
+    )
+  }
+}
+
 const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
   post: `${typePrefix}POST`,
@@ -23,7 +48,9 @@ let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
 let _normalizer
+let _normalizers
 let _keepMediaSizes
+let _restApiRoutePrefix
 
 exports.sourceNodes = async (
   {
@@ -33,6 +60,7 @@ exports.sourceNodes = async (
     cache,
     createNodeId,
     createContentDigest,
+    getCache,
     reporter,
   },
   {
@@ -50,7 +78,9 @@ exports.sourceNodes = async (
     includedRoutes = [`**`],
     excludedRoutes = [],
     normalizer,
+    normalizers,
     keepMediaSizes = false,
+    restApiRoutePrefix = `wp-json`,
   }
 ) => {
   const { createNode, touchNode } = actions
@@ -68,7 +98,9 @@ exports.sourceNodes = async (
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
   _keepMediaSizes = keepMediaSizes
+  _restApiRoutePrefix = restApiRoutePrefix
   _normalizer = normalizer
+  _normalizers = normalizers
 
   let entities = await fetch({
     baseUrl,
@@ -84,115 +116,197 @@ exports.sourceNodes = async (
     _includedRoutes,
     _excludedRoutes,
     _keepMediaSizes,
+    _restApiRoutePrefix,
     typePrefix,
     refactoredEntityTypes,
   })
 
-  // Normalize data & create nodes
+  let wordpressDataNormalizers = [
+    // Create fake wordpressId form element who done have any in the database
+    {
+      name: `generateFakeWordpressId`,
+      normalizer: ({ entities }) => normalize.generateFakeWordpressId(entities),
+    },
+    // Remove ACF key if it's not an object, combine ACF Options
+    {
+      name: `normalizeACF`,
+      normalizer: ({ entities }) => normalize.normalizeACF(entities),
+    },
+    // Combine ACF Option Data entities into one but split by IDs + options
+    {
+      name: `combineACF`,
+      normalizer: ({ entities }) => normalize.combineACF(entities),
+    },
+    // Creates entities from object collections of entities
+    {
+      name: `normalizeEntities`,
+      normalizer: ({ entities }) => normalize.normalizeEntities(entities),
+    },
+    // Standardizes ids & cleans keys
+    {
+      name: `standardizeKeys`,
+      normalizer: ({ entities }) => normalize.standardizeKeys(entities),
+    },
+    // Converts to use only GMT dates
+    {
+      name: `standardizeDates`,
+      normalizer: ({ entities }) => normalize.standardizeDates(entities),
+    },
+    // Lifts all "rendered" fields to top-level.
+    {
+      name: `liftRenderedField`,
+      normalizer: ({ entities }) => normalize.liftRenderedField(entities),
+    },
+    // Exclude entities of unknown shape
+    {
+      name: `excludeUnknownEntities`,
+      normalizer: ({ entities }) => normalize.excludeUnknownEntities(entities),
+    },
+    // Creates Gatsby IDs for each entity
+    {
+      name: `createGatsbyIds`,
+      normalizer: ({ creteNodeId, entities, _siteURL }) =>
+        normalize.createGatsbyIds(createNodeId, entities, _siteURL),
+    },
+    // Creates links between authors and user entities
+    {
+      name: `mapAuthorsToUsers`,
+      normalizer: ({ entities }) => normalize.mapAuthorsToUsers(entities),
+    },
+    // Creates links between posts and tags/categories.
+    {
+      name: `mapPostsToTagsCategories`,
+      normalizer: ({ entities }) =>
+        normalize.mapPostsToTagsCategories(entities),
+    },
+    // Creates links between tags/categories and taxonomies.
+    {
+      name: `mapTagsCategoriesToTaxonomies`,
+      normalizer: ({ entities }) =>
+        normalize.mapTagsCategoriesToTaxonomies(entities),
+    },
+    // Normalize menu items
+    {
+      name: `normalizeMenuItems`,
+      normalizer: ({ entities }) => normalize.normalizeMenuItems(entities),
+    },
+    // Creates links from entities to media nodes
+    {
+      name: `mapEntitiesToMedia`,
+      normalizer: ({ entities }) => normalize.mapEntitiesToMedia(entities),
+    },
+    // Downloads media files and removes "sizes" data as useless in Gatsby context.
+    {
+      name: `downloadMediaFiles`,
+      normalizer: async ({
+        entities,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+        touchNode,
+        getCache,
+        getNode,
+        auth,
+        reporter,
+        keepMediaSizes,
+      }) =>
+        await normalize.downloadMediaFiles({
+          entities,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          touchNode,
+          getCache,
+          getNode,
+          _auth: auth,
+          reporter,
+          keepMediaSizes,
+        }),
+    },
+    // Creates links between elements and parent element.
+    {
+      name: `mapElementsToParent`,
+      normalizer: ({ entities }) => normalize.mapElementsToParent(entities),
+    },
+    // Search and replace Content Urls
+    {
+      name: `searchReplaceContentUrls`,
+      normalizer: ({ entities, searchAndReplaceContentUrls }) =>
+        normalize.searchReplaceContentUrls({
+          entities,
+          searchAndReplaceContentUrls,
+        }),
+    },
+    {
+      name: `mapPolylangTranslations`,
+      normalizer: ({ entities }) => normalize.mapPolylangTranslations(entities),
+    },
+    {
+      name: `createUrlPathsFromLinks`,
+      normalizer: ({ entities }) => normalize.createUrlPathsFromLinks(entities),
+    },
+  ]
 
-  // Create fake wordpressId form element who done have any in the database
-  entities = normalize.generateFakeWordpressId(entities)
-
-  // Remove ACF key if it's not an object, combine ACF Options
-  entities = normalize.normalizeACF(entities)
-
-  // Combine ACF Option Data entities into one but split by IDs + options
-  entities = normalize.combineACF(entities)
-
-  // Creates entities from object collections of entities
-  entities = normalize.normalizeEntities(entities)
-
-  // Standardizes ids & cleans keys
-  entities = normalize.standardizeKeys(entities)
-
-  // Converts to use only GMT dates
-  entities = normalize.standardizeDates(entities)
-
-  // Lifts all "rendered" fields to top-level.
-  entities = normalize.liftRenderedField(entities)
-
-  // Exclude entities of unknown shape
-  entities = normalize.excludeUnknownEntities(entities)
-
-  // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL)
-
-  // Creates links between authors and user entities
-  entities = normalize.mapAuthorsToUsers(entities)
-
-  // Creates links between posts and tags/categories.
-  entities = normalize.mapPostsToTagsCategories(entities)
-
-  // Creates links between tags/categories and taxonomies.
-  entities = normalize.mapTagsCategoriesToTaxonomies(entities)
-
-  // Normalize menu items
-  entities = normalize.normalizeMenuItems(entities)
-
-  // Creates links from entities to media nodes
-  entities = normalize.mapEntitiesToMedia(entities)
-
-  // Downloads media files and removes "sizes" data as useless in Gatsby context.
-  entities = await normalize.downloadMediaFiles({
-    entities,
+  const normalizerHelpers = {
     store,
     cache,
     createNode,
     createNodeId,
+    createContentDigest,
     touchNode,
+    getCache,
     getNode,
-    _auth,
-    reporter,
-    keepMediaSizes,
-  })
-
-  // Creates links between elements and parent element.
-  entities = normalize.mapElementsToParent(entities)
-
-  // Search and replace Content Urls
-  entities = normalize.searchReplaceContentUrls({
-    entities,
+    typePrefix,
+    refactoredEntityTypes,
+    baseUrl,
+    protocol,
+    _siteURL,
+    hostingWPCOM,
+    useACF,
+    acfOptionPageIds,
+    auth,
+    verboseOutput,
+    perPage,
     searchAndReplaceContentUrls,
-  })
-
-  entities = normalize.mapPolylangTranslations(entities)
-
-  entities = normalize.createUrlPathsFromLinks(entities)
+    concurrentRequests,
+    excludedRoutes,
+    keepMediaSizes,
+    restApiRoutePrefix,
+    reporter,
+  }
 
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
-    entities = _normalizer({
-      entities,
-      store,
-      cache,
-      createNode,
-      createNodeId,
-      touchNode,
-      getNode,
-      typePrefix,
-      refactoredEntityTypes,
-      baseUrl,
-      protocol,
-      _siteURL,
-      hostingWPCOM,
-      useACF,
-      acfOptionPageIds,
-      auth,
-      verboseOutput,
-      perPage,
-      searchAndReplaceContentUrls,
-      concurrentRequests,
-      excludedRoutes,
-      keepMediaSizes,
+    wordpressDataNormalizers.push({
+      name: `customNormalizer`,
+      normalizer: _normalizer,
     })
   }
 
+  if (typeof _normalizers === `function`) {
+    wordpressDataNormalizers = _normalizers([...wordpressDataNormalizers])
+  }
+
   // creates nodes for each entry
-  normalize.createNodesFromEntities({
-    entities,
-    createNode,
-    createContentDigest,
+  wordpressDataNormalizers.push({
+    name: `createNodesFromEntities`,
+    normalizer: ({ entities, createNode, createContentDigest }) =>
+      normalize.createNodesFromEntities({
+        entities,
+        createNode,
+        createContentDigest,
+      }),
   })
+
+  // Normalize data & create nodes
+  for (const { normalizer } of wordpressDataNormalizers) {
+    entities = await normalizer({
+      entities,
+      ...normalizerHelpers,
+    })
+  }
 
   return
 }

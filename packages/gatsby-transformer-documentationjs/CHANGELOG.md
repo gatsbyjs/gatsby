@@ -3,6 +3,158 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.15...gatsby-transformer-documentationjs@4.3.16) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.14...gatsby-transformer-documentationjs@4.3.15) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-documentationjs ([#27146](https://github.com/gatsbyjs/gatsby/issues/27146)) ([d94937f](https://github.com/gatsbyjs/gatsby/commit/d94937f50b0926dd895be29b7dc4d2901b8b8dfc))
+
+## [4.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.13...gatsby-transformer-documentationjs@4.3.14) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.12...gatsby-transformer-documentationjs@4.3.13) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.11...gatsby-transformer-documentationjs@4.3.12) (2020-07-03)
+
+### Bug Fixes
+
+- incorrect typedef parsing for interfaces ([#24192](https://github.com/gatsbyjs/gatsby/issues/24192)) ([1a1177e](https://github.com/gatsbyjs/gatsby/commit/1a1177e))
+
+## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.10...gatsby-transformer-documentationjs@4.3.11) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.9...gatsby-transformer-documentationjs@4.3.10) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.8...gatsby-transformer-documentationjs@4.3.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.7...gatsby-transformer-documentationjs@4.3.8) (2020-06-30)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.6...gatsby-transformer-documentationjs@4.3.7) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-transformer-documentationjs:** Add childOf, mimeTypes and fill in other schema typings ([#25113](https://github.com/gatsbyjs/gatsby/issues/25113)) ([48f7878](https://github.com/gatsbyjs/gatsby/commit/48f7878))
+
+## [4.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.5...gatsby-transformer-documentationjs@4.3.6) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.4...gatsby-transformer-documentationjs@4.3.5) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.3...gatsby-transformer-documentationjs@4.3.4) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.2...gatsby-transformer-documentationjs@4.3.3) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.1...gatsby-transformer-documentationjs@4.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.0...gatsby-transformer-documentationjs@4.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [4.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.5...gatsby-transformer-documentationjs@4.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.4...gatsby-transformer-documentationjs@4.2.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.3...gatsby-transformer-documentationjs@4.2.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [4.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.2...gatsby-transformer-documentationjs@4.2.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.1...gatsby-transformer-documentationjs@4.2.2) (2020-04-10)
+
+### Bug Fixes
+
+- create unique Nodes ([#22774](https://github.com/gatsbyjs/gatsby/issues/22774)) ([1381a0b](https://github.com/gatsbyjs/gatsby/commit/1381a0b))
+
+## [4.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.0...gatsby-transformer-documentationjs@4.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.27...gatsby-transformer-documentationjs@4.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [4.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.26...gatsby-transformer-documentationjs@4.1.27) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.25...gatsby-transformer-documentationjs@4.1.26) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.24...gatsby-transformer-documentationjs@4.1.25) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.23...gatsby-transformer-documentationjs@4.1.24) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.22...gatsby-transformer-documentationjs@4.1.23) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.20...gatsby-transformer-documentationjs@4.1.22) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.20...gatsby-transformer-documentationjs@4.1.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.19...gatsby-transformer-documentationjs@4.1.20) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.18...gatsby-transformer-documentationjs@4.1.19) (2019-11-15)
+
+### Bug Fixes
+
+- **gatsby-transformer-documentationjs:** Add missing quotes around field names ([0c2eab0](https://github.com/gatsbyjs/gatsby/commit/0c2eab0))
+
+## [4.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.17...gatsby-transformer-documentationjs@4.1.18) (2019-11-15)
+
+### Bug Fixes
+
+- ensure all docjs elements are typed ([#19510](https://github.com/gatsbyjs/gatsby/issues/19510)) ([ab8adbc](https://github.com/gatsbyjs/gatsby/commit/ab8adbc))
+
+## [4.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.16...gatsby-transformer-documentationjs@4.1.17) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
 ## [4.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.15...gatsby-transformer-documentationjs@4.1.16) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

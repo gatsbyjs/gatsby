@@ -9,10 +9,10 @@ fi
 
 for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
-  cd $BASE
-  
+  cd "$BASE" || exit
+
   # validate
-  cd $folder
+  cd "$folder" || exit
   npm audit &&
   npm install &&
   # check both npm and yarn, sometimes yarn registry lags behind
@@ -21,5 +21,5 @@ for folder in $GLOB; do
   npm run build ||
   exit 1
 
-  cd $BASE
+  cd "$BASE" || exit
 done

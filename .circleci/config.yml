@@ -1,12 +1,22 @@
 orbs:
-  win: circleci/windows@1.0.0
+  win: circleci/windows@2.2.0
+  slack: circleci/slack@3.4.1
 
 executors:
   node:
     parameters:
       image:
         type: string
-        default: "10"
+        # First 10.x LTS release, but old Yarn
+        default: "10.13"
+    docker:
+      - image: circleci/node:<< parameters.image >>
+  node_10_19:
+    parameters:
+      image:
+        type: string
+        # More recent Yarn binary
+        default: "10.19"
     docker:
       - image: circleci/node:<< parameters.image >>
 
@@ -35,7 +45,7 @@ aliases:
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
-      at: packages
+      at: ./
 
   ignore_master: &ignore_master
     filters:
@@ -54,12 +64,16 @@ aliases:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: yarn jest -w 1 --ci
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
+      - run: yarn list react
+      - run:
+          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+          environment:
+            GENERATE_JEST_REPORT: true
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+      - store_test_results:
+          path: ./test-results/jest-node/
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -70,11 +84,73 @@ aliases:
           - /blog.+/
     requires:
       - lint
-      - unit_tests_node8
+      - typecheck
+      - unit_tests_node10
+
+  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
+  e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: s3j3qj
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
+  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: ave32k
+      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-image
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
 
 commands:
+  notify-status:
+    parameters:
+      condition:
+        type: boolean
+        default: false
+    steps:
+      - when:
+          condition: << parameters.condition >>
+          steps:
+            - slack/status:
+              channel: eng-react-integration-status
+
   e2e-test:
     parameters:
+      skip_file_change_test:
+        type: boolean
+        default: false
       trigger_pattern:
         type: string
         default: "packages/*|.circleci/*"
@@ -82,15 +158,22 @@ commands:
         type: string
       test_command:
         type: string
-        default: "" # if unset, e2e-test.sh specifies the command
+        default: "yarn test"
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
+      # In case of failure, add these steps again. Cache probably got deleted
+      #- <<: *restore_cache
+      #- <<: *install_node_modules
+      #- <<: *persist_cache
+      - unless:
+          condition: << parameters.skip_file_change_test >>
+          steps:
+            - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+
       - <<: *attach_to_bootstrap
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+      - run:
+          name: Run tests (using defaults)
+          command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
 
@@ -99,33 +182,41 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
+      # Persist the workspace again with all packages already built
       - persist_to_workspace:
-          root: packages
+          root: ./
           paths:
             - "*"
 
   lint:
     executor: node
-    parallelism: 2
     steps:
       - checkout
-      - <<: *restore_cache
+      # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
+      # Linting only needs the root packages, we remove the workspace and only install root packages
+      - run:
+          name: "remove workspaces from package.json"
+          command: |
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
       - <<: *install_node_modules
-      - <<: *persist_cache
       - run: yarn lint:code
+      - run: yarn lint:docs
       - run: yarn lint:other
-      - run: yarn check-repo-fields
 
-  unit_tests_node8:
-    executor:
-      name: node
-      image: "8"
-    <<: *test_template
+  typecheck:
+    executor: node
+    steps:
+      - checkout
+      # We should always assert on master
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|yarn.lock"
+      - <<: *attach_to_bootstrap
+      - run: yarn typecheck
+      - run: yarn check-repo-fields
 
   unit_tests_node10:
     executor: node
@@ -137,16 +228,11 @@ jobs:
       image: "12"
     <<: *test_template
 
-  unit_tests_www:
-    executor: node
-    steps:
-      - checkout
-      - run:
-          command: yarn
-          working_directory: ~/project/www
-      - run:
-          command: yarn test
-          working_directory: ~/project/www
+  unit_tests_node14:
+    executor:
+      name: node
+      image: "14"
+    <<: *test_template
 
   integration_tests_long_term_caching:
     executor: node
@@ -154,17 +240,36 @@ jobs:
       - e2e-test:
           test_path: integration-tests/long-term-caching
 
+  integration_tests_cache_resilience:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/cache-resilience
+
   integration_tests_gatsby_pipeline:
     executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
+  integration_tests_gatsby_cli:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/gatsby-cli
+          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
+
   integration_tests_structured_logging:
     executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/structured-logging
+
+  integration_tests_artifacts:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/artifacts
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
@@ -175,30 +280,66 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
-  e2e_tests_gatsby-image:
-    <<: *e2e-executor
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
+  e2e_tests_pnp:
+    executor: node_10_19
     steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
+      - run:
+          command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+          working_directory: ~/project
+      - run:
+          command: touch yarn.lock
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Quick upgrade to the v2 (any version, we just need the real set version)
+          command: yarn policies set-version berry
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Pins the Yarn version
+          command: yarn set version 2.0.0-rc.32
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Forces to use the local packages
+          command: yarn link --all --private ../..
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn install
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn add start-server-and-test@^1.11.0
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn build
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+
+  e2e_tests_gatsby-image:
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_experimental_react:
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_next_react:
+    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
-    <<: *e2e-executor
-    environment:
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_experimental_react:
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_next_react:
+    <<: *e2e_tests_development_runtime_alias
 
   e2e_tests_production_runtime:
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_experimental_react:
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_next_react:
+    <<: *e2e_tests_production_runtime_alias
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -220,6 +361,20 @@ jobs:
           test_path: e2e-tests/themes/production-runtime
           test_command: yarn test
 
+  mdx_e2e_tests:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/mdx
+          test_command: yarn test
+
+  e2e_tests_gatsby-static-image:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-static-image
+          test_command: yarn test
+
   starters_validate:
     executor: node
     steps:
@@ -233,111 +388,199 @@ jobs:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_cache
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
 
-  build_www:
-    docker:
-      - image: circleci/node:12
-    resource_class: xlarge # ++ RAM and CPU
+  update_i18n_source:
+    executor: node
     steps:
       - checkout
-      - restore_cache:
-          key: v1_www_public_dir
-      - restore_cache:
-          key: v1_www_cache_dir
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
       - run:
           command: yarn
-          working_directory: ~/project/www
+          working_directory: ~/project/scripts/i18n
       - run:
-          # manually match cpu_count to vcpus available in resource_class
-          command: GATSBY_CPU_COUNT=8 yarn build
-          working_directory: ~/project/www
-      - save_cache:
-          key: v1_www_public_dir_{{ epoch }}
-          paths:
-            - ~/project/www/public
-      - save_cache:
-          key: v1_www_cache_dir_{{ epoch }}
-          paths:
-            - ~/project/www/.cache
+          command: yarn run update-source
+          working_directory: ~/project/scripts/i18n
 
-  deploy_www:
-    docker:
-      - image: circleci/node:12
+  sync_translation_repo:
+    executor: node
     steps:
       - checkout
-      - restore_cache:
-          key: v1_www_public_dir
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
       - run:
-          command: yarn add netlify-cli
-          working_directory: ~/project/www
+          command: yarn
+          working_directory: ~/project/scripts/i18n
       - run:
-          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
-          no_output_timeout: 2h
-          working_directory: ~/project/www
+          command: yarn run-all sync
+          working_directory: ~/project/scripts/i18n
 
   windows_unit_tests:
     executor:
-      name: win/vs2019
+      name: win/default
       shell: powershell.exe
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-v2-{{ checksum "yarn.lock" }}
-            - yarn-packages-v2-
+      # Restoring cache takes as long as installing node modules, so skipping
+      # - restore_cache:
+      #     keys:
+      #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
+      #       - yarn-packages-v2-
       - run:
-          name: "Install dependencies"
-          command: yarn bootstrap
-      - save_cache:
-          paths:
-            - C:\Users\circleci\AppData\Local\Yarn\Cache
-          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+          name: Install node modules
+          command: yarn --frozen-lockfile
+      # Caching is slow, so disabling
+      # - save_cache:
+      #     paths:
+      #       - C:\Users\circleci\AppData\Local\Yarn\Cache
+      #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+      - run:
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+          shell: bash.exe
+      - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       - run:
           name: "Run Tests"
-          command: yarn test
+          command: yarn jest -w 1 --ci
+
+  bootstrap-with-experimental-react:
+    executor: node
+    parameters:
+      version:
+        type: string
+        default: "next"
+    steps:
+      - checkout
+      - run:
+          name: "Update React to prerelease"
+          command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
+      - run: yarn install
+      - run: yarn bootstrap -- concurrency=2
+      - run: yarn list react
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
 
 workflows:
   version: 2
+
+  weekly-i18n-sync:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - sync_translation_repo
+
+  weekly-node-14:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - unit_tests_node14
+
+  nightly-react-next:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "next"
+      - e2e_tests_gatsby-image_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+  nightly-react-experimental:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "experimental"
+      - e2e_tests_gatsby-image_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
-      - lint:
+      - lint
+      - typecheck:
           requires:
             - bootstrap
-      - unit_tests_node8:
+      - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - bootstrap
+            - lint
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
             - lint
-            - unit_tests_node8
+            - typecheck
+            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
-            - unit_tests_node8
-      - unit_tests_www:
-          requires:
-            - lint
-            - unit_tests_node8
+            - typecheck
+            - bootstrap
       - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
       - integration_tests_structured_logging:
           <<: *e2e-test-workflow
+      - integration_tests_artifacts:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_cli:
+          requires:
+            - bootstrap
+      - e2e_tests_pnp:
+          <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
@@ -347,6 +590,8 @@ workflows:
           <<: *e2e-test-workflow
       - themes_e2e_tests_development_runtime:
           <<: *e2e-test-workflow
+      - mdx_e2e_tests:
+          <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
@@ -354,33 +599,8 @@ workflows:
             branches:
               only:
                 - master
-      - manual_www_approval:
-          type: approval
+      - update_i18n_source:
           filters:
             branches:
               only:
                 - master
-      - build_www:
-          context: build_www
-          requires:
-            - manual_www_approval
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www
-  www_deploy:
-    triggers:
-      - schedule:
-          cron: "0 2,6,10,14,18,22 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build_www:
-          # Check CircleCI web ui for context details (env vars)
-          context: build_www
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www

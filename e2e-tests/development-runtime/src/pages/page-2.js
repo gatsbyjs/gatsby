@@ -1,8 +1,9 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import InstrumentPage from "../utils/instrument-page"
 
 const SecondPage = () => (
   <Layout>
@@ -12,7 +13,10 @@ const SecondPage = () => (
     <Link to="/" data-testid="back-button">
       Go back to the homepage
     </Link>
+    <button data-testid="back-by-number" onClick={() => navigate(-1)}>
+      Navigate by number back
+    </button>
   </Layout>
 )
 
-export default SecondPage
+export default InstrumentPage(SecondPage)

@@ -1,4 +1,5 @@
-const crypto = require(`crypto`)
+const { createContentDigest } = require(`gatsby-core-utils`)
+
 const mdx = require(`../utils/mdx`)
 const extractExports = require(`../utils/extract-exports`)
 
@@ -13,7 +14,10 @@ module.exports = async ({ id, node, content }) => {
   }
 
   // extract all the exports
-  const { frontmatter, ...nodeExports } = extractExports(code)
+  const { frontmatter, ...nodeExports } = extractExports(
+    code,
+    node.absolutePath
+  )
 
   const mdxNode = {
     id,
@@ -39,10 +43,7 @@ module.exports = async ({ id, node, content }) => {
     mdxNode.fileAbsolutePath = node.absolutePath
   }
 
-  mdxNode.internal.contentDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(mdxNode))
-    .digest(`hex`)
+  mdxNode.internal.contentDigest = createContentDigest(mdxNode)
 
   return mdxNode
 }

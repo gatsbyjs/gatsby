@@ -1,4 +1,4 @@
-[data-testid='global-style'] {
+[data-testid="global-style"] {
   position: relative;
   z-index: 9001; /* it's over 9000 */
 }

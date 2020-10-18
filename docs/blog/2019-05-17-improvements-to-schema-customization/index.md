@@ -13,7 +13,7 @@ It is now possible to indicate to Gatsby, that you want to add a resolver to an 
 
 ## Summary
 
-After about a month of testing schema customization both pre and post release, we determined a couple of issues. The original aim of our schema customisation work was to remove uncertainty in a user's schemas when their data changes.
+After about a month of testing schema customization both pre and post release, we determined a couple of issues. The original aim of our schema customization work was to remove uncertainty in a user's schemas when their data changes.
 
 However, the original design allowed some uncertainties to still creep in. In addition, it made inference a heavier process, trading performance for consistency without providing a way to opt-out completely. To summarize, the schema customization work released in Gatsby 2.2.0 suffered from a few non-ideal issues:
 
@@ -63,7 +63,7 @@ Here are suggested changes to your code if you are using schema customization al
 1. Add resolver directives to fields
 2. Add `@infer` or `@dontInfer` to your type if you don't have it already
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 
@@ -77,7 +77,7 @@ exports.sourceNodes = function sourceNodes({ actions }) {
 }
 ```
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 
@@ -107,7 +107,7 @@ Add resolver and resolver options (such as arguments) to the given field. There 
   characters that are invalid in GraphQL, `proxy` allows to explicitly
   proxy those properties to fields with valid field names. Takes a `from` arg.
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 

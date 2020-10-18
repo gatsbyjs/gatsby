@@ -1,6 +1,6 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
-const onCreateNode = require(`../on-node-create`)
+const { onCreateNode } = require(`../on-node-create`)
 const { graphql } = require(`gatsby/graphql`)
 
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -127,16 +127,20 @@ yadda yadda
         addInferredFields,
       } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
       const {
-        getExampleValue,
-      } = require(`../../../gatsby/src/schema/infer/example-value`)
+        addNodes,
+      } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
+      const {
+        getExampleObject,
+      } = require(`../../../gatsby/src/schema/infer/build-example-data`)
 
       const sc = createSchemaComposer()
       const typeName = `MarkdownRemark`
       const tc = sc.createObjectTC(typeName)
+      const inferenceMetadata = addNodes({ typeName }, nodes)
       addInferredFields({
         schemaComposer: sc,
         typeComposer: tc,
-        exampleValue: getExampleValue({ nodes, typeName }),
+        exampleValue: getExampleObject(inferenceMetadata),
       })
       sc.Query.addFields({
         listNode: { type: [tc], resolve: () => nodes },

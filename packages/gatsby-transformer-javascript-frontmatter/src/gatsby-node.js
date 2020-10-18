@@ -4,7 +4,6 @@ const traverse = require(`@babel/traverse`).default
 
 async function onCreateNode({
   node,
-  getNode,
   actions,
   loadNodeContent,
   createContentDigest,
@@ -37,7 +36,7 @@ async function onCreateNode({
       `functionBind`,
       `functionSent`,
       `dynamicImport`,
-      `flow`,
+      _.includes([`ts`, `tsx`], node.extension) ? `typescript` : `flow`,
     ],
   }
 

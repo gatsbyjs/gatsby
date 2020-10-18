@@ -1,21 +1,21 @@
 {
   "name": "gatsby-source-hacker-news",
   "description": "Gatsby source plugin for building websites using Hacker News as a data source",
-  "version": "2.1.14",
+  "version": "2.4.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.6.3",
-    "axios": "^0.19.0",
-    "lodash": "^4.17.15"
+    "@babel/runtime": "^7.11.2",
+    "axios": "^0.20.0",
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "babel-preset-gatsby-package": "^0.2.9",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.5.3",
+    "cross-env": "^7.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news#readme",
   "keywords": [
@@ -25,7 +25,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.15"
+    "gatsby": "^2.13.28"
   },
   "repository": {
     "type": "git",
@@ -33,11 +33,11 @@
     "directory": "packages/gatsby-source-hacker-news"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   }
 }

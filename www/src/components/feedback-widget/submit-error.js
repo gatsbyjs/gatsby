@@ -3,7 +3,7 @@ import WidgetWrapper from "./widget-wrapper"
 import { CloseButton } from "./buttons"
 import { Actions, ScreenReaderText, Title } from "./styled-elements"
 import { SubmitButton } from "./buttons"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward } from "react-icons/md"
 
 const SubmitError = ({ handleClose, handleOpen, titleRef }) => (
   <WidgetWrapper className="feedback-success" handleClose={handleClose}>

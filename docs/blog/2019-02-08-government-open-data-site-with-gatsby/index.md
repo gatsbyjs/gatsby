@@ -41,7 +41,7 @@ We'd transitioned some of our site already: we migrated our [explore data page](
 
 The homepage presented an exciting opportunity, as the redesign would feature monthly data for the first time on the site. Up until that point, we'd published only annual data. The addition of monthly data meant we needed a way to quickly and easily update the data. It became even more important that other team members – besides just our developer – could update the data.
 
-![homepage design of natural resources revenue data, featuring a map of the U.S., and charts for natural resources production, revenue, and disbursments on federal lands and waters](./full-homepage.jpg)
+![homepage design of natural resources revenue data, featuring a map of the U.S., and charts for natural resources production, revenue, and disbursements on federal lands and waters](./full-homepage.jpg)
 
 ## Rebuilding in Gatsby
 
@@ -51,13 +51,13 @@ In addition to being open source, there are five main reasons we used Gatsby to 
 
 1. Gatsby is a cross-platform ecosystem out of the box.
 
-1. [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
+2. [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
 
-1. Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
+3. Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
 
-1. Gatsby is a modern, web-component framework that allows us to design the site in a more modular way, leading to better code reuse.
+4. Gatsby is a modern, web-component framework that allows us to design the site in a more modular way, leading to better code reuse.
 
-1. We're better aligned with industry best practices, which supports long-term site maintenance.
+5. We're better aligned with industry best practices, which supports long-term site maintenance.
 
 We'll look at each of these in the context of our homepage redesign.
 
@@ -182,7 +182,7 @@ Fortunately, Gatsby provides a hook into the entire lifecycle of its build proce
 
 Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
-Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
+Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/d355ba54a08a4a36a23e4f3d4a06bbca517cee5f/gatsby-browser.js)).
 
 ```javascript
 exports.onClientEntry = () => {

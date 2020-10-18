@@ -1,10 +1,12 @@
-jest.mock(`../../components/layout`, () => jest.fn(({ children }) => children))
 import React from "react"
 import { render } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
 import StarterTemplate from "../template-starter-page"
+
+// Mock out metadata that relies on queries
+jest.mock(`../../components/page-metadata`, () => () => null)
 
 const getMockImage = () => {
   return {

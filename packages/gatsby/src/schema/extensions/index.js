@@ -6,7 +6,7 @@ const {
 } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
-const { getDateResolver } = require(`../types/date`)
+import { getDateResolver } from "../types/date"
 
 import type { GraphQLFieldConfigArgumentMap, GraphQLFieldConfig } from "graphql"
 import type { ComposeFieldConfig, ComposeOutputType } from "graphql-compose"
@@ -21,8 +21,11 @@ export interface GraphQLFieldExtensionDefinition {
   ): $Shape<ComposeFieldConfig>;
 }
 
+const inferExtensionName = `infer`
+const dontInferExtensionName = `dontInfer`
+
 const typeExtensions = {
-  infer: {
+  [inferExtensionName]: {
     description: `Infer field types from field values.`,
     args: {
       noDefaultResolvers: {
@@ -32,7 +35,7 @@ const typeExtensions = {
       },
     },
   },
-  dontInfer: {
+  [dontInferExtensionName]: {
     description: `Do not infer field types from field values.`,
     args: {
       noDefaultResolvers: {
@@ -89,7 +92,7 @@ const typeExtensions = {
 const builtInFieldExtensions = {
   dateformat: {
     name: `dateformat`,
-    description: `Add date formating options.`,
+    description: `Add date formatting options.`,
     args: {
       formatString: `String`,
       locale: `String`,
@@ -240,4 +243,6 @@ module.exports = {
   internalExtensionNames,
   processFieldExtensions,
   reservedExtensionNames,
+  inferExtensionName,
+  dontInferExtensionName,
 }

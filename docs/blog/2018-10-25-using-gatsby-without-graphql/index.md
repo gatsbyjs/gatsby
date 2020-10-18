@@ -47,23 +47,7 @@ That's it!
 
 ### The tldr; (in tweet form)
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    ➡ Did you know you can create pages in{" "}
-    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>{" "}
-    w/unstructured data? This code will:
-    <br />
-    <br />✅ Load data from the{" "}
-    <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a>{" "}
-    <br />✅ Create a page with links to all Pokémon
-    <br />✅ Create individual Pokémon pages
-    <br />✅ Create pages for abilities of each Pokémon
-    <br />
-    <br />
-    Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a>
-  </p>
-  &mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a>
-</blockquote>
+https://twitter.com/jlengstorf/status/1050855455759593472
 
 ### Breaking down the example
 
@@ -129,7 +113,7 @@ The [`createPage` action](/docs/actions/#createPage) is passed an object contain
 In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby’s data layer; it’s just props.
 
 ```jsx:title=src/templates/all-pokemon.js
-export default ({ pageContext: { allPokemon } }) => (// highlight-line
+export default function AllPokemon({ pageContext: { allPokemon } }) (// highlight-line
     {...}
         {allPokemon.map(pokemon => ( // highlight-line
             <li
@@ -231,9 +215,9 @@ Using Gatsby's data layer provides the following benefits:
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. Markdown -> HTML, images -> responsive images, etc)
 - It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
-- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
+- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other Pokémon" section to the Pokémon detail view, you would need to change your `gatsby-node.js` to pass all Pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
-> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+> Learn more about [GraphQL in Gatsby](/docs/graphql-concepts/).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 

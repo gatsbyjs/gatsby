@@ -2,8 +2,6 @@
 title: Overview of the Gatsby Build Process
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 <!-- written at the time of commit e85278c to bootstrap/index.js and commit f8cae16 to build.js -->
 
 _This is a high-level overview about the steps in the Gatsby build process. For more detailed information about specific steps, check out the [Gatsby Internals](/docs/gatsby-internals) section of the docs._
@@ -157,7 +155,7 @@ A [cache](/docs/glossary#cache) is also used to detect changes to `gatsby-*.js` 
 
 ## What happens when you run `gatsby build`?
 
-To see the code where many of these processes are happening, refer to the code and comments in the [`build`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build.js) and [`bootstrap`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js) files of the repository.
+To see the code where many of these processes are happening, refer to the code and comments in the [`build`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build.ts) and [`bootstrap`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.ts) files of the repository.
 
 A Node.js server process powers things behind the scenes when you run the `gatsby build` command. The process of converting assets and pages into HTML that can be rendered in a browser by a [server-side](/docs/glossary#server-side) language like Node.js is referred to as server-side rendering, or SSR. Since Gatsby builds everything ahead of time, this creates an entire site with all of the data your pages need at once. When the site is deployed, it doesn't need to run with server-side processes because everything has been gathered up and compiled by Gatsby.
 
@@ -165,7 +163,7 @@ A Node.js server process powers things behind the scenes when you run the `gatsb
 
 The following model demonstrates what is happening in different "layers" of Gatsby as content and data are gathered up and made available for your static assets.
 
-<LayerModel initialLayer="Build" />
+<ComponentModel initialLayer="Build" />
 
 Like the console output demonstrates in the section above, there are 2 main steps that take place when you run a build: the `bootstrap` phase, and the `build` phase (which can be observed finishing in the console output when you run `gatsby develop` or `gatsby build`).
 
@@ -241,7 +239,7 @@ Imports the composed GraphQL schema and builds it.
 
 13. `createPages`
 
-Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
+Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programmatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
 
 Plugins can handle the [`onCreatePage` event](/docs/node-apis/#onCreatePage) at this point for use cases like manipulating the path of pages.
 
@@ -271,7 +269,7 @@ An internal Gatsby utility adds code for redirects, like implemented with [`crea
 
 20. `Build manifest and related icons` - (from `gatsby-plugin-manifest`)
 
-This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle.
+This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle. The plugin adds a `manifest.json` file with the specified configurations and icons.
 
 21. `onPostBootstrap`
 
@@ -302,6 +300,8 @@ Page queries that were queued up earlier from query extraction are run so the da
 6. `Building static HTML for pages`
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
+
+By default, Gatsby rebuilds static HTML for all pages on each build. There is an experimental feature flag `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` which enables [conditional page builds](/docs/conditional-page-builds/).
 
 ## What do you get from a successful build?
 

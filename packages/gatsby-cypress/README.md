@@ -6,7 +6,7 @@ This package provides additional [Cypress](https://cypress.io/) commands for [te
 
 To use these commands, first install the necessary packages:
 
-```bash
+```shell
 npm install cypress gatsby-cypress start-server-and-test --save-dev
 ```
 
@@ -25,9 +25,7 @@ Once imported, the following additional commands are available:
 
   ```js
   // after navigating to another page via a link
-  cy.waitForRouteChange()
-    .get(`#element-with-event-handler`)
-    .click()
+  cy.waitForRouteChange().get(`#element-with-event-handler`).click()
   ```
 
 - [**no longer recommended**] `cy.getTestElement(selector)`: Selects elements where the `data-testid`
@@ -41,7 +39,7 @@ Once imported, the following additional commands are available:
   cy.getTestElement("btn-to-test").click()
   ```
 
-  > **NOTE:** It’s recommended not to use test IDs. Instead, consider using [`cypress-testing-library`](https://github.com/kentcdodds/cypress-testing-library) and relying on `getByText` instead.
+  > **NOTE:** It’s recommended not to use test IDs. Instead, consider using [`cypress-testing-library`](https://github.com/testing-library/cypress-testing-library) and relying on `findByText` instead.
 
 ## Running Cypress tests in Gatsby
 
@@ -72,7 +70,7 @@ context("Homepage", () => {
   })
 
   it("has focusable buttons", () => {
-    cy.getByText("click me").focus()
+    cy.findByText("click me").focus()
     cy.focused().should("have.text", "click me")
   })
 })

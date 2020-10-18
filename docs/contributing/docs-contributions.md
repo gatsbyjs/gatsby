@@ -2,20 +2,22 @@
 title: Docs Contributions
 ---
 
-Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
+Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of June 2020, over 2,100 people have contributed. It's people like you that make this community great!
 
-> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
+> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
 
 ## Top priorities
 
-Check the GitHub repo for issues labeled with ["documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or ["documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label. As well, examine the list of articles that haven't been fully fleshed out at the [Stub List](/contributing/stub-list).
+Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label. As well, examine the list of articles that haven't been fully fleshed out at the [Stub List](/contributing/stub-list).
 
 ## Options for contributing to the Gatsby docs
 
 When working on the Gatsby.js documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
+- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
+
+> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
 ## Fixing image and link paths
 
@@ -25,7 +27,7 @@ To address missing images, check the doc or tutorial source [in the Gatsby repo]
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
-Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice for links in documentation to work on GitHub, having them working on gatsbyjs.org is a higher priority!
+Keep in mind that some links in here are already correct because they work on gatsbyjs.com. While it would be nice for links in documentation to work on GitHub, having them working on gatsbyjs.com is a higher priority!
 
 ## Headings
 
@@ -82,17 +84,106 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
+> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
+
+- Prerequisites: install Node.js and Yarn. See [development setup instructions](/contributing/setting-up-your-local-dev-environment/).
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 - For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
 - Change directories into the docs site folder: `cd www`
 - Install dependencies with Yarn: `yarn install`
 - Add the following env variable to an `.env.development` file inside the `www` directory to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
+- Make sure you have the Gatsby CLI installed with `gatsby -v`, if not run `yarn global add gatsby-cli`
 - Start a build of `www` with `gatsby develop`.
 - Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
 - View the changes in your browser at `http://localhost:8000`.
 - Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
+
+## Changing headers
+
+It can be necessary to change a heading within the docs. It's important to note that headers automatically generate links with a corresponding URL that can be deep-linked from elsewhere on the site. When changing a header, be sure to point all corresponding links to the new URL. Here are some workflow tips:
+
+- Determine the URL you're looking for. `Changing headers` is linked with a URL ending in `changing-headers`, `Docs renaming instructions` becomes `docs-renaming-instructions`, etc.
+- Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
+
+## Adding a description
+
+The site automatically creates description tags in order to boost SEO:
+
+```html
+<meta name="description" content="Documentation of Gatsby" />
+<meta property="og:description" content="Documentation of Gatsby" />
+<meta name="twitter:description" content="Documentation of Gatsby" />
+```
+
+By default, this description is generated from the `page.excerpt`. If you would like to add a custom description, you can use the `description` frontmatter tag:
+
+```markdown
+---
+title: Gatsby Community Events
+description: Learn about other events happening around the globe to connect with other members of the Gatsby community
+---
+```
+
+## Configuring site navigation
+
+The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
+
+### Adjusting breadcrumb titles
+
+The `<Breadcrumb />` component is used in layout files to display the hierarchy of pages a user is currently browsing on at the top of each doc.
+
+To alter the title of a doc that is displayed in the Breadcrumb component, `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
+
+```yaml
+- title: Adding Page Transitions
+  link: /docs/adding-page-transitions/
+  breadcrumbTitle: Page Transitions # highlight-line
+```
+
+### Disabling or shortening Table of Contents
+
+The `<TableOfContents />` component is used to render a list of subheaders from a docs page and automatically provide deep links to them. It can be tweaked by values set in the frontmatter of a doc's markdown.
+
+In docs where the Table of Contents isn't required and should be disabled, a key in the frontmatter called `disableTableOfContents` can be set to `true` like this:
+
+```markdown
+---
+title: Glossary
+disableTableOfContents: true
+---
+
+When you're new to Gatsby there can be a lot of words to learn...
+```
+
+In other docs where the Table of Contents is extremely long it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
+
+```markdown
+---
+title: Glossary
+tableOfContentsDepth: 2
+---
+
+When you're new to Gatsby there can be a lot of words to learn...
+```
+
+## Adding embedded GraphQL examples
+
+There are embedded examples in a few places in the docs (like the [GraphQL Reference guide](/docs/graphql-reference/)) that provide a working version of the code described. In the specific example of the GraphQL Query Options Reference page, these examples of the GraphiQL interface show how data can be queried from Gatsby's data layer.
+
+To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://graphql-reference-1124782374.gtsb.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
+
+<!-- prettier-ignore -->
+```mdx
+Here's an example of a GraphQL query inline:
+
+<iframe src="https://graphql-reference-1124782374.gtsb.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
+
+More markdown content...
+```
+
+> Note that you should set the `explorerIsOpen` parameter in the URL to `false` if it isn't already.
 
 ## Docs renaming instructions
 
@@ -100,14 +191,11 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 
 - Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
-- For SEO purposes, add a redirect to the `createPages` function in [`www/gatsby-node.js`](https://github.com/gatsbyjs/gatsby/tree/master/www/gatsby-node.js). Here's an example:
+- For SEO purposes, add a redirect to [`www/redirects.yaml`](https://github.com/gatsbyjs/gatsby/tree/master/www/redirects.yaml). Here's an example:
 
-```js:title=www/gatsby-node.js
-createRedirect({
-  fromPath: `/docs/source-plugin-tutorial/`,
-  toPath: `/docs/pixabay-source-plugin-tutorial/`,
-  isPermanent: true,
-})
+```yaml:title=www/redirects.yaml
+- fromPath: /docs/source-plugin-tutorial/
+  toPath: /tutorial/source-plugin-tutorial/
 ```
 
 ## Claim your swag

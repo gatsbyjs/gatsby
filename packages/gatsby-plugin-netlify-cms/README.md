@@ -20,7 +20,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms-app gatsby-plugin-netlify-cms
+npm install netlify-cms-app gatsby-plugin-netlify-cms
 ```
 
 ## How to use
@@ -80,8 +80,12 @@ The js module might look like this:
 import CMS from "netlify-cms-app"
 
 /**
- * Any imported styles will automatically be applied to the editor preview
- * pane, there is no need to use `registerPreviewStyle` for imported styles.
+ * Any imported styles should be automatically be applied to the editor preview
+ * pane thus eliminating the need to use `registerPreviewStyle` for imported
+ * styles. However if you are experiencing build errors regarding importing css,
+ * sass or scss into a cms module when deploying to the netlify platform, you
+ * may need to follow the implementation found in netlify documentation here:
+ * https://www.netlifycms.org/docs/beta-features/#raw-css-in-registerpreviewstyle
  * All of the example imports below would result in styles being applied to the
  * preview pane.
  */
@@ -143,9 +147,7 @@ CMS.init({
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
 Identity](https://www.netlify.com/docs/identity/) to be used without
-configuration, but you may need to disable it in some cases, such as when using
-a Netlify CMS backend that conflicts. This is currently known to be the case
-when using the GitLab backend, but only when using implicit OAuth.
+configuration. Disable it when not using Netlify Identity to reduce bundle size.
 
 ```javascript
 plugins: [
@@ -237,10 +239,28 @@ plugins: [
 ]
 ```
 
+## Disable widget on site
+
+If you're not using Netlify Identity within your site you have the option to completely disable the widget (and not the CMS). To do so, add the following to `gatsby-node.js`:
+
+```javascript
+const webpack = require(`webpack`)
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^netlify-identity-widget$/,
+      }),
+    ],
+  })
+}
+```
+
 ## Support
 
 For help with integrating Netlify CMS with Gatsby, check out the community
-[Gitter](https://gitter.im/netlify/netlifycms).
+[Slack](https://join.slack.com/t/netlifycms/shared_invite/enQtODE1NTcxODA5Mjg1LTRjYWExM2MyZDJmODA3YmVkMjI2YmQwZDg2ZDUyYTMyM2Y3Zjc1ZTJhNDBkYmMwNjA2ZTkwODY4YjZjNGNlNTE).
 
 [1]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md
 [2]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@3.0.18/packages/gatsby-plugin-netlify-cms/README.md

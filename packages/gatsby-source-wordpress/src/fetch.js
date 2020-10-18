@@ -53,6 +53,7 @@ async function fetch({
   _concurrentRequests,
   _includedRoutes,
   _excludedRoutes,
+  _restApiRoutePrefix,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -65,7 +66,7 @@ async function fetch({
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
     _accessToken = await getWPCOMAccessToken(_auth)
   } else {
-    url = `${_siteURL}/wp-json`
+    url = `${_siteURL}/${_restApiRoutePrefix}`
     if (shouldUseJwt(_auth)) {
       _accessToken = await getJWToken(_auth, url)
     }
@@ -285,7 +286,7 @@ async function fetchData({
 
   let entities = []
   if (routeResponse) {
-    if (type.indexOf(`wordpress__menus_menus`) !== -1) {
+    if (type.includes(`wordpress__menus_menus`)) {
       routeResponse = routeResponse.map(r => {
         return { ...r, ID: r.term_id }
       })
@@ -527,7 +528,7 @@ function getValidRoutes({
     })
     // ACF to REST V2 does not allow ACF Option Page ID specification
     if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
-      _acfOptionPageIds.forEach(function(acfOptionPageId) {
+      _acfOptionPageIds.forEach(function (acfOptionPageId) {
         validRoutes.push({
           url: `${url}/acf/v3/options/${acfOptionPageId}`,
           type: `${typePrefix}acf_options`,

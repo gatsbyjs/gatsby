@@ -28,7 +28,7 @@ date: 2019-01-29
 # Hello, world!
 ```
 
-Which can then be [queried with GraphQL](/docs/querying-with-graphql/):
+Which can then be [queried with GraphQL](/docs/graphql-concepts/):
 
 ```graphql
 query {
@@ -60,7 +60,6 @@ author: Jay Gatsby
 ---
 
 <h1>{props.pageContext.frontmatter.title}</h1>
-
 <span>{props.pageContext.frontmatter.author}</span>
 
 (Blog post content, components, etc.)
@@ -80,7 +79,6 @@ import FAQ from "../components/faq.mdx"
 The chart is rendered inside our MDX document.
 
 <Chart />
-
 <FAQ />
 ```
 
@@ -100,19 +98,23 @@ sources
 ### Where do I start?
 
 The documentation offers guides for all different skill levels, you can
-find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.org/docs/quick-start)
+find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.com/docs/quick-start)
 
 <!-- This default export overrides the default layout ensuring -->
 <!--  that the FAQ component isn't wrapped by other elements -->
-export default ({ children }) => (
-  <>
-    {children}
-  </>
-)
+export default function Layout({ children }) {
+  return (
+    <>
+      {children}
+    </>
+  );
+}
 ```
 
 > **Note**: the default export concept used in this code block is explained in more detail
 > in the docs below on [defining layouts](#defining-a-layout)
+
+You can read more about using React components from other libraries in the [Importing and Using components in MDX guide](/docs/mdx/importing-and-using-components/).
 
 ## Combining frontmatter and imports
 
@@ -238,3 +240,9 @@ export const pageQuery = graphql`
   }
 `
 ```
+
+> Note: For now, this only works [if the `.mdx` file exporting the query is placed in
+> `src/pages`](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-437161966).
+> Exporting GraphQL queries from `.mdx` files that are used for programmatic page creation in
+> `gatsby-node.js` via `actions.createPage` [is not currently
+> supported](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-489005677).

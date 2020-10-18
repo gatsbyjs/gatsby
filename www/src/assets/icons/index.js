@@ -1,15 +1,8 @@
-import BlogIcon from "!raw-loader!./blog.svg"
-import DocsIcon from "!raw-loader!./docs.svg"
-import EcosystemIcon from "!raw-loader!./ecosystem.svg"
-import PluginsIcon from "!raw-loader!./plugins.svg"
-import ShowcaseIcon from "!raw-loader!./showcase.svg"
-import TutorialIcon from "!raw-loader!./tutorial.svg"
-
-export {
-  BlogIcon,
-  DocsIcon,
-  EcosystemIcon,
-  PluginsIcon,
-  ShowcaseIcon,
-  TutorialIcon,
-}
+export { default as V2Icon } from "./v2icon.svg"
+export { default as BlogIcon } from "./blog.svg"
+export { default as DocsIcon } from "./docs.svg"
+export { default as EcosystemIcon } from "./ecosystem.svg"
+export { default as PluginsIcon } from "./plugins.svg"
+export { default as ShowcaseIcon } from "./showcase.svg"
+export { default as TutorialIcon } from "./tutorial.svg"
+export { default as FeaturedSitesIcon } from "./featured-sites.svg"

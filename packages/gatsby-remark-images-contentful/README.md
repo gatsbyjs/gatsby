@@ -15,7 +15,7 @@ In the processing, it makes images responsive by:
 
 ## Install
 
-`npm install --save gatsby-remark-images-contentful`
+`npm install gatsby-remark-images-contentful`
 
 ## How to use
 
@@ -53,6 +53,7 @@ plugins: [
 | `wrapperStyle`         |         | Add custom styles to the div wrapping the responsive images. Use regular CSS syntax, e.g. `margin-bottom:10px; background: red;`                                                                                                                                                                                                                                                                                                         |
 | `backgroundColor`      | `white` | Set the background color of the image to match the background of your design                                                                                                                                                                                                                                                                                                                                                             |
 | `withWebp`             | `false` | Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format.                                                                                                                                                                                                                                                  |
+| `loading`              | `lazy`  | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`.                                                                                                                                                                                                                                                                                                                                                       |
 
 ## Troubleshooting
 
@@ -60,7 +61,7 @@ plugins: [
 
 This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
-```
+```text
 Something went wrong installing the "sharp" module
 
 dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib

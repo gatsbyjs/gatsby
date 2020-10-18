@@ -1,26 +1,70 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from "@reach/router"
+import { Link, Location } from "@reach/router"
+import { resolve } from "@reach/router/lib/utils"
 
 import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-export function withPrefix(path) {
-  return normalizePath(
-    [
-      typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
-      path,
-    ].join(`/`)
-  )
+const isAbsolutePath = path => path?.startsWith(`/`)
+
+export function withPrefix(path, prefix = getGlobalBasePrefix()) {
+  if (!isLocalLink(path)) {
+    return path
+  }
+
+  if (path.startsWith(`./`) || path.startsWith(`../`)) {
+    return path
+  }
+  const base = prefix ?? getGlobalPathPrefix() ?? `/`
+
+  return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${
+    path.startsWith(`/`) ? path : `/${path}`
+  }`
 }
+
+// These global values are wrapped in typeof clauses to ensure the values exist.
+// This is especially problematic in unit testing of this component.
+const getGlobalPathPrefix = () =>
+  process.env.NODE_ENV !== `production`
+    ? typeof __PATH_PREFIX__ !== `undefined`
+      ? __PATH_PREFIX__
+      : undefined
+    : __PATH_PREFIX__
+const getGlobalBasePrefix = () =>
+  process.env.NODE_ENV !== `production`
+    ? typeof __BASE_PATH__ !== `undefined`
+      ? __BASE_PATH__
+      : undefined
+    : __BASE_PATH__
+
+const isLocalLink = path =>
+  path &&
+  !path.startsWith(`http://`) &&
+  !path.startsWith(`https://`) &&
+  !path.startsWith(`//`)
 
 export function withAssetPrefix(path) {
-  return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
+  return withPrefix(path, getGlobalPathPrefix())
 }
 
-function normalizePath(path) {
-  return path.replace(/\/+/g, `/`)
+function absolutify(path, current) {
+  // If it's already absolute, return as-is
+  if (isAbsolutePath(path)) {
+    return path
+  }
+  return resolve(path, current)
+}
+
+const rewriteLinkPath = (path, relativeTo) => {
+  if (typeof path === `number`) {
+    return path
+  }
+  if (!isLocalLink(path)) {
+    return path
+  }
+  return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
 }
 
 const NavLinkPropTypes = {
@@ -67,14 +111,20 @@ class GatsbyLink extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(parsePath(this.props.to).pathname)
+      ___loader.enqueue(
+        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+          .pathname
+      )
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(parsePath(this.props.to).pathname)
+      ___loader.enqueue(
+        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+          .pathname
+      )
     }
   }
 
@@ -98,7 +148,10 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       this.io = createIntersectionObserver(ref, () => {
-        ___loader.enqueue(parsePath(this.props.to).pathname)
+        ___loader.enqueue(
+          parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+            .pathname
+        )
       })
     }
   }
@@ -131,53 +184,67 @@ class GatsbyLink extends React.Component {
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
-
-    const LOCAL_URL = /^\/(?!\/)/
-    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
+    if (process.env.NODE_ENV !== `production` && !isLocalLink(to)) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
     }
 
-    const prefixedTo = withPrefix(to)
-
     return (
-      <Link
-        to={prefixedTo}
-        state={state}
-        getProps={getProps}
-        innerRef={this.handleRef}
-        onMouseEnter={e => {
-          if (onMouseEnter) {
-            onMouseEnter(e)
-          }
-          ___loader.hovering(parsePath(to).pathname)
+      <Location>
+        {({ location }) => {
+          const prefixedTo = rewriteLinkPath(to, location.pathname)
+          return isLocalLink(prefixedTo) ? (
+            <Link
+              to={prefixedTo}
+              state={state}
+              getProps={getProps}
+              innerRef={this.handleRef}
+              onMouseEnter={e => {
+                if (onMouseEnter) {
+                  onMouseEnter(e)
+                }
+                ___loader.hovering(parsePath(prefixedTo).pathname)
+              }}
+              onClick={e => {
+                if (onClick) {
+                  onClick(e)
+                }
+
+                if (
+                  e.button === 0 && // ignore right clicks
+                  !this.props.target && // let browser handle "target=_blank"
+                  !e.defaultPrevented && // onClick prevented default
+                  !e.metaKey && // ignore clicks with modifier keys...
+                  !e.altKey &&
+                  !e.ctrlKey &&
+                  !e.shiftKey
+                ) {
+                  e.preventDefault()
+
+                  let shouldReplace = replace
+                  const isCurrent =
+                    encodeURI(prefixedTo) === window.location.pathname
+                  if (typeof replace !== `boolean` && isCurrent) {
+                    shouldReplace = true
+                  }
+                  // Make sure the necessary scripts and data are
+                  // loaded before continuing.
+                  window.___navigate(prefixedTo, {
+                    state,
+                    replace: shouldReplace,
+                  })
+                }
+
+                return true
+              }}
+              {...rest}
+            />
+          ) : (
+            <a href={prefixedTo} {...rest} />
+          )
         }}
-        onClick={e => {
-          if (onClick) {
-            onClick(e)
-          }
-
-          if (
-            e.button === 0 && // ignore right clicks
-            !this.props.target && // let browser handle "target=_blank"
-            !e.defaultPrevented && // onClick prevented default
-            !e.metaKey && // ignore clicks with modifier keys...
-            !e.altKey &&
-            !e.ctrlKey &&
-            !e.shiftKey
-          ) {
-            e.preventDefault()
-
-            // Make sure the necessary scripts and data are
-            // loaded before continuing.
-            navigate(to, { state, replace })
-          }
-
-          return true
-        }}
-        {...rest}
-      />
+      </Location>
     )
   }
 }
@@ -187,6 +254,7 @@ GatsbyLink.propTypes = {
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
+  state: PropTypes.object,
 }
 
 const showDeprecationWarning = (functionName, altFunctionName, version) =>
@@ -199,17 +267,17 @@ export default React.forwardRef((props, ref) => (
 ))
 
 export const navigate = (to, options) => {
-  window.___navigate(withPrefix(to), options)
+  window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
 }
 
 export const push = to => {
   showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(withPrefix(to))
+  window.___push(rewriteLinkPath(to, window.location.pathname))
 }
 
 export const replace = to => {
   showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(withPrefix(to))
+  window.___replace(rewriteLinkPath(to, window.location.pathname))
 }
 
 // TODO: Remove navigateTo for Gatsby v3

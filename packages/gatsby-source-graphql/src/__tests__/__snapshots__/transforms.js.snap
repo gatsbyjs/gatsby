@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NamespaceUnderFieldTransform works 1`] = `
+"type Mutation {
+  mutation: String
+}
+
+type Query {
+  wrapper: Wrapper!
+}
+
+type Wrapper {
+  query: String
+}
+"
+`;
+
+exports[`StripNonQueryTransform works 1`] = `
+"type Query {
+  query: String
+}
+"
+`;

@@ -14,11 +14,10 @@ In this tutorial, you'll be learning about how to pull data into your Gatsby sit
 
 GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
-You can access it when your site's development server is running—normally at
-<http://localhost:8000/___graphql>.
+You can access it when your site's development server is running—normally at `http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <source type="video/mp4" src="/graphiql-explore.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -44,7 +43,7 @@ Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explor
 First, install the plugin at the root of the project:
 
 ```shell
-npm install --save gatsby-source-filesystem
+npm install gatsby-source-filesystem
 ```
 
 Then add it to your `gatsby-config.js`:
@@ -79,33 +78,29 @@ Save that and restart the gatsby development server. Then open up GraphiQL again
 
 In the explorer pane, you'll see `allFile` and `file` available as selections:
 
-![graphiql-filesystem](graphiql-filesystem.png)
+![The GraphiQL IDE showing the new dropdown options provided by the gatsby-source-filesystem plugin](graphiql-filesystem.png)
 
 Click the `allFile` dropdown. Position your cursor after `allFile` in the query area, and then type <kbd>Ctrl + Enter</kbd>. This will pre-fill a query for the `id` of each file. Press "Play" to run the query:
 
-![filesystem-query](filesystem-query.png)
+![The GraphiQL IDE showing the results of a filesystem query](filesystem-query.png)
 
 In the Explorer pane, the `id` field has automatically been selected. Make selections for more fields by checking the field's corresponding checkbox. Press "Play" to run the query again, with the new fields:
 
-![filesystem-explorer-options](filesystem-explorer-options.png)
+![The GraphiQL IDE showing the new fields in the Explorer column](filesystem-explorer-options.png)
 
 Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl + Space</kbd>). This will show queryable fields on the `File` nodes.
 
-![filesystem-autocomplete](filesystem-autocomplete.png)
+![The GraphiQL IDE showing the gatsby-source-filesystem plugin's new autocomplete options](filesystem-autocomplete.png)
 
-Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
-each time to re-run the query. You'll see the updated query results:
+Try adding a number of fields to your query, press <kbd>Ctrl + Enter</kbd> each time to re-run the query. You'll see the updated query results:
 
-![allfile-query](allfile-query.png)
+![The GraphiQL IDE showing the results of the query](allfile-query.png)
 
-The result is an array of `File` "nodes" (node is a fancy name for an object in a
-"graph"). Each `File` node object has the fields you queried for.
+The result is an array of `File` "nodes" (node is a fancy name for an object in a "graph"). Each `File` node object has the fields you queried for.
 
 ## Build a page with a GraphQL query
 
-Building new pages with Gatsby often starts in GraphiQL. You first sketch out
-the data query by playing in GraphiQL then copy this to a React page component
-to start building the UI.
+Building new pages with Gatsby often starts in GraphiQL. You first sketch out the data query by playing in GraphiQL then copy this to a React page component to start building the UI.
 
 Let's try this.
 
@@ -117,7 +112,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyFiles({ data }) {
   console.log(data) // highlight-line
   return (
     <Layout>
@@ -142,14 +137,11 @@ export const query = graphql`
 `
 ```
 
-The `console.log(data)` line is highlighted above. It's often helpful when
-creating a new component to console out the data you're getting from the GraphQL query
-so you can explore the data in your browser console while building the UI.
+The `console.log(data)` line is highlighted above. It's often helpful when creating a new component to console out the data you're getting from the GraphQL query so you can explore the data in your browser console while building the UI.
 
-If you visit the new page at `/my-files/` and open up your browser console
-you will see something like:
+If you visit the new page at `/my-files/` and open up your browser console you will see something like:
 
-![data-in-console](data-in-console.png)
+![Browser console showing the structure of the data object](data-in-console.png)
 
 The shape of the data matches the shape of the GraphQL query.
 
@@ -160,7 +152,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyFiles({ data }) {
   console.log(data)
   return (
     <Layout>
@@ -209,9 +201,9 @@ export const query = graphql`
 `
 ```
 
-And now visit [http://localhost:8000/my-files](http://localhost:8000/my-files)… 😲
+And now visit `http://localhost:8000/my-files`… 😲
 
-![my-files-page](my-files-page.png)
+![A browser window showing a list of the files in the site](my-files-page.png)
 
 ## What's coming next?
 

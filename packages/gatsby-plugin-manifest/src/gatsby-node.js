@@ -1,8 +1,13 @@
-import fs from "fs"
-import path from "path"
+import * as fs from "fs"
+import * as path from "path"
 import sharp from "./safe-sharp"
-import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
-import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
+import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
+import {
+  defaultIcons,
+  doesIconExist,
+  addDigestToPath,
+  favicons,
+} from "./common"
 
 sharp.simd(true)
 
@@ -40,35 +45,90 @@ async function generateIcon(icon, srcIcon) {
 async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`)
 
-  let created = cache.get(cacheKey, srcIcon)
-
+  const created = cache.get(cacheKey, srcIcon)
   if (!created) {
     cache.set(cacheKey, true)
 
     try {
-      // console.log(`creating icon`, icon.src, srcIcon)
       await callback(icon, srcIcon)
     } catch (e) {
       cache.set(cacheKey, false)
       throw e
     }
-  } else {
-    // console.log(`icon exists`, icon.src, srcIcon)
+  }
+}
+
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  exports.pluginOptionsSchema = ({ Joi }) => {
+    Joi.object({
+      name: Joi.string(),
+      short_name: Joi.string(),
+      description: Joi.string(),
+      lang: Joi.string(),
+      localize: Joi.array().items(
+        Joi.object({
+          start_url: Joi.string(),
+          name: Joi.string(),
+          short_name: Joi.string(),
+          description: Joi.string(),
+          lang: Joi.string(),
+        })
+      ),
+      start_url: Joi.string(),
+      background_color: Joi.string(),
+      theme_color: Joi.string(),
+      display: Joi.string(),
+      legacy: Joi.boolean(),
+      include_favicon: Joi.boolean(),
+      icon: Joi.string(),
+      theme_color_in_head: Joi.boolean(),
+      crossOrigin: Joi.string().valid(`use-credentials`, `anonymous`),
+      cache_busting_mode: Joi.string().valid(`query`, `name`, `none`),
+      icons: Joi.array().items(
+        Joi.object({
+          src: Joi.string(),
+          sizes: Joi.string(),
+          type: Joi.string(),
+        })
+      ),
+      icon_options: Joi.object({
+        purpose: Joi.string(),
+      }),
+    })
+  }
+}
+
+/**
+ * Setup pluginOption defaults
+ * TODO: Remove once pluginOptionsSchema is stable
+ */
+exports.onPreInit = (_, pluginOptions) => {
+  pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
+  pluginOptions.include_favicon = pluginOptions.include_favicon ?? true
+  pluginOptions.legacy = pluginOptions.legacy ?? true
+  pluginOptions.theme_color_in_head = pluginOptions.theme_color_in_head ?? true
+  pluginOptions.cacheDigest = null
+
+  if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
+    pluginOptions.cacheDigest = createContentDigest(
+      fs.readFileSync(pluginOptions.icon)
+    )
   }
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan },
+  { reporter, parentSpan, basePath },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
     parentSpan,
   })
+
   activity.start()
 
   let cache = new Map()
 
-  await makeManifest(cache, reporter, manifest)
+  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -84,26 +144,49 @@ exports.onPostBootstrap = async (
           cacheModeOverride = { cache_busting_mode: `name` }
         }
 
-        return makeManifest(
+        return makeManifest({
           cache,
           reporter,
-          {
+          pluginOptions: {
             ...manifest,
             ...locale,
             ...cacheModeOverride,
           },
-          true
-        )
+          shouldLocalize: true,
+          basePath,
+        })
       })
     )
   }
   activity.end()
 }
 
-const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} makeManifestArgs
+ * @property {Object} cache - from gatsby-node api
+ * @property {Object} reporter - from gatsby-node api
+ * @property {Object} pluginOptions - from gatsby-node api/gatsby config
+ * @property {boolean?} shouldLocalize
+ * @property {string?} basePath - string of base path frpvided by gatsby node
+ */
+
+/**
+ * Build manifest
+ * @param {makeManifestArgs}
+ */
+const makeManifest = async ({
+  cache,
+  reporter,
+  pluginOptions,
+  shouldLocalize = false,
+  basePath = ``,
+}) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
+
+  const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
@@ -144,10 +227,12 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
   })
 
   // Only auto-generate icons if a src icon is defined.
-  if (icon !== undefined) {
+  if (typeof icon !== `undefined`) {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
-      throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      throw new Error(
+        `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      )
     }
 
     const sharpIcon = sharp(icon)
@@ -169,31 +254,63 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    //if cacheBusting is being done via url query icons must be generated before cache busting runs
-    if (cacheMode === `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+    /**
+     * Given an array of icon configs, generate the various output sizes from
+     * the source icon image.
+     */
+    async function processIconSet(iconSet) {
+      //if cacheBusting is being done via url query icons must be generated before cache busting runs
+      if (cacheMode === `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
         )
-      )
+      }
+
+      if (cacheMode !== `none`) {
+        iconSet = iconSet.map(icon => {
+          let newIcon = { ...icon }
+          newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
+          return newIcon
+        })
+      }
+
+      //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+      if (cacheMode !== `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
+        )
+      }
+
+      return iconSet
     }
 
-    if (cacheMode !== `none`) {
-      manifest.icons = manifest.icons.map(icon => {
-        let newIcon = { ...icon }
-        newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
-        return newIcon
-      })
-    }
+    manifest.icons = await processIconSet(manifest.icons)
 
-    //if file names are being modified by cacheBusting icons must be generated after cache busting runs
-    if (cacheMode !== `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-        )
-      )
+    // If favicon is enabled, apply the same caching policy and generate
+    // the resized image(s)
+    if (faviconIsEnabled) {
+      await processIconSet(favicons)
+
+      if (metadata.format === `svg`) {
+        fs.copyFileSync(icon, path.join(`public`, `favicon.svg`))
+      }
     }
+  }
+
+  //Fix #18497 by prefixing paths
+  manifest.icons = manifest.icons.map(icon => {
+    return {
+      ...icon,
+      src: slash(path.join(basePath, icon.src)),
+    }
+  })
+
+  if (manifest.start_url) {
+    manifest.start_url = path.posix.join(basePath, manifest.start_url)
   }
 
   //Write manifest

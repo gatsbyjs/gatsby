@@ -58,7 +58,7 @@ each theme points to its parents. (So `gatsby-theme-supertheme` references
 themes and the user only has to know about and install
 `gatsby-theme-supertheme`.
 
-```
+```text
 gatsby-theme-supertheme
 ├── gatsby-theme-a
 │   ├── gatsby-theme-a1
@@ -155,7 +155,7 @@ experience to developing and using themes for experienced Gatsby contributors
 and new users alike. Building out potential UX improvements to shadowing for
 more complex multi-theme authoring use cases, defining patterns for sharing
 design tokens and data abstractions across themes, and building a cohesive set
-of themable components for a set of official Gatsby themes are all directions
+of themeable components for a set of official Gatsby themes are all directions
 you may see us together with the community work on in the future.
 
 That's a peek inside where themes is going. Get started building your own themes

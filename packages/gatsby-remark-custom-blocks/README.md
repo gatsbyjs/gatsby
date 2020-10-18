@@ -6,7 +6,7 @@ Unlike in [gatsby-remark-component](https://www.gatsbyjs.org/packages/gatsby-rem
 
 ## Install
 
-`npm install --save gatsby-remark-custom-blocks`
+`npm install gatsby-remark-custom-blocks`
 
 ## How to use
 
@@ -50,7 +50,7 @@ plugins: [
 
 Use the following Markdown syntax to create blocks in your file:
 
-```
+```markdown
 [[danger]]
 | content
 

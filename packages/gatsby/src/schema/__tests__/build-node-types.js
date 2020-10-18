@@ -1,10 +1,8 @@
 const { graphql, GraphQLString } = require(`graphql`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -12,7 +10,7 @@ jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
-const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 const { TypeConflictReporter } = require(`../infer/type-conflict-reporter`)
 const typeConflictReporter = new TypeConflictReporter()
@@ -75,6 +73,7 @@ const makeNodes = () => [
 describe(`build-node-types`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
@@ -82,10 +81,10 @@ describe(`build-node-types`, () => {
     const schemaComposer = createSchemaComposer()
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
@@ -95,7 +94,6 @@ describe(`build-node-types`, () => {
       nodeModel: new LocalNodeModel({
         schemaComposer,
         schema,
-        nodeStore,
         createPageDependency,
       }),
     })

@@ -5,6 +5,9 @@ const {
 } = require(`../gatsby-node`)
 const path = require(`path`)
 
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
+const { pluginOptionsSchema } = require(`../gatsby-node`)
+
 describe(`gatsby-plugin-typescript`, () => {
   describe(`resolvableExtensions`, () => {
     it(`returns the correct resolvable extensions`, () => {
@@ -13,8 +16,8 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   describe(`onCreateBabelConfig`, () => {
-    it(`sets the correct babel preset`, () => {
-      const actions = { setBabelPreset: jest.fn() }
+    it(`sets the correct babel preset and plugin`, () => {
+      const actions = { setBabelPreset: jest.fn(), setBabelPlugin: jest.fn() }
       const options = {
         isTSX: true,
         jsxPragma: `jsx`,
@@ -24,6 +27,22 @@ describe(`gatsby-plugin-typescript`, () => {
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
         name: expect.stringContaining(path.join(`@babel`, `preset-typescript`)),
         options,
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(3)
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-optional-chaining`)
+        ),
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-nullish-coalescing-operator`)
+        ),
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-numeric-separator`)
+        ),
       })
     })
   })
@@ -51,6 +70,34 @@ describe(`gatsby-plugin-typescript`, () => {
       const loaders = { js: jest.fn() }
       onCreateWebpackConfig({ actions, loaders })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
+    })
+  })
+
+  describe(`plugin schema`, () => {
+    it(`should provide meaningful errors when fields are invalid`, () => {
+      const expectedErrors = [
+        `"isTSX" must be a boolean`,
+        `"jsxPragma" must be a string`,
+        `"allExtensions" must be a boolean`,
+      ]
+
+      const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+        isTSX: `this should be a boolean`,
+        jsxPragma: 123,
+        allExtensions: `this should be a boolean`,
+      })
+
+      expect(errors).toEqual(expectedErrors)
+    })
+
+    it(`should validate the schema`, () => {
+      const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+        isTSX: true,
+        jsxPragma: `ReactFunction`,
+        allExtensions: false,
+      })
+
+      expect(isValid).toBe(true)
     })
   })
 })

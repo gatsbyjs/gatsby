@@ -22,7 +22,7 @@ If you followed along with the [Unit testing guide](/docs/unit-testing) you'll h
 
 ```diff:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["babel-preset-gatsby"],
+~  presets: ["babel-preset-gatsby", "@emotion/babel-preset-css-prop"],
 +  plugins: [
 +    "emotion",
 +  ],
@@ -44,7 +44,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ```json:title=package.json
 "jest": {
-  "setupTestFrameworkScriptFile": "<rootDir>/setup-test-env.js"
+  "setupFilesAfterEnv": [`<rootDir>/setup-test-env.js`]
 }
 ```
 

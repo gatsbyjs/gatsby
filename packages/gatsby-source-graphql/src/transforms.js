@@ -1,16 +1,10 @@
+const { GraphQLObjectType, GraphQLNonNull } = require(`gatsby/graphql`)
 const {
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
-const {
-  visitSchema,
-  VisitSchemaKind,
-} = require(`graphql-tools/dist/transforms/visitSchema`)
-const {
-  createResolveType,
-  fieldMapToFieldConfigMap,
-} = require(`graphql-tools/dist/stitching/schemaRecreation`)
+  mapSchema,
+  MapperKind,
+  addTypes,
+  modifyObjectFields,
+} = require(`@graphql-tools/utils`)
 
 class NamespaceUnderFieldTransform {
   constructor({ typeName, fieldName, resolver }) {
@@ -20,57 +14,46 @@ class NamespaceUnderFieldTransform {
   }
 
   transformSchema(schema) {
-    const query = schema.getQueryType()
-    let newQuery
-    const nestedType = new GraphQLObjectType({
+    const queryConfig = schema.getQueryType().toConfig()
+
+    const nestedQuery = new GraphQLObjectType({
+      ...queryConfig,
       name: this.typeName,
-      fields: () =>
-        fieldMapToFieldConfigMap(
-          query.getFields(),
-          createResolveType(typeName => {
-            if (typeName === query.name) {
-              return newQuery
-            } else {
-              return schema.getType(typeName)
-            }
-          }),
-          true
-        ),
     })
-    newQuery = new GraphQLObjectType({
-      name: query.name,
-      fields: {
-        [this.fieldName]: {
-          type: new GraphQLNonNull(nestedType),
-          resolve: (parent, args, context, info) => {
-            if (this.resolver) {
-              return this.resolver(parent, args, context, info)
-            } else {
-              return {}
-            }
-          },
+
+    let newSchema = addTypes(schema, [nestedQuery])
+
+    const newRootFieldConfigMap = {
+      [this.fieldName]: {
+        type: new GraphQLNonNull(nestedQuery),
+        resolve: (parent, args, context, info) => {
+          if (this.resolver != null) {
+            return this.resolver(parent, args, context, info)
+          }
+
+          return {}
         },
       },
-    })
-    const typeMap = schema.getTypeMap()
-    const allTypes = Object.keys(typeMap)
-      .filter(name => name !== query.name)
-      .map(key => typeMap[key])
+    }
 
-    return new GraphQLSchema({
-      query: newQuery,
-      types: allTypes,
-    })
+    ;[newSchema] = modifyObjectFields(
+      newSchema,
+      queryConfig.name,
+      () => true,
+      newRootFieldConfigMap
+    )
+
+    return newSchema
   }
 }
 
 class StripNonQueryTransform {
   transformSchema(schema) {
-    return visitSchema(schema, {
-      [VisitSchemaKind.MUTATION]() {
+    return mapSchema(schema, {
+      [MapperKind.MUTATION]() {
         return null
       },
-      [VisitSchemaKind.SUBSCRIPTION]() {
+      [MapperKind.SUBSCRIPTION]() {
         return null
       },
     })

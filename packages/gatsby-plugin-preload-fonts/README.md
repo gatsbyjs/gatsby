@@ -6,8 +6,8 @@ link to stylesheets that in turn link to font files.
 
 ## Install
 
-```
-npm install --save gatsby-plugin-preload-fonts
+```shell
+npm install gatsby-plugin-preload-fonts
 ```
 
 Once you've installed the plugin, you'll want to add the included script
@@ -34,7 +34,7 @@ module.exports = {
 Before building your application, you will need to generate a font asset map
 using the included `gatsby-preload-fonts` script.
 
-```
+```shell
 npm run preload-fonts
 ```
 
@@ -48,11 +48,15 @@ all contributors have the latest version of the cache.
 
 You may pass any additional args to Puppeteer when running this script, like so:
 
-```
+```shell
 npm run preload-fonts -- --no-sandbox
 ```
 
 See [Puppeteer](#puppeteer) for more information.
+
+### Using with CI
+
+If you're planning to use this plugin in CI you can set the environment variable `CI=true` (most CI providers like Travis and CircleCI will set this for you). Please note that in this case `font-preload-cache.json` will only get rebuilt when routes change.
 
 ## Explanation of method
 
@@ -108,7 +112,7 @@ site's GraphQL server will not be scraped.
 If you're still having trouble, you can run `gatsby-preload-fonts` with a lower
 log level to view what paths it's visiting in real time.
 
-```
+```shell
 # mac/linux
 LOG_LEVEL=info npm run preload-fonts
 
@@ -123,7 +127,7 @@ Available log levels include `info`, `debug`, `warn`, `error`, and
 
 If you see a huge stack trace that looks like this
 
-```
+```text
 (node:30511) UnhandledPromiseRejectionWarning: Error: Failed to launch chrome!
 [0705/172123.766471:FATAL:zygote_host_impl_linux.cc(116)] No usable sandbox! Update your kernel or see https://chromium.googlesource.com/chromium/src/+/master/docs/linux_suid_sandbox_development.md for more information on developing with the SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
 ...
@@ -131,9 +135,13 @@ If you see a huge stack trace that looks like this
 
 you can pass the `--no-sandbox` flag to Puppeteer when you run the script:
 
-```
+```shell
 npm run preload-fonts -- --no-sandbox
 ```
 
 This comes with [inherent security risks](https://chromium.googlesource.com/chromium/src/+/master/docs/linux_suid_sandbox_development.md),
 but you should be alright since you're only running it locally.
+
+### Use different Chrome/Chromium executable
+
+In some cases, you might have to point Puppeteer to an external installation of Chrome/Chromium (e.g., on Alpine Linux, the build-in version of Chromium does not work). You can set the `PUPPETEER_EXECUTABLE_PATH` environment variable to the path of your custom chromium installation. A list with all environment variables to configure Puppeteer can be found [at the official docs](https://pptr.dev/#?product=Puppeteer&version=v1.20.0&show=api-environment-variables).

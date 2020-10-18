@@ -4,15 +4,16 @@ const { GraphQLList } = require(`graphql`)
 const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-const { isFile } = require(`./is-file`)
-const { isDate } = require(`../types/date`)
-const is32BitInteger = require(`./is-32-bit-integer`)
+import { isFile } from "./is-file"
+import { isDate } from "../types/date"
+import { addDerivedType } from "../types/derived-types"
+import { is32BitInteger } from "../../utils/is-32-bit-integer"
+const { getNode, getNodes } = require(`../../redux/nodes`)
 
 const addInferredFields = ({
   schemaComposer,
   typeComposer,
   exampleValue,
-  nodeStore,
   typeMapping,
   parentSpan,
 }) => {
@@ -28,9 +29,9 @@ const addInferredFields = ({
   addInferredFieldsImpl({
     schemaComposer,
     typeComposer,
-    nodeStore,
     exampleObject: exampleValue,
     prefix: typeComposer.getTypeName(),
+    unsanitizedFieldPath: [typeComposer.getTypeName()],
     typeMapping,
     config,
   })
@@ -43,10 +44,10 @@ module.exports = {
 const addInferredFieldsImpl = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   exampleObject,
   typeMapping,
   prefix,
+  unsanitizedFieldPath,
   config,
 }) => {
   const fields = []
@@ -81,8 +82,8 @@ const addInferredFieldsImpl = ({
       ...selectedField,
       schemaComposer,
       typeComposer,
-      nodeStore,
       prefix,
+      unsanitizedFieldPath,
       typeMapping,
       config,
     })
@@ -139,15 +140,16 @@ const addInferredFieldsImpl = ({
 const getFieldConfig = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   prefix,
   exampleValue,
   key,
   unsanitizedKey,
+  unsanitizedFieldPath,
   typeMapping,
   config,
 }) => {
   const selector = `${prefix}.${key}`
+  unsanitizedFieldPath.push(unsanitizedKey)
 
   let arrays = 0
   let value = exampleValue
@@ -164,24 +166,25 @@ const getFieldConfig = ({
   } else if (unsanitizedKey.includes(`___NODE`)) {
     fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
-      nodeStore,
       value: exampleValue,
       key: unsanitizedKey,
     })
+    arrays = arrays + (value.multiple ? 1 : 0)
   } else {
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
       typeComposer,
-      nodeStore,
       key,
       value,
       selector,
+      unsanitizedFieldPath,
       typeMapping,
       config,
       arrays,
     })
   }
 
+  unsanitizedFieldPath.pop()
   if (!fieldConfig) return null
 
   // Proxy resolver to unsanitized fieldName in case it contained invalid characters
@@ -241,7 +244,6 @@ const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
 // probably should be in example value
 const getFieldConfigFromFieldNameConvention = ({
   schemaComposer,
-  nodeStore,
   value,
   key,
 }) => {
@@ -251,12 +253,10 @@ const getFieldConfigFromFieldNameConvention = ({
 
   const getNodeBy = value =>
     foreignKey
-      ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
-      : nodeStore.getNode(value)
+      ? getNodes().find(node => _.get(node, foreignKey) === value)
+      : getNode(value)
 
-  const linkedNodes = Array.isArray(value)
-    ? value.map(getNodeBy)
-    : [getNodeBy(value)]
+  const linkedNodes = value.linkedNodes.map(getNodeBy)
 
   const linkedTypes = _.uniq(
     linkedNodes.filter(Boolean).map(node => node.internal.type)
@@ -265,7 +265,7 @@ const getFieldConfigFromFieldNameConvention = ({
   invariant(
     linkedTypes.length,
     `Encountered an error trying to infer a GraphQL type for: \`${key}\`. ` +
-      `There is no corresponding node with the \`id\` field matching: "${value}".`
+      `There is no corresponding node with the \`id\` field matching: "${value.linkedNodes}".`
   )
 
   let type
@@ -295,10 +295,10 @@ const getFieldConfigFromFieldNameConvention = ({
 const getSimpleFieldConfig = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   key,
   value,
   selector,
+  unsanitizedFieldPath,
   typeMapping,
   config,
   arrays,
@@ -312,7 +312,7 @@ const getSimpleFieldConfig = ({
       if (isDate(value)) {
         return { type: `Date`, extensions: { dateformat: {} } }
       }
-      if (isFile(nodeStore, selector, value)) {
+      if (isFile(unsanitizedFieldPath, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
@@ -350,15 +350,26 @@ const getSimpleFieldConfig = ({
           // "addDefaultResolvers: true" only makes sense for
           // pre-existing types.
           if (!config.shouldAddFields) return null
-          fieldTypeComposer = ObjectTypeComposer.create(
-            createTypeName(selector),
-            schemaComposer
-          )
-          fieldTypeComposer.setExtension(`createdFrom`, `inference`)
-          fieldTypeComposer.setExtension(
-            `plugin`,
-            typeComposer.getExtension(`plugin`)
-          )
+
+          const typeName = createTypeName(selector)
+          if (schemaComposer.has(typeName)) {
+            // Type could have been already created via schema customization
+            fieldTypeComposer = schemaComposer.getOTC(typeName)
+          } else {
+            fieldTypeComposer = ObjectTypeComposer.create(
+              typeName,
+              schemaComposer
+            )
+            fieldTypeComposer.setExtension(`createdFrom`, `inference`)
+            fieldTypeComposer.setExtension(
+              `plugin`,
+              typeComposer.getExtension(`plugin`)
+            )
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
+          }
         }
 
         // Inference config options are either explicitly defined on a type
@@ -372,10 +383,10 @@ const getSimpleFieldConfig = ({
           type: addInferredFieldsImpl({
             schemaComposer,
             typeComposer: fieldTypeComposer,
-            nodeStore,
             exampleObject: value,
             typeMapping,
             prefix: selector,
+            unsanitizedFieldPath,
             config: inferenceConfig,
           }),
         }
@@ -386,10 +397,7 @@ const getSimpleFieldConfig = ({
 
 const createTypeName = selector => {
   const keys = selector.split(`.`)
-  const suffix = keys
-    .slice(1)
-    .map(_.upperFirst)
-    .join(``)
+  const suffix = keys.slice(1).map(_.upperFirst).join(``)
   return `${keys[0]}${suffix}`
 }
 

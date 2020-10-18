@@ -4,11 +4,9 @@ const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildSchema } = require(`../../schema`)
 const { LocalNodeModel } = require(`../../node-model`)
-const nodeStore = require(`../../../db/nodes`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
-const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
+import { createPageDependency } from "../../../redux/actions/add-page-dependency"
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -34,15 +32,16 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 const buildTestSchema = async nodes => {
   store.dispatch({ type: `DELETE_CACHE` })
+  store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
   nodes.forEach(node =>
     actions.createNode(node, { name: `test` })(store.dispatch)
   )
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
-    nodeStore,
     types: [],
     thirdPartySchemas: [],
+    inferenceMetadata: store.getState().inferenceMetadata,
   })
   return { schema, schemaComposer }
 }
@@ -51,7 +50,6 @@ const queryResult = async (nodes, query) => {
   return graphql(schema, query, undefined, {
     nodeModel: new LocalNodeModel({
       schema,
-      nodeStore,
       createPageDependency,
       schemaComposer,
     }),

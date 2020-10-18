@@ -1,7 +1,8 @@
-const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 
 const _ = require(`lodash`)
+
+const DEFAULT_PAGE_LIMIT = 100
 
 const defaultOptions = {
   host: `cdn.contentful.com`,
@@ -9,6 +10,8 @@ const defaultOptions = {
   downloadLocal: false,
   localeFilter: () => true,
   forceFullSync: false,
+  pageLimit: DEFAULT_PAGE_LIMIT,
+  useNameForId: true,
 }
 
 const createPluginConfig = pluginOptions => {
@@ -20,43 +23,7 @@ const createPluginConfig = pluginOptions => {
   }
 }
 
-const optionsSchema = Joi.object().keys({
-  accessToken: Joi.string()
-    .required()
-    .empty(),
-  spaceId: Joi.string()
-    .required()
-    .empty(),
-  host: Joi.string().empty(),
-  environment: Joi.string().empty(),
-  downloadLocal: Joi.boolean(),
-  localeFilter: Joi.func(),
-  forceFullSync: Joi.boolean(),
-  proxy: Joi.object().keys({
-    host: Joi.string().required(),
-    port: Joi.number().required(),
-    auth: Joi.object().keys({
-      username: Joi.string(),
-      password: Joi.string(),
-    }),
-  }),
-  // default plugins passed by gatsby
-  plugins: Joi.array(),
-})
-
 const maskedFields = [`accessToken`, `spaceId`]
-
-const validateOptions = ({ reporter }, options) => {
-  const result = optionsSchema.validate(options, { abortEarly: false })
-  if (result.error) {
-    const errors = {}
-    result.error.details.forEach(detail => {
-      errors[detail.path[0]] = detail.message
-    })
-    reporter.panic(`Problems with gatsby-source-contentful plugin options:
-${exports.formatPluginOptionsForCLI(options, errors)}`)
-  }
-}
 
 const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
   const optionKeys = new Set(
@@ -122,7 +89,6 @@ const maskText = input => {
 
 export {
   defaultOptions,
-  validateOptions,
   formatPluginOptionsForCLI,
   maskText,
   createPluginConfig,

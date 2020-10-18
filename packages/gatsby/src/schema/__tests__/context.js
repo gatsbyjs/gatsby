@@ -1,12 +1,11 @@
 const { graphql } = require(`graphql`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
-const { buildObjectType } = require(`../types/type-builders`)
+import { buildObjectType } from "../types/type-builders"
 const { store } = require(`../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../redux/actions/restricted`)
 const { createTypes, createFieldExtension, createResolverContext } = actions
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -100,7 +99,7 @@ describe(`Resolver context`, () => {
       expect(results).toEqual(expected)
     })
 
-    it(`custom resolver context is avalable in custom field extension`, async () => {
+    it(`custom resolver context is available in custom field extension`, async () => {
       dispatch(
         createResolverContext({
           hello(planet) {

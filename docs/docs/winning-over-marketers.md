@@ -41,7 +41,7 @@ One question marketers often ask themselves when hearing new ideas, whether they
 
 In order to proactively diffuse these concerns, you might consider sharing stories of organizations that have adopted Gatsby:
 
-- [Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
+- [Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical e-commerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
 - [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 
@@ -51,4 +51,4 @@ A perception marketers often have of developers is that they are not very busine
 
 The explanations above -- whether you use them word-for-word or restate them in your own and your organization's language -- are intended to demonstrate concern for the business as a whole, so marketers see you as a trusted partner.
 
-_Want to read more on this topic? Check out [How to Talk About Gatsby To Your Clients And Team](https://www.gatsbyjs.org/blog/2019-03-07-sell-gatsby-to-clients/) by [Linda Watkins](https://www.gatsbyjs.org/contributors/linda-watkins/)._
+_Want to read more on this topic? Check out [How to Talk About Gatsby To Your Clients And Team](https://www.gatsbyjs.com/blog/2019-03-07-sell-gatsby-to-clients/) by [Linda Watkins](https://www.gatsbyjs.org/contributors/linda-watkins/)._

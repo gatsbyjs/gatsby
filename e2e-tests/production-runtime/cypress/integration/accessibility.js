@@ -27,10 +27,9 @@ describe(`focus management`, () => {
   })
 
   it(`Focus router wrapper after navigation from 404`, () => {
-    cy.visit(`/broken-path`, { failOnStatusCode: false }).waitForAPIorTimeout(
-      `onRouteUpdate`,
-      { timeout: 5000 }
-    )
+    cy.visit(`/broken-path`, {
+      failOnStatusCode: false,
+    }).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 5000 })
 
     cy.changeFocus()
     cy.assertRouterWrapperFocus(false)
@@ -39,10 +38,9 @@ describe(`focus management`, () => {
   })
 
   it(`Focus router wrapper after navigation from one 404 path to another 404 path`, () => {
-    cy.visit(`/broken-path`, { failOnStatusCode: false }).waitForAPIorTimeout(
-      `onRouteUpdate`,
-      { timeout: 5000 }
-    )
+    cy.visit(`/broken-path`, {
+      failOnStatusCode: false,
+    }).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 5000 })
 
     // navigating to different not existing page should also trigger
     // router wrapper focus as this is different page

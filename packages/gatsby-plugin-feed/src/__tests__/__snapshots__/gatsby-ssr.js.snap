@@ -72,6 +72,35 @@ exports[`Adds <Link> for feed to head creates Link only if pathname satisfied ma
 }
 `;
 
+exports[`Adds <Link> for feed to head creates Link that override href link generation from output with link set 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/gryffindor/feed.xml"
+          rel="alternate"
+          title="Gryffindor's RSS Feed"
+          type="application/rss+xml"
+        />,
+        <link
+          href="https://harreypetter.com/gryffindor"
+          rel="alternate"
+          title="Gryffindor's RSS Feed"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`Adds <Link> for feed to head creates Link with a title if it does exist 1`] = `
 [MockFunction] {
   "calls": Array [
@@ -114,6 +143,64 @@ exports[`Adds <Link> for feed to head creates multiple Link if feeds are several
         <link
           href="/ravenclaw/feed.xml"
           rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for feed to head testing output prefixes with __PATH_PREFIX__ without path prefix set 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="without-path-prefix/output-with-slash-prefix/feed.xml"
+          rel="alternate"
+          title="With slash prefix RSS Feed"
+          type="application/rss+xml"
+        />,
+        <link
+          href="without-path-prefix/output-without-slash-prefix/feed.xml"
+          rel="alternate"
+          title="Without slash prefix RSS Feed"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for feed to head testing output with and without prefixes set 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/with-slash-prefix/feed.xml"
+          rel="alternate"
+          title="With slash prefix RSS Feed"
+          type="application/rss+xml"
+        />,
+        <link
+          href="/without-slash-prefix/feed.xml"
+          rel="alternate"
+          title="Without slash prefix RSS Feed"
           type="application/rss+xml"
         />,
       ],

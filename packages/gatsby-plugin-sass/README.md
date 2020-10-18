@@ -1,22 +1,22 @@
 # gatsby-plugin-sass
 
-Provides drop-in support for SASS/SCSS stylesheets
+Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
-`npm install --save node-sass gatsby-plugin-sass`
+`npm install node-sass gatsby-plugin-sass`
 
 ## How to use
 
 1. Include the plugin in your `gatsby-config.js` file.
 
-```javascript:title="gatsby-config.js"
+```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-sass`]
 ```
 
 2. Write your stylesheets in Sass/SCSS and require or import them as normal.
 
-```css:title="src/index.sass"
+```scss:title=src/index.scss
 html {
   background-color: rebeccapurple;
   p {
@@ -25,8 +25,8 @@ html {
 }
 ```
 
-```javascript
-import("./src/index.sass")
+```javascript:title=gatsby-browser.js
+import "./src/index.scss"
 ```
 
 ## Other options
@@ -34,8 +34,7 @@ import("./src/index.sass")
 If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)/[dart-sass](https://github.com/sass/dart-sass) docs
 for all available options.
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -47,10 +46,10 @@ plugins: [
 ]
 ```
 
-If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader):
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader/tree/version-1):
+**Note:** Gatsby is using `css-loader@1.0.1`.
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -67,12 +66,11 @@ plugins: [
 
 By default the node implementation of Sass (`node-sass`) is used. To use the implementation written in Dart (`dart-sass`), you can install `sass` instead of `node-sass` and pass it into the options as the implementation:
 
-```bash
+```shell
 npm install --save-dev sass
 ```
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -83,16 +81,15 @@ plugins: [
 ]
 ```
 
-### SASS Precision
+### Sass Precision
 
-SASS defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
+Sass defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
 
 #### Bootstrap 4
 
-See [Bootstrap's documentation on theming](https://github.com/twbs/bootstrap/blob/master/site/content/docs/4.3/getting-started/theming.md#sass) for reference.
+See [Bootstrap's documentation on theming](https://getbootstrap.com/docs/4.3/getting-started/theming/#sass) for reference.
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -104,12 +101,11 @@ plugins: [
 ]
 ```
 
-### Bootstrap 3 (with `bootstrap-sass`)
+#### Bootstrap 3 (with `bootstrap-sass`)
 
 See [`bootstrap-sass`](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision) for reference.
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -128,10 +124,9 @@ Any file with the `module` extension will use CSS Modules.
 
 ## SASS & CSS Modules file Regexes
 
-To override the file regex for SASS or CSS modules,
+To override the file regex for Sass or CSS modules,
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -160,15 +155,13 @@ Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) prov
 
 First:
 
-```javascript
-  npm install resolve-url-loader --save-dev
-  or
-  yarn add resolve-url-loader --dev
+```shell
+npm install resolve-url-loader --save-dev
 ```
 
 And then:
 
-```javascript
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: "gatsby-plugin-sass",
@@ -179,9 +172,9 @@ plugins: [
 ]
 ```
 
-You can also configure resolve-url-plugin providing some options (see plugin documentation for all options https://github.com/bholloway/resolve-url-loader):
+You can also configure resolve-url-plugin providing some options (see [plugin documentation](https://github.com/bholloway/resolve-url-loader) for all options):
 
-```javascript
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: "gatsby-plugin-sass",
@@ -196,9 +189,9 @@ plugins: [
 ]
 ```
 
-NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for sass files in the plugin:
+NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for Sass files in the plugin:
 
-```javascript
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: "gatsby-plugin-sass",
@@ -220,6 +213,6 @@ plugins: [
 ### v2.0.0
 
 - `node-sass` is moved to a peer dependency. Installing the package
-  alongside `gatsby-plugin-sass` is now required. Use `npm install --save node-sass`
+  alongside `gatsby-plugin-sass` is now required. Use `npm install node-sass`
 
 - support Gatsby v2 only

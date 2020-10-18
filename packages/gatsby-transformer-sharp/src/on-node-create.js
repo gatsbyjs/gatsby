@@ -1,16 +1,17 @@
-const supportedExtensions = {
-  jpeg: true,
-  jpg: true,
-  png: true,
-  webp: true,
-  tif: true,
-  tiff: true,
+const { supportedExtensions } = require(`./supported-extensions`)
+
+function unstable_shouldOnCreateNode({ node }) {
+  return !!supportedExtensions[node.extension]
 }
 
-module.exports = async function onCreateNode({ node, actions, createNodeId }) {
+module.exports.onCreateNode = async function onCreateNode({
+  node,
+  actions,
+  createNodeId,
+}) {
   const { createNode, createParentChildLink } = actions
 
-  if (!supportedExtensions[node.extension]) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return
   }
 
@@ -29,3 +30,5 @@ module.exports = async function onCreateNode({ node, actions, createNodeId }) {
 
   return
 }
+
+module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode

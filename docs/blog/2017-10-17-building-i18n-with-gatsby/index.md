@@ -74,7 +74,7 @@ implementation in other projects.
 
 To get started, you'll need to install a few packages:
 
-`npm i -S i18next i18next-xhr-backend i18next-browser-languagedetector react-i18next`
+`npm install i18next i18next-xhr-backend i18next-browser-languagedetector react-i18next`
 
 ## Setting up
 
@@ -124,17 +124,17 @@ we create a JSON file for each component we want to translate.
 For our site we're currently supporting English and Welsh, so our locales folder
 looks like this.
 
-```
+```text
 - src
-	- locales
-		- en
-			- PageHeader.json
-			- PricingPlan.json
-		...
-		- cy
-			- PageHeader.json
-			- PricingPlan.json
-		...
+  - locales
+    - en
+      - PageHeader.json
+      - PricingPlan.json
+    ...
+    - cy
+      - PageHeader.json
+      - PricingPlan.json
+    ...
 ```
 
 The `PageHeader` component in the `en` folder might look like this:
@@ -214,7 +214,7 @@ React Helmet:
 
 ```jsx
 <div className="Pricing">
-	<Helmet title={t('heading')}>
+  <Helmet title={t('heading')}>
 </div>
 ```
 
@@ -231,14 +231,8 @@ import { translate } from "react-i18next"
 class LanguageSwitcher extends Component {
   constructor(props) {
     super(props)
-    const { i18n } = this.props
-    this.state = { language: i18n.language }
 
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ language: nextProps.i18n.language })
   }
 
   handleChangeLanguage(lng) {
@@ -248,7 +242,7 @@ class LanguageSwitcher extends Component {
 
   renderLanguageChoice({ code, label }) {
     const buttonClass = classNames("LanguageSwitcher__button", {
-      "LanguageSwitcher__button--selected": this.state.language === code,
+      "LanguageSwitcher__button--selected": this.props.i18n.language === code,
     })
 
     return (
@@ -279,8 +273,8 @@ class LanguageSwitcher extends Component {
 export default translate("LanguageSwitcher")(LanguageSwitcher)
 ```
 
-This is a pretty simple component. We're setting the `language` state based on
-the i18n prop so that we can check which language is currently active and show
+This is a pretty small component. We're getting the `language` in the
+i18n prop so that we can check which language is currently active and show
 that in our menu.
 
 The `handleLanguageChange` function just wraps the `react-i18n` function passed
@@ -289,7 +283,7 @@ Hooray! 🎉
 
 ## SSR
 
-To let it render the content into html, you need to load i18n namespaces (using `i18n.loadNamespaces`) before render
+To let it render the content into HTML, you need to load i18n namespaces (using `i18n.loadNamespaces`) before render
 
 ### With redux
 
@@ -334,7 +328,7 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
 }
 ```
 
-> `translate` hoc from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
+> `translate` HOC from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
 
 ## Finishing up
 

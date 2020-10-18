@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redux db should write cache to disk 1`] = `
+exports[`redux db should write redux cache to disk 1`] = `
 Object {
   "componentDataDependencies": Object {
     "connections": Map {},
@@ -16,8 +16,52 @@ Object {
       "query": "",
     },
   },
+  "jobsV2": Object {
+    "complete": Map {},
+    "incomplete": Map {},
+  },
+  "nodes": Map {
+    "pageA" => Object {
+      "id": "pageA",
+      "internal": Object {
+        "type": "Ding",
+      },
+    },
+    "pageB" => Object {
+      "id": "pageB",
+      "internal": Object {
+        "type": "Dong",
+      },
+    },
+  },
+  "nodesByType": Map {
+    "Ding" => Map {
+      "pageA" => Object {
+        "id": "pageA",
+        "internal": Object {
+          "type": "Ding",
+        },
+      },
+    },
+    "Dong" => Map {
+      "pageB" => Object {
+        "id": "pageB",
+        "internal": Object {
+          "type": "Dong",
+        },
+      },
+    },
+  },
+  "pageData": Map {},
+  "pageDataStats": Map {},
+  "pendingPageDataWrites": Object {
+    "pagePaths": Set {},
+    "templatePaths": Set {},
+  },
+  "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "PLUGINS_HASH": "",
     "plugins": Object {},
   },
   "webpackCompilationHash": "",

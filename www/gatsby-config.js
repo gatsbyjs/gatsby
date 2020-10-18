@@ -1,4 +1,3 @@
-const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -52,6 +51,26 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
+if (!process.env.DISABLE_SOURCE_DOCS) {
+  dynamicPlugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `docs`,
+      path: `${__dirname}/../docs/`,
+    },
+  })
+  // The `packages` directory is only used for API definitions,
+  // which are part of the docs.
+  dynamicPlugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `gatsby-core`,
+      path: `${__dirname}/../packages/gatsby/`,
+      ignore: [`**/dist/**`],
+    },
+  })
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -59,38 +78,28 @@ module.exports = {
     description: `Blazing fast modern site generator for React`,
     twitter: `@gatsbyjs`,
   },
-  mapping: {
-    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
-    "Mdx.frontmatter.author": `AuthorYaml`,
-  },
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
+      resolve: `gatsby-alias-imports`,
+      options: {
+        aliases: {
+          // Relative paths when importing components from MDX break translations of the docs,
+          // so use an alias instead inside MDX:
+          // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
+          "@components": `${__dirname}/src/components`,
+        },
+      },
+    },
+    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
-        keywords: [`gatsby-plugin`, `gatsby-component`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/../docs/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `packages`,
-        path: `${__dirname}/../packages/`,
-        ignore: [`**/dist/**`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
+        // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword
+        // that returns a lot fewer packages
+        // (In this case, stuff that Lennart has published)
+        keywords: process.env.DISABLE_NPM_SEARCH
+          ? [`lekoarts`]
+          : [`gatsby-plugin`, `gatsby-component`],
       },
     },
     {
@@ -100,11 +109,10 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        pathToConfigModule: `${__dirname}/src/utils/typography`,
       },
     },
     `gatsby-transformer-documentationjs`,
@@ -129,12 +137,12 @@ module.exports = {
           return (
             [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
             (node.internal.type === `File` &&
-              path.parse(node.dir).dir.endsWith(`packages`))
+              node.sourceInstanceName === `gatsby-core`)
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -148,7 +156,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -158,8 +171,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -174,7 +187,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -194,6 +212,8 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          // convert images using http to https in plugin library READMEs
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
@@ -218,20 +238,22 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
-    `gatsby-plugin-offline`,
-    {
-      resolve: `gatsby-plugin-perf-metrics`,
-      options: {
-        appId: `1:216044356421:web:92185d5e24b3a2a1`,
-      },
-    },
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-react-svg`,
+      options: {
+        rule: {
+          include: /assets\/(guidelines|icons|ornaments)\/.*\.svg$/,
+        },
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -252,25 +274,21 @@ module.exports = {
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
                   filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
+                    fields: { section: { eq: "blog" }, released: { eq: true } }
                   }
                 ) {
-                  edges {
-                    node {
+                  nodes {
+                    html
+                    frontmatter {
+                      title
+                      date
+                      author {
+                        id
+                      }
+                    }
+                    fields {
                       excerpt
-                      html
-                      frontmatter {
-                        title
-                        date
-                        excerpt
-                        author {
-                          id
-                        }
-                      }
-                      fields {
-                        slug
-                      }
+                      slug
                     }
                   }
                 }
@@ -291,21 +309,42 @@ module.exports = {
               }
             },
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.edges.map(({ node }) => {
+              allMdx.nodes.map(node => {
                 return {
                   title: node.frontmatter.title,
-                  description: node.frontmatter.excerpt || node.excerpt,
+                  description: node.fields.excerpt,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
                   author: node.frontmatter.author.id,
+                  date: node.frontmatter.date,
                 }
               }),
           },
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+          "/sw.js": [
+            `Cache-Control: max-age=0,no-cache,no-store,must-revalidate`,
+          ],
+        },
+        transformHeaders: (headers, path) => {
+          if (path === `/sw.js`) {
+            // remove last cache-control as it's set by the plugin itself
+            headers.splice(1, 1)
+          }
+
+          return headers.filter(
+            header => !header.toLowerCase().includes(`link:`)
+          )
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,

@@ -1,5 +1,5 @@
 ---
-title: Deploying to S3/Cloudfront
+title: Deploying to S3/CloudFront
 ---
 
 This guide walks through how to host and publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
@@ -26,7 +26,7 @@ Now that your Gatsby site is up and running and AWS access is sorted out, you'll
 First, install the Gatsby S3 plugin:
 
 ```shell
-npm i gatsby-plugin-s3
+npm install gatsby-plugin-s3
 ```
 
 Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
@@ -58,18 +58,18 @@ Run `npm run build && npm run deploy` to do a build and have it immediately depl
 
 Some deployments require passing environment variables. To deploy with environment variables, update the deployment script to your `package.json`:
 
-```js:title=package.json
+```json:title=package.json
 "scripts" : {
     ...
     "deploy": "npm run -n \"-r dotenv/config\" && npm run build && gatsby-plugin-s3 deploy"
 }
 ```
 
-This command requires `dotenv` first, runs build next, and finally deploys to s3. `dotenv`, a dependency of Gatsby that doesn't need to be installed directly, loads environment variables and makes them available globally.
+This command requires `dotenv` first, runs build next, and finally deploys to S3. `dotenv`, a dependency of Gatsby that doesn't need to be installed directly, loads environment variables and makes them available globally.
 
 If you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
 
-```sh
+```shell
 AWS_PROFILE=yourprofilename npm run deploy
 ```
 
@@ -121,10 +121,14 @@ And then in the Gatsby config you can reference it like so:
 
 If you need the full address elsewhere in your config, you can access it via `siteAddress.href`.
 
+<CloudCallout>
+  For automatic setup of builds that are deployed straight to S3:
+</CloudCallout>
+
 ## References:
 
 - [Gatsby on AWS, the right way](https://blog.joshwalsh.me/aws-gatsby/)
 - [Using CloudFront with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-cloudfront.md)
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](/blog/2018-08-24-gatsby-aws-hosting/)
-- [Escalade Sports: From $5000 to \$5/month in Hosting With Gatsby](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
+- [Escalade Sports: From $5000 to $5/month in Hosting With Gatsby](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Deploy your Gatsby.js Site to AWS S3](https://benenewton.com/deploy-your-gatsby-js-site-to-aws-s-3)

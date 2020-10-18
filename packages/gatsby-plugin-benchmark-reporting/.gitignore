@@ -1,0 +1,6 @@
+/lib
+/node_modules
+
+/*.js
+!index.js
+yarn.lock

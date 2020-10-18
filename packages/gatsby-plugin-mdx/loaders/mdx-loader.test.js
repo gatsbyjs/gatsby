@@ -1,6 +1,6 @@
 const mdxLoader = require(`./mdx-loader`)
 const prettier = require(`prettier`)
-const c = require(`js-combinatorics`)
+const { BaseN } = require(`js-combinatorics/commonjs/combinatorics`)
 
 function genMDXFile(input) {
   const code = {
@@ -16,9 +16,9 @@ array: [1,2,3]
 )`,
     namedExports: `export const meta = {author: "chris"}`,
     body: `# Some title
-    
+
 a bit of a paragraph
-    
+
 some content`,
   }
 
@@ -38,8 +38,7 @@ some content`,
 }
 
 // generate a table of all possible combinations of genMDXfile input
-const fixtures = c
-  .baseN([true, false], 3)
+const fixtures = new BaseN([true, false], 3)
   .toArray()
   .map(([frontmatter, layout, namedExports]) =>
     genMDXFile({ frontmatter, layout, namedExports })
@@ -57,7 +56,7 @@ const fixtures = c
 describe(`mdx-loader`, () => {
   expect.addSnapshotSerializer({
     print(val /*, serialize */) {
-      return prettier.format(val, { parser: `babylon` })
+      return prettier.format(val, { parser: `babel` })
     },
     test() {
       return true
@@ -74,7 +73,10 @@ describe(`mdx-loader`, () => {
           }
         },
         query: {
-          getNodes() {
+          getNodes(_type) {
+            return fixtures.map(([, node]) => node)
+          },
+          getNodesByType(_type) {
             return fixtures.map(([, node]) => node)
           },
           pluginOptions: {},

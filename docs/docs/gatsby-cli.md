@@ -27,16 +27,16 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```
+```shell
 gatsby new [<site-name> [<starter-url>]]
 ```
 
 #### Arguments
 
-| Argument    | Description                                                                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+| Argument    | Description                                                                                                                                                                                              |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                 |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
@@ -48,7 +48,7 @@ gatsby new [<site-name> [<starter-url>]]
 gatsby new my-awesome-site
 ```
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/):
 
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
@@ -66,7 +66,7 @@ gatsby new
    (Use a different starter)
 ```
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
+See the [Gatsby starters docs](/docs/gatsby-starters/) for more details.
 
 ### `develop`
 
@@ -79,7 +79,7 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 |     Option      | Description                                     |
 | :-------------: | ----------------------------------------------- |
 | `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to 8000                      |
+| `-p`, `--port`  | Set port. Defaults to env.PORT or 8000          |
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 
@@ -96,14 +96,14 @@ gatsby develop -H 0.0.0.0
 
 Then the terminal will log information as usual, but will additionally include a URL that you can navigate to from a client on the same network to see how the site renders.
 
-```
-You can now view gatsbyjs.org in the browser.
+```shell
+You can now view gatsbyjs.com in the browser.
 ⠀
   Local:            http://0.0.0.0:8000/
   On Your Network:  http://192.168.0.212:8000/ // highlight-line
 ```
 
-**Note**: you can't visit 0.0.0.0:8000 on Windows (but things will work using either localhost:8000 or the "On Your Network" URL on Windows)
+**Note**: To access Gatsby on your local machine, use either `http://localhost:8000` or the "On Your Network" URL.
 
 ### `build`
 
@@ -113,12 +113,14 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                                               |
-| :--------------------------: | --------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                       |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                   |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                          |
+|            Option            | Description                                                                                                                                  |
+| :--------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                                                          |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                                                      |
+|         `--profile`          | Build site with react profiling. See [Profiling Site Performance with React Profiler](/docs/profiling-site-performance-with-react-profiler/) |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/)                                    |
+|     `--graphql-tracing`      | Trace (see above) every graphql resolver, may have performance implications.                                                                 |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                                             |
 
 In addition to these build options, there are some optional [build environment variables](/docs/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 
@@ -207,3 +209,30 @@ For more information, check out the [Gatsby REPL documentation](/docs/gatsby-rep
 ### Disabling colored output
 
 In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).
+
+## How to change your default package manager for your next project?
+
+When you use `gatsby new` for the first time to create a new project, you are asked to choose your default package manager between yarn and npm.
+
+```shell
+Which package manager would you like to use ? › - Use arrow-keys. Return to submit.
+❯  yarn
+   npm
+```
+
+Once you’ve made your choice, the CLI won’t ask for your preference again for any subsequent project.
+
+If you want to change this for your next project you have to edit the config file created automatically by the CLI.
+This file is available on your system at: `~/.config/gatsby/config.json`
+
+In it you’re going to see something like this.
+
+```json:title=config.json
+{
+  "cli": {
+    "packageManager": "yarn"
+  }
+}
+```
+
+Edit your `packageManager` value, save and you’re good to go for your next project using `gatsby new`.

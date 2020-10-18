@@ -32,7 +32,7 @@ One of the most straightforward ways to add global styles to a site is using a g
 
 Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for [part one](/tutorial/part-one/) and start a new terminal session for part two.
 
-Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
+Open a new terminal window, create a new "hello world" Gatsby site in a directory called `tutorial-part-two`, and then move to this new directory:
 
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -48,7 +48,7 @@ You now have a new Gatsby site (based on the Gatsby "hello world" starter) with 
 │       └── index.js
 ```
 
-#### ✋ Add styles to a css file
+#### ✋ Add styles to a CSS file
 
 1. Create a `.css` file in your new project:
 
@@ -80,7 +80,7 @@ html {
 }
 ```
 
-> Note: The placement of the example css file in a `/src/styles/` folder is arbitrary.
+> Note: The placement of the example CSS file in a `/src/styles/` folder is arbitrary.
 
 #### ✋ Include the stylesheet in `gatsby-browser.js`
 
@@ -130,7 +130,7 @@ If you take a look at your project in the browser, you should see a lavender bac
 
 ## Using component-scoped CSS
 
-So far, we've talked about the more traditional approach of using standard css stylesheets. Now, we'll talk about various methods of modularizing CSS to tackle styling in a component-oriented way.
+So far, we've talked about the more traditional approach of using standard CSS stylesheets. Now, we'll talk about various methods of modularizing CSS to tackle styling in a component-oriented way.
 
 ### CSS Modules
 
@@ -152,16 +152,16 @@ First, create a new `Container` component.
 
 1. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
 
-```javascript:title=src/components/container.js
+```jsx:title=src/components/container.js
 import React from "react"
 import containerStyles from "./container.module.css"
 
-export default ({ children }) => (
-  <div className={containerStyles.container}>{children}</div>
-)
+export default function Container({ children }) {
+  return <div className={containerStyles.container}>{children}</div>
+}
 ```
 
-You'll notice you imported a css module file named `container.module.css`. Let's create that file now.
+You'll notice you imported a CSS module file named `container.module.css`. Let's create that file now.
 
 2. In the same directory (`src/components`), create a `container.module.css` file and copy/paste the following:
 
@@ -177,17 +177,19 @@ You'll notice that the file name ends with `.module.css` instead of the usual `.
 3. Create a new page component by creating a file at
    `src/pages/about-css-modules.js`:
 
-```javascript:title=src/pages/about-css-modules.js
+```jsx:title=src/pages/about-css-modules.js
 import React from "react"
 
 import Container from "../components/container"
 
-export default () => (
-  <Container>
-    <h1>About CSS Modules</h1>
-    <p>CSS Modules are cool</p>
-  </Container>
-)
+export default function About() {
+  return (
+    <Container>
+      <h1>About CSS Modules</h1>
+      <p>CSS Modules are cool</p>
+    </Container>
+  )
+}
 ```
 
 Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look something like this:
@@ -248,7 +250,7 @@ import Container from "../components/container"
 console.log(styles)
 ```
 
-The `console.log(styles)` code will log the resulting import so you can see the result of your processed `./about-css-modules.module.css` file. If you open the developer console (using e.g. Firefox or Chrome's developer tools) in your browser, you'll see:
+The `console.log(styles)` code will log the resulting import so you can see the result of your processed `./about-css-modules.module.css` file. If you open the developer console (using e.g. Firefox or Chrome's developer tools, often by the F12 key) in your browser, you'll see:
 
 ![Import result of CSS module in console](css-modules-console.png)
 
@@ -276,24 +278,26 @@ const User = props => (
 )
 // highlight-end
 
-export default () => (
-  <Container>
-    <h1>About CSS Modules</h1>
-    <p>CSS Modules are cool</p>
-    {/* highlight-start */}
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    {/* highlight-end */}
-  </Container>
-)
+export default function About() {
+  return (
+    <Container>
+      <h1>About CSS Modules</h1>
+      <p>CSS Modules are cool</p>
+      {/* highlight-start */}
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+        excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      {/* highlight-end */}
+    </Container>
+  )
+}
 ```
 
 > Tip: Generally, if you use a component in multiple places on a site, it should be in its own module file in the `components` directory. But, if it's used only in one file, create it inline.

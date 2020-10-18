@@ -13,7 +13,7 @@ git add .
 git push -u origin master
 ```
 
-You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the `.gitlab-ci.yml` file.
 
 ## Add Path Prefix to Gatsby
 
@@ -33,7 +33,7 @@ To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml` 
 
 The online editor on the [GitLab](https://gitlab.com) website contains a pre-built template for Gatsby deployment.
 
-To use the template open your repository on their website, select the 'Setup CI/CD' option on the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now select the 'Apply a GitLab CI Yaml Template' drop-down, and type 'Gatsby' into the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
+To use the template open your repository on their website, select the 'Setup CI/CD' option on the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now select the 'Apply a GitLab CI YAML Template' drop-down, and type 'Gatsby' into the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 
 If adding this manually to your project, the file needs to contain a few required fields:
 
@@ -45,6 +45,9 @@ image: node:latest
 cache:
   paths:
     - node_modules/
+    # Enables git-lab CI caching. Both .cache and public must be cached, otherwise builds will fail.
+    - .cache/
+    - public/
 
 pages:
   script:

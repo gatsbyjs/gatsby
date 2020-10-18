@@ -3,6 +3,8 @@ const { getOptions } = require(`loader-utils`)
 const grayMatter = require(`gray-matter`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
+const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 const {
   isImport,
@@ -12,8 +14,12 @@ const {
   EMPTY_NEWLINE,
 } = require(`@mdx-js/mdx/util`)
 
-const toMDAST = require(`remark-parse`)
-const squeeze = require(`remark-squeeze-paragraphs`)
+// Some packages are required implicitly from @mdx-js/mdx (not listed in package.json).
+// To support yarn PnP, we need them to be required from their direct parent.
+const requireFromMDX = createRequireFromPath(require.resolve(`@mdx-js/mdx`))
+
+const toMDAST = requireFromMDX(`remark-parse`)
+const squeeze = requireFromMDX(`remark-squeeze-paragraphs`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:mdx-loader`)
 const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
@@ -21,7 +27,6 @@ const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
 const createMDXNode = require(`../utils/create-mdx-node`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
-const slash = require(`slash`)
 
 const DEFAULT_OPTIONS = {
   footnotes: true,
@@ -84,7 +89,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function(content) {
+module.exports = async function (content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,
@@ -93,6 +98,7 @@ module.exports = async function(content) {
     cache,
     pathPrefix,
     pluginOptions,
+    ...helpers
   } = getOptions(this)
 
   const options = withDefaultOptions(pluginOptions)
@@ -156,7 +162,31 @@ ${contentWithoutFrontmatter}`
     }
   }
 
+  /**
+   * Support gatsby-remark parser plugins
+   */
+  for (let plugin of options.gatsbyRemarkPlugins) {
+    debug(`requiring`, plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
+    debug(`required`, plugin)
+    if (_.isFunction(requiredPlugin.setParserPlugins)) {
+      for (let parserPlugin of requiredPlugin.setParserPlugins(
+        plugin.options || {}
+      )) {
+        if (_.isArray(parserPlugin)) {
+          const [parser, parserPluginOptions] = parserPlugin
+          debug(`adding remarkPlugin with options`, plugin, parserPluginOptions)
+          options.remarkPlugins.push([parser, parserPluginOptions])
+        } else {
+          debug(`adding remarkPlugin`, plugin)
+          options.remarkPlugins.push(parserPlugin)
+        }
+      }
+    }
+  }
+
   const { rawMDXOutput } = await genMdx({
+    ...helpers,
     isLoader: true,
     options,
     node: { ...mdxNode, rawBody: code },
@@ -171,15 +201,15 @@ ${contentWithoutFrontmatter}`
     const result = babel.transform(rawMDXOutput, {
       configFile: false,
       plugins: [
-        require(`@babel/plugin-syntax-jsx`),
-        require(`@babel/plugin-syntax-object-rest-spread`),
+        requireFromMDX(`@babel/plugin-syntax-jsx`),
+        requireFromMDX(`@babel/plugin-syntax-object-rest-spread`),
         require(`../utils/babel-plugin-html-attr-to-jsx-attr`),
       ],
     })
     debugMore(`transformed code`, result.code)
     return callback(
       null,
-      `import React from 'react'
+      `import * as React from 'react'
   ${result.code}
       `
     )

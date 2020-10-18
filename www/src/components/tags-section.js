@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
-import TagsIcon from "react-icons/lib/ti/tags"
-const { kebabCase } = require(`lodash-es`)
+import Link from "./localized-link"
+import { TiTags as TagsIcon } from "react-icons/ti"
+import { kebabCase } from "lodash-es"
 
 import Button from "./button"
 
@@ -24,7 +24,8 @@ const TagsSection = ({ tags }) => {
         flexFlow: `row wrap`,
         justifyContent: `space-between`,
         alignItems: `baseline`,
-        borderTop: t => `1px solid ${t.colors.ui.border}`,
+        borderColor: `ui.border`,
+        borderTop: 1,
         mt: 10,
       }}
     >

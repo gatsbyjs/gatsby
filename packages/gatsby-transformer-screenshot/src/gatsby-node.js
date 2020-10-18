@@ -21,6 +21,7 @@ exports.onPreBootstrap = (
     cache,
     actions,
     createNodeId,
+    getCache,
     getNodesByType,
     createContentDigest,
     reporter,
@@ -52,6 +53,7 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        getCache,
         parentNodeId: n.id,
         createContentDigest,
         reporter,
@@ -75,7 +77,7 @@ exports.onPreBootstrap = (
 }
 
 exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest },
+  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
   pluginOptions
 ) => {
   const { createNode, createParentChildLink } = actions
@@ -99,6 +101,7 @@ exports.onCreateNode = async (
           cache,
           createNode,
           createNodeId,
+          getCache,
           createContentDigest,
           parentNodeId: node.id,
         })
@@ -126,6 +129,7 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  getCache,
   parentNodeId,
   createContentDigest,
   reporter,
@@ -148,6 +152,7 @@ const createScreenshotNode = async ({
         cache,
         createNode,
         createNodeId,
+        getCache,
         parentNodeId,
         reporter,
       })

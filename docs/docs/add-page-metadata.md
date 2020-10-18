@@ -10,12 +10,12 @@ Adding metadata to pages (such as a title or description) is key in helping sear
 
 Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides drop-in support for server rendering data added with React Helmet. Using the plugin, attributes you add to React Helmet will be added to the static HTML pages that Gatsby builds.
 
-### Using `React Helmet` and `gatsby-plugin-react-helmet`
+## Using `React Helmet` and `gatsby-plugin-react-helmet`
 
 1. Install both packages:
 
 ```shell
-npm install --save gatsby-plugin-react-helmet react-helmet
+npm install gatsby-plugin-react-helmet react-helmet
 ```
 
 2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.

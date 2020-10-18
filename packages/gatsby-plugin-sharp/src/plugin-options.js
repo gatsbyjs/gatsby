@@ -2,15 +2,20 @@ const _ = require(`lodash`)
 
 /// Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
-  forceBase64Format: false,
+  base64Width: 20,
+  forceBase64Format: ``, // valid formats: png,jpg,webp
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
   lazyImageGeneration: true,
   defaultQuality: 50,
+  failOnError: true, // matches default of the sharp api constructor (https://sharp.pixelplumbing.com/api-constructor)
 }
 
 const generalArgs = {
   quality: 50,
+  jpegQuality: null,
+  pngQuality: null,
+  webpQuality: null,
   jpegProgressive: true,
   pngCompressionLevel: 9,
   // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
@@ -22,6 +27,7 @@ const generalArgs = {
   toFormat: ``,
   toFormatBase64: ``,
   sizeByPixelDensity: false,
+  rotate: 0,
 }
 
 let pluginOptions = Object.assign({}, pluginDefaults)
@@ -33,11 +39,42 @@ exports.setPluginOptions = opts => {
 }
 
 exports.getPluginOptions = () => pluginOptions
+exports.getPluginOptionsDefaults = () => pluginDefaults
 
-const healOptions = (
-  { defaultQuality: quality },
+/**
+ * Creates a transform object
+ *
+ * @param {Partial<import('./process-file').TransformArgs>} args
+ */
+exports.createTransformObject = args => {
+  const options = {
+    height: args.height,
+    width: args.width,
+    cropFocus: args.cropFocus,
+    toFormat: args.toFormat,
+    pngCompressionLevel:
+      args.pngCompressionLevel || generalArgs.pngCompressionLevel,
+    quality: args.quality,
+    jpegQuality: args.jpegQuality,
+    pngQuality: args.pngQuality,
+    webpQuality: args.webpQuality,
+    jpegProgressive: args.jpegProgressive || generalArgs.jpegProgressive,
+    grayscale: args.grayscale || generalArgs.grayscale,
+    rotate: args.rotate,
+    trim: args.trim ? args.trim : undefined,
+    duotone: args.duotone ? args.duotone : null,
+    fit: args.fit,
+    background: args.background,
+  }
+
+  // get all non falsey values
+  return _.pickBy(options, _.identity)
+}
+
+exports.healOptions = (
+  { defaultQuality: quality, base64Width },
   args,
-  fileExtension,
+  fileExtension = ``,
   defaultArgs = {}
 ) => {
   let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
@@ -46,9 +83,15 @@ const healOptions = (
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
   options.toFormatBase64 = options.toFormatBase64.toLowerCase()
+  options.base64Width = options.base64Width || base64Width
 
   // when toFormat is not set we set it based on fileExtension
   if (options.toFormat === ``) {
+    if (!fileExtension) {
+      throw new Error(
+        `toFormat seems to be empty, we need a fileExtension to set it.`
+      )
+    }
     options.toFormat = fileExtension.toLowerCase()
 
     if (fileExtension === `jpeg`) {
@@ -74,7 +117,50 @@ const healOptions = (
     options.maxHeight = parseInt(options.maxHeight, 10)
   }
 
+  ;[`width`, `height`, `maxWidth`, `maxHeight`].forEach(prop => {
+    if (typeof options[prop] !== `undefined` && options[prop] < 1) {
+      throw new Error(
+        `${prop} has to be a positive int larger than zero (> 0), now it's ${options[prop]}`
+      )
+    }
+  })
+
   return options
 }
 
-exports.healOptions = healOptions
+/**
+ * Removes all default values so we have the smallest transform args
+ *
+ * @param {Partial<import('./process-file').TransformArgs>} args
+ * @param {{defaultQuality: number }} pluginOptions
+ */
+exports.removeDefaultValues = (args, pluginOptions) => {
+  const options = {
+    height: args.height,
+    width: args.width,
+    cropFocus: args.cropFocus,
+    toFormat: args.toFormat,
+    pngCompressionLevel:
+      args.pngCompressionLevel !== generalArgs.pngCompressionLevel
+        ? args.pngCompressionLevel
+        : undefined,
+    quality:
+      args.quality !== pluginOptions.defaultQuality ? args.quality : undefined,
+    jpegQuality: args.jpegQuality,
+    pngQuality: args.pngQuality,
+    webpQuality: args.webpQuality,
+    jpegProgressive:
+      args.jpegProgressive !== generalArgs.jpegProgressive
+        ? args.jpegProgressive
+        : undefined,
+    grayscale:
+      args.grayscale !== generalArgs.grayscale ? args.grayscale : undefined,
+    rotate: args.rotate !== generalArgs.rotate ? args.rotate : undefined,
+    trim: args.trim ? args.trim : undefined,
+    duotone: args.duotone || undefined,
+    fit: args.fit,
+    background: args.background,
+  }
+
+  return _.omitBy(options, _.isNil)
+}

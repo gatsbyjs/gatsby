@@ -29,7 +29,7 @@ You can highlight specific lines by adding special comments to the source file. 
 
 Take a look at the `highlight-line` comment on line 4 and the `highlight-range` comment on line 8:
 
-```{numberLines: true}
+```jsx{numberLines: true}
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -57,7 +57,7 @@ it will display like this:
 
 You can use similar comments to hide specific lines. Here's another example, this time using `src/code-examples/hide-lines.js`. Check out the `hide-line` comments on lines 1, 7, 13 and 14:
 
-```{numberLines: true}
+```jsx{numberLines: true}
 /* hide-range{1-3} */
 import React from "react"
 import ReactDOM from "react-dom"
@@ -111,7 +111,7 @@ You've learnt how to embed the contents of existing files into your Markdown usi
 
 If you'd prefer to write your code blocks directly within your Markdown, take a look at the example [Code and Syntax Highlighting with PrismJS][4].
 
-[1]: https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/
-[2]: https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
+[1]: https://www.gatsbyjs.com/plugins/gatsby-remark-embed-snippet/
+[2]: https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/
 [3]: http://prismjs.com/
 [4]: /code-and-syntax-highlighting/

@@ -193,7 +193,7 @@ Instead, Gatsby exports a `navigate` helper function that accepts `to` and `opti
 
 | Argument          | Required | Description                                                                                     |
 | ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`). Note: it needs to be a pathname, not a full URL.       |
 | `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
 | `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
@@ -249,6 +249,8 @@ const Form = () => (
 )
 ```
 
+Then from the receiving page you can access the `location` state as demonstrated in [Pass state as props to the linked page](#pass-state-as-props-to-the-linked-page).
+
 ### Replace history during programmatic navigation
 
 If the navigation should replace history instead of pushing a new entry into the navigation history, add the `replace` prop with a value of `true` to the `options` argument of `navigate`.
@@ -280,7 +282,7 @@ const Form = () => (
 It is common to host sites in a sub-directory of a site. Gatsby lets you [set
 the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
 
-For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need prefixed).
+For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need to be prefixed).
 
 ```jsx
 import { withPrefix } from "gatsby"
@@ -346,6 +348,10 @@ const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
 export default Link
 ```
 
+### Relative links
+
+The `<Link />` component follows [the behavior of @reach/router](https://reach.tech/router/nesting) by ignoring trailing slashes and treating each page as if it were a directory when resolving relative links. For example if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`.
+
 ### File Downloads
 
 You can similarly check for file downloads:
@@ -387,6 +393,18 @@ onClick = () => {
 }
 ```
 
+## Handling stale client-side pages
+
+Gatsby's `<Link>` component will only fetch each page's resources once. Updates to pages on the site are not reflected in the browser as they are effectively "locked in time". This can have the undesirable impact of different users having different views of the content.
+
+In order to prevent this staleness, Gatsby requests an additional resource on each new page load: `app-data.json`. This contains a hash generated when the site is built; if anything in the `src` directory changes, the hash will change. During page loads, if Gatsby sees a different hash in the `app-data.json` than the hash it initially retrieved when the site first loaded, the browser will navigate using `window.location`. The browser fetches the new page and starts over again, so any cached resources are lost.
+
+However, if the page has previously loaded, it will not re-request `app-data.json`. In that case, the hash comparison will not occur and the previously loaded content will be used.
+
+> **Note:** Any state will be lost during the `window.location` transition. This can have an impact if there is a reliance on state management, e.g. tracking state in [wrapPageElement](/docs/browser-apis/#wrapPageElement) or via a library like Redux.
+
 ## Additional resources
 
 - [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
+- [Routing: Getting Location Data from Props](/docs/location-data-from-props/)
+- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior

@@ -23,7 +23,7 @@ const useCoverage = !!process.env.GENERATE_JEST_REPORT
 module.exports = {
   notify: true,
   verbose: true,
-  roots: [...pkgs, `<rootDir>/peril`],
+  roots: pkgs,
   modulePathIgnorePatterns: ignoreDirs,
   coveragePathIgnorePatterns: ignoreDirs,
   testPathIgnorePatterns: [
@@ -31,28 +31,23 @@ module.exports = {
     `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
+    `<rootDir>/packages/gatsby-admin/.cache/`,
     `__tests__/fixtures`,
   ],
   transform: {
-    "^.+\\.js$": `<rootDir>/jest-transformer.js`,
-    "^.+\\.tsx?$": `<rootDir>/node_modules/ts-jest/preprocessor.js`,
+    "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
   snapshotSerializers: [`jest-serializer-path`],
-  collectCoverage: useCoverage,
-  coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
-  coverageThreshold: {
-    global: {
-      lines: 45,
-      statements: 44,
-      functions: 42,
-      branches: 43,
-    },
-  },
   collectCoverageFrom: coverageDirs,
-  reporters: [`default`].concat(useCoverage ? `jest-junit` : []),
+  reporters: process.env.CI
+    ? [[`jest-silent-reporter`, { useDots: true }]].concat(
+        useCoverage ? `jest-junit` : []
+      )
+    : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
+  setupFiles: [`<rootDir>/.jestSetup.js`],
 }

@@ -26,6 +26,8 @@ const ImageFitType = new GraphQLEnumType({
     COVER: { value: sharp.fit.cover },
     CONTAIN: { value: sharp.fit.contain },
     FILL: { value: sharp.fit.fill },
+    INSIDE: { value: sharp.fit.inside },
+    OUTSIDE: { value: sharp.fit.outside },
   },
 })
 
@@ -57,22 +59,24 @@ const DuotoneGradientType = new GraphQLInputObjectType({
   },
 })
 
+const PotraceTurnPolicyType = new GraphQLEnumType({
+  name: `PotraceTurnPolicy`,
+  values: {
+    TURNPOLICY_BLACK: { value: Potrace.TURNPOLICY_BLACK },
+    TURNPOLICY_WHITE: { value: Potrace.TURNPOLICY_WHITE },
+    TURNPOLICY_LEFT: { value: Potrace.TURNPOLICY_LEFT },
+    TURNPOLICY_RIGHT: { value: Potrace.TURNPOLICY_RIGHT },
+    TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
+    TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
+  },
+})
+
 const PotraceType = new GraphQLInputObjectType({
   name: `Potrace`,
   fields: () => {
     return {
       turnPolicy: {
-        type: new GraphQLEnumType({
-          name: `PotraceTurnPolicy`,
-          values: {
-            TURNPOLICY_BLACK: { value: Potrace.TURNPOLICY_BLACK },
-            TURNPOLICY_WHITE: { value: Potrace.TURNPOLICY_WHITE },
-            TURNPOLICY_LEFT: { value: Potrace.TURNPOLICY_LEFT },
-            TURNPOLICY_RIGHT: { value: Potrace.TURNPOLICY_RIGHT },
-            TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
-            TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
-          },
-        }),
+        type: PotraceTurnPolicyType,
       },
       turdSize: { type: GraphQLFloat },
       alphaMax: { type: GraphQLFloat },
@@ -91,5 +95,6 @@ module.exports = {
   ImageFitType,
   ImageCropFocusType,
   DuotoneGradientType,
+  PotraceTurnPolicyType,
   PotraceType,
 }

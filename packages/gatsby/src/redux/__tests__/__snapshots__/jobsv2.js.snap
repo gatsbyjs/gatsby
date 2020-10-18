@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Job v2 actions/reducer should enqueueJob 1`] = `
+Object {
+  "complete": Map {},
+  "incomplete": Map {
+    "aa9932d515707737e953173cd9c77306" => Object {
+      "job": Object {
+        "args": Object {},
+        "contentDigest": "aa9932d515707737e953173cd9c77306",
+        "id": "1234",
+        "inputPaths": Array [],
+        "name": "TEST_JOB",
+        "outputDir": "/public/static",
+        "plugin": Object {
+          "isLocal": false,
+          "name": "test-plugin",
+          "resolve": "/node_modules/test-plugin",
+          "version": "1.0.0",
+        },
+      },
+      "plugin": Object {
+        "name": "test-plugin",
+        "resolve": "/node_modules/test-plugin",
+        "version": "1.0.0",
+      },
+    },
+  },
+}
+`;
+
+exports[`Job v2 actions/reducer should enqueueJob 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {},
+        "contentDigest": "aa9932d515707737e953173cd9c77306",
+        "id": "1234",
+        "inputPaths": Array [],
+        "name": "TEST_JOB",
+        "outputDir": "/public/static",
+        "plugin": Object {
+          "isLocal": false,
+          "name": "test-plugin",
+          "resolve": "/node_modules/test-plugin",
+          "version": "1.0.0",
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;

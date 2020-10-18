@@ -43,6 +43,33 @@ Each method detailed below will start with the following contact form:
 
 ## Form submission options in Gatsby
 
+### Getform
+
+Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. Begin by creating a form on your Gatsby site that you can receive submissions from. When creating the form, direct the HTTP POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
+
+```jsx:title=src/pages/contact.js
+<form method="post" action="https://getform.io/{your-unique-getform-endpoint}">
+  ...
+  <label>
+    Email
+    <input type="email" name="email" />
+  </label>
+  <label>
+    Name
+    <input type="text" name="name" />
+  </label>
+  <label>
+    Message
+    <input type="text" name="message" />
+  </label>
+  ...
+</form>
+```
+
+Once you've made the code changes to your form, you can head over to the contact page on your site and start submitting data to the form. The submissions will then be visible on the Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered.
+
+You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [CodePen](https://codepen.io/getform).
+
 ### Netlify
 
 If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
@@ -51,8 +78,9 @@ Setting this up only involves adding a few form attributes:
 
 ```diff:title=src/pages/contact.js
 - <form method="post" action="#">
-+ <form method="post" netlify-honeypot="bot-field" data-netlify="true">
++ <form method="post" netlify-honeypot="bot-field" data-netlify="true" name="contact">
 +   <input type="hidden" name="bot-field" />
++   <input type="hidden" name="form-name" value="contact" />
   ...
 ```
 
@@ -64,7 +92,7 @@ More information on Netlify Forms can be found [on their website](https://www.ne
 
 Formspree offers a generous free-tier service for handling form submissions on static sites. This makes it a great tool for having form submissions sent directly to an email address of your choosing, with very little setup required.
 
-In order to begin leveraging Formspree's features, you must add a form action directing the http POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
+In order to begin leveraging Formspree's features, you must add a form action directing the HTTP POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
 
 ```jsx:title=src/pages/contact.js
 <form method="post" action="https://formspree.io/email@domain.tld">
@@ -85,7 +113,7 @@ All forms set up in this way come with reCAPTCHA by default, but you can also en
 <input type="text" name="_gotcha" style="display:none" />
 ```
 
-Because the input is hidden, Formspree will know that only a bot could have made the submission, and it will be silently ignore it!
+Because the input is hidden, Formspree will know that only a bot could have made the submission and it will be silently ignored!
 
 ### Run your own server
 
@@ -111,7 +139,7 @@ const mailer = nodemailer.createTransport({
   },
 })
 
-app.post("/contact", function(req, res) {
+app.post("/contact", function (req, res) {
   mailer.sendMail(
     {
       from: req.body.from,
@@ -119,7 +147,7 @@ app.post("/contact", function(req, res) {
       subject: req.body.subject || "[No subject]",
       html: req.body.message || "[No message]",
     },
-    function(err, info) {
+    function (err, info) {
       if (err) return res.status(500).send(err)
       res.json({ success: true })
     }
@@ -129,12 +157,12 @@ app.post("/contact", function(req, res) {
 app.listen(3000)
 ```
 
-This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Now](https://zeit.co/now).
+This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Vercel](https://vercel.com/home).
 
-Once deployed, note the url of the deployment (something like `my-project-abcd123.now.sh`), and use it as your form action:
+Once deployed, note the url of the deployment (something like `my-project-abcd123.vercel.app`), and use it as your form action:
 
 ```jsx:title=src/pages/contact.js
-<form method="post" action="my-project-abcd123.now.sh/contact">
+<form method="post" action="my-project-abcd123.vercel.app/contact">
   ...
 </form>
 ```
@@ -147,4 +175,4 @@ For an in-depth guide on running your own mail server, you can refer to [this aw
 
 If you have any issues or if you want to learn more about implementing your own contact form in Gatsby, check out this tutorial from Scott Tolinski:
 
-`youtube: hF7xJhzrr9s`
+https://youtu.be/hF7xJhzrr9s

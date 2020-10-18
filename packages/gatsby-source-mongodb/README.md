@@ -37,7 +37,7 @@ module.exports = {
 
 ## Plugin options
 
-- **connectionString**: if you need to use a connection string compatible with later versions of MongoDB, or for connections to MongoDB Atlas, you can enter the entire string, minus the `dbName` and `extraParams.` Use the In this case, the authentication information should already be embedded in the string ex. `mongodb+srv://<USERNAME>:<PASSWORD>@<SERVERNANE>-fsokc.mongodb.net`. Pass `dbName` and `extraParams` as options per below.
+- **connectionString**: if you need to use a connection string compatible with later versions of MongoDB, or for connections to MongoDB Atlas, you can enter the entire string, minus the `dbName` and `extraParams`. In this case, the authentication information should already be embedded in the string ex. `mongodb+srv://<USERNAME>:<PASSWORD>@<SERVERNANE>-fsokc.mongodb.net`. Pass `dbName` and `extraParams` as options per below.
 - **dbName**: indicates the database name that you want to use
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
@@ -48,7 +48,7 @@ module.exports = {
   properties user and password. ex. auth: { user: `admin`, password: `12345` }
 - **extraParams**: useful to set additional parameters for the connection, like authSource, ssl or replicaSet
   (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }. These are the types of options that can be appended as query parameters to the connection URI: https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options
-- **clientOptions**: for setting options on the creation of a `MongoClient` instance. By default to handle the various connection URI's necessary for newer versions of MongoDB Atlas, for instance, we pass { `useNewUrlParser`: `true` }. You can override the default by passing either an empty object literal or filled with other valid connection options. All options [specified in the `MongoClient` documentation](http://mongodb.github.io/node-mongodb-native/3.1/reference/connecting/connection-settings/) are valid for usage.
+- **clientOptions**: for setting options on the creation of a `MongoClient` instance. By default, we pass `useNewUrlParser: true` to handle the various connection URI's necessary for newer versions of MongoDB Atlas, as well as `useUnifiedTopology: true` to opt in to using the MongoDB driver's new topology engine, which improves server discovery and monitoring. You can override the default by passing either an empty object literal or filled with other valid connection options. All options [specified in the `MongoClient` documentation](https://mongodb.github.io/node-mongodb-native/3.1/reference/connecting/connection-settings/) are valid for usage.
 - **preserveObjectIds**: for preserving nested ObjectIDs within documents, set this to the Boolean `true`, ex: preserveObjectIds: `true`.
 
 ### Mapping mediatype feature
@@ -73,14 +73,14 @@ module.exports = {
       resolve: `gatsby-source-mongodb`,
       options: {
         dbName: `local`,
-        collection: `documents`
+        collection: `documents`,
         // highlight-start
         map: {
-          {documents: {body: `text/markdown`}
+          documents: { body: `text/markdown` },
         },
         // highlight-end
       },
-    }
+    },
   ],
 }
 ```

@@ -24,11 +24,15 @@ export interface FluidObject {
   media?: string
 }
 
-interface GatsbyImageProps {
+interface GatsbyImageOptionalProps {
+  /**
+   * @deprecated Use `fixed`
+   */
   resolutions?: FixedObject
+  /**
+   * @deprecated Use `fluid`
+   */
   sizes?: FluidObject
-  fixed?: FixedObject | FixedObject[]
-  fluid?: FluidObject | FluidObject[]
   fadeIn?: boolean
   durationFadeIn?: number
   title?: string
@@ -43,13 +47,22 @@ interface GatsbyImageProps {
   backgroundColor?: string | boolean
   onLoad?: () => void
   onError?: (event: any) => void
-  onClick?: () => void
   onStartLoad?: (param: { wasCached: boolean }) => void
   Tag?: string
   itemProp?: string
   loading?: `auto` | `lazy` | `eager`
   draggable?: boolean
 }
+  
+interface GatsbyImageFluidProps extends GatsbyImageOptionalProps {
+  fluid: FluidObject | FluidObject[]
+}
+
+interface GatsbyImageFixedProps extends GatsbyImageOptionalProps {
+  fixed: FixedObject | FixedObject[]
+}
+
+export type GatsbyImageProps = GatsbyImageFluidProps | GatsbyImageFixedProps
 
 export default class GatsbyImage extends React.Component<
   GatsbyImageProps,

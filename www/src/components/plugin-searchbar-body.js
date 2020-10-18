@@ -11,17 +11,22 @@ import {
   ToggleRefinement,
 } from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
-import { Link } from "gatsby"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import Link from "../components/localized-link"
+import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
+import isOfficialPackage from "../utils/is-official-package"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
-import GatsbyIcon from "../components/gatsby-monogram"
+import GatsbyIcon from "./gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import {
+  space,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
-import SkipNavLink from "../components/skip-nav-link"
+import SkipNavLink from "./skip-nav-link"
+import { FaUsers as CommunityIcon } from "react-icons/fa"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -58,7 +63,7 @@ const searchBoxStyles = t => css`
     appearance: none;
     -webkit-appearance: none;
     background: ${t.colors.themedInput.background};
-    border-radius: ${t.radii[2]}px;
+    border-radius: ${t.radii[2]};
     border: 0;
     color: ${t.colors.text};
     display: inline-block;
@@ -113,7 +118,7 @@ const searchBoxStyles = t => css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${t.radii[2]}px 0 0 ${t.radii[2]}px;
+    border-radius: ${t.radii[2]} 0 0 ${t.radii[2]};
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -169,14 +174,14 @@ const searchBoxStyles = t => css`
   .ais-InfiniteHits-loadMore {
     background-color: ${t.colors.gatsby};
     border: 0;
-    border-radius: ${t.radii[1]}px;
+    border-radius: ${t.radii[1]};
     color: ${t.colors.white};
     cursor: pointer;
     width: calc(100% - (${space[6]} * 2));
     margin: ${t.space[6]};
     height: ${t.space[9]};
     outline: none;
-    transition: all ${t.transition.speed.default} ${t.transition.curve.default};
+    transition: ${t.transition.default};
     font-family: ${t.fonts.heading};
     font-weight: bold;
   }
@@ -192,128 +197,122 @@ const searchBoxStyles = t => css`
 /* stylelint-enable */
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
-class Search extends Component {
-  render() {
-    return (
-      <div sx={{ pb: [11, null, null, 0] }}>
-        <div
-          sx={{
-            borderBottomWidth: `1px`,
-            borderBottomStyle: `solid`,
-            borderColor: `ui.border`,
-            display: `flex`,
-            flexDirection: `column`,
-            width: `100%`,
-          }}
-        >
-          <Global styles={searchBoxStyles} />
-          <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
-          <div css={{ display: `none` }}>
-            <Configure analyticsTags={[`gatsby-plugins`]} />
-            <RefinementList
-              attribute="keywords"
-              transformItems={items =>
-                items.map(({ count, ...item }) => {
-                  return {
-                    ...item,
-                    count: count || 0,
-                  }
-                })
-              }
-              defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
-            />
-            <ToggleRefinement
-              attribute="deprecated"
-              value={false}
-              label="No deprecated plugins"
-              defaultRefinement={true}
-            />
-          </div>
-
-          <div
-            sx={{
-              alignItems: `center`,
-              color: `textMuted`,
-              display: `flex`,
-              height: searchMetaHeight,
-              px: 6,
-              fontSize: 0,
-            }}
-          >
-            <Stats
-              translations={{
-                stats: function(n, ms) {
-                  return `${n} results`
-                },
-              }}
-            />
-            <SkipNavLink />
-          </div>
+function Search({ pathname, query }) {
+  return (
+    <div sx={{ pb: [11, null, null, 0] }}>
+      <div
+        sx={{
+          borderBottomWidth: `1px`,
+          borderBottomStyle: `solid`,
+          borderColor: `ui.border`,
+          display: `flex`,
+          flexDirection: `column`,
+          width: `100%`,
+        }}
+      >
+        <Global styles={searchBoxStyles} />
+        <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
+        <div css={{ display: `none` }}>
+          <Configure analyticsTags={[`gatsby-plugins`]} />
+          <RefinementList
+            attribute="keywords"
+            transformItems={items =>
+              items.map(({ count, ...item }) => {
+                return {
+                  ...item,
+                  count: count || 0,
+                }
+              })
+            }
+            defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
+          />
+          <ToggleRefinement
+            attribute="deprecated"
+            value={false}
+            label="No deprecated plugins"
+            defaultRefinement={true}
+          />
         </div>
 
-        <div>
-          <div
-            sx={{
-              [mediaQueries.md]: {
-                height: t =>
-                  `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
-                overflowY: `scroll`,
+        <div
+          sx={{
+            alignItems: `center`,
+            color: `textMuted`,
+            display: `flex`,
+            height: searchMetaHeight,
+            px: 6,
+            fontSize: 0,
+          }}
+        >
+          <Stats
+            translations={{
+              stats: function (n) {
+                return `${n} results`
               },
             }}
-          >
-            <InfiniteHits
-              hitComponent={result => (
-                <Result
-                  hit={result.hit}
-                  pathname={this.props.pathname}
-                  query={this.props.query}
-                />
-              )}
-            />
-          </div>
+          />
+          <SkipNavLink />
         </div>
+      </div>
 
+      <div>
         <div
           sx={{
-            fontSize: 0,
-            lineHeight: 0,
-            height: 20,
-            mt: 6,
-            display: `none`,
+            [mediaQueries.md]: {
+              height: t =>
+                `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+              overflowY: `scroll`,
+            },
           }}
         >
-          <a
-            href={`https://www.algolia.com/`}
-            sx={{
-              "&&": {
+          <InfiniteHits
+            hitComponent={result => (
+              <Result hit={result.hit} pathname={pathname} query={query} />
+            )}
+          />
+        </div>
+      </div>
+
+      <div
+        sx={{
+          fontSize: 0,
+          lineHeight: 0,
+          height: 20,
+          mt: 6,
+          display: `none`,
+        }}
+      >
+        <a
+          href={`https://www.algolia.com/`}
+          sx={{
+            "&&": {
+              background: `url(${AlgoliaLogo})`,
+              border: `none`,
+              fontWeight: `body`,
+              backgroundRepeat: `no-repeat`,
+              backgroundPosition: `50%`,
+              backgroundSize: `100%`,
+              overflow: `hidden`,
+              textIndent: `-9000px`,
+              padding: `0!important`,
+              width: 110,
+              height: `100%`,
+              display: `block`,
+              ml: `auto`,
+              "&:hover": {
                 background: `url(${AlgoliaLogo})`,
-                border: `none`,
-                fontWeight: `body`,
                 backgroundRepeat: `no-repeat`,
                 backgroundPosition: `50%`,
                 backgroundSize: `100%`,
-                overflow: `hidden`,
-                textIndent: `-9000px`,
-                padding: `0!important`,
-                width: 110,
-                height: `100%`,
-                display: `block`,
-                ml: `auto`,
-                "&:hover": {
-                  background: `url(${AlgoliaLogo})`,
-                  backgroundRepeat: `no-repeat`,
-                  backgroundPosition: `50%`,
-                  backgroundSize: `100%`,
-                },
               },
-            }}
-          >
-            Algolia
-          </a>
-        </div>
+            },
+          }}
+        >
+          Algolia
+        </a>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 // the result component is fed into the InfiniteHits component
@@ -322,6 +321,7 @@ const Result = ({ hit, pathname, query }) => {
   // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
   const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
+  const isOfficial = isOfficialPackage(hit)
   return (
     <Link
       to={`/packages/${hit.name}/?=${query}`}
@@ -380,7 +380,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? `navigation.linkColor` : `text`,
             display: `flex`,
-            fontFamily: `system`,
+            fontFamily: `body`,
             fontSize: 1,
             fontWeight: `bold`,
             my: 0,
@@ -403,14 +403,14 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: 0,
           }}
         >
-          {hit.repository &&
-            hit.name[0] !== `@` &&
-            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
-              0 && (
-              <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
-                <GatsbyIcon />
-              </span>
-            )}
+          <span
+            sx={{ mr: 1 }}
+            alt={
+              isOfficial ? `Official Gatsby Plugin` : `Community Gatsby Plugin`
+            }
+          >
+            {isOfficial ? <GatsbyIcon /> : <CommunityIcon />}
+          </span>
           <span
             css={{
               width: `5em`,

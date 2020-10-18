@@ -1,8 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../localized-link"
 
-const FooterLinks = props => (
+const links = [
+  { to: `/accessibility-statement/`, text: `Accessibility Statement` },
+  { to: `/contributing/code-of-conduct/`, text: `Code of Conduct` },
+  { to: `/guidelines/logo/`, text: `Logo & Assets` },
+]
+
+const FooterLinks = () => (
   <footer>
     <ul
       sx={{
@@ -40,15 +46,11 @@ const FooterLinks = props => (
         },
       }}
     >
-      <li>
-        <Link to="/accessibility-statement">Accessibility Statement</Link>
-      </li>
-      <li>
-        <Link to="/contributing/code-of-conduct/">Code of Conduct</Link>
-      </li>
-      <li>
-        <a href="/guidelines/logo/">Logo &amp; Assets</a>
-      </li>
+      {links.map(({ to, text }) => (
+        <li key={to}>
+          <Link to={to}>{text}</Link>
+        </li>
+      ))}
       <li>
         <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
       </li>

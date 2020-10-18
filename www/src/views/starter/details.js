@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
-import MdLaunch from "react-icons/lib/md/launch"
+import Link from "../../components/localized-link"
+import { MdLaunch } from "react-icons/md"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const Details = ({
   allDeps,
@@ -57,13 +57,17 @@ const Details = ({
       >
         {shownDeps &&
           shownDeps.map(dep =>
-            /^gatsby-/.test(dep) ? (
+            // gatsby-cypress is a helper plugin and not shown inside our plugins section
+            // for that reason we are excluding it from our list of plugins
+            /^gatsby-/.test(dep) && dep !== `gatsby-cypress` ? (
               <div key={dep}>
-                <Link to={`/packages/${dep}`}>{dep}</Link>
+                <Link to={`/packages/${dep}`} sx={styles.link}>
+                  {dep}
+                </Link>
               </div>
             ) : (
               <div key={dep}>
-                <a href={`https://npm.im/${dep}`}>
+                <a href={`https://npm.im/${dep}`} sx={styles.link}>
                   {`${dep} `}
                   <MdLaunch />
                 </a>
@@ -102,7 +106,7 @@ const styles = {
     border: 0,
     borderRadius: 1,
     cursor: `pointer`,
-    fontFamily: `header`,
+    fontFamily: `heading`,
     fontWeight: `bold`,
     py: 1,
     px: 4,
@@ -110,5 +114,8 @@ const styles = {
       borderBottom: `none`,
       color: `white`,
     },
+  },
+  link: {
+    color: `link.color`,
   },
 }

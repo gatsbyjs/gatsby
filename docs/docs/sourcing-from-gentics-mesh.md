@@ -20,7 +20,7 @@ Gentics Mesh is a self-hosted CMS. You can run it for example via [Docker](https
 docker run -p 8080:8080 -d gentics/mesh-demo
 ```
 
-The demo Gentics server that gets setup has a UI that can be accessed on <http://localhost:8080/mesh-ui/> with default login (username: admin, password: admin). It allows you to view the content stored on the CMS and add new content.
+The demo Gentics server that gets setup has a UI that can be accessed on `http://localhost:8080/mesh-ui/` with default login (username: admin, password: admin). It allows you to view the content stored on the CMS and add new content.
 
 ### Install the boilerplate
 
@@ -39,7 +39,7 @@ Additionally, you need the `gatsby-source-graphql` plugin. Because Gentics Mesh 
 Install the plugin:
 
 ```shell
-npm install --save gatsby-source-graphql
+npm install gatsby-source-graphql
 ```
 
 ### Configure the plugin
@@ -67,7 +67,7 @@ If everything works correctly, you should now have your Gentics Mesh API added t
 
 From the root of your project, run the development environment with `gatsby develop`. Once the server has started, you should be able to open the following URL in your browser:
 
-<http://localhost:8000/___graphql>
+`http://localhost:8000/___graphql`
 
 This will show you an interface where you can test your new content GraphQL API.
 
@@ -135,7 +135,7 @@ You can read more about how to use the GraphQL API in the [Gentics Mesh docs](ht
 
 For the purpose of this guide I've removed all the layout, SEO, link or other components in the Gatsby starter `index.js` file. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -180,7 +180,7 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-Once saved you can access the page via <http://localhost:8000>
+Once saved you can access the page via `http://localhost:8000`
 
 You now have:
 
@@ -193,6 +193,6 @@ Hopefully you've seen how easy it is to start working with Gentics Mesh and Gats
 ## Learn more
 
 There is a lot more to learn on how Gentics Mesh API can help you build your site.
-One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. vehicle → vehiclePage, category → catgoryPage.)
+One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. `vehicle` → `vehiclePage`, `category` → `categoryPage`.)
 
 This workflow is also explained hands-on in [this in-depth guide](https://getmesh.io/blog/gentics-mesh-gatsby/) which shows how to build a basic vehicle inventory with Gatsby.

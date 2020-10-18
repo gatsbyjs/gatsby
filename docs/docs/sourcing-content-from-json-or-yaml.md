@@ -8,13 +8,13 @@ To follow along with the JSON or YAML data sourcing tips outlined in this guide,
 
 Open up a terminal and run the following command:
 
-```bash
+```shell
 gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 ## Directly import data with YAML
 
-This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#Directly-importing-data-with-JSON).
+This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#directly-import-data-with-json).
 
 ### Add the YAML content
 
@@ -65,7 +65,7 @@ const YAMLbuildtime = () => (
 export default YAMLbuildtime
 ```
 
-The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional stateless React component.
+The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional React component.
 
 ## Directly import data with JSON
 
@@ -132,8 +132,8 @@ For this example, you will need to add an extra dependency so that the file cont
 
 Open your terminal, navigate to the folder containing the Gatsby site, and issue the following command:
 
-```bash
-npm install --save js-yaml
+```shell
+npm install js-yaml
 ```
 
 This newly added package will be responsible for loading and parsing the YAML file safely.
@@ -218,7 +218,7 @@ Once the dynamic site structure and content exists, you need to tell Gatsby to g
 
 If you don't already have one, create a `gatsby-node.js` file at the root of the project. Add the following code inside the file:
 
-```jsx:title=gatsby-node.js
+```js:title=gatsby-node.js
 const fs = require("fs")
 const yaml = require("js-yaml")
 exports.createPages = ({ actions }) => {
@@ -283,7 +283,7 @@ export default basicTemplate
 
 After parsing a YAML file into data and configuring Gatsby to produce pages with a template, you should have the following file and folder structure:
 
-```
+```text
   |gatsby-YAML-JSON-at-buildtime
     |content
       - index.yaml
@@ -293,7 +293,7 @@ After parsing a YAML file into data and configuring Gatsby to produce pages with
     - gatsby-node.js
 ```
 
-Running `gatsby develop` in the terminal and opening a browser window to <http://localhost:8000/page1> you'll see a page with content that was sourced from a YAML file used to generate your site.
+Running `gatsby develop` in the terminal and opening a browser window to `http://localhost:8000/page1` you'll see a page with content that was sourced from a YAML file used to generate your site.
 
 To make this work on your existing Gatsby site, you would need to:
 

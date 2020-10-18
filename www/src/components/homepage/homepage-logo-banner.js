@@ -2,66 +2,8 @@
 import { jsx } from "theme-ui"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
-import styled from "@emotion/styled"
-import { mediaQueries } from "gatsby-design-tokens"
 
 import { Name } from "./homepage-section"
-
-const Section = styled(`section`)`
-  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
-  overflow: hidden;
-  padding: ${p => p.theme.space[5]} 0;
-  width: 100%;
-
-  ${mediaQueries.xl} {
-    margin-top: -1px;
-    margin-bottom: -1px;
-  }
-
-  ${mediaQueries.xxl} {
-    padding: ${p => p.theme.space[7]} 0;
-  }
-`
-
-const Title = styled(`header`)`
-  padding-right: ${p => p.theme.space[6]};
-  padding-left: ${p => p.theme.space[6]};
-  ${mediaQueries.md} {
-    max-width: 30rem;
-  }
-
-  ${mediaQueries.lg} {
-    margin-left: ${p => p.theme.space[9]};
-  }
-
-  ${mediaQueries.xl} {
-    padding-right: 5%;
-    padding-left: 5%;
-  }
-
-  ${mediaQueries.xxl} {
-    padding-right: 8%;
-    padding-left: 8%;
-  }
-`
-
-const LogoGroup = styled(`div`)`
-  position: relative;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
-  grid-gap: ${p => p.theme.space[8]};
-  align-items: center;
-  overflow-x: scroll;
-  padding-left: ${p => p.theme.space[3]};
-  padding-bottom: ${p => p.theme.space[4]};
-  ${mediaQueries.xxl} {
-    padding-bottom: ${p => p.theme.space[6]};
-  }
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
 
 const HomepageLogoBanner = () => {
   const data = useStaticQuery(graphql`
@@ -73,13 +15,11 @@ const HomepageLogoBanner = () => {
         }
         sort: { fields: publicURL }
       ) {
-        edges {
-          node {
-            base
-            childImageSharp {
-              fixed(quality: 75, height: 24) {
-                ...GatsbyImageSharpFixed_tracedSVG
-              }
+        nodes {
+          base
+          childImageSharp {
+            fixed(quality: 75, height: 24) {
+              ...GatsbyImageSharpFixed_tracedSVG
             }
           }
         }
@@ -88,20 +28,51 @@ const HomepageLogoBanner = () => {
   `)
 
   return (
-    <Section>
-      <Title>
+    <section
+      sx={{
+        borderBottom: 1,
+        borderColor: `ui.border`,
+        overflow: `hidden`,
+        py: [5, null, null, null, null, null, 7],
+        my: [null, null, null, null, null, `-1px`],
+        width: `100%`,
+      }}
+    >
+      <header
+        sx={{
+          px: [6, null, null, null, null, `5%`, `8%`],
+          maxWidth: [null, null, null, `30rem`],
+          ml: [null, null, null, null, 9],
+        }}
+      >
         <Name>Trusted by</Name>
-      </Title>
-      <LogoGroup>
-        {data.allFile.edges.map(({ node: image }) => (
+      </header>
+      <div
+        sx={{
+          position: `relative`,
+          display: `grid`,
+          gridAutoFlow: `column`,
+          gridAutoColumns: `auto`,
+          gridGap: t => t.space[8],
+          alignItems: `center`,
+          overflowX: `scroll`,
+          pl: 3,
+          pb: [4, null, null, null, null, null, 6],
+          "&::-webkit-scrollbar": {
+            display: `none`,
+          },
+        }}
+        tabIndex={0}
+      >
+        {data.allFile.nodes.map(image => (
           <Img
             alt={`${image.base.split(`.`)[0]}`}
             fixed={image.childImageSharp.fixed}
             key={image.base}
           />
         ))}
-      </LogoGroup>
-    </Section>
+      </div>
+    </section>
   )
 }
 

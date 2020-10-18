@@ -5,14 +5,14 @@ const path = require(`path`)
 const sitemap = require(`sitemap`)
 
 const { onPostBuild } = require(`../gatsby-node`)
-const internals = require(`../internals`)
+import * as internals from "../internals"
 const pathPrefix = ``
 
 beforeEach(() => {
   global.__PATH_PREFIX__ = ``
 })
 
-describe(`Test plugin sitemap`, async () => {
+describe(`Test plugin sitemap`, () => {
   it(`default settings work properly`, async () => {
     internals.writeFile = jest.fn()
     internals.writeFile.mockResolvedValue(true)

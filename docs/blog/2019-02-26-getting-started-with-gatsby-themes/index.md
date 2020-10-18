@@ -7,9 +7,13 @@ tags: ["themes", "getting-started"]
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
-### What is a Gatsby theme?
+## What is a Gatsby theme?
 
-<Pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</Pullquote>
+<Pullquote cite="Jason Lengstorf">
+  Gatsby themes allow you to focus only on the parts of the site and app
+  building process that you need to care about by abstracting the rest away into
+  a package.
+</Pullquote>
 
 ## Getting Started
 
@@ -91,7 +95,7 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in the _them
 
 > MDX is markdown for the component era. It lets you write JSX embedded inside markdown. That's a great combination because it allows you to use markdown's often terse syntax (such as # heading) for the little things and JSX for more advanced components.
 
-Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.com/)
+Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.app/)
 
 In your _theme_ directory, add src/pages/index.mdx
 
@@ -220,18 +224,20 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 
 Inside of your _layout.js_ file, you can add your styling.
 
-```javascript:title=packages/theme/src/components/layout.js
-export default ({ children }) => (
-  <div
-    style={{
-      // Layout styling
-      margin: `10%`,
-      backgroundColor: `#fafafa`,
-    }}
-  >
-    {children}
-  </div>
-)
+```jsx:title=packages/theme/src/components/layout.js
+export default function Layout({ children }) {
+  return (
+    <div
+      style={{
+        // Layout styling
+        margin: `10%`,
+        backgroundColor: `#fafafa`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 ```
 
 To make sure your _layout.js_ file is connected to your theme you will navigate to your _gatsby-config.js_ file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
@@ -265,18 +271,20 @@ If you want to reuse a specific style, you can create styled components. In your
 
 Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
 
-```javascript:title=header.js
-export default ({ children }) => (
-  <section
-    style={{
-      // Header Specific Styling //
-      padding: "10px",
-      backgroundColor: "blue",
-    }}
-  >
-    {children}
-  </section>
-)
+```jsx:title=header.js
+export default function Header({ children }) {
+  return (
+    <section
+      style={{
+        // Header Specific Styling //
+        padding: "10px",
+        backgroundColor: "blue",
+      }}
+    >
+      {children}
+    </section>
+  )
+}
 ```
 
 To import your styled components, go to _index.js_ and export your component.
@@ -324,4 +332,4 @@ If you run into an error that your theme plugin can't be found, try clearing you
 
 to your _package.json_ file. Then you can use `npm run clean` in your terminal.
 
-If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieofCode](https://www.twitter.com/katieofcode)! I would love to see what kind of themes you build.
+If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieFujihara](https://www.twitter.com/KatieFujihara)! I would love to see what kind of themes you build.

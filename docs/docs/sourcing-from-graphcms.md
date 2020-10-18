@@ -22,20 +22,20 @@ gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
 
 Navigate inside of the project with `cd gatsby-site`.
 
-### Add the Source Plugin
+### Add the source plugin
 
-Additionally, you need the the `gatsby-source-graphql` library. Because GraphCMS uses GraphQL natively, you will take advantage of Gatsby's ability to simply stitch two GraphQL APIs together, reducing the time required to transform content. There is no need to use a special gatsby-source-x-cms plugin, the GraphQL source plugin is all you need.
+Additionally, you need the `gatsby-source-graphql` library. Because GraphCMS uses GraphQL natively, you will take advantage of Gatsby's ability to simply stitch two GraphQL APIs together, reducing the time required to transform content. There is no need to use a special gatsby-source-x-cms plugin, the GraphQL source plugin is all you need.
 
 You can install this component with:
 
 ```shell
   # Optionally with `npm install`
-  npm install --save gatsby-source-graphql
+  npm install gatsby-source-graphql
 ```
 
 ### Configure the plugin
 
-The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a fieldName that makes the most sense to your project. [Here's more information on working with GraphCMS APIs.](https://docs.graphcms.com/developers/api)
+The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a `fieldName` that makes the most sense to your project. [Here's more information on working with GraphCMS APIs.](https://docs.graphcms.com/docs/api)
 
 ```js
 {
@@ -58,23 +58,23 @@ If everything works correctly, you should now have your GraphCMS data added to t
 
 From the root of your project, run the development environment with `gatsby develop`. Once the server has started and is error free, you should be able to open the following URL in your browser:
 
-<http://localhost:8000/___graphql>
+`http://localhost:8000/___graphql`
 
 This will show you an interface where you can test your new content API.
 
 Try running this query:
 
-```js
+```graphql
 query {
-    gcms {
-        mountains {
-            title
-            elevation
-            image {
-                url
-            }
-        }
+  gcms {
+    mountains {
+      title
+      elevation
+      image {
+        url
+      }
     }
+  }
 }
 ```
 
@@ -110,7 +110,7 @@ Again, if everything is working properly, you should see a successful response i
 
 For the purpose of this tutorial I've removed all the layout, SEO, link or other components that comprise a page in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happening in the code. You are just looking at the nails for right now, but the hammers, saws and other tools are still in the toolbox. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
-```js
+```jsx
 import React from "react"
 import { StaticQuery } from "gatsby"
 

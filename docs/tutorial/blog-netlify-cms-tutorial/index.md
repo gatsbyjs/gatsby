@@ -2,20 +2,20 @@
 title: Making a Gatsby Blog with Netlify CMS
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JeTqxCJC56Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube video: Make a developer blog in under 10 minutes | Lightning Tutorial"></iframe>
+https://youtu.be/JeTqxCJC56Q
 
-This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog), a Gatsby starter based on the official [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory, `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/) for content editing. It also adds VS Code highlighting for code blocks.
+This tutorial will use [gatsby-personal-starter-blog](https://github.com/thomaswang/gatsby-personal-starter-blog), a Gatsby starter based on the official [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory, `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/) for content editing. It also adds VS Code highlighting for code blocks.
 
 ## Prerequisites
 
 - A GitHub account
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](/docs/gatsby-cli/) installed
 
 ## Set up a Netlify CMS-managed Gatsby site in 5 steps:
 
 ### Step 1
 
-Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog).
+Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](https://github.com/thomaswang/gatsby-personal-starter-blog).
 
 ```shell
 gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-starter-blog
@@ -30,7 +30,7 @@ cd [your-project-name]
 gatsby develop
 ```
 
-Now you can go to [`localhost:8000`](http://localhost:8000) to see your new site, but what's extra cool is that Netlify CMS is pre-installed and you can access it at [`localhost:8000/admin`](http://localhost:8000/admin).
+Now you can go to `http://localhost:8000` to see your new site, but what's extra cool is that Netlify CMS is pre-installed and you can access it at `http://localhost:8000/admin`
 
 A CMS, or content management system, is useful because you can add content like blog posts from a dashboard on your site, instead of having to add posts manually with Markdown. However, you'll likely want to be able to access the CMS from a deployed website, not just locally. For that, you'll need to deploy to Netlify through GitHub, set up continuous deployment, and do a few configurations. You'll go over this in [Step-5](#step-5).
 
@@ -48,13 +48,13 @@ backend:
 
 #### Customizing your site
 
-Head into `gatsby-config.js` and you can edit your siteMedata, add a Google Analytics tracking ID, and your app icon/favicon. Test out the edits for the deployed build by quitting the development server and running `gatsby build && gatsby serve`.
+Head into `gatsby-config.js` and you can edit your siteMetadata, add a Google Analytics tracking ID, and your app icon/favicon. Test out the edits for the deployed build by quitting the development server and running `gatsby build && gatsby serve`.
 
 You'll likely also want to edit the `README.md` and `package.json` files to include your own project details.
 
 ### Step 4
 
-Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
+Open [github.com](https://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
 
 ```shell
 git init
@@ -64,7 +64,7 @@ git remote add origin https://github.com/[your-username]/[your-repo-name].git
 git push -u origin master
 ```
 
-Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site" with the default deployment settings.
+Then, open [app.netlify.com](https://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site" with the default deployment settings.
 
 > _Note: if you don't see the correct repo listed, you may need to install or reconfigure the Netlify app on GitHub._
 
@@ -80,7 +80,7 @@ Once you've configured an authentication provider then you'll be able to use Net
 
 ![Netlify and GitHub Authorization](https://cdn.netlify.com/67edd5b656c432888d736cd40125cb61376905bb/c1cba/img/docs/github-oauth-config.png)
 
-Copy the credentials of your new app listed on [GitHub oAuth Apps](https://github.com/settings/developers) and install a new auth provider on Netlify using them.
+Copy the credentials of your new app listed on [GitHub OAuth Apps](https://github.com/settings/developers) and install a new auth provider on Netlify using them.
 
 ![Setting up access control](netlify-install-oauth-provider.png)
 

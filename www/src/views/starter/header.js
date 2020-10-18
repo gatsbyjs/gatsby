@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
-import MdArrowBack from "react-icons/lib/md/arrow-back"
+import Link from "../../components/localized-link"
+import { MdArrowBack } from "react-icons/md"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { withTitleHover } from "../shared/styles"
 
 const Header = ({ stub }) => (
@@ -37,7 +37,7 @@ const Header = ({ stub }) => (
       </Link>
     </div>
     <div>
-      <h1 sx={{ m: 0, display: `inline-block` }}>{stub}</h1>
+      <h1 sx={{ m: 0, display: `inline-block`, color: `heading` }}>{stub}</h1>
     </div>
   </div>
 )

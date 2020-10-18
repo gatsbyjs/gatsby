@@ -5,7 +5,7 @@ HJSON files. Supports arrays of objects and single objects.
 
 ## Install
 
-`npm install --save gatsby-transformer-hjson`
+`npm install gatsby-transformer-hjson`
 
 You also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
@@ -46,23 +46,25 @@ parent directory.
 
 For example, lets say your project has a data layout like:
 
+```text
     data/
         letters/
             a.hjson
             b.hjson
             c.hjson
+```
 
 Where each of `a.hjson`, `b.hjson` and `c.hjson` look like:
 
-```
+```json
 value: a
 ```
 
-```
+```json
 value: b
 ```
 
-```
+```json
 value: c
 ```
 

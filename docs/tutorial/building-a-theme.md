@@ -31,7 +31,7 @@ In the `authoring-themes-tutorial` folder, create two new folders, `gatsby-theme
 
 Create a `package.json` file in each of the new folders. Your file tree will look like this:
 
-```
+```text
 .
 ├── gatsby-theme-events
 │   └── package.json
@@ -115,7 +115,7 @@ You should now see the following dependencies in your `site/package.json`:
 
 If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
 
-```shell
+```json
 {
   "gatsby-theme-events": {
     "location": "gatsby-theme-events",
@@ -125,9 +125,7 @@ If you run `yarn workspaces info`, you'll be able to verify that the site is usi
   "site": {
     "location": "site",
     // highlight-start
-    "workspaceDependencies": [
-      "gatsby-theme-events"
-    ],
+    "workspaceDependencies": ["gatsby-theme-events"],
     // highlight-end
     "mismatchedWorkspaceDependencies": []
   }
@@ -514,7 +512,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 ```
 
 - You'll default the `basePath` to the root path (`"/"`)
-- Then you'll set up the call to the `createPage` action to create the a page at the base path.
+- Then you'll set up the call to the `createPage` action to create a page at the base path.
   - _Note that the component listed doesn't exist yet -- you'll create that shortly._
 
 ### Query for events
@@ -600,7 +598,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "events" and "event" template components.
+### Create the "events" and "event" template components
 
 The last step to make sure that these pages build is to create the page template components.
 
@@ -608,7 +606,7 @@ Create new files for the event template, and the events template:
 
 #### Events template
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 
 const EventsTemplate = () => <p>TODO: Build the events page template</p>
@@ -618,7 +616,7 @@ export default EventsTemplate
 
 #### Event template
 
-```javascript:title=gatsby-theme-events/src/templates/event.js
+```jsx:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 
 const EventTemplate = () => <p>TODO: Build the event page template</p>
@@ -634,15 +632,15 @@ To test that the root path (`"/"`) and individual event pages are building succe
 yarn workspace gatsby-theme-events develop
 ```
 
-You should see the placeholder `events.js` component at [localhost:8000](http://localhost:8000/).
+You should see the placeholder `events.js` component at `http://localhost:8000/`.
 
-If you hit [http://localhost:8000/404](http://localhost:8000/404) (for example -- or any route that doesn't exist) you should see a listing of event pages, all building with the placeholder `event.js` component.
+If you hit `http://localhost:8000/404` (for example -- or any route that doesn't exist) you should see a listing of event pages, all building with the placeholder `event.js` component.
 
 ## Display sorted data with `useStaticQuery`
 
 To show event data, you'll import `graphql` and `useStaticQuery` from Gatsby in the `events.js` component.
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 // highlight-next-line
 import { graphql, useStaticQuery } from "gatsby"
@@ -654,7 +652,7 @@ export default EventsTemplate
 
 Refactor the `EventsTemplate` component to include a static query for events data:
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
@@ -693,7 +691,7 @@ Start creating the UI to display the event data.
 
 Create a new file at `gatsby-theme-events/src/components/layout.js`:
 
-```javascript:title=gatsby-theme-events/src/components/layout.js
+```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 
 const Layout = ({ children }) => (
@@ -710,7 +708,7 @@ export default Layout
 
 Create a new file at `gatsby-theme-events/src/components/event-list.js`:
 
-```javascript:title=gatsby-theme-events/src/components/event-list.js
+```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
 
 const EventList = ({ events }) => <pre>{JSON.stringify(events, null, 2)}</pre>
@@ -727,7 +725,7 @@ By updating the `events.js` template with the following code, you will:
 - Import the two new components.
 - Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 // highlight-start
@@ -766,7 +764,7 @@ const EventsTemplate = () => {
 export default EventsTemplate
 ```
 
-To test that it's working, open up [localhost:8000](http://localhost:8000/) again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
+To test that it's working, open up `http://localhost:8000/` again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
 
 ![The root path view, with a header of "Gatsby Events Theme", and stringified JSON event data](./images/building-a-theme-events-page-data.png)
 
@@ -811,7 +809,7 @@ export default EventList
   - The date of the event
   - The location of the event
 
-Checking [localhost:8000](http://localhost:8000/) again, you should see the new markup:
+Checking `http://localhost:8000/` again, you should see the new markup:
 
 ![The events page, shown with markup defined](./images/building-a-theme-events-page-markup.png)
 
@@ -823,7 +821,7 @@ Similar to `EventList`, you'll need to create a React component template for an 
 
 First, you'll create a page query to query for individual events by `id`.
 
-```javascript:title=gatsby-theme-events/src/templates/event.js
+```jsx:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 // highlight-start
 import { graphql } from "gatsby"
@@ -849,7 +847,7 @@ export default EventTemplate
 
 ### Modify the event template to access event data
 
-```javascript:title=gatsby-theme-events/src/templates/event.js
+```jsx:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 import { graphql } from "gatsby"
 // highlight-start
@@ -882,7 +880,7 @@ export default EventTemplate
 
 There's some wishful programming here again -- the `<Event>` component doesn't exist yet. Create that component in `gatsby-theme-events/src/components/event.js`:
 
-```javascript:title=gatsby-theme-events/src/components/event.js
+```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
 const Event = props => <pre>{JSON.stringify(props, null, 2)}</pre>
@@ -896,7 +894,7 @@ To start off, as before, run `JSON.stringify` on the props data getting passed t
 
 Data is logging on the individual event pages. As before, now update the component to use markup, rather than displaying the raw data:
 
-```javascript:title=gatsby-theme-events/src/components/event.js
+```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
 // highlight-start
@@ -930,7 +928,7 @@ Now you'll refactor this component with some business logic to display the event
 - If the event is multi-day: July 4-6, 2019
 - If the event spans different months: July 30 - August 2 2019
 
-```javascript:title=gatsby-theme-events/src/components/event.js
+```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
 // highlight-start
@@ -962,6 +960,7 @@ const EventDate = ({ startDate, endDate }) => {
     </>
   )
 }
+// highlight-end
 
 const Event = ({ name, location, url, startDate, endDate }) => (
   <div>
@@ -969,14 +968,15 @@ const Event = ({ name, location, url, startDate, endDate }) => (
       {name} ({location})
     </h2>
     <p>
+      // highlight-start
       <EventDate startDate={startDate} endDate={endDate} />
+      // highlight-end
     </p>
     <p>
       Website: <a href={url}>{url}</a>
     </p>
   </div>
 )
-// highlight-end
 
 export default Event
 ```
@@ -1047,6 +1047,8 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
+Note that the example above sets default values for `options`. This behavior was also included in the prior `gatsby-config.js` example. You only need to set default values once, but both mechanisms for doing so are valid.
+
 > 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
@@ -1081,13 +1083,13 @@ yarn workspace site develop
 Once this is running, you'll observe two things:
 
 1. An "events" directory has automatically been generated for you in `site/events`.
-2. If you hit [localhost:8000/404](http://localhost:8000/404) (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
+2. If you hit `http://localhost:8000/404` (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
 
 However, you don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the dev server:
 
 ![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
 
-The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000/) will return a 404.
+The events listing page will now be accessible at `http://localhost:8000/events`. Hitting `http://localhost:8000/` will return a 404.
 
 ## Make themes extendable with gatsby-plugin-theme-ui
 
@@ -1146,14 +1148,8 @@ export const theme = {
     default: "90vw",
     max: "540px",
   },
-  styles: {
-    Layout: {
-      color: "gray.2",
-      fontFamily: "body",
-      fontSize: 1,
-      lineHeight: "body",
-    },
-    Header: {
+  text: {
+    heading: {
       backgroundColor: "primary",
       color: "background",
       fontWeight: "bold",
@@ -1165,14 +1161,20 @@ export const theme = {
         color: "inherit",
       },
     },
-    Main: {
+  },
+  layout: {
+    container: {
       margin: "0 auto",
       maxWidth: "max",
       width: "default",
-    },
-    Container: {
       padding: 3,
+      color: "gray.2",
+      fontFamily: "body",
+      fontSize: 1,
+      lineHeight: "body",
     },
+  },
+  styles: {
     h1: {
       color: "gray.3",
       fontSize: 5,
@@ -1206,7 +1208,7 @@ export default theme
 
 To use the theme you've defined, you'll need to use component shadowing to override the default theme in `gatsby-plugin-theme-ui`.
 
-> 💡 "Component shadowing" is a mechanism to override default provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing/).
+> 💡 "Component shadowing" is a mechanism to override the default rendering provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing/).
 
 You'll use component shadowing to activate the custom theme defined in the previous step.
 
@@ -1220,12 +1222,12 @@ export default theme
 
 Now, refactor the `layout.js` component in `gatsby-theme-events` to actually use Theme UI.
 
-First, import the `Layout`, `Header`, `Main`, and `Container` [components from Theme UI](https://theme-ui.com/layout).
+First, import the `Header`, and `Container` [components from Theme UI](https://theme-ui.com/components).
 
-```javascript:title=gatsby-theme-events/src/components/layout.js
+```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 // highlight-next-line
-import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+import { Heading, Container } from "theme-ui"
 
 const Layout = ({ children }) => (
   <div>
@@ -1239,19 +1241,17 @@ export default Layout
 
 Next, refactor the `layout.js` component to use the Theme UI components:
 
-```javascript:title=gatsby-theme-events/src/components/layout.js
+```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
-import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+import { Heading, Container } from "theme-ui"
 
 // highlight-start
 const Layout = ({ children }) => {
   return (
-    <ThemeLayout>
-      <Header>Gatsby Events Theme</Header>
-      <Main>
-        <Container>{children}</Container>
-      </Main>
-    </ThemeLayout>
+    <div>
+      <Heading>Gatsby Events Theme</Heading>
+      <Container>{children}</Container>
+    </div>
   )
 }
 // highlight-end
@@ -1267,9 +1267,9 @@ yarn workspace site develop
 
 ![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)
 
-To continue applying theme styles, you can use the `Style` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
+To continue applying theme styles, you can use the `Styled` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
 
-```javascript:title=gatsby-theme-events/src/components/event-list.js
+```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
 import { Link } from "gatsby"
 // highlight-next-line
@@ -1527,10 +1527,12 @@ Anything inside `theme-test/src/@jlengstorf/gatsby-theme-events` will "shadow" t
 
 For example, create a new file to override the layout component: `theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js`.
 
-```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
+```jsx:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
 
-export default ({ children }) => <>{children}</>
+export default function Layout({ children }) {
+  return <>{children}</>
+}
 ```
 
 If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:
@@ -1544,6 +1546,12 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 ### Further reading
 
 - Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
-- Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace).
+- Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-theme-workspace).
 - Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
-- All through the month of July 2019, Jason Lengstorf will be live-streaming building themes with community members. Follow [his Twitch channel](https://twitch.tv/jlengstorf) for updates, or check out [recordings from previous streams](https://jason.af/lwj-youtube).
+
+### Livestreams
+
+- [Jason Lengstorf and Brent Jackson livestream building a theme](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
+- [Jason Lengstorf and Emma Wedekind livestream building a theme](https://www.youtube.com/watch?v=W2uTfay3doo)
+- [Jason Lengstorf and Henry Zhu livestream building a theme](https://www.youtube.com/watch?v=z4ETLpujcqo)
+- [Jason Lengstorf and John Otander livestream building a theme](https://www.youtube.com/watch?v=PS2784YfPpw)

@@ -4,12 +4,13 @@ const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
-module.exports = async ({ syncToken, reporter, pluginConfig }) => {
+module.exports = async function contentfulFetch({
+  syncToken,
+  reporter,
+  pluginConfig,
+}) {
   // Fetch articles.
-  console.time(`Fetch Contentful data`)
-
-  console.log(`Starting to fetch data from Contentful`)
-
+  const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -28,17 +29,32 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   let locales
   let defaultLocale = `en-US`
   try {
-    console.log(`Fetching default locale`)
+    reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
-    locales = await client.getLocales().then(response => response.items)
-    defaultLocale = _.find(locales, { default: true }).code
-    locales = locales.filter(pluginConfig.get(`localeFilter`))
-    console.log(`default locale is : ${defaultLocale}`)
+    let contentfulLocales = await client
+      .getLocales()
+      .then(response => response.items)
+    defaultLocale = _.find(contentfulLocales, { default: true }).code
+    locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
+    if (locales.length === 0) {
+      reporter.panic(
+        `Please check if your localeFilter is configured properly. Locales '${_.join(
+          contentfulLocales.map(item => item.code),
+          `,`
+        )}' were found but were filtered down to none.`
+      )
+    }
+    reporter.verbose(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
+    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
+      reporter.panic(
+        `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+        e
+      )
     } else if (e.response) {
       if (e.response.status === 404) {
         // host and space used to generate url
@@ -69,8 +85,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   }
 
   let currentSyncData
+  const basicSyncConfig = {
+    limit: pageLimit,
+    resolveLinks: false,
+  }
   try {
-    let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
+    let query = syncToken
+      ? { nextSyncToken: syncToken, ...basicSyncConfig }
+      : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
     reporter.panic(`Fetching contentful data failed`, e)
@@ -80,41 +102,29 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   // doesn't support this.
   let contentTypes
   try {
-    contentTypes = await pagedGet(client, `getContentTypes`)
+    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    console.log(`error fetching content types`, e)
+    reporter.panic(`Error fetching content types`, e)
   }
-  console.log(`contentTypes fetched`, contentTypes.items.length)
+  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs on entries and assets, created/updated and deleted.
-  contentTypeItems = contentTypeItems.map(c => normalize.fixIds(c))
-
-  currentSyncData.entries = currentSyncData.entries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.assets = currentSyncData.assets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
-  currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
+  if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
+    reporter.info(
+      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful_id\``
+    )
+  } else {
+    // Traverse entire data model and enforce every `sys.id` to be a string
+    // and if that string starts with a number, to prefix it with `c`. Assigns
+    // original `id` to `contentful_id`.
+    // Expensive at scale.
+    contentTypeItems.forEach(normalize.fixIds)
+    currentSyncData.entries.forEach(normalize.fixIds)
+    currentSyncData.assets.forEach(normalize.fixIds)
+    currentSyncData.deletedEntries.forEach(normalize.fixIds)
+    currentSyncData.deletedAssets.forEach(normalize.fixIds)
+  }
 
   const result = {
     currentSyncData,
@@ -135,9 +145,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 function pagedGet(
   client,
   method,
+  pageLimit,
   query = {},
   skip = 0,
-  pageLimit = 1000,
   aggregatedResponse = null
 ) {
   return client[method]({
@@ -155,9 +165,9 @@ function pagedGet(
       return pagedGet(
         client,
         method,
+        pageLimit,
         query,
         skip + pageLimit,
-        pageLimit,
         aggregatedResponse
       )
     }

@@ -8,11 +8,20 @@ const pathWithoutExtension = fullPath => {
   return path.join(parsed.dir, parsed.name)
 }
 
+// TO-DO:
+//  - implement ability to add/remove shadowed modules from the webpack chain as file are being created/deleted
+//    ( https://github.com/gatsbyjs/gatsby/issues/11456 ):
+//    - this will also need to add memo invalidation for page template shadowing:
+//      see memoized `shadowCreatePagePath` function used in `createPage` action creator.
+
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
   constructor({ projectRoot, themes, extensions }) {
-    debug(`themes list`, themes.map(({ themeName }) => themeName))
+    debug(
+      `themes list`,
+      themes.map(({ themeName }) => themeName)
+    )
     this.themes = themes
     this.projectRoot = projectRoot
     this.extensions = extensions
@@ -103,41 +112,39 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     // don't include matching theme in possible shadowing paths
     const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
 
-    return [path.join(this.projectRoot, `src`, theme)]
-      .concat(
-        Array.from(themes)
-          .reverse()
-          .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+    const themesArray = [path.join(this.projectRoot, `src`, theme)].concat(
+      Array.from(themes)
+        .reverse()
+        .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+    )
+
+    for (const theme of themesArray) {
+      const possibleComponentPath = path.join(theme, component)
+      debug(`possibleComponentPath`, possibleComponentPath)
+
+      let dir
+      try {
+        // we use fs/path instead of require.resolve to work with
+        // TypeScript and alternate syntaxes
+        dir = fs.readdirSync(path.dirname(possibleComponentPath))
+      } catch (e) {
+        continue
+      }
+      const existsDir = dir.map(filepath => path.basename(filepath))
+
+      const isExactPath = existsDir.includes(
+        path.basename(possibleComponentPath) // find if there is an exact path match
       )
-      .map(dir => path.join(dir, component))
-      .find(possibleComponentPath => {
-        debug(`possibleComponentPath`, possibleComponentPath)
-        let dir
-        try {
-          // we use fs/path instead of require.resolve to work with
-          // TypeScript and alternate syntaxes
-          dir = fs.readdirSync(path.dirname(possibleComponentPath))
-        } catch (e) {
-          return false
-        }
-        const existsDir = dir.map(filepath => path.basename(filepath))
-        const exists =
-          // has extension, will match styles.css;
 
-          // import Thing from 'whatever.tsx'
-          // extensions: [.js, .tsx]
-          // site/src/whatever.tsx site/src/whatever.js.
+      if (isExactPath) return possibleComponentPath
 
-          //exact matches
-          existsDir.includes(path.basename(possibleComponentPath)) ||
-          // .js matches
-          // styles.css.js
-          // whatever.tsx.js
-          this.extensions.find(ext =>
-            existsDir.includes(path.basename(possibleComponentPath) + ext)
-          )
-        return exists
-      })
+      // if no exact path, search for extension
+      const matchingExtension = this.extensions.find(ext =>
+        existsDir.includes(path.basename(possibleComponentPath) + ext)
+      )
+      if (matchingExtension) return possibleComponentPath + matchingExtension // if extension matches, create path
+    }
+    return null
   }
 
   getMatchingThemesForPath(filepath) {

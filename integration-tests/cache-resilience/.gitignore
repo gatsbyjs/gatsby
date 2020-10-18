@@ -1,0 +1,7 @@
+plugins/**/gatsby-node.js
+gatsby-config.js
+src/pages/scenarios
+
+# temporary test artifacts
+on_pre_bootstrap.state
+on_post_build.state

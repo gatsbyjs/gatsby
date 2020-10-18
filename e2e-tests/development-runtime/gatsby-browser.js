@@ -1,3 +1,5 @@
+const Wrapper = require(`./src/wrap-root-element`).default
+
 if (typeof window !== `undefined`) {
   window.___PageComponentLifecycleCallsLog = []
 }
@@ -20,3 +22,5 @@ exports.onRouteUpdate = ({ location }) => {
 exports.onPrefetchPathname = ({ pathname }) => {
   addLogEntry(`onPrefetchPathname`, pathname)
 }
+
+exports.wrapRootElement = Wrapper

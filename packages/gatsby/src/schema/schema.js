@@ -4,7 +4,6 @@ const {
   isSpecifiedScalarType,
   isIntrospectionType,
   assertValidName,
-  parse,
   GraphQLNonNull,
   GraphQLList,
   GraphQLObjectType,
@@ -19,42 +18,56 @@ const {
   EnumTypeComposer,
   defineFieldMapToConfig,
 } = require(`graphql-compose`)
+const { getNode, getNodesByType } = require(`../redux/nodes`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
+const { overridableBuiltInTypeNames } = require(`./types/built-in-types`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
-const { findOne, findManyPaginated } = require(`./resolvers`)
+const {
+  findOne,
+  findManyPaginated,
+  wrappingResolver,
+  defaultResolver,
+} = require(`./resolvers`)
 const {
   processFieldExtensions,
   internalExtensionNames,
 } = require(`./extensions`)
-const { getPagination } = require(`./types/pagination`)
-const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
-const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
-const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+import { getPagination } from "./types/pagination"
+import { getSortInput, SORTABLE_ENUM } from "./types/sort"
+import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
+import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
+
+const {
+  isASTDocument,
+  parseTypeDef,
+  reportParsingError,
+} = require(`./types/type-defs`)
+import { clearDerivedTypes } from "./types/derived-types"
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
   schemaComposer,
-  nodeStore,
   types,
   typeMapping,
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   await updateSchemaComposer({
     schemaComposer,
-    nodeStore,
     types,
     typeMapping,
     fieldExtensions,
     thirdPartySchemas,
     printConfig,
     typeConflictReporter,
+    inferenceMetadata,
     parentSpan,
   })
   // const { printSchema } = require(`graphql`)
@@ -65,13 +78,18 @@ const buildSchema = async ({
 
 const rebuildSchemaWithSitePage = async ({
   schemaComposer,
-  nodeStore,
   typeMapping,
   fieldExtensions,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   const typeComposer = schemaComposer.getOTC(`SitePage`)
+
+  // Clear derived types and fields
+  // they will be re-created in processTypeComposer later
+  clearDerivedTypes({ schemaComposer, typeComposer })
+
   const shouldInfer =
     !typeComposer.hasExtension(`infer`) ||
     typeComposer.getExtension(`infer`) !== false
@@ -79,9 +97,9 @@ const rebuildSchemaWithSitePage = async ({
     addInferredType({
       schemaComposer,
       typeComposer,
-      nodeStore,
       typeConflictReporter,
       typeMapping,
+      inferenceMetadata,
       parentSpan,
     })
   }
@@ -89,7 +107,6 @@ const rebuildSchemaWithSitePage = async ({
     schemaComposer,
     typeComposer,
     fieldExtensions,
-    nodeStore,
     parentSpan,
   })
   return schemaComposer.buildSchema()
@@ -102,13 +119,13 @@ module.exports = {
 
 const updateSchemaComposer = async ({
   schemaComposer,
-  nodeStore,
   types,
   typeMapping,
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   let activity = report.phantomActivity(`Add explicit types`, {
@@ -124,9 +141,9 @@ const updateSchemaComposer = async ({
   activity.start()
   await addInferredTypes({
     schemaComposer,
-    nodeStore,
     typeConflictReporter,
     typeMapping,
+    inferenceMetadata,
     parentSpan: activity.span,
   })
   activity.end()
@@ -142,7 +159,6 @@ const updateSchemaComposer = async ({
   })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
-    nodeStore,
     parentSpan: activity.span,
   })
   await addConvenienceChildrenFields({
@@ -155,7 +171,6 @@ const updateSchemaComposer = async ({
         schemaComposer,
         typeComposer,
         fieldExtensions,
-        nodeStore,
         parentSpan: activity.span,
       })
     )
@@ -167,6 +182,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
+  await attachTracingResolver({ schemaComposer, parentSpan: activity.span })
   activity.end()
 }
 
@@ -174,7 +190,6 @@ const processTypeComposer = async ({
   schemaComposer,
   typeComposer,
   fieldExtensions,
-  nodeStore,
   parentSpan,
 }) => {
   if (typeComposer instanceof ObjectTypeComposer) {
@@ -184,19 +199,22 @@ const processTypeComposer = async ({
       fieldExtensions,
       parentSpan,
     })
-    await determineSearchableFields({
-      schemaComposer,
-      typeComposer,
-      parentSpan,
-    })
+
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
       await addImplicitConvenienceChildrenFields({
         schemaComposer,
         typeComposer,
-        nodeStore,
         parentSpan,
       })
+    }
+    await determineSearchableFields({
+      schemaComposer,
+      typeComposer,
+      parentSpan,
+    })
+
+    if (typeComposer.hasInterface(`Node`)) {
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
     }
   } else if (typeComposer instanceof InterfaceTypeComposer) {
@@ -219,14 +237,24 @@ const processTypeComposer = async ({
   }
 }
 
+const fieldNames = {
+  query: typeName => _.camelCase(typeName),
+  queryAll: typeName => _.camelCase(`all ${typeName}`),
+  convenienceChild: typeName => _.camelCase(`child ${typeName}`),
+  convenienceChildren: typeName => _.camelCase(`children ${typeName}`),
+}
+
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
     if (typeof typeOrTypeDef === `string`) {
+      typeOrTypeDef = parseTypeDef(typeOrTypeDef)
+    }
+    if (isASTDocument(typeOrTypeDef)) {
       let parsedTypes
       const createdFrom = `sdl`
       try {
-        parsedTypes = parseTypeDefs({
-          typeDefs: typeOrTypeDef,
+        parsedTypes = parseTypes({
+          doc: typeOrTypeDef,
           plugin,
           createdFrom,
           schemaComposer,
@@ -311,46 +339,60 @@ const mergeTypes = ({
   createdFrom,
   parentSpan,
 }) => {
-  // Only allow user or plugin owning the type to extend already existing type.
+  // The merge is considered safe when a user or a plugin owning the type extend this type
+  // TODO: add proper conflicts detection and reporting (on the field level)
   const typeOwner = typeComposer.getExtension(`plugin`)
-  if (
+  const isOverridableBuiltInType =
+    !typeOwner && overridableBuiltInTypeNames.has(typeComposer.getTypeName())
+
+  const isSafeMerge =
     !plugin ||
     plugin.name === `default-site-plugin` ||
-    plugin.name === typeOwner
-  ) {
-    if (type instanceof ObjectTypeComposer) {
-      mergeFields({ typeComposer, fields: type.getFields() })
-      type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
-    } else if (type instanceof InterfaceTypeComposer) {
-      mergeFields({ typeComposer, fields: type.getFields() })
-    } else if (type instanceof GraphQLObjectType) {
-      mergeFields({
-        typeComposer,
-        fields: defineFieldMapToConfig(type.getFields()),
-      })
-      type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
-    } else if (type instanceof GraphQLInterfaceType) {
-      mergeFields({
-        typeComposer,
-        fields: defineFieldMapToConfig(type.getFields()),
-      })
+    plugin.name === typeOwner ||
+    isOverridableBuiltInType
+
+  if (!isSafeMerge) {
+    if (typeOwner) {
+      report.warn(
+        `Plugin \`${plugin.name}\` has customized the GraphQL type ` +
+          `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
+          `by the plugin \`${typeOwner}\`. ` +
+          `This could potentially cause conflicts.`
+      )
+    } else {
+      report.warn(
+        `Plugin \`${plugin.name}\` has customized the built-in Gatsby GraphQL type ` +
+          `\`${typeComposer.getTypeName()}\`. ` +
+          `This is allowed, but could potentially cause conflicts.`
+      )
     }
-
-    if (isNamedTypeComposer(type)) {
-      typeComposer.extendExtensions(type.getExtensions())
-    }
-
-    addExtensions({ schemaComposer, typeComposer, plugin, createdFrom })
-
-    return true
-  } else {
-    report.warn(
-      `Plugin \`${plugin.name}\` tried to define the GraphQL type ` +
-        `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
-        `by the plugin \`${typeOwner}\`.`
-    )
-    return false
   }
+
+  if (type instanceof ObjectTypeComposer) {
+    mergeFields({ typeComposer, fields: type.getFields() })
+    type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+  } else if (type instanceof InterfaceTypeComposer) {
+    mergeFields({ typeComposer, fields: type.getFields() })
+  } else if (type instanceof GraphQLObjectType) {
+    mergeFields({
+      typeComposer,
+      fields: defineFieldMapToConfig(type.getFields()),
+    })
+    type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+  } else if (type instanceof GraphQLInterfaceType) {
+    mergeFields({
+      typeComposer,
+      fields: defineFieldMapToConfig(type.getFields()),
+    })
+  }
+
+  if (isNamedTypeComposer(type)) {
+    typeComposer.extendExtensions(type.getExtensions())
+  }
+
+  addExtensions({ schemaComposer, typeComposer, plugin, createdFrom })
+
+  return true
 }
 
 const processAddedType = ({
@@ -601,11 +643,7 @@ const createTypeComposerFromGatsbyType = ({
   }
 }
 
-const addSetFieldsOnGraphQLNodeTypeFields = ({
-  schemaComposer,
-  nodeStore,
-  parentSpan,
-}) =>
+const addSetFieldsOnGraphQLNodeTypeFields = ({ schemaComposer, parentSpan }) =>
   Promise.all(
     Array.from(schemaComposer.values()).map(async tc => {
       if (tc instanceof ObjectTypeComposer && tc.hasInterface(`Node`)) {
@@ -613,7 +651,7 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({
         const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
           type: {
             name: typeName,
-            nodes: nodeStore.getNodesByType(typeName),
+            nodes: getNodesByType(typeName),
           },
           traceId: `initial-setFieldsOnGraphQLNodeType`,
           parentSpan,
@@ -666,9 +704,44 @@ const addThirdPartySchemas = ({
   })
 }
 
+const resetOverriddenThirdPartyTypeFields = ({ typeComposer }) => {
+  // The problem: createResolvers API mutates third party schema instance.
+  //   For example it can add a new field referencing a type from our main schema
+  //   Then if we rebuild the schema this old type instance will sneak into
+  //   the new schema and produce the famous error:
+  //   "Schema must contain uniquely named types but contains multiple types named X"
+  // This function only affects schema rebuilding pathway.
+  //   It cleans up artifacts created by the `createResolvers` API of the previous build
+  //   so that we return the third party schema to its initial state (hence can safely re-add)
+  // TODO: the right way to fix this would be not to mutate the third party schema in
+  //   the first place. But unfortunately mutation happens in the `graphql-compose`
+  //   and we don't have an easy way to avoid it without major rework
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const createdFrom = typeComposer.getFieldExtension(fieldName, `createdFrom`)
+    if (createdFrom === `createResolvers`) {
+      typeComposer.removeField(fieldName)
+      return
+    }
+    const config = typeComposer.getFieldExtension(
+      fieldName,
+      `originalFieldConfig`
+    )
+    if (config) {
+      typeComposer.removeField(fieldName)
+      typeComposer.addFields({
+        [fieldName]: config,
+      })
+    }
+  })
+}
+
 const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
+  resetOverriddenThirdPartyTypeFields({ typeComposer })
+
   // Fix for types that refer to Query. Thanks Relay Classic!
   typeComposer.getFieldNames().forEach(fieldName => {
+    // Remove customization that we could have added via `createResolvers`
+    // to make it work with schema rebuilding
     const field = typeComposer.getField(fieldName)
     const fieldType = field.type.toString()
     if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
@@ -681,7 +754,10 @@ const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   const intermediateSchema = schemaComposer.buildSchema()
-  const createResolvers = resolvers => {
+  const createResolvers = (
+    resolvers,
+    { ignoreNonexistentTypes = false } = {}
+  ) => {
     Object.keys(resolvers).forEach(typeName => {
       const fields = resolvers[typeName]
       if (schemaComposer.has(typeName)) {
@@ -724,6 +800,15 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                 })
               }
               tc.extendField(fieldName, newConfig)
+
+              // See resetOverriddenThirdPartyTypeFields for explanation
+              if (tc.getExtension(`createdFrom`) === `thirdPartySchema`) {
+                tc.setFieldExtension(
+                  fieldName,
+                  `originalFieldConfig`,
+                  originalFieldConfig
+                )
+              }
             } else if (fieldTypeName) {
               report.warn(
                 `\`createResolvers\` passed resolvers for field ` +
@@ -733,10 +818,14 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               )
             }
           } else {
-            tc.addFields({ [fieldName]: fieldConfig })
+            tc.addFields({
+              [fieldName]: fieldConfig,
+            })
+            // See resetOverriddenThirdPartyTypeFields for explanation
+            tc.setFieldExtension(fieldName, `createdFrom`, `createResolvers`)
           }
         })
-      } else {
+      } else if (!ignoreNonexistentTypes) {
         report.warn(
           `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
             `doesn't exist in the schema. Use \`createTypes\` to add the type ` +
@@ -750,6 +839,24 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     createResolvers,
     traceId: `initial-createResolvers`,
     parentSpan,
+  })
+}
+
+function attachTracingResolver({ schemaComposer }) {
+  schemaComposer.forEach(typeComposer => {
+    if (
+      typeComposer instanceof ObjectTypeComposer ||
+      typeComposer instanceof InterfaceTypeComposer
+    ) {
+      typeComposer.getFieldNames().forEach(fieldName => {
+        const field = typeComposer.getField(fieldName)
+        typeComposer.extendField(fieldName, {
+          resolve: field.resolve
+            ? wrappingResolver(field.resolve)
+            : defaultResolver,
+        })
+      })
+    }
   })
 }
 
@@ -900,7 +1007,6 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
 const addImplicitConvenienceChildrenFields = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
 }) => {
   const shouldInfer = typeComposer.getExtension(`infer`)
   // In Gatsby v3, when `@dontInfer` is set, children fields will not be
@@ -910,9 +1016,9 @@ const addImplicitConvenienceChildrenFields = ({
   // if (shouldInfer === false) return
 
   const parentTypeName = typeComposer.getTypeName()
-  const nodes = nodeStore.getNodesByType(parentTypeName)
+  const nodes = getNodesByType(parentTypeName)
 
-  const childNodesByType = groupChildNodesByType({ nodeStore, nodes })
+  const childNodesByType = groupChildNodesByType({ nodes })
 
   Object.keys(childNodesByType).forEach(typeName => {
     const typeChildren = childNodesByType[typeName]
@@ -933,17 +1039,17 @@ const addImplicitConvenienceChildrenFields = ({
         !childOfExtension.types.includes(parentTypeName) ||
         !childOfExtension.many === many
       ) {
-        const fieldName = _.camelCase(
-          `${many ? `children` : `child`} ${typeName}`
-        )
+        const fieldName = many
+          ? fieldNames.convenienceChildren(typeName)
+          : fieldNames.convenienceChild(typeName)
         report.warn(
-          `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+          `The type \`${parentTypeName}\` does not explicitly define ` +
+            `the field \`${fieldName}\`.\n` +
+            `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
             `extension set to \`false\`, automatically adding fields for ` +
             `children types is deprecated.\n` +
             `In Gatsby v3, only children fields explicitly set with the ` +
-            `\`childOf\` extension will be added.\n` +
-            `For example, in Gatsby v3, \`${parentTypeName}\` will ` +
-            `not get a \`${fieldName}\` field.`
+            `\`childOf\` extension will be added.\n`
         )
       }
     }
@@ -958,7 +1064,7 @@ const addImplicitConvenienceChildrenFields = ({
 
 const createChildrenField = typeName => {
   return {
-    [_.camelCase(`children ${typeName}`)]: {
+    [fieldNames.convenienceChildren(typeName)]: {
       type: () => [typeName],
       resolve(source, args, context) {
         const { path } = context
@@ -973,7 +1079,7 @@ const createChildrenField = typeName => {
 
 const createChildField = typeName => {
   return {
-    [_.camelCase(`child ${typeName}`)]: {
+    [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
       async resolve(source, args, context) {
         const { path } = context
@@ -991,18 +1097,13 @@ const createChildField = typeName => {
   }
 }
 
-const groupChildNodesByType = ({ nodeStore, nodes }) =>
+const groupChildNodesByType = ({ nodes }) =>
   _(nodes)
-    .flatMap(node => (node.children || []).map(nodeStore.getNode))
+    .flatMap(node => (node.children || []).map(getNode).filter(Boolean))
     .groupBy(node => (node.internal ? node.internal.type : undefined))
     .value()
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
-  // TODO: We should have an abstraction for keeping and clearing
-  // related TypeComposers and InputTypeComposers.
-  // Also see the comment on the skipped test in `rebuild-schema`.
-  typeComposer.removeInputTypeComposer()
-
   const sortInputTC = getSortInput({
     schemaComposer,
     typeComposer,
@@ -1018,8 +1119,8 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
 
   const typeName = typeComposer.getTypeName()
   // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
-  const queryName = _.camelCase(typeName)
-  const queryNamePlural = _.camelCase(`all ${typeName}`)
+  const queryName = fieldNames.query(typeName)
+  const queryNamePlural = fieldNames.queryAll(typeName)
 
   schemaComposer.Query.addFields({
     [queryName]: {
@@ -1085,40 +1186,6 @@ const parseTypes = ({
     }
   })
   return types
-}
-
-const parseTypeDefs = ({
-  typeDefs,
-  plugin,
-  createdFrom,
-  schemaComposer,
-  parentSpan,
-}) => {
-  const doc = parse(typeDefs)
-  return parseTypes({ doc, plugin, createdFrom, schemaComposer, parentSpan })
-}
-
-const reportParsingError = error => {
-  const { message, source, locations } = error
-
-  if (source && locations && locations.length) {
-    const { codeFrameColumns } = require(`@babel/code-frame`)
-
-    const frame = codeFrameColumns(
-      source.body,
-      { start: locations[0] },
-      { linesAbove: 5, linesBelow: 5 }
-    )
-    report.panic(
-      `Encountered an error parsing the provided GraphQL type definitions:\n` +
-        message +
-        `\n\n` +
-        frame +
-        `\n`
-    )
-  } else {
-    throw error
-  }
 }
 
 const stringifyArray = arr =>

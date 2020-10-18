@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { slash } = require(`./utils`)
+const { slash } = require(`gatsby-core-utils`)
 
 function findFileNode({ node, getNode }) {
   // Find the file node.

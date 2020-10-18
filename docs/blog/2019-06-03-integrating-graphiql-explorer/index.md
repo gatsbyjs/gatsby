@@ -104,7 +104,9 @@ Now you have working page or component that uses your query!
     <source type="video/mp4" src="./graphiql-exporter-demo.mp4" />
     <p>Your browser does not support the video element.</p>
   </video>
-  <figcaption>Demo of scaffolding new page with GraphiQL Code Exporter</figcaption>
+  <figcaption>
+    Demo of scaffolding new page with GraphiQL Code Exporter
+  </figcaption>
 </figure>
 
 Interested in checking how Dan did this? Check his [Pull request](https://github.com/gatsbyjs/gatsby/pull/17120)!

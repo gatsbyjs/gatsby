@@ -1,7 +1,15 @@
+import { getLocaleAndBasePath } from "../i18n"
+
+function addTrailingSlashIfMissing(pathname) {
+  return pathname.endsWith(`/`) ? pathname : `${pathname}/`
+}
+
 const isItemActive = (location, item, activeItemHash) => {
-  const linkMatchesPathname = item.link === location.pathname
+  const pathnameWithTrailingSlash = addTrailingSlashIfMissing(location.pathname)
+  const { basePath } = getLocaleAndBasePath(pathnameWithTrailingSlash)
+  const linkMatchesPathname = item.link === basePath
   const linkWithoutHashMatchesPathname =
-    item.link.replace(/#.*/, ``) === location.pathname
+    item.link.replace(/#.*/, ``) === basePath
   const activeItemHashFalsy = !activeItemHash || activeItemHash === `NONE`
 
   if (activeItemHash) {
@@ -9,7 +17,7 @@ const isItemActive = (location, item, activeItemHash) => {
       return item
     }
 
-    if (item.link === `${location.pathname}#${activeItemHash}`) {
+    if (item.link === `${basePath}#${activeItemHash}`) {
       return item
     }
   }
@@ -18,7 +26,7 @@ const isItemActive = (location, item, activeItemHash) => {
     return item
   }
 
-  if (item.link === `${location.pathname}${location.hash}` && !activeItemHash) {
+  if (item.link === `${basePath}${location.hash}` && !activeItemHash) {
     return item
   }
 

@@ -84,7 +84,12 @@ beforeAll(() => {
 })
 
 const reporter = {
+  info: jest.fn(),
+  verbose: jest.fn(),
   panic: jest.fn(),
+  activityTimer: () => {
+    return { start: jest.fn(), end: jest.fn() }
+  },
 }
 
 beforeEach(() => {
@@ -121,6 +126,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
     }),
     reporter,
   })
+
   expect(reporter.panic).not.toBeCalled()
   expect(contentful.createClient).toBeCalledWith(
     expect.objectContaining({
@@ -129,6 +135,59 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       host: `cdn.contentful.com`,
       space: `rocybtov1ozk`,
     })
+  )
+})
+
+it(`calls contentful.getContentTypes with default page limit`, async () => {
+  await fetchData({
+    pluginConfig: createPluginConfig({
+      accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
+      spaceId: `rocybtov1ozk`,
+    }),
+    reporter,
+  })
+
+  expect(reporter.panic).not.toBeCalled()
+  expect(mockClient.getContentTypes).toHaveBeenCalledWith({
+    limit: 100,
+    order: `sys.createdAt`,
+    skip: 0,
+  })
+})
+
+it(`calls contentful.getContentTypes with custom plugin option page limit`, async () => {
+  await fetchData({
+    pluginConfig: createPluginConfig({
+      accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
+      spaceId: `rocybtov1ozk`,
+      pageLimit: 50,
+    }),
+    reporter,
+  })
+
+  expect(reporter.panic).not.toBeCalled()
+  expect(mockClient.getContentTypes).toHaveBeenCalledWith({
+    limit: 50,
+    order: `sys.createdAt`,
+    skip: 0,
+  })
+})
+
+it(`panics when localeFilter reduces locale list to 0`, async () => {
+  await fetchData({
+    pluginConfig: createPluginConfig({
+      accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
+      spaceId: `rocybtov1ozk`,
+      pageLimit: 50,
+      localeFilter: () => false,
+    }),
+    reporter,
+  })
+
+  expect(reporter.panic).toBeCalledWith(
+    expect.stringContaining(
+      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`
+    )
   )
 })
 

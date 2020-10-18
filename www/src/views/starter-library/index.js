@@ -1,9 +1,8 @@
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
-import Layout from "../../components/layout"
 import RRSM from "../../utils/reach-router-state-manager"
 import queryString from "query-string"
 
+import PageMetadata from "../../components/page-metadata"
 import FilteredStarters from "./filtered-starters"
 
 class StarterLibraryPage extends Component {
@@ -23,26 +22,12 @@ class StarterLibraryPage extends Component {
         : `Library` // if no search term or single dependency
 
     return (
-      <Layout location={location}>
-        <Helmet>
-          <title>Starter Library</title>
-          <meta
-            name="description"
-            content={`Gatsby Starters: ${filtersApplied}`}
-          />
-          <meta
-            property="og:description"
-            content={`Gatsby Starters: ${filtersApplied}`}
-          />
-          <meta
-            name="twitter:description"
-            content={`Gatsby Starters: ${filtersApplied}`}
-          />
-          <meta property="og:title" content={filtersApplied} />
-          <meta property="og:type" content="article" />
-          <meta name="twitter.label1" content="Reading time" />
-          <meta name="twitter:data1" content={`1 min read`} />
-        </Helmet>
+      <>
+        <PageMetadata
+          title="Starter Library"
+          description={`Gatsby Starters: ${filtersApplied}`}
+          timeToRead={1}
+        />
         <RRSM
           {...this.props}
           location={location}
@@ -55,7 +40,7 @@ class StarterLibraryPage extends Component {
           )}
           defaultSearchState={{ v: [`2`] }}
         />
-      </Layout>
+      </>
     )
   }
 }

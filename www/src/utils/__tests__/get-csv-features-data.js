@@ -1,67 +1,55 @@
 import { getFeaturesData } from "../get-csv-features-data"
 
-const mockEdges = [
+const mockNodes = [
   {
-    node: {
-      Category: `Performance`,
-      Gatsby: `3`,
-      Jamstack: `3`,
-      Cms: `2`,
-      Description: ``,
-    },
+    Category: `Performance`,
+    Gatsby: `3`,
+    Jamstack: `3`,
+    Cms: `2`,
+    Description: ``,
   },
   {
-    node: {
-      Category: `Developer Experience`,
-      Gatsby: `3`,
-      Jamstack: `3`,
-      Cms: `2`,
-      Description: ``,
-    },
+    Category: `Developer Experience`,
+    Gatsby: `3`,
+    Jamstack: `3`,
+    Cms: `2`,
+    Description: ``,
   },
   {
-    node: {
-      Category: `Governance`,
-      Gatsby: `3`,
-      Jamstack: `2`,
-      Cms: `3`,
-      Description: ``,
-    },
+    Category: `Governance`,
+    Gatsby: `3`,
+    Jamstack: `2`,
+    Cms: `3`,
+    Description: ``,
   },
   {
-    node: {
-      Category: `Accessibility`,
-      Gatsby: `2`,
-      Jamstack: `2`,
-      Cms: `3`,
-      Description: ``,
-    },
+    Category: `Accessibility`,
+    Gatsby: `2`,
+    Jamstack: `2`,
+    Cms: `3`,
+    Description: ``,
   },
   {
-    node: {
-      Category: `Documentation`,
-      Gatsby: `3`,
-      Jamstack: `3`,
-      Cms: `3`,
-      Description: ``,
-    },
+    Category: `Documentation`,
+    Gatsby: `3`,
+    Jamstack: `3`,
+    Cms: `3`,
+    Description: ``,
   },
   {
-    node: {
-      Category: `Ecosystem`,
-      Gatsby: `3`,
-      Jamstack: `2`,
-      Cms: `2`,
-      Description: ``,
-    },
+    Category: `Ecosystem`,
+    Gatsby: `3`,
+    Jamstack: `2`,
+    Cms: `2`,
+    Description: ``,
   },
 ]
 
 test(`it gets the correct number of sections and headers`, () => {
-  const { sections, sectionHeaders } = getFeaturesData(mockEdges)
+  const { sections, sectionHeaders } = getFeaturesData(mockNodes)
 
   expect(sections).toBeDefined()
-  expect(sections).toHaveLength(mockEdges.length)
+  expect(sections).toHaveLength(mockNodes.length)
   expect(sectionHeaders).toBeDefined()
-  expect(sectionHeaders).toHaveLength(mockEdges.length)
+  expect(sectionHeaders).toHaveLength(mockNodes.length)
 })

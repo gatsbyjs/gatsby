@@ -1,0 +1,6 @@
+/lib
+/node_modules
+
+/*.js
+!/gatsby-node.js
+yarn.lock

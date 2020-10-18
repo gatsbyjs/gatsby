@@ -13,8 +13,8 @@ This plugin reimplements the behavior of layout components in `gatsby@1`, which 
 
 ## Install
 
-```
-npm install --save gatsby-plugin-layout
+```shell
+npm install gatsby-plugin-layout
 ```
 
 ## How to use

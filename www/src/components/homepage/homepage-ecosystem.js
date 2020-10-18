@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageSection from "./homepage-section"
 import EcosystemSection from "../ecosystem/ecosystem-section"
@@ -14,7 +14,7 @@ import {
 } from "../shared/horizontal-scroller"
 import { EcosystemIcon } from "../../assets/icons"
 import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const Sections = styled(`div`)`
@@ -29,13 +29,14 @@ const Sections = styled(`div`)`
 
 const Section = styled(EcosystemSection)`
   box-shadow: ${p => p.theme.shadows.raised};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   margin-bottom: ${p => p.theme.space[6]};
   padding: ${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
     margin: 0 ${p => p.theme.space[2]} 0;
     padding: ${p => p.theme.space[6]};
+    max-height: none;
 
     :last-child {
       align-self: stretch;
@@ -99,7 +100,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     box-shadow: ${p => p.theme.shadows.raised};
 
     ${mediaQueries.md} {
-      border-radius: ${p => p.theme.radii[2]}px;
+      border-radius: ${p => p.theme.radii[2]};
     }
 
     ${mediaQueries.lg} {
@@ -113,8 +114,8 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.card.starterLabelBackground
           : props.theme.colors.card.pluginLabelBackground};
-      border-radius: ${p => p.theme.radii[2]}px 0 0 ${props =>
-  props.theme.radii[2]}px;
+      border-radius: ${p => p.theme.radii[2]} 0 0 ${props =>
+  props.theme.radii[2]};
       bottom: 0;
       content: "";
       left: 0;
@@ -145,7 +146,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 const HomepageEcosystem = ({ featuredItems }) => (
   <HomepageSection
     sectionName="Ecosystem"
-    sectionIcon={EcosystemIcon}
+    sectionIcon={<EcosystemIcon />}
     title="Plugins & Starters"
     introduction="We have the tools to help you build for the web."
     links={[
@@ -161,7 +162,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="Plugins"
         description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
-        icon={PluginsIcon}
+        icon={<PluginsIcon />}
         links={[
           { label: `Browse Plugins`, to: `/plugins/` },
           {
@@ -177,7 +178,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="Starters"
         description="Starters are Gatsby sites that are preconfigured for different use cases to give you a head start for your project."
-        icon={StartersIcon}
+        icon={<StartersIcon />}
         links={[
           { label: `Browse Starters`, to: `/starters/` },
           { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
@@ -194,10 +195,12 @@ const HomepageEcosystem = ({ featuredItems }) => (
     <SubTitle>Some of our recent favorites</SubTitle>
     <FeaturedItems className={SCROLLER_CLASSNAME}>
       <FeaturedItemsList>
-        {featuredItems.map(item => {
-          const { slug } = item
-          return <FeaturedItem key={slug} item={item} />
-        })}
+        {featuredItems
+          .filter(e => Boolean(e))
+          .map(item => {
+            const { slug } = item
+            return <FeaturedItem key={slug} item={item} />
+          })}
       </FeaturedItemsList>
     </FeaturedItems>
   </HomepageSection>

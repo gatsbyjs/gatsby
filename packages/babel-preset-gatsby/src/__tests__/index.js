@@ -1,7 +1,8 @@
-const preset = require(`../`)
-const path = require(`path`)
+import * as path from "path"
+import preset from "../index"
+import * as pathSerializer from "../utils/path-serializer"
 
-expect.addSnapshotSerializer(require(`../utils/path-serializer`))
+expect.addSnapshotSerializer(pathSerializer)
 
 describe(`babel-preset-gatsby`, () => {
   it.each([`build-stage`, `develop`, `build-javascript`, `build-html`])(
@@ -20,14 +21,23 @@ describe(`babel-preset-gatsby`, () => {
 
     expect(presets[0]).toEqual([
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
-      {
-        exclude: [`transform-typeof-symbol`],
-        corejs: 2,
-        loose: true,
-        modules: false,
-        useBuiltIns: `usage`,
+      expect.objectContaining({
         targets,
-      },
+      }),
+    ])
+  })
+
+  it(`Allows to configure react runtime`, () => {
+    const { presets } = preset(null, {
+      reactRuntime: `automatic`,
+    })
+
+    expect(presets[1]).toEqual([
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
+      expect.objectContaining({
+        pragma: undefined,
+        runtime: `automatic`,
+      }),
     ])
   })
 })

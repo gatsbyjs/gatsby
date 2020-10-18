@@ -6,7 +6,13 @@ Hey, @${username}
 
 Thank you for your pull request!
 
- We've moved all our starters over to https://github.com/gatsbyjs/gatsby. Please reopen this there. 
+This repo is now a read-only repo that's synced from the main Gatsby monorepo at https://github.com/gatsbyjs/gatsby/.
+
+We've moved all our starters to https://github.com/gatsbyjs/gatsby/tree/master/starters so changes to starters are made there.
+
+Please checkout our contribution docs & recreate your PR against the starter directory in monorepo.
+
+https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/
 
 Thanks again!
 `

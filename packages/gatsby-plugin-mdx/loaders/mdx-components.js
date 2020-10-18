@@ -13,7 +13,7 @@ const loaderUtils = require(`loader-utils`)
  * }
  * ```
  */
-module.exports = function() {
+module.exports = function () {
   const options = loaderUtils.getOptions(this)
   const pluginRequires = !options.plugins
     ? `[]`

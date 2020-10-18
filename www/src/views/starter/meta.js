@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import MdLink from "react-icons/lib/md/link"
-import MdStar from "react-icons/lib/md/star"
+import { MdLink, MdStar } from "react-icons/md"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import ShareMenu from "../../components/share-menu"
 import Button from "../../components/button"
 
@@ -13,7 +12,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       display: `flex`,
       flexDirection: `column-reverse`,
       flexWrap: `wrap`,
-      fontFamily: `header`,
+      fontFamily: `heading`,
       minWidth: `320px`,
       p: 6,
       pt: 0,
@@ -62,7 +61,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
 
     <div
       sx={{
-        borderBottom: t => `1px solid ${t.colors.ui.border}`,
+        borderBottom: 1,
+        borderColor: `ui.border`,
         display: `flex`,
         flexGrow: 1,
         flexWrap: `nowrap`,
@@ -89,7 +89,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               borderBottom: 0,
               color: `lilac`,
               cursor: `pointer`,
-              fontFamily: `header`,
+              fontFamily: `heading`,
               "&:hover": {
                 color: `gatsby`,
               },
@@ -128,7 +128,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           </Button>
           <ShareMenu
             url={`https://github.com/${starter.githubFullName}`}
-            title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
+            title={`Check out ${repoName} on the @gatsbyjs Starter Showcase!`}
             image={imageSharp.childImageSharp.resize.src}
           />
         </div>

@@ -1,14 +1,8 @@
-const fs = require(`fs-extra`)
-
-exports.onCreateNode = require(`./on-node-create`)
+const {
+  onCreateNode,
+  unstable_shouldOnCreateNode,
+} = require(`./on-node-create`)
+exports.onCreateNode = onCreateNode
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 exports.createSchemaCustomization = require(`./customize-schema`)
-
-exports.onPreExtractQueries = async ({ store }) => {
-  const program = store.getState().program
-
-  // Add fragments for ImageSharp to .cache/fragments.
-  await fs.copy(
-    require.resolve(`gatsby-transformer-sharp/src/fragments.js`),
-    `${program.directory}/.cache/fragments/image-sharp-fragments.js`
-  )
-}
+exports.createResolvers = require(`./create-resolvers`)

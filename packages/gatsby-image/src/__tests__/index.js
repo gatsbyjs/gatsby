@@ -1,6 +1,6 @@
-import "@babel/polyfill"
 import React from "react"
 import { render, cleanup, fireEvent } from "@testing-library/react"
+import MatchMediaMock from "jest-matchmedia-mock"
 import Image from "../"
 
 afterAll(cleanup)
@@ -33,8 +33,8 @@ const fixedImagesShapeMock = [
     base64: `string_of_base64`,
   },
   {
-    width: 100,
-    height: 100,
+    width: 300,
+    height: 300,
     src: `test_image_2.jpg`,
     srcSet: `some other srcSet`,
     srcSetWebp: `some other srcSetWebp`,
@@ -45,7 +45,7 @@ const fixedImagesShapeMock = [
 
 const fluidImagesShapeMock = [
   {
-    aspectRatio: 1.5,
+    aspectRatio: 2,
     src: `test_image.jpg`,
     srcSet: `some srcSet`,
     srcSetWebp: `some srcSetWebp`,
@@ -53,7 +53,7 @@ const fluidImagesShapeMock = [
     base64: `string_of_base64`,
   },
   {
-    aspectRatio: 2,
+    aspectRatio: 3,
     src: `test_image_2.jpg`,
     srcSet: `some other srcSet`,
     srcSetWebp: `some other srcSetWebp`,
@@ -118,7 +118,15 @@ const setupImages = (
   return container
 }
 
+let matchMedia
 describe(`<Image />`, () => {
+  beforeAll(() => {
+    matchMedia = new MatchMediaMock()
+  })
+  afterEach(() => {
+    matchMedia.clear()
+  })
+
   it(`should render fixed size images`, () => {
     const component = setup()
     expect(component).toMatchSnapshot()
@@ -168,7 +176,7 @@ describe(`<Image />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have the the "critical" prop set "loading='eager'"`, () => {
+  it(`should have the "critical" prop set "loading='eager'"`, () => {
     jest.spyOn(global.console, `log`)
 
     const props = { critical: true }
@@ -204,6 +212,126 @@ describe(`<Image />`, () => {
     expect(console.warn).toBeCalled()
   })
 
+  it(`should warn if missing both fixed and fluid props`, () => {
+    jest.spyOn(global.console, `error`)
+
+    render(<Image fixed={null} />)
+
+    expect(console.error).toBeCalledWith(
+      expect.stringContaining(
+        `The prop \`fluid\` or \`fixed\` is marked as required`
+      )
+    )
+  })
+
+  it(`should select the correct mocked image of fluid variants provided.`, () => {
+    const mediaQuery = `only screen and (min-width: 1024px)`
+    matchMedia.useMediaQuery(mediaQuery)
+
+    const tripleFluidImageShapeMock = fluidImagesShapeMock.concat({
+      aspectRatio: 5,
+      src: `test_image_4.jpg`,
+      srcSet: `third other srcSet`,
+      srcSetWebp: `third other srcSetWebp`,
+      sizes: `(max-width: 1920px) 100vw, 1920px`,
+      base64: `string_of_base64`,
+      media: `only screen and (min-width: 1024px)`,
+    })
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fluidArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fluid={tripleFluidImageShapeMock}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/padding-bottom: 20%/)
+    )
+  })
+
+  it(`should select the correct mocked image of fixed variants provided.`, () => {
+    const mediaQuery = `only screen and (min-width: 1024px)`
+    matchMedia.useMediaQuery(mediaQuery)
+
+    const tripleFixedImageShapeMock = fixedImagesShapeMock.concat({
+      width: 1024,
+      height: 768,
+      src: `test_image_4.jpg`,
+      srcSet: `third other srcSet`,
+      srcSetWebp: `third other srcSetWebp`,
+      base64: `string_of_base64`,
+      media: `only screen and (min-width: 1024px)`,
+    })
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fixedArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fixed={tripleFixedImageShapeMock}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/width: 1024px; height: 768px;/)
+    )
+  })
+
+  it(`should select the image with no media query as mocked image of fluid variants provided.`, () => {
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fluidArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fluid={fluidImagesShapeMock.slice().reverse()}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/padding-bottom: 50%/)
+    )
+  })
+
+  it(`should select the image with no media query as mocked image of fixed variants provided.`, () => {
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fixedArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fixed={fixedImagesShapeMock.slice().reverse()}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/width: 100px; height: 100px;/)
+    )
+  })
+
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
@@ -215,5 +343,42 @@ describe(`<Image />`, () => {
 
     expect(onLoadMock).toHaveBeenCalledTimes(1)
     expect(onErrorMock).toHaveBeenCalledTimes(1)
+  })
+
+  it(`should have an "aria-hidden" attribute on the fluid element`, () => {
+    const divTag = setup(true).querySelector(`.gatsby-image-wrapper > div`)
+    expect(divTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the background element`, () => {
+    const BgTag = setup(true).querySelector(`.gatsby-image-wrapper > div + div`)
+    expect(BgTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the Placeholder component when fluid`, () => {
+    const placeholderImageTag = setup(true).querySelector(`img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the Placeholder component when fixed`, () => {
+    const placeholderImageTag = setup().querySelector(`img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should not have an "aria-hidden" attribute on the Image`, () => {
+    const placeholderImageTag = setup().querySelector(`picture img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(null)
+  })
+
+  it(`should not have a "source" tag if no srcSet is provided`, () => {
+    jest.spyOn(global.console, `warn`)
+
+    const props = {
+      fixed: { ...fixedShapeMock, srcSet: null, srcSetWebp: null },
+    }
+    const sourceTag = setup(false, props).querySelector(`source`)
+    expect(sourceTag).toEqual(null)
+
+    expect(console.warn).toBeCalled()
   })
 })

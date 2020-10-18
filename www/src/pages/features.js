@@ -1,17 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
-import Layout from "../components/layout"
 import Container from "../components/container"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
-import { itemListFeatures } from "../utils/sidebar/item-list"
+import PageWithSidebar from "../components/page-with-sidebar"
 
 const FeaturesHeader = () => (
   <section>
@@ -49,7 +47,7 @@ const FeaturesHeader = () => (
         you’ve added. These files can be cached and served from a CDN.
         <br />
         <p sx={{ mt: 2 }}>Coming from the JAMstack world?</p>
-        <Button to="/features/jamstack" secondary>
+        <Button to="/features/jamstack/" secondary>
           Compare Gatsby vs JAMstack
         </Button>
       </li>
@@ -78,7 +76,7 @@ const FeaturesHeader = () => (
         provider.
         <br />
         <p sx={{ mt: 2 }}>Coming from the CMS world?</p>
-        <Button to="/features/cms" secondary>
+        <Button to="/features/cms/" secondary>
           Compare Gatsby vs CMS
         </Button>
       </li>
@@ -102,59 +100,46 @@ const FeaturesHeader = () => (
   </section>
 )
 
-class FeaturesPage extends Component {
-  render() {
-    return (
-      <Layout
-        location={this.props.location}
-        itemList={itemListFeatures}
-        enableScrollSync={true}
-      >
-        <Helmet>
-          <title>Features</title>
-          <meta
-            name="description"
-            content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+export default function FeaturesPage({ location, data }) {
+  return (
+    <PageWithSidebar location={location}>
+      <PageMetadata
+        title="Features"
+        description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+      />
+      <Container>
+        <main id={`reach-skip-nav`}>
+          <FeaturesHeader />
+          <SimpleEvaluationTable
+            title="Feature Comparison"
+            headers={[
+              { display: `Category`, nodeFieldProperty: `Category` },
+              { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+              {
+                display: `JAMstack frameworks`,
+                nodeFieldProperty: `Jamstack`,
+              },
+              { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+            ]}
+            data={data.allGatsbyFeaturesSpecsCsv.nodes}
           />
-        </Helmet>
-        <Container>
-          <main id={`reach-skip-nav`}>
-            <FeaturesHeader />
-            <SimpleEvaluationTable
-              title="Feature Comparison"
-              headers={[
-                { display: `Category`, nodeFieldProperty: `Category` },
-                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
-                {
-                  display: `JAMstack frameworks`,
-                  nodeFieldProperty: `Jamstack`,
-                },
-                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
-              ]}
-              data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
-            />
-            <FeaturesFooter />
-          </main>
-          <FooterLinks />
-        </Container>
-      </Layout>
-    )
-  }
+          <FeaturesFooter />
+        </main>
+        <FooterLinks />
+      </Container>
+    </PageWithSidebar>
+  )
 }
-
-export default FeaturesPage
 
 export const pageQuery = graphql`
   query {
     allGatsbyFeaturesSpecsCsv {
-      edges {
-        node {
-          Category
-          Gatsby
-          Jamstack
-          Cms
-          Description
-        }
+      nodes {
+        Category
+        Gatsby
+        Jamstack
+        Cms
+        Description
       }
     }
   }

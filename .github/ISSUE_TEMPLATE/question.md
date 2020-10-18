@@ -1,6 +1,7 @@
 ---
 name: Question 🤔
 about: Usage question or discussion about Gatsby.
+labels: "type: question or discussion"
 ---
 
 <!--
@@ -13,7 +14,6 @@ about: Usage question or discussion about Gatsby.
   Gatsby has several community support channels, try asking your question on:
 
   - Discord: https://gatsby.dev/discord
-  - Spectrum: https://spectrum.chat/gatsby-js
   - Twitter: https://twitter.com/gatsbyjs
 
   Before opening a new issue, please search existing issues https://github.com/gatsbyjs/gatsby/issues

@@ -13,23 +13,19 @@ const reset = () => cy.exec(`npm run reset:preview`)
 
 describe(`Gatsby Preview (Updating)`, () => {
   it(`displays initial data`, () => {
-    cy.get(`li:eq(0) a`)
-      .click()
-      .waitForRouteChange()
+    cy.get(`li:eq(0) a`).click().waitForRouteChange()
 
-    cy.queryByText(`Hello World (1)`).should(`exist`)
+    cy.findByText(`Hello World (1)`).should(`exist`)
 
-    cy.queryByText(`0`).should(`exist`)
+    cy.findByText(`0`).should(`exist`)
   })
 
   it(`updates and hot-reloads changes to content`, () => {
-    cy.get(`li:eq(0) a`)
-      .click()
-      .waitForRouteChange()
+    cy.get(`li:eq(0) a`).click().waitForRouteChange()
 
     update()
 
-    cy.queryByText(`1`).should(`exist`)
+    cy.findByText(`1`).should(`exist`)
   })
 
   it(`updates and hot-reloads new content`, () => {
@@ -46,18 +42,12 @@ describe(`Gatsby Preview (Updating)`, () => {
 
     reset()
 
-    cy.get(`li`)
-      .its(`length`)
-      .should(`be`, 1)
+    cy.get(`li`).its(`length`).should(`be`, 1)
   })
 
-  /*
-   * TODO: get this test passing in CI
-   * https://github.com/testing-library/cypress-testing-library/issues/23
-   */
-  it.skip(`can be triggered with webhook data`, () => {
+  it(`can be triggered with webhook data`, () => {
     cy.exec(`npm run update:webhook`)
 
-    cy.queryByText(`Hello World from a Webhook (999)`).should(`exist`)
+    cy.findByText(`Hello World from a Webhook (999)`).should(`exist`)
   })
 })

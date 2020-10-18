@@ -9,8 +9,15 @@ const path = require(`path`)
 const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
-const { getPluginOptions, healOptions } = require(`./plugin-options`)
+const {
+  getPluginOptions,
+  healOptions,
+  createTransformObject,
+  removeDefaultValues,
+} = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
+const duotone = require(`./duotone`)
+const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -23,71 +30,109 @@ const getImageSize = file => {
     const dimensions = imageSize.sync(
       toArray(fs.readFileSync(file.absolutePath))
     )
+
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
+
     imageSizeCache.set(file.internal.contentDigest, dimensions)
     return dimensions
   }
 }
-
-const duotone = require(`./duotone`)
 
 // Bound action creators should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+let boundActionCreators
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
-// We set the queue to a Map instead of an array to easily search in onCreateDevServer Api hook
-const queue = new Map()
-exports.queue = queue
+function calculateImageDimensionsAndAspectRatio(file, options) {
+  // Calculate the eventual width/height of the image.
+  const dimensions = getImageSize(file)
+  const imageAspectRatio = dimensions.width / dimensions.height
 
-function queueImageResizing({ file, args = {}, reporter }) {
-  const pluginOptions = getPluginOptions()
-  const options = healOptions(pluginOptions, args, file.extension)
-  if (!options.toFormat) {
-    options.toFormat = file.extension
+  let width = options.width
+  let height = options.height
+
+  switch (options.fit) {
+    case sharp.fit.fill: {
+      width = options.width ? options.width : dimensions.width
+      height = options.height ? options.height : dimensions.height
+      break
+    }
+    case sharp.fit.inside: {
+      const widthOption = options.width
+        ? options.width
+        : Number.MAX_SAFE_INTEGER
+      const heightOption = options.height
+        ? options.height
+        : Number.MAX_SAFE_INTEGER
+
+      width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.min(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
+    }
+    case sharp.fit.outside: {
+      const widthOption = options.width ? options.width : 0
+      const heightOption = options.height ? options.height : 0
+
+      width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.max(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
+    }
+
+    default: {
+      if (options.width && !options.height) {
+        width = options.width
+        height = Math.round(options.width / imageAspectRatio)
+      }
+
+      if (options.height && !options.width) {
+        width = Math.round(options.height * imageAspectRatio)
+        height = options.height
+      }
+    }
   }
 
+  return {
+    width,
+    height,
+    aspectRatio: width / height,
+  }
+}
+
+function prepareQueue({ file, args }) {
+  const { pathPrefix, ...options } = args
   const argsDigestShort = createArgsDigest(options)
   const imgSrc = `/${file.name}.${options.toFormat}`
-  const dirPath = path.join(
+  const outputDir = path.join(
     process.cwd(),
     `public`,
     `static`,
-    file.internal.contentDigest,
-    argsDigestShort
+    file.internal.contentDigest
   )
-  const filePath = path.join(dirPath, imgSrc)
-  fs.ensureDirSync(dirPath)
+  const outputFilePath = path.join(argsDigestShort, imgSrc)
 
-  let width
-  let height
-  // Calculate the eventual width/height of the image.
-  const dimensions = getImageSize(file)
-  let aspectRatio = dimensions.width / dimensions.height
-  const originalName = file.base
+  // make sure outputDir is created
+  fs.ensureDirSync(outputDir)
 
-  // If the width/height are both set, we're cropping so just return
-  // that.
-  if (options.width && options.height) {
-    width = options.width
-    height = options.height
-    // Recalculate the aspectRatio for the cropped photo
-    aspectRatio = width / height
-  } else if (options.width) {
-    // Use the aspect ratio of the image to calculate what will be the resulting
-    // height.
-    width = options.width
-    height = Math.round(options.width / aspectRatio)
-  } else {
-    // Use the aspect ratio of the image to calculate what will be the resulting
-    // width.
-    height = options.height
-    width = Math.round(options.height * aspectRatio)
-  }
+  const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
+    file,
+    options
+  )
 
   // encode the file name for URL
   const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
@@ -95,54 +140,155 @@ function queueImageResizing({ file, args = {}, reporter }) {
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
   const prefixedSrc =
-    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
-
-  // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
-  const job = {
-    args: options,
-    inputPath: file.absolutePath,
-    contentDigest: file.internal.contentDigest,
-    outputPath: filePath,
-  }
-
-  queue.set(prefixedSrc, job)
-
-  // schedule job immediately - this will be changed when image processing on demand is implemented
-  const finishedPromise = scheduleJob(
-    job,
-    boundActionCreators,
-    pluginOptions,
-    reporter
-  ).then(() => {
-    queue.delete(prefixedSrc)
-  })
+    (pathPrefix ? pathPrefix : ``) +
+    `/static/${digestDirPrefix}` +
+    encodedImgSrc
 
   return {
     src: prefixedSrc,
-    absolutePath: filePath,
+    outputDir: outputDir,
+    relativePath: outputFilePath,
+    width,
+    height,
+    aspectRatio,
+    options: removeDefaultValues(args, getPluginOptions()),
+  }
+}
+
+function createJob(job, { reporter }) {
+  if (!boundActionCreators) {
+    reporter.panic(
+      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
+    )
+  }
+
+  // Jobs can be duplicates and usually are long running tasks.
+  // Because of that we shouldn't use async/await and instead opt to use
+  // .then() /.catch() handlers, because this allows V8 to release
+  // duplicate jobs from memory quickly (as job is not referenced
+  // in resolve / reject handlers). If we would use async/await
+  // entire closure would keep duplicate job in memory until
+  // initial job finish.
+  let promise = null
+  if (boundActionCreators.createJobV2) {
+    promise = boundActionCreators.createJobV2(job)
+  } else {
+    promise = scheduleJob(job, boundActionCreators, reporter)
+  }
+
+  promise.catch(err => {
+    reporter.panic(err)
+  })
+
+  return promise
+}
+
+function queueImageResizing({ file, args = {}, reporter }) {
+  const fullOptions = healOptions(getPluginOptions(), args, file.extension)
+  const {
+    src,
+    width,
+    height,
+    aspectRatio,
+    relativePath,
+    outputDir,
+    options,
+  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+
+  // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
+  const finishedPromise = createJob(
+    {
+      name: IMAGE_PROCESSING_JOB_NAME,
+      inputPaths: [file.absolutePath],
+      outputDir,
+      args: {
+        operations: [
+          {
+            outputPath: relativePath,
+            args: options,
+          },
+        ],
+        pluginOptions: getPluginOptions(),
+      },
+    },
+    { reporter }
+  )
+
+  return {
+    src,
+    absolutePath: path.join(outputDir, relativePath),
     width,
     height,
     aspectRatio,
     finishedPromise,
-    // // finishedPromise is needed to not break our API (https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sqip/src/extend-node-type.js#L115)
-    // finishedPromise: {
-    //   then: (resolve, reject) => {
-    //     scheduleJob(job, boundActionCreators, pluginOptions).then(() => {
-    //       queue.delete(prefixedSrc)
-    //       resolve()
-    //     }, reject)
-    //   },
-    // },
-    originalName: originalName,
+    originalName: file.base,
   }
 }
 
-// A value in pixels(Int)
-const defaultBase64Width = () => getPluginOptions().base64Width || 20
-async function generateBase64({ file, args, reporter }) {
+function batchQueueImageResizing({ file, transforms = [], reporter }) {
+  const operations = []
+  const images = []
+
+  // loop through all transforms to set correct variables
+  transforms.forEach(transform => {
+    const {
+      src,
+      width,
+      height,
+      aspectRatio,
+      relativePath,
+      outputDir,
+      options,
+    } = prepareQueue({ file, args: transform })
+    // queue operations of an image
+    operations.push({
+      outputPath: relativePath,
+      args: options,
+    })
+
+    // create output results
+    images.push({
+      src,
+      absolutePath: path.join(outputDir, relativePath),
+      width,
+      height,
+      aspectRatio,
+      originalName: file.base,
+      finishedPromise: null,
+    })
+  })
+
+  const finishedPromise = createJob(
+    {
+      name: IMAGE_PROCESSING_JOB_NAME,
+      inputPaths: [file.absolutePath],
+      outputDir: path.join(
+        process.cwd(),
+        `public`,
+        `static`,
+        file.internal.contentDigest
+      ),
+      args: {
+        operations,
+        pluginOptions: getPluginOptions(),
+      },
+    },
+    { reporter }
+  )
+
+  return images.map(image => {
+    image.finishedPromise = finishedPromise
+
+    return image
+  })
+}
+
+async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: defaultBase64Width(),
+    // Should already be set to base64Width by `fluid()`/`fixed()` methods
+    // calling `generateBase64()`. Useful in Jest tests still.
+    width: args.base64Width || pluginOptions.base64Width,
   })
   let pipeline
   try {
@@ -160,29 +306,33 @@ async function generateBase64({ file, args, reporter }) {
     pipeline = pipeline.trim(options.trim)
   }
 
-  const forceBase64Format =
-    args.toFormatBase64 || pluginOptions.forceBase64Format
-  if (forceBase64Format) {
-    args.toFormat = forceBase64Format
+  const changedBase64Format =
+    options.toFormatBase64 || pluginOptions.forceBase64Format
+  if (changedBase64Format) {
+    options.toFormat = changedBase64Format
   }
 
   pipeline
-    .resize(options.width, options.height, {
+    .resize({
+      width: options.width,
+      height: options.height,
       position: options.cropFocus,
+      fit: options.fit,
+      background: options.background,
     })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: options.toFormat === `png`,
     })
     .jpeg({
-      quality: options.quality,
+      quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: options.toFormat === `jpg`,
     })
     .webp({
-      quality: options.quality,
-      force: args.toFormat === `webp`,
+      quality: options.webpQuality || options.quality,
+      force: options.toFormat === `webp`,
     })
 
   // grayscale
@@ -197,7 +347,7 @@ async function generateBase64({ file, args, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
+    pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
   const { data: buffer, info } = await pipeline.toBuffer({
     resolveWithObject: true,
@@ -212,7 +362,8 @@ async function generateBase64({ file, args, reporter }) {
   return base64output
 }
 
-const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) =>
+  `${file.internal.contentDigest}${JSON.stringify(args)}`
 
 const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
@@ -304,7 +455,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
   try {
     metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(
+      `Failed to retrieve metadata from image ${file.absolutePath}`,
+      err,
+      reporter
+    )
     return null
   }
 
@@ -313,25 +468,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+  const maxWidth = options.maxWidth
+    ? Math.min(options.maxWidth, width)
+    : undefined
+  const maxHeight = options.maxHeight
+    ? Math.min(options.maxHeight, height)
+    : undefined
 
   if (options[fixedDimension] < 1) {
     throw new Error(
       `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
     )
-  }
-
-  let presentationWidth, presentationHeight
-  if (fixedDimension === `maxWidth`) {
-    presentationWidth = Math.min(options.maxWidth, width)
-    presentationHeight = Math.round(presentationWidth * (height / width))
-  } else {
-    presentationHeight = Math.min(options.maxHeight, height)
-    presentationWidth = Math.round(presentationHeight * (width / height))
-  }
-
-  // If the users didn't set default sizes, we'll make one.
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image if no custom breakpoints are
@@ -365,7 +512,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       fluidSizes.push(breakpoint)
     })
   }
-  const filteredSizes = fluidSizes.filter(
+  let filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
 
@@ -373,42 +520,65 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // is available for small images. Also so we can link to
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
-
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  filteredSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
-  const images = sortedSizes.map(size => {
-    const arrrgs = {
-      ...options,
-      [otherDimensionAttr]: undefined,
-      [dimensionAttr]: Math.round(size),
+
+  const imageWithDensityOneIndex = filteredSizes.findIndex(
+    size => size === (fixedDimension === `maxWidth` ? maxWidth : maxHeight)
+  )
+
+  // Sort sizes for prettiness.
+  const transforms = filteredSizes.map(size => {
+    const arrrgs = createTransformObject(options)
+    if (arrrgs[otherDimensionAttr]) {
+      arrrgs[otherDimensionAttr] = undefined
     }
-    // Queue sizes for processing.
-    if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
-      arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
+    arrrgs[dimensionAttr] = Math.round(size)
+
+    // we need pathPrefix to calculate the correct outputPath
+    if (options.pathPrefix) {
+      arrrgs.pathPrefix = options.pathPrefix
     }
 
-    return queueImageResizing({
-      file,
-      args: arrrgs, // matey
-      reporter,
-    })
+    if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
+      if (options.fit === sharp.fit.inside) {
+        arrrgs.height = Math.round(size * (maxHeight / maxWidth))
+      } else {
+        arrrgs.height = Math.round(
+          size * (options.maxHeight / options.maxWidth)
+        )
+      }
+    }
+
+    return arrrgs
+  })
+
+  const images = batchQueueImageResizing({
+    file,
+    transforms,
+    reporter,
   })
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
-    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Width = options.base64Width
+    const base64Height = Math.max(
+      1,
+      Math.round(base64Width / images[0].aspectRatio)
+    )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
       trim: options.trim,
       toFormat: options.toFormat,
       toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
       width: base64Width,
       height: base64Height,
     }
@@ -423,6 +593,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
+
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
@@ -449,15 +620,25 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
+  // calculate presentationSizes
+  const imageWithDensityOne = images[imageWithDensityOneIndex]
+  const presentationWidth = imageWithDensityOne.width
+  const presentationHeight = imageWithDensityOne.height
+
+  // If the users didn't set default sizes, we'll make one.
+  const sizes =
+    options.sizes ||
+    `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+
   return {
     base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
     srcSetType,
-    sizes: options.sizes,
-    originalImg: originalImg,
-    originalName: originalName,
+    sizes,
+    originalImg,
+    originalName,
     density,
     presentationWidth,
     presentationHeight,
@@ -495,37 +676,48 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 
   // Sort images for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  const transforms = _.sortBy(filteredSizes).map(size => {
+    const arrrgs = createTransformObject(options)
+    arrrgs[fixedDimension] = Math.round(size)
 
-  const images = sortedSizes.map(size => {
-    const arrrgs = {
-      ...options,
-      [fixedDimension]: Math.round(size),
-    }
     // Queue images for processing.
     if (options.width !== undefined && options.height !== undefined) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
+    // we need pathPrefix to calculate the correct outputPath
+    if (options.pathPrefix) {
+      arrrgs.pathPrefix = options.pathPrefix
+    }
 
-    return queueImageResizing({
-      file,
-      args: arrrgs,
-      reporter,
-    })
+    return arrrgs
+  })
+
+  const images = batchQueueImageResizing({
+    file,
+    transforms,
+    reporter,
   })
 
   let base64Image
   if (options.base64) {
+    const base64Width = options.base64Width
+    const base64Height = Math.max(
+      1,
+      Math.round(base64Width / images[0].aspectRatio)
+    )
     const base64Args = {
-      // height is adjusted accordingly with respect to the aspect ratio
-      width: options.base64Width,
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
+      trim: options.trim,
       toFormat: options.toFormat,
       toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
+      width: base64Width,
+      height: base64Height,
     }
-
     // Get base64 version
     base64Image = await base64({
       file,
@@ -584,6 +776,7 @@ function toArray(buf) {
 exports.queueImageResizing = queueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
+exports.generateBase64 = generateBase64
 exports.traceSVG = traceSVG
 exports.sizes = fluid
 exports.resolutions = fixed

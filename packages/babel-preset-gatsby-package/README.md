@@ -15,7 +15,7 @@ This [Babel](https://babeljs.io/) preset is used for our internal packages. If y
 
 Install `babel-preset-gatsby-package` and add a `.babelrc` file with the following content to the root of your project:
 
-```bash
+```shell
 npm install --dev babel-preset-gatsby-package
 ```
 
@@ -41,6 +41,6 @@ Outputs the targets/plugins used and the version specified in [plugin data versi
 
 ### `nodeVersion`
 
-`string`, defaults to `8.0`
+`string`, defaults to `10.13`
 
 Allows the Node.js version target to be modified per [`@babel/preset-env` documentation](https://babeljs.io/docs/en/babel-preset-env#targetsnode)

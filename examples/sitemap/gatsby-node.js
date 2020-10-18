@@ -1,5 +1,5 @@
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions

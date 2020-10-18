@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  <a href="https://www.gatsbyjs.com">
+    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
 <h1 align="center">
@@ -33,26 +33,26 @@ Quickly get started using the Gatsby blog theme! This starter creates a new Gats
 
     Your site is now running at `http://localhost:8000`!
 
-    To get started, check out the guide to [using the Gatsby blog theme starter](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](http://gatsbyjs.org/tutorial/using-a-theme).
+    To get started, check out the guide to [using the Gatsby blog theme starter](https://gatsbyjs.com/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](https://gatsbyjs.com/tutorial/using-a-theme).
 
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using the blog theme starter:
 
-```
+```text
 gatsby-starter-blog-theme
 ├── content
-│ ├── assets
-│ │ └── avatar.png
-│ └── posts
-│ ├── hello-world.mdx
-│ └── my-second-post.mdx
+│   ├── assets
+│   │   └── avatar.png
+│   └── posts
+│       ├── hello-world.mdx
+│       └── my-second-post.mdx
 ├── src
-│ └── gatsby-theme-blog
-│ ├── components
-│ │ └── bio-content.js
-│ └── gatsby-theme-ui
-│ └── colors.js
+│   └── gatsby-theme-blog
+│       ├── components
+│       │   └── bio-content.js
+│       └── gatsby-theme-ui
+│           └── colors.js
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js
@@ -64,7 +64,7 @@ gatsby-starter-blog-theme
 
 1.  **`/content`**: A content folder holding assets that the theme expects to exist. This will vary from theme to theme -- this starter is set up to get you started with the blog theme, which expects an image asset for your avatar, and blog post content. Replace the avatar image file, delete the demo posts, and add your own!
 
-2.  **`/src`**: You will probably want to customize your site to personalize it. The files under `/src/gatsby-theme-blog` _shadow_, or override, the files of the same name in the `gatsby-theme-blog` package. To learn more about this, check out the [guide to getting started with using the blog theme starter](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme).
+2.  **`/src`**: You will probably want to customize your site to personalize it. The files under `/src/gatsby-theme-blog` _shadow_, or override, the files of the same name in the `gatsby-theme-blog` package. To learn more about this, check out the [guide to getting started with using the blog theme starter](https://gatsbyjs.com/docs/themes/using-a-gatsby-theme).
 
 3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 
@@ -72,7 +72,7 @@ gatsby-starter-blog-theme
 
 5.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. When using themes, it's where you'll include the theme plugin, and any customization options the theme provides.
 
-6.  **`LICENSE`**: Gatsby is licensed under the MIT license.
+6.  **`LICENSE`**: This Gatsby starter is licensed under the 0BSD license. This means that you can see this file as a placeholder and replace it with your own license.
 
 7.  **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
 
@@ -82,16 +82,16 @@ gatsby-starter-blog-theme
 
 ## 🎓 Learning Gatsby
 
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/).
+Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
 
 Here are some places to start:
 
 ### Themes
 
-- To learn more about Gatsby themes specifically, we recommend checking out the [theme docs](https://www.gatsbyjs.org/docs/themes/).
+- To learn more about Gatsby themes specifically, we recommend checking out the [theme docs](https://www.gatsbyjs.com/docs/themes/).
 
 ### General
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Reference Guides_ and _Gatsby API_ sections in the sidebar.
+- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _Reference Guides_ and _Gatsby API_ sections in the sidebar.

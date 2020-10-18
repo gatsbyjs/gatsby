@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Test hashing function default parameters 1`] = `174577032270956`;
-
-exports[`Test hashing function guards against collisions 1`] = `[Error: Hash collision at f(my input) = 174577032270956]`;

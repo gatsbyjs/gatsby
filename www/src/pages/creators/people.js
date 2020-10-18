@@ -1,23 +1,16 @@
-import React, { Component } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import CreatorsView from "../../views/creators"
 
-class PeoplePage extends Component {
-  render() {
-    const { location, data } = this.props
-    return <CreatorsView data={data} location={location} title={`People`} />
-  }
+export default function PeoplePage({ location, data }) {
+  return <CreatorsView data={data} location={location} title={`People`} />
 }
-
-export default PeoplePage
 
 export const pageQuery = graphql`
   query {
     allCreatorsYaml(filter: { type: { eq: "individual" } }) {
-      edges {
-        node {
-          ...CreatorData
-        }
+      nodes {
+        ...CreatorData
       }
     }
   }

@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Software Engineer @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
+  bio: Head of Product @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
   avatar: avatars/dustin-schau.png
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -53,7 +53,6 @@
 - id: Fernando Poumian
   bio: Full-Stack Web Developer - https://www.halfelectronic.com
   avatar: avatars/fernando-poumian.jpeg
-  twitter: "@fernandopoumian"
 - id: Josh Weaver
   bio: Developer at By the Book, Inc. Enjoys technology, writing and playing music. Can't turn down a decent board game.
   avatar: avatars/josh-weaver.jpg
@@ -126,7 +125,7 @@
   avatar: avatars/dan-kass.jpg
   twitter: "@JustFixNYC"
 - id: Gatsby Central
-  bio: The community for gatsby developers
+  bio: The community for Gatsby developers
   avatar: avatars/gatsby-central.jpg
   twitter: "@GatsbyCentral"
 - id: Ray Gesualdo
@@ -154,7 +153,7 @@
   avatar: avatars/dennis-brotzky.jpg
   twitter: "@_brotzky"
 - id: Tony Spiro
-  bio: Cosmic JS Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
+  bio: Cosmic Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
   avatar: avatars/tony-spiro.jpg
   twitter: "@tonyspiro"
 - id: Khaled Garbaya
@@ -162,7 +161,7 @@
   avatar: avatars/khaled-garbaya.jpg
   twitter: "@khaled_garbaya"
 - id: Mikhail Novikov
-  bio: GraphQL sommelier. Did Reindex, GraphQL Delegation, Schema Stitching, Launchpad. Organizer @GraphQLFinland.
+  bio: Gatsby Core Tech Lead
   avatar: avatars/freiksenet.jpg
   twitter: "@freiksenet"
 - id: Horacio Herrera
@@ -197,8 +196,8 @@
   bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
   avatar: avatars/chris-biscardi.png
   twitter: "@chrisbiscardi"
-- id: LekoArts
-  bio: Designer & Frontend Dev. Loves good typography & tv series. Blogs at lekoarts.de
+- id: Lennart Jörgens
+  bio: Senior Software Engineer at Gatsby. Passionate about design & 3D art. Blogs at lekoarts.de
   avatar: avatars/lekoarts.png
   twitter: "@lekoarts_de"
 - id: Tyler Barnes
@@ -213,7 +212,7 @@
   avatar: avatars/muhammad-muhsin.jpg
   twitter: "@muhsinlk"
 - id: Ondrej Polesny
-  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Cloud.
+  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Kontent.
   avatar: avatars/ondrej-polesny.jpg
   twitter: "@ondrabus"
 - id: John O’Nolan
@@ -245,9 +244,9 @@
 - id: Katie Fujihara
   bio: Lover of making beautiful UI. Portland tech community organizer.
   avatar: avatars/katie-fujihara.jpg
-  twitter: "@katieofcode"
+  twitter: "@KatieFujihara"
 - id: Sidhartha Chatterjee
-  bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
+  bio: Senior Software Engineer, core team @ GatsbyJS. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
 - id: Tania Rascia
@@ -271,7 +270,7 @@
   avatar: avatars/jim-ettig.jpg
   twitter: "@unclejge"
 - id: Marcy Sutton
-  bio: Head of Learning at Gatsby, cyclist, animal lover, pie baker.
+  bio: Lead DevRel/Community Software Engineer at Gatsby, cyclist, animal lover, pie baker.
   avatar: avatars/marcy-sutton.jpg
   twitter: "@marcysutton"
 - id: Allan Pooley
@@ -317,11 +316,11 @@
   avatar: avatars/benjamin-lannon.jpg
   twitter: "@lannonbr"
 - id: Thomas Wang
-  bio: Founder @ DormDev. A social developer on the JAMStack.
+  bio: A social developer on the JAMStack.
   avatar: avatars/thomas-wang.jpeg
-  twitter: "@thomaswangio"
+  twitter: "@ThomasWang"
 - id: Hashim Warren
-  bio: Marketer turned Web Developer  - https://hashim.xyz
+  bio: Full Stack Marketer, writing copy and code - https://www.configmag.com
   avatar: avatars/hashim-warren.jpg
   twitter: "@hashim_warren"
 - id: Caitlin Cashin
@@ -357,3 +356,94 @@
   bio: Creates tools that make designers & developers better at what they do. Polypane.rocks and Superposition.design | @kilianvalkhof | https://kilianvalkhof.com/
   avatar: avatars/kilian-valkhof.jpg
   twitter: "@kilianvalkhof"
+- id: David Bailey
+  bio: I build things for the web! ✧ Also interested in music, photography and language learning
+  avatar: avatars/david-bailey.jpg
+  twitter: "@davidbailey00"
+- id: Madalyn Parker
+  bio: Working to make the web a better place. Mental health advocate, passionate about a11y, requires strong coffee.
+  avatar: avatars/madalyn-parker.jpg
+  twitter: "@madalynrose"
+- id: Mark Casias
+  bio: Sr. Software Engineer for Mediacurrent. Bass player.
+  avatar: avatars/mark-casias.png
+  twitter: "@teampoop"
+- id: Jari Zwarts
+  bio: Frontend @ Oberon. Maker of things. https://jari.io
+  avatar: avatars/jari-zwarts.png
+  twitter: "@JariZwarts"
+- id: Scott Byrne
+  bio: Product Designer at Forestry.io & TinaCMS Team Member
+  avatar: avatars/scott-byrne.jpg
+  twitter: "@scottpbyrne"
+- id: William Imoh
+  bio: Developer Advocate and Product Manager at Mart Labs
+  avatar: avatars/william-imoh.jpg
+  twitter: "@iChuloo"
+- id: Josh Comeau
+  bio: Perpetual tinkerer, cat person. Staff software engineer on the Gatsby Cloud team.
+  avatar: avatars/josh-comeau.jpg
+  twitter: "@joshwcomeau"
+- id: Orta Therox
+  bio: Engineer on TypeScript at Microsoft
+  avatar: avatars/orta-therox.jpg
+  twitter: "@orta"
+- id: Aisha Blake
+  bio: Teacher, speaker, and community organizer who learned to code via Neopets. Loves theater, karaoke, and dogs.
+  avatar: avatars/aisha-blake.jpg
+  twitter: "@AishaBlake"
+- id: Rich Manalang
+  bio: Principal developer advocate at LaunchDarkly
+  avatar: avatars/rich-manalang.jpeg
+  twitter: "@rmanalan"
+- id: Bob Orchard
+  bio: Semi-stack developer with a design background. Senior Product Manager at Gatsby Cloud. I love to make things with my hands, travel, and tinker with new tech.
+  avatar: avatars/bob-orchard.jpg
+  twitter: "@boborchard"
+- id: Greg Thomas
+  bio: "Writer, musician, historian, and dedicated service provider for the dog."
+  avatar: avatars/greg-thomas.jpg
+- id: Laci Texter
+  bio: "Runner of rivers and city blocks, car-a-oke queen, and very fond of snail mail. Enjoys the art/science/sport of communication. Senior Brand Marketing Manager for Gatsby."
+  avatar: avatars/laci-texter.jpg
+  twitter: "@textercomm"
+- id: Debra Combs
+  bio: "Product Manager, Writer, Gamer, and lover of laughter."
+  avatar: avatars/debra-combs.png
+- id: Joel Varty
+  bio: "Dad to teens, HS football coach, president of Agility CMS."
+  avatar: avatars/joel-varty.jpg
+  twitter: "@joelvarty"
+- id: Paul Scanlon
+  bio: "Front End React UI Developer/UX Engineer based in Worthing, UK. After all is said and done, structure + order = fun."
+  avatar: avatars/paul-scanlon.jpg
+  twitter: "@PaulieScanlon"
+- id: Jake Lumetta
+  bio: "Jake is the CEO of ButterCMS. He loves whipping up Butter puns and building tools that make developers' lives better."
+  avatar: avatars/jake-lumetta.jpg
+  twitter: "@jakelumetta"
+- id: Maxime Castres
+  bio: "Growth Hacker @ Strapi. Gathering interesting individuals to build the best community."
+  avatar: avatars/maxime-castres.jpg
+  twitter: "@MaxCastres"
+- id: Eric Howey
+  bio: "Dad all the time, mental health therapist full time, web developer in my spare time. I listen and care."
+  avatar: avatars/eric-howey.jpg
+  twitter: "@erchwy"
+- id: Laurie Barth
+  bio: "Staff Software Engineer for Gatsby themes. Lover of all things LEGO."
+  avatar: avatars/laurie-barth.jpg
+  twitter: "@laurieontech"
+- id: Sam Larsen-Disney
+  bio: "UX Engineer and Experimenter who enjoys teaching the next generation to code."
+  avatar: avatars/sam-larsendisney.jpg
+  twitter: "@SamLarsenDisney"
+- id: Bianca Feliciano Nedjar
+  bio: "Director of Employee Engagement and Development at Gatsby; Likes consuming mass quantities of television and film, dining al fresco and Reddit."
+  avatar: avatars/bianca-nedjar.jpg
+- id: Kat Huang
+  bio: "Product Marketing Intern @ Gatsby. I like puns, drawing, squats, and digital sociology. Learned to code on Tumblr and once taught myself Latin."
+  avatar: avatars/kat-huang.jpg
+- id: Colby Fayock
+  bio: "Lead UX & Front End Astrocoder @ Element 84. Helping people learn by destructuring React & the static web"
+  avatar: avatars/colby-fayock.jpg

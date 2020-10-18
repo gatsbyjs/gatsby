@@ -9,7 +9,7 @@ React Hooks are _cool_. Besides simplifying your code and removing the need for 
 
 You can probably tell that we've been super excited about [React Hooks][hooks-intro]. So when they finally landed in React 16.8, we figured it was time to give our very own `StaticQuery` component the hook treatment!
 
-### Say hello to useStaticQuery
+## Say hello to useStaticQuery
 
 `useStaticQuery` is a hook that takes a GraphQL query and returns your data. That's it.
 
@@ -122,15 +122,15 @@ const Header = () => {
 
 Isn't that neat?
 
-![excited-gif](./images/excited.gif)
+![Animation of someone looking excited](./images/excited.gif)
 
 And if there's a change to the structure of that data, you only need to change the query in one place!
 
 We're really excited about this pattern and everything it enables. With our upcoming [themes][themes] feature, a theme could even export custom hooks of its own. Users could access data using these without writing a single query.
 
-# Where can I get this?
+## Where can I get this?
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">useStaticQuery hook snuck into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> pretty quick 😍 <a href="https://t.co/PbzTuzk6hb">https://t.co/PbzTuzk6hb</a> waaay nicer API than using the &lt;StaticQuery&gt; component. <a href="https://t.co/6Mf4sSF5C3">pic.twitter.com/6Mf4sSF5C3</a></p>&mdash; Jacob Impson (@jacobimpson) <a href="https://twitter.com/jacobimpson/status/1095930703504584706?ref_src=twsrc%5Etfw">February 14, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+https://twitter.com/jacobimpson/status/1095930703504584706
 
 The astute reader (Jacob is astute, be like Jacob) would've noticed that we _stealthily_ released `useStaticQuery` last week.
 
@@ -140,13 +140,13 @@ To use `useStaticQuery`, update `gatsby` to v2.1.0 and `react` and `react-dom` t
 npm install gatsby react react-dom
 ```
 
-# Known Limitations
+## Known Limitations
 
 Because of the way queries are currently parsed in Gatsby, `useStaticQuery` has one small limitation at the moment. You can only use one instance of `useStaticQuery` in a file. That's it! This doesn't mean your app can't have multiple uses, but rather that a single JavaScript file can only have one instance of `useStaticQuery`.
 
 We're working on fixing this soon.
 
-# Next Steps
+## Next Steps
 
 - Check out the [documentation][use-static-query]
 - To see `useStaticQuery` in action (and for a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
@@ -157,6 +157,5 @@ We hope you enjoy using `useStaticQuery` in your Gatsby apps. Happy building!
 [use-static-query]: /docs/use-static-query/
 [use-static-query-livestream]: https://www.youtube.com/watch?v=asrdFuAxPaU&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
 [sidhartha-twitter]: https://twitter.com/chatsidhartha
-[rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
 [hooks-intro]: https://reactjs.org/docs/hooks-intro.html
 [themes]: /blog/2019-02-11-gatsby-themes-livestream-and-example/

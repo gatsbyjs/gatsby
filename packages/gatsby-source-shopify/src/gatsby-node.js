@@ -13,7 +13,9 @@ import {
   ProductOptionNode,
   ProductVariantNode,
   ProductMetafieldNode,
+  ProductVariantMetafieldNode,
   ShopPolicyNode,
+  ShopDetailsNode,
   PageNode,
 } from "./nodes"
 import {
@@ -25,6 +27,7 @@ import {
   COLLECTION,
   PRODUCT,
   SHOP_POLICY,
+  SHOP_DETAILS,
   PAGE,
 } from "./constants"
 import {
@@ -33,20 +36,42 @@ import {
   COLLECTIONS_QUERY,
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
+  SHOP_DETAILS_QUERY,
   PAGES_QUERY,
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
+  {
+    actions: { createNode, touchNode },
+    createNodeId,
+    store,
+    cache,
+    getCache,
+    reporter,
+  },
   {
     shopName,
     accessToken,
+    apiVersion = `2020-07`,
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
+    shopifyQueries = {},
   }
 ) => {
-  const client = createClient(shopName, accessToken)
+  const client = createClient(shopName, accessToken, apiVersion)
+
+  const defaultQueries = {
+    articles: ARTICLES_QUERY,
+    blogs: BLOGS_QUERY,
+    collections: COLLECTIONS_QUERY,
+    products: PRODUCTS_QUERY,
+    shopPolicies: SHOP_POLICIES_QUERY,
+    shopDetails: SHOP_DETAILS_QUERY,
+    pages: PAGES_QUERY,
+  }
+
+  const queries = { ...defaultQueries, ...shopifyQueries }
 
   // Convenience function to namespace console messages.
   const formatMsg = msg =>
@@ -62,6 +87,7 @@ export const sourceNodes = async (
       touchNode,
       store,
       cache,
+      getCache,
       reporter,
     }
 
@@ -74,6 +100,7 @@ export const sourceNodes = async (
       verbose,
       imageArgs,
       paginationSize,
+      queries,
     }
 
     // Message printed when fetching is complete.
@@ -82,36 +109,52 @@ export const sourceNodes = async (
     let promises = []
     if (includeCollections.includes(SHOP)) {
       promises = promises.concat([
-        createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
-        createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
-          if (x.variants)
-            await forEach(x.variants.edges, async edge =>
-              createNode(await ProductVariantNode(imageArgs)(edge.node))
-            )
+        createNodes(COLLECTION, queries.collections, CollectionNode, args),
+        createNodes(
+          PRODUCT,
+          queries.products,
+          ProductNode,
+          args,
+          async (product, productNode) => {
+            if (product.variants)
+              await forEach(product.variants.edges, async edge => {
+                const v = edge.node
+                if (v.metafields)
+                  await forEach(v.metafields.edges, async edge =>
+                    createNode(
+                      await ProductVariantMetafieldNode(imageArgs)(edge.node)
+                    )
+                  )
+                return createNode(
+                  await ProductVariantNode(imageArgs, productNode)(edge.node)
+                )
+              })
 
-          if (x.metafields)
-            await forEach(x.metafields.edges, async edge =>
-              createNode(await ProductMetafieldNode(imageArgs)(edge.node))
-            )
+            if (product.metafields)
+              await forEach(product.metafields.edges, async edge =>
+                createNode(await ProductMetafieldNode(imageArgs)(edge.node))
+              )
 
-          if (x.options)
-            await forEach(x.options, async option =>
-              createNode(await ProductOptionNode(imageArgs)(option))
-            )
-        }),
+            if (product.options)
+              await forEach(product.options, async option =>
+                createNode(await ProductOptionNode(imageArgs)(option))
+              )
+          }
+        ),
         createShopPolicies(args),
+        createShopDetails(args),
       ])
     }
     if (includeCollections.includes(CONTENT)) {
       promises = promises.concat([
-        createNodes(BLOG, BLOGS_QUERY, BlogNode, args),
-        createNodes(ARTICLE, ARTICLES_QUERY, ArticleNode, args, async x => {
+        createNodes(BLOG, queries.blogs, BlogNode, args),
+        createNodes(ARTICLE, queries.articles, ArticleNode, args, async x => {
           if (x.comments)
             await forEach(x.comments.edges, async edge =>
               createNode(await CommentNode(imageArgs)(edge.node))
             )
         }),
-        createPageNodes(PAGE, PAGES_QUERY, PageNode, args),
+        createPageNodes(PAGE, queries.pages, PageNode, args),
       ])
     }
 
@@ -145,16 +188,35 @@ const createNodes = async (
   await forEach(
     await queryAll(
       client,
-      [`shop`, NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
       query,
       paginationSize
     ),
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
-      await f(entity)
+      await f(entity, node)
     }
   )
+  if (verbose) console.timeEnd(msg)
+}
+
+/**
+ * Fetch and create nodes for shop policies.
+ */
+const createShopDetails = async ({
+  client,
+  createNode,
+  formatMsg,
+  verbose,
+  queries,
+}) => {
+  // // Message printed when fetching is complete.
+  const msg = formatMsg(`fetched and processed ${SHOP_DETAILS} nodes`)
+
+  if (verbose) console.time(msg)
+  const { shop } = await queryOnce(client, queries.shopDetails)
+  createNode(ShopDetailsNode(shop))
   if (verbose) console.timeEnd(msg)
 }
 
@@ -166,19 +228,17 @@ const createShopPolicies = async ({
   createNode,
   formatMsg,
   verbose,
+  queries,
 }) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${SHOP_POLICY} nodes`)
 
   if (verbose) console.time(msg)
-  const { shop: policies } = await queryOnce(client, SHOP_POLICIES_QUERY)
+  const { shop: policies } = await queryOnce(client, queries.shopPolicies)
   Object.entries(policies)
     .filter(([_, policy]) => Boolean(policy))
     .forEach(
-      pipe(
-        ([type, policy]) => ShopPolicyNode(policy, { type }),
-        createNode
-      )
+      pipe(([type, policy]) => ShopPolicyNode(policy, { type }), createNode)
     )
   if (verbose) console.timeEnd(msg)
 }
@@ -195,7 +255,12 @@ const createPageNodes = async (
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(client, [endpoint], query, paginationSize),
+    await queryAll(
+      client,
+      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      query,
+      paginationSize
+    ),
     async entity => {
       const node = await nodeFactory(entity)
       createNode(node)

@@ -9,7 +9,9 @@ https://using-contentful.gatsbyjs.org/
 
 ## Install
 
-`npm install --save gatsby-source-contentful`
+```shell
+npm install gatsby-source-contentful
+```
 
 ## How to use
 
@@ -77,39 +79,40 @@ module.exports = {
 
 Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
 
-```GraphQL
-graphql`
-  query MyQuery {
-    # Example is for a `ContentType` with a `ContentfulAsset` field
-    # You could also query an asset directly via
-    # `allContentfulAsset { edges{ node { } } }`
-    # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
-    contentfulMyContentType {
-      myContentfulAssetField {
-        # Direct URL to Contentful CDN for this asset
-        file { url }
+```graphql
+query MyQuery {
+  # Example is for a `ContentType` with a `ContentfulAsset` field
+  # You could also query an asset directly via
+  # `allContentfulAsset { edges{ node { } } }`
+  # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+  contentfulMyContentType {
+    myContentfulAssetField {
+      # Direct URL to Contentful CDN for this asset
+      file {
+        url
+      }
 
-        # Query for a fluid image resource on this `ContentfulAsset` node
-        fluid(maxWidth: 500){
-          ...GatsbyContentfulFluid_withWebp
-        }
+      # Query for a fluid image resource on this `ContentfulAsset` node
+      fluid(maxWidth: 500) {
+        ...GatsbyContentfulFluid_withWebp
+      }
 
-        # Query for locally stored file(eg An image) - `File` node
-        localFile {
-          # Where the asset is downloaded into cache, don't use this
-          absolutePath
-          # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
-          publicURL
-          # Use `gatsby-image` to create fluid image resource
-          childImageSharp {
-            fluid(maxWidth: 500) {
-              ...GatsbyImageSharpFluid
+      # Query for locally stored file(e.g. An image) - `File` node
+      localFile {
+        # Where the asset is downloaded into cache, don't use this
+        absolutePath
+        # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
+        publicURL
+        # Use `gatsby-image` to create fluid image resource
+        childImageSharp {
+          fluid(maxWidth: 500) {
+            ...GatsbyImageSharpFluid
           }
         }
       }
     }
   }
-`
+}
 ```
 
 Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
@@ -146,7 +149,7 @@ You can pass in any other options available in the [contentful.js SDK](https://g
 
 **`localeFilter`** [function][optional] [default: `() => true`]
 
-Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
 
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
@@ -160,13 +163,31 @@ Prevents the use of sync tokens when accessing the Contentful API.
 
 Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.
 
+**`useNameForId`** [boolean][optional] [default: `true`]
+
+Use the content's `name` when generating the GraphQL schema e.g. a Content Type called `[Component] Navigation bar` will be named `contentfulComponentNavigationBar`.
+
+When set to `false`, the content's internal ID will be used instead e.g. a Content Type with the ID `navigationBar` will be called `contentfulNavigationBar`.
+
+Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like `contentfulC6XwpTaSiiI2Ak2Ww0oi6qa`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
+
+If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
+
+**`pageLimit`** [number][optional] [default: `100`]
+
+Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
+
+**`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
+
+If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
 
-1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
+1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
@@ -203,7 +224,7 @@ You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https:
 
 To query for a single `image` asset with the title 'foo' and a width of 1600px:
 
-```
+```javascript
 export const assetQuery = graphql`
   {
     contentfulAsset(filter: { title: { eq: 'foo' } }) {
@@ -237,22 +258,41 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so Gatsby can transform it to HTML.
-
-`ShortText` type fields will be returned as strings.
-
-Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node containing the exact same field name as the parent_:
+On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node.
 
 ```graphql
 {
   contentfulCaseStudy {
-    title
-    subtitle
     body {
       body
     }
   }
 }
+```
+
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
+
+```graphql
+{
+  contentfulCaseStudy {
+    body {
+      childMarkdownRemark {
+        html
+      }
+    }
+  }
+}
+```
+
+You can then insert the returned HTML inline in your JSX:
+
+```jsx
+<div
+  className="body"
+  dangerouslySetInnerHTML={{
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+  }}
+/>
 ```
 
 #### Duplicated entries
@@ -356,6 +396,32 @@ documentToReactComponents(node.bodyRichText.json, options)
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Sourcing From Multiple Contentful Spaces
+
+To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_second_space_id`,
+        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+  ],
+}
+```
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

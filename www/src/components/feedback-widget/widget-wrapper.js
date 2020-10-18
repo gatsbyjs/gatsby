@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const boldEntry = keyframes`
   100% {
@@ -67,7 +67,7 @@ const WrapperDiv = styled(`div`)`
   ${mediaQueries.lg} {
     box-shadow: ${p => p.theme.shadows.overlay};
     border: 0;
-    border-radius: ${p => p.theme.radii[2]}px;
+    border-radius: ${p => p.theme.radii[2]};
     height: 100%;
     padding: ${p => p.theme.space[7]} ${p => p.theme.space[6]};
     transform: scale(0);

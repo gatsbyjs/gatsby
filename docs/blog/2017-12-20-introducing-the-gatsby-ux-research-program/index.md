@@ -73,7 +73,6 @@ Other salient feedback includes that people who have used WordPress for a long t
 <Pullquote citation="Alec Lomas, AZ, frontend dev and design">
   You guys are pretty much nailing it. Just keep killin’ it, I guess!
 </Pullquote>
-
 <Pullquote citation="David Luhr, UT, UX">
   I’ve played around with static sites in Jekyll in the past, but I’ve always
   hit a pain point with how much functionality I could build into the different
@@ -87,7 +86,6 @@ Other salient feedback includes that people who have used WordPress for a long t
   of our pages instead of relying on a content management library that was kind
   of slow to develop in.
 </Pullquote>
-
 <Pullquote citation="Juliette Pichot, Germany, web developer">
   If you ever decide to sell to consumers, I really think that the speed /
   responsiveness of Gatsby is a really good selling point. Like when I tried to

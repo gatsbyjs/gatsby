@@ -3,11 +3,11 @@ const _ = require(`lodash`)
 const {
   getMonorepoPackageJsonPath,
 } = require(`./get-monorepo-package-json-path`)
-const request = require(`request`)
+const got = require(`got`)
 
 function difference(object, base) {
   function changes(object, base) {
-    return _.transform(object, function(result, value, key) {
+    return _.transform(object, function (result, value, key) {
       if (!_.isEqual(value, base[key])) {
         result[key] =
           _.isObject(value) && _.isObject(base[key])
@@ -61,11 +61,10 @@ exports.checkDepsChanges = async ({
     // and save some time/work
     try {
       localPKGjson = await new Promise((resolve, reject) => {
-        request(
-          `https://unpkg.com/${packageName}/package.json`,
-          (error, response, body) => {
+        got(`https://unpkg.com/${packageName}/package.json`).then(
+          (error, response) => {
             if (response && response.statusCode === 200) {
-              return resolve(JSON.parse(body))
+              return resolve(JSON.parse(response.body))
             }
 
             return reject(error)
@@ -102,6 +101,9 @@ exports.checkDepsChanges = async ({
       }
     }
   }
+
+  if (!monorepoPKGjson.dependencies) monorepoPKGjson.dependencies = {}
+  if (!localPKGjson.dependencies) localPKGjson.dependencies = {}
 
   const areDepsEqual = _.isEqual(
     monorepoPKGjson.dependencies,

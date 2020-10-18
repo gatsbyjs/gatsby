@@ -21,7 +21,7 @@ and reusable.
 - Content migration
 - Programmatic page creation in Gatsby
 - Manage styles with
-  [`Typography.js`](http://kyleamathews.github.io/typography.js/)
+  [`Typography.js`](https://kyleamathews.github.io/typography.js/)
 - Automatic pagination
 - Tag pages
 - Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
@@ -39,7 +39,7 @@ to classical CMS comparing to Gatsby workflows.
 As it's an older ecosystem, when you need a ready plugin or a theme for quick
 gratification, it's more likely to find something ready online for Hugo.
 
-Gatsby, on the other hand, is based on React, GraphQL, Webpack and its way of
+Gatsby, on the other hand, is based on React, GraphQL, webpack and its way of
 thinking is closer to how a developer would approach the problems from a
 single-page-application point of view.
 
@@ -59,7 +59,7 @@ For me, using Gatsby is
 [valuable learning experience](https://kalinchernev.github.io/learn-gatsbyjs)
 and it has also been so easy to work with, it feels "unfair". For example, the
 plugin system of Gatsby keeps me sane and productive, even in cases where I know
-only the briefest overview concepts of Webpack. Without Gatsby, I might have
+only the briefest overview concepts of webpack. Without Gatsby, I might have
 spent hours and days configuring what Gatsby provides out of the box.
 
 Last, but not least, the biggest benefit of using Gatsby compared to Hugo, is
@@ -165,14 +165,14 @@ Now that the system displays the content, it's time to style it. I decided to go
 for the
 [`typography.js` route](/tutorial/part-two/#typographyjs).
 The approach is well documented and you can also see
-[previews of the themes online](http://kyleamathews.github.io/typography.js/).
+[previews of the themes online](https://kyleamathews.github.io/typography.js/).
 
 Steps were:
 
 Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 "enable" the plugin in the `gatsby-config.js` file:
 
-```javascript=
+```javascript
 {
   resolve: `gatsby-plugin-typography`,
   options: {
@@ -183,7 +183,7 @@ Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 
 In `src/utils/typograhy` add:
 
-```javascript=
+```javascript
 import Typography from "typography"
 import theme from "typography-theme-moraga"
 

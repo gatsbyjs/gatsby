@@ -8,7 +8,7 @@ If this describes you, you have unique challenges, but also opportunities, build
 
 This guide is designed to help you navigate the terrain in order to effectively advocate for Gatsby within your organization.
 
-### Common characteristics of enterprises
+## Common characteristics of enterprises
 
 People mean different things when they say “enterprise”. Some mean 500-person companies. Other people mean 20,000-person companies.
 
@@ -16,7 +16,7 @@ When we say “enterprise” we mean large companies with established infrastruc
 
 Other common characteristics include specified procurement processes, standardization on particular technology stacks, changeover at e.g. 5-year intervals, and frequent security audits. Often, enterprises are heavily invested in maintaining and improving existing web properties (“brownfield”) as opposed to creating new ones (“greenfield”).
 
-### Key benefits of Gatsby for enterprises
+## Key benefits of Gatsby for enterprises
 
 One of the key challenges that enterprises face is keeping their tech stack up to date in order to enjoy productivity and performance benefits, while preventing their tooling setups from degrading into “legacy” code.
 
@@ -24,7 +24,7 @@ A related challenge is how to continue to attract and retain top engineering tal
 
 Surveys at enterprises adopting Gatsby have found that developers there highlight benefits such as:
 
-**1. The ability to build with modern tools such as React, Webpack, and GraphQL.** Adopting more common frameworks, rather than custom in-house tooling, tends to increases developer satisfaction, developer productivity, and the ability to recruit developers.
+**1. The ability to build with modern tools such as React, webpack, and GraphQL.** Adopting more common frameworks, rather than custom in-house tooling, tends to increases developer satisfaction, developer productivity, and the ability to recruit developers.
 
 **2. The ability to be productive from the start.** Reduced time on dev and build tooling setup / configuration helps developers get going right away. The burden of maintaining high-quality tooling setups is offloaded from internal tooling teams (and managers) to the Gatsby maintainer team.
 
@@ -64,7 +64,7 @@ Often, there are key individuals at agencies that are excited for personal and p
 
 One key to successfully completing a Gatsby project is having a pre-existing relationship of trust between the enterprise and its agency partners. When this isn’t true — perhaps because of past behavior on the part of one or both parties — any sort of change becomes difficult.
 
-### Conclusion
+## Conclusion
 
 Adopting Gatsby in an enterprise can be more difficult than in small companies. However, there are lasting benefits for the company as well as the individuals guiding the change.
 

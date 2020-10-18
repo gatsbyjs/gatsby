@@ -5,32 +5,33 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.17.4",
-    "gatsby-image": "^2.2.29",
-    "gatsby-plugin-manifest": "^2.2.23",
-    "gatsby-plugin-offline": "^3.0.16",
-    "gatsby-plugin-react-helmet": "^3.1.13",
-    "gatsby-plugin-sharp": "^2.2.32",
-    "gatsby-source-filesystem": "^2.1.33",
-    "gatsby-transformer-sharp": "^2.3.0",
+    "gatsby": "^2.24.79",
+    "gatsby-image": "^2.4.21",
+    "gatsby-plugin-manifest": "^2.4.34",
+    "gatsby-plugin-offline": "^3.2.33",
+    "gatsby-plugin-react-helmet": "^3.3.14",
+    "gatsby-plugin-sharp": "^2.6.42",
+    "gatsby-source-filesystem": "^2.3.34",
+    "gatsby-transformer-sharp": "^2.5.17",
     "prop-types": "^15.7.2",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-helmet": "^5.2.1"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "prettier": "2.1.2"
   },
   "keywords": [
     "gatsby"
   ],
-  "license": "MIT",
+  "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
+    "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {

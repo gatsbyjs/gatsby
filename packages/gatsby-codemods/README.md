@@ -8,19 +8,19 @@ A collection of codemod scripts for use with [JSCodeshift](https://github.com/fa
 
 - Install JSCodeshift as a global module
 
-```
+```shell
 npm install --global jscodeshift
 ```
 
 - Install this package
 
-```
+```shell
 npm install gatsby-codemods
 ```
 
 - Run a transform from this package on your project
 
-```
+```shell
 jscodeshift -t node_modules/gatsby-codemods/transforms/global-graphql-calls.js my-project
 ```
 

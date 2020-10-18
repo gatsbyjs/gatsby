@@ -29,7 +29,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
           const setHeadComponents = jest.fn()
           const setPostBodyComponents = jest.fn()
 
-          options = Object.assign({}, options)
+          options = Object.assign({ trackingId: `TEST_TRACKING_ID` }, options)
 
           onRenderBody({ setHeadComponents, setPostBodyComponents }, options)
 
@@ -38,6 +38,15 @@ describe(`gatsby-plugin-google-analytics`, () => {
             setPostBodyComponents,
           }
         }
+
+        it(`does not set tracking script when trackingId not given`, () => {
+          const { setHeadComponents, setPostBodyComponents } = setup({
+            trackingId: ``,
+          })
+
+          expect(setHeadComponents).not.toHaveBeenCalled()
+          expect(setPostBodyComponents).not.toHaveBeenCalled()
+        })
 
         it(`sets tracking script`, () => {
           const { setHeadComponents, setPostBodyComponents } = setup()
@@ -56,9 +65,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         it(`sets trackingId`, () => {
-          const { setPostBodyComponents } = setup({
-            trackingId: `TEST_TRACKING_ID`,
-          })
+          const { setPostBodyComponents } = setup()
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
 
@@ -164,6 +171,24 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
           expect(result).not.toContain(`allowAdFeatures`)
+        })
+
+        it(`should defer script after the site render when set`, () => {
+          const { setPostBodyComponents } = setup({
+            defer: true,
+          })
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).toContain(`defer=1;`)
+          expect(result).not.toContain(`async=1;`)
+        })
+
+        it(`should not defer script after the site render`, () => {
+          const { setPostBodyComponents } = setup({})
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).not.toContain(`defer=1;`)
+          expect(result).toContain(`async=1;`)
         })
       })
     })

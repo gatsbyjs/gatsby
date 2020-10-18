@@ -18,7 +18,7 @@ jest.mock(`gatsby/package.json`, () => {
 })
 
 jest.mock(
-  `../sync-requires`,
+  `$virtual/sync-requires`,
   () => {
     return {
       components: {
@@ -40,6 +40,10 @@ const MOCK_FILE_INFO = {
   )]: JSON.stringify({
     componentChunkName: `page-component---src-pages-test-js`,
     path: `/about/`,
+    webpackCompilationHash: `1234567890abcdef1234`,
+    staticQueryHashes: [],
+  }),
+  [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
 }
@@ -261,6 +265,7 @@ describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
+    fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
@@ -321,6 +326,7 @@ describe(`sanitizeComponents`, () => {
 
     const sanitizedComponents = sanitizeComponents([
       <link
+        key="manifest"
         rel="manifest"
         href="https://gatsbyjs.org/blog/manifest.webmanifest"
       />,

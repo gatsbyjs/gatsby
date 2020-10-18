@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`webpack utils dependencies returns default values without any options 1`] = `
+Object {
+  "exclude": [Function],
+  "test": /\\\\\\.\\(js\\|mjs\\)\\$/,
+  "type": "javascript/auto",
+  "use": Array [
+    Object {
+      "loader": StringContaining "babel-loader",
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
+        "cacheIdentifier": "{\\"browerslist\\":[],\\"gatsbyPreset\\":\\"1.0.0\\"}",
+        "compact": false,
+        "configFile": false,
+        "presets": Array [
+          Array [
+            "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
+            Object {
+              "stage": "develop",
+            },
+          ],
+        ],
+        "sourceMaps": false,
+      },
+    },
+  ],
+}
+`;
+
+exports[`webpack utils js returns default values without any options 1`] = `
+Object {
+  "include": [Function],
+  "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
+  "type": "javascript/auto",
+  "use": Array [
+    Object {
+      "loader": StringContaining "babel-loader",
+      "options": Object {
+        "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
+        "compact": false,
+        "configFile": true,
+        "reactRuntime": "classic",
+        "rootDir": "<TEMP_DIR>/test",
+        "stage": "develop",
+      },
+    },
+  ],
+}
+`;

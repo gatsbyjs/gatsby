@@ -1,5 +1,5 @@
 const { resolve } = require(`path`)
-const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const md5File = require(`md5-file`)
 
 const {
   DuotoneGradientType,
@@ -195,7 +195,7 @@ async function sqipContentful({ type, cache, store }) {
           file: { contentType },
         } = asset
 
-        if (contentType.indexOf(`image/`) !== 0) {
+        if (!contentType.includes(`image/`)) {
           return null
         }
 

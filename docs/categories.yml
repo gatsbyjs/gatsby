@@ -3,9 +3,12 @@ starter:
   - AMP
   - Authentication
   - AWS
+  - Azure
   - Blog
   - Client-side App
-  - CMS:Cosmic JS
+  - CMS:Agility CMS
+  - CMS:Cosmic
+  - CMS:Ghost
   - CMS:Headless
   - CMS:Contentful
   - CMS:DatoCMS
@@ -15,11 +18,13 @@ starter:
   - CMS:WordPress
   - CMS:sanity.io
   - CMS:Strapi
+  - CMS:Kontent
   - CMS:Forestry.io
   - CMS:Other
   - Disqus
   - Documentation
-  - eCommerce
+  - Donations
+  - E-commerce
   - Firebase
   - Gallery
   - Google Sheets
@@ -45,8 +50,10 @@ starter:
   - Search
   - SEO
   - Shopify
+  - Square
   - Storybook
   - Stripe
+  - Style Guide
   - Styling:Ant Design
   - Styling:Bootstrap
   - Styling:Bulma
@@ -56,6 +63,7 @@ starter:
   - Styling:PostCSS
   - Styling:SCSS
   - Styling:Tailwind
+  - Styling:Theme-UI
   - Styling:Other
   - Styling:None
   - Testing
@@ -66,6 +74,7 @@ site:
   - Agency
   - App
   - Blog
+  - Books
   - Business
   - Community
   - Conference
@@ -75,6 +84,7 @@ site:
   - Design System
   - Directory
   - Documentation
+  - E-commerce
   - Education
   - Entertainment
   - Entrepreneurship
@@ -84,8 +94,10 @@ site:
   - Food
   - Freelance
   - Gallery
+  - Ghost
   - Government
   - Healthcare
+  - Human Resources
   - JavaScript
   - Law
   - Landing Page
@@ -114,4 +126,3 @@ site:
   - Video
   - Web Development
   - WordPress
-  - eCommerce

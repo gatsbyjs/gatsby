@@ -12,8 +12,10 @@ and "transformer" plugins.
 
 The purpose of this doc is to:
 
-1.  Define what a Gatsby transformer plugin is, and
-2.  Walk through a simplified reimplementation of an existing plugin, to demonstrate how to create a transformer plugin.
+1. Define what a Gatsby transformer plugin is, and
+2. Walk through a simplified reimplementation of an existing plugin, to demonstrate how to create a transformer plugin.
+
+For a step-by-step process, check out the tutorial on [Creating a Remark Transformer Plugin](/tutorial/remark-plugin-tutorial/).
 
 ## What do transformer plugins do?
 
@@ -23,9 +25,9 @@ This loose coupling between the data source and transformer plugins allow Gatsby
 
 ## How do you create a transformer plugin?
 
-Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
+Just like a source plugin, a transformer plugin is a normal npm package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
 
-`gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
+`gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/YAML (e.g. a `.yaml` file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
 Check out this example of rebuilding a simplified `gatsby-transformer-yaml` directly in a site. Say you have a default Gatsby starter site which includes a `src/data/example.yml` file:
 
@@ -53,7 +55,7 @@ module.exports = {
 }
 ```
 
-These are exposed in your graphql schema which you can query:
+These are exposed in your GraphQL schema which you can query:
 
 ```graphql
 query {
@@ -100,10 +102,12 @@ Now you have a `File` node to work with:
 
 Now, transform the newly created `File` nodes by hooking into the `onCreateNode` API in `gatsby-node.js`.
 
+#### Convert YAML into JSON for storage in Gatsby nodes
+
 If you're following along in an example project, install the following packages:
 
 ```shell
-npm install --save js-yaml lodash
+npm install js-yaml lodash
 ```
 
 Now, in `gatsby-node.js`:
@@ -126,7 +130,7 @@ exports.onCreateNode = onCreateNode
 
 File content:
 
-```text
+```yaml
 - id: Jane Doe
   bio: Developer based in Somewhere, USA
 - id: John Smith
@@ -135,41 +139,67 @@ File content:
 
 Parsed YAML content:
 
-```javascript
-;[
+```json
+[
   {
-    id: "Jane Doe",
-    bio: "Developer based in Somewhere, USA",
+    "id": "Jane Doe",
+    "bio": "Developer based in Somewhere, USA"
   },
   {
-    id: "John Smith",
-    bio: "Developer based in Maintown, USA",
-  },
+    "id": "John Smith",
+    "bio": "Developer based in Maintown, USA"
+  }
 ]
 ```
 
 Now you'll write a helper function to transform the parsed YAML content into new Gatsby nodes:
 
-```javascript
+```javascript:title=gatsby-node.js
 function transformObject(obj, id, type) {
   const yamlNode = {
     ...obj,
     id,
     children: [],
-    parent: node.id,
+    parent: null,
     internal: {
       contentDigest: createContentDigest(obj),
       type,
     },
   }
   createNode(yamlNode)
-  createParentChildLink({ parent: node, child: yamlNode })
 }
 ```
 
 Above, you create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
 
-You then create a link between the parent node (file) and the child node (yaml content).
+#### Creating the transformer relationship
+
+You then need to create a link between the parent node (file) and the child node (YAML content) using the `createParentChildLink` function after adding the parent node's id to the `yamlNode`:
+
+```javascript:title=gatsby-node.js
+function transformObject(obj, id, type) {
+  const yamlNode = {
+    ...obj,
+    id,
+    children: [],
+    parent: node.id, // highlight-line
+    internal: {
+      contentDigest: createContentDigest(obj),
+      type,
+    },
+  }
+  createNode(yamlNode)
+  createParentChildLink({ parent: node, child: yamlNode }) // highlight-line
+}
+```
+
+Another example of a transformation relationship is the `gatsby-source-filesystem` plugin used with the `gatsby-transformer-remark` plugin. This combination transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/actions/#createParentChildLink). Transformation relationships like this are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and would not exist if the parent `File` node hadn't been created.
+
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on). Gatsby does so with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but should no longer exist.
+
+_For examples of other plugins creating transformation relationships, you can see the [`gatsby-transformer-remark` plugin](https://github.com/gatsbyjs/gatsby/blob/72077527b4acd3f2109ed5a2fcb780cddefee35a/packages/gatsby-transformer-remark/src/on-node-create.js#L39-L67) (from the above example) or the [`gatsby-transformer-sharp` plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25)._
+
+#### Create new nodes from the derived data
 
 In your updated `gatsby-node.js`, you'll then iterate through the parsed YAML content, using the helper function to transform each into a new node:
 
@@ -225,6 +255,8 @@ async function onCreateNode({
 exports.onCreateNode = onCreateNode
 ```
 
+#### Query for the transformed data
+
 Now you can query for your new nodes containing our transformed YAML data:
 
 ```graphql
@@ -272,7 +304,7 @@ Check out the [full source code](https://github.com/gatsbyjs/gatsby/blob/master/
 
 Sometimes transforming properties costs time and resources. In order to avoid recreating these properties at each run, you can profit from the global cache mechanism Gatsby provides.
 
-Cache keys should at least contain the contentDigest of the concerned node. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
+Cache keys should at least contain the contentDigest of the concerned node. For example, the `gatsby-transformer-remark` uses the following cache key for the HTML node:
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>
@@ -286,3 +318,7 @@ const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
 
 cache.set(htmlCacheKey(markdownNode), html)
 ```
+
+## Additional resources
+
+- Tutorial: [Creating a Remark Transformer Plugin](/tutorial/remark-plugin-tutorial/)

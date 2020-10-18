@@ -3,14 +3,11 @@ import { border, typography, compose } from "styled-system"
 import themeGet from "@styled-system/theme-get"
 import propTypes from "@styled-system/prop-types"
 
-import Box from "./box"
+import { Box } from "theme-ui"
 
 const buttonPropTypes = { ...propTypes.border, ...propTypes.typography }
 
-const styleProps = compose(
-  border,
-  typography
-)
+const styleProps = compose(border, typography)
 
 const Button = styled(Box)(
   props => {
@@ -59,7 +56,7 @@ Button.defaultProps = {
   border: 0,
   borderRadius: 2,
   color: `white`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: { xxs: 4, md: 5 },
   fontWeight: `bold`,
   px: 4,

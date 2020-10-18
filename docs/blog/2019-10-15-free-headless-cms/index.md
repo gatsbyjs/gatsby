@@ -18,7 +18,7 @@ How do you know which headless CMS is right for your site? In this post, we’ll
 
 2. This headless CMS has to be robust enough to grow with the site over time.
 
-3. This headless CMS has to work with with frontend frameworks like Gatsby.
+3. This headless CMS has to work with frontend frameworks like Gatsby.
 
 The difficulty with these must-haves is that there are no _truly free_ options. There are open source projects that provide code for free, but you have to host it somewhere. Then, there are hosted headless CMS’s with generous free tiers. But most of them have prohibitive pricing once your project grows.
 
@@ -40,7 +40,7 @@ Every writer or marketer who works on the Internet is familiar with WordPress, s
 
 ### How “free” is it?
 
-Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \$10 dollars a month.
+Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about $4 dollars a month. Other popular hosts like GoDaddy can get you going for less than $10 dollars a month.
 
 If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn’t be enough to handle a website that expects any sort of traffic. However, you’re just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a frontend framework like Gatsby.
 
@@ -48,7 +48,7 @@ So, as long as the host is reputable, and the service is secure, you can buy the
 
 ## Option #2. Netlify CMS
 
-Netlify created a free headless CMS modeled after open source projects like WordPress and Drupal, so JAMstack sites would have options beyond SaaS CMS’s. [Netlify CMS](https://www.netlifycms.org/) cleverly uses cloud git services like GitHub and Gitlab as the backend for your content, and claims to work with almost any static site generator, including Gatsby.
+Netlify created a free headless CMS modeled after open source projects like WordPress and Drupal, so JAMstack sites would have options beyond SaaS CMS’s. [Netlify CMS](https://www.netlifycms.org/) cleverly uses cloud git services like GitHub and GitLab as the backend for your content, and claims to work with almost any static site generator, including Gatsby.
 
 ### How “free” is it?
 
@@ -56,19 +56,20 @@ Because Netlify CMS is tied to third party authentication and git services, it�
 
 ## Option #3. Headless Ghost
 
-Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and CloudFlare - so you’ll be in good company if you choose it.
+Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and Cloudflare - so you’ll be in good company if you choose it.
 
 ### How “free” is it?
 
-Though Ghost is open source, it still requires hosting. The official Ghost recommendation is to use their own Ghost-optimized hosting at about \$30 dollars a month, or generic DigitalOcean hosting which can start at less than \$10 dollars.
+Though Ghost is open source, it still requires hosting. The official Ghost recommendation is to use their own Ghost-optimized hosting at about $30 dollars a month, or generic DigitalOcean hosting which can start at less than $10 dollars.
 
 ## The Hidden Cost of Any Free Headless CMS
 
 No matter how small the initial cost of a “free” headless CMS, the biggest tax you’ll pay is writer workflow. If you, or someone on your team hates writing and managing content within your CMS, then it doesn’t matter how much money was saved every month.
 
 This is where the power of a headless CMS architecture shines. You can create a Gatsby site that starts with one free headless CMS, then switches to another if the first one didn’t fit your workflow, without making drastic changes to your site.
+
 <Pullquote>
-The decoupled nature of your site erases concerns of CMS lock-in.
+  The decoupled nature of your site erases concerns of CMS lock-in.
 </Pullquote>
 
 Now, that’s really being free!

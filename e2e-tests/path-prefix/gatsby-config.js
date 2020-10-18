@@ -22,6 +22,8 @@ module.exports = {
       },
     },
     `gatsby-plugin-sitemap`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-plugin-feed`,
       options: {

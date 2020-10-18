@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "./localized-link"
 
 import {
   BlogIcon,
@@ -9,7 +9,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/icons"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {
@@ -35,10 +35,17 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     getProps={getProps}
     to={linkTo}
   >
-    <span dangerouslySetInnerHTML={{ __html: icon }} />
+    {icon}
     <div>{label}</div>
   </Link>
 )
+const navItems = [
+  { id: `docs`, text: `Docs`, icon: <DocsIcon /> },
+  { id: `tutorial`, text: `Tutorials`, icon: <TutorialIcon /> },
+  { id: `plugins`, text: `Plugins`, icon: <PluginsIcon /> },
+  { id: `blog`, text: `Blog`, icon: <BlogIcon /> },
+  { id: `showcase`, text: `Showcase`, icon: <ShowcaseIcon /> },
+]
 
 const MobileNavigation = () => (
   <div
@@ -50,7 +57,7 @@ const MobileNavigation = () => (
       borderTopWidth: `1px`,
       bottom: 0,
       display: `flex`,
-      fontFamily: `header`,
+      fontFamily: `heading`,
       justifyContent: `space-around`,
       left: 0,
       paddingBottom: `env(safe-area-inset-bottom)`,
@@ -62,11 +69,9 @@ const MobileNavigation = () => (
       },
     }}
   >
-    <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
-    <MobileNavItem linkTo="/tutorial/" label="Tutorials" icon={TutorialIcon} />
-    <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
-    <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
-    <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
+    {navItems.map(({ id, text, icon }) => (
+      <MobileNavItem linkTo={`/${id}/`} key={id} label={text} icon={icon} />
+    ))}
   </div>
 )
 
@@ -104,8 +109,7 @@ const styles = {
         mt: 0,
         mx: `auto`,
         "& path, & line, & polygon": {
-          transition: t =>
-            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          transition: `default`,
         },
       },
       ":hover": {

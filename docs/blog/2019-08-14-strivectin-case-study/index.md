@@ -3,7 +3,7 @@ title: "Migrating from Magento Enterprise to Gatsby"
 date: 2019-08-14
 author: Thomas Slade
 tags:
-  - ecommerce
+  - e-commerce
   - case-studies
   - marketing
   - headless-cms
@@ -13,7 +13,7 @@ showImageInArticle: true
 
 [StriVectin](https://www.strivectin.com), founded in 2002, sells lab-tested, anti-aging skincare products. They offer direct-to-consumer products online and are stocked in thousands of retailers globally. Their first site went live on Magento Enterprise in 2011. During this time, the customer base has grown more than 10x. This growth introduced technical obstacles. Site outages became a constant problem during marketing events and press releases. The site performance was sluggish—even when utilizing a CDN, browser cache, and Magento’s page cache.
 
-The performance and stability concerns needed resolution in order for StriVectin to succeed. [Elevar](https://getelevar.com/?utm_source=gatsbyjs&utm_medium=blog&utm_campaign=casestudy&utm_content=casestudy), an ecommerce data analysis and optimization company, helped with implementation which included designing, building, and launching. Fast forward to July 2019 and a new, blazing-fast site launched using Gatsby. Day-to-day concerns with site outages, instability, or “the site is slow for me” are now a thing of the past!
+The performance and stability concerns needed resolution in order for StriVectin to succeed. [Elevar](https://getelevar.com/?utm_source=gatsbyjs&utm_medium=blog&utm_campaign=casestudy&utm_content=casestudy), an e-commerce data analysis and optimization company, helped with implementation which included designing, building, and launching. Fast forward to July 2019 and a new, blazing-fast site launched using Gatsby. Day-to-day concerns with site outages, instability, or “the site is slow for me” are now a thing of the past!
 
 ## Client goals
 
@@ -21,7 +21,7 @@ StriVectin wanted to move to a platform that allowed them more freedom and flexi
 
 ## Elevar goals
 
-After aligning with the client’s goals, we came up with some of our own. Speed and performance were paramount since our own data across hundreds of eCommerce stores show that speed correlates to conversion rate. We also wanted to invest in thinking through each user interaction, design choice, and an advanced analytics tracking solution for all marketing partners.
+After aligning with the client’s goals, we came up with some of our own. Speed and performance were paramount since our own data across hundreds of e-commerce stores show that speed correlates to conversion rate. We also wanted to invest in thinking through each user interaction, design choice, and an advanced analytics tracking solution for all marketing partners.
 
 Most developers struggle with the steep learning curve associated with Magento. The codebase is roughly 20,000 files! Our team wanted to Improve DX (Developer Experience). We’ve experienced attacks first-hand in Magento, and the constant paranoia associated with security patch release cycles. We wanted to reduce this exposure.
 
@@ -51,7 +51,7 @@ Gatsby provides us with a superior DX and a fast site. This includes:
 
 Gatsby provides conveniences around data fetching. The “Content Mesh” is a mesh of different content sources stitched into a single data layer. You can query this layer using GraphQL. Our “Content Mesh” consists of Prismic, Shopify, and Yotpo. You can see how those data sources make up the Homepage below:
 
-![Strivectin content mesh.](images/content-mesh.png)
+![StriVectin content mesh.](./images/content-mesh.png)
 
 ### Leaving the server behind
 
@@ -111,19 +111,13 @@ Launch was effortless. We had the site living on a subdomain of strivectin.com s
 Felicity Sissener, the Chief Digital Officer at StriVectin had this to say about launch:
 
 <Pullquote>
-“This has also been the smoothest cut-over of my entire career- your team and work are top notch.”
+  “This has also been the smoothest cut-over of my entire career- your team and
+  work are top notch.”
 </Pullquote>
 
 We confidently ship code to production many times per day. At the time of writing this, we have not had a single site outage.
 
 StriVectin’s hosting costs have gone from \$2,000/month to just a few dollars per day. The servers will be decommissioned very soon.
-
-<figure>
-  <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/DC4g3SGNJpC/giphy.mp4"/>
-  </video>
-  <figcaption>Server smashing time</figcaption>
-</figure>
 
 Feature development and maintenance is much simpler. The codebase was around 20,000 files on Magento and went down to around 300.
 

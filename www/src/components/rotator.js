@@ -3,9 +3,8 @@ import { jsx } from "theme-ui"
 
 import React, { Component } from "react"
 import Slider from "./slider"
-import Link from "gatsby-link"
-import MdNavigateBefore from "react-icons/lib/md/navigate-before"
-import MdNavigateNext from "react-icons/lib/md/navigate-next"
+import Link from "./localized-link"
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md"
 import { visuallyHidden } from "../utils/styles"
 
 const controlButtonStyles = {
@@ -114,8 +113,9 @@ class Rotator extends Component {
     return (
       <div
         sx={{
-          borderTop: t => `1px solid ${t.colors.ui.border}`,
-          borderBottom: t => `1px solid ${t.colors.ui.border}`,
+          borderTop: 1,
+          borderBottom: 1,
+          borderColor: `ui.border`,
           py: 4,
           px: 9,
           my: 6,
@@ -130,7 +130,7 @@ class Rotator extends Component {
           <p
             sx={{
               fontSize: 4,
-              fontFamily: `header`,
+              fontFamily: `heading`,
               textAlign: `center`,
               mb: 0,
             }}

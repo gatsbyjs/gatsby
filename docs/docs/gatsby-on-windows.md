@@ -2,7 +2,7 @@
 title: Gatsby on Windows
 ---
 
-## Setting up your environment for building native Node.js modules.
+## Setting up your environment for building native Node.js modules
 
 Many Gatsby plugins and themes require building native Node.js modules, e.g.
 [Sharp (a common Gatsby dependency used for image processing)](/packages/gatsby-plugin-sharp/).
@@ -11,7 +11,7 @@ Tools).
 
 The recommended way to setup your build environment on Windows is to install the
 [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools)
-package by running `npm install windows-build-tools -g` on an admin PowerShell
+package by running `npm install --global windows-build-tools --vs2015` on an admin PowerShell
 console. Upon installing this package, it downloads and installs Visual C++
 Build Tools 2015, provided free of charge by Microsoft. These tools are required
 to compile popular native modules. It will also install Python 2.7, configuring
@@ -19,7 +19,7 @@ your machine and npm appropriately.
 
 If your `windows-build-tools` installation stalls after Visual Studio Build Tools finishes, [this remedy](https://github.com/felixrieseberg/windows-build-tools/issues/47#issuecomment-296881488) might help.
 
-### If `npm install` still fails...
+### If `npm install` still fails
 
 Sometimes the `windows-build-tools` won't properly install the required
 libraries. This is true if you already have a regular .NET development
@@ -79,7 +79,7 @@ further instructions and contact the `node-gyp`team on
 
 ## gatsby-plugin-sharp requires Node x64
 
-Some plugins which depend on native NPM dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
+Some plugins which depend on native npm dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
 
 ## gatsby-plugin-sharp requires libvips
 
@@ -87,6 +87,4 @@ Sharp uses a C library, libvips. If you are having issues while installing Sharp
 
 ## Windows Subsystem for Linux
 
-If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
-
-You can also visit [Gatsby on Linux](/docs/gatsby-on-linux/) to learn more.
+If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. For more explicit instructions on getting set up with WSL, see the [Gatsby on Linux](/docs/gatsby-on-linux/#windows-subsystem-linux-wsl) documentation.

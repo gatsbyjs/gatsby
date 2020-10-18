@@ -1,6 +1,5 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const sharp = require(`sharp`)
 jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
@@ -8,19 +7,35 @@ jest.mock(`async/queue`, () => () => {
     push: jest.fn(),
   }
 })
+jest.mock(`gatsby/dist/redux/actions`, () => {
+  return {
+    boundActionCreators: {
+      createJobV2: jest.fn().mockReturnValue(Promise.resolve()),
+    },
+  }
+})
 
+const sharp = require(`sharp`)
+const { scheduleJob } = require(`../scheduler`)
+scheduleJob.mockReturnValue(Promise.resolve())
 fs.ensureDirSync = jest.fn()
+fs.existsSync = jest.fn().mockReturnValue(false)
 
 const {
   base64,
+  generateBase64,
   fluid,
   fixed,
   queueImageResizing,
   getImageSize,
   stats,
+  setBoundActionCreators,
 } = require(`../`)
-const { scheduleJob } = require(`../scheduler`)
-scheduleJob.mockResolvedValue(Promise.resolve())
+
+const {
+  getPluginOptionsDefaults,
+  setPluginOptions,
+} = require(`../plugin-options`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -55,60 +70,140 @@ describe(`gatsby-plugin-sharp`, () => {
   }
 
   describe(`queueImageResizing`, () => {
-    it(`should round height when auto-calculated`, () => {
-      // Resize 144-density.png (281x136) with a 3px width
-      const result = queueImageResizing({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { width: 3 },
-      })
+    ;[`createJob`, `createJobV2`].forEach(api => {
+      describe(`with ${api}`, () => {
+        let boundActionCreators
+        beforeEach(() => {
+          boundActionCreators = {}
+          if (api === `createJobV2`) {
+            boundActionCreators.createJobV2 = jest
+              .fn()
+              .mockReturnValue(Promise.resolve())
+          }
+          setBoundActionCreators(boundActionCreators)
+          scheduleJob.mockClear()
+        })
 
-      // Width should be: w = (3 * 136) / 281 = 1.451957295
-      // We expect value to be rounded to 1
-      expect(result.height).toBe(1)
+        it(`should round height when auto-calculated ${api}`, () => {
+          // Resize 144-density.png (281x136) with a 3px width
+          const result = queueImageResizing({
+            file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+            args: { width: 3 },
+          })
+
+          // Width should be: w = (3 * 136) / 281 = 1.451957295
+          // We expect value to be rounded to 1
+          expect(result.height).toBe(1)
+          if (api === `createJobV2`) {
+            expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
+            expect(boundActionCreators.createJobV2).toMatchSnapshot()
+          } else {
+            expect(scheduleJob).toHaveBeenCalledTimes(1)
+            expect(scheduleJob).toMatchSnapshot()
+          }
+        })
+
+        it(`file name works with spaces & special characters ${api}`, async () => {
+          // test name encoding with various characters
+          const testName = `spaces and '"@#$%^&,`
+
+          const queueResult = queueImageResizing({
+            file: getFileObject(
+              path.join(__dirname, `images/144-density.png`),
+              testName
+            ),
+            args: { width: 3 },
+          })
+
+          const queueResultName = path.parse(queueResult.src).name
+
+          // decoding to check for outputting same name
+          expect(decodeURIComponent(queueResultName)).toBe(testName)
+
+          // regex for special characters above and spaces
+          // testname should match, the queue result should not
+          expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
+          expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
+          if (api === `createJobV2`) {
+            expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
+            expect(boundActionCreators.createJobV2).toMatchSnapshot()
+          } else {
+            expect(scheduleJob).toHaveBeenCalledTimes(1)
+            expect(scheduleJob).toMatchSnapshot()
+          }
+        })
+
+        // re-enable when image processing on demand is implemented
+        it.skip(`should process immediately when asked`, async () => {
+          const result = queueImageResizing({
+            file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+            args: { width: 3 },
+          })
+
+          await result.finishedPromise
+
+          expect(scheduleJob).toMatchSnapshot()
+        })
+      })
     })
 
-    it(`file name works with spaces & special characters`, async () => {
-      // test name encoding with various characters
-      const testName = `spaces and '"@#$%^&,`
-
-      const queueResult = queueImageResizing({
-        file: getFileObject(
-          path.join(__dirname, `images/144-density.png`),
-          testName
-        ),
-        args: { width: 3 },
-      })
-
-      const queueResultName = path.parse(queueResult.src).name
-
-      // decoding to check for outputting same name
-      expect(decodeURIComponent(queueResultName)).toBe(testName)
-
-      // regex for special characters above and spaces
-      // testname should match, the queue result should not
-      expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
-      expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
-    })
-
-    // re-enable when image processing on demand is implemented
-    it.skip(`should process immediately when asked`, async () => {
+    it(`should return the same result when using createJob as createJobV2`, async () => {
       scheduleJob.mockClear()
-      const result = queueImageResizing({
+      const boundActionCreators = {
+        createJobV2: jest.fn(() => Promise.resolve()),
+      }
+      setBoundActionCreators(boundActionCreators)
+      const resultV2 = await queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: { width: 3 },
       })
 
-      await result.finishedPromise
-
-      expect(scheduleJob).toMatchSnapshot()
+      setBoundActionCreators({})
+      const result = await queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+      expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
+      expect(scheduleJob).toHaveBeenCalledTimes(1)
+      expect(result).toStrictEqual(resultV2)
     })
   })
 
   describe(`fluid`, () => {
+    let boundActionCreators = {}
+    beforeEach(() => {
+      boundActionCreators.createJobV2 = jest
+        .fn()
+        .mockReturnValue(Promise.resolve())
+      setBoundActionCreators(boundActionCreators)
+      scheduleJob.mockClear()
+    })
+
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
       const result = await fluid({ file })
 
+      expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
       expect(result).toMatchSnapshot()
+    })
+
+    it(`includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api`, async () => {
+      setBoundActionCreators({})
+      const result = await fluid({ file })
+
+      expect(boundActionCreators.createJobV2).not.toHaveBeenCalled()
+      expect(scheduleJob).toHaveBeenCalledTimes(1)
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`should give the same result with createJob as with createJobV2`, async () => {
+      const resultV2 = await fluid({ file })
+
+      setBoundActionCreators({})
+      const result = await fluid({ file })
+      expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
+      expect(scheduleJob).toHaveBeenCalledTimes(1)
+      expect(result).toStrictEqual(resultV2)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`adds pathPrefix if defined`, async () => {
@@ -122,6 +217,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.src.indexOf(pathPrefix)).toBe(0)
       expect(result.srcSet.indexOf(pathPrefix)).toBe(0)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`keeps original file name`, async () => {
@@ -131,6 +227,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(path.parse(result.src).name).toBe(file.name)
       expect(path.parse(result.srcSet).name).toBe(file.name)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`does not change the arguments object it is given`, async () => {
@@ -141,6 +238,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(args).toEqual({ maxWidth: 400 })
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`infers the maxWidth if only maxHeight is given`, async () => {
@@ -151,6 +249,53 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.presentationWidth).toEqual(41)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
+    })
+
+    it(`calculate height based on width when maxWidth & maxHeight are present`, async () => {
+      const testsCases = [
+        { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.fill },
+          result: [20, 20],
+        },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.inside },
+          result: [20, 10],
+        },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.outside },
+          result: [41, 20],
+        },
+        { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.fill },
+          result: [200, 200],
+        },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.inside },
+          result: [200, 97],
+        },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.outside },
+          result: [413, 200],
+        },
+      ]
+      const fileObject = getFileObject(
+        path.join(__dirname, `images/144-density.png`)
+      )
+
+      for (const testCase of testsCases) {
+        boundActionCreators.createJobV2.mockClear()
+        const result = await fluid({
+          file: fileObject,
+          args: testCase.args,
+        })
+
+        expect(boundActionCreators.createJobV2.mock.calls).toMatchSnapshot()
+        expect(result.presentationWidth).toEqual(testCase.result[0])
+        expect(result.presentationHeight).toEqual(testCase.result[1])
+      }
     })
 
     it(`should throw if maxWidth is less than 1`, async () => {
@@ -161,6 +306,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       await expect(result).rejects.toThrow()
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`accepts srcSet breakpoints`, async () => {
@@ -180,6 +326,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const actual = findAllBreakpoints(result.srcSet)
       // should contain all requested sizes as well as the original size
       expect(actual).toEqual(expect.arrayContaining(expected))
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`should throw on srcSet breakpoints less than 1`, async () => {
@@ -191,6 +338,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       await expect(result).rejects.toThrow()
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`ensure maxWidth is in srcSet breakpoints`, async () => {
@@ -206,6 +354,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.srcSet).toEqual(expect.stringContaining(`${maxWidth}w`))
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`reject any breakpoints larger than the original width`, async () => {
@@ -240,6 +389,7 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(actual).toEqual(expect.arrayContaining(expected))
       // should contain no other sizes
       expect(actual.length).toEqual(expected.length)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`prevents duplicate breakpoints`, async () => {
@@ -260,12 +410,37 @@ describe(`gatsby-plugin-sharp`, () => {
       const actual = findAllBreakpoints(result.srcSet)
       expect(actual).toEqual(expect.arrayContaining(expected))
       expect(actual.length).toEqual(expected.length)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
   })
 
   describe(`fixed`, () => {
-    it(`does not warn when the requested width is equal to the image width`, async () => {
+    let boundActionCreators = {}
+    beforeEach(() => {
+      boundActionCreators.createJobV2 = jest
+        .fn()
+        .mockReturnValue(Promise.resolve())
+      setBoundActionCreators(boundActionCreators)
+      scheduleJob.mockClear()
       console.warn = jest.fn()
+    })
+
+    it(`should give the same result with createJob as with createJobV2`, async () => {
+      const boundActionCreators = {
+        createJobV2: jest.fn(() => Promise.resolve()),
+      }
+      setBoundActionCreators(boundActionCreators)
+      const resultV2 = await fixed({ file, args: { width: 1 } })
+
+      setBoundActionCreators({})
+      const result = await fixed({ file, args: { width: 1 } })
+      expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
+      expect(scheduleJob).toHaveBeenCalledTimes(1)
+      expect(result).toStrictEqual(resultV2)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
+    })
+
+    it(`does not warn when the requested width is equal to the image width`, async () => {
       const args = { width: 1 }
 
       const result = await fixed({
@@ -275,11 +450,10 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(1)
       expect(console.warn).toHaveBeenCalledTimes(0)
-      console.warn.mockClear()
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`warns when the requested width is greater than the image width`, async () => {
-      console.warn = jest.fn()
       const { width } = await sharp(file.absolutePath).metadata()
       const args = { width: width * 2 }
 
@@ -290,7 +464,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(width)
       expect(console.warn).toHaveBeenCalledTimes(1)
-      console.warn.mockClear()
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`correctly infers the width when only the height is given`, async () => {
@@ -302,6 +476,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.width).toEqual(21)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
   })
 
@@ -313,6 +488,120 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result).toMatchSnapshot()
+    })
+
+    it(`should cache same image`, async () => {
+      const file1 = getFileObject(absolutePath)
+      const file2 = getFileObject(absolutePath)
+      const file3 = getFileObject(absolutePath, `test`, `new-image`)
+      // change file of file3
+      file3.base = path.join(__dirname, `images/144-density.png`)
+
+      const result = await base64({
+        file: file1,
+        args,
+      })
+      const result2 = await base64({
+        file: file2,
+        args,
+      })
+      const result3 = await base64({
+        file: file3,
+        args,
+      })
+
+      // I would like to test sharp being executed but I don't really know how to mock that beast :p
+      expect(result).toEqual(result2)
+      expect(result).not.toEqual(result3)
+    })
+
+    // Matches base64 string in snapshot, converts to jpg to force use of bg
+    // Testing pixel colour for a match would be better
+    it(`should support option: 'background'`, async () => {
+      const result = await generateBase64({
+        file: getFileObject(path.join(__dirname, `images/alphatest.png`)),
+        args: {
+          background: `#ff0000`,
+          toFormatBase64: `jpg`,
+        },
+      })
+
+      expect(result).toMatchSnapshot()
+    })
+
+    describe(`should support option: 'base64Width'`, () => {
+      // Uses 'generateBase64()` directly to avoid `base64()` caching affecting results.
+      it(`should support a configurable width`, async () => {
+        const result = await generateBase64({
+          file,
+          args: { base64Width: 42 },
+        })
+
+        expect(result.width).toEqual(42)
+      })
+
+      it(`should support a configurable default width`, async () => {
+        setPluginOptions({ base64Width: 32 })
+
+        const result = await generateBase64({
+          file,
+          args,
+        })
+
+        expect(result.width).toEqual(32)
+        setPluginOptions(getPluginOptionsDefaults())
+      })
+
+      it(`width via arg overrides global default`, async () => {
+        setPluginOptions({ base64Width: 32 })
+
+        const result = await generateBase64({
+          file,
+          args: { base64Width: 42 },
+        })
+
+        expect(result.width).toEqual(42)
+        setPluginOptions(getPluginOptionsDefaults())
+      })
+    })
+
+    describe(`should support options: 'toFormatBase64' and 'forceBase64Format'`, () => {
+      it(`should support a different image format for base64`, async () => {
+        const result = await generateBase64({
+          file,
+          args: { toFormatBase64: `webp` },
+        })
+
+        expect(result.src).toEqual(
+          expect.stringMatching(/^data:image\/webp;base64/)
+        )
+      })
+
+      it(`should support a configurable default base64 image format`, async () => {
+        setPluginOptions({ forceBase64Format: `webp` })
+        const result = await generateBase64({
+          file,
+          args,
+        })
+
+        expect(result.src).toEqual(
+          expect.stringMatching(/^data:image\/webp;base64/)
+        )
+        setPluginOptions(getPluginOptionsDefaults())
+      })
+
+      it(`image format via arg overrides global default`, async () => {
+        setPluginOptions({ forceBase64Format: `png` })
+        const result = await generateBase64({
+          file,
+          args: { toFormatBase64: `webp` },
+        })
+
+        expect(result.src).toEqual(
+          expect.stringMatching(/^data:image\/webp;base64/)
+        )
+        setPluginOptions(getPluginOptionsDefaults())
+      })
     })
   })
 
@@ -409,14 +698,16 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 })
 
-function getFileObject(absolutePath, name = `test`) {
+function getFileObject(absolutePath, name = `test`, contentDigest = `1234`) {
+  const parsedPath = path.parse(absolutePath)
   return {
     id: `${absolutePath} absPath of file`,
     name: name,
+    base: parsedPath.base,
     absolutePath,
     extension: `png`,
     internal: {
-      contentDigest: `1234`,
+      contentDigest,
     },
   }
 }

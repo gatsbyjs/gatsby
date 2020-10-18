@@ -5,7 +5,7 @@ A list of utilities used in multiple gatsby packages.
 ## Usage
 
 ```shell
-npm install --save gatsby-core-utils
+npm install gatsby-core-utils
 ```
 
 ### createContentDigest
@@ -61,5 +61,46 @@ const { joinPath } = require("gatsby-core-utils")
 const BASEPATH = "/mybase/"
 const pathname = "./gatsby/is/awesome"
 const url = joinPath(BASEPATH, pathname)
+// ...
+```
+
+### isCI
+
+A utility that enhances `isCI` from 'ci-info` with support for Vercel and Heroku detection
+
+```js
+const { isCI } = require("gatsby-core-utils")
+
+if (isCI()) {
+  // execute CI-specific code
+}
+// ...
+```
+
+### getCIName
+
+A utility that returns the name of the current CI environment if available, `null` otherwise
+
+```js
+const { getCIName } = require("gatsby-core-utils")
+
+const CI_NAME = getCIName()
+console.log({ CI_NAME })
+// {CI_NAME: null}, or
+// {CI_NAME: "Vercel"}
+// ...
+```
+
+### createRequireFromPath
+
+A cross-version polyfill for Node's [`Module.createRequire`](https://nodejs.org/api/modules.html#modules_module_createrequire_filename).
+
+```js
+const { createRequireFromPath } = require("gatsby-core-utils")
+
+const requireUtil = createRequireFromPath("../src/utils/")
+
+// Require `../src/utils/some-tool`
+requireUtil("./some-tool")
 // ...
 ```

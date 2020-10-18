@@ -4,10 +4,10 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "chalk": "^2.4.2",
-    "cheerio": "^1.0.0-rc.2",
-    "js-yaml": "^3.12.2",
-    "node-fetch": "^2.3.0"
+    "chalk": "^3.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "js-yaml": "^3.13.1",
+    "node-fetch": "^2.6.0"
   },
   "scripts": {
     "start": "node ./index.js"

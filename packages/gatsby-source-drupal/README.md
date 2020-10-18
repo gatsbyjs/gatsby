@@ -15,7 +15,7 @@ been used since jsonapi version `8.x-1.0-alpha4`.
 
 ## Install
 
-`npm install --save gatsby-source-drupal`
+`npm install gatsby-source-drupal`
 
 ## How to use
 
@@ -98,6 +98,36 @@ module.exports = {
 }
 ```
 
+### Fastbuilds
+
+You can use the `fastBuilds` option to enable fastbuilds. This requires the
+Gatsby Drupal module (called gatsby_fastbuilds) to be enabled. This will speed
+up your development and build process by only downloading content that has
+changed since you last ran `gatsby build` or `gatsby develop`.
+
+This will require authentication to your Drupal site and a Drupal user with the
+Drupal permission to `sync gatsby fastbuild log entities`.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        basicAuth: {
+          username: process.env.BASIC_AUTH_USERNAME,
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
+        fastBuilds: true,
+      },
+    },
+  ],
+}
+```
+
 ## Request Headers
 
 You can add optional request headers to the request using `headers` param.
@@ -142,9 +172,31 @@ module.exports = {
 }
 ```
 
+### File Downloads
+
+You can use the `skipFileDownloads` option if you do not want Gatsby to download
+files from your Drupal website. This is useful if you are using another option
+for processing/serving images.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        skipFileDownloads: true,
+      },
+    },
+  ],
+}
+```
+
 ## Concurrent File Requests
 
-You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however to many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
+You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
 
 ```javascript
 // In your gatsby-config.js
@@ -162,6 +214,58 @@ module.exports = {
 }
 ```
 
+## Disallowed Link Types
+
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // skip the action--action resource type.
+        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+      },
+    },
+  ],
+}
+```
+
+_NOTES_:
+
+When using [includes](https://www.drupal.org/docs/8/modules/jsonapi/includes) in your JSON:API calls the included data will automatically become available to query, even if the link types are skipped using `disallowedLinkTypes`.
+
+This enables you to fetch only the data you need at build time, instead of all data of a certain entity type or bundle.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // Skip the node--page resource type and paragraph components.
+        disallowedLinkTypes: [
+          `self`,
+          `describedby`,
+          `node--page`,
+          `paragraph--text`,
+          `paragraph--image`,
+        ],
+        filters: {
+          // Use includes so only the news content paragraph components are fetched.
+          "node--news": "include=field_content",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby
@@ -170,11 +274,11 @@ In your Drupal module configuration, set the update URL to your Gatsby Preview i
 
 _NOTES_:
 
-- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` drupal module are incompatible).
+- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` Drupal module are incompatible).
 
 ### Preview Secret
 
-While you don't need to pass any additional options for preview to work, you can pass a `secret` for added security between your drupal instance and gatsby preview. Ensure this secret matches the one set in your Drupal Gatsby Preview settings.
+While you don't need to pass any additional options for preview to work, you can pass a `secret` for added security between your Drupal instance and Gatsby preview. Ensure this secret matches the one set in your Drupal Gatsby Preview settings.
 
 ```javascript
 // In your gatsby-config.js

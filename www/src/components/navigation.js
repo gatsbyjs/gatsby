@@ -1,17 +1,19 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
-import { Link } from "gatsby"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import TwitterIcon from "react-icons/lib/fa/twitter"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import {
+  FaTwitter as TwitterIcon,
+  FaDiscord as DiscordIcon,
+} from "react-icons/fa"
 
-import SearchForm from "../components/search-form"
-import DiscordIcon from "../components/discord"
+import Link from "./localized-link"
+import SearchForm from "./search-form"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { breakpointGutter } from "../utils/styles"
-import DarkModeToggle from "../components/dark-mode-toggle"
+import DarkModeToggle from "./dark-mode-toggle"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -80,6 +82,16 @@ const SocialNavItem = ({ href, title, children }) => (
   </a>
 )
 
+const navItems = [
+  { id: `docs`, text: `Docs` },
+  { id: `tutorial`, text: `Tutorial` },
+  { id: `plugins`, text: `Plugins` },
+  { id: `features`, text: `Features` },
+  { id: `blog`, text: `Blog` },
+  { id: `showcase`, text: `Showcase` },
+  { id: `contributing`, text: `Contributing` },
+]
+
 const Navigation = ({ pathname }) => {
   const [colorMode] = useColorMode()
   const isHomepage = pathname === `/`
@@ -117,7 +129,7 @@ const Navigation = ({ pathname }) => {
         sx={{
           alignItems: `center`,
           display: `flex`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           height: `100%`,
           margin: `0 auto`,
           px: 6,
@@ -188,21 +200,16 @@ const Navigation = ({ pathname }) => {
                 listStyle: `none`,
                 m: 0,
                 maskImage: t =>
-                  `linear-gradient(to right, transparent, white ${
-                    t.space[1]
-                  }, white 98%, transparent)`,
+                  `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
                 overflowX: `auto`,
               },
             }}
           >
-            <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
-            <NavItem linkTo="/plugins/">Plugins</NavItem>
-            <NavItem linkTo="/features/">Features</NavItem>
-            <NavItem linkTo="/blog/">Blog</NavItem>
-            <NavItem linkTo="/showcase/">Showcase</NavItem>
-            <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <NavItem linkTo="/starters/">Starters</NavItem> */}
+            {navItems.map(({ id, text }) => (
+              <NavItem key={id} linkTo={`/${id}/`}>
+                {text}
+              </NavItem>
+            ))}
           </ul>
         </nav>
         <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />
@@ -216,7 +223,7 @@ const Navigation = ({ pathname }) => {
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
           >
-            <GithubIcon style={{ verticalAlign: `middle` }} />
+            <GithubIcon />
           </SocialNavItem>
           <div
             sx={{
@@ -225,16 +232,10 @@ const Navigation = ({ pathname }) => {
             }}
           >
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
-              <TwitterIcon style={{ verticalAlign: `middle` }} />
+              <TwitterIcon />
             </SocialNavItem>
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon
-                overrideCSS={{
-                  verticalAlign: `middle`,
-                  position: `relative`,
-                  top: `0.05em`,
-                }}
-              />
+              <DiscordIcon />
             </SocialNavItem>
           </div>
           <div

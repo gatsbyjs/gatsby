@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
+import ItemLink from "./item-link"
+import { useSidebarContext } from "./sidebar"
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -32,174 +33,166 @@ const Chevron = ({ isExpanded }) => (
   </span>
 )
 
-const TitleButton = ({
-  isActive,
-  isExpanded,
-  item,
-  onSectionTitleClick,
-  uid,
-}) => (
-  <button
-    aria-expanded={isExpanded}
-    aria-controls={uid}
-    sx={{
-      ...styles.resetButton,
-      ...styles.button,
-      pl: item.level === 0 ? 6 : 0,
-      pr: `0 !important`,
-      minHeight: 40,
-      "&:before": {
-        bg: `itemBorderColor`,
-        content: `''`,
-        height: 1,
-        position: `absolute`,
-        right: 0,
-        bottom: 0,
-        left: t => (item.level === 0 ? t.space[6] : 0),
-        top: `auto`,
-      },
-    }}
-    onClick={() => onSectionTitleClick(item)}
-  >
-    <SectionTitle isExpanded={isExpanded} isActive={isActive} item={item}>
-      {item.title}
-      <span
-        sx={{
-          position: `absolute`,
-          top: 0,
-          bottom: 0,
-          right: 0,
-          minHeight: `sidebarItemMinHeight`,
-          width: `sidebarItemMinHeight`,
-        }}
-      >
-        <Chevron isExpanded={isExpanded} />
-      </span>
-    </SectionTitle>
-  </button>
-)
-
-const SplitButton = ({
-  createLink,
-  isActive,
-  isExpanded,
-  isParentOfActiveItem,
-  item,
-  location,
-  onLinkClick,
-  onSectionTitleClick,
-  uid,
-}) => (
-  <span
-    css={{
-      alignItems: `flex-end`,
-      display: `flex`,
-      position: `relative`,
-      width: `100%`,
-    }}
-  >
-    <span
+// Common styled heading component used in different types of SectionTitles
+const SectionHeading = ({ children, disabled, item }) => {
+  const { getItemState } = useSidebarContext()
+  const { isExpanded = false } = getItemState(item)
+  return (
+    <h3
       sx={{
-        // borderRightWidth: "1px",
-        // borderRightStyle: "solid",
-        // borderRightColor: "sidebar.itemBorderColor"
-        flexGrow: 1,
-      }}
-    >
-      {createLink({
-        isActive,
-        isExpanded,
-        isParentOfActiveItem,
-        item,
-        location,
-        onLinkClick,
-        level: item.level,
-        overrideCSS: {
-          ...(item.level === 0 &&
-            item.ui !== `steps` && {
-              "&&": {
-                ...styles.level0,
-                color:
-                  (isParentOfActiveItem && isExpanded) || isActive
-                    ? `link.color`
-                    : `navigation.linkDefault`,
-              },
-            }),
-          pr: t => t.sizes.sidebarItemMinHeight,
+        alignItems: `center`,
+        display: `flex`,
+        fontSize: 1,
+        // fontFamily: "body",
+        // fontWeight: isActive ? `bold` : `body`,
+        fontWeight: `body`,
+        textTransform: `uppercase`,
+        letterSpacing: `tracked`,
+        margin: 0,
+        ...(item.level === 0 && styles.level0),
+        color:
+          isExpanded && !disabled
+            ? `gatsby`
+            : disabled
+            ? `navigation.linkDefault`
+            : false,
+        "&:hover": {
+          color: !disabled && `gatsby`,
         },
-      })}
-    </span>
-    <button
-      aria-controls={uid}
-      aria-expanded={isExpanded}
-      aria-label={item.title + (isExpanded ? ` collapse` : ` expand`)}
-      sx={{
-        ...styles.resetButton,
-        bottom: 0,
-        ml: `auto`,
-        minHeight: `sidebarItemMinHeight`,
-        position: `absolute`,
-        right: 0,
-        top: 0,
-        width: `sidebarItemMinHeight`,
-        zIndex: 1,
       }}
-      onClick={() => onSectionTitleClick(item)}
     >
-      <Chevron isExpanded={isExpanded} />
-    </button>
-  </span>
-)
+      {children}
+    </h3>
+  )
+}
 
-const Title = ({ item, isActive, isExpanded }) => (
+// A title with no interactability
+const Title = ({ item }) => (
   <div
     sx={{
       alignItems: `center`,
       display: `flex`,
       paddingLeft: indention(item.level),
-      minHeight: 40,
+      minHeight: `sidebarItemMinHeight`,
     }}
   >
-    <SectionTitle
-      disabled
-      isActive={isActive}
-      isExpanded={isExpanded}
-      item={item}
-    >
+    <SectionHeading disabled item={item}>
       {item.title}
-    </SectionTitle>
+    </SectionHeading>
   </div>
 )
 
-const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
-  <h3
-    sx={{
-      alignItems: `center`,
-      display: `flex`,
-      fontSize: 1,
-      // fontFamily: "body",
-      // fontWeight: isActive ? `bold` : `body`,
-      fontWeight: `body`,
-      textTransform: `uppercase`,
-      letterSpacing: `tracked`,
-      margin: 0,
-      ...(item.level === 0 && { ...styles.level0 }),
-      color:
-        isExpanded && !disabled
-          ? `gatsby`
-          : disabled
-          ? `navigation.linkDefault`
-          : false,
-      "&:hover": {
-        color: disabled ? false : `gatsby`,
-      },
-    }}
-  >
-    {children}
-  </h3>
-)
+// A title rendered as a button that can be clicked to expand/collapse
+// but does not represent a page itself
+const TitleButton = ({ item, uid }) => {
+  const { onSectionTitleClick, getItemState } = useSidebarContext()
+  const { isExpanded = false } = getItemState(item)
+  return (
+    <button
+      aria-expanded={isExpanded}
+      aria-controls={uid}
+      sx={{
+        ...styles.resetButton,
+        ...styles.button,
+        pl: indention(item.level),
+        pr: t => t.sizes.sidebarItemMinHeight,
+        minHeight: `sidebarItemMinHeight`,
+        "&:before": {
+          bg: `itemBorderColor`,
+          content: `''`,
+          height: 1,
+          position: `absolute`,
+          right: 0,
+          bottom: 0,
+          left: indention(item.level),
+          top: `auto`,
+        },
+      }}
+      onClick={() => onSectionTitleClick(item)}
+    >
+      <SectionHeading item={item}>
+        {item.title}
+        <span
+          sx={{
+            position: `absolute`,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            minHeight: `sidebarItemMinHeight`,
+            width: `sidebarItemMinHeight`,
+          }}
+        >
+          <Chevron isExpanded={isExpanded} />
+        </span>
+      </SectionHeading>
+    </button>
+  )
+}
 
-export { Title, TitleButton, SplitButton }
+// A split title with a link that can be navigated to, and a button
+// that can expand it
+const SplitButton = ({ itemRef, item, uid }) => {
+  const { getItemState, onSectionTitleClick } = useSidebarContext()
+  const { isExpanded = false } = getItemState(item)
+  return (
+    <span
+      ref={itemRef}
+      css={{
+        alignItems: `flex-end`,
+        display: `flex`,
+        position: `relative`,
+        width: `100%`,
+      }}
+    >
+      <span
+        sx={{
+          // borderRightWidth: "1px",
+          // borderRightStyle: "solid",
+          // borderRightColor: "sidebar.itemBorderColor"
+          flexGrow: 1,
+        }}
+      >
+        <ItemLink
+          item={item}
+          overrideCSS={{
+            "&&": item.level === 0 && item.ui !== `steps` && styles.level0,
+            pr: t => t.sizes.sidebarItemMinHeight,
+          }}
+        />
+      </span>
+      <button
+        aria-controls={uid}
+        aria-expanded={isExpanded}
+        aria-label={`${item.title} toggle`}
+        sx={{
+          ...styles.resetButton,
+          bottom: 0,
+          ml: `auto`,
+          minHeight: `sidebarItemMinHeight`,
+          position: `absolute`,
+          right: 0,
+          top: 0,
+          width: `sidebarItemMinHeight`,
+          zIndex: 1,
+        }}
+        onClick={() => onSectionTitleClick(item)}
+      >
+        <Chevron isExpanded={isExpanded} />
+      </button>
+    </span>
+  )
+}
+
+export default function SectionTitle({ itemRef, item, uid }) {
+  const { disableAccordions } = useSidebarContext()
+  // If the item has a link, render it as a combination link and toggle button
+  if (item.link) {
+    return <SplitButton itemRef={itemRef} item={item} uid={uid} />
+  }
+  // Otherwise, render the toggle button depending on if toggling is enabled
+  const SectionTitleComponent = disableAccordions ? Title : TitleButton
+  return <SectionTitleComponent item={item} uid={uid} />
+}
 
 const styles = {
   resetButton: {
@@ -214,7 +207,7 @@ const styles = {
     width: `100%`,
   },
   level0: {
-    fontFamily: `header`,
+    fontFamily: `heading`,
     letterSpacing: `tracked`,
     textTransform: `uppercase`,
     fontSize: 1,

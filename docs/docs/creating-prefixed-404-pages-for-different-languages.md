@@ -6,28 +6,32 @@ Using the [`onCreatePage`](/docs/node-apis/#onCreatePage) API in your project's 
 
 Here is an example that shows you how to create an English 404 page at `src/pages/en/404.js`, and a German 404 page at `/src/pages/de/404.js`:
 
-```javascript:title=src/pages/en/404.js
+```jsx:title=src/pages/en/404.js
 import React from "react"
 import Layout from "../../components/layout"
 
-export default () => (
-  <Layout>
-    <h1>Page Not Found</h1>
-    <p>Oops, we couldn't find this page!</p>
-  </Layout>
-)
+export default function NotFound() {
+  return (
+    <Layout>
+      <h1>Page Not Found</h1>
+      <p>Oops, we couldn't find this page!</p>
+    </Layout>
+  )
+}
 ```
 
-```javascript:title=src/pages/de/404.js
+```jsx:title=src/pages/de/404.js
 import React from "react"
 import Layout from "../../components/layout"
 
-export default () => (
-  <Layout>
-    <h1>Seite nicht gefunden</h1>
-    <p>Ups, wir konnten diese Seite nicht finden!</p>
-  </Layout>
-)
+export default function NotFound() {
+  return (
+    <Layout>
+      <h1>Seite nicht gefunden</h1>
+      <p>Ups, wir konnten diese Seite nicht finden!</p>
+    </Layout>
+  )
+}
 ```
 
 Now, open up your project's `gatsby-node.js` and add the following code:

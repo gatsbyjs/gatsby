@@ -2,20 +2,14 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
-import Highlight, { defaultProps } from "prism-react-renderer"
 
 import Copy from "../copy"
 import normalize from "./normalize"
+import LazyHighlight from "../lazy-highlight"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)
-  return [
-    lang
-      .split(`language-`)
-      .pop()
-      .split(`{`)
-      .shift(),
-  ].concat(
+  return [lang.split(`language-`).pop().split(`{`).shift()].concat(
     params.split(`&`).reduce((merged, param) => {
       const [key, value] = param.split(`=`)
       merged[key] = value
@@ -43,12 +37,7 @@ const CodeBlock = ({
   )
 
   return (
-    <Highlight
-      {...defaultProps}
-      code={content}
-      language={language}
-      theme={undefined}
-    >
+    <LazyHighlight code={content} language={language} theme={undefined}>
       {({ tokens, getLineProps, getTokenProps }) => (
         <React.Fragment>
           {title && (
@@ -63,8 +52,8 @@ const CodeBlock = ({
                   fileName={title}
                   sx={{
                     position: `absolute`,
-                    right: t => t.space[1],
-                    top: t => t.space[1],
+                    right: 1,
+                    top: 1,
                     borderRadius: 2,
                   }}
                   content={content}
@@ -95,7 +84,7 @@ const CodeBlock = ({
           </div>
         </React.Fragment>
       )}
-    </Highlight>
+    </LazyHighlight>
   )
 }
 

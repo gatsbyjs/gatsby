@@ -41,7 +41,7 @@ export const anchorsTargetIsEquivalentToSelf = anchor =>
    * Some browsers use the empty string to mean _self, check
    * for actual `_self`
    */
-  [`_self`, ``].indexOf(anchor.target) !== -1 ||
+  [`_self`, ``].includes(anchor.target) ||
   /**
    * As per https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */
@@ -123,8 +123,17 @@ export const routeThroughBrowserOrApp = (
   // IE clears the host value if the anchor href changed after creation, e.g.
   // in React. Creating a new anchor element to ensure host value is present
   const destination = document.createElement(`a`)
-  destination.href = clickedAnchor.href
-  if (clickedAnchor.href instanceof SVGAnimatedString) {
+
+  // https://html.spec.whatwg.org/multipage/links.html#concept-hyperlink-url-set
+  // If clickedAnchor has no href attribute like `<a>example</a>`, the href getter returns empty string.
+  if (clickedAnchor.href !== ``) {
+    destination.href = clickedAnchor.href
+  }
+
+  if (
+    `SVGAnimatedString` in window &&
+    clickedAnchor.href instanceof SVGAnimatedString
+  ) {
     destination.href = clickedAnchor.href.animVal
   }
 
@@ -167,7 +176,7 @@ export const routeThroughBrowserOrApp = (
   return false
 }
 
-export default function(root, pluginOptions, cb) {
+export default function (root, pluginOptions, cb) {
   const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)

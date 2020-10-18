@@ -16,10 +16,8 @@ exports.onRenderBody = ({ setHeadComponents, pathname }, pluginOptions) => {
       if (typeof match === `string`) return new RegExp(match).exec(pathname)
       return true
     })
-    .map(({ output, title }, i) => {
-      if (output.charAt(0) !== `/`) {
-        output = `/` + output
-      }
+    .map(({ output, title, link }, i) => {
+      const href = link || withPrefix(output.replace(/^\/?/, `/`))
 
       return (
         <link
@@ -27,7 +25,7 @@ exports.onRenderBody = ({ setHeadComponents, pathname }, pluginOptions) => {
           rel="alternate"
           type="application/rss+xml"
           title={title}
-          href={withPrefix(output)}
+          href={href}
         />
       )
     })

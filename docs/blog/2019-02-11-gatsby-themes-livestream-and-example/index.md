@@ -29,9 +29,7 @@ No code. No assembling plugins. Just writing content.
 
 Recently I had the pleasure of building a theme from scratch with Gatsby’s own [John Otander](https://twitter.com/4lpine) live on [my weekly livestream](https://twitch.tv/jlengstorf).
 
-<iframe id="ytplayer" title="Theme livestream on YouTube" type="text/html" width="720" height="405"
-src="https://www.youtube.com/embed/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
-frameborder="0" allowfullscreen />
+https://youtu.be/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
 
 On the stream, we covered multiple topics:
 
@@ -47,7 +45,7 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/livestr
 - Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/)
 - Post: [Why Themes](/blog/2019-01-31-why-themes/)
 - [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/)
-- [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.com/getting-started)
+- [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.app/getting-started)
 - [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 - [John Otander on Twitter](https://twitter.com/4lpine)
 - [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)

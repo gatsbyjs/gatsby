@@ -1,13 +1,9 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
-const deepMap = require(`deep-map`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
+const digest = str => createContentDigest(str)
+const { getNormalizedRichTextField } = require(`./rich-text`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -54,36 +50,85 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-exports.fixIds = object => {
-  const out = deepMap(object, (v, k) => (k === `id` ? fixId(v) : v))
+const shouldBeSkipped = (object, alreadyWalkedObjectRefs) =>
+  !object || typeof object !== `object` || alreadyWalkedObjectRefs.has(object)
 
-  return {
-    ...out,
-    sys: {
-      ...out.sys,
-      contentful_id: object.sys.id,
-    },
+// Walk the object model and find any property named `sys`. If it
+// contains an `id` then make sure the id is a string and if it starts with a
+// number, prefix it with (an arbitrarily chosen) `c`, for "contentful".
+// The `front` tracks which objects have been visited to prevent infinite
+// recursion on cyclic structures.
+const fixIds = object => {
+  if (!object || typeof object !== `object`) return
+
+  const objectsToProcess = [object]
+  const alreadyWalkedObjectRefs = new Set(objectsToProcess)
+
+  while (objectsToProcess.length !== 0) {
+    const current = objectsToProcess.pop()
+
+    if (Array.isArray(current)) {
+      current.forEach(item => {
+        if (shouldBeSkipped(item, alreadyWalkedObjectRefs)) return
+
+        objectsToProcess.push(item)
+        alreadyWalkedObjectRefs.add(item)
+      })
+      continue
+    }
+
+    Object.keys(current).forEach(key => {
+      const currentProp = current[key]
+      if (shouldBeSkipped(currentProp, alreadyWalkedObjectRefs)) return
+
+      // The `contentful_id` is ours and we want to make sure we don't visit the
+      // same node twice (this is possible if the same node appears in two
+      // separate branches while sharing a common ancestor). This check makes
+      // sure we keep the original `id` preserved in `contentful_id`.
+      if (key === `sys` && !currentProp.contentful_id) {
+        currentProp.contentful_id = currentProp.id
+        currentProp.id = fixId(currentProp.id)
+      }
+
+      objectsToProcess.push(currentProp)
+      alreadyWalkedObjectRefs.add(currentProp)
+    })
   }
 }
+exports.fixIds = fixIds
 
-const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
-  currentLocale === defaultLocale
-    ? `${spaceId}___${id}`
-    : `${spaceId}___${id}___${currentLocale}`
+const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+  const normalizedType = type.startsWith(`Deleted`)
+    ? type.substring(`Deleted`.length)
+    : type
+  return currentLocale === defaultLocale
+    ? `${spaceId}___${id}___${normalizedType}`
+    : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
+}
 
 exports.makeId = makeId
 
 const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
   spaceId,
-  id
-) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale }))
+  id,
+  type
+) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
-  contentTypeItems.map(contentType =>
-    currentSyncData.entries.filter(
-      entry => entry.sys.contentType.sys.id === contentType.sys.id
-    )
+exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+  // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
+  const map = new Map(
+    contentTypeItems.map(contentType => [contentType.sys.id, []])
   )
+  // Now fill the buckets. Ignore entries for which there exists no bucket. (Not sure if that ever happens)
+  mergedSyncData.entries.map(entry => {
+    let arr = map.get(entry.sys.contentType.sys.id)
+    if (arr) {
+      arr.push(entry)
+    }
+  })
+  // Order is relevant, must map 1:1 to contentTypeItems array
+  return contentTypeItems.map(contentType => map.get(contentType.sys.id))
+}
 
 exports.buildResolvableSet = ({
   entryList,
@@ -95,21 +140,27 @@ exports.buildResolvableSet = ({
   const resolvable = new Set()
   existingNodes.forEach(n => {
     if (n.contentful_id) {
-      // We need to add only root level resolvable (assets and entries)
-      // derived nodes (markdown or JSON) will be recreated if needed.
-      // We also need to apply `fixId` as some objects will have ids
-      // prefixed with `c` and fixIds will recursively apply that
-      // and resolvable ids need to match that.
-      resolvable.add(fixId(n.contentful_id))
+      if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
+        resolvable.add(n.contentful_id)
+      } else {
+        // We need to add only root level resolvable (assets and entries)
+        // derived nodes (markdown or JSON) will be recreated if needed.
+        // We also need to apply `fixId` as some objects will have ids
+        // prefixed with `c` and fixIds will recursively apply that
+        // and resolvable ids need to match that.
+        resolvable.add(`${fixId(n.contentful_id)}___${n.sys.type}`)
+      }
     }
   })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      resolvable.add(entry.sys.id)
+      resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
-  assets.forEach(assetItem => resolvable.add(assetItem.sys.id))
+  assets.forEach(assetItem =>
+    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
+  )
 
   return resolvable
 }
@@ -121,10 +172,20 @@ exports.buildForeignReferenceMap = ({
   defaultLocale,
   locales,
   space,
+  useNameForId,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
-    const contentTypeItemId = contentTypeItem.name.toLowerCase()
+    // Establish identifier for content type
+    //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
+    //  but sometimes a base62 uuid generated by Contentful, hence the option)
+    let contentTypeItemId
+    if (useNameForId) {
+      contentTypeItemId = contentTypeItem.name.toLowerCase()
+    } else {
+      contentTypeItemId = contentTypeItem.sys.id.toLowerCase()
+    }
+
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
@@ -141,35 +202,43 @@ exports.buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
+                const key = `${v.sys.id}___${v.sys.linkType || v.sys.type}`
                 // Don't create link to an unresolvable field.
-                if (!resolvable.has(v.sys.id)) {
+                if (!resolvable.has(key)) {
                   return
                 }
 
-                if (!foreignReferenceMap[v.sys.id]) {
-                  foreignReferenceMap[v.sys.id] = []
+                if (!foreignReferenceMap[key]) {
+                  foreignReferenceMap[key] = []
                 }
-                foreignReferenceMap[v.sys.id].push({
+                foreignReferenceMap[key].push({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
                   spaceId: space.sys.id,
+                  type: entryItem.sys.type,
                 })
               })
             }
           } else if (
-            entryItemFieldValue &&
-            entryItemFieldValue.sys &&
-            entryItemFieldValue.sys.type &&
-            entryItemFieldValue.sys.id &&
-            resolvable.has(entryItemFieldValue.sys.id)
+            entryItemFieldValue?.sys?.type &&
+            entryItemFieldValue.sys.id
           ) {
-            if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
-              foreignReferenceMap[entryItemFieldValue.sys.id] = []
+            const key = `${entryItemFieldValue.sys.id}___${
+              entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
+            }`
+            // Don't create link to an unresolvable field.
+            if (!resolvable.has(key)) {
+              return
             }
-            foreignReferenceMap[entryItemFieldValue.sys.id].push({
+
+            if (!foreignReferenceMap[key]) {
+              foreignReferenceMap[key] = []
+            }
+            foreignReferenceMap[key].push({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
               spaceId: space.sys.id,
+              type: entryItem.sys.type,
             })
           }
         }
@@ -181,7 +250,7 @@ exports.buildForeignReferenceMap = ({
 }
 
 function prepareTextNode(node, key, text, createNodeId) {
-  const str = _.isString(text) ? text : ` `
+  const str = _.isString(text) ? text : ``
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
     parent: node.id,
@@ -192,6 +261,9 @@ function prepareTextNode(node, key, text, createNodeId) {
       mediaType: `text/markdown`,
       content: str,
       contentDigest: digest(str),
+    },
+    sys: {
+      type: node.sys.type,
     },
   }
 
@@ -214,6 +286,9 @@ function prepareRichTextNode(node, key, content, createNodeId) {
       content: str,
       contentDigest: digest(str),
     },
+    sys: {
+      type: node.sys.type,
+    },
   }
 
   node.children = node.children.concat([richTextNode.id])
@@ -233,6 +308,9 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
       content: str,
       contentDigest: digest(str),
     },
+    sys: {
+      type: node.sys.type,
+    },
   }
 
   node.children = node.children.concat([JSONNode.id])
@@ -240,8 +318,9 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   return JSONNode
 }
 
-exports.createContentTypeNodes = ({
+exports.createNodesForContentType = ({
   contentTypeItem,
+  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -252,8 +331,20 @@ exports.createContentTypeNodes = ({
   defaultLocale,
   locales,
   space,
+  useNameForId,
+  richTextOptions,
 }) => {
-  const contentTypeItemId = contentTypeItem.name
+  // Establish identifier for content type
+  //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
+  //  but sometimes a base62 uuid generated by Contentful, hence the option)
+  let contentTypeItemId
+  if (useNameForId) {
+    contentTypeItemId = contentTypeItem.name
+  } else {
+    contentTypeItemId = contentTypeItem.sys.id
+  }
+
+  const createNodePromises = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -285,10 +376,31 @@ exports.createContentTypeNodes = ({
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
         const fieldProps = contentTypeItem.fields.find(field => field.id === k)
-        if (fieldProps.localized) {
-          return getField(v)
+
+        const localizedField = fieldProps.localized
+          ? getField(v)
+          : v[defaultLocale]
+
+        if (
+          fieldProps.type === `RichText` &&
+          richTextOptions &&
+          richTextOptions.resolveFieldLocales
+        ) {
+          const contentTypesById = new Map()
+          contentTypeItems.forEach(contentTypeItem =>
+            contentTypesById.set(contentTypeItem.sys.id, contentTypeItem)
+          )
+
+          return getNormalizedRichTextField({
+            field: localizedField,
+            fieldProps,
+            contentTypesById,
+            getField,
+            defaultLocale,
+          })
         }
-        return v[defaultLocale]
+
+        return localizedField
       })
 
       // Prefix any conflicting fields
@@ -314,11 +426,17 @@ exports.createContentTypeNodes = ({
               // creating an empty node field in case when original key field value
               // is empty due to links to missing entities
               const resolvableEntryItemFieldValue = entryItemFieldValue
-                .filter(function(v) {
-                  return resolvable.has(v.sys.id)
+                .filter(function (v) {
+                  return resolvable.has(
+                    `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                  )
                 })
-                .map(function(v) {
-                  return mId(space.sys.id, v.sys.id)
+                .map(function (v) {
+                  return mId(
+                    space.sys.id,
+                    v.sys.id,
+                    v.sys.linkType || v.sys.type
+                  )
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
                 entryItemFields[
@@ -334,10 +452,18 @@ exports.createContentTypeNodes = ({
             entryItemFieldValue.sys.type &&
             entryItemFieldValue.sys.id
           ) {
-            if (resolvable.has(entryItemFieldValue.sys.id)) {
+            if (
+              resolvable.has(
+                `${entryItemFieldValue.sys.id}___${
+                  entryItemFieldValue.sys.linkType ||
+                  entryItemFieldValue.sys.type
+                }`
+              )
+            ) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                 space.sys.id,
-                entryItemFieldValue.sys.id
+                entryItemFieldValue.sys.id,
+                entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
               )
             }
             delete entryItemFields[entryItemFieldKey]
@@ -346,7 +472,8 @@ exports.createContentTypeNodes = ({
       })
 
       // Add reverse linkages if there are any for this node
-      const foreignReferences = foreignReferenceMap[entryItem.sys.id]
+      const foreignReferences =
+        foreignReferenceMap[`${entryItem.sys.id}___${entryItem.sys.type}`]
       if (foreignReferences) {
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
@@ -356,23 +483,33 @@ exports.createContentTypeNodes = ({
             // skip it. However, if it is an array, add it:
             if (Array.isArray(existingReference)) {
               entryItemFields[foreignReference.name].push(
-                mId(foreignReference.spaceId, foreignReference.id)
+                mId(
+                  foreignReference.spaceId,
+                  foreignReference.id,
+                  foreignReference.type
+                )
               )
             }
           } else {
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
             entryItemFields[foreignReference.name] = [
-              mId(foreignReference.spaceId, foreignReference.id),
+              mId(
+                foreignReference.spaceId,
+                foreignReference.id,
+                foreignReference.type
+              ),
             ]
           }
         })
       }
 
       let entryNode = {
-        id: mId(space.sys.id, entryItem.sys.id),
+        id: mId(space.sys.id, entryItem.sys.id, entryItem.sys.type),
         spaceId: space.sys.id,
-        contentful_id: entryItem.sys.contentful_id,
+        contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
+          ? entryItem.sys.id
+          : entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
@@ -380,16 +517,20 @@ exports.createContentTypeNodes = ({
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
         },
+        sys: {
+          type: entryItem.sys.type,
+        },
       }
 
-      // Use default locale field.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // Ignore fields with "___node" as they're already handled
-        // and won't be a text field.
-        if (entryItemFieldKey.split(`___`).length > 1) {
-          return
-        }
-      })
+      // Revision applies to entries, assets, and content types
+      if (entryItem.sys.revision) {
+        entryNode.sys.revision = entryItem.sys.revision
+      }
+
+      // Content type applies to entries only
+      if (entryItem.sys.contentType) {
+        entryNode.sys.contentType = entryItem.sys.contentType
+      }
 
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
@@ -492,6 +633,9 @@ exports.createContentTypeNodes = ({
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
       },
+      sys: {
+        type: contentTypeItem.sys.type,
+      },
     }
 
     // Get content digest of node.
@@ -499,14 +643,16 @@ exports.createContentTypeNodes = ({
 
     contentTypeNode.internal.contentDigest = contentDigest
 
-    createNode(contentTypeNode)
+    createNodePromises.push(createNode(contentTypeNode))
     entryNodes.forEach(entryNode => {
-      createNode(entryNode)
+      createNodePromises.push(createNode(entryNode))
     })
     childrenNodes.forEach(entryNode => {
-      createNode(entryNode)
+      createNodePromises.push(createNode(entryNode))
     })
   })
+
+  return createNodePromises
 }
 
 exports.createAssetNodes = ({
@@ -517,6 +663,7 @@ exports.createAssetNodes = ({
   locales,
   space,
 }) => {
+  const createNodePromises = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -529,31 +676,33 @@ exports.createAssetNodes = ({
       localesFallback,
     })
 
-    const localizedAsset = { ...assetItem }
-    // Create a node for each asset. They may be referenced by Entries
-    //
-    // Get localized fields.
-    localizedAsset.fields = {
-      file: localizedAsset.fields.file
-        ? getField(localizedAsset.fields.file)
-        : null,
-      title: localizedAsset.fields.title
-        ? getField(localizedAsset.fields.title)
-        : ``,
-      description: localizedAsset.fields.description
-        ? getField(localizedAsset.fields.description)
-        : ``,
-    }
     const assetNode = {
-      contentful_id: localizedAsset.sys.contentful_id,
-      id: mId(space.sys.id, localizedAsset.sys.id),
+      contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
+        ? assetItem.sys.id
+        : assetItem.sys.contentful_id,
+      spaceId: space.sys.id,
+      id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
+      createdAt: assetItem.sys.createdAt,
+      updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      ...localizedAsset.fields,
+      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
+      description: assetItem.fields.description
+        ? getField(assetItem.fields.description)
+        : ``,
       node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
       },
+      sys: {
+        type: assetItem.sys.type,
+      },
+    }
+
+    // Revision applies to entries, assets, and content types
+    if (assetItem.sys.revision) {
+      assetNode.sys.revision = assetItem.sys.revision
     }
 
     // Get content digest of node.
@@ -561,6 +710,8 @@ exports.createAssetNodes = ({
 
     assetNode.internal.contentDigest = contentDigest
 
-    createNode(assetNode)
+    createNodePromises.push(createNode(assetNode))
   })
+
+  return createNodePromises
 }

@@ -1,7 +1,7 @@
 ---
 title: How I used Theme UI to build my Gatsby Themes library
 date: 2019-07-30
-author: LekoArts
+author: Lennart Jörgens
 excerpt: "Theme UI helped me a lot to get this done quickly. Starting at the Design to Code Handoff (by using the same design tokens) and ending at using the breakpoint syntax in the GraphQL layer of Gatsby to individually style theme entries."
 canonicalLink: "https://www.lekoarts.de/en/blog/how-i-used-theme-ui-to-build-my-gatsby-themes-library"
 publishedAt: lekoarts.de
@@ -21,19 +21,25 @@ With this blogpost I want to describe the process of creating my Gatsby themes l
 Nearly every time before I start coding a project I start with the design in Figma. I'm still faster with prototyping with Figma than in code with React (probably due to my design background). I started looking at Dribbble and Behance to find some inspiration as I had a light website with playful elements, a **stunning** hero section and otherwise minimal design in mind.
 
 <figure>
-<img src="./images/behance-dribbble-inspiration.png" alt="Screenshot of Figma showing different screenshots from Dribbble, Behance and Refactoring UI for inspiration" />
-<figcaption>Inspirational screenshots</figcaption>
+  <img
+    src="./images/behance-dribbble-inspiration.png"
+    alt="Screenshot of Figma showing different screenshots from Dribbble, Behance and Refactoring UI for inspiration"
+  />
+  <figcaption>Inspirational screenshots</figcaption>
 </figure>
 
 I really liked the prominent and actionable hero section of the [Refactoring UI website](https://refactoringui.com/), the shapes and colors from the other designs. Speaking of Refactoring UI, for the design (and later for coding) I used the TailwindCSS colors and styles.
 
 The design you see live on the website now is pretty much the design I created in Figma — which speaks to the ease of use of a Figma (+ Tailwind styles) => Theme UI (+ Tailwind preset) workflow!
 
-As mentioned I also wanted a rad hero section, nothing boring but also not something that is overused (and potentially can also slow down your website) like particles.js. Since I'm pretty proficient with Cinema4D and 3D in general I just tried to visualize "Gatsby Themes" with 3D models. I drew some inspiration from [Kyle Gill's illustrations](https://kylegill.com/blog/2019-04-22-a-simple-guide-to-gatsby-themes/index). I rendered the scene with Arnold, modified it a bit with Photoshop and et voilá: You can see the finished result on my social preview image now.
+As mentioned I also wanted a rad hero section, nothing boring but also not something that is overused (and potentially can also slow down your website) like particles.js. Since I'm pretty proficient with Cinema4D and 3D in general I just tried to visualize "Gatsby Themes" with 3D models. I drew some inspiration from [Kyle Gill's illustrations](https://kylegill.com/blog/2019-04-22-a-simple-guide-to-gatsby-themes/index). I rendered the scene with Arnold, modified it a bit with Photoshop and et voilà: You can see the finished result on my social preview image now.
 
 <figure>
-<img src="./images/gatsby-themes-3d-illustration.png" alt="3D Rendering showing a little factory receiving input from four objects." />
-<figcaption>Cinema4D Rendering of a "Gatsby Themes factory"</figcaption>
+  <img
+    src="./images/gatsby-themes-3d-illustration.png"
+    alt="3D Rendering showing a little factory receiving input from four objects."
+  />
+  <figcaption>Cinema4D Rendering of a "Gatsby Themes factory"</figcaption>
 </figure>
 
 ## Code
@@ -45,8 +51,13 @@ I want to focus on [Theme UI](https://theme-ui.com/) and explain how I used it o
 To get started I installed the preset and put it into my shadowed theme config (see [official documentation](https://theme-ui.com/presets) on that). Then I had to override the colors e.g. the primary and secondary color. For that I took a look into my Figma design:
 
 <figure>
-<img src="./images/figma-theme-ui-handoff.png" alt="Screenshot showing both Figma and VS Code. The value used in Figma can easily get transferred to VS Code and Theme UI." />
-<figcaption>Using Tailwind styles in both Figma and Theme UI is the best!</figcaption>
+  <img
+    src="./images/figma-theme-ui-handoff.png"
+    alt="Screenshot showing both Figma and VS Code. The value used in Figma can easily get transferred to VS Code and Theme UI."
+  />
+  <figcaption>
+    Using Tailwind styles in both Figma and Theme UI is the best!
+  </figcaption>
 </figure>
 
 It's great to have the same design tokens in all places. I chose the color **Indigo.600** and later in Theme UI I just had to use `colors.indigo[6]`.
@@ -65,7 +76,7 @@ gradients: {
 
 You can access theme values with a function which I did in this case to be able to use my already defined colors in the gradients. So why did I set up the gradients variants? I wanted to use a **single** property in my "Shapes" component to define the color. I didn't just pass in the value in the component itself like `` backgroundImage:t=>`linear-gradient(135deg,${t.colors[colorProp][8]},${t.colors[colorProp][6]})` `` because then every shape would have had the same angle and the same spacing (value 8 and 6 here). Some colors need other values to look right so variants was the only logical choice here. The usage looks something like this:
 
-```js
+```jsx
 const Circle = ({ color, className }) => (
   <div
     sx={{
@@ -82,7 +93,7 @@ const Circle = ({ color, className }) => (
 
 While the shapes (circle, donut, grid) look really nice on bigger displays, for mobile and tablet views their initial size and position needs to be adjusted. I'm still a fan of "form follows function" so they shouldn't get in the way when reading things. When looking at the [source code](https://github.com/LekoArts/gatsby-themes/blob/569722297e73d05e0063e0333c284741c174cc2f/www/src/components/hero.tsx) for the hero section you'll see that it's very intuitive to define those properties:
 
-```js
+```jsx
 <Circle
   size="210px"
   color="orange"
@@ -97,31 +108,32 @@ I highly recommend using the breakpoint syntax and reading the [documentation](h
 So far, so normal you'd say. But I had a cool idea to solve my problem of positioning shapes around my theme entries which I collect in a `.yaml` file (see the [source file](https://github.com/LekoArts/gatsby-themes/blob/master/www/data/themes.yaml)). Just define the shapes in the respective theme entry! YAML is a great format for that as it makes it possible (together with the Gatsby transformer) to create arrays and array of objects. The shapes entry looks like this:
 
 ```yaml
-shapes: [
-  {
-    type: "circle",
-    color: "green",
-    size: ["200px", "300px"],
-    xOffset: ["-140px", "-120px"],
-    yOffset: ["-70px"],
-    opacity: 0.5,
-  },
-  {
-    type: "donut",
-    color: "teal",
-    size: ["25px", "100px"],
-    xOffset: ["50px"],
-    yOffset: ["-60px"],
-    opacity: 1,
-  },
-]
+shapes:
+  [
+    {
+      type: "circle",
+      color: "green",
+      size: ["200px", "300px"],
+      xOffset: ["-140px", "-120px"],
+      yOffset: ["-70px"],
+      opacity: 0.5,
+    },
+    {
+      type: "donut",
+      color: "teal",
+      size: ["25px", "100px"],
+      xOffset: ["50px"],
+      yOffset: ["-60px"],
+      opacity: 1,
+    },
+  ]
 ```
 
 These are all the information that my shape components need to render the desired output. I didn't use _left_ and _right_ here as the shapes should always face the outside (on the inside it could overlap the text). As you can see the array / breakpoint notation for position and size was used — I think that's just cool 😎
 
 To give you an idea how I then added this functionality to the listing here's an excerpt of the relevant file:
 
-```js:title=src/components/listing.tsx
+```jsx:title=src/components/listing.tsx
 <Container sx={{ py: 4 }}>
   {themes.map((theme, index) => {
     const isEven = index % 2 === 0
@@ -171,6 +183,6 @@ Setting the offset values to either _left_ or _right_ is decided by _isEven_ whi
 
 ## Conclusion
 
-All in all Theme UI helped me a lot to get this done quickly. From the design phase, to the code handoff phase (by using the same design tokens) to finally using the breakpoint syntax in the GraphQL layer of Gatsby to individually style theme entries. Of course Theme UI offers you all the things it says on its own website: "Ergonomic, Themeable, Contraint-based". And in the case of Gatsby themes: Also shadowable.
+All in all Theme UI helped me a lot to get this done quickly. From the design phase, to the code handoff phase (by using the same design tokens) to finally using the breakpoint syntax in the GraphQL layer of Gatsby to individually style theme entries. Of course Theme UI offers you all the things it says on its own website: "Ergonomic, Themeable, Constraint-based". And in the case of Gatsby themes: Also shadowable.
 
 I highly recommend using Theme UI for your projects and especially for Gatsby Themes 🎉

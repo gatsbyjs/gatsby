@@ -26,7 +26,7 @@ export const pageQuery = graphql`
       id
       siteMetadata {
         title
-        subtitle
+        description
       }
     }
   }

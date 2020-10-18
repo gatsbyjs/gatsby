@@ -8,18 +8,18 @@ To add tags to your blog posts, you will first want to have your site set up to 
 
 The process will essentially look like this:
 
-1.  Add tags to your `markdown` files
-2.  Write a query to get all tags for your posts
-3.  Make a tags page template (for `/tags/{tag}`)
-4.  Modify `gatsby-node.js` to render pages using that template
-5.  Make a tags index page (`/tags`) that renders a list of all tags
-6.  _(optional)_ Render tags inline with your blog posts
+1. Add tags to your `markdown` files
+2. Write a query to get all tags for your posts
+3. Make a tags page template (for `/tags/{tag}`)
+4. Modify `gatsby-node.js` to render pages using that template
+5. Make a tags index page (`/tags`) that renders a list of all tags
+6. _(optional)_ Render tags inline with your blog posts
 
 ## Add tags to your `markdown` files
 
 You add tags by defining them in the `frontmatter` of your Markdown file. The `frontmatter` is the area at the top surrounded by dashes that includes post data like the title and date.
 
-```md
+```markdown
 ---
 title: "A Trip To the Zoo"
 ---
@@ -29,7 +29,7 @@ I went to the zoo today. It was terrible.
 
 Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here you add your new tags field:
 
-```md
+```markdown
 ---
 title: "A Trip To the Zoo"
 tags: ["animals", "Chicago", "zoos"]
@@ -44,7 +44,7 @@ If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
 
 Now, these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
-Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql`):
+Try running the following query in Graph<em>i</em>QL (`http://localhost:8000/___graphql`):
 
 ```graphql
 {
@@ -231,7 +231,7 @@ Some notes:
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
-Your `/tags` page will simply list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
+Your `/tags` page will list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
 
 ```jsx:title=src/pages/tags.js
 import React from "react"
@@ -308,4 +308,4 @@ export const pageQuery = graphql`
 
 ## _(optional)_ Render tags inline with your blog posts
 
-The home stretch! Anywhere else you'd like to render your tags, simply add them to the `frontmatter` section of your `graphql` query and access them in your component like any other prop.
+The home stretch! Anywhere else you'd like to render your tags, add them to the `frontmatter` section of your `graphql` query and access them in your component like any other prop.

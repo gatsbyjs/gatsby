@@ -1,20 +1,20 @@
 {
   "name": "gatsby-plugin-nprogress",
   "description": "Shows page loading indicator when loading page resources is delayed",
-  "version": "2.1.12",
+  "version": "2.3.13",
   "author": "Kyle Mathews<mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.6.3",
+    "@babel/runtime": "^7.11.2",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "babel-preset-gatsby-package": "^0.2.9",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.5.3",
+    "cross-env": "^7.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-nprogress#readme",
   "keywords": [
@@ -32,11 +32,11 @@
     "directory": "packages/gatsby-plugin-nprogress"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   }
 }

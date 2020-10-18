@@ -2,11 +2,9 @@
 title: GraphQL Concepts
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
-[GraphQL](http://graphql.org/).
+[GraphQL](https://graphql.org/).
 
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 React components.
@@ -23,7 +21,7 @@ the browser when needed by your components.
 
 Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
 
-<LayerModel initialLayer="Data" />
+<ComponentModel initialLayer="Data" />
 
 ## Why is GraphQL so cool?
 
@@ -66,12 +64,14 @@ A basic page component with a GraphQL query might look like this:
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ data }) => (
-  <div>
-    <h1>About {data.site.siteMetadata.title}</h1>
-    <p>We're a very cool website you should return to often.</p>
-  </div>
-)
+export default function Page({ data }) {
+  return (
+    <div>
+      <h1>About {data.site.siteMetadata.title}</h1>
+      <p>We're a very cool website you should return to often.</p>
+    </div>
+  )
+}
 
 export const query = graphql`
   query {
@@ -116,14 +116,14 @@ as we do and find it useful for all your projects.
 When starting out with GraphQL, we recommend the following two tutorials:
 
 - https://www.howtographql.com/
-- http://graphql.org/learn/
+- https://graphql.org/learn/
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 
 One of the great things about GraphQL is how flexible it is. People use GraphQL
-with [many different programming languages](http://graphql.org/code/) and for web and native apps.
+with [many different programming languages](https://graphql.org/code/) and for web and native apps.
 
 Most people run GraphQL on a server to respond live to requests for
 data from clients. You define a schema (a schema is a formal way of describing
@@ -154,7 +154,7 @@ If you give Gatsby data that looks like this:
 
 Gatsby will create a schema that looks something like this:
 
-```
+```text
 title: String
 ```
 
@@ -203,12 +203,14 @@ import React from "react"
 import Img from "gatsby-image"
 import { graphql } from "gatsby"
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default function Page({ data }) {
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 
 export const query = graphql`
   query {
@@ -234,7 +236,7 @@ See also the following blog posts:
 
 ### Fragments
 
-Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](https://graphql.org/learn/queries/#fragments).
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
@@ -268,7 +270,7 @@ It’s good practice for your helper components to define and export a fragment 
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <div>
       <h1>Index page</h1>
@@ -308,13 +310,15 @@ If the index component becomes too large, you might want to refactor it into sma
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ frontmatter: { title, date } }) => (
-  <div>
-    <h3>
-      {title} <span>— {date}</span>
-    </h3>
-  </div>
-)
+export default function IndexPost({ frontmatter: { title, date } }) {
+  return (
+    <div>
+      <h3>
+        {title} <span>— {date}</span>
+      </h3>
+    </div>
+  )
+}
 
 export const query = graphql`
   fragment IndexPostFragment on MarkdownRemark {
@@ -333,7 +337,7 @@ import React from "react"
 import IndexPost from "../components/IndexPost"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <div>
       <h1>Index page</h1>
@@ -353,6 +357,7 @@ export const query = graphql`
       totalCount
       edges {
         node {
+          id
           ...IndexPostFragment
         }
       }
@@ -364,17 +369,17 @@ export const query = graphql`
 ## Further reading
 
 - [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
-- [The Anatomy of a GraphQL Query](https://blog.apollographql.com/the-anatomy-of-a-graphql-query-6dffa9e9e747)
+- [The Anatomy of a GraphQL Query](https://www.apollographql.com/blog/the-anatomy-of-a-graphql-query-6dffa9e9e747)
 
 ### Getting started with GraphQL
 
-- http://graphql.org/learn/
+- https://graphql.org/learn/
 - https://www.howtographql.com/
 - https://reactjs.org/blog/2015/05/01/graphql-introduction.html
 - https://services.github.com/on-demand/graphql/
 
 ### Advanced readings on GraphQL
 
-- [GraphQL specification](https://facebook.github.io/graphql/October2016/)
+- [GraphQL specification](https://spec.graphql.org/October2016/)
 - [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
 - [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)

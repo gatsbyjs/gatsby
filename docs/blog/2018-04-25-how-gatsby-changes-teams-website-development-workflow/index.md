@@ -12,7 +12,7 @@ Website teams adopting Gatsby report improved collaboration at each stage -- fro
 
 To fully take advantage of new, Gatsby-enabled workflows, consider adopting some of these techniques:
 
-### Architecture
+## Architecture
 
 _Take advantage of extended evaluation periods to build a component library_
 
@@ -26,7 +26,7 @@ Choosing Gatsby frees your CMS from doing a lot of the heavy lifting, such as sc
 
 Another consideration is that not all of your content _has_ to live in one system. Often, you can save time and money by creating a multi-modal content architecture with best-in-class solutions for each of the different workflows & capabilities you require. You might choose to manage your e-commerce product catalog in Shopify, company-specific marketing pages in Contentful, and form-based event data in Google Sheets & Forms. Gatsby offers plugins to pull data from multiple sources, while building with one stack.
 
-### User Research
+## User Research
 
 _Utilize developers to prototype faster_
 
@@ -36,7 +36,7 @@ Gatsby makes another option possible. Some Gatsby users report [setting up a pro
 
 Especially if your organization already uses a React or HTML-based component library, your team may consider bringing in a developer to construct live wireframe-level prototypes. This may enable you to accelerate the user research process, start the development process with a working prototype rather than from scratch, and ultimately let you arrive at a better version of your site.
 
-### Development
+## Development
 
 _Make progress without access to the client CMS_
 

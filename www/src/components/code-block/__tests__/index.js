@@ -28,7 +28,7 @@ describe(`basic functionality`, () => {
     `.trim()
     beforeEach(() => {
       const text = `
-      import React from 'react'
+      import * as React from 'react'
 
       ${hidden} // hide-line
 

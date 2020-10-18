@@ -1,0 +1,30 @@
+# Setup TypeScript
+
+This recipe helps you start developing with the popular TypeScript language.
+
+This recipe:
+
+---
+
+Installs necessary NPM packages.
+
+<NPMPackage name="typescript" />
+<NPMPackage name="gatsby-plugin-typescript" />
+<NPMPackage name="@typescript-eslint/parser" />
+<NPMPackage name="@typescript-eslint/eslint-plugin" />
+
+---
+
+Installs the plugin `gatsby-plugin-typescript` in your `gatsby-config.js`.
+
+<GatsbyPlugin name="gatsby-plugin-typescript" />
+
+---
+
+Adds a `tsconfig.json` file to control how TypeScript processes your code.
+
+<File path="tsconfig.json" content="https://raw.githubusercontent.com/microsoft/TypeScript-Website/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/tsconfig.json" />
+
+---
+
+After installing this recipe, you can add TypeScript code, components, and pages in your sites `src` directory.

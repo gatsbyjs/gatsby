@@ -12,7 +12,7 @@ canonicalLink: https://kymellis.co/jamstack-marketing-headless-cms/
 
 There's an emerging trend in modern web development called the JAMstack. It's largely being discussed in developer circles, but I was lucky enough to work on a site relaunch project as a marketer where I got to see the JAMstack in action.
 
-It got me excited about the future because I've been in marketing for the best part of a decade and I've never witnessed a site that I've worked on go from zero to hero so quickly. There's often a disjoint in the decision making process when companies with resources (i.e. some money, developers and a marketing team) decide to launch or relaunch a marketing website. So in this post I'm going to summarise:
+It got me excited about the future because I've been in marketing for the best part of a decade and I've never witnessed a site that I've worked on go from zero to hero so quickly. There's often a disjoint in the decision making process when companies with resources (i.e. some money, developers and a marketing team) decide to launch or relaunch a marketing website. So in this post I'm going to summarize:
 
 - What the JAMstack is and what it means for tech-savvy marketers
 - An example of a JAMstack site that I worked on
@@ -28,13 +28,15 @@ In terms of what this means to you as a marketer – it's essentially a modern w
 
 Put simply, a JAMstack website has an unlimited ecosystem of all of the tools and services you need in the background, but the actual site itself on the frontend is just HTML.
 
-Building your marketing site on the JAMstack is an efficient and reliable way to combine all of your content and channels and serve it up as a lightning-fast website that your visitors will love. If you need to add ecommerce, paywalls, a podcast or some other content to your site in the future, your team won't have to figure out how to get everything to play ball with your CMS or build a new site from scratch. Instead they'll be able to connect new APIs or services to your existing site.
+Building your marketing site on the JAMstack is an efficient and reliable way to combine all of your content and channels and serve it up as a lightning-fast website that your visitors will love. If you need to add e-commerce, paywalls, a podcast or some other content to your site in the future, your team won't have to figure out how to get everything to play ball with your CMS or build a new site from scratch. Instead they'll be able to connect new APIs or services to your existing site.
 
 **The past vs the future**
 Using a traditional CMS is more restrictive and opinionated than this. You're constrained to the platform you choose from the get-go and forced to accept additional "features" that you might not even need. While these platforms have provided us with an excellent way to publish websites in the past, it's changing for the future.
 
 <Pullquote>
-Thanks to progression with modern browsers, static site generators, APIs and content delivery networks, websites can be built as modular stacks that aren't tied to specific technologies.
+  Thanks to progression with modern browsers, static site generators, APIs and
+  content delivery networks, websites can be built as modular stacks that aren't
+  tied to specific technologies.
 </Pullquote>
 
 **Going back to the benefits:** better performance, higher security, cheaper to scale & a better experience. These aren't just developer benefits, they apply directly to the marketing team too. Better performance means better site engagement and improved SEO. Higher security means less chance of not hitting your stretch goal next June because the site got hacked. Cheaper to scale means there will be less roadblocks in your way when you want to add that Shopify store or when a big campaign sends 1M visitors to the site. Better experience — who wouldn't want that?
@@ -46,7 +48,7 @@ Static site generators like Gatsby play a huge part in making all of this possib
 
 So you might be thinking if there's no traditional CMS and your site is pure HTML, that means you have to work on all of your content and SEO directly in code. While this is one way to do it, there is a better way for marketing teams.
 
-Since we're building websites that are modular, it's still possible to use any CMS that has a robust API to send content to your site. Instead of storing all of your content in GitHub, you can pull it right out of a CMS of your choosing and use a static site generator to build a speedy, optimised website.
+Since we're building websites that are modular, it's still possible to use any CMS that has a robust API to send content to your site. Instead of storing all of your content in GitHub, you can pull it right out of a CMS of your choosing and use a static site generator to build a speedy, optimized website.
 
 ![Headless CMS](./images/headlesscms.jpeg)
 
@@ -85,17 +87,21 @@ Since the SEO health of the site was so bad before, it took a few days for Googl
 In the first month after we launched, impressions in Google were up 44% and clicks were up 12%. By month two, impressions were up 73% and clicks 43%. Beyond this things started to stabilise a little on a MoM basis, but overall things are trending upward, with plenty of new search terms appearing in search console every week.
 
 <figure>
-  <img alt="Ghost Docs Website Performance" src="./images/googleanalytics.png" />
+  <img
+    alt="Ghost Docs Website Performance"
+    src="./images/googleanalytics.png"
+  />
   <figcaption>
-    Month 3 and 4 compared to the first two months after launching the new Docs site
+    Month 3 and 4 compared to the first two months after launching the new Docs
+    site
   </figcaption>
 </figure>
-
 <figure>
-  <img alt="Ghost Docs Website Growth" src="./images/googleanalyticsgrowth.png" />
-  <figcaption>
-    Growth over the past 6 months
-  </figcaption>
+  <img
+    alt="Ghost Docs Website Growth"
+    src="./images/googleanalyticsgrowth.png"
+  />
+  <figcaption>Growth over the past 6 months</figcaption>
 </figure>
 
 As always, there is still work to do to ensure the site ranks well for the most relevant terms, but right now the work put in upfront to improve the site is paying off handsomely. From a marketers perspective it was really exciting - I've never migrated a site with such instant success before.
@@ -104,7 +110,7 @@ As always, there is still work to do to ensure the site ranks well for the most 
 
 - [Ghost](https://ghost.org/) delivering content via the API
 - A frontend built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
-- Deployed with [Netlifly](https://netlify.com/) (really nifty content delivery network)
+- Deployed with [Netlify](https://netlify.com/) (really nifty content delivery network)
 - [Algolia](https://algolia.com/) powering the search functionality
 - [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
 
@@ -124,7 +130,7 @@ I've already covered some of the benefits of opting to use JAMstack instead of a
 
 **Overall benefits:**
 
-- Improved technical knowledge and skills - including shipping content and working with code every day during the build. End result = easier to manage, improve and optimise the site content after it launched.
+- Improved technical knowledge and skills - including shipping content and working with code every day during the build. End result = easier to manage, improve and optimize the site content after it launched.
 - Became well versed in how the site is structured, resulting in greater understanding and communication between teams (dev + design + marketing).
 - The development cycle and the content were being worked on simultaneously and you could see the iterative improvements being made instantly. No long dev cycles followed by a mad dash to get all of the marketing content in at the last minute.
 
@@ -139,7 +145,7 @@ To be frank, all of these downsides are things that are worth enduring to get a 
 **Tips for a successful JAMstack launch**
 Since you're going to be working so closely with developers, it would be a good idea to sit down from the outset and plan out how things are going to work. Your developers are going to need to know exactly what functionality you need so that it can be built into the site. If you're using a headless CMS, you'll need to be clear about what data and content you expect to be pulled out of the CMS and into your static site.
 
-You will likely require integrations with your favourite tools and services and tracking for analytics. Depending on what stack you decide to use, the answer to how this will be connected together might be different. So it's important to iron out these expectations from the start so nothing gets missed.
+You will likely require integrations with your favorite tools and services and tracking for analytics. Depending on what stack you decide to use, the answer to how this will be connected together might be different. So it's important to iron out these expectations from the start so nothing gets missed.
 
 ## Conclusion
 

@@ -7,7 +7,7 @@ As methodologies for building Gatsby Themes begin to formalize and standardize, 
 ## Naming
 
 It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
-can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme` enables gatsby in identifying theme packages for compilation.
+can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme-` enables Gatsby in identifying theme packages for compilation.
 
 ## Initializing required directories
 
@@ -34,19 +34,21 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
 ## Separating queries and presentational components
 
-As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
+As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
 
 ### Page queries
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
-```js:title=src/templates/post-list.js
+```jsx:title=src/templates/post-list.js
 import React from "react"
 import { graphql } from "gatsby"
 
 import PostList from "../components/PostList"
 
-export default props => <PostList posts={props.allMdx.edges} />
+export default function MyPostsList(props) {
+  return <PostList posts={props.allMdx.edges} />
+}
 
 export const query = graphql`
   query {
@@ -79,7 +81,7 @@ export const query = graphql`
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -128,7 +130,7 @@ your theme you can create a StaticQuery to access it:
 ```js:title=src/hooks/use-site-metadata.js
 import { graphql, useStaticQuery } from "gatsby"
 
-export default () => {
+export default function useSiteMetadata() {
   const data = useStaticQuery(graphql`
     {
       site {
@@ -150,13 +152,13 @@ export default () => {
 
 Then use it in components like the a header:
 
-```js:title=src/components/header.js
+```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
 
 import useSiteMetadata from "../hooks/use-site-metadata"
 
-export default () => {
+export default function Header() {
   const { title, social } = useSiteMetadata()
 
   return (
@@ -221,7 +223,7 @@ for performing a theme upgrade.
   - Renaming a directory
 - **Removing or changing the props a component accepts** since it will affect component extending.
 - **Changing queries** since a user could be using the original data in shadowed components.
-- **Removing or changing the behaviour** of your theme's configuration.
+- **Removing or changing the behavior** of your theme's configuration.
 - **Removing attributes in schema definitions** because it can break end user queries.
 - **Removing default data** this could change your generated schema and break a user's site if they
   depend on some part of that generated schema.

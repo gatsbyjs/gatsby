@@ -8,8 +8,7 @@ import FeedbackForm from "./feedback-form"
 import SubmitSuccess from "./submit-success"
 import SubmitError from "./submit-error"
 import { ScreenReaderText, WidgetContainer } from "./styled-elements"
-import MdClose from "react-icons/lib/md/close"
-import MdForum from "react-icons/lib/md/forum"
+import { MdClose, MdForum } from "react-icons/md"
 
 const postFeedback = ({ rating, comment }) => {
   const payload = {

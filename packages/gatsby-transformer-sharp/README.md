@@ -10,7 +10,7 @@ including resizing, cropping, and creating responsive images.
 
 ## Install
 
-`npm install --save gatsby-transformer-sharp gatsby-plugin-sharp`
+`npm install gatsby-transformer-sharp gatsby-plugin-sharp`
 
 ## How to use
 
@@ -38,13 +38,35 @@ It recognizes files with the following extensions as images.
 
 Each image file is parsed into a node of type `ImageSharp`.
 
+## Configuration options
+
+`checkSupportedExtensions` [boolean][optional]
+
+Sharp only supports certain image formats (see the Parsing algorithm section above) and hence throws a warning when you e.g. use a .gif in an `ImageSharp` query. You'll need to use `publicURL` instead. With this option you can disable the warning behavior.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // The option defaults to true
+        checkSupportedExtensions: false,
+      },
+    },
+  ],
+}
+```
+
 ## Troubleshooting
 
 ### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
 
 This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
-```
+```text
 Something went wrong installing the "sharp" module
 
 dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib

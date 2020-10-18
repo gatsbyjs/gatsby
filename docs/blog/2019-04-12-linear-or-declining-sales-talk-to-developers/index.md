@@ -110,7 +110,7 @@ So: what can you do?
 
 1. **Get out of your office** and go introduce yourself (always a good start!)
 
-2. **Let them know what your KPI goals are** and ask them how they feel they could help. Explain what you know about the positive benefits benefits of site/app performance. (they love to help and will bend over backwards to do so!)
+2. **Let them know what your KPI goals are** and ask them how they feel they could help. Explain what you know about the positive benefits of site/app performance. (they love to help and will bend over backwards to do so!)
 
 3. **Talk to them about the benefits that performance has on your goals** and what it means to you, your team and the overall company. (not everyone connects the dots to the work they are doing and how important of a role they play within the company. IMHO, the developers are your Kings and Queens of the castle...so treat them as such!)
 

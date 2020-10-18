@@ -1,6 +1,6 @@
 # gatsby-plugin-manifest
 
-The web app manifest(part of the [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) specification) enabled by this plugin allows users to add your site to their home screen on most mobile browsers —
+The web app manifest (part of the [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) specification) enabled by this plugin allows users to add your site to their home screen on most mobile browsers —
 [see here](http://caniuse.com/#feat=web-app-manifest). The manifest provides configuration and icons to the phone.
 
 This plugin provides several features beyond manifest configuration to make your life easier, they are:
@@ -13,10 +13,12 @@ This plugin provides several features beyond manifest configuration to make your
 
 Each of these features has extensive configuration available so you are always in control.
 
+This guide focuses on configuring the plugin. For more information on the web app manifest, check out the additional resources below.
+
 ## Install
 
-```
-$ npm install --save gatsby-plugin-manifest
+```shell
+npm install gatsby-plugin-manifest
 ```
 
 ## How to use
@@ -76,8 +78,8 @@ There are three modes in which icon generation can function: automatic, hybrid, 
 **_IMPORTANT:_** For best results, if you're providing an icon for generation it should be...
 
 - ...at least as big as the largest icon being generated (512x512 by default).
-- ...square (if it's not, transparent bars will add to make it square).
-- ...of one of the follow formats: JPEG, PNG, WebP, TIFF, GIF or SVG.
+- ...square (if it's not, transparent bars will automatically be added to make it square).
+- ...of one of the following formats: JPEG, PNG, WebP, TIFF, GIF or SVG.
 
 #### Automatic mode configuration
 
@@ -109,7 +111,7 @@ Add the following line to the plugin options
   ], // Add or remove icon sizes as desired
 ```
 
-If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you include a high-resolution icon from which to generate smaller icons. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
+If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you include a high-resolution icon from which to generate smaller icons. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config.
 
 The hybrid option allows the most flexibility while still not requiring you to create all icon sizes manually.
 
@@ -138,13 +140,13 @@ In the manual mode, you are responsible for defining the entire web app manifest
 
 #### Localization configuration
 
-Localization allows you to create unique manifests for each localized version of your site. As many languages as you want are supported. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the German (`de`) version would be `/de/about`)
+Localization allows you to create unique manifests for each localized version of your site. You can add as many languages as you want. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the German (`de`) version would be `/de/about`).
 
 The default site language should be configured in your root plugin options. Any additional languages should be defined in the `localize` array. The root settings will be used as defaults if not overridden in a locale. Any configuration option available in the root is also available in the `localize` array.
 
 `lang` and `start_url` are the only _required_ options in the array objects. `name`, `short_name`, and `description` are [recommended](https://www.w3.org/TR/appmanifest/#dfn-directionality-capable-members) to be translated if being used in the default language. All other config options are optional. This is helpful if you want to provide unique icons for each locale.
 
-The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
 
 Using localization requires name-based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide an `icon` in a specific locale without uniquely defining `icons`. If you're using icon creation in hybrid or manual mode for your locales, remember to provide unique icon paths.
 
@@ -200,10 +202,8 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`,
         icon_options: {
-          // For all the options available, please see:
-          // https://developer.mozilla.org/en-US/docs/Web/Manifest
-          // https://w3c.github.io/manifest/#purpose-member
-          purpose: `maskable`,
+          // For all the options available, please see the additional resources below.
+          purpose: `any maskable`,
         },
       },
     },
@@ -213,7 +213,7 @@ module.exports = {
 
 #### Disable legacy icons
 
-iOS 11.3 added support for the web app manifest spec. Previous iOS versions won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
+iOS 11.3 added support for the web app manifest specification. Previous iOS versions won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in the plugin configuration:
 
 ```js
 // in gatsby-config.js
@@ -238,7 +238,9 @@ module.exports = {
 
 #### Disable favicon
 
-Excludes `<link rel="icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
+A favicon is generated by default in automatic and hybrid modes (a 32x32 PNG, included via a `<link rel="icon" />` tag in the document head). Additionally, if an SVG icon is provided as the source, it will be used in the document head without modification as a favicon. The PNG will still be created and included as a fallback. Including the SVG icon allows creating a responsive icon with CSS Media Queries such as [dark mode](https://catalin.red/svg-favicon-light-dark-theme/#browser-support-and-fallbacks) and [others](https://css-tricks.com/svg-favicons-and-all-the-fun-things-we-can-do-with-them/#other-media-queries).
+
+You can set the `include_favicon` plugin option to `false` to opt-out of this behavior.
 
 ```js
 // in gatsby-config.js
@@ -269,7 +271,7 @@ Cache busting works by calculating a unique "digest" of the provided icon and mo
 
 **Options:**
 
-- **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`
+- **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`.
 
 - **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting). This mode is required and automatically enabled for a locale's icons if you are providing a unique icon for a specific locale in automatic mode using the localization features.
 
@@ -295,6 +297,34 @@ module.exports = {
   ],
 }
 ```
+
+#### Using with gatsby-plugin-offline
+
+If using this plugin with `gatsby-plugin-offline` you may find that your icons are not cached.
+In order to solve this, update your `gatsby-config.js` as follows:
+
+```js
+// gatsby-config.js
+{
+   resolve: 'gatsby-plugin-manifest',
+   options: {
+      icon: 'icon.svg',
+      cache_busting_mode: 'none'
+   }
+},
+{
+   resolve: 'gatsby-plugin-offline',
+   options: {
+      workboxConfig: {
+         globPatterns: ['**/icon-path*']
+      }
+   }
+}
+```
+
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.
+Note that you have to prefix your icon with `icon-path` or whatever you may call it
 
 #### Remove `theme-color` meta tag
 
@@ -412,9 +442,9 @@ Internet Explorer is the only other major browser that doesn't support the web a
 ### Additional resources
 
 This article from the Chrome DevRel team is a good intro to the web app
-manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+manifest — https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
+For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/).
 
 ## Troubleshooting
 
@@ -422,7 +452,7 @@ For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozil
 
 This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
-```
+```text
 Something went wrong installing the "sharp" module
 
 dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
@@ -446,3 +476,63 @@ npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-cont
 ```
 
 If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
+
+### APACHE: Error while trying to use the following icon from the Manifest
+
+If you are on an Apache webserver and utilizing the automatic solution, you may receive an error when attempting to access an icon listed in the manifest as residing in the `/icons` folder. This is because Apache restricts access to all `/icons` folders by default. You can fix this by switching to the hybrid solution and changing the folder name from `icons` to something like `favicons`.
+
+Example:
+
+```js
+// In the gatsby-plugin-manifest section of your gatsby-config.js
+  icon: `src/images/icon.png`, // This path is relative to the root of the site.
+  icons: [
+    {
+        "src": "favicons/icon-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    },  // Add or remove icon sizes as desired
+  ]
+```
+
+Alternatively, if you have access to modify Apache, you can resolve this issue by removing the restriction on `/icons` folders.
+
+#### On Debian based systems
+
+Backup the `/etc/apache2/mods-available/alias.conf` file:
+
+```shell
+cp /etc/apache2/mods-available/alias.conf /etc/apache2/mods-available/alias.conf.back
+```
+
+Comment out the Alias `/icons/ "/usr/share/apache2/icons/"` row in `/etc/apache2/mods-available/alias.conf` file:
+
+```shell
+cat /etc/apache2/mods-available/alias.conf | grep "Alias /icons/"
+```
+
+Reload Apache service:
+
+```shell
+service apache2 reload
+```
+
+#### On Red Hat or CentOS systems
+
+Create a backup of `/etc/httpd/conf.d/autoindex.conf`:
+
+```shell
+cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back
+```
+
+Comment out `"Alias /icons/"` in `/etc/httpd/conf.d/autoindex.conf`:
+
+```shell
+cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"
+```
+
+Reload Apache or restart the server:
+
+```shell
+service httpd reload
+```

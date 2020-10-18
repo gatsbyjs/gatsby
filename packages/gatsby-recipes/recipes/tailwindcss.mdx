@@ -1,0 +1,42 @@
+# Setup Gatsby with Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com/) is a highly customizable, low-level CSS framework that gives you all of the building blocks you need to build bespoke designs without any annoying opinionated styles you have to fight to override.
+
+This recipe:
+
+---
+
+Installs necessary NPM packages.
+
+<NPMPackage name="tailwindcss" />
+<NPMPackage name="gatsby-plugin-postcss" />
+
+---
+
+Installs necessary Gatsby plugins.
+
+<GatsbyPlugin name="gatsby-plugin-postcss"/>
+
+---
+
+Sets up necessary files.
+
+<File
+  path="postcss.config.js"
+  content="https://raw.githubusercontent.com/Khaledgarbaya/gatsby-tailwindcss-recipe/master/postcss.config.js"
+/>
+
+<File
+  path="tailwind.config.js"
+  content="https://raw.githubusercontent.com/Khaledgarbaya/gatsby-tailwindcss-recipe/master/tailwind.config.js"
+/>
+
+<File
+  path="src/styles/tailwind.css"
+  content="https://raw.githubusercontent.com/Khaledgarbaya/gatsby-tailwindcss-recipe/master/src/styles/tailwind.css"
+/>
+
+<File
+  path="src/pages/usingtailwind.js"
+  content="https://raw.githubusercontent.com/Khaledgarbaya/gatsby-tailwindcss-recipe/master/src/pages/tailwind.js"
+/>

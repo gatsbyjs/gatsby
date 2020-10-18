@@ -75,7 +75,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `function`,
-          value: function() {
+          value: function () {
             return { pageCategory: window.pageType }
           }.toString(),
         },

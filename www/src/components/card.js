@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const Card = ({ children }) => (
   <div
@@ -15,13 +15,15 @@ const Card = ({ children }) => (
         boxShadow: t => `0 1px 0 0 ${t.colors.ui.border}`,
         "&:nth-of-type(5), &:nth-of-type(6)": { boxShadow: `none` },
         "&:nth-of-type(2n)": {
-          borderLeft: t => `1px solid ${t.colors.ui.border}`,
+          borderLeft: 1,
+          borderColor: `ui.border`,
         },
       },
       [mediaQueries.xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
-        borderLeft: t => `1px solid ${t.colors.ui.border}`,
+        borderLeft: 1,
+        borderColor: `ui.border`,
         "&:nth-of-type(4)": { boxShadow: `none` },
         "&:nth-of-type(3n+1)": { borderLeft: 0 },
       },
@@ -29,9 +31,13 @@ const Card = ({ children }) => (
   >
     <div
       sx={{
-        p: 8,
-        pb: [0, 8],
+        pt: 8,
+        px: 0,
         transform: `translateZ(0)`,
+        [mediaQueries.sm]: {
+          px: 8,
+          py: 8,
+        },
       }}
     >
       {children}

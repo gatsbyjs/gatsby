@@ -12,6 +12,8 @@ const fs = require(`fs-extra`)
 
 const FileParser = require(`../file-parser`).default
 
+const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
+
 describe(`File parser`, () => {
   const MOCK_FILE_INFO = {
     "no-query.js": `import React from "react"`,
@@ -21,6 +23,23 @@ query PageQueryName {
   foo
 }
 \``,
+    "page-query-indirect.js": `import { graphql } from 'gatsby'
+    const query = graphql\`
+query PageQueryIndirect {
+  foo
+}
+\`
+export { query }
+`,
+    "page-query-indirect-2.js": `import { graphql } from 'gatsby'
+    const query = graphql\`
+query PageQueryIndirect2 {
+  foo
+}
+\`
+const query2 = query;
+export { query2 }
+`,
     "page-query-no-name.js": `import { graphql } from 'gatsby'
   export const query = graphql\`
 query {
@@ -148,6 +167,18 @@ export default () => {
   const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
   return <div>{data.doo}</div>;
 }`,
+    "static-query-hooks-with-other-export.js": `import { graphql, useStaticQuery } from 'gatsby'
+export { Bar } from 'bar'
+export default () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}
+`,
+    "static-query-hooks-alternative-import.js": `import * as Gatsby from 'gatsby'
+export default () => {
+  const data = Gatsby.useStaticQuery(Gatsby.graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
     "static-query-hooks-with-type-parameter.ts": `import { graphql, useStaticQuery } from 'gatsby'
 export default () => {
   const data = useStaticQuery<HomepageQuery>(graphql\`query StaticQueryName { foo }\`);
@@ -182,6 +213,18 @@ export default () => {
   const data = useStaticQuery(strangeQueryName);
   return <div>{data.pizza}</div>;
 }`,
+    [`${specialChars}.js`]: `import { graphql, useStaticQuery } from 'gatsby'
+export default () => {
+  const data = useStaticQuery(graphql\`query { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
+    [`static-${specialChars}.js`]: `import { graphql } from 'gatsby'
+  export default () => (
+  <StaticQuery
+    query={graphql\`query { foo }\`}
+    render={data => <div>{data.doo}</div>}
+  />
+)`,
   }
 
   const parser = new FileParser()
@@ -193,11 +236,30 @@ export default () => {
   })
 
   it(`extracts query AST correctly from files`, async () => {
+    const errors = []
+    const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
       Object.keys(MOCK_FILE_INFO),
-      jest.fn()
+      addError
     )
     expect(results).toMatchSnapshot()
     expect(reporter.warn).toMatchSnapshot()
+    expect(errors.length).toEqual(1)
+  })
+
+  it(`generates spec-compliant query names out of path`, async () => {
+    const ast = await parser.parseFile(`${specialChars}.js`, jest.fn())
+    const nameNode = ast[0].doc.definitions[0].name
+    expect(nameNode).toEqual({
+      kind: `Name`,
+      value: `zhADollarpercentandJs1125018085`,
+    })
+
+    const ast2 = await parser.parseFile(`static-${specialChars}.js`, jest.fn())
+    const nameNode2 = ast2[0].doc.definitions[0].name
+    expect(nameNode2).toEqual({
+      kind: `Name`,
+      value: `staticZhADollarpercentandJs1125018085`,
+    })
   })
 })

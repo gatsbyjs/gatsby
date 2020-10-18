@@ -27,7 +27,7 @@ Image optimization in Gatsby is provided by a plugin called `gatsby-image` which
 
 Start by using npm to install the `gatsby-image` plugin and its associated dependencies.
 
-```bash
+```shell
 npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
@@ -51,9 +51,9 @@ Determine where your image files are located. In this example they're in `src/da
 
 If you haven't already, make sure that your project is set up to see content inside that directory. That means doing two things:
 
-1.  Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
+1. Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
 
-```bash
+```shell
 npm install gatsby-source-filesystem
 ```
 
@@ -91,6 +91,8 @@ export const query = graphql`
 `
 ```
 
+_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/packages/gatsby-image/#fragments)._
+
 There are a couple of things to note here.
 
 ### Relative image paths and `gatsby-config.js`
@@ -99,7 +101,7 @@ You might expect the relative path to be relative to the file the code sits in, 
 
 ### Image fragments
 
-Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don’t have a finite size depending on the screen, where as other images are _fixed_.
+Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don’t have a finite size depending on the screen, whereas other images are _fixed_.
 
 The query will return a data object including the processed image in a format usable by the `gatsby-image` component. The returned result will be automatically passed into the component and attached to the `data` prop. You can then display the image using JSX to automatically output responsive, highly performant HTML.
 
@@ -187,7 +189,7 @@ In order to reference your images in YAML make sure that the relative paths are 
 
 The inside of the YAML file would look something like this:
 
-```
+```yaml
 - image: speaking/kcdc.jpg
 ```
 
@@ -225,8 +227,8 @@ Since the images are stored as part of an array, they can be accessed using the 
 
 If your query is part of a reusable component you may want to use a Static Query hook. The code necessary to do this is almost the same as the single image use case above.
 
-```javascript:title=src/components/header-image.js
-export default () => {
+```jsx:title=src/components/header-image.js
+export default function HeaderImage() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "headers/default.jpg" }) {
@@ -254,19 +256,20 @@ This example is attempting to query for all the data in `speaking.yaml` and the 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
 ```graphql
-talks: allSpeakingYaml {
-        edges {
-            node {
-                image {
-                    childImageSharp {
-                        fluid {
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
+{
+  talks: allSpeakingYaml {
+    edges {
+      node {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
             }
+          }
         }
+      }
     }
+  }
 }
 ```
 
@@ -343,17 +346,17 @@ And then like this to access the image using the alias name `banner`.
 <Img fluid={data.banner.childImageSharp.fluid} />
 ```
 
-These examples should handle a fair number of use cases. A couple bonus things:
+These examples should handle a fair number of use cases. A couple of bonus things:
 
 ## Aspect ratio
 
 `gatsby-image` has a feature that gives you the ability to set an aspect ratio to constrain image proportions. This can be used for fixed or fluid processed images; it doesn't matter.
 
 ```jsx
-<Img sizes={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
+<Img fluid={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
 ```
 
-This example uses the `sizes` option on the `Img` component to specify the `aspectRatio` option along with the fluid image data. This processing is made possible by `gatsby-plugin-sharp`.
+This example uses the `fluid` option on the `Img` component to specify the `aspectRatio` option along with the fluid image data. This processing is made possible by `gatsby-plugin-sharp`.
 
 ## Bonus Error
 

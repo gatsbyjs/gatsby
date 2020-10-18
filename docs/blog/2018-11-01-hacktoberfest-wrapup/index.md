@@ -41,16 +41,7 @@ Thanks to everyone's contributions, throughout October we merged 439 pull reques
 
 Of the 250 different authors who contributed to this month, over 170 were first-time contributors to the Gatsby repo!
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    150 new people started contributing to Gatsby last month! Welcome and
-    thanks!{" "}
-    <a href="https://twitter.com/hashtag/Hacktoberfest?src=hash&amp;ref_src=twsrc%5Etfw">
-      #Hacktoberfest
-    </a>
-  </p>
-  &mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1056235954824871936?ref_src=twsrc%5Etfw">October 27, 2018</a>
-</blockquote>
+https://twitter.com/gatsbyjs/status/1056235954824871936
 
 (We celebrated a bit early).
 

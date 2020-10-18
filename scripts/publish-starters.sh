@@ -11,24 +11,24 @@ fi
 
 for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
-  cd $BASE
+  cd "$BASE"
 
-  NAME=$(jq -r '.name' $folder/package.json)
-  IS_WORKSPACE=$(jq -r '.workspaces' $folder/package.json)
+  NAME=$(jq -r '.name' "$folder/package.json")
+  IS_WORKSPACE=$(jq -r '.workspaces' "$folder/package.json")
   CLONE_DIR="__${NAME}__clone__"
-  
+
   # sync to read-only clones
   # clone, delete files in the clone, and copy (new) files over
   # this handles file deletions, additions, and changes seamlessly
   # note: redirect output to dev/null to avoid any possibility of leaking token
-  git clone --quiet --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR > /dev/null
-  cd $CLONE_DIR
+  git clone --quiet --depth 1 "https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git" "$CLONE_DIR" > /dev/null
+  cd "$CLONE_DIR"
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
-  cp -r $BASE/$folder/. .
+  cp -r "$BASE/$folder/." .
 
   if [ "$IS_WORKSPACE" = null ]; then
-    rm -rf yarn.lock
-    yarn import # generate a new yarn.lock file based on package-lock.json
+    rm -f yarn.lock
+    yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
   fi
 
   if [ -n "$(git status --porcelain)" ]; then
@@ -37,5 +37,5 @@ for folder in $GLOB; do
     git push origin master
   fi
 
-  cd $BASE
+  cd "$BASE"
 done

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 
 import {
   showcaseList,
@@ -14,11 +14,11 @@ import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-import GithubIcon from "react-icons/lib/go/mark-github"
-import LaunchSiteIcon from "react-icons/lib/md/launch"
-import FeaturedIcon from "../../assets/icons/featured-sites-icons"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { MdLaunch as LaunchSiteIcon } from "react-icons/md"
+import { FeaturedSitesIcon } from "../../assets/icons"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
@@ -26,7 +26,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   return (
     <main id={`reach-skip-nav`} sx={showcaseList}>
       {items.map(
-        ({ node }) =>
+        node =>
           node.fields &&
           node.fields.slug && ( // have to filter out null fields from bad data
             <div key={node.id} sx={showcaseItem}>
@@ -60,6 +60,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                         href={node.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Open source code for ${node.title}`}
                       >
                         <GithubIcon style={{ verticalAlign: `text-top` }} />
                       </a>
@@ -71,6 +72,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open website for ${node.title}`}
                   >
                     <LaunchSiteIcon style={{ verticalAlign: `text-top` }} />
                   </a>
@@ -108,12 +110,12 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                         },
                       },
                     }}
-                    to={`/showcase?${qs.stringify({
+                    to={`/showcase/?${qs.stringify({
                       filters: `Featured`,
                     })}`}
                     className="featured-site"
                   >
-                    <FeaturedIcon />
+                    <FeaturedSitesIcon />
                   </Link>
                 )}
               </div>

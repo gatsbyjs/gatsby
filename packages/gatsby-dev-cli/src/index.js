@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const os = require(`os`)
 const watch = require(`./watch`)
-
+const { getVersionInfo } = require(`./utils/version`)
 const argv = require(`yargs`)
   .usage(`Usage: gatsby-dev [options]`)
   .alias(`q`, `quiet`)
@@ -16,7 +16,7 @@ const argv = require(`yargs`)
   .nargs(`s`, 0)
   .describe(`s`, `Scan once. Do not start file watch`)
   .alias(`p`, `set-path-to-repo`)
-  .nargs(`p`, 0)
+  .nargs(`p`, 1)
   .describe(
     `p`,
     `Set path to Gatsby repository.
@@ -36,7 +36,15 @@ You typically only need to configure this once.`
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
-  .alias(`h`, `help`).argv
+  .alias(`h`, `help`)
+  .nargs(`v`, 0)
+  .alias(`v`, `version`)
+  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`).argv
+
+if (argv.version) {
+  console.log(getVersionInfo())
+  process.exit()
+}
 
 const conf = new Configstore(pkg.name)
 
@@ -97,7 +105,13 @@ If you prefer to place them in your package.json dependencies instead,
 gatsby-dev will pick them up.
 `
   )
-  process.exit()
+  if (!argv.forceInstall) {
+    process.exit()
+  } else {
+    console.log(
+      `Continuing other dependencies installation due to "--forceInstall" flag`
+    )
+  }
 }
 
 watch(gatsbyLocation, argv.packages, {

@@ -2,7 +2,15 @@
 title: Converting a Starter to a Theme
 ---
 
-Gatsby themes are designed to be easy to create from an existing starter. Here we will walk you through the main steps of converting your starter to a theme.
+Gatsby themes are designed to be easy to create from an existing starter. This guide will walk you through the main steps of converting your starter to a theme.
+
+## What is a starter? What is a theme?
+
+A starter is a boilerplate Gatsby site that users can copy and [customize](/docs/modifying-a-starter/). Once modified, a starter maintains no connection to its source.
+
+A theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. In contrast to starters, themes can be packaged and distributed through a registry like npm, and their versions can be tracked/managed through a `package.json` file.
+
+One reason to convert a starter to a theme is to make it easier to push updates out to consumers of your code. With a starter, users would have to try and update their code from the original starter repo and run the risk of overwriting some of their own changes. With a theme, it's much easier for developers to update code through their package manager and rely on a consistent theme API that respects their customizations.
 
 ## Prepare Your `package.json`
 
@@ -60,21 +68,19 @@ There may be other locations where you will need to update the path resolution l
 
 ## Sourcing pages
 
-If your theme provides pages for things like the blog post index and a homepage, you will need to source them.
-Gatsby will only look in the relative `src/pages` directory when `gatsby develop` is run.
-You will need to use the [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
+Gatsby by default sources pages relative from `src/pages`, like a regular Gatsby site does. However, if you would like to source pages from a different directory you'll have to setup [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
 
 ```shell
-npm install --save gatsby-plugin-page-creator
+npm install gatsby-plugin-page-creator
 ```
 
-Then, tell the plugin to look in your theme's `src/pages` directory.
+Then, tell the plugin to look in your theme's `src/<custom-directory>` directory.
 
 ```js:title=gatsby-config.js
 {
   resolve: `gatsby-plugin-page-creator`,
   options: {
-    path: path.join(__dirname, `src`, `pages`),
+    path: path.join(__dirname, `src`, `<custom-directory>`),
   },
 },
 ```
@@ -88,5 +94,9 @@ From the root of your newly created theme run `npm publish`.
 Once you've published, you can install the theme in your starter.
 
 ```shell
-npm install --save gatsby-theme-NAME
+npm install gatsby-theme-NAME
 ```
+
+## Walkthrough
+
+- [Jason Lengstorf converts an existing Gatsby site to a theme](https://www.youtube.com/watch?v=NkW06HK9-aY)

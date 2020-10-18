@@ -1,3 +1,7 @@
+const fs = require(`fs`)
+const path = require(`path`)
+const crypto = require(`crypto`)
+
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
@@ -6,13 +10,28 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLJSON,
+  GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
-const path = require(`path`)
 
 const cacheImage = require(`./cache-image`)
+
+// By default store the images in `.cache` but allow the user to override
+// and store the image cache away from the gatsby cache. After all, the gatsby
+// cache is more likely to go stale than the images (which never go stale)
+// Note that the same image might be requested multiple times in the same run
+
+if (process.env.GATSBY_REMOTE_CACHE) {
+  console.warn(
+    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
+  )
+}
+const REMOTE_CACHE_FOLDER =
+  process.env.GATSBY_REMOTE_CACHE ??
+  path.join(process.cwd(), `.cache/remote_cache`)
+const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
 const {
   ImageFormatType,
@@ -33,10 +52,26 @@ const getBase64Image = imageProps => {
   if (!imageProps) return null
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
-  // TODO add caching.
+
+  // Note: sha1 is unsafe for crypto but okay for this particular case
+  const shasum = crypto.createHash(`sha1`)
+  shasum.update(requestUrl)
+  const urlSha = shasum.digest(`hex`)
+
+  // TODO: Find the best place for this step. This is definitely not it.
+  fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
+
+  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
+
+  if (fs.existsSync(cacheFile)) {
+    // TODO: against dogma, confirm whether readFileSync is indeed slower
+    return fs.promises.readFile(cacheFile, `utf8`)
+  }
+
   return new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
-      resolve(body)
+      // TODO: against dogma, confirm whether writeFileSync is indeed slower
+      fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
     })
   })
 }
@@ -88,6 +123,11 @@ const resolveFixed = (image, options) => {
   // If no dimension is given, set a default width
   if (options.width === undefined && options.height === undefined) {
     options.width = 400
+  }
+
+  // If only a height is given, calculate the width based on the height and the aspect ratio
+  if (options.height !== undefined && options.width === undefined) {
+    options.width = Math.round(options.height * desiredAspectRatio)
   }
 
   // If we're cropping, calculate the specified aspect ratio.
@@ -327,10 +367,10 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           resolve: getTracedSVG,
         },
         aspectRatio: { type: GraphQLFloat },
-        width: { type: GraphQLFloat },
-        height: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        width: { type: new GraphQLNonNull(GraphQLFloat) },
+        height: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
@@ -396,6 +436,8 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
     },
     resolve: (image, options, context) =>
       Promise.resolve(resolveFixed(image, options)).then(node => {
+        if (!node) return null
+
         return {
           ...node,
           image,
@@ -421,9 +463,9 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve: getTracedSVG,
         },
-        aspectRatio: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
@@ -458,7 +500,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
             return _.get(fluid, `srcSet`)
           },
         },
-        sizes: { type: GraphQLString },
+        sizes: { type: new GraphQLNonNull(GraphQLString) },
       },
     }),
     args: {
@@ -493,6 +535,8 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
     },
     resolve: (image, options, context) =>
       Promise.resolve(resolveFluid(image, options)).then(node => {
+        if (!node) return null
+
         return {
           ...node,
           image,

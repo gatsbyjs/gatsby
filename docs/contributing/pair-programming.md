@@ -2,39 +2,36 @@
 title: Open Community Pair Programming Sessions
 ---
 
-The best part of open source is the community, and every community is stronger when it works together. To help build the strongest community possible, Gatsby is offering free [one-hour pair programming sessions][cal] to anyone and everyone in the open source community.
+The best part of open source is the community, and every community is stronger when it works together. To help build the strongest community possible, Gatsby is offering free [45 minute pair programming sessions][form] to anyone and everyone in the open source community.
 
 ## How community pair programming sessions work
 
-1.  Sign up for any available slot on [the open pairing calendar][cal]
-2.  You’ll be paired with one of the Gatsby Inkteam
-3.  Join the video meeting during your time slot
-4.  Build, learn, or discuss your Gatsby or other OSS project!
+1. Select or create [an issue](https://github.com/gatsbyjs/gatsby/issues) you would like to work on and work on it yourself.
+2. [Create a pull request](/contributing/how-to-open-a-pull-request/) when you encounter any problem.
+3. Fill in your details in [the pair programming request form][form].
+4. You’ll be paired with a Gatsby team member and we'll establish a good time to pair on [Zoom](https://zoom.us).
+5. We'll help you with your pull request or issue!
+6. The video of your pairing session will be available on our [YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w/videos).
 
 ### What we expect in pair programming sessions
 
-These sessions are intended for people who:
+These sessions are intended for people who would like to contribute to Gatsby. We will pair program together to solve an issue or pull request related to Gatsby.
 
-- would like to get started with Gatsby, or
-- would like to get started with contributing to open source software, or
-- would like to work on an issue or pull request related to Gatsby, or
-- are using Gatsby for a personal, open source, charity or education project
-
-If you're interested in support for a commercial Gatsby project, please [get in touch via the contact page](https://www.gatsbyjs.com/contact-us/).
+If you're interested in support for a commercial Gatsby project, please [get in touch via the contact page](/contact-us/).
 
 We also expect the following from pair programming participants:
 
-- These sessions tend to work best when you have a specific goal for the session.
-- If you're new to building with Gatsby we recommend [working through the tutorial](https://www.gatsbyjs.org/tutorial/) before your session. If you get stuck part way through that's a great time to book a pairing session.
-- If you're new to contributing to open source we recommend following the ["Setting Up Your Local Dev Environment" guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/) before your session.
+- These sessions work best when you have a specific goal for the session. You should choose an issue or pull request that you'd like to work on.
+- If you're new to building with Gatsby we recommend [working through the tutorial](/tutorial/) before your session. If you get stuck part way through that's a great time to book a pairing session.
+- If you're new to contributing to open source we recommend following the ["Setting Up Your Local Dev Environment" guide](/contributing/setting-up-your-local-dev-environment/) before your session.
 - All participants are expected to adhere to [Gatsby’s code of conduct](/contributing/code-of-conduct/)
-- We will ask if it’s okay to record our session; you are _not_ required to let us record
-- If the session is recorded, we may post the recording on [Gatsby’s YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
+- We will ask if it’s okay to record your session; you are _not_ required to let us record and we will work to find another solution that works for you. However, we think it's really valuable to surface these pairing sessions so more people can learn from them and they have a wider reach.
+- Check out our [previous sessions](https://www.youtube.com/playlist?list=PLCU2qJekvcN1f4CRTTMMW6XliGio1NcUD) to see if we've already covered what you're looking to learn! This list will grow over time and we're really excited to have lasting learning artifacts for contributing to Gatsby. Our very first recording was not an actual pairing session but was an [introduction to Gatsby's repository and internals](https://www.youtube.com/watch?v=9wM3pFtyTHw) and is a tremendous resource.
 
 ## How to sign up
 
-We allow booking up to 30 days in advance, and spots tend to fill up fast. If we’re all booked up today, check back tomorrow for the next batch of spots. The core team is spread across North America, India, and Europe, so most time zones will have availability during working hours.
+Fill in the [request a pairing session form][form] to reserve your spot. The Gatsby team will be notified. You should get an email shortly with next steps.
 
-[Reserve your spot today][cal] and let’s build something amazing together!
+[Reserve your spot today][form] and let’s build something amazing together!
 
-[cal]: https://calendly.com/gatsbyjs/pair-programming
+[form]: https://airtable.com/shrtYlQjqQARrmJH4

@@ -4,7 +4,7 @@ Parses JavaScript files to extract data from exports.
 
 ## Install
 
-`npm install --save gatsby-transformer-javascript-static-exports`
+`npm install gatsby-transformer-javascript-static-exports`
 
 ## How to use
 
@@ -21,7 +21,7 @@ statically read the data exports.
 In a .js file, export a data object to set your metadata variables, like so:
 
 ```javascript
-import React from 'react'
+import * as React from 'react'
 
 exports.data = {
     title: 'Choropleth on d3v4',

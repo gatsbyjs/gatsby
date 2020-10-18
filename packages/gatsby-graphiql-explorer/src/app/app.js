@@ -17,7 +17,7 @@ const parameters = {}
 window.location.search
   .substr(1)
   .split(`&`)
-  .forEach(function(entry) {
+  .forEach(function (entry) {
     var eq = entry.indexOf(`=`)
     if (eq >= 0) {
       parameters[decodeURIComponent(entry.slice(0, eq))] = decodeURIComponent(
@@ -30,7 +30,7 @@ function locationQuery(params) {
   return (
     `?` +
     Object.keys(params)
-      .map(function(key) {
+      .map(function (key) {
         return encodeURIComponent(key) + `=` + encodeURIComponent(params[key])
       })
       .join(`&`)
@@ -61,7 +61,7 @@ function graphQLFetcher(graphQLParams) {
     },
     body: JSON.stringify(graphQLParams),
     credentials: `include`,
-  }).then(function(response) {
+  }).then(function (response) {
     return response.json()
   })
 }
@@ -88,7 +88,12 @@ function updateURL() {
 const DEFAULT_QUERY =
   parameters.query ||
   (window.localStorage && window.localStorage.getItem(`graphiql:query`)) ||
-  null
+  undefined
+
+const DEFAULT_VARIABLES =
+  parameters.variables ||
+  (window.localStorage && window.localStorage.getItem(`graphiql:variables`)) ||
+  undefined
 
 const QUERY_EXAMPLE_SITEMETADATA_TITLE = `#     {
 #       site {
@@ -159,6 +164,7 @@ class App extends React.Component {
   state = {
     schema: null,
     query: DEFAULT_QUERY,
+    variables: DEFAULT_VARIABLES,
     explorerIsOpen: storedExplorerPaneState,
     codeExporterIsOpen: storedCodeExporterPaneState,
   }
@@ -167,7 +173,11 @@ class App extends React.Component {
     graphQLFetcher({
       query: getIntrospectionQuery(),
     }).then(result => {
-      const newState = { schema: buildClientSchema(result.data) }
+      const newState = {
+        schema: buildClientSchema(result.data),
+        enableRefresh: result.extensions.enableRefresh,
+        refreshToken: result.extensions.refreshToken,
+      }
 
       if (this.state.query === null) {
         try {
@@ -296,8 +306,18 @@ class App extends React.Component {
     this.setState({ codeExporterIsOpen: newCodeExporterIsOpen })
   }
 
+  _refreshExternalDataSources = () => {
+    const options = { method: `post` }
+    if (this.state.refreshToken) {
+      options.headers = {
+        Authorization: this.state.refreshToken,
+      }
+    }
+    return fetch(`/__refresh`, options)
+  }
+
   render() {
-    const { query, schema, codeExporterIsOpen } = this.state
+    const { query, variables, schema, codeExporterIsOpen } = this.state
     const codeExporter = codeExporterIsOpen ? (
       <CodeExporter
         hideCodeExporter={this._handleToggleExporter}
@@ -324,6 +344,7 @@ class App extends React.Component {
           fetcher={graphQLFetcher}
           schema={schema}
           query={query}
+          variables={variables}
           onEditQuery={this._handleEditQuery}
           onEditVariables={onEditVariables}
           onEditOperationName={onEditOperationName}
@@ -349,6 +370,13 @@ class App extends React.Component {
               label="Code Exporter"
               title="Toggle Code Exporter"
             />
+            {this.state.enableRefresh && (
+              <GraphiQL.Button
+                onClick={this._refreshExternalDataSources}
+                label="Refresh Data"
+                title="Refresh Data from External Sources"
+              />
+            )}
           </GraphiQL.Toolbar>
         </GraphiQL>
         {codeExporter}

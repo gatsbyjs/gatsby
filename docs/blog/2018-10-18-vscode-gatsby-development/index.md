@@ -55,22 +55,22 @@ You can take a look at my ["dotfiles" GitHub](https://github.com/mikelax/dotfile
 VS Code has a built-in debugger to enable proper runtime debugging, if you want to move past the `console.log` throughout your code. Use the following steps to be up and (debugging) in minutes.
 
 1. Install the [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) Extension for VS Code.
-1. In the Debug view, click the Debug Dropdown in the Panel and select the option `Add Config (projectname)`. This will create a `launch.json` file in your `.vscode` subfolder in the given project. Add the following to this file.
+2. In the Debug view, click the Debug Dropdown in the Panel and select the option `Add Config (projectname)`. This will create a `launch.json` file in your `.vscode` subfolder in the given project. Add the following to this file.
 
 _NOTE_: You most likely will want to add the `.vscode` folder to your `.gitignore` file so it is not checked into source.
 
-```json5:title=launch.json
+```json:title=launch.json
 {
-  version: "0.2.0",
-  configurations: [
+  "version": "0.2.0",
+  "configurations": [
     {
-      type: "chrome",
-      request: "launch",
-      name: "Launch Chrome for Gatsby site",
-      url: "http://localhost:8000",
-      webRoot: "${workspaceFolder}",
-    },
-  ],
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome for Gatsby site",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
 }
 ```
 

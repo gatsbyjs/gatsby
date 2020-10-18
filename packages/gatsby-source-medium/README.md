@@ -1,14 +1,12 @@
 # gatsby-source-medium
 
 Source plugin for pulling data into Gatsby from an unofficial Medium JSON
-endpoint. Unfortunately the JSON endpoint does not provide the complete stories,
-but only previews. If you need the complete stories, you might have a look at
-something like
+endpoint. Unfortunately the JSON endpoint does not provide the complete stories, but only previews. And due to a limitation placed by Medium, only the most recent 10 posts are returned. If you need the complete stories, you might have a look at something like
 [gatsby-source-rss](https://github.com/jondubin/gatsby-source-rss).
 
 ## Install
 
-`npm install --save gatsby-source-medium`
+`npm install gatsby-source-medium`
 
 ## How to use
 
@@ -19,7 +17,6 @@ plugins: [
     resolve: `gatsby-source-medium`,
     options: {
       username: `username/publication`,
-      limit: 200,
     },
   },
 ]
@@ -30,14 +27,6 @@ plugins: [
 #### Username
 
 Remember that if you are fetching a user, prepend your username with `@`.
-
-#### Limit
-
-**Note: this only affects requests for users and not publications.**
-
-Limit is optional and will default to 100.
-
-You must set a higher limit if you want more than 100 posts. If you want fewer, you can either use this setting, or add a limit parameter to your graphql query.
 
 ## How to query
 

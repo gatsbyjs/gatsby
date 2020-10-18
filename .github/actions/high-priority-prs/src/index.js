@@ -17,7 +17,7 @@ const teams = [
   },
 ]
 
-const start = async function() {
+const start = async function () {
   const data = await fetch()
   if (data) {
     const queues = processData(data)

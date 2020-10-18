@@ -13,7 +13,7 @@ Furthermore, Gitpod prebuilds any branch of a repository so that you don't need 
 
 ## Get Started
 
-To start a fresh dev environment you can prefix the any GitHub URL with `gitpod.io/#`.
+To start a fresh dev environment you can prefix any GitHub URL with `gitpod.io/#`.
 
 > Example: https://gitpod.io/#https://github.com/gatsbyjs/gatsby
 

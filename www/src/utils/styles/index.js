@@ -8,7 +8,7 @@ import {
   fontSizes,
   fontWeights,
   fonts,
-} from "../../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -20,14 +20,13 @@ export const focusStyle = {
   boxShadow: `0 0 0 2px ${colors.input.focusBoxShadow}`,
 }
 
-export const buttonStyles = t => {
+export const buttonStyles = () => {
   return {
     default: {
       alignItems: `center`,
       backgroundColor: `button.primaryBg`,
       borderRadius: 2,
-      borderWidth: 1,
-      borderStyle: `solid`,
+      border: 1,
       borderColor: `button.primaryBorder`,
       color: `button.primaryText`,
       cursor: `pointer`,
@@ -41,8 +40,7 @@ export const buttonStyles = t => {
       px: 3,
       height: `36px`,
       backgroundSize: t => `${t.space[7]} ${t.space[7]}`,
-      transition: t =>
-        `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+      transition: t => `all ${t.transition.default}`,
       ":hover, :focus": {
         backgroundColor: `gatsby`,
         backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
@@ -63,7 +61,7 @@ export const buttonStyles = t => {
   }
 }
 
-export const svgStyles = t => {
+export const svgStyles = () => {
   return {
     stroke: {
       "& .svg-stroke": {
@@ -107,7 +105,7 @@ export const formInputFocus = {
 export const formInput = {
   backgroundColor: colors.white,
   border: `1px solid ${colors.input.border}`,
-  borderRadius: `${radii[2]}px`,
+  borderRadius: `${radii[2]}`,
   display: `block`,
   fontFamily: fonts.system,
   fontSize: fontSizes[2],
@@ -169,7 +167,8 @@ export const visuallyHidden = {
 }
 
 // Layout
-export const breakpointGutter = `@media (min-width: 42rem)`
+export const blogWidth = `42rem`
+export const breakpointGutter = `@media (min-width: ${blogWidth})`
 
 export const pullIntoGutter = {
   marginLeft: `-${space[6]}`,

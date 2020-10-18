@@ -1,16 +1,18 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import TechWithIcon from "../../components/tech-with-icon"
-import GithubIcon from "react-icons/lib/fa/github"
-import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import CodesandboxIcon from "../../assets/vendor-logos/codesandbox.svg"
+import NetlifyIcon from "../../assets/vendor-logos/netlify.svg"
 
-const Source = ({ startersYaml, repoUrl }) => (
+const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
     sx={{
       display: `flex`,
-      borderTop: t => `1px solid ${t.colors.ui.border}`,
-      fontFamily: `header`,
+      borderTop: 1,
+      borderColor: `ui.border`,
+      fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
       [mediaQueries.lg]: { mx: 8 },
@@ -67,10 +69,25 @@ const Source = ({ startersYaml, repoUrl }) => (
         Try this starter
       </span>
       <a
+        href={`https://codesandbox.io/s/github/${starter.owner}/${starter.stub}`}
+        sx={{
+          "&&": {
+            borderBottom: 0,
+            mr: 4,
+            color: `link.color`,
+          },
+        }}
+      >
+        <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
+      </a>
+      {` `}
+      &nbsp;
+      <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         sx={{
           "&&": {
             borderBottom: 0,
+            color: `link.color`,
           },
         }}
       >

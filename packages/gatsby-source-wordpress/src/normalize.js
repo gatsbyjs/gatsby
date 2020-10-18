@@ -57,17 +57,21 @@ const normalizeACF = entities =>
 exports.normalizeACF = normalizeACF
 
 // Combine all ACF Option page data
-exports.combineACF = function(entities) {
+exports.combineACF = function (entities) {
   let acfOptionData = {}
   // Map each ACF Options object keys/data to single object
-  _.forEach(entities.filter(e => e.__type === `wordpress__acf_options`), e => {
-    if (e[`acf`]) {
-      acfOptionData[e.__acfOptionPageId || `options`] = {}
-      Object.keys(e[`acf`]).map(
-        k => (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
-      )
+  _.forEach(
+    entities.filter(e => e.__type === `wordpress__acf_options`),
+    e => {
+      if (e[`acf`]) {
+        acfOptionData[e.__acfOptionPageId || `options`] = {}
+        Object.keys(e[`acf`]).map(
+          k =>
+            (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
+        )
+      }
     }
-  })
+  )
 
   // Remove previous ACF Options objects (if any)
   _.pullAll(
@@ -312,12 +316,19 @@ exports.mapPolylangTranslations = entities =>
   entities.map(entity => {
     if (entity.polylang_translations) {
       entity.polylang_translations___NODE = entity.polylang_translations.map(
-        translation =>
-          entities.find(
+        translation => {
+          const post = entities.find(
             t =>
               t.wordpress_id === translation.wordpress_id &&
               entity.__type === t.__type
-          ).id
+          )
+
+          if (!post) {
+            return null
+          }
+
+          return post.id
+        }
       )
 
       delete entity.polylang_translations
@@ -326,7 +337,7 @@ exports.mapPolylangTranslations = entities =>
     return entity
   })
 
-exports.searchReplaceContentUrls = function({
+exports.searchReplaceContentUrls = function ({
   entities,
   searchAndReplaceContentUrls,
 }) {
@@ -344,7 +355,7 @@ exports.searchReplaceContentUrls = function({
 
   const _blacklist = [`_links`, `__type`]
 
-  const blacklistProperties = function(obj = {}, blacklist = []) {
+  const blacklistProperties = function (obj = {}, blacklist = []) {
     for (var i = 0; i < blacklist.length; i++) {
       delete obj[blacklist[i]]
     }
@@ -352,7 +363,7 @@ exports.searchReplaceContentUrls = function({
     return obj
   }
 
-  return entities.map(function(entity) {
+  return entities.map(function (entity) {
     const original = Object.assign({}, entity)
 
     try {
@@ -487,6 +498,7 @@ exports.downloadMediaFiles = async ({
   createNode,
   createNodeId,
   touchNode,
+  getCache,
   getNode,
   _auth,
   reporter,
@@ -526,6 +538,7 @@ exports.downloadMediaFiles = async ({
               cache,
               createNode,
               createNodeId,
+              getCache,
               parentNodeId: e.id,
               auth: _auth,
               reporter,

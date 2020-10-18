@@ -1,7 +1,7 @@
 import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
 
 jest.mock(
-  `../.cache/typography`,
+  `typography-plugin-cache-endpoint`,
   () => {
     return {}
   },

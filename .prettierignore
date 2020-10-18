@@ -10,7 +10,7 @@ benchmarks/**/public
 e2e-tests/**/public
 examples/**/public
 integration-tests/**/public
-www/public
+www
 
 # cache-dirs
 **/.cache
@@ -22,6 +22,8 @@ packages/**/*.js
 !packages/gatsby-plugin-mdx/**/*.js
 packages/gatsby-plugin-mdx/node_modules/**/*.js
 packages/gatsby/cache-dir/commonjs/**/*.js
+packages/gatsby-admin/public/styles.*
+packages/gatsby/gatsby-admin-public/styles.*
 
 # fixtures
 **/__testfixtures__/**

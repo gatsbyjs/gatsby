@@ -1,8 +1,8 @@
-import breakpoints from "./breakpoints"
+import { breakpoints } from "./breakpoints"
 
-let mediaQueries = {}
+let mq = {}
 for (let breakpoint in breakpoints) {
-  mediaQueries[breakpoint] = `@media (min-width: ${breakpoints[breakpoint]})`
+  mq[breakpoint] = `@media (min-width: ${breakpoints[breakpoint]})`
 }
 
-export default mediaQueries
+export const mediaQueries = mq

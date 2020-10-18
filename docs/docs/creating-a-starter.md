@@ -15,17 +15,19 @@ For a starter to work properly, it needs to include some files (see the [Hello W
 - `static`: a directory for static assets, such as a `favicon.ico` file.
 - `.gitignore`: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
 - `.prettierrc` _(optional)_: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
+- `LICENSE`: a file containing an [appropriate open source license](#open-source-license), preferably with a [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/).
 
 Your starter should also have these qualities:
 
-- Open source and available from a stable URL
+- Available from a stable URL
+- Open source license
 - Configurable
 - Fast
 - Web accessible
 
 Let's expand upon these items to prepare you for creating a winning starter.
 
-## Open source and available from a stable URL
+## Available from a stable URL
 
 The Gatsby CLI allows users to install a new site with a starter using the command `gatsby new <site-name> <starter-url>`. For this to work, your starter needs to be available to download. The easiest way to accomplish this is to host your starter on GitHub or GitLab and use the publicly available repo URL, such as:
 
@@ -34,6 +36,10 @@ The Gatsby CLI allows users to install a new site with a starter using the comma
 Although the official starters live in the Gatsby repo, community members can offer their own starters from their own repos. Here's an example of installing a community starter:
 
 `gatsby new my-app https://github.com/netlify-templates/gatsby-starter-netlify-cms`
+
+## Open source license
+
+Gatsby recommends all starters use the [BSD Zero Clause License](https://choosealicense.com/licenses/0bsd/)(0BSD). While the [MIT License](https://choosealicense.com/licenses/mit/) is more common (and was used in Gatsby official starters [for a long time](https://github.com/gatsbyjs/gatsby/pull/25441)), MIT's "License and copyright notice" condition make it a bad fit for starters. Starters, by design, are for people to customize and use for their own sites (open and closed source). The 0BSD has no "License and copyright notice" condition. This allows folks to use and customize the starter without reference to the original license or source. This is how most creators expect starters to be treated and how developers expect to use starters, despite many having the MIT license. Using 0BSD represents better alignment between expectations and licensing.
 
 ## Configurable
 
@@ -65,12 +71,15 @@ In addition to performance, creating a starter free of accessibility issues is a
 
 For more accessibility help, check out the [A11y Project checklist](https://a11yproject.com/checklist) and [WebAIM](https://webaim.org). You can also check out [tips on creating accessible web apps](https://www.deque.com/blog/accessibility-tips-in-single-page-applications/) heavy on client-side JavaScript.
 
+## Run your starter locally
+
+Since starters are Gatsby projects, you can run `gatsby develop` or `gatsby build` and then `gatsby serve` in order to ensure your starter is working. If you'd like to be extra thorough and make sure the `gatsby new` command works with your starter, you can run `gatsby new project-name ../relative/path/to/your/starter`, replacing the final part of that command with the appropriate relative path.
+
 ## Add your starter to the Gatsby Starter Library
 
 To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/contributing/submit-to-starter-library/). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
 
 ## Further reading:
 
-- [How to create a Gatsby Starter
-  ](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
+- [How to create a Gatsby Starter](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
 - [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)

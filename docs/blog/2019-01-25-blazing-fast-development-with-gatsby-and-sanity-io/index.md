@@ -13,7 +13,7 @@ Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/
 
 In January 2019 we shipped our new [Sanity Gatsby Source](https://github.com/sanity-io/gatsby-source-sanity) Plugin that uses the Sanity APIs to rebuild instantly as content changes. When developing this means a group of people can freely work together on both content models, UI design and the content itself. In real-time. Without rebuilds. This feels both a bit futuristic and pretty great. In the process we also to also make the static production builds themselves as fast as possible.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/STtpXBvJmDA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/STtpXBvJmDA
 
 You can experience it yourself with the sample [company website](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we built for the launch. We ship it in a monorepo along with a Sanity project that has content models for _people_, _project case studies_ and _blogging_. We made it pretty minimal to make it easier to extend.
 
@@ -24,10 +24,10 @@ The Gatsby source plugin for Sanity comes with the ability to easily overlay dra
 Add the source plugin to your Gatsby project:
 
 ```shell
-npm install --save gatsby-source-sanity
+npm install gatsby-source-sanity
 ```
 
-The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/introducing-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
+The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
 
 Once you have installed the plugin, add this configuration to `gatsby-config.js`:
 
@@ -127,6 +127,6 @@ Sanity already comes with a capable and easy to use image pipeline on a superfas
 
 Gatsby has already set high standards for developer experience by striking a good balance between code and configuration. We have worked hard to make it as effortless as possible to use [Sanity.io](https://www.sanity.io) as a content backend with Gatsby, and we hope that you will enjoy building websites with this combo.
 
-If you quickly want to get started with a full JAMstack combo, check out the [company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we put up. It features both a Studio configuration and a website template with projects, blog, people, and pages. With configuration files to put the website on either [Now](https://zeit.co) or [Netlify](https://netlify.com). You should be up in minutes.
+If you quickly want to get started with a full JAMstack combo, check out the [company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we put up. It features both a Studio configuration and a website template with projects, blog, people, and pages. With configuration files to put the website on either [Vercel](https://vercel.com) or [Netlify](https://netlify.com). You should be up in minutes.
 
 We're very excited to see whatever you do with it and welcome you to come with all your questions, feedback, and ideas in [our developer community](https://slack.sanity.io).

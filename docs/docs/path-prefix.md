@@ -6,14 +6,14 @@ Many applications are hosted at something other than the root (`/`) of their dom
 
 For example, a Gatsby blog could live at `example.com/blog/`, or a site could be hosted on GitHub Pages at `example.github.io/my-gatsby-site/`.
 
-Each of these sites need a prefix added to all paths on the site. So a link to
+Each of these sites needs a prefix added to all paths on the site. So a link to
 `/my-sweet-blog-post/` should be rewritten as `/blog/my-sweet-blog-post`.
 
 In addition, links to various resources (JavaScript, CSS, images, and other static content) need the same prefix, so that the site continues to function correctly when served with the path prefix in place.
 
 Adding the path prefix is a two step process, as follows:
 
-### Add to `gatsby-config.js`
+## Add to `gatsby-config.js`
 
 Firstly, add a `pathPrefix` value to your `gatsby-config.js`.
 
@@ -23,7 +23,7 @@ module.exports = {
 }
 ```
 
-### Build
+## Build
 
 The final step is to build your application with the `--prefix-paths` flag, like so:
 
@@ -33,7 +33,17 @@ gatsby build --prefix-paths
 
 If this flag is not passed, Gatsby will ignore your `pathPrefix` and build the site as if hosted from the root domain.
 
-### In-app linking
+## Serve
+
+Serve your application with the `--prefix-paths` flag, like so:
+
+```shell
+gatsby serve --prefix-paths
+```
+
+If this flag is not passed, Gatsby will ignore your `pathPrefix`.
+
+## In-app linking
 
 Gatsby provides APIs and libraries to make using this feature seamless. Specifically, the [`Link`](/docs/gatsby-link/) component has built-in functionality to handle path prefixing.
 
@@ -76,11 +86,11 @@ export default function Index() {
 }
 ```
 
-### Add the path prefix to paths using `withPrefix`
+## Add the path prefix to paths using `withPrefix`
 
-For pathnames you construct manually, there’s a helper function, [`withPrefix`](/docs/gatsby-link/#add-the-path-prefix-to-paths-using-withprefix) that prepends your path prefix in production (but doesn’t during development where paths don’t need prefixed).
+For pathnames you construct manually, there’s a helper function, [`withPrefix`](/docs/gatsby-link/#add-the-path-prefix-to-paths-using-withprefix) that prepends your path prefix in production (but doesn’t during development where paths don’t need to be prefixed).
 
-### Additional Considerations
+### Additional considerations
 
 The [`assetPrefix`](/docs/asset-prefix/) feature can be thought of as semi-related to this feature. That feature allows your assets (non-HTML files, e.g. images, JavaScript, etc.) to be hosted on a separate domain, for example a CDN.
 

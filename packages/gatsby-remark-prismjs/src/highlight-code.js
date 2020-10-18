@@ -1,14 +1,19 @@
 const Prism = require(`prismjs`)
-const _ = require(`lodash`)
 const loadPrismLanguage = require(`./load-prism-language`)
 const handleDirectives = require(`./directives`)
+const escapeHTML = require(`./escape-html`)
 const unsupportedLanguages = new Set()
+
+require(`prismjs/components/prism-diff`)
+require(`prismjs/plugins/diff-highlight/prism-diff-highlight`)
 
 module.exports = (
   language,
   code,
+  additionalEscapeCharacters = {},
   lineNumbersHighlight = [],
-  noInlineHighlight = false
+  noInlineHighlight = false,
+  diffLanguage = null
 ) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {
@@ -34,12 +39,16 @@ module.exports = (
         console.warn(message, `applying generic code block`)
         unsupportedLanguages.add(lang)
       }
-      return _.escape(code)
+      return escapeHTML(code, additionalEscapeCharacters)
     }
   }
 
   const grammar = Prism.languages[language]
-  const highlighted = Prism.highlight(code, grammar, language)
+  const highlighted = Prism.highlight(
+    code,
+    grammar,
+    diffLanguage ? `${language}-${diffLanguage}` : language
+  )
   const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
 
   let finalCode = ``

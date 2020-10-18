@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 import qs from "qs"
 
 const ScrollToLink = ({ to, ...rest }) => <a href={to} {...rest} />
@@ -22,7 +22,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
             },
           },
         }}
-        to={`/showcase?${qs.stringify({
+        to={`/showcase/?${qs.stringify({
           filters: [c],
         })}`}
         onClick={e => {

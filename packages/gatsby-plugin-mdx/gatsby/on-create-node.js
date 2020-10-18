@@ -1,18 +1,14 @@
 const fs = require(`fs`)
 const path = require(`path`)
-const crypto = require(`crypto`)
 const babel = require(`@babel/core`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
 const createMDXNode = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
-const genMDX = require(`../utils/gen-mdx`)
+const { findImports } = require(`../utils/gen-mdx`)
 
-const contentDigest = val =>
-  crypto
-    .createHash(`md5`)
-    .update(val)
-    .digest(`hex`)
+const contentDigest = val => createContentDigest(val)
 
 module.exports = async (
   {
@@ -25,6 +21,7 @@ module.exports = async (
     reporter,
     cache,
     pathPrefix,
+    ...helpers
   },
   pluginOptions
 ) => {
@@ -59,18 +56,19 @@ module.exports = async (
   createParentChildLink({ parent: node, child: mdxNode })
 
   // write scope files into .cache for later consumption
-  const { scopeImports, scopeIdentifiers } = await genMDX(
-    {
-      node: mdxNode,
-      getNode,
-      getNodes,
-      reporter,
-      cache,
-      pathPrefix,
-      options,
-    },
-    { forceDisableCache: true }
-  )
+  const { scopeImports, scopeIdentifiers } = await findImports({
+    node: mdxNode,
+    getNode,
+    getNodes,
+    reporter,
+    cache,
+    pathPrefix,
+    options,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    ...helpers,
+  })
   await cacheScope({
     cache,
     scopeIdentifiers,

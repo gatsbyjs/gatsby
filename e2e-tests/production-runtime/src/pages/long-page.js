@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import * as React from "react"
+import { Link } from "gatsby"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const LongPage = () => (
   <Layout>
@@ -11,6 +11,8 @@ const LongPage = () => (
     <Link to="/" data-testid="below-the-fold">
       Go back to the homepage - middle of the page
     </Link>
+    <div style={{ height: `200vh` }} />
+    <h1 id="áccentuated">Special Hash ID</h1>
     <div style={{ height: `200vh` }} />
     <Link to="/" data-testid="even-more-below-the-fold">
       Go back to the homepage - bottom of the page

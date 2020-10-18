@@ -4,6 +4,7 @@ const axios = require(`axios`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
+const chalk = require(`chalk`)
 const { buildResponsiveSizes } = require(`./utils`)
 
 // If the image is hosted on contentful
@@ -34,6 +35,7 @@ module.exports = async (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
+    loading: `lazy`,
   }
 
   // This will only work for markdown syntax image tags
@@ -42,7 +44,7 @@ module.exports = async (
   // This will also allow the use of html image tags
   const rawHtmlNodes = select(markdownAST, `html`)
 
-  const generateImagesAndUpdateNode = async function(node, resolve) {
+  const generateImagesAndUpdateNode = async function (node, resolve) {
     // Ignore if it is not contentful image
 
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
@@ -56,11 +58,11 @@ module.exports = async (
 
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
-    const options = _.defaults(pluginOptions, defaults)
+    const options = _.defaults({}, pluginOptions, defaults)
 
     const optionsHash = createContentDigest(options)
 
-    const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
+    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
     let cachedRawHTML = await cache.get(cacheKey)
 
     if (cachedRawHTML) {
@@ -68,11 +70,20 @@ module.exports = async (
     }
     const metaReader = sharp()
 
-    const response = await axios({
-      method: `GET`,
-      url: originalImg, // for some reason there is a './' prefix
-      responseType: `stream`,
-    })
+    let response
+    try {
+      response = await axios({
+        method: `GET`,
+        url: originalImg, // for some reason there is a './' prefix
+        responseType: `stream`,
+      })
+    } catch (err) {
+      reporter.panic(
+        `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
+        err
+      )
+      return []
+    }
 
     response.data.pipe(metaReader)
 
@@ -80,11 +91,14 @@ module.exports = async (
 
     response.data.destroy()
 
-    const responsiveSizesResult = await buildResponsiveSizes({
-      metadata,
-      imageUrl: originalImg,
-      options,
-    })
+    const responsiveSizesResult = await buildResponsiveSizes(
+      {
+        metadata,
+        imageUrl: originalImg,
+        options,
+      },
+      reporter
+    )
 
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
@@ -96,6 +110,18 @@ module.exports = async (
     // Generate default alt tag
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+
+    const loading = options.loading
+
+    if (![`lazy`, `eager`, `auto`].includes(loading)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
+          `loading`
+        )} option. Please pass one of "lazy", "eager" or "auto".
+      `)
+      )
+    }
 
     // Create our base image tag
     let imageTag = `
@@ -109,6 +135,7 @@ module.exports = async (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${responsiveSizesResult.sizes}"
+        loading="${loading}"
       />
    `.trim()
 
@@ -133,6 +160,7 @@ module.exports = async (
             alt="${node.alt ? node.alt : defaultAlt}"
             title="${node.title ? node.title : ``}"
             src="${fallbackSrc}"
+            loading="${loading}"
           />
         </picture>
       `.trim()
@@ -218,7 +246,7 @@ ${rawHTML}
             }
 
             let imageRefs = []
-            $(`img`).each(function() {
+            $(`img`).each(function () {
               imageRefs.push($(this))
             })
 

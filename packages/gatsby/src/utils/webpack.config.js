@@ -1,20 +1,24 @@
 require(`v8-compile-cache`)
 
+const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
+const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath, withTrailingSlash } = require(`./path`)
-const getGatsbyDependents = require(`./gatsby-dependents`)
-
+import { withBasePath, withTrailingSlash } from "./path"
+import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
-const createUtils = require(`./webpack-utils`)
-const hasLocalEslint = require(`./local-eslint-config-finder`)
+import { createWebpackUtils } from "./webpack-utils"
+import { hasLocalEslint } from "./local-eslint-config-finder"
+import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+
+const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -37,7 +41,7 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = await createUtils({ stage, program })
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
   const { assetPrefix, pathPrefix } = store.getState().config
 
@@ -48,7 +52,7 @@ module.exports = async (
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
     const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
-    // config env is dependant on the env that it's run, this can be anything from staging-production
+    // config env is dependent on the env that it's run, this can be anything from staging-production
     // this allows you to set use different .env environments or conditions in gatsby files
     const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
     const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
@@ -90,7 +94,7 @@ module.exports = async (
         return acc
       },
       {
-        "process.env": JSON.stringify({}),
+        "process.env": `({})`,
       }
     )
   }
@@ -158,8 +162,8 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            require.resolve(`event-source-polyfill`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -176,6 +180,7 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           app: directoryPath(`.cache/production-app`),
         }
       default:
@@ -197,14 +202,21 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
+
+      plugins.virtualModules(),
     ]
 
     switch (stage) {
       case `develop`:
-        configPlugins = configPlugins.concat([
-          plugins.hotModuleReplacement(),
-          plugins.noEmitOnErrors(),
-        ])
+        configPlugins = configPlugins
+          .concat([
+            process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
+              plugins.fastRefresh(),
+            plugins.hotModuleReplacement(),
+            plugins.noEmitOnErrors(),
+            plugins.eslintGraphqlSchemaReload(),
+          ])
+          .filter(Boolean)
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
@@ -314,13 +326,16 @@ module.exports = async (
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        configRules.push({
-          include: /node_modules\/react-dom/,
-          test: /\.jsx?$/,
-          use: {
-            loader: require.resolve(`./webpack-hmr-hooks-patch`),
-          },
-        })
+        // TODO: Remove entire block when we make fast-refresh the default
+        if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
+          configRules.push({
+            include: /node_modules\/react-dom/,
+            test: /\.jsx?$/,
+            use: {
+              loader: require.resolve(`./webpack-hmr-hooks-patch`),
+            },
+          })
+        }
 
         break
       }
@@ -377,14 +392,25 @@ module.exports = async (
         "@babel/runtime": path.dirname(
           require.resolve(`@babel/runtime/package.json`)
         ),
-        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
-        "react-hot-loader": path.dirname(
-          require.resolve(`react-hot-loader/package.json`)
-        ),
+        // TODO: Remove entire block when we make fast-refresh the default
+        ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+          ? {
+              "react-hot-loader": path.dirname(
+                require.resolve(`react-hot-loader/package.json`)
+              ),
+            }
+          : {}),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
+        "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
+          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        ),
+        "socket.io-client": path.dirname(
+          require.resolve(`socket.io-client/package.json`)
+        ),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -393,20 +419,31 @@ module.exports = async (
         PnpWebpackPlugin.bind(directoryPath(`public`), module),
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
+        new CoreJSResolver(),
       ],
     }
 
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      // force to use es modules when importing internals of @reach.router
-      // for browser bundles
-      resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
-        `es`
+      resolve.alias = Object.assign(
+        {},
+        {
+          // force to use es modules when importing internals of @reach.router
+          // for browser bundles
+          "@reach/router": path.join(
+            path.dirname(require.resolve(`@reach/router/package.json`)),
+            `es`
+          ),
+        },
+        resolve.alias
       )
     }
 
+    if (stage === `build-javascript` && program.profile) {
+      resolve.alias[`react-dom$`] = `react-dom/profiling`
+      resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
+    }
     return resolve
   }
 
@@ -464,6 +501,95 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
+    const isCssModule = module => module.type === `css/mini-extract`
+
+    const splitChunks = {
+      chunks: `all`,
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        framework: {
+          chunks: `all`,
+          name: `framework`,
+          // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+          test: new RegExp(
+            `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+              `|`
+            )})[\\\\/]`
+          ),
+          priority: 40,
+          // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+          enforce: true,
+        },
+        // if a module is bigger than 160kb from node_modules we make a separate chunk for it
+        lib: {
+          test(module) {
+            return (
+              !isCssModule(module) &&
+              module.size() > 160000 &&
+              /node_modules[/\\]/.test(module.identifier())
+            )
+          },
+          name(module) {
+            const hash = crypto.createHash(`sha1`)
+            if (!module.libIdent) {
+              throw new Error(
+                `Encountered unknown module type: ${module.type}. Please open an issue.`
+              )
+            }
+
+            hash.update(module.libIdent({ context: program.directory }))
+
+            return hash.digest(`hex`).substring(0, 8)
+          },
+          priority: 30,
+          minChunks: 1,
+          reuseExistingChunk: true,
+        },
+        commons: {
+          name: `commons`,
+          // if a chunk is used on all components we put it in commons (we need at least 2 components)
+          minChunks: Math.max(componentsCount, 2),
+          priority: 20,
+        },
+        // If a chunk is used in at least 2 components we create a separate chunk
+        shared: {
+          test(module) {
+            return !isCssModule(module)
+          },
+          name(module, chunks) {
+            const hash = crypto
+              .createHash(`sha1`)
+              .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
+              .digest(`hex`)
+
+            return hash
+          },
+          priority: 10,
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+
+        // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+        // TODO make an exception for css-modules
+        styles: {
+          test(module) {
+            return isCssModule(module)
+          },
+
+          name: `styles`,
+          priority: 40,
+          enforce: true,
+        },
+      },
+      // We load our pages async through async-requires, maxInitialRequests doesn't have an effect on chunks derived from page components.
+      // By default webpack has set maxAsyncRequests to 6, in some cases this isn't enough an actually makes the bundle size blow up.
+      // We've set maxAsyncRequests to Infinity to negate this. This could potentionally exceed the 25 initial requests that we set before
+      // sadly I do not have a better solution.
+      maxAsyncRequests: Infinity,
+      maxInitialRequests: 25,
+      minSize: 20000,
+    }
 
     config.optimization = {
       runtimeChunk: {
@@ -473,42 +599,20 @@ module.exports = async (
       // TODO update to deterministic in webpack 5 (hashed is deprecated)
       // @see https://webpack.js.org/guides/caching/#module-identifiers
       moduleIds: `hashed`,
-      splitChunks: {
-        name: false,
-        chunks: `all`,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          commons: {
-            name: `commons`,
-            chunks: `all`,
-            // if a chunk is used more than half the components count,
-            // we can assume it's pretty global
-            minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
-          },
-          react: {
-            name: `commons`,
-            chunks: `all`,
-            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
-          },
-          // Only create one CSS file to avoid
-          // problems with code-split CSS loading in different orders
-          // causing inconsistent/non-determanistic styling
-          // See https://github.com/gatsbyjs/gatsby/issues/11072
-          styles: {
-            name: `styles`,
-            // This should cover all our types of CSS.
-            test: /\.(css|scss|sass|less|styl)$/,
-            chunks: `all`,
-            enforce: true,
-            // this rule trumps all other rules because of the priority.
-            priority: 10,
-          },
-        },
-      },
+      splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        !program.noUglify && plugins.minifyJs(),
+        !program.noUglify &&
+          plugins.minifyJs(
+            program.profile
+              ? {
+                  terserOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                  },
+                }
+              : {}
+          ),
         plugins.minifyCss(),
       ].filter(Boolean),
     }
@@ -521,7 +625,6 @@ module.exports = async (
       `@reach/router/lib/history`,
       `@reach/router`,
       `common-tags`,
-      /^core-js\//,
       `crypto`,
       `debug`,
       `fs`,
@@ -535,14 +638,7 @@ module.exports = async (
     ]
 
     // Packages we want to externalize because meant to be user-provided
-    const userExternalList = [
-      `es6-promise`,
-      `minimatch`,
-      `pify`,
-      `react-helmet`,
-      `react`,
-      /^react-dom\//,
-    ]
+    const userExternalList = [`react-helmet`, `react`, /^react-dom\//]
 
     const checkItem = (item, request) => {
       if (typeof item === `string` && item === request) {
@@ -564,7 +660,7 @@ module.exports = async (
     }
 
     config.externals = [
-      function(context, request, callback) {
+      function (context, request, callback) {
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)
@@ -573,6 +669,12 @@ module.exports = async (
         }
       },
     ]
+  }
+
+  if (stage === `develop`) {
+    config.externals = {
+      "socket.io-client": `io`,
+    }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

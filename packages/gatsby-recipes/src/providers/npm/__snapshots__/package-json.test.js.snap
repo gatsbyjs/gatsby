@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`packageJson resource e2e package resource test: PackageJson create 1`] = `
+Object {
+  "_message": "Wrote key \\"husky\\" to package.json",
+  "id": "husky",
+  "name": "husky",
+  "value": "\\"{/n  /\\"hooks/\\": {}/n}\\"",
+}
+`;
+
+exports[`packageJson resource e2e package resource test: PackageJson create plan 1`] = `
+Object {
+  "currentState": "{
+  \\"name\\": \\"test\\",
+  \\"scripts\\": {}
+}",
+  "describe": "Add husky to package.json",
+  "diff": "- Original  - 0
++ Modified  + 3
+
+  Object {
++   \\"husky\\": \\"{
++   /\\"hooks/\\": {}
++ }\\",
+    \\"name\\": \\"test\\",
+    \\"scripts\\": Object {},
+  }",
+  "id": "husky",
+  "name": "husky",
+  "newState": "{
+  \\"name\\": \\"test\\",
+  \\"scripts\\": {},
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
+}",
+}
+`;
+
+exports[`packageJson resource e2e package resource test: PackageJson destroy 1`] = `undefined`;
+
+exports[`packageJson resource e2e package resource test: PackageJson update 1`] = `
+Object {
+  "_message": "Wrote key \\"husky\\" to package.json",
+  "id": "husky",
+  "name": "husky",
+  "value": "\\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"",
+}
+`;
+
+exports[`packageJson resource e2e package resource test: PackageJson update plan 1`] = `
+Object {
+  "currentState": "{
+  \\"name\\": \\"test\\",
+  \\"scripts\\": {},
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
+}",
+  "describe": "Add husky to package.json",
+  "diff": "- Original  - 1
++ Modified  + 3
+
+@@ -1,6 +1,8 @@
+  Object {
+    \\"husky\\": \\"{
+-   /\\"hooks/\\": {}
++   /\\"hooks/\\": {
++     /\\"pre-commit/\\": /\\"lint-staged/\\"
++   }
+  }\\",
+    \\"name\\": \\"test\\",
+    \\"scripts\\": Object {},",
+  "id": "husky",
+  "name": "husky",
+  "newState": "{
+  \\"name\\": \\"test\\",
+  \\"scripts\\": {},
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"
+}",
+}
+`;
+
+exports[`packageJson resource handles multiple parallel create calls 1`] = `
+Object {
+  "_message": "Wrote key \\"husky\\" to package.json",
+  "id": "husky",
+  "name": "husky",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;
+
+exports[`packageJson resource handles multiple parallel create calls 2`] = `
+Object {
+  "_message": "Wrote key \\"husky2\\" to package.json",
+  "id": "husky2",
+  "name": "husky2",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;
+
+exports[`packageJson resource handles object values 1`] = `
+Object {
+  "_message": "Wrote key \\"husky\\" to package.json",
+  "id": "husky",
+  "name": "husky",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;

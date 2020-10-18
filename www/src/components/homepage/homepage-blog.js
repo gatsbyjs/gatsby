@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageSection from "./homepage-section"
 import HomepageBlogPosts from "./homepage-blog-posts"
@@ -11,7 +11,7 @@ import { BlogIcon } from "../../assets/icons"
 const HomepageBlog = ({ posts }) => (
   <HomepageSection
     sectionName="Blog"
-    sectionIcon={BlogIcon}
+    sectionIcon={<BlogIcon />}
     title="The Gatsby blog"
     links={[
       {

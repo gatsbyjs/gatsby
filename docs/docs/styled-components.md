@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
@@ -25,7 +25,7 @@ cd styled-components-tutorial
 Second, install the necessary dependencies for `styled-components`, including the Gatsby plugin.
 
 ```shell
-npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
+npm install gatsby-plugin-styled-components styled-components babel-plugin-styled-components
 ```
 
 And then add it to your site's `gatsby-config.js`:
@@ -94,25 +94,51 @@ const User = props => (
   </UserWrapper>
 )
 
-export default () => (
-  <Container>
-    <h1>About Styled Components</h1>
-    <p>Styled Components is cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-  </Container>
-)
+export default function UsersList() {
+  return (
+    <Container>
+      <h1>About Styled Components</h1>
+      <p>Styled Components is cool</p>
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+        excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+    </Container>
+  )
+}
 ```
 
-### Enabling user stylesheets with a stable class name
+## Creating Global Styles
+
+Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. It's advised to use `createGlobalStyle` in [Layout components](/docs/layout-components/), which are shared over multiple pages rather than using it on a single page.
+
+The example below shows how to create a `GlobalStyle` (which is a StyledComponent) for the color purple by importing `createGlobalStyle` from `styled-components`.
+
+```jsx:title=src/components/layout.js
+import React from "react"
+import { createGlobalStyle } from "styled-components"
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: ${props => (props.theme === "purple" ? "purple" : "white")};
+  }
+`
+export default function Layout({ children }) {
+  return (
+    <React.Fragment>
+      <GlobalStyle theme="purple" />
+    </React.Fragment>
+  )
+}
+```
+
+## Enabling user stylesheets with a stable class name
 
 Adding a persistent CSS `className` to your styled components can make it easier for end users of your website to take advantage of [user stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
@@ -127,9 +153,9 @@ const Section = styled.section`
   max-width: 600px;
 `
 
-export default ({ children }) => (
-  <Section className={`container`}>{children}</Section>
-)
+export default function Container({ children }) {
+  return <Section className={`container`}>{children}</Section>
+}
 ```
 
 An end user of your site could then [write their own CSS styles](https://mediatemple.net/blog/tips/bend-websites-css-will-stylish-stylebot/) matching HTML elements using a class name of `.container`. If your CSS-in-JS style changes, it will not affect the end user's stylesheet.

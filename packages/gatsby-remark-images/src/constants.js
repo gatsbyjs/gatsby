@@ -9,7 +9,10 @@ exports.DEFAULT_OPTIONS = {
   tracedSVG: false,
   loading: `lazy`,
   disableBgImageOnAlpha: false,
+  disableBgImage: false,
 }
+
+exports.EMPTY_ALT = `GATSBY_EMPTY_ALT`
 
 exports.imageClass = `gatsby-resp-image-image`
 exports.imageWrapperClass = `gatsby-resp-image-wrapper`

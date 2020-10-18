@@ -2,10 +2,8 @@ const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [
@@ -134,6 +132,7 @@ function makeNodes() {
 
 async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
+  store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
   nodes.forEach(node =>
     actions.createNode(node, { name: `test` })(store.dispatch)
   )
@@ -141,9 +140,9 @@ async function queryResult(nodes, query) {
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
-    nodeStore,
     types: [],
     thirdPartySchemas: [],
+    inferenceMetadata: store.getState().inferenceMetadata,
   })
   store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
@@ -153,7 +152,6 @@ async function queryResult(nodes, query) {
     nodeModel: new LocalNodeModel({
       schemaComposer,
       schema,
-      nodeStore,
       createPageDependency: jest.fn(),
     }),
   })

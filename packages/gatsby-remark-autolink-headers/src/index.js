@@ -21,11 +21,18 @@ module.exports = (
     maintainCase = false,
     removeAccents = false,
     enableCustomId = false,
+    isIconAfterHeader = false,
+    elements = null,
   }
 ) => {
   slugs.reset()
 
   visit(markdownAST, `heading`, node => {
+    // If elements array exists, do not create links for heading types not included in array
+    if (Array.isArray(elements) && !elements.includes(`h${node.depth}`)) {
+      return
+    }
+
     let id
     if (enableCustomId && node.children.length > 0) {
       const last = node.children[node.children.length - 1]
@@ -55,8 +62,10 @@ module.exports = (
     patch(data.hProperties, `id`, id)
 
     if (icon !== false) {
+      patch(data.hProperties, `style`, `position:relative;`)
       const label = id.split(`-`).join(` `)
-      node.children.unshift({
+      const method = isIconAfterHeader ? `push` : `unshift`
+      node.children[method]({
         type: `link`,
         url: `#${id}`,
         title: null,
@@ -64,7 +73,7 @@ module.exports = (
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: className,
+            class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
           },
           hChildren: [
             {

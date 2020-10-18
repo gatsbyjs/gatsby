@@ -33,13 +33,17 @@ Gatsby has many benefits that give developers the freedom to build great website
 
 > Just about every feature you could want for building a state-of-the-art website or web app is available through Gatsby. If the feature isn't already built in, there's an extensive library of available plugins. There's a list of features, their availability, and comparisons with other site building options available on the [Features page](/features/). The complete list of currently available plugins can be found on the [Plugins page](/plugins/).
 
+### Data integration
+
+> Gatsby supports data integration from sources like CMSs, SaaS services, APIs, databases, and other data sources of all flavors. Gatsby can also pull unstructured data directly into pages using API calls specifically crafted for this purpose, this works great with smaller websites which can later be scaled up effortlessly if necessary. This makes Gatsby stand out from most other static site generators.
+
 ### Community and documentation
 
 > You'd be hard-pressed to find a more active and welcoming open-source community than Gatsby. Documentation is thorough, detailed, and doesn't make any assumptions about your experience-level going in. The Gatsby team is committed to transparency and working in the open so the community can follow and participate in Gatsby's development and direction. Everyone is encouraged to contribute to Gatsby and every contribution is valued.
 
 ### Brings focus to the frontend
 
-> A benefit that frequently comes up in discussions of Gatsby is how it helps bring more focus to fontend development and a clearer division between frontend and backend tasks. Complicated tooling and configuration can consume a lot of development time and can pull frontend developers away from doing what they do best. Because Gatsby requires minimal tooling and configuration, frontend developers can spend more time making great UI's and backend developers can focus on adding the features and integrations that make your product better.
+> A benefit that frequently comes up in discussions of Gatsby is how it helps bring more focus to frontend development and a clearer division between frontend and backend tasks. Complicated tooling and configuration can consume a lot of development time and can pull frontend developers away from doing what they do best. Because Gatsby requires minimal tooling and configuration, frontend developers can spend more time making great UI's and backend developers can focus on adding the features and integrations that make your product better.
 
 ## Common concerns
 
@@ -51,7 +55,7 @@ You may find that many of your developer friends and colleagues have some questi
 
 ### Do I have to learn GraphQL to use Gatsby?
 
-> GraphQL is used to pull the content from all your different sources into Gatsby in a consistent, unified way. You don't have to use GraphQL to do this, but learning GraphQL will equip you to create new integrations more easily (and it may not be as challenging as you think). Amberly Romo digs into some of the pros and cons in her post on [Using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/).
+> GraphQL is used to pull the content from all your different sources into Gatsby in a consistent, unified way. You don't have to use GraphQL to do this, but learning GraphQL will equip you to create new integrations more easily (and it may not be as challenging as you think). Amberley Romo digs into some of the pros and cons in her post on [Using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/).
 
 ### Our content team needs to be able to make site updates, but they're not super technical. Are they going to be able to work with a Gatsby site?
 

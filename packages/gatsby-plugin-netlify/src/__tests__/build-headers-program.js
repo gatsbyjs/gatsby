@@ -1,8 +1,15 @@
 import buildHeadersProgram from "../build-headers-program"
-import path from "path"
-import os from "os"
-import fs from "fs-extra"
+import * as path from "path"
+import * as os from "os"
+import * as fs from "fs-extra"
 import { DEFAULT_OPTIONS } from "../constants"
+
+jest.mock(`fs-extra`, () => {
+  return {
+    ...jest.requireActual(`fs-extra`),
+    existsSync: jest.fn(),
+  }
+})
 
 describe(`build-headers-program`, () => {
   let reporter
@@ -11,6 +18,8 @@ describe(`build-headers-program`, () => {
     reporter = {
       warn: jest.fn(),
     }
+    fs.existsSync.mockClear()
+    fs.existsSync.mockReturnValue(true)
   })
 
   const createPluginData = async () => {
@@ -150,10 +159,9 @@ describe(`build-headers-program`, () => {
           `0-0180cd94ef2497ac7db8.js`,
           `component---src-pages-index-js-0bdd01c77ee09ef0224c.js`,
         ],
-        "pages-manifest": [`pages-manifest-ab11f09e0ca7ecd3b43e.js`],
       },
       pathPrefix: ``,
-      publicFolder: fileName => path.join(tmpDir, fileName),
+      publicFolder: (...files) => path.join(tmpDir, ...files),
     }
   }
 
@@ -168,16 +176,32 @@ describe(`build-headers-program`, () => {
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
     expect(reporter.warn).not.toHaveBeenCalled()
-    expect(
-      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
-    ).toMatchSnapshot()
+    const output = await fs.readFile(
+      pluginData.publicFolder(`_headers`),
+      `utf8`
+    )
+    expect(output).toMatchSnapshot()
+    expect(output).toMatch(/app-data\.json/)
+    expect(output).toMatch(/page-data\.json/)
+    // we should only check page-data & app-data once which leads to 2 times
+    expect(fs.existsSync).toBeCalledTimes(2)
   })
 
-  it(`without manifest['pages-manifest']`, async () => {
+  it(`with manifest['pages-manifest']`, async () => {
     const pluginData = await createPluginData()
 
-    // gatsby 2.9+ no longer has a pages-manifest key
-    delete pluginData.manifest[`pages-manifest`]
+    fs.existsSync.mockImplementation(path => {
+      if (path.includes(`page-data.json`) || path.includes(`app-data.json`)) {
+        return false
+      }
+
+      return true
+    })
+
+    // gatsby < 2.9 uses page-manifest
+    pluginData.manifest[`pages-manifest`] = [
+      `pages-manifest-ab11f09e0ca7ecd3b43e.js`,
+    ]
 
     const pluginOptions = {
       ...DEFAULT_OPTIONS,
@@ -192,6 +216,38 @@ describe(`build-headers-program`, () => {
       `utf8`
     )
     expect(output).toMatchSnapshot()
+    expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
+    expect(output).not.toMatch(/\/app-data\.json/g)
+    expect(output).not.toMatch(/\/page-data\.json/g)
+    expect(output).not.toMatch(/\/undefined/g)
+  })
+
+  it(`without app-data file`, async () => {
+    const pluginData = await createPluginData()
+
+    // gatsby 2.17.0+ adds an app-data file
+    delete pluginData.manifest[`pages-manifest`]
+
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeCachingHeaders: true,
+    }
+    fs.existsSync.mockImplementation(path => {
+      if (path.includes(`app-data.json`)) {
+        return false
+      }
+
+      return true
+    })
+
+    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+
+    expect(reporter.warn).not.toHaveBeenCalled()
+    const output = await fs.readFile(
+      pluginData.publicFolder(`_headers`),
+      `utf8`
+    )
+    expect(output).not.toMatch(/app-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
   })
 

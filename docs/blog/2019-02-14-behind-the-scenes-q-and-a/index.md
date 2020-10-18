@@ -26,16 +26,16 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Functional Questions (How do I do X with Gatsby?)
 
-**Question:** Can I serialize an api to be stored and accessed client-side only?
+**Question:** Can I serialize an API to be stored and accessed client-side only?
 **Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to invoke that API at _build time_
 
 **Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
 **Question:** Is it possible to have the gatsby-\*.js files be rewritten in TypeScript?
-**Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
+**Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have an out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
 
-**Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
+**Question:** Gatsby transformers support Markdown and AsciiDoc. Possible support for Sphinx reStructuredText?
 **Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! Check out [Creating a Source Plugin](/docs/creating-a-source-plugin/).
 
 **Question:** How did you implement the GitHub PR test for lighthouse scoring?
@@ -44,7 +44,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it possible to dictate code splitting manually, e.g. component level code splitting?
 **Answer:** Yup! React. Lazy is great + standard async imports.
 
-**Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our ssr generated html to match the final rendered DOM.
+**Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our SSR generated HTML to match the final rendered DOM.
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
 **Question:** Is there a way to enable SSR on run time to things like a post preview?
@@ -59,8 +59,8 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Can I use Gatsby Image with images from external sources like Cloudinary or an AWS bucket? And if it's indeed possible, will this impact my build time if I have thousands of images?
 **Answer:** Yes, build-times do go up with image processing as it's very CPU intensive.
 
-**Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin javascript should not include in Frontend and vice versa?
-**Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out [Building Apps with Gatsby](/docs/building-apps-with-gatsby/) for details about how to build the admin section.
+**Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin JavaScript should not include in Frontend and vice versa?
+**Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out [Building Apps with Gatsby](/docs/adding-app-and-website-functionality/) for details about how to build the admin section.
 
 ### GraphQL / Data Layer
 
@@ -91,7 +91,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[CSS-in-JS Podcast on CSS Tricks](https://css-tricks.com/video-screencasts/168-css-in-js/)
 
 **Question:** How about best practices with Styles and Web Fonts?
-**Answer:** Re: Styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default! As far as web fonts, depends! You could use gatsby-plugin-typography and load google fonts if that's your thing. [Typefaces](https://github.com/kyleamathews/typefaces) lets you add open source fonts from NPM packages.
+**Answer:** Re: Styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default! As far as web fonts, depends! You could use gatsby-plugin-typography and load google fonts if that's your thing. [Typefaces](https://github.com/kyleamathews/typefaces) lets you add open source fonts from npm packages.
 
 ### Content Management Systems (CMS)
 
@@ -127,7 +127,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
 
 **Question:** How can I use gatsby-image for images in the content body like a WordPress post?
-**Answer:** That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
+**Answer:** That's a bit tricky as the content body is an HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
 
 **Question:** Is there a 3rd party CMS that you recommend that works particular well with Gatsby?
 **Answer:** Lots of CMS-s! Here's a list: [Headless CMS](/docs/headless-cms/)
@@ -145,7 +145,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 **Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time?
 **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/) and [Building Apps with Gatsby
-](/docs/building-apps-with-gatsby/)
+](/docs/adding-app-and-website-functionality/)
 
 **Question:** How to do SSR loading for Dynamic content- for example, a blog, as it uses build time SSR technique?
 **Answer:** Gatsby's data layer and source plugins can fetch data dynamically at build time to grab your data. Then whenever your data changes, you rebuild your site with the updated content. Builds are fast so you can update the site every few minutes if necessary.
@@ -160,7 +160,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Would it makes sense to still use Gatsby for a more "dynamic" type of app?
 **Answer:** Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: [Dynamic Apps Webinar](https://www.gatsbyjs.com/build-web-apps-webinar).
 
-**Question:** What is the recommended approach for sites that have integrations like a oauth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?
+**Question:** What is the recommended approach for sites that have integrations like an OAuth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?
 **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/).
 
 **Question:** Dustin mentioned a recording on building dynamic apps with Gatsby. Is that available?
@@ -179,7 +179,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Scaling Gatsby (Gatsby for Large Apps)
 
-**Question:** I'm working for a e-Commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
+**Question:** I'm working for an e-commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
 **Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington
 ](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/)
 
@@ -201,7 +201,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Gatsby Use Cases
 
 **Question:** To use gatsby for a blog - is this overengineering?
-**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — [https://overreacted.io/](https://overreacted.io/)
+**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — https://overreacted.io/
 
 **Question:** Is it overkill to build every site with Gatsby.js?
 **Answer:** We don't think so :)
@@ -209,14 +209,14 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Do you think there will be a market for Gatsby premium themes (like for WordPress)?
 **Answer:** Yep :) it's on the roadmap!
 
-**Question:** Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?
-**Answer:** We see all use cases....dynamic apps, ecommerce, financial services, docs sites, portfolios, and company marketing sites are all very common!
+**Question:** Beyond blogs and e-commerce websites, what other use cases are you seeing people building with Gatsby?
+**Answer:** We see all use cases....dynamic apps, e-commerce, financial services, docs sites, portfolios, and company marketing sites are all very common!
 
 **Question:** Who does the Gatsby team consider its users? Content creators? Engineers? Other?
 **Answer:** All of the above!
 
 **Question:** Is Gatsby production ready? It's fantastic!
-**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase ](/showcase/)(includes the Flamingo e-commerce site).
+**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase](/showcase/) (includes the Flamingo e-commerce site).
 
 ### Misc. questions
 
@@ -256,19 +256,19 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is there a good upgrade path for new versions of Gatsby?
 **Answer:** Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2, check out [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/).
 
-**Question:** Following up on upgrade path question—how would you upgrade between version of 2.\~?
+**Question:** Following up on upgrade path question—how would you upgrade between version of 2.~?
 **Answer:** You can bump the version # in your package.json and then you're done.
 
-**Question:** If my .htaccess file is configured to read .html files without the extension in the url, can Gatsby compile the links to pages without the .html ending?
+**Question:** If my `.htaccess` file is configured to read `.html` files without the extension in the url, can Gatsby compile the links to pages without the `.html` ending?
 **Answer:** We haven't added support for this yet.
 
-**Question:** Follow up to the .htaccess question, how do you manage to hide .html from your url on gatsbyjs.com?
+**Question:** Follow up to the `.htaccess` question, how do you manage to hide `.html` from your url on gatsbyjs.com?
 **Answer:** Many servers can do this. Generally the feature is called "clean urls".
 
 **Question:** No concern of the additional request for the SVG??
 **Answer:** SVGs previews are inlined.
 
-**Question:** No concerns of excessive prefetching in the bg?
+**Question:** No concerns of excessive prefetching in the background?
 **Answer:** This is turned off on low-power devices.
 
 **Question:** Re content updates: But is a new build triggered on _every_ content change?

@@ -44,13 +44,15 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
 
 exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
-  const typeDefs = `
-    type DocumentationJs implements Node {
+  const typeDefs = /* GraphQL */ `
+    type DocumentationJs implements Node
+      @childOf(types: ["File", "DocumentationJs"], many: true) {
       name: String
       kind: String
       memberof: String
       scope: String
       access: String
+      optional: Boolean
       readonly: Boolean
       abstract: Boolean
       generator: Boolean
@@ -65,6 +67,10 @@ exports.sourceNodes = ({ actions }) => {
       lends: String
       type: DoctrineType
       default: JSON
+      description: DocumentationJSComponentDescription
+        @link(from: "description___NODE")
+      deprecated: DocumentationJSComponentDescription
+        @link(from: "deprecated___NODE")
       augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
       implements: [DocumentationJs] @link(from: "implements___NODE")
@@ -77,6 +83,11 @@ exports.sourceNodes = ({ actions }) => {
       members: DocumentationJsMembers
       codeLocation: DocumenationJSLocationRange
       docsLocation: DocumenationJSLocationRange
+    }
+
+    type DocumentationJSComponentDescription implements Node
+      @mimeTypes(types: ["text/markdown"]) {
+      id: ID! # empty type
     }
 
     type DocumentationJSLocation {
@@ -207,7 +218,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
     const handledDocs = new WeakMap()
     const typeDefs = new Map()
 
-    const getNodeIDForType = typeName => {
+    const getNodeIDForType = (typeName, parent) => {
       if (typeDefs.has(typeName)) {
         return typeDefs.get(typeName)
       }
@@ -215,10 +226,17 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const index = documentationJson.findIndex(
         docsJson =>
           docsJson.name === typeName &&
-          [`typedef`, `constant`].includes(docsJson.kind)
+          [`interface`, `typedef`, `constant`].includes(docsJson.kind)
       )
 
-      if (index !== -1) {
+      const isCycle = parent === documentationJson[index]
+      if (isCycle) {
+        helpers.reporter.warn(
+          `Unexpected cycle detected creating DocumentationJS nodes for file:\n\n\t${node.absolutePath}\n\nFor type: ${typeName}`
+        )
+      }
+
+      if (index !== -1 && !isCycle) {
         return prepareNodeForDocs(documentationJson[index], {
           commentNumber: index,
         }).node.id
@@ -227,21 +245,21 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       return null
     }
 
-    const tryToAddTypeDef = type => {
+    const tryToAddTypeDef = (type, parent) => {
       if (type.applications) {
-        type.applications.forEach(tryToAddTypeDef)
+        type.applications.forEach(t => tryToAddTypeDef(t, parent))
       }
 
       if (type.expression) {
-        tryToAddTypeDef(type.expression)
+        tryToAddTypeDef(type.expression, parent)
       }
 
       if (type.elements) {
-        type.elements.forEach(tryToAddTypeDef)
+        type.elements.forEach(t => tryToAddTypeDef(t, parent))
       }
 
       if (type.type === `NameExpression` && type.name) {
-        type.typeDef___NODE = getNodeIDForType(type.name)
+        type.typeDef___NODE = getNodeIDForType(type.name, parent)
       }
     }
 
@@ -269,7 +287,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const docSkeletonNode = {
         commentNumber,
         level,
-        id: createNodeId(docId(node.id, docsJson)),
+        id: createNodeId(docId(parent, docsJson)),
         parent,
         children: [],
         internal: {
@@ -323,7 +341,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
           picked.type = picked.type.expression
         }
 
-        tryToAddTypeDef(picked.type)
+        tryToAddTypeDef(picked.type, docsJson)
       }
 
       const mdFields = [`description`, `deprecated`]
@@ -361,10 +379,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               // When documenting destructured parameters, the name
               // is parent.child where we just want the child.
               if (docObj.name && docObj.name.split(`.`).length > 1) {
-                docObj.name = docObj.name
-                  .split(`.`)
-                  .slice(-1)
-                  .join(`.`)
+                docObj.name = docObj.name.split(`.`).slice(-1).join(`.`)
               }
 
               const adjustedObj = {

@@ -4,6 +4,7 @@ import Image from "../index"
 
 class ImageWithIEPolyfill extends Component {
   imageRef = this.props.innerRef || createRef()
+  placeholderRef = createRef()
 
   // Load object-fit/position polyfill if required (e.g. in IE)
   componentDidMount() {
@@ -12,24 +13,34 @@ class ImageWithIEPolyfill extends Component {
       typeof testImg.style.objectFit === `undefined` ||
       typeof testImg.style.objectPosition === `undefined`
     ) {
-      import(`object-fit-images`).then(({ default: ObjectFitImages }) =>
+      import(`object-fit-images`).then(({ default: ObjectFitImages }) => {
         ObjectFitImages(this.imageRef.current.imageRef.current)
-      )
+        ObjectFitImages(this.placeholderRef.current)
+      })
     }
   }
 
   render() {
     const { objectFit, objectPosition, ...props } = this.props
 
+    const polyfillStyle = {
+      objectFit: objectFit,
+      objectPosition: objectPosition,
+      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
+    }
+
     return (
       <Image
         ref={this.imageRef}
+        placeholderRef={this.placeholderRef}
         {...props}
         imgStyle={{
           ...props.imgStyle,
-          objectFit: objectFit,
-          objectPosition: objectPosition,
-          fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
+          ...polyfillStyle,
+        }}
+        placeholderStyle={{
+          ...props.placeholderStyle,
+          ...polyfillStyle,
         }}
       />
     )

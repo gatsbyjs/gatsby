@@ -1,19 +1,21 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 import { useColorMode } from "theme-ui"
 
 import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { ShowcaseIcon } from "../../assets/icons"
-import { mediaQueries, colors } from "../../gatsby-plugin-theme-ui"
+import {
+  mediaQueries,
+  colors,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
+import Link from "../../components/localized-link"
 
 const featuredSitesCard = {
   display: `flex`,
@@ -40,15 +42,15 @@ const GradientOverlay = () => {
   return (
     <div
       sx={{
-        background: t =>
+        background: () =>
           `linear-gradient(90deg, ${hex2rgba(gradientColor, 0)} 0%, ${hex2rgba(
             gradientColor,
             1
           )} 100%)`,
-        bottom: t => t.space[6],
+        bottom: 6,
         pointerEvents: `none`,
         position: `absolute`,
-        right: t => `-${t.space[6]}`,
+        right: -6,
         top: 0,
         width: 60,
       }}
@@ -88,7 +90,7 @@ class FeaturedSites extends Component {
         >
           <h1
             sx={{
-              fontFamily: `header`,
+              fontFamily: `heading`,
               fontSize: 4,
               fontWeight: `bold`,
               ml: 1,
@@ -119,7 +121,7 @@ class FeaturedSites extends Component {
           >
             <span className="title">View all</span>
             {` `}
-            <MdArrowForward sx={{ verticalAlign: `sub` }} />
+            <ArrowForwardIcon sx={{ verticalAlign: `sub` }} />
           </a>
           <div
             css={{
@@ -142,7 +144,7 @@ class FeaturedSites extends Component {
               Want to get featured?
             </div>
             <Button
-              to="https://gatsbyjs.org/contributing/site-showcase-submissions/"
+              to="https://www.gatsbyjs.org/contributing/site-showcase-submissions/"
               tag="href"
               target="_blank"
               rel="noopener noreferrer"
@@ -156,15 +158,17 @@ class FeaturedSites extends Component {
         <div css={{ position: `relative` }}>
           <div
             sx={{
-              borderBottom: t => `1px solid ${t.colors.ui.border}`,
+              borderBottom: 1,
+              borderColor: `ui.border`,
               display: `flex`,
               flexShrink: 0,
-              margin: t => `0 -${t.space[6]}`,
+              mx: -6,
               overflowX: `scroll`,
-              padding: t => `${t.space[6]} ${t.space[6]} 0`,
+              pt: 6,
+              px: 6,
             }}
           >
-            {featured.slice(0, 9).map(({ node }) => (
+            {featured.slice(0, 9).map(node => (
               <div
                 key={node.id}
                 sx={{
@@ -177,7 +181,7 @@ class FeaturedSites extends Component {
                     "&&": {
                       borderBottom: `none`,
                       color: `heading`,
-                      fontFamily: `header`,
+                      fontFamily: `heading`,
                       fontSize: 3,
                       fontWeight: `bold`,
                       transition: t =>
@@ -214,7 +218,7 @@ class FeaturedSites extends Component {
                 >
                   {node.built_by && (
                     <div
-                      sx={{ color: `text`, fontFamily: `header`, fontSize: 2 }}
+                      sx={{ color: `text`, fontFamily: `heading`, fontSize: 2 }}
                     >
                       Built by {node.built_by}
                     </div>
@@ -236,8 +240,7 @@ class FeaturedSites extends Component {
                   textAlign: `center`,
                   "&&": {
                     border: 0,
-                    transition: t =>
-                      `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                    transition: `default`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,
@@ -281,9 +284,7 @@ class FeaturedSites extends Component {
                         },
                       }}
                     >
-                      <span
-                        dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
-                      />
+                      <ShowcaseIcon />
                     </span>
                     View all Featured Sites
                   </span>

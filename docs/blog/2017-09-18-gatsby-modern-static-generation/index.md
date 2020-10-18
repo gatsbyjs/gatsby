@@ -70,7 +70,7 @@ changes you want to make so it applies only required changes, thus making the
 rendering much faster.
 
 If you use React with
-[server-side rendering](https://facebook.github.io/react/docs/react-dom-server.html),
+[server-side rendering](https://reactjs.org/docs/react-dom-server.html),
 your flow looks something like this:
 
 - A browser requests a page
@@ -136,7 +136,7 @@ Common components can be found at
 At
 [`/gatsby-node.js`](https://github.com/kbariotis/kostasbariotis.com/tree/master/gatsby-node.js)
 you can find the route it takes in order to render the site. First, it loads all
-posts using the GraphQL api which queries all `.md` files. Then it creates a
+posts using the GraphQL API which queries all `.md` files. Then it creates a
 page for each one, using the
 [`/src/templates/blog-post.js`](https://github.com/kbariotis/kostasbariotis.com/tree/master/src/templates/blog-post.js)
 template and before that it creates a page, with pagination, for all posts and

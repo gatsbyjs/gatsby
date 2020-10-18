@@ -4,7 +4,7 @@ title: Sourcing from Sanity
 
 ## What is Sanity.io?
 
-[Sanity](https:///www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
+[Sanity](https://www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
 
 You can use Sanity as a headless CMS that lets your authors work in a user friendly environment, or as a pure data backend for your apps. We make it easier for you to reuse content across multiple websites, apps, print, voice assistants, and other channels.
 
@@ -12,14 +12,14 @@ You can use Sanity as a headless CMS that lets your authors work in a user frien
 
 Begin with setting up a Gatsby project. If you want to start from scratch, the [Quick Start guide](/docs/quick-start) is a good place to begin. Come back to this guide when you're set up.
 
-You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be an useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
+You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be a useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
 
 This guide will cover how configure and use the [`gatsby-source-sanity`](https://www.npmjs.com/package/gatsby-source-sanity) plugin.
 
 ## Basic usage
 
 ```shell
-npm install --save gatsby-source-sanity
+npm install gatsby-source-sanity
 ```
 
 ```js:title=gatsby-config.js
@@ -38,7 +38,7 @@ module.exports = {
 
 At this point you can choose to (and probably should) [set up a GraphQL API](https://www.sanity.io/help/graphql-beta) for your Sanity dataset, if you have not done so already. This will help the plugin in knowing which types and fields exists, so you can query for them even without them being present in any current documents.
 
-Go through <http://localhost:8000/___graphql> after running `gatsby develop` to understand the created data. Create a new query and check available collections and fields by using the autocomplete (`CTRL + SPACE`).
+Go through `http://localhost:8000/___graphql` after running `gatsby develop` to understand the created data. Create a new query and check available collections and fields by using the autocomplete (`CTRL + SPACE`).
 
 ## Options
 
@@ -57,7 +57,7 @@ Getting errors such as these?
 > Cannot query field "allSanityBlogPost"
 > Unknown field `preamble` on type `BlogPost`
 
-By [deploying a GraphQL API](https://www.sanity.io/help/graphql-beta) for your dataset, we are able to introspect and figure out which schema types and fields are available and make them available to prevent this problem. Once the API is deployed it will be transparently be applied. If you have deployed your API and are still seeing similar issues, remember that you have to redeploy the API if your schema changes.
+By [deploying a GraphQL API](https://www.sanity.io/help/graphql-beta) for your dataset, we are able to introspect and figure out which schema types and fields are available and make them available to prevent this problem. Once the API is deployed it will be transparently applied. If you have deployed your API and are still seeing similar issues, remember that you have to redeploy the API if your schema changes.
 
 Some background for this problem:
 
@@ -212,7 +212,7 @@ The above query will fetch all projects that have a `slug.current` field set, an
 
 Most [Gatsby starters](/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
 
-Remember to use the GraphiQL interface to help write the queries you need - it's usually running at <http://localhost:8000/___graphql> while running `gatsby develop`.
+Remember to use the GraphiQL interface to help write the queries you need - it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
 
 ## "Raw" fields
 
@@ -230,29 +230,31 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
 
-```js
-// In your .env file
+```text:title=.env
 SANITY_PROJECT_ID = abc123
 SANITY_DATASET = production
 SANITY_TOKEN = my-super-secret-token
+```
 
-// In your gatsby-config.js file
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
+```js:title=gatsby-config.js
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: "gatsby-source-sanity",
       options: {
         projectId: process.env.SANITY_PROJECT_ID,
-        dataset: process.env.SANITY_DATASET
-        token: process.env.SANITY_TOKEN
-      }
-    }
-  ]
+        dataset: process.env.SANITY_DATASET,
+        token: process.env.SANITY_TOKEN,
+      },
+    },
+  ],
 }
 ```
 
 This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+
+<CloudCallout />

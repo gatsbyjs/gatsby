@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import * as React from "react"
+import PropTypes from "prop-types"
+import { graphql } from "gatsby"
 
-import Layout from '../components/layout.js'
+import Layout from "../components/layout.js"
 
 const IndexPage = ({ data }) => (
   <Layout data={data}>
@@ -28,7 +28,7 @@ const IndexPage = ({ data }) => (
       For an up to date list of possible configuration options, please check out
       the
       {` `}
-      <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sqip/">
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-transformer-sqip/">
         plugins readme
       </a>
       .

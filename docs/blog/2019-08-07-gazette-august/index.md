@@ -29,7 +29,7 @@ Similarly, earlier last month, we felt like we needed to take some time to slow 
 
 We feel this went quite well, so we intend to keep doing this fairly regularly to keep Gatsby stable and ensure you have painless upgrades. Our goal is to always enable the experience [Brian Holt](https://twitter.com/holtbt) depicts below, specifically painless upgrades and all the while delivering real value and fixes in every version of Gatsby.
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have an opinionated starter for creating course sites built with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> that I hadn&#39;t updated since January so I full well expected to spend a few hours fixing it after I updated all the deps.<br/><br/>Nope, just updated the packages and everything worked. Thanks Gatsby team!</p>&mdash; Brian Holt (@holtbt) <a href="https://twitter.com/holtbt/status/1158559782451609600?ref_src=twsrc%5Etfw">August 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+https://twitter.com/holtbt/status/1158559782451609600
 
 Check out the [project](https://github.com/gatsbyjs/gatsby/projects/13) on GitHub if you're interested.
 
@@ -66,7 +66,7 @@ If you're curious about the implementation, [here](https://github.com/gatsbyjs/g
 
 [Native Lazy Loading](https://web.dev/native-lazy-loading) just launched in Chrome 76. We shipped support for this in `gatsby-image` back in May! So if you're using Gatsby, your site already does this out of the box.
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We at <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> just shipped support for Chrome&#39;s new native lazy loading feature in gatsby-image@2.1.0<br/><br/>Works out of the box if your browser supports it and falls back to our own implementation if it doesn&#39;t 😉 <a href="https://t.co/0XoXSr3Col">https://t.co/0XoXSr3Col</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1129118956193640448?ref_src=twsrc%5Etfw">May 16, 2019</a></blockquote>
+https://twitter.com/chatsidhartha/status/1129118956193640448
 
 Check out the implementation on the [PR on GitHub](https://github.com/gatsbyjs/gatsby/pull/13217).
 
@@ -74,7 +74,7 @@ Check out the implementation on the [PR on GitHub](https://github.com/gatsbyjs/g
 
 Jason has basically been living his life on livestream since the past month. He's done some incredible streams and has many more exciting ones coming up.
 
-My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
+My favorite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
 
 In case that isn't your jam, there's also [Gatsby + WordPress](https://www.youtube.com/watch?v=DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ), [composing and styling Gatsby themes](https://www.youtube.com/watch?v=6Z4p-qjnKCQ), [Microfrontends](https://www.youtube.com/watch?v=0Ta-awtLZTs) and even a [livestream on livestreaming](https://www.youtube.com/watch?v=rgTugjTDYaE)! How _meta_!
 
@@ -86,7 +86,7 @@ Talking about jam, to celebrate the launch of Gatsby Themes, we announced the [G
 
 The response was incredible. Seeing so many wonderful themes from all of you has been spectacular and we're afraid we might like _too_ many of them to pick one.
 
-The team is currently hard at work judging and picking their favourites so results should be out very soon!
+The team is currently hard at work judging and picking their favorites so results should be out very soon!
 
 ## Community Highlights
 
@@ -101,7 +101,7 @@ Firstly, thank you for all your contributions, folks! Every single contribution 
 
 Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we achieved a new record in merged PRs last month:
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote>
+https://twitter.com/chatsidhartha/status/1156334013247737856
 
 ## Gatsby Site of the month
 

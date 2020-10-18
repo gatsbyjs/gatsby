@@ -5,7 +5,7 @@ arrays of objects and single objects.
 
 ## Install
 
-`npm install --save gatsby-transformer-json`
+`npm install gatsby-transformer-json`
 
 If you want to transform json files, you also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
@@ -57,7 +57,7 @@ parent directory.
 
 For example, let's say your project has a data layout like:
 
-```
+```text
 data/
     letters/
         a.json
@@ -235,7 +235,10 @@ It's probably because you have arrays of mixed values somewhere. For instance:
 ```json
 {
   "stuff": [25, "bob"],
-  "orEven": [[25, "bob"], [23, "joe"]]
+  "orEven": [
+    [25, "bob"],
+    [23, "joe"]
+  ]
 }
 ```
 
@@ -244,6 +247,11 @@ If you can rewrite your data with objects, you should be good to go:
 ```json
 {
   "stuff": [{ "count": 25, "name": "bob" }],
-  "orEven": [{ "count": 25, "name": "bob" }, { "count": 23, "name": "joe" }]
+  "orEven": [
+    { "count": 25, "name": "bob" },
+    { "count": 23, "name": "joe" }
+  ]
 }
 ```
+
+Else, if your data doesn't have a consistent schema, like [TopoJSON files](https://en.wikipedia.org/wiki/GeoJSON#TopoJSON), or you can't rewrite it, consider placing the JSON file inside the [`static` folder](/docs/static-folder/#when-to-use-the-static-folder) and use the dynamic import syntax (`import('/static/myjson.json')`) within the `componentDidMount` lifecycle or the `useEffect` hook.

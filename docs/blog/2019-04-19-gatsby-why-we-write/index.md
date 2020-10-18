@@ -10,8 +10,6 @@ If you're a Gatsby community member, you may have noticed something: we write _a
 
 Community members are often surprised by the comprehensiveness of our [documentation](/docs/). We publish new articles on this blog multiple times per week, from both the core team and the community.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> docs are some of the best I&#39;ve ever read. Super clear setup instructions, especially Step 0 for those new to dev. Too many other frameworks assume dev environment setup experience, so it&#39;s nice to see the Gatsby team be better here.</p>&mdash; Matt Convente (@mattconvente) <a href="https://twitter.com/mattconvente/status/1099706762897342465?ref_src=twsrc%5Etfw">February 24, 2019</a></blockquote>
-
 Writing isn't something we just do because we love it (although we do). Writing is core to who we are as a project, a company, and a community.
 
 Writing is core to the success we've enjoyed so far, and it's core to our strategy to become the default way to build on the web.
@@ -31,7 +29,7 @@ The answer:
 
 ## Principle 2: content acts as a guide unlocking the power of Gatsby.
 
-Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, Webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
+Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
 
 You can do almost anything you want with Gatsby, you just have to:
 
@@ -110,7 +108,7 @@ We want everyone to understand [the depths of Gatsby](/docs/behind-the-scenes/),
 
 We want folks who build their site with Gatsby; to build a plugin. We want folks who write documentation; to want to contribute code.
 
-We want folks who contribute code to dive deep into Gatsby's core, to the internal plugins where few other than [Michal](https://twitter.com/mipiechowiak) and [Kyle](https://twitter.com/kylemathews) dare to venture.
+We want folks who contribute code to dive deep into Gatsby's core, to the internal plugins where few other than [Michał](https://twitter.com/mipiechowiak) and [Kyle](https://twitter.com/kylemathews) dare to venture.
 
 We want to do this because Gatsby _is_ the future of the web, a place where performance and accessibility don't have to be reinvented site-by-site but can come baked in, where you can author your content wherever and still have an amazing developer experience.
 
