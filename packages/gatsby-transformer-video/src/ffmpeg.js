@@ -206,7 +206,7 @@ export default class FFMPEG {
 
       await new Promise((resolve, reject) => {
         ffmpeg(publicPath)
-          .on(`filenames`, function(filenames) {
+          .on(`filenames`, function (filenames) {
             console.log(`[FFMPEG] Taking ${filenames.length} screenshots`)
           })
           .on(`error`, (err, stdout, stderr) => {

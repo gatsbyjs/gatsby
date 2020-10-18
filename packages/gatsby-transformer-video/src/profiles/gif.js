@@ -7,8 +7,5 @@ export default function profileGif({ ffmpegSession, filters }) {
     `[b][p] paletteuse`,
   ].join(`,`)
 
-  return ffmpegSession
-    .videoCodec(`gif`)
-    .complexFilter([filters])
-    .noAudio()
+  return ffmpegSession.videoCodec(`gif`).complexFilter([filters]).noAudio()
 }
