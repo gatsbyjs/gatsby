@@ -24,21 +24,21 @@
   },
   "license": "MIT",
   "dependencies": {
-    "execa": "^4.0.0",
-    "fast-glob": "^3.2.2",
+    "execa": "^4.0.3",
+    "fast-glob": "^3.2.4",
     "fluent-ffmpeg": "^2.1.2",
-    "fs-extra": "^8.1.0",
-    "imagemin": "^7.0.0",
-    "imagemin-giflossy": "^5.0.0",
-    "imagemin-mozjpeg": "^8.0.0",
-    "p-queue": "^6.3.0"
+    "fs-extra": "^9.0.1",
+    "imagemin": "^7.0.1",
+    "imagemin-giflossy": "^5.1.10",
+    "imagemin-mozjpeg": "^9.0.0",
+    "p-queue": "^6.6.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.0",
-    "@babel/runtime": "^7.0.0",
-    "babel-preset-gatsby-package": "0.2.18",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/runtime": "^7.12.1",
+    "babel-preset-gatsby-package": "0.5.3",
+    "cross-env": "^7.0.2"
   }
 }
