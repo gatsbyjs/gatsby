@@ -740,7 +740,7 @@
           link: /docs/different-organization-types/
           breadcrumbTitle: Spreading Gatsby
           items:
-            - title: As a Freelancer*
+            - title: As a Freelancer
               link: /docs/gatsby-for-freelancers/
             - title: Inside an Agency
               link: /docs/gatsby-for-agencies/
