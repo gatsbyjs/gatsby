@@ -142,7 +142,7 @@ const warnForGlobalTag = file =>
       file
   )
 
-type GraphQLDocumentInFile = {
+export type GraphQLDocumentInFile = {
   filePath: string,
   doc: DocumentNode,
   templateLoc: string,
