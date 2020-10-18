@@ -11,6 +11,7 @@ import imageminMozjpeg from "imagemin-mozjpeg"
 import PQueue from "p-queue"
 import sharp from "sharp"
 import { createFileNodeFromBuffer } from "gatsby-source-filesystem"
+import reporter from "gatsby-cli/lib/reporter"
 
 import { cacheContentfulVideo } from "./helpers"
 
@@ -53,14 +54,17 @@ export default class FFMPEG {
     })
 
   // Execute FFMMPEG and log progress
-  executeFfmpeg = async ({ ffmpegSession, cachePath, loggingPrefix }) => {
+  executeFfmpeg = async ({ ffmpegSession, cachePath }) => {
     let startTime
     let lastLoggedPercent = 0.1
+
+    const { name } = parse(cachePath)
 
     return new Promise((resolve, reject) => {
       ffmpegSession
         .on(`start`, commandLine => {
-          console.log(`${loggingPrefix} Executing:\n\n${commandLine}\n`)
+          reporter.info(`${name} - converting`)
+          reporter.verbose(`${name} - executing:\n\n${commandLine}\n`)
           startTime = performance.now()
         })
         .on(`progress`, progress => {
@@ -74,18 +78,19 @@ export default class FFMPEG {
             const loggedTimeLeft =
               estTimeLeft !== Infinity && ` (~${estTimeLeft}s)`
 
-            console.log(`${loggingPrefix} ${percent}%${loggedTimeLeft}`)
+            reporter.info(`${name} - ${percent}%${loggedTimeLeft}`)
             lastLoggedPercent = progress.percent
           }
         })
         .on(`error`, (err, stdout, stderr) => {
-          console.log(`\n---\n`, stdout, stderr, `\n---\n`)
-          console.log(`${loggingPrefix} An error occurred:`)
+          reporter.info(`\n---\n`, stdout, stderr, `\n---\n`)
+          reporter.info(`${name} - An error occurred:`)
           console.error(err)
           reject(err)
         })
         .on(`end`, () => {
-          console.log(`${loggingPrefix} 100%`)
+          reporter.verbose(`${name} - 100%`)
+          reporter.info(`${name} - converted`)
           resolve()
         })
         .save(cachePath)
@@ -129,11 +134,8 @@ export default class FFMPEG {
   }
 
   // Queue video for conversion
-  queueConvertVideo = async (...args) => {
-    const videoData = await this.queue.add(() => this.convertVideo(...args))
-
-    return videoData
-  }
+  queueConvertVideo = async (...args) =>
+    this.queue.add(() => this.convertVideo(...args))
 
   // Converts a video based on a given profile, populates cache and public dir
   convertVideo = async ({
@@ -147,7 +149,6 @@ export default class FFMPEG {
     const alreadyExists = await pathExists(cachePath)
 
     if (!alreadyExists) {
-      const loggingPrefix = `[FFMPEG]`
       const ffmpegSession = ffmpeg().input(sourcePath)
       const filters = this.createFilters({ fieldArgs, info }).join(`,`)
       const videoStreamMetadata = this.parseVideoStream(info.streams)
@@ -155,7 +156,7 @@ export default class FFMPEG {
       profile({ ffmpegSession, filters, fieldArgs, videoStreamMetadata })
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg({ ffmpegSession, cachePath, loggingPrefix })
+      await this.executeFfmpeg({ ffmpegSession, cachePath })
     }
 
     // If public file does not exist, copy cached file
@@ -175,6 +176,10 @@ export default class FFMPEG {
 
     return { publicPath }
   }
+
+  // Queue take screenshots
+  queueTakeScreenshots = (...args) =>
+    this.queue.add(() => this.takeScreenshots(...args))
 
   takeScreenshots = async (
     video,
@@ -224,10 +229,12 @@ export default class FFMPEG {
       ffmpeg(path)
         .on(`filenames`, function (filenames) {
           screenshotRawNames = filenames
-          console.log(`[FFMPEG] Taking ${filenames.length} screenshots`)
+          reporter.info(
+            `${name} - Taking ${filenames.length} ${width}px screenshots`
+          )
         })
         .on(`error`, (err, stdout, stderr) => {
-          console.log(`[FFMPEG] Failed to take screenshots:`)
+          reporter.info(`${name} - Failed to take ${width}px screenshots:`)
           console.error(err)
           reject(err)
         })
@@ -244,8 +251,6 @@ export default class FFMPEG {
 
     const screenshotNodes = []
 
-    console.log({ screenshotRawNames, tmpDir })
-
     for (const screenshotRawName of screenshotRawNames) {
       try {
         const rawScreenshotPath = resolve(tmpDir, screenshotRawName)
@@ -254,7 +259,7 @@ export default class FFMPEG {
         try {
           await access(rawScreenshotPath)
         } catch {
-          console.warn(`Screenshot ${rawScreenshotPath} could not be found!`)
+          reporter.warn(`Screenshot ${rawScreenshotPath} could not be found!`)
           continue
         }
 
@@ -280,7 +285,7 @@ export default class FFMPEG {
 
         screenshotNodes.push(node)
       } catch (err) {
-        console.log(`Failed to take screenshots:`)
+        reporter.info(`${name} - failed to take screenshots:`)
         console.error(err)
         throw err
       }

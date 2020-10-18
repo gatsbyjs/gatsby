@@ -4,6 +4,7 @@ import { resolve } from "path"
 
 import PQueue from "p-queue"
 import axios from "axios"
+import reporter from "gatsby-cli/lib/reporter"
 
 const downloadQueue = new PQueue({ concurrency: 3 })
 
@@ -26,14 +27,13 @@ export async function cacheContentfulVideo({ video, cacheDir }) {
 
   try {
     await access(path, fs.constants.R_OK)
-
-    console.log(`Already downloaded ${url}`)
+    reporter.verbose(`Already downloaded ${url}`)
     downloadCache[url] = path
 
     return downloadCache[url]
   } catch {
     if (url in downloadCache) {
-      console.log(`Already downloading ${url}`)
+      // Already downloading
       return downloadCache[url]
     }
 
@@ -44,15 +44,13 @@ export async function cacheContentfulVideo({ video, cacheDir }) {
       while (!downloaded) {
         try {
           await downloadQueue.add(async () => {
-            console.log(`Downloading https:${url}`)
+            reporter.info(`Downloading ${url}`)
 
             const response = await axios({
               method: `get`,
               url: `https:${url}`,
               responseType: `stream`,
             })
-
-            console.log(`Writing ${fileName} to disk`)
 
             await new Promise((resolve, reject) => {
               const file = fs.createWriteStream(path)
@@ -69,17 +67,19 @@ export async function cacheContentfulVideo({ video, cacheDir }) {
 
           if (tries === 3) {
             throw new Error(
-              `Download of https:${url} failed after three times:\n\n${e}`
+              `Download of ${url} failed after three times:\n\n${e}`
             )
           }
-          console.log(
-            `Unable to download https:${url}\n\nRetrying again after 1s (${tries}/3)`
+          reporter.info(
+            `Unable to download ${url}\n\nRetrying again after 1s (${tries}/3)`
           )
           console.error(e)
           console.log(Object.keys(e), e.message)
           await new Promise(resolve => setTimeout(resolve, 1000))
         }
       }
+
+      reporter.info(`Downloaded: ${url}`)
 
       return path
     }

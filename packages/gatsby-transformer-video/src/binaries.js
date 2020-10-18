@@ -2,6 +2,7 @@ import { resolve } from "path"
 
 import execa from "execa"
 import { access, ensureDir } from "fs-extra"
+import reporter from "gatsby-cli/lib/reporter"
 
 export async function libsInstalled({ platform }) {
   try {
@@ -31,7 +32,7 @@ export async function downloadLibs({ binariesDir, platform }) {
 
   switch (platform) {
     case `win32`:
-      console.log(
+      reporter.info(
         `Downloading FFMPEG && FFPROBE (Note: This script is not yet tested on windows)`
       )
       await execa(
@@ -45,33 +46,34 @@ export async function downloadLibs({ binariesDir, platform }) {
         execaConfig
       )
 
-      console.log(`Unzipping FFMPEG && FFPROBE`)
+      reporter.info(`Unzipping FFMPEG && FFPROBE`)
       await execa(`tar`, [`-xf`, `ffmpeg.zip`], execaConfig)
 
-      console.log(`Cleanup`)
+      reporter.info(`Cleanup`)
       await execa(`mv`, [`bin/*`, `.`], execaConfig)
       await execa(`rm`, [`-rf`, `ffmpeg-latest-win64-static`], execaConfig)
       break
     case `linux`:
-      console.log(`Downloading FFMPEG && FFPROBE`)
+      reporter.info(`Downloading FFMPEG && FFPROBE`)
       await execa(
         `wget`,
         [
           `-O`,
+          `-nv`,
           `ffmpeg.zip`,
           `https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz`,
         ],
         execaConfig
       )
 
-      console.log(`Unzipping FFMPEG && FFPROBE`)
+      reporter.info(`Unzipping FFMPEG && FFPROBE`)
       await execa(`tar`, [`-xf`, `ffmpeg.zip`, `--strip`, `1`], execaConfig)
 
-      console.log(`Cleanup`)
+      reporter.info(`Cleanup`)
       await execa(`rm`, [`ffmpeg.zip`], execaConfig)
       break
     case `darwin`:
-      console.log(`Downloading FFMPEG`)
+      reporter.info(`Downloading FFMPEG`)
 
       await execa(
         `curl`,
@@ -85,7 +87,7 @@ export async function downloadLibs({ binariesDir, platform }) {
         execaConfig
       )
 
-      console.log(`Downloading FFPROBE`)
+      reporter.info(`Downloading FFPROBE`)
       await execa(
         `curl`,
         [
@@ -97,11 +99,11 @@ export async function downloadLibs({ binariesDir, platform }) {
         execaConfig
       )
 
-      console.log(`Unzipping...`)
+      reporter.info(`Unzipping...`)
       await execa(`unzip`, [`-o`, `ffmpeg.zip`], execaConfig)
       await execa(`unzip`, [`-o`, `ffprobe.zip`], execaConfig)
 
-      console.log(`Cleanup...`)
+      reporter.info(`Cleanup...`)
       await execa(`rm`, [`ffmpeg.zip`, `ffprobe.zip`], execaConfig)
       break
     default:

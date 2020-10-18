@@ -3,6 +3,7 @@ import os from "os"
 
 import { ensureDir } from "fs-extra"
 import { GraphQLString, GraphQLInt, GraphQLFloat } from "gatsby/graphql"
+import reporter from "gatsby-cli/lib/reporter"
 
 import FFMPEG from "./ffmpeg"
 
@@ -303,14 +304,14 @@ exports.createResolvers = async (
 
 exports.onPreInit = async ({ store }, { downloadBinaries = true }) => {
   if (!downloadBinaries) {
-    console.log(`Skipped download of FFMPEG & FFPROBE binaries`)
+    reporter.verbose(`Skipped download of FFMPEG & FFPROBE binaries`)
     return
   }
 
   const alreadyInstalled = await libsInstalled({ platform })
 
   if (alreadyInstalled) {
-    console.log(`FFMPEG && FFPROBE are already available on this machine`)
+    reporter.verbose(`FFMPEG && FFPROBE are already available on this machine`)
     return
   }
 
@@ -322,14 +323,14 @@ exports.onPreInit = async ({ store }, { downloadBinaries = true }) => {
   try {
     await libsAlreadyDownloaded({ binariesDir })
 
-    console.log(`FFMPEG & FFPROBE binaries already downloaded`)
+    reporter.verbose(`FFMPEG & FFPROBE binaries already downloaded`)
   } catch {
     try {
-      console.log(`FFMPEG & FFPROBE getting binaries for ${platform}@${arch}`)
+      reporter.info(`FFMPEG & FFPROBE getting binaries for ${platform}@${arch}`)
 
       await downloadLibs({ binariesDir, platform })
 
-      console.log(
+      reporter.info(
         `Finished. This system is ready to convert videos with GatsbyJS`
       )
     } catch (err) {
