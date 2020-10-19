@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.56...gatsby-source-contentful@3.0.0) (2020-10-19)
+
+### Performance Improvements
+
+- **gatsby-plugin-contentful:** drop the super expensive fixids cycle ([#27318](https://github.com/gatsbyjs/gatsby/issues/27318)) ([b316505](https://github.com/gatsbyjs/gatsby/commit/b3165058bce5dca1a0145dd2f0d518aaa6750add))
+
+### BREAKING CHANGES
+
+- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries  those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
+
+If you were relying on the `id` property in the `sys` object, you should be aware that it is no longer "normalized". In particular, it will no longer get a 'c' prefixed to the id.
+
 ## [2.3.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.55...gatsby-source-contentful@2.3.56) (2020-10-19)
 
 **Note:** Version bump only for package gatsby-source-contentful

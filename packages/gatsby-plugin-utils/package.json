@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "0.2.35",
+  "version": "0.2.36",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^7.0.2",
-    "gatsby": "^2.24.81",
+    "gatsby": "^2.24.82",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5"
   },

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.81...gatsby@2.24.82) (2020-10-19)
+
+### Bug Fixes
+
+- **gatsby:** notify when Gatsby cache is incomplete ([#27549](https://github.com/gatsbyjs/gatsby/issues/27549)) ([2d6a153](https://github.com/gatsbyjs/gatsby/commit/2d6a1535ca2fa45bc6821d3273c32e18f66913fc))
+
 ## [2.24.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.80...gatsby@2.24.81) (2020-10-19)
 
 ### Features
