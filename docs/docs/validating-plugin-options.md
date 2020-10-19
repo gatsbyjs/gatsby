@@ -15,7 +15,11 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-plugin-console-log`,
-      options: { optionA: true, optionB: false, message: "Hello world" },
+      options: {
+        optionA: true,
+        message: "Hello world"
+        optionB: false, // Optional.
+      },
     },
   ],
 }
@@ -97,11 +101,21 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
 
 ## Joi best practices
 
-The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema` to see all the available types and methods.
+The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema` as it shows all the available types and methods.
 
-Some specific Joi best practices for `pluginOptionsSchema`s.
+Here are some specific Joi best practices for `pluginOptionsSchema`s:
 
-### Setting default options
+- [Add descriptions](#add-descriptions)
+- [Set default options](#set-default-options)
+- [Validate external access](#validate-external-access) where necessary
+- Add custom error messages where useful
+- Deprecate options rather than removing them
+
+### Add descriptions
+
+Make sure that every option and field has a `.description()` explaining its purpose. While this is not immediately visible, there might be tooling in the future that auto-generates plugin option documentation from the schema.
+
+### Set default options
 
 You can use the `.default()` method to set a default for an option. For example with `gatsby-plugin-console-log`, this is how it can default the `message` option to "default message" in case users do not pass their own:
 
@@ -129,7 +143,32 @@ exports.onPreInit = (_, pluginOptions) => {
 
 ### Validating external access
 
-TK `.external()`
+Some plugins (particularly source plugins) will query external APIs. With the `.external()` method, they can asynchronously validate that users have access to the API to provide a better experience if they pass invalid secrets.
+
+For example, this is how the [Contentful source plugin](/plugins/gatsby-source-contentful/) ensures the user has access to the space they are trying to query:
+
+```javascript:title=gatsby-source-contentful/gatsby-node.js
+exports.pluginOptionsSchema = ({ Joi }) => {
+  return Joi.object({
+    accessToken: Joi.string().required(),
+    spaceId: Joi.string().required(),
+    // ...more options here...
+  }).external(async pluginOptions => {
+    try {
+      await contentful
+        .createClient({
+          space: pluginOptions.spaceId,
+          accessToken: pluginOptions.accessToken,
+        })
+        .getSpace()
+    } catch (err) {
+      throw new Error(
+        `Cannot access Contentful space "${pluginOptions.spaceId}" with the provided access token. Double check they are correct and try again!`
+      )
+    }
+  })
+}
+```
 
 ### Using custom error messages
 
