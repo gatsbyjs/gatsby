@@ -145,10 +145,8 @@ function isFeedbackDisabled(): boolean {
     return true
   }
 
-  if (process.env.NODE_ENV !== `test`) {
-    if (isCI()) {
-      return true
-    }
+  if (isCI()) {
+    return true
   }
 
   return false
