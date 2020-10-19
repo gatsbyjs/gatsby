@@ -145,7 +145,7 @@ function isFeedbackDisabled(): boolean {
     return true
   }
 
-  if (isCI) {
+  if (isCI()) {
     return true
   }
 
