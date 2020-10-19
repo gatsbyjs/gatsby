@@ -59,7 +59,7 @@ During schema compilation, Gatsby will infer the sub object's type while [creati
 
 Every time a build is re-run, there is a chance that a node that exists in the Redux store no longer exists in the original data source. E.g. a file might be deleted from disk between runs. We need a way to indicate that fact to Gatsby.
 
-To track this, there is a Redux `nodesTouched` namespace that tracks whether a particular node ID has been touched. This occurs whenever a node is created (handled by [CREATE_NODE](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/Redux/reducers/nodes-touched.ts)), or an explicit call to [touchNode](/docs/actions/#touchNode).
+To track this, there is a Redux `nodesTouched` namespace that tracks whether a particular node ID has been touched. This occurs whenever a node is created (handled by [CREATE_NODE](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/nodes-touched.ts)), or an explicit call to [touchNode](/docs/actions/#touchNode).
 
 When a `source-nodes` plugin runs again, it generally recreates nodes (which automatically touches them too). But in some cases, such as [transformer-screenshot](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-screenshot/src/gatsby-node.js#L56), a node might not change, but we still want to keep it around for the build. In these cases, we must explicitly call `touchNode`.
 
