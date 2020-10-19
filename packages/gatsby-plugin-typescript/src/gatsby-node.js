@@ -37,7 +37,7 @@ function onCreateWebpackConfig({ actions, loaders }) {
 
 if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
   exports.pluginOptionsSchema = ({ Joi }) =>
-    Joi.object().keys({
+    Joi.object({
       isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
       jsxPragma: Joi.string()
         .description(
