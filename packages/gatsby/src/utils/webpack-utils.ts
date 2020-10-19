@@ -727,7 +727,9 @@ function reactHasJsxRuntime(): boolean {
     const react = require(`react/package.json`)
     return (
       !!require.resolve(`react/jsx-runtime.js`) &&
-      semver.major(react.version) >= 17
+      (semver.major(react.version) >= 17 ||
+        semver.minor(react.version) >= 16.4 ||
+        semver.minor(react.version) >= 15.7)
     )
   } catch (e) {
     // If the require.resolve throws, that means this version of React
