@@ -100,8 +100,16 @@ export const calculateImageSizes = ({
   outputPixelDensities = [0.25, 0.5, 1, 2, 3],
   srcSetBreakpoints,
 }) => {
-  if (maxWidth === 0 || width === 0 || maxHeight === 0 || height === 0) {
-    throw new Error(`provided image dimensions must be positive numbers (> 0)`)
+  const userDimensions = { width, maxWidth, height, maxHeight }
+  const erroneousUserDimensions = Object.entries(userDimensions).filter(
+    ([_, size]) => size < 1
+  )
+  if (erroneousUserDimensions.length) {
+    throw new Error(
+      `Specified dimensions for images must be positive numbers (> 0). Problem dimensions you have are ${erroneousUserDimensions
+        .map(dim => dim.join(`: `))
+        .join(`, `)}`
+    )
   }
 
   let sizes
