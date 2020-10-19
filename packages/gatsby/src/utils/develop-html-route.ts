@@ -81,7 +81,9 @@ export const parseError = function (err, directory): IParsedError {
   // Remove the `/lib/` added by webpack
   const filename = path.join(
     directory,
-    ...position.filename.split(path.sep).slice(2)
+    // Don't need to use path.sep as webpack always uses a single forward slash
+    // as a path seperator.
+    ...position.filename.split(`/`).slice(2)
   )
 
   let code
