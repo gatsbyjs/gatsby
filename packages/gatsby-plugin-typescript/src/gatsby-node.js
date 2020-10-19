@@ -37,27 +37,18 @@ function onCreateWebpackConfig({ actions, loaders }) {
 
 if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
   exports.pluginOptionsSchema = ({ Joi }) =>
-    Joi.object()
-      .keys({
-        isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
-        jsxPragma: Joi.string()
-          .description(
-            `Replace the function used when compiling JSX expressions.`
-          )
-          .default(`React`),
-        allExtensions: Joi.boolean()
-          .description(
-            `Indicates that every file should be parsed as TS or TSX.`
-          )
-          .default(false),
-      })
-      .external(({ isTSX, allExtensions }) => {
-        if (isTSX && !allExtensions) {
-          throw new Error(
-            `Invalid plugin options for "gatsby-plugin-typescript": "isTSX" is true requires "allExtensions" to be true.`
-          )
-        }
-      })
+    Joi.object().keys({
+      isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
+      jsxPragma: Joi.string()
+        .description(
+          `Replace the function used when compiling JSX expressions.`
+        )
+        .default(`React`),
+      allExtensions: Joi.boolean()
+        .description(`Indicates that every file should be parsed as TS or TSX.`)
+        .default(false)
+        .when(`isTSX`, { is: true, then: Joi.valid(true) }),
+    })
 }
 
 exports.resolvableExtensions = resolvableExtensions

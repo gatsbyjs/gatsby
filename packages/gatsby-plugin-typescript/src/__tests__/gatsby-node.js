@@ -99,5 +99,15 @@ describe(`gatsby-plugin-typescript`, () => {
 
       expect(isValid).toBe(true)
     })
+
+    it(`should break when isTSX doesn't match allExtensions`, () => {
+      const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+        isTSX: true,
+        jsxPragma: `ReactFunction`,
+        allExtensions: false,
+      })
+
+      expect(errors).toEqual(`"allExtensions" must be [true]`)
+    })
   })
 })
