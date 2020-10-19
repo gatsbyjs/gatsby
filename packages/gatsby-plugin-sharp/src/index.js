@@ -812,6 +812,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
 }
 
 exports.queueImageResizing = queueImageResizing
+exports.batchQueueImageResizing = batchQueueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
 exports.generateBase64 = generateBase64
