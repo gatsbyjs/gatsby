@@ -132,7 +132,8 @@ function getLocalReporter({ activity, reporter }) {
 function extendErrorIdWithPluginName(pluginName, errorMeta) {
   if (typeof errorMeta === `object`) {
     const id = errorMeta && errorMeta[`id`]
-    if (id) {
+    const isPrefixed = id.includes(`${pluginName}_`)
+    if (id && !isPrefixed) {
       return {
         ...errorMeta,
         id: `${pluginName}_${id}`,
