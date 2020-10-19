@@ -144,11 +144,16 @@ function isFeedbackDisabled(): boolean {
   if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
     return true
   }
+
+  if (isCI) {
+    return true
+  }
+
   return false
 }
 
 export async function userGetsSevenDayFeedback(): Promise<boolean> {
-  if (isCI || isFeedbackDisabled()) return false
+  if (isFeedbackDisabled()) return false
 
   if (getConfigStore().get(sevenDayKey)) return false
 
