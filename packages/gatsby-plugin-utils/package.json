@@ -32,6 +32,9 @@
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5"
   },
+  "peerDependencies": {
+    "gatsby": "^2.24.79"
+  },
   "files": [
     "dist/",
     "src/"
