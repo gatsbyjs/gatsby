@@ -21,7 +21,7 @@ const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { rgbToHex } = require(`./utils`)
 
 const imageSizeCache = new Map()
-export const getImageSize = file => {
+const getImageSize = file => {
   if (
     process.env.NODE_ENV !== `test` &&
     imageSizeCache.has(file.internal.contentDigest)
