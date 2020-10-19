@@ -28,13 +28,13 @@ export function showFeedbackRequest(): void {
 export function showSevenDayFeedbackRequest(): void {
   getConfigStore().set(sevenDayKey, Date.now())
   trackCli(`SHOW_SEVEN_DAY_FEEDBACK_LINK`, {
-    name: `https://www.surveymonkey.com/r/gatsbyjs-feedback-cli`,
+    name: `https://gatsby.dev/feedback-survey`,
   })
   report.log(
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
   report.log(
-    `\nGive us your feedback here: https://www.surveymonkey.com/r/gatsbyjs-feedback-cli\n\n`
+    `\nGive us your feedback here: https://gatsby.dev/feedback-survey\n\n`
   )
 }
 
