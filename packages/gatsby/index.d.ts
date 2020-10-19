@@ -316,7 +316,7 @@ export interface GatsbyNode {
    *       createNodeField({
    *         node,
    *         name: `slug`,
-   *         value: polishSlug(`/blog/${postSlug}/`),
+   *         value: `/blog/${postSlug}/`,
    *       });
    *     }
    *   }
