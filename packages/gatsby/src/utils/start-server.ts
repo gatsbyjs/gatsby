@@ -97,8 +97,6 @@ export async function startServer(
     }
   }
 
-  await createIndexHtml(indexHTMLActivity)
-
   indexHTMLActivity.end()
 
   // report.stateUpdate(`webpack`, `IN_PROGRESS`)
@@ -292,11 +290,15 @@ export async function startServer(
     developHtmlRoute({ app, program, store })
   }
 
+  const genericHtmlPageCreated = false
   // We still need this even w/ ssr for the dev 404 page.
   const genericHtmlPath = process.env.GATSBY_EXPERIMENTAL_DEV_SSR
     ? `/public/dev-404-page/index.html`
     : `/public/index.html`
-  app.use((_, res) => {
+  app.use(async (_, res) => {
+    if (!genericHtmlPageCreated) {
+      await createIndexHtml(indexHTMLActivity)
+    }
     res.sendFile(directoryPath(genericHtmlPath), err => {
       if (err) {
         res.status(500).end()
