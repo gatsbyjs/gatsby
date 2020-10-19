@@ -33,9 +33,57 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 If users pass options that do not match the schema, the validation will show an error when they run `gatsby develop`.
 
-## Testing an options schema
+## Unit testing an options schema
 
-TK `testPluginOptionsSchema`
+In order to verify that a `pluginOptionsSchema` behaves as expected, we recommend that you unit test it with various configurations using the `gatsby-plugin-utils` package.
+
+1. Add the `gatsby-plugin-utils` package to your site:
+
+   ```shell
+   yarn add gatsby-plugin-utils
+   ```
+
+   or
+
+   ```shell
+   npm install gatsby-plugin-utils
+   ```
+
+2. Use the `testPluginOptionsSchema` function exported from it in your test file. For example, with [Jest](https://jestjs.io):
+
+   ```javascript:title=plugins/gatsby-plugin-console/__tests__/pluginOptionsSchema.test.js
+   // This is an example using Jest (https://jestjs.io/)
+   import { testPluginOptionsSchema } from "gatsby-plugin-utils"
+   import { pluginOptionsSchema } from "../gatsby-node"
+
+   it(`should invalidate incorrect options`, () => {
+     const options = {
+       optionA: undefined, // Should be a boolean
+       message: 123, // Should be a string
+       optionB: `not a boolean`, // Should be a boolean
+     }
+     const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, options)
+
+     expect(isValid).toBe(false)
+     expect(errors).toEqual([
+       `"optionA" is required`,
+       `"message" must be a string`,
+       `"optionB" must be a boolean`,
+     ])
+   })
+
+   it(`should validate correct options`, () => {
+     const options = {
+       optionA: ,
+       message: "string",
+       optionB: true,
+     }
+     const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, options)
+
+     expect(isValid).toBe(true)
+     expect(errors).toEqual([])
+   })
+   ```
 
 ## Joi tips
 
