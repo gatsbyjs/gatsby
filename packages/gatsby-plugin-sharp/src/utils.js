@@ -100,6 +100,7 @@ export const calculateImageSizes = ({
   outputPixelDensities = [0.25, 0.5, 1, 2, 3],
   srcSetBreakpoints,
 }) => {
+  // check that all dimensions provided are positive
   const userDimensions = { width, maxWidth, height, maxHeight }
   const erroneousUserDimensions = Object.entries(userDimensions).filter(
     ([_, size]) => size < 1
@@ -122,11 +123,6 @@ export const calculateImageSizes = ({
     // if no width is passed, we need to resize the image based on the passed height
     const fixedDimension = width === undefined ? `height` : `width`
     const fixedValue = fixedDimension === `height` ? height : width
-    if (fixedValue < 1) {
-      throw new Error(
-        `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${fixedValue}`
-      )
-    }
 
     if (!width) {
       width = height * aspectRatio
@@ -164,11 +160,6 @@ export const calculateImageSizes = ({
       : DEFAULT_FLUID_SIZE // if all else fails, use this size
 
     const fixedValue = fixedDimension === `maxHeight` ? maxHeight : maxWidth
-    if (fixedValue < 1) {
-      throw new Error(
-        `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${fixedValue}`
-      )
-    }
 
     // Create sizes (in width) for the image if no custom breakpoints are
     // provided. If the max width of the container for the rendered markdown file
@@ -191,7 +182,7 @@ export const calculateImageSizes = ({
     if (!sizes.includes(maxWidth)) {
       sizes.push(maxWidth)
     }
-    sizes = sizes.sort((a, b) => a - b)
+    sizes = sizes.sort()
   } else {
     console.warn(
       `No valid layout was provided. Valid image layouts are fixed, fluid, and constrained.`
