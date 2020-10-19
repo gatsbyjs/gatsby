@@ -147,7 +147,7 @@ function isFeedbackDisabled(): boolean {
   return false
 }
 
-export async function userGets7DayFeedback(): Promise<boolean> {
+export async function userGetsSevenDayFeedback(): Promise<boolean> {
   if (isCI || isFeedbackDisabled()) return false
 
   if (getConfigStore().get(sevenDayKey)) return false
