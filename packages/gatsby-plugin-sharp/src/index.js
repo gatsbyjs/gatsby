@@ -20,6 +20,28 @@ const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 
 const imageSizeCache = new Map()
+
+const getImageSizeAsync = async file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  }
+  const input = fs.createReadStream(file.absolutePath)
+  const dimensions = await imageSize(input)
+
+  if (!dimensions) {
+    reportError(
+      `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+      ``
+    )
+  }
+
+  imageSizeCache.set(file.internal.contentDigest, dimensions)
+  return dimensions
+}
+// Remove in next major as it's really slow
 const getImageSize = file => {
   if (
     process.env.NODE_ENV !== `test` &&
@@ -27,9 +49,7 @@ const getImageSize = file => {
   ) {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
-    const dimensions = imageSize.sync(
-      toArray(fs.readFileSync(file.absolutePath))
-    )
+    const dimensions = imageSize.sync(fs.readFileSync(file.absolutePath))
 
     if (!dimensions) {
       reportError(
@@ -657,7 +677,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  const dimensions = getImageSize(file)
+  const dimensions = await getImageSizeAsync(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
@@ -763,16 +783,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 }
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
-  }
-
-  return arr
-}
-
 exports.queueImageResizing = queueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
@@ -783,4 +793,5 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.getImageSizeAsync = getImageSizeAsync
 exports.stats = stats

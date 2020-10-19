@@ -114,12 +114,21 @@ const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
   type
 ) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) =>
-  contentTypeItems.map(contentType =>
-    mergedSyncData.entries.filter(
-      entry => entry.sys.contentType.sys.id === contentType.sys.id
-    )
+exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+  // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
+  const map = new Map(
+    contentTypeItems.map(contentType => [contentType.sys.id, []])
   )
+  // Now fill the buckets. Ignore entries for which there exists no bucket. (Not sure if that ever happens)
+  mergedSyncData.entries.map(entry => {
+    let arr = map.get(entry.sys.contentType.sys.id)
+    if (arr) {
+      arr.push(entry)
+    }
+  })
+  // Order is relevant, must map 1:1 to contentTypeItems array
+  return contentTypeItems.map(contentType => map.get(contentType.sys.id))
+}
 
 exports.buildResolvableSet = ({
   entryList,

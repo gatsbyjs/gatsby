@@ -5,6 +5,9 @@ const {
 } = require(`../gatsby-node`)
 const path = require(`path`)
 
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
+const { pluginOptionsSchema } = require(`../gatsby-node`)
+
 describe(`gatsby-plugin-typescript`, () => {
   describe(`resolvableExtensions`, () => {
     it(`returns the correct resolvable extensions`, () => {
@@ -67,6 +70,34 @@ describe(`gatsby-plugin-typescript`, () => {
       const loaders = { js: jest.fn() }
       onCreateWebpackConfig({ actions, loaders })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
+    })
+  })
+
+  describe(`plugin schema`, () => {
+    it(`should provide meaningful errors when fields are invalid`, () => {
+      const expectedErrors = [
+        `"isTSX" must be a boolean`,
+        `"jsxPragma" must be a string`,
+        `"allExtensions" must be a boolean`,
+      ]
+
+      const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+        isTSX: `this should be a boolean`,
+        jsxPragma: 123,
+        allExtensions: `this should be a boolean`,
+      })
+
+      expect(errors).toEqual(expectedErrors)
+    })
+
+    it(`should validate the schema`, () => {
+      const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+        isTSX: true,
+        jsxPragma: `ReactFunction`,
+        allExtensions: false,
+      })
+
+      expect(isValid).toBe(true)
     })
   })
 })

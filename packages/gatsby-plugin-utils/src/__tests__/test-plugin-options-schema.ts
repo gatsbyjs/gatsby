@@ -1,5 +1,5 @@
 import { testPluginOptionsSchema } from "../test-plugin-options-schema"
-import { ObjectSchema } from "../utils/plugin-options-schema-joi-type"
+import { ObjectSchema } from "../joi"
 
 describe(`testPluginOptionsSchema`, () => {
   it(`should partially validate one value of a schema`, () => {
