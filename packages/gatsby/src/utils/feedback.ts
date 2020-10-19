@@ -1,12 +1,13 @@
 import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion, isCI } from "gatsby-core-utils"
+import { trackCli } from "gatsby-telemetry"
 import latestVersion from "latest-version"
 import getDayOfYear from "date-fns/getDayOfYear"
 
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
 const firstDateKey = `feedback.firstCheckDate`
-const sevenDayKey = `feedback.hadSevenDayFeedback`
+const sevenDayKey = `feedback.sevenDayFeedbackDate`
 
 // This function is designed to be used by `gatsby feedback --disable`
 // and `gatsby feedback --enable`. This key is used to determine
@@ -22,6 +23,19 @@ export function showFeedbackRequest(): void {
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
   report.log(`\nGive us your feedback here: https://gatsby.dev/feedback\n\n`)
+}
+
+export function showSevenDayFeedbackRequest(): void {
+  getConfigStore().set(sevenDayKey, Date.now())
+  trackCli(`SHOW_SEVEN_DAY_FEEDBACK_LINK`, {
+    name: `https://www.surveymonkey.com/r/gatsbyjs-feedback-cli`,
+  })
+  report.log(
+    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
+  )
+  report.log(
+    `\nGive us your feedback here: https://www.surveymonkey.com/r/gatsbyjs-feedback-cli\n\n`
+  )
 }
 
 const randomChanceToBeTrue = (): boolean => {
@@ -76,6 +90,18 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 
     if (lastDate > threeMonthsAgo) {
+      return false
+    }
+  }
+
+  // we don't want to give them this survey right after the seven day feedback survey
+  const sevenDayFeedback = getConfigStore().get(sevenDayKey)
+  if (sevenDayFeedback) {
+    const sevenDayDate = new Date(sevenDayFeedback)
+    const threeMonthsAgo = new Date()
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
+
+    if (sevenDayDate > threeMonthsAgo) {
       return false
     }
   }
@@ -140,6 +166,5 @@ export async function userGets7DayFeedback(): Promise<boolean> {
       return false
     }
   }
-  getConfigStore().set(sevenDayKey, true) // ensure they don't get this survey again
   return true
 }

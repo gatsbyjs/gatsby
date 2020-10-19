@@ -11,6 +11,7 @@ import {
   userGets7DayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 import { store } from "../redux"
@@ -87,10 +88,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   process.on(
     `SIGINT`,
     async (): Promise<void> => {
-      if (
-        (await userPassesFeedbackRequestHeuristic()) ||
-        (await userGets7DayFeedback())
-      ) {
+      if (await userGets7DayFeedback()) {
+        showSevenDayFeedbackRequest()
+      } else if (await userPassesFeedbackRequestHeuristic()) {
         showFeedbackRequest()
       }
       process.exit(0)

@@ -21,6 +21,7 @@ import {
   userGets7DayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
 import { boundActionCreators } from "../redux/actions"
@@ -353,10 +354,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     report.info(`.cache/deletedPages.txt created`)
   }
 
-  if (
-    (await userPassesFeedbackRequestHeuristic()) ||
-    (await userGets7DayFeedback())
-  ) {
+  if (await userGets7DayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
 }
