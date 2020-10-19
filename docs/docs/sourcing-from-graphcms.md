@@ -31,6 +31,8 @@ Once finished, navigate inside of the project with `cd gatsby-site`.
 
 ### Add the `gatsby-source-graphcms` plugin
 
+> This plugin is in **beta**. Please use at your own risk!
+
 In order to fetch data from your GraphCMS project, you will need to install [`gatsby-source-graphcms`](https://github.com/GraphCMS/gatsby-source-graphcms).
 
 You can install this package with:
