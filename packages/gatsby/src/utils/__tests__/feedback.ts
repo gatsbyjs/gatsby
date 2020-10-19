@@ -9,11 +9,11 @@ jest.mock(`date-fns/getDayOfYear`, (): (() => number) => (): number => {
   const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3)
   return 1 * 30 * 3 * currentQuarter
 })
-jest.mock(`gatsby-core-utils`, (): (() => any) => (): any => {
+jest.mock(`gatsby-core-utils`, () => {
   return {
     ...jest.requireActual(`gatsby-core-utils`),
     getGatsbyVersion: jest.fn(() => `2.1.1`),
-    isCI: () => false,
+    isCI: (): boolean => false,
   }
 })
 
