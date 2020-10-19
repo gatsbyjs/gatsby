@@ -5,21 +5,53 @@ jest.mock(`glob`, () => {
   }
 })
 
-const _ = require(`lodash`)
-const { parse, buildSchema } = require(`graphql`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const glob = require(`glob`)
-const {
-  resolveThemes,
-  parseQueries,
-  processQueries,
-} = require(`../query-compiler`)
+import _ from "lodash"
+import { parse, buildSchema } from "graphql"
+import fs from "fs-extra"
+import path from "path"
+import glob from "glob"
+import { resolveThemes, parseQueries, processQueries } from "../query-compiler"
+import { GraphQLDocumentInFile } from "../file-parser"
 
 const base = path.resolve(``)
 
+const createGatsbyDoc = (
+  filePath: string,
+  query: string,
+  {
+    isHook,
+    isStaticQuery,
+  }: {
+    isHook?: boolean
+    isStaticQuery?: boolean
+  } = { isHook: false, isStaticQuery: false }
+): GraphQLDocumentInFile => {
+  const doc = parse(query)
+  return {
+    filePath,
+    doc,
+    text: query,
+    isHook,
+    isStaticQuery,
+    hash: `hash`,
+    templateLoc: {
+      start: {
+        // so no idea, but it seems to work correctly on websites
+        line: 1,
+        column: 0,
+      },
+      end: {
+        line: 1,
+        column: 0,
+      },
+    },
+  }
+}
+
 describe(`Runner`, () => {
   beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     glob.sync.mockClear()
   })
 
@@ -126,6 +158,7 @@ describe(`actual compiling`, () => {
 
   it(`compiles a query`, async () => {
     const nodes = [
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       createGatsbyDoc(
         `mockFile`,
         `query mockFileQuery {
@@ -728,7 +761,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
          9 |         fragment PostsJsonFragment on PostsJson {
         10 |           id
         11 |           node
@@ -756,7 +789,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
       >  9 |         fragment PostsJsonFragment on PostsJson {
            |                  ^^^^^^^^^^^^^^^^^
         10 |           id
@@ -1084,7 +1117,8 @@ describe(`Extra fields`, () => {
     schema = buildSchema(sdl)
   })
 
-  const transformQuery = queryString => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const transformQuery = (queryString: string): any => {
     const nodes = [createGatsbyDoc(`mockFile`, queryString)]
     const errors = []
     const result = processQueries({
@@ -1297,30 +1331,3 @@ describe(`Extra fields`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 })
-
-const createGatsbyDoc = (
-  filePath,
-  query,
-  { isHook, isStaticQuery } = { isHook: false, isStaticQuery: false }
-) => {
-  const doc = parse(query)
-  return {
-    filePath,
-    doc,
-    text: query,
-    isHook,
-    isStaticQuery,
-    hash: `hash`,
-    templateLoc: {
-      start: {
-        // so no idea, but it seems to work correctly on websites
-        line: 1,
-        column: 0,
-      },
-      end: {
-        line: 1,
-        column: 0,
-      },
-    },
-  }
-}

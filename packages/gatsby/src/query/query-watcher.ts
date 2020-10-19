@@ -31,7 +31,7 @@ interface IComponent {
   isInBootstrap: boolean
 }
 
-interface IQuery {
+export interface IQuery {
   id: string
   name: string
   text: string

@@ -34,59 +34,52 @@ import {
 
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 import { store } from "../redux"
-import {IGatsbyState} from '../redux/types';
+import { IGatsbyState } from "../redux/types"
 import * as actions from "../redux/actions/internal"
 import { boundActionCreators } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
-import  FileParser from "./file-parser"
+import FileParser from "./file-parser"
 import {
   graphqlError,
   multipleRootQueriesError,
   duplicateFragmentError,
   unknownFragmentError,
 } from "./graphql-errors"
-import report from  "gatsby-cli/lib/reporter"
+import report from "gatsby-cli/lib/reporter"
 import errorParser, {
   locInGraphQlToLocInFile,
+  ILocOfGraphQLDocInSrcFile,
 } from "./error-parser"
-
-import {GraphQLDocumentInFile} from './file-parser'
-import { Span } from "opentracing";
+import { GraphQLDocumentInFile } from "./file-parser"
+import { Span } from "opentracing"
+import { IQuery } from "./query-watcher"
 
 const overlayErrorID = `graphql-compiler`
 
-interface DefinitionByName {
-  name: string;
-  def: DefinitionNode;
-  filePath: string;
-  text: string;
-  templateLoc: string;
-  printedAst: null | string;
-  isHook: boolean;
-  isStaticQuery: boolean;
-  isFragment: boolean;
-  hash: string;
+interface IDefinitionByName {
+  name: string
+  def: DefinitionNode
+  filePath: string
+  text: string
+  templateLoc: ILocOfGraphQLDocInSrcFile
+  printedAst: null | string
+  isHook: boolean
+  isStaticQuery: boolean
+  isFragment: boolean
+  hash: string
 }
 
-interface Query {
-  id?: string;
-  name: string;
-  text: string;
-  originalText: string;
-  path: string;
-  isHook: boolean;
-  isStaticQuery: boolean;
-  hash: string;
-}
-
-
-//done
-export default async function compile({ parentSpan }: { parentSpan?: Span; } = {}): Promise<
-  Map<string, Query>
-> {
+export default async function compile({
+  parentSpan,
+}: { parentSpan?: Span } = {}): Promise<Map<string, IQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, themes, flattenedPlugins }: IGatsbyState = store.getState()
+  const {
+    program,
+    schema,
+    themes,
+    flattenedPlugins,
+  }: IGatsbyState = store.getState()
 
   const activity = report.activityTimer(`extract queries from components`, {
     parentSpan,
@@ -97,8 +90,10 @@ export default async function compile({ parentSpan }: { parentSpan?: Span; } = {
   const errors = []
   const addError = errors.push.bind(errors)
 
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const parsedQueries = await parseQueries({
     base: program.directory,
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     additional: resolveThemes(
       themes.themes
         ? themes.themes
@@ -112,6 +107,7 @@ export default async function compile({ parentSpan }: { parentSpan?: Span; } = {
     parentSpan,
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const queries = processQueries({
     schema,
     parsedQueries,
@@ -122,11 +118,15 @@ export default async function compile({ parentSpan }: { parentSpan?: Span; } = {
   if (errors.length !== 0) {
     const structuredErrors = activity.panicOnBuild(errors)
     if (process.env.gatsby_executing_command === `develop`) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       websocketManager.emitError(overlayErrorID, structuredErrors)
     }
   } else {
     if (process.env.gatsby_executing_command === `develop`) {
       // emitError with `null` as 2nd param to clear browser error overlay
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       websocketManager.emitError(overlayErrorID, null)
     }
   }
@@ -135,20 +135,26 @@ export default async function compile({ parentSpan }: { parentSpan?: Span; } = {
   return queries
 }
 
-//done
-export const resolveThemes = (themes : any = []): any =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const resolveThemes = (themes: any = []): any =>
   themes.reduce((merged, theme) => {
     merged.push(theme.themeDir)
     return merged
   }, [])
 
-//done
 export const parseQueries = async ({
   base,
   additional,
   addError,
   parentSpan,
-}: {base: string; additional: any; addError: any; parentSpan?: Span}): Promise<GraphQLDocumentInFile> => {
+}: {
+  base: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  additional: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addError: any
+  parentSpan?: Span
+}): Promise<GraphQLDocumentInFile> => {
   const filesRegex = `*.+(t|j)s?(x)`
   // Pattern that will be appended to searched directories.
   // It will match any .js, .jsx, .ts, and .tsx files, that are not
@@ -197,22 +203,28 @@ export const parseQueries = async ({
   return await parser.parseFiles(files, addError)
 }
 
-//done
 export const processQueries = ({
   schema,
   parsedQueries,
   addError,
   parentSpan,
-}: {schema: GraphQLSchema, parsedQueries: Array<GraphQLDocumentInFile>, addError: any, parentSpan?: Span}) : Map<string, Query> => {
+}: {
+  schema: GraphQLSchema
+  parsedQueries: Array<GraphQLDocumentInFile>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addError: any
+  parentSpan?: Span
+}): Map<string, IQuery> => {
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const { definitionsByName, operations } = extractOperations(
     schema,
     parsedQueries,
-    addError,
-    parentSpan
+    addError
   )
 
   boundActionCreators.setGraphQLDefinitions(definitionsByName)
 
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   return processDefinitions({
     schema,
     operations,
@@ -232,11 +244,17 @@ const preValidationRules: ReadonlyArray<ValidationRule> = [
   VariablesInAllowedPositionRule,
 ]
 
-
 // done
-const extractOperations = (schema: GraphQLSchema, parsedQueries: Array<GraphQLDocumentInFile>, addError: any, parentSpan?: Span): {definitionsByName: Map<string, DefinitionByName>,
-operations: Array<DefinitionNode>} => {
-  const definitionsByName  = new Map<string, DefinitionByName>();
+const extractOperations = (
+  schema: GraphQLSchema,
+  parsedQueries: Array<GraphQLDocumentInFile>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addError: any
+): {
+  definitionsByName: Map<string, IDefinitionByName>
+  operations: Array<DefinitionNode>
+} => {
+  const definitionsByName = new Map<string, IDefinitionByName>()
   const operations: Array<DefinitionNode> = []
 
   for (const {
@@ -254,6 +272,8 @@ operations: Array<DefinitionNode>} => {
       addError(
         ...errors.map(error => {
           const location = {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
           }
           return errorParser({ message: error.message, filePath, location })
@@ -261,6 +281,8 @@ operations: Array<DefinitionNode>} => {
       )
 
       store.dispatch(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         actions.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -270,6 +292,8 @@ operations: Array<DefinitionNode>} => {
     }
 
     doc.definitions.forEach((def: DefinitionNode) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       const name = def.name.value
       let printedAst: null | string = null
       if (def.kind === Kind.OPERATION_DEFINITION) {
@@ -281,6 +305,8 @@ operations: Array<DefinitionNode>} => {
           const otherDef = definitionsByName.get(name)
           // If it's not an accidental duplicate fragment, but is a different
           // one - we report an error
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           if (printedAst !== otherDef.printedAst) {
             addError(
               duplicateFragmentError({
@@ -323,25 +349,36 @@ operations: Array<DefinitionNode>} => {
   }
 }
 
-//done
 const processDefinitions = ({
   schema,
   operations,
   definitionsByName,
   addError,
-  parentSpan,
-}: {schema: GraphQLSchema, operations: Array<DefinitionNode>, definitionsByName: Map<string, DefinitionByName>, addError: any, parentSpan?: Span}): Map<string, Query> => {
-  const processedQueries = new Map<string, Query>()
+}: {
+  schema: GraphQLSchema
+  operations: Array<DefinitionNode>
+  definitionsByName: Map<string, IDefinitionByName>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addError: any
+  parentSpan?: Span
+}): Map<string, IQuery> => {
+  const processedQueries = new Map<string, IQuery>()
 
   const fragmentsUsedByFragment = new Map<string, Set<string>>()
 
   const fragmentNames = Array.from(definitionsByName.entries())
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([_, def]) => def.isFragment)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .map(([name, _]) => name)
 
   for (const operation of operations) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     const name = operation.name.value
-    const originalDefinition = definitionsByName.get(name) as DefinitionByName
+    const originalDefinition = definitionsByName.get(name) as IDefinitionByName
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     const filePath = definitionsByName.get(name).filePath
     if (processedQueries.has(filePath)) {
       const otherQuery = processedQueries.get(filePath)
@@ -350,11 +387,15 @@ const processDefinitions = ({
         multipleRootQueriesError(
           filePath,
           originalDefinition.def,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           otherQuery && definitionsByName.get(otherQuery.name).def
         )
       )
 
       store.dispatch(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         actions.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -362,11 +403,10 @@ const processDefinitions = ({
       continue
     }
 
-
-
     const {
       usedFragments,
       missingFragments,
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
     } = determineUsedFragmentsForDefinition(
       originalDefinition,
       definitionsByName,
@@ -376,6 +416,8 @@ const processDefinitions = ({
     if (missingFragments.length > 0) {
       for (const { filePath, definition, node } of missingFragments) {
         store.dispatch(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
           })
@@ -395,6 +437,8 @@ const processDefinitions = ({
     let document = {
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         .map(name => definitionsByName.get(name).def)
         .concat([operation]),
     }
@@ -409,13 +453,19 @@ const processDefinitions = ({
 
         const filePath = originalDefinition.filePath
         store.dispatch(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
             error: formattedMessage,
           })
         )
         const location = locInGraphQlToLocInFile(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           originalDefinition.templateLoc,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           error.locations[0]
         )
         addError(
@@ -432,9 +482,10 @@ const processDefinitions = ({
       continue
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document = addExtraFields(document, schema)
 
-    const query: Query = {
+    const query = {
       name,
       text: print(document),
       originalText: originalDefinition.text,
@@ -442,14 +493,13 @@ const processDefinitions = ({
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
       hash: originalDefinition.hash,
-    }
-
-    if (query.isStaticQuery) {
-      query.id =
-        `sq--` +
-        _.kebabCase(
-          `${path.relative(store.getState().program.directory, filePath)}`
-        )
+      ...(originalDefinition.isStaticQuery && {
+        id:
+          `sq--` +
+          _.kebabCase(
+            `${path.relative(store.getState().program.directory, filePath)}`
+          ),
+      }),
     }
 
     if (
@@ -463,26 +513,36 @@ const processDefinitions = ({
       )
     }
 
-    processedQueries.set(filePath, query)
+    processedQueries.set(filePath, query as IQuery)
   }
 
   return processedQueries
 }
 
-//done
 const determineUsedFragmentsForDefinition = (
-  definition: DefinitionByName,
-  definitionsByName: Map<string, DefinitionByName>,
+  definition: IDefinitionByName,
+  definitionsByName: Map<string, IDefinitionByName>,
   fragmentsUsedByFragment: Map<string, Set<string>>,
   traversalPath: Array<string> = []
-): {usedFragments: Set<string>; missingFragments: Array<{filePath: string, definition: DefinitionByName, node: FragmentSpreadNode}>} => {
+): {
+  usedFragments: Set<string>
+  missingFragments: Array<{
+    filePath: string
+    definition: IDefinitionByName
+    node: FragmentSpreadNode
+  }>
+} => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
   if (cachedUsedFragments) {
     return { usedFragments: cachedUsedFragments, missingFragments: [] }
   } else {
     const usedFragments = new Set<string>()
-    const missingFragments: Array<{filePath: string, definition: DefinitionByName, node: FragmentSpreadNode}> = []
+    const missingFragments: Array<{
+      filePath: string
+      definition: IDefinitionByName
+      node: FragmentSpreadNode
+    }> = []
     visit(def, {
       [Kind.FRAGMENT_SPREAD]: (node: FragmentSpreadNode) => {
         const name = node.name.value
@@ -531,19 +591,21 @@ const determineUsedFragmentsForDefinition = (
  *   `id` field to all object/interface types having an id
  * TODO: Remove this in v3.0 as it is a legacy from Relay compiler
  */
-//done
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const addExtraFields = (document: DocumentNode, schema: GraphQLSchema): any => {
   const typeInfo = new TypeInfo(schema)
   const contextStack = []
 
   const transformer = visitWithTypeInfo(typeInfo, {
     enter: {
-      [Kind.SELECTION_SET]: node => {
+      [Kind.SELECTION_SET]: (): void => {
         // Entering selection set:
         //   selection sets can be nested, so keeping their metadata stacked
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         contextStack.push({ hasTypename: false })
       },
-      [Kind.FIELD]: node => {
+      [Kind.FIELD]: (node): void => {
         // Entering a field of the current selection-set:
         //   mark which fields already exist in this selection set to avoid duplicates
         const context = contextStack[contextStack.length - 1]
@@ -551,21 +613,30 @@ const addExtraFields = (document: DocumentNode, schema: GraphQLSchema): any => {
           node.name.value === `__typename` ||
           node?.alias?.value === `__typename`
         ) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           context.hasTypename = true
         }
       },
     },
     leave: {
-      [Kind.SELECTION_SET]: node => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      [Kind.SELECTION_SET]: (node): any => {
         // Modify the selection-set AST on leave (add extra fields unless they already exist)
         const context = contextStack.pop()
         const parentType = typeInfo.getParentType()
         const extraFields = []
 
         // Adding __typename to unions and interfaces (if required)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         if (!context.hasTypename && isAbstractType(parentType)) {
           extraFields.push({
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             kind: Kind.FIELD,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             name: { kind: Kind.NAME, value: `__typename` },
           })
         }
