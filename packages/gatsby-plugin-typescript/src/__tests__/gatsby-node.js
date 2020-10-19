@@ -92,7 +92,7 @@ describe(`gatsby-plugin-typescript`, () => {
 
     it(`should validate the schema`, () => {
       const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: true,
+        isTSX: false,
         jsxPragma: `ReactFunction`,
         allExtensions: false,
       })
