@@ -88,7 +88,8 @@ export const parseError = function (err, directory): IParsedError {
   try {
     code = fs.readFileSync(filename, `utf-8`)
   } catch (e) {
-    report.error(`Couldn't read the file ${filename}`, e, err)
+    console.log(`original error`, err)
+    report.error(`Couldn't read the file ${filename}`, e)
   }
   const line = position.line
   const row = position.row
