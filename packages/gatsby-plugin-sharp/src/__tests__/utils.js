@@ -7,7 +7,7 @@ const {
 const reporter = require(`gatsby-cli/lib/reporter`)
 const progress = require(`progress`)
 
-describe.skip(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
+describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
   beforeEach(() => {
     progress.mockClear()
   })
@@ -259,21 +259,21 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     expect(sizes).toEqual(expect.not.arrayContaining([1250, 1500]))
   })
 
-  it(`should also include sizes from srcSetBreakpoints when outputPixelDensities are also passed in`, () => {
-    // global.console = { warn: jest.fn(), log: jest.fn() }
-    const srcSetBreakpoints = [400, 800]
+  it(`should only uses sizes from srcSetBreakpoints when outputPixelDensities are also passed in`, () => {
+    jest.spyOn(global.console, `warn`)
+    const srcSetBreakpoints = [400, 800] // should find these
     const maxWidth = 500
     const args = {
       layout: `fluid`,
       maxWidth,
-      outputPixelDensities: [1, 2, 4],
+      outputPixelDensities: [2, 4], // and ignore these, ie [1000, 2000]
       srcSetBreakpoints,
       file,
       imgDimensions,
     }
 
     const sizes = calculateImageSizes(args)
-    expect(sizes).toEqual(expect.arrayContaining([400, 500, 800, 1000]))
-    // expect(console.warn).toBeCalled()
+    expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
+    expect(console.warn).toBeCalled()
   })
 })
