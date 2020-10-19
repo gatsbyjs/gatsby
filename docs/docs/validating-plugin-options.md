@@ -2,11 +2,13 @@
 title: Validating plugin options
 ---
 
-In order to make [plugin configuration](/docs/configuring-usage-with-plugin-options/) easier for users, plugins can optionally define a [Joi](https://joi.dev) schema to enforce data types for each option using the [`pluginOptionsSchema` API](/docs/node-apis/#pluginOptionsSchema) in `gatsby-node.js`. When users of the plugin pass configuration options, Gatsby will validate that the options match the schema.
+To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, they can optionally define a schema to enforce data types for each option. When users of the plugin pass configuration options, Gatsby will validate that the options match the schema.
 
 ## How to define an options schema
 
-Consider the following `gatsby-config` with a plugin called `gatsby-plugin-console-log`:
+To define their options schema, plugins export a [`pluginOptionsSchema`](/docs/node-apis/#pluginOptionsSchema) from the `gatsby-node.js`. This function gets passed an instance of [Joi](https://joi.dev) to define the schema with.
+
+For example, consider the following plugin called `gatsby-plugin-console-log`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -19,7 +21,7 @@ module.exports = {
 }
 ```
 
-`gatsby-plugin-console-log` can ensure users pass a boolean to `optionA` and `optionB`, and a string to `message` with this `pluginOptionsSchema`:
+`gatsby-plugin-console-log` can ensure users have to pass a boolean to `optionA` and a string to `message`, as well as optionally pass a boolean to `optionB`, with this `pluginOptionsSchema`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
@@ -31,11 +33,11 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 }
 ```
 
-If users pass options that do not match the schema, the validation will show an error when they run `gatsby develop`.
+If users pass options that do not match the schema, the validation will show an error when they run `gatsby develop` and prompt them to fix thier configuration.
 
 ## Unit testing an options schema
 
-In order to verify that a `pluginOptionsSchema` behaves as expected, we recommend that you unit test it with various configurations using the `gatsby-plugin-utils` package.
+To verify that a `pluginOptionsSchema` behaves as expected, we recommend unit testing it with different configurations using the [`gatsby-plugin-utils` package](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#testpluginoptionsschema).
 
 1. Add the `gatsby-plugin-utils` package to your site:
 
@@ -62,7 +64,10 @@ In order to verify that a `pluginOptionsSchema` behaves as expected, we recommen
        message: 123, // Should be a string
        optionB: `not a boolean`, // Should be a boolean
      }
-     const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, options)
+     const { isValid, errors } = testPluginOptionsSchema(
+       pluginOptionsSchema,
+       options
+     )
 
      expect(isValid).toBe(false)
      expect(errors).toEqual([
@@ -74,20 +79,23 @@ In order to verify that a `pluginOptionsSchema` behaves as expected, we recommen
 
    it(`should validate correct options`, () => {
      const options = {
-       optionA: ,
+       optionA: false,
        message: "string",
        optionB: true,
      }
-     const { isValid, errors } = testPluginOptionsSchema(pluginOptionsSchema, options)
+     const { isValid, errors } = testPluginOptionsSchema(
+       pluginOptionsSchema,
+       options
+     )
 
      expect(isValid).toBe(true)
      expect(errors).toEqual([])
    })
    ```
 
-## Joi tips
+## Joi recipes
 
-While working on a `pluginOptionsSchema`, it is helpful to refer to the [Joi API documentation](https://joi.dev/api/) for all the available types and methods. Apart from that, here are some tips and hidden features that we recommend you use for the best experience for your plugin users.
+We recommending opening the [Joi API documentation](https://joi.dev/api/) while working on a `pluginOptionsSchema` to see all the available types and methods.
 
 ### Setting default options
 
