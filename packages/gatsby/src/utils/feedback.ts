@@ -19,6 +19,9 @@ export function setFeedbackDisabledValue(enabled: boolean): void {
 // Print the feedback request to the user
 export function showFeedbackRequest(): void {
   getConfigStore().set(lastDateKey, Date.now())
+  trackCli(`SHOW_FEEDBACK_LINK`, {
+    name: `https://gatsby.dev/feedback`,
+  })
   report.log(
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
