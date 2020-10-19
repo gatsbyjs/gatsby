@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.31...gatsby-recipes@0.2.32) (2020-10-19)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Added isLocal prop to wordpress recipe ([#27523](https://github.com/gatsbyjs/gatsby/issues/27523)) ([10d3451](https://github.com/gatsbyjs/gatsby/commit/10d345111d37f6c4ef1cfd896d050f8dfdd2d349))
+
 ## [0.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.30...gatsby-recipes@0.2.31) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-recipes
