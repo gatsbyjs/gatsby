@@ -52,9 +52,9 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
           .default(false),
       })
       .external(({ isTSX, allExtensions }) => {
-        if (isTSX !== allExtensions) {
+        if (isTSX && !allExtensions) {
           throw new Error(
-            `Invalid plugin options for "gatsby-plugin-typescript": "isTSX" and "allExtensions" must match.`
+            `Invalid plugin options for "gatsby-plugin-typescript": "isTSX" is true requires "allExtensions" to be true.`
           )
         }
       })

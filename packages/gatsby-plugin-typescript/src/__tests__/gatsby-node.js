@@ -107,7 +107,9 @@ describe(`gatsby-plugin-typescript`, () => {
         allExtensions: false,
       })
 
-      expect(errors).toEqual(`"isTSX" and "allExtensions" must match`)
+      expect(errors).toEqual(
+        `"isTSX" is true requires "allExtensions" to be true`
+      )
     })
   })
 })
