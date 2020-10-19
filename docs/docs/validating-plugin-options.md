@@ -108,7 +108,7 @@ Here are some specific Joi best practices for `pluginOptionsSchema`s:
 - [Add descriptions](#add-descriptions)
 - [Set default options](#set-default-options)
 - [Validate external access](#validate-external-access) where necessary
-- Add custom error messages where useful
+- [Add custom error messages](#add-custom-error-messages) where useful
 - Deprecate options rather than removing them
 
 ### Add descriptions
@@ -170,9 +170,31 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 }
 ```
 
-### Using custom error messages
+### Add custom error messages
 
-TK `.messages()`
+Sometimes you might want to provide more detailed error messages than the default "optionA is required". Joi provides a [`.messages()` method](https://github.com/sideway/joi/issues/2109) which lets you override error messages for specific error types.
+
+For example:
+
+```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
+exports.pluginOptionsSchema = ({ Joi }) => {
+  return Joi.object({
+    optionA: Joi.boolean()
+      .required()
+      .description(`Enables optionA.`)
+      // highlight-start
+      .messages({
+        // Override the error message if the .required() call fails
+        "any.required": `"optionA" needs to be specified to true or false. Get the correct value from your dashboard settings.`,
+      }),
+    // highlight-end
+    message: Joi.string()
+      .default(`default message`)
+      .description(`The message logged to the console.`),
+    optionB: Joi.boolean().description(`Enables optionB.`),
+  })
+}
+```
 
 ### Deprecating options
 
