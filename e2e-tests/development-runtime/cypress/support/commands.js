@@ -24,7 +24,7 @@ Cypress.Commands.add(`lifecycleCallOrder`, expectedActionCallOrder =>
     if (expectedActionCallOrderLength > actionsLength) {
       return false
     }
-    
+
     let prevActionIndex = -1
     for (let i = 0; i < actionsLength; i += 1) {
       const nextActionIndex = prevActionIndex + 1
@@ -81,6 +81,29 @@ Cypress.Commands.add(
   }
 )
 
-Cypress.Commands.add(`assertRoute`, (route) => {
+Cypress.Commands.add(`assertRoute`, route => {
   cy.url().should(`equal`, `${window.location.origin}${route}`)
+})
+
+// react-error-overlay is iframe, so this is just convenience helper
+// https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/#custom-command
+Cypress.Commands.add(`getOverlayIframe`, () => {
+  // get the iframe > document > body
+  // and retry until the body element is not empty
+  return (
+    cy
+      .get(`iframe`, { log: true, timeout: 150000 })
+      .its(`0.contentDocument.body`)
+      .should(`not.be.empty`)
+      // wraps "body" DOM element to allow
+      // chaining more Cypress commands, like ".find(...)"
+      // https://on.cypress.io/wrap
+      .then(cy.wrap, { log: true })
+  )
+})
+
+Cypress.Commands.add(`assertNoOverlayIframe`, () => {
+  // get the iframe > document > body
+  // and retry until the body element is not empty
+  return cy.get(`iframe`, { log: true, timeout: 15000 }).should(`not.exist`)
 })

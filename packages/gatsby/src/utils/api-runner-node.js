@@ -527,8 +527,27 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         return null
       }
 
+      let gatsbyNode = pluginNodeCache.get(plugin.name)
+      if (!gatsbyNode) {
+        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+        pluginNodeCache.set(plugin.name, gatsbyNode)
+      }
+
       const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
+
+      // TODO: rethink createNode API to handle this better
+      if (
+        api === `onCreateNode` &&
+        gatsbyNode?.unstable_shouldOnCreateNode && // Don't bail if this api is not exported
+        !gatsbyNode.unstable_shouldOnCreateNode(
+          { node: args.node },
+          plugin.pluginOptions
+        )
+      ) {
+        // Do not try to schedule an async event for this node for this plugin
+        return null
+      }
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))

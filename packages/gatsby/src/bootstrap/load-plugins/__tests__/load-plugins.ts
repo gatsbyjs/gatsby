@@ -120,20 +120,7 @@ describe(`Load plugins`, () => {
       expect(plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            browserAPIs: [],
-            id: ``,
             name: `gatsby-plugin-typescript`,
-            nodeAPIs: [
-              `resolvableExtensions`,
-              `onCreateBabelConfig`,
-              `onCreateWebpackConfig`,
-            ],
-            pluginOptions: {
-              plugins: [],
-            },
-            resolve: ``,
-            ssrAPIs: [],
-            version: `1.0.0`,
           }),
         ])
       )
@@ -162,13 +149,16 @@ describe(`Load plugins`, () => {
             id: ``,
             name: `gatsby-plugin-typescript`,
             nodeAPIs: [
+              `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
               `onCreateWebpackConfig`,
             ],
             pluginOptions: {
-              plugins: [],
+              allExtensions: false,
+              isTSX: true,
               jsxPragma: `h`,
+              plugins: [],
             },
             resolve: ``,
             ssrAPIs: [],
@@ -287,6 +277,35 @@ describe(`Load plugins`, () => {
         ]
       `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)
+    })
+
+    it(`defaults plugin options to the ones defined in the schema`, async () => {
+      let plugins = await loadPlugins({
+        plugins: [
+          {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+              trackingId: `fake`,
+            },
+          },
+        ],
+      })
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(
+        plugins.find(plugin => plugin.name === `gatsby-plugin-google-analytics`)
+          .pluginOptions
+      ).toEqual({
+        // All the options that have defaults are defined
+        anonymize: false,
+        exclude: [],
+        head: false,
+        pageTransitionDelay: 0,
+        plugins: [],
+        respectDNT: false,
+        trackingId: `fake`,
+      })
     })
   })
 })
