@@ -17,7 +17,7 @@ This guide assumes the following:
 - You have an active GraphCMS account
 - You've created a new GraphCMS project (preferably using the `Blog Starter` template)
 
-All schema and data references in this guide are from the `Blog Starter` template.
+All schema and data references in this guide are from the GraphCMS `Blog Starter` template.
 
 ### Create a new Gatsby site
 
