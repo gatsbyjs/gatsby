@@ -160,5 +160,7 @@ export const buildHTML = async ({
 }): Promise<void> => {
   const rendererPath = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool)
-  await deleteRenderer(rendererPath)
+  if (stage !== `develop-html`) {
+    await deleteRenderer(rendererPath)
+  }
 }
