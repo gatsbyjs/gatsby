@@ -83,7 +83,12 @@ export const parseError = function (err, directory): IParsedError {
     ...position.filename.split(path.sep).slice(2)
   )
 
-  const code = fs.readFileSync(filename, `utf-8`)
+  let code
+  try {
+    code = fs.readFileSync(filename, `utf-8`)
+  } catch (e) {
+    report.error(`Couldn't read the file ${filename}`, e, err)
+  }
   const line = position.line
   const row = position.row
   ansiHTML.setColors({
