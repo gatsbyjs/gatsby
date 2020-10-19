@@ -31,7 +31,7 @@ export function showSevenDayFeedbackRequest(): void {
     name: `https://gatsby.dev/feedback-survey`,
   })
   report.log(
-    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
+    `\n\nHi there! Will you tell us about how you're learning Gatsby? \nIt takes less than 5 minutes and your feedback will help us make installing and using Gatsby so much better.`
   )
   report.log(
     `\nGive us your feedback here: https://gatsby.dev/feedback-survey\n\n`
