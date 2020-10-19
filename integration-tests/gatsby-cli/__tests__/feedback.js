@@ -3,7 +3,7 @@ import { GatsbyCLI } from "../test-helpers"
 const MAX_TIMEOUT = 2147483647
 jest.setTimeout(MAX_TIMEOUT)
 
-jest.mock('gatsby-core-utils', () => ({ isCi: () => false }))
+jest.mock('gatsby-core-utils', () => ({ isCI: () => false }))
 
 describe(`gatsby feedback`, () => {
   it(`Prints a note to give feedback`, () => {
