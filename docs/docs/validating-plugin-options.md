@@ -2,7 +2,7 @@
 title: Validating plugin options
 ---
 
-To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, they can optionally define a schema to enforce data types for each option. When users of the plugin pass configuration options, Gatsby will validate that the options match the schema.
+To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, a plugin can optionally define a schema to enforce a type for each option. When users of the plugin pass configuration options, Gatsby will validate that the options match the schema.
 
 ## How to define an options schema
 
@@ -26,9 +26,11 @@ module.exports = {
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
-    optionA: Joi.boolean().required(),
-    message: Joi.string().required(),
-    optionB: Joi.boolean(),
+    optionA: Joi.boolean().required().description(`Enables optionA.`),
+    message: Joi.string()
+      .required()
+      .description(`The message logged to the console.`),
+    optionB: Joi.boolean().description(`Enables optionB.`),
   })
 }
 ```
@@ -37,7 +39,7 @@ If users pass options that do not match the schema, the validation will show an 
 
 ## Unit testing an options schema
 
-To verify that a `pluginOptionsSchema` behaves as expected, we recommend unit testing it with different configurations using the [`gatsby-plugin-utils` package](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#testpluginoptionsschema).
+To verify that a `pluginOptionsSchema` behaves as expected, unit test it with different configurations using the [`gatsby-plugin-utils` package](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#testpluginoptionsschema).
 
 1. Add the `gatsby-plugin-utils` package to your site:
 
@@ -93,9 +95,11 @@ To verify that a `pluginOptionsSchema` behaves as expected, we recommend unit te
    })
    ```
 
-## Joi recipes
+## Joi best practices
 
-We recommending opening the [Joi API documentation](https://joi.dev/api/) while working on a `pluginOptionsSchema` to see all the available types and methods.
+The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema` to see all the available types and methods.
+
+Some specific Joi best practices for `pluginOptionsSchema`s.
 
 ### Setting default options
 
@@ -104,9 +108,11 @@ You can use the `.default()` method to set a default for an option. For example 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
-    optionA: Joi.boolean().required(),
-    message: Joi.string().default(`default message`),
-    optionB: Joi.boolean(),
+    optionA: Joi.boolean().required().description(`Enables optionA.`),
+    message: Joi.string()
+      .default(`default message`) // highlight-line
+      .description(`The message logged to the console.`),
+    optionB: Joi.boolean().description(`Enables optionB.`),
   })
 }
 ```
