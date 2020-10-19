@@ -88,6 +88,20 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
+const checkIgnoredParameters = (layout, parameters) => {
+  const ignoredParams = Object.entries(parameters).filter(([_, value]) =>
+    Boolean(value)
+  )
+  if (ignoredParams.length) {
+    console.warn(
+      `The following provided parameter(s): ${ignoredParams
+        .map(param => param.join(`: `))
+        .join(`, `)} are ignored in ${layout} image layouts.`
+    )
+  }
+  return
+}
+
 const DEFAULT_FLUID_SIZE = 800
 export const calculateImageSizes = ({
   file,
@@ -119,11 +133,9 @@ export const calculateImageSizes = ({
   const densities = Array.from(new Set([1, ...outputPixelDensities])).sort()
 
   if (layout === `fixed`) {
-    // FIXED
-    // if no width is passed, we need to resize the image based on the passed height
-    const fixedDimension = width === undefined ? `height` : `width`
-    const fixedValue = fixedDimension === `height` ? height : width
+    checkIgnoredParameters(`fixed`, { maxWidth, maxHeight })
 
+    // if no width is passed, we need to resize the image based on the passed height
     if (!width) {
       width = height * aspectRatio
     }
@@ -137,6 +149,7 @@ export const calculateImageSizes = ({
     // requested, add back the original so there's at least something)
     if (sizes.length === 0) {
       sizes.push(width)
+      const fixedDimension = width === undefined ? `height` : `width`
       console.warn(`
                      The requested ${fixedDimension} "${
         fixedDimension === `width` ? width : height
@@ -149,17 +162,23 @@ export const calculateImageSizes = ({
                      `)
     }
   } else if (layout === `fluid` || layout === `constrained`) {
-    // FLUID
-    // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
-    const fixedDimension = maxWidth === undefined ? `maxHeight` : `maxWidth`
-    maxWidth = maxWidth
-      ? Math.min(maxWidth, imgDimensions.width)
-      : maxHeight * aspectRatio
-    maxHeight = maxHeight
-      ? Math.min(maxHeight, imgDimensions.height)
-      : DEFAULT_FLUID_SIZE // if all else fails, use this size
+    // warn if ignored parameters are passed in
+    checkIgnoredParameters(`fluid and constrained`, { width, height })
 
-    const fixedValue = fixedDimension === `maxHeight` ? maxHeight : maxWidth
+    // Case 1: maxWidth of maxHeight were passed in, make sure it isn't larger than the actual image
+    maxWidth = Math.min(maxWidth, imgDimensions.width)
+    maxHeight = Math.min(maxHeight, imgDimensions.height)
+
+    // Case 2: neither maxWidth or maxHeight were passed in, use default size
+    if (!maxWidth && !maxHeight) {
+      maxWidth = Math.min(DEFAULT_FLUID_SIZE, imgDimensions.width)
+      maxHeight = maxWidth / aspectRatio
+    }
+
+    // if it still hasn't been found, calculate maxWidth from the derived maxHeight
+    if (!maxWidth) {
+      maxWidth = maxHeight * aspectRatio
+    }
 
     // Create sizes (in width) for the image if no custom breakpoints are
     // provided. If the max width of the container for the rendered markdown file
@@ -171,7 +190,7 @@ export const calculateImageSizes = ({
     // image processing time (Sharp has optimizations thankfully for creating
     // multiple sizes of the same input file)
 
-    sizes = densities.map(density => density * fixedValue)
+    sizes = densities.map(density => density * maxWidth)
     // add breakpoint set to sizes if they are specified
     if (srcSetBreakpoints) {
       srcSetBreakpoints.forEach(breakpoint => sizes.push(breakpoint))
@@ -182,7 +201,7 @@ export const calculateImageSizes = ({
     if (!sizes.includes(maxWidth)) {
       sizes.push(maxWidth)
     }
-    sizes = sizes.sort()
+    sizes = sizes.sort((a, b) => a - b)
   } else {
     console.warn(
       `No valid layout was provided. Valid image layouts are fixed, fluid, and constrained.`
