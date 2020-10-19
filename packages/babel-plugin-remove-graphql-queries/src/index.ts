@@ -269,7 +269,6 @@ export default function ({ types: t }): PluginObj {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               (process.env.NODE_ENV === `test` ||
-                state.opts.stage === `develop` ||
                 state.opts.stage === `develop-html` ||
                 state.opts.stage === `build-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
@@ -313,7 +312,6 @@ export default function ({ types: t }): PluginObj {
           CallExpression(path2: NodePath<CallExpression>): void {
             if (
               (process.env.NODE_ENV === `test` ||
-                state.opts.stage === `develop` ||
                 state.opts.stage === `develop-html` ||
                 state.opts.stage === `build-html`) &&
               isUseStaticQuery(path2)
