@@ -251,7 +251,19 @@ export async function initialize({
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+  const publicDirectory = `${program.directory}/public`
+  const cacheIsCorrupt =
+    fs.existsSync(cacheDirectory) && !fs.existsSync(publicDirectory)
+
+  if (cacheIsCorrupt) {
+    reporter.info(reporter.stripIndent`
+      We've detected that the Gatsby cache is incomplete (the .cache directory exists
+      but the public directory does not). As a precaution, we're deleting your site's
+      cache to ensure there's no stale data.
+    `)
+  }
+
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
       // Attempt to empty dir if remove fails,
       // like when directory is mount point
@@ -286,7 +298,7 @@ export async function initialize({
   await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
+  await fs.ensureDir(`${publicDirectory}/static`)
 
   activity.end()
 
