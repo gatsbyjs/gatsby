@@ -2,11 +2,11 @@
 title: Validating plugin options
 ---
 
-To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, a plugin can optionally define a schema to enforce a type for each option. When users of the plugin pass configuration options, Gatsby will validate that the options match the schema.
+To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, a plugin can optionally define a schema to enforce a type for each option. When users use a plugin, Gatsby will validate that the provided options match the schema.
 
 ## How to define an options schema
 
-To define their options schema, plugins export a [`pluginOptionsSchema`](/docs/node-apis/#pluginOptionsSchema) from the `gatsby-node.js`. This function gets passed an instance of [Joi](https://joi.dev) to define the schema with.
+To define their options schema, plugins export a [`pluginOptionsSchema`](/docs/node-apis/#pluginOptionsSchema) from their `gatsby-node.js`. This function gets passed an instance of [Joi](https://joi.dev) to define the schema with.
 
 For example, consider the following plugin called `gatsby-plugin-console-log`:
 
@@ -39,7 +39,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 }
 ```
 
-If users pass options that do not match the schema, the validation will show an error when they run `gatsby develop` and prompt them to fix thier configuration.
+If users pass options that do not match the schema, the validation will show an error when they run `gatsby develop` and prompt them to fix their configuration.
 
 ## Unit testing an options schema
 
@@ -59,47 +59,49 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
 
 2. Use the `testPluginOptionsSchema` function exported from it in your test file. For example, with [Jest](https://jestjs.io):
 
-   ```javascript:title=plugins/gatsby-plugin-console/__tests__/pluginOptionsSchema.test.js
+   ```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.test.js
    // This is an example using Jest (https://jestjs.io/)
    import { testPluginOptionsSchema } from "gatsby-plugin-utils"
    import { pluginOptionsSchema } from "../gatsby-node"
 
-   it(`should invalidate incorrect options`, () => {
-     const options = {
-       optionA: undefined, // Should be a boolean
-       message: 123, // Should be a string
-       optionB: `not a boolean`, // Should be a boolean
-     }
-     const { isValid, errors } = testPluginOptionsSchema(
-       pluginOptionsSchema,
-       options
-     )
+   describe(`pluginOptionsSchema`, () => {
+     it(`should invalidate incorrect options`, () => {
+       const options = {
+         optionA: undefined, // Should be a boolean
+         message: 123, // Should be a string
+         optionB: `not a boolean`, // Should be a boolean
+       }
+       const { isValid, errors } = testPluginOptionsSchema(
+         pluginOptionsSchema,
+         options
+       )
 
-     expect(isValid).toBe(false)
-     expect(errors).toEqual([
-       `"optionA" is required`,
-       `"message" must be a string`,
-       `"optionB" must be a boolean`,
-     ])
-   })
+       expect(isValid).toBe(false)
+       expect(errors).toEqual([
+         `"optionA" is required`,
+         `"message" must be a string`,
+         `"optionB" must be a boolean`,
+       ])
+     })
 
-   it(`should validate correct options`, () => {
-     const options = {
-       optionA: false,
-       message: "string",
-       optionB: true,
-     }
-     const { isValid, errors } = testPluginOptionsSchema(
-       pluginOptionsSchema,
-       options
-     )
+     it(`should validate correct options`, () => {
+       const options = {
+         optionA: false,
+         message: "string",
+         optionB: true,
+       }
+       const { isValid, errors } = testPluginOptionsSchema(
+         pluginOptionsSchema,
+         options
+       )
 
-     expect(isValid).toBe(true)
-     expect(errors).toEqual([])
+       expect(isValid).toBe(true)
+       expect(errors).toEqual([])
+     })
    })
    ```
 
-## Joi best practices
+## Best practices for option schemas
 
 The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema` as it shows all the available types and methods.
 
@@ -109,7 +111,7 @@ Here are some specific Joi best practices for `pluginOptionsSchema`s:
 - [Set default options](#set-default-options)
 - [Validate external access](#validate-external-access) where necessary
 - [Add custom error messages](#add-custom-error-messages) where useful
-- Deprecate options rather than removing them
+- [Deprecate options](#deprecating-options) in a major version release rather than removing them
 
 ### Add descriptions
 
@@ -117,7 +119,7 @@ Make sure that every option and field has a `.description()` explaining its purp
 
 ### Set default options
 
-You can use the `.default()` method to set a default for an option. For example with `gatsby-plugin-console-log`, this is how it can default the `message` option to "default message" in case users do not pass their own:
+You can use the `.default()` method to default a value for an option. For example with `gatsby-plugin-console-log`, this is how it can default the `message` option to `"default message"` in case users do not pass their own `message`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
@@ -131,7 +133,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 }
 ```
 
-Accessing `pluginOptions.message` would then log `"default message"` in all plugin APIs if users do not supply their own value:
+Accessing `pluginOptions.message` would then log `"default message"` in all plugin APIs if the user does not supply their own value:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.onPreInit = (_, pluginOptions) => {
@@ -143,7 +145,7 @@ exports.onPreInit = (_, pluginOptions) => {
 
 ### Validating external access
 
-Some plugins (particularly source plugins) will query external APIs. With the `.external()` method, they can asynchronously validate that users have access to the API to provide a better experience if they pass invalid secrets.
+Some plugins (particularly source plugins) query external APIs. With the `.external()` method, they can asynchronously validate that users have access to the API to provide a better experience if they pass invalid secrets.
 
 For example, this is how the [Contentful source plugin](/plugins/gatsby-source-contentful/) ensures the user has access to the space they are trying to query:
 
@@ -172,9 +174,9 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 ### Add custom error messages
 
-Sometimes you might want to provide more detailed error messages than the default "optionA is required". Joi provides a [`.messages()` method](https://github.com/sideway/joi/issues/2109) which lets you override error messages for specific error types.
+Sometimes you might want to provide more detailed error messages when validation fails for a specific field. Joi provides a [`.messages()` method](https://github.com/sideway/joi/issues/2109) which lets you override error messages for specific [error types](https://joi.dev/api/?v=17.2.1#list-of-errors).
 
-For example:
+For example, this is how we would provide a custom error message if users do not specify `optionA` for `gatsby-plugin-console-log`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
@@ -198,7 +200,29 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 ### Deprecating options
 
-TK `.forbidden()`
+Rather than removing options from the schema, deprecate them using the [`.forbidden()` method](https://joi.dev/api/?v=17.2.1#anyforbidden) in a major version release. Then, [add a custom error message](#add-custom-error-messages) explaining how users should upgrade the functionality using `.messages()`.
+
+For example:
+
+```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
+  return Joi.object({
+    optionA: Joi.boolean()
+      .required()
+      .description(`Enables optionA.`)
+      // highlight-start
+      .forbidden()
+      .messages({
+        // Override the error message if the .forbidden() call fails
+        "any.unknown": `"optionA" is no longer supported. Use "optionB" instead by setting it to the same value you had before on "optionA".`,
+      }),
+      // highlight-end
+    message: Joi.string()
+      .default(`default message`)
+      .description(`The message logged to the console.`),
+    optionB: Joi.boolean().description(`Enables optionB.`),
+  })
+}
+```
 
 ## Additional resources
 
