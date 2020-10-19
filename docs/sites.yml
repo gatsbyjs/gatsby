@@ -11835,3 +11835,14 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: MKO Mom
+  url: https://mkomom.com/
+  main_url: https://mkomom.com/
+  source_url: https://github.com/chrisotto6/mkomom
+  description: >
+    Mom, parent and life blog for Maddie Otto.
+  categories:
+    - Blog
+  built_by: Chris Otto
+  built_by_url: https://github.com/chrisotto6
+  featured: false
