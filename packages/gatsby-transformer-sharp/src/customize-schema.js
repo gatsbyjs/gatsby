@@ -448,10 +448,9 @@ const imageNodeType = ({
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLInt),
-        defaultValue: [1, 2, 3],
         description: stripIndent`
         A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always a 1x image. 
-        Default is [ 1, 2, 3 ], meaning 1x, 2x, 3x. In this case, an image with a fixed layout and width = 600 would generate images at 600, 1200 and 1800px wide`,
+        Default is [ 1, 2, 3 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2, 3] for fluid. In this case, an image with a fixed layout and width = 600 would generate images at 600, 1200 and 1800px wide`,
       },
       sizes: {
         type: GraphQLString,
