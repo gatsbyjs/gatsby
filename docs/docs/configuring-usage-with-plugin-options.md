@@ -54,24 +54,6 @@ The following table lists possible options values and an example plugin that mak
 
 **Note**: Themes (which are a type of plugin) are able to receive options from a site's `gatsby-config` to be used in its `gatsby-config` in order to allow themes to be composed together. This is done by exporting the `gatsby-config` as a function instead of an object. You can see an example of this in the [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog) and [`gatsby-theme-blog-core`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog-core) repositories. Plugins are not capable of this functionality.
 
-## How to validate options
-
-In order to make configuration easier for users, plugins can optionally define a [Joi](https://joi.dev) schema to enforce data types for each option using the [`pluginOptionsSchema` API](/docs/node-apis/#pluginOptionsSchema) in `gatsby-node.js`. When users of the plugin pass in configuration options, Gatsby will validate that the options match the schema.
-
-For example, here is what the schema for `gatsby-plugin-console-log` looks like:
-
-```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
-exports.pluginOptionsSchema = ({ Joi }) => {
-  return Joi.object({
-    optionA: Joi.boolean().required(),
-    message: Joi.string().required().default(`default message`),
-    optionB: Joi.boolean(),
-  })
-}
-```
-
-This ensures users pass a boolean to `optionA` and `optionB`, and a string to `message`. If they pass options that do not match the schema, the validation will show an error when they run `gatsby develop`. It also defaults the `message` option to "default message" in case users do not pass their own.
-
 ## Additional resources
 
 - [Example Gatsby site using plugin options with a local plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-plugin-options)

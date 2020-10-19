@@ -297,6 +297,8 @@
                   link: /docs/creating-a-transformer-plugin/
                 - title: Configuring Usage with Plugin Options
                   link: /docs/configuring-usage-with-plugin-options/
+                - title: Validating plugin options
+                  link: /docs/validating-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Maintaining a Plugin
