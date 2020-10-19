@@ -42,7 +42,7 @@ In your plugin's `gatsby-node.js` file, you can access the `cache` argument like
 ```js:title=gatsby-node.js
 exports.onPostBuild = async function ({ cache, graphql }, { query }) {
   const cacheKey = "some-key-name"
-  const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000; // 86400000
+  const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
   let obj = await cache.get(cacheKey)
 
   if (!obj) {
