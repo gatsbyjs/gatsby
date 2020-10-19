@@ -48,15 +48,20 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
+function unstable_shouldOnCreateNode({ node }) {
+  return node.internal.type === `MarkdownRemark`
+}
+
+function onCreateNode({ node, actions, getNode }) {
   const { createNodeField } = actions
 
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
-  }
+  const value = createFilePath({ node, getNode })
+  createNodeField({
+    name: `slug`,
+    node,
+    value,
+  })
 }
+
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.onCreateNode = onCreateNode

@@ -1,18 +1,20 @@
 const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
 
+exports.unstable_shouldOnCreateNode = function ({ node }) {
+  return node.internal.type === "Mdx"
+}
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === "Mdx") {
-    const value = createFilePath({ node, getNode })
+  const value = createFilePath({ node, getNode })
 
-    createNodeField({
-      name: "path",
-      node,
-      value,
-    })
-  }
+  createNodeField({
+    name: "path",
+    node,
+    value,
+  })
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
