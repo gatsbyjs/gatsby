@@ -53,6 +53,7 @@ export const ERROR_MAP = {
     text: (context): string => `PageCreator: ${context.sourceMessage}`,
     level: `ERROR`,
     type: `PLUGIN`,
+    category: `SYSTEM`,
   },
   [CODES.RequiredPath]: {
     text: (context): string => `PageCreator: ${context.sourceMessage}`,
