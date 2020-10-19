@@ -56,7 +56,7 @@ export async function createPagesFromCollectionBuilder(
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     reporter.error({
-      id: prefixId(CODES.CollectionBuilder, reporter),
+      id: prefixId(CODES.CollectionBuilder),
       context: {
         sourceMessage: `Tried to create pages from the collection builder.
 Unfortunately, the query came back empty. There may be an error in your query:

@@ -42,7 +42,7 @@ export function derivePath(
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
       reporter.error({
-        id: prefixId(CODES.GeneratePath, reporter),
+        id: prefixId(CODES.GeneratePath),
         context: {
           sourceMessage: `Could not find value in the following node for key ${slugPart} (transformed to ${key})`,
         },

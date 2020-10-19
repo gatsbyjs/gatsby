@@ -13,8 +13,8 @@ export const CODES = {
 
 export const pluginPrefix = `gatsby-plugin-page-creator`
 
-export function prefixId(id: string, reporter: Reporter): string {
-  return reporter.setErrorMap ? id : `${pluginPrefix}_${id}`
+export function prefixId(id: string): string {
+  return `${pluginPrefix}_${id}`
 }
 
 // TODO: Refactor to use contextual data instead of only context.sourceMessage

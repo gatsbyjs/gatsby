@@ -30,7 +30,7 @@ export function isValidCollectionPathImplementation(
       assert(closer, `}`)
     } catch (e) {
       reporter.panicOnBuild({
-        id: prefixId(CODES.CollectionPath, reporter),
+        id: prefixId(CODES.CollectionPath),
         context: {
           sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`,
         },
