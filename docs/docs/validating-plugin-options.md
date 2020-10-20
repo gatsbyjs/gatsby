@@ -59,7 +59,7 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
 
 2. Use the `testPluginOptionsSchema` function exported from it in your test file. For example, with [Jest](https://jestjs.io):
 
-   ```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.test.js
+   ```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.js
    // This is an example using Jest (https://jestjs.io/)
    import { testPluginOptionsSchema } from "gatsby-plugin-utils"
    import { pluginOptionsSchema } from "../gatsby-node"
