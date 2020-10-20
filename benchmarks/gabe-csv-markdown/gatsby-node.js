@@ -42,21 +42,22 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
+exports.unstable_shouldOnCreateNode = ({ node }) =>
+  node.internal.type === `GendataCsv`
+
 // Not sure if there is a better way than to create a proxy node for markdown to pick up
 // I certainly can't get remark to to pick up csv nodes :(
 exports.onCreateNode = ({ node, actions }) => {
   const { createNode } = actions
 
-  if (node.internal.type === `GendataCsv`) {
-    createNode({
-      id: `${node.id}-MarkdownProxy`,
-      parent: node.id,
-      internal: {
-        type: `MarkdownProxy`,
-        mediaType: "text/markdown",
-        content: node.articleContent,
-        contentDigest: node.articleContent,
-      },
-    })
-  }
+  createNode({
+    id: `${node.id}-MarkdownProxy`,
+    parent: node.id,
+    internal: {
+      type: `MarkdownProxy`,
+      mediaType: "text/markdown",
+      content: node.articleContent,
+      contentDigest: node.articleContent,
+    },
+  })
 }
