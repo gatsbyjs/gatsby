@@ -182,7 +182,7 @@ export function fixedImageSizes({
 
   sizes = densities
     .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
-    .map(density => density * width)
+    .map(density => Math.round(density * width))
     .filter(size => size <= imgDimensions.width)
 
   // If there's no fixed images after filtering (e.g. image is smaller than what's
@@ -240,7 +240,6 @@ export function fluidImageSizes({
       height: maxHeight,
       fit,
     })
-    console.log({ calculated })
     maxWidth = calculated.width
     maxHeight = calculated.height
     aspectRatio = calculated.aspectRatio
@@ -261,6 +260,8 @@ export function fluidImageSizes({
     maxWidth = maxHeight * aspectRatio
   }
 
+  maxWidth = Math.round(maxWidth)
+
   // Create sizes (in width) for the image if no custom breakpoints are
   // provided. If the max width of the container for the rendered markdown file
   // is 800px, the sizes would then be: 200, 400, 800, 1600 if using
@@ -272,13 +273,8 @@ export function fluidImageSizes({
   // multiple sizes of the same input file)
   if (srcSetBreakpoints) {
     sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
-    if (outputPixelDensities) {
-      reporter.warn(
-        `outputPixelDensities of ${outputPixelDensities} were passed into the image at ${file.absolutePath} with srcSetBreakpoints, srcSetBreakpoints will override the effect of outputPixelDensities`
-      )
-    }
   } else {
-    sizes = densities.map(density => density * maxWidth)
+    sizes = densities.map(density => Math.round(density * maxWidth))
     sizes = sizes.filter(size => size <= imgDimensions.width)
   }
 
@@ -296,6 +292,9 @@ export function fluidImageSizes({
 }
 
 export const getSizes = width => `(max-width: ${width}px) 100vw, ${width}px`
+
+export const getSrcSet = images =>
+  images.map(image => `${image.src} ${image.width}w`).join(`\n`)
 
 export function getDimensionsAndAspectRatio(dimensions, options) {
   // Calculate the eventual width/height of the image.
