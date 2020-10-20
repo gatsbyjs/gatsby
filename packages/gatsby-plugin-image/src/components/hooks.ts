@@ -8,8 +8,11 @@ import {
   SetStateAction,
   Dispatch,
 } from "react"
+import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
+import { Layout } from "../utils"
+import { ISharpGatsbyImageData } from "./gatsby-image.browser"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -27,10 +30,22 @@ export function hasImageLoaded(cacheKey: string): boolean {
   return imageCache.has(cacheKey)
 }
 
+export type FileNode = Node & {
+  childImageSharp?: Node & {
+    gatsbyImage?: Node & {
+      imageData: ISharpGatsbyImageData
+    }
+  }
+}
+
+export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
+  file?.childImageSharp?.gatsbyImage?.imageData
+
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: "intrinsic" | "responsive" | "fixed"
+  layout: Layout,
+  backgroundColor?: string
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
@@ -41,8 +56,12 @@ export function getWrapperProps(
     wrapperStyle.height = height
   }
 
-  if (layout === `intrinsic`) {
+  if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
+  }
+
+  if (backgroundColor && typeof backgroundColor === `string`) {
+    wrapperStyle.backgroundColor = backgroundColor
   }
 
   return {

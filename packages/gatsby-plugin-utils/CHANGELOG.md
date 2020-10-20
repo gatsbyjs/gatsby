@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.34...gatsby-plugin-utils@0.2.35) (2020-10-19)
+
+### Features
+
+- **gatsby-plugin-utils:** save validation resulting value to plugin options ([#27381](https://github.com/gatsbyjs/gatsby/issues/27381)) ([0073fb1](https://github.com/gatsbyjs/gatsby/commit/0073fb167e7ccddefbff8872b5b9bd488660804d))
+
+## [0.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.33...gatsby-plugin-utils@0.2.34) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [0.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.32...gatsby-plugin-utils@0.2.33) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [0.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.31...gatsby-plugin-utils@0.2.32) (2020-10-15)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
 ## [0.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.30...gatsby-plugin-utils@0.2.31) (2020-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-utils

@@ -1,7 +1,14 @@
 const grayMatter = require(`gray-matter`)
 const _ = require(`lodash`)
 
-module.exports = async function onCreateNode(
+function unstable_shouldOnCreateNode({ node }) {
+  return (
+    node.internal.mediaType === `text/markdown` ||
+    node.internal.mediaType === `text/x-markdown`
+  )
+}
+
+module.exports.onCreateNode = async function onCreateNode(
   {
     node,
     loadNodeContent,
@@ -15,10 +22,7 @@ module.exports = async function onCreateNode(
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
-  if (
-    node.internal.mediaType !== `text/markdown` &&
-    node.internal.mediaType !== `text/x-markdown`
-  ) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return {}
   }
 
@@ -76,3 +80,5 @@ module.exports = async function onCreateNode(
     return {} // eslint
   }
 }
+
+module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode

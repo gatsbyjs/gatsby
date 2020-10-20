@@ -13,8 +13,6 @@ import {
 import { ReactElement } from "react"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
-  width: number
-  height: number
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
   toggleIsLoaded: Function
@@ -23,11 +21,7 @@ type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
 
 export function lazyHydrate(
   {
-    layout = `fixed`,
-    width,
-    height,
-    placeholder,
-    images,
+    image,
     loading,
     isLoading,
     isLoaded,
@@ -38,6 +32,8 @@ export function lazyHydrate(
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>
 ): (() => void) | null {
+  const { width, height, layout, images, placeholder } = image
+
   if (!root.current) {
     return null
   }

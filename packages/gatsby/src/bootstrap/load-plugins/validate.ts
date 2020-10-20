@@ -198,16 +198,23 @@ export async function validatePluginOptions({
           }
 
           try {
-            // All plugins have "plugins: []"" added to their options in load.ts, even if they
-            // do not have subplugins. We add plugins to the schema if it does not exist already
-            // to make sure they pass validation.
+            if (typeof plugin.pluginOptions === `undefined`) {
+              return null
+            }
+
             if (!optionsSchema.describe().keys.plugins) {
+              // All plugins have "plugins: []"" added to their options in load.ts, even if they
+              // do not have subplugins. We add plugins to the schema if it does not exist already
+              // to make sure they pass validation.
               optionsSchema = optionsSchema.append({
                 plugins: Joi.array().length(0),
               })
             }
 
-            await validateOptionsSchema(optionsSchema, plugin.pluginOptions)
+            plugin.pluginOptions = await validateOptionsSchema(
+              optionsSchema,
+              plugin.pluginOptions
+            )
           } catch (error) {
             if (error instanceof Joi.ValidationError) {
               reporter.error({

@@ -15,7 +15,7 @@ const {
   fluid,
   fixed,
   traceSVG,
-  gatsbyImageProps,
+  generateImageData,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
@@ -389,7 +389,7 @@ const imageNodeType = ({
     type: new GraphQLObjectType({
       name: `ImageSharpGatsbyImage`,
       fields: {
-        componentProps: {
+        imageData: {
           type: new GraphQLNonNull(GraphQLJSON),
         },
       },
@@ -401,8 +401,8 @@ const imageNodeType = ({
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
-        RESPONSIVE: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
-        INTRINSIC: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+        FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
         `,
       },
       maxWidth: {
@@ -410,7 +410,7 @@ const imageNodeType = ({
         description: stripIndent`
         Maximum display width of generated files. 
         The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-        This only applies when layout = RESPONSIVE. For other layout types, use "width"`,
+        This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
       },
       maxHeight: {
         type: GraphQLInt,
@@ -420,26 +420,21 @@ const imageNodeType = ({
         description: stripIndent`
         The display width of the generated image. 
         The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-        Ignored if layout = RESPONSIVE, where you should use "maxWidth" instead.
+        Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
         `,
+      },
+      height: {
+        type: GraphQLInt,
       },
       placeholder: {
         type: ImagePlaceholderType,
-        defaultValue: `base64`,
+        defaultValue: `blurred`,
         description: stripIndent`
         Format of generated placeholder image. 
         DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
         BASE64: a blurred, low resolution image, encoded as a base64 data URI
         TRACED_SVG: a low-resolution traced SVG of the image.
         NONE: no placeholder. Set "background" to use a fixed background color.`,
-      },
-      height: {
-        type: GraphQLInt,
-      },
-      base64: {
-        type: GraphQLBoolean,
-        defaultValue: true,
-        description: `Generate low-res base64 placeholder image.`,
       },
       tracedSVGOptions: {
         type: PotraceType,
@@ -453,10 +448,9 @@ const imageNodeType = ({
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLInt),
-        defaultValue: [1, 2, 3],
         description: stripIndent`
         A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always a 1x image. 
-        Default is [ 1, 2, 3 ], meaning 1x, 2x, 3x. In this case, an image with a fixed layout and width = 600 would generate images at 600, 1200 and 1800px wide`,
+        Default is [ 1, 2, 3 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2, 3] for fluid. In this case, an image with a fixed layout and width = 600 would generate images at 600, 1200 and 1800px wide`,
       },
       sizes: {
         type: GraphQLString,
@@ -486,7 +480,6 @@ const imageNodeType = ({
         type: DuotoneGradientType,
         defaultValue: false,
       },
-
       quality: {
         type: GraphQLInt,
       },
@@ -540,12 +533,12 @@ const imageNodeType = ({
       const file = getNodeAndSavePathDependency(image.parent, context.path)
       const args = { ...fieldArgs, pathPrefix }
 
-      if (!gatsbyImageProps) {
+      if (!generateImageData) {
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
       }
 
-      const componentProps = await gatsbyImageProps({
+      const imageData = await generateImageData({
         file,
         args,
         reporter,
@@ -553,7 +546,7 @@ const imageNodeType = ({
       })
 
       return {
-        componentProps,
+        imageData,
         fieldArgs: args,
         image,
         file,

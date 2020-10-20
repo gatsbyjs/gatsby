@@ -44,12 +44,12 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
   children,
 }) {
   let sizer: JSX.Element | null = null
-  if (layout === `responsive`) {
+  if (layout === `fluid`) {
     sizer = (
-      <div aria-hidden style={{ paddingTop: `${(width / height) * 100}%` }} />
+      <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
   }
-  if (layout === `intrinsic`) {
+  if (layout === `constrained`) {
     sizer = (
       <div style={{ maxWidth: width, display: `block` }}>
         <img

@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-expressions */
-import { GatsbyImageProps } from "gatsby-plugin-image"
+import { ISharpGatsbyImageData } from "gatsby-plugin-image"
 import { GatsbyCache } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { fixed, fluid, traceSVG } from "."
 
 export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "responsive" | "intrinsic"
-  placeholder?: "tracedSVG" | "dominantColor" | "base64" | "none"
+  layout?: "fixed" | "fluid" | "constrained"
+  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
   tracedSVGOptions?: Record<string, unknown>
   [key: string]: unknown
 }
 
-export async function gatsbyImageProps({
+export async function generateImageData({
   file,
   args: {
     layout = `fixed`,
@@ -26,36 +26,34 @@ export async function gatsbyImageProps({
   args: ISharpGatsbyImageArgs
   cache: GatsbyCache
   reporter: Reporter
-}): Promise<Omit<GatsbyImageProps, "alt"> | undefined> {
-  // TODO: fancy stuff
-
+}): Promise<ISharpGatsbyImageData | undefined> {
   const isResponsive = layout !== `fixed`
 
+  // TODO: remove this and replace with:
+  // const pipeline = sharp(file)
   const resize = isResponsive ? fluid : fixed
-
-  if (placeholder !== `base64`) {
+  // TODO: actually call-out to get the base64, if needed
+  if (placeholder !== `blurred`) {
     args.base64 = false
   }
+  // TODO: Do the actual dominantColor calculation here
 
   if (placeholder === `dominantColor`) {
     args.dominantColor = true
   }
+
+  // TODO: use pipeline.metadata() to get source image sizes
+  // then use calculateImageSizes() to get output sizes
+  // then do everything else in fluid() except the size calculations
 
   const imageData = await resize({ file, args, reporter, cache })
 
   if (!imageData) {
     return undefined
   }
-  const imageProps: Pick<
-    GatsbyImageProps,
-    "layout" | "width" | "height" | "images" | "placeholder" | "style"
-  > = {
-    // const imageProps = {
+  const imageProps: ISharpGatsbyImageData = {
     layout,
     placeholder: undefined,
-    style: undefined,
-    width: isResponsive ? 1 : imageData.width,
-    height: isResponsive ? imageData.aspectRatio : imageData.height,
     images: {
       fallback: {
         src: imageData.src,
@@ -64,6 +62,24 @@ export async function gatsbyImageProps({
       },
       sources: [],
     },
+  }
+
+  imageData.aspectRatio = imageData.aspectRatio || 1
+
+  switch (layout) {
+    case `fixed`:
+      imageProps.width = imageData.width
+      imageProps.height = imageData.height
+      break
+
+    case `fluid`:
+      imageProps.width = 1
+      imageProps.height = 1 / imageData.aspectRatio
+      break
+
+    case `constrained`:
+      imageProps.width = args.maxWidth || imageData.presentationWidth || 1
+      imageProps.height = (imageProps.width || 1) / imageData.aspectRatio
   }
 
   if (placeholder === `tracedSVG`) {
@@ -82,7 +98,7 @@ export async function gatsbyImageProps({
       fallback: imageData.base64,
     }
   } else if (placeholder === `dominantColor`) {
-    imageProps.style = { backgroundColor: imageData.dominantColor }
+    imageProps.backgroundColor = imageData.dominantColor
   }
 
   if (args.webP) {

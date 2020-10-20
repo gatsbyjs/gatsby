@@ -1,5 +1,5 @@
 const sharp = require(`./safe-sharp`)
-const { gatsbyImageProps } = require(`./image-props`)
+const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
 
 const _ = require(`lodash`)
@@ -18,9 +18,31 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
-const { rgbToHex } = require(`./utils`)
+// const { rgbToHex } = require(`./utils`)
 
 const imageSizeCache = new Map()
+
+const getImageSizeAsync = async file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  }
+  const input = fs.createReadStream(file.absolutePath)
+  const dimensions = await imageSize(input)
+
+  if (!dimensions) {
+    reportError(
+      `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+      ``
+    )
+  }
+
+  imageSizeCache.set(file.internal.contentDigest, dimensions)
+  return dimensions
+}
+// Remove in next major as it's really slow
 const getImageSize = file => {
   if (
     process.env.NODE_ENV !== `test` &&
@@ -28,9 +50,7 @@ const getImageSize = file => {
   ) {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
-    const dimensions = imageSize.sync(
-      toArray(fs.readFileSync(file.absolutePath))
-    )
+    const dimensions = imageSize.sync(fs.readFileSync(file.absolutePath))
 
     if (!dimensions) {
       reportError(
@@ -54,7 +74,7 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
-exports.gatsbyImageProps = gatsbyImageProps
+exports.generateImageData = generateImageData
 
 function calculateImageDimensionsAndAspectRatio(file, options) {
   // Calculate the eventual width/height of the image.
@@ -435,7 +455,6 @@ async function stats({ file, reporter }) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
-  console.log({ args })
   if (options.sizeByPixelDensity) {
     /*
      * We learned that `sizeByPixelDensity` is only valid for vector images,
@@ -460,10 +479,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
     const pipeline = sharp(file.absolutePath)
     metadata = await pipeline.metadata()
     if (args.dominantColor) {
-      const {
-        dominant: { r, g, b },
-      } = await pipeline.stats()
-      dominantColor = rgbToHex(r, g, b)
+      dominantColor = `#000000`
+      // const {
+      //   dominant: { r, g, b },
+      // } = await pipeline.stats()
+      // dominantColor = rgbToHex(r, g, b)
     }
   } catch (err) {
     reportError(
@@ -669,15 +689,16 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  const dimensions = getImageSize(file)
+  const dimensions = await getImageSizeAsync(file)
 
   let dominantColor
   try {
     if (args.dominantColor) {
-      const {
-        dominant: { r, g, b },
-      } = await sharp(file.absolutePath).stats()
-      dominantColor = rgbToHex(r, g, b)
+      // const {
+      //   dominant: { r, g, b },
+      // } = await sharp(file.absolutePath).stats()
+      // dominantColor = rgbToHex(r, g, b)
+      dominantColor = `#000000`
     }
   } catch (err) {
     reporter.warn(
@@ -790,17 +811,8 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 }
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
-  }
-
-  return arr
-}
-
 exports.queueImageResizing = queueImageResizing
+exports.batchQueueImageResizing = batchQueueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
 exports.generateBase64 = generateBase64
@@ -810,4 +822,5 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.getImageSizeAsync = getImageSizeAsync
 exports.stats = stats

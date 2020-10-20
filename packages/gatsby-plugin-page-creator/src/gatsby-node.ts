@@ -1,3 +1,4 @@
+import _ from "lodash"
 import glob from "globby"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
@@ -136,7 +137,7 @@ export function setFieldsOnGraphQLNodeType({
 }: SetFieldsOnGraphQLNodeTypeArgs): object {
   try {
     const extensions = store.getState().program.extensions
-    const collectionQuery = `all${type.name}`
+    const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
         gatsbyPath: {

@@ -208,6 +208,9 @@ Array [
       "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
+      "allExtensions": false,
+      "isTSX": true,
+      "jsxPragma": "React",
       "plugins": Array [],
     },
     "resolve": "",
@@ -485,6 +488,9 @@ Array [
       "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
+      "allExtensions": false,
+      "isTSX": true,
+      "jsxPragma": "React",
       "plugins": Array [],
     },
     "resolve": "",
@@ -770,6 +776,9 @@ Array [
       "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
+      "allExtensions": false,
+      "isTSX": true,
+      "jsxPragma": "React",
       "plugins": Array [],
     },
     "resolve": "",
