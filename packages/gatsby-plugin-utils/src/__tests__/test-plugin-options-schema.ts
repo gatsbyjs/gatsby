@@ -38,8 +38,8 @@ describe(`testPluginOptionsSchema`, () => {
     expect(isValid).toBe(false)
     expect(errors).toMatchInlineSnapshot(`
       Array [
-        "\\"toVerify\\" must be a boolean",
         "\\"nb\\" must be a number",
+        "\\"toVerify\\" must be a boolean",
       ]
     `)
   })
@@ -100,7 +100,9 @@ describe(`testPluginOptionsSchema`, () => {
         "\\"head\\" must be a boolean",
         "\\"anonymize\\" must be a boolean",
         "\\"respectDNT\\" must be a boolean",
-        "\\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string",
+        "\\"exclude\\" \\"[0]\\" must be a string",
+        "\\"exclude\\" \\"[1]\\" must be a string",
+        "\\"exclude\\" \\"[2]\\" must be a string",
       ]
     `)
   })
@@ -169,7 +171,9 @@ describe(`testPluginOptionsSchema`, () => {
         "\\"head\\" must be a boolean",
         "\\"anonymize\\" must be a boolean",
         "\\"respectDNT\\" must be a boolean",
-        "\\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string",
+        "\\"exclude\\" \\"[0]\\" must be a string",
+        "\\"exclude\\" \\"[1]\\" must be a string",
+        "\\"exclude\\" \\"[2]\\" must be a string",
         "\\"pageTransitionDelay\\" must be a number",
         "\\"optimizeId\\" must be a string",
         "\\"experimentId\\" must be a string",

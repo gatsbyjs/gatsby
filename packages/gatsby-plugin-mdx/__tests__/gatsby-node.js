@@ -9,7 +9,8 @@ describe(`pluginOptionsSchema`, () => {
       `"gatsbyRemarkPlugins" "[0]" does not match any of the allowed types. "[1]" does not match any of the allowed types`,
       `"remarkPlugins" must be an array`,
       `"rehypePlugins" must be an array`,
-      `"mediaTypes" "[0]" must be a string. "[1]" must be a string`,
+      `"mediaTypes[0]" must be a string`,
+      `"mediaTypes[1]" must be a string`,
       `"shouldBlockNodeFromTransformation" must have an arity lesser or equal to 1`,
     ]
 
