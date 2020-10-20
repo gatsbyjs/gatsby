@@ -145,7 +145,7 @@ exports.onPreInit = (_, pluginOptions) => {
 
 ### Validating external access
 
-Some plugins (particularly source plugins) query external APIs. With the `.external()` method, they can asynchronously validate that users have access to the API to provide a better experience if they pass invalid secrets.
+Some plugins (particularly source plugins) query external APIs. With the `.external()` method, you can asynchronously validate that the user has access to the API, providing a better experience if they pass invalid secrets.
 
 For example, this is how the [Contentful source plugin](/plugins/gatsby-source-contentful/) ensures the user has access to the space they are trying to query:
 
