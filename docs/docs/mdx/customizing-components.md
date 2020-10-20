@@ -33,8 +33,8 @@ export default function Layout({ children }) {
 The following components can be customized with the MDXProvider:
 
 <!-- remark lint doesn't realize the pipes in code blocks aren't table markers -->
-<!-- lint ignore table-pipe-alignment -->
 <!-- prettier-ignore-start -->
+<!-- lint ignore table-pipe-alignment -->
 
 | Tag             | Name                                                                 | Syntax                                            |
 | --------------- | -------------------------------------------------------------------- | ------------------------------------------------- |
