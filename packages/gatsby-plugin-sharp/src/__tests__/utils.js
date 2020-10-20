@@ -116,7 +116,7 @@ describe(`calculateImageSizes (fixed)`, () => {
       imgDimensions,
     }
     const sizes = calculateImageSizes(args)
-    expect(sizes).toEqual(expect.arrayContaining([120, 240, 360]))
+    expect(sizes).toEqual(expect.arrayContaining([120, 240]))
   })
 
   it(`should create images of different sizes based on pixel densities with a given height`, () => {
@@ -127,7 +127,7 @@ describe(`calculateImageSizes (fixed)`, () => {
       imgDimensions,
     }
     const sizes = calculateImageSizes(args)
-    expect(sizes).toEqual(expect.arrayContaining([120, 240, 360]))
+    expect(sizes).toEqual(expect.arrayContaining([120, 240]))
   })
 })
 
@@ -201,7 +201,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     expect(sizes).toContain(450)
   })
 
-  it(`should create images of different sizes (0.25x, 0.5x, 1x, 2x, and 3x) from a maxWidth`, () => {
+  it(`should create images of different sizes (0.25x, 0.5x, 1x, 2x) from a maxWidth`, () => {
     const args = {
       layout: `fluid`,
       maxWidth: 320,
@@ -209,7 +209,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       imgDimensions,
     }
     const sizes = calculateImageSizes(args)
-    expect(sizes).toEqual(expect.arrayContaining([80, 160, 320, 640, 960]))
+    expect(sizes).toEqual(expect.arrayContaining([80, 160, 320, 640]))
   })
 
   it(`should create images of different sizes (0.25x, 0.5x, 1x) without any defined size provided`, () => {

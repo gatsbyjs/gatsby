@@ -104,23 +104,19 @@ const checkIgnoredParameters = (layout, parameters, filepath) => {
   return
 }
 
-const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2, 3]
+const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_FLUID_SIZE = 800
-export const calculateImageSizes = ({
-  file,
-  imgDimensions,
-  width,
-  maxWidth,
-  height,
-  maxHeight,
-  layout,
-  outputPixelDensities,
-  srcSetBreakpoints,
-}) => {
+
+const dedupeAndSortDensities = values =>
+  Array.from(new Set([1, ...values])).sort()
+
+export function calculateImageSizes(args) {
+  const { width, maxWidth, height, maxHeight, file, layout, reporter } = args
+
   // check that all dimensions provided are positive
   const userDimensions = { width, maxWidth, height, maxHeight }
   const erroneousUserDimensions = Object.entries(userDimensions).filter(
-    ([_, size]) => size < 1
+    ([_, size]) => typeof size === `number` && size < 1
   )
   if (erroneousUserDimensions.length) {
     throw new Error(
@@ -130,95 +126,124 @@ export const calculateImageSizes = ({
     )
   }
 
+  if (layout === `fixed`) {
+    return fixedImageSizes(args)
+  } else if (layout === `fluid` || layout === `constrained`) {
+    return fluidImageSizes(args)
+  } else {
+    reporter.warn(
+      `No valid layout was provided for the image at ${file.absolutePath}. Valid image layouts are fixed, fluid, and constrained.`
+    )
+    return []
+  }
+}
+export function fixedImageSizes({
+  file,
+  imgDimensions,
+  width,
+  maxWidth,
+  height,
+  maxHeight,
+  outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
+  srcSetBreakpoints,
+}) {
   let sizes
   const aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1
-  const densities = Array.from(
-    new Set([1, ...(outputPixelDensities || DEFAULT_PIXEL_DENSITIES)])
-  ).sort()
+  const densities = dedupeAndSortDensities(outputPixelDensities)
 
-  if (layout === `fixed`) {
-    checkIgnoredParameters(`fixed`, { maxWidth, maxHeight }, file.absolutePath)
+  checkIgnoredParameters(`fixed`, { maxWidth, maxHeight }, file.absolutePath)
 
-    // if no width is passed, we need to resize the image based on the passed height
-    if (!width) {
-      width = height * aspectRatio
-    }
+  // if no width is passed, we need to resize the image based on the passed height
+  if (!width) {
+    width = height * aspectRatio
+  }
 
-    sizes = densities
-      .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
-      .map(density => density * width)
-      .filter(size => size <= imgDimensions.width)
+  sizes = densities
+    .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
+    .map(density => density * width)
+    .filter(size => size <= imgDimensions.width)
 
-    // If there's no fixed images after filtering (e.g. image is smaller than what's
-    // requested, add back the original so there's at least something)
-    if (sizes.length === 0) {
-      sizes.push(width)
-      const fixedDimension = width === undefined ? `height` : `width`
-      console.warn(`
+  // If there's no fixed images after filtering (e.g. image is smaller than what's
+  // requested, add back the original so there's at least something)
+  if (sizes.length === 0) {
+    sizes.push(width)
+    const fixedDimension = width === undefined ? `height` : `width`
+    console.warn(`
                      The requested ${fixedDimension} "${
-        fixedDimension === `width` ? width : height
-      }px" for a resolutions field for
+      fixedDimension === `width` ? width : height
+    }px" for a resolutions field for
                      the file ${file.absolutePath}
                      was larger than the actual image ${fixedDimension} of ${
-        imgDimensions[fixedDimension]
-      }px!
+      imgDimensions[fixedDimension]
+    }px!
                      If possible, replace the current image with a larger one.
                      `)
-    }
-  } else if (layout === `fluid` || layout === `constrained`) {
-    // warn if ignored parameters are passed in
-    checkIgnoredParameters(
-      `fluid and constrained`,
-      { width, height },
-      file.absolutePath
-    )
-
-    // Case 1: maxWidth of maxHeight were passed in, make sure it isn't larger than the actual image
-    maxWidth = Math.min(maxWidth, imgDimensions.width)
-    maxHeight = Math.min(maxHeight, imgDimensions.height)
-
-    // Case 2: neither maxWidth or maxHeight were passed in, use default size
-    if (!maxWidth && !maxHeight) {
-      maxWidth = Math.min(DEFAULT_FLUID_SIZE, imgDimensions.width)
-      maxHeight = maxWidth / aspectRatio
-    }
-
-    // if it still hasn't been found, calculate maxWidth from the derived maxHeight
-    if (!maxWidth) {
-      maxWidth = maxHeight * aspectRatio
-    }
-
-    // Create sizes (in width) for the image if no custom breakpoints are
-    // provided. If the max width of the container for the rendered markdown file
-    // is 800px, the sizes would then be: 200, 400, 800, 1600, 2400 (based off of
-    // the default outputPixelDensities)
-    //
-    // This is enough sizes to provide close to the optimal image size for every
-    // device size / screen resolution while (hopefully) not requiring too much
-    // image processing time (Sharp has optimizations thankfully for creating
-    // multiple sizes of the same input file)
-    if (srcSetBreakpoints) {
-      sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
-      if (outputPixelDensities) {
-        console.warn(
-          `outputPixelDensities of ${outputPixelDensities} were passed into the image at ${file.absolutePath} with srcSetBreakpoints, srcSetBreakpoints will override the effect of outputPixelDensities`
-        )
-      }
-    } else {
-      sizes = densities.map(density => density * maxWidth)
-      sizes = sizes.filter(size => size <= imgDimensions.width)
-    }
-
-    // ensure that the size passed in is included in the final output
-    if (!sizes.includes(maxWidth)) {
-      sizes.push(maxWidth)
-    }
-    sizes = sizes.sort((a, b) => a - b)
-  } else {
-    console.warn(
-      `No valid layout was provided for the image at ${file.absolutePath}. Valid image layouts are fixed, fluid, and constrained.`
-    )
   }
+  return sizes
+}
+
+export function fluidImageSizes({
+  file,
+  imgDimensions,
+  width,
+  maxWidth,
+  height,
+  maxHeight,
+  outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
+  srcSetBreakpoints,
+}) {
+  // warn if ignored parameters are passed in
+  checkIgnoredParameters(
+    `fluid and constrained`,
+    { width, height },
+    file.absolutePath
+  )
+  let sizes
+  const aspectRatio = imgDimensions.width / imgDimensions.height
+  // Sort, dedupe and ensure there's a 1
+  const densities = dedupeAndSortDensities(outputPixelDensities)
+
+  // Case 1: maxWidth of maxHeight were passed in, make sure it isn't larger than the actual image
+  maxWidth = maxWidth && Math.min(maxWidth, imgDimensions.width)
+  maxHeight = maxHeight && Math.min(maxHeight, imgDimensions.height)
+
+  // Case 2: neither maxWidth or maxHeight were passed in, use default size
+  if (!maxWidth && !maxHeight) {
+    maxWidth = Math.min(DEFAULT_FLUID_SIZE, imgDimensions.width)
+    maxHeight = maxWidth / aspectRatio
+  }
+
+  // if it still hasn't been found, calculate maxWidth from the derived maxHeight
+  if (!maxWidth) {
+    maxWidth = maxHeight * aspectRatio
+  }
+
+  // Create sizes (in width) for the image if no custom breakpoints are
+  // provided. If the max width of the container for the rendered markdown file
+  // is 800px, the sizes would then be: 200, 400, 800, 1600 if using
+  // the default outputPixelDensities
+  //
+  // This is enough sizes to provide close to the optimal image size for every
+  // device size / screen resolution while (hopefully) not requiring too much
+  // image processing time (Sharp has optimizations thankfully for creating
+  // multiple sizes of the same input file)
+  if (srcSetBreakpoints) {
+    sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
+    if (outputPixelDensities) {
+      console.warn(
+        `outputPixelDensities of ${outputPixelDensities} were passed into the image at ${file.absolutePath} with srcSetBreakpoints, srcSetBreakpoints will override the effect of outputPixelDensities`
+      )
+    }
+  } else {
+    sizes = densities.map(density => density * maxWidth)
+    sizes = sizes.filter(size => size <= imgDimensions.width)
+  }
+
+  // ensure that the size passed in is included in the final output
+  if (!sizes.includes(maxWidth)) {
+    sizes.push(maxWidth)
+  }
+  sizes = sizes.sort((a, b) => a - b)
   return sizes
 }
