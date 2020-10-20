@@ -24,7 +24,7 @@ const layers = [
     text: <InstallLayer />,
     example: (
       <CodeWrapper title="shell" language="shell">
-        {`npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image`}
+        {`npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image gatsby-source-filesystem`}
       </CodeWrapper>
     ),
   },
@@ -56,7 +56,7 @@ const layers = [
     text: <QueryLayer />,
     example: (
       <CodeWrapper title="src/pages/index.js" language="graphql">
-        {`const query = graphql\`
+        {`export const query = graphql\`
   query {
     file(relativePath: { eq: "images/gatsby-logo.png" }) {
       childImageSharp {
