@@ -1,5 +1,6 @@
 import sysPath from "path"
 import { Reporter } from "gatsby"
+import { CODES, prefixId } from "./error-utils"
 
 // This file is a helper for consumers. It's going to log an error to them if they
 // in any way have an incorrect filepath setup for us to predictably use collection
@@ -24,20 +25,25 @@ export function isValidCollectionPathImplementation(
 
     try {
       assert(opener, `{`, ``) // This is a noop because of the opening check, but here for posterity
-      assert(model, /^[A-Z][a-zA-Z]+$/, errorMessage(filePath, part))
-      assert(field, /^[a-zA-Z_()]+$/, errorMessage(filePath, part))
-      assert(closer, `}`, errorMessage(filePath, part))
+      assert(model, /^[A-Z][a-zA-Z]+$/, errorMessage(part))
+      assert(field, /^[a-zA-Z_()]+$/, errorMessage(part))
+      assert(closer, `}`, errorMessage(part))
     } catch (e) {
-      reporter.panicOnBuild(e.message)
+      reporter.panicOnBuild({
+        id: prefixId(CODES.CollectionPath),
+        context: {
+          sourceMessage: e.message,
+        },
+        filePath: filePath,
+      })
       passing = false
     }
   })
   return passing
 }
 
-function errorMessage(filePath: string, part: string): string {
-  return `PageCreator: Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-filePath: ${filePath}`
+function errorMessage(part: string): string {
+  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`
 }
 
 function assert(part: string, matches: string | RegExp, message: string): void {

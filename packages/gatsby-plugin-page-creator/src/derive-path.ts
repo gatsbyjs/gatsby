@@ -8,6 +8,7 @@ import {
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
 } from "./path-utils"
+import { CODES, prefixId } from "./error-utils"
 
 const doubleForwardSlashes = /\/\/+/g
 
@@ -40,10 +41,12 @@ export function derivePath(
 
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
-      reporter.error(
-        `PageCreator: Could not find value in the following node for key ${slugPart} (transformed to ${key})`
-      )
-      reporter.log(JSON.stringify(node, null, 4))
+      reporter.error({
+        id: prefixId(CODES.GeneratePath),
+        context: {
+          sourceMessage: `Could not find value in the following node for key ${slugPart} (transformed to ${key})`,
+        },
+      })
       return
     }
 

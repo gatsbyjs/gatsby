@@ -3,8 +3,9 @@ import { generateQueryFromString } from "./extract-query"
 import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
 import traverse from "@babel/traverse"
-import { extractModel } from "./path-utils"
 import { Reporter } from "gatsby"
+import { extractModel } from "./path-utils"
+import { CODES, prefixId } from "./error-utils"
 
 // This Function opens up the actual collection file and extracts the queryString used in the
 export function collectionExtractQueryString(
@@ -39,13 +40,15 @@ export function collectionExtractQueryString(
             if (!text) return
 
             if (text.includes(`...CollectionPagesQueryFragment`) === false) {
-              reporter.error(
-                `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
+              reporter.error({
+                id: prefixId(CODES.CollectionGraphQL),
+                context: {
+                  sourceMessage: `Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
 
-Please fix the query from ${absolutePath.split(`src/pages`)[1]}.
-
-Offending query: ${text}`
-              )
+Offending query: ${text}`,
+                },
+                filePath: absolutePath,
+              })
               queryString = ``
               modelType = ``
               return

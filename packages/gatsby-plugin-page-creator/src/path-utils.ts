@@ -3,11 +3,10 @@
 export function extractModel(absolutePath: string): string {
   const model = /\{([a-zA-Z]+)\./.exec(absolutePath)
 
-  //  This shouldn't happen - but TS requires us to validate
+  // This shouldn't happen - but TS requires us to validate
+  // Don't throw an error here as otherwise it would be captured in the onPreInit hook and not by isValidCollectionPathImplementation()
   if (!model) {
-    throw new Error(
-      `PageCreator: An error occured extracting the Model from the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
-    )
+    return ``
   }
 
   return model[1]
@@ -28,7 +27,7 @@ export function extractAllCollectionSegments(
   // This shouldn't happen - but TS requires us to validate
   if (!slugParts) {
     throw new Error(
-      `PageCreator: An error occured building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
+      `An error occured building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
     )
   }
 

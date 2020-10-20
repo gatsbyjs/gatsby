@@ -1,14 +1,15 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
+import { createPath } from "gatsby-page-utils"
+import { Reporter } from "gatsby"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "./get-match-path"
-import { createPath } from "gatsby-page-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
 import { derivePath } from "./derive-path"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
-import { Reporter } from "gatsby"
+import { CODES, prefixId } from "./error-utils"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
@@ -54,14 +55,16 @@ export async function createPagesFromCollectionBuilder(
 
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
-    reporter.error(
-      `PageCreator: Tried to create pages from the collection builder.
-Unfortunately, the query came back empty. There may be an error in your query.
+    reporter.error({
+      id: prefixId(CODES.CollectionBuilder),
+      context: {
+        sourceMessage: `Tried to create pages from the collection builder.
+Unfortunately, the query came back empty. There may be an error in your query:
 
-file: ${absolutePath}
-
-${errors.map(error => error.message).join(`\n`)}`.trim()
-    )
+${errors.map(error => error.message).join(`\n`)}`.trim(),
+      },
+      filePath: absolutePath,
+    })
 
     watchCollectionBuilder(
       absolutePath,
@@ -89,7 +92,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim()
   >
 
   if (nodes) {
-    reporter.info(
+    reporter.verbose(
       `   PageCreator: Creating ${nodes.length} page${
         nodes.length > 1 ? `s` : ``
       } from ${filePath}`
