@@ -48,12 +48,6 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
 1. Add the `gatsby-plugin-utils` package to your site:
 
    ```shell
-   yarn add gatsby-plugin-utils
-   ```
-
-   or
-
-   ```shell
    npm install gatsby-plugin-utils
    ```
 
