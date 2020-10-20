@@ -1,15 +1,16 @@
 import { Joi } from "./joi"
 import { GatsbyNode } from "gatsby"
 import { validateOptionsSchema } from "./validate"
+import { IPluginInfoOptions } from "gatsby"
 
 interface ITestPluginOptionsSchemaReturnType {
   errors: Array<string>
   isValid: boolean
 }
 
-export async function testPluginOptionsSchema<PluginOptions = object>(
+export async function testPluginOptionsSchema(
   pluginSchemaFunction: Exclude<GatsbyNode["pluginOptionsSchema"], undefined>,
-  pluginOptions: PluginOptions
+  pluginOptions: IPluginInfoOptions
 ): Promise<ITestPluginOptionsSchemaReturnType> {
   const pluginSchema = pluginSchemaFunction({ Joi })
 
