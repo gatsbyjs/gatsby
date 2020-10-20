@@ -1,5 +1,3 @@
-import reporter from "gatsby-cli/lib/reporter"
-
 const ProgressBar = require(`progress`)
 
 // TODO remove in V3
@@ -90,12 +88,12 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
-const warnForIgnoredParameters = (layout, parameters, filepath) => {
+const warnForIgnoredParameters = (layout, parameters, filepath, reporter) => {
   const ignoredParams = Object.entries(parameters).filter(([_, value]) =>
     Boolean(value)
   )
   if (ignoredParams.length) {
-    reporter(
+    reporter.warn(
       `The following provided parameter(s): ${ignoredParams
         .map(param => param.join(`: `))
         .join(
@@ -113,7 +111,7 @@ const dedupeAndSortDensities = values =>
   Array.from(new Set([1, ...values])).sort()
 
 export function calculateImageSizes(args) {
-  const { width, maxWidth, height, maxHeight, file, layout } = args
+  const { width, maxWidth, height, maxHeight, file, layout, reporter } = args
 
   // check that all dimensions provided are positive
   const userDimensions = { width, maxWidth, height, maxHeight }
@@ -148,13 +146,19 @@ export function fixedImageSizes({
   maxHeight,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
+  reporter,
 }) {
   let sizes
   const aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities)
 
-  warnForIgnoredParameters(`fixed`, { maxWidth, maxHeight }, file.absolutePath)
+  warnForIgnoredParameters(
+    `fixed`,
+    { maxWidth, maxHeight },
+    file.absolutePath,
+    reporter
+  )
 
   // if no width is passed, we need to resize the image based on the passed height
   if (!width) {
@@ -171,7 +175,7 @@ export function fixedImageSizes({
   if (sizes.length === 0) {
     sizes.push(width)
     const fixedDimension = width === undefined ? `height` : `width`
-    reporter(`
+    reporter.warn(`
                      The requested ${fixedDimension} "${
       fixedDimension === `width` ? width : height
     }px" for a resolutions field for
@@ -194,12 +198,14 @@ export function fluidImageSizes({
   maxHeight,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
+  reporter,
 }) {
   // warn if ignored parameters are passed in
   warnForIgnoredParameters(
     `fluid and constrained`,
     { width, height },
-    file.absolutePath
+    file.absolutePath,
+    reporter
   )
   let sizes
   const aspectRatio = imgDimensions.width / imgDimensions.height
@@ -233,7 +239,7 @@ export function fluidImageSizes({
   if (srcSetBreakpoints) {
     sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
     if (outputPixelDensities) {
-      reporter(
+      reporter.warn(
         `outputPixelDensities of ${outputPixelDensities} were passed into the image at ${file.absolutePath} with srcSetBreakpoints, srcSetBreakpoints will override the effect of outputPixelDensities`
       )
     }
@@ -249,3 +255,5 @@ export function fluidImageSizes({
   sizes = sizes.sort((a, b) => a - b)
   return sizes
 }
+
+export const getSizes = width => `(max-width: ${width}px) 100vw, ${width}px`

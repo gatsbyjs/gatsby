@@ -73,7 +73,6 @@ describe(`calculateImageSizes (fixed)`, () => {
   })
 
   it(`should warn if ignored maxWidth or maxHeight are passed in`, () => {
-    jest.spyOn(global.console, `warn`)
     const args = {
       layout: `fixed`,
       height: 240,
@@ -81,9 +80,10 @@ describe(`calculateImageSizes (fixed)`, () => {
       maxHeight: 1000,
       file,
       imgDimensions,
+      reporter,
     }
     calculateImageSizes(args)
-    expect(console.warn).toBeCalled()
+    expect(reporter.warn).toBeCalled()
   })
 
   it(`should return the original width of the image when only width is provided`, () => {
@@ -155,7 +155,6 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
   })
 
   it(`should warn if ignored width or height are passed in`, () => {
-    jest.spyOn(global.console, `warn`)
     const args = {
       layout: `fluid`,
       maxWidth: 240,
@@ -163,9 +162,10 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       width: 1000,
       file,
       imgDimensions,
+      reporter,
     }
     calculateImageSizes(args)
-    expect(console.warn).toBeCalled()
+    expect(reporter.warn).toBeCalled()
   })
 
   it(`should include the original size of the image when maxWidth is passed`, () => {
@@ -174,6 +174,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       maxWidth: 400,
       file,
       imgDimensions,
+      reporter,
     }
     const sizes = calculateImageSizes(args)
     expect(sizes).toContain(400)
@@ -231,6 +232,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       srcSetBreakpoints,
       file,
       imgDimensions,
+      reporter,
     }
 
     const sizes = calculateImageSizes(args)
@@ -252,6 +254,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       srcSetBreakpoints,
       file,
       imgDimensions,
+      reporter,
     }
 
     const sizes = calculateImageSizes(args)
@@ -260,7 +263,6 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
   })
 
   it(`should only uses sizes from srcSetBreakpoints when outputPixelDensities are also passed in`, () => {
-    jest.spyOn(global.console, `warn`)
     const srcSetBreakpoints = [400, 800] // should find these
     const maxWidth = 500
     const args = {
@@ -270,10 +272,11 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       srcSetBreakpoints,
       file,
       imgDimensions,
+      reporter,
     }
 
     const sizes = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
-    expect(console.warn).toBeCalled()
+    expect(reporter.warn).toBeCalled()
   })
 })
