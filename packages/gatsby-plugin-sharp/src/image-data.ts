@@ -124,6 +124,7 @@ export async function generateImageData({
     aspectRatio: number
   } = calculateImageSizes({
     file,
+    layout,
     ...args,
     imgDimensions: metadata,
     reporter,
