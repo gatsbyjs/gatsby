@@ -149,7 +149,6 @@ export function fixedImageSizes({
   srcSetBreakpoints,
   reporter,
 }) {
-  console.log(`fixed`, width, height)
   let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1
@@ -175,9 +174,13 @@ export function fixedImageSizes({
     aspectRatio = calculated.aspectRatio
   }
 
+  if (!width && !height) {
+    width = 400
+  }
+
   // if no width is passed, we need to resize the image based on the passed height
   if (!width) {
-    width = height * aspectRatio
+    width = Math.round(height * aspectRatio)
   }
 
   sizes = densities
