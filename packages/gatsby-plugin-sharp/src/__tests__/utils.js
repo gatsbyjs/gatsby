@@ -94,7 +94,7 @@ describe(`calculateImageSizes (fixed)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toContain(600)
   })
 
@@ -105,7 +105,7 @@ describe(`calculateImageSizes (fixed)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toContain(500 * (imgDimensions.width / imgDimensions.height))
   })
 
@@ -116,7 +116,7 @@ describe(`calculateImageSizes (fixed)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([120, 240]))
   })
 
@@ -127,7 +127,7 @@ describe(`calculateImageSizes (fixed)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([120, 240]))
   })
 })
@@ -177,7 +177,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       imgDimensions,
       reporter,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toContain(400)
   })
 
@@ -188,7 +188,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toContain(400)
   })
 
@@ -199,7 +199,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toContain(450)
   })
 
@@ -210,7 +210,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([80, 160, 320, 640]))
   })
 
@@ -220,7 +220,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       file,
       imgDimensions,
     }
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([200, 400, 800]))
   })
 
@@ -236,7 +236,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       reporter,
     }
 
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([50, 70, 150, 250, 300, 500]))
   })
 
@@ -258,7 +258,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       reporter,
     }
 
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([50, 70, 150, 250]))
     expect(sizes).toEqual(expect.not.arrayContaining([1250, 1500]))
   })
@@ -276,12 +276,12 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       reporter,
     }
 
-    const sizes = calculateImageSizes(args)
+    const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
     expect(reporter.warn).toBeCalled()
   })
 
-  it(`should adjust sizes according to fit type`, () => {
+  it(`should adjust fluid sizes according to fit type`, () => {
     const imgDimensions = {
       width: 2810,
       height: 1360,
@@ -318,7 +318,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       },
     ]
     testsCases.forEach(({ args, result }) => {
-      const sizes = calculateImageSizes({
+      const { presentationWidth, presentationHeight } = calculateImageSizes({
         ...args,
         file,
         outputPixelDensities,
@@ -326,7 +326,56 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
         imgDimensions,
         layout: `fluid`,
       })
-      expect(sizes).toEqual([result[0]])
+      expect([presentationWidth, presentationHeight]).toEqual(result)
+    })
+  })
+
+  it(`should adjust fixed sizes according to fit type`, () => {
+    const imgDimensions = {
+      width: 2810,
+      height: 1360,
+    }
+
+    const outputPixelDensities = [1]
+
+    const testsCases = [
+      { args: { width: 20, height: 20 }, result: [20, 20] },
+      {
+        args: { width: 20, height: 20, fit: sharp.fit.fill },
+        result: [20, 20],
+      },
+      {
+        args: { width: 20, height: 20, fit: sharp.fit.inside },
+        result: [20, 10],
+      },
+      {
+        args: { width: 20, height: 20, fit: sharp.fit.outside },
+        result: [41, 20],
+      },
+      { args: { width: 200, height: 200 }, result: [200, 200] },
+      {
+        args: { width: 200, height: 200, fit: sharp.fit.fill },
+        result: [200, 200],
+      },
+      {
+        args: { width: 200, height: 200, fit: sharp.fit.inside },
+        result: [200, 97],
+      },
+      {
+        args: { width: 200, height: 200, fit: sharp.fit.outside },
+        result: [413, 200],
+      },
+    ]
+    testsCases.forEach(({ args, result }) => {
+      const { presentationWidth, presentationHeight } = calculateImageSizes({
+        ...args,
+        file,
+        outputPixelDensities,
+        reporter,
+        imgDimensions,
+        layout: `fixed`,
+      })
+      expect([presentationWidth, presentationHeight]).toEqual(result)
     })
   })
 })

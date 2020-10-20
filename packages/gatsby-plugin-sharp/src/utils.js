@@ -201,7 +201,12 @@ export function fixedImageSizes({
                      If possible, replace the current image with a larger one.
                      `)
   }
-  return sizes
+  return {
+    sizes,
+    aspectRatio,
+    presentationWidth: width,
+    presentationHeight: Math.round(width / aspectRatio),
+  }
 }
 
 export function fluidImageSizes({
@@ -282,7 +287,12 @@ export function fluidImageSizes({
     sizes.push(maxWidth)
   }
   sizes = sizes.sort((a, b) => a - b)
-  return sizes
+  return {
+    sizes,
+    aspectRatio,
+    presentationWidth: maxWidth,
+    presentationHeight: Math.round(maxWidth / aspectRatio),
+  }
 }
 
 export const getSizes = width => `(max-width: ${width}px) 100vw, ${width}px`
