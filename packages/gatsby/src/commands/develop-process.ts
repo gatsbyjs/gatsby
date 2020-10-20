@@ -137,6 +137,4 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   }
 
   service.start()
-
-  program.developMachineService = service
 }
