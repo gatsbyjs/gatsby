@@ -16,7 +16,6 @@ export function testPluginOptionsSchema<PluginOptions = object>(
 
   pluginOptionsNames.forEach(pluginOptionName => {
     const partialSchema = pluginSchema.extract(pluginOptionName)
-
     const { error } = partialSchema.validate(pluginOptions[pluginOptionName], {
       abortEarly: false,
     })
