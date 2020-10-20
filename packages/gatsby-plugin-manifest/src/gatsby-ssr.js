@@ -31,18 +31,6 @@ exports.onRenderBody = (
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
     if (insertFaviconLinkTag) {
-      if (icon?.endsWith(`.svg`)) {
-        headComponents.push(
-          <link
-            key={`gatsby-plugin-manifest-icon-link-svg`}
-            rel="icon"
-            href={withPrefix(
-              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
-            )}
-            type="image/svg+xml"
-          />
-        )
-      }
       favicons.forEach(favicon => {
         headComponents.push(
           <link
@@ -52,6 +40,18 @@ exports.onRenderBody = (
               addDigestToPath(favicon.src, cacheDigest, cacheBusting)
             )}
             type="image/png"
+          />
+        )
+      }
+      if (icon?.endsWith(`.svg`)) {
+        headComponents.push(
+          <link
+            key={`gatsby-plugin-manifest-icon-link-svg`}
+            rel="icon"
+            href={withPrefix(
+              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
+            )}
+            type="image/svg+xml"
           />
         )
       })
