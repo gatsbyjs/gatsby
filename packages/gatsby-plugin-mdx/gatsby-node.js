@@ -15,7 +15,7 @@ const {
 exports.sourceNodes = require(`./gatsby/source-nodes`)
 
 /**
- * Check whether the Create Mdx nodes from MDX files.
+ * Check whether to create Mdx nodes from MDX files.
  */
 exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 

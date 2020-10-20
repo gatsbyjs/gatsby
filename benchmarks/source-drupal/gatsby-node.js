@@ -1,15 +1,9 @@
 const kebabCase = require(`lodash.kebabcase`)
 
-function unstable_shouldOnCreateNode({node}) {
-  return node.internal.type === `node__article`
-}
-
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
-
 exports.onCreateNode = ({ actions, node }) => {
   const { createNodeField } = actions
 
-  if (unstable_shouldOnCreateNode({node})) {
+  if (node.internal.type === "node__article") {
     createNodeField({ node, name: "slug", value: kebabCase(node.title) })
   }
 }
