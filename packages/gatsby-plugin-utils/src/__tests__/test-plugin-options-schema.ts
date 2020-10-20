@@ -1,8 +1,8 @@
 import { testPluginOptionsSchema } from "../test-plugin-options-schema"
-import { ObjectSchema } from "../utils/plugin-options-schema-joi-type"
+import { ObjectSchema } from "../joi"
 
 describe(`testPluginOptionsSchema`, () => {
-  it(`should partially validate one value of a schema`, () => {
+  it(`should partially validate one value of a schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         str: Joi.string(),
@@ -10,7 +10,7 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
     })
 
@@ -22,7 +22,7 @@ describe(`testPluginOptionsSchema`, () => {
     `)
   })
 
-  it(`should partially validate multiples value of a schema`, () => {
+  it(`should partially validate multiples value of a schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         str: Joi.string(),
@@ -30,7 +30,7 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
       nb: `invalid value`,
     })
@@ -44,7 +44,7 @@ describe(`testPluginOptionsSchema`, () => {
     `)
   })
 
-  it(`should validate half of a real world plugin schema`, () => {
+  it(`should validate half of a real world plugin schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         trackingId: Joi.string()
@@ -85,7 +85,7 @@ describe(`testPluginOptionsSchema`, () => {
         cookieDomain: Joi.string(),
       })
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
       head: `invalid boolean value`,
       anonymize: `invalid boolean value`,
@@ -105,7 +105,7 @@ describe(`testPluginOptionsSchema`, () => {
     `)
   })
 
-  it(`should validate an entire real world plugin schema`, () => {
+  it(`should validate an entire real world plugin schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         trackingId: Joi.string()
@@ -146,7 +146,7 @@ describe(`testPluginOptionsSchema`, () => {
         cookieDomain: Joi.string(),
       })
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
       head: `invalid boolean value`,
       anonymize: `invalid boolean value`,
@@ -182,13 +182,13 @@ describe(`testPluginOptionsSchema`, () => {
     `)
   })
 
-  it(`should check the validity of a schema`, () => {
+  it(`should check the validity of a schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         toVerify: Joi.boolean(),
       })
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: false,
     })
 
