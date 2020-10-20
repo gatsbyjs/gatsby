@@ -3,8 +3,9 @@ import path from "path"
 import fs from "fs-extra"
 import { codeFrameColumns } from "@babel/code-frame"
 import ansiHTML from "ansi-html"
-const { trackCli } = require(`gatsby-telemetry`)
+import { trackCli } from "gatsby-telemetry"
 
+import { findPageByPath } from "./find-page-by-path"
 import { renderHTML } from "./worker/render-html"
 import { Stage } from "../commands/types"
 import { isWebpackStatusPending } from "./webpack-status"
@@ -144,9 +145,10 @@ export const route = ({ app, program, store }): any =>
     }
 
     trackCli(`GATSBY_EXPERIMENTAL_DEV_SSR`)
-    const { pages } = store.getState()
 
-    if (!pages.has(req.path)) {
+    const pathObj = findPageByPath(store.getState(), req.path)
+
+    if (!pathObj) {
       return next()
     }
 
@@ -156,7 +158,7 @@ export const route = ({ app, program, store }): any =>
     try {
       const renderResponse = await renderHTML({
         htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
-        paths: [req.path],
+        paths: [pathObj.path],
         stage: Stage.DevelopHTML,
         envVars: [
           [`NODE_ENV`, process.env.NODE_ENV || ``],
