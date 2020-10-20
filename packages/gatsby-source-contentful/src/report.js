@@ -1,10 +1,10 @@
 export const CODES = {
   /* Fetch errors */
 
-  LocalesMissing: 111001,
-  SelfSignedCertificate: 111002,
-  SyncError: 111003,
-  FetchContentTypes: 111004,
+  LocalesMissing: `111001`,
+  SelfSignedCertificate: `111002`,
+  SyncError: `111003`,
+  FetchContentTypes: `111004`,
 }
 
 export const ERROR_MAP = {
