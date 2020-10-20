@@ -64,7 +64,7 @@
     "npm-packlist": "^2.1.2",
     "npm-run-all": "4.1.5",
     "plop": "^1.9.1",
-    "prettier": "2.0.5",
+    "prettier": "2.1.2",
     "remark": "^12.0.1",
     "remark-cli": "^8.0.1",
     "remark-frontmatter": "^2.0.0",

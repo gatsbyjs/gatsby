@@ -93,8 +93,9 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${p => p.theme.space[5]} + ${props =>
-  props.theme.space[6]});
+    padding-left: calc(
+      ${p => p.theme.space[5]} + ${props => props.theme.space[6]}
+    );
     position: relative;
     border: 0;
     box-shadow: ${p => p.theme.shadows.raised};
@@ -114,8 +115,8 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.card.starterLabelBackground
           : props.theme.colors.card.pluginLabelBackground};
-      border-radius: ${p => p.theme.radii[2]} 0 0 ${props =>
-  props.theme.radii[2]};
+      border-radius: ${p => p.theme.radii[2]} 0 0
+        ${props => props.theme.radii[2]};
       bottom: 0;
       content: "";
       left: 0;
