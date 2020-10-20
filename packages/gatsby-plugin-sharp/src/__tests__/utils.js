@@ -6,6 +6,7 @@ const {
 } = require(`../utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const progress = require(`progress`)
+const sharp = require(`sharp`)
 
 describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
   beforeEach(() => {
@@ -278,5 +279,54 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     const sizes = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
     expect(reporter.warn).toBeCalled()
+  })
+
+  it(`should adjust sizes according to fit type`, () => {
+    const imgDimensions = {
+      width: 2810,
+      height: 1360,
+    }
+
+    const outputPixelDensities = [1]
+
+    const testsCases = [
+      { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
+      {
+        args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.fill },
+        result: [20, 20],
+      },
+      {
+        args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.inside },
+        result: [20, 10],
+      },
+      {
+        args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.outside },
+        result: [41, 20],
+      },
+      { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
+      {
+        args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.fill },
+        result: [200, 200],
+      },
+      {
+        args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.inside },
+        result: [200, 97],
+      },
+      {
+        args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.outside },
+        result: [413, 200],
+      },
+    ]
+    testsCases.forEach(({ args, result }) => {
+      const sizes = calculateImageSizes({
+        ...args,
+        file,
+        outputPixelDensities,
+        reporter,
+        imgDimensions,
+        layout: `fluid`,
+      })
+      expect(sizes).toEqual([result[0]])
+    })
   })
 })
