@@ -526,7 +526,7 @@ describe(`Test plugin manifest options`, () => {
   })
 })
 
-describe.only(`pluginOptionsSchema`, () => {
+describe(`pluginOptionsSchema`, () => {
   it(`validates options correctly`, () => {
     expect(testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
       .toMatchInlineSnapshot(`
