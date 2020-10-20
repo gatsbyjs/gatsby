@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.48...gatsby-plugin-mdx@1.2.49) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
 ## [1.2.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.47...gatsby-plugin-mdx@1.2.48) (2020-10-19)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

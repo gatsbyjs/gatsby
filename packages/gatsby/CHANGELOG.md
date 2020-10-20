@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.83](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.82...gatsby@2.24.83) (2020-10-20)
+
+### Bug Fixes
+
+- **gatsby:** Handle double prefix case for `extendErrorIdWithPluginName` ([#27547](https://github.com/gatsbyjs/gatsby/issues/27547)) ([b4d8342](https://github.com/gatsbyjs/gatsby/commit/b4d8342008de8fac199e3a524130573ba81ed354))
+
 ## [2.24.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.81...gatsby@2.24.82) (2020-10-19)
 
 ### Bug Fixes

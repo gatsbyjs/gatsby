@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-images",
   "description": "Processes images in markdown so they can be used in the production build.",
-  "version": "3.3.36",
+  "version": "3.3.37",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -24,7 +24,7 @@
     "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.3",
     "cross-env": "^7.0.2",
-    "gatsby-plugin-utils": "^0.2.35",
+    "gatsby-plugin-utils": "^0.2.37",
     "hast-util-to-html": "^6.1.0",
     "mdast-util-to-hast": "^6.0.2"
   },
