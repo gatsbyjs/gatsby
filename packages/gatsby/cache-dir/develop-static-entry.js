@@ -99,10 +99,10 @@ export default (pagePath, callback) => {
   const getPageData = pagePath => {
     const pageDataPath = getPageDataPath(pagePath)
     const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
-    const pageDataRaw = fs.readFileSync(absolutePageDataPath)
+    const pageDataJson = fs.readFileSync(absolutePageDataPath, 'utf8')
 
     try {
-      return JSON.parse(pageDataRaw.toString())
+      return JSON.parse(pageDataJson)
     } catch (err) {
       return null
     }
