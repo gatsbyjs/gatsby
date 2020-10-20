@@ -5,6 +5,7 @@ import {
   IGatsbyPlugin,
   ProgramStatus,
   ICreatePageDependencyAction,
+  IDeleteComponentDependenciesAction,
   IReplaceComponentQueryAction,
   IReplaceStaticQueryAction,
   IQueryExtractedAction,
@@ -43,6 +44,22 @@ export const createPageDependency = (
       path,
       nodeId,
       connection,
+    },
+  }
+}
+
+/**
+ * Delete dependencies between an array of pages and data. Probably for
+ * internal use only. Used when deleting pages.
+ * @private
+ */
+export const deleteComponentsDependencies = (
+  paths: Array<string>
+): IDeleteComponentDependenciesAction => {
+  return {
+    type: `DELETE_COMPONENTS_DEPENDENCIES`,
+    payload: {
+      paths,
     },
   }
 }
