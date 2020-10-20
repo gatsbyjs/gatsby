@@ -110,10 +110,7 @@ export default (pagePath, callback) => {
 
   const pageData = getPageData(pagePath)
 
-  const {
-    componentChunkName,
-    //  staticQueryHashes = []
-  } = pageData
+  const componentChunkName = pageData?.componentChunkName
 
   const createElement = React.createElement
 
