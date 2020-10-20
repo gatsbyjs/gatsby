@@ -50,7 +50,7 @@ describe(`findPageByPath`, () => {
   function assertGetterWithSlashMatrix(
     pathWithoutTrailingOrLeadingSlashes: string,
     exactPath: string
-  ) {
+  ): any {
     const withTrailingSlash = pathWithoutTrailingOrLeadingSlashes + `/`
     const withLeadingSlash = `/` + pathWithoutTrailingOrLeadingSlashes
     const withLeadingAndTrailingSlash =
