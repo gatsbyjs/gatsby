@@ -51,7 +51,7 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
    npm install gatsby-plugin-utils
    ```
 
-2. Use the `testPluginOptionsSchema` function exported from it in your test file. For example, with [Jest](https://jestjs.io):
+2. Use the `testPluginOptionsSchema` function exported from the package in your test file. For example, with [Jest](https://jestjs.io):
 
    ```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.js
    // This is an example using Jest (https://jestjs.io/)
@@ -109,11 +109,11 @@ Here are some specific Joi best practices for `pluginOptionsSchema`s:
 
 ### Add descriptions
 
-Make sure that every option and field has a `.description()` explaining its purpose. While this is not immediately visible, there might be tooling in the future that auto-generates plugin option documentation from the schema.
+Make sure that every option and field has a `.description()` explaining its purpose. This is helpful for documentation as users can look at the schema and understand all the options. There might also be tooling in the future that auto-generates plugin option documentation from the schema.
 
 ### Set default options
 
-You can use the `.default()` method to set a default value for an option. For example with `gatsby-plugin-console-log`, you can have the `message` option default to  `"default message"` in case a user does not pass their own `message`:
+You can use the `.default()` method to set a default value for an option. For example with `gatsby-plugin-console-log`, you can have the `message` option default to `"default message"` in case a user does not pass their own `message`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
