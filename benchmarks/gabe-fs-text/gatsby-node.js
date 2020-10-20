@@ -40,40 +40,41 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, actions , createNodeId}) => {
-  if (node.internal.type === "File") {
-    // Do minimal processing to get some key pieces. This could be gatsby-transformer-text or -html :p
+exports.unstable_shouldOnCreateNode = ({ node }) =>
+  node.internal.type === "File"
 
-    const html = fs.readFileSync(node.absolutePath, "utf8")
+exports.onCreateNode = ({ node, actions, createNodeId }) => {
+  // Do minimal processing to get some key pieces. This could be gatsby-transformer-text or -html :p
 
-    const base = path.basename(node.absolutePath)
-    const slug = base.slice(11, -5) // remove date prefix and `..txt` tail
-    const date = base.slice(0, 10)
+  const html = fs.readFileSync(node.absolutePath, "utf8")
 
-    const offset1 = html.indexOf("<h1>")
-    const title = html.slice(
-      offset1 + "<h1>".length,
-      html.indexOf("</h1>", offset1)
-    )
+  const base = path.basename(node.absolutePath)
+  const slug = base.slice(11, -5) // remove date prefix and `..txt` tail
+  const date = base.slice(0, 10)
 
-    const offset2 = html.indexOf("<blockquote>", offset1)
-    const description = html.slice(
-      offset2 + "<blockquote>".length,
-      html.indexOf("</blockquote>", offset2)
-    )
+  const offset1 = html.indexOf("<h1>")
+  const title = html.slice(
+    offset1 + "<h1>".length,
+    html.indexOf("</h1>", offset1)
+  )
 
-    actions.createNode({
-      id: createNodeId(slug),
-      slug,
-      date,
-      title,
-      description,
-      html,
-      internal: {
-        type: "Texto",
-        contentDigest: html,
-      },
-      parent: node.id, // Required otherwise the node is not cached and a warm build screws up. TODO: is touchNode faster?
-    })
-  }
+  const offset2 = html.indexOf("<blockquote>", offset1)
+  const description = html.slice(
+    offset2 + "<blockquote>".length,
+    html.indexOf("</blockquote>", offset2)
+  )
+
+  actions.createNode({
+    id: createNodeId(slug),
+    slug,
+    date,
+    title,
+    description,
+    html,
+    internal: {
+      type: "Texto",
+      contentDigest: html,
+    },
+    parent: node.id, // Required otherwise the node is not cached and a warm build screws up. TODO: is touchNode faster?
+  })
 }
