@@ -4,9 +4,12 @@ import { pluginOptionsSchema } from "../gatsby-node"
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
-      `"extensions" "[0]" must be a string. "[1]" must be a string. "[2]" must be a string`,
+      `"extensions[0]" must be a string`,
+      `"extensions[1]" must be a string`,
+      `"extensions[2]" must be a string`,
       `"defaultLayout" must be of type object`,
-      `"gatsbyRemarkPlugins" "[0]" does not match any of the allowed types. "[1]" does not match any of the allowed types`,
+      `"gatsbyRemarkPlugins[0]" does not match any of the allowed types`,
+      `"gatsbyRemarkPlugins[1]" does not match any of the allowed types`,
       `"remarkPlugins" must be an array`,
       `"rehypePlugins" must be an array`,
       `"mediaTypes[0]" must be a string`,
