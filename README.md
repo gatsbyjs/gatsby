@@ -14,7 +14,7 @@
   Fast in every way that matters
 </h3>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
+  Gatsby is a free and open-source framework based on React that helps developers build blazing-fast websites and apps.
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -72,11 +72,11 @@ Gatsby is a modern web framework for blazing fast websites.
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
   to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
-- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code-splitting,
+  image optimization, inlining critical styles, lazy-loading, prefetching resources,
   and more to ensure your site is fast — no manual tuning required.
 
-- **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
+- **Host at Scale for Pennies.** Gatsby sites don’t require servers. So you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
   hosted entirely free on services like GitHub Pages and Netlify.
 
@@ -107,7 +107,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    Get your Gatsby blog set up in a single command:
 
    ```shell
-   # create a new Gatsby site using the default starter
+   # creates a new Gatsby site using the default starter
    gatsby new my-blazing-fast-site
    ```
 
