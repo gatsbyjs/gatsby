@@ -56,7 +56,9 @@ const layers = [
     text: <QueryLayer />,
     example: (
       <CodeWrapper title="src/pages/index.js" language="graphql">
-        {`export const query = graphql\`
+        {`import { graphql } from "gatsby"
+
+export const query = graphql\`
   query {
     file(relativePath: { eq: "images/gatsby-logo.png" }) {
       childImageSharp {
