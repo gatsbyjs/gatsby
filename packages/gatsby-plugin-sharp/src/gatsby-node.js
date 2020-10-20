@@ -30,14 +30,10 @@ const finishProgressBar = () => {
 exports.onPostBuild = () => finishProgressBar()
 
 exports.onCreateDevServer = async ({ app, cache, reporter, emitter }) => {
+  createOrGetProgressBar()
   finishProgressBar()
 
   app.use(async (req, res, next) => {
-    // images are only saved in static, so short-circuit
-    if (!req.url.startsWith(`/static/`)) {
-      return next()
-    }
-
     const pathOnDisk = path.resolve(path.join(`./public/`, req.url))
 
     if (await pathExists(pathOnDisk)) {
@@ -60,6 +56,23 @@ exports.onCreateDevServer = async ({ app, cache, reporter, emitter }) => {
 
     return res.sendFile(pathOnDisk)
   })
+}
+
+// So something is wrong with the reporter, when I do this in preBootstrap,
+// the progressbar gets not updated
+exports.onPostBootstrap = async ({ reporter, cache, store }) => {
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // recreate jobs that haven't been triggered by develop yet
+    // removing stale jobs has already kicked in so we know these still need to process
+    for (const [contentDigest] of store.getState().jobsV2.complete) {
+      const job = await cache.get(contentDigest)
+
+      if (job) {
+        // we dont have to await, gatsby does this for us
+        _unstable_createJob(job, { reporter })
+      }
+    }
+  }
 }
 
 exports.onPreBootstrap = async (
@@ -137,19 +150,6 @@ exports.onPreBootstrap = async (
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })
-  }
-
-  if (process.env.gatsby_executing_command !== `develop`) {
-    // recreate jobs that haven't been triggered by develop yet
-    // removing stale jobs has already kicked in so we know these still need to process
-    for (const [contentDigest] of store.getState().jobsV2.complete) {
-      const job = await cache.get(contentDigest)
-
-      if (job) {
-        // we dont have to await, gatsby does this for us
-        _unstable_createJob(job, { reporter })
-      }
-    }
   }
 
   // normalizedOptions = setPluginOptions(pluginOptions)

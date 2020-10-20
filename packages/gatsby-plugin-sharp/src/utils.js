@@ -32,7 +32,7 @@ function createGatsbyProgressOrFallbackToExternalProgressBar(
 
 let progressBar
 let pendingImagesCounter = 0
-let firstPass = process.env.gatsby_executing_command !== `develop`
+let firstPass = true
 const createOrGetProgressBar = reporter => {
   if (!progressBar) {
     progressBar = createGatsbyProgressOrFallbackToExternalProgressBar(
