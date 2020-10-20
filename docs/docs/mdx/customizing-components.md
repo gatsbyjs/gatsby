@@ -34,6 +34,7 @@ The following components can be customized with the MDXProvider:
 
 <!-- remark lint doesn't realize the pipes in code blocks aren't table markers -->
 <!-- lint ignore table-pipe-alignment -->
+<!-- prettier-ignore-start -->
 
 | Tag             | Name                                                                 | Syntax                                            |
 | --------------- | -------------------------------------------------------------------- | ------------------------------------------------- |
@@ -63,6 +64,7 @@ The following components can be customized with the MDXProvider:
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                 |
 
 <!-- lint enable table-pipe-alignment -->
+<!-- prettier-ignore-end -->
 
 ## How does this work?
 

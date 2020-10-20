@@ -261,6 +261,7 @@ That's it!
 
 #### Output MDX
 
+<!-- prettier-ignore-start -->
 ```mdx
 <RecipeIntroduction># Create a file</RecipeIntroduction>
 
@@ -274,6 +275,7 @@ Creates a "hello, world" file
   That's it!
 </RecipeStep>
 ```
+<!-- prettier-ignore-end -->
 
 #### Parser return object
 
