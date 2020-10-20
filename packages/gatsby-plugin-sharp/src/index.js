@@ -269,6 +269,9 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         file.internal.contentDigest
       ),
       args: {
+        isLazy:
+          process.env.gatsby_executing_command === `develop` &&
+          !getPluginOptions().experimentalDisableLazyProcessing,
         operations,
         pluginOptions: getPluginOptions(),
       },
@@ -784,3 +787,4 @@ exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
 exports.stats = stats
+exports._unstable_createJob = createJob

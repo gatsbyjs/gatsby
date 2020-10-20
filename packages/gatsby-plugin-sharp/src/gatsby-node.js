@@ -2,10 +2,22 @@ const {
   setBoundActionCreators,
   // queue: jobQueue,
   // reportError,
+  _unstable_createJob,
 } = require(`./index`)
+const { pathExists } = require(`fs-extra`)
+const { slash } = require(`gatsby-core-utils`)
 const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
+const path = require(`path`)
+
+exports.onPreInit = ({ reporter }, pluginOptions) => {
+  if (!pluginOptions.experimentalDisableLazyProcessing) {
+    reporter.info(
+      `[gatsby-plugin-sharp] The lazy image processing experiment is enabled, to disable it please set experimentalDisableLazyProcessing to false in pluginOptions`
+    )
+  }
+}
 
 // create the progressbar once and it will be killed in another lifecycle
 const finishProgressBar = () => {
@@ -16,9 +28,44 @@ const finishProgressBar = () => {
 }
 
 exports.onPostBuild = () => finishProgressBar()
-exports.onCreateDevServer = () => finishProgressBar()
 
-exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
+exports.onCreateDevServer = async ({ app, cache, reporter, emitter }) => {
+  finishProgressBar()
+
+  app.use(async (req, res, next) => {
+    // images are only saved in static, so short-circuit
+    if (!req.url.startsWith(`/static/`)) {
+      return next()
+    }
+
+    const pathOnDisk = path.resolve(path.join(`./public/`, req.url))
+
+    if (await pathExists(pathOnDisk)) {
+      return res.sendFile(pathOnDisk)
+    }
+
+    const jobContentDigest = await cache.get(req.url)
+    const cacheResult = jobContentDigest
+      ? await cache.get(jobContentDigest)
+      : null
+
+    if (!cacheResult) {
+      return next()
+    }
+
+    await _unstable_createJob(cacheResult, { reporter })
+    // we should implement cache.del inside our abstraction
+    await cache.cache.del(jobContentDigest)
+    await cache.cache.del(req.url)
+
+    return res.sendFile(pathOnDisk)
+  })
+}
+
+exports.onPreBootstrap = async (
+  { actions, emitter, reporter, cache, store },
+  pluginOptions
+) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
 
@@ -40,6 +87,33 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
 
     emitter.on(`CREATE_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
+        if (action.payload.job.args.isLazy) {
+          // we have to remove some internal pieces
+          const job = {
+            name: action.payload.job.name,
+            inputPaths: action.payload.job.inputPaths.map(input => input.path),
+            outputDir: action.payload.job.outputDir,
+            args: {
+              ...action.payload.job.args,
+              isLazy: false,
+            },
+          }
+          cache.set(action.payload.job.contentDigest, job)
+
+          action.payload.job.args.operations.forEach(op => {
+            const cacheKey = slash(
+              path.relative(
+                path.join(process.cwd(), `public`),
+                path.join(action.payload.job.outputDir, op.outputPath)
+              )
+            )
+
+            cache.set(`/${cacheKey}`, action.payload.job.contentDigest)
+          })
+
+          return
+        }
+
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
@@ -51,12 +125,31 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
     emitter.on(`END_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
         const jobContentDigest = action.payload.jobContentDigest
+
+        // when it's lazy we didn't set it
+        if (!imageCountInJobsMap.has(jobContentDigest)) {
+          return
+        }
+
         const imageCount = imageCountInJobsMap.get(jobContentDigest)
         const progress = createOrGetProgressBar(reporter)
         progress.tick(imageCount)
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })
+  }
+
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // recreate jobs that haven't been triggered by develop yet
+    // removing stale jobs has already kicked in so we know these still need to process
+    for (const [contentDigest] of store.getState().jobsV2.complete) {
+      const job = await cache.get(contentDigest)
+
+      if (job) {
+        // we dont have to await, gatsby does this for us
+        _unstable_createJob(job, { reporter })
+      }
+    }
   }
 
   // normalizedOptions = setPluginOptions(pluginOptions)

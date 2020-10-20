@@ -38,8 +38,12 @@ const q = queue(
  * @param {{inputPaths: string[], outputDir: string, args: WorkerInput}} args
  * @return Promise
  */
-exports.IMAGE_PROCESSING = ({ inputPaths, outputDir, args }) =>
-  new Promise((resolve, reject) => {
+exports.IMAGE_PROCESSING = ({ inputPaths, outputDir, args }) => {
+  if (args.isLazy) {
+    return Promise.resolve()
+  }
+
+  return new Promise((resolve, reject) => {
     q.push({ inputPaths, outputDir, args }, function (err) {
       if (err) {
         return reject(err)
@@ -48,3 +52,4 @@ exports.IMAGE_PROCESSING = ({ inputPaths, outputDir, args }) =>
       return resolve()
     })
   })
+}
