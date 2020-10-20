@@ -1,14 +1,14 @@
 import React from "react"
-const fs = require(`fs`)
+import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
-const { merge } = require(`lodash`)
-const { join } = require(`path`)
+import { merge } from "lodash"
+import { join } from "path"
 import apiRunner from "./api-runner-ssr"
-const { grabMatchParams } = require(`./find-path`)
+import { grabMatchParams } from "./find-path"
 const syncRequires = require(`$virtual/sync-requires`)
 
-const { RouteAnnouncerProps } = require(`./route-announcer-props`)
-const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
+import { RouteAnnouncerProps } from "./route-announcer-props"
+import { ServerLocation, Router, isRedirect } from "@reach/router"
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
@@ -99,7 +99,7 @@ export default (pagePath, callback) => {
   const getPageData = pagePath => {
     const pageDataPath = getPageDataPath(pagePath)
     const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
-    const pageDataJson = fs.readFileSync(absolutePageDataPath, 'utf8')
+    const pageDataJson = fs.readFileSync(absolutePageDataPath, `utf8`)
 
     try {
       return JSON.parse(pageDataJson)
