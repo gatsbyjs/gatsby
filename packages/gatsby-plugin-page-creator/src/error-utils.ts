@@ -9,6 +9,8 @@ export const CODES = {
   GraphQLResolver: `12106`,
   RequiredPath: `12107`,
   NonExistingPath: `12108`,
+  FileSystemAdd: `12109`,
+  FileSystemRemove: `12110`,
 }
 
 export const pluginPrefix = `gatsby-plugin-page-creator`
@@ -66,5 +68,17 @@ export const ERROR_MAP = {
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
+  },
+  [CODES.FileSystemAdd]: {
+    text: (context): string => `PageCreator: ${context.sourceMessage}`,
+    level: `ERROR`,
+    type: `PLUGIN`,
+    category: `SYSTEM`,
+  },
+  [CODES.FileSystemRemove]: {
+    text: (context): string => `PageCreator: ${context.sourceMessage}`,
+    level: `ERROR`,
+    type: `PLUGIN`,
+    category: `SYSTEM`,
   },
 } as Reporter["errorMap"]

@@ -103,7 +103,7 @@ Please pick a path to an existing directory.`,
           }
         } catch (e) {
           reporter.panic({
-            id: prefixId(CODES.Generic),
+            id: prefixId(CODES.FileSystemAdd),
             context: {
               sourceMessage: e.message,
             },
@@ -125,7 +125,7 @@ Please pick a path to an existing directory.`,
           knownFiles.delete(removedPath)
         } catch (e) {
           reporter.panic({
-            id: prefixId(CODES.Generic),
+            id: prefixId(CODES.FileSystemRemove),
             context: {
               sourceMessage: e.message,
             },
