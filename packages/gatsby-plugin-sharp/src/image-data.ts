@@ -135,7 +135,7 @@ export async function generateImageData({
     const transform = createTransformObject({
       ...args,
       width,
-      height: Math.round(width * imageSizes.aspectRatio),
+      height: Math.round(width / imageSizes.aspectRatio),
       toFormat: args.toFormat || metadata.format,
     })
     return transform
@@ -178,7 +178,7 @@ export async function generateImageData({
       const transform = createTransformObject({
         ...args,
         width,
-        height: Math.round(width * imageSizes.aspectRatio),
+        height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
       })
       return transform
