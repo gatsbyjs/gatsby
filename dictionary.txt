@@ -261,7 +261,7 @@ JSX
 Julien
 JWT
 Kategorien
-kintoblock
+*kintoblock
 KintoBlock
 KintoBlocks
 KintoHub
