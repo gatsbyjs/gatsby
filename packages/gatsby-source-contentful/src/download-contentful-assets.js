@@ -20,7 +20,7 @@ async function distributeWorkload(workers, count) {
 
   async function task() {
     while (methods.length > 0) {
-      await methods.shift()
+      await methods.pop()()
     }
   }
 
