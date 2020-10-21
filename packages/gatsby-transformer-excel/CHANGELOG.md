@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.15...gatsby-transformer-excel@2.4.16) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
 ## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.4.14...gatsby-transformer-excel@2.4.15) (2020-10-13)
 
 ### Bug Fixes

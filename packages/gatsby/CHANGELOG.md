@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.84](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.83...gatsby@2.24.84) (2020-10-21)
+
+### Bug Fixes
+
+- duplicate types to solve circular dependency ([#27578](https://github.com/gatsbyjs/gatsby/issues/27578)) ([029ec48](https://github.com/gatsbyjs/gatsby/commit/029ec489a271ddeb7ad3fa174bd536c1b38db246))
+
+## [2.24.83](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.82...gatsby@2.24.83) (2020-10-20)
+
+### Bug Fixes
+
+- **gatsby:** Handle double prefix case for `extendErrorIdWithPluginName` ([#27547](https://github.com/gatsbyjs/gatsby/issues/27547)) ([b4d8342](https://github.com/gatsbyjs/gatsby/commit/b4d8342008de8fac199e3a524130573ba81ed354))
+
+## [2.24.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.81...gatsby@2.24.82) (2020-10-19)
+
+### Bug Fixes
+
+- **gatsby:** notify when Gatsby cache is incomplete ([#27549](https://github.com/gatsbyjs/gatsby/issues/27549)) ([2d6a153](https://github.com/gatsbyjs/gatsby/commit/2d6a1535ca2fa45bc6821d3273c32e18f66913fc))
+
+## [2.24.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.80...gatsby@2.24.81) (2020-10-19)
+
+### Features
+
+- **gatsby-plugin-utils:** save validation resulting value to plugin options ([#27381](https://github.com/gatsbyjs/gatsby/issues/27381)) ([0073fb1](https://github.com/gatsbyjs/gatsby/commit/0073fb167e7ccddefbff8872b5b9bd488660804d))
+
+## [2.24.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.79...gatsby@2.24.80) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby:** refresh browser when receiving update and runtime errored ([#27467](https://github.com/gatsbyjs/gatsby/issues/27467)) ([f227e85](https://github.com/gatsbyjs/gatsby/commit/f227e85728168d104ed0a7982823923dcd3bba62))
+
+### Performance Improvements
+
+- **gatsby:** test sync before calling onCreateNode ([#27442](https://github.com/gatsbyjs/gatsby/issues/27442)) ([6400383](https://github.com/gatsbyjs/gatsby/commit/6400383287db9967a7124df7fb0d096408372b95))
+
+## [2.24.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.78...gatsby@2.24.79) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby:** add runtime check for react 17 ([#27468](https://github.com/gatsbyjs/gatsby/issues/27468)) ([239d539](https://github.com/gatsbyjs/gatsby/commit/239d539b76421f210a0db901786021ac45a42ac7))
+
 ## [2.24.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.77...gatsby@2.24.78) (2020-10-15)
 
 ### Features

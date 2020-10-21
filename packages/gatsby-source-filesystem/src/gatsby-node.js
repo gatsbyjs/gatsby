@@ -146,6 +146,15 @@ const createFSMachine = (
   return interpret(fsMachine).start()
 }
 
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  exports.pluginOptionsSchema = ({ Joi }) =>
+    Joi.object({
+      name: Joi.string(),
+      path: Joi.string(),
+      ignore: Joi.array().items(Joi.string()),
+    })
+}
+
 exports.sourceNodes = (api, pluginOptions) => {
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
