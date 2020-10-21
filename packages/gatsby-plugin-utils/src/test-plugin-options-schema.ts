@@ -1,7 +1,7 @@
 import { Joi } from "./joi"
 import { GatsbyNode } from "gatsby"
 import { validateOptionsSchema } from "./validate"
-import { IPluginInfoOptions } from "gatsby"
+import { IPluginInfoOptions } from "./types"
 
 interface ITestPluginOptionsSchemaReturnType {
   errors: Array<string>
