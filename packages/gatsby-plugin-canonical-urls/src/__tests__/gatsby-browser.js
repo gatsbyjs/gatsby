@@ -2,7 +2,7 @@ const { onRouteUpdate } = require(`../gatsby-browser`)
 
 describe(`gatsby-plugin-canonical-urls`, () => {
   beforeEach(() => {
-    global.document.head.innerHTML = `<link data-basehost="someurl.com" data-baseprotocol="http:" href="http://someurl.com/somepost" rel="canonical"
+    global.document.head.innerHTML = `<link href="http://someurl.com/somepost" rel="canonical"
         />`
   })
 
@@ -10,7 +10,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     onRouteUpdate({ location: { pathname: `/hogwarts`, hash: ``, search: `` } })
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`
+      `"<link href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`
     )
   })
   it(`should keep the hash`, () => {
@@ -19,7 +19,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     })
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts#harry-potter\\" rel=\\"canonical\\">"`
+      `"<link href=\\"http://someurl.com/hogwarts#harry-potter\\" rel=\\"canonical\\">"`
     )
   })
   it(`shouldn't strip search parameter by default`, () => {
@@ -32,7 +32,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     })
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts?house=gryffindor\\" rel=\\"canonical\\">"`
+      `"<link href=\\"http://someurl.com/hogwarts?house=gryffindor\\" rel=\\"canonical\\">"`
     )
   })
   it(`should strip search parameters if option stripQueryString is true`, () => {
@@ -52,7 +52,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     )
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`
+      `"<link href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`
     )
   })
 })
