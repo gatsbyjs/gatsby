@@ -168,7 +168,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 ### Add custom error messages
 
-Sometimes you might want to provide more detailed error messages when validation fails for a specific field. Joi provides a [`.messages()` method](https://github.com/sideway/joi/issues/2109) which lets you override error messages for specific [error types](https://joi.dev/api/?v=17.2.1#list-of-errors).
+Sometimes you might want to provide more detailed error messages when validation fails for a specific field. Joi provides a [`.messages()` method](https://joi.dev/api/?v=17.2.1#anymessagesmessages) which lets you override error messages for specific [error types](https://joi.dev/api/?v=17.2.1#list-of-errors) (e.g. `"any.required"` when a `.required()` call fails).
 
 For example, this is how we would provide a custom error message if users do not specify `optionA` for `gatsby-plugin-console-log`:
 
