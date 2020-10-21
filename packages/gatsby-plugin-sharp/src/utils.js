@@ -168,7 +168,6 @@ export function fixedImageSizes({
       height,
       fit,
     })
-    console.log({ calculated })
     width = calculated.width
     height = calculated.height
     aspectRatio = calculated.aspectRatio
