@@ -99,7 +99,7 @@ export const onRouteUpdate = true
  *
  *   window.scrollTo(...(currentPosition || [0, 0]))
  *
- *   return false
+ *   return true
  * }
  */
 export const shouldUpdateScroll = true
