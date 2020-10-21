@@ -143,7 +143,11 @@ describe(`findPageByPath`, () => {
     ])
 
     it(`Will return 404 pages if requested not found (will prefer /dev-404-page/)`, () => {
-      const page = findPageByPath(stateWithBoth404Pages, `/does-not-exist/`)
+      const page = findPageByPath(
+        stateWithBoth404Pages,
+        `/does-not-exist/`,
+        true
+      )
       expect(page).toBeDefined()
       expect(page?.path).toEqual(`/dev-404-page/`)
     })
@@ -155,7 +159,11 @@ describe(`findPageByPath`, () => {
         `/404.html`,
       ])
 
-      const page = findPageByPath(stateWith404HtmlPage, `/does-not-exist/`)
+      const page = findPageByPath(
+        stateWith404HtmlPage,
+        `/does-not-exist/`,
+        true
+      )
       expect(page).toBeDefined()
       expect(page?.path).toEqual(`/404.html`)
     })
