@@ -74,35 +74,6 @@ export interface IImageDataArgs {
   reporter: Reporter
 }
 
-export function getOutputAspectRatio(
-  {
-    width,
-    height,
-    maxWidth,
-    maxHeight,
-    layout = `fixed`,
-    fit = `cover`,
-  }: ISharpGatsbyImageArgs,
-  metadata: IImageMetadata
-): number {
-  // These maintain the input aspect ratio
-  if (fit === `inside` || fit === `outside`) {
-    return metadata.width / metadata.height
-  }
-
-  // If there's a width and height set, then calculate from that
-  if (height && width && layout === `fixed`) {
-    return width / height
-  }
-
-  // If there's a maxWidth and maxHeight, then we can get aspect ratio from there
-  if (maxWidth && maxHeight && layout !== `fixed`) {
-    return maxWidth / maxHeight
-  }
-  // Otherwise we use the aspect ratio of the source image
-  return metadata.width / metadata.height
-}
-
 export async function generateImageData({
   file,
   args,
