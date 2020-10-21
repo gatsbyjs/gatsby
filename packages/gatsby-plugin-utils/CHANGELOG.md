@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.37...gatsby-plugin-utils@0.2.38) (2020-10-21)
+
+### Bug Fixes
+
+- duplicate types to solve circular dependency ([#27578](https://github.com/gatsbyjs/gatsby/issues/27578)) ([029ec48](https://github.com/gatsbyjs/gatsby/commit/029ec489a271ddeb7ad3fa174bd536c1b38db246))
+- Update plugin schema testing util and associated tests ([#27574](https://github.com/gatsbyjs/gatsby/issues/27574)) ([6d81283](https://github.com/gatsbyjs/gatsby/commit/6d81283e4f47ae2cb571626bf4d02fcd2c9d1af4))
+
 ## [0.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.36...gatsby-plugin-utils@0.2.37) (2020-10-20)
 
 **Note:** Version bump only for package gatsby-plugin-utils
