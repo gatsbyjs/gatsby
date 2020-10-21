@@ -22,6 +22,7 @@ const initialState = (): IGatsbyState["queries"] => {
     byConnection: new Map<ConnectionName, Set<QueryId>>(),
     trackedQueries: new Map<QueryId, IQueryState>(),
     trackedComponents: new Map<ComponentPath, IComponentState>(),
+    deletedQueries: new Set<QueryId>(),
   }
 }
 
@@ -60,20 +61,42 @@ export function queriesReducer(
 
     case `CREATE_PAGE`: {
       const { path, componentPath } = action.payload
-      if (!state.trackedQueries.has(path) || action.contextModified) {
-        const query = registerQuery(state, path)
+      let query = state.trackedQueries.get(path)
+      if (!query || action.contextModified) {
+        query = registerQuery(state, path)
         query.dirty = setFlag(query.dirty, FLAG_DIRTY_PAGE)
       }
       registerComponent(state, componentPath).pages.add(path)
+      state.deletedQueries.delete(path)
       return state
     }
     case `DELETE_PAGE`: {
-      const { path, componentPath } = action.payload
-      const component = state.trackedComponents.get(componentPath)
-      if (component) {
-        component.pages.delete(path)
+      // Don't actually remove the page query from trackedQueries, just mark it as "deleted". Why?
+      //   We promote a technique of a consecutive deletePage/createPage calls in onCreatePage hook,
+      //   see https://www.gatsbyjs.com/docs/creating-and-modifying-pages/#pass-context-to-pages
+      //   If we remove a query and then re-add, it will be marked as dirty.
+      //   This is OK for cold cache but with warm cache we will re-run all of those queries (unnecessarily).
+      //   We will reconcile the state after createPages API call and actually delete those queries.
+      state.deletedQueries.add(action.payload.path)
+      return state
+    }
+    case `API_FINISHED`: {
+      if (action.payload.apiName !== `createPages`) {
+        return state
       }
-      state.trackedQueries.delete(path)
+      for (const queryId of state.deletedQueries) {
+        for (const component of state.trackedComponents.values()) {
+          component.pages.delete(queryId)
+        }
+        for (const nodeQueries of state.byNode.values()) {
+          nodeQueries.delete(queryId)
+        }
+        for (const connectionQueries of state.byConnection.values()) {
+          connectionQueries.delete(queryId)
+        }
+        state.trackedQueries.delete(queryId)
+      }
+      state.deletedQueries.clear()
       return state
     }
     case `QUERY_EXTRACTED`: {
@@ -108,10 +131,11 @@ export function queriesReducer(
       // TODO: unify the behavior?
       const query = registerQuery(state, action.payload.id)
       query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
+      state.deletedQueries.delete(action.payload.id)
       return state
     }
     case `REMOVE_STATIC_QUERY`: {
-      state.trackedQueries.delete(action.payload)
+      state.deletedQueries.add(action.payload)
       return state
     }
     case `CREATE_COMPONENT_DEPENDENCY`: {

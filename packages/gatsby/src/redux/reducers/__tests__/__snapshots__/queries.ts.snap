@@ -12,6 +12,7 @@ Object {
       "/hi/",
     },
   },
+  "deletedQueries": Set {},
   "trackedComponents": Map {},
   "trackedQueries": Map {},
 }

@@ -10,7 +10,7 @@ const queryQueue = require(`./queue`)
  * them from all tracked queries.
  */
 const calcDirtyQueryIds = state => {
-  const { trackedQueries, trackedComponents } = state.queries
+  const { trackedQueries, trackedComponents, deletedQueries } = state.queries
 
   const queriesWithBabelErrors = new Set()
   for (const component of trackedComponents.values()) {
@@ -23,6 +23,9 @@ const calcDirtyQueryIds = state => {
   // Note: trackedQueries contains both - page and static query ids
   const dirtyQueryIds = []
   for (const [queryId, query] of trackedQueries) {
+    if (deletedQueries.has(queryId)) {
+      continue
+    }
     if (query.dirty > 0 && !queriesWithBabelErrors.has(queryId)) {
       dirtyQueryIds.push(queryId)
     }

@@ -163,6 +163,16 @@ export interface IComponentState {
   errors: number
 }
 
+export type GatsbyNodeAPI =
+  | "onPreBoostrap"
+  | "onPostBoostrap"
+  | "onCreateWebpackConfig"
+  | "onCreatePage"
+  | "sourceNodes"
+  | "createPagesStatefully"
+  | "createPages"
+  | "onPostBuild"
+
 export interface IGatsbyState {
   program: IStateProgram
   nodes: GatsbyNodes
@@ -179,16 +189,7 @@ export interface IGatsbyState {
       plugins: []
       [key: string]: unknown
     }
-    nodeAPIs: Array<
-      | "onPreBoostrap"
-      | "onPostBoostrap"
-      | "onCreateWebpackConfig"
-      | "onCreatePage"
-      | "sourceNodes"
-      | "createPagesStatefully"
-      | "createPages"
-      | "onPostBuild"
-    >
+    nodeAPIs: Array<GatsbyNodeAPI>
     browserAPIs: Array<
       | "onRouteUpdate"
       | "registerServiceWorker"
@@ -211,6 +212,7 @@ export interface IGatsbyState {
     byConnection: Map<string, Set<Identifier>>
     trackedQueries: Map<Identifier, IQueryState>
     trackedComponents: Map<string, IComponentState>
+    deletedQueries: Set<Identifier>
   }
   components: Map<
     SystemPath,
@@ -292,6 +294,7 @@ export type ActionsUnion =
   | IAddChildNodeToParentNodeAction
   | IAddFieldToNodeAction
   | IAddThirdPartySchema
+  | IApiFinishedAction
   | ICreateFieldExtension
   | ICreateNodeAction
   | ICreatePageAction
@@ -347,6 +350,13 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
+
+export interface IApiFinishedAction {
+  type: `API_FINISHED`
+  payload: {
+    apiName: GatsbyNodeAPI
+  }
+}
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`

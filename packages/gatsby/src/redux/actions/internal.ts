@@ -19,6 +19,7 @@ import {
   IDefinitionMeta,
   ISetGraphQLDefinitionsAction,
   IQueryStartAction,
+  IApiFinishedAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -82,6 +83,15 @@ export const replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+export const apiFinished = (
+  payload: IApiFinishedAction["payload"]
+): IApiFinishedAction => {
+  return {
+    type: `API_FINISHED`,
+    payload,
   }
 }
 

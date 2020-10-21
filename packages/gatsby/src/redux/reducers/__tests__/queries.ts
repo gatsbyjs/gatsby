@@ -18,6 +18,8 @@ import {
   IQueryStartAction,
 } from "../../types"
 
+import { cloneDeep } from "lodash"
+
 type QueriesState = IGatsbyState["queries"]
 
 let state: QueriesState
@@ -80,6 +82,7 @@ it(`has expected initial state`, () => {
     Object {
       "byConnection": Map {},
       "byNode": Map {},
+      "deletedQueries": Set {},
       "trackedComponents": Map {},
       "trackedQueries": Map {},
     }
@@ -156,28 +159,70 @@ describe(`create page`, () => {
       byConnection: new Map(),
     })
   })
+
+  it(`cancels scheduled page deletion`, () => {
+    state = createPage(state, Pages.foo)
+    state = deletePage(state, Pages.foo)
+    // sanity check
+    expect(state.deletedQueries).toEqual(new Set([Pages.foo.path]))
+
+    state = createPage(state, Pages.foo)
+    expect(state.deletedQueries).toEqual(new Set([]))
+  })
 })
 
 describe(`delete page`, () => {
   beforeEach(() => {
     state = createPage(state, Pages.foo)
     state = createPage(state, Pages.bar)
+
+    const action1: ICreatePageDependencyAction = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: {
+        path: Pages.foo.path,
+        nodeId: `123`,
+      },
+    }
+    const action2: ICreatePageDependencyAction = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: {
+        path: Pages.bar.path,
+        connection: `Bar`,
+      },
+    }
+    state = reducer(state, action1)
+    state = reducer(state, action2)
   })
 
-  it(`removes page query from tracked queries`, () => {
-    state = deletePage(state, Pages.foo)
-
-    expect(state.trackedQueries.has(`/foo`)).toEqual(false)
-    expect(state.trackedQueries.has(`/bar`)).toEqual(true) // sanity check
-  })
-
-  it(`removes page query from tracked component pages`, () => {
-    state = deletePage(state, Pages.foo)
-
-    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      pages: new Set([]),
+  it(`has expected baseline`, () => {
+    expect(state).toMatchObject({
+      byConnection: new Map([[`Bar`, new Set([`/bar`])]]),
+      byNode: new Map([[`123`, new Set([`/foo`])]]),
+      deletedQueries: new Set(),
     })
-    // sanity check:
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      pages: new Set([`/foo`]),
+    })
+    expect(state.trackedComponents.get(`/bar.js`)).toMatchObject({
+      pages: new Set([`/bar`]),
+    })
+    expect(state.trackedQueries.has(`/foo`)).toEqual(true)
+    expect(state.trackedQueries.has(`/bar`)).toEqual(true)
+  })
+
+  it(`schedules page query for deletion from tracked queries`, () => {
+    state = deletePage(state, Pages.foo)
+
+    // Pages still exist just scheduled for deletion:
+    expect(state.deletedQueries.has(`/foo`)).toEqual(true)
+    expect(state.deletedQueries.has(`/bar`)).toEqual(false)
+
+    expect(state.trackedQueries.has(`/foo`)).toEqual(true)
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      pages: new Set([`/foo`]),
+    })
+
+    expect(state.trackedQueries.has(`/bar`)).toEqual(true)
     expect(state.trackedComponents.get(`/bar.js`)).toMatchObject({
       pages: new Set([`/bar`]),
     })
@@ -187,8 +232,8 @@ describe(`delete page`, () => {
     state = deletePage(state, Pages.foo)
 
     expect(state).toMatchObject({
-      byNode: new Map(),
-      byConnection: new Map(),
+      byNode: new Map([[`123`, new Set([`/foo`])]]),
+      byConnection: new Map([[`Bar`, new Set([`/bar`])]]),
     })
   })
 })
@@ -230,6 +275,15 @@ describe(`replace static query`, () => {
     })
   })
 
+  it(`cancels scheduled static query deletion`, () => {
+    state = reducer(state, replaceStaticQuery(StaticQueries.q1))
+    state = removeStaticQuery(state, StaticQueries.q1.id)
+    expect(state.deletedQueries.has(StaticQueries.q1.id)).toEqual(true) // sanity check
+
+    state = reducer(state, replaceStaticQuery(StaticQueries.q1))
+    expect(state.deletedQueries.has(StaticQueries.q1.id)).toEqual(false)
+  })
+
   // TODO: currently we track static query components in a separate "static-query-components" reducer
   //   Instead we should track all query relations uniformly in "queries" reducer.
   //   Then this test will make sense
@@ -262,9 +316,99 @@ describe(`remove static query`, () => {
     state = reducer(state, replaceStaticQuery(StaticQueries.q2))
   })
 
-  it(`removes static query from tracked queries`, () => {
+  it(`schedules static query for deletion from tracked queries`, () => {
     state = removeStaticQuery(state, StaticQueries.q1.id)
-    expect(Array.from(state.trackedQueries.keys())).toEqual([`sq--q2`])
+    expect(Array.from(state.deletedQueries.keys())).toEqual([`sq--q1`])
+    expect(Array.from(state.trackedQueries.keys())).toEqual([
+      `sq--q1`,
+      `sq--q2`,
+    ])
+  })
+})
+
+describe(`createPages API end`, () => {
+  beforeEach(() => {
+    state = createPage(state, Pages.foo)
+    state = createPage(state, Pages.bar)
+    state = reducer(state, replaceStaticQuery(StaticQueries.q1))
+
+    const dataDependencies = [
+      { path: Pages.foo.path, nodeId: `123` },
+      { path: Pages.foo.path, connection: `Test` },
+      { path: Pages.bar.path, nodeId: `123` },
+      { path: Pages.bar.path, connection: `Test` },
+      { path: StaticQueries.q1.id, connection: `Test` },
+      { path: StaticQueries.q1.id, nodeId: `123` },
+    ]
+    for (const payload of dataDependencies) {
+      state = reducer(state, {
+        type: `CREATE_COMPONENT_DEPENDENCY`,
+        payload,
+      })
+    }
+    state = deletePage(state, Pages.foo)
+    state = removeStaticQuery(state, StaticQueries.q1.id)
+  })
+
+  it(`has expected baseline`, () => {
+    expect(state).toMatchObject({
+      byConnection: new Map([[`Test`, new Set([`/foo`, `/bar`, `sq--q1`])]]),
+      byNode: new Map([[`123`, new Set([`/foo`, `/bar`, `sq--q1`])]]),
+      deletedQueries: new Set([`/foo`, `sq--q1`]),
+    })
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      pages: new Set([`/foo`]),
+    })
+    expect(state.trackedComponents.get(`/bar.js`)).toMatchObject({
+      pages: new Set([`/bar`]),
+    })
+    expect(state.trackedQueries.has(`/foo`)).toEqual(true)
+    expect(state.trackedQueries.has(`/bar`)).toEqual(true)
+    expect(state.trackedQueries.has(`sq--q1`)).toEqual(true)
+  })
+
+  it(`doesn't alter state on any API other than createPages`, () => {
+    const baseLine = cloneDeep(state)
+    state = reducer(state, {
+      type: `API_FINISHED`,
+      payload: { apiName: `sourceNodes` },
+    })
+    expect(state).toEqual(baseLine)
+  })
+
+  it(`removes previously deleted page query from tracked component pages`, () => {
+    state = reducer(state, {
+      type: `API_FINISHED`,
+      payload: { apiName: `createPages` },
+    })
+
+    expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
+      pages: new Set([]),
+    })
+    expect(state.trackedComponents.get(`/bar.js`)).toMatchObject({
+      pages: new Set([`/bar`]),
+    })
+    expect(state.deletedQueries).toEqual(new Set([]))
+  })
+
+  it(`removes previously deleted page query from tracked queries`, () => {
+    state = reducer(state, {
+      type: `API_FINISHED`,
+      payload: { apiName: `createPages` },
+    })
+
+    expect(state.trackedQueries.has(`/foo`)).toEqual(false)
+    expect(state.trackedQueries.has(`/bar`)).toEqual(true)
+  })
+
+  it(`clears data dependencies for previously deleted queries`, () => {
+    state = reducer(state, {
+      type: `API_FINISHED`,
+      payload: { apiName: `createPages` },
+    })
+
+    expect(state.byNode.get(`123`)).toEqual(new Set([`/bar`]))
+    expect(state.byConnection.get(`Test`)).toEqual(new Set([`/bar`]))
   })
 
   // TODO: see a note in the "replace static query"
@@ -557,6 +701,100 @@ describe(`add page data dependency`, () => {
     const state = reducer(undefined, action)
 
     expect(state).toMatchSnapshot()
+  })
+})
+
+describe(`query start`, () => {
+  beforeEach(() => {
+    state = createPage(state, Pages.foo)
+    state = reducer(state, replaceStaticQuery(StaticQueries.q1))
+
+    const dataDependencies = [
+      { path: Pages.foo.path, nodeId: `123` },
+      { path: Pages.foo.path, connection: `Test` },
+      { path: StaticQueries.q1.id, connection: `Test` },
+      { path: StaticQueries.q1.id, nodeId: `123` },
+    ]
+    for (const payload of dataDependencies) {
+      state = reducer(state, {
+        type: `CREATE_COMPONENT_DEPENDENCY`,
+        payload,
+      })
+    }
+  })
+
+  it(`has expected baseline`, () => {
+    expect(state.byNode.get(`123`)).toEqual(new Set([`/foo`, `sq--q1`]))
+    expect(state.byConnection.get(`Test`)).toEqual(new Set([`/foo`, `sq--q1`]))
+  })
+
+  it(`resets data dependencies for page queries`, () => {
+    state = reducer(
+      state,
+      queryStart(
+        {
+          componentPath: Pages.foo.componentPath,
+          path: Pages.foo.path,
+          isPage: true,
+        },
+        {} as any
+      )
+    )
+    expect(state.byNode.get(`123`)?.has(`/foo`)).toEqual(false)
+    expect(state.byConnection.get(`Test`)?.has(`/foo`)).toEqual(false)
+  })
+
+  it(`resets data dependencies for static queries`, () => {
+    state = reducer(
+      state,
+      queryStart(
+        {
+          componentPath: StaticQueries.q1.componentPath,
+          path: StaticQueries.q1.id,
+          isPage: false,
+        },
+        {} as any
+      )
+    )
+    expect(state.byNode.get(`123`)?.has(`sq--q1`)).toEqual(false)
+    expect(state.byConnection.get(`Test`)?.has(`sq--q1`)).toEqual(false)
+  })
+})
+
+describe(`create node`, () => {
+  it.todo(`marks page query as dirty when it has this node as a dependency`)
+  it.todo(`marks static query as dirty when it has this node as a dependency`)
+  it.todo(
+    `does not mark page query as dirty when this node is not a query dependency`
+  )
+  it.todo(
+    `does not mark static query as dirty when this node is not a query dependency`
+  )
+})
+
+describe(`delete node`, () => {
+  it.todo(`marks page query as dirty when it has this node as a dependency`)
+  it.todo(`marks static query as dirty when it has this node as a dependency`)
+  it.todo(
+    `does not mark page query as dirty when this node is not a query dependency`
+  )
+  it.todo(
+    `does not mark static query as dirty when this node is not a query dependency`
+  )
+})
+
+describe(`delete cache`, () => {
+  it(`restores original state`, () => {
+    const initialState = cloneDeep(state)
+    state = createPage(state, Pages.foo)
+    state = createPage(state, Pages.bar)
+    state = reducer(state, replaceStaticQuery(StaticQueries.q1))
+    state = reducer(state, replaceStaticQuery(StaticQueries.q2))
+    // sanity check
+    expect(state).not.toEqual(initialState)
+
+    state = reducer(state, { type: `DELETE_CACHE` })
+    expect(state).toEqual(initialState)
   })
 })
 
