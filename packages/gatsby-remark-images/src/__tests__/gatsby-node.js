@@ -2,7 +2,7 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"maxWidth" must be a number`,
       `"linkImagesToOriginal" must be a boolean`,
@@ -20,7 +20,7 @@ describe(`pluginOptionsSchema`, () => {
       `"srcSetBreakpoints" must be an array`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       maxWidth: `This should be a number`,
       linkImagesToOriginal: `This should be a boolean`,
       showCaptions: `This should be a boolean`,
@@ -40,8 +40,8 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       maxWidth: 700,
       linkImagesToOriginal: false,
       showCaptions: true,

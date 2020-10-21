@@ -13,6 +13,7 @@ jest.mock(`gatsby-core-utils`, () => {
   return {
     ...jest.requireActual(`gatsby-core-utils`),
     getGatsbyVersion: jest.fn(() => `2.1.1`),
+    isCI: (): boolean => false,
   }
 })
 

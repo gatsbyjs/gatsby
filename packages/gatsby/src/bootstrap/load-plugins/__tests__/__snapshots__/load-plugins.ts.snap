@@ -209,7 +209,7 @@ Array [
     ],
     "pluginOptions": Object {
       "allExtensions": false,
-      "isTSX": true,
+      "isTSX": false,
       "jsxPragma": "React",
       "plugins": Array [],
     },
@@ -489,7 +489,7 @@ Array [
     ],
     "pluginOptions": Object {
       "allExtensions": false,
-      "isTSX": true,
+      "isTSX": false,
       "jsxPragma": "React",
       "plugins": Array [],
     },
@@ -777,7 +777,7 @@ Array [
     ],
     "pluginOptions": Object {
       "allExtensions": false,
-      "isTSX": true,
+      "isTSX": false,
       "jsxPragma": "React",
       "plugins": Array [],
     },
