@@ -10,7 +10,26 @@ const { findImports } = require(`../utils/gen-mdx`)
 
 const contentDigest = val => createContentDigest(val)
 
-module.exports = async (
+function unstable_shouldOnCreateNode({ node }, pluginOptions) {
+  const options = defaultOptions(pluginOptions)
+
+  return _unstable_shouldOnCreateNode({ node }, options)
+}
+
+function _unstable_shouldOnCreateNode({ node }, options) {
+  // options check to stop transformation of the node
+  if (options.shouldBlockNodeFromTransformation(node)) {
+    return false
+  }
+
+  return node.internal.type === `File`
+    ? options.extensions.includes(node.ext)
+    : options.mediaTypes.includes(node.internal.mediaType)
+}
+
+module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
+module.exports.onCreateNode = async (
   {
     node,
     loadNodeContent,
@@ -28,19 +47,7 @@ module.exports = async (
   const { createNode, createParentChildLink } = actions
   const options = defaultOptions(pluginOptions)
 
-  // options check to stop transformation of the node
-  if (options.shouldBlockNodeFromTransformation(node)) {
-    return
-  }
-
-  // if we shouldn't process this node, then return
-  if (
-    !(node.internal.type === `File` && options.extensions.includes(node.ext)) &&
-    !(
-      node.internal.type !== `File` &&
-      options.mediaTypes.includes(node.internal.mediaType)
-    )
-  ) {
+  if (!_unstable_shouldOnCreateNode({ node }, options)) {
     return
   }
 

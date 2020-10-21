@@ -2,18 +2,22 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
-      `"extensions" "[0]" must be a string. "[1]" must be a string. "[2]" must be a string`,
+      `"extensions[0]" must be a string`,
+      `"extensions[1]" must be a string`,
+      `"extensions[2]" must be a string`,
       `"defaultLayout" must be of type object`,
-      `"gatsbyRemarkPlugins" "[0]" does not match any of the allowed types. "[1]" does not match any of the allowed types`,
+      `"gatsbyRemarkPlugins[0]" does not match any of the allowed types`,
+      `"gatsbyRemarkPlugins[1]" does not match any of the allowed types`,
       `"remarkPlugins" must be an array`,
       `"rehypePlugins" must be an array`,
-      `"mediaTypes" "[0]" must be a string. "[1]" must be a string`,
+      `"mediaTypes[0]" must be a string`,
+      `"mediaTypes[1]" must be a string`,
       `"shouldBlockNodeFromTransformation" must have an arity lesser or equal to 1`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       extensions: [1, 2, 3],
       defaultLayout: `this should be an object`,
       gatsbyRemarkPlugins: [1, { not: `existing prop` }, `valid one`],
@@ -26,8 +30,8 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       extensions: [`.mdx`, `.mdxx`],
       defaultLayout: {
         posts: `../post-layout.js`,

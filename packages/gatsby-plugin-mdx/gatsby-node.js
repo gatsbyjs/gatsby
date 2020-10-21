@@ -4,15 +4,25 @@ const { MDX_SCOPES_LOCATION } = require(`./constants`)
 const defaultOptions = require(`./utils/default-options`)
 const fs = require(`fs`)
 
+const {
+  onCreateNode,
+  unstable_shouldOnCreateNode
+} = require(`./gatsby/on-create-node`)
+
 /**
  * Create Mdx types and resolvers
  */
 exports.sourceNodes = require(`./gatsby/source-nodes`)
 
 /**
+ * Check whether to create Mdx nodes from MDX files.
+ */
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
+/**
  * Create Mdx nodes from MDX files.
  */
-exports.onCreateNode = require(`./gatsby/on-create-node`)
+exports.onCreateNode = onCreateNode
 
 /**
  * Add frontmatter as page context for MDX pages

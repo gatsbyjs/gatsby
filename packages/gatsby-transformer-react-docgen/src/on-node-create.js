@@ -88,7 +88,11 @@ function createPropNodes(
   return node
 }
 
-export default async function onCreateNode(
+export function unstable_shouldOnCreateNode({ node }) {
+  return canParse(node)
+}
+
+export async function onCreateNode(
   {
     node,
     loadNodeContent,
@@ -99,9 +103,9 @@ export default async function onCreateNode(
   },
   pluginOptions
 ) {
-  const { createNode, createParentChildLink } = actions
-
   if (!canParse(node)) return
+
+  const { createNode, createParentChildLink } = actions
 
   const content = await loadNodeContent(node)
 
