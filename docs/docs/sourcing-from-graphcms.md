@@ -36,7 +36,7 @@ In order to fetch data from your GraphCMS project, you will need to install [`ga
 You can install this package with:
 
 ```shell
-  yarn add gatsby-source-graphcms
+npm install gatsby-source-graphcms
 ```
 
 ### Configure the plugin
