@@ -430,7 +430,6 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
     Your site is now running at <code>http://localhost:8000</code>!
   </p>
   <p>
-    {/* prettier-ignore */}
     You’ll also see a second link: <code>http://localhost:8000/___graphql</code>.
     This is a tool you can use to experiment with querying your data. Learn more
     about it at <a href="https://gatsby.dev/tutorial">gatsby.dev/tutorial</a>
