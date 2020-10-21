@@ -6,6 +6,7 @@ const {
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
+const { trackFeatureIsUsed } = require(`gatsby-telemetry`)
 const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
@@ -16,6 +17,7 @@ exports.onPreInit = ({ reporter }, pluginOptions) => {
     reporter.info(
       `[gatsby-plugin-sharp] The lazy image processing experiment is enabled, to disable it please set experimentalDisableLazyProcessing to false in pluginOptions`
     )
+    trackFeatureIsUsed(`LazyImageProcessing`)
   }
 }
 
