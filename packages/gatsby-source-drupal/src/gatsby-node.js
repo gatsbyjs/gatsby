@@ -1,7 +1,12 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  getHref,
+} = require(`./normalize`)
 const {
   handleReferences,
   handleWebhookUpdate,
@@ -257,7 +262,7 @@ exports.sourceNodes = async (
         const getNext = async (url, data = []) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
-            url = url.href
+            url = getHref(url)
 
             // Apply any filters configured in gatsby-config.js. Filters
             // can be any valid JSON API filter query string.
