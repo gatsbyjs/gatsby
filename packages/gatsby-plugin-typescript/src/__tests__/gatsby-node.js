@@ -74,14 +74,14 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   describe(`plugin schema`, () => {
-    it(`should provide meaningful errors when fields are invalid`, () => {
+    it(`should provide meaningful errors when fields are invalid`, async () => {
       const expectedErrors = [
         `"isTSX" must be a boolean`,
         `"jsxPragma" must be a string`,
         `"allExtensions" must be a boolean`,
       ]
 
-      const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+      const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
         isTSX: `this should be a boolean`,
         jsxPragma: 123,
         allExtensions: `this should be a boolean`,
@@ -90,14 +90,24 @@ describe(`gatsby-plugin-typescript`, () => {
       expect(errors).toEqual(expectedErrors)
     })
 
-    it(`should validate the schema`, () => {
-      const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+    it(`should validate the schema`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
         isTSX: false,
         jsxPragma: `ReactFunction`,
         allExtensions: false,
       })
 
       expect(isValid).toBe(true)
+    })
+
+    it(`should break when isTSX doesn't match allExtensions`, async () => {
+      const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        isTSX: true,
+        jsxPragma: `ReactFunction`,
+        allExtensions: false,
+      })
+
+      expect(errors).toEqual([`"allExtensions" must be [true]`])
     })
   })
 })

@@ -111,15 +111,29 @@ describe(`onPostBuild`, () => {
 })
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
-      `"precachePages" "[0]" must be a string. "[1]" must be a string. "[2]" must be a string`,
+      `"precachePages[0]" must be a string`,
+      `"precachePages[1]" must be a string`,
+      `"precachePages[2]" must be a string`,
       `"appendScript" must be a string`,
       `"debug" must be a boolean`,
-      `"workboxConfig" "importWorkboxFrom" must be a string. "globDirectory" must be a string. "globPatterns[0]" must be a string. "globPatterns[1]" must be a string. "globPatterns[2]" must be a string. "modifyURLPrefix./" must be a string. "cacheId" must be a string. "dontCacheBustURLsMatching" must be of type object. "runtimeCaching[0].handler" must be one of [StaleWhileRevalidate, CacheFirst, NetworkFirst, NetworkOnly, CacheOnly]. "runtimeCaching[1]" must be of type object. "runtimeCaching[2]" must be of type object. "skipWaiting" must be a boolean. "clientsClaim" must be a boolean`,
+      `"workboxConfig.importWorkboxFrom" must be a string`,
+      `"workboxConfig.globDirectory" must be a string`,
+      `"workboxConfig.globPatterns[0]" must be a string`,
+      `"workboxConfig.globPatterns[1]" must be a string`,
+      `"workboxConfig.globPatterns[2]" must be a string`,
+      `"workboxConfig.modifyURLPrefix./" must be a string`,
+      `"workboxConfig.cacheId" must be a string`,
+      `"workboxConfig.dontCacheBustURLsMatching" must be of type object`,
+      `"workboxConfig.runtimeCaching[0].handler" must be one of [StaleWhileRevalidate, CacheFirst, NetworkFirst, NetworkOnly, CacheOnly]`,
+      `"workboxConfig.runtimeCaching[1]" must be of type object`,
+      `"workboxConfig.runtimeCaching[2]" must be of type object`,
+      `"workboxConfig.skipWaiting" must be a boolean`,
+      `"workboxConfig.clientsClaim" must be a boolean`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       precachePages: [1, 2, 3],
       appendScript: 1223,
       debug: `This should be a boolean`,
@@ -148,8 +162,8 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       precachePages: [`/about-us/`, `/projects/*`],
       appendScript: `src/custom-sw-code.js`,
       debug: true,

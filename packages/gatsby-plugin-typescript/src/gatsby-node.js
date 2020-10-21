@@ -46,7 +46,8 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         .default(`React`),
       allExtensions: Joi.boolean()
         .description(`Indicates that every file should be parsed as TS or TSX.`)
-        .default(false),
+        .default(false)
+        .when(`isTSX`, { is: true, then: Joi.valid(true) }),
     })
 }
 
