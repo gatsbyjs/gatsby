@@ -1,3 +1,5 @@
+import React from "react"
+
 exports.onRouteUpdate = ({ location }) => {
   if (process.env.NODE_ENV !== `production` || typeof gtag !== `function`) {
     return null
@@ -28,4 +30,14 @@ exports.onRouteUpdate = ({ location }) => {
   }
 
   return null
+}
+
+exports.onRenderBody = ({ setHeadComponents }) => {
+  setHeadComponents([
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-analytics"
+      href="https://www.google-analytics.com"
+    />,
+  ])
 }
