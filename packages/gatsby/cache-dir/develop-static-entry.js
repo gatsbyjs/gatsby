@@ -165,28 +165,24 @@ export default (pagePath, callback) => {
       }
     ).pop()
 
-    if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-      // Let the site or plugin render the page component.
-      apiRunner(`replaceRenderer`, {
-        bodyComponent,
-        replaceBodyHTMLString,
-        setHeadComponents,
-        setHtmlAttributes,
-        setBodyAttributes,
-        setPreBodyComponents,
-        setPostBodyComponents,
-        setBodyProps,
-        pathname: pagePath,
-        pathPrefix: __PATH_PREFIX__,
-      })
-    }
+    // Let the site or plugin render the page component.
+    apiRunner(`replaceRenderer`, {
+      bodyComponent,
+      replaceBodyHTMLString,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      setPreBodyComponents,
+      setPostBodyComponents,
+      setBodyProps,
+      pathname: pagePath,
+      pathPrefix: __PATH_PREFIX__,
+    })
 
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-          bodyHtml = renderToString(bodyComponent)
-        }
+        bodyHtml = renderToString(bodyComponent)
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
@@ -217,7 +213,10 @@ export default (pagePath, callback) => {
   }
 
   let bodyStr = ``
-  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR && pagePath !== `/dev-404/`) {
+  if (
+    process.env.NODE_ENV == `test` ||
+    (process.env.GATSBY_EXPERIMENTAL_DEV_SSR && pagePath !== `/dev-404/`)
+  ) {
     bodyStr = generateBodyHTML()
   }
 
