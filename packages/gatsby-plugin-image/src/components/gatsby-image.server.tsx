@@ -23,6 +23,11 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   loading = `lazy`,
   ...props
 }) {
+  if (!image) {
+    console.warn(`[gatsby-plugin-image] Missing image prop`)
+    return null
+  }
+
   const {
     width,
     height,
