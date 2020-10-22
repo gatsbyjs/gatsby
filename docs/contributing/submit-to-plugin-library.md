@@ -25,7 +25,7 @@ You can include other _relevant_ keywords to your `package.json` file to help in
   "gatsby-plugin",
   "gatsby-transformer-plugin",
   "mathjax",
-  "markdown",
+  "markdown"
 ]
 ```
 
