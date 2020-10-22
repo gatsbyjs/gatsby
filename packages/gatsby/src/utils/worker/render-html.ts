@@ -19,17 +19,18 @@ export const renderHTML = ({
   // for modules that aren't bundled by webpack.
   envVars.forEach(([key, value]) => (process.env[key] = value))
 
+  const htmlComponentRenderer = require(htmlComponentRendererPath)
+
   return Promise.map(
     paths,
     path =>
       new Promise((resolve, reject) => {
-        const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
           htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
             if (stage === `develop-html`) {
-              resolve(htmlString)
+              return resolve(htmlString)
             } else {
-              resolve(
+              return resolve(
                 fs.outputFile(
                   getPageHtmlFilePath(join(process.cwd(), `public`), path),
                   htmlString

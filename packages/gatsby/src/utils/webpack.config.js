@@ -236,9 +236,10 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return `cheap-module-source-map`
+      case: `develop-html`:
+          return `inline-cheap-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
-      case `develop-html`:
       case `build-html`:
       case `build-javascript`:
         return `source-map`

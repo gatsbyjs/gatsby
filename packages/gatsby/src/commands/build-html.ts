@@ -5,6 +5,7 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"
+import crypto from "crypto"
 
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -13,6 +14,26 @@ import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
+
+let oldHash = ``
+function getChecksum(path) {
+  return new Promise(function (resolve, reject) {
+    // crypto.createHash('sha1');
+    // crypto.createHash('sha256');
+    const hash = crypto.createHash("md5")
+    const input = fs.createReadStream(path)
+
+    input.on("error", reject)
+
+    input.on("data", function (chunk) {
+      hash.update(chunk)
+    })
+
+    input.on("close", function () {
+      resolve(hash.digest("hex"))
+    })
+  })
+}
 
 const runWebpack = (
   compilerConfig,
@@ -23,9 +44,9 @@ const runWebpack = (
     if (stage === `build-html`) {
       webpack(compilerConfig).run((err, stats) => {
         if (err) {
-          reject(err)
+          return reject(err)
         } else {
-          resolve(stats)
+          return resolve(stats)
         }
       })
     } else if (stage === `develop-html`) {
@@ -37,11 +58,18 @@ const runWebpack = (
           if (err) {
             reject(err)
           } else {
-            // Make sure we get the latest version during development
-            delete require.cache[
-              require.resolve(`${directory}/public/render-page.js`)
-            ]
-            resolve(stats)
+            const pathToRenderPage = `${directory}/public/render-page.js`
+
+            getChecksum(pathToRenderPage).then(newHash => {
+              if (oldHash !== `` && newHash !== oldHash) {
+                // Make sure we get the latest version during development
+                delete require.cache[require.resolve(pathToRenderPage)]
+              }
+
+              oldHash = newHash
+
+              return resolve(stats)
+            })
           }
         }
       )
