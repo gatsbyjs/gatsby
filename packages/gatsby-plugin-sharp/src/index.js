@@ -419,17 +419,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
-  let dominantColor
   try {
-    const pipeline = sharp(file.absolutePath)
-    metadata = await pipeline.metadata()
-    if (args.dominantColor) {
-      dominantColor = `#000000`
-      // const {
-      //   dominant: { r, g, b },
-      // } = await pipeline.stats()
-      // dominantColor = rgbToHex(r, g, b)
-    }
+    metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -619,7 +610,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     presentationWidth,
     presentationHeight,
     tracedSVG,
-    dominantColor,
   }
 }
 
@@ -635,21 +625,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
   const dimensions = await getImageSizeAsync(file)
-
-  let dominantColor
-  try {
-    if (args.dominantColor) {
-      // const {
-      //   dominant: { r, g, b },
-      // } = await sharp(file.absolutePath).stats()
-      // dominantColor = rgbToHex(r, g, b)
-      dominantColor = `#000000`
-    }
-  } catch (err) {
-    reporter.warn(
-      `Could not calculate dominant color for "${file.relativePath}"`
-    )
-  }
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
@@ -752,7 +727,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
     srcSet,
     originalName: originalName,
     tracedSVG,
-    dominantColor,
   }
 }
 
