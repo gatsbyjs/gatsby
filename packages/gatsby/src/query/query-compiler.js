@@ -157,7 +157,7 @@ export const parseQueries = async ({
 
   files = _.uniq(files)
 
-  const parser = new FileParser(parentSpan)
+  const parser = new FileParser({ parentSpan })
 
   return await parser.parseFiles(files, addError)
 }

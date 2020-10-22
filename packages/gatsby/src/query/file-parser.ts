@@ -26,6 +26,7 @@ import {
   VariableDeclarator,
 } from "@babel/types"
 import { ILocationPosition } from "gatsby-cli/src/structured-errors/types"
+import { Span } from "opentracing"
 
 interface IQueryName {
   name?: {
@@ -60,7 +61,7 @@ type AddParseErrorFunction = (...error: Array<IParseError>) => unknown
  */
 const generateQueryName = (
   def: IQueryName,
-  hash: string,
+  hash: number,
   file: string
 ): IQueryName => {
   if (!def.name || !def.name.value) {
@@ -114,7 +115,7 @@ async function parseToAst(
   filePath: string,
   fileStr: string,
   addError: AddParseErrorFunction,
-  parentSpan?: object
+  parentSpan?: Span
 ): Promise<Node | null> {
   let ast
 
@@ -188,7 +189,7 @@ export interface IGraphQLDocumentInFile {
   doc: DocumentNode
   templateLoc: string
   text: string
-  hash: string
+  hash: number
   isHook: boolean
   isStaticQuery: boolean
 }
@@ -204,7 +205,7 @@ async function findGraphQLTags(
   file: string,
   text: string,
   addError: AddParseErrorFunction,
-  parentSpan?: object
+  parentSpan?: Span
 ): Promise<Array<IGraphQLDocumentInFile>> {
   return new Promise((resolve, reject) => {
     parseToAst(file, text, addError, parentSpan)
@@ -248,7 +249,7 @@ async function findGraphQLTags(
             },
           })
 
-          const docInFile = {
+          const docInFile: IGraphQLDocumentInFile = {
             filePath: file,
             doc: gqlAst,
             text: text,
@@ -430,10 +431,18 @@ async function findGraphQLTags(
   })
 }
 
-const cache = {}
+const cache: Map<string, Array<IGraphQLDocumentInFile>> = new Map()
+
+export interface IFileParserOptions {
+  parentSpan?: Span
+}
 
 export class FileParser {
-  constructor(private parentSpan?: object) {}
+  private readonly parentSpan?: Span
+
+  constructor({ parentSpan }: IFileParserOptions = {}) {
+    this.parentSpan = parentSpan
+  }
 
   async parseFile(
     file: string,
@@ -469,14 +478,12 @@ export class FileParser {
       .digest(`hex`)
 
     try {
-      const astDefinitions =
-        cache[hash] ||
-        (cache[hash] = await findGraphQLTags(
-          file,
-          text,
-          addError,
-          this.parentSpan
-        ))
+      const astDefinitions = await this.getAstDefinitions(
+        hash,
+        file,
+        text,
+        addError
+      )
 
       // If any AST definitions were extracted, report success.
       // This can mean there is none or there was a babel error when
@@ -563,6 +570,31 @@ export class FileParser {
       })
       return null
     }
+  }
+
+  private async getAstDefinitions(
+    hash: string,
+    file: string,
+    text,
+    addError: AddParseErrorFunction
+  ): Promise<Array<IGraphQLDocumentInFile>> {
+    return (
+      cache.get(hash) ||
+      (await this.fetchAstDefinitionsAndUpdateCache(hash, file, text, addError))
+    )
+  }
+
+  private async fetchAstDefinitionsAndUpdateCache(
+    hash: string,
+    file: string,
+    text: string,
+    addError: AddParseErrorFunction
+  ): Promise<Array<IGraphQLDocumentInFile>> {
+    const tags = await findGraphQLTags(file, text, addError, this.parentSpan)
+
+    cache.set(hash, tags)
+
+    return tags
   }
 
   async parseFiles(
