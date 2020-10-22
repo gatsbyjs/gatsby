@@ -135,7 +135,7 @@ module.exports = async (
         }
       case `build-html`:
       case `develop-html`:
-        // A temp file required by static-site-generator-plugin. See plugins() below.
+        // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
@@ -236,10 +236,9 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return `cheap-module-source-map`
-      case: `develop-html`:
-          return `inline-cheap-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
+      case `develop-html`:
       case `build-html`:
       case `build-javascript`:
         return `source-map`

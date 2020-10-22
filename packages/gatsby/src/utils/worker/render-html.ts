@@ -4,6 +4,8 @@ import { join } from "path"
 import { getPageHtmlFilePath } from "../../utils/page-html"
 import { Stage } from "../../commands/types"
 
+const renderers = {}
+
 export const renderHTML = ({
   htmlComponentRendererPath,
   paths,
@@ -19,7 +21,13 @@ export const renderHTML = ({
   // for modules that aren't bundled by webpack.
   envVars.forEach(([key, value]) => (process.env[key] = value))
 
-  const htmlComponentRenderer = require(htmlComponentRendererPath)
+  let htmlComponentRenderer
+  if (require.cache[htmlComponentRendererPath]) {
+    htmlComponentRenderer = renderers[htmlComponentRendererPath]
+  } else {
+    renderers[htmlComponentRendererPath] = require(htmlComponentRendererPath)
+    htmlComponentRenderer = renderers[htmlComponentRendererPath]
+  }
 
   return Promise.map(
     paths,

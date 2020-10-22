@@ -290,7 +290,7 @@ export async function startServer(
     developHtmlRoute({ app, program, store })
   }
 
-  const genericHtmlPageCreated = false
+  let genericHtmlPageCreated = false
   // We still need this even w/ ssr for the dev 404 page.
   const genericHtmlPath = process.env.GATSBY_EXPERIMENTAL_DEV_SSR
     ? `/public/dev-404-page/index.html`
@@ -298,6 +298,7 @@ export async function startServer(
   app.use(async (_, res) => {
     if (!genericHtmlPageCreated) {
       await createIndexHtml(indexHTMLActivity)
+      genericHtmlPageCreated = true
     }
     res.sendFile(directoryPath(genericHtmlPath), err => {
       if (err) {

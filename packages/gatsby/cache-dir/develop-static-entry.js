@@ -215,7 +215,7 @@ export default (pagePath, callback) => {
   let bodyStr = ``
   if (
     process.env.NODE_ENV == `test` ||
-    (process.env.GATSBY_EXPERIMENTAL_DEV_SSR && pagePath !== `/dev-404/`)
+    (process.env.GATSBY_EXPERIMENTAL_DEV_SSR && pagePath !== `/dev-404-page/`)
   ) {
     bodyStr = generateBodyHTML()
   }
