@@ -21,13 +21,7 @@ export const renderHTML = ({
   // for modules that aren't bundled by webpack.
   envVars.forEach(([key, value]) => (process.env[key] = value))
 
-  let htmlComponentRenderer
-  if (require.cache[htmlComponentRendererPath]) {
-    htmlComponentRenderer = renderers[htmlComponentRendererPath]
-  } else {
-    renderers[htmlComponentRendererPath] = require(htmlComponentRendererPath)
-    htmlComponentRenderer = renderers[htmlComponentRendererPath]
-  }
+  const htmlComponentRenderer = require(htmlComponentRendererPath)
 
   return Promise.map(
     paths,
