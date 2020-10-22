@@ -285,7 +285,7 @@ export function fluidImageSizes({
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  if (srcSetBreakpoints.length > 0) {
+  if (srcSetBreakpoints?.length > 0) {
     sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
   } else {
     sizes = densities.map(density => Math.round(density * maxWidth))
