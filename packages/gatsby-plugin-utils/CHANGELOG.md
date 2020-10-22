@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.38...gatsby-plugin-utils@0.2.39) (2020-10-22)
+
+### Bug Fixes
+
+- **gatsby-plugin-utils:** skip libcheck during typegen ([#27588](https://github.com/gatsbyjs/gatsby/issues/27588)) ([0fdd3e9](https://github.com/gatsbyjs/gatsby/commit/0fdd3e969c18c6fda7e5c62fc5a352fce1877974))
+
 ## [0.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.37...gatsby-plugin-utils@0.2.38) (2020-10-21)
 
 ### Bug Fixes
