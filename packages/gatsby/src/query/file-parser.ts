@@ -1,7 +1,14 @@
 import { codeFrameColumns } from "@babel/code-frame"
 import { NodePath } from "@babel/core"
 import traverse from "@babel/traverse"
-import { CallExpression, Node } from "@babel/types"
+import {
+  CallExpression,
+  Identifier,
+  JSXIdentifier,
+  Node,
+  TaggedTemplateExpression,
+  VariableDeclarator,
+} from "@babel/types"
 import {
   EmptyGraphQLTagError,
   followVariableDeclarations,
@@ -19,12 +26,6 @@ import { locInGraphQlToLocInFile } from "./error-parser"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import apiRunnerNode from "../utils/api-runner-node"
 import { boundActionCreators } from "../redux/actions"
-import {
-  Identifier,
-  TaggedTemplateExpression,
-  JSXIdentifier,
-  VariableDeclarator,
-} from "@babel/types"
 import { ILocationPosition } from "gatsby-cli/src/structured-errors/types"
 import { Span } from "opentracing"
 
@@ -129,8 +130,7 @@ async function parseToAst(
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babelParseToAst(item, filePath)
-        ast = tmp
+        ast = babelParseToAst(item, filePath)
         break
       } catch (error) {
         boundActionCreators.queryExtractionGraphQLError({
