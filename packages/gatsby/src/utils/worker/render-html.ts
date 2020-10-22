@@ -4,8 +4,6 @@ import { join } from "path"
 import { getPageHtmlFilePath } from "../../utils/page-html"
 import { Stage } from "../../commands/types"
 
-const renderers = {}
-
 export const renderHTML = ({
   htmlComponentRendererPath,
   paths,
