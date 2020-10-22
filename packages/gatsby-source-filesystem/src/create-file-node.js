@@ -45,13 +45,10 @@ exports.createFileNode = async (
     }
   }
 
-  // Stringify date objects.
-  const stats2 = { ...stats }
-  Object.keys(stats2).forEach(key => {
-    if (stats2[key] instanceof Date) {
-      stats2[key] = stats2[key].toJSON() // This is actually toISOString()
-    }
-  })
+  stats.atime = stats.atime.toJSON()
+  stats.mtime = stats.mtime.toJSON()
+  stats.ctime = stats.ctime.toJSON()
+  stats.birthtime = stats.birthtime.toJSON()
 
   return {
     // Don't actually make the File id the absolute path as otherwise
@@ -62,7 +59,6 @@ exports.createFileNode = async (
     parent: null,
     internal,
     sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
-    absolutePath: slashedFile.absolutePath,
     relativePath: slash(
       path.relative(
         pluginOptions.path || process.cwd(),
@@ -70,7 +66,6 @@ exports.createFileNode = async (
       )
     ),
     extension: slashedFile.ext.slice(1).toLowerCase(),
-    size: stats.size,
     prettySize: prettyBytes(stats.size),
     modifiedTime: stats.mtime,
     accessTime: stats.atime,
