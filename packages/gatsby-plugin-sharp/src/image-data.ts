@@ -93,7 +93,6 @@ export async function generateImageData({
     presentationWidth: number
     presentationHeight: number
     aspectRatio: number
-    isSmaller: boolean
   } = calculateImageSizes({
     file,
     layout,
@@ -121,12 +120,12 @@ export async function generateImageData({
 
   const srcSet = getSrcSet(images)
 
-  let topSize = imageSizes.presentationWidth
-  if (imageSizes.isSmaller) topSize = metadata.width
+  const widthOfMaxSize = Math.min(imageSizes.presentationWidth, metadata.width)
+  const sizes = args.sizes || getSizes(widthOfMaxSize)
 
-  const sizes = args.sizes || getSizes(topSize)
-
-  const primaryIndex = imageSizes.sizes.findIndex(size => size === topSize)
+  const primaryIndex = imageSizes.sizes.findIndex(
+    size => size === widthOfMaxSize
+  )
 
   const primaryImage = images[primaryIndex]
 
@@ -200,12 +199,8 @@ export async function generateImageData({
 
   switch (layout) {
     case `fixed`:
-      imageProps.width = imageSizes.isSmaller
-        ? imageSizes.presentationWidth
-        : primaryImage.width
-      imageProps.height = imageSizes.isSmaller
-        ? imageSizes.presentationHeight
-        : primaryImage.height
+      imageProps.width = imageSizes.presentationWidth
+      imageProps.height = imageSizes.presentationHeight
       break
 
     case `fluid`:

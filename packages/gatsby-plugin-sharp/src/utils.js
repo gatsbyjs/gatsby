@@ -183,9 +183,7 @@ export function fixedImageSizes({
   }
 
   let originalWidth = width
-  let isSmaller = false
   if (imgDimensions.width < width || imgDimensions.height < height) {
-    isSmaller = true
     width = imgDimensions.width
     height = imgDimensions.height
   }
@@ -216,7 +214,6 @@ export function fixedImageSizes({
     aspectRatio,
     presentationWidth: originalWidth,
     presentationHeight: Math.round(originalWidth / aspectRatio),
-    isSmaller,
   }
 }
 
@@ -272,9 +269,7 @@ export function fluidImageSizes({
   }
 
   let originalMaxWidth = maxWidth
-  let isSmaller = false
   if (imgDimensions.width < maxWidth || imgDimensions.height < maxHeight) {
-    isSmaller = true
     maxWidth = imgDimensions.width
     maxHeight = imgDimensions.height
   }
@@ -307,7 +302,6 @@ export function fluidImageSizes({
     aspectRatio,
     presentationWidth: originalMaxWidth,
     presentationHeight: Math.round(originalMaxWidth / aspectRatio),
-    isSmaller,
   }
 }
 
