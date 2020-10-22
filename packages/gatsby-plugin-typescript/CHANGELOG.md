@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.4.23...gatsby-plugin-typescript@2.4.24) (2020-10-21)
+
+### Bug Fixes
+
+- Update plugin schema testing util and associated tests ([#27574](https://github.com/gatsbyjs/gatsby/issues/27574)) ([6d81283](https://github.com/gatsbyjs/gatsby/commit/6d81283e4f47ae2cb571626bf4d02fcd2c9d1af4))
+
+## [2.4.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.4.22...gatsby-plugin-typescript@2.4.23) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-plugin-typescript
+
+## [2.4.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.4.21...gatsby-plugin-typescript@2.4.22) (2020-10-15)
+
+### Features
+
+- **gatsby-plugin-typescript:** Add schema ([#27361](https://github.com/gatsbyjs/gatsby/issues/27361)) ([072ef6c](https://github.com/gatsbyjs/gatsby/commit/072ef6c992168c89505143670013d5d8147f4ab4))
+
 ## [2.4.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.4.20...gatsby-plugin-typescript@2.4.21) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-plugin-typescript

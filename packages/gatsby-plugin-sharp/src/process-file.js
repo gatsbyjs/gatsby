@@ -61,7 +61,9 @@ sharp.concurrency(cpuCoreCount())
 exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
-    pipeline = sharp(file)
+    pipeline = !options.failOnError
+      ? sharp(file, { failOnError: false })
+      : sharp(file)
 
     // Keep Metadata
     if (!options.stripMetadata) {

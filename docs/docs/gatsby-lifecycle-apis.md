@@ -33,7 +33,7 @@ During the main bootstrap sequence, Gatsby (in this order):
   - within this, `createNode` can be called multiple times, which then triggers [onCreateNode](/docs/node-apis/#onCreateNode)
 - creates initial GraphQL schema
 - runs [resolvableExtensions](/docs/node-apis/#resolvableExtensions) which lets plugins register file types or extensions e.g. [`gatsby-plugin-typescript`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-typescript/src/gatsby-node.js)
-- runs [createPages](/docs/node-apis/#createPages) from the gatsby-node.js in the root directory of the project e.g. implemented by [`page-hot-reloader`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/page-hot-reloader.js)
+- runs [createPages](/docs/node-apis/#createPages) from the gatsby-node.js in the root directory of the project e.g. implemented by [`page-hot-reloader`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/page-hot-reloader.ts)
   - within this, `createPage` can be called any number of times, which then triggers [onCreatePage](/docs/node-apis/#onCreatePage)
 - runs [createPagesStatefully](/docs/node-apis/#createPagesStatefully)
 - runs source nodes again and updates the GraphQL schema to include pages this time
