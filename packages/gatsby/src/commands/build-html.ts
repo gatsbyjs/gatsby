@@ -16,7 +16,7 @@ type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
 let oldHash = ``
-function getChecksum(path) {
+function getChecksum(path): string {
   return new Promise(function (resolve, reject) {
     // crypto.createHash('sha1');
     // crypto.createHash('sha256');
