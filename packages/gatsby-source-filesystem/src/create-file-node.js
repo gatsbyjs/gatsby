@@ -46,32 +46,37 @@ exports.createFileNode = async (
   }
 
   // Stringify date objects.
-  return JSON.parse(
-    JSON.stringify({
-      // Don't actually make the File id the absolute path as otherwise
-      // people will use the id for that and ids shouldn't be treated as
-      // useful information.
-      id: createNodeId(pathToFile),
-      children: [],
-      parent: null,
-      internal,
-      sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
-      absolutePath: slashedFile.absolutePath,
-      relativePath: slash(
-        path.relative(
-          pluginOptions.path || process.cwd(),
-          slashedFile.absolutePath
-        )
-      ),
-      extension: slashedFile.ext.slice(1).toLowerCase(),
-      size: stats.size,
-      prettySize: prettyBytes(stats.size),
-      modifiedTime: stats.mtime,
-      accessTime: stats.atime,
-      changeTime: stats.ctime,
-      birthTime: stats.birthtime,
-      ...slashedFile,
-      ...stats,
-    })
-  )
+  const stats2 = { ...stats }
+  Object.keys(stats2).forEach(key => {
+    if (stats2[key] instanceof Date) {
+      stats2[key] = stats2[key].toJSON() // This is actually toISOString()
+    }
+  })
+
+  return {
+    // Don't actually make the File id the absolute path as otherwise
+    // people will use the id for that and ids shouldn't be treated as
+    // useful information.
+    id: createNodeId(pathToFile),
+    children: [],
+    parent: null,
+    internal,
+    sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
+    absolutePath: slashedFile.absolutePath,
+    relativePath: slash(
+      path.relative(
+        pluginOptions.path || process.cwd(),
+        slashedFile.absolutePath
+      )
+    ),
+    extension: slashedFile.ext.slice(1).toLowerCase(),
+    size: stats.size,
+    prettySize: prettyBytes(stats.size),
+    modifiedTime: stats.mtime,
+    accessTime: stats.atime,
+    changeTime: stats.ctime,
+    birthTime: stats.birthtime,
+    ...slashedFile,
+    ...stats,
+  }
 }
