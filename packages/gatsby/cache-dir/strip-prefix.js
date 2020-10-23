@@ -8,10 +8,6 @@ export default function stripPrefix(str, prefix = ``) {
     return str
   }
 
-  if (str === prefix) {
-    return `/`
-  }
-
   if (str.startsWith(`${prefix}/`)) {
     return str.slice(prefix.length)
   }
