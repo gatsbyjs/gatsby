@@ -182,6 +182,12 @@ export function fixedImageSizes({
     width = Math.round(height * aspectRatio)
   }
 
+  let originalWidth = width
+  if (imgDimensions.width < width || imgDimensions.height < height) {
+    width = imgDimensions.width
+    height = imgDimensions.height
+  }
+
   sizes = densities
     .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
     .map(density => Math.round(density * width))
@@ -206,8 +212,8 @@ export function fixedImageSizes({
   return {
     sizes,
     aspectRatio,
-    presentationWidth: width,
-    presentationHeight: Math.round(width / aspectRatio),
+    presentationWidth: originalWidth,
+    presentationHeight: Math.round(originalWidth / aspectRatio),
   }
 }
 
@@ -262,6 +268,12 @@ export function fluidImageSizes({
     maxWidth = maxHeight * aspectRatio
   }
 
+  let originalMaxWidth = maxWidth
+  if (imgDimensions.width < maxWidth || imgDimensions.height < maxHeight) {
+    maxWidth = imgDimensions.width
+    maxHeight = imgDimensions.height
+  }
+
   maxWidth = Math.round(maxWidth)
 
   // Create sizes (in width) for the image if no custom breakpoints are
@@ -273,7 +285,7 @@ export function fluidImageSizes({
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  if (srcSetBreakpoints) {
+  if (srcSetBreakpoints?.length > 0) {
     sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
   } else {
     sizes = densities.map(density => Math.round(density * maxWidth))
@@ -288,8 +300,8 @@ export function fluidImageSizes({
   return {
     sizes,
     aspectRatio,
-    presentationWidth: maxWidth,
-    presentationHeight: Math.round(maxWidth / aspectRatio),
+    presentationWidth: originalMaxWidth,
+    presentationHeight: Math.round(originalMaxWidth / aspectRatio),
   }
 }
 

@@ -119,10 +119,12 @@ export async function generateImageData({
   })
 
   const srcSet = getSrcSet(images)
-  const sizes = args.sizes || getSizes(imageSizes.presentationWidth, layout)
+
+  const widthOfMaxSize = Math.min(imageSizes.presentationWidth, metadata.width)
+  const sizes = args.sizes || getSizes(widthOfMaxSize, layout)
 
   const primaryIndex = imageSizes.sizes.findIndex(
-    size => size === imageSizes.presentationWidth
+    size => size === widthOfMaxSize
   )
 
   const primaryImage = images[primaryIndex]
@@ -197,8 +199,8 @@ export async function generateImageData({
 
   switch (layout) {
     case `fixed`:
-      imageProps.width = primaryImage.width
-      imageProps.height = primaryImage.height
+      imageProps.width = imageSizes.presentationWidth
+      imageProps.height = imageSizes.presentationHeight
       break
 
     case `fluid`:
@@ -210,6 +212,5 @@ export async function generateImageData({
       imageProps.width = args.maxWidth || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
-
   return imageProps
 }
