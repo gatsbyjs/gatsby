@@ -45,7 +45,7 @@ export default [
       excludeDevTools(),
       json(),
       babel({
-        babelHelpers: `runtime`,
+        babelHelpers: `bundled`,
         skipPreflightCheck: true,
         exclude: `node_modules/**`,
       }),
@@ -103,7 +103,7 @@ export default [
     },
     plugins: [
       babel({
-        babelHelpers: `runtime`,
+        babelHelpers: `bundled`,
         skipPreflightCheck: true,
         exclude: `node_modules/**`,
       }),
