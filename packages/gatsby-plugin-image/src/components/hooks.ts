@@ -136,7 +136,7 @@ export function getMainProps(
 export type PlaceholderImageAttrs = ImgHTMLAttributes<HTMLImageElement> &
   Pick<PlaceholderProps, "sources" | "fallback">
 
-export function getPlaceHolderProps(
+export function getPlaceholderProps(
   placeholder: PlaceholderImageAttrs
 ): PlaceholderImageAttrs {
   const result: PlaceholderImageAttrs = {
