@@ -761,7 +761,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 |
+         8 | 
          9 |         fragment PostsJsonFragment on PostsJson {
         10 |           id
         11 |           node
@@ -789,7 +789,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 |
+         8 | 
       >  9 |         fragment PostsJsonFragment on PostsJson {
            |                  ^^^^^^^^^^^^^^^^^
         10 |           id
