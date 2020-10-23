@@ -87,7 +87,7 @@
     "directory": "packages/gatsby-cli"
   },
   "scripts": {
-    "build:babel": "babel --config-file ./non-rollup-babel.config.js src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
+    "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
     "build:rollup": "rollup -c",
     "build": "npm-run-all -p build:babel build:rollup",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",

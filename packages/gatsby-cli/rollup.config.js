@@ -45,6 +45,25 @@ export default {
       babelHelpers: `bundled`,
       skipPreflightCheck: true,
       exclude: `node_modules/**`,
+      babelrc: false,
+      presets: [
+        [
+          "@babel/env",
+          {
+            "modules": false,
+            "shippedProposals": true,
+            "targets": { "node": "10.13.0" }
+          }
+        ],
+        "@babel/preset-react"
+      ],
+      plugins: ["@babel/plugin-transform-runtime"],
+      overrides: [
+        {
+          "test": ["**/*.ts", "**/*.tsx"],
+          "plugins": [["@babel/plugin-transform-typescript", { "isTSX": true }]]
+        }
+      ]
     }),
     resolve({
       extensions: [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`],
