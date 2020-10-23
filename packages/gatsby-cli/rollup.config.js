@@ -25,6 +25,8 @@ function excludeDevTools() {
   }
 }
 
+const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
+
 export default {
   input: `src/reporter/loggers/ink/index.tsx`,
   output: {
@@ -41,7 +43,7 @@ export default {
     excludeDevTools(),
     json(),
     babel({
-      extensions: [`.js`, `.jsx`, `.es6`, `.es`, `.mjs`, `.ts`, `.tsx`] ,
+      extensions,
       babelHelpers: `bundled`,
       skipPreflightCheck: true,
       exclude: `node_modules/**`,
@@ -66,7 +68,7 @@ export default {
       ]
     }),
     resolve({
-      extensions: [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`],
+      extensions,
       dedupe: [ `react`, `ink` ]
     }),
     commonjs(),
