@@ -4,29 +4,6 @@ title: File System Route API
 
 This page documents the APIs and conventions available with a file system based routing API, a suite of new APIs and conventions to make the file system the primary way of creating pages. While the [`createPage`](/docs/actions/#createPage) Node API won't go away you should be able to accomplish most common tasks with this file-based API.
 
-For now, these features are marked as experimental and require a flag to utilize. Add the following flag when using `gatsby develop` and `gatsby build`:
-
-```shell
-GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop
-```
-
-Or in the `scripts` section of your `package.json`:
-
-```json:title=package.json
-{
-  "develop": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
-  "build": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build"
-}
-```
-
-**Note:** If you're on Windows you should install [`cross-env`](https://www.npmjs.com/package/cross-env) and prepend your scripts, e.g.:
-
-```json:title=package.json
-{
-  "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop"
-}
-```
-
 Files created in `src/pages` were always automatically converted to single-page routes, now you're also able to define client-only and dynamic collection-based routes there.
 
 A complete example using all options below can be found in [Gatsby's "examples" folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api).
