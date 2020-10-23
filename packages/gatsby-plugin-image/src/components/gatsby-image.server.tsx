@@ -1,6 +1,6 @@
 import React, { ElementType, FunctionComponent, CSSProperties } from "react"
 import { GatsbyImageProps, ISharpGatsbyImageData } from "./gatsby-image.browser"
-import { getWrapperProps, getMainProps, getPlaceHolderProps } from "./hooks"
+import { getWrapperProps, getMainProps, getPlaceholderProps } from "./hooks"
 import { Placeholder } from "./placeholder"
 import { MainImage, MainImageProps } from "./main-image"
 import { LayoutWrapper } from "./layout-wrapper"
@@ -78,7 +78,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
       className={`${wClass}${className ? ` ${className}` : ``}`}
     >
       <LayoutWrapper layout={layout} width={width} height={height}>
-        {placeholder && <Placeholder {...getPlaceHolderProps(placeholder)} />}
+        {placeholder && <Placeholder {...getPlaceholderProps(placeholder)} />}
         <MainImage
           data-gatsby-image-ssr=""
           sizes={sizes}

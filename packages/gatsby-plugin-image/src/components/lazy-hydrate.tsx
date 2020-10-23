@@ -6,7 +6,7 @@ import { Placeholder } from "./placeholder"
 import { MainImageProps, MainImage } from "./main-image"
 import {
   getMainProps,
-  getPlaceHolderProps,
+  getPlaceholderProps,
   hasNativeLazyLoadSupport,
   hasImageLoaded,
 } from "./hooks"
@@ -50,7 +50,7 @@ export function lazyHydrate(
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
       {!hasLoaded && placeholder && (
-        <Placeholder {...getPlaceHolderProps(placeholder)} />
+        <Placeholder {...getPlaceholderProps(placeholder)} />
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
