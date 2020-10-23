@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Client only paths`,
+    title: `Client-Only Paths`,
   },
   plugins: [
     {
