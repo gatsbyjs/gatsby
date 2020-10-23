@@ -6,6 +6,8 @@ Gatsby and its ecosystem of plugins provide all kinds of data through a
 GraphQL interface. This guide will show how that data can be used to
 programmatically create pages.
 
+> **Note:** For most use cases you'll be able to use the [File System Route API](/docs/file-system-route-api/) to create pages. Please read on if you need more control over the page creation or consume data outside of Gatsby's GraphQL data layer.
+
 ## Prerequisites
 
 Though you can use any data source you'd like, this guide will show how to

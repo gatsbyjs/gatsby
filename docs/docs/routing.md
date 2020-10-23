@@ -30,19 +30,43 @@ Other than creating single-page routes in `src/pages` you can also create multip
 
 - `src/pages/products/{Product.name}.js => /products/burger`
 
-### Pages created with `createPage` action
+In order to create client-only routes you can use square brackets (`[ ]`) in the filepath to mark any dynamic segment of an URL. For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL.
 
-Another way to create pages is in your `gatsby-node.js` file using the `createPage` action, a JavaScript function. When pages are defined this way, the path is explicitly set. For example:
+- `src/pages/users/[id].js => /users/:id`
+
+See the [File System Route API](/docs/file-system-route-api/) documentation for more detail.
+
+### Using `gatsby-node.js`
+
+You can use [Gatsby Node APIs](/docs/node-apis/), including [`createPages`](/docs/node-apis/#createPages), inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/actions/#createPage) action which is at the core of programmatically creating a page. Here's an example for creating pages from markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
-createPage({
-  path: "/routing",
-  component: routing,
-  context: {},
-})
+exports.createPages = async function ({ actions, graphql }) {
+  const { data } = await graphql(`
+    query {
+      allMarkdownRemark {
+        nodes {
+          fields {
+            slug
+          }
+        }
+      }
+    }
+  `)
+  // highlight-start
+  data.allMarkdownRemark.forEach(node => {
+    const slug = node.fields.slug
+    actions.createPage({
+      path: slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: { slug: slug },
+    })
+  })
+  // highlight-end
+}
 ```
 
-For more information on this action, visit the [`createPage` API documentation](/docs/actions/#createPage).
+The data for creating these pages doesn't necessarily have to come from Gatsby's internal GraphQL data layer as you e.g. can source local files or make async calls to remote APIs. For more information, also on how you can modify pages, please see [Creating and Modifying Pages](/docs/creating-and-modifying-pages/) for more detail.
 
 ## Conflicting Routes
 
@@ -62,7 +86,7 @@ Alternatively, you can navigate between pages using standard `<a>` tags, but you
 
 Gatsby will handle scroll restoration for you in most cases. To track and restore scroll position in additional containers, you can [use the `useScrollRestoration` hook](/docs/scroll-restoration/).
 
-## Creating authentication-gated links
+## Creating authentication-gated routes
 
 For pages dealing with sensitive information, or other dynamic behavior, you may want to handle that information server-side. Gatsby lets you create [client-only routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate, ensuring that the information is only available to authorized users.
 

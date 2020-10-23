@@ -1,18 +1,19 @@
 ---
-title: Programmatically Creating and Modifying Pages
+title: Creating and Modifying Pages
 ---
 
 Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
-- In your site's gatsby-node.js by implementing the API
-  [`createPages`](/docs/node-apis/#createPages)
-- Gatsby core automatically turns React components in `src/pages/*` into pages. Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
-- Plugins can also implement `createPages` and create pages for you
+- By creating React components in `src/pages`. Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
+- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes
+- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/node-apis/#createPages). [Plugins](/docs/plugins/) can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
 to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).
+
+> **Note:** For most use cases you'll be able to use the [File System Route API](/docs/file-system-route-api/) to create pages. Please read on if you need more control over the page creation or consume data outside of Gatsby's GraphQL data layer.
 
 ## Debugging help
 
@@ -263,4 +264,4 @@ Page context is serialized before being passed to pages. This means it can't be 
 
 ## Creating client-only routes
 
-In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](https://www.gatsbyjs.com/docs/client-only-routes-and-user-authentication/).
+In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](/docs/client-only-routes-and-user-authentication/).
