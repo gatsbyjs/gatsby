@@ -59,11 +59,11 @@
     "@types/hosted-git-info": "^3.0.1",
     "@types/yargs": "^15.0.8",
     "babel-preset-gatsby-package": "^0.5.3",
-    "concurrently": "^5.0.0",
     "cross-env": "^7.0.2",
     "rimraf": "^3.0.2",
     "ink": "^2.7.1",
     "ink-spinner": "^3.1.0",
+    "npm-run-all": "4.1.5",
     "react": "^16.8.0",
     "rollup": "^2.23.0",
     "rollup-plugin-auto-external": "^2.0.0",
@@ -89,12 +89,12 @@
   "scripts": {
     "build:babel": "babel --config-file ./non-rollup-babel.config.js src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
     "build:rollup": "rollup -c",
-    "build": "concurrently \"npm run build:babel\" \"npm run build:rollup\"",
+    "build": "npm-run-all -p build:babel build:rollup",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch:babel": "npm run build:babel -- --watch",
     "watch:rollup": "npm run build:rollup -- -w",
-    "watch": "concurrently \"npm run watch:babel\" \"npm run watch:rollup\"",
+    "watch": "npm-run-all -p watch:babel watch:rollup",
     "postinstall": "node scripts/postinstall.js"
   },
   "engines": {
