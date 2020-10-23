@@ -2,7 +2,7 @@
 title: How Queries Work
 ---
 
-In Gatsby, GraphQL queries are specified as tagged `graphql` expressions. These can be exported in your page source files, used in the `StaticQuery` component or used in the `useStaticQuery` hook in your React code. Plugins can also define fragments for use in queries.
+In Gatsby, GraphQL queries are specified as tagged `graphql` expressions. These can be exported in your page source files, used in the `StaticQuery` component, or used in the `useStaticQuery` hook in your React code. Plugins can also define fragments for use in queries.
 
 Note that the process outlined in this section only applies to queries that are specified in components or templates. It does _not_ apply to queries specificed in a `gatsby-node.js` file which are typically used for the creation of dynamic pages.
 
