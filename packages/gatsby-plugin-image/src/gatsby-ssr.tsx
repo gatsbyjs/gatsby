@@ -29,6 +29,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     right: 0;
     top: 0;
     width: 100%;
+    object-fit: cover;
   }
   .gatsby-image-wrapper [data-main-image] {
     opacity: 0;

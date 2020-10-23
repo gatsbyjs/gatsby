@@ -127,6 +127,7 @@ export function getMainProps(
     result.style.transition = `opacity 500ms linear`
     result.style.width = `100%`
     result.style.willChange = `opacity`
+    result.style.objectFit = `cover`
   }
 
   return result
