@@ -78,5 +78,6 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
       ),
       stripMetadata: Joi.boolean().default(true),
       defaultQuality: Joi.number().default(50),
+      failOnError: Joi.boolean().default(true),
     })
 }

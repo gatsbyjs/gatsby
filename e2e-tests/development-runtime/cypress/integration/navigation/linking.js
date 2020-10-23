@@ -143,6 +143,24 @@ describe(`navigation`, () => {
     })
   })
 
+  describe(`All location changes should trigger an effect`, () => {
+    beforeEach(() => {
+      cy.visit(`/navigation-effects`).waitForRouteChange()
+    })
+
+    it(`should trigger an effect after a search param has changed`, () => {
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `Waiting for effect`)
+      cy.getTestElement(`send-search-message`).click().waitForRouteChange()
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `?message=searchParam`)
+    })
+
+    it(`should trigger an effect after the hash has changed`, () => {
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `Waiting for effect`)
+      cy.getTestElement(`send-hash-message`).click().waitForRouteChange()
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `#message-hash`)
+    })
+  })
+
   describe(`Route lifecycle update order`, () => {
     it(`calls onPreRouteUpdate, render and onRouteUpdate the correct amount of times on route change`, () => {
       cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
