@@ -42,7 +42,7 @@ export default {
     json(),
     babel({
       extensions: [`.js`, `.jsx`, `.es6`, `.es`, `.mjs`, `.ts`, `.tsx`] ,
-      babelHelpers: `runtime`,
+      babelHelpers: `bundled`,
       skipPreflightCheck: true,
       exclude: `node_modules/**`,
     }),
