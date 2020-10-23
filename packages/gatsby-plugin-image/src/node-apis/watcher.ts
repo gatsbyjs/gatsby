@@ -15,12 +15,14 @@ let watcher: FSWatcher | undefined
  */
 export function watchImage({
   fullPath,
+  pathPrefix,
   createNodeId,
   createNode,
   cache,
   reporter,
 }: {
   fullPath: string
+  pathPrefix: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
   cache: GatsbyCache
@@ -42,7 +44,7 @@ export function watchImage({
           reporter.warn(`Could not process image ${path}`)
           return
         }
-        await updateImages({ node, cache, reporter })
+        await updateImages({ node, cache, pathPrefix, reporter })
       }
     )
   } else {
@@ -56,10 +58,12 @@ export function watchImage({
 async function updateImages({
   cache,
   node,
+  pathPrefix,
   reporter,
 }: {
   cache: GatsbyCache
   node: Node
+  pathPrefix: string
   reporter: Reporter
 }): Promise<void> {
   // See if any static image instances use this source image file
@@ -79,7 +83,7 @@ async function updateImages({
           return
         }
         // Update the image
-        await writeImage(node, args, reporter, cache, cacheFilename)
+        await writeImage(node, args, pathPrefix, reporter, cache, cacheFilename)
       }
     )
   )

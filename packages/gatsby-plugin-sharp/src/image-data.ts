@@ -77,6 +77,7 @@ export interface IImageDataArgs {
 export async function generateImageData({
   file,
   args,
+  pathPrefix,
   reporter,
   cache,
 }: IImageDataArgs): Promise<ISharpGatsbyImageData | undefined> {
@@ -109,6 +110,8 @@ export async function generateImageData({
       height: Math.round(width / imageSizes.aspectRatio),
       toFormat: args.toFormat || metadata.format,
     })
+
+    if (pathPrefix) transform.pathPrefix = pathPrefix
     return transform
   })
 
