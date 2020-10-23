@@ -45,10 +45,34 @@ const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   return flattened
 }
 
+const supportStringPlugins = (config: ISiteConfig = {}): void => {
+  if (!config.plugins) return
+
+  config.plugins = config.plugins.map(plugin => {
+    if (typeof plugin === `string`)
+      return {
+        resolve: plugin,
+        options: {},
+      }
+
+    return plugin
+  })
+
+  return
+}
+
 export async function loadPlugins(
   config: ISiteConfig = {},
   rootDir: string | null = null
 ): Promise<Array<IFlattenedPlugin>> {
+  // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
+  supportStringPlugins(config)
+
+  // Show errors for invalid plugin configuration
+  if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+    await validatePluginOptions(config)
+  }
+
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,
@@ -71,11 +95,6 @@ export async function loadPlugins(
 
   // Show errors for any non-Gatsby APIs exported from plugins
   await handleBadExports({ currentAPIs, badExports })
-
-  // Show errors for invalid plugin configuration
-  if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-    await validatePluginOptions({ flattenedPlugins })
-  }
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({
