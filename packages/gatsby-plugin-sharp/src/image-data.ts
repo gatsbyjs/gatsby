@@ -119,7 +119,7 @@ export async function generateImageData({
   })
 
   const srcSet = getSrcSet(images)
-  const sizes = args.sizes || getSizes(imageSizes.presentationWidth)
+  const sizes = args.sizes || getSizes(imageSizes.presentationWidth, layout)
 
   const primaryIndex = imageSizes.sizes.findIndex(
     size => size === imageSizes.presentationWidth

@@ -293,10 +293,28 @@ export function fluidImageSizes({
   }
 }
 
-export const getSizes = width => `(max-width: ${width}px) 100vw, ${width}px`
+export const getSizes = (width, layout) => {
+  switch (layout) {
+    // If screen is wider than the max size, image width is the max size,
+    // otherwise it's the width of the screen
+    case `constrained`:
+      return `(min-width: ${width}px) ${width}px, 100vw`
+
+    // Image is always the same width, whatever the size of the screen
+    case `fixed`:
+      return `${width}px`
+
+    // Image is always the width of the screen
+    case `fluid`:
+      return `100vw`
+
+    default:
+      return undefined
+  }
+}
 
 export const getSrcSet = images =>
-  images.map(image => `${image.src} ${image.width}w`).join(`\n`)
+  images.map(image => `${image.src} ${image.width}w`).join(`,\n`)
 
 export function getDimensionsAndAspectRatio(dimensions, options) {
   // Calculate the eventual width/height of the image.
