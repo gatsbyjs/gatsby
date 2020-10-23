@@ -61,6 +61,22 @@ Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed aft
 - `isIconAfterHeader`: Boolean. Enable the anchor icon to be inline at the end of the header text (optional)
 - `elements`: String array. Specify which type of header tags to link (optional)
 
+## how to style the SVG
+
+You can add currentColor with the following css
+
+```
+a.anchor {
+  fill: currentColor
+}
+```
+
+Or if you want to only target the svg (note that the first selector is faster than the one below but that's micro optimisations)
+
+```
+a.anchor > svg
+```
+
 ```javascript
 // In your gatsby-config.js
 module.exports = {
