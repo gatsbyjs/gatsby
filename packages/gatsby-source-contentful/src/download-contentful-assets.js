@@ -12,10 +12,10 @@ const bar = new ProgressBar(
 /**
  * @name distributeWorkload
  * @param workers A list of async functions to complete
- * @param {number} count The number of task runners to use
+ * @param {number} count The number of task runners to use (see assetDownloadWorkers in config)
  */
 
-async function distributeWorkload(workers, count) {
+async function distributeWorkload(workers, count = 50) {
   const methods = workers.slice()
 
   async function task() {
