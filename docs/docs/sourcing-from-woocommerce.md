@@ -16,8 +16,8 @@ This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages
 
 Install it:
 
-```bash
-npm install --save @pasdo501/gatsby-source-woocommerce
+```shell
+npm install @pasdo501/gatsby-source-woocommerce
 ```
 
 Configure its options:

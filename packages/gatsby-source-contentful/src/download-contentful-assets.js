@@ -9,7 +9,23 @@ const bar = new ProgressBar(
   }
 )
 
-let totalJobs = 0
+/**
+ * @name distributeWorkload
+ * @param workers A list of async functions to complete
+ * @param {number} count The number of task runners to use (see assetDownloadWorkers in config)
+ */
+
+async function distributeWorkload(workers, count = 50) {
+  const methods = workers.slice()
+
+  async function task() {
+    while (methods.length > 0) {
+      await methods.pop()()
+    }
+  }
+
+  await Promise.all(new Array(count).fill(undefined).map(() => task()))
+}
 
 /**
  * @name downloadContentfulAssets
@@ -25,23 +41,19 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     store,
     cache,
     getCache,
-    getNodes,
+    getNodesByType,
     reporter,
+    assetDownloadWorkers,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
-  const contentfulAssetNodes = getNodes().filter(
-    n =>
-      n.internal.owner === `gatsby-source-contentful` &&
-      n.internal.type === `ContentfulAsset`
-  )
 
-  await Promise.all(
-    contentfulAssetNodes.map(async node => {
-      totalJobs += 1
-      bar.total = totalJobs
+  const assetNodes = getNodesByType(`ContentfulAsset`)
+  bar.total = assetNodes.length
 
+  await distributeWorkload(
+    assetNodes.map(node => async () => {
       let fileNodeID
       const { contentful_id: id, node_locale: locale } = node
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
@@ -56,7 +68,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
         )
         return Promise.resolve()
       }
-      const url = `http://${node.file.url.slice(2)}`
+      const url = `https://${node.file.url.slice(2)}`
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata
@@ -95,7 +107,8 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       }
 
       return node
-    })
+    }),
+    assetDownloadWorkers
   )
 }
 exports.downloadContentfulAssets = downloadContentfulAssets

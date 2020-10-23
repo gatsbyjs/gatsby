@@ -2,12 +2,12 @@
 
 Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas are stitched together by declaring an arbitrary type name that wraps the remote schema Query type (`typeName` below), and putting the remote schema under a field of the Gatsby GraphQL query (`fieldName` below).
 
-- [Example website](https://using-gatsby-source-graphql.netlify.com/)
+- [Example website](https://using-gatsby-source-graphql.netlify.app/)
 - [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
 ## Install
 
-`npm install --save gatsby-source-graphql`
+`npm install gatsby-source-graphql`
 
 ## How to use
 
@@ -26,7 +26,7 @@ module.exports = {
         // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
-        url: "https://swapi-graphql.netlify.com/.netlify/functions/index",
+        url: "https://swapi-graphql.netlify.app/.netlify/functions/index",
       },
     },
 
@@ -149,6 +149,58 @@ module.exports = {
   ],
 }
 ```
+
+## Custom transform schema function (advanced)
+
+It's possible to modify the remote schema, via a `transformSchema` option which customizes the way the default schema is transformed before it is merged on the Gatsby schema by the stitching process.
+
+The `transformSchema` function gets an object argument with the following fields:
+
+- schema (introspected remote schema)
+- link (default link)
+- resolver (default resolver)
+- defaultTransforms (an array with the default transforms)
+- options (plugin options)
+
+The return value is expected to be the final schema used for stitching.
+
+Below an example configuration that uses the default implementation (equivalent to not using the `transformSchema` option at all):
+
+```js
+const { wrapSchema } = require(`@graphql-tools/wrap`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+        transformSchema: ({
+          schema,
+          link,
+          resolver,
+          defaultTransforms,
+          options,
+        }) => {
+          return wrapSchema(
+            {
+              schema,
+              executor: linkToExecutor(link),
+            },
+            defaultTransforms
+          )
+        }
+    },
+  ]
+}
+```
+
+For details, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https://www.graphql-tools.com/docs/schema-wrapping).
+
+An use case for this feature can be seen in [this issue](https://github.com/gatsbyjs/gatsby/issues/23552).
 
 # Refetching data
 

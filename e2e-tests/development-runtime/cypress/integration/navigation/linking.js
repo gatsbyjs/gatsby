@@ -33,6 +33,50 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
+  it(`can navigate using numbers`, () => {
+    cy.getTestElement(`page-two`).click().waitForRouteChange()
+
+    cy.getTestElement(`back-by-number`).click()
+
+    cy.location(`pathname`).should(`equal`, `/`)
+  })
+
+  describe(`relative links`, () => {
+    it(`can navigate to a subdirectory`, () => {
+      cy.getTestElement(`subdir-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-1`)
+    })
+
+    it(`can navigate to a sibling page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+
+    it(`can navigate to a parent page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-parent-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory`)
+    })
+
+    it(`can navigate to a sibling page programatically`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-button-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+  })
+
   describe(`non-existent route`, () => {
     beforeEach(() => {
       cy.getTestElement(`broken-link`).click().waitForRouteChange()
@@ -96,6 +140,62 @@ describe(`navigation`, () => {
         .waitForRouteChange()
 
       cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    })
+  })
+
+  describe(`All location changes should trigger an effect`, () => {
+    beforeEach(() => {
+      cy.visit(`/navigation-effects`).waitForRouteChange()
+    })
+
+    it(`should trigger an effect after a search param has changed`, () => {
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `Waiting for effect`)
+      cy.getTestElement(`send-search-message`).click().waitForRouteChange()
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `?message=searchParam`)
+    })
+
+    it(`should trigger an effect after the hash has changed`, () => {
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `Waiting for effect`)
+      cy.getTestElement(`send-hash-message`).click().waitForRouteChange()
+      cy.getTestElement(`effect-message`).invoke(`text`).should(`eq`, `#message-hash`)
+    })
+  })
+
+  describe(`Route lifecycle update order`, () => {
+    it(`calls onPreRouteUpdate, render and onRouteUpdate the correct amount of times on route change`, () => {
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
+      cy.lifecycleCallCount(`render`).should(`eq`, 1)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 1)
+      cy.getTestElement(`page-two`).click().waitForRouteChange()
+      cy.getTestElement(`page-2-message`).should(`exist`)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`render`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+    })
+
+    it(`renders the component after onPreRouteUpdate on route change`, () => {
+      cy.getTestElement(`page-component`).should(`exist`)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
+      cy.lifecycleCallCount(`render`).should(`eq`, 1)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 1)
+      cy.lifecycleCallOrder([
+        `onPreRouteUpdate`,
+        `render`,
+        `onRouteUpdate`,
+      ]).should(`eq`, true)
+      cy.getTestElement(`page-two`).click().waitForRouteChange()
+      cy.getTestElement(`page-2-message`).should(`exist`)
+      cy.lifecycleCallOrder([
+        `onPreRouteUpdate`,
+        `render`,
+        `onRouteUpdate`,
+        `onPreRouteUpdate`,
+        `render`,
+        `onRouteUpdate`,
+      ]).should(`eq`, true)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`render`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
   })
 })

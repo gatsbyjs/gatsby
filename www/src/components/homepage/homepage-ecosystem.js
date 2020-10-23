@@ -93,8 +93,9 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${p => p.theme.space[5]} + ${props =>
-  props.theme.space[6]});
+    padding-left: calc(
+      ${p => p.theme.space[5]} + ${props => props.theme.space[6]}
+    );
     position: relative;
     border: 0;
     box-shadow: ${p => p.theme.shadows.raised};
@@ -114,8 +115,8 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.card.starterLabelBackground
           : props.theme.colors.card.pluginLabelBackground};
-      border-radius: ${p => p.theme.radii[2]} 0 0 ${props =>
-  props.theme.radii[2]};
+      border-radius: ${p => p.theme.radii[2]} 0 0
+        ${props => props.theme.radii[2]};
       bottom: 0;
       content: "";
       left: 0;
@@ -146,7 +147,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 const HomepageEcosystem = ({ featuredItems }) => (
   <HomepageSection
     sectionName="Ecosystem"
-    sectionIcon={EcosystemIcon}
+    sectionIcon={<EcosystemIcon />}
     title="Plugins & Starters"
     introduction="We have the tools to help you build for the web."
     links={[
@@ -162,7 +163,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="Plugins"
         description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
-        icon={PluginsIcon}
+        icon={<PluginsIcon />}
         links={[
           { label: `Browse Plugins`, to: `/plugins/` },
           {
@@ -178,7 +179,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="Starters"
         description="Starters are Gatsby sites that are preconfigured for different use cases to give you a head start for your project."
-        icon={StartersIcon}
+        icon={<StartersIcon />}
         links={[
           { label: `Browse Starters`, to: `/starters/` },
           { label: `Using Starters`, to: `/docs/starters/`, secondary: true },

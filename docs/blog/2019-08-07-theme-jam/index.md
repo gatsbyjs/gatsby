@@ -65,7 +65,7 @@ Two of the themes we received stood out especially. As we reviewed, we all took 
 
 Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)’s API, beautiful design, and an explorable UX to create this powerful theme for podcasters.
 
-**Check out the theme: [source code](https://github.com/vojtaholik/gatsby-theme-simplecast) · [demo](https://gatsby-theme-simplecast.netlify.com/)**
+**Check out the theme: [source code](https://github.com/vojtaholik/gatsby-theme-simplecast) · [demo](https://gatsby-theme-simplecast.netlify.app/)**
 
 ### Allan’s Prismic-Powered Legal Pages Theme
 
@@ -73,7 +73,7 @@ Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)’s A
 
 Allan turned something boring (required legal pages) into something beautiful by pulling common legal pages — such as a “terms & conditions” page — from [Prismic](https://prismic.io/) and putting them into a gorgeous UI. This theme highlights theme composability: combine this theme with others to quickly add required legal pages to any Gatsby site!
 
-**Check out the theme: [source code](https://github.com/littleplusbig/gatsby-theme-legals-prismic) · [demo](https://gatsby-theme-legals.netlify.com/)**
+**Check out the theme: [source code](https://github.com/littleplusbig/gatsby-theme-legals-prismic) · [demo](https://gatsby-theme-legals.netlify.app/)**
 
 ## Thanks to the Entire Community
 

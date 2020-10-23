@@ -15,7 +15,7 @@ This solution assumes you already have programmatically generated pages from Mar
 To start out, download the plugins for Gatsby-image as mentioned in [Using gatsby-image](/docs/using-gatsby-image/).
 
 ```shell
-npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 You will also want to have `gatsby-source-filesystem` installed. Then, configure the various plugins in the `gatsby-config` file.
@@ -176,7 +176,7 @@ You may also include images in the Markdown body itself. The plugin [gatsby-rema
 Start out by installing `gatsby-remark-images` and `gatsby-plugin-sharp`.
 
 ```shell
-npm install --save gatsby-remark-images gatsby-plugin-sharp
+npm install gatsby-remark-images gatsby-plugin-sharp
 ```
 
 Also make sure that `gatsby-source-filesystem` is installed and points at the directory where your images are located.
@@ -189,7 +189,7 @@ The below example uses the `gatsby-plugin-mdx` plugin.
 
 `gatsby-remark-images` needs to be both a sub-plugin of `gatsby-plugin-mdx`, included in the `options` field, and a string entry in the plugins array. `gatsby-plugin-sharp` can be included on its own.
 
-`gatsby-source-filesystem` needs to be pointed at wherever you have your images on disk,
+`gatsby-source-filesystem` needs to be pointed at wherever you have your images on disk.
 
 > Note: This example configuration assumes your images and Markdown pages are sourced from the same directory. Check out the section on [configuring for different directories](#configuring-for-images-and-posts-in-different-directories) for additional help.
 

@@ -165,35 +165,35 @@ describe(`filtering on linked nodes`, () => {
       makeNodes().concat([
         {
           id: `1`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 0 },
           children: [],
           linked___NODE: [`child_1`, `child_2`],
           foo: `bar`,
         },
         {
           id: `2`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 1 },
           children: [],
           linked___NODE: [`child_1`],
           foo: `baz`,
         },
         {
           id: `3`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 2 },
           children: [],
           linked___NODE: [`child_2`],
           foo: `foo`,
         },
         {
           id: `4`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 3 },
           children: [],
           array: [{ linked___NODE: [`child_1`, `child_2`] }],
           foo: `lorem`,
         },
         {
           id: `5`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 4 },
           children: [],
           array: [
             { linked___NODE: [`child_1`] },
@@ -203,21 +203,21 @@ describe(`filtering on linked nodes`, () => {
         },
         {
           id: `6`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 5 },
           children: [],
           array: [{ linked___NODE: [`child_1`] }],
           foo: `sit`,
         },
         {
           id: `7`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 6 },
           children: [],
           array: [{ linked___NODE: [`child_2`] }],
           foo: `dolor`,
         },
         {
           id: `8`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 7 },
           children: [],
           foo: `ipsum`,
         },
@@ -285,12 +285,12 @@ describe(`filtering on linked nodes`, () => {
     }
 
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
-    expect(result.data.in.edges).toEqual([`bar`, `foo`, `baz`].map(itemToEdge))
+    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
     expect(result.data.insideInlineArrayEq.edges).toEqual(
       [`lorem`, `ipsum`, `sit`].map(itemToEdge)
     )
     expect(result.data.insideInlineArrayIn.edges).toEqual(
-      [`lorem`, `ipsum`, `dolor`, `sit`].map(itemToEdge)
+      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
     )
   })
 

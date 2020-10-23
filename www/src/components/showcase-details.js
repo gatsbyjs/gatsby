@@ -14,7 +14,7 @@ import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 import PageMetadata from "../components/site-metadata"
 
-import FeaturedIcon from "../assets/icons/featured-sites-icons"
+import { FeaturedSitesIcon } from "../assets/icons"
 import { MdArrowUpward, MdLink } from "react-icons/md"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import { filterByCategories } from "../views/showcase/filtered-showcase"
@@ -66,7 +66,7 @@ const Featured = () => (
         width: t => t.space[5],
       }}
     >
-      <FeaturedIcon />
+      <FeaturedSitesIcon />
     </span>
     {` `}
     Featured
@@ -279,7 +279,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
               },
             }}
           >
-            <h1 sx={{ m: 0 }}>{site.title}</h1>
+            <h1 sx={{ m: 0, color: `inherit` }}>{site.title}</h1>
             <a href={site.main_url} sx={styles.link}>
               {cleanUrl(site.main_url)}
             </a>

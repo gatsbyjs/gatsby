@@ -21,8 +21,8 @@ To do this yourself, you'll build a simple blog using the excellent [gatsby-star
 ```shell
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
 git init # so you can keep track of the changes
-npm i # to install regular gastby requirements
-npm i --save-dev better-sqlite3 # to add an sqlite javascript client
+npm install # to install regular gastby requirements
+npm install --save-dev better-sqlite3 # to add an sqlite javascript client
 ```
 
 The useful commands on a sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
@@ -88,7 +88,7 @@ if (image) {
 }
 ```
 
-And now that you have all the data you need, it is just a matter of creating a file with the metadata in yaml format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
+And now that you have all the data you need, it is just a matter of creating a file with the metadata in YAML format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
 
 ```javascript
   fs.mkdir(path, (err) => { });
@@ -126,7 +126,7 @@ To have comments on your site you can use a service like [Disqus](https://disqus
 ```javascript
 const Database = require("better-sqlite3")
 const fs = require("fs")
-const yourSite = "http://username.github.io/yoursite/"
+const yourSite = "https://username.github.io/yoursite/"
 
 if (process.argv.length < 3) {
   usage()

@@ -13,16 +13,16 @@ When you've installed [`gatsby-plugin-offline`](/packages/gatsby-plugin-offline/
 
 As a website owner, how do I test my site is serving its HTML correctly when `gatsby-plugin-offline` is being used? It would be best if you used your terminal of choice to visit your website. You can crawl your site by running the following command:
 
-**on Windows (using powershell):**
+**on Windows (using PowerShell):**
 
 ```shell
-Invoke-WebRequest https://www.gatsbyjs.org/docs/seo | Select -ExpandProperty Content
+Invoke-WebRequest https://www.gatsbyjs.com/docs/seo | Select -ExpandProperty Content
 ```
 
-**on Mac OS/Linux:**
+**on macOS/Linux:**
 
 ```shell
-curl https://www.gatsbyjs.org/docs/seo
+curl https://www.gatsbyjs.com/docs/seo
 ```
 
 ## Speed boost
@@ -35,7 +35,7 @@ In July 2018, [Google announced a new ranking factor for site speed](https://web
 
 Adding metadata to pages, such as page title, meta description, alt text and structured data using JSON-LD, helps search engines understand your content and when to show your pages in search results.
 
-A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](https://www.gatsbyjs.org/docs/add-seo-component/) to your Gatsby app.
+A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/plugins/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](/docs/add-seo-component/) to your Gatsby app.
 
 Some examples using react-helmet:
 
@@ -48,25 +48,29 @@ Some examples using react-helmet:
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
 
-For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data) that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
+For example, here is a structured data snippet (added with `react-helmet`) in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data), that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
 
 ```html
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "url": "http://www.spookytech.com",
-    "name": "Spooky technologies",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+5-601-785-8543",
-      "contactType": "Customer Support"
-    }
-  }
-</script>
+<Helmet>
+  <script type="application/ld+json">
+    {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://www.spookytech.com",
+          "name": "Spooky technologies",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+5-601-785-8543",
+            "contactType": "Customer Support"
+          }
+        }
+      `}
+  </script>
+</Helmet>
 ```
 
-When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method.
+When using structured data, you'll need to test during development and the [Rich Results Test](https://search.google.com/test/rich-results) from Google is one recommended method.
 
 After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
 

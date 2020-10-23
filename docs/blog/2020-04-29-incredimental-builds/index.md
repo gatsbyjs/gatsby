@@ -14,17 +14,17 @@ We pictured a world in which rich, dynamic web applications were built and serve
 
 This is a really exciting vision, but it only works if builds are lightning quick. If our data changes thousands of times a day, and it takes hours to rebuild the site, the math doesn't work.
 
-Happily, this vision has gotten significantly more tangible recently, with our [incremental builds launch](https://gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) last week 🎉
+Happily, this vision has gotten significantly more tangible recently, with our [incremental builds launch](/blog/2020-04-22-announcing-incremental-builds/) last week 🎉
 
 ## What are incremental builds?
 
 I think it's best explained through an example.
 
-Let's say we're building an online magazine, something that mixes the content of Architectural Digest with the aesthetic of Cosmopolitan/Buzzfeed. I've named it METROGLAM.
+Let's say we're building an online magazine, something that mixes the content of Architectural Digest with the aesthetic of Cosmopolitan/BuzzFeed. I've named it METROGLAM.
 
 ![A mockup of a Cosmopolitan-style online magazine, except all the articles are about interior design and architecture](./images/metroglam.png)
 
-We'll host each article in a CMS like Wordpress or Contentful. We'll have dozens of individual authors and editors, and we expect we'll average about 15 new articles a day, with maybe 100 or so daily edits (tweaks, corrections, live updates…). Whenever the content changes, it triggers a new build and deploys it live.
+We'll host each article in a CMS like WordPress or Contentful. We'll have dozens of individual authors and editors, and we expect we'll average about 15 new articles a day, with maybe 100 or so daily edits (tweaks, corrections, live updates…). Whenever the content changes, it triggers a new build and deploys it live.
 
 At first, this works great! Gatsby pulls all our data at build-time and generates beautiful, functional HTML files. After a couple years, though, our builds start to get a little sluggish; Once we hit 10,000 articles, it might take anywhere from 5 to 20 minutes to build.
 
@@ -54,7 +54,7 @@ Last week's launch supports content changes with a few specific CMS providers:
 - Sanity
 - DatoCMS
 - Cosmic
-- Wordpress (alpha)
+- WordPress (alpha)
 - Drupal (alpha)
 
 In order to build incrementally, we need tight integration with the CMS to be able to detect changes. To get to the build speeds we're after, it's not fast enough to fetch all recent data and figure out what's changed; we need to integrate at a lower level with the CMS, and every CMS is different.
@@ -63,7 +63,7 @@ What if you're not using one of those CMS', or if your content is in Markdown? W
 
 ## The other half of the story
 
-When you think about it, a sub-10-second build is wild. Have you ever heard of a Webpack app being built that fast?!
+When you think about it, a sub-10-second build is wild. Have you ever heard of a webpack app being built that fast?!
 
 There's two parts to Gatsby Cloud's incremental builds feature:
 
@@ -84,7 +84,7 @@ It's important to clarify that in order to achieve the results that we have, we 
 
 Because Gatsby Cloud only has to build Gatsby sites, we can make all kinds of assumptions and optimizations around that. Other CI/CD platforms can't optimize their cloud infrastructure for a specific kind of site, since they need to support many different build processes and application types.
 
-That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/) for "incremental data changes", to handle the content-diffing mentioned earlier.
+That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](/docs/conditional-page-builds/) for "conditional page builds", to handle the content-diffing mentioned earlier.
 
 We do believe that Gatsby Cloud should be the best place to build your Gatsby project, since we're able to make Gatsby-specific optimizations. But we also want Gatsby builds to be fast, no matter where they're built.
 

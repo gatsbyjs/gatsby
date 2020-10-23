@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.18...gatsby-remark-images-contentful@2.3.19) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.17...gatsby-remark-images-contentful@2.3.18) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.16...gatsby-remark-images-contentful@2.3.17) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.15...gatsby-remark-images-contentful@2.3.16) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.14...gatsby-remark-images-contentful@2.3.15) (2020-08-31)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.13...gatsby-remark-images-contentful@2.3.14) (2020-08-12)
+
+### Bug Fixes
+
+- **gatsby-remark-images-contentful:** Support custom Url search params in inline markdown images ([#25947](https://github.com/gatsbyjs/gatsby/issues/25947)) ([d70d389](https://github.com/gatsbyjs/gatsby/commit/d70d389))
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.12...gatsby-remark-images-contentful@2.3.13) (2020-08-11)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.11...gatsby-remark-images-contentful@2.3.12) (2020-07-28)
+
+### Bug Fixes
+
+- do not augment plugin-options ([#26006](https://github.com/gatsbyjs/gatsby/issues/26006)) ([222920b](https://github.com/gatsbyjs/gatsby/commit/222920b))
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.10...gatsby-remark-images-contentful@2.3.11) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.9...gatsby-remark-images-contentful@2.3.10) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.8...gatsby-remark-images-contentful@2.3.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.7...gatsby-remark-images-contentful@2.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.6...gatsby-remark-images-contentful@2.3.7) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.5...gatsby-remark-images-contentful@2.3.6) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.4...gatsby-remark-images-contentful@2.3.5) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.3...gatsby-remark-images-contentful@2.3.4) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.2...gatsby-remark-images-contentful@2.3.3) (2020-05-25)
+
+### Bug Fixes
+
+- **gatsby-remark-images-contentful:** use `url` for cache key instead of `fileName` ([#24338](https://github.com/gatsbyjs/gatsby/issues/24338)) ([08503b2](https://github.com/gatsbyjs/gatsby/commit/08503b2))
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.1...gatsby-remark-images-contentful@2.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
 ## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.0...gatsby-remark-images-contentful@2.3.1) (2020-05-05)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful

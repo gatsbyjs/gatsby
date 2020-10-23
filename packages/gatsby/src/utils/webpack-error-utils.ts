@@ -24,6 +24,7 @@ interface ITransformedWebpackError {
     [key: string]: unknown
   }
 }
+
 const transformWebpackError = (
   stage: keyof typeof stageCodeToReadableLabel,
   webpackError: any
@@ -101,7 +102,7 @@ const transformWebpackError = (
 export const structureWebpackErrors = (
   stage: Stage,
   webpackError: any
-): ITransformedWebpackError[] | ITransformedWebpackError => {
+): Array<ITransformedWebpackError> | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
   }

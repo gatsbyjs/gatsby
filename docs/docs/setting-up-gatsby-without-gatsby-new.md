@@ -2,7 +2,7 @@
 title: Setting up a Gatsby Site Without the `gatsby new` Command
 ---
 
-There are many Enterprise level companies that maintain an internal clone of the NPM registry for security purposes. If you work for such a company, you may find that you are able to successfully run `npm install -g gatsby-cli` but cannot run the `gatsby new <project-source>` as the `gatsby new` command clones a repo from a public GitHub repository. Many companies block public GitHub, which will cause the `gatsby new` command to fail. Not to worry, though, you can set up a new Gatsby site without the `gatsby new` command with a few quick steps.
+There are many Enterprise level companies that maintain an internal clone of the npm registry for security purposes. If you work for such a company, you may find that you are able to successfully run `npm install -g gatsby-cli` but cannot run the `gatsby new <project-source>` as the `gatsby new` command clones a repo from a public GitHub repository. Many companies block public GitHub, which will cause the `gatsby new` command to fail. Not to worry, though, you can set up a new Gatsby site without the `gatsby new` command with a few quick steps.
 
 ## Preparing your environment
 
@@ -20,7 +20,7 @@ mkdir my-new-gatsby-site
 cd my-new-gatsby-site
 ```
 
-Next, you'll need to set up NPM within your project.
+Next, you'll need to set up npm within your project.
 
 ```shell
 npm init
@@ -31,7 +31,7 @@ Fill out the prompts for the `package.json` file that is generated. If you'd lik
 Now, you'll need to install the necessary packages that Gatsby relies on to work its magic.
 
 ```shell
-npm install --save gatsby react react-dom
+npm install gatsby react react-dom
 ```
 
 Next, you'll add a `src` directory and a `pages` directory inside your project.

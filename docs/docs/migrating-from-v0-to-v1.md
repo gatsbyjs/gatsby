@@ -27,7 +27,7 @@ git mv utils src
 automatically prefixes urls and handles prefetching. Add `gatsby-link` to your
 project by running:
 
-`npm install --save gatsby-link`
+`npm install gatsby-link`
 
 `gatsby-link` auto-detects whether to use a plain `<Link>` or `<NavLink>` based
 on what props you pass it. There's no need to wrap `<IndexLink>` because it was
@@ -123,7 +123,7 @@ Here's an example of migrating a markdown wrapper to Gatsby v1.
 
 Install Gatsby plugins for handling markdown files.
 
-`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
+`npm install gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
 
 Next add them to your `gatsby-config.js` file. Make your config file look
 something like the following:
@@ -285,7 +285,7 @@ export const pageQuery = graphql`
 `
 ```
 
-At the bottom of the file you'll notice the graphql query. This is how pages and
+At the bottom of the file you'll notice the GraphQL query. This is how pages and
 templates in Gatsby v1 get their data. In v0, wrapper components had little
 control over what data they got. In v1, templates and pages can query for
 exactly the data they need.

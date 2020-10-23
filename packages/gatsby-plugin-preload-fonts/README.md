@@ -7,7 +7,7 @@ link to stylesheets that in turn link to font files.
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-preload-fonts
+npm install gatsby-plugin-preload-fonts
 ```
 
 Once you've installed the plugin, you'll want to add the included script

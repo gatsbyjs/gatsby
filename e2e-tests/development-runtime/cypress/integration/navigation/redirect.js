@@ -40,6 +40,21 @@ const runTests = () => {
       )
     })
   })
+
+  it(`should redirect to a dynamically-created replacement page`, () => {
+    cy.visit(`/redirect-me/`).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/pt/redirect-me/`)
+    cy.then(() => {
+      expect(spy).not.to.be.calledWith(
+        `The route "/redirect" matches both a page and a redirect; this is probably not intentional.`
+      )
+
+      cy.findByText("This should be at /pt/redirect-me/", {
+        exact: false,
+      }).should(`exist`)
+    })
+  })
 }
 
 describe(`redirect`, () => {
@@ -51,11 +66,11 @@ describe(`redirect`, () => {
     // this is sanity check for this group
     it(`make sure 404 is present`, () => {
       cy.visit(`/______not_existing_page`).waitForRouteChange()
-      cy.queryByText("Preview custom 404 page").click()
-      cy.queryByText("A custom 404 page wasn't detected", {
+      cy.findByText("Preview custom 404 page").click()
+      cy.findByText("A custom 404 page wasn't detected", {
         exact: false,
       }).should(`not.exist`)
-      cy.queryByText(
+      cy.findByText(
         "You just hit a route that does not exist... the sadness."
       ).should(`exist`)
     })
@@ -83,11 +98,11 @@ describe(`redirect`, () => {
 
     it(`make sure 404 is NOT present`, () => {
       cy.visit(`/______not_existing_page`).waitForRouteChange()
-      cy.queryByText("Preview custom 404 page").click()
-      cy.queryByText("A custom 404 page wasn't detected", {
+      cy.findByText("Preview custom 404 page").click()
+      cy.findByText("A custom 404 page wasn't detected", {
         exact: false,
       }).should(`exist`)
-      cy.queryByText(
+      cy.findByText(
         "You just hit a route that does not exist... the sadness.",
         { exact: false }
       ).should(`not.exist`)

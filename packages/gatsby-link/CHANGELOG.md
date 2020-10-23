@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.15...gatsby-link@2.4.16) (2020-10-20)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-link ([#27118](https://github.com/gatsbyjs/gatsby/issues/27118)) ([fc3b2d6](https://github.com/gatsbyjs/gatsby/commit/fc3b2d6cf6f85fd9a933bf850ff5970eb05234d9))
+
+## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.14...gatsby-link@2.4.15) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.13...gatsby-link@2.4.14) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.12...gatsby-link@2.4.13) (2020-07-15)
+
+### Bug Fixes
+
+- **gatsby:** Support numbers in navigate function ([#25611](https://github.com/gatsbyjs/gatsby/issues/25611)) ([83926c8](https://github.com/gatsbyjs/gatsby/commit/83926c8))
+- **gatsby-link:** Do not crash in unit tests when globals are undefined ([#25608](https://github.com/gatsbyjs/gatsby/issues/25608)) ([6404fc7](https://github.com/gatsbyjs/gatsby/commit/6404fc7))
+
+## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.11...gatsby-link@2.4.12) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.10...gatsby-link@2.4.11) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.9...gatsby-link@2.4.10) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.8...gatsby-link@2.4.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.7...gatsby-link@2.4.8) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.6...gatsby-link@2.4.7) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.5...gatsby-link@2.4.6) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.4...gatsby-link@2.4.5) (2020-06-03)
+
+### Bug Fixes
+
+- **gatsby-link:** Fail gracefully on empty `to` prop ([#24745](https://github.com/gatsbyjs/gatsby/issues/24745)) ([700cff7](https://github.com/gatsbyjs/gatsby/commit/700cff7))
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.3...gatsby-link@2.4.4) (2020-06-02)
+
+### Features
+
+- **gatsby:** Add support for relative links ([#24054](https://github.com/gatsbyjs/gatsby/issues/24054)) ([e2c6cf2](https://github.com/gatsbyjs/gatsby/commit/e2c6cf2))
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.2...gatsby-link@2.4.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-link
+
 ## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.1...gatsby-link@2.4.2) (2020-05-08)
 
 ### Bug Fixes

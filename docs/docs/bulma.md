@@ -8,11 +8,11 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 ## Installation
 
-For starters, lets install all the required packages we're going to need.
+For starters, let's install all the required packages we're going to need.
 
 `yarn add bulma node-sass gatsby-plugin-sass`
 
-Then add the `gatsby-plugin-sass` in to `gatsby-config.js`.
+Then, add the `gatsby-plugin-sass` in to `gatsby-config.js`.
 
 ```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-sass`],
@@ -20,7 +20,7 @@ plugins: [`gatsby-plugin-sass`],
 
 ## File for styles
 
-Now is the time to create a scss-file that holds your simple style customisation and the import statement for bulma.
+Now is the time to create a SCSS file that holds your simple style customization and the import statement for Bulma.
 
 (To keep things simple, insert the file next to `index.js` in the pages-directory)
 
@@ -68,4 +68,4 @@ And that's all there is to it! Now you can use Bulma as you normally would.
 
 ## Resources
 
-- [Bulma documentation on how to use sass](https://bulma.io/documentation/customize/with-node-sass/)
+- [Bulma documentation on how to use Sass](https://bulma.io/documentation/customize/with-node-sass/)

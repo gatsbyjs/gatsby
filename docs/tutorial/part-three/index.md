@@ -12,7 +12,7 @@ In this part, you'll learn about Gatsby plugins and creating "layout" components
 
 Gatsby plugins are JavaScript packages that help add functionality to a Gatsby site. Gatsby is designed to be extensible, which means plugins are able to extend and modify just about everything Gatsby does.
 
-Layout components are for sections of your site that you want to share across multiple pages. For example, sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and/or navigation menu. On this page for example, the header at the top is part of gatsbyjs.org's layout component.
+Layout components are for sections of your site that you want to share across multiple pages. For example, sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and/or navigation menu. On this page for example, the header at the top is part of gatsbyjs.com's layout component.
 
 Let's dive into part three.
 
@@ -43,10 +43,10 @@ cd tutorial-part-three
 
 There are two main steps to using a plugin: Installing and configuring.
 
-1. Install the `gatsby-plugin-typography` NPM package.
+1. Install the `gatsby-plugin-typography` npm package.
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
+npm install gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
@@ -90,7 +90,7 @@ gatsby develop
 
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
 
-![typography-styles](typography-styles.png)
+![Developer tool panel showing `typography.js` CSS styles](typography-styles.png)
 
 ### ✋ Make some content and style changes
 
@@ -114,7 +114,7 @@ export default function Home() {
 
 Your site should now look like this:
 
-![no-layout](no-layout.png)
+![Screenshot of site with no layout styling](no-layout.png)
 
 Let's make a quick improvement. Many sites have a single column of text centered in the middle of the page. To create this, add the following styles to the `<div>` in `src/pages/index.js`.
 
@@ -135,7 +135,7 @@ export default function Home() {
 }
 ```
 
-![with-layout2](with-layout2.png)
+![Screenshot of a Gatsby page with a centered column of text](with-layout2.png)
 
 Sweet. You've installed and configured your very first Gatsby plugin!
 
@@ -175,7 +175,7 @@ export default function Contact() {
 
 Let's see what the new about page looks like:
 
-![about-uncentered](about-uncentered.png)
+![About page with uncentered text](about-uncentered.png)
 
 Hmm. It would be nice if the content of the two new pages were centered like the index page. And it would be nice to have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
@@ -218,7 +218,7 @@ export default function Home() {
 }
 ```
 
-![with-layout2](with-layout2.png)
+![Screenshot of a Gatsby page with a centered column of text](with-layout2.png)
 
 Sweet, the layout is working! The content of your index page is still centered.
 
@@ -247,7 +247,7 @@ export default function Layout({ children }) {
 
 If you go to any of your three pages, you'll see the same title added, e.g. the `/about/` page:
 
-![with-title](with-title.png)
+![Formatted page showing site title](with-title.png)
 
 ### ✋ Add navigation links between pages
 
@@ -286,7 +286,7 @@ export default function Layout({ children }) {
 }
 ```
 
-![with-navigation2](with-navigation.png)
+![A Gatsby page showing navigation links](with-navigation.png)
 
 And there you have it! A three page site with basic global navigation.
 

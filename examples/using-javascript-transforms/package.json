@@ -19,20 +19,20 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://www.gatsbyjs.org",
+  "homepage": "https://www.gatsbyjs.com",
   "dependencies": {
-    "bulma": "0.8.2",
+    "bulma": "0.9.0",
     "d3": "4.13.0",
-    "gatsby": "^2.21.35",
-    "gatsby-plugin-sass": "^2.3.1",
-    "gatsby-remark-prismjs": "^3.5.1",
-    "gatsby-source-filesystem": "^2.3.3",
-    "gatsby-transformer-javascript-frontmatter": "^2.3.2",
-    "gatsby-transformer-remark": "^2.8.8",
-    "moment": "^2.25.3",
+    "gatsby": "^2.24.63",
+    "gatsby-plugin-sass": "^2.3.13",
+    "gatsby-remark-prismjs": "^3.5.13",
+    "gatsby-source-filesystem": "^2.3.30",
+    "gatsby-transformer-javascript-frontmatter": "^2.3.12",
+    "gatsby-transformer-remark": "^2.8.35",
+    "moment": "^2.28.0",
     "node-sass": "^4.14.1",
     "normalize.css": "^7.0.0",
-    "prismjs": "^1.20.0",
+    "prismjs": "^1.21.0",
     "prop-types": "^15.7.2",
     "react-helmet": "^5.2.1"
   }

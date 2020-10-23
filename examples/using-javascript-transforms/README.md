@@ -2,7 +2,7 @@
 
 ### An exploration of the JavaScript ecosystem in Gatsby
 
-#### Demo at [https://using-javascript-transforms.netlify.com](https://using-javascript-transforms.netlify.com)
+#### Demo at [https://using-javascript-transforms.netlify.app](https://using-javascript-transforms.netlify.app)
 
 The example mixes JavaScript and remark, uses scss and bulma.io, has use case
 examples for graphql in layouts, and some "manual" page creation with the help

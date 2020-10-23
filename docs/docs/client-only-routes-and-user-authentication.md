@@ -49,7 +49,7 @@ const App = () => {
 export default App
 ```
 
-Briefly, when a page loads, Reach Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
+Briefly, when a page loads, Reach Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router)). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
 
 ### Adjusting routes to account for authenticated users
 
@@ -87,7 +87,7 @@ The `<PrivateRoute />` component would look something like this one (taken from 
 
 ```jsx:title=src/components/PrivateRoute.js
 // import ...
-import React, { Component } from "react"
+import React from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 
@@ -150,12 +150,12 @@ In this example with a router and a single route for `/app/why-gatsby-is-awesome
 
 A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
 
-In this example, when making a `GET` request to `/app/why-gatsby-is-awesome`, the server should respond with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect).
+In this example, when making a `GET` request to `/app/why-gatsby-is-awesome`, the server should respond with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect). This can be done with NGINX using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options), or an [equivalent directive](https://serverfault.com/questions/290784/what-is-apaches-equivalent-of-nginxs-try-files) if using Apache.
 
 One result of this method is that the client is completely unaware of the logic on the server, decoupling it from Gatsby.
 
 ## Additional resources
 
 - [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
-- [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
+- [Live version of the "simple auth" example](https://simple-auth.netlify.app/)
 - [The Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) which also implements an authenticated flow

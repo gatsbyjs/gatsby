@@ -1,20 +1,20 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Gatsby plugin to add support for using Less",
-  "version": "3.2.1",
+  "version": "4.0.6",
   "author": "monastic.panic@gmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.9.6",
-    "less-loader": "^5.0.0"
+    "@babel/runtime": "^7.11.2",
+    "less-loader": "^6.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "babel-preset-gatsby-package": "^0.4.1",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.5.3",
+    "cross-env": "^7.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less#readme",
   "keywords": [
@@ -25,8 +25,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "less": "^3.0.0"
+    "gatsby": "^2.0.0"
   },
   "repository": {
     "type": "git",

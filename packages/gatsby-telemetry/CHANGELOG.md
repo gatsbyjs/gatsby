@@ -3,6 +3,150 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.37...gatsby-telemetry@1.3.38) (2020-10-06)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-telemetry ([#27145](https://github.com/gatsbyjs/gatsby/issues/27145)) ([f3075c9](https://github.com/gatsbyjs/gatsby/commit/f3075c986833d65615f2623bbb0cce0333a967b7))
+
+## [1.3.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.36...gatsby-telemetry@1.3.37) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** export typescript types, add captureEvent ([#27167](https://github.com/gatsbyjs/gatsby/issues/27167)) ([78abe26](https://github.com/gatsbyjs/gatsby/commit/78abe269e185969b22a51efa5eabe1cf87c0fca6))
+
+## [1.3.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.35...gatsby-telemetry@1.3.36) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.34...gatsby-telemetry@1.3.35) (2020-09-16)
+
+### Features
+
+- **gatsby-admin:** track errors ([#26903](https://github.com/gatsbyjs/gatsby/issues/26903)) ([617cc1d](https://github.com/gatsbyjs/gatsby/commit/617cc1dd0e16d60abbea1caec8d3a63f8dbe4142))
+
+## [1.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.33...gatsby-telemetry@1.3.34) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.32...gatsby-telemetry@1.3.33) (2020-09-14)
+
+### Features
+
+- **gatsby:** create telemetry service and start it during develop ([#26832](https://github.com/gatsbyjs/gatsby/issues/26832)) ([6132b95](https://github.com/gatsbyjs/gatsby/commit/6132b9517f2d4668c55e98fe63f2509fdb3d130a)), closes [#26853](https://github.com/gatsbyjs/gatsby/issues/26853)
+
+## [1.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.31...gatsby-telemetry@1.3.32) (2020-09-08)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.30...gatsby-telemetry@1.3.31) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.29...gatsby-telemetry@1.3.30) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.28...gatsby-telemetry@1.3.29) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.27...gatsby-telemetry@1.3.28) (2020-08-24)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.26...gatsby-telemetry@1.3.27) (2020-08-11)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.25...gatsby-telemetry@1.3.26) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.24...gatsby-telemetry@1.3.25) (2020-08-03)
+
+### Features
+
+- **gatsby-telemetry:** Add API to track feature usage ([#26071](https://github.com/gatsbyjs/gatsby/issues/26071)) ([22196a1](https://github.com/gatsbyjs/gatsby/commit/22196a1))
+
+## [1.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.23...gatsby-telemetry@1.3.24) (2020-07-30)
+
+### Features
+
+- **telemetry:** Telemetry flush events fixes and covert more of telemetry to TypeScript ([#25956](https://github.com/gatsbyjs/gatsby/issues/25956)) ([12f124b](https://github.com/gatsbyjs/gatsby/commit/12f124b))
+
+## [1.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.22...gatsby-telemetry@1.3.23) (2020-07-24)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.21...gatsby-telemetry@1.3.22) (2020-07-22)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.20...gatsby-telemetry@1.3.21) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.19...gatsby-telemetry@1.3.20) (2020-07-20)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.18...gatsby-telemetry@1.3.19) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.17...gatsby-telemetry@1.3.18) (2020-07-03)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.16...gatsby-telemetry@1.3.17) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.15...gatsby-telemetry@1.3.16) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.14...gatsby-telemetry@1.3.15) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.13...gatsby-telemetry@1.3.14) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.12...gatsby-telemetry@1.3.13) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.11...gatsby-telemetry@1.3.12) (2020-06-19)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.10...gatsby-telemetry@1.3.11) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.9...gatsby-telemetry@1.3.10) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.8...gatsby-telemetry@1.3.9) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.7...gatsby-telemetry@1.3.8) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.6...gatsby-telemetry@1.3.7) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.5...gatsby-telemetry@1.3.6) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-telemetry
+
 ## [1.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.4...gatsby-telemetry@1.3.5) (2020-05-18)
 
 **Note:** Version bump only for package gatsby-telemetry

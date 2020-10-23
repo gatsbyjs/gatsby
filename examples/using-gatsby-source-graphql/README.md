@@ -2,9 +2,9 @@
 
 Simple gatsby site that displays blog with data inside GraphCMS.
 
-Built using [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/).
+Built using [gatsby-source-graphql](https://www.gatsbyjs.com/packages/gatsby-source-graphql/).
 
-<!-- [See it here](https://using-gatsby-source-graphql.netlify.com/) -->
+<!-- [See it here](https://using-gatsby-source-graphql.netlify.app/) -->
 
 ## How it works
 

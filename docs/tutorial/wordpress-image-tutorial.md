@@ -2,6 +2,12 @@
 title: "Adding Images to a WordPress Site"
 ---
 
+<mark>Warning:</mark>
+
+The version of `gatsby-source-wordpress` that this tutorial uses will soon be deprecated and replaced with a complete rewrite in the next major version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
+
+Please follow the tutorial on [creating a new site with `gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
+
 ## What this tutorial covers:
 
 In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
@@ -26,7 +32,7 @@ cd images-tutorial-site
 Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
-npm install --save gatsby-source-wordpress
+npm install gatsby-source-wordpress
 ```
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
@@ -75,7 +81,7 @@ Now you will need to add the `gatsby-transformer-sharp` and `gatsby-plugin-sharp
 First, you’ll need to install a few plugins and their dependencies:
 
 ```shell
-npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
+npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 ```
 
 Place these plugins in your `gatsby-config.js` like this:
@@ -143,7 +149,7 @@ Here’s an example of creating specific widths and heights for images:
             localFile {
               childImageSharp {
                 # Try editing the "width" and "height" values.
-                resolutions(width: 200, height: 200) {
+                fixed(width: 200, height: 200) {
                   # In the GraphQL explorer, use field names
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
@@ -151,7 +157,7 @@ Here’s an example of creating specific widths and heights for images:
 
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site.
-                  # ...GatsbyImageSharpResolutions_withWebp
+                  # ...GatsbyImageSharpFixed_withWebp
                 }
               }
             }
@@ -209,8 +215,7 @@ import Img from "gatsby-image"
 const IndexPage = ({ data }) => {
   const imagesResolutions = data.allWordpressPost.edges.map(
     edge =>
-      edge.node.childWordPressAcfPostPhoto.photo.localFile.childImageSharp
-        .resolutions
+      edge.node.childWordPressAcfPostPhoto.photo.localFile.childImageSharp.fixed
   )
   return (
     <div>
@@ -218,7 +223,7 @@ const IndexPage = ({ data }) => {
       <p>Welcome to your new Gatsby site.</p>
       <p>Now go build something great.</p>
       {imagesResolutions.map(imageRes => (
-        <Img resolutions={imageRes} key={imageRes.src} />
+        <Img fixed={imageRes} key={imageRes.src} />
       ))}
       <Link to="/page-2/">Go to page 2</Link>
     </div>
@@ -237,8 +242,8 @@ export const query = graphql`
               localFile {
                 childImageSharp {
                   # edit the maxWidth value to generate resized images
-                  resolutions(width: 500, height: 500) {
-                    ...GatsbyImageSharpResolutions_withWebp_tracedSVG
+                  fixed(width: 500, height: 500) {
+                    ...GatsbyImageSharpFixed_withWebp_tracedSVG
                   }
                 }
               }

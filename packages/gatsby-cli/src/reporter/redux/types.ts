@@ -1,12 +1,13 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IStructuredError } from "../../structured-errors/types"
+import { ErrorCategory } from "../../structured-errors/error-map"
 
 export interface IGatsbyCLIState {
-  messages: ILog[]
+  messages: Array<ILog>
   activities: {
     [id: string]: IActivity
   }
-  status: string
+  status: ActivityStatuses | ""
 }
 
 export type ActionsUnion =
@@ -42,6 +43,7 @@ interface ILog {
   group: string | undefined
   code: string | undefined
   type: string | undefined
+  category?: keyof typeof ErrorCategory
   filePath: string | undefined
   location: IStructuredError["location"] | undefined
   docsUrl: string | undefined
@@ -61,7 +63,7 @@ export interface ICreateLog {
 
 export interface ISetStatus {
   type: Actions.SetStatus
-  payload: string
+  payload: ActivityStatuses | ""
 }
 
 export interface IPendingActivity {
@@ -70,6 +72,7 @@ export interface IPendingActivity {
     id: string
     type: ActivityTypes
     status: ActivityStatuses
+    startTime?: [number, number]
   }
 }
 

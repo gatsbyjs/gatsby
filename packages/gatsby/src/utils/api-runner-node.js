@@ -11,27 +11,37 @@ const fs = require(`fs-extra`)
 const { getCache } = require(`./get-cache`)
 import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
-const {
+import {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
   buildEnumType,
   buildScalarType,
-} = require(`../schema/types/type-builders`)
+} from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
+const {
+  getNodes,
+  getNode,
+  getNodesByType,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+} = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
+const { loadNodeContent } = require(`../db/nodes`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
 const boundPluginActionCreators = {}
 const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
-  const { traceId } = actionOptions
-  if (boundPluginActionCreators[plugin.name + api + traceId]) {
-    return boundPluginActionCreators[plugin.name + api + traceId]
+  const { traceId, deferNodeMutation } = actionOptions
+  const defer = deferNodeMutation ? `defer-node-mutation` : ``
+  const actionKey = plugin.name + api + traceId + defer
+  if (boundPluginActionCreators[actionKey]) {
+    return boundPluginActionCreators[actionKey]
   } else {
     const keys = Object.keys(boundActionCreators)
     const doubleBoundActionCreators = {}
@@ -51,9 +61,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
         }
       }
     }
-    boundPluginActionCreators[
-      plugin.name + api + traceId
-    ] = doubleBoundActionCreators
+    boundPluginActionCreators[actionKey] = doubleBoundActionCreators
     return doubleBoundActionCreators
   }
 }
@@ -72,13 +80,185 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const getLocalReporter = (activity, reporter) =>
-  activity
-    ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
-    : reporter
+const deferredAction = type => (...args) => {
+  // Regular createNode returns a Promise, but when deferred we need
+  // to wrap it in another which we resolve when it's actually called
+  if (type === `createNode`) {
+    return new Promise(resolve => {
+      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+        type,
+        payload: args,
+        resolve,
+      })
+    })
+  }
+  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+    type,
+    payload: args,
+  })
+}
 
-const runAPI = (plugin, api, args, activity) => {
-  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+const NODE_MUTATION_ACTIONS = [
+  `createNode`,
+  `deleteNode`,
+  `deleteNodes`,
+  `touchNode`,
+  `createParentChildLink`,
+  `createNodeField`,
+]
+
+const deferActions = actions => {
+  const deferred = { ...actions }
+  NODE_MUTATION_ACTIONS.forEach(action => {
+    deferred[action] = deferredAction(action)
+  })
+  return deferred
+}
+
+/**
+ * Create a local reporter
+ * Used to override reporter methods with activity methods
+ */
+function getLocalReporter({ activity, reporter }) {
+  // If we have an activity, bind panicOnBuild to the activities method to
+  // join them
+  if (activity) {
+    return { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
+  }
+
+  return reporter
+}
+
+function extendErrorIdWithPluginName(pluginName, errorMeta) {
+  const id = errorMeta?.id
+  if (id) {
+    const isPrefixed = id.includes(`${pluginName}_`)
+    if (!isPrefixed) {
+      return {
+        ...errorMeta,
+        id: `${pluginName}_${id}`,
+      }
+    }
+  }
+
+  return errorMeta
+}
+
+function getErrorMapWthPluginName(pluginName, errorMap) {
+  const entries = Object.entries(errorMap)
+
+  return entries.reduce((memo, [key, val]) => {
+    memo[`${pluginName}_${key}`] = val
+
+    return memo
+  }, {})
+}
+
+function extendLocalReporterToCatchPluginErrors({
+  reporter,
+  pluginName,
+  runningActivities,
+}) {
+  let setErrorMap
+
+  let error = reporter.error
+  let panic = reporter.panic
+  let panicOnBuild = reporter.panicOnBuild
+
+  if (pluginName && reporter?.setErrorMap) {
+    setErrorMap = errorMap =>
+      reporter.setErrorMap(getErrorMapWthPluginName(pluginName, errorMap))
+
+    error = (errorMeta, error) =>
+      reporter.error(extendErrorIdWithPluginName(pluginName, errorMeta), error)
+
+    panic = (errorMeta, error) =>
+      reporter.panic(extendErrorIdWithPluginName(pluginName, errorMeta), error)
+
+    panicOnBuild = (errorMeta, error) =>
+      reporter.panicOnBuild(
+        extendErrorIdWithPluginName(pluginName, errorMeta),
+        error
+      )
+  }
+
+  return {
+    ...reporter,
+    setErrorMap,
+    error,
+    panic,
+    panicOnBuild,
+    activityTimer: (...args) => {
+      const activity = reporter.activityTimer.apply(reporter, args)
+
+      const originalStart = activity.start
+      const originalEnd = activity.end
+
+      activity.start = () => {
+        originalStart.apply(activity)
+        runningActivities.add(activity)
+      }
+
+      activity.end = () => {
+        originalEnd.apply(activity)
+        runningActivities.delete(activity)
+      }
+
+      return activity
+    },
+
+    createProgress: (...args) => {
+      const activity = reporter.createProgress.apply(reporter, args)
+
+      const originalStart = activity.start
+      const originalEnd = activity.end
+      const originalDone = activity.done
+
+      activity.start = () => {
+        originalStart.apply(activity)
+        runningActivities.add(activity)
+      }
+
+      activity.end = () => {
+        originalEnd.apply(activity)
+        runningActivities.delete(activity)
+      }
+
+      activity.done = () => {
+        originalDone.apply(activity)
+        runningActivities.delete(activity)
+      }
+
+      return activity
+    },
+  }
+}
+
+const getUninitializedCache = plugin => {
+  const message =
+    `Usage of "cache" instance in "onPreInit" API is not supported as ` +
+    `this API runs before cache initialization` +
+    (plugin && plugin !== `default-site-plugin` ? ` (called in ${plugin})` : ``)
+
+  return {
+    get() {
+      throw new Error(message)
+    },
+    set() {
+      throw new Error(message)
+    },
+  }
+}
+
+const pluginNodeCache = new Map()
+
+const runAPI = async (plugin, api, args, activity) => {
+  let gatsbyNode = pluginNodeCache.get(plugin.name)
+  if (!gatsbyNode) {
+    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+    pluginNodeCache.set(plugin.name, gatsbyNode)
+  }
+
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
@@ -88,14 +268,6 @@ const runAPI = (plugin, api, args, activity) => {
     pluginSpan.setTag(`plugin`, plugin.name)
 
     const {
-      loadNodeContent,
-      getNodes,
-      getNode,
-      getNodesByType,
-      hasNodeChanged,
-      getNodeAndSavePathDependency,
-    } = require(`../db/nodes`)
-    const {
       publicActions,
       restrictedActionsAvailableInAPI,
     } = require(`../redux/actions`)
@@ -103,10 +275,15 @@ const runAPI = (plugin, api, args, activity) => {
       ...publicActions,
       ...(restrictedActionsAvailableInAPI[api] || {}),
     }
-    const boundActionCreators = bindActionCreators(
+    let boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch
     )
+
+    if (args.deferNodeMutation) {
+      boundActionCreators = deferActions(boundActionCreators)
+    }
+
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,
@@ -123,7 +300,11 @@ const runAPI = (plugin, api, args, activity) => {
 
     const tracing = initAPICallTracing(pluginSpan)
 
-    const cache = getCache(plugin.name)
+    // See https://github.com/gatsbyjs/gatsby/issues/11369
+    const cache =
+      api === `onPreInit`
+        ? getUninitializedCache(plugin.name)
+        : getCache(plugin.name)
 
     // Ideally this would be more abstracted and applied to more situations, but right now
     // this can be potentially breaking so targeting `createPages` API and `createPage` action
@@ -170,7 +351,20 @@ const runAPI = (plugin, api, args, activity) => {
         },
       }
     }
-    const localReporter = getLocalReporter(activity, reporter)
+
+    const localReporter = getLocalReporter({ activity, reporter })
+
+    const runningActivities = new Set()
+
+    const extendedLocalReporter = extendLocalReporterToCatchPluginErrors({
+      reporter: localReporter,
+      pluginName: plugin.name,
+      runningActivities,
+    })
+
+    const endInProgressActivitiesCreatedByThisRun = () => {
+      runningActivities.forEach(activity => activity.end())
+    }
 
     const apiCallArgs = [
       {
@@ -187,7 +381,7 @@ const runAPI = (plugin, api, args, activity) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter: localReporter,
+        reporter: extendedLocalReporter,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -211,8 +405,9 @@ const runAPI = (plugin, api, args, activity) => {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
-          callback(err, val)
           apiFinished = true
+          endInProgressActivitiesCreatedByThisRun()
+          callback(err, val)
         }
 
         try {
@@ -226,12 +421,13 @@ const runAPI = (plugin, api, args, activity) => {
         }
       })
     } else {
-      const result = gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
+      try {
+        return await gatsbyNode[api](...apiCallArgs)
+      } finally {
+        pluginSpan.finish()
         apiFinished = true
-        return res
-      })
+        endInProgressActivitiesCreatedByThisRun()
+      }
     }
   }
 
@@ -332,8 +528,27 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         return null
       }
 
+      let gatsbyNode = pluginNodeCache.get(plugin.name)
+      if (!gatsbyNode) {
+        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+        pluginNodeCache.set(plugin.name, gatsbyNode)
+      }
+
       const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
+
+      // TODO: rethink createNode API to handle this better
+      if (
+        api === `onCreateNode` &&
+        gatsbyNode?.unstable_shouldOnCreateNode && // Don't bail if this api is not exported
+        !gatsbyNode.unstable_shouldOnCreateNode(
+          { node: args.node },
+          plugin.pluginOptions
+        )
+      ) {
+        // Do not try to schedule an async event for this node for this plugin
+        return null
+      }
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
@@ -342,7 +557,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           pluginName: `${plugin.name}@${plugin.version}`,
         })
 
-        const localReporter = getLocalReporter(activity, reporter)
+        const localReporter = getLocalReporter({ activity, reporter })
 
         const file = stackTrace
           .parse(err)

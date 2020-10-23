@@ -1,9 +1,13 @@
 import ci from "ci-info"
 
 const CI_DEFINITIONS = [
-  envFromCIandCIName,
+  envFromCIAndCIName,
   getEnvDetect({ key: `NOW_BUILDER_ANNOTATE`, name: `ZEIT Now` }),
   getEnvDetect({ key: `NOW_REGION`, name: `ZEIT Now v1` }),
+  getEnvDetect({ key: `VERCEL_URL`, name: `Vercel Now` }),
+  getEnvDetect({ key: `NOW_BUILDER`, name: `Vercel Now` }),
+  getEnvDetect({ key: `VERCEL_BUILDER`, name: `Vercel Now` }),
+  getEnvDetect({ key: `CODESANDBOX_SSE`, name: `CodeSandbox` }),
   herokuDetect,
   getEnvFromCIInfo,
   envFromCIWithNoName,
@@ -34,7 +38,7 @@ export function isCI(): boolean {
 }
 
 /**
- * Gets the name of the CI environment (e.g. "ZEIT Now", "Heroku", etc.)
+ * Gets the name of the CI environment (e.g. "Vercel", "Heroku", etc.)
  * @return The name of the CI if available. Defaults to null if not in CI
  */
 
@@ -73,7 +77,7 @@ function herokuDetect(): false | "Heroku" {
   )
 }
 
-function envFromCIandCIName(): string | null {
+function envFromCIAndCIName(): string | null {
   if (process.env.CI_NAME && process.env.CI) {
     return process.env.CI_NAME
   }

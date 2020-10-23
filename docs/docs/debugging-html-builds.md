@@ -18,9 +18,9 @@ Errors while building static HTML files generally happen for one of the followin
    have a default export that's a component or string.
 
 3. You mix up `import` and `require` calls in the same file. This might lead to
-   "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4
+   "WebpackError: Invariant Violation: Minified React error #130" [since webpack 4
    is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
-   The solution is to only use `import`.
+   The solution is to only use `import` and this also extends to `gatsby-ssr` and `gatsby-browser` files.
 
 4. Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
    build being inconsistent. It's possible that a change in a file like `gatsby-ssr` or `gatsby-browser` has a structure that is
@@ -51,7 +51,7 @@ const module = typeof window !== `undefined` ? require("module") : null
 
 ## Fixing third-party modules
 
-So, the worst has happened and you're using an NPM module that expects `window`
+So, the worst has happened and you're using an npm module that expects `window`
 to be defined. You may be able to file an issue and get the module patched, but
 what to do in the mean time?
 

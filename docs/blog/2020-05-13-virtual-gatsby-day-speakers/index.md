@@ -51,11 +51,11 @@ You'll learn how the combination of Gatsby's documentation, the speed with which
 
 Ready to set up your drop-shipping side hustle? Great news: Makenna Smutz is here to show you how do it fast and for free.
 
-Smutz will provide a fast-track tutorial for setting up a static site with Gatsby and Netlify (for zero up-front costs) using Stripe, Printful, Sendgrid, and GraphCMS. Follow Smutz on Twitter [@KenzSmutz](https://twitter.com/KenzSmutz).
+Smutz will provide a fast-track tutorial for setting up a static site with Gatsby and Netlify (for zero up-front costs) using Stripe, Printful, SendGrid, and GraphCMS. Follow Smutz on Twitter [@KenzSmutz](https://twitter.com/KenzSmutz).
 
 ![Sam Julien speaker photo](./Sam_Julien.jpg)
 
-Remember when we announced [Gatsby Recipes](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)? Sam Julien does! Julien jumped in right away and now he's excited to share how you can use a Gatsby Recipe to set up Auth on your site.
+Remember when we announced [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/)? Sam Julien does! Julien jumped in right away and now he's excited to share how you can use a Gatsby Recipe to set up Auth on your site.
 
 In this talk, you'll learn how to apply this fun and easy way to set up logging in and out of a Gatsby site, access protected data, and handle silent authentication when the page reloads. You'll also learn some tips and tricks to avoid common pitfalls with authentication in Gatsby. By the end, you'll be ready for the next level of your Gatsby quest! Follow Julien on Twitter [@samjulien](https://twitter.com/samjulien).
 

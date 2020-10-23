@@ -1,128 +1,518 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`gatsby-plugin resource all returns plugins as array 1`] = `
-Array [
-  Object {
-    "id": "gatsby-source-filesystem",
-    "name": "gatsby-source-filesystem",
-    "options": Object {
-      "name": "pages",
-      "path": "\${__dirname}/src/pages",
-    },
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": Object {
+    "name": "pages",
+    "path": "\${__dirname}/src/pages",
   },
-  Object {
-    "id": "gatsby-transformer-sharp",
-    "name": "gatsby-transformer-sharp",
-    "options": undefined,
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 2`] = `
+Object {
+  "_message": "Installed gatsby-transformer-sharp in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-transformer-sharp",
+  "name": "gatsby-transformer-sharp",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 3`] = `
+Object {
+  "_message": "Installed gatsby-plugin-emotion in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-emotion",
+  "name": "gatsby-plugin-emotion",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 4`] = `
+Object {
+  "_message": "Installed gatsby-plugin-typography in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-typography",
+  "name": "gatsby-plugin-typography",
+  "options": Object {
+    "pathToConfigModule": "src/utils/typography",
   },
-  Object {
-    "id": "gatsby-plugin-emotion",
-    "name": "gatsby-plugin-emotion",
-    "options": undefined,
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-typography",
-    "name": "gatsby-plugin-typography",
-    "options": Object {
-      "pathToConfigModule": "src/utils/typography",
-    },
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-transformer-remark",
-    "name": "gatsby-transformer-remark",
-    "options": Object {
-      "plugins": Array [
-        Object {
-          "options": Object {
-            "maxWidth": 590,
-          },
-          "resolve": "gatsby-remark-images",
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 5`] = `
+Object {
+  "_message": "Installed gatsby-transformer-remark in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-transformer-remark",
+  "name": "gatsby-transformer-remark",
+  "options": Object {
+    "plugins": Array [
+      Object {
+        "options": Object {
+          "maxWidth": 590,
         },
-        Object {
-          "options": Object {
-            "wrapperStyle": "margin-bottom: 1.0725rem",
-          },
-          "resolve": "gatsby-remark-responsive-iframe",
+        "resolve": "gatsby-remark-images",
+      },
+      Object {
+        "options": Object {
+          "wrapperStyle": "margin-bottom: 1.0725rem",
         },
-        "gatsby-remark-prismjs",
-        "gatsby-remark-copy-linked-files",
-        "gatsby-remark-smartypants",
-      ],
-    },
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+        "resolve": "gatsby-remark-responsive-iframe",
+      },
+      "gatsby-remark-prismjs",
+      "gatsby-remark-copy-linked-files",
+      "gatsby-remark-smartypants",
+    ],
   },
-  Object {
-    "id": "gatsby-plugin-sharp",
-    "name": "gatsby-plugin-sharp",
-    "options": undefined,
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 6`] = `
+Object {
+  "_message": "Installed gatsby-plugin-sharp in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-sharp",
+  "name": "gatsby-plugin-sharp",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 7`] = `
+Object {
+  "_message": "Installed gatsby-plugin-google-analytics in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-google-analytics",
+  "name": "gatsby-plugin-google-analytics",
+  "options": Object {
+    "trackingId": "UA-774017-3",
   },
-  Object {
-    "id": "gatsby-plugin-google-analytics",
-    "name": "gatsby-plugin-google-analytics",
-    "options": Object {
-      "trackingId": "UA-774017-3",
-    },
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 8`] = `
+Object {
+  "_message": "Installed gatsby-plugin-manifest in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-manifest",
+  "name": "gatsby-plugin-manifest",
+  "options": Object {
+    "background_color": null,
+    "display": "minimal-ui",
+    "icon": "static/logo.png",
+    "name": "Bricolage",
+    "short_name": "Bricolage",
+    "start_url": "/",
+    "theme_color": null,
   },
-  Object {
-    "id": "gatsby-plugin-manifest",
-    "name": "gatsby-plugin-manifest",
-    "options": Object {
-      "background_color": null,
-      "display": "minimal-ui",
-      "icon": "static/logo.png",
-      "name": "Bricolage",
-      "short_name": "Bricolage",
-      "start_url": "/",
-      "theme_color": null,
-    },
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-offline",
-    "name": "gatsby-plugin-offline",
-    "options": undefined,
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-react-helmet",
-    "name": "gatsby-plugin-react-helmet",
-    "options": undefined,
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-]
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 9`] = `
+Object {
+  "_message": "Installed gatsby-plugin-offline in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-offline",
+  "name": "gatsby-plugin-offline",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource all returns plugins as array 10`] = `
+Object {
+  "_message": "Installed gatsby-plugin-react-helmet in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-react-helmet",
+  "name": "gatsby-plugin-react-helmet",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
 `;
 
 exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
 Object {
-  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin create 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin create plan 1`] = `
+Object {
+  "currentState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+  ].filter(Boolean),
+};
+",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 1
++ Modified  + 5
+
+@@ -3,7 +3,6 @@
+  });
+
+  const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+-
+  module.exports = {
+    siteMetadata: {
+      siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+@@ -50,6 +49,11 @@
+          reportFilename: \`_bundle.html\`,
+          openAnalyzer: false,
+        },
++     },
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
+      },
+    ].filter(Boolean),
+  };",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ].filter(Boolean),
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin update 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin update plan 1`] = `
+Object {
+  "currentState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    \\"gatsby-source-filesystem\\",
+  ].filter(Boolean),
+};
+",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 0
++ Modified  + 5
+
+@@ -51,6 +51,11 @@
+        },
+      },
+      \\"gatsby-source-filesystem\\",
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ].filter(Boolean),
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    \\"gatsby-source-filesystem\\",
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ].filter(Boolean),
+};
+",
 }
 `;
 
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
-  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
 `;
 
@@ -138,7 +528,13 @@ module.exports = {
   plugins: [],
 };
 ",
-  "describe": "Install gatsby-plugin-foo in gatsby-config.js",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 1
 + Modified  + 7
 
@@ -149,15 +545,15 @@ module.exports = {
 -   plugins: [],
 +   plugins: [
 +     {
-+       resolve: \\"gatsby-plugin-foo\\",
++       resolve: \\"gatsby-source-filesystem\\",
 +       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
++       __key: \\"gatsby-source-filesystem\\",
 +     },
 +   ],
   };
 ",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "newState": "/**
  * Configure your Gatsby site with this file.
  *
@@ -167,9 +563,9 @@ module.exports = {
   /* Your site config here */
   plugins: [
     {
-      resolve: \\"gatsby-plugin-foo\\",
+      resolve: \\"gatsby-source-filesystem\\",
       options: undefined,
-      __key: \\"gatsby-plugin-foo\\",
+      __key: \\"gatsby-source-filesystem\\",
     },
   ],
 };
@@ -181,10 +577,14 @@ exports[`gatsby-plugin resource e2e plugin resource test with hello world starte
 
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update 1`] = `
 Object {
-  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
 `;
 
@@ -197,10 +597,16 @@ Object {
  */
 module.exports = {
   /* Your site config here */
-  plugins: [\\"gatsby-plugin-foo\\"],
+  plugins: [\\"gatsby-source-filesystem\\"],
 };
 ",
-  "describe": "Install gatsby-plugin-foo in gatsby-config.js",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 1
 + Modified  + 8
 
@@ -208,19 +614,19 @@ module.exports = {
    */
   module.exports = {
     /* Your site config here */
--   plugins: [\\"gatsby-plugin-foo\\"],
+-   plugins: [\\"gatsby-source-filesystem\\"],
 +   plugins: [
-+     \\"gatsby-plugin-foo\\",
++     \\"gatsby-source-filesystem\\",
 +     {
-+       resolve: \\"gatsby-plugin-foo\\",
++       resolve: \\"gatsby-source-filesystem\\",
 +       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
++       __key: \\"gatsby-source-filesystem\\",
 +     },
 +   ],
   };
 ",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "newState": "/**
  * Configure your Gatsby site with this file.
  *
@@ -229,11 +635,11 @@ module.exports = {
 module.exports = {
   /* Your site config here */
   plugins: [
-    \\"gatsby-plugin-foo\\",
+    \\"gatsby-source-filesystem\\",
     {
-      resolve: \\"gatsby-plugin-foo\\",
+      resolve: \\"gatsby-source-filesystem\\",
       options: undefined,
-      __key: \\"gatsby-plugin-foo\\",
+      __key: \\"gatsby-source-filesystem\\",
     },
   ],
 };
@@ -243,10 +649,14 @@ module.exports = {
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
 Object {
-  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
 `;
 
@@ -321,7 +731,13 @@ module.exports = {
   ],
 };
 ",
-  "describe": "Install gatsby-plugin-foo in gatsby-config.js",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 0
 + Modified  + 5
 
@@ -330,15 +746,15 @@ module.exports = {
       \`gatsby-plugin-offline\`,
       \`gatsby-plugin-react-helmet\`,
 +     {
-+       resolve: \\"gatsby-plugin-foo\\",
++       resolve: \\"gatsby-source-filesystem\\",
 +       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
++       __key: \\"gatsby-source-filesystem\\",
 +     },
     ],
   };
 ",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "newState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
@@ -406,9 +822,9 @@ module.exports = {
     \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
     {
-      resolve: \\"gatsby-plugin-foo\\",
+      resolve: \\"gatsby-source-filesystem\\",
       options: undefined,
-      __key: \\"gatsby-plugin-foo\\",
+      __key: \\"gatsby-source-filesystem\\",
     },
   ],
 };
@@ -420,10 +836,14 @@ exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
 Object {
-  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
 `;
 
@@ -437,13 +857,7 @@ module.exports = {
     homeCity: \`San Francisco\`,
   },
   plugins: [
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        path: \`\${__dirname}/src/pages\`,
-        name: \`pages\`,
-      },
-    },
+    \\"gatsby-source-filesystem\\",
     \`gatsby-transformer-sharp\`,
     \`gatsby-plugin-emotion\`,
     {
@@ -495,28 +909,33 @@ module.exports = {
     },
     \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
-    \\"gatsby-plugin-foo\\",
   ],
 };
 ",
-  "describe": "Install gatsby-plugin-foo in gatsby-config.js",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
   "diff": "- Original  - 0
 + Modified  + 5
 
-@@ -65,6 +65,11 @@
+@@ -58,6 +58,11 @@
+      },
       \`gatsby-plugin-offline\`,
       \`gatsby-plugin-react-helmet\`,
-      \\"gatsby-plugin-foo\\",
 +     {
-+       resolve: \\"gatsby-plugin-foo\\",
++       resolve: \\"gatsby-source-filesystem\\",
 +       options: undefined,
-+       __key: \\"gatsby-plugin-foo\\",
++       __key: \\"gatsby-source-filesystem\\",
 +     },
     ],
   };
 ",
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
   "newState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
@@ -525,13 +944,7 @@ module.exports = {
     homeCity: \`San Francisco\`,
   },
   plugins: [
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        path: \`\${__dirname}/src/pages\`,
-        name: \`pages\`,
-      },
-    },
+    \\"gatsby-source-filesystem\\",
     \`gatsby-transformer-sharp\`,
     \`gatsby-plugin-emotion\`,
     {
@@ -583,11 +996,10 @@ module.exports = {
     },
     \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
-    \\"gatsby-plugin-foo\\",
     {
-      resolve: \\"gatsby-plugin-foo\\",
+      resolve: \\"gatsby-source-filesystem\\",
       options: undefined,
-      __key: \\"gatsby-plugin-foo\\",
+      __key: \\"gatsby-source-filesystem\\",
     },
   ],
 };
@@ -598,7 +1010,7 @@ module.exports = {
 exports[`gatsby-plugin resource handles config options as an object 1`] = `
 Array [
   Object {
-    "name": "gatsby-plugin-foo",
+    "name": "gatsby-source-filesystem",
     "options": Object {
       "bar": "baz",
       "baz": "qux",

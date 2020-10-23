@@ -26,7 +26,7 @@ When you want to reuse common pieces of data across the site (for example, your 
 module.exports = {
   siteMetadata: {
     title: `Gatsby`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
     description: `Blazing fast modern site generator for React`,
   },
 }
@@ -89,7 +89,7 @@ Gatsby includes an advanced feature that lets you create "mappings" between node
 
 > Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/schema-customization/#foreign-key-fields).
 
-For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a yaml file named `author.yaml`:
+For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a YAML file named `author.yaml`:
 
 ```markdown
 ---

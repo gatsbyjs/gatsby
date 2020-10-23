@@ -25,7 +25,7 @@ After the process is complete, some additional packages are needed.
 Change directories to the `js-search-example` folder and issue the following command:
 
 ```shell
-npm install --save js-search axios
+npm install js-search axios
 ```
 
 Or if Yarn is being used:
@@ -320,7 +320,7 @@ const SearchTemplate = props => {
   return (
     <div>
       <h1 style={{ marginTop: `3em`, textAlign: `center` }}>
-        Search data using JS Search using Gatsby Api
+        Search data using JS Search using Gatsby API
       </h1>
       <div>
         <ClientSearch books={allBooks} engine={options} />

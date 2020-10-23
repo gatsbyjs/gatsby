@@ -4,7 +4,7 @@ module.exports = require(`babel-jest`).createTransformer({
   overrides: [
     ...(babelPreset.overrides || []),
     {
-      test: `**/*.ts`,
+      test: [`**/*.ts`, `**/*.tsx`],
       plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
     },
   ],

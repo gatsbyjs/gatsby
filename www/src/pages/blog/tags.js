@@ -108,7 +108,7 @@ class TagsPage extends React.Component {
 
     let PopularTagButtons = []
     POPULAR_TAGS.forEach(key => {
-      PopularTagButtons.push(<PopularTagButton tag={key} />)
+      PopularTagButtons.push(<PopularTagButton key={key} tag={key} />)
     })
 
     return (

@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
+`npm install gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
 ## How to use
 
@@ -373,21 +373,29 @@ plugins: [
 
 ### Shell prompt
 
-To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+To show fancy prompts next to shell commands (only triggers on `bash` and `shell`), either set `prompt.global` to `true` in `gatsby-config.js`,
 or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
 to the language.
 
 ````
-```bash{outputLines: 2-10,12}
+```shell{outputLines: 2-10,12}
 ````
 
 The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
 unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
 
 ````
-```bash{promptUser: alice}{promptHost: dev.localhost}
+```shell{promptUser: alice}{promptHost: dev.localhost}
+````
+
+### Diff code blocks
+
+You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs:
+
+````
+```diff-javascript
 ````
 
 ### Line hiding

@@ -43,13 +43,13 @@ const { compareState } = require(`../utils/nodes-diff`)
 const stdio = `inherit`
 
 const build = ({ updatePlugins } = {}) => {
-  spawnSync(gatsbyBin, [`clean`], { stdio })
+  spawnSync(process.execPath, [gatsbyBin, `clean`], { stdio })
   selectConfiguration(1)
 
   let processOutput
 
   // First run, get state
-  processOutput = spawnSync(gatsbyBin, [`build`], {
+  processOutput = spawnSync(process.execPath, [gatsbyBin, `build`], {
     stdio,
     env: {
       ...process.env,
@@ -71,7 +71,7 @@ const build = ({ updatePlugins } = {}) => {
   }
 
   // Second run, get state and compare with state from previous run
-  processOutput = spawnSync(gatsbyBin, [`build`], {
+  processOutput = spawnSync(process.execPath, [gatsbyBin, `build`], {
     stdio,
     env: {
       ...process.env,

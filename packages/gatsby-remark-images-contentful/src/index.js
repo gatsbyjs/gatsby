@@ -58,11 +58,11 @@ module.exports = async (
 
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
-    const options = _.defaults(pluginOptions, defaults)
+    const options = _.defaults({}, pluginOptions, defaults)
 
     const optionsHash = createContentDigest(options)
 
-    const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
+    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
     let cachedRawHTML = await cache.get(cacheKey)
 
     if (cachedRawHTML) {
@@ -91,11 +91,14 @@ module.exports = async (
 
     response.data.destroy()
 
-    const responsiveSizesResult = await buildResponsiveSizes({
-      metadata,
-      imageUrl: originalImg,
-      options,
-    })
+    const responsiveSizesResult = await buildResponsiveSizes(
+      {
+        metadata,
+        imageUrl: originalImg,
+        options,
+      },
+      reporter
+    )
 
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`

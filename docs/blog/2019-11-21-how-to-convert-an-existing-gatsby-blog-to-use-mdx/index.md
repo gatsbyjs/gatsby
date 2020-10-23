@@ -21,7 +21,7 @@ It can be a big tricky to add MDX to an existing blog. The following 5 steps wil
 
 You can also see the [full changes in PR #19580](https://github.com/gatsbyjs/gatsby/pull/19580/files) for an overview of the changes you have to make to get MDX working. As stated above, this introduces changes to [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which you can install with Gatsby CLI.
 
-```bash
+```shell
 gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
@@ -29,8 +29,8 @@ gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 
 Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also install `gatsby-plugin-feed-mdx` for our RSS feeds. Finally, install `@mdx-js/mdx` and `@mdx-js/react`.
 
-```bash
-npm install --save gatsby-plugin-mdx gatsby-plugin-feed-mdx @mdx-js/mdx @mdx-js/react
+```shell
+npm install gatsby-plugin-mdx gatsby-plugin-feed-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 ### Step 2
@@ -102,8 +102,8 @@ Then, replace `gatsby-plugin-feed` with `gatsby-plugin-feed-mdx`. This will allo
 
 Now, since we're no longer using `gatsby-transformer-remark` and `gatsby-plugin-feed`, you can uninstall them.
 
-```bash
-npm uninstall --save gatsby-transformer-remark gatsby-plugin-feed
+```shell
+npm uninstall gatsby-transformer-remark gatsby-plugin-feed
 ```
 
 ### Step 3
@@ -214,7 +214,7 @@ This is a post showing MDX in action. This starter now comes with MDX out-of-the
 MDX lets you write JSX embedded inside markdown, perfect for technical blogs. MDX works with Gatsby through [gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/). You can learn more about it in the Gatsby docs: [Getting Started with MDX](https://www.gatsbyjs.org/docs/mdx/getting-started/).
 ````
 
-![example post mdx](./screenshot.png)
+![example post MDX](./screenshot.png)
 
 If you're interested in spinning up a new personal blog with MDX, I've prepared [Gatsby personal blog starter](https://github.com/thomaswangio/gatsby-personal-starter-blog) for your usage!
 

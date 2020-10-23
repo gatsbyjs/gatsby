@@ -12,6 +12,14 @@ const {
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
+import {
+  getNode,
+  getNodes,
+  getNodesByType,
+  getTypes,
+  saveResolvedNodes,
+} from "../redux/nodes"
+import { runFastFiltersAndSort } from "../redux/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -60,11 +68,10 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, nodeStore, createPageDependency }) {
+  constructor({ schema, schemaComposer, createPageDependency }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
-    this.nodeStore = nodeStore
-    this.createPageDependency = createPageDependency
+    this.createPageDependencyActionCreator = createPageDependency
 
     this._rootNodeMap = new WeakMap()
     this._trackedRootNodes = new Set()
@@ -72,6 +79,26 @@ class LocalNodeModel {
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
     this.replaceFiltersCache()
+  }
+
+  createPageDependency(createPageDependencyArgs) {
+    if (createPageDependencyArgs.connection) {
+      const nodeTypeNames = toNodeTypeNames(
+        this.schema,
+        createPageDependencyArgs.connection
+      )
+      if (nodeTypeNames) {
+        nodeTypeNames.forEach(typeName => {
+          this.createPageDependencyActionCreator({
+            ...createPageDependencyArgs,
+            connection: typeName,
+          })
+        })
+        return
+      }
+    }
+
+    this.createPageDependencyActionCreator(createPageDependencyArgs)
   }
 
   /**
@@ -104,7 +131,7 @@ class LocalNodeModel {
   getNodeById(args, pageDependencies) {
     const { id, type } = args || {}
 
-    const node = getNodeById(this.nodeStore, id)
+    const node = getNodeById(id)
 
     let result
     if (!node) {
@@ -136,7 +163,7 @@ class LocalNodeModel {
     const { ids, type } = args || {}
 
     const nodes = Array.isArray(ids)
-      ? ids.map(id => getNodeById(this.nodeStore, id)).filter(Boolean)
+      ? ids.map(id => getNodeById(id)).filter(Boolean)
       : []
 
     let result
@@ -169,11 +196,11 @@ class LocalNodeModel {
 
     let result
     if (!type) {
-      result = this.nodeStore.getNodes()
+      result = getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
       const nodes = nodeTypeNames.reduce((acc, typeName) => {
-        acc.push(...this.nodeStore.getNodesByType(typeName))
+        acc.push(...getNodesByType(typeName))
         return acc
       }, [])
       result = nodes.filter(Boolean)
@@ -248,7 +275,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = await this.nodeStore.runQuery({
+    const queryResult = await runFastFiltersAndSort({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
@@ -345,7 +372,7 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await this.nodeStore.saveResolvedNodes(nodeTypeNames, async node => {
+      await saveResolvedNodes(nodeTypeNames, async node => {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
           this,
@@ -379,7 +406,7 @@ class LocalNodeModel {
    * @returns {string[]}
    */
   getTypes() {
-    return this.nodeStore.getTypes()
+    return getTypes()
   }
 
   /**
@@ -414,11 +441,14 @@ class LocalNodeModel {
     while (iterations++ < 100) {
       if (predicate && predicate(node)) return node
 
-      const parent = node.parent && getNodeById(this.nodeStore, node.parent)
+      const parent = getNodeById(node.parent)
       const id = this._rootNodeMap.get(node)
-      const trackedParent = id && getNodeById(this.nodeStore, id)
+      const trackedParent = getNodeById(id)
 
-      if (!parent && !trackedParent) return node
+      if (!parent && !trackedParent) {
+        const isMatchingRoot = !predicate || predicate(node)
+        return isMatchingRoot ? node : null
+      }
 
       node = parent || trackedParent
     }
@@ -534,8 +564,7 @@ class ContextualNodeModel {
   }
 }
 
-const getNodeById = (nodeStore, id) =>
-  id != null ? nodeStore.getNode(id) : null
+const getNodeById = id => (id != null ? getNode(id) : null)
 
 const toNodeTypeNames = (schema, gqlTypeName) => {
   const gqlType =
@@ -625,19 +654,14 @@ async function resolveRecursive(
     const gqlField = gqlFields[fieldName]
     const gqlNonNullType = getNullableType(gqlField.type)
     const gqlFieldType = getNamedType(gqlField.type)
-    let innerValue
-    if (gqlField.resolve) {
-      innerValue = await resolveField(
-        nodeModel,
-        schemaComposer,
-        schema,
-        node,
-        gqlField,
-        fieldName
-      )
-    } else {
-      innerValue = node[fieldName]
-    }
+    let innerValue = await resolveField(
+      nodeModel,
+      schemaComposer,
+      schema,
+      node,
+      gqlField,
+      fieldName
+    )
     if (gqlField && innerValue != null) {
       if (
         isCompositeType(gqlFieldType) &&
@@ -659,15 +683,17 @@ async function resolveRecursive(
       ) {
         innerValue = await Promise.all(
           innerValue.map(item =>
-            resolveRecursive(
-              nodeModel,
-              schemaComposer,
-              schema,
-              item,
-              gqlFieldType,
-              queryField,
-              _.isObject(fieldToResolve) ? fieldToResolve : queryField
-            )
+            item == null
+              ? item
+              : resolveRecursive(
+                  nodeModel,
+                  schemaComposer,
+                  schema,
+                  item,
+                  gqlFieldType,
+                  queryField,
+                  _.isObject(fieldToResolve) ? fieldToResolve : queryField
+                )
           )
         )
       }
@@ -677,11 +703,20 @@ async function resolveRecursive(
     }
   }
 
-  Object.keys(queryFields).forEach(key => {
-    if (!fieldsToResolve[key] && node[key]) {
-      resolvedFields[key] = node[key]
+  for (const fieldName of Object.keys(queryFields)) {
+    if (!fieldsToResolve[fieldName] && node[fieldName]) {
+      // It is possible that this field still has a custom resolver
+      // See https://github.com/gatsbyjs/gatsby/issues/27368
+      resolvedFields[fieldName] = await resolveField(
+        nodeModel,
+        schemaComposer,
+        schema,
+        node,
+        gqlFields[fieldName],
+        fieldName
+      )
     }
-  })
+  }
 
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
@@ -694,6 +729,9 @@ function resolveField(
   gqlField,
   fieldName
 ) {
+  if (!gqlField?.resolve) {
+    return node[fieldName]
+  }
   const withResolverContext = require(`./context`)
   return gqlField.resolve(
     node,
@@ -719,7 +757,8 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames
+  nodeTypeNames,
+  isNestedType = false
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
@@ -746,7 +785,8 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType)
+        toNodeTypeNames(schema, gqlFieldType),
+        true
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -754,6 +794,11 @@ const determineResolvableFields = (
     }
 
     if (!fieldsToResolve[fieldName] && needsResolve) {
+      fieldsToResolve[fieldName] = true
+    }
+    if (!fieldsToResolve[fieldName] && isNestedType) {
+      // If parent field needs to be resolved - all nested fields should be added as well
+      // See https://github.com/gatsbyjs/gatsby/issues/26056
       fieldsToResolve[fieldName] = true
     }
   })

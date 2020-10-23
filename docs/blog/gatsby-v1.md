@@ -36,7 +36,7 @@ In the last year, Gatsby community and usage have exploded. Milestones reached:
   [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
 - 10,000 stars on GitHub
 - 1000 followers on Twitter
-- 500,000 NPM downloads (100,000 in the last month!!)
+- 500,000 npm downloads (100,000 in the last month!!)
 
 ![Gatsby npm downloads year over year](./images/gatsby-npm-downloads.png)
 
@@ -97,7 +97,7 @@ during the bootstrap and build processes and in the browser.
 
 There are already many
 [official Gatsby plugins](/docs/plugins/#official-plugins) built—all distributed
-as individual NPM packages. It is easy to create your own plugins for internal
+as individual npm packages. It is easy to create your own plugins for internal
 projects and for contributing back to Gatsby.
 
 Plugins can:
@@ -291,9 +291,9 @@ is using Gatsby to build both their marketing site _and_ SaaS app within the
 _same Gatsby codebase_.
 
 The marketing pages of their site are built using markdown and React components
-along with a modern css-in-js library
+along with a modern CSS-in-JS library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
-uses [Redux](http://redux.js.org/) to communicate with their Django API.
+uses [Redux](https://redux.js.org/) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a
 potential customer goes to sign-up for the app, there's no _awkward jump from

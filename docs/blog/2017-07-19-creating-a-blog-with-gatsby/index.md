@@ -80,11 +80,11 @@ blog, you can use the following plugins:
 
 with the following command:
 
-```bash
+```shell
 yarn add gatsby-plugin-catch-links gatsby-plugin-react-helmet
 ```
 
-You will be using [yarn][yarn], but npm can just as easily be used with `npm i --save [deps]`.
+You will be using [yarn][yarn], but npm can just as easily be used with `npm install [deps]`.
 
 After installing each of these functional plugins, edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed
@@ -122,7 +122,7 @@ Markdown, let's add that [`gatsby-source-filesystem`][gatsby-source-filesystem]
 plugin. Similarly to the previous step, install the plugin and then inject
 into your `gatsby-config.js`, like so:
 
-```bash
+```shell
 yarn add gatsby-source-filesystem
 ```
 
@@ -164,7 +164,7 @@ You only need one transformer plugin (for Markdown), so let's get that
 installed.
 
 - [gatsby-transformer-remark][gatsby-transformer-remark]
-  - Uses the [remark][remark] Markdown parser to transform .md files on disk
+  - Uses the [remark][remark] Markdown parser to transform `.md` files on disk
     into HTML; additionally, this transformer can optionally take plugins to
     further extend functionality--e.g. add syntax highlighting with
     `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative
@@ -173,7 +173,7 @@ installed.
 
 The process should be familiar by now, install and then add to config.
 
-```bash
+```shell
 yarn add gatsby-transformer-remark
 ```
 

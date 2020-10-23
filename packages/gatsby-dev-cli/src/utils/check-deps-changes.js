@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const {
   getMonorepoPackageJsonPath,
 } = require(`./get-monorepo-package-json-path`)
-const request = require(`request`)
+const got = require(`got`)
 
 function difference(object, base) {
   function changes(object, base) {
@@ -61,11 +61,10 @@ exports.checkDepsChanges = async ({
     // and save some time/work
     try {
       localPKGjson = await new Promise((resolve, reject) => {
-        request(
-          `https://unpkg.com/${packageName}/package.json`,
-          (error, response, body) => {
+        got(`https://unpkg.com/${packageName}/package.json`).then(
+          (error, response) => {
             if (response && response.statusCode === 200) {
-              return resolve(JSON.parse(body))
+              return resolve(JSON.parse(response.body))
             }
 
             return reject(error)

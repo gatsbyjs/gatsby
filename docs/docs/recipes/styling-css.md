@@ -230,9 +230,9 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 
 ### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby plugin [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/) and `node-sass`.
 
-`npm install --save node-sass gatsby-plugin-sass`
+`npm install node-sass gatsby-plugin-sass`
 
 2. Include the plugin in your `gatsby-config.js` file.
 
@@ -270,9 +270,9 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 ### Additional resources
 
-- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Difference between `.sass` and `.scss`](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](/docs/sass/)
 
 ## Adding a Local Font
 
@@ -284,10 +284,6 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 ### Directions
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
-
-```text
-src/fonts/fontname.woff2
-```
 
 2. Import the font asset into a CSS file to bundle it into your Gatsby site:
 
@@ -327,7 +323,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
-npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+npm install gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
@@ -403,9 +399,9 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 ### Directions
 
-1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+1. Run `npm install typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
 
-An example to load the popular 'Source Sans Pro' font would be: `npm install --save typeface-source-sans-pro`.
+An example to load the popular 'Source Sans Pro' font would be: `npm install typeface-source-sans-pro`.
 
 2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
 

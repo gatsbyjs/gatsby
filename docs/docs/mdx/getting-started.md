@@ -4,7 +4,7 @@ title: Getting Started with MDX
 
 The fastest way to get started with Gatsby + MDX is to use the [MDX
 starter](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic). This
-allows you to write .mdx files in `src/pages` in order to create new pages on
+allows you to write `.mdx` files in `src/pages` in order to create new pages on
 your site.
 
 ## 🚀 Quick start
@@ -54,7 +54,7 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
    }
    ```
 
-3. **Restart `gatsby develop`** and add an `.mdx` page to \`src/pages
+3. **Restart `gatsby develop`** and add an `.mdx` page to `src/pages`
 
 > **Note:** If you want to query for frontmatter, exports, or other fields like
 > `tableOfContents` and you haven't previously added a `gatsby-source-filesystem`

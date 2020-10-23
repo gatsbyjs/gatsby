@@ -30,24 +30,24 @@ URL - /**en**/about
 
 React-intl is a part of the FormatJS set of i18n libraries and provides support for over 150+ languages. It builds on JavaScript's [Internationalization API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) providing enhanced APIs and components. React-intl uses React context and HOCs (Higher Order Components) to provide translations allowing you to dynamically load language modules as you need them. There are also polyfill options available for older browsers that do not support the base JavaScript i18n API.
 
-More detailed information about react-intl's [APIs](https://github.com/formatjs/react-intl/blob/master/docs/API.md) and [components](https://github.com/formatjs/react-intl/blob/master/docs/Components.md), including [demos](https://github.com/formatjs/react-intl/tree/master/examples), are available in the [documentation](https://github.com/formatjs/react-intl/tree/master/docs).
+More detailed information about react-intl's [APIs](https://github.com/formatjs/formatjs/blob/main/website/docs/react-intl/api.md) and [components](https://github.com/formatjs/formatjs/blob/main/website/docs/react-intl/components.md), including [demos](https://github.com/formatjs/formatjs/tree/main/packages/react-intl/examples), are available in the [documentation](https://github.com/formatjs/formatjs/tree/main/website/docs/react-intl).
 
 ### react-i18next
 
 React-i18next is an internationalization library built on the i18next framework. It uses components to make sure translations render correctly or to re-render your content when the user language changes.
 
-React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with Webpack.
+React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with webpack.
 
-This framework also has experimental support for the React suspense API and React hooks.
+This framework also has experimental support for the React suspense API and it supports a stable version of React hooks.
 
 ## Other resources
 
-- [Building i18n with Gatsby](https://www.gatsbyjs.org/blog/2017-10-17-building-i18n-with-gatsby/)
+- [Building i18n with Gatsby](https://www.gatsbyjs.com/blog/2017-10-17-building-i18n-with-gatsby/)
 
-- [Building Eviction Free NYC with GatsbyJS + Contentful](https://www.gatsbyjs.org/blog/2018-04-27-building-eviction-free-nyc-with-gatsbyjs-and-contentful/)
+- [Building Eviction Free NYC with GatsbyJS + Contentful](https://www.gatsbyjs.com/blog/2018-04-27-building-eviction-free-nyc-with-gatsbyjs-and-contentful/)
 
-- [Gatsby i18n packages](https://www.gatsbyjs.org/packages/gatsby-plugin-i18n/?=i18)
+- [Gatsby i18n packages](https://www.gatsbyjs.com/plugins/gatsby-plugin-i18n/?=i18)
 
-- [Gatsby i18n articles](https://www.gatsbyjs.org/blog/tags/i-18-n/)
+- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/i18n/)
 
-- [W3C's i18n resources](http://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)
+- [W3C's i18n resources](https://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)

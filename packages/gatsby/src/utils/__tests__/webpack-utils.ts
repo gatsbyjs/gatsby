@@ -1,9 +1,12 @@
+import * as os from "os"
 import { createWebpackUtils } from "../webpack-utils"
 import { Stage, IProgram } from "../../commands/types"
 
+import autoprefixer from "autoprefixer"
+
 jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: (): string[] => [],
+    getBrowsersList: (): Array<string> => [],
   }
 })
 
@@ -13,10 +16,21 @@ jest.mock(`babel-preset-gatsby/package.json`, () => {
   }
 })
 
+jest.mock(`autoprefixer`, () =>
+  jest.fn(options => {
+    return {
+      options,
+      postcssPlugin: `autoprefixer`,
+    }
+  })
+)
+
 let config
 
 beforeAll(() => {
-  config = createWebpackUtils(Stage.Develop, {} as IProgram)
+  config = createWebpackUtils(Stage.Develop, {
+    directory: `${os.tmpdir()}/test`,
+  } as IProgram)
 })
 
 describe(`webpack utils`, () => {
@@ -161,6 +175,47 @@ describe(`webpack utils`, () => {
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
           )
         ).toEqual(true)
+      })
+    })
+  })
+  describe(`postcss`, () => {
+    it(`adds postcss rule`, () => {
+      expect(config.loaders.postcss).toEqual(expect.any(Function))
+    })
+    describe(`uses defaults when no options are passed`, () => {
+      let postcss
+      beforeAll(() => {
+        postcss = config.loaders.postcss()
+      })
+      it(`initialises autoprefixer with defaults`, () => {
+        postcss.options.plugins(postcss.loader)
+        expect(autoprefixer).toBeCalled()
+        expect(autoprefixer).toBeCalledWith({
+          flexbox: `no-2009`,
+          overrideBrowserslist: [],
+        })
+      })
+    })
+    describe(`uses override options when they are passed`, () => {
+      let postcss
+      beforeAll(() => {
+        jest.clearAllMocks()
+        postcss = config.loaders.postcss({
+          plugins: [
+            autoprefixer({
+              grid: `no-autoplace`,
+            }),
+          ],
+        })
+      })
+      it(`initialises autoprefixer with overrides`, () => {
+        postcss.options.plugins(postcss.loader)
+        expect(autoprefixer).toBeCalled()
+        expect(autoprefixer).toBeCalledWith({
+          flexbox: `no-2009`,
+          grid: `no-autoplace`,
+          overrideBrowserslist: [],
+        })
       })
     })
   })

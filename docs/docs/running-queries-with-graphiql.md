@@ -28,7 +28,7 @@ When the development server is running for one of your Gatsby sites, open Graphi
 
 Make sure to check out the GraphiQL docs in the upper right-hand corner of the IDE. It's easy to miss them, but they're worth visiting!
 
-![A diagram pointing out where to find the GraphiQl docs](./images/graphiql-docs.png)
+![A diagram pointing out where to find the GraphiQL docs](./images/graphiql-docs.png)
 
 ## Using the GraphiQL Explorer
 
@@ -40,6 +40,10 @@ The GraphiQL Explorer enables you to interactively construct full queries by cli
 />
 
 Read more [about the GraphiQL Explorer](/blog/2019-06-03-integrating-graphiql-explorer/) on the Gatsby blog.
+
+## Enable Refresh Content Button
+
+The environment variable `ENABLE_GATSBY_REFRESH_ENDPOINT` enables a "Refresh Data" button which allows you to refresh the sourced content. See [Refreshing Content](/docs/refreshing-content/).
 
 ## Other resources
 

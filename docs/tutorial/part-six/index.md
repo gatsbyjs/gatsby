@@ -38,7 +38,7 @@ Once you save the file, look at `/my-files/` again—the new markdown file is in
 Add a transformer plugin that can transform markdown files:
 
 ```shell
-npm install --save gatsby-transformer-remark
+npm install gatsby-transformer-remark
 ```
 
 Then add it to the `gatsby-config.js` like normal:
@@ -70,11 +70,11 @@ module.exports = {
 
 Restart the development server then refresh (or open again) GraphiQL and look at the autocomplete:
 
-![markdown-autocomplete](markdown-autocomplete.png)
+![GraphiQL screenshot showing new `gatsby-transformer-remark` autocomplete options](markdown-autocomplete.png)
 
 Select `allMarkdownRemark` again and run it as you did for `allFile`. You'll see there the markdown file you recently added. Explore the fields that are available on the `MarkdownRemark` node.
 
-![markdown-query](markdown-query.png)
+![GraphiQL screenshot showing the result of a query](markdown-query.png)
 
 Ok! Hopefully, some basics are starting to fall into place. Source plugins bring data _into_ Gatsby's data system and _transformer_ plugins transform raw content brought by source plugins. This pattern can handle all data sourcing and data transformation you might need when building a Gatsby site.
 
@@ -150,7 +150,7 @@ export const query = graphql`
 
 Now the frontpage should look like:
 
-![frontpage](frontpage.png)
+![Screenshot of the frontpage](frontpage.png)
 
 But your one blog post looks a bit lonely. So let's add another one at `src/pages/pandas-and-bananas.md`
 
@@ -165,7 +165,7 @@ Do Pandas eat bananas? Check out this short video that shows that yes! pandas do
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
 ```
 
-![two-posts](two-posts.png)
+![Frontpage showing two posts](two-posts.png)
 
 Which looks great! Except… the order of the posts is wrong.
 

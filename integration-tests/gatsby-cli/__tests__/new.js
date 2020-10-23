@@ -1,25 +1,35 @@
-import { GatsbyCLI, removeFolder } from "../test-helpers"
-import fs from "fs"
+import { GatsbyCLI } from "../test-helpers"
+import * as fs from "fs-extra"
+import execa from "execa"
 import { join } from "path"
+import { getConfigStore } from "gatsby-core-utils"
 
-const MAX_TIMEOUT = 2147483647
+const MAX_TIMEOUT = 30000
 jest.setTimeout(MAX_TIMEOUT)
 
 const cwd = `execution-folder`
 
+const clean = dir => execa(`yarn`, ["del-cli", dir])
+
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
   const dir = join(__dirname, "../execution-folder")
-  beforeAll(() => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir)
-    }
+  const originalPackageManager =
+    getConfigStore().get("cli.packageManager") || `npm`
+
+  beforeAll(async () => {
+    await clean(dir)
+    await fs.ensureDir(dir)
+    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, `yarn`])
   })
 
-  afterAll(() => removeFolder("execution-folder"))
+  afterAll(async () => {
+    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, originalPackageManager])
+    await clean(dir)
+  })
 
   it(`a default starter creates a gatsby site`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke(`new`, `gatsby-default`)
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([`new`, `gatsby-default`])
 
     logs.should.contain(
       `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git`
@@ -36,11 +46,11 @@ describe(`gatsby new`, () => {
   })
 
   it(`a theme starter creates a gatsby site`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke(
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
-      `gatsbyjs/gatsby-starter-blog`
-    )
+      `gatsbyjs/gatsby-starter-blog`,
+    ])
 
     logs.should.contain(
       `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git`
@@ -57,11 +67,11 @@ describe(`gatsby new`, () => {
   })
 
   it(`an invalid starter fails to create a gatsby site`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke(
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-invalid`,
-      `tHiS-Is-A-fAkE-sTaRtEr`
-    )
+      `tHiS-Is-A-fAkE-sTaRtEr`,
+    ])
 
     logs.should.contain(`Error`)
     logs.should.contain(`starter tHiS-Is-A-fAkE-sTaRtEr doesn't exist`)

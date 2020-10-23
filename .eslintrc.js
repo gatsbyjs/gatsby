@@ -94,6 +94,9 @@ module.exports = {
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
         ...TSEslint.configs.recommended.rules,
+        // We should absolutely avoid using ts-ignore, but it's not always possible.
+        // particular when a dependencies types are incorrect.
+        "@typescript-eslint/ban-ts-ignore": "warn",
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
         // and outputs declaratively typed. So this let's us ignore the parameters
@@ -102,15 +105,22 @@ module.exports = {
           "error",
           { ignoreParameters: true },
         ],
-        // This rule tries to ensure we use camelCase for all variables, properties
-        // functions, etc. However, it is not always possible to ensure properties
-        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
-        // this rule. This allows properties to be whatever they need to be.
-        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
+        "@typescript-eslint/camelcase": [
+          "error",
+          {
+            // This rule tries to ensure we use camelCase for all variables, properties
+            // functions, etc. However, it is not always possible to ensure properties
+            // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+            // this rule. This allows properties to be whatever they need to be.
+            properties: "never",
+            // Allow unstable api's to use `unstable_`, which is easier to grep
+            allow: ["^unstable_"],
+          },
+        ],
         // This rule tries to prevent using `require()`. However in node code,
         // there are times where this makes sense. And it specifically is causing
         // problems in our tests where we often want this functionality for module
-        // mocking. At this point it's easier to have it off and just encouarge
+        // mocking. At this point it's easier to have it off and just encourage
         // using top-level imports via code reviews.
         "@typescript-eslint/no-var-requires": "off",
         // This rule ensures that typescript types do not have semicolons
@@ -139,7 +149,7 @@ module.exports = {
         // This ensures that we always type the return type of functions
         // a high level focus of our TS setup is typing fn inputs and outputs.
         "@typescript-eslint/explicit-function-return-type": "error",
-        // This forces us to use interfaces over types aliases for object defintions.
+        // This forces us to use interfaces over types aliases for object definitions.
         // Type is still useful for opaque types
         // e.g.,
         // type UUID = string
@@ -165,6 +175,7 @@ module.exports = {
         // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
         // so disabling them in .ts(x) files
         "flowtype/no-types-missing-file-annotation": "off",
+        "@typescript-eslint/array-type": ["error", { default: "generic" }],
       },
     },
   ],

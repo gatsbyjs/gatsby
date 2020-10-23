@@ -19,7 +19,7 @@ This guide will cover how configure and use the [`gatsby-source-sanity`](https:/
 ## Basic usage
 
 ```shell
-npm install --save gatsby-source-sanity
+npm install gatsby-source-sanity
 ```
 
 ```js:title=gatsby-config.js
@@ -57,7 +57,7 @@ Getting errors such as these?
 > Cannot query field "allSanityBlogPost"
 > Unknown field `preamble` on type `BlogPost`
 
-By [deploying a GraphQL API](https://www.sanity.io/help/graphql-beta) for your dataset, we are able to introspect and figure out which schema types and fields are available and make them available to prevent this problem. Once the API is deployed it will be transparently be applied. If you have deployed your API and are still seeing similar issues, remember that you have to redeploy the API if your schema changes.
+By [deploying a GraphQL API](https://www.sanity.io/help/graphql-beta) for your dataset, we are able to introspect and figure out which schema types and fields are available and make them available to prevent this problem. Once the API is deployed it will be transparently applied. If you have deployed your API and are still seeing similar issues, remember that you have to redeploy the API if your schema changes.
 
 Some background for this problem:
 

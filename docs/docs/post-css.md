@@ -11,7 +11,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 1. Install the Gatsby plugin [gatsby-plugin-postcss](/packages/gatsby-plugin-postcss/).
 
 ```shell
-npm install --save gatsby-plugin-postcss
+npm install postcss gatsby-plugin-postcss
 ```
 
 2. Include the plugin in your `gatsby-config.js` file.
@@ -75,4 +75,4 @@ module.exports = () => ({
 
 ## Other resources
 
-- [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
+- [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)

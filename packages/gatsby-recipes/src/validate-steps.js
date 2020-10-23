@@ -1,19 +1,15 @@
-const ALLOWED_STEP_O_COMMANDS = [`Config`]
+const render = require(`./renderer`)
 
-module.exports = steps => {
-  const commandKeys = Object.keys(steps[0]).filter(
-    cmd => !ALLOWED_STEP_O_COMMANDS.includes(cmd)
-  )
+module.exports = async steps => {
+  const errors = []
+  const firstStepPlan = await render(steps[0])
 
-  if (commandKeys.length) {
-    return commandKeys.map(key => {
-      return {
-        step: 0,
-        resource: key,
-        validationError: `Resources e.g. ${key} should not be placed in the introduction step`,
-      }
+  if (firstStepPlan.length) {
+    errors.push({
+      step: 0,
+      validationError: `Resources should not be placed in the introduction step (0)`,
     })
-  } else {
-    return []
   }
+
+  return errors
 }

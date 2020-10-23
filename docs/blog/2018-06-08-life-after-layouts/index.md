@@ -120,7 +120,7 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 https://twitter.com/gatsbyjs/status/974507205121617920
 
 - We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](/docs/static-query/)
-- Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
+- Upgraded to the latest versions of React, Babel, webpack, and other libraries Gatsby depends on
 - Better support for CSS inlining and splitting, which will boost performance
 
 For a full list of what's new, check out our [V2 migration guide](/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).

@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.2...gatsby-plugin-postcss@3.0.3) (2020-10-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-postcss:** Delete invalid plugins property from outer options object. ([#27430](https://github.com/gatsbyjs/gatsby/issues/27430)) ([2fd07f9](https://github.com/gatsbyjs/gatsby/commit/2fd07f925113b4e1f578480bf68c93282a7e3dca))
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.1...gatsby-plugin-postcss@3.0.2) (2020-10-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-postcss:** Add required additional level of nesting for postcss-loader options. ([#27418](https://github.com/gatsbyjs/gatsby/issues/27418)) ([8756441](https://github.com/gatsbyjs/gatsby/commit/8756441819138e12c14460c8a4e5c3c28fe338b9))
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.0...gatsby-plugin-postcss@3.0.1) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.13...gatsby-plugin-postcss@3.0.0) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.12...gatsby-plugin-postcss@2.3.13) (2020-09-28)
+
+### Bug Fixes
+
+- **docs:** remove README.md not displaying on Gatsby plugin library ([#27040](https://github.com/gatsbyjs/gatsby/issues/27040)) ([6987edb](https://github.com/gatsbyjs/gatsby/commit/6987edb84d9cfa79c7f60a4656e1048d13d5f6d8))
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.11...gatsby-plugin-postcss@2.3.12) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.10...gatsby-plugin-postcss@2.3.11) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.9...gatsby-plugin-postcss@2.3.10) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.8...gatsby-plugin-postcss@2.3.9) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.7...gatsby-plugin-postcss@2.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.6...gatsby-plugin-postcss@2.3.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.5...gatsby-plugin-postcss@2.3.6) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.4...gatsby-plugin-postcss@2.3.5) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.3...gatsby-plugin-postcss@2.3.4) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.2...gatsby-plugin-postcss@2.3.3) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.1...gatsby-plugin-postcss@2.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
 ## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.3.0...gatsby-plugin-postcss@2.3.1) (2020-05-05)
 
 **Note:** Version bump only for package gatsby-plugin-postcss

@@ -1,9 +1,10 @@
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema } from "graphql"
+import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
+import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
 type SystemPath = string
 type Identifier = string
@@ -37,18 +38,18 @@ export interface IGatsbyPage {
 }
 
 export interface IGatsbyConfig {
-  plugins?: {
+  plugins?: Array<{
     // This is the name of the plugin like `gatsby-plugin-manifest
     resolve: string
     options: {
       [key: string]: unknown
     }
-  }[]
+  }>
   siteMetadata?: {
     title?: string
     author?: string
     description?: string
-    sireUrl?: string
+    siteUrl?: string
     // siteMetadata is free form
     [key: string]: unknown
   }
@@ -57,12 +58,13 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  mapping?: Record<string, string>
 }
 
 export interface IGatsbyNode {
   id: Identifier
   parent: Identifier
-  children: Identifier[]
+  children: Array<Identifier>
   internal: {
     type: string
     counter: number
@@ -74,16 +76,18 @@ export interface IGatsbyNode {
   }
   __gatsby_resolved: any // TODO
   [key: string]: unknown
+  fields: Array<string>
 }
 
 export interface IGatsbyPlugin {
   id: Identifier
   name: string
   version: string
+  [key: string]: any
 }
 
 export interface IGatsbyPluginContext {
-  [key: string]: (...args: any[]) => any
+  [key: string]: (...args: Array<any>) => any
 }
 
 export interface IGatsbyStaticQueryComponents {
@@ -93,17 +97,34 @@ export interface IGatsbyStaticQueryComponents {
   query: string
   hash: string
 }
+export interface IDefinitionMeta {
+  name: string
+  def: DefinitionNode
+  filePath: string
+  text: string
+  templateLoc: any
+  printedAst: string
+  isHook: boolean
+  isStaticQuery: boolean
+  isFragment: boolean
+  hash: string
+}
 
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
-  job: InternalJobInterface
+  job: InternalJob
+  plugin: IGatsbyPlugin
+}
+
+export interface IGatsbyIncompleteJob {
+  job: InternalJob
   plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyCompleteJobV2 {
   result: JobResultInterface
-  inputPaths: InternalJobInterface["inputPaths"]
+  inputPaths: InternalJob["inputPaths"]
 }
 
 export interface IPlugin {
@@ -111,9 +132,9 @@ export interface IPlugin {
   options: Record<string, any>
 }
 
-interface IBabelStage {
-  plugins: IPlugin[]
-  presets: IPlugin[]
+export interface IBabelStage {
+  plugins: Array<IPlugin>
+  presets: Array<IPlugin>
   options: {
     cacheDirectory: boolean
     sourceType: string
@@ -127,14 +148,18 @@ type BabelStageKeys =
   | "build-html"
   | "build-javascript"
 
+export interface IStateProgram extends IProgram {
+  extensions: Array<string>
+}
+
 export interface IGatsbyState {
-  program: IProgram
+  program: IStateProgram
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   lastAction: ActionsUnion
-  flattenedPlugins: {
+  flattenedPlugins: Array<{
     resolve: SystemPath
     id: Identifier
     name: string
@@ -143,7 +168,7 @@ export interface IGatsbyState {
       plugins: []
       [key: string]: unknown
     }
-    nodeAPIs: (
+    nodeAPIs: Array<
       | "onPreBoostrap"
       | "onPostBoostrap"
       | "onCreateWebpackConfig"
@@ -152,19 +177,20 @@ export interface IGatsbyState {
       | "createPagesStatefully"
       | "createPages"
       | "onPostBuild"
-    )[]
-    browserAPIs: (
+    >
+    browserAPIs: Array<
       | "onRouteUpdate"
       | "registerServiceWorker"
       | "onServiceWorkerActive"
       | "onPostPrefetchPathname"
-    )[]
-    ssrAPIs: ("onRenderBody" | "onPreRenderHTML")[]
+    >
+    ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
-  }[]
+  }>
   config: IGatsbyConfig
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
+  definitions: Map<string, IDefinitionMeta>
   status: {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
@@ -186,10 +212,15 @@ export interface IGatsbyState {
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
   >
+  staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>
+  pendingPageDataWrites: {
+    pagePaths: Set<string>
+    templatePaths: Set<SystemPath>
+  }
   // @deprecated
   jobs: {
-    active: any[] // TODO
-    done: any[] // TODO
+    active: Array<any> // TODO
+    done: Array<any> // TODO
   }
   jobsV2: {
     incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
@@ -197,31 +228,33 @@ export interface IGatsbyState {
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
-  redirects: IRedirect[]
+  redirects: Array<IRedirect>
   babelrc: {
     stages: {
       [key in BabelStageKeys]: IBabelStage
     }
   }
   schemaCustomization: {
-    composer: SchemaComposer<any>
-    context: {} // TODO
-    fieldExtensions: {} // TODO
-    printConfig: any // TODO
-    thridPartySchemas: any[] // TODO
-    types: any[] // TODO
+    composer: null | SchemaComposer<any>
+    context: Record<string, any>
+    fieldExtensions: GraphQLFieldExtensionDefinition
+    printConfig: {
+      path?: string
+      include?: { types?: Array<string>; plugins?: Array<string> }
+      exclude?: { types?: Array<string>; plugins?: Array<string> }
+      withFieldTypes?: boolean
+    } | null
+    thirdPartySchemas: Array<GraphQLSchema>
+    types: Array<
+      string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin }
+    >
   }
   themes: any // TODO
   logs: IGatsbyCLIState
   inferenceMetadata: {
     step: string // TODO make enum or union
     typeMap: {
-      [key: string]: {
-        ignoredFields: Set<string>
-        total: number
-        dirty: boolean
-        fieldMap: any // TODO
-      }
+      [key: string]: ITypeMetadata
     }
   }
   pageDataStats: Map<SystemPath, number>
@@ -238,6 +271,8 @@ export interface ICachedReduxState {
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
   pageData: IGatsbyState["pageData"]
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
 }
 
 export type ActionsUnion =
@@ -266,19 +301,39 @@ export type ActionsUnion =
   | IReplaceWebpackConfigAction
   | ISetPluginStatusAction
   | ISetProgramStatusAction
+  | ISetResolvedNodesAction
   | ISetSchemaAction
+  | ISetGraphQLDefinitionsAction
+  | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | IAddPageDataStatsAction
   | IRemoveTemplateComponentAction
   | ISetBabelPluginAction
   | ISetBabelPresetAction
   | ISetBabelOptionsAction
+  | ICreateJobAction
+  | ISetJobAction
+  | IEndJobAction
+  | ISetStaticQueriesByTemplateAction
+  | IAddPendingPageDataWriteAction
+  | IAddPendingTemplateDataWriteAction
+  | IClearPendingPageDataWritesAction
+  | ICreateResolverContext
+  | IClearSchemaCustomizationAction
+  | ISetSchemaComposerAction
+  | IStartIncrementalInferenceAction
+  | IBuildTypeMetadataAction
+  | IDisableTypeInferenceAction
+  | ISetProgramAction
+  | ISetProgramExtensions
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -330,6 +385,33 @@ export interface IRemoveStaleJobV2Action {
   }
 }
 
+interface ICreateJobAction {
+  type: `CREATE_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface ISetJobAction {
+  type: `SET_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface IEndJobAction {
+  type: `END_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
@@ -343,7 +425,7 @@ export interface ICreatePageDependencyAction {
 export interface IDeleteComponentDependenciesAction {
   type: "DELETE_COMPONENTS_DEPENDENCIES"
   payload: {
-    paths: string[]
+    paths: Array<string>
   }
 }
 
@@ -430,7 +512,7 @@ export interface ICreateTypes {
   type: `CREATE_TYPES`
   plugin: IGatsbyPlugin
   traceId?: string
-  payload: DocumentNode | DocumentNode[]
+  payload: DocumentNode | Array<DocumentNode>
 }
 
 export interface ICreateFieldExtension {
@@ -462,6 +544,15 @@ export interface ICreateResolverContext {
   payload:
     | IGatsbyPluginContext
     | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
+}
+
+interface IClearSchemaCustomizationAction {
+  type: `CLEAR_SCHEMA_CUSTOMIZATION`
+}
+
+interface ISetSchemaComposerAction {
+  type: `SET_SCHEMA_COMPOSER`
+  payload: SchemaComposer<any>
 }
 
 export interface ICreatePageAction {
@@ -501,10 +592,36 @@ export interface ISetPageDataAction {
 }
 
 export interface IRemoveTemplateComponentAction {
-  type: `REMOVE_TEMPLATE_COMPONENT`
+  type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
     componentPath: string
   }
+}
+
+export interface ISetStaticQueriesByTemplateAction {
+  type: `SET_STATIC_QUERIES_BY_TEMPLATE`
+  payload: {
+    componentPath: string
+    staticQueryHashes: Array<Identifier>
+  }
+}
+
+export interface IAddPendingPageDataWriteAction {
+  type: `ADD_PENDING_PAGE_DATA_WRITE`
+  payload: {
+    path: string
+  }
+}
+
+export interface IAddPendingTemplateDataWriteAction {
+  type: `ADD_PENDING_TEMPLATE_DATA_WRITE`
+  payload: {
+    componentPath: SystemPath
+  }
+}
+
+export interface IClearPendingPageDataWritesAction {
+  type: `CLEAR_PENDING_PAGE_DATA_WRITES`
 }
 
 export interface IDeletePageAction {
@@ -556,6 +673,11 @@ export interface ISetSchemaAction {
   payload: IGatsbyState["schema"]
 }
 
+export interface ISetGraphQLDefinitionsAction {
+  type: `SET_GRAPHQL_DEFINITIONS`
+  payload: IGatsbyState["definitions"]
+}
+
 export interface ISetSiteConfig {
   type: `SET_SITE_CONFIG`
   payload: IGatsbyState["config"]
@@ -564,11 +686,13 @@ export interface ISetSiteConfig {
 export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
+  oldNode?: IGatsbyNode
 }
 
 export interface IAddFieldToNodeAction {
   type: `ADD_FIELD_TO_NODE`
   payload: IGatsbyNode
+  addedField: string
 }
 
 export interface IAddChildNodeToParentNodeAction {
@@ -578,12 +702,64 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: {
-    id: Identifier
-  }
+  payload: IGatsbyNode
 }
 
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
-  payload: Identifier[]
+  payload: Array<Identifier>
+  fullNodes: Array<IGatsbyNode>
+}
+
+export interface ISetSiteFlattenedPluginsAction {
+  type: `SET_SITE_FLATTENED_PLUGINS`
+  payload: IGatsbyState["flattenedPlugins"]
+}
+
+export interface ISetResolvedNodesAction {
+  type: `SET_RESOLVED_NODES`
+  payload: {
+    key: string
+    nodes: IGatsbyState["resolvedNodesCache"]
+  }
+}
+
+export interface IAddPageDataStatsAction {
+  type: `ADD_PAGE_DATA_STATS`
+  payload: {
+    filePath: SystemPath
+    size: number
+  }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
+}
+
+interface IStartIncrementalInferenceAction {
+  type: `START_INCREMENTAL_INFERENCE`
+}
+
+interface IBuildTypeMetadataAction {
+  type: `BUILD_TYPE_METADATA`
+  payload: {
+    nodes: Array<IGatsbyNode>
+    typeName: string
+  }
+}
+
+interface IDisableTypeInferenceAction {
+  type: `DISABLE_TYPE_INFERENCE`
+  payload: Array<string>
+}
+
+interface ISetProgramAction {
+  type: `SET_PROGRAM`
+  payload: IStateProgram
+}
+
+interface ISetProgramExtensions {
+  type: `SET_PROGRAM_EXTENSIONS`
+  payload: Array<string>
 }

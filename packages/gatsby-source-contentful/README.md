@@ -10,7 +10,7 @@ https://using-contentful.gatsbyjs.org/
 ## Install
 
 ```shell
-npm install --save gatsby-source-contentful
+npm install gatsby-source-contentful
 ```
 
 ## How to use
@@ -80,36 +80,39 @@ module.exports = {
 Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
 
 ```graphql
-  query MyQuery {
-    # Example is for a `ContentType` with a `ContentfulAsset` field
-    # You could also query an asset directly via
-    # `allContentfulAsset { edges{ node { } } }`
-    # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
-    contentfulMyContentType {
-      myContentfulAssetField {
-        # Direct URL to Contentful CDN for this asset
-        file { url }
+query MyQuery {
+  # Example is for a `ContentType` with a `ContentfulAsset` field
+  # You could also query an asset directly via
+  # `allContentfulAsset { edges{ node { } } }`
+  # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+  contentfulMyContentType {
+    myContentfulAssetField {
+      # Direct URL to Contentful CDN for this asset
+      file {
+        url
+      }
 
-        # Query for a fluid image resource on this `ContentfulAsset` node
-        fluid(maxWidth: 500){
-          ...GatsbyContentfulFluid_withWebp
-        }
+      # Query for a fluid image resource on this `ContentfulAsset` node
+      fluid(maxWidth: 500) {
+        ...GatsbyContentfulFluid_withWebp
+      }
 
-        # Query for locally stored file(e.g. An image) - `File` node
-        localFile {
-          # Where the asset is downloaded into cache, don't use this
-          absolutePath
-          # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
-          publicURL
-          # Use `gatsby-image` to create fluid image resource
-          childImageSharp {
-            fluid(maxWidth: 500) {
-              ...GatsbyImageSharpFluid
+      # Query for locally stored file(e.g. An image) - `File` node
+      localFile {
+        # Where the asset is downloaded into cache, don't use this
+        absolutePath
+        # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
+        publicURL
+        # Use `gatsby-image` to create fluid image resource
+        childImageSharp {
+          fluid(maxWidth: 500) {
+            ...GatsbyImageSharpFluid
           }
         }
       }
     }
   }
+}
 ```
 
 Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
@@ -146,7 +149,7 @@ You can pass in any other options available in the [contentful.js SDK](https://g
 
 **`localeFilter`** [function][optional] [default: `() => true`]
 
-Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
 
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
@@ -174,6 +177,10 @@ If you are confident your Content Types will have natural-language IDs (e.g. `bl
 
 Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
 
+**`assetDownloadWorkers`** [number][optional] [default: `50`]
+
+Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
+
 **`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
 
 If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.
@@ -182,9 +189,9 @@ If you want to resolve the locales in fields of assets and entries that are refe
 
 There are currently some things to keep in mind when building your content models at Contentful.
 
-1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
+1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 

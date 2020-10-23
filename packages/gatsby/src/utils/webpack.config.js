@@ -5,6 +5,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
+const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -12,10 +13,10 @@ const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
-
 const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
+import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -51,7 +52,7 @@ module.exports = async (
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
     const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
-    // config env is dependant on the env that it's run, this can be anything from staging-production
+    // config env is dependent on the env that it's run, this can be anything from staging-production
     // this allows you to set use different .env environments or conditions in gatsby files
     const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
     const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
@@ -93,7 +94,7 @@ module.exports = async (
         return acc
       },
       {
-        "process.env": JSON.stringify({}),
+        "process.env": `({})`,
       }
     )
   }
@@ -161,8 +162,8 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            require.resolve(`event-source-polyfill`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -179,6 +180,7 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           app: directoryPath(`.cache/production-app`),
         }
       default:
@@ -200,6 +202,8 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
+
+      plugins.virtualModules(),
     ]
 
     switch (stage) {
@@ -388,7 +392,6 @@ module.exports = async (
         "@babel/runtime": path.dirname(
           require.resolve(`@babel/runtime/package.json`)
         ),
-        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
         // TODO: Remove entire block when we make fast-refresh the default
         ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
           ? {
@@ -404,6 +407,10 @@ module.exports = async (
         "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
           require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
         ),
+        "socket.io-client": path.dirname(
+          require.resolve(`socket.io-client/package.json`)
+        ),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -412,17 +419,24 @@ module.exports = async (
         PnpWebpackPlugin.bind(directoryPath(`public`), module),
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
+        new CoreJSResolver(),
       ],
     }
 
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      // force to use es modules when importing internals of @reach.router
-      // for browser bundles
-      resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
-        `es`
+      resolve.alias = Object.assign(
+        {},
+        {
+          // force to use es modules when importing internals of @reach.router
+          // for browser bundles
+          "@reach/router": path.join(
+            path.dirname(require.resolve(`@reach/router/package.json`)),
+            `es`
+          ),
+        },
+        resolve.alias
       )
     }
 
@@ -611,7 +625,6 @@ module.exports = async (
       `@reach/router/lib/history`,
       `@reach/router`,
       `common-tags`,
-      /^core-js\//,
       `crypto`,
       `debug`,
       `fs`,
@@ -656,6 +669,12 @@ module.exports = async (
         }
       },
     ]
+  }
+
+  if (stage === `develop`) {
+    config.externals = {
+      "socket.io-client": `io`,
+    }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

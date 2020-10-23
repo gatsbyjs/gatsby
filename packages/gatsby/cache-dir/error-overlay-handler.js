@@ -1,4 +1,4 @@
-import * as ReactRefreshErrorOverlay from "@pmmmwh/react-refresh-webpack-plugin/src/overlay"
+import * as ReactRefreshErrorOverlay from "@pmmmwh/react-refresh-webpack-plugin/overlay"
 import * as ReactErrorOverlay from "react-error-overlay"
 
 const ErrorOverlay = {
@@ -14,10 +14,44 @@ const ErrorOverlay = {
 
 if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
   // Report runtime errors
+  let registeredReloadListeners = false
+  function onError() {
+    if (registeredReloadListeners) {
+      return
+    }
+
+    // Inspired by `react-dev-utils` HMR client:
+    // If there was unhandled error, reload browser
+    // on next HMR update
+    module.hot.addStatusHandler(status => {
+      if (status === `apply` || status === `idle`) {
+        window.location.reload()
+      }
+    })
+
+    // Additionally in Gatsby case query result updates can cause
+    // runtime error and also fix them, so reload on data updates
+    // as well
+    ___emitter.on(`pageQueryResult`, () => {
+      window.location.reload()
+    })
+    ___emitter.on(`staticQueryResult`, () => {
+      window.location.reload()
+    })
+
+    registeredReloadListeners = true
+  }
   ReactErrorOverlay.startReportingRuntimeErrors({
-    onError: () => {},
+    onError,
     filename: `/commons.js`,
   })
+
+  // ReactErrorOverlay `onError` handler is triggered pretty late
+  // so we attach same error/unhandledrejection as ReactErrorOverlay
+  // to be able to detect runtime error and setup listeners faster
+  window.addEventListener(`error`, onError)
+  window.addEventListener(`unhandledrejection`, onError)
+
   ReactErrorOverlay.setEditorHandler(errorLocation =>
     window.fetch(
       `/__open-stack-frame-in-editor?fileName=` +

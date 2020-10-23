@@ -189,7 +189,7 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
     </tbody>
   </table>
   <p>
-    <a href="https://www.gatsbyjs.org/">gatsbyjs.org</a>
+    <a href="https://www.gatsbyjs.com/">gatsbyjs.com</a>
   </p>
   <p>
     <a href="https://twitter.com/gatsbyjs">twitter.com/gatsbyjs</a>

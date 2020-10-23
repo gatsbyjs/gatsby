@@ -31,7 +31,7 @@ onExit(() => {
 
 const readMatchPaths = async (
   program: IServeProgram
-): Promise<IMatchPath[]> => {
+): Promise<Array<IMatchPath>> => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
   try {
@@ -49,11 +49,11 @@ const readMatchPaths = async (
       )}?`
     )
   }
-  return JSON.parse(rawJSON) as IMatchPath[]
+  return JSON.parse(rawJSON) as Array<IMatchPath>
 }
 
 const matchPathRouter = (
-  matchPaths: IMatchPath[],
+  matchPaths: Array<IMatchPath>,
   options: {
     root: string
   }
@@ -106,7 +106,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
-  router.use(express.static(`public`))
+  router.use(express.static(`public`, { dotfiles: `allow` }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
@@ -151,7 +151,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       const urls = prepareUrls(
         program.ssl ? `https` : `http`,
         program.host,
-        program.port
+        port
       )
       printInstructions(
         program.sitePackageJson.name || `(Unnamed package)`,

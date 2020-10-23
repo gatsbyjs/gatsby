@@ -1,46 +1,66 @@
-import spawn from "cross-spawn"
+import execa, { sync } from "execa"
 import { join } from "path"
 import { createLogsMatcher } from "./matcher"
+
+const gatsbyBinLocation = join(
+  GLOBAL_GATSBY_CLI_LOCATION,
+  `node_modules`,
+  `.bin`,
+  `gatsby`
+)
 
 // Use as `GatsbyCLI.cwd('execution-folder').invoke('new', 'foo')`
 export const GatsbyCLI = {
   from(relativeCwd) {
     return {
-      invoke(...args) {
-        const results = spawn.sync(
-          join(__dirname, `../../../packages/gatsby-cli/lib/index.js`),
-          args,
-          {
+      invoke(args) {
+        const NODE_ENV = args[0] === `develop` ? `development` : `production`
+        try {
+          const results = sync(gatsbyBinLocation, [].concat(args), {
             cwd: join(__dirname, `../`, `./${relativeCwd}`),
-          }
-        )
+            env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
+          })
 
-        if (results.error) {
-          return [1, createLogsMatcher(results.error.toString().split("\n"))]
+          return [
+            results.exitCode,
+            createLogsMatcher(results.stdout.toString().split("\n")),
+          ]
+        } catch (err) {
+          return [
+            err.exitCode,
+            createLogsMatcher(err.stdout?.toString().split("\n") || ``),
+          ]
         }
-
-        return [
-          results.status,
-          createLogsMatcher(results.output.toString().split("\n")),
-        ]
       },
 
-      invokeAsync: (...args) => {
-        const res = spawn(
-          join(__dirname, `../../../packages/gatsby-cli/lib/index.js`),
-          args,
-          {
-            cwd: join(__dirname, `../`, `./${relativeCwd}`),
-          }
-        )
-
-        const logs = []
-
-        res.stdout.on("data", data => {
-          logs.push(data.toString())
+      invokeAsync: (args, onExit) => {
+        const NODE_ENV = args[0] === `develop` ? `development` : `production`
+        const res = execa(gatsbyBinLocation, [].concat(args), {
+          cwd: join(__dirname, `../`, `./${relativeCwd}`),
+          env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
         })
 
-        return [res, () => createLogsMatcher(logs)]
+        const logs = []
+        res.stdout.on("data", data => {
+          if (!res.killed) {
+            logs.push(data.toString())
+          }
+
+          if (onExit && onExit(data.toString())) {
+            res.cancel()
+          }
+        })
+
+        return [
+          res.catch(err => {
+            if (err.isCanceled) {
+              return
+            }
+
+            throw err
+          }),
+          () => createLogsMatcher(logs),
+        ]
       },
     }
   },

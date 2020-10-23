@@ -39,7 +39,7 @@ Now move into the newly created directory and install the Gatsby plugin for Pris
 
 ```shell
 cd prismic-tutorial
-npm install --save gatsby-source-prismic
+npm install gatsby-source-prismic
 ```
 
 In addition to installing the Prismic plugin, you also have to install the package `dotenv` to securely use your access tokens locally as you should never commit secret API keys to your repository!
@@ -58,6 +58,8 @@ _Note: If you want to locally build your project you'll also have to create a `.
 
 Now you need to configure the plugin (See all [available options](https://www.npmjs.com/package/gatsby-source-prismic#how-to-use)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/javascript/query-the-api/link-resolving) for each field if necessary.
 
+Remember also to add an object of Prismic custom type JSON schemas. You can copy it from Prismic's JSON editor tab in your custom type page. It's important to keep the name of JSON file **the same** as your custom type's API ID. More information can be found in the [Prismic documentation](https://user-guides.prismic.io/en/articles/380227-introduction-to-custom-type-building) and [Source Plugin README](/packages/gatsby-source-prismic/#providing-json-schemas).
+
 Add the following to register the plugin:
 
 ```javascript:title=gatsby-config.js
@@ -73,6 +75,7 @@ module.exports = {
         repositoryName: `your-repository-name`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
+        page: require("./src/schemas/page.json"),
       },
     },
   ],
@@ -222,6 +225,6 @@ This was an example meant to help you understand how Prismic works with Gatsby. 
 - Add relationships between posts, e.g. with categories
 - Query data from Prismic for single pages
 
-As mentioned in the beginning of this guide, if you got stuck, you can compare your code to the [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic) which is the project set up in the videos. A working example created by following this guide is available in the [commit history](https://github.com/LeKoArts/gatsby-starter-prismic/tree/4aa5d52e79a0b4d90f0a671c24eb8289eb15a42b) of the aforementioned starter. More advanced usages of Prismic in Gatsby would be [Slices](https://intercom.help/prismicio/content-modeling-and-custom-types/field-reference/slices) and [Labels](https://intercom.help/prismicio/content-modeling-and-custom-types/structure-your-content/add-custom-styles-to-rich-text).
+As mentioned in the beginning of this guide, if you got stuck, you can compare your code to the [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic) which is the project set up in the videos. A working example created by following this guide is available in the [commit history](https://github.com/LekoArts/gatsby-starter-prismic/tree/4aa5d52e79a0b4d90f0a671c24eb8289eb15a42b) of the aforementioned starter. More advanced usages of Prismic in Gatsby would be [Slices](https://intercom.help/prismicio/content-modeling-and-custom-types/field-reference/slices) and [Labels](https://intercom.help/prismicio/content-modeling-and-custom-types/structure-your-content/add-custom-styles-to-rich-text).
 
 <!-- Links to more advanced tutorials will go here -->

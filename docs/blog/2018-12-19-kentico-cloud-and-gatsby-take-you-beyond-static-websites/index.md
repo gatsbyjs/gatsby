@@ -38,7 +38,7 @@ Kentico Cloud also makes it easy for editors to understand the hierarchical stru
 For us developers, the headless CMS tools are very important. Apart from great technical documentation and many SDKs (including [JavaScript](http://bit.ly/2Gsq0Tb)), Kentico Cloud has a [source plugin for Gatsby](http://bit.ly/2S8ZzTO). If you decide to build a static site like I did, it's just another package that you install via npm.
 
 ```shell
-npm install --save gatsby-source-kentico-cloud
+npm install gatsby-source-kentico-cloud
 ```
 
 which updates packages.json
