@@ -218,7 +218,7 @@ export class BaseLoader {
 
     const inFlightPromise = Promise.all([
       this.loadAppData(),
-      this.loadPageDataJson(pagePath),
+      this.loadPageDataJson(rawPath),
     ]).then(allData => {
       const result = allData[1]
       if (result.status === PageResourceStatus.Error) {
