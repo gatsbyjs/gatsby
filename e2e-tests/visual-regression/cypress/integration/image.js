@@ -5,13 +5,21 @@ const testCases = [
   ["constrained image", "/images/constrained"],
 ]
 
+const sizes = ["iphone-6", "ipad-2", "macbook-13"]
+
 describe(`GatsbyImage`, () => {
-  testCases.forEach(([title, path]) => {
-    describe(title, () => {
-      it(`renders correctly`, () => {
-        cy.visit(path).waitForRouteChange()
-        cy.get("[data-main-image]").should("have.css", "opacity", "1")
-        cy.get("#test-image").matchImageSnapshot()
+  sizes.forEach(size => {
+    testCases.forEach(([title, path]) => {
+      describe(`${title}`, () => {
+        it(`renders correctly on ${size}`, () => {
+          cy.viewport(size)
+          cy.visit(path)
+          // Wait for main image to load
+          cy.get("[data-main-image]").should("have.css", "opacity", "1")
+          // Wait for blur-up
+          cy.wait(600)
+          cy.get("#test-image").matchImageSnapshot()
+        })
       })
     })
   })
