@@ -37,9 +37,8 @@ const runWebpack = (
         },
         (err, stats) => {
           if (err) {
-            reject(err)
+            return reject(err)
           } else {
-            resolve(stats)
             const pathToRenderPage = `${directory}/public/render-page.js`
             newHash = stats.hash || ``
 
