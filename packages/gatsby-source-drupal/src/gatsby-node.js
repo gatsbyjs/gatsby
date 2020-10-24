@@ -1,7 +1,11 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+} = require(`./normalize`)
 const {
   handleReferences,
   handleWebhookUpdate,
