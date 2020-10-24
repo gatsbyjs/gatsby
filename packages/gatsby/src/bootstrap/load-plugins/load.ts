@@ -233,9 +233,7 @@ export function loadPlugins(
 
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(
-    plugin =>
-      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
-      plugin === `gatsby-plugin-typescript`
+    plugin => plugin.resolve === `gatsby-plugin-typescript`
   )
 
   if (typescriptPlugin === undefined) {
