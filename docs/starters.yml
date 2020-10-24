@@ -5619,7 +5619,7 @@
     - PWA
     - ESLint
     - SEO ready
-- url: https://gatsby-starter-blog-and-cv-dark.netlify.app
+- url: https://gatsby-starter-blog-and-cv.netlify.app
   repo: https://github.com/dospolov/gatsby-starter-blog-and-cv
   description: Gatsby starter for Blog and CV.
   tags:
