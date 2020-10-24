@@ -7,8 +7,12 @@ import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { GatsbyNode } from "../../../"
-import { IPluginInfo, IFlattenedPlugin } from "./types"
-import { IPluginInfoOptions, ISiteConfig } from "gatsby-plugin-utils/dist/types"
+import {
+  IPluginInfo,
+  IFlattenedPlugin,
+  IPluginInfoOptions,
+  ISiteConfig,
+} from "./types"
 
 interface IApi {
   version?: string
@@ -177,9 +181,6 @@ export async function validatePluginOptions(
 
   config.plugins = await Promise.all(
     config.plugins.map(async plugin => {
-      // NOTE: This is only here to satisfy TypeScript but should never happen.
-      if (typeof plugin === `string`) return plugin
-
       let gatsbyNode
 
       try {
