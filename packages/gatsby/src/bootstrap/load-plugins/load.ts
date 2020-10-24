@@ -242,6 +242,13 @@ export function loadPlugins(
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-typescript`),
+        options: {
+          // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
+          // pluginOptionsSchema of gatsby-plugin-typescript
+          allExtensions: false,
+          isTSX: false,
+          jsxPragma: `React`,
+        },
       })
     )
   }

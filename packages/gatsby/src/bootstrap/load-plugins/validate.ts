@@ -8,7 +8,7 @@ import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { GatsbyNode } from "../../../"
 import { IPluginInfo, IFlattenedPlugin } from "./types"
-import { ISiteConfig } from "gatsby-plugin-utils/dist/types"
+import { IPluginInfoOptions, ISiteConfig } from "gatsby-plugin-utils/dist/types"
 
 interface IApi {
   version?: string
@@ -217,7 +217,7 @@ export async function validatePluginOptions(
 
         plugin.options = await validateOptionsSchema(
           optionsSchema,
-          plugin.options || {}
+          (plugin.options as IPluginInfoOptions) || {}
         )
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
