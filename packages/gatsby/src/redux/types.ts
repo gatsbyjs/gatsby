@@ -57,6 +57,7 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
+  assetPrefix?: string
   pathPrefix?: string
   mapping?: Record<string, string>
 }

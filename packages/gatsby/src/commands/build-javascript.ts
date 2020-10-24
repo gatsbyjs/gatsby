@@ -7,7 +7,7 @@ import webpackConfig from "../utils/webpack.config"
 import { store } from "../redux"
 import mapTemplatesToStaticQueryHashes from "../utils/map-templates-to-static-query-hashes"
 
-import { IProgram } from "./types"
+import { IProgram, Stage } from "./types"
 
 import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 
@@ -24,7 +24,7 @@ export const buildProductionBundle = async (
   const compilerConfig = await webpackConfig(
     program,
     directory,
-    `build-javascript`,
+    Stage.BuildJavascript,
     null,
     { parentSpan }
   )

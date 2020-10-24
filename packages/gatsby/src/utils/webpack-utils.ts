@@ -116,7 +116,7 @@ type PluginUtils = BuiltinPlugins & {
 /**
  * webpack atoms namespace
  */
-interface IWebpackUtils {
+export interface IWebpackUtils {
   loaders: ILoaderUtils
 
   rules: IRuleUtils

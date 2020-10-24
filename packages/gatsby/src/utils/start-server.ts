@@ -107,7 +107,7 @@ export async function startServer(
   const devConfig = await webpackConfig(
     program,
     directory,
-    `develop`,
+    Stage.Develop,
     program.port,
     { parentSpan: webpackActivity.span }
   )
