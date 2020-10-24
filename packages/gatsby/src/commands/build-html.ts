@@ -5,7 +5,6 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"
-import crypto from "crypto"
 
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -16,25 +15,7 @@ type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
 let oldHash = ``
-function getChecksum(path): Promise<string> {
-  return new Promise(function (resolve, reject) {
-    // crypto.createHash('sha1');
-    // crypto.createHash('sha256');
-    const hash = crypto.createHash(`md5`)
-    const input = fs.createReadStream(path)
-
-    input.on(`error`, reject)
-
-    input.on(`data`, function (chunk) {
-      hash.update(chunk)
-    })
-
-    input.on(`close`, function () {
-      resolve(hash.digest(`hex`))
-    })
-  })
-}
-
+let newHash = ``
 const runWebpack = (
   compilerConfig,
   stage: Stage,
@@ -58,18 +39,18 @@ const runWebpack = (
           if (err) {
             reject(err)
           } else {
+            resolve(stats)
             const pathToRenderPage = `${directory}/public/render-page.js`
+            newHash = stats.hash || ``
 
-            getChecksum(pathToRenderPage).then(newHash => {
-              if (oldHash !== `` && newHash !== oldHash) {
-                // Make sure we get the latest version during development
-                delete require.cache[require.resolve(pathToRenderPage)]
-              }
+            if (oldHash !== `` && newHash !== oldHash) {
+              // Make sure we get the latest version during development
+              delete require.cache[require.resolve(pathToRenderPage)]
+            }
 
-              oldHash = newHash
+            oldHash = newHash
 
-              return resolve(stats)
-            })
+            return resolve(stats)
           }
         }
       )
