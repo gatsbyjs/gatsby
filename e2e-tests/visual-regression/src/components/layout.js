@@ -22,6 +22,7 @@ const Layout = ({ children }) => (
           style={{
             margin: `0 auto`,
             padding: `10px 20px`,
+            background: `white`,
           }}
         >
           {children}
