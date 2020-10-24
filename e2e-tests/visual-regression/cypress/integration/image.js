@@ -10,6 +10,7 @@ describe(`GatsbyImage`, () => {
     describe(title, () => {
       it(`renders correctly`, () => {
         cy.visit(path).waitForRouteChange()
+        cy.get("[data-main-image]").should("have.css", "opacity", "1")
         cy.get("#test-image").matchImageSnapshot()
       })
     })
