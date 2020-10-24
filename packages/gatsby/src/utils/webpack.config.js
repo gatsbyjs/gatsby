@@ -677,13 +677,6 @@ module.exports = async (
     }
   }
 
-  // Share the in-memory cache across develop & develop-html to reduce
-  // memory usage in dev.
-  const sharedDevelopCache = {}
-  if (stage === `develop` || stage === `develop-html`) {
-    config.cache = sharedDevelopCache
-  }
-
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
