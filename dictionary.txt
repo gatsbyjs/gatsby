@@ -479,7 +479,7 @@ webpages
 websocket
 WeChat
 WeKnow
-Whatsapp
+WhatsApp
 workspaces
 www
 xyz
