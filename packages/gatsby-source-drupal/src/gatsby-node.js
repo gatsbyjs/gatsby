@@ -5,7 +5,6 @@ const {
   nodeFromData,
   downloadFile,
   isFileNode,
-  getHref,
 } = require(`./normalize`)
 const {
   handleReferences,
