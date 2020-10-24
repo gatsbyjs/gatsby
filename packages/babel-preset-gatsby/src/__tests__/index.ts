@@ -1,5 +1,5 @@
 import * as path from "path"
-import preset from "../index"
+import preset, { StageOption } from "../index"
 import * as pathSerializer from "../utils/path-serializer"
 
 expect.addSnapshotSerializer(pathSerializer)
@@ -8,7 +8,7 @@ describe(`babel-preset-gatsby`, () => {
   it.each([`build-stage`, `develop`, `build-javascript`, `build-html`])(
     `should specify proper presets and plugins when stage is %s`,
     stage => {
-      expect(preset(null, { stage })).toMatchSnapshot()
+      expect(preset(null, { stage: stage as StageOption })).toMatchSnapshot()
     }
   )
 

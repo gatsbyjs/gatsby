@@ -1,13 +1,29 @@
-const path = require(`path`)
-const {
-  CORE_JS_POLYFILL_EXCLUDE_LIST: polyfillsToExclude,
-} = require(`gatsby-legacy-polyfills/dist/exclude`)
+import * as path from "path"
+import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude"
 
-const resolve = m => require.resolve(m)
+const resolve = (modulePath: string): string => require.resolve(modulePath)
 
 const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
-export function loadCachedConfig() {
+export type StageOption =
+  | "build-javascript"
+  | "build-html"
+  | "develop"
+  | "develop-html"
+
+export type TargetOption = string | Array<string> | {}
+
+interface ILoadCachedConfigReturnType {
+  browserslist?: string | Array<string>
+}
+
+interface IPresetOptions {
+  stage?: StageOption
+  targets?: TargetOption
+  reactRuntime?: "classic" | "automatic"
+}
+
+export function loadCachedConfig(): ILoadCachedConfigReturnType {
   let pluginBabelConfig = {}
   if (!IS_TEST) {
     try {
@@ -29,8 +45,9 @@ export function loadCachedConfig() {
   return pluginBabelConfig
 }
 
-export default function preset(_, options = {}) {
-  let { targets = null } = options
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export default function preset(_?: unknown, options: IPresetOptions = {}) {
+  let targets: TargetOption | undefined = options.targets || undefined
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
   const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
