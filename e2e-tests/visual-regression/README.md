@@ -1,30 +1,17 @@
-# gatsby-starter-default
+# Visual regression tests
 
-The default Gatsby starter.
+This test suite uses [cypress-image-snapshot](https://github.com/jaredpalmer/cypress-image-snapshot)
+to compare screenshots of pages or elements with a saved snapshot.
 
-For an overview of the project structure please refer to the [Gatsby documentation - Building with Components](https://www.gatsbyjs.org/docs/building-with-components/).
+To add a test, add a page to `src/pages`, then add a test to `cypress/integration`.
 
-## Install
+## Considerations
 
-Make sure that you have the Gatsby CLI program installed:
+Remember that the test will run on Linux in CI, so avoid tests that might change between platforms.
+Using default fonts is an example. In general, if you're not testing the text itself then exclude it from your tests.
 
-```shell
-npm install --global gatsby-cli
-```
+Rather than comparing the full page, a good idea is to compare a wrapper element.
 
-And run from your CLI:
+## Updating snapshots
 
-```shell
-gatsby new gatsby-example-site
-```
-
-Then you can run it by:
-
-```shell
-cd gatsby-example-site
-gatsby develop
-```
-
-## Deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
+Run `yarn cy:update-snapshots` if you need to update them. Please note that unlike Jest, this doesn't delete outdated snapshots.

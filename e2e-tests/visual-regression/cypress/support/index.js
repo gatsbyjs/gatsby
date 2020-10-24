@@ -14,6 +14,8 @@
 // ***********************************************************
 
 import "gatsby-cypress"
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command"
 
-addMatchImageSnapshotCommand();
+addMatchImageSnapshotCommand({
+  customDiffDir: `/__diff_output__`,
+})

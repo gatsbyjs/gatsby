@@ -26,11 +26,13 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "cypress run --browser chrome",
+    "cy:update-snapshots": "cypress run --browser chrome --env updateSnapshots=true",
+    "cy:clean-snapshots": "rimraf cypress/snapshots/*"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "gatsby-cypress": "0.4.12-dev-1603453272121",
+    "gatsby-cypress": "0.4.11",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"

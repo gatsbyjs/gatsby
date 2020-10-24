@@ -9,7 +9,7 @@ const Page = () => {
       file(relativePath: { eq: "landsend.jpg" }) {
         childImageSharp {
           # gatsbyImage(width: 500, height: 500, layout: FIXED) { Disabled until bug is fixed
-          gatsbyImage(width: 500, layout: FIXED) {
+          gatsbyImage(width: 550, layout: FIXED) {
             imageData
           }
         }
