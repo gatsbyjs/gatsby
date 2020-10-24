@@ -67,7 +67,7 @@ exports.downloadFile = async (
             }
           : {}
       fileNode = await createRemoteFileNode({
-        url: getHref(url),
+        url,
         store,
         cache,
         createNode,
