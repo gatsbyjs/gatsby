@@ -13,7 +13,13 @@ import {
   ICurrentAPIs,
   validatePluginOptions,
 } from "./validate"
-import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
+import {
+  IPluginInfo,
+  IFlattenedPlugin,
+  ISiteConfig,
+  IRawSiteConfig,
+} from "./types"
+import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -45,28 +51,29 @@ const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   return flattened
 }
 
-const supportStringPlugins = (config: ISiteConfig = {}): void => {
-  if (!config.plugins) return
+const normalizePlugins = (config: IRawSiteConfig = {}): ISiteConfig => {
+  return {
+    ...config,
+    plugins: (config.plugins || []).map(
+      (plugin): IPluginRefObject => {
+        if (typeof plugin === `string`)
+          return {
+            resolve: plugin,
+            options: {},
+          }
 
-  config.plugins = config.plugins.map(plugin => {
-    if (typeof plugin === `string`)
-      return {
-        resolve: plugin,
-        options: {},
+        return plugin
       }
-
-    return plugin
-  })
-
-  return
+    ),
+  }
 }
 
 export async function loadPlugins(
-  config: ISiteConfig = {},
+  rawConfig: IRawSiteConfig = {},
   rootDir: string | null = null
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
-  supportStringPlugins(config)
+  const config = normalizePlugins(rawConfig)
 
   // Show errors for invalid plugin configuration
   if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
