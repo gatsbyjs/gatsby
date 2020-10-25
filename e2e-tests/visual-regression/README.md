@@ -15,3 +15,7 @@ Rather than comparing the full page, a good idea is to compare a wrapper element
 ## Updating snapshots
 
 Run `yarn cy:update-snapshots` if you need to update them. Please note that unlike Jest, this doesn't delete outdated snapshots.
+
+## Credits
+
+Test images by [Benjamin Elliott](https://unsplash.com/photos/lH0_kBu5iyo) and [Red Zeppelin](https://unsplash.com/photos/uJMxXtH-Qso) via Unsplash

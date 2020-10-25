@@ -5,14 +5,14 @@ const testCases = [
   ["constrained image", "/images/constrained"],
 ]
 
-const sizes = ["iphone-6", "ipad-2", "macbook-13"]
+const sizes = [["iphone-6"], ["ipad-2"], [1027, 768]]
 
 describe(`GatsbyImage`, () => {
   sizes.forEach(size => {
     testCases.forEach(([title, path]) => {
       describe(`${title}`, () => {
-        it(`renders correctly on ${size}`, () => {
-          cy.viewport(size)
+        it(`renders correctly on ${size.join("x")}`, () => {
+          cy.viewport(...size)
           cy.visit(path)
           // Wait for main image to load
           cy.get("[data-main-image]").should("have.css", "opacity", "1")
