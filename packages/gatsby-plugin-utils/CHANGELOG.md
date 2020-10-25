@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.38...gatsby-plugin-utils@0.2.39) (2020-10-22)
+
+### Bug Fixes
+
+- **gatsby-plugin-utils:** skip libcheck during typegen ([#27588](https://github.com/gatsbyjs/gatsby/issues/27588)) ([0fdd3e9](https://github.com/gatsbyjs/gatsby/commit/0fdd3e969c18c6fda7e5c62fc5a352fce1877974))
+
+## [0.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.37...gatsby-plugin-utils@0.2.38) (2020-10-21)
+
+### Bug Fixes
+
+- duplicate types to solve circular dependency ([#27578](https://github.com/gatsbyjs/gatsby/issues/27578)) ([029ec48](https://github.com/gatsbyjs/gatsby/commit/029ec489a271ddeb7ad3fa174bd536c1b38db246))
+- Update plugin schema testing util and associated tests ([#27574](https://github.com/gatsbyjs/gatsby/issues/27574)) ([6d81283](https://github.com/gatsbyjs/gatsby/commit/6d81283e4f47ae2cb571626bf4d02fcd2c9d1af4))
+
+## [0.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.36...gatsby-plugin-utils@0.2.37) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [0.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.35...gatsby-plugin-utils@0.2.36) (2020-10-19)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [0.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.34...gatsby-plugin-utils@0.2.35) (2020-10-19)
+
+### Features
+
+- **gatsby-plugin-utils:** save validation resulting value to plugin options ([#27381](https://github.com/gatsbyjs/gatsby/issues/27381)) ([0073fb1](https://github.com/gatsbyjs/gatsby/commit/0073fb167e7ccddefbff8872b5b9bd488660804d))
+
 ## [0.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.33...gatsby-plugin-utils@0.2.34) (2020-10-16)
 
 **Note:** Version bump only for package gatsby-plugin-utils

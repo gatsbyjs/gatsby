@@ -59,7 +59,24 @@ describe(`Plugin Errors`, () => {
           action: expect.objectContaining({
             type: `LOG`,
             payload: expect.objectContaining({
-              level: "ERROR",
+              level: `ERROR`,
+              category: `SYSTEM`,
+              text: `Error text is MORE ERROR!`,
+              code: `structured-plugin-errors_12345`
+            })
+          })
+        })
+      ])
+    )
+
+    expect(events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: `LOG_ACTION`,
+          action: expect.objectContaining({
+            type: `LOG`,
+            payload: expect.objectContaining({
+              level: `ERROR`,
               category: `SYSTEM`,
               text: `Error text is PANIC!`,
               code: `structured-plugin-errors_1337`,

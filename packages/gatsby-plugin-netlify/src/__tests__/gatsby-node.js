@@ -2,7 +2,7 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`gatsby-node.js`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"headers" must be of type object`,
       `"allPageHeaders" must be an array`,
@@ -13,7 +13,7 @@ describe(`gatsby-node.js`, () => {
       `"generateMatchPathRewrites" must be a boolean`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       headers: `this should be an object`,
       allPageHeaders: `this should be an array`,
       mergeSecurityHeaders: `this should be a boolean`,
@@ -26,8 +26,8 @@ describe(`gatsby-node.js`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       headers: {
         "/some-page": [`Bearer: Some-Magic-Token`],
         "/some-other-page": [`some`, `great`, `headers`],
