@@ -10,4 +10,5 @@ yarn-error.log
 # Cypress output
 cypress/videos/
 cypress/screenshots/
+cypress/results/
 __diff_output__

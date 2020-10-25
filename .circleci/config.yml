@@ -383,6 +383,8 @@ jobs:
           test_command: yarn test
       - store_artifacts:
           path: e2e-tests/visual-regression/__diff_output__
+      - store_test_results:
+          path: e2e-tests/visual-regression/cypress/results
 
   starters_validate:
     executor: node

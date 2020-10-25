@@ -1,3 +1,10 @@
 {
-  "baseUrl": "http://localhost:9000"
+  "baseUrl": "http://localhost:9000",
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "cypress/results/junit-[hash].xml",
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
 }
