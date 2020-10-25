@@ -1,15 +1,35 @@
 /* @flow */
 
-const tracer = require(`opentracing`).globalTracer()
-const { store } = require(`../redux`)
-const { getNodesByType, getTypes } = require(`../redux/nodes`)
-const { createSchemaComposer } = require(`./schema-composer`)
-const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
-const { builtInFieldExtensions } = require(`./extensions`)
-const { builtInTypeDefinitions } = require(`./types/built-in-types`)
-const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
+import { globalTracer, Span } from "opentracing"
+import { DocumentNode } from "graphql"
+import { store } from "../redux"
+import { getNodesByType, getTypes } from "../redux/nodes"
+import { createSchemaComposer } from "./schema-composer"
+import { buildSchema, rebuildSchemaWithSitePage } from "./schema"
+import { builtInFieldExtensions } from "./extensions"
+import { builtInTypeDefinitions } from "./types/built-in-types"
+import { TypeConflictReporter } from "./infer/type-conflict-reporter"
+import { IGatsbyPlugin } from "../redux/types"
+import { GraphQLFieldExtensionDefinition } from "./extensions"
 
-const getAllTypeDefinitions = () => {
+interface IBuildSchemaSpan {
+  parentSpan: Span
+  fullMetadataBuild?: boolean
+}
+
+interface IBuildMetadataTypes {
+  types: Array<string>
+}
+
+const tracer = globalTracer()
+
+const getAllTypeDefinitions = (): Array<
+  | {
+      typeOrTypeDef: DocumentNode
+      plugin?: IGatsbyPlugin
+    }
+  | string
+> => {
   const {
     schemaCustomization: { types },
   } = store.getState()
@@ -25,15 +45,22 @@ const getAllTypeDefinitions = () => {
   return [
     ...builtInTypes,
     ...types.filter(
-      type => type.plugin && type.plugin.name !== `default-site-plugin`
+      type =>
+        typeof type !== `string` &&
+        type.plugin &&
+        type.plugin.name !== `default-site-plugin`
     ),
     ...types.filter(
-      type => !type.plugin || type.plugin.name === `default-site-plugin`
+      type =>
+        typeof type === `string` ||
+        !type.plugin ||
+        type.plugin.name === `default-site-plugin`
     ),
   ]
 }
 
-const getAllFieldExtensions = () => {
+// TODO - Replace `any` with `builtInFieldExtensions` type once extensions\index.js is typed
+const getAllFieldExtensions = (): GraphQLFieldExtensionDefinition & any => {
   const {
     schemaCustomization: { fieldExtensions: customFieldExtensions },
   } = store.getState()
@@ -49,7 +76,9 @@ const getAllFieldExtensions = () => {
 // and then using this aggregated node structure in related GraphQL type.
 // Actual logic for inference located in inferenceMetadata reducer and ./infer
 // Here we just orchestrate the process via redux actions
-const buildInferenceMetadata = ({ types }) =>
+const buildInferenceMetadata = ({
+  types,
+}: IBuildMetadataTypes): Promise<void> =>
   new Promise(resolve => {
     if (!types || !types.length) {
       resolve()
@@ -59,13 +88,13 @@ const buildInferenceMetadata = ({ types }) =>
     // TODO: use async iterators when we switch to node>=10
     //  or better investigate if we can offload metadata building to worker/Jobs API
     //  and then feed the result into redux?
-    const processNextType = () => {
+    const processNextType = (): void => {
       const typeName = typeNames.pop()
       store.dispatch({
         type: `BUILD_TYPE_METADATA`,
         payload: {
           typeName,
-          nodes: getNodesByType(typeName),
+          nodes: getNodesByType(typeName ?? ``),
         },
       })
       if (typeNames.length > 0) {
@@ -78,7 +107,10 @@ const buildInferenceMetadata = ({ types }) =>
     processNextType()
   })
 
-const build = async ({ parentSpan, fullMetadataBuild = true }) => {
+export const build = async ({
+  parentSpan,
+  fullMetadataBuild = true,
+}: IBuildSchemaSpan): Promise<void> => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
@@ -128,10 +160,14 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   span.finish()
 }
 
-const rebuild = async ({ parentSpan }) =>
+export const rebuild = async ({
+  parentSpan,
+}: IBuildSchemaSpan): Promise<void> =>
   await build({ parentSpan, fullMetadataBuild: false })
 
-const rebuildWithSitePage = async ({ parentSpan }) => {
+export const rebuildWithSitePage = async ({
+  parentSpan,
+}: IBuildSchemaSpan): Promise<void> => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
     `rebuild schema with SitePage context`,
@@ -174,10 +210,4 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
   })
 
   span.finish()
-}
-
-module.exports = {
-  build,
-  rebuild,
-  rebuildWithSitePage,
 }
