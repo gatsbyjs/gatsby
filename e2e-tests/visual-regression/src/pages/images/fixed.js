@@ -1,6 +1,7 @@
 import * as React from "react"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useStaticQuery, graphql } from "gatsby"
+import { TestWrapper } from "../../components/test-wrapper"
 import Layout from "../../components/layout"
 
 const Page = () => {
@@ -19,13 +20,13 @@ const Page = () => {
   return (
     <Layout>
       <h1>Fixed width and height</h1>
-      <div id="test-image" style={{ padding: 5 }}>
+      <TestWrapper>
         <GatsbyImage
           image={getImage(data.file)}
           loading="eager"
           alt="chameleon"
         />
-      </div>
+      </TestWrapper>
     </Layout>
   )
 }
