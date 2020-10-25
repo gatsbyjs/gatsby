@@ -1,5 +1,4 @@
 /* @flow */
-// Force Update - test
 
 import { globalTracer, Span } from "opentracing"
 import { DocumentNode } from "graphql"
