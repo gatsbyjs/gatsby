@@ -10,7 +10,7 @@ import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { getNode, getNodes } = require(`../../redux/nodes`)
 
-const addInferredFields = ({
+export const addInferredFields = ({
   schemaComposer,
   typeComposer,
   exampleValue,

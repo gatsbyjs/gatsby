@@ -1,18 +1,81 @@
-const report = require(`gatsby-cli/lib/reporter`)
-const { ObjectTypeComposer } = require(`graphql-compose`)
-const { hasNodes } = require(`./inference-metadata`)
-const { getExampleObject } = require(`./build-example-data`)
-const { addNodeInterface } = require(`../types/node-interface`)
-const { addInferredFields } = require(`./add-inferred-fields`)
-const { getNodesByType } = require(`../../redux/nodes`)
+/* @flow */
 
-const addInferredTypes = ({
+import { reporter as report } from "gatsby-cli/lib/reporter/reporter"
+import { ObjectTypeComposer, SchemaComposer } from "graphql-compose"
+import { Span } from "opentracing"
+
+import { getNodesByType } from "../../redux/nodes"
+import { addNodeInterface } from "../types/node-interface"
+import { hasNodes, ITypeMetadata } from "./inference-metadata"
+import { getExampleObject } from "./build-example-data"
+import { addInferredFields } from "./add-inferred-fields"
+import { TypeConflictReporter } from "./type-conflict-reporter"
+
+interface IInferredTypeArgs {
+  schemaComposer: SchemaComposer<any>
+  typeComposer?: ObjectTypeComposer
+  typeConflictReporter: TypeConflictReporter
+  typeMapping: Record<string, string>
+  inferenceMetadata: Partial<{
+    step: string
+    typeMap: {
+      [key: string]: ITypeMetadata
+    }
+  }>
+  parentSpan: Span
+}
+
+const putFileFirst = (typeNames: Array<string>): Array<string> => {
+  const index = typeNames.indexOf(`File`)
+  if (index !== -1) {
+    return [`File`, ...typeNames.slice(0, index), ...typeNames.slice(index + 1)]
+  } else {
+    return typeNames
+  }
+}
+
+export const addInferredType = ({
+  schemaComposer,
+  typeComposer,
+  typeConflictReporter,
+  typeMapping,
+  inferenceMetadata = {},
+  parentSpan,
+}: IInferredTypeArgs): ObjectTypeComposer => {
+  const typeName = typeComposer.getTypeName()
+  // TODO: Move this to where the type is created once we can get
+  // node type owner information directly from store
+  if (
+    typeComposer.getExtension(`createdFrom`) === `inference` &&
+    hasNodes(inferenceMetadata.typeMap[typeName])
+  ) {
+    const nodes = getNodesByType(typeName)
+    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+  }
+
+  const exampleValue = getExampleObject({
+    ...inferenceMetadata.typeMap[typeName],
+    typeName,
+    typeConflictReporter,
+  })
+
+  addInferredFields({
+    schemaComposer,
+    typeComposer,
+    exampleValue,
+    typeMapping,
+    parentSpan,
+  })
+  return typeComposer
+}
+
+export const addInferredTypes = ({
   schemaComposer,
   typeConflictReporter,
   typeMapping,
   inferenceMetadata,
   parentSpan,
-}) => {
+}: IInferredTypeArgs): Array<ObjectTypeComposer> => {
   // XXX(freiksenet): Won't be needed after plugins set typedefs
   // Infer File first so all the links to it would work
   const { typeMap } = inferenceMetadata
@@ -74,53 +137,4 @@ const addInferredTypes = ({
       inferenceMetadata,
     })
   )
-}
-
-const addInferredType = ({
-  schemaComposer,
-  typeComposer,
-  typeConflictReporter,
-  typeMapping,
-  inferenceMetadata = {},
-  parentSpan,
-}) => {
-  const typeName = typeComposer.getTypeName()
-  // TODO: Move this to where the type is created once we can get
-  // node type owner information directly from store
-  if (
-    typeComposer.getExtension(`createdFrom`) === `inference` &&
-    hasNodes(inferenceMetadata.typeMap[typeName])
-  ) {
-    const nodes = getNodesByType(typeName)
-    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
-  }
-
-  const exampleValue = getExampleObject({
-    ...inferenceMetadata.typeMap[typeName],
-    typeName,
-    typeConflictReporter,
-  })
-
-  addInferredFields({
-    schemaComposer,
-    typeComposer,
-    exampleValue,
-    typeMapping,
-    parentSpan,
-  })
-  return typeComposer
-}
-
-const putFileFirst = typeNames => {
-  const index = typeNames.indexOf(`File`)
-  if (index !== -1) {
-    return [`File`, ...typeNames.slice(0, index), ...typeNames.slice(index + 1)]
-  } else {
-    return typeNames
-  }
-}
-
-module.exports = {
-  addInferredType,
-  addInferredTypes,
 }
