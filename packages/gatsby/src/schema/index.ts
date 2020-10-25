@@ -13,7 +13,7 @@ import { IGatsbyPlugin } from "../redux/types"
 import { GraphQLFieldExtensionDefinition } from "./extensions"
 
 interface IBuildSchemaSpan {
-  parentSpan: Span
+  parentSpan?: Span
   fullMetadataBuild?: boolean
 }
 
