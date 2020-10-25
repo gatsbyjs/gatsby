@@ -1,5 +1,4 @@
 /* @flow */
-// Test commit
 
 import { reporter as report } from "gatsby-cli/lib/reporter/reporter"
 import { ObjectTypeComposer, SchemaComposer } from "graphql-compose"
