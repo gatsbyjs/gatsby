@@ -16,30 +16,43 @@ module.exports = (
   diffLanguage = null
 ) => {
   // (Try to) load languages on demand.
-  if (!Prism.languages[language]) {
-    try {
-      loadPrismLanguage(language)
-    } catch (e) {
-      // Language wasn't loaded so let's bail.
-      let message = null
-      switch (language) {
-        case `none`:
-          return code // Don't escape if set to none.
-        case `text`:
-          message = noInlineHighlight
-            ? `code block language not specified in markdown.`
-            : `code block or inline code language not specified in markdown.`
-          break
-        default:
-          message = `unable to find prism language '${language}' for highlighting.`
-      }
+  try {
+    loadPrismLanguage(language)
+  } catch (e) {
+    // Language wasn't loaded so let's bail.
+    let message = null
+    switch (language) {
+      case `none`:
+        return code // Don't escape if set to none.
+      case `text`:
+        message = noInlineHighlight
+          ? `code block language not specified in markdown.`
+          : `code block or inline code language not specified in markdown.`
+        break
+      default:
+        message = `unable to find prism language '${language}' for highlighting.`
+    }
 
-      const lang = language.toLowerCase()
+    const lang = language.toLowerCase()
+    if (!unsupportedLanguages.has(lang)) {
+      console.warn(message, `applying generic code block`)
+      unsupportedLanguages.add(lang)
+    }
+    return escapeHTML(code, additionalEscapeCharacters)
+  }
+
+  if (diffLanguage) {
+    try {
+      loadPrismLanguage(diffLanguage)
+    } catch (e) {
+      let message = `unable to find prism language '${diffLanguage}' for highlighting.`
+
+      const lang = diffLanguage.toLowerCase()
       if (!unsupportedLanguages.has(lang)) {
         console.warn(message, `applying generic code block`)
         unsupportedLanguages.add(lang)
       }
-      return escapeHTML(code, additionalEscapeCharacters)
+      diffLanguage = null
     }
   }
 
