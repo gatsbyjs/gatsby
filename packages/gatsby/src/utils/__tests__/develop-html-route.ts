@@ -1,4 +1,4 @@
-import { parseError } from "../develop-html-route"
+import { parseError } from "../render-dev-html-child"
 import error from "./fixtures/error-object"
 
 describe(`error parsing`, () => {
