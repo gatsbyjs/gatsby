@@ -216,7 +216,7 @@ exports.createResolvers = async (
       type: `GatsbyVideo`,
       args: {
         ...DEFAULT_ARGS,
-        crf: { type: GraphQLInt, defaultValue: 31 },
+        crf: { type: GraphQLInt, defaultValue: 28 },
         preset: { type: GraphQLString, defaultValue: `medium` },
         maxRate: { type: GraphQLString },
         bufSize: { type: GraphQLString },
@@ -229,7 +229,7 @@ exports.createResolvers = async (
       type: `GatsbyVideo`,
       args: {
         ...DEFAULT_ARGS,
-        crf: { type: GraphQLInt, defaultValue: 36 },
+        crf: { type: GraphQLInt, defaultValue: 31 },
         preset: { type: GraphQLString, defaultValue: `medium` },
         maxRate: { type: GraphQLInt },
         bufSize: { type: GraphQLInt },
