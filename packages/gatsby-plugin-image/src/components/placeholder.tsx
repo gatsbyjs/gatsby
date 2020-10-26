@@ -23,7 +23,7 @@ export const Placeholder: FunctionComponent<PlaceholderProps> = function Placeho
       />
     )
   } else {
-    return <div {...props} style={props.style}></div>
+    return <div {...props}></div>
   }
 }
 

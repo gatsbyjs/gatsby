@@ -144,21 +144,20 @@ export function getPlaceholderProps(
   height?: number,
   backgroundColor?: string
 ): PlaceholderImageAttrs {
-  const wrapperStyle: CSSProperties = {
-    position: `relative`,
-  }
-
-  if (layout === `fixed`) {
-    wrapperStyle.width = width
-    wrapperStyle.height = height
-  }
-
-  if (layout === `constrained`) {
-    wrapperStyle.display = `inline-block`
-  }
+  const wrapperStyle: CSSProperties = {}
 
   if (backgroundColor) {
+    if (layout === `fixed`) {
+      wrapperStyle.width = width
+      wrapperStyle.height = height
+    }
+
+    if (layout === `constrained`) {
+      wrapperStyle.display = `inline-block`
+    }
+
     wrapperStyle.backgroundColor = backgroundColor
+    wrapperStyle.position = `relative`
   }
 
   const result: PlaceholderImageAttrs = {
