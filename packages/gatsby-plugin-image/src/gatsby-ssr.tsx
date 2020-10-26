@@ -70,6 +70,19 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
 
 
       const target = e.target;
+
+      let imageWrapper = null;
+      let parentElement = target;
+      while (imageWrapper === null && parentElement) {
+        if (typeof parentElement.parentNode.dataset["gatsbyImageWrapper"] !== "undefined") {
+          imageWrapper = parentElement.parentNode;
+        }
+        parentElement = parentElement.parentNode;
+      }
+
+      const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
+
+
       const img = new Image();
       img.src = target.currentSrc;
       // We decode the img through javascript so we're sure the blur-up effect works
@@ -78,7 +91,10 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
           // do nothing
         })
         .then(() => {
-          target.style.opacity = 1
+          target.style.opacity = 1;
+          if (placeholder) {
+            placeholder.style.opacity = 0;
+          }
         })
     }, true)
   }

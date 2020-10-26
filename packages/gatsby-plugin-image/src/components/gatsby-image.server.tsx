@@ -78,7 +78,9 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
       className={`${wClass}${className ? ` ${className}` : ``}`}
     >
       <LayoutWrapper layout={layout} width={width} height={height}>
-        {placeholder && <Placeholder {...getPlaceholderProps(placeholder)} />}
+        {placeholder && (
+          <Placeholder {...getPlaceholderProps(placeholder, false)} />
+        )}
         <MainImage
           data-gatsby-image-ssr=""
           sizes={sizes}

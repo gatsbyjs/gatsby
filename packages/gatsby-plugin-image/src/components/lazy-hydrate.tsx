@@ -50,7 +50,7 @@ export function lazyHydrate(
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
       {!hasLoaded && placeholder && (
-        <Placeholder {...getPlaceholderProps(placeholder)} />
+        <Placeholder {...getPlaceholderProps(placeholder, isLoaded)} />
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}

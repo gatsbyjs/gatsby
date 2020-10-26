@@ -46,7 +46,9 @@ export function getWrapperProps(
   height: number,
   layout: Layout,
   backgroundColor?: string
-): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
+): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
+  "data-gatsby-image-wrapper": string
+} {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
   }
@@ -66,6 +68,7 @@ export function getWrapperProps(
 
   return {
     className: `gatsby-image-wrapper`,
+    "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
 }
@@ -134,14 +137,21 @@ export function getMainProps(
 }
 
 export type PlaceholderImageAttrs = ImgHTMLAttributes<HTMLImageElement> &
-  Pick<PlaceholderProps, "sources" | "fallback">
+  Pick<PlaceholderProps, "sources" | "fallback"> & {
+    "data-placeholder-image"?: string
+  }
 
 export function getPlaceholderProps(
-  placeholder: PlaceholderImageAttrs
+  placeholder: PlaceholderImageAttrs,
+  isLoaded: boolean
 ): PlaceholderImageAttrs {
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,
+    "data-placeholder-image": ``,
+    style: {
+      opacity: isLoaded ? 0 : 1,
+    },
   }
 
   // fallback when it's not configured in gatsby-config.
