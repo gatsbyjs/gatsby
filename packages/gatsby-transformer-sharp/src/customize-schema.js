@@ -36,6 +36,7 @@ const {
   ImagePlaceholderType,
 } = require(`./types`)
 const { stripIndent } = require(`common-tags`)
+const { prefixId, CODES } = require(`./error-utils`)
 
 function toArray(buf) {
   const arr = new Array(buf.length)
@@ -625,8 +626,13 @@ const createFields = ({
             // this is no longer in progress
             inProgressCopy.delete(publicPath)
             if (err) {
-              console.error(
-                `error copying file from ${details.absolutePath} to ${publicPath}`,
+              reporter.panic(
+                {
+                  id: prefixId(CODES.MissingResource),
+                  context: {
+                    sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+                  },
+                },
                 err
               )
             }
