@@ -38,7 +38,7 @@ const DEFAULT_ARGS = {
   overlayPadding: { type: GraphQLInt, defaultValue: 10 },
   publicPath: {
     type: GraphQLString,
-    defaultValue: `assets/videos`,
+    defaultValue: `static/videos`,
   },
 }
 
