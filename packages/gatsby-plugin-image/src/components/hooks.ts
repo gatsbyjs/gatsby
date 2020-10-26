@@ -44,8 +44,7 @@ export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: Layout,
-  backgroundColor?: string
+  layout: Layout
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
   "data-gatsby-image-wrapper": string
 } {
@@ -60,10 +59,6 @@ export function getWrapperProps(
 
   if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
-  }
-
-  if (backgroundColor) {
-    wrapperStyle.backgroundColor = backgroundColor
   }
 
   return {
@@ -142,15 +137,37 @@ export type PlaceholderImageAttrs = ImgHTMLAttributes<HTMLImageElement> &
   }
 
 export function getPlaceholderProps(
-  placeholder: PlaceholderImageAttrs,
-  isLoaded: boolean
+  placeholder: PlaceholderImageAttrs | undefined,
+  isLoaded: boolean,
+  layout: Layout,
+  width?: number,
+  height?: number,
+  backgroundColor?: string
 ): PlaceholderImageAttrs {
+  const wrapperStyle: CSSProperties = {
+    position: `relative`,
+  }
+
+  if (layout === `fixed`) {
+    wrapperStyle.width = width
+    wrapperStyle.height = height
+  }
+
+  if (layout === `constrained`) {
+    wrapperStyle.display = `inline-block`
+  }
+
+  if (backgroundColor) {
+    wrapperStyle.backgroundColor = backgroundColor
+  }
+
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,
     "data-placeholder-image": ``,
     style: {
       opacity: isLoaded ? 0 : 1,
+      ...wrapperStyle,
     },
   }
 

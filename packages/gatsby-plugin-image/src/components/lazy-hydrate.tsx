@@ -32,7 +32,7 @@ export function lazyHydrate(
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>
 ): (() => void) | null {
-  const { width, height, layout, images, placeholder } = image
+  const { width, height, layout, images, placeholder, backgroundColor } = image
 
   if (!root.current) {
     return null
@@ -49,8 +49,17 @@ export function lazyHydrate(
 
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
-      {!hasLoaded && placeholder && (
-        <Placeholder {...getPlaceholderProps(placeholder, isLoaded)} />
+      {!hasLoaded && (
+        <Placeholder
+          {...getPlaceholderProps(
+            placeholder,
+            isLoaded,
+            layout,
+            width,
+            height,
+            backgroundColor
+          )}
+        />
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}

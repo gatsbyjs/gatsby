@@ -81,8 +81,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
     width,
     height,
-    layout,
-    backgroundColor
+    layout
   )
 
   useEffect((): (() => void) | undefined => {

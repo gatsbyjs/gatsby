@@ -79,7 +79,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
         }
         parentElement = parentElement.parentNode;
       }
-
       const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
 
 
