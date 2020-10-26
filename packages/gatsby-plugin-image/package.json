@@ -49,7 +49,7 @@
     "@babel/cli": "^7.8.7",
     "@babel/core": "^7.8.7",
     "@types/babel__core": "^7.1.10",
-    "@types/babel__traverse": "^7.0.9",
+    "@types/babel__traverse": "^7.0.15",
     "@types/fs-extra": "^8.1.0",
     "@types/node": "^14.10.2",
     "@types/prop-types": "^15.7.3",
