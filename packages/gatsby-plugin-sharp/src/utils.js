@@ -172,7 +172,6 @@ export function fixedImageSizes({
     height = calculated.height
     aspectRatio = calculated.aspectRatio
   }
-
   if (!width && !height) {
     width = 400
   }
@@ -182,8 +181,26 @@ export function fixedImageSizes({
     width = Math.round(height * aspectRatio)
   }
 
-  let originalWidth = width
-  if (imgDimensions.width < width || imgDimensions.height < height) {
+  const originalWidth = width // will use this for presentationWidth, don't want to lose it
+
+  const isTopSizeOverriden =
+    imgDimensions.width < width || imgDimensions.height < height
+
+  // If the image is smaller than what's requested, warn the user that it's being processed as such
+  // print out this message with the necessary information before we overwrite it for sizing
+  if (isTopSizeOverriden) {
+    const fixedDimension = imgDimensions.width < width ? `width` : `height`
+    reporter.warn(`
+                       The requested ${fixedDimension} "${
+      fixedDimension === `width` ? width : height
+    }px" for a resolutions field for
+                       the file ${file.absolutePath}
+                       was larger than the actual image ${fixedDimension} of ${
+      imgDimensions[fixedDimension]
+    }px!
+                       If possible, replace the current image with a larger one.
+                       `)
+
     width = imgDimensions.width
     height = imgDimensions.height
   }
@@ -193,27 +210,12 @@ export function fixedImageSizes({
     .map(density => Math.round(density * width))
     .filter(size => size <= imgDimensions.width)
 
-  // If there's no fixed images after filtering (e.g. image is smaller than what's
-  // requested, add back the original so there's at least something)
-  if (sizes.length === 0) {
-    sizes.push(width)
-    const fixedDimension = width === undefined ? `height` : `width`
-    reporter.warn(`
-                     The requested ${fixedDimension} "${
-      fixedDimension === `width` ? width : height
-    }px" for a resolutions field for
-                     the file ${file.absolutePath}
-                     was larger than the actual image ${fixedDimension} of ${
-      imgDimensions[fixedDimension]
-    }px!
-                     If possible, replace the current image with a larger one.
-                     `)
-  }
   return {
     sizes,
     aspectRatio,
     presentationWidth: originalWidth,
     presentationHeight: Math.round(originalWidth / aspectRatio),
+    isTopSizeOverriden,
   }
 }
 
@@ -269,7 +271,9 @@ export function fluidImageSizes({
   }
 
   let originalMaxWidth = maxWidth
-  if (imgDimensions.width < maxWidth || imgDimensions.height < maxHeight) {
+  let isTopSizeOverriden =
+    imgDimensions.width < maxWidth || imgDimensions.height < maxHeight
+  if (isTopSizeOverriden) {
     maxWidth = imgDimensions.width
     maxHeight = imgDimensions.height
   }
@@ -302,6 +306,7 @@ export function fluidImageSizes({
     aspectRatio,
     presentationWidth: originalMaxWidth,
     presentationHeight: Math.round(originalMaxWidth / aspectRatio),
+    isTopSizeOverriden,
   }
 }
 

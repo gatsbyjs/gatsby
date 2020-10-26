@@ -7,6 +7,7 @@ import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import type { SharpInstance } from "sharp"
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
+import { meta } from "joi"
 export interface ISharpGatsbyImageArgs {
   layout?: "fixed" | "fluid" | "constrained"
   placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
@@ -70,6 +71,7 @@ export interface IImageDataProps {
 export interface IImageDataArgs {
   file: FileNode
   args: ISharpGatsbyImageArgs
+  pathPrefix: string
   cache: GatsbyCache
   reporter: Reporter
 }
@@ -77,6 +79,7 @@ export interface IImageDataArgs {
 export async function generateImageData({
   file,
   args,
+  pathPrefix,
   reporter,
   cache,
 }: IImageDataArgs): Promise<ISharpGatsbyImageData | undefined> {
@@ -93,6 +96,7 @@ export async function generateImageData({
     presentationWidth: number
     presentationHeight: number
     aspectRatio: number
+    isTopSizeOverriden: boolean
   } = calculateImageSizes({
     file,
     layout,
@@ -109,6 +113,8 @@ export async function generateImageData({
       height: Math.round(width / imageSizes.aspectRatio),
       toFormat: args.toFormat || metadata.format,
     })
+
+    if (pathPrefix) transform.pathPrefix = pathPrefix
     return transform
   })
 
@@ -120,12 +126,21 @@ export async function generateImageData({
 
   const srcSet = getSrcSet(images)
 
-  const widthOfMaxSize = Math.min(imageSizes.presentationWidth, metadata.width)
+  const widthOfMaxSize = imageSizes.isTopSizeOverriden
+    ? metadata.width
+    : imageSizes.presentationWidth
+
   const sizes = args.sizes || getSizes(widthOfMaxSize, layout)
 
   const primaryIndex = imageSizes.sizes.findIndex(
     size => size === widthOfMaxSize
   )
+
+  if (primaryIndex === -1) {
+    reporter.panic(
+      `No image of the specified size found. Images may not have been processed correctly.`
+    )
+  }
 
   const primaryImage = images[primaryIndex]
 

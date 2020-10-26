@@ -46,6 +46,7 @@ export async function createImageNode({
 
 export async function writeImages({
   images,
+  pathPrefix,
   cacheDir,
   reporter,
   cache,
@@ -54,6 +55,7 @@ export async function writeImages({
   createNode,
 }: {
   images: Map<string, ImageProps>
+  pathPrefix: string
   cacheDir: string
   reporter: Reporter
   cache: GatsbyCache
@@ -96,7 +98,7 @@ export async function writeImages({
       }
       await cache.set(cacheKey, imageRefs)
 
-      await writeImage(file, args, reporter, cache, cacheFilename)
+      await writeImage(file, args, pathPrefix, reporter, cache, cacheFilename)
 
       if (process.env.NODE_ENV === `development`) {
         // Watch the source image for changes
@@ -104,6 +106,7 @@ export async function writeImages({
           createNode,
           createNodeId,
           fullPath,
+          pathPrefix,
           cache,
           reporter,
         })
@@ -117,12 +120,13 @@ export async function writeImages({
 export async function writeImage(
   file: Node,
   args: SharpProps,
+  pathPrefix: string,
   reporter: Reporter,
   cache: GatsbyCache,
   filename: string
 ): Promise<void> {
   try {
-    const options = { file, args, reporter, cache }
+    const options = { file, args, pathPrefix, reporter, cache }
 
     if (!PluginSharp.generateImageData) {
       reporter.warn(`Please upgrade gatsby-plugin-sharp`)
