@@ -26,7 +26,7 @@ There are some general syntax requirements when using collection routes:
 - Types can be both lowercase and uppercase (e.g. `MarkdownRemark` or `contentfulMyContentType`)
 - The initial type name must be followed by a dot
 
-> Note: To keep things consistent we only used capitalized type names in our examples
+> Note: To keep things consistent only capitalized type names are used in the examples
 
 Moreover, you cannot only name files but also folders with this syntax and create nested routes, for example:
 
