@@ -18,6 +18,15 @@ describe(`extract query`, () => {
       ).toBe(`{allThing{nodes{id}}}`)
     })
 
+    it(`handles lowercased model name`, () => {
+      expect(
+        generateQueryFromString(
+          `contentfulType`,
+          compatiblePath(`/foo/{contentfulType.id}.js`)
+        )
+      ).toBe(`{allContentfulType{nodes{id}}}`)
+    })
+
     it(`works with different file extsnions`, () => {
       expect(
         generateQueryFromString(

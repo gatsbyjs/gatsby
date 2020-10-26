@@ -20,7 +20,11 @@ export function generateQueryFromString(
     return fragmentInterpolator(queryOrModel, fields)
   }
 
-  return `{all${queryOrModel}{nodes{${fields}}}}`
+  // In case queryOrModel is not capitalized
+  const connectionQuery = _.camelCase(`all ${queryOrModel}`)
+  console.log(fields)
+
+  return `{${connectionQuery}{nodes{${fields}}}}`
 }
 
 // Takes a query result of something like `{ fields: { value: 'foo' }}` with a filepath of `/fields__value` and
