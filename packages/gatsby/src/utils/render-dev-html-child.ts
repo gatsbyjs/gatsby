@@ -127,7 +127,11 @@ export const parseError = function (err, directory): IParsedError {
   return data
 }
 
-export function renderHTML({ path, htmlComponentRendererPath, directory }) {
+export function renderHTML({
+  path,
+  htmlComponentRendererPath,
+  directory,
+}): Promise<string | object> {
   return new Promise((resolve, reject) => {
     console.log(`inside worker`, { path, htmlComponentRendererPath, directory })
     const htmlComponentRenderer = require(htmlComponentRendererPath)
