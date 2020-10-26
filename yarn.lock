@@ -7506,10 +7506,10 @@ contentful-sdk-core@^6.4.0, contentful-sdk-core@^6.4.5:
     lodash "^4.17.10"
     qs "^6.5.2"
 
-contentful@^7.14.7:
-  version "7.14.7"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-7.14.7.tgz#3f9724ec2152f7b7bd24d70a0ad78fac57f4e159"
-  integrity sha512-1NqFoATOCBf9J8cyrZL3fAKkycmGGYiu8/3x4qxZ5KywxyWBT3qdiUmT2bPGZIkmPSHJhmv0qRXFySQjAbIelA==
+contentful@^7.14.8:
+  version "7.14.8"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-7.14.8.tgz#cdda293323501c4d576b24dbcd247e2eda1148ef"
+  integrity sha512-q0Y/1rNOxF13W3KLe+WxaT3+oDdxCbKiuHF+l0TlQXcVcFeLUhXXJn72noefsH8aWXMF6/rkDQ+Fl6szIMF5qw==
   dependencies:
     axios "^0.20.0"
     contentful-resolve-response "^1.2.2"
@@ -13610,10 +13610,10 @@ is-observable@^1.1.0:
   dependencies:
     symbol-observable "^1.1.0"
 
-is-online@^8.5.0:
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/is-online/-/is-online-8.5.0.tgz#1f986b00d2bdabce0bda3de6993f06ac8d914b9c"
-  integrity sha512-CcBJAVvhLpluDD0KCXlOXSXGyOWnzCtJf/WuQT4xE1PPMIQkGKoqSkV1xWmgvX1ZNw62B7BZ0AfK4TiK1NTddQ==
+is-online@^8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/is-online/-/is-online-8.5.1.tgz#bcc6970c6a3fad552a41738c0f0d0737b0ce6e63"
+  integrity sha512-RKyTQx/rJqw2QOXHwy7TmXdlkpe0Hhj7GBsr6TQJaj4ebNOfameZCMspU5vYbwBBzJ2brWArdSvNVox6T6oCTQ==
   dependencies:
     got "^9.6.0"
     p-any "^2.0.0"
