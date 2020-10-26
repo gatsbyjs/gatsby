@@ -1,5 +1,6 @@
 import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
+import { savePageDataAndStaticQueries } from "./socketIo"
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
@@ -10,11 +11,18 @@ class DevLoader extends BaseLoader {
 
   loadPage(pagePath) {
     const realPath = findPath(pagePath)
-    return super.loadPage(realPath).then(result =>
-      require(`./socketIo`)
-        .getPageData(realPath)
-        .then(() => result)
-    )
+    return super.loadPage(realPath).then(result => {
+      savePageDataAndStaticQueries(
+        realPath,
+        {
+          ...result.page,
+          result: result.json,
+        },
+        result.staticQueryResults
+      )
+
+      return result
+    })
   }
 
   loadPageDataJson(rawPath) {

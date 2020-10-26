@@ -88,6 +88,14 @@ export default function socketIo() {
   }
 }
 
+function savePageDataAndStaticQueries(pathname, pageData, staticQueriesData) {
+  pageQueryData[pathname] = pageData
+  staticQueryData = {
+    ...staticQueryData,
+    ...staticQueriesData,
+  }
+}
+
 function getPageData(pathname) {
   pathname = normalizePagePath(pathname)
   if (inFlightGetPageDataPromiseCache[pathname]) {
@@ -129,4 +137,9 @@ function unregisterPath(path) {
   socket.emit(`unregisterPath`, path)
 }
 
-export { getPageData, registerPath, unregisterPath }
+export {
+  getPageData,
+  registerPath,
+  unregisterPath,
+  savePageDataAndStaticQueries,
+}
