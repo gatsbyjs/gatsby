@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "gatsby-source-filesystem": "^2.3.35",
