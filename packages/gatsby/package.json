@@ -157,6 +157,7 @@
     "webpack-stats-plugin": "^0.3.2",
     "webpack-virtual-modules": "^0.2.2",
     "xstate": "^4.11.0",
+    "xxhashjs": "0.2.2",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
