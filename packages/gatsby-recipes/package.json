@@ -127,7 +127,10 @@
   "license": "MIT",
   "main": "dist/index.js",
   "peerDependencies": {
-    "react": "^16.12.0"
+    "gatsby": "^2.6.0",
+    "ink": ">=2.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "repository": {
     "type": "git",
