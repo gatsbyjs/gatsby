@@ -17,11 +17,7 @@ type IWorkerPool = any // TODO
 
 let oldHash = ``
 let newHash = ``
-const runWebpack = (
-  compilerConfig,
-  stage: Stage,
-  directory
-): Bluebird<webpack.Stats> =>
+const runWebpack = (compilerConfig, stage: Stage): Bluebird<webpack.Stats> =>
   new Bluebird((resolve, reject) => {
     if (stage === `build-html`) {
       webpack(compilerConfig).run((err, stats) => {
@@ -40,7 +36,6 @@ const runWebpack = (
           if (err) {
             return reject(err)
           } else {
-            const pathToRenderPage = `${directory}/public/render-page.js`
             newHash = stats.hash || ``
 
             // Make sure we use the latest version during development
@@ -62,7 +57,7 @@ const doBuildRenderer = async (
   webpackConfig: webpack.Configuration,
   stage: Stage
 ): Promise<string> => {
-  const stats = await runWebpack(webpackConfig, stage, directory)
+  const stats = await runWebpack(webpackConfig, stage)
   if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }

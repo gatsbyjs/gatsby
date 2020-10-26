@@ -10,7 +10,7 @@ const startWorker = (): any =>
 
 let worker = startWorker()
 
-export const restartWorker = (): null => {
+export const restartWorker = (): void => {
   const oldWorker = worker
   const newWorker = startWorker()
   worker = newWorker
