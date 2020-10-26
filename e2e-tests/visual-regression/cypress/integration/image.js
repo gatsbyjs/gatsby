@@ -18,7 +18,7 @@ describe(`GatsbyImage`, () => {
           cy.get("[data-main-image]").should("have.css", "opacity", "1")
           // Wait for blur-up
           cy.wait(1000)
-          cy.get("#test-image").matchImageSnapshot()
+          cy.get("#test-wrapper").matchImageSnapshot()
         })
       })
     })
