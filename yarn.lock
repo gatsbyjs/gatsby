@@ -11135,6 +11135,11 @@ gemoji@^5.0.0:
   resolved "https://registry.yarnpkg.com/gemoji/-/gemoji-5.0.1.tgz#4cea541c735b74ec82edd56c2d46538cd54f355d"
   integrity sha512-7yV9K8JdiK+h2M4YDnf/8bunJKYvs0t0p8eKh7zexVSuXddRG9Ue18ZViKOZljISk57DE64X19gvJfHZmhggGg==
 
+gemoji@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/gemoji/-/gemoji-6.0.0.tgz#c8a4f2923d5f651ee19d9d98eaa2a5f7d05cdf56"
+  integrity sha512-6or0cWT0wSR9Jow5cODTUjPzIf4KCO1gkamFMJ/AmE+VZOg9awW993P2sFL5jYsoeIVhZdfClqdg6r7VAHYGEw==
+
 generic-names@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/generic-names/-/generic-names-1.0.3.tgz#2d786a121aee508876796939e8e3bff836c20917"
@@ -21694,13 +21699,13 @@ retext-diacritics@^3.0.0:
     quotation "^1.0.1"
     unist-util-position "^3.0.0"
 
-retext-emoji@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/retext-emoji/-/retext-emoji-7.0.1.tgz#ff36a558d28365a595e7337fe8dd46712c95c09c"
-  integrity sha512-oZxqCYO7ljD1CVMtX1b4Ph65VnskkR8vIPqb58Me0a6/ST5ZkiajIY7CpM1YUNlJ+KToYcZiZbMnyam0w8rGIQ==
+retext-emoji@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/retext-emoji/-/retext-emoji-7.0.2.tgz#031d085597ff1408457bc037d9dcf64c0d39b2a0"
+  integrity sha512-I2n7sfsBI6BP6ATU1kiroXHSq8kDri7zyS3w6hD9/dYxi4YMrajP/4FMcAz13X931ta5gDG6vKaAFDF1GMR6BA==
   dependencies:
     emoticon "^3.1.0"
-    gemoji "^5.0.0"
+    gemoji "^6.0.0"
     nlcst-affix-emoticon-modifier "^1.0.0"
     nlcst-emoji-modifier "^4.0.0"
     nlcst-emoticon-modifier "^1.0.0"
