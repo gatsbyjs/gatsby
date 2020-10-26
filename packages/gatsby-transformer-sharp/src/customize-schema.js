@@ -538,7 +538,11 @@ const imageNodeType = ({
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
       }
-
+      reporter.warn(
+        stripIndent`
+        You are using the alpha version of the \`gatsbyImage\` sharp API, which is unstable and will change without notice. 
+        Please do not use it in production.`
+      )
       const imageData = await generateImageData({
         file,
         args,
