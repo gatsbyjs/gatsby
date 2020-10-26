@@ -23,7 +23,8 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "babel-preset-gatsby-package": "^0.5.3",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "del-cli": "^3.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preload-fonts#readme",
   "keywords": [
@@ -46,6 +47,6 @@
     "build": "babel src --out-dir . --ignore \"**/__tests__\" --ignore **/__mocks__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore **/__mocks__",
-    "clean": "rm -rf index.js prepare"
+    "clean": "del-cli index.js prepare"
   }
 }
