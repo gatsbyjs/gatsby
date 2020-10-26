@@ -1,6 +1,6 @@
 import minimatch from "minimatch"
 
-export const ReporterPrefix = `[gatsby-plugin-sitemap]:`
+export const reporterPrefix = `[gatsby-plugin-sitemap]:`
 
 /**
  *
@@ -158,7 +158,6 @@ export function pageFilter({ allPages, filterPages, excludes }) {
   }
 
   const filteredPages = allPages.filter(page => {
-    // eslint-disable-next-line consistent-return
     const defaultFilterMatches = defaultExcludes.some((exclude, i, arr) => {
       try {
         const doesMatch = defaultFilterPages(page, exclude, {
@@ -172,13 +171,13 @@ export function pageFilter({ allPages, filterPages, excludes }) {
 
         return doesMatch
       } catch {
-        throw new Error(`${ReporterPrefix} Error in default page filter`)
+        throw new Error(`${reporterPrefix} Error in default page filter`)
       }
     })
 
     if (defaultFilterMatches) {
       messages.push(
-        `${ReporterPrefix} Default filter excluded page ${resolvePagePath(
+        `${reporterPrefix} Default filter excluded page ${resolvePagePath(
           page
         )}`
       )
@@ -189,7 +188,6 @@ export function pageFilter({ allPages, filterPages, excludes }) {
       return !defaultFilterMatches
     }
 
-    // eslint-disable-next-line consistent-return
     const customFilterMatches = excludes.some(exclude => {
       try {
         return filterPages(page, exclude, {
@@ -199,7 +197,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
         })
       } catch {
         throw new Error(
-          `${ReporterPrefix} Error in custom page filter.
+          `${reporterPrefix} Error in custom page filter.
             If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
             https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
             `
@@ -209,7 +207,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
 
     if (customFilterMatches) {
       messages.push(
-        `${ReporterPrefix} Custom filtering excluded page ${resolvePagePath(
+        `${reporterPrefix} Custom filtering excluded page ${resolvePagePath(
           page
         )}`
       )

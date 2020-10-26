@@ -1,7 +1,7 @@
 import path from "path"
 import { simpleSitemapAndIndex } from "sitemap"
 import { pluginOptionsSchema, validateOptions } from "./options-validation"
-import { prefixPath, pageFilter, ReporterPrefix } from "./internals"
+import { prefixPath, pageFilter, reporterPrefix } from "./internals"
 
 let usedSchemaValidationApi = false
 
@@ -14,7 +14,7 @@ if (!usedSchemaValidationApi) {
   exports.onPreInit = async ({ reporter }, pluginOptions) => {
     try {
       await validateOptions(pluginOptions)
-      reporter.verbose(`${ReporterPrefix} Plugin options passed validation.`)
+      reporter.verbose(`${reporterPrefix} Plugin options passed validation.`)
     } catch (err) {
       reporter.panic(err)
     }
@@ -45,30 +45,32 @@ exports.onPostBuild = async (
   const { data: queryRecords } = await graphql(query)
 
   reporter.verbose(
-    `${ReporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
+    `${reporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
   )
 
   // resolvePages and resolveSuteUrl are allowed to be sync or async. The IIFE handles each possibility
-  const allPages = await (async () => resolvePages(queryRecords))().catch(err =>
-    reporter.panic(`${ReporterPrefix} Error resolving Pages`, err)
+  const allPages = await Promise.resolve(
+    resolvePages(queryRecords).catch(err =>
+      reporter.panic(`${reporterPrefix} Error resolving Pages`, err)
+    )
   )
 
-  const siteUrl = await (async () =>
-    resolveSiteUrl(queryRecords))().catch(err =>
-    reporter.panic(`${ReporterPrefix} Error resolving Site URL`, err)
+  const siteUrl = await Promise.resolve(
+    resolveSiteUrl(queryRecords).catch(err =>
+      reporter.panic(`${reporterPrefix} Error resolving Site URL`, err)
+    )
   )
 
   if (!Array.isArray(allPages)) {
     reporter.panic(
-      `${ReporterPrefix} The \`resolvePages\` function did not return an array.`
+      `${reporterPrefix} The \`resolvePages\` function did not return an array.`
     )
   }
 
   reporter.verbose(
-    `${ReporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
+    `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
 
-  // eslint-disable-next-line consistent-return
   const { filteredPages, messages } = pageFilter(
     {
       allPages,
@@ -81,16 +83,20 @@ exports.onPostBuild = async (
   messages.forEach(message => reporter.verbose(message))
 
   reporter.verbose(
-    `${ReporterPrefix} ${filteredPages.length} pages remain after filtering`
+    `${reporterPrefix} ${filteredPages.length} pages remain after filtering`
   )
 
-  // eslint-disable-next-line consistent-return
-  const serializedPages = filteredPages.map(page => {
+  const serializedPages = []
+
+  filteredPages.forEach(page => {
     try {
       const { url, ...rest } = serialize(page, { resolvePagePath })
-      return { url: prefixPath({ url, siteUrl, pathPrefix }), ...rest }
+      serializedPages.push({
+        url: prefixPath({ url, siteUrl, pathPrefix }),
+        ...rest,
+      })
     } catch (err) {
-      reporter.panic(`${ReporterPrefix} Error serializing pages`, err)
+      reporter.panic(`${reporterPrefix} Error serializing pages`, err)
     }
   })
 
