@@ -1,5 +1,5 @@
 import ProgressBar from "progress"
-import sharp from "sharp"
+import sharp from "./safe-sharp"
 // TODO remove in V3
 export function createGatsbyProgressOrFallbackToExternalProgressBar(
   message,
