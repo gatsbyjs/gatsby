@@ -60,7 +60,7 @@ export function getWrapperProps(
     wrapperStyle.display = `inline-block`
   }
 
-  if (backgroundColor && typeof backgroundColor === `string`) {
+  if (backgroundColor) {
     wrapperStyle.backgroundColor = backgroundColor
   }
 

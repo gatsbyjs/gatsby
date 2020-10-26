@@ -52,6 +52,7 @@ export function _createCompatLayer(
     const rewiredProps: Partial<GatsbyImageProps> = {
       alt: ``,
       as: Tag,
+      image: undefined,
       ...props,
     }
 
@@ -101,9 +102,7 @@ export function _createCompatLayer(
         })
       }
       rewiredProps.image = image
-    }
-
-    if (fluid) {
+    } else if (fluid) {
       if (Array.isArray(fluid)) {
         warnForArtDirection()
         fluid = fluid[0] as Exclude<ICompatProps["fluid"], undefined>

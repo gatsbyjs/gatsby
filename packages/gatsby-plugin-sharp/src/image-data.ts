@@ -7,7 +7,6 @@ import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import type { SharpInstance } from "sharp"
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
-import { meta } from "joi"
 export interface ISharpGatsbyImageArgs {
   layout?: "fixed" | "fluid" | "constrained"
   placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
