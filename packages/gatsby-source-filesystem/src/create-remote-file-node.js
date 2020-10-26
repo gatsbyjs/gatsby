@@ -21,6 +21,8 @@ let bar
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
 
+let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
+
 /********************
  * Type Definitions *
  ********************/
@@ -211,56 +213,75 @@ async function processRemoteNode({
   // from a previous request.
   const cachedHeaders = await cache.get(cacheIdForHeaders(url))
 
-  const headers = { ...httpHeaders }
-  if (cachedHeaders && cachedHeaders.etag) {
-    headers[`If-None-Match`] = cachedHeaders.etag
-  }
-
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
-  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-  }
-
-  // Create the temp and permanent file names for the url.
   const digest = createContentDigest(url)
-  if (!name) {
-    name = getRemoteFileName(url)
-  }
+
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
 
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
-  // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
-
-  if (response.statusCode == 200) {
-    // Save the response headers for future requests.
-    await cache.set(cacheIdForHeaders(url), response.headers)
+  let fetched = false
+  if (process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER) {
+    fs.copySync(
+      process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
+      tmpFilename
+    )
+    fetched = true
   }
 
-  // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-  if (ext === ``) {
-    if (response.statusCode === 200) {
-      // if this is fresh response - try to guess extension and cache result for future
-      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-      const filetype = fileType(buffer)
-      if (filetype) {
-        ext = `.${filetype.ext}`
-        await cache.set(cacheIdForExtensions(url), ext)
+  if (!fetched) {
+    const headers = { ...httpHeaders }
+    if (cachedHeaders && cachedHeaders.etag) {
+      headers[`If-None-Match`] = cachedHeaders.etag
+    }
+
+    // Add htaccess authentication if passed in. This isn't particularly
+    // extensible. We should define a proper API that we validate.
+    const httpOpts = {}
+    if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
+      httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+    }
+
+    if (!name) {
+      name = getRemoteFileName(url)
+    }
+
+    // Fetch the file.
+    const response = await requestRemoteNode(
+      url,
+      headers,
+      tmpFilename,
+      httpOpts
+    )
+
+    if (response.statusCode == 200) {
+      fetched = true
+
+      // Save the response headers for future requests.
+      await cache.set(cacheIdForHeaders(url), response.headers)
+    }
+
+    // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
+    if (ext === ``) {
+      if (response.statusCode === 200) {
+        // if this is fresh response - try to guess extension and cache result for future
+        const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
+        const filetype = fileType(buffer)
+        if (filetype) {
+          ext = `.${filetype.ext}`
+          await cache.set(cacheIdForExtensions(url), ext)
+        }
+      } else if (response.statusCode === 304) {
+        // if file on server didn't change - grab cached extension
+        ext = await cache.get(cacheIdForExtensions(url))
       }
-    } else if (response.statusCode === 304) {
-      // if file on server didn't change - grab cached extension
-      ext = await cache.get(cacheIdForExtensions(url))
     }
   }
 
   const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
   // If the status code is 200, move the piped temp file to the real name.
-  if (response.statusCode === 200) {
+  if (fetched) {
     await fs.move(tmpFilename, filename, { overwrite: true })
     // Else if 304, remove the empty response.
   } else {
@@ -321,7 +342,7 @@ const pushTask = task =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({
+module.exports = function createRemoteFileNode({
   url,
   cache,
   createNode,
@@ -333,7 +354,21 @@ module.exports = ({
   ext = null,
   name = null,
   reporter,
-}) => {
+}) {
+  if (showFlagWarning) {
+    showFlagWarning = false
+    // Note: This will use a placeholder image as the default for every file that is downloaded through this API.
+    //       That may break certain cases, in particular when the file is not meant to be an image or when the image
+    //       is expected to be of a particular type that is other than the placeholder. This API is meant to bypass
+    //       the remote download for local testing only.
+    console.info(
+      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: Any file downloaded by \`createRemoteFileNode\` will use the same placeholder image and skip the remote fetch. Note: This is an experimental flag that can change/disappear at any point.`
+    )
+    console.info(
+      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: File to use: \`${process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER}\``
+    )
+  }
+
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
