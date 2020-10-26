@@ -13,6 +13,12 @@
 const { addMatchImageSnapshotPlugin } = require("cypress-image-snapshot/plugin")
 
 module.exports = (on, config) => {
-  console.log("CONFIG")
   addMatchImageSnapshotPlugin(on, config)
+  on("before:browser:launch", (browser = {}, launchOptions) => {
+    if (browser.family === "chromium" || browser.family === "chrome") {
+      // Make retina screens run at 1x density so they match the versions in CI
+      launchOptions.push("--force-device-scale-factor=1")
+    }
+    return launchOptions
+  })
 }
