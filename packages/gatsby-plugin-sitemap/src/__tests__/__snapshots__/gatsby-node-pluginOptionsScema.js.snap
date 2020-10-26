@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-sitemap Node API with Expermintal plugin option Validation should succeed when using \`pluginOptionsSchema\` API 1`] = `
+Object {
+  "createLinkInHead": true,
+  "entryLimit": 45000,
+  "excludes": Array [],
+  "filterPages": [Function],
+  "output": "/sitemap",
+  "query": "{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }",
+  "resolvePagePath": [Function],
+  "resolvePages": [Function],
+  "resolveSiteUrl": [Function],
+  "serialize": [Function],
+}
+`;

@@ -63,7 +63,7 @@ The options are as follows:
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
 - [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned.
 - [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
-- [`serialize`](#serialize) (function) Takes the output of the data query and lets you return an array of sitemap entries.
+- [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry.
 
 The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 

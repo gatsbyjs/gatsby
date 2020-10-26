@@ -7,20 +7,7 @@ Object {
   "excludes": Array [],
   "filterPages": [Function],
   "output": "/sitemap",
-  "query": "
-  {
-    site {
-      siteMetadata {
-        siteUrl
-      }
-    }
-
-    allSitePage {
-      nodes {
-        path
-      }
-    }
-  }",
+  "query": "{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }",
   "resolvePagePath": [Function],
   "resolvePages": [Function],
   "resolveSiteUrl": [Function],

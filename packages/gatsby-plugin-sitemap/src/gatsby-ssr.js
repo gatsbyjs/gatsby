@@ -7,7 +7,10 @@ import { validateOptionsSsr } from "./options-validation"
 const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  let { output, createLinkInHead } = validateOptionsSsr(pluginOptions)
+  //TODO: This handles if the `pluginOptionsSchema` API was used, can be removed once the API is on by default.
+  const { output, createLinkInHead } = pluginOptions?.output
+    ? pluginOptions
+    : validateOptionsSsr(pluginOptions)
 
   if (!createLinkInHead) {
     return
