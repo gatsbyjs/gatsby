@@ -23,8 +23,10 @@ Gatsby uses the content within the curly braces to generate GraphQL queries to r
 There are some general syntax requirements when using collection routes:
 
 - Filenames must start and end with curly braces (`{ }`)
-- Types must be capitalized (e.g. `MarkdownRemark` or `File`)
+- Types can be both lowercase and uppercase (e.g. `MarkdownRemark` or `contentfulMyContentType`)
 - The initial type name must be followed by a dot
+
+> Note: To keep things consistent we only used capitalized type names in our examples
 
 Moreover, you cannot only name files but also folders with this syntax and create nested routes, for example:
 
