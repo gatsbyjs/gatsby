@@ -50,15 +50,13 @@ exports.onPostBuild = async (
 
   // resolvePages and resolveSuteUrl are allowed to be sync or async. The IIFE handles each possibility
   const allPages = await Promise.resolve(
-    resolvePages(queryRecords).catch(err =>
-      reporter.panic(`${reporterPrefix} Error resolving Pages`, err)
-    )
-  )
+    resolvePages(queryRecords)
+  ).catch(err => reporter.panic(`${reporterPrefix} Error resolving Pages`, err))
 
   const siteUrl = await Promise.resolve(
-    resolveSiteUrl(queryRecords).catch(err =>
-      reporter.panic(`${reporterPrefix} Error resolving Site URL`, err)
-    )
+    resolveSiteUrl(queryRecords)
+  ).catch(err =>
+    reporter.panic(`${reporterPrefix} Error resolving Site URL`, err)
   )
 
   if (!Array.isArray(allPages)) {
