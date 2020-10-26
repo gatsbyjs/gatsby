@@ -42,8 +42,8 @@ const runWebpack = (
             const pathToRenderPage = `${directory}/public/render-page.js`
             newHash = stats.hash || ``
 
+            // Make sure we get the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
-              // Make sure we get the latest version during development
               delete require.cache[require.resolve(pathToRenderPage)]
             }
 
