@@ -7,6 +7,7 @@ import { chunk } from "lodash"
 import webpack from "webpack"
 
 import webpackConfig from "../utils/webpack.config"
+import { restartWorker } from "../utils/render-dev-html"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
 import { IProgram, Stage } from "./types"
@@ -42,9 +43,9 @@ const runWebpack = (
             const pathToRenderPage = `${directory}/public/render-page.js`
             newHash = stats.hash || ``
 
-            // Make sure we get the latest version during development
+            // Make sure we use the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
-              delete require.cache[require.resolve(pathToRenderPage)]
+              restartWorker()
             }
 
             oldHash = newHash
