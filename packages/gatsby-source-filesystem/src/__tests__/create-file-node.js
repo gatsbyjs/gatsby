@@ -53,62 +53,88 @@ describe(`create-file-node`, () => {
   })
 
   it(`records the shape of the node`, async () => {
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const dname = fs.mkdtempSync(`gatsby-create-file-node-test`).trim()
+    try {
+      const fname = path.join(dname, `f`)
+      console.log(dname, fname)
+      fs.writeFileSync(fname, `data`)
+      try {
+        const createNodeId = jest.fn()
+        createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
-    const node = await createFileNode(
-      path.resolve(`${__dirname}/fixtures/file.json`),
-      createNodeId,
-      {}
-    )
+        const node = await createFileNode(fname, createNodeId, {})
 
-    jest.unmock(`fs-extra`)
+        // Sanitize all filenames
+        Object.keys(node).forEach(key => {
+          if (typeof node[key] === `string`) {
+            node[key] = node[key].replace(new RegExp(dname, `g`), `<DIR>`)
+            node[key] = node[key].replace(new RegExp(fname, `g`), `<FILE>`)
+          }
+        })
+        Object.keys(node.internal).forEach(key => {
+          if (typeof node.internal[key] === `string`) {
+            node.internal[key] = node.internal[key].replace(
+              new RegExp(dname, `g`),
+              `<DIR>`
+            )
+            node.internal[key] = node.internal[key].replace(
+              new RegExp(fname, `g`),
+              `<FILE>`
+            )
+          }
+        })
 
-    // Note: this snapshot should update if the mock above is changed
-    expect(node).toMatchInlineSnapshot(`
-      Object {
-        "absolutePath": "<PROJECT_ROOT>/packages/gatsby-source-filesystem/src/__tests__/fixtures/file.json",
-        "accessTime": "1970-01-01T00:02:03.456Z",
-        "atime": "1970-01-01T00:02:03.456Z",
-        "atimeMs": 123456,
-        "base": "file.json",
-        "birthTime": "1970-01-01T00:02:03.456Z",
-        "birthtime": "1970-01-01T00:02:03.456Z",
-        "birthtimeMs": 123456,
-        "blksize": 123456,
-        "blocks": 123456,
-        "changeTime": "1970-01-01T00:02:03.456Z",
-        "children": Array [],
-        "ctime": "1970-01-01T00:02:03.456Z",
-        "ctimeMs": 123456,
-        "dev": 123456,
-        "dir": "<PROJECT_ROOT>/packages/gatsby-source-filesystem/src/__tests__/fixtures",
-        "ext": ".json",
-        "extension": "json",
-        "id": "uuid-from-gatsby",
-        "ino": 123456,
-        "internal": Object {
-          "contentDigest": "3857af536a3d0950f833cf47079facdd",
-          "description": "File \\"packages/gatsby-source-filesystem/src/__tests__/fixtures/file.json\\"",
-          "mediaType": "application/json",
-          "type": "File",
-        },
-        "mode": 123456,
-        "modifiedTime": "1970-01-01T00:02:03.456Z",
-        "mtime": "1970-01-01T00:02:03.456Z",
-        "mtimeMs": 123456,
-        "name": "file",
-        "nlink": 123456,
-        "parent": null,
-        "prettySize": "123 kB",
-        "rdev": 123456,
-        "relativeDirectory": "packages/gatsby-source-filesystem/src/__tests__/fixtures",
-        "relativePath": "packages/gatsby-source-filesystem/src/__tests__/fixtures/file.json",
-        "root": "/",
-        "size": 123456,
-        "sourceInstanceName": "__PROGRAMMATIC__",
-        "uid": 123456,
+        // Note: this snapshot should update if the mock above is changed
+        expect(node).toMatchInlineSnapshot(`
+          Object {
+            "absolutePath": "<DIR>/f",
+            "accessTime": "1970-01-01T00:02:03.456Z",
+            "atime": "1970-01-01T00:02:03.456Z",
+            "atimeMs": 123456,
+            "base": "f",
+            "birthTime": "1970-01-01T00:02:03.456Z",
+            "birthtime": "1970-01-01T00:02:03.456Z",
+            "birthtimeMs": 123456,
+            "blksize": 123456,
+            "blocks": 123456,
+            "changeTime": "1970-01-01T00:02:03.456Z",
+            "children": Array [],
+            "ctime": "1970-01-01T00:02:03.456Z",
+            "ctimeMs": 123456,
+            "dev": 123456,
+            "dir": "<DIR>",
+            "ext": "",
+            "extension": "",
+            "id": "uuid-from-gatsby",
+            "ino": 123456,
+            "internal": Object {
+              "contentDigest": "8d777f385d3dfec8815d20f7496026dc",
+              "description": "File \\"<DIR>/f\\"",
+              "mediaType": "application/octet-stream",
+              "type": "File",
+            },
+            "mode": 123456,
+            "modifiedTime": "1970-01-01T00:02:03.456Z",
+            "mtime": "1970-01-01T00:02:03.456Z",
+            "mtimeMs": 123456,
+            "name": "f",
+            "nlink": 123456,
+            "parent": null,
+            "prettySize": "123 kB",
+            "rdev": 123456,
+            "relativeDirectory": "<DIR>",
+            "relativePath": "<DIR>/f",
+            "root": "",
+            "size": 123456,
+            "sourceInstanceName": "__PROGRAMMATIC__",
+            "uid": 123456,
+          }
+        `)
+      } finally {
+        fs.unlinkSync(fname)
       }
-    `)
+    } finally {
+      fs.rmdirSync(dname)
+    }
   })
 })
