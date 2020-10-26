@@ -118,6 +118,12 @@ export function resolvePlugin(
       version: packageJSON.version,
     }
   } catch (err) {
+    if (process.argv.includes(`--verbose`)) {
+      console.log(
+        `Verbose: This is the error thrown while trying to load "${pluginName}":`,
+        err
+      )
+    }
     throw new Error(
       `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`
     )
