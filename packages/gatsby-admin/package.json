@@ -28,6 +28,7 @@
     "lodash-es": "^4.17.15",
     "ncp": "^2.0.0",
     "nodemon": "^2.0.6",
+    "normalize.css": "^8.0.1",
     "prism-react-renderer": "^1.1.1",
     "query-string": "^6.13.6",
     "react": "^16.12.0",

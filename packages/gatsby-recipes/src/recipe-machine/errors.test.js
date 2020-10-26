@@ -1,6 +1,6 @@
-const { interpret } = require(`xstate`)
+import { interpret } from "xstate"
 
-const recipeMachine = require(`.`)
+import recipeMachine from "."
 
 describe(`recipe-machine errors`, () => {
   it(`errors if part of the recipe fails schema validation`, done => {
