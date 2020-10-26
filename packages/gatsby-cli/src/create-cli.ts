@@ -567,6 +567,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
 
       handler: handlerP(({ cmd, key, value }: yargs.Arguments) => {
         if (!getPackageManager()) {
+          trackCli(`SET_DEFAULT_PACKAGE_MANAGER`, { name: `npm` })
           setPackageManager(`npm`)
         }
 
@@ -579,8 +580,10 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
             if (value) {
               // @ts-ignore
               setPackageManager(value)
+              trackCli(`SET_PACKAGE_MANAGER`, { name: `${value}` })
               return
             } else {
+              trackCli(`SET_PACKAGE_MANAGER`, { name: `npm` })
               setPackageManager(`npm`)
             }
           } else {

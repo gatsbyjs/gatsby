@@ -37,66 +37,6 @@ const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
 exports.getLocalizedField = getLocalizedField
 exports.buildFallbackChain = buildFallbackChain
 
-// If the id starts with a number, left-pad it with a c (for Contentful of
-// course :-))
-const fixId = id => {
-  if (!_.isString(id)) {
-    id = id.toString()
-  }
-  if (!isNaN(id.slice(0, 1))) {
-    return `c${id}`
-  }
-  return id
-}
-exports.fixId = fixId
-
-const shouldBeSkipped = (object, alreadyWalkedObjectRefs) =>
-  !object || typeof object !== `object` || alreadyWalkedObjectRefs.has(object)
-
-// Walk the object model and find any property named `sys`. If it
-// contains an `id` then make sure the id is a string and if it starts with a
-// number, prefix it with (an arbitrarily chosen) `c`, for "contentful".
-// The `front` tracks which objects have been visited to prevent infinite
-// recursion on cyclic structures.
-const fixIds = object => {
-  if (!object || typeof object !== `object`) return
-
-  const objectsToProcess = [object]
-  const alreadyWalkedObjectRefs = new Set(objectsToProcess)
-
-  while (objectsToProcess.length !== 0) {
-    const current = objectsToProcess.pop()
-
-    if (Array.isArray(current)) {
-      current.forEach(item => {
-        if (shouldBeSkipped(item, alreadyWalkedObjectRefs)) return
-
-        objectsToProcess.push(item)
-        alreadyWalkedObjectRefs.add(item)
-      })
-      continue
-    }
-
-    Object.keys(current).forEach(key => {
-      const currentProp = current[key]
-      if (shouldBeSkipped(currentProp, alreadyWalkedObjectRefs)) return
-
-      // The `contentful_id` is ours and we want to make sure we don't visit the
-      // same node twice (this is possible if the same node appears in two
-      // separate branches while sharing a common ancestor). This check makes
-      // sure we keep the original `id` preserved in `contentful_id`.
-      if (key === `sys` && !currentProp.contentful_id) {
-        currentProp.contentful_id = currentProp.id
-        currentProp.id = fixId(currentProp.id)
-      }
-
-      objectsToProcess.push(currentProp)
-      alreadyWalkedObjectRefs.add(currentProp)
-    })
-  }
-}
-exports.fixIds = fixIds
-
 const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
@@ -138,26 +78,20 @@ exports.buildResolvableSet = ({
   defaultLocale,
 }) => {
   const resolvable = new Set()
-  existingNodes.forEach(n => {
-    if (n.contentful_id) {
-      if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
-        resolvable.add(n.contentful_id)
-      } else {
-        // We need to add only root level resolvable (assets and entries)
-        // derived nodes (markdown or JSON) will be recreated if needed.
-        // We also need to apply `fixId` as some objects will have ids
-        // prefixed with `c` and fixIds will recursively apply that
-        // and resolvable ids need to match that.
-        resolvable.add(`${fixId(n.contentful_id)}___${n.sys.type}`)
-      }
+  existingNodes.forEach(node => {
+    if (node.internal.owner === `gatsby-source-contentful`) {
+      // We need to add only root level resolvable (assets and entries)
+      // Derived nodes (markdown or JSON) will be recreated if needed.
+      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry => {
+    entries.forEach(entry =>
       resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
-    })
+    )
   })
+
   assets.forEach(assetItem =>
     resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
   )
@@ -507,9 +441,7 @@ exports.createNodesForContentType = ({
       let entryNode = {
         id: mId(space.sys.id, entryItem.sys.id, entryItem.sys.type),
         spaceId: space.sys.id,
-        contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
-          ? entryItem.sys.id
-          : entryItem.sys.contentful_id,
+        contentful_id: entryItem.sys.id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
@@ -677,9 +609,7 @@ exports.createAssetNodes = ({
     })
 
     const assetNode = {
-      contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
-        ? assetItem.sys.id
-        : assetItem.sys.contentful_id,
+      contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
       id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
       createdAt: assetItem.sys.createdAt,

@@ -172,7 +172,7 @@ Formik
 Formspree
 Formspree's
 FOUC
-FreeCodeCamp
+*freeCodeCamp
 frontend
 frontmatter
 Frontmatter
@@ -477,9 +477,9 @@ WebpackError
 webpage
 webpages
 websocket
-Wechat
+WeChat
 WeKnow
-Whatsapp
+WhatsApp
 workspaces
 www
 xyz

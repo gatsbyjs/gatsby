@@ -134,6 +134,17 @@ export const sourceNodes = true
 export const onCreateNode = true
 
 /**
+ * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+ * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+ * Note: this API does not receive the regular `api` that other callbacks get as first arg.
+ *
+ * @gatsbyVersion 2.24.80
+ * @example
+ * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+ */
+export const unstable_shouldOnCreateNode = true
+
+/**
  * Called when a new page is created. This extension API is useful
  * for programmatically manipulating pages created by other plugins e.g.
  * if you want paths without trailing slashes.

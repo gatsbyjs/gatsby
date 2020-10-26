@@ -1,6 +1,9 @@
 // Match a resource's defined dependencies against all resources
 // defined in the recipe.
-module.exports = (resources, resourceWithDependencies) => {
+export default function findDependencyMatch(
+  resources,
+  resourceWithDependencies
+) {
   // Resource doesn't have a dependsOn key so we return
   if (!resourceWithDependencies.dependsOn) {
     return []

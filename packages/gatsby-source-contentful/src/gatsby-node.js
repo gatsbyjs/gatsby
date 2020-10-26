@@ -122,6 +122,12 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
           `Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.`
         )
         .default(100),
+      assetDownloadWorkers: Joi.number()
+        .integer()
+        .description(
+          `Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.`
+        )
+        .default(50),
       proxy: Joi.object()
         .keys({
           host: Joi.string().required(),
@@ -562,6 +568,7 @@ exports.sourceNodes = async (
       getCache,
       getNodesByType,
       reporter,
+      assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
   }
 
