@@ -4,6 +4,13 @@ const path = require(`path`)
 const { Machine, interpret } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
+const { ERROR_MAP } = require(`./error-utils`)
+
+exports.onPreInit = ({ reporter }) => {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+}
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states.
