@@ -31,7 +31,7 @@ const spawn = (
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-const checkForYarn = async (): Promise<boolean> => {
+const checkForYarn = (): boolean => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
     return true

@@ -1,4 +1,5 @@
-import reporter from "../"
+import { Level } from "../../structured-errors/types"
+import { reporter } from "../reporter"
 import * as reporterActions from "../redux/actions"
 
 // TODO: report.error now DOES return something. Get rid of this spying mocking stuff
@@ -91,5 +92,17 @@ describe(`report.error`, () => {
       reporterActions.createLog as jest.Mock
     )[0]
     expect(generatedError).toMatchSnapshot()
+  })
+
+  it(`sets an error map if setErrorMap is called`, () => {
+    reporter.setErrorMap({
+      "1337": {
+        text: (context): string => `Error text is ${context.someProp} `,
+        level: Level.ERROR,
+        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+      },
+    })
+
+    expect(reporter.errorMap[`1337`]).toBeTruthy()
   })
 })

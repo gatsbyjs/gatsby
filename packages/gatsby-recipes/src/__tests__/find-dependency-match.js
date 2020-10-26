@@ -1,4 +1,4 @@
-const findDependencyMatch = require(`../find-dependency-match`)
+import findDependencyMatch from "../find-dependency-match"
 
 describe(`findDependencyMatch`, () => {
   test(`basic matching`, () => {

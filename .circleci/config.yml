@@ -182,7 +182,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
@@ -213,7 +213,7 @@ jobs:
     steps:
       - checkout
       # We should always assert on master
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|yarn.lock"
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
@@ -233,17 +233,6 @@ jobs:
       name: node
       image: "14"
     <<: *test_template
-
-  unit_tests_www:
-    executor: node
-    steps:
-      - checkout
-      - run:
-          command: yarn
-          working_directory: ~/project/www
-      - run:
-          command: yarn test
-          working_directory: ~/project/www
 
   integration_tests_long_term_caching:
     executor: node
@@ -377,6 +366,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/mdx
+          test_command: yarn test
+
+  e2e_tests_gatsby-static-image:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-static-image
           test_command: yarn test
 
   starters_validate:
@@ -565,11 +561,6 @@ workflows:
             - lint
             - typecheck
             - bootstrap
-      - unit_tests_www:
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_cache_resilience:
@@ -588,6 +579,8 @@ workflows:
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow

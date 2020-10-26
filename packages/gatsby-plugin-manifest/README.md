@@ -18,7 +18,7 @@ This guide focuses on configuring the plugin. For more information on the web ap
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-manifest
+npm install gatsby-plugin-manifest
 ```
 
 ## How to use

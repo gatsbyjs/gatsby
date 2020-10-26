@@ -6,7 +6,7 @@ _NOTE: This plugin only generates output when run in `production` mode! To test 
 
 ## Install
 
-`npm install --save gatsby-plugin-sitemap`
+`npm install gatsby-plugin-sitemap`
 
 ## How to Use
 
@@ -204,7 +204,7 @@ allPages.map(page => thisFunc(page, tools))
 
 **Kind**: global variable
 
-| Param | Type                | Description                                          |
-| ----- | ------------------- | ---------------------------------------------------- |
-| page  | <code>object</code> | A single element from the results of the `resolvePages` function                 |
-| tools | <code>object</code> | contains tools for serializing `{ resolvePagePath }` |
+| Param | Type                | Description                                                      |
+| ----- | ------------------- | ---------------------------------------------------------------- |
+| page  | <code>object</code> | A single element from the results of the `resolvePages` function |
+| tools | <code>object</code> | contains tools for serializing `{ resolvePagePath }`             |

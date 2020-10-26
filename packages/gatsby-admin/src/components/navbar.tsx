@@ -2,7 +2,7 @@
 import { jsx, Flex } from "strict-ui"
 import { Text, Button, AnchorButton } from "gatsby-interface"
 import { useQuery } from "urql"
-import { FeedbackForm } from "feedback-fish"
+import { FeedbackFish } from "@feedback-fish/react"
 import externalLinkIcon from "../external-link.svg"
 import graphqlIcon from "../graphql.svg"
 import { Link } from "gatsby"
@@ -15,10 +15,10 @@ function SendFeedbackButton(props): JSX.Element {
     <Button
       variant="GHOST"
       size="S"
+      data-feedback-fish
       {...props}
-      onClick={(evt): void => {
+      onClick={(): void => {
         telemetry.trackEvent(`FEEDBACK_WIDGET_OPEN`)
-        props.onClick(evt)
       }}
     >
       Send feedback
@@ -67,10 +67,11 @@ function Navbar(): JSX.Element {
         )}
       </Flex>
       <Flex alignItems="baseline" gap={3}>
-        <FeedbackForm
+        <FeedbackFish
           projectId="9502a819990b03"
           triggerComponent={SendFeedbackButton}
         />
+        <SendFeedbackButton />
         <AnchorButton
           size="S"
           href="/___graphql"
