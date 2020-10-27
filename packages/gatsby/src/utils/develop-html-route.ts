@@ -47,6 +47,8 @@ export const route = ({ app, program, store }): any =>
         context: {
           path: pathObj.path,
           filePath: error.filename,
+          line: error.line,
+          column: error.row,
         },
       })
       res.status(500).send(`<title>Develop SSR Error</title><h1>Error<h1>
