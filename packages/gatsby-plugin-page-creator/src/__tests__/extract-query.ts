@@ -118,6 +118,17 @@ describe(`extract query`, () => {
       ).toBe(`{allThing{nodes{id,fields{name}}}}`)
     })
 
+    it(`multiple nested nodes`, () => {
+      expect(
+        generateQueryFromString(
+          `thing`,
+          compatiblePath(
+            `/foo/bar/{thing.fields__name}/{thing.fields__description}.js`
+          )
+        )
+      ).toBe(`{allThing{nodes{fields{name},fields{description},id}}}`)
+    })
+
     it(`deeply nested nodes`, () => {
       expect(
         generateQueryFromString(

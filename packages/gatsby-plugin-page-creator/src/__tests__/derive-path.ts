@@ -7,6 +7,9 @@ describe(`derive-path`, () => {
     expect(
       derivePath(`product/{Product.id}.js`, { id: `1` }, reporter)
     ).toEqual(`product/1`)
+    expect(
+      derivePath(`product/{product.id}.js`, { id: `1` }, reporter)
+    ).toEqual(`product/1`)
   })
 
   it(`converts number to string in URL`, () => {

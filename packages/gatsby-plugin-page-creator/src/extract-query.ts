@@ -15,6 +15,7 @@ export function generateQueryFromString(
   queryOrModel: string,
   fileAbsolutePath: string
 ): string {
+  // TODO: 'fields' possibly contains duplicate fields, e.g. field{name},field{description} that should be merged to field{name,description}
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
   if (queryOrModel.includes(`...CollectionPagesQueryFragment`)) {
     return fragmentInterpolator(queryOrModel, fields)
