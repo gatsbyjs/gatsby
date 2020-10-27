@@ -8,13 +8,13 @@ import { isWebpackStatusPending } from "../webpack-status"
 export const route = ({ app, program, store }): any =>
   // Render an HTML page and serve it.
   app.get(`*`, async (req, res, next) => {
-    // if (isWebpackStatusPending()) {
-    // res
-    // .status(202)
-    // .send(
-    // `webpack isn't yet finished compiling code. Try refreshing once it's done.`
-    // )
-    // }
+    if (isWebpackStatusPending()) {
+      res
+        .status(202)
+        .send(
+          `webpack isn't yet finished compiling code. Try refreshing once it's done.`
+        )
+    }
 
     trackCli(`GATSBY_EXPERIMENTAL_DEV_SSR`)
 

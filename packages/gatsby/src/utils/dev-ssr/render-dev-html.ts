@@ -2,7 +2,7 @@ import JestWorker from "jest-worker"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
-    exposedMethods: [`renderHTML`],
+    exposedMethods: [`renderHTML`, `deleteModuleCache`],
     numWorkers: 1,
     enableWorkerThreads: true,
   })
@@ -22,11 +22,22 @@ export const initDevWorkerPool = (): void => {
   worker = startWorker()
 }
 
-export const restartWorker = (): void => {
-  const oldWorker = worker
-  const newWorker = startWorker()
-  worker = newWorker
-  oldWorker.end()
+let changeCount = 0
+export const restartWorker = (htmlComponentRendererPath): void => {
+  changeCount += 1
+  // Forking is expensive — each time we re-require the outputted webpack
+  // file, memory grows ~10 mb — 25 regenerations means ~250mb which seems
+  // like an accepatable amount of memory to grow before we reclaim it
+  // by rebooting the worker process.
+  if (changeCount > 25) {
+    const oldWorker = worker
+    const newWorker = startWorker()
+    worker = newWorker
+    oldWorker.end()
+    changeCount = 0
+  } else {
+    worker.deleteModuleCache(htmlComponentRendererPath)
+  }
 }
 
 export const renderDevHTML = ({
