@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.88](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.87...gatsby@2.24.88) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** add missing printTypeDefinitions ([#27670](https://github.com/gatsbyjs/gatsby/issues/27670)) ([2da94bf](https://github.com/gatsbyjs/gatsby/commit/2da94bfcd612d10b0816e38a95e43651986fd94b))
+- **gatsby:** better heuristic for automatic cache purging ([#27682](https://github.com/gatsbyjs/gatsby/issues/27682)) ([a5665d2](https://github.com/gatsbyjs/gatsby/commit/a5665d28f585c7f8727e2bbaccb4ab0fffeaa8e7))
+
 ## [2.24.87](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.86...gatsby@2.24.87) (2020-10-26)
 
 **Note:** Version bump only for package gatsby
