@@ -2,8 +2,6 @@ import { createNodeId } from "../create-node-id"
 
 describe(`createNodeId`, (): void => {
   describe(`uuid`, () => {
-    // Keep tests in this group in sync with the xxhash group below
-
     it(`should return a string`, () => {
       // Key is just something random that's not only ascii
       const id2 = createNodeId(`myboea"`, `ghost ns`)
