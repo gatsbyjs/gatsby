@@ -166,49 +166,51 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
    npm install gatsby-plugin-utils
    ```
 
-2. Use the `testPluginOptionsSchema` function exported from the package in your test file. For example, with [Jest](https://jestjs.io), your tests might look something like this:
+2. Use the `testPluginOptionsSchema` function exported from the package in your test file. It takes two parameters, the plugin's actual Joi schema and an example options object to test. It returns an object with an `isValid` boolean, which will be true or false based on whether or not the options object fits the actual Joi schema, and an `errors` array, which will contain the error messages if the validation failed.
 
-   ```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.js
-   // This is an example using Jest (https://jestjs.io/)
-   import { testPluginOptionsSchema } from "gatsby-plugin-utils"
-   import { pluginOptionsSchema } from "../gatsby-node"
+For example, with [Jest](https://jestjs.io), your tests might look something like this:
 
-   describe(`pluginOptionsSchema`, () => {
-     it(`should invalidate incorrect options`, () => {
-       const options = {
-         optionA: undefined, // Should be a boolean
-         message: 123, // Should be a string
-         optionB: `not a boolean`, // Should be a boolean
-       }
-       const { isValid, errors } = testPluginOptionsSchema(
-         pluginOptionsSchema,
-         options
-       )
+```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.js
+// This is an example using Jest (https://jestjs.io/)
+import { testPluginOptionsSchema } from "gatsby-plugin-utils"
+import { pluginOptionsSchema } from "../gatsby-node"
 
-       expect(isValid).toBe(false)
-       expect(errors).toEqual([
-         `"optionA" is required`,
-         `"message" must be a string`,
-         `"optionB" must be a boolean`,
-       ])
-     })
+describe(`pluginOptionsSchema`, () => {
+  it(`should invalidate incorrect options`, () => {
+    const options = {
+      optionA: undefined, // Should be a boolean
+      message: 123, // Should be a string
+      optionB: `not a boolean`, // Should be a boolean
+    }
+    const { isValid, errors } = testPluginOptionsSchema(
+      pluginOptionsSchema,
+      options
+    )
 
-     it(`should validate correct options`, () => {
-       const options = {
-         optionA: false,
-         message: "string",
-         optionB: true,
-       }
-       const { isValid, errors } = testPluginOptionsSchema(
-         pluginOptionsSchema,
-         options
-       )
+    expect(isValid).toBe(false)
+    expect(errors).toEqual([
+      `"optionA" is required`,
+      `"message" must be a string`,
+      `"optionB" must be a boolean`,
+    ])
+  })
 
-       expect(isValid).toBe(true)
-       expect(errors).toEqual([])
-     })
-   })
-   ```
+  it(`should validate correct options`, () => {
+    const options = {
+      optionA: false,
+      message: "string",
+      optionB: true,
+    }
+    const { isValid, errors } = testPluginOptionsSchema(
+      pluginOptionsSchema,
+      options
+    )
+
+    expect(isValid).toBe(true)
+    expect(errors).toEqual([])
+  })
+})
+```
 
 ## Additional resources
 
