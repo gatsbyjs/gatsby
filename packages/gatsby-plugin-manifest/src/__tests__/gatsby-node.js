@@ -527,8 +527,8 @@ describe(`Test plugin manifest options`, () => {
 })
 
 describe(`pluginOptionsSchema`, () => {
-  it(`validates options correctly`, () => {
-    expect(testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
+  it(`validates options correctly`, async () => {
+    expect(await testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
       .toMatchInlineSnapshot(`
       Object {
         "errors": Array [],
