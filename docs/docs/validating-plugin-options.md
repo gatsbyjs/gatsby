@@ -1,5 +1,5 @@
 ---
-title: Validating plugin options
+title: Validating Plugin Options
 ---
 
 To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, a plugin can optionally define a schema to enforce a type for each option. Gatsby will validate that the options users pass match the schema to help them correctly set up their site.
