@@ -5,9 +5,10 @@ const seedConstant = `638f7a53-c567-4eca-8fc1-b23efb1cfb2b`
 
 // This cache prevents duplicate calls to uuid which is relevant for certain cases
 const unprefixedCache: Map<string, string> = new Map()
+// ns -> name -> uuid
 const namespacedCache: Map<string, Map<string, string>> = new Map([
   [``, unprefixedCache],
-]) // ns -> name -> id
+])
 
 /**
  * Generate a unique id that is consistent, deterministic, and fast while resulting in predictably short hashes.
@@ -18,7 +19,7 @@ const namespacedCache: Map<string, Map<string, string>> = new Map([
  * - The value does not need to be encrypted
  * - The value must be unique within our system (as little collision risk as possible on small ascii inputs)
  * - The value needs to be deterministic (same input always results in same output)
- * - The conversion needs to be fast (we used to use uuid, which called into crytpo for sha1, but it was super slow)
+ * - The conversion needs to be fast
  * - The result should be predictably short as it may be used in urls
  *
  * High level this step is meant to prevent people from using our `id` to have meaning in their site and it's meant
@@ -45,7 +46,6 @@ export function createNodeId(id: string | number, namespace: string): string {
     )
   }
 
-  // Note: we can use the idCache for namespace as well since the key for ids will include the namespace
   let nsHash = unprefixedCache.get(namespace)
   if (!nsHash) {
     nsHash = uuidv5(namespace, seedConstant) as string
