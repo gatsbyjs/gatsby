@@ -7,7 +7,7 @@ import { chunk } from "lodash"
 import webpack from "webpack"
 
 import webpackConfig from "../utils/webpack.config"
-import { restartWorker } from "../utils/render-dev-html"
+import { restartWorker } from "../utils/dev-ssr/render-dev-html"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
 import { IProgram, Stage } from "./types"

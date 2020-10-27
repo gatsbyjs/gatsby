@@ -1,16 +1,10 @@
-const { codeFrameColumns } = require(`@babel/code-frame`)
-const ansiHTML = require(`ansi-html`)
-const fs = require(`fs-extra`)
-const sysPath = require(`path`)
-const report = require(`gatsby-cli/lib/reporter`)
+const { codeFrameColumns } = require("@babel/code-frame")
+const ansiHTML = require("ansi-html")
+const fs = require("fs-extra")
+const sysPath = require("path")
+const report = require("gatsby-cli/lib/reporter")
 
-interface IErrorPosition {
-  filename: string
-  line: number
-  row: number
-}
-
-const getPosition = function (stackObject): IErrorPosition {
+const getPosition = function (stackObject) {
   let filename
   let line
   let row
@@ -56,19 +50,8 @@ const colors = {
   yellow: `DB3A00`,
 }
 
-interface IParsedError {
-  filename: string
-  code: string
-  codeFrame: string
-  line: number
-  row: number
-  message: string
-  type: string
-  stack: [string]
-}
-
 // Code borrowed and modified from https://github.com/watilde/parse-error
-export const parseError = function (err, directory): IParsedError {
+exports.parseError = function (err, directory) {
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)
@@ -127,12 +110,12 @@ export const parseError = function (err, directory): IParsedError {
   return data
 }
 
-export function renderHTML({
+exports.renderHTML = ({
   path,
   htmlComponentRendererPath,
   directory,
   warming = false,
-}): Promise<string | object> {
+}) => {
   if (warming) return null
   return new Promise((resolve, reject) => {
     console.log(`inside worker`, { path, htmlComponentRendererPath, directory })
