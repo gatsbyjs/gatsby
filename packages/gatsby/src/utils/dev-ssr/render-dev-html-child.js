@@ -118,7 +118,9 @@ exports.renderHTML = ({
   directory,
   warming = false,
 }) => {
-  if (warming) return null
+  if (warming) {
+    return `warmed up`
+  }
   return new Promise((resolve, reject) => {
     console.log(`inside worker`, { path, htmlComponentRendererPath, directory })
     const htmlComponentRenderer = require(htmlComponentRendererPath)
