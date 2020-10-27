@@ -1,7 +1,9 @@
+const extractModelRegex = /\{([a-zA-Z]+)\./
+
 // Given a absolutePath that has a collection marker it will extract the Model.
 // /foo/bar/{Model.bar} => Model
 export function extractModel(absolutePath: string): string {
-  const model = /\{([a-zA-Z]+)\./.exec(absolutePath)
+  const model = extractModelRegex.exec(absolutePath)
 
   // This shouldn't happen - but TS requires us to validate
   // Don't throw an error here as otherwise it would be captured in the onPreInit hook and not by isValidCollectionPathImplementation()
@@ -17,12 +19,14 @@ export function removeFileExtension(absolutePath: string): string {
   return absolutePath.replace(/\.[a-z]+$/, ``)
 }
 
+const slugPartsRegex = /(\{.*?\})/g
+
 // This extracts all information in an absolute path to an array of each collection part
 // /foo/{Model.bar}/{Model.baz} => ['Model.bar', 'Model.baz']
 export function extractAllCollectionSegments(
   absolutePath: string
 ): Array<string> {
-  const slugParts = /(\{.*\})/g.exec(absolutePath)
+  const slugParts = absolutePath.match(slugPartsRegex)
 
   // This shouldn't happen - but TS requires us to validate
   if (!slugParts) {
@@ -34,6 +38,8 @@ export function extractAllCollectionSegments(
   return slugParts
 }
 
+const extractFieldWithoutUnionRegex = /\(.*\)__/g
+
 // Given a filePath part that is a collection marker it do this transformation:
 // {Model.bar} => bar
 // {Model.field__bar} => field__bar
@@ -42,9 +48,12 @@ export function extractFieldWithoutUnion(filePart: string): string {
   return (
     extractField(filePart)
       // Ignore union syntax
-      .replace(/\(.*\)__/g, ``)
+      .replace(extractFieldWithoutUnionRegex, ``)
   )
 }
+
+const extractFieldRegexCurlyBraces = /(\{|\})/g
+const extractFieldGraphQLModel = /[a-zA-Z_][a-zA-Z0-9_]+\./
 
 // Given a filePath part that is a collection marker it do this transformation:
 // {Model.field__(Union)__bar} => field__(Union)__bar
@@ -54,12 +63,14 @@ export function extractField(filePart: string): string {
   return (
     filePart
       // Remove curly braces
-      .replace(/(\{|\})/g, ``)
+      .replace(extractFieldRegexCurlyBraces, ``)
       // Remove Model
       // Regex created with: https://spec.graphql.org/draft/#sec-Names
-      .replace(/[a-zA-Z_][a-zA-Z0-9_]+\./, ``)
+      .replace(extractFieldGraphQLModel, ``)
   )
 }
+
+const switchToPeriodDelimitersRegex = /__/g
 
 // Used to convert filePath field accessors to js syntax accessors.
 // e.g.
@@ -67,12 +78,16 @@ export function extractField(filePart: string): string {
 // This can then be used with _.get
 export function switchToPeriodDelimiters(filePart: string): string {
   // replace access by periods
-  return filePart.replace(/__/g, `.`)
+  return filePart.replace(switchToPeriodDelimitersRegex, `.`)
 }
+
+const convertUnionSyntaxToGraphqlRegex = /\(/g
 
 // Converts the part of the file from something like `(Union)` to `... on Union`
 export function convertUnionSyntaxToGraphql(filePart: string): string {
-  return filePart.replace(/\(/g, `... on `).replace(/\)/g, ``)
+  return filePart
+    .replace(convertUnionSyntaxToGraphqlRegex, `... on `)
+    .replace(/\)/g, ``)
 }
 
 // Compose function to chain multiple methods from this file together

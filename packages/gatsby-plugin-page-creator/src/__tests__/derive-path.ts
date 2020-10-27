@@ -25,6 +25,26 @@ describe(`derive-path`, () => {
     ).toEqual(`product/1`)
   })
 
+  it(`has support for nested collections`, () => {
+    expect(
+      derivePath(
+        `product/{Product.id}/{Product.field__name}.js`,
+        { id: 1, field: { name: `foo` } },
+        reporter
+      )
+    ).toEqual(`product/1/foo`)
+  })
+
+  it(`has support for nested collections with same field`, () => {
+    expect(
+      derivePath(
+        `product/{Product.field__name}/{Product.field__category}.js`,
+        { field: { name: `foo`, category: `bar` } },
+        reporter
+      )
+    ).toEqual(`product/foo/bar`)
+  })
+
   it(`has union support`, () => {
     expect(
       derivePath(
