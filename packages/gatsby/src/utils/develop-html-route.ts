@@ -35,6 +35,20 @@ export const route = ({ app, program, store }): any =>
       })
       res.status(200).send(renderResponse)
     } catch (error) {
+      report.error({
+        id: `11614`,
+        filePath: error.filename,
+        location: {
+          start: {
+            line: error.line,
+            column: error.row,
+          },
+        },
+        context: {
+          path: pathObj.path,
+          filePath: error.filename,
+        },
+      })
       res.status(500).send(`<title>Develop SSR Error</title><h1>Error<h1>
         <h2>The page didn't SSR correctly</h2>
         <ul>
