@@ -122,13 +122,10 @@ exports.renderHTML = ({
     return `warmed up`
   }
   return new Promise((resolve, reject) => {
-    console.log(`inside worker`, { path, htmlComponentRendererPath, directory })
     const htmlComponentRenderer = require(htmlComponentRendererPath)
     try {
-      console.time(`SSR`)
       htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
         resolve(htmlString)
-        console.timeEnd(`SSR`)
       })
     } catch (err) {
       const stack = err.stack ? err.stack : ``
