@@ -113,7 +113,7 @@ Make sure that every option and field has a `.description()` explaining its purp
 
 ### Set default options
 
-You can use the `.default()` method to set a default value for an option. For example with `gatsby-plugin-console-log`, you can have the `message` option default to `"default message"` in case a user does not pass their own `message`:
+You can use the `.default()` method to set a default value for an option. For example, in the `gatsby-plugin-console-log` plugin above, you could have the `message` option default to `"default message"` if a user does not pass their own `message` value:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
