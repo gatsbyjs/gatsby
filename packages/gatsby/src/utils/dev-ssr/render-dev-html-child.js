@@ -1,8 +1,8 @@
-const { codeFrameColumns } = require("@babel/code-frame")
-const ansiHTML = require("ansi-html")
-const fs = require("fs-extra")
-const sysPath = require("path")
-const report = require("gatsby-cli/lib/reporter")
+const { codeFrameColumns } = require(`@babel/code-frame`)
+const ansiHTML = require(`ansi-html`)
+const fs = require(`fs-extra`)
+const sysPath = require(`path`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const getPosition = function (stackObject) {
   let filename
@@ -51,7 +51,7 @@ const colors = {
 }
 
 // Code borrowed and modified from https://github.com/watilde/parse-error
-exports.parseError = function (err, directory) {
+const parseError = function (err, directory) {
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)
@@ -109,6 +109,8 @@ exports.parseError = function (err, directory) {
   }
   return data
 }
+
+exports.parseError = parseError
 
 exports.renderHTML = ({
   path,
