@@ -131,7 +131,9 @@ export function renderHTML({
   path,
   htmlComponentRendererPath,
   directory,
+  warming = false,
 }): Promise<string | object> {
+  if (warming) return null
   return new Promise((resolve, reject) => {
     console.log(`inside worker`, { path, htmlComponentRendererPath, directory })
     const htmlComponentRenderer = require(htmlComponentRendererPath)
