@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.4.13...gatsby-source-hacker-news@2.4.14) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-hacker-news ([#27652](https://github.com/gatsbyjs/gatsby/issues/27652)) ([0650f8a](https://github.com/gatsbyjs/gatsby/commit/0650f8a0d1efb25f4e039ad18ce6bc2f6bea3b58))
+
 ## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.4.12...gatsby-source-hacker-news@2.4.13) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-source-hacker-news

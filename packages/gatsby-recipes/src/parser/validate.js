@@ -1,8 +1,8 @@
-const { transform } = require(`@babel/standalone`)
-const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
-const visit = require(`unist-util-visit`)
+import { transform } from "@babel/standalone"
+import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
+import visit from "unist-util-visit"
 
-const { u } = require(`.`)
+import { u } from "."
 
 const validateJsx = () => tree => {
   visit(tree, `jsx`, node => {
@@ -25,7 +25,7 @@ const validateJsx = () => tree => {
   })
 }
 
-module.exports = mdx => {
+export default function validate(mdx) {
   try {
     u.use(validateJsx).processSync(mdx)
   } catch (e) {
