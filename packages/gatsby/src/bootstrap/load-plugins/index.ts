@@ -56,11 +56,16 @@ const normalizePlugins = (config: IRawSiteConfig = {}): ISiteConfig => {
     ...config,
     plugins: (config.plugins || []).map(
       (plugin): IPluginRefObject => {
-        if (typeof plugin === `string`)
+        if (typeof plugin === `string`) {
           return {
             resolve: plugin,
             options: {},
           }
+        }
+
+        if (plugin.options.plugins) {
+          plugin.options = normalizePlugins(plugin.options)
+        }
 
         return plugin
       }
