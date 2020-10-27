@@ -98,7 +98,7 @@ function savePageDataAndStaticQueries(
   const normalizedPagePath = normalizePagePath(pathname)
 
   if (didDataChange(normalizedPagePath, pageData, pageQueryData)) {
-    pageQueryData[normalizePagePath(pathname)] = pageData
+    pageQueryData[normalizedPagePath] = pageData
   }
 
   for (const id in staticQueriesData) {
