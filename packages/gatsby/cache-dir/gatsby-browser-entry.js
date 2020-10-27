@@ -99,8 +99,12 @@ function graphql() {
 }
 
 function collectionGraphql() {
-  // TODO: Strip this out of the component and throw error if it gets called
-  return null
+  throw new Error(
+    `It appears like Gatsby is misconfigured. Gatsby related \`collectionGraphql\` calls ` +
+      `are supposed to only be evaluated at compile time, and then compiled away. ` +
+      `Unfortunately, something went wrong and the query was left in the compiled code.\n\n` +
+      `Unless your site has a complex or custom babel/Gatsby configuration this is likely a bug in Gatsby.`
+  )
 }
 
 export {
