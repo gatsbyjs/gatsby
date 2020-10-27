@@ -48,12 +48,16 @@ export function extractFieldWithoutUnion(filePart: string): string {
 
 // Given a filePath part that is a collection marker it do this transformation:
 // {Model.field__(Union)__bar} => field__(Union)__bar
+// Also works with lowercased model
+// {model.field} => field
 export function extractField(filePart: string): string {
   return (
     filePart
+      // Remove curly braces
       .replace(/(\{|\})/g, ``)
       // Remove Model
-      .replace(/[A-Z][a-zA-Z]+\./, ``)
+      // Regex created with: https://spec.graphql.org/draft/#sec-Names
+      .replace(/[a-zA-Z_][a-zA-Z0-9_]+\./, ``)
   )
 }
 

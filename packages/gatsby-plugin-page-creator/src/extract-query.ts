@@ -22,7 +22,6 @@ export function generateQueryFromString(
 
   // In case queryOrModel is not capitalized
   const connectionQuery = _.camelCase(`all ${queryOrModel}`)
-  console.log(fields)
 
   return `{${connectionQuery}{nodes{${fields}}}}`
 }
