@@ -2,7 +2,7 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`gatsby-node.js`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"commonmark" must be a boolean`,
       `"footnotes" must be a boolean`,
@@ -11,7 +11,7 @@ describe(`gatsby-node.js`, () => {
       `"plugins" must be an array`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       commonmark: `this should be a boolean`,
       footnotes: `this should be a boolean`,
       pedantic: `this should be a boolean`,
@@ -22,8 +22,8 @@ describe(`gatsby-node.js`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       commonmark: false,
       footnotes: false,
       pedantic: false,

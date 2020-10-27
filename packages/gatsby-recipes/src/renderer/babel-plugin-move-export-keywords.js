@@ -1,11 +1,11 @@
-const _ = require(`lodash`)
+import _ from "lodash"
 
 const isMDXLayout = element => element.name && element.name.name === `MDXLayout`
 const isLayoutProps = declaration => declaration.id.name === `layoutProps`
 const shouldRemoveDeclaration = declaration =>
   isLayoutProps(declaration) || isMDXLayout(declaration)
 
-module.exports = api => {
+export default function MoveExportKeyword(api) {
   const { types: t } = api
   let exportsToMove = []
   return {

@@ -98,7 +98,7 @@ And here is the html output considering the same markdown as before:
 </details>
 
 <details class="custom-block">
-  <summary class="custom-block-heading"> This is a title! </summary>
+  <summary class="custom-block-heading">This is a title!</summary>
   <div class="custom-block-body"><p>content</p></div>
 </details>
 ```

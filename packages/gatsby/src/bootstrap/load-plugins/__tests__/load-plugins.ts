@@ -156,7 +156,7 @@ describe(`Load plugins`, () => {
             ],
             pluginOptions: {
               allExtensions: false,
-              isTSX: true,
+              isTSX: false,
               jsxPragma: `h`,
               plugins: [],
             },
