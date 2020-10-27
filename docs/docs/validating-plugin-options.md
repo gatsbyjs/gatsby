@@ -25,7 +25,7 @@ module.exports = {
 }
 ```
 
-`gatsby-plugin-console-log` can ensure users have to pass a boolean to `optionA` and a string to `message`, as well as optionally pass a boolean to `optionB`, with this `pluginOptionsSchema`:
+You want users to pass in a boolean to `optionA` and a string to `message`, and they can optionally pass a boolean to `optionB`. To enforce these rules, you would create the following `pluginOptionsSchema`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
