@@ -17,7 +17,10 @@ const startWorker = (): any => {
   return newWorker
 }
 
-let worker = startWorker()
+let worker
+export const initDevWorkerPool = (): void => {
+  worker = startWorker()
+}
 
 export const restartWorker = (): void => {
   const oldWorker = worker

@@ -17,7 +17,7 @@ import telemetry from "gatsby-telemetry"
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
 import { buildRenderer } from "../commands/build-html"
-import { renderDevHTML } from "./dev-ssr/render-dev-html"
+import { renderDevHTML, initDevWorkerPool } from "./dev-ssr/render-dev-html"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import * as WorkerPool from "../utils/worker/pool"
@@ -68,6 +68,8 @@ export async function startServer(
     id: `webpack-develop`,
   })
   webpackActivity.start()
+
+  initDevWorkerPool()
 
   const devConfig = await webpackConfig(
     program,
