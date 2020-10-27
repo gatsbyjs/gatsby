@@ -177,6 +177,10 @@ If you are confident your Content Types will have natural-language IDs (e.g. `bl
 
 Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
 
+**`assetDownloadWorkers`** [number][optional] [default: `50`]
+
+Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
+
 **`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
 
 If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.

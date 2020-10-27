@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.3...gatsby-source-contentful@3.0.4) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-contentful ([#27539](https://github.com/gatsbyjs/gatsby/issues/27539)) ([0e54bae](https://github.com/gatsbyjs/gatsby/commit/0e54baefd5c6d460d89be6d684cb0bf6173445ca))
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.2...gatsby-source-contentful@3.0.3) (2020-10-22)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** set default for contentful asset workers ([#27586](https://github.com/gatsbyjs/gatsby/issues/27586)) ([d372db8](https://github.com/gatsbyjs/gatsby/commit/d372db810bbfc8a695b6220f0fe586149ec02def))
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.1...gatsby-source-contentful@3.0.2) (2020-10-21)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fixed contentful asset download stalling with high number of assets ([#27563](https://github.com/gatsbyjs/gatsby/issues/27563)) ([dc0ce0c](https://github.com/gatsbyjs/gatsby/commit/dc0ce0c1152d486bc1e58ac7fcaac36924437de8))
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.0...gatsby-source-contentful@3.0.1) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 # [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.56...gatsby-source-contentful@3.0.0) (2020-10-19)
 
 ### Performance Improvements
