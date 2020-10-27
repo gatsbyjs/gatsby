@@ -4,7 +4,10 @@ import report from "gatsby-cli/lib/reporter"
 const seedConstant = `638f7a53-c567-4eca-8fc1-b23efb1cfb2b`
 
 // This cache prevents duplicate calls to uuid which is relevant for certain cases
-const idCache = new Map() // `${namespace}_${id}` -> hash
+const unprefixedCache: Map<string, string> = new Map()
+const namespacedCache: Map<string, Map<string, string>> = new Map([
+  [``, unprefixedCache],
+]) // ns -> name -> id
 
 /**
  * Generate a unique id that is consistent, deterministic, and fast while resulting in predictably short hashes.
@@ -43,21 +46,26 @@ export function createNodeId(id: string | number, namespace: string): string {
   }
 
   // Note: we can use the idCache for namespace as well since the key for ids will include the namespace
-  let nsHash = idCache.get(namespace)
+  let nsHash = unprefixedCache.get(namespace)
   if (!nsHash) {
-    nsHash = uuidv5(namespace, seedConstant)
-    idCache.set(namespace, nsHash)
+    nsHash = uuidv5(namespace, seedConstant) as string
+    unprefixedCache.set(namespace, nsHash)
   }
 
   // Calling uuid is relatively expensive because it calls into crypto for sha1.
   // We use a local map to cache calls with the same ns+id pair, which helps a lot.
-  const key = `${namespace}_${id}`
-  let hash = idCache.get(key)
+  let nsCache = namespacedCache.get(namespace)
+  if (!nsCache) {
+    nsCache = new Map()
+    namespacedCache.set(namespace, nsCache)
+  }
+
+  let hash = nsCache.get(id)
   if (hash) {
     return hash
   }
 
-  hash = uuidv5(id, nsHash)
-  idCache.set(key, hash)
+  hash = uuidv5(id, nsHash) as string
+  nsCache.set(id, hash)
   return hash
 }
