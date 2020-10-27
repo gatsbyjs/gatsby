@@ -170,7 +170,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 Sometimes you might want to provide more detailed error messages when validation fails for a specific field. Joi provides a [`.messages()` method](https://joi.dev/api/?v=17.2.1#anymessagesmessages) which lets you override error messages for specific [error types](https://joi.dev/api/?v=17.2.1#list-of-errors) (e.g. `"any.required"` when a `.required()` call fails).
 
-For example, this is how we would provide a custom error message if users do not specify `optionA` for `gatsby-plugin-console-log`:
+For example, in the `gatsby-plugin-console-log` plugin above, this is how you would provide a custom error message if users do not specify `optionA`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
