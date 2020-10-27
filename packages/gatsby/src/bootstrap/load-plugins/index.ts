@@ -73,9 +73,7 @@ export async function loadPlugins(
   await handleBadExports({ currentAPIs, badExports })
 
   // Show errors for invalid plugin configuration
-  if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-    await validatePluginOptions({ flattenedPlugins })
-  }
+  await validatePluginOptions({ flattenedPlugins })
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({
