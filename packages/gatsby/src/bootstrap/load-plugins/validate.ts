@@ -13,6 +13,7 @@ import {
   IPluginInfoOptions,
   ISiteConfig,
 } from "./types"
+import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
 
 interface IApi {
   version?: string
@@ -172,15 +173,15 @@ export async function handleBadExports({
   }
 }
 
-export async function validatePluginOptions(
-  config: ISiteConfig = {}
-): Promise<void> {
-  if (!config.plugins) return
-
+async function validatePluginsOptions(
+  plugins: Array<IPluginRefObject>
+): Promise<{
+  errors: number
+  plugins: Array<IPluginRefObject>
+}> {
   let errors = 0
-
-  config.plugins = await Promise.all(
-    config.plugins.map(async plugin => {
+  const newPlugins = await Promise.all(
+    plugins.map(async plugin => {
       let gatsbyNode
 
       try {
@@ -221,8 +222,15 @@ export async function validatePluginOptions(
           (plugin.options as IPluginInfoOptions) || {}
         )
 
-        if (plugin.options.plugins) {
-          await validatePluginOptions({ plugins: plugin.options.plugins })
+        if (plugin.options?.plugins) {
+          const {
+            errors: subErrors,
+            plugins: subPlugins,
+          } = await validatePluginsOptions(
+            plugin.options.plugins as Array<IPluginRefObject>
+          )
+          plugin.options.plugins = subPlugins
+          errors += subErrors
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
@@ -244,6 +252,17 @@ export async function validatePluginOptions(
       return plugin
     })
   )
+  return { errors, plugins: newPlugins }
+}
+
+export async function validatePluginOptions(
+  config: ISiteConfig = {}
+): Promise<void> {
+  if (!config.plugins) return
+
+  const { errors, plugins } = await validatePluginsOptions(config.plugins)
+
+  config.plugins = plugins
 
   if (errors > 0) {
     process.exit(1)
