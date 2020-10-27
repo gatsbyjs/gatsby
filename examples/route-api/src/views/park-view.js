@@ -9,10 +9,10 @@ function ParkView({ park }) {
       </header>
       <main>
         <h1>{park.name}</h1>
+        <p>{park.description}</p>
         <p>
-          {park.description}
+          Location: {park.meta.location.place} ({park.meta.location.type})
         </p>
-        <p>Location: {park.meta.location.place} ({park.meta.location.type})</p>
       </main>
       <footer>Delos Corporation.</footer>
     </div>

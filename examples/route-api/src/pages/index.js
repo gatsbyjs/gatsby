@@ -64,7 +64,9 @@ function Index({ data }) {
         </ul>
         <h3>collectionGraphql</h3>
         <p>
-          The example below is a list of parks that are all <em>not</em> the type of <em>Resort</em>. By using <em>collectionGraphql</em> the GraphQL query for creating the routes was adapted.
+          The example below is a list of parks that are all <em>not</em> the
+          type of <em>Resort</em>. By using <em>collectionGraphql</em> the
+          GraphQL query for creating the routes was adapted.
         </p>
         <ul>
           {data.parksFragment.nodes.map(park => (
@@ -75,18 +77,25 @@ function Index({ data }) {
         </ul>
         <h3>Nested collections</h3>
         <p>
-          The example below does a <em>group</em> query on all parks and links to them. The paths are created as nested collections, e.g. to construct a route at <em>/parks/theme-park/park-one/</em>.
+          The example below does a <em>group</em> query on all parks and links
+          to them. The paths are created as nested collections, e.g. to
+          construct a route at <em>/parks/theme-park/park-one/</em>.
         </p>
         <div>
           {data.parks.group.map(field => {
             const groupName = field.fieldValue
-            const inValidLinkPrefix = groupName === `Resort` ? `/parks/resort/` : `/parks/theme-park/`
+            const inValidLinkPrefix =
+              groupName === `Resort` ? `/parks/resort/` : `/parks/theme-park/`
 
             return (
               <React.Fragment>
                 <h4>{groupName}</h4>
                 <ul>
-                  <li><Link to={`${inValidLinkPrefix}hogwarts`}>Non-existing {groupName}</Link></li>
+                  <li>
+                    <Link to={`${inValidLinkPrefix}hogwarts`}>
+                      Non-existing {groupName}
+                    </Link>
+                  </li>
                   {field.nodes.map(park => (
                     <li key={park.gatsbyPath}>
                       <Link to={park.gatsbyPath}>{park.name}</Link>
@@ -156,7 +165,9 @@ export const query = graphql`
         }
       }
     }
-    parksFragment: allPark(filter: {meta: {location: {type: {ne: "Resort"}}}}) {
+    parksFragment: allPark(
+      filter: { meta: { location: { type: { ne: "Resort" } } } }
+    ) {
       nodes {
         name
         gatsbyPath(filePath: "/parks/{park.name}")

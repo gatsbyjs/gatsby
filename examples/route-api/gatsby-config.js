@@ -24,22 +24,22 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/blog`,
-        name: `blog`
-      }
+        name: `blog`,
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/products`,
-        name: `products`
-      }
+        name: `products`,
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/parks`,
-        name: `parks`
-      }
+        name: `parks`,
+      },
     },
   ],
 }
