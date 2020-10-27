@@ -8,7 +8,7 @@ To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) 
 
 To define their options schema, plugins export [`pluginOptionsSchema`](/docs/node-apis/#pluginOptionsSchema) from their `gatsby-node.js` file. This function gets passed an instance of [Joi](https://joi.dev) to define the schema with.
 
-For example, consider the following plugin called `gatsby-plugin-console-log`:
+For example, imagine you were creating a plugin called `gatsby-plugin-console-log`. You decide you want users to configure your plugin using the following options:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
