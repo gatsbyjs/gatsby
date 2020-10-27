@@ -255,7 +255,7 @@ async function validatePluginsOptions(
   return { errors, plugins: newPlugins }
 }
 
-export async function validatePluginOptions(
+export async function validateConfigPluginsOptions(
   config: ISiteConfig = {}
 ): Promise<void> {
   if (!config.plugins) return

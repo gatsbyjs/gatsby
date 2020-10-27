@@ -11,7 +11,7 @@ import {
   handleMultipleReplaceRenderers,
   ExportType,
   ICurrentAPIs,
-  validatePluginOptions,
+  validateConfigPluginsOptions,
 } from "./validate"
 import {
   IPluginInfo,
@@ -51,51 +51,32 @@ const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   return flattened
 }
 
-const normalizePlugins = (
-  plugins?: Array<PluginRef>
-): Array<IPluginRefObject> =>
-  (plugins || []).map(
-    (plugin): IPluginRefObject => {
-      if (typeof plugin === `string`) {
-        return {
-          resolve: plugin,
-          options: {},
-        }
-      }
-
-      if (plugin.options?.plugins) {
-        plugin.options = {
-          ...plugin.options,
-          plugins: normalizePlugins(plugin.options.plugins),
-        }
-      }
-
-      return plugin
+function normalizePlugin(plugin): IPluginRefObject {
+  if (typeof plugin === `string`) {
+    return {
+      resolve: plugin,
+      options: {},
     }
-  )
+  }
+
+  if (plugin.options?.plugins) {
+    plugin.options = {
+      ...plugin.options,
+      plugins: normalizePlugins(plugin.options.plugins),
+    }
+  }
+
+  return plugin
+}
+
+function normalizePlugins(plugins?: Array<PluginRef>): Array<IPluginRefObject> {
+  return (plugins || []).map(normalizePlugin)
+}
 
 const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
   return {
     ...config,
-    plugins: (config.plugins || []).map(
-      (plugin): IPluginRefObject => {
-        if (typeof plugin === `string`) {
-          return {
-            resolve: plugin,
-            options: {},
-          }
-        }
-
-        if (plugin.options?.plugins) {
-          plugin.options = {
-            ...plugin.options,
-            plugins: normalizePlugins(plugin.options.plugins),
-          }
-        }
-
-        return plugin
-      }
-    ),
+    plugins: (config.plugins || []).map(normalizePlugin),
   }
 }
 
@@ -108,7 +89,7 @@ export async function loadPlugins(
 
   // Show errors for invalid plugin configuration
   if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-    await validatePluginOptions(config)
+    await validateConfigPluginsOptions(config)
   }
 
   const currentAPIs = getAPI({
