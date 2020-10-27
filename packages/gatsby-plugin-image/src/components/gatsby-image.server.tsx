@@ -41,8 +41,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
     width,
     height,
-    layout,
-    backgroundColor
+    layout
   )
 
   const cleanedImages: ISharpGatsbyImageData["images"] = {
@@ -78,7 +77,17 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
       className={`${wClass}${className ? ` ${className}` : ``}`}
     >
       <LayoutWrapper layout={layout} width={width} height={height}>
-        {placeholder && <Placeholder {...getPlaceholderProps(placeholder)} />}
+        <Placeholder
+          {...getPlaceholderProps(
+            placeholder,
+            false,
+            layout,
+            width,
+            height,
+            backgroundColor
+          )}
+        />
+
         <MainImage
           data-gatsby-image-ssr=""
           sizes={sizes}
