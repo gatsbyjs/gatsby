@@ -375,6 +375,17 @@ jobs:
           test_path: e2e-tests/gatsby-static-image
           test_command: yarn test
 
+  e2e_tests_visual-regression:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/visual-regression
+          test_command: yarn test
+      - store_artifacts:
+          path: e2e-tests/visual-regression/__diff_output__
+      - store_test_results:
+          path: e2e-tests/visual-regression/cypress/results
+
   starters_validate:
     executor: node
     steps:
@@ -581,6 +592,8 @@ workflows:
       - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-static-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
