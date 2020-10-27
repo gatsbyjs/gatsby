@@ -220,6 +220,10 @@ export async function validatePluginOptions(
           optionsSchema,
           (plugin.options as IPluginInfoOptions) || {}
         )
+
+        if (plugin.options.plugins) {
+          await validatePluginOptions({ plugins: plugin.options.plugins })
+        }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
           reporter.error({
