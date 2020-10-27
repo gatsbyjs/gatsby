@@ -544,9 +544,7 @@ const errors = {
       column,
     }): string => `The path "${path}" errored during SSR.
 
-    Edit its component ${filePath}:${line}:${column} to resolve the error.
-
-    See this docs page for more information https://gatsby.dev/debug-html`,
+    Edit its component ${filePath}:${line}:${column} to resolve the error.`,
     level: Level.WARNING,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
