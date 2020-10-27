@@ -122,7 +122,7 @@ export function getMainProps(
     result.style.position = `absolute`
     result.style.top = 0
     result.style.transform = `translateZ(0)`
-    result.style.transition = `opacity 500ms linear`
+    result.style.transition = `opacity 250ms linear`
     result.style.width = `100%`
     result.style.willChange = `opacity`
     result.style.objectFit = `cover`
@@ -166,6 +166,7 @@ export function getPlaceholderProps(
     "data-placeholder-image": ``,
     style: {
       opacity: isLoaded ? 0 : 1,
+      transition: `opacity 500ms linear`,
       ...wrapperStyle,
     },
   }
