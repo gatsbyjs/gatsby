@@ -97,7 +97,7 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
 
 ## Best practices for option schemas
 
-The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema` as it shows all the available types and methods.
+The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema`, as it shows all the available types and methods.
 
 Here are some specific Joi best practices for `pluginOptionsSchema`s:
 
