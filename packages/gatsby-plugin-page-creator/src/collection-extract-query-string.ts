@@ -21,12 +21,12 @@ export function collectionExtractQueryString(
   // so it can hit this case.
   if (!modelType) return null
 
-  // 1.  Read the file and scan for a use of unstable_collectionGraphql
+  // 1.  Read the file and scan for a use of collectionGraphql
   const fileContents = fs.readFileSync(absolutePath).toString()
 
   // 2.  If the user is using the collectionGraphql function, we have to
   //     parse the file and extract it's contents
-  if (fileContents.includes(`unstable_collectionGraphql`)) {
+  if (fileContents.includes(`collectionGraphql`)) {
     const ast = babelParseToAst(fileContents, absolutePath)
 
     traverse(ast, {
@@ -36,7 +36,7 @@ export function collectionExtractQueryString(
         }
         path.traverse({
           TaggedTemplateExpression(path) {
-            const { text } = getGraphQLTag(path, `unstable_collectionGraphql`)
+            const { text } = getGraphQLTag(path, `collectionGraphql`)
             if (!text) return
 
             if (text.includes(`...CollectionPagesQueryFragment`) === false) {
