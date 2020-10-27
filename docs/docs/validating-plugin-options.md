@@ -51,7 +51,7 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
    npm install gatsby-plugin-utils
    ```
 
-2. Use the `testPluginOptionsSchema` function exported from the package in your test file. For example, with [Jest](https://jestjs.io):
+2. Use the `testPluginOptionsSchema` function exported from the package in your test file. For example, with [Jest](https://jestjs.io), your tests might look something like this:
 
    ```javascript:title=plugins/gatsby-plugin-console/__tests__/gatsby-node.js
    // This is an example using Jest (https://jestjs.io/)
