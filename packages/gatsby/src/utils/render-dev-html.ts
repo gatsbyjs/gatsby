@@ -1,14 +1,11 @@
 import JestWorker from "jest-worker"
 
 const startWorker = (): any => {
-  const newWorker = new JestWorker(
-    require.resolve(`./render-dev-html-child.js`),
-    {
-      exposedMethods: [`renderHTML`],
-      numWorkers: 1,
-      enableWorkerThreads: true,
-    }
-  )
+  const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
+    exposedMethods: [`renderHTML`],
+    numWorkers: 1,
+    enableWorkerThreads: true,
+  })
 
   // jest-worker is lazy with forking but we want to fork immediately so the user
   // doesn't have to wait.
