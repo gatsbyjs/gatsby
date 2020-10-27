@@ -61,7 +61,8 @@ const reporter = {
     }
   }),
 }
-const { onPostBootstrap } = require(`../gatsby-node`)
+const { onPostBootstrap, pluginOptionsSchema } = require(`../gatsby-node`)
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 
 const apiArgs = {
   reporter,
@@ -522,5 +523,17 @@ describe(`Test plugin manifest options`, () => {
     await onPostBootstrap({ ...apiArgs }, specificOptions)
 
     expect(fs.copyFileSync).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe(`pluginOptionsSchema`, () => {
+  it(`validates options correctly`, () => {
+    expect(testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
+      .toMatchInlineSnapshot(`
+      Object {
+        "errors": Array [],
+        "isValid": true,
+      }
+    `)
   })
 })

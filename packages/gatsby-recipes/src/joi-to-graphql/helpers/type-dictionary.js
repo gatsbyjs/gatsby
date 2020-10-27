@@ -1,6 +1,4 @@
-"use strict"
-
-const {
+import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLID,
@@ -10,16 +8,16 @@ const {
   GraphQLBoolean,
   GraphQLNonNull,
   GraphQLEnumType,
-} = require(`graphql`)
+} from "graphql"
 
-module.exports = {
-  object: GraphQLObjectType,
-  string: GraphQLString,
-  guid: GraphQLID,
-  integer: GraphQLInt,
-  number: GraphQLFloat,
-  array: GraphQLList,
-  boolean: GraphQLBoolean,
-  required: GraphQLNonNull,
-  enum: GraphQLEnumType,
+export {
+  GraphQLObjectType as object,
+  GraphQLString as string,
+  GraphQLID as guid,
+  GraphQLInt as integer,
+  GraphQLFloat as number,
+  GraphQLList as array,
+  GraphQLBoolean as boolean,
+  GraphQLNonNull as required,
+  GraphQLEnumType as enum,
 }

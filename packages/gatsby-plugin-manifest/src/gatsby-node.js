@@ -59,7 +59,7 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 }
 
 if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = ({ Joi }) => {
+  exports.pluginOptionsSchema = ({ Joi }) =>
     Joi.object({
       name: Joi.string(),
       short_name: Joi.string(),
@@ -89,13 +89,13 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
           src: Joi.string(),
           sizes: Joi.string(),
           type: Joi.string(),
+          purpose: Joi.string(),
         })
       ),
       icon_options: Joi.object({
         purpose: Joi.string(),
       }),
     })
-  }
 }
 
 /**
