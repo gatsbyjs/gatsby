@@ -137,7 +137,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 ```
 
-### Validating external access
+ ### Validate external access 
 
 Some plugins (particularly source plugins) query external APIs. With the `.external()` method, you can asynchronously validate that the user has access to the API, providing a better experience if they pass invalid secrets.
 
