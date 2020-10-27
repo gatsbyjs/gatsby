@@ -2,5 +2,5 @@
   "baseUrl": "http://localhost:8000",
   "failOnStatusCode": false,
   "chromeWebSecurity": false,
-  "pageLoadTimeout": 10000
+  "taskTimeout": 10000
 }
