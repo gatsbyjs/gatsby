@@ -99,9 +99,6 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-blog)
 
-[![Deploy to Platform.sh](https://platform.sh/images/deploy/sml-blue.svg)](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/gatsby/.platform.template.yaml&utm_content=gatsby&utm_source=github&utm_medium=button&utm_campaign=deploy_on_platform)
-
-
 <a href="https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/gatsby/.platform.template.yaml&utm_content=gatsby&utm_source=github&utm_medium=button&utm_campaign=deploy_on_platform">
     <img src="https://platform.sh/images/deploy/lg-blue.svg" alt="Deploy on Platform.sh" width="180px" />
 </a>
