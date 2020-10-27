@@ -18,11 +18,8 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
-    "build": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
     "start": "npm run develop"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.2"
   }
 }
