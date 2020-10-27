@@ -65,6 +65,7 @@ const errorParser = ({
       cb: (match): IMatch => {
         return {
           id: `85923`,
+          category: `USER`,
           context: {
             sourceMessage: match[0],
             field: match[1],
