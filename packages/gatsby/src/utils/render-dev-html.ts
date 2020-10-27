@@ -1,9 +1,8 @@
-import sysPath from "path"
 import JestWorker from "jest-worker"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(
-    sysPath.join(__dirname, `./render-dev-html-child.js`),
+    require.resolve(`./render-dev-html-child.js`),
     {
       exposedMethods: [`renderHTML`],
       numWorkers: 1,
