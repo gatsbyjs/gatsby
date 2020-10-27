@@ -1,8 +1,8 @@
-import { codeFrameColumns } from "@babel/code-frame"
-import ansiHTML from "ansi-html"
-import fs from "fs-extra"
-import sysPath from "path"
-import report from "gatsby-cli/lib/reporter"
+const { codeFrameColumns } = require(`@babel/code-frame`)
+const ansiHTML = require(`ansi-html`)
+const fs = require(`fs-extra`)
+const sysPath = require(`path`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 interface IErrorPosition {
   filename: string
