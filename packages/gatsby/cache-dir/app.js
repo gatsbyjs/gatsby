@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import domReady from "@mikaelkristiansson/domready"
 import io from "socket.io-client"
 
-import socketIo, { setLoader as socketIoSetLoader } from "./socketIo"
+import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
@@ -16,8 +16,6 @@ window.___emitter = emitter
 
 const loader = new DevLoader(syncRequires, matchPaths)
 setLoader(loader)
-// TODO REFACTOR
-socketIoSetLoader(loader)
 loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
@@ -112,7 +110,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(window.location.pathname),
   ]).then(() => {
     const preferDefault = m => (m && m.default) || m
-    let Root = preferDefault(require(`./root`))
+    const Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)

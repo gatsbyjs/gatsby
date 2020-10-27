@@ -502,6 +502,19 @@ export const setLoader = _loader => {
   instance = _loader
 }
 
+export function invalidatePageDb(paths) {
+  paths.forEach(path => {
+    instance.pageDb.delete(findPath(path))
+    instance.pageDataDb.delete(findPath(path))
+  })
+}
+
+export function invalidateStaticQueries(ids) {
+  ids.forEach(id => {
+    delete instance.staticQueryDb[id]
+  })
+}
+
 export const publicLoader = {
   // Deprecated methods. As far as we're aware, these are only used by
   // core gatsby and the offline plugin, however there's a very small
