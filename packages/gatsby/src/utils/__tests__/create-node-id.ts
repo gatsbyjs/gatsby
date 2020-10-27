@@ -104,7 +104,7 @@ describe(`createNodeId`, (): void => {
       )
 
       // The id should be consistent and deterministic (input should affect output, not run instance or rng)
-      expect(id).toMatchInlineSnapshot(`"a4c1c7d4"`)
+      expect(id).toMatchInlineSnapshot(`"Ga4c1c7d4"`)
     })
 
     it(`should hash a value with a namespace`, () => {
@@ -142,9 +142,9 @@ describe(`createNodeId`, (): void => {
       expect(id1 !== id2).toBe(true)
 
       // For completion sake
-      expect(idSans).toMatchInlineSnapshot(`"2546f2f0"`)
-      expect(id1).toMatchInlineSnapshot(`"2f0665fc2546f2f0"`)
-      expect(id2).toMatchInlineSnapshot(`"9ff818ec2546f2f0"`)
+      expect(idSans).toMatchInlineSnapshot(`"G2546f2f0"`)
+      expect(id1).toMatchInlineSnapshot(`"G2f0665fc2546f2f0"`)
+      expect(id2).toMatchInlineSnapshot(`"G9ff818ec2546f2f0"`)
     })
 
     it(`return same id for same input`, () => {
@@ -155,8 +155,8 @@ describe(`createNodeId`, (): void => {
       const idWith = createNodeId(KEY, NS)
 
       // Only input should affect it so repetitive calls should not change the output
-      expect(idSans).toMatchInlineSnapshot(`"92954a39"`)
-      expect(idWith).toMatchInlineSnapshot(`"2f0665fc92954a39"`)
+      expect(idSans).toMatchInlineSnapshot(`"G92954a39"`)
+      expect(idWith).toMatchInlineSnapshot(`"G2f0665fc92954a39"`)
 
       for (let i = 0; i < 10; ++i) {
         const idSans2 = createNodeId(KEY)

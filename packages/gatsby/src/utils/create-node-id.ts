@@ -53,7 +53,8 @@ export function createNodeId(
     const ns = namespace ? XXH.h32(namespace, SEED).toString(16) : ``
     const val = XXH.h32(id, SEED).toString(16)
 
-    return `${ns}${val}`
+    // Prefix a `G` to prevent the id to look like a serialized number. If we don't then type inference might fail.
+    return `G${ns}${val}`
   }
 
   return uuidv5(id, uuidv5(namespace, seedConstant))
