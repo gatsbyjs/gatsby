@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.39...gatsby-source-wordpress@3.3.40) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-wordpress ([#27655](https://github.com/gatsbyjs/gatsby/issues/27655)) ([b33f403](https://github.com/gatsbyjs/gatsby/commit/b33f403535c719b1b85698820abea21c5ae89a25))
+
 ## [3.3.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.38...gatsby-source-wordpress@3.3.39) (2020-10-16)
 
 **Note:** Version bump only for package gatsby-source-wordpress

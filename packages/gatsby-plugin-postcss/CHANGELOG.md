@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.3...gatsby-plugin-postcss@3.0.4) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-postcss ([#27280](https://github.com/gatsbyjs/gatsby/issues/27280)) ([ed75748](https://github.com/gatsbyjs/gatsby/commit/ed75748805eb1fa10e2446388b5992a51133f182))
+
 ## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@3.0.2...gatsby-plugin-postcss@3.0.3) (2020-10-14)
 
 ### Bug Fixes
