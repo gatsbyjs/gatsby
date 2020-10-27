@@ -74,7 +74,7 @@ const parseError = function (err, directory) {
   const line = position.line
   const row = position.row
   ansiHTML.setColors({
-    reset: [colors.text, colors.background], // FOREGROUND-COLOR or [FOREGROUND-COLOR] or [, BACKGROUND-COLOR] or [FOREGROUND-COLOR, BACKGROUND-COLOR]
+    reset: [colors.text, colors.background], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
     black: `aaa`, // String
     red: colors.keyword,
     green: colors.green,
@@ -112,16 +112,8 @@ const parseError = function (err, directory) {
 
 exports.parseError = parseError
 
-exports.renderHTML = ({
-  path,
-  htmlComponentRendererPath,
-  directory,
-  warming = false,
-}) => {
-  if (warming) {
-    return `warmed up`
-  }
-  return new Promise((resolve, reject) => {
+exports.renderHTML = ({ path, htmlComponentRendererPath, directory }) =>
+  new Promise((resolve, reject) => {
     const htmlComponentRenderer = require(htmlComponentRendererPath)
     try {
       htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
@@ -142,8 +134,9 @@ exports.renderHTML = ({
       // return { error }
     }
   })
-}
 
 exports.deleteModuleCache = htmlComponentRendererPath => {
   delete require.cache[require.resolve(htmlComponentRendererPath)]
 }
+
+exports.warmup = () => `warmed`

@@ -2,7 +2,7 @@ import JestWorker from "jest-worker"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
-    exposedMethods: [`renderHTML`, `deleteModuleCache`],
+    exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
     numWorkers: 1,
     enableWorkerThreads: true,
   })
@@ -10,9 +10,7 @@ const startWorker = (): any => {
   // jest-worker is lazy with forking but we want to fork immediately so the user
   // doesn't have to wait.
   // @ts-ignore
-  newWorker.renderHTML({
-    warming: true,
-  })
+  newWorker.warmup()
 
   return newWorker
 }
