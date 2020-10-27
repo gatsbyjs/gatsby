@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.89](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.88...gatsby@2.24.89) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** leak less in chokidar listeners ([#27685](https://github.com/gatsbyjs/gatsby/issues/27685)) ([e0a3645](https://github.com/gatsbyjs/gatsby/commit/e0a3645d7c788b7c589d69187840305a650678f7))
+
 ## [2.24.88](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.87...gatsby@2.24.88) (2020-10-27)
 
 ### Bug Fixes
