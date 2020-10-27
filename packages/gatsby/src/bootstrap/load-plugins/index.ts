@@ -19,7 +19,7 @@ import {
   ISiteConfig,
   IRawSiteConfig,
 } from "./types"
-import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
+import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -51,7 +51,30 @@ const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   return flattened
 }
 
-const normalizePlugins = (config: IRawSiteConfig = {}): ISiteConfig => {
+const normalizePlugins = (
+  plugins?: Array<PluginRef>
+): Array<IPluginRefObject> =>
+  (plugins || []).map(
+    (plugin): IPluginRefObject => {
+      if (typeof plugin === `string`) {
+        return {
+          resolve: plugin,
+          options: {},
+        }
+      }
+
+      if (plugin.options?.plugins) {
+        plugin.options = {
+          ...plugin.options,
+          plugins: normalizePlugins(plugin.options.plugins),
+        }
+      }
+
+      return plugin
+    }
+  )
+
+const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
   return {
     ...config,
     plugins: (config.plugins || []).map(
@@ -63,8 +86,11 @@ const normalizePlugins = (config: IRawSiteConfig = {}): ISiteConfig => {
           }
         }
 
-        if (plugin.options.plugins) {
-          plugin.options = normalizePlugins(plugin.options)
+        if (plugin.options?.plugins) {
+          plugin.options = {
+            ...plugin.options,
+            plugins: normalizePlugins(plugin.options.plugins),
+          }
         }
 
         return plugin
@@ -78,7 +104,7 @@ export async function loadPlugins(
   rootDir: string | null = null
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
-  const config = normalizePlugins(rawConfig)
+  const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
   if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
