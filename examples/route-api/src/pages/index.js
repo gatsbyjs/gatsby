@@ -8,7 +8,7 @@ function Index({ data }) {
         <h1>File System Route API</h1>
         <p>
           Please see the{` `}
-          <a href="https://www.gatsbyjs.com/docs/file-system-page-creation">
+          <a href="https://www.gatsbyjs.com/docs/file-system-route-api">
             documentation
           </a>
           {` `}
@@ -62,6 +62,28 @@ function Index({ data }) {
             </li>
           ))}
         </ul>
+        <h3>Nested collections</h3>
+        <p>
+          The example below does a <em>group</em> query on all parks and links to them. The paths are created as nested collections, e.g. to construct a route at <em>/parks/theme-park/park-one/</em>.
+        </p>
+        <div>
+          {data.parks.group.map(field => {
+            const groupName = field.fieldValue
+
+            return (
+              <React.Fragment>
+                <h4>{groupName}</h4>
+                <ul>
+                  {field.nodes.map(park => (
+                    <li key={park.gatsbyPath}>
+                      <Link to={park.gatsbyPath}>{park.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </React.Fragment>
+            )
+          })}
+        </div>
         <h2>Client-Only routes</h2>
         <p>
           As shortly mentioned for the "Collection routes" the{` `}
@@ -109,6 +131,15 @@ export const query = graphql`
           ... on File {
             name
           }
+        }
+      }
+    }
+    parks: allPark {
+      group(field: meta___location___type) {
+        fieldValue
+        nodes {
+          name
+          gatsbyPath(filePath: "/parks/{park.meta__location__type}/{park.name}")
         }
       }
     }
