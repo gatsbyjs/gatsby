@@ -1,19 +1,23 @@
 import io from "socket.io-client"
 import { reportError, clearError } from "./error-overlay-handler"
 import normalizePagePath from "./normalize-page-path"
+// TODO move away from lodash
+import isEqual from "lodash/isEqual"
 
 let socket = null
 
 const inFlightGetPageDataPromiseCache = {}
 let staticQueryData = {}
 let pageQueryData = {}
+// dev-loader
+// TODO REFACTOR
+let loader
 
 export const getStaticQueryData = () => staticQueryData
 export const getPageQueryData = () => pageQueryData
 
 const didDataChange = (id, queryData, exisitingQueryData) =>
-  !(id in exisitingQueryData) ||
-  JSON.stringify(exisitingQueryData) !== JSON.stringify(queryData[id])
+  !(id in exisitingQueryData) || !isEqual(queryData, exisitingQueryData[id])
 
 export default function socketIo() {
   if (process.env.NODE_ENV !== `production`) {
@@ -50,16 +54,23 @@ export default function socketIo() {
             }
           } else if (msg.type === `pageQueryResult`) {
             const normalizedPagePath = normalizePagePath(msg.payload.id)
-            if (
-              didDataChange(
-                normalizedPagePath,
-                msg.payload.result,
-                pageQueryData
-              )
-            ) {
+
+            const result = {
+              ...msg.payload.result,
+            }
+            if (didDataChange(normalizedPagePath, result, pageQueryData)) {
+              // update page database, make sure it is in-sync
+              if (loader && loader.pageDb.has(normalizedPagePath)) {
+                const cachedPageDbData = loader.pageDb.get(normalizedPagePath)
+                cachedPageDbData.payload.page.staticQueryHashes =
+                  result.staticQueryHashes
+                cachedPageDbData.payload.json = result.result
+                loader.pageDb.set(normalizedPagePath, cachedPageDbData)
+              }
+
               pageQueryData = {
                 ...pageQueryData,
-                [normalizedPagePath]: msg.payload.result,
+                [normalizedPagePath]: result,
               }
             }
           } else if (msg.type === `overlayError`) {
@@ -90,15 +101,22 @@ export default function socketIo() {
   }
 }
 
+function setLoader(devLoader) {
+  loader = devLoader
+}
+
 function savePageDataAndStaticQueries(
   pathname,
-  pageData,
+  { webpackCompilationHash, matchPath, ...pageData },
   staticQueriesData = {}
 ) {
   const normalizedPagePath = normalizePagePath(pathname)
 
   if (didDataChange(normalizedPagePath, pageData, pageQueryData)) {
-    pageQueryData[normalizedPagePath] = pageData
+    pageQueryData = {
+      ...pageQueryData,
+      [normalizedPagePath]: pageData,
+    }
   }
 
   for (const id in staticQueriesData) {
@@ -157,4 +175,5 @@ export {
   registerPath,
   unregisterPath,
   savePageDataAndStaticQueries,
+  setLoader,
 }

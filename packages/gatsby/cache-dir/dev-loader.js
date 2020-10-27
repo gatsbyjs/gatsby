@@ -11,7 +11,7 @@ class DevLoader extends BaseLoader {
 
   loadPage(pagePath) {
     const realPath = findPath(pagePath)
-    return super.loadPage(realPath).then(result => {
+    return super.loadPage(realPath).then((result = {}) => {
       savePageDataAndStaticQueries(
         realPath,
         {
