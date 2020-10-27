@@ -57,16 +57,6 @@ export function createNodeId(id: string | number, namespace: string): string {
     return hash
   }
 
-  if (
-    ![
-      `Plugin`,
-      `gatsby-source-contentful`,
-      `gatsby-transformer-remark`,
-    ].includes(namespace)
-  ) {
-    console.log(`namespace:`, namespace)
-  }
-
   hash = uuidv5(id, nsHash)
   idCache.set(key, hash)
   return hash
