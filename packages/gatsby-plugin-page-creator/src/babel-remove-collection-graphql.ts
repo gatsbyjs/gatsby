@@ -1,3 +1,6 @@
+// Taken from `babel-plugin-remove-graphql-queries`
+// In the future import from there
+
 import { NodePath, PluginObj } from "@babel/core"
 import { Binding } from "@babel/traverse"
 import {
