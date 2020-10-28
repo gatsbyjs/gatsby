@@ -178,7 +178,7 @@ It does come with the advantage of querying your data from one place after decla
 
 However, it doesn’t give you the opportunity to know what exactly you are querying for in the template and if any changes occur in the component query structure in `gatsby-node.js`. [Hot reload](/docs/glossary#hot-module-replacement) is taken off the table and the site needs to be rebuilt for changes to reflect.
 
-Gatsby stores page metadata (including context) in a redux store (which also means that it stores the memory of the page). For larger sites (either number of pages and/or amount of data that is being passed via page context) this will cause problems. There might be "out of memory" crashes if it's too much data or degraded performance.
+Gatsby stores page metadata (including context) in a Redux store (which also means that it stores the memory of the page). For larger sites (either number of pages and/or amount of data that is being passed via page context) this will cause problems. There might be "out of memory" crashes if it's too much data or degraded performance.
 
 > If there is memory pressure, Node.js will try to garbage collect more often, which is a known performance issue.
 
