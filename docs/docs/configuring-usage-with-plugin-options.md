@@ -195,7 +195,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 #### Deprecating options
 
-While you can simply remove options from the schema in major versions, that causes cryptic error messages for users upgrading with existing configuration. Instead, deprecate them using the [`.forbidden()` method](https://joi.dev/api/?v=17.2.1#anyforbidden) in a major version release. Then, [add a custom error message](#add-custom-error-messages) explaining how users should upgrade the functionality using `.messages()`.
+While you can simply remove options from the schema in major versions, that causes cryptic error messages for users upgrading with existing configuration. Instead, deprecate them using the [`.forbidden()` method](https://joi.dev/api/?v=17.3.0#anyforbidden) in a major version release. Then, [add a custom error message](#add-custom-error-messages) explaining how users should upgrade the functionality using `.messages()`.
 
 For example:
 
