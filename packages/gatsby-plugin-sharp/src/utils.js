@@ -144,13 +144,14 @@ export function fixedImageSizes({
   maxWidth,
   height,
   maxHeight,
-  fit = `cover`,
+  transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
   reporter,
 }) {
   let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
+  const { fit = `cover` } = transformOptions
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities)
 
@@ -225,12 +226,14 @@ export function fluidImageSizes({
   width,
   maxWidth,
   height,
-  fit,
+  transformOptions = {},
   maxHeight,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
   reporter,
 }) {
+  const { fit = `cover` } = transformOptions
+
   // warn if ignored parameters are passed in
   warnForIgnoredParameters(
     `fluid and constrained`,

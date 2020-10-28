@@ -4,29 +4,39 @@ import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
-import type { SharpInstance } from "sharp"
+import type { Sharp } from "sharp"
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
+
+type ImageFormat = "jpg" | "png" | "webp" | "" | "auto"
 export interface ISharpGatsbyImageArgs {
   layout?: "fixed" | "fluid" | "constrained"
+  formats?: Array<ImageFormat>
   placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
   tracedSVGOptions?: Record<string, unknown>
   width?: number
   height?: number
   maxWidth?: number
   maxHeight?: number
-  fit?: "contain" | "cover" | "fill" | "inside" | "outside"
-  [key: string]: unknown
+  sizes?: string
+  quality?: number
+  transformOptions: {
+    fit?: "contain" | "cover" | "fill" | "inside" | "outside"
+  }
+  jpgOptions: Record<string, unknown>
+  pngOptions: Record<string, unknown>
+  webpOptions: Record<string, unknown>
+  blurredOptions: { width?: number; toFormat?: ImageFormat }
 }
 export type FileNode = Node & {
   absolutePath?: string
 }
 
 export interface IImageMetadata {
-  width: number
-  height: number
-  format: string
-  density?: string
+  width?: number
+  height?: number
+  format?: string
+  density?: number
   dominantColor?: string
 }
 
@@ -45,7 +55,7 @@ export async function getImageMetadata(
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
-  const pipeline: SharpInstance = sharp(file.absolutePath)
+  const pipeline: Sharp = sharp(file.absolutePath)
 
   const { width, height, density, format } = await pipeline.metadata()
 
@@ -86,9 +96,35 @@ export async function generateImageData({
     layout = `fixed`,
     placeholder = `dominantColor`,
     tracedSVGOptions = {},
+    quality,
   } = args
 
+  const formats = new Set(args.formats)
+  let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
+
+  if (formats.has(`jpg`) && formats.has(`png`)) {
+    reporter.warn(
+      `Specifying both "jpg" and "png" formats is not supported and will be ignored. Please use "auto" instead.`
+    )
+    useAuto = true
+  }
+
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+
+  let primaryFormat: ImageFormat | undefined
+  let options: Record<string, unknown> | undefined
+  if (useAuto) {
+    primaryFormat = (metadata.format || file.extension) as ImageFormat
+  } else if (formats.has(`png`)) {
+    primaryFormat = `png`
+    options = args.pngOptions
+  } else if (formats.has(`jpg`)) {
+    primaryFormat = `jpg`
+    options = args.jpgOptions
+  } else if (formats.has(`webp`)) {
+    primaryFormat = `webp`
+    options = args.webpOptions
+  }
 
   const imageSizes: {
     sizes: Array<number>
@@ -107,10 +143,13 @@ export async function generateImageData({
   const transforms = imageSizes.sizes.map(outputWidth => {
     const width = Math.round(outputWidth)
     const transform = createTransformObject({
-      ...args,
+      quality,
+      ...args.transformOptions,
+      ...options,
+      tracedSVGOptions,
       width,
       height: Math.round(width / imageSizes.aspectRatio),
-      toFormat: args.toFormat || metadata.format,
+      toFormat: primaryFormat,
     })
 
     if (pathPrefix) transform.pathPrefix = pathPrefix
@@ -159,11 +198,14 @@ export async function generateImageData({
     },
   }
 
-  if (args.webP) {
+  if (primaryFormat !== `webp` && formats.has(`webp`)) {
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        ...args,
+        quality,
+        ...args.transformOptions,
+        ...args.webpOptions,
+        tracedSVGOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
@@ -186,9 +228,16 @@ export async function generateImageData({
   }
 
   if (placeholder === `blurred`) {
+    const placeholderWidth = args.blurredOptions?.width || 20
     const { src: fallback } = await base64({
       file,
-      args: { ...args, width: args.base64Width, height: args.base64Height },
+      args: {
+        ...options,
+        ...args.transformOptions,
+        toFormatBase64: args.blurredOptions?.toFormat,
+        width: placeholderWidth,
+        height: Math.round(placeholderWidth / imageSizes.aspectRatio),
+      },
       reporter,
     })
     imageProps.placeholder = {

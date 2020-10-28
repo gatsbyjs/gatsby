@@ -34,6 +34,11 @@ const {
   ImageFitType,
   ImageLayoutType,
   ImagePlaceholderType,
+  JPGOptionsType,
+  PNGOptionsType,
+  WebPOptionsType,
+  BlurredOptionsType,
+  TransformOptionsType,
 } = require(`./types`)
 const { stripIndent } = require(`common-tags`)
 const { prefixId, CODES } = require(`./error-utils`)
@@ -380,6 +385,8 @@ const fluidNodeType = ({
   }
 }
 
+let warnedForAlpha = false
+
 const imageNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -415,6 +422,10 @@ const imageNodeType = ({
       },
       maxHeight: {
         type: GraphQLInt,
+        description: stripIndent`
+        If set, the generated image is a maximum of this height, cropping if necessary. 
+        If the image layout is "constrained" then the image will be limited to this height. 
+        If the aspect ratio of the image is different than the source, then the image will br cropped.`,
       },
       width: {
         type: GraphQLInt,
@@ -426,6 +437,8 @@ const imageNodeType = ({
       },
       height: {
         type: GraphQLInt,
+        description: stripIndent`
+        If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
       },
       placeholder: {
         type: ImagePlaceholderType,
@@ -433,19 +446,27 @@ const imageNodeType = ({
         description: stripIndent`
         Format of generated placeholder image. 
         DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
-        BASE64: a blurred, low resolution image, encoded as a base64 data URI
+        BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
         TRACED_SVG: a low-resolution traced SVG of the image.
         NONE: no placeholder. Set "background" to use a fixed background color.`,
+      },
+      blurredOptions: {
+        type: BlurredOptionsType,
+        description: `Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this`,
       },
       tracedSVGOptions: {
         type: PotraceType,
         defaultValue: false,
-        description: `Options for traced placeholder SVGs. You also should set placeholder to SVG.`,
+        description: `Options for traced placeholder SVGs. You also should set placeholder to "SVG".`,
       },
-      webP: {
-        type: GraphQLBoolean,
-        defaultValue: true,
-        description: `Generate images in WebP format as well as matching the input format. This is the default (and strongly recommended), but will add to processing time.`,
+      formats: {
+        type: GraphQLList(ImageFormatType),
+        description: stripIndent`
+        The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG" and "WEBP". 
+        The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+        not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs.
+        `,
+        defaultValue: [``, `WEBP`],
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLInt),
@@ -462,72 +483,24 @@ const imageNodeType = ({
         container will be the full width of the screen. In these cases we will generate an appropriate value.
         `,
       },
-      base64Width: {
-        type: GraphQLInt,
-      },
-      grayscale: {
-        type: GraphQLBoolean,
-        defaultValue: false,
-      },
-      jpegProgressive: {
-        type: GraphQLBoolean,
-        defaultValue: true,
-      },
-      pngCompressionSpeed: {
-        type: GraphQLInt,
-        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
-      },
-      duotone: {
-        type: DuotoneGradientType,
-        defaultValue: false,
-      },
       quality: {
         type: GraphQLInt,
       },
-      jpegQuality: {
-        type: GraphQLInt,
+      jpgOptions: {
+        type: JPGOptionsType,
       },
-      pngQuality: {
-        type: GraphQLInt,
+      pngOptions: {
+        type: PNGOptionsType,
       },
-      webpQuality: {
-        type: GraphQLInt,
+      webpOptions: {
+        type: WebPOptionsType,
       },
-      toFormat: {
-        type: ImageFormatType,
-        defaultValue: ``,
-      },
-      toFormatBase64: {
-        type: ImageFormatType,
-        defaultValue: ``,
-        description: `Force output format. Default is to use the same as the input format`,
-      },
-      cropFocus: {
-        type: ImageCropFocusType,
-        defaultValue: sharp.strategy.attention,
-      },
-      fit: {
-        type: ImageFitType,
-        defaultValue: sharp.fit.cover,
+      transformOptions: {
+        type: TransformOptionsType,
       },
       background: {
         type: GraphQLString,
-        defaultValue: `rgba(0,0,0,1)`,
-      },
-      rotate: {
-        type: GraphQLInt,
-        defaultValue: 0,
-      },
-      trim: {
-        type: GraphQLFloat,
-        defaultValue: false,
-      },
-      srcSetBreakpoints: {
-        type: GraphQLList(GraphQLInt),
-        defaultValue: [],
-        description: stripIndent`\
-        A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]. 
-        You should usually leave this blank and allow it to be generated from the width/maxWidth and outputPixelDensities`,
+        defaultValue: `rgba(0,0,0,0)`,
       },
     },
     resolve: async (image, fieldArgs, context) => {
@@ -538,11 +511,14 @@ const imageNodeType = ({
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
       }
-      reporter.warn(
-        stripIndent`
+      if (!warnedForAlpha) {
+        reporter.warn(
+          stripIndent`
         You are using the alpha version of the \`gatsbyImage\` sharp API, which is unstable and will change without notice. 
         Please do not use it in production.`
-      )
+        )
+        warnedForAlpha = true
+      }
       const imageData = await generateImageData({
         file,
         args,
