@@ -25,7 +25,7 @@ export function isValidCollectionPathImplementation(
 
     try {
       assert(opener, `{`, ``) // This is a noop because of the opening check, but here for posterity
-      assert(model, /^[a-zA-Z_][a-zA-Z0-9_]+$/, errorMessage(part))
+      assert(model, /^[\w_][\w\d_]+$/, errorMessage(part))
       assert(field, /^[a-zA-Z_()]+$/, errorMessage(part))
       assert(closer, `}`, errorMessage(part))
     } catch (e) {

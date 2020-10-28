@@ -53,7 +53,7 @@ export function extractFieldWithoutUnion(filePart: string): string {
 }
 
 const extractFieldRegexCurlyBraces = /[{}]/g
-const extractFieldGraphQLModel = /[a-zA-Z_][a-zA-Z0-9_]+\./
+const extractFieldGraphQLModel = /[\w_][\w\d_]+\./
 
 // Given a filePath part that is a collection marker it do this transformation:
 // {Model.field__(Union)__bar} => field__(Union)__bar
