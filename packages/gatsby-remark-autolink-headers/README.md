@@ -94,7 +94,7 @@ By default, the anchor link has a class of `anchor` (see `className` option to c
 
 In your CSS you can specify this element, in this instance the anchor tag will appear red:
 
-```
+```css
 a.anchor {
     fill: 'red'
 }
