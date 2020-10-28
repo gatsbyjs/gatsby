@@ -1,4 +1,4 @@
-const extractModelRegex = /\{([a-zA-Z]+)\./
+const extractModelRegex = /\{([\w\d_]+)\./
 
 // Given a absolutePath that has a collection marker it will extract the Model.
 // /foo/bar/{Model.bar} => Model
@@ -52,7 +52,7 @@ export function extractFieldWithoutUnion(filePart: string): string {
   )
 }
 
-const extractFieldRegexCurlyBraces = /(\{|\})/g
+const extractFieldRegexCurlyBraces = /[{}]/g
 const extractFieldGraphQLModel = /[a-zA-Z_][a-zA-Z0-9_]+\./
 
 // Given a filePath part that is a collection marker it do this transformation:
