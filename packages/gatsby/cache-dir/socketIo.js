@@ -115,6 +115,8 @@ function savePageDataAndStaticQueries(
       }
     }
   }
+
+  ___emitter.emit(`pageQueryResult`, pageData)
 }
 
 function getPageData(pathname) {
