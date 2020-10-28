@@ -45,6 +45,21 @@ describe(`extract query`, () => {
       ).toBe(`{allType123{nodes{id}}}`)
     })
 
+    it(`handles fields with number or underscore`, () => {
+      expect(
+        generateQueryFromString(
+          `_type123`,
+          compatiblePath(`/foo/{_type123.field123}.js`)
+        )
+      ).toBe(`{allType123{nodes{field123,id}}}`)
+      expect(
+        generateQueryFromString(
+          `_type123`,
+          compatiblePath(`/foo/{_type123._field123}.js`)
+        )
+      ).toBe(`{allType123{nodes{_field123,id}}}`)
+    })
+
     it(`works with different file extensions`, () => {
       expect(
         generateQueryFromString(
