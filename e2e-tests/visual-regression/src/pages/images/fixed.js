@@ -24,7 +24,7 @@ const Page = () => {
         <GatsbyImage
           image={getImage(data.file)}
           loading="eager"
-          alt="chameleon"
+          alt="cornwall"
         />
       </TestWrapper>
     </Layout>
