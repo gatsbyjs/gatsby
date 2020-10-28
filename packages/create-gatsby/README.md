@@ -1,0 +1,15 @@
+# create-gatsby
+
+Create Gatsby apps in an interactive CLI experience that does the plumbing for you.
+
+## Quick Overview
+
+Create a new Gatsby app by running the following command:
+
+```shell
+npx create-gatsby
+```
+
+It will ask you questions about what you're building, and set up a Gatsby project for you.
+
+_Note: this package is different from the Gatsby CLI, it is intended solely to create new sites. The Gatsby CLI supports a similar functionality legacy functionality with the `gatsby new` command._

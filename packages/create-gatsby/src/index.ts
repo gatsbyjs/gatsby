@@ -6,10 +6,13 @@ interface IAnswers {
   project: string
   styling?: string
   cms?: string
+  features?: Array<string>
 }
 
 export async function run(): Promise<void> {
-  console.log(`Welcome to Gatsby! Let's answer some questions`)
+  console.log(
+    `Welcome to Gatsby! This command will generate a new Gatsby site for you with the setup you select. Let's answer some questions:`
+  )
   const data = await prompt<IAnswers>(questions)
 
   const messages: Array<string> = [
@@ -23,6 +26,10 @@ export async function run(): Promise<void> {
     messages.push(
       `🎨 Get you set up to use ${data.styling} for styling your site`
     )
+  }
+
+  if (data.features) {
+    messages.push(`🔌 Install ${data.features.join(`, `)}`)
   }
 
   console.log(`
