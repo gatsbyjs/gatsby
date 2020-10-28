@@ -425,7 +425,9 @@ subpage
 subprocesses
 subscribable
 Suriano
+*svg
 SVG
+*svgs
 SVGs
 symlink
 TalkYard
