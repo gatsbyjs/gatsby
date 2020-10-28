@@ -6,7 +6,7 @@ const fs = require(`fs`)
 
 const {
   onCreateNode,
-  unstable_shouldOnCreateNode
+  unstable_shouldOnCreateNode,
 } = require(`./gatsby/on-create-node`)
 
 /**
@@ -77,7 +77,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         .description(
           `Configure the file extensions that gatsby-plugin-mdx will process`
         ),
-      defaultLayout: Joi.object({})
+      defaultLayouts: Joi.object({})
         .unknown(true)
         .default({})
         .description(`Set the layout components for MDX source types`),
@@ -94,8 +94,16 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
       remarkPlugins: Joi.array()
         .items(
           Joi.alternatives().try(
-            Joi.object({}).unknown(true),
-            Joi.array().items(Joi.object({}).unknown(true))
+            Joi.alternatives().try(
+              Joi.function(),
+              Joi.object({}).unknown(true),
+              Joi.array().items(
+                Joi.alternatives().try(
+                  Joi.object({}).unknown(true),
+                  Joi.function()
+                )
+              )
+            )
           )
         )
         .default([])
@@ -103,8 +111,14 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
       rehypePlugins: Joi.array()
         .items(
           Joi.alternatives().try(
+            Joi.function(),
             Joi.object({}).unknown(true),
-            Joi.array().items(Joi.object({}).unknown(true))
+            Joi.array().items(
+              Joi.alternatives().try(
+                Joi.object({}).unknown(true),
+                Joi.function()
+              )
+            )
           )
         )
         .default([])
