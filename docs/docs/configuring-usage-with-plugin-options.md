@@ -226,7 +226,7 @@ To verify that a `pluginOptionsSchema` behaves as expected, unit test it with di
 1. Add the `gatsby-plugin-utils` package to your site:
 
    ```shell
-   npm install gatsby-plugin-utils
+   npm install --dev gatsby-plugin-utils
    ```
 
 2. Use the `testPluginOptionsSchema` function exported from the package in your test file. It takes two parameters, the plugin's actual Joi schema and an example options object to test. It returns an object with an `isValid` boolean, which will be true or false based on whether or not the options object fits the actual Joi schema, and an `errors` array, which will contain the error messages if the validation failed.
