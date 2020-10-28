@@ -52,3 +52,39 @@ exports.onPostBuild = async (
     createRedirects(pluginData, redirects, rewrites),
   ])
 }
+
+const MATH_ALL_KEYS = /^/
+const pluginOptionsSchema = function ({ Joi }) {
+  // headers is a specific type used by Netlify: https://www.gatsbyjs.com/plugins/gatsby-plugin-netlify/#headers
+  const headersSchema = Joi.object()
+    .pattern(MATH_ALL_KEYS, Joi.array().items(Joi.string()))
+    .description(`Add more Netlify headers to specific pages`)
+
+  return Joi.object({
+    headers: headersSchema,
+    allPageHeaders: Joi.array()
+      .items(Joi.string())
+      .description(`Add more headers to all the pages`),
+    mergeSecurityHeaders: Joi.boolean().description(
+      `When set to true, turns off the default security headers`
+    ),
+    mergeLinkHeaders: Joi.boolean().description(
+      `When set to true, turns off the default gatsby js headers`
+    ),
+    mergeCachingHeaders: Joi.boolean().description(
+      `When set to true, turns off the default caching headers`
+    ),
+    transformHeaders: Joi.function()
+      .maxArity(2)
+      .description(
+        `Transform function for manipulating headers under each path (e.g.sorting), etc. This should return an object of type: { key: Array<string> }`
+      ),
+    generateMatchPathRewrites: Joi.boolean().description(
+      `When set to true, turns off automatic creation of redirect rules for client only paths`
+    ),
+  })
+}
+
+if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
+  exports.pluginOptionsSchema = pluginOptionsSchema
+}

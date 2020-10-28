@@ -3,9 +3,17 @@ import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
+import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
-import { IPluginInfo, IFlattenedPlugin } from "./types"
+import { GatsbyNode } from "../../../"
+import {
+  IPluginInfo,
+  IFlattenedPlugin,
+  IPluginInfoOptions,
+  ISiteConfig,
+} from "./types"
+import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
 
 interface IApi {
   version?: string
@@ -162,6 +170,102 @@ export async function handleBadExports({
         })
       }
     })
+  }
+}
+
+async function validatePluginsOptions(
+  plugins: Array<IPluginRefObject>
+): Promise<{
+  errors: number
+  plugins: Array<IPluginRefObject>
+}> {
+  let errors = 0
+  const newPlugins = await Promise.all(
+    plugins.map(async plugin => {
+      let gatsbyNode
+
+      try {
+        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+      } catch (err) {
+        gatsbyNode = {}
+      }
+
+      if (!gatsbyNode.pluginOptionsSchema) return plugin
+
+      let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
+        GatsbyNode["pluginOptionsSchema"],
+        undefined
+      >)({
+        Joi,
+      })
+
+      // Validate correct usage of pluginOptionsSchema
+      if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
+        reporter.warn(
+          `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`
+        )
+        return plugin
+      }
+
+      try {
+        if (!optionsSchema.describe().keys.plugins) {
+          // All plugins have "plugins: []"" added to their options in load.ts, even if they
+          // do not have subplugins. We add plugins to the schema if it does not exist already
+          // to make sure they pass validation.
+          optionsSchema = optionsSchema.append({
+            plugins: Joi.array().length(0),
+          })
+        }
+
+        plugin.options = await validateOptionsSchema(
+          optionsSchema,
+          (plugin.options as IPluginInfoOptions) || {}
+        )
+
+        if (plugin.options?.plugins) {
+          const {
+            errors: subErrors,
+            plugins: subPlugins,
+          } = await validatePluginsOptions(
+            plugin.options.plugins as Array<IPluginRefObject>
+          )
+          plugin.options.plugins = subPlugins
+          errors += subErrors
+        }
+      } catch (error) {
+        if (error instanceof Joi.ValidationError) {
+          reporter.error({
+            id: `11331`,
+            context: {
+              validationErrors: error.details,
+              pluginName: plugin.resolve,
+            },
+          })
+          errors++
+
+          return plugin
+        }
+
+        throw error
+      }
+
+      return plugin
+    })
+  )
+  return { errors, plugins: newPlugins }
+}
+
+export async function validateConfigPluginsOptions(
+  config: ISiteConfig = {}
+): Promise<void> {
+  if (!config.plugins) return
+
+  const { errors, plugins } = await validatePluginsOptions(config.plugins)
+
+  config.plugins = plugins
+
+  if (errors > 0) {
+    process.exit(1)
   }
 }
 

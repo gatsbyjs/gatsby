@@ -1,8 +1,8 @@
-const { interpret } = require(`xstate`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import { interpret } from "xstate"
+import fs from "fs-extra"
+import path from "path"
 
-const recipeMachine = require(`.`)
+import recipeMachine from "."
 
 describe(`recipe-machine`, () => {
   it(`creates empty plan when the step has no resources`, done => {

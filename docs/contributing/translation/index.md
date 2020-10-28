@@ -34,6 +34,6 @@ Each translation repo will have at least two maintainers and codeowners that are
 
 ## Language-specific channels
 
-Each translation group may want to have a space for maintainers and community members to ask questions and coordinate the project. **[Discord](https://gatsby.dev/discord) is the official channel** and maintainers can have their own private groups if desired. Some groups may elect to use a different platform such as Wechat or Whatsapp, but that will be at your own discretion.
+Each translation group may want to have a space for maintainers and community members to ask questions and coordinate the project. **[Discord](https://gatsby.dev/discord) is the official channel** and maintainers can have their own private groups if desired. Some groups may elect to use a different platform such as WeChat or WhatsApp, but that will be at your own discretion.
 
 To set up a Discord channel for a translation group (if it doesn't already exist), [ping the Gatsbyjs team](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).

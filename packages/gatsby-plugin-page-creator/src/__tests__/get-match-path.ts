@@ -21,5 +21,8 @@ describe(`getMatchPath`, () => {
     expect(getMatchPath(`/products/[id]/[...page]`)).toEqual(
       `/products/:id/*page`
     )
+    expect(getMatchPath(`/products/[brand]/offer/[coupon]`)).toEqual(
+      `/products/:brand/offer/:coupon`
+    )
   })
 })

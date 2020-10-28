@@ -1,5 +1,5 @@
 const { resolve } = require(`path`)
-const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const md5File = require(`md5-file`)
 
 const {
   DuotoneGradientType,

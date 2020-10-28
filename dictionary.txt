@@ -172,7 +172,7 @@ Formik
 Formspree
 Formspree's
 FOUC
-FreeCodeCamp
+*freeCodeCamp
 frontend
 frontmatter
 Frontmatter
@@ -363,7 +363,7 @@ README
 reCAPTCHA
 reconciler
 Reddit
-redux
+*redux
 Redux
 rehydrate
 reimplement
@@ -425,6 +425,10 @@ subpage
 subprocesses
 subscribable
 Suriano
+*svg
+SVG
+*svgs
+SVGs
 symlink
 TalkYard
 theming
@@ -477,9 +481,9 @@ WebpackError
 webpage
 webpages
 websocket
-Wechat
+WeChat
 WeKnow
-Whatsapp
+WhatsApp
 workspaces
 www
 xyz

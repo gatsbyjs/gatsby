@@ -1,0 +1,28 @@
+{
+  "name": "gatsby-example-file-system-route-api",
+  "private": true,
+  "description": "Gatsby example site demoing File System Route API",
+  "version": "1.0.0",
+  "author": "LekoArts <lekoarts@gmail.com>",
+  "dependencies": {
+    "gatsby": "^2.24.67",
+    "gatsby-source-filesystem": "^2.3.32",
+    "gatsby-transformer-remark": "^2.8.37",
+    "gatsby-transformer-yaml": "^2.4.13",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
+    "build": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build",
+    "start": "npm run develop"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
+}

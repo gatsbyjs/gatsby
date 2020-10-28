@@ -16,7 +16,7 @@ The high level process is:
 
 1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
 2. Build a `render-page.js` that takes a page path and renders its HTML
-3. For each page in redux, call `render-page.js`
+3. For each page in Redux, call `render-page.js`
 
 ## webpack
 
