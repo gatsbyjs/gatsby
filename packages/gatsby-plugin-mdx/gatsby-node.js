@@ -77,7 +77,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         .description(
           `Configure the file extensions that gatsby-plugin-mdx will process`
         ),
-      defaultLayout: Joi.object({})
+      defaultLayouts: Joi.object({})
         .unknown(true)
         .default({})
         .description(`Set the layout components for MDX source types`),
