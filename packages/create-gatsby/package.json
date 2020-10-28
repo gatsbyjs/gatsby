@@ -1,0 +1,38 @@
+{
+  "name": "create-gatsby",
+  "version": "0.0.0-1",
+  "main": "lib/index.js",
+  "bin": "lib/cli.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn build"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.12.1",
+    "enquirer": "^2.3.6",
+    "execa": "^4.0.3",
+    "fs-extra": "^9.0.1",
+    "gatsby-core-utils": "^1.3.23"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "@types/configstore": "^4.0.0",
+    "@types/fs-extra": "^9.0.2",
+    "@types/node": "^14.14.5",
+    "eslint": "^7.12.1",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/create-gatsby"
+  },
+  "author": "Matt Kane <matt@gatsbyjs.com>"
+}
