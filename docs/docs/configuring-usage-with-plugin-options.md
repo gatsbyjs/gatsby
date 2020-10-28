@@ -95,6 +95,15 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 If users pass options that do not match the schema, the validation will show an error when they run `gatsby develop` and prompt them to fix their configuration.
 
+For example, if an integer is passed into `message` (which is marked as a required string) this message would be shown:
+
+```
+ ERROR #11331  PLUGIN
+
+Invalid plugin options for "gatsby-plugin-console-log":
+
+- "message" must be a string
+```
 ### Best practices for option schemas
 
 The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema`, as it shows all the available types and methods.
