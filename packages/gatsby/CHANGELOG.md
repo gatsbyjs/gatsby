@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.90](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.89...gatsby@2.24.90) (2020-10-28)
+
+### Performance Improvements
+
+- **gatsby:** cache `createNodeId` locally ([#27686](https://github.com/gatsbyjs/gatsby/issues/27686)) ([5acfb60](https://github.com/gatsbyjs/gatsby/commit/5acfb605e971a6296a4dd588eb5a96031f9948cd))
+
 ## [2.24.89](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.88...gatsby@2.24.89) (2020-10-27)
 
 ### Bug Fixes
