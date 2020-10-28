@@ -1,4 +1,6 @@
-const extractModelRegex = /\{([\w\d_]+)\./
+// Regex created with: https://spec.graphql.org/draft/#sec-Names
+// First char only letter, underscore; rest letter, underscore, digit
+const extractModelRegex = /\{([a-zA-Z_][\w]+)\./
 
 // Given a absolutePath that has a collection marker it will extract the Model.
 // /foo/bar/{Model.bar} => Model
@@ -53,7 +55,9 @@ export function extractFieldWithoutUnion(filePart: string): string {
 }
 
 const extractFieldRegexCurlyBraces = /[{}]/g
-const extractFieldGraphQLModel = /[\w_][\w\d_]+\./
+// Regex created with: https://spec.graphql.org/draft/#sec-Names
+// First char only letter, underscore; rest letter, underscore, digit
+const extractFieldGraphQLModel = /[a-zA-Z_][\w]+\./
 
 // Given a filePath part that is a collection marker it do this transformation:
 // {Model.field__(Union)__bar} => field__(Union)__bar
@@ -65,7 +69,6 @@ export function extractField(filePart: string): string {
       // Remove curly braces
       .replace(extractFieldRegexCurlyBraces, ``)
       // Remove Model
-      // Regex created with: https://spec.graphql.org/draft/#sec-Names
       .replace(extractFieldGraphQLModel, ``)
   )
 }
