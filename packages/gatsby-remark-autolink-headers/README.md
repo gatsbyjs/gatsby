@@ -96,7 +96,7 @@ In your CSS you can specify this element, in this instance the anchor tag will a
 
 ```css
 a.anchor {
-    fill: 'red'
+  fill: "red";
 }
 ```
 
