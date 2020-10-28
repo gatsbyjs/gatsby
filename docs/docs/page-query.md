@@ -27,7 +27,7 @@ module.exports = {
 
 ### Mark up basic index page
 
-A simple index page (`src/pages/index.js`) can be marked up like so:
+An index page (`src/pages/index.js`) can be marked up like so:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
