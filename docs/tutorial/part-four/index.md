@@ -350,7 +350,7 @@ But let's restore the real title.
 
 One of the core principles of Gatsby is that _creators need an immediate connection to what they're creating_ ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principle/)). In other words, when you make any change to code you should immediately see the effect of that change. You manipulate an input of Gatsby and you see the new output showing up on the screen.
 
-So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
+So almost everywhere, changes you make will immediately take effect. Edit the `src/components/layout.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
 
 ![Both titles say Pandas Eating Lots](pandas-eating-lots-titles.png)
 
