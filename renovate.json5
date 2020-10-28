@@ -2094,7 +2094,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-recipes",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "express-graphql", "lodash", "lodash-es"],
+      excludePackageNames: ["cross-env", "express-graphql", "lodash", "lodash-es", "react-reconciler"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2105,7 +2105,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-recipes",
       excludePackageNames: ["cross-env"],
-      packageNames: ["express-graphql"],
+      packageNames: ["express-graphql", "react-reconciler"],
     },
     {
       groupName: "minor and patch for gatsby-source-contentful",
