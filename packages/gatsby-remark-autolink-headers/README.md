@@ -90,9 +90,9 @@ module.exports = {
 
 ## How to style the anchor link
 
-By default, the anchor link has no additional styling. To make it fit your website, we'll have to write som extra CSS rules.
+By default, the anchor link has a class of `anchor` (see `className` option to change this name) on the element but has no additional styling. To make it fit your website, you'll have to write some CSS to change the appeareance.
 
-If you want to make the anchor link red, you can add the following CSS rule:
+In your CSS you can specify this element, in this instance the anchor tag will appear red:
 
 ```
 a.anchor {
@@ -100,4 +100,4 @@ a.anchor {
 }
 ```
 
-note: Not sure how to add custom css? You can visit our [tutorial](https://www.gatsbyjs.com/tutorial/part-two/).
+Note: There are a variety of approaches to styling your Gatsby site, see [styling documentation](https://www.gatsbyjs.com/docs/styling/) for more detail.
