@@ -18,6 +18,10 @@ describe(`isValidCollectionPathImplementation`, () => {
     `{model.bar__field}.js`,
     `{model.bar__(Union)__field}.js`,
     `{_model123.bar}.js`,
+    `{model.bar123}.js`,
+    `{model.bar_123}.js`,
+    `{model.bar__field123}.js`,
+    `{model.bar__(Union)__field123}.js`,
   ])(`%o passes`, path => {
     expect(() =>
       isValidCollectionPathImplementation(compatiblePath(path), reporter)
@@ -30,6 +34,8 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/{Model:bar}`,
     `/products/{Model.bar.js`,
     `/products/{Model_bar}.js`,
+    `/products/{123Model.bar}.js`,
+    `/products/{Model.123bar}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 
