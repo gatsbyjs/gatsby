@@ -233,15 +233,20 @@ export function loadPlugins(
 
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(
-    plugin =>
-      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
-      plugin === `gatsby-plugin-typescript`
+    plugin => plugin.resolve === `gatsby-plugin-typescript`
   )
 
   if (typescriptPlugin === undefined) {
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-typescript`),
+        options: {
+          // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
+          // pluginOptionsSchema of gatsby-plugin-typescript
+          allExtensions: false,
+          isTSX: false,
+          jsxPragma: `React`,
+        },
       })
     )
   }
