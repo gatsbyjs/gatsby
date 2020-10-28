@@ -4,7 +4,7 @@ Fullstory is an analytics service for recording customer visits. This plugin add
 
 ## Install
 
-`npm install --save gatsby-plugin-fullstory`
+`npm install gatsby-plugin-fullstory`
 
 ## How to use
 

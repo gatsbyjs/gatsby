@@ -1,7 +1,6 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
-const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
 module.exports = async function contentfulFetch({
@@ -10,10 +9,6 @@ module.exports = async function contentfulFetch({
   pluginConfig,
 }) {
   // Fetch articles.
-  console.time(`Fetch Contentful data`)
-
-  console.log(`Starting to fetch data from Contentful`)
-
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
@@ -33,7 +28,7 @@ module.exports = async function contentfulFetch({
   let locales
   let defaultLocale = `en-US`
   try {
-    reporter.info(`Fetching default locale`)
+    reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
@@ -48,7 +43,7 @@ module.exports = async function contentfulFetch({
         )}' were found but were filtered down to none.`
       )
     }
-    reporter.info(`default locale is: ${defaultLocale}`)
+    reporter.verbose(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
@@ -89,10 +84,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   }
 
   let currentSyncData
+  const basicSyncConfig = {
+    limit: pageLimit,
+    resolveLinks: false,
+  }
   try {
     let query = syncToken
-      ? { nextSyncToken: syncToken }
-      : { initial: true, limit: pageLimit }
+      ? { nextSyncToken: syncToken, ...basicSyncConfig }
+      : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
     reporter.panic(`Fetching contentful data failed`, e)
@@ -104,27 +103,11 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(`error fetching content types`, e)
+    reporter.panic(`Error fetching content types`, e)
   }
-  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
+  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
-
-  if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
-    reporter.info(
-      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful_id\``
-    )
-  } else {
-    // Traverse entire data model and enforce every `sys.id` to be a string
-    // and if that string starts with a number, to prefix it with `c`. Assigns
-    // original `id` to `contentful_id`.
-    // Expensive at scale.
-    contentTypeItems.forEach(normalize.fixIds)
-    currentSyncData.entries.forEach(normalize.fixIds)
-    currentSyncData.assets.forEach(normalize.fixIds)
-    currentSyncData.deletedEntries.forEach(normalize.fixIds)
-    currentSyncData.deletedAssets.forEach(normalize.fixIds)
-  }
 
   const result = {
     currentSyncData,

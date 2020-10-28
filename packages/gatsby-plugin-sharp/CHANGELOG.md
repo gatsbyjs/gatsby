@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.42...gatsby-plugin-sharp@2.6.43) (2020-10-19)
+
+### Performance Improvements
+
+- **gatsby-plugin-image:** Optimise image size functions ([#27544](https://github.com/gatsbyjs/gatsby/issues/27544)) ([8752477](https://github.com/gatsbyjs/gatsby/commit/87524778996452b2649e29588526a724f9813d45))
+
+## [2.6.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.41...gatsby-plugin-sharp@2.6.42) (2020-10-12)
+
+### Features
+
+- **gatsby-plugin-sharp:** added option to allow sharp process to continue with errors ([#27345](https://github.com/gatsbyjs/gatsby/issues/27345)) ([1da5926](https://github.com/gatsbyjs/gatsby/commit/1da5926959b1c451ce1c0e6444a195a6c5616e82))
+
+## [2.6.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.40...gatsby-plugin-sharp@2.6.41) (2020-10-12)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.39...gatsby-plugin-sharp@2.6.40) (2020-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.38...gatsby-plugin-sharp@2.6.39) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.6.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.37...gatsby-plugin-sharp@2.6.38) (2020-10-01)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

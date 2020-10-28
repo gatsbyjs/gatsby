@@ -105,11 +105,18 @@ module.exports = {
           "error",
           { ignoreParameters: true },
         ],
-        // This rule tries to ensure we use camelCase for all variables, properties
-        // functions, etc. However, it is not always possible to ensure properties
-        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
-        // this rule. This allows properties to be whatever they need to be.
-        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
+        "@typescript-eslint/camelcase": [
+          "error",
+          {
+            // This rule tries to ensure we use camelCase for all variables, properties
+            // functions, etc. However, it is not always possible to ensure properties
+            // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+            // this rule. This allows properties to be whatever they need to be.
+            properties: "never",
+            // Allow unstable api's to use `unstable_`, which is easier to grep
+            allow: ["^unstable_"],
+          },
+        ],
         // This rule tries to prevent using `require()`. However in node code,
         // there are times where this makes sense. And it specifically is causing
         // problems in our tests where we often want this functionality for module
@@ -168,10 +175,7 @@ module.exports = {
         // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
         // so disabling them in .ts(x) files
         "flowtype/no-types-missing-file-annotation": "off",
-        "@typescript-eslint/array-type": [
-          'error',
-          { default: 'generic' },
-        ],
+        "@typescript-eslint/array-type": ["error", { default: "generic" }],
       },
     },
   ],

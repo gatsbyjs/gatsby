@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.14...gatsby-plugin-guess-js@1.3.15) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
 ## [1.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.13...gatsby-plugin-guess-js@1.3.14) (2020-10-01)
 
 **Note:** Version bump only for package gatsby-plugin-guess-js

@@ -13,6 +13,7 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
+import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 
 export {
   default as Link,
@@ -306,6 +307,20 @@ export interface GatsbyNode {
   ): void
 
   /**
+   * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+   * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+   * Note: this API does not receive the regular `api` that other callbacks get as first arg.
+   *
+   * @gatsbyVersion 2.24.80
+   * @example
+   * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+   */
+  unstable_shouldOnCreateNode?<TNode extends object = {}>(
+    args: { node: TNode },
+    options?: PluginOptions
+  ): boolean
+
+  /**
    * Called when a new page is created. This extension API is useful
    * for programmatically manipulating pages created by other plugins e.g.
    * if you want paths without trailing slashes.
@@ -512,6 +527,12 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+
+  /**
+   * Add a Joi schema for the possible options of your plugin.
+   * Currently experimental and not enabled by default.
+   */
+  pluginOptionsSchema?(args: PluginOptionsSchemaArgs): ObjectSchema
 }
 
 /**
@@ -1272,6 +1293,15 @@ export interface Actions {
     plugin?: ActionPlugin,
     traceId?: string
   ): void
+
+  printTypeDefinitions (
+    path?: string,
+    include?: { types?: Array<string>; plugins?: Array<string> },
+    exclude?: { types?: Array<string>; plugins?: Array<string> },
+    withFieldTypes?: boolean,
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {
@@ -1546,4 +1576,8 @@ export interface IPluginRefOptions {
   plugins?: PluginRef[]
   path?: string
   [option: string]: unknown
+}
+
+export interface PluginOptionsSchemaArgs {
+  Joi: PluginOptionsSchemaJoi
 }

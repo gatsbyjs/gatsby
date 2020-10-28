@@ -26,7 +26,7 @@ Now that your Gatsby site is up and running and AWS access is sorted out, you'll
 First, install the Gatsby S3 plugin:
 
 ```shell
-npm i gatsby-plugin-s3
+npm install gatsby-plugin-s3
 ```
 
 Add it to your `gatsby-config.js`: (don't forget to change the bucket name)

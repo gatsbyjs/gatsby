@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.23...gatsby-plugin-netlify@2.3.24) (2020-10-22)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.22...gatsby-plugin-netlify@2.3.23) (2020-10-21)
+
+### Bug Fixes
+
+- Update plugin schema testing util and associated tests ([#27574](https://github.com/gatsbyjs/gatsby/issues/27574)) ([6d81283](https://github.com/gatsbyjs/gatsby/commit/6d81283e4f47ae2cb571626bf4d02fcd2c9d1af4))
+
+## [2.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.21...gatsby-plugin-netlify@2.3.22) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.20...gatsby-plugin-netlify@2.3.21) (2020-10-19)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.19...gatsby-plugin-netlify@2.3.20) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.18...gatsby-plugin-netlify@2.3.19) (2020-10-15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.17...gatsby-plugin-netlify@2.3.18) (2020-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.16...gatsby-plugin-netlify@2.3.17) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
 ## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.3.15...gatsby-plugin-netlify@2.3.16) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-plugin-netlify

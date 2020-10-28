@@ -84,7 +84,7 @@ with the following command:
 yarn add gatsby-plugin-catch-links gatsby-plugin-react-helmet
 ```
 
-You will be using [yarn][yarn], but npm can just as easily be used with `npm i --save [deps]`.
+You will be using [yarn][yarn], but npm can just as easily be used with `npm install [deps]`.
 
 After installing each of these functional plugins, edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed

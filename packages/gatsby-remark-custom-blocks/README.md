@@ -6,7 +6,7 @@ Unlike in [gatsby-remark-component](https://www.gatsbyjs.org/packages/gatsby-rem
 
 ## Install
 
-`npm install --save gatsby-remark-custom-blocks`
+`npm install gatsby-remark-custom-blocks`
 
 ## How to use
 
@@ -98,7 +98,7 @@ And here is the html output considering the same markdown as before:
 </details>
 
 <details class="custom-block">
-  <summary class="custom-block-heading"> This is a title! </summary>
+  <summary class="custom-block-heading">This is a title!</summary>
   <div class="custom-block-body"><p>content</p></div>
 </details>
 ```

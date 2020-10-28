@@ -55,7 +55,7 @@ If you've been thinking about moving your blog from WordPress to a static site b
 - I used Prettier on all the Markdown files to try to make them consistent. Here is a little snippet I used to run Prettier on all the posts:
 
 ```shell
-npm i -g prettier # install prettier globally
+npm install -g prettier # install prettier globally
 cd content/posts  # move to the directory that contains all your posts
 prettier
   --print-width 100

@@ -10,7 +10,7 @@ https://using-contentful.gatsbyjs.org/
 ## Install
 
 ```shell
-npm install --save gatsby-source-contentful
+npm install gatsby-source-contentful
 ```
 
 ## How to use
@@ -176,6 +176,10 @@ If you are confident your Content Types will have natural-language IDs (e.g. `bl
 **`pageLimit`** [number][optional] [default: `100`]
 
 Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
+
+**`assetDownloadWorkers`** [number][optional] [default: `50`]
+
+Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
 
 **`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
 
