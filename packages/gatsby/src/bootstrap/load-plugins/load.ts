@@ -119,7 +119,7 @@ export function resolvePlugin(
       version: packageJSON.version,
     }
   } catch (err) {
-    if (process.argv.includes(`--verbose`)) {
+    if (process.env.gatsby_log_level === `verbose`) {
       reporter.panicOnBuild(
         `plugin "${pluginName} threw the following error:\n`,
         err
