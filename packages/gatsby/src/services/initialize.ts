@@ -278,6 +278,7 @@ export async function initialize({
     // been loaded from the file system cache).
     store.dispatch({
       type: `DELETE_CACHE`,
+      cacheIsCorrupt,
     })
 
     // in future this should show which plugin's caches are purged
