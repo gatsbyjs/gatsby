@@ -276,7 +276,7 @@ export async function startServer(
         })
         res.status(200).send(renderResponse)
       } catch (e) {
-        console.log(e)
+        report.panic(e)
         res.send(e).status(500)
       }
     }
