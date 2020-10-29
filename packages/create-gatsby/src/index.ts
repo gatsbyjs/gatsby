@@ -16,7 +16,7 @@ const questions = [
   {
     type: `input`,
     name: `project`,
-    message: `What would you like to name the folder where you site will be created?`,
+    message: `What would you like to name the folder where your site will be created?`,
     initial: `my-gatsby-site`,
   },
   {
@@ -60,6 +60,9 @@ export async function run(): Promise<void> {
 `
   )
 
+  console.log(
+    c.red.italic(`Important: This is currently for testing purposes only`)
+  )
   console.log(
     `This command will generate a new Gatsby site for you with the setup you select.`
   )
