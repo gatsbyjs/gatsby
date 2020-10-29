@@ -35,7 +35,7 @@ Note that if a particular directory does not have an `index.js` file, then that 
 
 Other than creating single-page routes in `src/pages` you can also create multiple pages from a model based on the collection of nodes within it. To do that, use curly braces (`{ }`) in the file path to signify dynamic URL segments that relate to a field within the [node](/docs/glossary#node).
 
-Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can create control the file path and queried data by adding some extra notation to the names of your files. For most use cases this will be the easier way of creating pages, for all other instances you should fallback to `gatsby-node.js` and its APIs.
+Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can control the file path and queried data by adding some extra notation to the names of your files without touching or creating `gatsby-node.js` whatsoever.
 
 For example, assuming you have a model called `Product`:
 
@@ -45,7 +45,7 @@ See the [File System Route API](/docs/file-system-route-api/) documentation for 
 
 ### Using `gatsby-node.js`
 
-You can use [Gatsby Node APIs](/docs/node-apis/), including the [`createPages`](/docs/node-apis/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
+The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/node-apis/), including the [`createPages`](/docs/node-apis/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {

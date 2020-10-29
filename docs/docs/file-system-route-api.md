@@ -2,6 +2,8 @@
 title: File System Route API
 ---
 
+Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can control the file path and queried data by adding some extra notation to the names of your files without touching or creating `gatsby-node.js` whatsoever.
+
 This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/node-apis#createPages) API.
 
 In short, these APIs enable you to programmatically create pages from Gatsby's [GraphQL data layer](/docs/graphql-concepts/) and to create [client-only routes](/docs/client-only-routes-and-user-authentication).
@@ -21,7 +23,7 @@ To use the File System Route API, use curly braces (`{ }`) in your filenames to 
 - `src/pages/products/{Product.fields__sku}.js` will generate a route like `/products/001923`
 - `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
 
-At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
+At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
 
 ### Syntax
 
