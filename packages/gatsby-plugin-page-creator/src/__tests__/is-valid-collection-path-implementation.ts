@@ -11,27 +11,41 @@ const compatiblePath = (filepath: string): string =>
   filepath.replace(/\//g, syspath.sep)
 
 describe(`isValidCollectionPathImplementation`, () => {
-  it.each([`{Model.bar}/{Model.bar}.js`, `{Model.bar__(Union)__field}.js`])(
-    `%o passes`,
-    path => {
-      expect(() =>
-        isValidCollectionPathImplementation(compatiblePath(path), reporter)
-      ).not.toThrow()
-    }
-  )
+  it.each([
+    `{Model.bar}/{Model.bar}.js`,
+    `{Model.bar__(Union)__field}.js`,
+    `{model.bar}.js`,
+    `{model.bar__field}.js`,
+    `{model.bar__(Union)__field}.js`,
+    `{_model123.bar}.js`,
+    `{model.bar123}.js`,
+    `{model.bar_123}.js`,
+    `{model.bar__field123}.js`,
+    `{model.bar__(Union)__field123}.js`,
+  ])(`%o passes`, path => {
+    expect(() =>
+      isValidCollectionPathImplementation(compatiblePath(path), reporter)
+    ).not.toThrow()
+  })
 
   it.each([
     `/products/{bar}`,
-    `/products/{missingCapitalization.bar}`,
     `/products/{Model.}`,
     `/products/{Model:bar}`,
     `/products/{Model.bar.js`,
+    `/products/{Model_bar}.js`,
+    `/products/{123Model.bar}.js`,
+    `/products/{Model.123bar}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 
     isValidCollectionPathImplementation(compatiblePath(path), reporter)
-    expect(reporter.panicOnBuild)
-      .toBeCalledWith(`PageCreator: Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.
-filePath: ${compatiblePath(path)}`)
+    expect(reporter.panicOnBuild).toBeCalledWith({
+      context: {
+        sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`,
+      },
+      filePath: compatiblePath(path),
+      id: `gatsby-plugin-page-creator_12105`,
+    })
   })
 })

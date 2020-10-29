@@ -96,6 +96,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -114,6 +115,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -132,6 +134,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -150,6 +153,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -168,6 +172,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -186,6 +191,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -236,6 +242,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -358,6 +365,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -376,6 +384,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -394,6 +403,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -412,6 +422,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -430,6 +441,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -448,6 +460,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -466,6 +479,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -516,6 +530,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -626,6 +641,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -646,6 +662,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -664,6 +681,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -682,6 +700,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -700,6 +719,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -718,6 +738,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -736,6 +757,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -754,6 +776,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {
@@ -804,6 +827,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
+      "onCreateBabelConfig",
       "onPreInit",
     ],
     "pluginOptions": Object {

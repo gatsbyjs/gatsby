@@ -18,7 +18,7 @@ Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-imag
 
 - uses the new [IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to cheaply lazy load images
 - holds an image’s position so your page doesn’t jump around as images load
-- makes it easy to add a placeholder—either a gray background or a blurry version of the image.
+- makes it possible to add a placeholder—either a gray background or a blurry version of the image.
 
 _For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image/) docs._
 

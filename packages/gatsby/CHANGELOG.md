@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.91](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.90...gatsby@2.24.91) (2020-10-28)
+
+### Bug Fixes
+
+- **gatsby:** fix subplugin validation ([#27616](https://github.com/gatsbyjs/gatsby/issues/27616)) ([65deab8](https://github.com/gatsbyjs/gatsby/commit/65deab8b47802262d19f7577ba5db302a2cd22e6))
+
+## [2.24.90](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.89...gatsby@2.24.90) (2020-10-28)
+
+### Performance Improvements
+
+- **gatsby:** cache `createNodeId` locally ([#27686](https://github.com/gatsbyjs/gatsby/issues/27686)) ([5acfb60](https://github.com/gatsbyjs/gatsby/commit/5acfb605e971a6296a4dd588eb5a96031f9948cd))
+
+## [2.24.89](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.88...gatsby@2.24.89) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** leak less in chokidar listeners ([#27685](https://github.com/gatsbyjs/gatsby/issues/27685)) ([e0a3645](https://github.com/gatsbyjs/gatsby/commit/e0a3645d7c788b7c589d69187840305a650678f7))
+
+## [2.24.88](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.87...gatsby@2.24.88) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** add missing printTypeDefinitions ([#27670](https://github.com/gatsbyjs/gatsby/issues/27670)) ([2da94bf](https://github.com/gatsbyjs/gatsby/commit/2da94bfcd612d10b0816e38a95e43651986fd94b))
+- **gatsby:** better heuristic for automatic cache purging ([#27682](https://github.com/gatsbyjs/gatsby/issues/27682)) ([a5665d2](https://github.com/gatsbyjs/gatsby/commit/a5665d28f585c7f8727e2bbaccb4ab0fffeaa8e7))
+
+## [2.24.87](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.86...gatsby@2.24.87) (2020-10-26)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.86](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.85...gatsby@2.24.86) (2020-10-26)
+
+### Features
+
+- **gatsby:** disable automatic by default ([#27615](https://github.com/gatsbyjs/gatsby/issues/27615)) ([18c182a](https://github.com/gatsbyjs/gatsby/commit/18c182a574475c9c06dbbeb7ddae27f5cb008fe9))
+
+## [2.24.85](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.84...gatsby@2.24.85) (2020-10-22)
+
+### Bug Fixes
+
+- **gatsby:** trigger location effects in navigation ([#27594](https://github.com/gatsbyjs/gatsby/issues/27594)) ([642eeb1](https://github.com/gatsbyjs/gatsby/commit/642eeb10a56a0618f2f0c608a035293cd3d5269f))
+
 ## [2.24.84](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.83...gatsby@2.24.84) (2020-10-21)
 
 ### Bug Fixes

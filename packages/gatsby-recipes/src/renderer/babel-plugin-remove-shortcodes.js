@@ -19,7 +19,7 @@ const shouldRemoveDeclaration = declaration =>
   isMDXLayout(declaration) ||
   isLayoutProps(declaration)
 
-module.exports = api => {
+export default function babelPluginRemoveShortcodes(api) {
   const { types: t } = api
 
   return {

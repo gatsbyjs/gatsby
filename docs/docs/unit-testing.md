@@ -160,7 +160,7 @@ This mocks the `graphql()` function, `Link` component, and `StaticQuery` compone
 ## Writing tests
 
 A full guide to unit testing is beyond the scope of this guide, but you can
-start with a simple snapshot test to check that everything is working.
+start with a snapshot test to check that everything is working.
 
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
@@ -183,7 +183,7 @@ describe("Header", () => {
 })
 ```
 
-This is a very simple snapshot test, which uses `react-test-renderer` to render
+This is a very brief snapshot test, which uses `react-test-renderer` to render
 the component, and then generates a snapshot of it on the first run. It then
 compares future snapshots against this, which means you can quickly check for
 regressions. Visit [the Jest docs](https://jestjs.io/docs/en/getting-started) to

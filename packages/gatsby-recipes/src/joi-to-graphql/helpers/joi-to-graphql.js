@@ -1,18 +1,13 @@
-"use strict"
+import { GraphQLObjectType, GraphQLInputObjectType, GraphQLList } from "graphql"
+import { GraphQLJSONObject } from "graphql-type-json"
+import Hoek from "@hapi/hoek"
+import * as TypeDictionary from "./type-dictionary"
 
-const {
-  GraphQLObjectType,
-  GraphQLInputObjectType,
-  GraphQLList,
-} = require(`graphql`)
-const { GraphQLJSONObject } = require(`graphql-type-json`)
-const Hoek = require(`@hapi/hoek`)
-const TypeDictionary = require(`./type-dictionary`)
 const internals = {}
 let cache = {}
 const lazyLoadQueue = []
 
-module.exports = constructor => {
+export default function joiToGraphql(constructor) {
   let target
   const { name, args, resolve, description } = constructor._meta[0]
 

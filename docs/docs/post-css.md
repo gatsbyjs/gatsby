@@ -42,7 +42,7 @@ import "./styles.css"
 
 ### With CSS modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.css -> App.module.css`. Any file with the module extension will use CSS modules.
+To use CSS modules, prepend `.module` to the extension. For example: `App.css -> App.module.css`. Any file with the module extension will use CSS modules.
 
 ### PostCSS plugins
 

@@ -3,8 +3,9 @@ import { generateQueryFromString } from "./extract-query"
 import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
 import traverse from "@babel/traverse"
-import { extractModel } from "./path-utils"
 import { Reporter } from "gatsby"
+import { extractModel } from "./path-utils"
+import { CODES, prefixId } from "./error-utils"
 
 // This Function opens up the actual collection file and extracts the queryString used in the
 export function collectionExtractQueryString(
@@ -20,12 +21,12 @@ export function collectionExtractQueryString(
   // so it can hit this case.
   if (!modelType) return null
 
-  // 1.  Read the file and scan for a use of unstable_collectionGraphql
+  // 1.  Read the file and scan for a use of collectionGraphql
   const fileContents = fs.readFileSync(absolutePath).toString()
 
   // 2.  If the user is using the collectionGraphql function, we have to
   //     parse the file and extract it's contents
-  if (fileContents.includes(`unstable_collectionGraphql`)) {
+  if (fileContents.includes(`collectionGraphql`)) {
     const ast = babelParseToAst(fileContents, absolutePath)
 
     traverse(ast, {
@@ -35,17 +36,19 @@ export function collectionExtractQueryString(
         }
         path.traverse({
           TaggedTemplateExpression(path) {
-            const { text } = getGraphQLTag(path, `unstable_collectionGraphql`)
+            const { text } = getGraphQLTag(path, `collectionGraphql`)
             if (!text) return
 
             if (text.includes(`...CollectionPagesQueryFragment`) === false) {
-              reporter.error(
-                `PageCreator: Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
+              reporter.error({
+                id: prefixId(CODES.CollectionGraphQL),
+                context: {
+                  sourceMessage: `Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
 
-Please fix the query from ${absolutePath.split(`src/pages`)[1]}.
-
-Offending query: ${text}`
-              )
+Offending query: ${text}`,
+                },
+                filePath: absolutePath,
+              })
               queryString = ``
               modelType = ``
               return

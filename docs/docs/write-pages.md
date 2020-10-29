@@ -59,7 +59,7 @@ The dynamic files that are created are (all under the `.cache` directory).
 
 ## pages.json
 
-This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
+This is a collection of page objects, created from Redux `pages` namespace. For each page it includes the
 
 - [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname)
 - [jsonName](/docs/gatsby-internals-terminology/#jsonname)
@@ -85,7 +85,7 @@ e.g
 
 ## sync-requires.js
 
-This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` Redux namespace. The keys are the [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {
@@ -122,7 +122,7 @@ Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-ge
 
 ## data.json
 
-This is a generated JSON file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
+This is a generated JSON file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire Redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
 
 ```javascript
 {
