@@ -11,8 +11,10 @@ const Page = () => {
         <StaticImage
           src="../../images/cornwall.jpg"
           layout="constrained"
-          loading="eager"
           alt="cornwall"
+          maxWidth={1024}
+          placeholder="blurred"
+          webP
         />
       </TestWrapper>
     </Layout>
