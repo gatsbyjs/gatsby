@@ -1,4 +1,9 @@
 import JestWorker from "jest-worker"
+import fs from "fs-extra"
+import { joinPath } from "gatsby-core-utils"
+
+import { store } from "../../redux"
+import { writeModule } from "../gatsby-webpack-virtual-modules"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -38,6 +43,65 @@ export const restartWorker = (htmlComponentRendererPath): void => {
   }
 }
 
+interface IGatsbyPageComponent {
+  component: string
+  componentChunkName: string
+}
+
+// TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
+const hotImport =
+  process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+    ? `const { hot } = require("react-hot-loader/root")`
+    : ``
+const hotMethod = process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
+
+const writeLazyRequires = (pageComponents): void => {
+  // Create file with sync requires of components/json files.
+  let lazySyncRequires = `${hotImport}
+
+// prefer default export if available
+const preferDefault = m => (m && m.default) || m
+\n\n`
+  lazySyncRequires += `exports.components = {\n${[...pageComponents.values()]
+    .map(
+      (c: IGatsbyPageComponent): string =>
+        `  "${
+          c.componentChunkName
+        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+    )
+    .join(`,\n`)}
+}\n\n`
+
+  writeModule(`$virtual/lazy-sync-requires`, lazySyncRequires)
+}
+
+const pageComponents = new Map()
+const ensurePathComponentInSSRBundle = async (path, directory): void => {
+  const pages = [...store.getState().pages.values()]
+  const { component, componentChunkName } = pages.find(p => p.path === path)
+  if (!pageComponents.has(component)) {
+    pageComponents.set(component, { component, componentChunkName })
+    await writeLazyRequires(pageComponents)
+    const htmlComponentRendererPath = joinPath(
+      directory,
+      `public/render-page.js`
+    )
+    await new Promise(async resolve => {
+      const watcher = fs.watch(htmlComponentRendererPath, () => {
+        // It's changed, clean up the watcher.
+        watcher.close()
+        // Make sure the worker is ready.
+        await worker.deleteModuleCache(htmlComponentRendererPath)
+        resolve()
+      })
+    })
+  }
+  // else nothing to do so we return.
+}
+
+// Initialize the virtual module.
+writeLazyRequires(pageComponents)
+
 export const renderDevHTML = ({
   path,
   htmlComponentRendererPath,
@@ -45,6 +109,9 @@ export const renderDevHTML = ({
 }): Promise<string> =>
   new Promise(async (resolve, reject) => {
     try {
+      // Write component to file & wait for public/render-page.js to update
+      await ensurePathComponentInSSRBundle(path, directory)
+
       const response = await worker.renderHTML({
         path,
         htmlComponentRendererPath,

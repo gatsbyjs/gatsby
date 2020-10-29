@@ -5,7 +5,7 @@ import { merge } from "lodash"
 import { join } from "path"
 import apiRunner from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
-import syncRequires from "$virtual/sync-requires"
+import lazySyncRequires from "$virtual/lazy-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
@@ -130,7 +130,7 @@ export default (pagePath, callback) => {
         }
 
         const pageElement = createElement(
-          syncRequires.components[componentChunkName],
+          lazySyncRequires.components[componentChunkName],
           props
         )
 
