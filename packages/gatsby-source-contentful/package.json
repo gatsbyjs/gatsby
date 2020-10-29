@@ -56,5 +56,6 @@
   },
   "engines": {
     "node": ">=10.13.0"
-  }
+  },
+  "types": "index.d.ts"
 }
