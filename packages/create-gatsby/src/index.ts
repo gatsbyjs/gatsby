@@ -3,6 +3,7 @@ import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
 import { initStarter } from "./init-starter"
+import c from "ansi-colors"
 
 const makeChoices = (
   options: Record<string, string>
@@ -50,29 +51,48 @@ interface IAnswers {
 
 export async function run(): Promise<void> {
   console.log(
-    `Welcome to Gatsby! This command will generate a new Gatsby site for you with the setup you select. Let's answer some questions:`
+    `
+
+
+                         ${c.blueBright.bold.underline(`Welcome to Gatsby!`)}
+   
+                
+`
   )
+
+  console.log(
+    `This command will generate a new Gatsby site for you with the setup you select.`
+  )
+  console.log(`Let's answer some questions:\n`)
   const data = await prompt<IAnswers>(questions)
 
   const messages: Array<string> = [
-    `🛠  Create a new Gatsby site in the folder "${data.project}"`,
+    `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
   if (data.cms) {
-    messages.push(`📚 Install and configure the plugin for ${cmses[data.cms]}`)
+    messages.push(
+      `📚 Install and configure the plugin for ${c.red(cmses[data.cms])}`
+    )
   }
 
   if (data.styling) {
     messages.push(
-      `🎨 Get you set up to use ${styles[data.styling]} for styling your site`
+      `🎨 Get you set up to use ${c.green(
+        styles[data.styling]
+      )} for styling your site`
     )
   }
 
   if (data.features) {
-    messages.push(`🔌 Install ${data.features.join(`, `)}`)
+    messages.push(
+      `🔌 Install ${data.features.map(feat => c.magenta(feat)).join(`, `)}`
+    )
   }
 
   console.log(`
-Thanks! Here's what we'll now do:
+
+${c.bold(`Thanks! Here's what we'll now do:`)}
+
 ${messages.join(`\n`)}
   `)
 
