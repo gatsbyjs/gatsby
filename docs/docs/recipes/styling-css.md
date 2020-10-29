@@ -403,13 +403,15 @@ This example shows how to set up the [Open Sans](https://fonts.google.com/specim
 
 1. Run `npm install fontsource-open-sans` to download the necessary package files.
 
-2. Then within your app entry file or site component, import it in. In Gatsby, you could choose to import it into a layout template (`layout.js`), page component (`index.js`), or `gatsby-browser.js`.
+2. Then within your app entry file or site component, import it in. In Gatsby, it is recommended you import it via the layout template (`layout.js`), however, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
 import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
 import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
 import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
 ```
+
+**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
@@ -418,8 +420,6 @@ body {
   font-family: "Open Sans";
 }
 ```
-
-**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
 
 ### Additional resources
 

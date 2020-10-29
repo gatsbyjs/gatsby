@@ -20,17 +20,19 @@ Some examples of web font services include [Google Fonts](https://fonts.google.c
 
 The fastest way to get started using Google Fonts is by choosing a font from [Fontsource](https://github.com/fontsource/fontsource).
 
-This is an installation example using Open Sans, applicable to all other fonts searchable via [NPM](https://www.npmjs.com/) or the [packages](https://github.com/fontsource/fontsource/tree/master/packages) directory in the repository.
+This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-1. Run `npm install fontsource-open-sans` to download the necessary package files. If you wish to use a different typeface, search up `fontsource-<insert font name>` on [NPM](https://www.npmjs.com/) for specific instructions tailored to that font.
+1. Run `npm install fontsource-open-sans` to download the necessary package files.
 
-2. Then within your app entry file or site component, import it in. In Gatsby, you could choose to import it into a layout template (`layout.js`), page component (`index.js`), or `gatsby-browser.js`.
+2. Then within your app entry file or site component, import it in. In Gatsby, it is recommended you import it via the layout template (`layout.js`), however, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
 import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
 import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
 import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
 ```
+
+**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
@@ -39,8 +41,6 @@ body {
   font-family: "Open Sans";
 }
 ```
-
-_NOTE: The range of supported weights and styles a font may support is shown on each package README file._
 
 ### Using Typekit Web Fonts
 
