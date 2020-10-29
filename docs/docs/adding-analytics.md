@@ -26,21 +26,21 @@ You should now have a Tracking ID; take note of it, as your website will need to
 
 You can find this tracking ID later by going to `Admin > Tracking Info > Tracking Code`.
 
-## Using `gatsby-plugin-gtag`
+## Using `gatsby-plugin-google-gtag`
 
 Now, it's time to configure Gatsby to send page views to your Google Analytics account.
 
-We are going to use `gatsby-plugin-gtag`. For other analytics options (including Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
+We are going to use `gatsby-plugin-google-gtag`. For other analytics options (including Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
 
 ```shell
-npm install gatsby-plugin-gtag
+npm install gatsby-plugin-google-gtag
 ```
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-plugin-gtag`,
+      resolve: `gatsby-plugin-google-gtag`,
       options: {
         // replace `UA-XXXXXXXXX-X` with your own Google Analytics Tracking ID
         trackingId: `UA-XXXXXXXX-X`,
@@ -52,7 +52,7 @@ module.exports = {
 
 > Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
 
-Full documentation for the plugin can be found [here](/packages/gatsby-plugin-gtag/).
+Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-gtag/).
 
 There are a number of extra configuration options--both with the Gatsby plugin and also in your Google Analytics account--so you can tailor things to meet your website's needs.
 
