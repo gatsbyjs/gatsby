@@ -25,7 +25,7 @@ To use the File System Route API, use curly braces (`{ }`) in your filenames to 
 
 At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
 
-### Syntax
+### Syntax (collection routes)
 
 There are some general syntax requirements when using collection routes:
 
@@ -225,7 +225,7 @@ By using [aliasing](/docs/graphql-reference/#aliasing) you can use `gatsbyPath` 
 
 Use [client-only routes](/docs/client-only-routes-and-user-authentication) if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations, you will usually create a route with one or more dynamic segments to query data from a server in order to render your page.
 
-### Syntax
+### Syntax (client-only routes)
 
 You can use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL. For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL.
 
