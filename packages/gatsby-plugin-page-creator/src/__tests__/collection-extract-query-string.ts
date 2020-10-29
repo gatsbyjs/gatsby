@@ -22,7 +22,7 @@ describe(`collectionExtractQueryString`, () => {
     // @ts-ignore
     patchReadFileSync(`
       import { graphql } from "gatsby"
-      export const pageQuery = graphql\`  
+      export const pageQuery = graphql\`
         { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
       \`
       `)
@@ -35,10 +35,10 @@ describe(`collectionExtractQueryString`, () => {
     expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
   })
 
-  it(`uses unstable_collectionGraphql if exported`, async () => {
+  it(`uses collectionGraphql if exported`, async () => {
     patchReadFileSync(`
-      import { unstable_collectionGraphql } from "gatsby"
-      export const collectionQuery = unstable_collectionGraphql\`  
+      import { collectionGraphql } from "gatsby"
+      export const collectionQuery = collectionGraphql\`
         { allThings(filter: { name: { nin: ["stuff"] }}) { ...CollectionPagesQueryFragment } }
       \`
       `)
@@ -55,8 +55,8 @@ describe(`collectionExtractQueryString`, () => {
 
   it(`reports an error if you forget the fragment`, async () => {
     patchReadFileSync(`
-      import { unstable_collectionGraphql } from "gatsby"
-      export const collectionQuery = unstable_collectionGraphql\`  
+      import { collectionGraphql } from "gatsby"
+      export const collectionQuery = collectionGraphql\`
         { allThings(filter: { name: { nin: ["stuff"] }}) { nodes { id } } }
       \`
       `)

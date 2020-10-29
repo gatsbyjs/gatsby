@@ -15,12 +15,16 @@ export function generateQueryFromString(
   queryOrModel: string,
   fileAbsolutePath: string
 ): string {
+  // TODO: 'fields' possibly contains duplicate fields, e.g. field{name},field{description} that should be merged to field{name,description}
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
   if (queryOrModel.includes(`...CollectionPagesQueryFragment`)) {
     return fragmentInterpolator(queryOrModel, fields)
   }
 
-  return `{all${queryOrModel}{nodes{${fields}}}}`
+  // In case queryOrModel is not capitalized
+  const connectionQuery = _.camelCase(`all ${queryOrModel}`)
+
+  return `{${connectionQuery}{nodes{${fields}}}}`
 }
 
 // Takes a query result of something like `{ fields: { value: 'foo' }}` with a filepath of `/fields__value` and

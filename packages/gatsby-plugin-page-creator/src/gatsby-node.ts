@@ -197,6 +197,16 @@ export function setFieldsOnGraphQLNodeType({
   }
 }
 
+export function onCreateBabelConfig({ stage, actions }): void {
+  if (stage === `develop` || stage === `develop-html`) {
+    return
+  }
+
+  actions.setBabelPlugin({
+    name: require.resolve(`./babel-remove-collection-graphql`),
+  })
+}
+
 export async function onPreInit(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions

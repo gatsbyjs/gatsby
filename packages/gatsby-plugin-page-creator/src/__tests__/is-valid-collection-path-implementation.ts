@@ -11,21 +11,31 @@ const compatiblePath = (filepath: string): string =>
   filepath.replace(/\//g, syspath.sep)
 
 describe(`isValidCollectionPathImplementation`, () => {
-  it.each([`{Model.bar}/{Model.bar}.js`, `{Model.bar__(Union)__field}.js`])(
-    `%o passes`,
-    path => {
-      expect(() =>
-        isValidCollectionPathImplementation(compatiblePath(path), reporter)
-      ).not.toThrow()
-    }
-  )
+  it.each([
+    `{Model.bar}/{Model.bar}.js`,
+    `{Model.bar__(Union)__field}.js`,
+    `{model.bar}.js`,
+    `{model.bar__field}.js`,
+    `{model.bar__(Union)__field}.js`,
+    `{_model123.bar}.js`,
+    `{model.bar123}.js`,
+    `{model.bar_123}.js`,
+    `{model.bar__field123}.js`,
+    `{model.bar__(Union)__field123}.js`,
+  ])(`%o passes`, path => {
+    expect(() =>
+      isValidCollectionPathImplementation(compatiblePath(path), reporter)
+    ).not.toThrow()
+  })
 
   it.each([
     `/products/{bar}`,
-    `/products/{missingCapitalization.bar}`,
     `/products/{Model.}`,
     `/products/{Model:bar}`,
     `/products/{Model.bar.js`,
+    `/products/{Model_bar}.js`,
+    `/products/{123Model.bar}.js`,
+    `/products/{Model.123bar}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 

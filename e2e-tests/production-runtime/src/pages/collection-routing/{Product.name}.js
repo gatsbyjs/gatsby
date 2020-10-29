@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql, unstable_collectionGraphql } from "gatsby"
+import { Link, graphql, collectionGraphql } from "gatsby"
 
 import Layout from "../../components/layout"
 
@@ -22,9 +22,9 @@ export const blogPostQuery = graphql`
   }
 `
 
-export const collection = unstable_collectionGraphql`
+export const collection = collectionGraphql`
   {
-    allProduct { 
+    allProduct {
       ...CollectionPagesQueryFragment
     }
   }

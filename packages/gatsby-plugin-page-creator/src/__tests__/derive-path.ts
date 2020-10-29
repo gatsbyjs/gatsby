@@ -7,6 +7,9 @@ describe(`derive-path`, () => {
     expect(
       derivePath(`product/{Product.id}.js`, { id: `1` }, reporter)
     ).toEqual(`product/1`)
+    expect(
+      derivePath(`product/{product.id}.js`, { id: `1` }, reporter)
+    ).toEqual(`product/1`)
   })
 
   it(`converts number to string in URL`, () => {
@@ -23,6 +26,26 @@ describe(`derive-path`, () => {
         reporter
       )
     ).toEqual(`product/1`)
+  })
+
+  it(`has support for nested collections`, () => {
+    expect(
+      derivePath(
+        `product/{Product.id}/{Product.field__name}.js`,
+        { id: 1, field: { name: `foo` } },
+        reporter
+      )
+    ).toEqual(`product/1/foo`)
+  })
+
+  it(`has support for nested collections with same field`, () => {
+    expect(
+      derivePath(
+        `product/{Product.field__name}/{Product.field__category}.js`,
+        { field: { name: `foo`, category: `bar` } },
+        reporter
+      )
+    ).toEqual(`product/foo/bar`)
   })
 
   it(`has union support`, () => {
