@@ -6,9 +6,9 @@ Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
-- By creating React components in `src/pages`. Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
-- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes
-- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/node-apis/#createPages). [Plugins](/docs/plugins/) can also implement `createPages` and create pages for you
+- By creating React components in the `src/pages` directory. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
+- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
+- In your site's `gatsby-node.js` file, by implementing the API [`createPages`](/docs/node-apis/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
 to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).

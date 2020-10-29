@@ -6,23 +6,25 @@ Part of what makes Gatsby sites so fast is that a lot of the work is done at bui
 
 Alternatively, your application may include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible). This includes things like authentication or retrieving dynamic content. To handle those pages, you can make use of [client-only routes](/docs/client-only-routes-and-user-authentication) using [`@reach/router`](/docs/reach-router-and-gatsby/) which is built into Gatsby.
 
-Gatsby's file sytem based routing has the concept of pages where each file inside `src/pages` will generate its own route in your Gatsby site. The path for those routes matches the file structure it's found in.
+With Gatsby's file system routing, each file inside the `src/pages` directory will generate its own route in your Gatsby site. The path for those routes matches the file structure it's found in.
 
 ## Creating routes
 
 Routes can be created in three ways:
 
-- By creating React components in `src/pages`. Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
-- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes
-- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/node-apis/#createPages). [Plugins](/docs/plugins/) can also implement `createPages` and create pages for you
+- By creating React components in `src/pages`. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
+- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
+- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/node-apis/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
 ### Routes defined in `src/pages`
 
-For example, `src/pages/contact.js` will be found at `yoursite.com/contact`. And `src/pages/home.js` will be found at `yoursite.com/home`. This works at whatever level the file is created. If `contact.js` is moved to a directory called `information`, located inside `src/pages`, the page will now be found at `yoursite.com/information/contact`.
+Each `.js` file inside `src/pages` will generate its own page in your Gatsby site. The path for those pages matches the file structure it's found in.
+
+For example, `src/pages/contact.js` will be found at `yoursite.com/contact`, and `src/pages/home.js` will be found at `yoursite.com/home`. This works at whatever level the file is created at. If `contact.js` is moved to a directory called `information`, located inside `src/pages`, the page will now be found at `yoursite.com/information/contact`.
 
 The exception to this rule is any file named `index.js`. Files with this name are matched to the root directory they're found in. That means `index.js` in the root `src/pages` directory is accessed via `yoursite.com`. However, if there is an `index.js` inside the `information` directory, it is found at `yoursite.com/information`.
 
-Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
+Note that if a particular directory does not have an `index.js` file, then that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
 ### Using the File System Route API
 
@@ -38,7 +40,7 @@ See the [File System Route API](/docs/file-system-route-api/) documentation for 
 
 ### Using `gatsby-node.js`
 
-You can use [Gatsby Node APIs](/docs/node-apis/), including [`createPages`](/docs/node-apis/#createPages), inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/actions/#createPage) action which is at the core of programmatically creating a page. Here's an example for creating pages from markdown files sourced by Gatsby's data layer:
+You can use [Gatsby Node APIs](/docs/node-apis/), including the [`createPages`](/docs/node-apis/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {
@@ -66,7 +68,7 @@ exports.createPages = async function ({ actions, graphql }) {
 }
 ```
 
-The data for creating these pages doesn't necessarily have to come from Gatsby's internal GraphQL data layer as you e.g. can source local files or make async calls to remote APIs. For more information, also on how you can modify pages, please see [Creating and Modifying Pages](/docs/creating-and-modifying-pages/) for more detail.
+The data for creating these pages doesn't necessarily have to come from Gatsby's internal GraphQL data layer. For example, you can source local files or make async calls to remote APIs. For more information, please see [Creating and Modifying Pages](/docs/creating-and-modifying-pages/).
 
 ## Conflicting Routes
 

@@ -2,7 +2,7 @@
 title: File System Route API
 ---
 
-This page documents the APIs and conventions available with a file system based routing API, a suite of APIs and conventions to make the file system the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API, if you want more control over the page creation you should use the [`createPages`](/docs/node-apis#createPages) API.
+This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/node-apis#createPages) API.
 
 In short, these APIs enable you to programmatically create pages from Gatsby's [GraphQL data layer](/docs/graphql-concepts/) and to create [client-only routes](/docs/client-only-routes-and-user-authentication).
 
@@ -10,28 +10,31 @@ A complete example showcasing all options can be found in [Gatsby's "examples" f
 
 ## Creating collection routes
 
-Given the example that you source a `product.yaml` file and multiple markdown blog posts Gatsby will automatically infer the fields and create multiple [nodes](/docs/glossary#node) for both types (`Product` and `MarkdownRemark`). As usual, you can perform queries like `allProduct` or `allMarkdownRemark` but you're also able to access that information directly in the file path.
+Imagine a Gatsby project that sources a `product.yaml` file and multiple Markdown blog posts. At build time, Gatsby will automatically [infer](/docs/glossary/#inference) the fields and create multiple [nodes](/docs/glossary#node) for both types (`Product` and `MarkdownRemark`). There are two ways you could query for that data:
 
-To do that, use curly braces (`{ }`) to signify dynamic URL segments that relate to a field within the node. Here are a few examples:
+* You can perform GraphQL queries like `allProduct` or `allMarkdownRemark` from inside a component, as usual.
+* You can use the File System Route API to access node information directly from the file path.
 
-- `src/pages/products/{Product.name}.js => /products/burger`
-- `src/pages/products/{Product.fields__sku}.js => /products/001923`
-- `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js => /blog/learning-gatsby`
+To use the File System Route API, use curly braces (`{ }`) in your filenames to signify dynamic URL segments that relate to a field within the node. Here are a few examples:
 
-Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. This is the query that Gatsby uses to grab all the nodes and create a page for each of them. Gatsby also adds `id` to every query automatically to simplify how to integrate with page queries.
+- `src/pages/products/{Product.name}.js` will generate a route like `/products/burger`
+- `src/pages/products/{Product.fields__sku}.js` will generate a route like `/products/001923`
+- `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
+
+At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
 
 There are some general syntax requirements when using collection routes:
 
-- Filenames must start and end with curly braces (`{ }`)
-- Types can be both lowercase and uppercase (e.g. `MarkdownRemark` or `contentfulMyContentType`)
-- The initial type name must be followed by a dot
+- Filenames must start and end with curly braces (`{ }`).
+- Types can be both lowercase and uppercase (e.g. `MarkdownRemark` or `contentfulMyContentType`).
+- The initial type name must be followed by a period (`.`).
 
-> Note: To keep things consistent only capitalized type names are used in the examples
+> Note: To keep things consistent, only capitalized type names are used in the examples.
 
-Moreover, you cannot only name files but also folders with this syntax and create nested routes, for example:
+In addition to files, you can also name folders with this syntax. This allows you to create nested routes. For example:
 
-- `src/pages/products/{Product.name}/{Product.color}.js => /products/fidget-spinner/red`
-- `src/pages/products/{Product.name}/template.js =>`
+- `src/pages/products/{Product.name}/{Product.color}.js` will generate a route like `/products/fidget-spinner/red`
+- `src/pages/products/{Product.name}/template.js` will generate a route like `/products/fidget-spinner/template`
 
 ### Dot notation
 
@@ -97,7 +100,7 @@ allMarkdownRemark {
 }
 ```
 
-Using `( )` you signify that you want to access a [GraphQL union type](https://graphql.org/learn/schema/#union-types). This is often possible with types that Gatsby creates for you, e.g. `MarkdownRemark` always has `File` as a parent type and thus you can also access fields there. You can use this multiple levels deep, too, e.g. `src/pages/blog/{Post.parent__(MarkdownRemark)__parent__(File)__name}.js`.
+Using `( )` you signify that you want to access a [GraphQL union type](https://graphql.org/learn/schema/#union-types). This is often possible with types that Gatsby creates for you. For example, `MarkdownRemark` always has `File` as a parent type, and thus you can also access fields from the `File` node. You can use this multiple levels deep, too, e.g. `src/pages/blog/{Post.parent__(MarkdownRemark)__parent__(File)__name}.js`.
 
 ### Component implementation
 
@@ -163,13 +166,13 @@ Use [client-only routes](/docs/client-only-routes-and-user-authentication) if yo
 
 For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL. You can use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL.
 
-- `src/pages/users/[id].js => /users/:id`
-- `src/pages/users/[id]/group/[groupId].js => /users/:id/group/:groupId`
+- `src/pages/users/[id].js` will generate a route like `/users/:id`
+- `src/pages/users/[id]/group/[groupId].js` will generate a route like `/users/:id/group/:groupId`
 
 Gatsby also supports _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
-- `src/pages/image/[...awsKey].js => /image/*awsKey`
-- `src/pages/image/[...].js => /image/*`
+- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`
+- `src/pages/image/[...].js` will generate a route like `/image/*`
 
 Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
@@ -199,10 +202,10 @@ To address this issue, Gatsby automatically includes a `gatsbyPath` field on eve
 
 There are some general syntax requirements when using the `filePath` argument:
 
-- The path must be an absolute path (so starting with a `/`)
-- You must omit the file extension
-- You must omit the `src/pages` prefix
-- Your path must not include `index`
+- The path must be an absolute path (starting with a `/`).
+- You must omit the file extension.
+- You must omit the `src/pages` prefix.
+- Your path must not include `index`.
 
 ### `gatsbyPath` example
 
@@ -248,10 +251,10 @@ Have a look at the [route-api example](https://github.com/gatsbyjs/gatsby/tree/m
 
 ### Collection route + fallback
 
-By using a combination of a collection route with a client only route, you can create a great experience when a user tries to visit a URL from the collection route that doesn’t exist for the collection item. Consider these two file paths:
+By using a combination of a collection route with a client-only route, you can create a seamless experience when a user tries to visit a URL from the collection route that doesn’t exist for the collection item. Consider these two file paths:
 
-- `src/pages/products/{Product.name}.js`
-- `src/pages/products/[name].js`
+- `src/pages/products/{Product.name}.js` (collection route)
+- `src/pages/products/[name].js` (client-only route, fallback)
 
 If the user visits a product that wasn’t built from the data in your site, they will hit the client-only route, which can be used to show the user that the product doesn’t exist or load the data on the client.
 
