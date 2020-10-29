@@ -5,7 +5,7 @@ import { merge } from "lodash"
 import { join } from "path"
 import apiRunner from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
-const syncRequires = require(`$virtual/sync-requires`)
+import syncRequires from "$virtual/sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
