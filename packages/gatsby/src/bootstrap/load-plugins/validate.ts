@@ -237,21 +237,28 @@ async function validatePluginsOptions(
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
+          // If rootDir and plugin.parentDir are the same, i.e. if this is a plugin a user configured in their gatsby-config.js (and not a sub-theme that added it), this will be ""
+          // Otherwise, this will contain (and show) the relative path and warn instead of error
+          const configDir =
+            (plugin.parentDir &&
+              rootDir &&
+              path.relative(rootDir, plugin.parentDir)) ||
+            null
           console.log(``)
           reporter.error({
             id: `11331`,
             context: {
-              configDir:
-                (plugin.parentDir &&
-                  rootDir &&
-                  path.relative(rootDir, plugin.parentDir)) ||
-                null,
+              configDir,
               validationErrors: error.details,
               pluginName: plugin.resolve,
             },
           })
           console.log(``)
-          errors++
+
+          // Only process.exit if it's an error the user can fix
+          if (!configDir) {
+            errors++
+          }
 
           return plugin
         }
