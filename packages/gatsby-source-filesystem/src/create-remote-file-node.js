@@ -208,84 +208,24 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  const pluginCacheDir = cache.directory
-  // See if there's response headers for this url
-  // from a previous request.
-  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
-
-  const digest = createContentDigest(url)
-
-  if (!ext) {
-    ext = getRemoteFileExtension(url)
-  }
-
-  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
-
-  let fetched = false
+  let filename
   if (process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER) {
-    fs.copySync(
-      process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
-      tmpFilename
-    )
-    fetched = true
-  }
-
-  if (!fetched) {
-    const headers = { ...httpHeaders }
-    if (cachedHeaders && cachedHeaders.etag) {
-      headers[`If-None-Match`] = cachedHeaders.etag
-    }
-
-    // Add htaccess authentication if passed in. This isn't particularly
-    // extensible. We should define a proper API that we validate.
-    const httpOpts = {}
-    if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-      httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-    }
-
-    if (!name) {
-      name = getRemoteFileName(url)
-    }
-
-    // Fetch the file.
-    const response = await requestRemoteNode(
+    filename = await fetchPlaceholder({
+      fromPath: process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
       url,
-      headers,
-      tmpFilename,
-      httpOpts
-    )
-
-    if (response.statusCode == 200) {
-      fetched = true
-
-      // Save the response headers for future requests.
-      await cache.set(cacheIdForHeaders(url), response.headers)
-    }
-
-    // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-    if (ext === ``) {
-      if (response.statusCode === 200) {
-        // if this is fresh response - try to guess extension and cache result for future
-        const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-        const filetype = fileType(buffer)
-        if (filetype) {
-          ext = `.${filetype.ext}`
-          await cache.set(cacheIdForExtensions(url), ext)
-        }
-      } else if (response.statusCode === 304) {
-        // if file on server didn't change - grab cached extension
-        ext = await cache.get(cacheIdForExtensions(url))
-      }
-    }
-  }
-
-  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
-  // If the status code is 200, move the piped temp file to the real name.
-  if (fetched) {
-    await fs.move(tmpFilename, filename, { overwrite: true })
-    // Else if 304, remove the empty response.
+      cache,
+      ext,
+      name,
+    })
   } else {
-    await fs.remove(tmpFilename)
+    filename = await fetchRemoteNode({
+      url,
+      cache,
+      auth,
+      httpHeaders,
+      ext,
+      name,
+    })
   }
 
   // Create the file node.
@@ -300,6 +240,91 @@ async function processRemoteNode({
   await createNode(fileNode, { name: `gatsby-source-filesystem` })
 
   return fileNode
+}
+
+async function fetchRemoteNode({
+  url,
+  cache,
+  auth = {},
+  httpHeaders = {},
+  ext,
+  name,
+}) {
+  const pluginCacheDir = cache.directory
+  // See if there's response headers for this url
+  // from a previous request.
+  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
+
+  const headers = { ...httpHeaders }
+  if (cachedHeaders && cachedHeaders.etag) {
+    headers[`If-None-Match`] = cachedHeaders.etag
+  }
+
+  // Add htaccess authentication if passed in. This isn't particularly
+  // extensible. We should define a proper API that we validate.
+  const httpOpts = {}
+  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
+    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+  }
+
+  const digest = createContentDigest(url)
+  if (!name) {
+    name = getRemoteFileName(url)
+  }
+
+  if (!ext) {
+    ext = getRemoteFileExtension(url)
+  }
+
+  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
+
+  // Fetch the file.
+  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+
+  if (response.statusCode === 200) {
+    // Save the response headers for future requests.
+    await cache.set(cacheIdForHeaders(url), response.headers)
+  }
+
+  // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
+  if (ext === ``) {
+    if (response.statusCode === 200) {
+      // if this is fresh response - try to guess extension and cache result for future
+      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
+      const filetype = fileType(buffer)
+      if (filetype) {
+        ext = `.${filetype.ext}`
+        await cache.set(cacheIdForExtensions(url), ext)
+      }
+    } else if (response.statusCode === 304) {
+      // if file on server didn't change - grab cached extension
+      ext = await cache.get(cacheIdForExtensions(url))
+    }
+  }
+
+  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
+  // If the status code is 200, move the piped temp file to the real name.
+  if (response.statusCode === 200) {
+    await fs.move(tmpFilename, filename, { overwrite: true })
+    // Else if 304, remove the empty response.
+  } else {
+    await fs.remove(tmpFilename)
+  }
+
+  return filename
+}
+
+async function fetchPlaceholder({ fromPath, url, cache, ext, name }) {
+  const pluginCacheDir = cache.directory
+  const digest = createContentDigest(url)
+
+  if (!ext) {
+    ext = getRemoteFileExtension(url)
+  }
+
+  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
+  fs.copySync(fromPath, filename)
+  return filename
 }
 
 /**
