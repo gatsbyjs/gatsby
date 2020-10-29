@@ -3,7 +3,6 @@ import { trackCli } from "gatsby-telemetry"
 
 import { findPageByPath } from "../find-page-by-path"
 import { renderDevHTML } from "./render-dev-html"
-import { isWebpackStatusPending } from "../webpack-status"
 
 export const route = ({ app, program, store }): any =>
   // Render an HTML page and serve it.
