@@ -1,4 +1,4 @@
-# create-gatsby
+# create-gatsby (alpha)
 
 Create Gatsby apps in an interactive CLI experience that does the plumbing for you.
 
@@ -7,7 +7,13 @@ Create Gatsby apps in an interactive CLI experience that does the plumbing for y
 Create a new Gatsby app by running the following command:
 
 ```shell
-npx create-gatsby
+npm init gatsby
+```
+
+or
+
+```shell
+yarn create gatsby
 ```
 
 It will ask you questions about what you're building, and set up a Gatsby project for you.
