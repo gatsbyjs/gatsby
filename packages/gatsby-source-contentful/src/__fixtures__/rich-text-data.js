@@ -9,10 +9,9 @@ exports.initialSync = () => {
                 type: `Link`,
                 linkType: `Space`,
                 id: `ahntqop9oi7x`,
-                contentful_id: `ahntqop9oi7x`,
               },
             },
-            id: `c6KpLS2NZyB3KAvDzWf4Ukh`,
+            id: `6KpLS2NZyB3KAvDzWf4Ukh`,
             type: `Entry`,
             createdAt: `2020-10-16T11:50:44.939Z`,
             updatedAt: `2020-10-16T11:50:44.939Z`,
@@ -21,7 +20,6 @@ exports.initialSync = () => {
                 id: `master`,
                 type: `Link`,
                 linkType: `Environment`,
-                contentful_id: `master`,
               },
             },
             revision: 1,
@@ -30,10 +28,8 @@ exports.initialSync = () => {
                 type: `Link`,
                 linkType: `ContentType`,
                 id: `page`,
-                contentful_id: `page`,
               },
             },
-            contentful_id: `6KpLS2NZyB3KAvDzWf4Ukh`,
           },
           fields: {
             title: {
@@ -293,10 +289,9 @@ exports.initialSync = () => {
                         data: {
                           target: {
                             sys: {
-                              id: `c7oHxo6bs0us9wIkq27qdyK`,
+                              id: `7oHxo6bs0us9wIkq27qdyK`,
                               type: `Link`,
                               linkType: `Entry`,
-                              contentful_id: `7oHxo6bs0us9wIkq27qdyK`,
                             },
                           },
                         },
@@ -343,10 +338,9 @@ exports.initialSync = () => {
                                 data: {
                                   target: {
                                     sys: {
-                                      id: `c6KpLS2NZyB3KAvDzWf4Ukh`,
+                                      id: `6KpLS2NZyB3KAvDzWf4Ukh`,
                                       type: `Link`,
                                       linkType: `Entry`,
-                                      contentful_id: `6KpLS2NZyB3KAvDzWf4Ukh`,
                                     },
                                   },
                                 },
@@ -384,10 +378,9 @@ exports.initialSync = () => {
                     data: {
                       target: {
                         sys: {
-                          id: `c7oHxo6bs0us9wIkq27qdyK`,
+                          id: `7oHxo6bs0us9wIkq27qdyK`,
                           type: `Link`,
                           linkType: `Entry`,
-                          contentful_id: `7oHxo6bs0us9wIkq27qdyK`,
                         },
                       },
                     },
@@ -422,10 +415,9 @@ exports.initialSync = () => {
                     data: {
                       target: {
                         sys: {
-                          id: `c4ZQrqcrTunWiuNaavhGYNT`,
+                          id: `4ZQrqcrTunWiuNaavhGYNT`,
                           type: `Link`,
                           linkType: `Asset`,
-                          contentful_id: `4ZQrqcrTunWiuNaavhGYNT`,
                         },
                       },
                     },
@@ -454,10 +446,9 @@ exports.initialSync = () => {
                 type: `Link`,
                 linkType: `Space`,
                 id: `ahntqop9oi7x`,
-                contentful_id: `ahntqop9oi7x`,
               },
             },
-            id: `c7oHxo6bs0us9wIkq27qdyK`,
+            id: `7oHxo6bs0us9wIkq27qdyK`,
             type: `Entry`,
             createdAt: `2020-10-16T11:50:44.929Z`,
             updatedAt: `2020-10-16T11:50:44.929Z`,
@@ -466,7 +457,6 @@ exports.initialSync = () => {
                 id: `master`,
                 type: `Link`,
                 linkType: `Environment`,
-                contentful_id: `master`,
               },
             },
             revision: 1,
@@ -475,10 +465,8 @@ exports.initialSync = () => {
                 type: `Link`,
                 linkType: `ContentType`,
                 id: `page`,
-                contentful_id: `page`,
               },
             },
-            contentful_id: `7oHxo6bs0us9wIkq27qdyK`,
           },
           fields: {
             title: {
@@ -531,10 +519,9 @@ exports.initialSync = () => {
                         data: {
                           target: {
                             sys: {
-                              id: `c6KpLS2NZyB3KAvDzWf4Ukh`,
+                              id: `6KpLS2NZyB3KAvDzWf4Ukh`,
                               type: `Link`,
                               linkType: `Entry`,
-                              contentful_id: `6KpLS2NZyB3KAvDzWf4Ukh`,
                             },
                           },
                         },
@@ -578,10 +565,9 @@ exports.initialSync = () => {
                     data: {
                       target: {
                         sys: {
-                          id: `c5yedy6m6500gVbtpNh8bEm`,
+                          id: `5yedy6m6500gVbtpNh8bEm`,
                           type: `Link`,
                           linkType: `Asset`,
-                          contentful_id: `5yedy6m6500gVbtpNh8bEm`,
                         },
                       },
                     },
@@ -624,10 +610,9 @@ exports.initialSync = () => {
                 type: `Link`,
                 linkType: `Space`,
                 id: `ahntqop9oi7x`,
-                contentful_id: `ahntqop9oi7x`,
               },
             },
-            id: `c4ZQrqcrTunWiuNaavhGYNT`,
+            id: `4ZQrqcrTunWiuNaavhGYNT`,
             type: `Asset`,
             createdAt: `2020-10-16T11:47:54.157Z`,
             updatedAt: `2020-10-16T11:47:54.158Z`,
@@ -636,11 +621,9 @@ exports.initialSync = () => {
                 id: `master`,
                 type: `Link`,
                 linkType: `Environment`,
-                contentful_id: `master`,
               },
             },
             revision: 1,
-            contentful_id: `4ZQrqcrTunWiuNaavhGYNT`,
           },
           fields: {
             title: {
@@ -669,10 +652,9 @@ exports.initialSync = () => {
                 type: `Link`,
                 linkType: `Space`,
                 id: `ahntqop9oi7x`,
-                contentful_id: `ahntqop9oi7x`,
               },
             },
-            id: `c5yedy6m6500gVbtpNh8bEm`,
+            id: `5yedy6m6500gVbtpNh8bEm`,
             type: `Asset`,
             createdAt: `2020-10-16T11:47:43.597Z`,
             updatedAt: `2020-10-16T11:47:43.597Z`,
@@ -681,11 +663,9 @@ exports.initialSync = () => {
                 id: `master`,
                 type: `Link`,
                 linkType: `Environment`,
-                contentful_id: `master`,
               },
             },
             revision: 1,
-            contentful_id: `5yedy6m6500gVbtpNh8bEm`,
           },
           fields: {
             title: {
@@ -720,7 +700,6 @@ exports.initialSync = () => {
               type: `Link`,
               linkType: `Space`,
               id: `ahntqop9oi7x`,
-              contentful_id: `ahntqop9oi7x`,
             },
           },
           id: `page`,
@@ -732,11 +711,9 @@ exports.initialSync = () => {
               id: `master`,
               type: `Link`,
               linkType: `Environment`,
-              contentful_id: `master`,
             },
           },
           revision: 2,
-          contentful_id: `page`,
         },
         displayField: `title`,
         name: `Page`,
@@ -814,7 +791,6 @@ exports.initialSync = () => {
     },
   }
 }
-
 exports.deleteLinkedPage = () => {
   return {
     currentSyncData: {
@@ -824,13 +800,12 @@ exports.deleteLinkedPage = () => {
         {
           sys: {
             type: `DeletedEntry`,
-            id: `c7oHxo6bs0us9wIkq27qdyK`,
+            id: `7oHxo6bs0us9wIkq27qdyK`,
             space: {
               sys: {
                 type: `Link`,
                 linkType: `Space`,
                 id: `ahntqop9oi7x`,
-                contentful_id: `ahntqop9oi7x`,
               },
             },
             environment: {
@@ -838,14 +813,12 @@ exports.deleteLinkedPage = () => {
                 id: `master`,
                 type: `Link`,
                 linkType: `Environment`,
-                contentful_id: `master`,
               },
             },
             revision: 1,
             createdAt: `2020-10-16T12:29:38.094Z`,
             updatedAt: `2020-10-16T12:29:38.094Z`,
             deletedAt: `2020-10-16T12:29:38.094Z`,
-            contentful_id: `7oHxo6bs0us9wIkq27qdyK`,
           },
         },
       ],
@@ -860,7 +833,6 @@ exports.deleteLinkedPage = () => {
               type: `Link`,
               linkType: `Space`,
               id: `ahntqop9oi7x`,
-              contentful_id: `ahntqop9oi7x`,
             },
           },
           id: `page`,
@@ -872,11 +844,9 @@ exports.deleteLinkedPage = () => {
               id: `master`,
               type: `Link`,
               linkType: `Environment`,
-              contentful_id: `master`,
             },
           },
           revision: 2,
-          contentful_id: `page`,
         },
         displayField: `title`,
         name: `Page`,

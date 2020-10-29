@@ -448,16 +448,16 @@ Object {
 
 exports[`gatsby-node stores rich text as raw with references attached 1`] = `
 Array [
-  "ahntqop9oi7x___c7oHxo6bs0us9wIkq27qdyK___Entry",
-  "ahntqop9oi7x___c6KpLS2NZyB3KAvDzWf4Ukh___Entry",
-  "ahntqop9oi7x___c4ZQrqcrTunWiuNaavhGYNT___Asset",
+  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry",
+  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry",
+  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset",
 ]
 `;
 
 exports[`gatsby-node stores rich text as raw with references attached 2`] = `
 Array [
-  "ahntqop9oi7x___c7oHxo6bs0us9wIkq27qdyK___Entry___nl",
-  "ahntqop9oi7x___c6KpLS2NZyB3KAvDzWf4Ukh___Entry___nl",
-  "ahntqop9oi7x___c4ZQrqcrTunWiuNaavhGYNT___Asset___nl",
+  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry___nl",
+  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry___nl",
+  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset___nl",
 ]
 `;
