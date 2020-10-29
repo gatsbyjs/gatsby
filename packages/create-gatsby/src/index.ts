@@ -113,6 +113,8 @@ ${messages.join(`\n`)}
     data.project
   )
   console.log(
-    "Looks like you should probably go and implement `gatsby plugin add` now!"
+    `This is the point where we'd then install the plugins, but ${c.redBright(
+      `gatsby plugin add`
+    )} hasn't been implemented yet`
   )
 }
