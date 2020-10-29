@@ -395,13 +395,13 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli/) installed
-- Choosing a font package from [Fontsource](https://github.com/fontsource/fontsource)
+- A chosen font package from [Fontsource](https://github.com/fontsource/fontsource)
 
 ### Directions
 
-This is an installation example using Open Sans, applicable to all other fonts searchable via [NPM](https://www.npmjs.com/) or the [packages](https://github.com/fontsource/fontsource/tree/master/packages) directory in the repository.
+This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-1. Run `npm install fontsource-open-sans` to download the necessary package files. If you wish to use a different typeface, search up `fontsource-<insert font name>` on [NPM](https://www.npmjs.com/) for specific instructions tailored to that font.
+1. Run `npm install fontsource-open-sans` to download the necessary package files.
 
 2. Then within your app entry file or site component, import it in. In Gatsby, you could choose to import it into a layout template (`layout.js`), page component (`index.js`), or `gatsby-browser.js`.
 
@@ -419,12 +419,11 @@ body {
 }
 ```
 
-_NOTE: The range of supported weights and styles a font may support is shown on each package README file._
+**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
 
 ### Additional resources
 
-- [Fontsource](https://github.com/fontsource/fontsource) - Main monorepo
-- [[WIP] Search Directory](https://fontsource.github.io/search-directory/) - Currently open to contributions improving the user experience
+- [Fontsource repo on GitHub](https://github.com/fontsource/fontsource)
 - [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
 
 ## Using Font Awesome
