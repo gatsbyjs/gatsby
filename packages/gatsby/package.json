@@ -198,6 +198,7 @@
     "dist/",
     "gatsby-admin-public/",
     "graphql.js",
+    "graphql.d.ts",
     "index.d.ts",
     "scripts/postinstall.js",
     "utils.js",
