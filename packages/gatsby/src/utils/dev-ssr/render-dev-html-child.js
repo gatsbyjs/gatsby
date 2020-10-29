@@ -112,26 +112,47 @@ const parseError = function (err, directory) {
 
 exports.parseError = parseError
 
+const callRenderFunction = ({ path, htmlComponentRendererPath }) => {
+  const htmlComponentRenderer = require(htmlComponentRendererPath)
+  return new Promise(resolve => {
+    htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
+      // console.log(`rendered correctly`, { htmlString, attempts })
+      resolve(htmlString)
+    })
+  })
+}
+
 exports.renderHTML = ({ path, htmlComponentRendererPath, directory }) =>
-  new Promise((resolve, reject) => {
-    const htmlComponentRenderer = require(htmlComponentRendererPath)
+  new Promise(async (resolve, reject) => {
     try {
-      htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-        resolve(htmlString)
+      const htmlString = await callRenderFunction({
+        path,
+        htmlComponentRendererPath,
       })
+      resolve(htmlString)
     } catch (err) {
-      const stack = err.stack ? err.stack : ``
-      // Only generate error pages for webpack errors. If it's not a webpack
-      // error, it's not a user error so probably a system error so we'll just
-      // panic and quit.
-      const regex = /webpack:\/lib\//gm
-      if (!stack.match(regex)) {
-        report.panic(err)
-        return
+      // The bundle might not yet have the page component we need yet
+      // so develop-static-entry.js will throw (kinda like React suspense)
+      // and we keep trying until it's there.
+      if (err.message === `try again`) {
+        setTimeout(() => {
+          exports.deleteModuleCache(htmlComponentRendererPath)
+          exports.renderHTML({ path, htmlComponentRendererPath, directory })
+        }, 100)
+      } else {
+        const stack = err.stack ? err.stack : ``
+        // Only generate error pages for webpack errors. If it's not a webpack
+        // error, it's not a user error so probably a system error so we'll just
+        // panic and quit.
+        const regex = /webpack:\/lib\//gm
+        if (!stack.match(regex)) {
+          console.log(err)
+          return
+        }
+        const error = parseError(err, directory)
+        reject(error)
+        // return { error }
       }
-      const error = parseError(err, directory)
-      reject(error)
-      // return { error }
     }
   })
 

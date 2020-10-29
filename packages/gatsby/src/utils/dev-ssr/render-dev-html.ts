@@ -10,7 +10,11 @@ const startWorker = (): any => {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
     numWorkers: 1,
     enableWorkerThreads: true,
+    forkOptions: { silent: false },
   })
+
+  newWorker.getStdout().pipe(process.stdout)
+  newWorker.getStderr().pipe(process.stderr)
 
   // jest-worker is lazy with forking but we want to fork immediately so the user
   // doesn't have to wait.
@@ -117,12 +121,12 @@ export const renderDevHTML = ({
       // Write component to file & wait for public/render-page.js to update
       await ensurePathComponentInSSRBundle(path, directory)
 
-      const response = await worker.renderHTML({
+      const htmlString = await worker.renderHTML({
         path,
         htmlComponentRendererPath,
         directory,
       })
-      resolve(response)
+      resolve(htmlString)
     } catch (error) {
       reject(error)
     }
