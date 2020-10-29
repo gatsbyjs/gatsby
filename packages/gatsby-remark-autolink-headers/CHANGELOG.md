@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.3.15...gatsby-remark-autolink-headers@2.3.16) (2020-10-28)
+
+### Bug Fixes
+
+- **gatsby:** fix subplugin validation ([#27616](https://github.com/gatsbyjs/gatsby/issues/27616)) ([65deab8](https://github.com/gatsbyjs/gatsby/commit/65deab8b47802262d19f7577ba5db302a2cd22e6))
+
 ## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.3.14...gatsby-remark-autolink-headers@2.3.15) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-remark-autolink-headers

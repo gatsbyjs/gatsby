@@ -47,7 +47,7 @@ Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and th
 
 ## Find Root Nodes
 
-To access this information, `schema/node-model.js` provides the [findRootNodeAncestor()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L403) function. It takes an object, and looks up its parent's nodeID in `rootNodeMap`. It then finds the actual node in redux. It then gets that node's `parent` ID, and gets the parent node from redux. And continues in this way until the root node is found.
+To access this information, `schema/node-model.js` provides the [findRootNodeAncestor()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L403) function. It takes an object, and looks up its parent's nodeID in `rootNodeMap`. It then finds the actual node in Redux. It then gets that node's `parent` ID, and gets the parent node from Redux. And continues in this way until the root node is found.
 
 In the above example, `nodeA` has parent `id1`. So `findRootNodeAncestor({ blog: "blog/my-blog.md", b: 2 })` would return the node for `id1` (the parent).
 

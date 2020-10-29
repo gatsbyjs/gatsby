@@ -14,6 +14,12 @@ import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IFlattenedPlugin } from "../types"
 
+afterEach(() => {
+  Object.keys(reporter).forEach(method => {
+    reporter[method].mockClear()
+  })
+})
+
 describe(`Load plugins`, () => {
   /**
    * Replace the resolve path and version string.
@@ -306,6 +312,54 @@ describe(`Load plugins`, () => {
         respectDNT: false,
         trackingId: `fake`,
       })
+    })
+
+    it(`validates subplugin schemas`, async () => {
+      await loadPlugins({
+        plugins: [
+          {
+            resolve: `gatsby-transformer-remark`,
+            options: {
+              plugins: [
+                {
+                  resolve: `gatsby-remark-autolink-headers`,
+                  options: {
+                    maintainCase: `should be boolean`,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      })
+
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "pluginName": "gatsby-remark-autolink-headers",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "maintainCase",
+                    "label": "maintainCase",
+                    "value": "should be boolean",
+                  },
+                  "message": "\\"maintainCase\\" must be a boolean",
+                  "path": Array [
+                    "maintainCase",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
+      expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
   })
 })
