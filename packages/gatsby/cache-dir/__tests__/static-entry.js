@@ -16,6 +16,19 @@ jest.mock(`gatsby/package.json`, () => {
     version: `2.0.0`,
   }
 })
+jest.mock(
+  `$virtual/lazy-sync-requires`,
+  () => {
+    return {
+      components: {
+        "page-component---src-pages-test-js": () => null,
+      },
+    }
+  },
+  {
+    virtual: true,
+  }
+)
 
 jest.mock(
   `$virtual/sync-requires`,
