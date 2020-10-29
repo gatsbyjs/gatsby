@@ -76,12 +76,18 @@ const preferDefault = m => (m && m.default) || m
 }
 
 const pageComponents = new Map()
-const ensurePathComponentInSSRBundle = async (path, directory): void => {
+const ensurePathComponentInSSRBundle = async (
+  path,
+  directory
+): Promise<void> => {
   const pages = [...store.getState().pages.values()]
-  const { component, componentChunkName } = pages.find(p => p.path === path)
-  if (!pageComponents.has(component)) {
-    pageComponents.set(component, { component, componentChunkName })
-    await writeLazyRequires(pageComponents)
+  const page = pages.find(p => p.path === path)
+  if (page && !pageComponents.has(page.component)) {
+    pageComponents.set(page.component, {
+      component: page.component,
+      componentChunkName: page.componentChunkName,
+    })
+    writeLazyRequires(pageComponents)
     const htmlComponentRendererPath = joinPath(
       directory,
       `public/render-page.js`
@@ -91,8 +97,7 @@ const ensurePathComponentInSSRBundle = async (path, directory): void => {
         // It's changed, clean up the watcher.
         watcher.close()
         // Make sure the worker is ready.
-        await worker.deleteModuleCache(htmlComponentRendererPath)
-        resolve()
+        worker.deleteModuleCache(htmlComponentRendererPath).then(resolve)
       })
     })
   }
