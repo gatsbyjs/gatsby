@@ -448,7 +448,7 @@ const imageNodeType = ({
         description: `Generate images in WebP format as well as matching the input format. This is the default (and strongly recommended), but will add to processing time.`,
       },
       outputPixelDensities: {
-        type: GraphQLList(GraphQLInt),
+        type: GraphQLList(GraphQLFloat),
         description: stripIndent`
         A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always a 1x image. 
         Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide`,
