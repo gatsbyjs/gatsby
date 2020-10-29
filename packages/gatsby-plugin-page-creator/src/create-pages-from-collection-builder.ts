@@ -99,11 +99,18 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     )
   }
 
+  let derivePathErrors = 0
+
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths = nodes.map((node: Record<string, object>) => {
     // URL path for the component and node
-    const path = createPath(derivePath(filePath, node, reporter))
+    const { derivedPath, errors: countDerivePath } = derivePath(
+      filePath,
+      node,
+      reporter
+    )
+    const path = createPath(derivedPath)
     // Params is supplied to the FE component on props.params
     const params = getCollectionRouteParams(createPath(filePath), path)
     // nodeParams is fed to the graphql query for the component
@@ -121,8 +128,19 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       },
     })
 
+    derivePathErrors += countDerivePath
+
     return path
   })
+
+  if (derivePathErrors > 0) {
+    reporter.error({
+      id: prefixId(CODES.GeneratePath),
+      context: {
+        sourceMessage: `Could not find a value in the node for ${filePath}. Please make sure that the syntax is correct and supported.`,
+      },
+    })
+  }
 
   watchCollectionBuilder(
     absolutePath,

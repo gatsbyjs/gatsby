@@ -8,7 +8,6 @@ import {
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
 } from "./path-utils"
-import { CODES, prefixId } from "./error-utils"
 
 const doubleForwardSlashes = /\/\/+/g
 
@@ -20,7 +19,9 @@ export function derivePath(
   path: string,
   node: Record<string, any>,
   reporter: Reporter
-): string {
+): { errors: number; derivedPath: string } {
+  let errors = 0
+
   // 1.  Remove the extension
   let pathWithoutExtension = removeFileExtension(path)
 
@@ -41,12 +42,12 @@ export function derivePath(
 
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
-      reporter.error({
-        id: prefixId(CODES.GeneratePath),
-        context: {
-          sourceMessage: `Could not find value in the following node for key ${slugPart} (transformed to ${key})`,
-        },
-      })
+      reporter.verbose(
+        `Could not find value in the following node for key ${slugPart} (transformed to ${key}) for node:
+
+        ${JSON.stringify(node, null, 2)}`
+      )
+      errors++
       return
     }
 
@@ -59,7 +60,10 @@ export function derivePath(
   // 4.  Remove double forward slashes that could occur in the final URL
   const derivedPath = pathWithoutExtension.replace(doubleForwardSlashes, `/`)
 
-  return derivedPath
+  return {
+    errors,
+    derivedPath,
+  }
 }
 
 // If the node value is meant to be a slug, like `foo/bar`, the slugify
