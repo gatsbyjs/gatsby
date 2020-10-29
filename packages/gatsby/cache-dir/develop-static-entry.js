@@ -129,12 +129,8 @@ export default (pagePath, callback) => {
             : undefined,
         }
 
-        if (!lazySyncRequires.components[componentChunkName]) {
-          throw new Error(`try again`)
-        }
-
         const pageElement = createElement(
-          lazySyncRequires.components[componentChunkName],
+          lazySyncRequires.lazyComponents[componentChunkName],
           props
         )
 

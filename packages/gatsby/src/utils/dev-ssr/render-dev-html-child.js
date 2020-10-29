@@ -112,47 +112,26 @@ const parseError = function (err, directory) {
 
 exports.parseError = parseError
 
-const callRenderFunction = ({ path, htmlComponentRendererPath }) => {
-  const htmlComponentRenderer = require(htmlComponentRendererPath)
-  return new Promise(resolve => {
-    htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-      // console.log(`rendered correctly`, { htmlString, attempts })
-      resolve(htmlString)
-    })
-  })
-}
-
 exports.renderHTML = ({ path, htmlComponentRendererPath, directory }) =>
-  new Promise(async (resolve, reject) => {
+  new Promise((resolve, reject) => {
     try {
-      const htmlString = await callRenderFunction({
-        path,
-        htmlComponentRendererPath,
+      const htmlComponentRenderer = require(htmlComponentRendererPath)
+      htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
+        // console.log(`rendered correctly`, { htmlString, attempts })
+        resolve(htmlString)
       })
-      resolve(htmlString)
     } catch (err) {
-      // The bundle might not yet have the page component we need yet
-      // so develop-static-entry.js will throw (kinda like React suspense)
-      // and we keep trying until it's there.
-      if (err.message === `try again`) {
-        setTimeout(() => {
-          exports.deleteModuleCache(htmlComponentRendererPath)
-          exports.renderHTML({ path, htmlComponentRendererPath, directory })
-        }, 100)
-      } else {
-        const stack = err.stack ? err.stack : ``
-        // Only generate error pages for webpack errors. If it's not a webpack
-        // error, it's not a user error so probably a system error so we'll just
-        // panic and quit.
-        const regex = /webpack:\/lib\//gm
-        if (!stack.match(regex)) {
-          console.log(err)
-          return
-        }
-        const error = parseError(err, directory)
-        reject(error)
-        // return { error }
+      const stack = err.stack ? err.stack : ``
+      // Only generate error pages for webpack errors. If it's not a webpack
+      // error, it's not a user error so probably a system error so we'll just
+      // panic and quit.
+      const regex = /webpack:\/lib\//gm
+      if (!stack.match(regex)) {
+        console.log(err)
+        return
       }
+      const error = parseError(err, directory)
+      reject(error)
     }
   })
 

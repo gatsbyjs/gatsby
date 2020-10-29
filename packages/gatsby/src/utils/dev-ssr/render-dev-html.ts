@@ -1,6 +1,7 @@
 import JestWorker from "jest-worker"
 import fs from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
+import report from "gatsby-cli/lib/reporter"
 
 import { store } from "../../redux"
 import { writeModule } from "../gatsby-webpack-virtual-modules"
@@ -9,7 +10,6 @@ const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
     numWorkers: 1,
-    enableWorkerThreads: true,
     forkOptions: { silent: false },
   })
 
@@ -66,7 +66,9 @@ const writeLazyRequires = (pageComponents): void => {
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
 \n\n`
-  lazySyncRequires += `exports.components = {\n${[...pageComponents.values()]
+  lazySyncRequires += `exports.lazyComponents = {\n${[
+    ...pageComponents.values(),
+  ]
     .map(
       (c: IGatsbyPageComponent): string =>
         `  "${
@@ -80,32 +82,89 @@ const preferDefault = m => (m && m.default) || m
 }
 
 const pageComponents = new Map()
+const pageComponentsWritten = new Set()
+const inFlightPromises = new Map()
+
+const searchFileForString = (substring, filePath): Promise<boolean> =>
+  new Promise(resolve => {
+    const stream = fs.createReadStream(filePath)
+    let found = false
+    stream.on(`data`, function (d) {
+      if (d.includes(substring)) {
+        found = true
+        stream.close()
+        resolve(found)
+      }
+    })
+    stream.on(`error`, function () {
+      resolve(found)
+    })
+    stream.on(`close`, function () {
+      resolve(found)
+    })
+  })
+
 const ensurePathComponentInSSRBundle = async (
   path,
   directory
-): Promise<void> => {
+): Promise<any> => {
   const pages = [...store.getState().pages.values()]
   const page = pages.find(p => p.path === path)
-  if (page && !pageComponents.has(page.component)) {
-    pageComponents.set(page.component, {
-      component: page.component,
-      componentChunkName: page.componentChunkName,
-    })
-    writeLazyRequires(pageComponents)
-    const htmlComponentRendererPath = joinPath(
-      directory,
-      `public/render-page.js`
-    )
-    await new Promise(async resolve => {
-      const watcher = fs.watch(htmlComponentRendererPath, () => {
-        // It's changed, clean up the watcher.
-        watcher.close()
-        // Make sure the worker is ready.
-        worker.deleteModuleCache(htmlComponentRendererPath).then(resolve)
-      })
-    })
+
+  // This shouldn't happen.
+  if (!page) {
+    report.panic(`page not found`)
   }
-  // else nothing to do so we return.
+
+  // If we know it's written, return.
+  if (pageComponentsWritten.has(page.componentChunkName)) {
+    return true
+  }
+
+  let promiseResolve
+  // If we're already handling this path, return its promise.
+  if (inFlightPromises.has(page.componentChunkName)) {
+    return inFlightPromises.get(page.componentChunkName)
+  } else {
+    const promise = new Promise(function (resolve) {
+      promiseResolve = resolve
+    })
+
+    inFlightPromises.set(page.componentChunkName, promise)
+  }
+
+  // Write out the component information to lazy-sync-requires
+  pageComponents.set(page.component, {
+    component: page.component,
+    componentChunkName: page.componentChunkName,
+  })
+  writeLazyRequires(pageComponents)
+
+  // Now wait for it to be written to public/render-page.js
+  const htmlComponentRendererPath = joinPath(directory, `public/render-page.js`)
+  const watcher = fs.watch(htmlComponentRendererPath, async () => {
+    // This search takes 1-10ms
+    const found = await searchFileForString(
+      page.componentChunkName,
+      htmlComponentRendererPath
+    )
+    if (found) {
+      // It's changed, clean up the watcher.
+      watcher.close()
+      // Make sure the worker is ready and then resolve.
+      worker.deleteModuleCache(htmlComponentRendererPath).then(promiseResolve)
+    }
+  })
+
+  // We're done, delete the promise from the in-flight promises
+  // and add it to the set of done paths.
+  inFlightPromises.get(page.componentChunkName).then(() => {
+    inFlightPromises.delete(page.componentChunkName)
+    pageComponentsWritten.add(page.componentChunkName)
+  })
+
+  // Return the promise for the first request.
+  return inFlightPromises.get(page.componentChunkName)
 }
 
 // Initialize the virtual module.

@@ -11,5 +11,5 @@ export default function Inline() {
       }
     }
   `)
-  return <div>hi2 {site.siteMetadata.title}</div>
+  return <div>hi1 {site.siteMetadata.title}</div>
 }
