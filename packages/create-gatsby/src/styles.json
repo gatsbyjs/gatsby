@@ -1,0 +1,8 @@
+{
+  "": "No (or I'll add it later)",
+  "gatsby-plugin-postcss": "CSS Modules/PostCSS",
+  "gatsby-plugin-styled-components": "styled-components",
+  "gatsby-plugin-emotion": "Emotion",
+  "gatsby-plugin-sass": "Sass",
+  "gatsby-plugin-themeui": "Theme-UI"
+}

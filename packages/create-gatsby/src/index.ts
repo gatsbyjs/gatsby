@@ -1,12 +1,51 @@
 import { prompt } from "enquirer"
-import questions from "./questions.json"
+import cmses from "./cmses.json"
+import styles from "./styles.json"
+import features from "./features.json"
 import { initStarter } from "./init-starter"
+
+const makeChoices = (
+  options: Record<string, string>
+): Array<{ message: string; name: string }> =>
+  Object.entries(options).map(([name, message]) => {
+    return { name, message }
+  })
+
+const questions = [
+  {
+    type: `input`,
+    name: `project`,
+    message: `What would you like to name the folder where you site will be created?`,
+    initial: `my-gatsby-site`,
+  },
+  {
+    type: `select`,
+    name: `cms`,
+    message: `Will you be using a CMS?`,
+    hint: `Use arrow keys to move, and enter to select`,
+    choices: makeChoices(cmses),
+  },
+  {
+    type: `select`,
+    name: `styling`,
+    message: `Would you like to install a styling system?`,
+    hint: `Use arrow keys to move, and enter to select`,
+    choices: makeChoices(styles),
+  },
+  {
+    type: `multiselect`,
+    name: `features`,
+    message: `Would you like to install additional features with other plugins?`,
+    hint: `Use arrow keys to move, spacebar to select, and enter to confirm your choices`,
+    choices: makeChoices(features),
+  },
+]
 
 interface IAnswers {
   project: string
-  styling?: string
-  cms?: string
-  features?: Array<string>
+  styling?: keyof typeof styles
+  cms?: keyof typeof cmses
+  features?: Array<keyof typeof features>
 }
 
 export async function run(): Promise<void> {
@@ -16,15 +55,15 @@ export async function run(): Promise<void> {
   const data = await prompt<IAnswers>(questions)
 
   const messages: Array<string> = [
-    `🛠  Create a new Gatsby site called ${data.project}`,
+    `🛠  Create a new Gatsby site in the folder "${data.project}"`,
   ]
   if (data.cms) {
-    messages.push(`📚 Install and configure the plugin for ${data.cms}`)
+    messages.push(`📚 Install and configure the plugin for ${cmses[data.cms]}`)
   }
 
   if (data.styling) {
     messages.push(
-      `🎨 Get you set up to use ${data.styling} for styling your site`
+      `🎨 Get you set up to use ${styles[data.styling]} for styling your site`
     )
   }
 

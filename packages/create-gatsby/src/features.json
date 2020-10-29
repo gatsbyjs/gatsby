@@ -1,0 +1,7 @@
+{
+  "gatsby-plugin-google-analytics": "Add the Google Analytics tracking script",
+  "gatsby-plugin-sitemap": "Add an automatic sitemap",
+  "gatsby-plugin-mdx": "Add MDX support",
+  "gatsby-plugin-offline": "Enable offline functionality",
+  "gatsby-plugin-manifest": "Generate a manifest file"
+}

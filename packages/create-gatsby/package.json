@@ -7,8 +7,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "prepare": "yarn build",
-    "prepublishOnly": "yarn build"
+    "prepare": "yarn build"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
   "dependencies": {
