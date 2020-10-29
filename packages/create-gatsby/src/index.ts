@@ -96,7 +96,7 @@ export async function run(): Promise<void> {
 
 ${c.bold(`Thanks! Here's what we'll now do:`)}
 
-${messages.join(`\n`)}
+    ${messages.join(`\n    `)}
   `)
 
   const { confirm } = await prompt<{ confirm: boolean }>({
