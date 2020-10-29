@@ -111,7 +111,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    gatsby new my-blazing-fast-site
    ```
 
-3. **Start the site in `develop` mode.**
+3. **Start the site in `developer` mode.**
 
    Next, move into your new site’s directory and start it up:
 
