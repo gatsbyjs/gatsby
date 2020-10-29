@@ -1,4 +1,5 @@
 const fluidTestId = `image-fluid`
+const alternateFluidTestId = `plugin-image-fluid`
 
 describe(`fluid`, () => {
   beforeEach(() => {
@@ -29,5 +30,29 @@ describe(`fluid`, () => {
           expect(part).to.match(/\d{2,}w/)
         })
       })
+  })
+
+  describe(`new gatsbyImage resolvers`, () => {
+    it(`renders`, () => {
+      cy.getTestElement(alternateFluidTestId).should(`exist`)
+    })
+    
+    it(`does not include sizes`, () => {
+      cy.getTestElement(alternateFluidTestId)
+        .find(`picture > source`)
+        .should(`not.have.attr`, `sizes`)
+    })
+
+    it(`renders correct srcset`, () => {
+      cy.getTestElement(alternateFluidTestId)
+        .find(`picture > source`)
+        .should(`have.attr`, `srcset`)
+        .and(srcset => {
+          srcset.split(/\s*,\s*/).forEach(part => {
+            expect(part).to.contain(`/static`)
+            expect(part).to.match(/\d{2,}w/)
+          })
+        })
+    })
   })
 })

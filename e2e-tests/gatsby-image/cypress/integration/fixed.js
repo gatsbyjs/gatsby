@@ -1,4 +1,5 @@
 const fixedTestId = `image-fixed`
+const alternateFixedTestId = `plugin-image-fixed`
 
 describe(`fixed`, () => {
   beforeEach(() => {
@@ -55,6 +56,22 @@ describe(`fixed`, () => {
         .find(`picture > img`)
         .should(`have.attr`, `width`)
         .and(`match`, /^\d+$/)
+    })
+  })
+
+  describe(`new gatsbyImage resolvers`, () => {
+    it(`renders`, () => {
+      cy.getTestElement(alternateFixedTestId).should(`exist`)
+    })
+    
+    it(`applies height and width`, () => {
+      cy.getTestElement(alternateFixedTestId).find(`.gatsby-image-wrapper`)
+      .should(`have.attr`, `style`)
+      .and(style => {
+        ;[`height:`, `width:`].forEach(part => {
+          expect(style).contains(part)
+        })
+      })
     })
   })
 })

@@ -1,4 +1,5 @@
 const fluidTestId = `image-fluid`
+const alternateFluidTestId = `plugin-image-fluid`
 
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
@@ -12,10 +13,18 @@ describe(`Production gatsby-image`, () => {
           .find(`.gatsby-image-wrapper`)
           .its(`length`)
           .should(`eq`, 1)
+        cy.getTestElement(alternateFluidTestId)
+          .find(`.gatsby-image-wrapper`)
+          .its(`length`)
+          .should(`eq`, 1)
       })
 
       it(`contains position relative`, () => {
         cy.getTestElement(fluidTestId)
+          .find(`.gatsby-image-wrapper`)
+          .should(`have.attr`, `style`)
+          .and(`contains`, `position:relative`)
+        cy.getTestElement(alternateFluidTestId)
           .find(`.gatsby-image-wrapper`)
           .should(`have.attr`, `style`)
           .and(`contains`, `position:relative`)
@@ -29,10 +38,17 @@ describe(`Production gatsby-image`, () => {
         .find(`.gatsby-image-wrapper > img`)
         .should(`have.attr`, `src`)
         .and(`contains`, `base64`)
+      cy.getTestElement(alternateFluidTestId)
+        .find(`.gatsby-image-wrapper > img`)
+        .should(`have.attr`, `src`)
+        .and(`contains`, `base64`)
     })
 
     it(`renders with style`, () => {
       cy.getTestElement(fluidTestId)
+        .find(`.gatsby-image-wrapper > img`)
+        .should(`have.attr`, `style`)
+      cy.getTestElement(alternateFluidTestId)
         .find(`.gatsby-image-wrapper > img`)
         .should(`have.attr`, `style`)
     })
@@ -47,16 +63,23 @@ describe(`Production gatsby-image`, () => {
 
   it(`renders a picture tag`, () => {
     cy.getTestElement(fluidTestId).find(`picture`).its(`length`).should(`eq`, 1)
+    cy.getTestElement(alternateFluidTestId).find(`picture`).its(`length`).should(`eq`, 1)
   })
 
   it(`renders a picture > source`, () => {
     cy.getTestElement(fluidTestId)
       .find(`picture > source`)
       .should(`have.attr`, `srcset`)
+    cy.getTestElement(alternateFluidTestId)
+      .find(`picture > source`)
+      .should(`have.attr`, `srcset`)
   })
 
   it(`renders fallback img`, () => {
     cy.getTestElement(fluidTestId)
+      .find(`picture > img`)
+      .should(`have.attr`, `src`)
+    cy.getTestElement(alternateFluidTestId)
       .find(`picture > img`)
       .should(`have.attr`, `src`)
   })
