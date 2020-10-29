@@ -244,7 +244,6 @@ async function validatePluginsOptions(
               rootDir &&
               path.relative(rootDir, plugin.parentDir)) ||
             null
-          console.log(``)
           reporter.error({
             id: `11331`,
             context: {
@@ -253,7 +252,6 @@ async function validatePluginsOptions(
               pluginName: plugin.resolve,
             },
           })
-          console.log(``)
 
           // Only process.exit if it's an error the user can fix
           if (!configDir) {
