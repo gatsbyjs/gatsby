@@ -8,12 +8,12 @@ In short, these APIs enable you to programmatically create pages from Gatsby's [
 
 A complete example showcasing all options can be found in [Gatsby's "examples" folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api).
 
-## Creating collection routes
+## Collection routes
 
 Imagine a Gatsby project that sources a `product.yaml` file and multiple Markdown blog posts. At build time, Gatsby will automatically [infer](/docs/glossary/#inference) the fields and create multiple [nodes](/docs/glossary#node) for both types (`Product` and `MarkdownRemark`). There are two ways you could query for that data:
 
-* You can perform GraphQL queries like `allProduct` or `allMarkdownRemark` from inside a component, as usual.
-* You can use the File System Route API to access node information directly from the file path.
+- You can perform GraphQL queries like `allProduct` or `allMarkdownRemark` from inside a component, as usual.
+- You can use the File System Route API to access node information directly from the file path.
 
 To use the File System Route API, use curly braces (`{ }`) in your filenames to signify dynamic URL segments that relate to a field within the node. Here are a few examples:
 
@@ -22,6 +22,8 @@ To use the File System Route API, use curly braces (`{ }`) in your filenames to 
 - `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
 
 At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection. Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
+
+### Syntax
 
 There are some general syntax requirements when using collection routes:
 
@@ -36,7 +38,9 @@ In addition to files, you can also name folders with this syntax. This allows yo
 - `src/pages/products/{Product.name}/{Product.color}.js` will generate a route like `/products/fidget-spinner/red`
 - `src/pages/products/{Product.name}/template.js` will generate a route like `/products/fidget-spinner/template`
 
-### Dot notation
+#### Dot notation
+
+Using `.` you signify that you want to access a field on a node of a type.
 
 `src/pages/products/{Product.name}.js` generates the following query:
 
@@ -49,9 +53,9 @@ allProduct {
 }
 ```
 
-Using `.` you signify that you want to access a field on a node of a type. To access nested fields you'll need to use the underscore notation.
+#### Underscore notation
 
-### Underscore notation
+Using `__` (double underscore) you signify that you want to access a nested field on a node.
 
 `src/pages/products/{Product.fields__sku}.js` generates the following query:
 
@@ -65,8 +69,6 @@ allProduct {
   }
 }
 ```
-
-Using `__` (double underscore) you signify that you want to access a nested field on a node.
 
 You can nest as deep as necessary, e.g. `src/pages/products/{Product.fields__date__createdAt}.js` generates the following query:
 
@@ -83,7 +85,9 @@ allProduct {
 }
 ```
 
-### Parentheses notation
+#### Parentheses notation
+
+Using `( )` you signify that you want to access a [GraphQL union type](https://graphql.org/learn/schema/#union-types). This is often possible with types that Gatsby creates for you. For example, `MarkdownRemark` always has `File` as a parent type, and thus you can also access fields from the `File` node. You can use this multiple levels deep, too, e.g. `src/pages/blog/{Post.parent__(MarkdownRemark)__parent__(File)__name}.js`.
 
 `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` generates the following query:
 
@@ -100,18 +104,18 @@ allMarkdownRemark {
 }
 ```
 
-Using `( )` you signify that you want to access a [GraphQL union type](https://graphql.org/learn/schema/#union-types). This is often possible with types that Gatsby creates for you. For example, `MarkdownRemark` always has `File` as a parent type, and thus you can also access fields from the `File` node. You can use this multiple levels deep, too, e.g. `src/pages/blog/{Post.parent__(MarkdownRemark)__parent__(File)__name}.js`.
-
 ### Component implementation
 
-In the component itself (e.g. `src/pages/products/{Product.name}.js`) you're then able to access the `name` via `props` and as a variable in the GraphQL query (as `$name`). However, we recommend filtering by `id` as this is the fastest way to filter.
+Naming your file with the File System Route API will generate routes for each node and will automatically pass the field name via `props.params` to the React component and as a variable to the GraphQL query. As explained in [Querying data in pages with GraphQL](/docs/page-query/) you can render data from a node on the page by filtering only for the given `id` or field name.
+
+For example, in the component itself (e.g. `src/pages/products/{Product.name}.js`) you're able to access the `name` via `props.params` and as a variable in the GraphQL query (as `$name`). However, we recommend filtering by `id` as this is the fastest way to filter.
 
 ```jsx:title=src/pages/products/{Product.name}.js
 import React from "react"
 import { graphql } from "gatsby"
 
 export default function Component(props) {
-  return props.data.fields.sku + props.params.name
+  return props.data.fields.sku + props.params.name // highlight-line
 }
 
 // This is the page query that connects the data to the actual component. Here you can query for any and all fields
@@ -129,11 +133,11 @@ export const query = graphql`
 }
 ```
 
-If you need to customize the query used for collecting the nodes you can use the `collectionGraphql` export, much akin to the `graphql` export. In the example below you filter out every product that is of type "Burger" for the collection route:
+If you need to customize the query used for collecting the nodes, you can use the `collectionGraphql` export (much akin to the [`graphql`](/docs/page-query#how-does-the-graphql-tag-work) export). In the example below you filter out every product that is of type "Burger" for the collection route:
 
 ```jsx:title=src/pages/products/{Product.name}.js
 import React from "react"
-import { graphql, collectionGraphql } from "gatsby"
+import { graphql, collectionGraphql } from "gatsby" // highlight-line
 
 export default function Component(props) {
   return props.data.fields.sku + props.params.name
@@ -142,12 +146,14 @@ export default function Component(props) {
 // If you are customizing the collection query, there is a special fragment you MUST use when using this API. The fragment converts to
 // { nodes { id, [params_from_path] } }
 
+// highlight-start
 export const collectionQuery = collectionGraphql`
 {
   allProduct(filter: { type: { nin: ["Burger"] } }) {
     ...CollectionPagesQueryFragment
   }
 }`
+// highlight-end
 
 export const query = graphql`
   query ($id: String) {
@@ -160,43 +166,11 @@ export const query = graphql`
 }
 ```
 
-## Creating client-only routes
+### Routing and linking
 
-Use [client-only routes](/docs/client-only-routes-and-user-authentication) if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations, you will usually create a route with one or more dynamic segments to query data from a server in order to render your page.
+Gatsby "slugifies" every route that gets created from collection pages (by using [sindresorhus/slugify](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
 
-For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL. You can use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL.
-
-- `src/pages/users/[id].js` will generate a route like `/users/:id`
-- `src/pages/users/[id]/group/[groupId].js` will generate a route like `/users/:id/group/:groupId`
-
-Gatsby also supports _splat_ routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
-
-- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`
-- `src/pages/image/[...].js` will generate a route like `/image/*`
-
-Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives. The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
-
-```js:title=src/pages/users/[id].js
-function UserPage(props) {
-  const id = props.params.id
-}
-```
-
-```js:title=src/pages/image/[...awsKey].js
-function ProductsPage(props) {
-  const splat = props.params.awsKey
-}
-```
-
-```js:title=src/pages/image/[...].js
-function AppPage(props) {
-  const splat = props.params[‘*’]
-}
-```
-
-## Routing and linking
-
-Gatsby "slugifies" every route that gets created from collection pages. When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
+When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
 
 To address this issue, Gatsby automatically includes a `gatsbyPath` field on every type used by collection pages. The `gatsbyPath` field must take an argument of the `filePath` it is trying to resolve. This is necessary because it’s possible that one type is used in multiple collection pages.
 
@@ -207,7 +181,7 @@ There are some general syntax requirements when using the `filePath` argument:
 - You must omit the `src/pages` prefix.
 - Your path must not include `index`.
 
-### `gatsbyPath` example
+#### `gatsbyPath` example
 
 Assume that a `Product` type is used in two pages:
 
@@ -225,7 +199,7 @@ export default function HomePage(props) {
     <ul>
       {props.data.allProduct.map(product => (
         <li key={product.name}>
-          <Link to={product.productPath}>{product.name}</Link> (<Link to={product.discountPath}>Discount</Link>)
+          <Link to={product.productPath}>{product.name}</Link> (<Link to={product.discountPath}>Discount</Link>) // highlight-line
         </li>
       ))}
     </ul>
@@ -236,8 +210,8 @@ export const query = graphql`
   query {
     allProduct {
       name
-      productPath: gatsbyPath(filePath: "/products/{Product.name}")
-      discountPath: gatsbyPath(filePath: "/discounts/{Product.name}")
+      productPath: gatsbyPath(filePath: "/products/{Product.name}") // highlight-line
+      discountPath: gatsbyPath(filePath: "/discounts/{Product.name}") // highlight-line
     }
   }
 }
@@ -245,18 +219,62 @@ export const query = graphql`
 
 By using [aliasing](/docs/graphql-reference/#aliasing) you can use `gatsbyPath` multiple times.
 
+## Creating client-only routes
+
+Use [client-only routes](/docs/client-only-routes-and-user-authentication) if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations, you will usually create a route with one or more dynamic segments to query data from a server in order to render your page.
+
+### Syntax
+
+You can use square brackets (`[ ]`) in the file path to mark any dynamic segments of the URL. For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL.
+
+- `src/pages/users/[id].js` will generate a route like `/users/:id`
+- `src/pages/users/[id]/group/[groupId].js` will generate a route like `/users/:id/group/:groupId`
+
+#### Splat routes
+
+Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
+
+- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`
+- `src/pages/image/[...].js` will generate a route like `/image/*`
+
+Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives.
+
+### Examples
+
+The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
+
+```js:title=src/pages/users/[name].js
+function UserPage(props) {
+  const name = props.params.name
+}
+```
+
+```js:title=src/pages/image/[...awsKey].js
+function ProductsPage(props) {
+  const splat = props.params.awsKey
+}
+```
+
+```js:title=src/pages/image/[...].js
+function AppPage(props) {
+  const splat = props.params[‘*’]
+}
+```
+
 ## Example use cases
 
 Have a look at the [route-api example](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api/src/pages/products) for more detail.
 
 ### Collection route + fallback
 
-By using a combination of a collection route with a client-only route, you can create a seamless experience when a user tries to visit a URL from the collection route that doesn’t exist for the collection item. Consider these two file paths:
+By using a combination of a collection route with a client-only route, you can create a seamless experience when a user tries to visit a URL from the collection route that doesn’t exist (yet) for the collection item. Consider these two file paths:
 
 - `src/pages/products/{Product.name}.js` (collection route)
 - `src/pages/products/[name].js` (client-only route, fallback)
 
-If the user visits a product that wasn’t built from the data in your site, they will hit the client-only route, which can be used to show the user that the product doesn’t exist or load the data on the client.
+The collection route will create all available product pages at the time of the [build](/docs/glossary/build/). If you're adding a new product you want to link to but only periodically building your site, you'll need a fallback. By using a client-only route as a fallback you then can load the necessary information for the product on the client until you re-built your site.
+
+Similarly, the fallback page could also be used for when a product doesn't exist and you want to show some helpful information (like a 404 page).
 
 ### Using one template for multiple routes
 
@@ -267,7 +285,7 @@ You want to display product information which is both accessible by name and SKU
 - `src/pages/products/{Product.name}.js`
 - `src/pages/products/{Product.meta__sku}.js`
 
-Create a view component at `src/view/product-view.js` that takes in a `product` prop. Use that component in your collection route, e.g.:
+Create a view component at `src/view/product-view.js` that takes in a `product` prop. Use that component in both collection routes, e.g.:
 
 ```js:title=src/pages/products/{Product.name}.js
 import React from "react"
@@ -296,6 +314,8 @@ export const query = graphql`
   }
 `
 ```
+
+You can copy the same code to the `src/pages/products/{Product.meta__sku}.js` file.
 
 ### Purely client-only app
 

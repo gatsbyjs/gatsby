@@ -24,17 +24,22 @@ For example, `src/pages/contact.js` will be found at `yoursite.com/contact`, and
 
 The exception to this rule is any file named `index.js`. Files with this name are matched to the root directory they're found in. That means `index.js` in the root `src/pages` directory is accessed via `yoursite.com`. However, if there is an `index.js` inside the `information` directory, it is found at `yoursite.com/information`.
 
+| Path                               | Route                              |
+| ---------------------------------- | ---------------------------------- |
+| `src/pages/contact.js`             | `yoursite.com/contact`             |
+| `src/pages/information/contact.js` | `yoursite.com/information/contact` |
+
 Note that if a particular directory does not have an `index.js` file, then that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
 ### Using the File System Route API
 
-Other than creating single-page routes in `src/pages` you can also create multiple pages from a model based on the collection of nodes within it. To do that, use curly braces (`{ }`) to signify dynamic URL segments that relate to a field within the [node](/docs/glossary#node). Assuming you have a model called `Product`:
+Other than creating single-page routes in `src/pages` you can also create multiple pages from a model based on the collection of nodes within it. To do that, use curly braces (`{ }`) in the file path to signify dynamic URL segments that relate to a field within the [node](/docs/glossary#node).
+
+Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can create control the file path and queried data by adding some extra notation to the names of your files. For most use cases this will be the easier way of creating pages, for all other instances you should fallback to `gatsby-node.js` and its APIs.
+
+For example, assuming you have a model called `Product`:
 
 - `src/pages/products/{Product.name}.js => /products/burger`
-
-In order to create client-only routes you can use square brackets (`[ ]`) in the filepath to mark any dynamic segment of an URL. For example, in order to edit a user, you might want a route like `/user/:id` to fetch the data for whatever `id` is passed into the URL.
-
-- `src/pages/users/[id].js => /users/:id`
 
 See the [File System Route API](/docs/file-system-route-api/) documentation for more detail.
 
