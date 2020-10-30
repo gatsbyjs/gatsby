@@ -16,15 +16,15 @@ export function isValidCollectionPathImplementation(
 
   parts.forEach(part => {
     if (passing === false) return
-    if (!part.startsWith(`{`)) return
+    if (!part.includes(`{`) && !part.includes(`}`)) return
 
-    const opener = part.slice(0)
+    const opener = part.match(/\{/)?.[0]!
     const model = part.match(/{([a-zA-Z_][\w]+)./)?.[1]!
     const field = part.match(/\.([a-zA-Z_][\w_()]+)}/)?.[1]!
     const closer = part.match(/\}/)?.[0]!
 
     try {
-      assert(opener, `{`, ``) // This is a noop because of the opening check, but here for posterity
+      assert(opener, `{`, errorMessage(part)) // This is a noop because of the opening check, but here for posterity
       assert(model, /^[a-zA-Z_][\w]+$/, errorMessage(part))
       assert(field, /^[a-zA-Z_][\w_()]+$/, errorMessage(part))
       assert(closer, `}`, errorMessage(part))

@@ -18,14 +18,22 @@ describe(`isValidCollectionPathImplementation`, () => {
     `{model.bar__field}.js`,
     `{model.bar__(Union)__field}.js`,
     `{_model123.bar}.js`,
-    `{model.bar123}.js`,
+    `/products/{model.bar123}.js`,
     `{model.bar_123}.js`,
     `{model.bar__field123}.js`,
-    `{model.bar__(Union)__field123}.js`,
+    `/products/{model.bar__(Union)__field123}.js`,
+    `/products/prefix-{Model.id}.js`,
+    `/products/prefix_{Model.id}.js`,
+    `/products/prefix{Model.id}.js`,
   ])(`%o passes`, path => {
     expect(() =>
       isValidCollectionPathImplementation(compatiblePath(path), reporter)
     ).not.toThrow()
+    const isValid = isValidCollectionPathImplementation(
+      compatiblePath(path),
+      reporter
+    )
+    expect(isValid).toBe(true)
   })
 
   it.each([
@@ -36,10 +44,16 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/{Model_bar}.js`,
     `/products/{123Model.bar}.js`,
     `/products/{Model.123bar}.js`,
+    `/produts/Model}.js`,
+    `/products/{Model.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 
-    isValidCollectionPathImplementation(compatiblePath(path), reporter)
+    const isValid = isValidCollectionPathImplementation(
+      compatiblePath(path),
+      reporter
+    )
+    expect(isValid).toBe(false)
     expect(reporter.panicOnBuild).toBeCalledWith({
       context: {
         sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`,
