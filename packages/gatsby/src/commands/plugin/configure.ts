@@ -22,6 +22,9 @@ export async function run(): Promise<void> {
     .map(name => {
       const option = options[name]
       const supported = supportedOptionTypes.includes(option.type)
+      // TODO: Don't hard code this.
+      // Maybe we just allowlist a bunch of options like accessToken, password, token?
+      const isSensitive = name === `accessToken`
 
       return {
         name,
@@ -32,6 +35,10 @@ export async function run(): Promise<void> {
           : ``,
         message: name,
         disabled: !supported,
+        // coerce inputs on sensitive fields into asterisks
+        ...(isSensitive && {
+          format: (input): string => `*`.repeat(input.length),
+        }),
         // hint: option.flags?.description,
       }
     })
