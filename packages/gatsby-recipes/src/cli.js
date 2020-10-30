@@ -86,6 +86,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `theme-ui.mdx`,
     },
     {
+      label: `Add Chakra UI`,
+      value: `chakra-ui.mdx`,
+    },
+    {
       label: `Add Emotion`,
       value: `emotion.mdx`,
     },
