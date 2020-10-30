@@ -9,6 +9,7 @@ import { writeModule } from "../gatsby-webpack-virtual-modules"
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
+    enableWorkerThreads: true,
     numWorkers: 1,
     forkOptions: { silent: false },
   })
