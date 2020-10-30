@@ -25,10 +25,16 @@ const cacheImage = require(`./cache-image`)
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
-    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
+    `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
+  )
+}
+if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE) {
+  console.warn(
+    `Please be aware that the \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
   )
 }
 const REMOTE_CACHE_FOLDER =
+  process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE ??
   process.env.GATSBY_REMOTE_CACHE ??
   path.join(process.cwd(), `.cache/remote_cache`)
 const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)

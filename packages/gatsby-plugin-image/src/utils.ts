@@ -1,6 +1,6 @@
 import { ImgHTMLAttributes, ElementType } from "react"
 
-export type Layout = "fixed" | "responsive" | "intrinsic"
+export type Layout = "fixed" | "fluid" | "constrained"
 
 export interface ICommonImageProps {
   layout?: Layout
@@ -68,82 +68,4 @@ export interface IImageOptions {
   webP?: boolean
   base64?: boolean
   tracedSVG?: boolean
-}
-
-export const splitProps = (
-  props: StaticImageProps
-): {
-  commonOptions: ICommonImageProps
-  fluidOptions: IFluidImageProps
-  fixedOptions: IFixedImageProps
-  layout: Layout
-  imageOptions: IImageOptions
-  gatsbyImageProps: ImageComponentProps
-  src: string
-} => {
-  const {
-    layout = `fixed`,
-    quality,
-    jpegQuality,
-    pngQuality,
-    webpQuality,
-    grayscale,
-    toFormat,
-    cropFocus,
-    pngCompressionSpeed,
-    maxWidth,
-    maxHeight,
-    srcSetBreakpoints,
-    fit,
-    background,
-    width,
-    height,
-    webP,
-    base64,
-    tracedSVG,
-    duotone,
-    rotate,
-    src,
-    ...gatsbyImageProps
-  } = props
-
-  const commonOptions: ICommonImageProps = {
-    quality,
-    jpegQuality,
-    pngQuality,
-    webpQuality,
-    grayscale,
-    toFormat,
-    cropFocus,
-    pngCompressionSpeed,
-    duotone,
-    rotate,
-  }
-
-  const fluidOptions: IFluidImageProps = {
-    layout,
-    maxWidth,
-    maxHeight,
-    srcSetBreakpoints,
-    fit,
-    background,
-  }
-
-  const imageOptions: IImageOptions = {
-    webP,
-    base64,
-    tracedSVG,
-  }
-
-  const fixedOptions: IFixedImageProps = { layout, width, height }
-
-  return {
-    src,
-    commonOptions,
-    fluidOptions,
-    fixedOptions,
-    layout,
-    imageOptions,
-    gatsbyImageProps: { layout, ...gatsbyImageProps },
-  }
 }

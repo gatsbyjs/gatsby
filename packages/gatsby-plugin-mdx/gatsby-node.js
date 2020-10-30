@@ -93,36 +93,21 @@ if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
         .description(`Use Gatsby-specific remark plugins`),
       remarkPlugins: Joi.array()
         .items(
-          Joi.alternatives().try(
-            Joi.alternatives().try(
-              Joi.function(),
-              Joi.object({}).unknown(true),
-              Joi.array().items(
-                Joi.alternatives().try(
-                  Joi.object({}).unknown(true),
-                  Joi.function()
-                )
-              )
-            )
-          )
+          Joi.function(),
+          Joi.object({}).unknown(true),
+          Joi.array().items(Joi.object({}).unknown(true), Joi.function())
         )
         .default([])
         .description(`Specify remark plugins`),
       rehypePlugins: Joi.array()
         .items(
-          Joi.alternatives().try(
-            Joi.function(),
-            Joi.object({}).unknown(true),
-            Joi.array().items(
-              Joi.alternatives().try(
-                Joi.object({}).unknown(true),
-                Joi.function()
-              )
-            )
-          )
+          Joi.function(),
+          Joi.object({}).unknown(true),
+          Joi.array().items(Joi.object({}).unknown(true), Joi.function())
         )
         .default([])
         .description(`Specify rehype plugins`),
+      plugins: Joi.array().items(Joi.string(), Joi.object({}).unknown(true)),
       mediaTypes: Joi.array()
         .items(Joi.string())
         .default(["text/markdown", "text/x-markdown"])
