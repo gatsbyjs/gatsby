@@ -400,8 +400,10 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     builder: yargs =>
       yargs
         .positional(`cmd`, {
-          choices: [`docs`, `add`, `configure`],
-          describe: "Valid commands include `docs`, `add`, `configure`.",
+          choices: process.env.GATSBY_EXPERIMENTAL_PLUGIN_COMMANDS
+            ? [`docs`, `add`, `configure`]
+            : [`docs`],
+          describe: "Valid commands include `docs`.",
           type: `string`,
         })
         .positional(`plugins`, {
