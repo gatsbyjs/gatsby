@@ -63,6 +63,8 @@ const extractFieldGraphQLModel = /[a-zA-Z_][\w]+\./
 // {Model.field__(Union)__bar} => field__(Union)__bar
 // Also works with lowercased model
 // {model.field} => field
+// Also works with prefixes/postfixes (due to the regex match)
+// prefix-{model.field} => field
 export function extractField(filePart: string): string {
   const content = filePart.match(curlyBracesContentsRegex)
 

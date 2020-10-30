@@ -20,6 +20,7 @@ export function derivePath(
   node: Record<string, any>,
   reporter: Reporter
 ): { errors: number; derivedPath: string } {
+  // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
   let errors = 0
 
   // 1.  Remove the extension

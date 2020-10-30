@@ -18,16 +18,16 @@ export function isValidCollectionPathImplementation(
     if (passing === false) return
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
-    const opener = part.match(/\{/)?.[0]!
-    const model = part.match(/{([a-zA-Z_][\w]+)./)?.[1]!
-    const field = part.match(/((?<=\.).*)}/)?.[1]!
-    const closer = part.match(/\}/)?.[0]!
+    const opener = part.match(/\{/)?.[0]! // Search for {
+    const model = part.match(/{([a-zA-Z_][\w]+)./)?.[1]! // Search for word before first dot, e.g. Model
+    const field = part.match(/((?<=\.).*)}/)?.[1]! // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
+    const closer = part.match(/\}/)?.[0]! // Search for }
 
     try {
-      assert(opener, `{`, errorMessage(part)) // This is a noop because of the opening check, but here for posterity
-      assert(model, /^[a-zA-Z_][\w]+$/, errorMessage(part))
-      assert(field, /^[a-zA-Z_][\w_()]+$/, errorMessage(part))
-      assert(closer, `}`, errorMessage(part))
+      assert(opener, `{`, errorMessage(part)) // Check that { exists
+      assert(model, /^[a-zA-Z_][\w]+$/, errorMessage(part)) // Check that Model is https://spec.graphql.org/draft/#sec-Names
+      assert(field, /^[a-zA-Z_][\w_()]+$/, errorMessage(part)) // Check that field is foo__bar__baz (and not foo.bar.baz) + https://spec.graphql.org/draft/#sec-Names
+      assert(closer, `}`, errorMessage(part)) // Check that } exists
     } catch (e) {
       reporter.panicOnBuild({
         id: prefixId(CODES.CollectionPath),
