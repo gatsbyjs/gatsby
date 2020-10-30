@@ -20,8 +20,11 @@ const Keys = {
 
 describe(`The create-gatsby CLI`, () => {
   it(`runs`, async () => {
+    // Start mocking stdout
+    stdout.start()
     run()
     await tick()
+    stdinMock.send(`my-new-site`)
     stdinMock.send(Keys.ENTER)
     await tick()
     await stdinMock.send(Keys.DOWN)
@@ -29,31 +32,34 @@ describe(`The create-gatsby CLI`, () => {
     await stdinMock.send(Keys.ENTER)
     await tick()
 
-    stdinMock.send(Keys.ENTER)
+    await stdinMock.send(Keys.DOWN)
+    await stdinMock.send(Keys.ENTER)
     await tick()
+
     await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.SPACE)
     await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.SPACE)
     stdinMock.send(Keys.ENTER)
+    // Clear the stdout buffer, as we only want to check final output
     stdout.start()
     await tick()
 
-    expect(stdout.output).toMatchInlineSnapshot(`
-      "✔ Would you like to install additional features with other plugins? · gatsby-plugin-sitemap, gatsby-plugin-mdx✔ Would you like to install additional features with other plugins? · gatsby-plugin-sitemap, gatsby-plugin-mdx✔ Would you like to install additional features with other plugins? · gatsby-plugin-sitemap, gatsby-plugin-mdx✔ Would you like to install additional features with other plugins? · gatsby-plugin-sitemap, gatsby-plugin-mdx✔ Would you like to install additional features with other plugins? · gatsby-plugin-sitemap, gatsby-plugin-mdx
-
-
-      Thanks! Here's what we'll now do:
-
-          🛠  Create a new Gatsby site in the folder my-gatsby-site
-          📚 Install and configure the plugin for Contentful
-          🎨 Get you set up to use  for styling your site
-          🔌 Install gatsby-plugin-sitemap, gatsby-plugin-mdx
-        
-      ? Shall we do this? (y/N) › false"
-    `)
     stdout.stop()
+    console.log(stdout.output)
 
+    expect(stdout.output).toMatch(
+      `Create a new Gatsby site in the folder my-new-site`
+    )
+    expect(stdout.output).toMatch(
+      `Install and configure the plugin for Contentful`
+    )
+    expect(stdout.output).toMatch(
+      `Get you set up to use CSS Modules/PostCSS for styling your site`
+    )
+    expect(stdout.output).toMatch(
+      `Install gatsby-plugin-sitemap, gatsby-plugin-mdx`
+    )
     await tick(1000)
   })
 })
