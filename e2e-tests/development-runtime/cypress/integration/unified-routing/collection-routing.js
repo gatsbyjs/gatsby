@@ -42,4 +42,31 @@ describe(`collection-routing`, () => {
     cy.findByTestId(`name`)
     cy.should(`not.exist`)
   })
+
+  it(`should allow normal folder`, () => {
+    cy.visit(`/collection-routing/hogwarts/1/`)
+      .waitForRouteChange()
+    cy.findByTestId(`custom-text`)
+      .should(`have.text`, `static-folder`)
+    cy.findByTestId(`pagecontext`)
+      .should(`have.text`, `1`)
+  })
+
+  it(`should allow static template`, () => {
+    cy.visit(`/collection-routing/westworld/1/template`)
+      .waitForRouteChange()
+    cy.findByTestId(`custom-text`)
+      .should(`have.text`, `Static Template`)
+    cy.findByTestId(`pagecontext`)
+      .should(`have.text`, `1`)
+  })
+
+  it(`should allow nested collections`, () => {
+    cy.visit(`/collection-routing/hello-world-1/1`)
+      .waitForRouteChange()
+    cy.findByTestId(`slug`)
+      .should(`have.text`, `/preview/1 + test`)
+    cy.findByTestId(`pagecontext`)
+      .should(`have.text`, `1`)
+  })
 })
