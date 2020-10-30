@@ -20,7 +20,7 @@ jest.mock(
   `$virtual/lazy-sync-requires`,
   () => {
     return {
-      components: {
+      lazyComponents: {
         "page-component---src-pages-test-js": () => null,
       },
     }

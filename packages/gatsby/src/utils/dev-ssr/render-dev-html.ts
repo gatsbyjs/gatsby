@@ -145,6 +145,10 @@ const ensurePathComponentInSSRBundle = async (
   const htmlComponentRendererPath = joinPath(directory, `public/render-page.js`)
   const watcher = fs.watch(htmlComponentRendererPath, async () => {
     // This search takes 1-10ms
+    // We do it as there can be a race conditions where two pages
+    // are requested at the same time which means that both are told render-page.js
+    // has changed when the first page is complete meaning the second
+    // page's component won't be in the render meaning its SSR will fail.
     const found = await searchFileForString(
       page.componentChunkName,
       htmlComponentRendererPath
