@@ -38,9 +38,7 @@ export async function run(): Promise<void> {
       return {
         name,
         initial: supportedOptionTypes.includes(typeof option.flags?.default)
-          ? // TODO: Don't toString() this otherwise the answers will have e.g. "false" instead of `false`
-            // Might require an upstream fix in enquirer.
-            option.flags?.default.toString()
+          ? option.flags?.default.toString()
           : ``,
         message: name,
         disabled: !supported,
