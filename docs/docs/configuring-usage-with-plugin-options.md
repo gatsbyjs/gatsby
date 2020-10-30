@@ -108,7 +108,7 @@ Invalid plugin options for "gatsby-plugin-console-log":
 
 The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema`, as it shows all the available types and methods.
 
-Here are some specific Joi best practices for `pluginOptionsSchema`s:
+Here are some specific Joi best practices for `pluginOptionsSchema`:
 
 - [Add descriptions](#add-descriptions)
 - [Set default options](#set-default-options)
