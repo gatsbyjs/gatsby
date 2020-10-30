@@ -6,7 +6,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
-import { GatsbyNode } from "../../../"
+import { getPluginOptionsSchema } from "../../utils/get-plugin-options-schema"
 import {
   IPluginInfo,
   IFlattenedPlugin,
@@ -182,25 +182,10 @@ async function validatePluginsOptions(
   let errors = 0
   const newPlugins = await Promise.all(
     plugins.map(async plugin => {
-      let gatsbyNode
-
-      try {
-        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-      } catch (err) {
-        gatsbyNode = {}
-      }
-
-      if (!gatsbyNode.pluginOptionsSchema) return plugin
-
-      let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
-        GatsbyNode["pluginOptionsSchema"],
-        undefined
-      >)({
-        Joi,
-      })
+      let optionsSchema = await getPluginOptionsSchema(plugin.resolve)
 
       // Validate correct usage of pluginOptionsSchema
-      if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
+      if (!optionsSchema) {
         reporter.warn(
           `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`
         )
