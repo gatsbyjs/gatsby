@@ -321,4 +321,4 @@ You can copy the same code to the `src/pages/products/{Product.meta__sku}.js` fi
 
 ### Purely client-only app
 
-If you want your Gatsby app to be 100% client-only you can create a file at `src/pages/[...].js` to catch all requests. See the [client-only-paths example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) for more detail.
+If you want your Gatsby app to be 100% client-only, you can create a file at `src/pages/[...].js` to catch all requests. See the [client-only-paths example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) for more detail.
