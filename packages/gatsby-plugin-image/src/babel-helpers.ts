@@ -5,6 +5,9 @@ import { getAttributeValues } from "babel-jsx-utils"
 
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
+  `layout`,
+  `maxWidth`,
+  `maxHeight`,
   `quality`,
   `jpegQuality`,
   `pngQuality`,
@@ -15,16 +18,20 @@ export const SHARP_ATTRIBUTES = new Set([
   `pngCompressionSpeed`,
   `rotate`,
   `duotone`,
-  `layout`,
-  `maxWidth`,
-  `maxHeight`,
-  `srcSetBreakpoints`,
-  `fit`,
-  `background`,
   `width`,
   `height`,
-  `tracedSVG`,
+  `placeholder`,
+  `tracedSVGOptions`,
   `webP`,
+  `outputPixelDensities`,
+  `sizes`,
+  `fit`,
+  `background`,
+  `base64Width`,
+  `jpegProgressive`,
+  `toFormatBase64`,
+  `trim`,
+  `srcSetBreakpoints`,
 ])
 
 export function evaluateImageAttributes(
