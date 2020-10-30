@@ -8,6 +8,9 @@ This recipes sets up and configures [gatsby-plugin-chakra-ui](https://www.gatsby
 
 ## Installs necessary NPM packages
 
+<NPMPackage name="@emotion/core" />
+<NPMPackage name="@emotion/styled" />
+<NPMPackage name="emotion-theming" />
 <NPMPackage name="@chakra-ui/core" />
 <NPMPackage name="gatsby-plugin-chakra-ui" />
 
@@ -19,9 +22,12 @@ This recipes sets up and configures [gatsby-plugin-chakra-ui](https://www.gatsby
 
 ---
 
-## Shadows gatsby-plugin-chakra-ui `theme.js` file so you can customize your own global styles
+## Creates gatsby-plugin-chakra-ui `theme.js` file so you can customize your own global styles
 
-<GatsbyShadowFile theme="gatsby-plugin-chakra-ui" path="src/theme.js" />
+<File
+  path="src/gatsby-plugin-chakra-ui/theme.js"
+  content="https://raw.githubusercontent.com/shoxton/gatsby-recipe-chakra-ui/master/theme.js"
+/>
 
 ---
 
