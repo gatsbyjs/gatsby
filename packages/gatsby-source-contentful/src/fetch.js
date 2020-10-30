@@ -10,7 +10,9 @@ module.exports = async function contentfulFetch({
   reporter,
 }) {
   // Fetch articles.
+  let syncProgress
   const pageLimit = pluginConfig.get(`pageLimit`)
+  let syncItemCount = 0
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -29,6 +31,13 @@ module.exports = async function contentfulFetch({
         ]
           .filter(Boolean)
           .join(` `)
+      }
+
+      // Sync progress
+      if (response.config.url === `sync`) {
+        syncItemCount += response.data.items.length
+        syncProgress.total = syncItemCount
+        syncProgress.tick(response.data.items.length)
       }
 
       // Log error and throw it in an extended shape
@@ -146,10 +155,18 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
     resolveLinks: false,
   }
   try {
+    syncProgress = reporter.createProgress(
+      `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
+      pageLimit,
+      0
+    )
+    syncProgress.start()
+    reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
     let query = syncToken
       ? { nextSyncToken: syncToken, ...basicSyncConfig }
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
+    syncProgress.done()
   } catch (e) {
     reporter.panic(
       {

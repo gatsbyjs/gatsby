@@ -83,13 +83,21 @@ beforeAll(() => {
   }
 })
 
+const start = jest.fn()
+const end = jest.fn()
+
+const mockActivity = {
+  start,
+  end,
+  done: end,
+}
+
 const reporter = {
   info: jest.fn(),
   verbose: jest.fn(),
   panic: jest.fn(),
-  activityTimer: () => {
-    return { start: jest.fn(), end: jest.fn() }
-  },
+  activityTimer: jest.fn(() => mockActivity),
+  createProgress: jest.fn(() => mockActivity),
 }
 
 beforeEach(() => {
