@@ -14,9 +14,6 @@ const startWorker = (): any => {
     forkOptions: { silent: false },
   })
 
-  newWorker.getStdout().pipe(process.stdout)
-  newWorker.getStderr().pipe(process.stderr)
-
   // jest-worker is lazy with forking but we want to fork immediately so the user
   // doesn't have to wait.
   // @ts-ignore

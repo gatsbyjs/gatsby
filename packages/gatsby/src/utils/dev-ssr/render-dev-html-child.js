@@ -2,7 +2,6 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const ansiHTML = require(`ansi-html`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
-const report = require(`gatsby-cli/lib/reporter`)
 
 const getPosition = function (stackObject) {
   let filename
@@ -69,7 +68,7 @@ const parseError = function (err, directory) {
     code = fs.readFileSync(filename, `utf-8`)
   } catch (e) {
     console.log(err)
-    report.error(`Couldn't read the file ${filename}`, e)
+    console.log(`Couldn't read the file ${filename}`, e)
   }
   const line = position.line
   const row = position.row
