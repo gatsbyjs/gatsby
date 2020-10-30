@@ -1,0 +1,9 @@
+.astronaut {
+    animation: astronaut 4s infinite ease;
+}
+
+@keyframes astronaut {
+    0% { transform: translateY(10px) }
+    50% { transform: translateY(-20px) }
+    100% { transform: translateY(10px) }
+}
