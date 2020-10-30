@@ -3,11 +3,20 @@ import { getPluginOptionsSchema } from "../../utils/get-plugin-options-schema"
 
 const supportedOptionTypes = [`string`, `boolean`, `number`]
 
+const getPluginOptionTypes = (schema): any => {
+  const optionTypes = {}
+  Object.entries(schema.describe().keys).forEach(([key, value]) => {
+    optionTypes[key] = value.type
+  })
+  return optionTypes
+}
+
 export async function run(): Promise<void> {
   // TODO: Get this from the command
   const pluginName = `gatsby-source-contentful`
 
   const pluginOptionsSchema = await getPluginOptionsSchema(pluginName)
+  const pluginOptionTypes = getPluginOptionTypes(pluginOptionsSchema)
 
   if (!pluginOptionsSchema) {
     console.log(
@@ -39,6 +48,21 @@ export async function run(): Promise<void> {
         ...(isSensitive && {
           format: (input): string => `*`.repeat(input.length),
         }),
+        // revert input back to the type from the plugin's options schema
+        result: (value, choice): string | boolean | number => {
+          switch (pluginOptionTypes[choice.name]) {
+            case `string`:
+              return String(value)
+            case `boolean`:
+              if (value === `true`) return true
+              if (value === `false`) return false
+              return value
+            case `number`:
+              return Number(value)
+            default:
+              return value
+          }
+        },
         // hint: option.flags?.description,
       }
     })
