@@ -104,6 +104,7 @@ Invalid plugin options for "gatsby-plugin-console-log":
 
 - "message" must be a string
 ```
+
 ### Best practices for option schemas
 
 The [Joi API documentation](https://joi.dev/api/) is a great reference to use while working on a `pluginOptionsSchema`, as it shows all the available types and methods.
