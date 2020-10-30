@@ -11,6 +11,14 @@ export const resolvableExtensions = true
  * complete so you can query your data in order to create pages.
  *
  * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
+ *
+ * @gatsbyVersion 2.2.0
+ * @param {object} $0 See the [documentation for `Node API Helpers` for more details](/docs/node-api-helpers)
+ * @param {Actions} $0.actions See the [list of documented actions](/docs/actions)
+ * @param {object} $0.actions.createPages [Documentation for this action](/docs/actions/#createPage)
+ * @param {function} $0.graphql: Query GraphQL API. See [examples here](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs)
+ * @param {GatsbyReporter} $0.reporter Log issues. See [GatsbyReporter documentation](/docs/node-api-helpers/#GatsbyReporter) for more details
+ *
  * @example
  * const path = require(`path`)
  *
