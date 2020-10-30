@@ -72,13 +72,13 @@ export async function run(): Promise<void> {
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
-  if (data.cms) {
+  if (data.cms && data.cms !== `none`) {
     messages.push(
       `📚 Install and configure the plugin for ${c.red(cmses[data.cms])}`
     )
   }
 
-  if (data.styling) {
+  if (data.styling && data.styling !== `none`) {
     messages.push(
       `🎨 Get you set up to use ${c.green(
         styles[data.styling]
@@ -86,7 +86,7 @@ export async function run(): Promise<void> {
     )
   }
 
-  if (data.features) {
+  if (data.features?.length) {
     messages.push(
       `🔌 Install ${data.features.map(feat => c.magenta(feat)).join(`, `)}`
     )
