@@ -1,4 +1,4 @@
-import resources from "./resources"
+import * as resources from "./resources"
 import _ from "lodash"
 
 export default function validateRecipe(plan) {
