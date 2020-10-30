@@ -18,15 +18,46 @@ module.exports = async function contentfulFetch({
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
     responseLogger: response => {
-      const meta = [
-        `size: ${response.headers[`content-length`]}B`,
-        `response id: ${response.headers[`x-contentful-request-id`]}`,
-        `cache: ${response.headers[`x-cache`]}`,
-      ]
+      function createMetadataLog(response) {
+        return [
+          response?.headers[`content-length`] &&
+            `size: ${response.headers[`content-length`]}B`,
+          response?.headers[`x-contentful-request-id`] &&
+            `request id: ${response.headers[`x-contentful-request-id`]}`,
+          response?.headers[`x-cache`] &&
+            `cache: ${response.headers[`x-cache`]}`,
+        ]
+          .filter(Boolean)
+          .join(` `)
+      }
+
+      // Log error and throw it in an extended shape
+      if (response.isAxiosError) {
+        reporter.verbose(
+          `${response.config.method} /${response.config.url}: ${
+            response.response.status
+          } ${response.response.statusText} (${createMetadataLog(
+            response.response
+          )})`
+        )
+        let errorMessage = `${response.response.status} ${response.response.statusText}`
+        if (response.response?.data?.message) {
+          errorMessage += `\n\n${response.response.data.message}`
+        }
+        const contentfulApiError = new Error(errorMessage)
+        // Special response naming to ensure the error object is not touched by
+        // https://github.com/contentful/contentful.js/commit/41039afa0c1462762514c61458556e6868beba61
+        contentfulApiError.responseData = response.response
+        contentfulApiError.request = response.request
+        contentfulApiError.config = response.config
+
+        throw contentfulApiError
+      }
+
       reporter.verbose(
         `${response.config.method} /${response.config.url}: ${
           response.status
-        } ${response.statusText} (${meta.join(` `)})`
+        } ${response.statusText} (${createMetadataLog(response)})`
       )
     },
   }
@@ -74,8 +105,8 @@ module.exports = async function contentfulFetch({
         },
         e
       )
-    } else if (e.response) {
-      if (e.response.status === 404) {
+    } else if (e.responseData) {
+      if (e.responseData.status === 404) {
         // host and space used to generate url
         details = `Endpoint not found. Check if ${chalk.yellow(
           `host`
@@ -84,7 +115,7 @@ module.exports = async function contentfulFetch({
           host: `Check if setting is correct`,
           spaceId: `Check if setting is correct`,
         }
-      } else if (e.response.status === 401) {
+      } else if (e.responseData.status === 401) {
         // authorization error
         details = `Authorization error. Check if ${chalk.yellow(
           `accessToken`
@@ -98,7 +129,7 @@ module.exports = async function contentfulFetch({
 
     reporter.panic({
       context: {
-        sourceMessage: `Accessing your Contentful space failed.
+        sourceMessage: `Accessing your Contentful space failed: ${e.message}
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
@@ -122,7 +153,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       {
         id: CODES.SyncError,
         context: {
-          sourceMessage: `Fetching contentful data failed`,
+          sourceMessage: `Fetching contentful data failed: ${e.message}`,
         },
       },
       e
@@ -139,7 +170,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       {
         id: CODES.FetchContentTypes,
         context: {
-          sourceMessage: `error fetching content types`,
+          sourceMessage: `Error fetching content types: ${e.message}`,
         },
       },
       e
