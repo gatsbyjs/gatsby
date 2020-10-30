@@ -1,5 +1,5 @@
 .astronaut {
-    animation: astronaut 4s infinite ease;
+    animation: astronaut 6s infinite ease;
 }
 
 @keyframes astronaut {
