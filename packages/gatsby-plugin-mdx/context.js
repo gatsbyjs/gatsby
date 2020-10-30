@@ -1,15 +1,17 @@
-import React, { createContext, useContext } from "react"
+const React = require('react')
 
-const GatsbyMDXScopeContext = createContext({})
+const GatsbyMDXScopeContext = React.createContext({})
 
-export const useMDXScope = scope => {
-  const contextScope = useContext(GatsbyMDXScopeContext)
+exports.useMDXScope = scope => {
+  const contextScope = React.useContext(GatsbyMDXScopeContext)
   return scope || contextScope
 }
 
-export const MDXScopeProvider = ({ __mdxScope, children }) =>
+exports.MDXScopeProvider = ({ __mdxScope, children }) =>
   React.createElement(
     GatsbyMDXScopeContext.Provider,
     { value: __mdxScope },
     children
   )
+
+
