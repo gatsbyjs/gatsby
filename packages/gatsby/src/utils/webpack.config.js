@@ -87,8 +87,8 @@ module.exports = async (
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
     if (stage === `develop`) {
-      envObject.SOCKET_IO_DEFAULT_TRANSPORT = JSON.stringify(
-        process.env.SOCKET_IO_DEFAULT_TRANSPORT || `websocket`
+      envObject.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT = JSON.stringify(
+        process.env.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT || `websocket`
       )
     }
 
