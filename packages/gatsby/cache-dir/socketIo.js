@@ -1,15 +1,21 @@
 import io from "socket.io-client"
 import { reportError, clearError } from "./error-overlay-handler"
 import normalizePagePath from "./normalize-page-path"
+// TODO move away from lodash
+import isEqual from "lodash/isEqual"
 
 let socket = null
 
 const inFlightGetPageDataPromiseCache = {}
 let staticQueryData = {}
 let pageQueryData = {}
+let hasReceivedSocketIoUpdateBool = false
 
 export const getStaticQueryData = () => staticQueryData
 export const getPageQueryData = () => pageQueryData
+
+const didDataChange = (id, queryData, exisitingQueryData) =>
+  !(id in exisitingQueryData) || !isEqual(queryData, exisitingQueryData[id])
 
 export default function socketIo() {
   if (process.env.NODE_ENV !== `production`) {
@@ -26,17 +32,6 @@ export default function socketIo() {
           socket.io.opts.transports = [`polling`, `websocket`]
         })
 
-        const didDataChange = (msg, queryData) => {
-          const id =
-            msg.type === `staticQueryResult`
-              ? msg.payload.id
-              : normalizePagePath(msg.payload.id)
-          return (
-            !(id in queryData) ||
-            JSON.stringify(msg.payload.result) !== JSON.stringify(queryData[id])
-          )
-        }
-
         socket.on(`connect`, () => {
           // we might have disconnected so we loop over the page-data requests in flight
           // so we can get the data again
@@ -47,17 +42,24 @@ export default function socketIo() {
 
         socket.on(`message`, msg => {
           if (msg.type === `staticQueryResult`) {
-            if (didDataChange(msg, staticQueryData)) {
+            hasReceivedSocketIoUpdateBool = true
+            if (
+              didDataChange(msg.payload.id, msg.payload.result, staticQueryData)
+            ) {
               staticQueryData = {
                 ...staticQueryData,
                 [msg.payload.id]: msg.payload.result,
               }
             }
           } else if (msg.type === `pageQueryResult`) {
-            if (didDataChange(msg, pageQueryData)) {
+            hasReceivedSocketIoUpdateBool = true
+            const normalizedPagePath = normalizePagePath(msg.payload.id)
+
+            const result = msg.payload.result
+            if (didDataChange(normalizedPagePath, result, pageQueryData)) {
               pageQueryData = {
                 ...pageQueryData,
-                [normalizePagePath(msg.payload.id)]: msg.payload.result,
+                [normalizedPagePath]: result,
               }
             }
           } else if (msg.type === `overlayError`) {
@@ -86,6 +88,32 @@ export default function socketIo() {
   } else {
     return null
   }
+}
+
+function savePageDataAndStaticQueries(
+  pathname,
+  { webpackCompilationHash, matchPath, ...pageData },
+  staticQueriesData = {}
+) {
+  const normalizedPagePath = normalizePagePath(pathname)
+
+  if (didDataChange(normalizedPagePath, pageData, pageQueryData)) {
+    pageQueryData = {
+      ...pageQueryData,
+      [normalizedPagePath]: pageData,
+    }
+  }
+
+  for (const id in staticQueriesData) {
+    if (didDataChange(id, staticQueriesData[id], staticQueryData)) {
+      staticQueryData = {
+        ...staticQueryData,
+        [id]: staticQueriesData[id],
+      }
+    }
+  }
+
+  ___emitter.emit(`pageQueryResult`, pageData)
 }
 
 function getPageData(pathname) {
@@ -129,4 +157,14 @@ function unregisterPath(path) {
   socket.emit(`unregisterPath`, path)
 }
 
-export { getPageData, registerPath, unregisterPath }
+function hasReceivedSocketIoUpdate() {
+  return hasReceivedSocketIoUpdateBool
+}
+
+export {
+  getPageData,
+  registerPath,
+  unregisterPath,
+  hasReceivedSocketIoUpdate,
+  savePageDataAndStaticQueries,
+}

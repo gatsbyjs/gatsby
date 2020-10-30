@@ -8,6 +8,8 @@ jest.mock(`../socketIo`, () => {
   return {
     default: jest.fn(),
     getPageData: jest.fn().mockResolvedValue(),
+    savePageDataAndStaticQueries: jest.fn(),
+    hasReceivedSocketIoUpdate: jest.fn(() => false),
   }
 })
 
