@@ -15,13 +15,19 @@ function isEslintRule(rule?: RuleSetRule): boolean {
   return options && typeof options.useEslintrc !== `undefined`
 }
 
+interface IGatsbyWebpackEslintGraphqlSchemaReloadProps {
+  jsxRuntimeExists: boolean
+}
+
 export class GatsbyWebpackEslintGraphqlSchemaReload {
   private plugin: { name: string }
   private schema: GraphQLSchema | null
+  private jsxRuntimeExists: boolean
 
-  constructor() {
+  constructor(props: IGatsbyWebpackEslintGraphqlSchemaReloadProps) {
     this.plugin = { name: `GatsbyWebpackEslintGraphqlSchemaReload` }
     this.schema = null
+    this.jsxRuntimeExists = props.jsxRuntimeExists
   }
 
   findEslintOptions(compiler: Compiler): RuleSetQuery | undefined {
@@ -50,7 +56,7 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
 
       // Hackish but works:
       // replacing original eslint options object with updated config
-      Object.assign(options, eslintConfig(schema))
+      Object.assign(options, eslintConfig(schema, this.jsxRuntimeExists))
     })
   }
 }

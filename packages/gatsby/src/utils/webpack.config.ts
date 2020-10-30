@@ -1,22 +1,25 @@
 require(`v8-compile-cache`)
 
-const crypto = require(`crypto`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import crypto from "crypto"
+import fs from "fs-extra"
+import path from "path"
 const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
-const { store } = require(`../redux`)
+import { store } from "../redux"
 const { actions } = require(`../redux/actions`)
-const { getPublicPath } = require(`./get-public-path`)
+import { getPublicPath } from "./get-public-path"
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
-import { createWebpackUtils } from "./webpack-utils"
+import { createWebpackUtils, IWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+import { IGatsbyConfig, IGatsbyState } from "../redux/types"
+import { IProgram, Stage } from "../commands/types"
+import webpack, { Plugin, RuleSetRule } from "webpack"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -26,13 +29,13 @@ const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (
-  program,
-  directory,
-  suppliedStage,
-  port,
-  { parentSpan } = {}
-) => {
+export default async (
+  program: IProgram,
+  directory: string,
+  suppliedStage: Stage,
+  _port: number | null,
+  { parentSpan }: { parentSpan?: any } = {}
+): Promise<IGatsbyState["webpack"]> => {
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
@@ -41,13 +44,23 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
+  const { rules, loaders, plugins }: IWebpackUtils = createWebpackUtils(
+    stage,
+    program
+  )
 
-  const { assetPrefix, pathPrefix } = store.getState().config
+  const { assetPrefix, pathPrefix }: IGatsbyConfig = store.getState().config
 
-  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+  const publicPath: string = getPublicPath({
+    assetPrefix,
+    pathPrefix,
+    ...program,
+  })
 
-  function processEnv(stage, defaultNodeEnv) {
+  function processEnv(
+    stage: Stage,
+    defaultNodeEnv: "development" | "production"
+  ): Record<string, string> {
     debug(`Building env for "${stage}"`)
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
@@ -68,12 +81,17 @@ module.exports = async (
       }
     }
 
-    const envObject = Object.keys(parsed).reduce((acc, key) => {
-      acc[key] = JSON.stringify(parsed[key])
-      return acc
-    }, {})
+    const envObject: Record<string, string> = Object.keys(parsed).reduce(
+      (acc, key) => {
+        acc[key] = JSON.stringify(parsed[key])
+        return acc
+      },
+      {}
+    )
 
-    const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
+    const gatsbyVarObject: Record<string, string> = Object.keys(
+      process.env
+    ).reduce((acc, key) => {
       if (key.match(/^GATSBY_/)) {
         acc[key] = JSON.stringify(process.env[key])
       }
@@ -99,7 +117,7 @@ module.exports = async (
     )
   }
 
-  function getHmrPath() {
+  function getHmrPath(): string {
     // ref: https://github.com/gatsbyjs/gatsby/issues/8348
     let hmrBasePath = `/`
     const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
@@ -117,7 +135,7 @@ module.exports = async (
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
-  function getOutput() {
+  function getOutput(): webpack.Output {
     switch (stage) {
       case `develop`:
         return {
@@ -127,7 +145,7 @@ module.exports = async (
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
           publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
-          devtoolModuleFilenameTemplate: info =>
+          devtoolModuleFilenameTemplate: (info): string =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
           // See https://reactjs.org/docs/cross-origin-errors.html
@@ -158,7 +176,7 @@ module.exports = async (
     }
   }
 
-  function getEntry() {
+  function getEntry(): webpack.Entry {
     switch (stage) {
       case `develop`:
         return {
@@ -188,7 +206,7 @@ module.exports = async (
     }
   }
 
-  function getPlugins() {
+  function getPlugins(): Array<webpack.Plugin> {
     let configPlugins = [
       plugins.moment(),
 
@@ -196,10 +214,12 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
-        __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
-        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
+        __BASE_PATH__: JSON.stringify(program[`prefixPaths`] ? pathPrefix : ``),
+        __PATH_PREFIX__: JSON.stringify(
+          program[`prefixPaths`] ? publicPath : ``
+        ),
         __ASSET_PREFIX__: JSON.stringify(
-          program.prefixPaths ? assetPrefix : ``
+          program[`prefixPaths`] ? assetPrefix : ``
         ),
       }),
 
@@ -208,15 +228,16 @@ module.exports = async (
 
     switch (stage) {
       case `develop`:
-        configPlugins = configPlugins
-          .concat([
+        {
+          const pluginsArray: Array<Plugin> = [
             process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
               plugins.fastRefresh(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
-          ])
-          .filter(Boolean)
+          ].filter(Boolean) as Array<Plugin>
+          configPlugins = configPlugins.concat(pluginsArray).filter(Boolean)
+        }
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
@@ -232,7 +253,7 @@ module.exports = async (
     return configPlugins
   }
 
-  function getDevtool() {
+  function getDevtool(): webpack.Options.Devtool {
     switch (stage) {
       case `develop`:
         return `cheap-module-source-map`
@@ -247,7 +268,7 @@ module.exports = async (
     }
   }
 
-  function getMode() {
+  function getMode(): `development` | `production` {
     switch (stage) {
       case `build-javascript`:
         return `production`
@@ -260,7 +281,7 @@ module.exports = async (
     }
   }
 
-  function getModule() {
+  function getModule(): webpack.Module {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
@@ -283,7 +304,7 @@ module.exports = async (
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
         }],
-      }
+      } as RuleSetRule
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
@@ -311,7 +332,7 @@ module.exports = async (
     switch (stage) {
       case `develop`: {
         // get schema to pass to eslint config and program for directory
-        const { schema, program } = store.getState()
+        const { schema, program }: IGatsbyState = store.getState()
 
         // if no local eslint config, then add gatsby config
         if (!hasLocalEslint(program.directory)) {
@@ -378,7 +399,7 @@ module.exports = async (
     return { rules: configRules }
   }
 
-  function getResolve(stage) {
+  function getResolve(stage: Stage): webpack.Resolve {
     const { program } = store.getState()
     const resolve = {
       // Use the program's extension list (generated via the
@@ -440,14 +461,14 @@ module.exports = async (
       )
     }
 
-    if (stage === `build-javascript` && program.profile) {
+    if (stage === `build-javascript` && program[`profile`]) {
       resolve.alias[`react-dom$`] = `react-dom/profiling`
       resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
     }
     return resolve
   }
 
-  function getResolveLoader() {
+  function getResolveLoader(): webpack.ResolveLoader {
     const root = [path.resolve(directory, `node_modules`)]
 
     const userLoaderDirectoryPath = path.resolve(directory, `loaders`)
@@ -468,7 +489,7 @@ module.exports = async (
     }
   }
 
-  const config = {
+  const config: webpack.Configuration = {
     // Context is the base directory for resolving the entry option.
     context: directory,
     entry: getEntry(),
@@ -501,9 +522,9 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module => module.type === `css/mini-extract`
+    const isCssModule = (module): boolean => module.type === `css/mini-extract`
 
-    const splitChunks = {
+    const splitChunks: webpack.Options.SplitChunksOptions = {
       chunks: `all`,
       cacheGroups: {
         default: false,
@@ -523,14 +544,14 @@ module.exports = async (
         },
         // if a module is bigger than 160kb from node_modules we make a separate chunk for it
         lib: {
-          test(module) {
+          test(module): boolean {
             return (
               !isCssModule(module) &&
               module.size() > 160000 &&
               /node_modules[/\\]/.test(module.identifier())
             )
           },
-          name(module) {
+          name(module): string {
             const hash = crypto.createHash(`sha1`)
             if (!module.libIdent) {
               throw new Error(
@@ -554,10 +575,10 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          test(module) {
+          test(module): boolean {
             return !isCssModule(module)
           },
-          name(module, chunks) {
+          name(_module, chunks): string {
             const hash = crypto
               .createHash(`sha1`)
               .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
@@ -573,7 +594,7 @@ module.exports = async (
         // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
         // TODO make an exception for css-modules
         styles: {
-          test(module) {
+          test(module): boolean {
             return isCssModule(module)
           },
 
@@ -602,9 +623,9 @@ module.exports = async (
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        !program.noUglify &&
+        !program[`noUglify`] &&
           plugins.minifyJs(
-            program.profile
+            program[`profile`]
               ? {
                   terserOptions: {
                     keep_classnames: true,
@@ -614,7 +635,7 @@ module.exports = async (
               : {}
           ),
         plugins.minifyCss(),
-      ].filter(Boolean),
+      ].filter(Boolean) as Array<webpack.Plugin>,
     }
   }
 
@@ -640,7 +661,7 @@ module.exports = async (
     // Packages we want to externalize because meant to be user-provided
     const userExternalList = [`react-helmet`, `react`, /^react-dom\//]
 
-    const checkItem = (item, request) => {
+    const checkItem = (item, request): boolean => {
       if (typeof item === `string` && item === request) {
         return true
       } else if (item instanceof RegExp && item.test(request)) {
@@ -649,7 +670,7 @@ module.exports = async (
       return false
     }
 
-    const isExternal = request => {
+    const isExternal = (request): string | null => {
       if (externalList.some(item => checkItem(item, request))) {
         return `umd ${require.resolve(request)}`
       }
@@ -660,7 +681,7 @@ module.exports = async (
     }
 
     config.externals = [
-      function (context, request, callback) {
+      function (_context, request, callback): void {
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)
@@ -678,7 +699,8 @@ module.exports = async (
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))
-  const getConfig = () => store.getState().webpack
+  const getConfig: () => IGatsbyState["webpack"] = () =>
+    store.getState().webpack
 
   await apiRunnerNode(`onCreateWebpackConfig`, {
     getConfig,
