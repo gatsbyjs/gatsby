@@ -32,4 +32,5 @@ module.exports = async (args: IProgram): Promise<void> => {
     default:
       report.error(`Unknown command ${cmd}`)
   }
+  return void 0
 }
