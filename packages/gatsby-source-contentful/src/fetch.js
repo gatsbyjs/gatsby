@@ -89,7 +89,9 @@ module.exports = async function contentfulFetch({
         },
       })
     }
-    reporter.verbose(`Default locale is: ${defaultLocale}`)
+    reporter.verbose(
+      `Default locale is: ${defaultLocale}. There are ${contentfulLocales.length} locales in total.`
+    )
   } catch (e) {
     let details
     let errors
