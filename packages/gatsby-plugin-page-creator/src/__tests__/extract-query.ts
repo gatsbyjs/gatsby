@@ -161,6 +161,28 @@ describe(`extract query`, () => {
       ).toBe(`{allCustomType{nodes{id,fields{name{thing}}}}}`)
     })
 
+    it(`deeply nested nodes with prefixes`, () => {
+      expect(
+        generateQueryFromString(
+          `Thing`,
+          compatiblePath(
+            `/foo/bar/prefix-{Thing.id}/another-prefix_{Thing.fields__name__thing}.js`
+          )
+        )
+      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+    })
+
+    it(`deeply nested nodes with postfixes`, () => {
+      expect(
+        generateQueryFromString(
+          `Thing`,
+          compatiblePath(
+            `/foo/bar/{Thing.id}-postfix/{Thing.fields__name__thing}_another-postfix.js`
+          )
+        )
+      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+    })
+
     it(`supports graphql unions`, () => {
       expect(
         generateQueryFromString(

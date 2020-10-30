@@ -72,7 +72,7 @@ function extractUrlParamsForQuery(createdPath: string): string {
     .reduce<Array<string>>((queryParts: Array<string>, part: string): Array<
       string
     > => {
-      if (part.startsWith(`{`)) {
+      if (part.includes(`{`) && part.includes(`}`)) {
         return queryParts.concat(
           deriveNesting(compose(removeFileExtension, extractField)(part))
         )

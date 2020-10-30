@@ -179,7 +179,7 @@ export function setFieldsOnGraphQLNodeType({
 
             validatePathQuery(filePath, extensions)
 
-            return derivePath(filePath, sourceCopy, reporter)
+            return derivePath(filePath, sourceCopy, reporter).derivedPath
           },
         },
       }

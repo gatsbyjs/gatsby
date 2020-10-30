@@ -19,12 +19,16 @@ describe(`isValidCollectionPathImplementation`, () => {
     `{model.bar__(Union)__field}.js`,
     `{_model123.bar}.js`,
     `/products/{model.bar123}.js`,
+    `/products/{model.bar123}/{model.foo}.js`,
+    `/products/{model.bar123}/test/{model.foo}.js`,
+    `/products/{model.bar123}/{model.foo}/template.js`,
     `{model.bar_123}.js`,
     `{model.bar__field123}.js`,
     `/products/{model.bar__(Union)__field123}.js`,
     `/products/prefix-{Model.id}.js`,
     `/products/prefix_{Model.id}.js`,
     `/products/prefix{Model.id}.js`,
+    `/products/{Model.id}postfix.js`,
   ])(`%o passes`, path => {
     expect(() =>
       isValidCollectionPathImplementation(compatiblePath(path), reporter)
