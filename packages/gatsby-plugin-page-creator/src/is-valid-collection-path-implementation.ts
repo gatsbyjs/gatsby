@@ -20,7 +20,7 @@ export function isValidCollectionPathImplementation(
 
     const opener = part.match(/\{/)?.[0]!
     const model = part.match(/{([a-zA-Z_][\w]+)./)?.[1]!
-    const field = part.match(/\.([a-zA-Z_][\w_()]+)}/)?.[1]!
+    const field = part.match(/((?<=\.).*)}/)?.[1]!
     const closer = part.match(/\}/)?.[0]!
 
     try {
@@ -43,7 +43,7 @@ export function isValidCollectionPathImplementation(
 }
 
 function errorMessage(part: string): string {
-  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`
+  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field__subfield}. The problematic part is: ${part}.`
 }
 
 function assert(part: string, matches: string | RegExp, message: string): void {

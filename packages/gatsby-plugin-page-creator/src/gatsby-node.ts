@@ -134,7 +134,7 @@ Please pick a path to an existing directory.`,
       }
     ).then(() => doneCb(null, null))
   } catch (e) {
-    reporter.panic({
+    reporter.panicOnBuild({
       id: prefixId(CODES.Generic),
       context: {
         sourceMessage: e.message,
@@ -187,7 +187,7 @@ export function setFieldsOnGraphQLNodeType({
 
     return {}
   } catch (e) {
-    reporter.panic({
+    reporter.panicOnBuild({
       id: prefixId(CODES.GraphQLResolver),
       context: {
         sourceMessage: e.message,
@@ -216,7 +216,7 @@ export async function onPreInit(
   }
 
   try {
-    const pagesGlob = `**/\\{*\\}**`
+    const pagesGlob = `**/**\\{*\\}**`
 
     const files = await glob(pagesGlob, { cwd: pagesPath })
 
@@ -243,7 +243,7 @@ export async function onPreInit(
       })
     )
   } catch (e) {
-    reporter.panic({
+    reporter.panicOnBuild({
       id: prefixId(CODES.Generic),
       context: {
         sourceMessage: e.message,

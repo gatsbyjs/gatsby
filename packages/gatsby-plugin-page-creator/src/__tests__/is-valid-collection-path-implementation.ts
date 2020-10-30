@@ -50,6 +50,10 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/{Model.123bar}.js`,
     `/produts/Model}.js`,
     `/products/{Model.js`,
+    `/products/{Model.foo.bar}.js`,
+    `/products/prefix-{Model.foo.bar}.js`,
+    `/products/prefix-{Model.foo.bar__baz}.js`,
+    `/products/prefix-{Model.foo.bar.baz}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 
@@ -60,7 +64,7 @@ describe(`isValidCollectionPathImplementation`, () => {
     expect(isValid).toBe(false)
     expect(reporter.panicOnBuild).toBeCalledWith({
       context: {
-        sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`,
+        sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field__subfield}. The problematic part is: ${part}.`,
       },
       filePath: compatiblePath(path),
       id: `gatsby-plugin-page-creator_12105`,
