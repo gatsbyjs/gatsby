@@ -271,12 +271,16 @@ export async function startServer(
       try {
         const renderResponse = await renderDevHTML({
           path: genericHtmlPath,
+          // Let renderDevHTML figure it out.
+          page: undefined,
+          store,
           htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
           directory: program.directory,
         })
-        res.status(200).send(renderResponse)
+        const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
+        res.status(status).send(renderResponse)
       } catch (e) {
-        report.panic(e)
+        report.error(e)
         res.send(e).status(500)
       }
     }

@@ -67,8 +67,9 @@ const parseError = function (err, directory) {
   try {
     code = fs.readFileSync(filename, `utf-8`)
   } catch (e) {
-    console.log(err)
-    console.log(`Couldn't read the file ${filename}`, e)
+    console.log(`Couldn't read the file ${filename}`)
+    console.log(`original error`, err)
+    return `404 page`
   }
   const line = position.line
   const row = position.row
@@ -97,7 +98,7 @@ const parseError = function (err, directory) {
   const message = splitMessage[splitMessage.length - 1]
   const type = err.type ? err.type : err.name
   const data = {
-    filename: filename,
+    filename: sysPath.relative(directory, filename),
     code,
     codeFrame,
     line: line,
@@ -113,24 +114,30 @@ exports.parseError = parseError
 
 exports.renderHTML = ({ path, htmlComponentRendererPath, directory }) =>
   new Promise((resolve, reject) => {
+    require(`source-map-support`).install()
     try {
       const htmlComponentRenderer = require(htmlComponentRendererPath)
       htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-        // console.log(`rendered correctly`, { htmlString, attempts })
         resolve(htmlString)
       })
     } catch (err) {
       const stack = err.stack ? err.stack : ``
+
       // Only generate error pages for webpack errors. If it's not a webpack
       // error, it's not a user error so probably a system error so we'll just
       // panic and quit.
       const regex = /webpack:\/lib\//gm
-      if (!stack.match(regex)) {
+      const moduleBuildFailed = /Module.build.failed/gm
+      if (stack.match(moduleBuildFailed)) {
+        reject(`500 page`)
+      } else if (!stack.match(regex)) {
+        console.log(`unexpected error while SSRing the path: ${path}`)
         console.log(err)
-        return
+        reject(err)
+      } else {
+        const error = parseError(err, directory)
+        reject(error)
       }
-      const error = parseError(err, directory)
-      reject(error)
     }
   })
 

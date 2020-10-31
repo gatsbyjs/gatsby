@@ -2,14 +2,16 @@ import JestWorker from "jest-worker"
 import fs from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import report from "gatsby-cli/lib/reporter"
+import _ from "lodash"
 
-import { store } from "../../redux"
-import { writeModule } from "../gatsby-webpack-virtual-modules"
+import { startListener } from "../../bootstrap/requires-writer"
+import { findPageByPath } from "../find-page-by-path"
+import { boundActionCreators } from "../../redux/actions"
+const { createSSRVisitedPage } = boundActionCreators
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
-    enableWorkerThreads: true,
     numWorkers: 1,
     forkOptions: { silent: false },
   })
@@ -45,44 +47,6 @@ export const restartWorker = (htmlComponentRendererPath): void => {
   }
 }
 
-interface IGatsbyPageComponent {
-  component: string
-  componentChunkName: string
-}
-
-// TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
-const hotImport =
-  process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-    ? `const { hot } = require("react-hot-loader/root")`
-    : ``
-const hotMethod = process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
-
-const writeLazyRequires = (pageComponents): void => {
-  // Create file with sync requires of components/json files.
-  let lazySyncRequires = `${hotImport}
-
-// prefer default export if available
-const preferDefault = m => (m && m.default) || m
-\n\n`
-  lazySyncRequires += `exports.lazyComponents = {\n${[
-    ...pageComponents.values(),
-  ]
-    .map(
-      (c: IGatsbyPageComponent): string =>
-        `  "${
-          c.componentChunkName
-        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
-    )
-    .join(`,\n`)}
-}\n\n`
-
-  writeModule(`$virtual/lazy-sync-requires`, lazySyncRequires)
-}
-
-const pageComponents = new Map()
-const pageComponentsWritten = new Set()
-const inFlightPromises = new Map()
-
 const searchFileForString = (substring, filePath): Promise<boolean> =>
   new Promise(resolve => {
     const stream = fs.createReadStream(filePath)
@@ -103,92 +67,85 @@ const searchFileForString = (substring, filePath): Promise<boolean> =>
   })
 
 const ensurePathComponentInSSRBundle = async (
-  path,
+  page,
   directory
 ): Promise<any> => {
-  const pages = [...store.getState().pages.values()]
-  const page = pages.find(p => p.path === path)
-
   // This shouldn't happen.
   if (!page) {
     report.panic(`page not found`)
   }
 
-  // If we know it's written, return.
-  if (pageComponentsWritten.has(page.componentChunkName)) {
-    return true
-  }
-
-  let promiseResolve
-  // If we're already handling this path, return its promise.
-  if (inFlightPromises.has(page.componentChunkName)) {
-    return inFlightPromises.get(page.componentChunkName)
-  } else {
-    const promise = new Promise(function (resolve) {
-      promiseResolve = resolve
-    })
-
-    inFlightPromises.set(page.componentChunkName, promise)
-  }
-
-  // Write out the component information to lazy-sync-requires
-  pageComponents.set(page.component, {
-    component: page.component,
-    componentChunkName: page.componentChunkName,
-  })
-  writeLazyRequires(pageComponents)
-
-  // Now wait for it to be written to public/render-page.js
+  // Now check if it's written to public/render-page.js
   const htmlComponentRendererPath = joinPath(directory, `public/render-page.js`)
-  const watcher = fs.watch(htmlComponentRendererPath, async () => {
-    // This search takes 1-10ms
-    // We do it as there can be a race conditions where two pages
-    // are requested at the same time which means that both are told render-page.js
-    // has changed when the first page is complete meaning the second
-    // page's component won't be in the render meaning its SSR will fail.
-    const found = await searchFileForString(
-      page.componentChunkName,
-      htmlComponentRendererPath
-    )
-    if (found) {
-      // It's changed, clean up the watcher.
-      watcher.close()
-      // Make sure the worker is ready and then resolve.
-      worker.deleteModuleCache(htmlComponentRendererPath).then(promiseResolve)
-    }
-  })
+  // This search takes 1-10ms
+  // We do it as there can be a race conditions where two pages
+  // are requested at the same time which means that both are told render-page.js
+  // has changed when the first page is complete meaning the second
+  // page's component won't be in the render meaning its SSR will fail.
+  let found = await searchFileForString(
+    page.componentChunkName,
+    htmlComponentRendererPath
+  )
 
-  // We're done, delete the promise from the in-flight promises
-  // and add it to the set of done paths.
-  inFlightPromises.get(page.componentChunkName).then(() => {
-    inFlightPromises.delete(page.componentChunkName)
-    pageComponentsWritten.add(page.componentChunkName)
-  })
+  if (!found) {
+    await new Promise(resolve => {
+      let readAttempts = 0
+      const searchForStringInterval = setInterval(async () => {
+        readAttempts += 1
+        found = await searchFileForString(
+          page.componentChunkName,
+          htmlComponentRendererPath
+        )
+        if (found || readAttempts === 5) {
+          clearInterval(searchForStringInterval)
+          resolve()
+        }
+      }, 300)
+    })
+  }
 
-  // Return the promise for the first request.
-  return inFlightPromises.get(page.componentChunkName)
+  return found
 }
-
-// Initialize the virtual module.
-writeLazyRequires(pageComponents)
 
 export const renderDevHTML = ({
   path,
+  page,
+  store,
   htmlComponentRendererPath,
   directory,
 }): Promise<string> =>
   new Promise(async (resolve, reject) => {
-    try {
-      // Write component to file & wait for public/render-page.js to update
-      await ensurePathComponentInSSRBundle(path, directory)
+    startListener()
+    let pageObj
+    if (!page) {
+      pageObj = findPageByPath(store.getState(), path)
+    } else {
+      pageObj = page
+    }
 
-      const htmlString = await worker.renderHTML({
-        path,
-        htmlComponentRendererPath,
-        directory,
-      })
-      resolve(htmlString)
-    } catch (error) {
-      reject(error)
+    // Record this page was requested. This will kick off adding its page
+    // component to the ssr bundle (if that's not already happened)
+    createSSRVisitedPage(pageObj)
+
+    let pageFound = true
+    if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+      // Write component to file & wait for public/render-page.js to update
+      pageFound = await ensurePathComponentInSSRBundle(pageObj, directory)
+      if (!pageFound) {
+        reject(`404 page`)
+      }
+    }
+
+    if (pageFound) {
+      try {
+        const htmlString = await worker.renderHTML({
+          path,
+          htmlComponentRendererPath,
+          directory,
+        })
+        resolve(htmlString)
+      } catch (error) {
+        reject(error)
+      }
     }
   })

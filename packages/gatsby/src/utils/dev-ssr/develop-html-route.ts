@@ -21,11 +21,20 @@ export const route = ({ app, program, store }): any =>
     try {
       const renderResponse = await renderDevHTML({
         path: pathObj.path,
+        page: pathObj,
+        store,
         htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
         directory: program.directory,
       })
       res.status(200).send(renderResponse)
     } catch (error) {
+      // THe page errored but couldn't read the page component.
+      // This is a race condition when a page is deleted but its requested
+      // immediately after before anything can recompile.
+      if (error === `404 page`) {
+        return next()
+      }
+
       report.error({
         id: `11614`,
         filePath: error.filename,
@@ -53,7 +62,6 @@ export const route = ({ app, program, store }): any =>
         <pre style="background:#fdfaf6;padding:8px;">${error.codeFrame}</pre>`)
     }
 
-    // TODO add support for 404 and general rendering errors
     htmlActivity.end()
 
     // Make eslint happy

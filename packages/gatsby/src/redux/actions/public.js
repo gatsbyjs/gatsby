@@ -1391,4 +1391,17 @@ actions.removePageData = (id: PageDataRemove) => {
   }
 }
 
+/**
+ * Record that a page was SSRed.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ */
+actions.createSSRVisitedPage = (page: Page) => {
+  return {
+    type: `CREATE_SSR_VISITED_PAGE`,
+    payload: page,
+  }
+}
+
 module.exports = { actions }

@@ -259,6 +259,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
+  ssrVisitedPages: Set<string>
 }
 
 export interface ICachedReduxState {
@@ -553,6 +554,12 @@ interface IClearSchemaCustomizationAction {
 interface ISetSchemaComposerAction {
   type: `SET_SCHEMA_COMPOSER`
   payload: SchemaComposer<any>
+}
+
+export interface ICreateSSRVisitedPage {
+  type: `CREATE_SSR_VISITED_PAGE`
+  payload: IGatsbyPage
+  plugin?: IGatsbyPlugin
 }
 
 export interface ICreatePageAction {

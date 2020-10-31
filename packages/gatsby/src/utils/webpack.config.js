@@ -172,7 +172,9 @@ module.exports = async (
         }
       case `develop-html`:
         return {
-          main: directoryPath(`.cache/develop-static-entry`),
+          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+            ? directoryPath(`.cache/new-develop-static-entry`)
+            : directoryPath(`.cache/develop-static-entry`),
         }
       case `build-html`:
         return {

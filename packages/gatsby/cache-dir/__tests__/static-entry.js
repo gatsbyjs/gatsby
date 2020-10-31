@@ -2,7 +2,7 @@ import React from "react"
 import fs from "fs"
 const { join } = require(`path`)
 
-import DevelopStaticEntry from "../develop-static-entry"
+import DevelopStaticEntry from "../new-develop-static-entry"
 
 jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
