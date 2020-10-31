@@ -1,21 +1,41 @@
-const { createRequireFromPath } = require(`gatsby-core-utils`)
-const path = require(`path`)
-import { mergeGatsbyConfig } from "../../utils/merge-gatsby-config"
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
-const debug = require(`debug`)(`gatsby:load-themes`)
+import { createRequireFromPath } from "gatsby-core-utils"
+import path from "path"
+import {
+  mergeGatsbyConfig,
+  IGatsbyConfigInput,
+} from "../../utils/merge-gatsby-config"
+import BluebirdPromise from "bluebird"
+import _ from "lodash"
+import debug from "debug"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
-const { resolvePlugin } = require(`../load-plugins/load`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { resolvePlugin } from "../load-plugins/load"
+import reporter from "gatsby-cli/lib/reporter"
+
+const log = debug(`gatsby:load-themes`)
+
+interface ITheme {
+  themeName: string
+  themeConfig: any
+  themeSpec: any
+  themeDir: string
+  parentDir: string
+  configFilePath: string
+}
+
+interface IThemeConfig {
+  useLegacyThemes: boolean
+  rootDir: string
+  configFilePath: string
+}
 
 // get the gatsby-config file for a theme
 const resolveTheme = async (
-  themeSpec,
-  configFileThatDeclaredTheme,
-  isMainConfig = false,
-  rootDir
-) => {
+  themeSpec: any,
+  configFileThatDeclaredTheme: string,
+  isMainConfig: boolean = false,
+  rootDir: string
+): Promise<ITheme> => {
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
@@ -84,9 +104,15 @@ const resolveTheme = async (
 // no use case for a loop so I expect that to only happen if someone is very
 // off track and creating their own set of themes
 const processTheme = (
-  { themeName, themeConfig, themeSpec, themeDir, configFilePath },
-  { useLegacyThemes, rootDir }
-) => {
+  {
+    themeName,
+    themeConfig,
+    themeSpec,
+    themeDir,
+    configFilePath,
+  }: Omit<ITheme, "parentDir">,
+  { useLegacyThemes, rootDir }: Omit<IThemeConfig, "configFilePath">
+): Promise<any> | Array<Omit<ITheme, "configFilePath">> => {
   const themesList = useLegacyThemes
     ? themeConfig && themeConfig.__experimentalThemes
     : themeConfig && themeConfig.plugins
@@ -96,7 +122,7 @@ const processTheme = (
   if (themeConfig && themesList) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
-    return Promise.mapSeries(themesList, async spec => {
+    return BluebirdPromise.mapSeries(themesList, async spec => {
       const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
       return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
     }).then(arr =>
@@ -110,11 +136,14 @@ const processTheme = (
   }
 }
 
-module.exports = async (
-  config,
-  { useLegacyThemes = false, configFilePath, rootDir }
-) => {
-  const themesA = await Promise.mapSeries(
+export async function loadThemes(
+  config: any,
+  { useLegacyThemes = false, configFilePath, rootDir }: IThemeConfig
+): Promise<{
+  config: IGatsbyConfigInput
+  themes: Array<Omit<ITheme, "configFilePath">>
+}> {
+  const themesA = await BluebirdPromise.mapSeries(
     useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
     async themeSpec => {
       const themeObj = await resolveTheme(
@@ -128,13 +157,13 @@ module.exports = async (
   ).then(arr => _.flattenDeep(arr))
 
   // log out flattened themes list to aid in debugging
-  debug(themesA)
+  log(themesA)
 
   // map over each theme, adding the theme itself to the plugins
   // list in the config for the theme. This enables the usage of
   // gatsby-node, etc in themes.
   return (
-    Promise.mapSeries(
+    BluebirdPromise.mapSeries(
       themesA,
       ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
         return {
