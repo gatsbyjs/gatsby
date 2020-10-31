@@ -160,7 +160,7 @@ describe(`develop-static-entry`, () => {
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    DevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -172,7 +172,7 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    DevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -184,14 +184,14 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    DevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
   })
 
   test(`onPreRenderHTML adds metatag note for development environment`, done => {
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    DevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -202,7 +202,7 @@ describe(`develop-static-entry`, () => {
   test(`onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
     global.plugins = [reverseHeadersPlugin]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    DevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
