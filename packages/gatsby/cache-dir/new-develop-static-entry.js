@@ -33,7 +33,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, callback) => {
+export default (pagePath, isClientOnlyPage, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -212,7 +212,7 @@ export default (pagePath, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = generateBodyHTML()
+  const bodyStr = isClientOnlyPage ? `` : generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,

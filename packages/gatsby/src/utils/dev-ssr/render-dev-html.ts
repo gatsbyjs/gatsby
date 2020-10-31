@@ -123,6 +123,11 @@ export const renderDevHTML = ({
       pageObj = page
     }
 
+    let isClientOnlyPage = false
+    if (pageObj.matchPath) {
+      isClientOnlyPage = true
+    }
+
     // Record this page was requested. This will kick off adding its page
     // component to the ssr bundle (if that's not already happened)
     createSSRVisitedPage(pageObj)
@@ -142,6 +147,7 @@ export const renderDevHTML = ({
           path,
           htmlComponentRendererPath,
           directory,
+          isClientOnlyPage,
         })
         resolve(htmlString)
       } catch (error) {

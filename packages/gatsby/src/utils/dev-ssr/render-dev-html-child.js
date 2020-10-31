@@ -112,14 +112,29 @@ const parseError = function (err, directory) {
 
 exports.parseError = parseError
 
-exports.renderHTML = ({ path, htmlComponentRendererPath, directory }) =>
+exports.renderHTML = ({
+  path,
+  htmlComponentRendererPath,
+  isClientOnlyPage = false,
+  directory,
+}) =>
   new Promise((resolve, reject) => {
     require(`source-map-support`).install()
     try {
       const htmlComponentRenderer = require(htmlComponentRendererPath)
-      htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-        resolve(htmlString)
-      })
+      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        htmlComponentRenderer.default(
+          path,
+          isClientOnlyPage,
+          (_throwAway, htmlString) => {
+            resolve(htmlString)
+          }
+        )
+      } else {
+        htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
+          resolve(htmlString)
+        })
+      }
     } catch (err) {
       const stack = err.stack ? err.stack : ``
 
