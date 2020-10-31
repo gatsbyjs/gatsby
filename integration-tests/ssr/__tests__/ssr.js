@@ -22,8 +22,8 @@ describe(`SSR`, () => {
     expect(exitCode).toEqual({ exitCode: 0 })
   })
   test(`it generates an error page correctly`, async () => {
-    const src = path.resolve(`./__tests__/fixtures/bad-page.js`)
-    const dest = path.resolve(`./src/pages/bad-page.js`)
+    const src = path.join(__dirname, `/fixtures/bad-page.js`)
+    const dest = path.join(__dirname, `../src/pages/bad-page.js`)
     fs.copySync(src, dest)
 
     const pageUrl = `http://localhost:8000/bad-page/`
