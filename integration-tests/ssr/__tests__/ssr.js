@@ -1,7 +1,7 @@
 const fetch = require(`node-fetch`)
-const { execFile } = require(`child_process`)
+const { execFile } = require("child_process")
 const fs = require(`fs-extra`)
-import { joinPath } from "gatsby-core-utils"
+const path = require(`path`)
 
 describe(`SSR`, () => {
   test(`is run for a page when it is requested`, async () => {
@@ -22,9 +22,9 @@ describe(`SSR`, () => {
     expect(exitCode).toEqual({ exitCode: 0 })
   })
   test(`it generates an error page correctly`, async () => {
-    const src = joinPath(__dirname, `/fixtures/bad-page.js`)
-    const dest = joinPath(__dirname, `/../src/pages/bad-page.js`)
-    const result = fs.copySync(src, dest)
+    const src = path.resolve(`./__tests__/fixtures/bad-page.js`)
+    const dest = path.resolve(`./src/pages/bad-page.js`)
+    fs.copySync(src, dest)
 
     const pageUrl = `http://localhost:8000/bad-page/`
     await new Promise(resolve => {
