@@ -1,3 +1,4 @@
+require(`source-map-support`).install()
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const ansiHTML = require(`ansi-html`)
 const fs = require(`fs-extra`)
@@ -119,7 +120,6 @@ exports.renderHTML = ({
   directory,
 }) =>
   new Promise((resolve, reject) => {
-    require(`source-map-support`).install()
     try {
       const htmlComponentRenderer = require(htmlComponentRendererPath)
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {

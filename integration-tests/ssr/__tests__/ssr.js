@@ -46,13 +46,15 @@ describe(`SSR`, () => {
 
     // After the page is gone, it'll 404.
     await new Promise(resolve => {
-      const testInterval = setInterval(() => {
-        fetch(pageUrl).then(res => {
-          if (res.status === 404) {
-            clearInterval(testInterval)
-            resolve()
-          }
-        })
+      setTimeout(() => {
+        const testInterval = setInterval(() => {
+          fetch(pageUrl).then(res => {
+            if (res.status === 404) {
+              clearInterval(testInterval)
+              resolve()
+            }
+          })
+        }, 400)
       }, 400)
     })
   })
