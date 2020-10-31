@@ -13,7 +13,7 @@ interface INormalizedPluginEntry {
   options: Record<string, unknown>
 }
 
-interface IGatsbyConfigInput {
+export interface IGatsbyConfigInput {
   siteMetadata?: Record<string, unknown>
   plugins?: Array<PluginEntry>
   pathPrefix?: string
