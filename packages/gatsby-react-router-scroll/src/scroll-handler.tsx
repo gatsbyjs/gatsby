@@ -2,6 +2,7 @@ import * as React from "react"
 import { LocationContext } from "@reach/router"
 import PropTypes from "prop-types"
 import { SessionStorage } from "./session-storage"
+import { supportsPassiveListener } from "./supports-passive-listener"
 
 export const ScrollContext = React.createContext<SessionStorage>(
   new SessionStorage()
@@ -34,7 +35,11 @@ export class ScrollHandler extends React.Component<
   }
 
   componentDidMount(): void {
-    window.addEventListener(`scroll`, this.scrollListener)
+    window.addEventListener(
+      `scroll`,
+      this.scrollListener,
+      supportsPassiveListener() ? { passive: true } : false
+    )
     let scrollPosition
     const { key, hash } = this.props.location
 
