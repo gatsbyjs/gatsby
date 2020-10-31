@@ -9,7 +9,7 @@ const babel = require("@babel/core");
 
 const declare = require("@babel/helper-plugin-utils").declare;
 
-const loadThemes = require("gatsby/dist/bootstrap/load-themes");
+const { loadThemes } = require("gatsby/dist/bootstrap/load-themes");
 
 var inquirer = require("inquirer");
 
