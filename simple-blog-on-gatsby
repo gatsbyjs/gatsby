@@ -1,0 +1,55 @@
+ #simple-introduction-To-gatsby
+
+#lets-talk-about-gatsby
+
+#big
+
+
+Heard of GatsbyJS, but not sure what to make of it?  
+Here’s five blazing-fast questions and answers with Front End Developer, Grayson Hicks, about everyone’s favorite front-end tool right now.
+
+1:  What is Gatsby?
+Gatsby is a React-based, GraphQL powered, static site generator. What does that even mean?  Well, it weaves together the best parts of React, webpack, react-router, GraphQL, and other front-end tools in to one very enjoyable developer experience. Don’t get hung up on the moniker ‘static site generator’.  That term has been around for a while, but Gatsby is far more like a modern front-end framework than a static site generator of old.
+
+It uses powerful preconfiguration to build a website that uses only static files for incredibly fast page loads, service workers, code splitting, server-side rendering, intelligent image loading, asset optimization, and data prefetching. All out of the box. I didn’t believe the speed until I tried it myself.
+
+You code and develop your site, Gatsby transforms it into a directory with a single HTML file and your static assets. This folder is uploaded to your favorite hosting provider, and voila. Overall think, part Jekyll, part create-react-app.
+
+2:  What makes Gatsby special?
+You may be thinking, “I have a nice web pack config I use”, or “create-react-app works for me”, or "Jekyll is fine for my blog.”  Well, I think there are three things that make Gatsby very special versus these other tools.
+
+First, is the way Gatsby uses GraphQL to build it’s data layer. What do I mean by that? Gatsby is made to collect your data from wherever it may be: Markdown, JSON, your favorite CMS, third party APIs, anywhere! And at build time, it creates an internal GraphQL server of all of this data. So in your react components, all of your data is queried at build time from that same place, in the same way through GraphQL.
+
+The second reason it’s special is the richness of the Gatsby ecosystem. Gatsby has not been around for too long, but already boasts great documentation, and a number of starters to help you get a site up quickly.  That GraphQL data collection I mentioned before may sound intimidating, but due to Gatsby's well-documented data source plugins, it can be as simple as a few lines of code in the config file.
+
+Lastly, is its dedication to performance. Every aspect of performance and accessibility is a point of emphasis, and you can really feel that in the final product.  More so than any boilerplate or generator I have come across, Gatsby lives up to the hype.
+
+3:  Do I have to know React and GraphQL?
+One of the biggest hurdles to someone trying out Gatsby is saying, “Well, I don’t know GraphQL”, or “I don’t know React and I really don’t have the time or energy to learn those just so I can try Gatsby.”  Fair enough, and as someone who knew React, but was intimidated by GraphQL, I put off learning Gatsby for way too long after first hearing about it.  But, I can confidently say that if you only know one or don’t know either of React and GraphQL, Gatsby is actually a great point of entry.  It has fantastic documentation and examples of React and GraphQL, and its structure lends itself to ‘thinking in React’ and ‘thinking in GraphQL’.
+
+Now, as far as, can you use Gatsby without these?  I actually tried it.  As I mentioned, I knew React, but not GraphQL, and thought, I’ll just not use the GraphQL part, you know just make regular API calls in my components, etc.  Don’t do this.  It misses the purpose of Gatsby entirely, and hamstrings you completely.  Kind of like saying, “Can I use React without JSX?”
+
+So, yes, React and GraphQL are crucial for Gatsby, but if you don’t know them, Gatsby is an excellent tool to learn them, and not an excuse not to.
+
+4: How do I get started with Gatsby?
+If you’re thinking about getting started, as I have mentioned before, Gatsby has excellent documentation and tutorials, so head over to gatsbyjs.org and follow along:
+          1. Click on docs and follow the instructions there.
+          2. Install the global Gatsby CLI.
+          3. Run the Gatsby `new` command with the name of your site. `cd` in to the new directory.
+          4. Run ‘gatsby develop’ and click on the `localhost` link in your console.
+
+And there we go, our Gatsby site is up and running.  To compile this for production, we would stop the `develop` and run `gatsby build`. And there you can see the `build` folder meant to be uploaded to your hosting provider.
+
+Gatsby also includes the idea of ‘starters’. Starters are something like boilerplate and templates for Gatsby.  If you know your data will be coming from a certain source, or your site will function in a certain way, such as a blog, there is probably a starter that has the data sources preconfigured, and also the styling and component structure will be setup and opinionated.  This makes getting up and running very quick and easy.
+
+If there is not a starter that fits you, you can use Gatsby’s default starter, and find your data source plugin and follow its install instructions. I would recommend starting with the Gatsby default starter tutorial to get going, and I think you’ll be surprised how quickly you feel comfortable and itching to hook it up to your data or favorite CMS.
+
+5: What's next for the future of Gatsby?
+Gatsby has not been around too long.  Its version 1 was released in July 2017.  Since then, its use has grown tremendously, and version 2 beta was released in June 2018.  There will be a few technical changes to Gatsby, plus what I believe will be a general outlook shift for Gatsby.  Some of the technical updates of Gatsby v2 are: 
+An upgrade to webpack 4 from webpack 1, which should lead to some serious performance gains, especially during the build step.
+Adoption of Reach Router, a project similar to react-router, but built with accessibility of single page apps in mind.
+Some tweaks to where you can use GraphQL in Gatsby, from being limited to Gatsby’s very top level React components, to now being able to define a query in any component.
+Upgrade React to v16, so you can use Context, Fragments, and any other aspect of the latest version of React.
+Editors Note: Gatsby v2 has been released since this article was first published. Read about it here. 
+
+In a general sense, the world of powerful static site generator framework tools like Gatsby is growing stronger. I believe you will see more and more movement to tools like this for vast sections of website building.  In many languages, not just in React, static site generators are being seen as a way to build the web of the future. Gatsby itself is built upon some of the fastest growing web technologies today: React, GraphQL, and webpack.  I can’t repeat enough how much Gatsby is blast to build with, and I believe its future is very, very bright.
