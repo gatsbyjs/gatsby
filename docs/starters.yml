@@ -7447,3 +7447,17 @@
     - SEO friendly components
     - Prebuilt events calendar
     - Material UI
+- url: https://gatsby-starter-design-system.netlify.app/
+  repo: https://github.com/altenull/gatsby-starter-design-system
+  description: A simple starter to build a design system website with Gatsby
+  tags:
+    - Design System
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Code syntax highlighting
+    - Copy code feature
+    - Prettier code styling
+    - SEO with react-helmet
+    - Styled Components
