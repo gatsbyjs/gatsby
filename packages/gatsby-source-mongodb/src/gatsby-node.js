@@ -80,10 +80,12 @@ function createNodes(
   collectionName,
   createContentDigest
 ) {
-  const { preserveObjectIds = false } = pluginOptions
+  const { preserveObjectIds = false, query = {} } = pluginOptions
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
-    let cursor = collection.find()
+    let cursor = collection.find(
+      query[collectionName] ? query[collectionName] : {}
+    )
 
     // Execute the each command, triggers for each document
     cursor.toArray((err, documents) => {
