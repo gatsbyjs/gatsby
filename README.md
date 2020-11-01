@@ -110,6 +110,13 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    # create a new Gatsby site using the default starter
    gatsby new my-blazing-fast-site
    ```
+   OR
+   
+   ```shell
+   # create a new Gatsby site using the gatsby-starter-hello-world starter template
+   gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-hello-world
+   ```
+   
 
 3. **Start the site in `develop` mode.**
 
