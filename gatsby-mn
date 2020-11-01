@@ -1,0 +1,65 @@
+# mandarin translation
+
+#translate in mandarin
+
+：什么是盖茨比？
+Gatsby是基于React的GraphQL支持的静态站点生成器。那有什么意思？好吧，它把React，webpack，react-router，GraphQL和其他前端工具的最佳部分组合在一起，形成了一种非常愉快的开发人员体验。不要挂在“静态网站生成器”这个绰号上。这个术语已经存在了一段时间，但是Gatsby更像是现代的前端框架，而不是旧的静态站点生成器。
+
+它使用强大的预配置来构建一个网站，该网站仅使用静态文件来实现快速的页面加载，服务工作者，代码拆分，服务器端呈现，智能图像加载，资产优化和数据预取。全部开箱。直到自己亲自尝试，我才相信速度。
+
+您对网站进行编码和开发，Gatsby将其转换为包含单个HTML文件和静态资产的目录。此文件夹已上载到您最喜欢的托管服务提供商。总的来说，部分是Jekyll，部分是create-react-app。
+: Shénme shì gài cí bǐ?
+Gatsby shì jīyú React de GraphQL zhīchí de jìngtài zhàndiǎn shēngchéng qì. Nà yǒu shé me yìsi? Hǎo ba, tā bǎ React,webpack,react-router,GraphQL hé qítā qiánduān gōngjù de zuì jiā bùfèn zǔhé zài yīqǐ, xíngchéngle yī zhǒng fēicháng yúkuài de kāifā rényuán tǐyàn. Bùyào guà zài “jìngtài wǎngzhàn shēngchéng qì” zhège chuòhào shàng. Zhège shùyǔ yǐjīng cúnzàile yīduàn shíjiān, dànshì Gatsby gèng xiàng shì xiàndài de qiánduān kuàngjià, ér bùshì jiù de jìngtài zhàndiǎn shēngchéng qì.
+
+Tā shǐyòng qiángdà de yù pèizhì lái gòujiàn yīgè wǎngzhàn, gāi wǎngzhàn jǐn shǐyòng jìngtài wénjiàn lái shíxiàn kuàisù de yèmiàn jiāzài, fúwù gōngzuò zhě, dàimǎ chāi fēn, fúwùqì duān chéngxiàn, zhìnéng túxiàng jiāzài, zīchǎn yōuhuà hé shùjù yù qǔ. Quánbù kāi xiāng. Zhídào zìjǐ qīnzì chángshì, wǒ cái xiàng xìn sùdù.
+
+Nín duì wǎngzhàn jìnxíng biānmǎ hé kāifā,Gatsby jiāng qí zhuǎnhuàn wèi bāohán dāngè HTML wénjiàn hé jìngtài zīchǎn de mùlù. Cǐ wénjiàn jiā yǐ shàngzài dào nín zuì xǐhuān de tuōguǎn fúwù tígōng shāng. Zǒng de lái shuō, bùfèn shì Jekyll, bùfèn shì create-react-app.
+
+
+2：盖茨比有什么特别之处？
+您可能会想，“我有一个不错的Web Pack配置”，或者“ create-react-app对我有用”，或者“ Jekyll适合我的博客”。好吧，与其他工具相比，我认为有三件事使Gatsby非常特别。
+
+首先，是盖茨比使用GraphQL构建数据层的方式。那是什么意思Gatsby可以从任何地方收集您的数据：Markdown，JSON，您最喜欢的CMS，第三方API，任何地方！并且在构建时，它将创建一个包含所有这些数据的内部GraphQL服务器。因此，在您的React组件中，所有的数据都是在构建时以相同的方式通过GraphQL从同一位置查询的。
+
+特殊之处的第二个原因是盖茨比生态系统的丰富性。盖茨比（Gatsby）成立时间不长，但已经拥有出色的文档资料，并且有许多入门指南可帮助您快速建立网站。我之前提到的GraphQL数据收集听起来可能令人生畏，但是由于盖茨比（Gatsby）记录良好的数据源插件，它可以像配置文件中的几行代码一样简单。
+
+最后，是它对性能的专注。性能和可访问性的每个方面都是重点，您在最终产品中确实可以感受到这一点。与我所遇到的任何样板或发电机相比，盖茨比活得更多。
+2: Gài cí bǐ yǒu shé me tèbié zhī chù?
+Nín kěnéng huì xiǎng,“wǒ yǒu yīgè bùcuò de Web Pack pèizhì”, huòzhě “create-react-app duì wǒ yǒuyòng”, huòzhě “Jekyll shìhé wǒ de bókè”. Hǎo ba, yǔ qítā gōngjù xiāng bǐ, wǒ rènwéi yǒusān jiàn shì shǐ Gatsby fēicháng tèbié.
+
+Shǒuxiān, shì gài cí bǐ shǐyòng GraphQL gòujiàn shùjù céng de fāngshì. Nà shì shénme yìsi Gatsby kěyǐ cóng rènhé dìfāng shōují nín de shùjù:Markdown,JSON, nín zuì xǐhuān de CMS, dì sānfāng API, rènhé dìfāng! Bìngqiě zài gòujiàn shí, tā jiāng chuàngjiàn yīgè bāohán suǒyǒu zhèxiē shùjù de nèibù GraphQL fúwùqì. Yīncǐ, zài nín de React zǔjiàn zhōng, suǒyǒu de shùjù dōu shì zài gòujiàn shí yǐ xiāngtóng de fāngshì tōngguò GraphQL cóng tóngyī wèizhì cháxún de.
+
+Tèshū zhī chǔ de dì èr gè yuányīn shì gài cí bǐ shēngtài xìtǒng de fēngfù xìng. Gài cí bǐ (Gatsby) chénglì shíjiān bù cháng, dàn yǐjīng yǒngyǒu chūsè de wéndàng zīliào, bìngqiě yǒu xǔduō rùmén zhǐnán kě bāngzhù nín kuàisù jiànlì wǎngzhàn. Wǒ zhīqián tí dào de GraphQL shùjù shōují tīng qǐlái kěnéng lìng rénshēng wèi, dànshì yóuyú gài cí bǐ (Gatsby) jìlù liánghǎo de shùjù yuán chājiàn, tā kěyǐ xiàng pèizhì wénjiàn zhōng de jǐ xíng dàimǎ yīyàng jiǎndān.
+
+Zuìhòu, shì tā duì xìngnéng de zhuānzhù. Xìngnéng hàn kě fǎngwèn xìng de měi gè fāngmiàn dōu shì zhòngdiǎn, nín zài zuìzhōng chǎnpǐn zhōng quèshí kěyǐ gǎnshòu dào zhè yīdiǎn. Yǔ wǒ suǒ yù dào de rènhé yàngbǎn huò fādiàn jī xiāng bǐ, gài cí bǐ huó dé gèng duō.
+
+
+
+
+3：我是否必须了解React和GraphQL？
+尝试Gatsby的人遇到的最大障碍之一是：“嗯，我不知道GraphQL”或“我不知道React，我真的没有时间或精力去学习那些，所以我可以尝试盖茨比。”相当公平，作为一个了解React但被GraphQL吓倒的人，我在第一次听说Gatsby之后就推迟了太久。但是，我可以自信地说，如果您只知道React或GraphQL之一，或者不了解，那么Gatsby实际上是一个很好的切入点。它具有出色的文档和React和GraphQL的示例，其结构使其适合“在React中思考”和“在GraphQL中思考”。
+
+现在，到目前为止，没有这些，您可以使用Gatsby吗？我实际上尝试过。正如我提到的，我知道React，但不了解GraphQL，并且以为，我不会使用GraphQL部分，只知道在我的组件中进行常规API调用，等等。不要这样做。它完全达不到Gatsby的目的，并完全束缚您。有点像说：“我可以在没有JSX的情况下使用React吗？”
+
+因此，是的，React和GraphQL对盖茨比至关重要，但是如果您不了解它们，盖茨比也是一个很好的选择
+3: Wǒ shìfǒu bìxū liǎojiě React hé GraphQL?
+Chángshì Gatsby de rén yù dào de zuìdà zhàng'ài zhī yī shì:“Ń, wǒ bù zhīdào GraphQL” huò “wǒ bù zhīdào React, wǒ zhēn de méiyǒu shí jiàn huò jīnglì qù xuéxí nàxiē, suǒyǐ wǒ kěyǐ chángshì gài cí bǐ.” Xiāngdāng gōngpíng, zuòwéi yīgè liǎojiě React dàn bèi GraphQL xià dào de rén, wǒ zài dì yī cì tīng shuō Gatsby zhīhòu jiù tuīchíle tài jiǔ. Dànshì, wǒ kěyǐ zìxìn de shuō, rúguǒ nín zhǐ zhīdào React huò GraphQL zhī yī, huòzhě bù liǎojiě, nàme Gatsby shíjì shang shì yīgè hěn hǎo de qiērù diǎn. Tā jùyǒu chūsè de wéndàng hé React hé GraphQL de shìlì, qí jiégòu shǐ qí shìhé “zài React zhōng sīkǎo” hé “zài GraphQL zhōng sīkǎo”.
+
+Xiànzài, dào mùqián wéizhǐ, méiyǒu zhèxiē, nín kěyǐ shǐyòng Gatsby ma? Wǒ shíjì shang chángshìguò. Zhèngrú wǒ tí dào de, wǒ zhīdào React, dàn bù liǎojiě GraphQL, bìngqiě yǐwéi, wǒ bù huì shǐyòng GraphQL bùfèn, zhǐ zhīdào zài wǒ de zǔjiàn zhōng jìnxíng chángguī API diàoyòng, děng děng. Bùyào zhèyàng zuò. Tā wánquán dá bù dào Gatsby de mùdì, bìng wánquán shùfù nín. Yǒudiǎn xiàng shuō:“Wǒ kěyǐ zài méiyǒu JSX de qíngkuàng xià shǐyòng React ma?”
+
+Yīncǐ, shì de,React hé GraphQL duì gài cí bǐ zhì guān zhòngyào, dànshì rúguǒ nín bù liǎojiě tāmen, gài cí bǐ yěshì yīgè hěn hǎo de xuǎnzé
+
+
+
+4：如何开始使用盖茨比？
+如前所述，如果您正在考虑入门，Gatsby拥有出色的文档和教程，因此请转到gatsbyjs.org并遵循：
+          1.点击文档，然后按照其中的说明进行操作。
+          2.安装全局Gatsby CLI。
+          3.使用您的站点名称运行Gatsby`new`命令。 cd进入新目录。
+          4.运行“ gatsby开发”，然后在控制台中单击“本地主机”链接。
+4: Rúhé kāishǐ shǐyòng gài cí bǐ?
+Rú qián suǒ shù, rúguǒ nín zhèngzài kǎolǜ rùmén,Gatsby yǒngyǒu chūsè de wéndàng hé jiàochéng, yīncǐ qǐng zhuǎn dào gatsbyjs.Org bìng zūnxún:
+          1. Diǎnjī wéndàng, ránhòu ànzhào qízhōng de shuōmíng jìnxíng cāozuò.
+          2. Ānzhuāng quánjú Gatsby CLI.
+          3. Shǐyòng nín de zhàndiǎn míngchēng yùnxíng Gatsby`new`mìnglìng. Cd jìnrù xīn mùlù.
+          4. Yùnxíng “gatsby kāifā”, ránhòu zài kòngzhì táizhōng dān jī “běndì zhǔjī” liànjiē.
