@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "chokidar": "^3.4.2",
+    "chokidar": "^3.4.3",
     "configstore": "^5.0.1",
     "del": "^6.0.0",
-    "execa": "^4.0.3",
+    "execa": "^4.1.0",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^9.0.1",
     "got": "^10.7.0",
