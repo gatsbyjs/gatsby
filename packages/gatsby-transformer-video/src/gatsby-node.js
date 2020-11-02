@@ -154,37 +154,42 @@ exports.createResolvers = async (
 
   // Analyze the resulting video and prepare field return values
   async function processResult({ publicPath }) {
-    const result = await ffmpeg.executeFfprobe(publicPath)
+    try {
+      const result = await ffmpeg.executeFfprobe(publicPath)
 
-    const {
-      format_name: formatName,
-      format_long_name: formatLongName,
-      start_time: startTime,
-      duration: duration,
-      size: size,
-      bit_rate: bitRate,
-    } = result.format
+      const {
+        format_name: formatName,
+        format_long_name: formatLongName,
+        start_time: startTime,
+        duration: duration,
+        size: size,
+        bit_rate: bitRate,
+      } = result.format
 
-    const { width, height } = result.streams[0]
+      const { width, height } = result.streams[0]
 
-    const path = publicPath.replace(resolve(rootDir, `public`), ``)
+      const path = publicPath.replace(resolve(rootDir, `public`), ``)
 
-    const { name, ext } = parse(publicPath)
+      const { name, ext } = parse(publicPath)
 
-    return {
-      path,
-      absolutePath: publicPath,
-      name,
-      ext,
-      formatName,
-      formatLongName,
-      startTime: startTime === `N/A` ? null : startTime,
-      duration: duration === `N/A` ? null : duration,
-      size: size === `N/A` ? null : size,
-      bitRate: bitRate === `N/A` ? null : bitRate,
-      width,
-      height,
-      aspectRatio: width / height,
+      return {
+        path,
+        absolutePath: publicPath,
+        name,
+        ext,
+        formatName,
+        formatLongName,
+        startTime: startTime === `N/A` ? null : startTime,
+        duration: duration === `N/A` ? null : duration,
+        size: size === `N/A` ? null : size,
+        bitRate: bitRate === `N/A` ? null : bitRate,
+        width,
+        height,
+        aspectRatio: width / height,
+      }
+    } catch (err) {
+      reporter.error(`Unable to analyze video file: ${publicPath}`)
+      throw err
     }
   }
 
