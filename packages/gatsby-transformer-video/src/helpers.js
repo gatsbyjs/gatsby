@@ -27,13 +27,13 @@ export async function cacheContentfulVideo({ video, cacheDir }) {
 
   try {
     await access(path, fs.constants.R_OK)
-    reporter.verbose(`Already downloaded ${url}`)
+    reporter.verbose(`Cache hit: ${url}`)
     downloadCache[url] = path
 
     return downloadCache[url]
   } catch {
     if (url in downloadCache) {
-      // Already downloading
+      // Already in download queue
       return downloadCache[url]
     }
 
@@ -44,7 +44,7 @@ export async function cacheContentfulVideo({ video, cacheDir }) {
       while (!downloaded) {
         try {
           await downloadQueue.add(async () => {
-            reporter.info(`Downloading ${url}`)
+            reporter.info(`Downloading: ${url}`)
 
             const response = await axios({
               method: `get`,

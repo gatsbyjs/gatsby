@@ -89,7 +89,6 @@ export default class FFMPEG {
           reject(err)
         })
         .on(`end`, () => {
-          reporter.verbose(`${name} - 100%`)
           reporter.info(`${name} - converted`)
           resolve()
         })
@@ -119,9 +118,7 @@ export default class FFMPEG {
     }
 
     if (!path) {
-      throw new Error(
-        `Unable to extract asset file path for ${type} (${video.id})`
-      )
+      throw new Error(`Unable to locate video file for ${type} (${video.id})`)
     }
 
     const optionsHash = createContentDigest(fieldArgs)
