@@ -29,6 +29,8 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/prefix_{Model.id}.js`,
     `/products/prefix{Model.id}.js`,
     `/products/{Model.id}postfix.js`,
+    `/products/{Model.bar}/[name].js`,
+    `/products/{Model.bar}/[...name].js`,
   ])(`%o passes`, path => {
     expect(() =>
       isValidCollectionPathImplementation(compatiblePath(path), reporter)

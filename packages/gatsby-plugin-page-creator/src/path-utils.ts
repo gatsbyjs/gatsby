@@ -21,6 +21,11 @@ export function removeFileExtension(absolutePath: string): string {
   return absolutePath.replace(/\.[a-z]+$/, ``)
 }
 
+// Remove trailing slash
+export function stripTrailingSlash(str: string): string {
+  return str.endsWith(`/`) ? str.slice(0, -1) : str
+}
+
 const curlyBracesContentsRegex = /(\{.*?\})/g
 
 // This extracts all information in an absolute path to an array of each collection part

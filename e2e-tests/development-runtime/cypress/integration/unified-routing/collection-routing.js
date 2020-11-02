@@ -69,4 +69,13 @@ describe(`collection-routing`, () => {
     cy.findByTestId(`pagecontext`)
       .should(`have.text`, `1`)
   })
+
+  it(`supports nested collection + client-only route`, () => {
+    cy.visit(`/collection-routing/hello-world-1/dolores`).waitForRouteChange()
+
+    cy.findByTestId(`splat`)
+    cy.should(`have.text`, `dolores`)
+    cy.findByTestId(`title`)
+    cy.should(`have.text`, `Named SPLAT Nested with Collection Route!`)
+  })
 })

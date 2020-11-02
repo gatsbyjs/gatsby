@@ -4,23 +4,23 @@ import reporter from "gatsby-cli/lib/reporter"
 describe(`derive-path`, () => {
   it(`has basic support`, () => {
     expect(
-      derivePath(`product/{Product.id}.js`, { id: `1` }, reporter).derivedPath
+      derivePath(`product/{Product.id}`, { id: `1` }, reporter).derivedPath
     ).toEqual(`product/1`)
     expect(
-      derivePath(`product/{product.id}.js`, { id: `1` }, reporter).derivedPath
+      derivePath(`product/{product.id}`, { id: `1` }, reporter).derivedPath
     ).toEqual(`product/1`)
   })
 
   it(`converts number to string in URL`, () => {
     expect(
-      derivePath(`product/{Product.id}.js`, { id: 1 }, reporter).derivedPath
+      derivePath(`product/{Product.id}`, { id: 1 }, reporter).derivedPath
     ).toEqual(`product/1`)
   })
 
   it(`has nested value support`, () => {
     expect(
       derivePath(
-        `product/{Product.field__id}.js`,
+        `product/{Product.field__id}`,
         { field: { id: `1` } },
         reporter
       ).derivedPath
@@ -30,7 +30,7 @@ describe(`derive-path`, () => {
   it(`has support for nested collections`, () => {
     expect(
       derivePath(
-        `product/{Product.id}/{Product.field__name}.js`,
+        `product/{Product.id}/{Product.field__name}`,
         { id: 1, field: { name: `foo` } },
         reporter
       ).derivedPath
@@ -40,7 +40,7 @@ describe(`derive-path`, () => {
   it(`has support for nested collections with same field`, () => {
     expect(
       derivePath(
-        `product/{Product.field__name}/{Product.field__category}.js`,
+        `product/{Product.field__name}/{Product.field__category}`,
         { field: { name: `foo`, category: `bar` } },
         reporter
       ).derivedPath
@@ -50,7 +50,7 @@ describe(`derive-path`, () => {
   it(`has union support`, () => {
     expect(
       derivePath(
-        `product/{Product.field__(File)__id}.js`,
+        `product/{Product.field__(File)__id}`,
         {
           field: { id: `1` },
         },
@@ -62,7 +62,7 @@ describe(`derive-path`, () => {
   it(`doesnt remove '/' from slug`, () => {
     expect(
       derivePath(
-        `product/{Product.slug}.js`,
+        `product/{Product.slug}`,
         {
           slug: `bar/baz`,
         },
@@ -74,7 +74,7 @@ describe(`derive-path`, () => {
   it(`slugify's periods properly`, () => {
     expect(
       derivePath(
-        `film/{Movie.title}.js`,
+        `film/{Movie.title}`,
         {
           title: `Mrs. Doubtfire`,
         },
@@ -86,7 +86,7 @@ describe(`derive-path`, () => {
   it(`supports prefixes`, () => {
     expect(
       derivePath(
-        `foo/prefix-{Model.name}.js`,
+        `foo/prefix-{Model.name}`,
         {
           name: `dolores`,
         },
@@ -98,7 +98,7 @@ describe(`derive-path`, () => {
   it(`supports prefixes with nested collections`, () => {
     expect(
       derivePath(
-        `foo/prefix{Model.name}/another-prefix_{Model.trait}.js`,
+        `foo/prefix{Model.name}/another-prefix_{Model.trait}`,
         {
           name: `dolores`,
           trait: `awesome`,
@@ -111,7 +111,7 @@ describe(`derive-path`, () => {
   it(`supports postfixes`, () => {
     expect(
       derivePath(
-        `foo/{Model.name}-postfix.js`,
+        `foo/{Model.name}-postfix`,
         {
           name: `dolores`,
         },
@@ -123,7 +123,7 @@ describe(`derive-path`, () => {
   it(`supports postfixes with nested collections`, () => {
     expect(
       derivePath(
-        `foo/{Model.name}postfix/{Model.trait}_another-postfix.js`,
+        `foo/{Model.name}postfix/{Model.trait}_another-postfix`,
         {
           name: `dolores`,
           trait: `awesome`,
@@ -134,12 +134,13 @@ describe(`derive-path`, () => {
   })
 
   it(`keeps existing slashes around and handles possible double forward slashes`, () => {
-    // This tests two things
-    // 1) The trailing slash should be transferred (normally "@sindresorhus/slugify" would remove that)
+    // This tests three things
+    // 1) The trailing slash should be removed (as createPath will be used later anyways)
     // 2) There shouldn't be a double forward slash in the final URL => blog//fire-and-powder/
+    // 3) If the slug is supposed to be a URL (e.g. foo/bar) it should keep that
     expect(
       derivePath(
-        `blog/{MarkdownRemark.fields__slug}.js`,
+        `blog/{MarkdownRemark.fields__slug}`,
         {
           fields: {
             slug: `/fire-and-powder/`,
@@ -147,6 +148,62 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`blog/fire-and-powder/`)
+    ).toEqual(`blog/fire-and-powder`)
+    expect(
+      derivePath(
+        `blog/{MarkdownRemark.fields__slug}`,
+        {
+          fields: {
+            slug: `/fire-and-powder/and-water`,
+          },
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`blog/fire-and-powder/and-water`)
+  })
+
+  it(`supports file extension`, () => {
+    expect(
+      derivePath(
+        `foo/{Model.name}.js`,
+        {
+          name: `dolores`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/dolores.js`)
+  })
+
+  it(`supports file extension with existing slashes around`, () => {
+    expect(
+      derivePath(
+        `foo/{Model.name}.js`,
+        {
+          name: `/dolores/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/dolores.js`)
+    expect(
+      derivePath(
+        `foo/{Model.name}/template.js`,
+        {
+          name: `/dolores/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/dolores/template.js`)
+  })
+
+  it(`supports mixed collection and client-only route`, () => {
+    expect(
+      derivePath(
+        `foo/{Model.name}/[...name]`,
+        {
+          name: `dolores`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/dolores/[...name]`)
   })
 })

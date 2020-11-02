@@ -3,16 +3,16 @@ import slugify from "@sindresorhus/slugify"
 import { Reporter } from "gatsby"
 import {
   compose,
-  removeFileExtension,
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
+  stripTrailingSlash,
 } from "./path-utils"
 
 const doubleForwardSlashes = /\/\/+/g
 
 // Generates the path for the page from the file path
-// product/{Product.id}.js => /product/:id, pulls from nodes.id
+// product/{Product.id} => /product/:id, pulls from nodes.id
 // product/{Product.sku__en} => product/:sku__en pulls from nodes.sku.en
 // blog/{MarkdownRemark.parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
 export function derivePath(
@@ -23,8 +23,8 @@ export function derivePath(
   // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
   let errors = 0
 
-  // 1.  Remove the extension
-  let pathWithoutExtension = removeFileExtension(path)
+  // 1.  Incoming path can optionally be stripped of file extension (but not mandatory)
+  let modifiedPath = path
 
   // 2.  Pull out the slug parts that are within { } brackets.
   const slugParts = extractAllCollectionSegments(path)
@@ -52,14 +52,17 @@ export function derivePath(
       return
     }
 
-    const value = safeSlugify(nodeValue)
+    // 3.d  Safely slugify all values (to keep URL structures) and remove any trailing slash
+    const value = stripTrailingSlash(safeSlugify(nodeValue))
 
-    // 3.d  replace the part of the slug with the actual value
-    pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
+    // 3.e  replace the part of the slug with the actual value
+    modifiedPath = modifiedPath.replace(slugPart, value)
   })
 
   // 4.  Remove double forward slashes that could occur in the final URL
-  const derivedPath = pathWithoutExtension.replace(doubleForwardSlashes, `/`)
+  modifiedPath = modifiedPath.replace(doubleForwardSlashes, `/`)
+
+  const derivedPath = modifiedPath
 
   return {
     errors,
