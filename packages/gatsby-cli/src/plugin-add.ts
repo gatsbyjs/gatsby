@@ -1,6 +1,5 @@
 import { NPMPackage, GatsbyPlugin } from "gatsby-recipes"
-import { IProgram } from "./types"
-
+import reporter from "./reporter"
 const normalizePluginName = (plugin: string): string => {
   if (plugin.startsWith(`gatsby-`)) {
     return plugin
@@ -17,8 +16,7 @@ const normalizePluginName = (plugin: string): string => {
 
 async function installPluginPackage(
   plugin: string,
-  root: string,
-  reporter: IProgram["report"]
+  root: string
 ): Promise<void> {
   const installTimer = reporter.activityTimer(`Installing ${plugin}`)
 
@@ -36,8 +34,7 @@ async function installPluginPackage(
 
 async function installPluginConfig(
   plugin: string,
-  root: string,
-  reporter: IProgram["report"]
+  root: string
 ): Promise<void> {
   const installTimer = reporter.activityTimer(
     `Adding ${plugin} to gatsby-config`
@@ -55,22 +52,21 @@ async function installPluginConfig(
   installTimer.end()
 }
 
-export default async function run({
-  plugins,
-  report,
-  directory,
-}: IProgram & { plugins?: Array<string> }): Promise<void> {
+export async function addPlugins(
+  directory: string,
+  plugins?: Array<string>
+): Promise<void> {
   if (!plugins?.length) {
-    report.error(`Please specify a plugin to install`)
+    reporter.error(`Please specify a plugin to install`)
     return
   }
 
   const pluginList = plugins.map(normalizePluginName)
 
   await Promise.all(
-    pluginList.map(plugin => installPluginPackage(plugin, directory, report))
+    pluginList.map(plugin => installPluginPackage(plugin, directory))
   )
   await Promise.all(
-    pluginList.map(plugin => installPluginConfig(plugin, directory, report))
+    pluginList.map(plugin => installPluginConfig(plugin, directory))
   )
 }

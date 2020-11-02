@@ -1,5 +1,3 @@
-import add from "./plugin-add"
-
 module.exports = async (args: IProgram): Promise<void> => {
   const { report, cmd } = args
   switch (cmd) {
@@ -25,9 +23,6 @@ module.exports = async (args: IProgram): Promise<void> => {
         - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
                    `)
       return void 0
-
-    case `add`:
-      return add(args)
 
     default:
       report.error(`Unknown command ${cmd}`)
