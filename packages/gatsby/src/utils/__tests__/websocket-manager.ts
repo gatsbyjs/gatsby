@@ -19,7 +19,7 @@ jest.mock(`fs-extra`, () => {
 })
 
 const INTERVAL_TIMEOUT = 500
-const TEST_TIMEOUT = 10000
+const TEST_TIMEOUT = 30000
 
 function waitUntil<T = any>(
   cb: (resolve: (resolved?: T) => void) => void,
