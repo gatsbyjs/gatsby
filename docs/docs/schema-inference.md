@@ -72,7 +72,7 @@ Each of these categories of fields is created in a different way, explained belo
 
 ## gqlType Creation
 
-The Gatsby term for the GraphQLObjectType for a unique node type, is `gqlType`. GraphQLObjectTypes are simply objects that define the type name and fields. The field definitions are created by the [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) function in `build-node-types.js`.
+The Gatsby term for the GraphQLObjectType for a unique node type, is `gqlType`. GraphQLObjectTypes are objects that define the type name and fields. The field definitions are created by the [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) function in `build-node-types.js`.
 
 An important thing to note is that all gqlTypes are created before their fields are inferred. This allows fields to be of types that haven't yet been created due to their order of compilation. This is accomplished by the use of `fields` [being a function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L167) (basically lazy functions).
 
@@ -142,7 +142,7 @@ Gatsby stores these children in Redux as IDs in the parent's `children` field. A
 }
 ```
 
-An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. The benefit of this is that we can easily create a `File.children` field that returns all children, regardless of type. The downside is that the creation of fields such as `File.childMarkdownRemark` and `File.childrenPostsJson` is more complicated. This is what [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) does.
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. The benefit of this is that we can create a `File.children` field that returns all children, regardless of type. The downside is that the creation of fields such as `File.childMarkdownRemark` and `File.childrenPostsJson` is more complicated. This is what [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) does.
 
 Another convenience Gatsby provides is the ability to query a node's `child` or `children`, depending on whether a parent node has 1 or more children of that type.
 

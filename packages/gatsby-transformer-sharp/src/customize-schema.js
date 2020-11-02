@@ -7,6 +7,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -14,6 +15,7 @@ const {
   fluid,
   fixed,
   traceSVG,
+  generateImageData,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
@@ -30,7 +32,10 @@ const {
   PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
+  ImageLayoutType,
+  ImagePlaceholderType,
 } = require(`./types`)
+const { stripIndent } = require(`common-tags`)
 const { prefixId, CODES } = require(`./error-utils`)
 
 function toArray(buf) {
@@ -375,6 +380,186 @@ const fluidNodeType = ({
   }
 }
 
+const imageNodeType = ({
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+  cache,
+}) => {
+  return {
+    type: new GraphQLObjectType({
+      name: `ImageSharpGatsbyImage`,
+      fields: {
+        imageData: {
+          type: new GraphQLNonNull(GraphQLJSON),
+        },
+      },
+    }),
+    args: {
+      layout: {
+        type: ImageLayoutType,
+        defaultValue: `fixed`,
+        description: stripIndent`
+        The layout for the image.
+        FIXED: A static image sized, that does not resize according to the screen width
+        FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+        `,
+      },
+      maxWidth: {
+        type: GraphQLInt,
+        description: stripIndent`
+        Maximum display width of generated files. 
+        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+        This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
+      },
+      maxHeight: {
+        type: GraphQLInt,
+      },
+      width: {
+        type: GraphQLInt,
+        description: stripIndent`
+        The display width of the generated image. 
+        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+        Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+        `,
+      },
+      height: {
+        type: GraphQLInt,
+      },
+      placeholder: {
+        type: ImagePlaceholderType,
+        defaultValue: `blurred`,
+        description: stripIndent`
+        Format of generated placeholder image. 
+        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
+        BASE64: a blurred, low resolution image, encoded as a base64 data URI
+        TRACED_SVG: a low-resolution traced SVG of the image.
+        NONE: no placeholder. Set "background" to use a fixed background color.`,
+      },
+      tracedSVGOptions: {
+        type: PotraceType,
+        defaultValue: false,
+        description: `Options for traced placeholder SVGs. You also should set placeholder to SVG.`,
+      },
+      webP: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+        description: `Generate images in WebP format as well as matching the input format. This is the default (and strongly recommended), but will add to processing time.`,
+      },
+      outputPixelDensities: {
+        type: GraphQLList(GraphQLFloat),
+        description: stripIndent`
+        A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always a 1x image. 
+        Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide`,
+      },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
+        description: stripIndent`
+        The "sizes" property, passed to the img tag. This describes the display size of the image. 
+        This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
+        container will be the full width of the screen. In these cases we will generate an appropriate value.
+        `,
+      },
+      base64Width: {
+        type: GraphQLInt,
+      },
+      grayscale: {
+        type: GraphQLBoolean,
+        defaultValue: false,
+      },
+      jpegProgressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
+      duotone: {
+        type: DuotoneGradientType,
+        defaultValue: false,
+      },
+      quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
+        type: GraphQLInt,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
+        type: ImageFormatType,
+        defaultValue: ``,
+        description: `Force output format. Default is to use the same as the input format`,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: sharp.strategy.attention,
+      },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
+      rotate: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
+      },
+      srcSetBreakpoints: {
+        type: GraphQLList(GraphQLInt),
+        defaultValue: [],
+        description: stripIndent`\
+        A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]. 
+        You should usually leave this blank and allow it to be generated from the width/maxWidth and outputPixelDensities`,
+      },
+    },
+    resolve: async (image, fieldArgs, context) => {
+      const file = getNodeAndSavePathDependency(image.parent, context.path)
+      const args = { ...fieldArgs, pathPrefix }
+
+      if (!generateImageData) {
+        reporter.warn(`Please upgrade gatsby-plugin-sharp`)
+        return null
+      }
+      reporter.warn(
+        stripIndent`
+        You are using the alpha version of the \`gatsbyImage\` sharp API, which is unstable and will change without notice. 
+        Please do not use it in production.`
+      )
+      const imageData = await generateImageData({
+        file,
+        args,
+        reporter,
+        cache,
+      })
+
+      return {
+        imageData,
+        fieldArgs: args,
+        image,
+        file,
+      }
+    },
+  }
+}
+
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the
  * underlying fs-extra module during parallel copies of the same file
@@ -406,11 +591,14 @@ const createFields = ({
   const sizesNode = fluidNodeType({ name: `ImageSharpSizes`, ...nodeOptions })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
+  const imageNode = imageNodeType(nodeOptions)
+
   return {
     fixed: fixedNode,
     resolutions: resolutionsNode,
     fluid: fluidNode,
     sizes: sizesNode,
+    gatsbyImage: imageNode,
     original: {
       type: new GraphQLObjectType({
         name: `ImageSharpOriginal`,
@@ -615,6 +803,7 @@ module.exports = ({
     createTypes([
       ImageFormatType,
       ImageFitType,
+      ImageLayoutType,
       ImageCropFocusType,
       DuotoneGradientType,
       PotraceTurnPolicyType,

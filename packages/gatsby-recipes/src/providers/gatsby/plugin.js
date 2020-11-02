@@ -128,12 +128,35 @@ const getDescriptionForPlugin = async (root, name) => {
 
 const readmeCache = new Map()
 
-const getReadmeForPlugin = async name => {
+const getPath = (module, file, root) => {
+  try {
+    return require.resolve(`${module}/${file}`, { paths: [root] })
+  } catch (e) {
+    return undefined
+  }
+}
+
+const getReadmeForPlugin = async (root, name) => {
   if (readmeCache.has(name)) {
     return readmeCache.get(name)
   }
 
+  let readmePath
+
+  const readmes = [`readme`, `readme.md`, `README`, `README.md`]
+  while (!readmePath && readmes.length) {
+    readmePath = getPath(name, readmes.pop(), root)
+  }
+
   try {
+    if (readmePath) {
+      const readme = await fs.readFile(readmePath, `utf8`)
+      if (readme) {
+        readmeCache.set(name, readme)
+      }
+      return readme
+    }
+
     const readme = await fetch(`https://unpkg.com/${name}/README.md`)
       .then(res => res.text())
       .catch(() => null)
@@ -267,7 +290,7 @@ const read = async ({ root }, id) => {
     if (plugin?.name) {
       const [description, readme] = await Promise.all([
         getDescriptionForPlugin(root, id),
-        getReadmeForPlugin(id),
+        getReadmeForPlugin(root, id),
       ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
         root,
