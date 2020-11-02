@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.34...gatsby-recipes@0.2.35) (2020-11-02)
+
+### Features
+
+- **recipes:** Export providers ([#27724](https://github.com/gatsbyjs/gatsby/issues/27724)) ([023daf2](https://github.com/gatsbyjs/gatsby/commit/023daf201181c15456a3ec9fe075bab54c2a1248))
+
 ## [0.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.33...gatsby-recipes@0.2.34) (2020-10-26)
 
 **Note:** Version bump only for package gatsby-recipes
