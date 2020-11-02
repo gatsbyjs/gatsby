@@ -117,7 +117,7 @@ Please pick a path to an existing directory.`,
           store.getState().pages.forEach(page => {
             if (page.component === componentPath) {
               deletePage({
-                path: createPath(removedPath),
+                path: page.path,
                 component: componentPath,
               })
             }
