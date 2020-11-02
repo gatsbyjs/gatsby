@@ -8,8 +8,11 @@ import {
   SetStateAction,
   Dispatch,
 } from "react"
+import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
+import { Layout } from "../utils"
+import { ISharpGatsbyImageData } from "./gatsby-image.browser"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -27,11 +30,24 @@ export function hasImageLoaded(cacheKey: string): boolean {
   return imageCache.has(cacheKey)
 }
 
+export type FileNode = Node & {
+  childImageSharp?: Node & {
+    gatsbyImage?: Node & {
+      imageData: ISharpGatsbyImageData
+    }
+  }
+}
+
+export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
+  file?.childImageSharp?.gatsbyImage?.imageData
+
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: "intrinsic" | "responsive" | "fixed"
-): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
+  layout: Layout
+): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
+  "data-gatsby-image-wrapper": string
+} {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
   }
@@ -41,12 +57,13 @@ export function getWrapperProps(
     wrapperStyle.height = height
   }
 
-  if (layout === `intrinsic`) {
+  if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
   }
 
   return {
     className: `gatsby-image-wrapper`,
+    "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
 }
@@ -105,23 +122,53 @@ export function getMainProps(
     result.style.position = `absolute`
     result.style.top = 0
     result.style.transform = `translateZ(0)`
-    result.style.transition = `opacity 500ms linear`
+    result.style.transition = `opacity 250ms linear`
     result.style.width = `100%`
     result.style.willChange = `opacity`
+    result.style.objectFit = `cover`
   }
 
   return result
 }
 
 export type PlaceholderImageAttrs = ImgHTMLAttributes<HTMLImageElement> &
-  Pick<PlaceholderProps, "sources" | "fallback">
+  Pick<PlaceholderProps, "sources" | "fallback"> & {
+    "data-placeholder-image"?: string
+  }
 
-export function getPlaceHolderProps(
-  placeholder: PlaceholderImageAttrs
+export function getPlaceholderProps(
+  placeholder: PlaceholderImageAttrs | undefined,
+  isLoaded: boolean,
+  layout: Layout,
+  width?: number,
+  height?: number,
+  backgroundColor?: string
 ): PlaceholderImageAttrs {
+  const wrapperStyle: CSSProperties = {}
+
+  if (backgroundColor) {
+    if (layout === `fixed`) {
+      wrapperStyle.width = width
+      wrapperStyle.height = height
+    }
+
+    if (layout === `constrained`) {
+      wrapperStyle.display = `inline-block`
+    }
+
+    wrapperStyle.backgroundColor = backgroundColor
+    wrapperStyle.position = `relative`
+  }
+
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,
+    "data-placeholder-image": ``,
+    style: {
+      opacity: isLoaded ? 0 : 1,
+      transition: `opacity 500ms linear`,
+      ...wrapperStyle,
+    },
   }
 
   // fallback when it's not configured in gatsby-config.

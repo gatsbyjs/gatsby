@@ -29,11 +29,12 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     right: 0;
     top: 0;
     width: 100%;
+    object-fit: cover;
   }
   .gatsby-image-wrapper [data-main-image] {
     opacity: 0;
     transform: translateZ(0px);
-    transition: opacity 500ms linear;
+    transition: opacity 250ms linear;
     will-change: opacity;
   }
     `)}
@@ -69,6 +70,18 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
 
 
       const target = e.target;
+
+      let imageWrapper = null;
+      let parentElement = target;
+      while (imageWrapper === null && parentElement) {
+        if (typeof parentElement.parentNode.dataset["gatsbyImageWrapper"] !== "undefined") {
+          imageWrapper = parentElement.parentNode;
+        }
+        parentElement = parentElement.parentNode;
+      }
+      const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
+
+
       const img = new Image();
       img.src = target.currentSrc;
       // We decode the img through javascript so we're sure the blur-up effect works
@@ -77,7 +90,11 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
           // do nothing
         })
         .then(() => {
-          target.style.opacity = 1
+          target.style.opacity = 1;
+          if (placeholder) {
+            placeholder.style.opacity = 0;
+            placeholder.style.transition = "opacity 500ms linear";
+          }
         })
     }, true)
   }

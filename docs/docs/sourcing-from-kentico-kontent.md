@@ -20,7 +20,7 @@ Once you have a subscription to Kentico Kontent, you need some content to retrie
 
 The created Sample Project is a comprehensive presentation of a fictional coffee company named Dancing Goat that showcases various Kentico Kontent features. It can be displayed in various channels, as you can see by going to the [Quickstart page in Kentico Kontent](https://app.kontent.ai/quickstart) from within that project.
 
-For this guide, you don't have to worry about most of the features. You'll just pull some data to display within the Gatsby site you'll create in the next step. The only thing you need to continue is your Project ID, which you can find in Kentico Kontent under _Project settings_ -> _API keys_.
+For this guide, you don't have to worry about most of the features. You'll pull some data to display within the Gatsby site you'll create in the next step. The only thing you need to continue is your Project ID, which you can find in Kentico Kontent under _Project settings_ -> _API keys_.
 
 ### Gatsby
 
@@ -96,7 +96,7 @@ const Layout = ({ children }) => {
 // ...
 ```
 
-If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can easily change this title in Kentico Kontent to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
+If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can change this title in Kentico Kontent to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
 
 So you've seen how to add content to existing pages in Gatsby using Kentico Kontent. Next, you will start creating new pages of your own.
 
@@ -218,15 +218,15 @@ Now you know how to create pages programmatically and pull their content from Ke
 
 To keep your site static but always up to date with the latest content from Kentico Kontent, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git), but the principle is similar using other services like [Gatsby Cloud](https://www.gatsbyjs.com/docs/kontent/getting-started), or [Travis CI](https://travis-ci.org/), as with another [site sourced from Kentico Kontent](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
 
-For simple automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git repository.
+For automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git repository.
 
 Now that your site's up and running, you need to set up automatic builds when published content in Kentico Kontent changes. First, in Netlify [create a new build hook](https://docs.netlify.com/configure-builds/build-hooks/) with a name like "Change in Kentico Kontent content" and copy the URL. Then go to Kentico Kontent. Under _Project settings_, choose _Webhooks_ and create a new webhook. Give it a name like "Netlify build", paste the URL into the _URL address_ field and choose the [events to trigger the webhook](https://docs.kontent.ai/reference/webhooks-reference#a-events-to-trigger-a-webhook), you want to select just "DELIVERY API TRIGGERS" for content item events: "Publish" and "Unpublish". And that's it. Now whenever published content changes, your webhook will trigger a build in Netlify to ensure your static content is updated to the latest version.
 
 ## What's next?
 
-You've seen how to set up a simple Gatsby site that sources content from Kentico Kontent and is automatically redeployed on any change to the content. Kentico Kontent is capable of creating many other kinds of relationships, including taxonomies for categorization, multiple languages, and linking items together. Want to do more?
+You've seen how to set up a Gatsby site that sources content from Kentico Kontent and is automatically redeployed on any change to the content. Kentico Kontent is capable of creating many other kinds of relationships, including taxonomies for categorization, multiple languages, and linking items together. Want to do more?
 
 - See [more about what the Kentico Kontent source plugin can do](https://github.com/Kentico/kontent-gatsby-packages/tree/master/packages/gatsby-source-kontent#available-options).
 - Read the [Kentico Kontent documentation](https://docs.kontent.ai) to see what's possible.
-- Explore the [Kentico Kontent Gatsby starter](https://github.com/Kentico/gatsby-starter-kontent) to see some simple site.
+- Explore the [Kentico Kontent Gatsby starter](https://github.com/Kentico/gatsby-starter-kontent) to see a sample site.
 - Explore the [Kentico Kontent Gatsby starter Lumen](https://github.com/Kentico/gatsby-starter-kontent-lumen) to see a more complete example.
