@@ -287,7 +287,7 @@ exports.createResolvers = async (
         width: { type: GraphQLInt, defaultValue: 600 },
       },
       resolve: (video, fieldArgs) =>
-        ffmpeg.takeScreenshots(video, fieldArgs, {
+        ffmpeg.queueTakeScreenshots(video, fieldArgs, {
           getCache,
           createNode,
           createNodeId,
