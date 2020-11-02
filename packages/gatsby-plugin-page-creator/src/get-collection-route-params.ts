@@ -23,7 +23,7 @@ export function getCollectionRouteParams(
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
     const key = extractFieldWithoutUnion(part)
-    // Use the previously created regex to map prefix-123 to prefix-(.+)
+    // Use the previously created regex to match prefix-123 to prefix-(.+)
     const match = urlParts[i].match(templateRegex[i])
 
     if (match) {
