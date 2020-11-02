@@ -13,8 +13,6 @@ const Page = () => {
           layout="constrained"
           alt="cornwall"
           maxWidth={1024}
-          placeholder="blurred"
-          webP
         />
       </TestWrapper>
     </Layout>

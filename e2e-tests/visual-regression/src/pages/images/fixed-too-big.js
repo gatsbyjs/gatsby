@@ -9,9 +9,7 @@ const Page = () => {
     query {
       file(relativePath: { eq: "landsend.jpg" }) {
         childImageSharp {
-          gatsbyImage(width: 500, height: 500, layout: FIXED) {
-            imageData
-          }
+          gatsbyImageData(width: 500, height: 500, layout: FIXED)
         }
       }
     }

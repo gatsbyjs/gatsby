@@ -39,7 +39,7 @@ export const ImagePlaceholderType = new GraphQLEnumType({
   values: {
     DOMINANT_COLOR: { value: `dominantColor` },
     TRACED_SVG: { value: `tracedSVG` },
-    BASE64: { value: `base64` },
+    BLURRED: { value: `blurred` },
     NONE: { value: `none` },
   },
 })

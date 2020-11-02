@@ -32,14 +32,12 @@ export function hasImageLoaded(cacheKey: string): boolean {
 
 export type FileNode = Node & {
   childImageSharp?: Node & {
-    gatsbyImage?: Node & {
-      imageData: ISharpGatsbyImageData
-    }
+    gatsbyImageData?: ISharpGatsbyImageData
   }
 }
 
 export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
-  file?.childImageSharp?.gatsbyImage?.imageData
+  file?.childImageSharp?.gatsbyImageData
 
 export function getWrapperProps(
   width: number,

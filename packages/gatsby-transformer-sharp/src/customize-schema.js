@@ -394,14 +394,7 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: new GraphQLObjectType({
-      name: `ImageSharpGatsbyImage`,
-      fields: {
-        imageData: {
-          type: new GraphQLNonNull(GraphQLJSON),
-        },
-      },
-    }),
+    type: new GraphQLNonNull(GraphQLJSON),
     args: {
       layout: {
         type: ImageLayoutType,
@@ -425,7 +418,7 @@ const imageNodeType = ({
         description: stripIndent`
         If set, the generated image is a maximum of this height, cropping if necessary. 
         If the image layout is "constrained" then the image will be limited to this height. 
-        If the aspect ratio of the image is different than the source, then the image will br cropped.`,
+        If the aspect ratio of the image is different than the source, then the image will be cropped.`,
       },
       width: {
         type: GraphQLInt,
@@ -444,9 +437,9 @@ const imageNodeType = ({
         type: ImagePlaceholderType,
         defaultValue: `blurred`,
         description: stripIndent`
-        Format of generated placeholder image. 
-        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
+        Format of generated placeholder image, displayed while the main image loads. 
         BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
         TRACED_SVG: a low-resolution traced SVG of the image.
         NONE: no placeholder. Set "background" to use a fixed background color.`,
       },
@@ -464,14 +457,15 @@ const imageNodeType = ({
         description: stripIndent`
         The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG" and "WEBP". 
         The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
-        not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs.
+        not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying 
+        both PNG and JPG is not supported and will be ignored.
         `,
-        defaultValue: [``, `WEBP`],
+        defaultValue: [`AUTO`, `WEBP`],
       },
       outputPixelDensities: {
-        type: GraphQLList(GraphQLInt),
+        type: GraphQLList(GraphQLFloat),
         description: stripIndent`
-        A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always a 1x image. 
+        A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image. 
         Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide`,
       },
       sizes: {
@@ -485,22 +479,28 @@ const imageNodeType = ({
       },
       quality: {
         type: GraphQLInt,
+        description: `The default quality. This is overriden by any format-specific options`,
       },
       jpgOptions: {
         type: JPGOptionsType,
+        description: `Options to pass to sharp when generating JPG images.`,
       },
       pngOptions: {
         type: PNGOptionsType,
+        description: `Options to pass to sharp when generating PNG images.`,
       },
       webpOptions: {
         type: WebPOptionsType,
+        description: `Options to pass to sharp when generating WebP images.`,
       },
       transformOptions: {
         type: TransformOptionsType,
+        description: `Options to pass to sharp to control cropping and other image manipulations.`,
       },
       background: {
         type: GraphQLString,
         defaultValue: `rgba(0,0,0,0)`,
+        description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
       },
     },
     resolve: async (image, fieldArgs, context) => {
@@ -514,7 +514,7 @@ const imageNodeType = ({
       if (!warnedForAlpha) {
         reporter.warn(
           stripIndent`
-        You are using the alpha version of the \`gatsbyImage\` sharp API, which is unstable and will change without notice. 
+        You are using the alpha version of the \`gatsbyImageData\` sharp API, which is unstable and will change without notice. 
         Please do not use it in production.`
         )
         warnedForAlpha = true
@@ -526,12 +526,7 @@ const imageNodeType = ({
         cache,
       })
 
-      return {
-        imageData,
-        fieldArgs: args,
-        image,
-        file,
-      }
+      return imageData
     },
   }
 }
@@ -574,7 +569,7 @@ const createFields = ({
     resolutions: resolutionsNode,
     fluid: fluidNode,
     sizes: sizesNode,
-    gatsbyImage: imageNode,
+    gatsbyImageData: imageNode,
     original: {
       type: new GraphQLObjectType({
         name: `ImageSharpOriginal`,
