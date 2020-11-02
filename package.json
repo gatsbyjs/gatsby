@@ -21,7 +21,7 @@
     "@types/node": "^12.19.1",
     "@types/node-fetch": "^2.5.7",
     "@types/normalize-path": "^3.0.0",
-    "@types/react": "^16.9.53",
+    "@types/react": "^16.9.55",
     "@types/semver": "^7.3.4",
     "@types/signal-exit": "^3.0.0",
     "@types/stack-trace": "^0.0.29",
