@@ -1,3 +1,4 @@
+import configure from "./plugin/configure"
 import add from "./plugin-add"
 
 module.exports = async (args: IProgram): Promise<void> => {
@@ -28,6 +29,9 @@ module.exports = async (args: IProgram): Promise<void> => {
 
     case `add`:
       return add(args)
+
+    case `configure`:
+      return configure(args)
 
     default:
       report.error(`Unknown command ${cmd}`)
