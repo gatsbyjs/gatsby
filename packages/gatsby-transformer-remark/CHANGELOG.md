@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.9.0...gatsby-transformer-remark@2.9.1) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** add excerpt_separator to plugin options schema ([#27785](https://github.com/gatsbyjs/gatsby/issues/27785)) ([8f8a419](https://github.com/gatsbyjs/gatsby/commit/8f8a41979bb88c0caf7ddae91ed840325692b4a8)), closes [#27784](https://github.com/gatsbyjs/gatsby/issues/27784)
+
 # [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.47...gatsby-transformer-remark@2.9.0) (2020-11-02)
 
 ### Features

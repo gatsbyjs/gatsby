@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.5.0...gatsby-plugin-manifest@2.5.1) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** create directories recursively ([#27793](https://github.com/gatsbyjs/gatsby/issues/27793)) ([085d188](https://github.com/gatsbyjs/gatsby/commit/085d1888481881456bbaf4a988cfb7578f28f0d9))
+
 # [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.37...gatsby-plugin-manifest@2.5.0) (2020-11-02)
 
 ### Features
