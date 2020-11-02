@@ -50,9 +50,7 @@ describe(`websocket-manager`, () => {
 
   async function getClientSocket(): Promise<typeof io.Socket> {
     return new Promise(resolve => {
-      const clientSocket = io.default(
-        `http://[${httpServerAddr.address}]:${httpServerAddr.port}`
-      )
+      const clientSocket = io.default(`http://127.0.0.1:${httpServerAddr.port}`)
       clientSocket.on(`connect`, () => {
         resolve(clientSocket)
       })
