@@ -239,7 +239,7 @@ export class WebsocketManager {
       socket.on(`getDataForPath`, getDataForPath)
 
       socket.on(`registerPath`, (path: string): void => {
-        setActivePath(path)
+        setActivePath(path, true)
       })
 
       socket.on(`disconnect`, (): void => {
