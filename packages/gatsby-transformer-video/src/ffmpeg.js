@@ -123,7 +123,7 @@ export default class FFMPEG {
 
     const optionsHash = createContentDigest(fieldArgs)
 
-    const filename = `${contentDigest}-${optionsHash}`
+    const filename = `${optionsHash}-${contentDigest}`
 
     const info = await this.executeFfprobe(path)
 
@@ -194,15 +194,15 @@ export default class FFMPEG {
       fileType = video.file.contentType
     }
 
+    // Resolve videos only
     if (fileType.indexOf(`video/`) === -1) {
       return null
     }
 
-    let path, fileName
+    let path
 
     if (type === `File`) {
       path = video.absolutePath
-      fileName = video.name
     }
 
     if (type === `ContentfulAsset`) {
@@ -210,11 +210,11 @@ export default class FFMPEG {
         video,
         cacheDir: this.cacheDirOriginal,
       })
-      fileName = video.file.fileName
     }
 
     const { timestamps, width } = fieldArgs
-    const { name } = parse(fileName)
+
+    const name = video.internal.contentDigest
 
     const tmpDir = resolve(tmpdir(), `gatsby-transformer-video`, name)
 
