@@ -85,7 +85,7 @@ const promptForPluginOptions = async (
         return true
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
-          return error.details.map(error => `- ${error.message}`).join("\n")
+          return error.details.map(error => `- ${error.message}`).join(`\n`)
         }
 
         throw error
