@@ -2,6 +2,8 @@
 
 > Convert videos via FFMPEG. Easily convert & host **small** videos on your own.
 
+# This is a beta plugin. See: https://github.com/gatsbyjs/gatsby/pull/15783
+
 :warning: Converting videos might take a lot of time. Make sure to have an effective caching mechanism in place. See [caching](#caching)
 
 ## Features
@@ -12,6 +14,10 @@
 - Several parameters to tweak the output: maxWidth/maxHeight, overlay, saturation, duration, fps, ...
 - Create video conversion profiles. Create a converter function using `fluent-ffmpeg` to unlock all FFMPEG features.
 - Take screenshots at any position of the video
+
+## Usage example
+
+https://github.com/gatsbyjs/gatsby/tree/gatsby-transformer-video/examples/using-gatsby-transformer-video
 
 ## Installation
 
@@ -93,7 +99,7 @@ module.exports = {
         profiles: {
           sepia: {
             extension: `mp4`,
-            converter: function({ ffmpegSession, videoStreamMetadata }) {
+            converter: function ({ ffmpegSession, videoStreamMetadata }) {
               // Example:
               // https://github.com/gatsbyjs/gatsby/blob/gatsby-transformer-video/examples/using-gatsby-transformer-video/gatsby-config.js
             },
