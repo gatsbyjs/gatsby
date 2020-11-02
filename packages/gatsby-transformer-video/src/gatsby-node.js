@@ -165,6 +165,8 @@ exports.createResolvers = async (
       bit_rate: bitRate,
     } = result.format
 
+    const { width, height } = result.streams[0]
+
     const path = publicPath.replace(resolve(rootDir, `public`), ``)
 
     const { name, ext } = parse(publicPath)
@@ -180,6 +182,9 @@ exports.createResolvers = async (
       duration: duration === `N/A` ? null : duration,
       size: size === `N/A` ? null : size,
       bitRate: bitRate === `N/A` ? null : bitRate,
+      width,
+      height,
+      aspectRatio: width / height,
     }
   }
 
