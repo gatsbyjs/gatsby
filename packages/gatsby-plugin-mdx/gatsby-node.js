@@ -113,7 +113,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(`Determine which media types are processed by MDX`),
     shouldBlockNodeFromTransformation: Joi.function()
       .maxArity(1)
-      .default(() => false)
+      .default(() => () => false)
       .description(
         `Disable MDX transformation for nodes where this function returns true`
       ),
