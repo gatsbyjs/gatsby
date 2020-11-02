@@ -280,18 +280,6 @@ export async function startServer(
     res.status(404).end()
   })
 
-  // just debugging info endpoint (should not get in to main branch)
-  app.get(`/__debug/websocket-manager`, (_, res) => {
-    res
-      .send({
-        clients: Array.from(websocketManager.clients).map(
-          ({ socket, ...rest }) => rest
-        ),
-        activePaths: Array.from(websocketManager.activePaths),
-      })
-      .end()
-  })
-
   // Render an HTML page and serve it.
   app.use((_, res) => {
     res.sendFile(directoryPath(`public/index.html`), err => {
