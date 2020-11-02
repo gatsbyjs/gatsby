@@ -1,6 +1,6 @@
 import fs from "fs"
 import { access } from "fs-extra"
-import { resolve } from "path"
+import { resolve, extname } from "path"
 
 import PQueue from "p-queue"
 import axios from "axios"
@@ -18,12 +18,12 @@ const downloadCache = {}
  * Retry is currently broken: https://github.com/gatsbyjs/gatsby/issues/22010
  * Downloaded files are not cached properly: https://github.com/gatsbyjs/gatsby/issues/8324 & https://github.com/gatsbyjs/gatsby/pull/8379
  */
-export async function cacheContentfulVideo({ video, cacheDir }) {
+export async function cacheContentfulVideo({ video, cacheDir, contentDigest }) {
   const {
     file: { url, fileName },
   } = video
 
-  const path = resolve(cacheDir, fileName)
+  const path = resolve(cacheDir, `${contentDigest}.${extname(fileName)}`)
 
   try {
     await access(path, fs.constants.R_OK)

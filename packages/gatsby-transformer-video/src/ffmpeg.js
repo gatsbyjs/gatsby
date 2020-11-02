@@ -106,15 +106,16 @@ export default class FFMPEG {
     }
 
     if (type === `ContentfulAsset`) {
-      path = await cacheContentfulVideo({
-        video,
-        cacheDir: this.cacheDirOriginal,
-      })
       contentDigest = createContentDigest([
         video.contentful_id,
         video.file.url,
         video.file.details.size,
       ])
+      path = await cacheContentfulVideo({
+        video,
+        contentDigest,
+        cacheDir: this.cacheDirOriginal,
+      })
     }
 
     if (!path) {
