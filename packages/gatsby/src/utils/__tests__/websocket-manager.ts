@@ -129,17 +129,25 @@ describe(`websocket-manager`, () => {
     done()
   })
 
-  it(`Can connect`, async () => {
-    expect.assertions(1)
-    const clientSocket = await getClientSocket()
-    expect(clientSocket.connected).toBe(true)
-    clientSocket.disconnect()
-  })
+  it(
+    `Can connect`,
+    async () => {
+      expect.assertions(1)
+      const clientSocket = await getClientSocket()
+      expect(clientSocket.connected).toBe(true)
+      clientSocket.disconnect()
+    },
+    TEST_TIMEOUT
+  )
 
   describe(`Active path tracking`, () => {
-    it(`reports no active paths when there are no connections`, () => {
-      expect(websocketManager.activePaths).toEqual(new Set())
-    })
+    it(
+      `reports no active paths when there are no connections`,
+      () => {
+        expect(websocketManager.activePaths).toEqual(new Set())
+      },
+      TEST_TIMEOUT
+    )
 
     it(
       `can register and unregister paths`,
