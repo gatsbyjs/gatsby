@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.52...gatsby-plugin-mdx@1.2.53) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** allow plugins: [...] in options schema ([#27709](https://github.com/gatsbyjs/gatsby/issues/27709)) ([f8cf904](https://github.com/gatsbyjs/gatsby/commit/f8cf9049312907a1be6739e75435defc1e83579c))
+- **gatsby-plugin-mdx:** remark/hypePlugins options schema ([#27698](https://github.com/gatsbyjs/gatsby/issues/27698)) ([21f24f8](https://github.com/gatsbyjs/gatsby/commit/21f24f8d833a01bae7ac9a8573c41b37315b4fcc))
+
 ## [1.2.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.51...gatsby-plugin-mdx@1.2.52) (2020-10-28)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

@@ -190,5 +190,5 @@ The following quote is from the Snipcart [payment gateway page](https://app.snip
 - [OneShopper Gatsby starter](/starters/rohitguptab/OneShopper/)
 - Reference guide on [sourcing from Etsy](/docs/sourcing-from-etsy/)
 - Reference guide on [processing payments with Stripe](/docs/processing-payments-with-stripe/)
-- From the Snipcart blog: [E-Commerce for React Developers \[w/ Gatsby Tutorial\]](https://snipcart.com/blog/react-ecommerce-gatsby-tutorial)
+- From the Snipcart blog: [Gatsby E-Commerce Recipe: Integrate a Cart in a Few Steps](https://snipcart.com/blog/gatsby-recipes-ecommerce)
 - [Snipcart documentation](https://docs.snipcart.com/v3/setup/installation)
