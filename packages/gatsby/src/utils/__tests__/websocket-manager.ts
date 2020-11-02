@@ -2,6 +2,7 @@ import { createServer } from "http"
 import * as io from "socket.io-client"
 import { WebsocketManager } from "../websocket-manager"
 import { store } from "../../redux"
+import * as path from "path"
 
 const MOCK_FILE_INFO = {}
 
@@ -116,6 +117,13 @@ describe(`websocket-manager`, () => {
         payload: { ...pageObject, component: `not-important`, context: {} },
         plugin: { name: `websocket-manager-test` },
       })
+    })
+
+    store.dispatch({
+      type: `SET_PROGRAM`,
+      payload: {
+        directory: __dirname,
+      },
     })
 
     done()
@@ -556,11 +564,25 @@ describe(`websocket-manager`, () => {
           }
 
           MOCK_FILE_INFO[
-            `/public/page-data/blog/page-data.json`
+            path.join(
+              __dirname,
+              `public`,
+              `page-data`,
+              `blog`,
+              `page-data.json`
+            )
           ] = pageQueryResult
           MOCK_FILE_INFO[
-            `/public/page-data/sq/d/12345.json`
+            path.join(
+              __dirname,
+              `public`,
+              `page-data`,
+              `sq`,
+              `d`,
+              `${staticQueryId}.json`
+            )
           ] = staticQueryResult
+          console.log({ MOCK_FILE_INFO })
 
           const receivedPageQueryDataOnClientPromise = new Promise(resolve => {
             function handler(msg): void {
