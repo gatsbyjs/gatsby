@@ -19,7 +19,7 @@ export function getCollectionRouteParams(
     .split(`/`)
   const urlParts = urlPath.split(`/`)
 
-  urlTemplateParts.map((part, i) => {
+  urlTemplateParts.forEach((part, i) => {
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
     const key = extractFieldWithoutUnion(part)
