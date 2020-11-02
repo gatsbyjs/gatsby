@@ -94,7 +94,7 @@ export async function generateImageData({
 }: IImageDataArgs): Promise<ISharpGatsbyImageData | undefined> {
   const {
     layout = `fixed`,
-    placeholder = `dominantColor`,
+    placeholder = `blurred`,
     tracedSVGOptions = {},
     quality,
   } = args
