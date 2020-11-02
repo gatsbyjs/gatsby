@@ -44,7 +44,7 @@ export function watchImage({
           reporter.warn(`Could not process image ${path}`)
           return
         }
-        await updateImages({ node, pathPrefix, cache, reporter })
+        await updateImages({ node, cache, pathPrefix, reporter })
       }
     )
   } else {
@@ -57,13 +57,13 @@ export function watchImage({
  */
 async function updateImages({
   cache,
-  pathPrefix,
   node,
+  pathPrefix,
   reporter,
 }: {
   cache: GatsbyCache
-  pathPrefix: string
   node: Node
+  pathPrefix: string
   reporter: Reporter
 }): Promise<void> {
   // See if any static image instances use this source image file
@@ -77,21 +77,13 @@ async function updateImages({
 
   await Promise.all(
     Object.values(imageRefs).map(
-      async ({ isFixed, contentDigest, args, cacheFilename }) => {
+      async ({ contentDigest, args, cacheFilename }) => {
         if (contentDigest && contentDigest === node.internal.contentDigest) {
           // Skipping, because the file is unchanged
           return
         }
         // Update the image
-        await writeImage(
-          node,
-          pathPrefix,
-          args,
-          reporter,
-          cache,
-          isFixed,
-          cacheFilename
-        )
+        await writeImage(node, args, pathPrefix, reporter, cache, cacheFilename)
       }
     )
   )

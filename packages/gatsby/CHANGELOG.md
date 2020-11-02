@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.92](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.91...gatsby@2.24.92) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby:** include graphql type definition in published files ([#27646](https://github.com/gatsbyjs/gatsby/issues/27646)) ([875b214](https://github.com/gatsbyjs/gatsby/commit/875b214a7dd58d1e532a605d45906e5942a4e2c5))
+- **gatsby:** print real plugin loading error in verbose ([#27664](https://github.com/gatsbyjs/gatsby/issues/27664)) ([c947568](https://github.com/gatsbyjs/gatsby/commit/c9475689615eb1b4e34f599e80c36bcef76ee77a))
+- **gatsby:** purge jobsV2 results when cache is corrupt ([#27700](https://github.com/gatsbyjs/gatsby/issues/27700)) ([a6ecfb2](https://github.com/gatsbyjs/gatsby/commit/a6ecfb2b01d761e8a3612b8ea132c698659923d9))
+- **gatsby:** show theme that has faulty config ([#27708](https://github.com/gatsbyjs/gatsby/issues/27708)) ([d7d1b97](https://github.com/gatsbyjs/gatsby/commit/d7d1b97e69cc5fa8030722a792a56e6d30937d2d))
+
+### Features
+
+- **gatsby:** allow configuration of default socket type ([#27734](https://github.com/gatsbyjs/gatsby/issues/27734)) ([f43a6bd](https://github.com/gatsbyjs/gatsby/commit/f43a6bd8ab3226afdfa79519d477c2a43f86e66d))
+- Add "gatsby plugin" command ([#27725](https://github.com/gatsbyjs/gatsby/issues/27725)) ([5869cc5](https://github.com/gatsbyjs/gatsby/commit/5869cc5ab2189b257944a4c3f99af564be81ea80))
+
+## [2.24.91](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.90...gatsby@2.24.91) (2020-10-28)
+
+### Bug Fixes
+
+- **gatsby:** fix subplugin validation ([#27616](https://github.com/gatsbyjs/gatsby/issues/27616)) ([65deab8](https://github.com/gatsbyjs/gatsby/commit/65deab8b47802262d19f7577ba5db302a2cd22e6))
+
+## [2.24.90](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.89...gatsby@2.24.90) (2020-10-28)
+
+### Performance Improvements
+
+- **gatsby:** cache `createNodeId` locally ([#27686](https://github.com/gatsbyjs/gatsby/issues/27686)) ([5acfb60](https://github.com/gatsbyjs/gatsby/commit/5acfb605e971a6296a4dd588eb5a96031f9948cd))
+
+## [2.24.89](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.88...gatsby@2.24.89) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** leak less in chokidar listeners ([#27685](https://github.com/gatsbyjs/gatsby/issues/27685)) ([e0a3645](https://github.com/gatsbyjs/gatsby/commit/e0a3645d7c788b7c589d69187840305a650678f7))
+
+## [2.24.88](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.87...gatsby@2.24.88) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** add missing printTypeDefinitions ([#27670](https://github.com/gatsbyjs/gatsby/issues/27670)) ([2da94bf](https://github.com/gatsbyjs/gatsby/commit/2da94bfcd612d10b0816e38a95e43651986fd94b))
+- **gatsby:** better heuristic for automatic cache purging ([#27682](https://github.com/gatsbyjs/gatsby/issues/27682)) ([a5665d2](https://github.com/gatsbyjs/gatsby/commit/a5665d28f585c7f8727e2bbaccb4ab0fffeaa8e7))
+
 ## [2.24.87](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.86...gatsby@2.24.87) (2020-10-26)
 
 **Note:** Version bump only for package gatsby

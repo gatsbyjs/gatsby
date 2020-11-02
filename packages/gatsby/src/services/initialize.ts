@@ -252,8 +252,11 @@ export async function initialize({
   }
   const cacheDirectory = `${program.directory}/.cache`
   const publicDirectory = `${program.directory}/public`
+
+  // .cache directory exists in develop at this point
+  // so checking for .cache/json as a heuristic (could be any expected file)
   const cacheIsCorrupt =
-    fs.existsSync(cacheDirectory) && !fs.existsSync(publicDirectory)
+    fs.existsSync(`${cacheDirectory}/json`) && !fs.existsSync(publicDirectory)
 
   if (cacheIsCorrupt) {
     reporter.info(reporter.stripIndent`
@@ -275,6 +278,7 @@ export async function initialize({
     // been loaded from the file system cache).
     store.dispatch({
       type: `DELETE_CACHE`,
+      cacheIsCorrupt,
     })
 
     // in future this should show which plugin's caches are purged

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.39...gatsby-plugin-utils@0.2.40) (2020-10-28)
+
+### Bug Fixes
+
+- **gatsby:** fix subplugin validation ([#27616](https://github.com/gatsbyjs/gatsby/issues/27616)) ([65deab8](https://github.com/gatsbyjs/gatsby/commit/65deab8b47802262d19f7577ba5db302a2cd22e6))
+
 ## [0.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-utils@0.2.38...gatsby-plugin-utils@0.2.39) (2020-10-22)
 
 ### Bug Fixes

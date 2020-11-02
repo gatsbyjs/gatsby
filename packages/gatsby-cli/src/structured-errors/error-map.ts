@@ -468,7 +468,9 @@ const errors = {
     text: (context): string =>
       [
         stripIndent(`
-          Invalid plugin options for "${context.pluginName}":
+          Invalid plugin options for "${context.pluginName}"${
+          context.configDir ? `, configured by ${context.configDir}` : ``
+        }:
         `),
       ]
         .concat([``])

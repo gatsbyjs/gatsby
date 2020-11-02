@@ -58,7 +58,7 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
-exports.pluginOptionsSchema = ({ Joi }) => {
+exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     name: Joi.string(),
     short_name: Joi.string(),
@@ -88,13 +88,13 @@ exports.pluginOptionsSchema = ({ Joi }) => {
         src: Joi.string(),
         sizes: Joi.string(),
         type: Joi.string(),
+        purpose: Joi.string(),
       })
     ),
     icon_options: Joi.object({
       purpose: Joi.string(),
     }),
   })
-}
 
 /**
  * Setup pluginOption defaults

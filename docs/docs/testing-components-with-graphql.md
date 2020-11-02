@@ -13,12 +13,12 @@ In general it is best practice to test the smallest components possible, so the
 simplest thing to do is to test the individual page components with mock data,
 rather than trying to test a full page. However, if you do want to test the full
 page you'll need to provide the equivalent data to the component. Luckily
-there's a simple way to get the data you need.
+there's a way to get the data you need.
 
 First you should make sure you have read
 [the unit testing guide](/docs/unit-testing/) and set up your project as
 described. This guide is based on the same blog starter project. You will be
-writing a simple snapshot test for the index page.
+writing a snapshot test for the index page.
 
 As Jest doesn't run or compile away your GraphQL queries you need to mock the
 `graphql` function to stop it throwing an error. If you set your project up with
@@ -282,7 +282,7 @@ export const Header = props => {
 export default Header
 ```
 
-Note that because `useStaticQuery` is a React Hook, it is simply a function and so can
+Note that because `useStaticQuery` is a React Hook, it is a function and so can
 be assigned to `data` which is then passed as a prop to the `PureHeader`. This is only
 possible since we have also made `Header` a function component.
 

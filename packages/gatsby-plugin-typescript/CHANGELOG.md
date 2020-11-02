@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.4.24...gatsby-plugin-typescript@2.4.25) (2020-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-typescript
+
 ## [2.4.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.4.23...gatsby-plugin-typescript@2.4.24) (2020-10-21)
 
 ### Bug Fixes

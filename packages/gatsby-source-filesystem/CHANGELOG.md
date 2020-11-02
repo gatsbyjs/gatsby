@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.36...gatsby-source-filesystem@2.3.37) (2020-10-27)
+
+### Performance Improvements
+
+- **gatsby-source-filesystem:** dont JSON parse/stringify the node ([#27597](https://github.com/gatsbyjs/gatsby/issues/27597)) ([ffbec4c](https://github.com/gatsbyjs/gatsby/commit/ffbec4c5e56496ad8169415e9b4a93ba47c18398))
+
 ## [2.3.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.35...gatsby-source-filesystem@2.3.36) (2020-10-26)
 
 ### Bug Fixes
