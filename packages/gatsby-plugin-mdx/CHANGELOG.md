@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.53...gatsby-plugin-mdx@1.3.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [1.2.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.52...gatsby-plugin-mdx@1.2.53) (2020-11-02)
 
 ### Bug Fixes

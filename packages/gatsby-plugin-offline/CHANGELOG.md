@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.38...gatsby-plugin-offline@3.3.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [3.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.37...gatsby-plugin-offline@3.2.38) (2020-10-28)
 
 **Note:** Version bump only for package gatsby-plugin-offline
