@@ -8,7 +8,7 @@ Alternatively, your application may include functionality that cannot be handled
 
 ## Creating routes
 
-Gatsby makes it easy to programmatically control your pages. Pages can be created in three ways:
+Gatsby makes it possible to programmatically control your pages. Pages can be created in three ways:
 
 - In your site's gatsby-node.js by implementing the API
   [`createPages`](/docs/node-apis/#createPages)

@@ -21,11 +21,7 @@ const Page = () => {
     <Layout>
       <h1>Constrained</h1>
       <TestWrapper>
-        <GatsbyImage
-          image={getImage(data.file)}
-          loading="eager"
-          alt="chameleon"
-        />
+        <GatsbyImage image={getImage(data.file)} alt="cornwall" />
       </TestWrapper>
     </Layout>
   )

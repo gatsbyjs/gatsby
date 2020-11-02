@@ -158,7 +158,7 @@ Gatsby will create a schema that looks something like this:
 title: String
 ```
 
-This makes it easy to pull data from anywhere and immediately start writing
+This makes it possible to pull data from anywhere and immediately start writing
 GraphQL queries against your data.
 
 This _can_ cause confusion as some data sources allow you to define

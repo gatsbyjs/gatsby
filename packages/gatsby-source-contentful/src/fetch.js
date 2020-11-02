@@ -16,6 +16,18 @@ module.exports = async function contentfulFetch({
     host: pluginConfig.get(`host`),
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
+    responseLogger: response => {
+      const meta = [
+        `size: ${response.headers[`content-length`]}B`,
+        `response id: ${response.headers[`x-contentful-request-id`]}`,
+        `cache: ${response.headers[`x-cache`]}`,
+      ]
+      reporter.verbose(
+        `${response.config.method} /${response.config.url}: ${
+          response.status
+        } ${response.statusText} (${meta.join(` `)})`
+      )
+    },
   }
 
   const client = contentful.createClient(contentfulClientOptions)

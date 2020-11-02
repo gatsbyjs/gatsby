@@ -40,15 +40,16 @@ The [Node API helpers](/docs/node-api-helpers/#cache) documentation offers more 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
 ```js:title=gatsby-node.js
-exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
+exports.onPostBuild = async function ({ cache, graphql }, { query }) {
   const cacheKey = "some-key-name"
+  const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
   let obj = await cache.get(cacheKey)
 
   if (!obj) {
     obj = { created: Date.now() }
     const data = await graphql(query)
     obj.data = data
-  } else if (Date.now() > obj.lastChecked + 3600000) {
+  } else if (Date.now() > obj.lastChecked + twentyFourHoursInMilliseconds) {
     /* Reload after a day */
     const data = await graphql(query)
     obj.data = data
