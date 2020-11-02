@@ -12,6 +12,7 @@ function Video({
     previewWebP,
     previewGif,
     videoSepia,
+    videoScreenshots,
   },
   ...props
 }) {
@@ -20,9 +21,9 @@ function Video({
       <h2>Example: {name.substring(0, 1).toUpperCase() + name.substring(1)}</h2>
       <h3>Screenshots at 1s, 50% and 99%:</h3>
       <div className="screenshots">
-        {videoH264.screenshots.map(({ path }) => (
+        {videoScreenshots.map(({ publicURL }) => (
           <div key="path">
-            <img src={path} />
+            <img src={publicURL} />
           </div>
         ))}
       </div>
@@ -39,12 +40,22 @@ function Video({
         <img loading="lazy" src={previewGif.path} alt="" />
       </picture>
       <h3>Video as optimized h264 &amp; h265:</h3>
-      <video playsInline preload="auto" controls>
+      <video
+        playsInline
+        preload="auto"
+        poster={videoScreenshots[0].publicURL}
+        controls
+      >
         <source src={videoH265.path} type="video/mp4; codecs=hevc" />
         <source src={videoH264.path} type="video/mp4; codecs=avc1" />
       </video>
       <h3>Custom video converter:</h3>
-      <video playsInline preload="auto" controls>
+      <video
+        playsInline
+        preload="auto"
+        poster={videoScreenshots[0].publicURL}
+        controls
+      >
         <source src={videoSepia.path} type="video/mp4; codecs=avc1" />
       </video>
     </div>
@@ -80,12 +91,8 @@ export const query = graphql`
             overlayX: "end"
             overlayY: "start"
             overlayPadding: 25
-            screenshots: "1,50%,99%"
           ) {
             path
-            screenshots {
-              path
-            }
           }
           videoH265(
             overlay: "gatsby.png"
@@ -106,6 +113,9 @@ export const query = graphql`
           }
           previewGif: videoGif(maxWidth: 300, fps: 4, duration: 2) {
             path
+          }
+          videoScreenshots(timestamps: ["1", "50%", "99%"]) {
+            publicURL
           }
         }
       }
