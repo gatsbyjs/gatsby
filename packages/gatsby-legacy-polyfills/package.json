@@ -35,13 +35,13 @@
     "core-js": "^3.6.5",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.2",
-    "execa": "^4.0.3",
+    "execa": "^4.1.0",
     "fs-extra": "^9.0.1",
     "microbundle": "^0.12.4",
     "npm-run-all": "^4.1.5",
     "object-assign": "^4.1.1",
     "source-map": "^0.7.3",
-    "url-polyfill": "^1.1.10",
+    "url-polyfill": "^1.1.12",
     "whatwg-fetch": "^3.4.1"
   }
 }
