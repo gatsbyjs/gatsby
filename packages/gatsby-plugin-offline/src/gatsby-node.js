@@ -244,6 +244,9 @@ exports.pluginOptionsSchema = function ({ Joi }) {
             `NetworkOnly`,
             `CacheOnly`
           ),
+          options: Joi.array().items(Joi.object({
+            networkTimeoutSeconds : Joi.number()
+          }))
         })
       ),
       skipWaiting: Joi.boolean(),
