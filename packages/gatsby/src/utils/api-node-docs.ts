@@ -443,6 +443,7 @@ export const onCreateDevServer = true
 /**
  * Run during the bootstrap phase. Plugins can use this to define a schema for their options using
  * [Joi](https://joi.dev) to validate the options users pass to the plugin.
+ * @gatsbyVersion 2.25.0
  * @param {object} $0
  * @param {Joi} $0.Joi The instance of [Joi](https://joi.dev) to define the schema
  * @example

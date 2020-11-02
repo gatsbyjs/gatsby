@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.7...gatsby-source-contentful@3.1.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.6...gatsby-source-contentful@3.0.7) (2020-11-02)
 
 ### Features

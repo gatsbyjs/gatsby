@@ -43,6 +43,23 @@ module.exports = (
     }
   }
 
+  // (Try to) load diffLanguage on demand.
+  if (diffLanguage && !Prism.languages[diffLanguage]) {
+    try {
+      loadPrismLanguage(diffLanguage)
+    } catch (e) {
+      let message = `unable to find prism language '${diffLanguage}' for highlighting.`
+
+      const lang = diffLanguage.toLowerCase()
+      if (!unsupportedLanguages.has(lang)) {
+        console.warn(message, `applying generic code block`)
+        unsupportedLanguages.add(lang)
+      }
+      // Ignore diffLanguage when it does not exist.
+      diffLanguage = null
+    }
+  }
+
   const grammar = Prism.languages[language]
   const highlighted = Prism.highlight(
     code,

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.37...gatsby-plugin-manifest@2.5.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [2.4.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.36...gatsby-plugin-manifest@2.4.37) (2020-10-28)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

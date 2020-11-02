@@ -88,9 +88,7 @@ export async function loadPlugins(
   const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
-  if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-    await validateConfigPluginsOptions(config, rootDir)
-  }
+  await validateConfigPluginsOptions(config, rootDir)
 
   const currentAPIs = getAPI({
     browser: browserAPIs,
