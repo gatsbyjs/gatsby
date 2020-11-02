@@ -29,7 +29,7 @@ describe(`collection-routing`, () => {
     cy.should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
       .click()
     cy.waitForRouteChange()
-      .assertRoute(`/collection-routing/gatsby-astronaut`)
+      .assertRoute(`/collection-routing/gatsby-astronaut/`)
     cy.findByTestId(`name`)
     cy.should(`have.text`, `gatsby-astronaut`)
     cy.findByTestId(`pagecontext`)
