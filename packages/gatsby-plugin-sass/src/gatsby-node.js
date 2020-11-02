@@ -86,7 +86,9 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       ),
     cssLoaderOptions: Joi.object({})
       .unknown(true)
-      .description(`Pass in options for css-loader: https://github.com/webpack-contrib/css-loader/tree/version-1#options`),
+      .description(
+        `Pass in options for css-loader: https://github.com/webpack-contrib/css-loader/tree/version-1#options`
+      ),
     postCssPlugins: Joi.array()
       .items(Joi.object({}).unknown(true))
       .description(`An array of postCss plugins`),
