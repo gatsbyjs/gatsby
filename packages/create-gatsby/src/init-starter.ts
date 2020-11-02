@@ -170,27 +170,12 @@ interface IGetPaths {
   selectedOtherStarter: boolean
 }
 
-const successMessage = (): void => {
+const successMessage = (rootPath: string): void => {
   reporter.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
+  cd ${rootPath}
   gatsby develop
 `)
-}
-
-export async function installPlugins(
-  plugins: Array<string>,
-  rootPath: string
-): Promise<void> {
-  const command = require.resolve(`gatsby-cli/lib/create-cli`, {
-    paths: [rootPath],
-  })
-
-  if (!command) {
-    reporter.error(`Did not install Gatsby`)
-    return void 0
-  }
-  const { createCli } = require(command)
-  return createCli([process.argv[0], command, `plugin`, `add`, ...plugins])
 }
 
 /**
@@ -203,11 +188,6 @@ export async function initStarter(
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
-
-  //   await installPlugins(
-  //     [`gatsby-plugin-image`, `gatsby-transformer-sharp`],
-  //     sitePath
-  //   )
 
   const sitePackageJson = await fs
     .readJSON(path.join(sitePath, `package.json`))
@@ -226,6 +206,6 @@ export async function initStarter(
     false
   )
 
-  successMessage()
+  successMessage(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }

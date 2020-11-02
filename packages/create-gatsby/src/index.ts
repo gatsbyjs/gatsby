@@ -3,7 +3,9 @@ import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
 import { initStarter } from "./init-starter"
+import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
+import path from "path"
 
 const makeChoices = (
   options: Record<string, string>
@@ -72,10 +74,14 @@ export async function run(): Promise<void> {
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
+
+  const plugins = []
+
   if (data.cms && data.cms !== `none`) {
     messages.push(
       `📚 Install and configure the plugin for ${c.red(cmses[data.cms])}`
     )
+    plugins.push(data.cms)
   }
 
   if (data.styling && data.styling !== `none`) {
@@ -84,12 +90,16 @@ export async function run(): Promise<void> {
         styles[data.styling]
       )} for styling your site`
     )
+    plugins.push(data.styling)
   }
 
   if (data.features?.length) {
     messages.push(
-      `🔌 Install ${data.features.map(feat => c.magenta(feat)).join(`, `)}`
+      `🔌 Install ${data.features
+        .map((feat: string) => c.magenta(feat))
+        .join(`, `)}`
     )
+    plugins.push(...data.features)
   }
 
   console.log(`
@@ -115,9 +125,8 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     `https://github.com/gatsbyjs/gatsby-starter-hello-world.git`,
     data.project
   )
-  console.log(
-    `This is the point where we'd then install the plugins, but ${c.redBright(
-      `gatsby plugin add`
-    )} hasn't been implemented yet`
-  )
+
+  console.log(c.bold.green(`Installing plugins...`))
+
+  await installPlugins(plugins, path.resolve(data.project))
 }
