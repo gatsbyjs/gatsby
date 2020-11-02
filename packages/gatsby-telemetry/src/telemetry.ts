@@ -30,7 +30,7 @@ interface IOSInfo {
   ci: boolean | undefined
   ciName: string | null
   docker: boolean | undefined
-  isTTY: boolean | undefined
+  isTTY: boolean
 }
 
 export interface IAggregateStats {
@@ -337,12 +337,8 @@ export class AnalyticsTracker {
     }
   }
 
-  getIsTTY(): boolean | undefined {
-    try {
-      return Boolean(process.stdout.isTTY)
-    } catch (e) {
-      return undefined
-    }
+  getIsTTY(): boolean {
+    return Boolean(process.stdout?.isTTY)
   }
 
   getMachineId(): string {
