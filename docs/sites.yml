@@ -11835,3 +11835,22 @@
   built_by: Alex Perronnet
   built_by_url: https://alexperronnet.io
   featured: false
+- title: Baby Notebook
+  main_url: https://babynotebookapp.com
+  url: https://babynotebookapp.com
+  description: >
+    A mobile app for creating beautiful baby photo books.
+  categories:
+    - App
+    - Mobile Development
+    - Design
+    - Landing Page
+    - Netlify CMS
+    - E-commerce
+    - Entrepreneurship
+    - Photography
+    - User Experience
+    - Blog
+  built_by: Baby Notebook
+  built_by_url: https://babynotebookapp.com
+  featured: false
