@@ -1,6 +1,11 @@
 import uuidv4 from "uuid/v4"
 import os from "os"
-import { isCI, getCIName, createContentDigest } from "gatsby-core-utils"
+import {
+  isCI,
+  getCIName,
+  createContentDigest,
+  getTermProgram,
+} from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
@@ -25,11 +30,12 @@ interface IOSInfo {
   nodeVersion: SemVer
   platform: string
   release: string
-  cpus: string | undefined
+  cpus?: string
   arch: string
-  ci: boolean | undefined
+  ci?: boolean
   ciName: string | null
-  docker: boolean | undefined
+  docker?: boolean
+  termProgram?: string
   isTTY: boolean
 }
 
@@ -386,6 +392,7 @@ export class AnalyticsTracker {
       ci: isCI(),
       ciName: getCIName(),
       docker: isDocker(),
+      termProgram: getTermProgram(),
       isTTY: this.getIsTTY(),
     }
     this.osInfo = osInfo
