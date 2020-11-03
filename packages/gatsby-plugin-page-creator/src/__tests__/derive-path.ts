@@ -206,4 +206,52 @@ describe(`derive-path`, () => {
       ).derivedPath
     ).toEqual(`foo/dolores/[...name]`)
   })
+
+  it(`handles special chars`, () => {
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `I ♥ Dogs`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/i-love-dogs`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `  Déjà Vu!  `,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/deja-vu`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `fooBar 123 $#%`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/foo-bar-123`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `я люблю единорогов`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/ya-lyublyu-edinorogov`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `Münchner Weißwürstchen`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/muenchner-weisswuerstchen`)
+  })
 })

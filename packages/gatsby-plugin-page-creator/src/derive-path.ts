@@ -43,12 +43,16 @@ export function derivePath(
 
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
-      reporter.verbose(
-        `Could not find value in the following node for key ${slugPart} (transformed to ${key}) for node:
+      if (process.env.gatsby_log_level === `verbose`) {
+        reporter.verbose(
+          `Could not find value in the following node for key ${slugPart} (transformed to ${key}) for node:
 
         ${JSON.stringify(node, null, 2)}`
-      )
+        )
+      }
+
       errors++
+
       return
     }
 

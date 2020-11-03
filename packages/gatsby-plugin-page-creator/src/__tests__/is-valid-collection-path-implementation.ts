@@ -31,6 +31,8 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/{Model.id}postfix.js`,
     `/products/{Model.bar}/[name].js`,
     `/products/{Model.bar}/[...name].js`,
+    `/products/{M.id}.js`,
+    `/products/{M.i}.js`,
   ])(`%o passes`, path => {
     expect(() =>
       isValidCollectionPathImplementation(compatiblePath(path), reporter)
@@ -42,10 +44,11 @@ describe(`isValidCollectionPathImplementation`, () => {
     expect(isValid).toBe(true)
   })
 
+  // Error in second part
   it.each([
-    `/products/{bar}`,
-    `/products/{Model.}`,
-    `/products/{Model:bar}`,
+    `/products/{bar}.js`,
+    `/products/{Model.}.js`,
+    `/products/{Model:bar}.js`,
     `/products/{Model.bar.js`,
     `/products/{Model_bar}.js`,
     `/products/{123Model.bar}.js`,
@@ -56,8 +59,28 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/prefix-{Model.foo.bar}.js`,
     `/products/prefix-{Model.foo.bar__baz}.js`,
     `/products/prefix-{Model.foo.bar.baz}.js`,
+    `/{Model.test}/{Model.id.js`,
+    `/{Model.test}/Model.id}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
+
+    const isValid = isValidCollectionPathImplementation(
+      compatiblePath(path),
+      reporter
+    )
+    expect(isValid).toBe(false)
+    expect(reporter.panicOnBuild).toBeCalledWith({
+      context: {
+        sourceMessage: `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field__subfield}. The problematic part is: ${part}.`,
+      },
+      filePath: compatiblePath(path),
+      id: `gatsby-plugin-page-creator_12105`,
+    })
+  })
+
+  // Error in first part
+  it.each([`/Model.test}/{Model.id}.js`])(`%o throws as expected`, path => {
+    const part = path.split(`/`)[1]
 
     const isValid = isValidCollectionPathImplementation(
       compatiblePath(path),

@@ -56,10 +56,8 @@ export function reverseLookupParams(
   return reversedParams
 }
 
-// Changes something like
-//   `/Users/site/src/pages/foo/{Model.id}/{Model.baz}`
-// to
-//   `id,baz`
+// Changes something like `/Users/site/src/pages/foo/{Model.id}/{Model.baz}` to `id,baz`.
+// Also supports prefixes/postfixes, e.g. `/foo/prefix-{Model.id}` to `id`
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(path.sep)
 

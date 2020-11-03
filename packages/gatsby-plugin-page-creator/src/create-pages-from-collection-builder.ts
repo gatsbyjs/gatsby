@@ -105,11 +105,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths = nodes.map((node: Record<string, object>) => {
     // URL path for the component and node
-    const { derivedPath, errors: countDerivePath } = derivePath(
-      filePath,
-      node,
-      reporter
-    )
+    const { derivedPath, errors } = derivePath(filePath, node, reporter)
     const path = createPath(derivedPath)
     // Params is supplied to the FE component on props.params
     const params = getCollectionRouteParams(createPath(filePath), path)
@@ -128,13 +124,13 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       },
     })
 
-    derivePathErrors += countDerivePath
+    derivePathErrors += errors
 
     return path
   })
 
   if (derivePathErrors > 0) {
-    reporter.error({
+    reporter.panicOnBuild({
       id: prefixId(CODES.GeneratePath),
       context: {
         sourceMessage: `Could not find a value in the node for ${filePath}. Please make sure that the syntax is correct and supported.`,
