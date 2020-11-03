@@ -218,7 +218,7 @@ const makeManifest = async ({
       const exists = fs.existsSync(iconPath)
       //create destination directory if it doesn't exist
       if (!exists) {
-        fs.mkdirSync(iconPath)
+        fs.mkdirSync(iconPath, { recursive: true })
       }
       paths[iconPath] = true
     }
