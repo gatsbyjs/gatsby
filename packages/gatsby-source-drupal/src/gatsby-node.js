@@ -47,6 +47,7 @@ exports.sourceNodes = async (
     params,
     concurrentFileRequests,
     disallowedLinkTypes,
+    allowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
   } = pluginOptions
@@ -219,6 +220,7 @@ exports.sourceNodes = async (
     })
     allData = await Promise.all(
       _.map(data.data.links, async (url, type) => {
+        if (allowedLinkTypes && !allowedLinkTypes.includes(type)) return
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return

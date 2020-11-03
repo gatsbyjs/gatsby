@@ -214,9 +214,9 @@ module.exports = {
 }
 ```
 
-## Disallowed Link Types
+## Disallowed and allowed Link Types
 
-You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped. The `allowedLinkTypes` setting is the exact opposite, and can be used to define a list of allowed links while all others are skipped.
 
 ```javascript
 // In your gatsby-config.js
@@ -228,6 +228,8 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         // skip the action--action resource type.
         disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+        // make sure ONLY page and article nodes are included.
+        allowedLinkTypes: [`node--page`, `node--article`],
       },
     },
   ],
@@ -236,7 +238,7 @@ module.exports = {
 
 _NOTES_:
 
-When using [includes](https://www.drupal.org/docs/8/modules/jsonapi/includes) in your JSON:API calls the included data will automatically become available to query, even if the link types are skipped using `disallowedLinkTypes`.
+When using [includes](https://www.drupal.org/docs/8/modules/jsonapi/includes) in your JSON:API calls the included data will automatically become available to query, even if the link types are skipped using `disallowedLinkTypes` or `allowedLinkTypes`.
 
 This enables you to fetch only the data you need at build time, instead of all data of a certain entity type or bundle.
 
