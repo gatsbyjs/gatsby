@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "build": "npm-run-all -s clean -p build:*",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/types.d.ts",
@@ -48,12 +48,12 @@
   "devDependencies": {
     "@babel/cli": "^7.8.7",
     "@babel/core": "^7.8.7",
-    "@types/babel__core": "^7.1.10",
+    "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.0.15",
     "@types/fs-extra": "^8.1.0",
     "@types/node": "^14.10.2",
     "@types/prop-types": "^15.7.3",
-    "@types/react": "^16.9.53",
+    "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.8",
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-macros": "^2.8.0",

@@ -166,8 +166,12 @@ describe(`Test plugin manifest options`, () => {
     // No sharp calls because this is manual mode: user provides all icon sizes
     // rather than the plugin generating them
     expect(sharp).toHaveBeenCalledTimes(0)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath, {
+      recursive: true,
+    })
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath, {
+      recursive: true,
+    })
   })
 
   it(`invokes sharp if icon argument specified`, async () => {

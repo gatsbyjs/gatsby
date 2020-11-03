@@ -225,6 +225,7 @@ describe(`Load plugins`, () => {
         Array [
           Object {
             "context": Object {
+              "configDir": null,
               "pluginName": "gatsby-plugin-google-analytics",
               "validationErrors": Array [
                 Object {
@@ -262,6 +263,7 @@ describe(`Load plugins`, () => {
         Array [
           Object {
             "context": Object {
+              "configDir": null,
               "pluginName": "gatsby-plugin-google-analytics",
               "validationErrors": Array [
                 Object {
@@ -339,6 +341,7 @@ describe(`Load plugins`, () => {
         Array [
           Object {
             "context": Object {
+              "configDir": null,
               "pluginName": "gatsby-remark-autolink-headers",
               "validationErrors": Array [
                 Object {

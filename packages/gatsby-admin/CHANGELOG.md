@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.182](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.181...gatsby-admin@0.1.182) (2020-11-02)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.181](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.180...gatsby-admin@0.1.181) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [0.1.180](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.179...gatsby-admin@0.1.180) (2020-11-02)
+
+**Note:** Version bump only for package gatsby-admin
+
 ## [0.1.179](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.178...gatsby-admin@0.1.179) (2020-10-28)
 
 **Note:** Version bump only for package gatsby-admin

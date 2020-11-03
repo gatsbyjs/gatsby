@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.1.0...gatsby-source-contentful@3.1.1) (2020-11-03)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** default function returned invalid value ([#27797](https://github.com/gatsbyjs/gatsby/issues/27797)) ([e688bf0](https://github.com/gatsbyjs/gatsby/commit/e688bf0240dd06e232335f84933a677873ff1744))
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.7...gatsby-source-contentful@3.1.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.6...gatsby-source-contentful@3.0.7) (2020-11-02)
+
+### Features
+
+- log Contentful API responses when --verbose flag is set ([#27713](https://github.com/gatsbyjs/gatsby/issues/27713)) ([5611c0f](https://github.com/gatsbyjs/gatsby/commit/5611c0f4b1f03662e7f11813d08ee56cd2ca74f5))
+
 ## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.5...gatsby-source-contentful@3.0.6) (2020-10-28)
 
 **Note:** Version bump only for package gatsby-source-contentful

@@ -68,56 +68,54 @@ exports.onPostBootstrap = ({ cache }, pluginOptions) => {
   }
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = function ({ Joi }) {
-    return Joi.object({
-      extensions: Joi.array()
-        .items(Joi.string())
-        .default([".mdx"])
-        .description(
-          `Configure the file extensions that gatsby-plugin-mdx will process`
-        ),
-      defaultLayouts: Joi.object({})
-        .unknown(true)
-        .default({})
-        .description(`Set the layout components for MDX source types`),
-      gatsbyRemarkPlugins: Joi.array()
-        .items(
-          Joi.string(),
-          Joi.object({
-            resolve: Joi.string(),
-            options: Joi.object({}).unknown(true),
-          })
-        )
-        .default([])
-        .description(`Use Gatsby-specific remark plugins`),
-      remarkPlugins: Joi.array()
-        .items(
-          Joi.function(),
-          Joi.object({}).unknown(true),
-          Joi.array().items(Joi.object({}).unknown(true), Joi.function())
-        )
-        .default([])
-        .description(`Specify remark plugins`),
-      rehypePlugins: Joi.array()
-        .items(
-          Joi.function(),
-          Joi.object({}).unknown(true),
-          Joi.array().items(Joi.object({}).unknown(true), Joi.function())
-        )
-        .default([])
-        .description(`Specify rehype plugins`),
-      plugins: Joi.array().items(Joi.string(), Joi.object({}).unknown(true)),
-      mediaTypes: Joi.array()
-        .items(Joi.string())
-        .default(["text/markdown", "text/x-markdown"])
-        .description(`Determine which media types are processed by MDX`),
-      shouldBlockNodeFromTransformation: Joi.function()
-        .maxArity(1)
-        .default(() => false)
-        .description(
-          `Disable MDX transformation for nodes where this function returns true`
-        ),
-    })
-  }
+exports.pluginOptionsSchema = function ({ Joi }) {
+  return Joi.object({
+    extensions: Joi.array()
+      .items(Joi.string())
+      .default([".mdx"])
+      .description(
+        `Configure the file extensions that gatsby-plugin-mdx will process`
+      ),
+    defaultLayouts: Joi.object({})
+      .unknown(true)
+      .default({})
+      .description(`Set the layout components for MDX source types`),
+    gatsbyRemarkPlugins: Joi.array()
+      .items(
+        Joi.string(),
+        Joi.object({
+          resolve: Joi.string(),
+          options: Joi.object({}).unknown(true),
+        })
+      )
+      .default([])
+      .description(`Use Gatsby-specific remark plugins`),
+    remarkPlugins: Joi.array()
+      .items(
+        Joi.function(),
+        Joi.object({}).unknown(true),
+        Joi.array().items(Joi.object({}).unknown(true), Joi.function())
+      )
+      .default([])
+      .description(`Specify remark plugins`),
+    rehypePlugins: Joi.array()
+      .items(
+        Joi.function(),
+        Joi.object({}).unknown(true),
+        Joi.array().items(Joi.object({}).unknown(true), Joi.function())
+      )
+      .default([])
+      .description(`Specify rehype plugins`),
+    plugins: Joi.array().items(Joi.string(), Joi.object({}).unknown(true)),
+    mediaTypes: Joi.array()
+      .items(Joi.string())
+      .default(["text/markdown", "text/x-markdown"])
+      .description(`Determine which media types are processed by MDX`),
+    shouldBlockNodeFromTransformation: Joi.function()
+      .maxArity(1)
+      .default(() => () => false)
+      .description(
+        `Disable MDX transformation for nodes where this function returns true`
+      ),
+  })
 }
