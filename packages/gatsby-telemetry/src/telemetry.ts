@@ -30,6 +30,7 @@ interface IOSInfo {
   ci: boolean | undefined
   ciName: string | null
   docker: boolean | undefined
+  isTTY: boolean
 }
 
 export interface IAggregateStats {
@@ -336,6 +337,10 @@ export class AnalyticsTracker {
     }
   }
 
+  getIsTTY(): boolean {
+    return Boolean(process.stdout?.isTTY)
+  }
+
   getMachineId(): string {
     // Cache the result
     if (this.machineId) {
@@ -381,6 +386,7 @@ export class AnalyticsTracker {
       ci: isCI(),
       ciName: getCIName(),
       docker: isDocker(),
+      isTTY: this.getIsTTY(),
     }
     this.osInfo = osInfo
     return osInfo

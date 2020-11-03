@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.40...gatsby-remark-images@3.4.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [3.3.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.39...gatsby-remark-images@3.3.40) (2020-10-28)
 
 **Note:** Version bump only for package gatsby-remark-images
