@@ -124,6 +124,7 @@ const install = async (rootPath: string): Promise<void> => {
     }
   } catch (e) {
     reporter.error(e)
+  } finally {
     process.chdir(prevDir)
   }
 }
