@@ -12,22 +12,18 @@ export function isValidCollectionPathImplementation(
   reporter: Reporter
 ): boolean {
   const parts = filePath.split(sysPath.sep)
-  let passing = true
+  let passing = false
+  let errors = 0
 
   parts.forEach(part => {
-    if (passing === false) return
-    if (!part.startsWith(`{`)) return
+    if (!part.includes(`{`) && !part.includes(`}`)) return
 
-    const opener = part.slice(0)
-    const model = part.match(/{([a-zA-Z_][\w]+)./)?.[1]!
-    const field = part.match(/\.([a-zA-Z_][\w_()]+)}/)?.[1]!
-    const closer = part.match(/\}/)?.[0]!
+    const model = part.match(/\{([a-zA-Z_]\w*)./)?.[1]! // Search for word before first dot, e.g. Model
+    const field = part.match(/((?<=\.).*)}/)?.[1]! // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
 
     try {
-      assert(opener, `{`, ``) // This is a noop because of the opening check, but here for posterity
-      assert(model, /^[a-zA-Z_][\w]+$/, errorMessage(part))
-      assert(field, /^[a-zA-Z_][\w_()]+$/, errorMessage(part))
-      assert(closer, `}`, errorMessage(part))
+      assert(model, /^[a-zA-Z_]\w*$/, errorMessage(part)) // Check that Model is https://spec.graphql.org/draft/#sec-Names
+      assert(field, /^[a-zA-Z_][\w_()]*$/, errorMessage(part)) // Check that field is foo__bar__baz (and not foo.bar.baz) + https://spec.graphql.org/draft/#sec-Names
     } catch (e) {
       reporter.panicOnBuild({
         id: prefixId(CODES.CollectionPath),
@@ -36,14 +32,19 @@ export function isValidCollectionPathImplementation(
         },
         filePath: filePath,
       })
-      passing = false
+      errors++
     }
   })
+
+  if (errors === 0) {
+    passing = true
+  }
+
   return passing
 }
 
 function errorMessage(part: string): string {
-  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field}. The problematic part is: ${part}.`
+  return `Collection page builder encountered an error parsing the filepath. To use collection paths the schema to follow is {Model.field__subfield}. The problematic part is: ${part}.`
 }
 
 function assert(part: string, matches: string | RegExp, message: string): void {

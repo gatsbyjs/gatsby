@@ -44,12 +44,14 @@ export const ERROR_MAP = {
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
+    docsUrl: `https://www.gatsbyjs.com/docs/file-system-route-api/#syntax-collection-routes`,
   },
   [CODES.CollectionPath]: {
     text: (context): string => `PageCreator: ${context.sourceMessage}`,
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
+    docsUrl: `https://www.gatsbyjs.com/docs/file-system-route-api/#syntax-collection-routes`,
   },
   [CODES.GraphQLResolver]: {
     text: (context): string => `PageCreator: ${context.sourceMessage}`,

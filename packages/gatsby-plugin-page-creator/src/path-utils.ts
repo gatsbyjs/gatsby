@@ -21,14 +21,19 @@ export function removeFileExtension(absolutePath: string): string {
   return absolutePath.replace(/\.[a-z]+$/, ``)
 }
 
-const slugPartsRegex = /(\{.*?\})/g
+// Remove trailing slash
+export function stripTrailingSlash(str: string): string {
+  return str.endsWith(`/`) ? str.slice(0, -1) : str
+}
+
+const curlyBracesContentsRegex = /\{.*?\}/g
 
 // This extracts all information in an absolute path to an array of each collection part
 // /foo/{Model.bar}/{Model.baz} => ['Model.bar', 'Model.baz']
 export function extractAllCollectionSegments(
   absolutePath: string
 ): Array<string> {
-  const slugParts = absolutePath.match(slugPartsRegex)
+  const slugParts = absolutePath.match(curlyBracesContentsRegex)
 
   // This shouldn't happen - but TS requires us to validate
   if (!slugParts) {
@@ -63,9 +68,17 @@ const extractFieldGraphQLModel = /[a-zA-Z_][\w]+\./
 // {Model.field__(Union)__bar} => field__(Union)__bar
 // Also works with lowercased model
 // {model.field} => field
+// Also works with prefixes/postfixes (due to the regex match)
+// prefix-{model.field} => field
 export function extractField(filePart: string): string {
+  const content = filePart.match(curlyBracesContentsRegex)
+
+  if (!content) {
+    return ``
+  }
+
   return (
-    filePart
+    content[0]
       // Remove curly braces
       .replace(extractFieldRegexCurlyBraces, ``)
       // Remove Model
