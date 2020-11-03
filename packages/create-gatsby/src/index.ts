@@ -235,7 +235,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   if (!confirm) {
     console.log(`OK, bye!`)
-    process.exit(0)
+    return
   }
 
   await initStarter(
