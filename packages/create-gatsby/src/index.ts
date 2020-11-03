@@ -8,8 +8,13 @@ import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
 import type Joi from "joi"
+import fs from "fs"
 import { stripIndent } from "common-tags"
 import terminalLink from "terminal-link"
+
+// eslint-disable-next-line no-control-regex
+const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
+const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
 const makeChoices = (
   options: Record<string, string>
@@ -24,6 +29,18 @@ const questions = [
     name: `project`,
     message: `What would you like to name the folder where your site will be created?`,
     initial: `my-gatsby-site`,
+    validate: (value: string): string | boolean => {
+      if (INVALID_FILENAMES.test(value)) {
+        return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
+      }
+      if (process.platform === `win32` && INVALID_WINDOWS.test(value)) {
+        return `The destination "${value}" is not a valid Windows filename. Please try another name`
+      }
+      if (fs.existsSync(path.resolve(value))) {
+        return `The destination "${value}" already exists. Please choose a different name`
+      }
+      return true
+    },
   },
   {
     type: `select`,
