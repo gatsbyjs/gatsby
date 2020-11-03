@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.1.0...gatsby-source-contentful@3.1.1) (2020-11-03)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** default function returned invalid value ([#27797](https://github.com/gatsbyjs/gatsby/issues/27797)) ([e688bf0](https://github.com/gatsbyjs/gatsby/commit/e688bf0240dd06e232335f84933a677873ff1744))
+
 # [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.7...gatsby-source-contentful@3.1.0) (2020-11-02)
 
 ### Features
