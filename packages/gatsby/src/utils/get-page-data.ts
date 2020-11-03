@@ -1,13 +1,17 @@
 import * as path from "path"
 import { store, emitter } from "../redux"
+import * as actions from "../redux/actions/internal"
 import {
   IPageDataWithQueryResult,
   readPageData as readPageDataUtil,
 } from "./page-data"
 
-export async function getPageData(
-  pagePath: string
-): Promise<IPageDataWithQueryResult> {
+export interface IPageQueryResult {
+  id: string
+  result: IPageDataWithQueryResult
+}
+
+export async function getPageData(pagePath: string): Promise<IPageQueryResult> {
   const { queries } = store.getState()
 
   const query = queries.trackedQueries.get(pagePath)
@@ -19,18 +23,14 @@ export async function getPageData(
     return waitNextPageData(pagePath)
   }
   if (query.dirty !== 0) {
-    emitter.emit(`QUERY_RUN_REQUESTED`, { pagePath })
+    store.dispatch(actions.queryRunRequested({ path: pagePath, isPage: true }))
     return waitNextPageData(pagePath)
   }
   // Results are up-to-date
   return readPageData(pagePath)
 }
 
-async function waitNextPageData(
-  pagePath: string
-): Promise<IPageDataWithQueryResult> {
-  // FIXME: Relying on `CLEAR_PENDING_PAGE_DATA_WRITES` is wrong as we
-  //  may see a previous query running here
+async function waitNextPageData(pagePath: string): Promise<IPageQueryResult> {
   return new Promise(resolve => {
     const listener = (): void => {
       emitter.off(`CLEAR_PENDING_PAGE_DATA_WRITES`, listener)
@@ -40,7 +40,14 @@ async function waitNextPageData(
   })
 }
 
-function readPageData(pagePath): Promise<IPageDataWithQueryResult> {
+async function readPageData(pagePath): Promise<IPageQueryResult> {
   const { program } = store.getState()
-  return readPageDataUtil(path.join(program.directory, `public`), pagePath)
+  const tmp = {
+    id: pagePath,
+    result: await readPageDataUtil(
+      path.join(program.directory, `public`),
+      pagePath
+    ),
+  }
+  return tmp
 }
