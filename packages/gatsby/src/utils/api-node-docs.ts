@@ -18,6 +18,7 @@ export const resolvableExtensions = true
  * @param {function} $0.actions.createPages [Documentation for this action](/docs/actions/#createPage)
  * @param {function} $0.graphql: Query GraphQL API. See [examples here](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs)
  * @param {GatsbyReporter} $0.reporter Log issues. See [GatsbyReporter documentation](/docs/node-api-helpers/#GatsbyReporter) for more details
+ * @returns {Promise<void>} No return value required, but the caller will `await` any promise that's returned
  *
  * @example
  * const path = require(`path`)
