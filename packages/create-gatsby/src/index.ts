@@ -7,6 +7,7 @@ import { initStarter } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
+import type Joi from "joi"
 
 const makeChoices = (
   options: Record<string, string>
@@ -47,28 +48,42 @@ const questions = [
 
 const supportedOptionTypes = [`string`, `boolean`, `number`]
 
-const makePluginConfigQuestions = (
-  selectedPlugins: Array<string>
-): Array<any> => {
-  const formPrompts = selectedPlugins.map((pluginName: string) => {
-    const schema = pluginSchemas[pluginName]
-    const { keys: options } = schema
-    const choices = Object.keys(schema?.keys).reduce((result, name) => {
-      const option = options[name]
+type PluginName = keyof typeof pluginSchemas
+type Schema = Joi.Description & {
+  // Limitation in Joi typings
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  flags?: Record<string, any>
+}
 
-      if (option?.flags?.presence === `required`) {
-        result.push({
-          name,
-          initial:
-            option.flags?.default &&
-            supportedOptionTypes.includes(typeof option.flags?.default)
-              ? option.flags?.default.toString()
-              : undefined,
-          message: name,
-        })
+const makePluginConfigQuestions = (
+  selectedPlugins: Array<PluginName>
+): Array<any> => {
+  const formPrompts = selectedPlugins.map((pluginName: PluginName) => {
+    const schema = pluginSchemas[pluginName]
+    if (typeof schema === `string` || !(`keys` in schema)) {
+      return []
+    }
+    const options: Record<string, Schema> | undefined = schema?.keys
+    const choices: Array<{
+      name: string
+      initial: string
+      message: string
+    }> = []
+
+    Object.entries(options).forEach(([name, option]) => {
+      if (option?.flags?.presence !== `required`) {
+        return
       }
-      return result
-    }, [])
+      choices.push({
+        name,
+        initial:
+          option.flags?.default &&
+          supportedOptionTypes.includes(typeof option.flags?.default)
+            ? option.flags?.default.toString()
+            : undefined,
+        message: name,
+      })
+    })
 
     return {
       type: `form`,
@@ -112,7 +127,7 @@ export async function run(): Promise<void> {
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
 
-  const plugins = []
+  const plugins: Array<PluginName> = []
 
   if (data.cms && data.cms !== `none`) {
     messages.push(
