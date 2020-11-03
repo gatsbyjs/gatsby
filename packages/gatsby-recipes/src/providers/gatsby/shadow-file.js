@@ -1,6 +1,7 @@
 import path from "path"
 import fs from "fs-extra"
 import * as Joi from "@hapi/joi"
+import reporter from "gatsby-cli/lib/reporter"
 
 import { slash } from "gatsby-core-utils"
 
@@ -118,8 +119,11 @@ export const plan = async ({ root }, { theme, path: filePath, id }) => {
   try {
     newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
   } catch (e) {
-    // Good chance this file won't exist yet as the theme's NPM package isn't
-    // installed.
+    reporter.verbose(
+      `We couldn't read the specified ShadowFile while planning. Probably just doesn't
+    exist yet because the theme's NPMPackage isn't yet installed but here's the error`,
+      e
+    )
   }
 
   const newResource = {
