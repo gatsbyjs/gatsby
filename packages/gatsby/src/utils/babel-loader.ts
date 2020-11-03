@@ -1,11 +1,11 @@
-const babelLoader = require(`babel-loader`)
-
-const {
+import babelLoader from "babel-loader"
+import {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
-} = require(`./babel-loader-helpers`)
-const { getBrowsersList } = require(`./browserslist`)
+} from "./babel-loader-helpers"
+import { getBrowsersList } from "./browserslist"
+import { version } from "babel-preset-gatsby/package.json"
 
 /**
  * Gatsby's custom loader for webpack & babel
@@ -22,7 +22,7 @@ const { getBrowsersList } = require(`./browserslist`)
  *
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
-module.exports = babelLoader.custom(babel => {
+export default babelLoader.custom(babel => {
   const toReturn = {
     // Passed the loader options.
     customOptions({
@@ -30,7 +30,7 @@ module.exports = babelLoader.custom(babel => {
       reactRuntime = `classic`,
       rootDir = process.cwd(),
       ...options
-    }) {
+    }): { custom: Record<string, any>; loader: Record<string, any> } {
       return {
         custom: {
           stage,
@@ -40,7 +40,7 @@ module.exports = babelLoader.custom(babel => {
           cacheIdentifier: JSON.stringify({
             browerslist: getBrowsersList(rootDir),
             babel: babel.version,
-            gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
+            gatsbyPreset: version,
             env: babel.getEnv(),
           }),
           sourceType: `unambiguous`,
@@ -51,7 +51,7 @@ module.exports = babelLoader.custom(babel => {
     },
 
     // Passed Babel's 'PartialConfig' object.
-    config(partialConfig, { customOptions }) {
+    config(partialConfig, { customOptions }): Record<string, any> {
       let { options } = partialConfig
       const [
         reduxPresets,
