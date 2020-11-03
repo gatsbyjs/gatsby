@@ -26,7 +26,7 @@ export function stripTrailingSlash(str: string): string {
   return str.endsWith(`/`) ? str.slice(0, -1) : str
 }
 
-const curlyBracesContentsRegex = /(\{.*?\})/g
+const curlyBracesContentsRegex = /\{.*?\}/g
 
 // This extracts all information in an absolute path to an array of each collection part
 // /foo/{Model.bar}/{Model.baz} => ['Model.bar', 'Model.baz']
