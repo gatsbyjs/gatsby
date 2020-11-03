@@ -79,7 +79,22 @@ describe(`isValidCollectionPathImplementation`, () => {
   })
 
   // Error in first part
-  it.each([`/Model.test}/{Model.id}.js`])(`%o throws as expected`, path => {
+  it.each([
+    `/Model.test}/{Model.id}.js`,
+    `/{Model.test/{Model.id}.js`,
+    `/{Model_test}/{Model.id}.js`,
+    `/{Model:test}/{Model.id}.js`,
+    `/{Model.}/{Model.id}.js`,
+    `/{123Model.test}/{Model.id}.js`,
+    `/{bar}/{Model.id}.js`,
+    `/{Model.123bar}/{Model.id}.js`,
+    `/Model}/{Model.id}.js`,
+    `/{Model./{Model.id}js`,
+    `/{Model.foo.bar}/{Model.id}.js`,
+    `/prefix-{Model.foo.bar}/{Model.id}.js`,
+    `/prefix-{Model.foo.bar__baz}/{Model.id}.js`,
+    `/prefix-{Model.foo.bar.baz}/{Model.id}.js`,
+  ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[1]
 
     const isValid = isValidCollectionPathImplementation(
