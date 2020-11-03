@@ -129,7 +129,9 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    getSavedScrollPosition: args => this._stateStorage.read(args),
+    getSavedScrollPosition(args) {
+      return this._stateStorage.read(args)
+    },
   })
   if (results.length > 0) {
     // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration

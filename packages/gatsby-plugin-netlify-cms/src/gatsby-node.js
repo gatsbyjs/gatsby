@@ -253,9 +253,8 @@ exports.onCreateWebpackConfig = (
       }),
 
       new CopyPlugin(
-        [].concat.apply(
-          [],
-          externals.map(({ name, assetName, sourceMap, assetDir }) =>
+        [].concat(
+          ...externals.map(({ name, assetName, sourceMap, assetDir }) =>
             [
               {
                 from: require.resolve(path.join(name, assetDir, assetName)),

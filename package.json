@@ -75,6 +75,7 @@
     "remark-preset-lint-markdown-style-guide": "^3.0.1",
     "remark-preset-lint-recommended": "^4.0.1",
     "remark-retext": "^4.0.0",
+    "retext": "^7.0.1",
     "retext-diacritics": "^3.0.0",
     "retext-emoji": "^7.0.2",
     "retext-english": "^3.0.4",
@@ -84,7 +85,6 @@
     "retext-spell": "^4.0.0",
     "retext-syntax-mentions": "^2.1.1",
     "retext-syntax-urls": "^2.0.0",
-    "retext": "^7.0.1",
     "rimraf": "^3.0.2",
     "svgo": "1.3.2",
     "ts-jest": "^22",
@@ -156,5 +156,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "eslint-plugin-class-property": "^1.1.0"
+  }
 }

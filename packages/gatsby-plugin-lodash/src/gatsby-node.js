@@ -31,7 +31,10 @@ exports.onCreateWebpackConfig = (
   })
 
   actions.setWebpackConfig({
-    plugins: [new webpackLodashPlugin(features)],
+    plugins: [
+      // eslint-disable-next-line new-cap
+      new webpackLodashPlugin(features),
+    ],
   })
 }
 

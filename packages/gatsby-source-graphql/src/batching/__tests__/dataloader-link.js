@@ -33,7 +33,10 @@ describe(`createDataloaderLink`, () => {
   it(`reports fetch errors`, done => {
     const link = createDataloaderLink({
       uri: `some-endpoint`,
-      fetch: jest.fn(() => Promise.reject(`FetchError`)),
+      fetch: jest.fn(() =>
+        // eslint-disable-next-line prefer-promise-reject-errors
+        Promise.reject(`FetchError`)
+      ),
     })
     const observable = execute(link, { query: sampleQuery })
     observable.subscribe({

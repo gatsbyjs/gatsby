@@ -3,8 +3,11 @@ import PropTypes from "prop-types"
 import Image from "../index"
 
 class ImageWithIEPolyfill extends Component {
-  imageRef = this.props.innerRef || createRef()
-  placeholderRef = createRef()
+  constructor(...args) {
+    super(...args)
+    this.imageRef = this.props.innerRef || createRef()
+    this.placeholderRef = createRef()
+  }
 
   // Load object-fit/position polyfill if required (e.g. in IE)
   componentDidMount() {
@@ -13,9 +16,9 @@ class ImageWithIEPolyfill extends Component {
       typeof testImg.style.objectFit === `undefined` ||
       typeof testImg.style.objectPosition === `undefined`
     ) {
-      import(`object-fit-images`).then(({ default: ObjectFitImages }) => {
-        ObjectFitImages(this.imageRef.current.imageRef.current)
-        ObjectFitImages(this.placeholderRef.current)
+      import(`object-fit-images`).then(({ default: objectFitImages }) => {
+        objectFitImages(this.imageRef.current.imageRef.current)
+        objectFitImages(this.placeholderRef.current)
       })
     }
   }

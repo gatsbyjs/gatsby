@@ -58,7 +58,7 @@ exports.normalizeACF = normalizeACF
 
 // Combine all ACF Option page data
 exports.combineACF = function (entities) {
-  let acfOptionData = {}
+  const acfOptionData = {}
   // Map each ACF Options object keys/data to single object
   _.forEach(
     entities.filter(e => e.__type === `wordpress__acf_options`),
@@ -195,7 +195,7 @@ exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
 // Build foreign reference map.
 exports.mapTypes = entities => {
   const groups = _.groupBy(entities, e => e.__type)
-  for (let groupId in groups) {
+  for (const groupId in groups) {
     groups[groupId] = groups[groupId].map(e => {
       return {
         wordpress_id: e.wordpress_id,
@@ -242,7 +242,7 @@ exports.mapPostsToTagsCategories = entities => {
   return entities.map(e => {
     // Replace tags & categories with links to their nodes.
 
-    let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
+    const entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
     if (tags.length && entityHasTags) {
       e.tags___NODE = e.tags
         .map(t => {
@@ -260,7 +260,7 @@ exports.mapPostsToTagsCategories = entities => {
       delete e.tags
     }
 
-    let entityHasCategories =
+    const entityHasCategories =
       e.categories && Array.isArray(e.categories) && e.categories.length
     if (categories.length && entityHasCategories) {
       e.categories___NODE = e.categories
@@ -367,19 +367,18 @@ exports.searchReplaceContentUrls = function ({
     const original = Object.assign({}, entity)
 
     try {
-      let whiteList = blacklistProperties(entity, _blacklist)
-      let replaceable = JSON.stringify(whiteList)
-      let replaced = replaceable.replace(
+      const whiteList = blacklistProperties(entity, _blacklist)
+      const replaceable = JSON.stringify(whiteList)
+      const replaced = replaceable.replace(
         new RegExp(sourceUrl, `g`),
         replacementUrl
       )
-      var parsed = JSON.parse(replaced)
+      const parsed = JSON.parse(replaced)
+      return _.defaultsDeep(parsed, original)
     } catch (e) {
       console.log(colorized.out(e.message, colorized.color.Font.FgRed))
       return original
     }
-
-    return _.defaultsDeep(parsed, original)
   })
 }
 
@@ -622,9 +621,9 @@ exports.createNodesFromEntities = ({
 }) => {
   entities.forEach(e => {
     // Create subnodes for ACF Flexible layouts
-    let { __type, ...entity } = e // eslint-disable-line no-unused-vars
-    let children = []
-    let childrenNodes = []
+    const { __type, ...entity } = e // eslint-disable-line no-unused-vars
+    const children = []
+    const childrenNodes = []
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {
         if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
@@ -652,7 +651,7 @@ exports.createNodesFromEntities = ({
       })
     }
 
-    let node = {
+    const node = {
       ...entity,
       children,
       parent: null,

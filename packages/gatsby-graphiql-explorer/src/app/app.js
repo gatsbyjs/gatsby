@@ -18,7 +18,7 @@ window.location.search
   .substr(1)
   .split(`&`)
   .forEach(function (entry) {
-    let eq = entry.indexOf(`=`)
+    const eq = entry.indexOf(`=`)
     if (eq >= 0) {
       parameters[decodeURIComponent(entry.slice(0, eq))] = decodeURIComponent(
         entry.slice(eq + 1)
@@ -45,7 +45,7 @@ const graphqlParamNames = {
   explorerIsOpen: true,
 }
 const otherParams = {}
-for (let k in parameters) {
+for (const k in parameters) {
   if (parameters.hasOwnProperty(k) && graphqlParamNames[k] !== true) {
     otherParams[k] = parameters[k]
   }
@@ -216,7 +216,7 @@ class App extends React.Component {
     })
   }
 
-  _handleInspectOperation = (cm, mousePos) => {
+  _handleInspectOperation(cm, mousePos) {
     const parsedQuery = parse(this.state.query || ``)
 
     if (!parsedQuery) {
@@ -274,13 +274,13 @@ class App extends React.Component {
     return false
   }
 
-  _handleEditQuery = query => {
+  _handleEditQuery(query) {
     parameters.query = query
     updateURL()
     this.setState({ query })
   }
 
-  _handleToggleExplorer = () => {
+  _handleToggleExplorer() {
     const newExplorerIsOpen = !this.state.explorerIsOpen
     if (window.localStorage) {
       window.localStorage.setItem(
@@ -293,7 +293,7 @@ class App extends React.Component {
     this.setState({ explorerIsOpen: newExplorerIsOpen })
   }
 
-  _handleToggleExporter = () => {
+  _handleToggleExporter() {
     const newCodeExporterIsOpen = !this.state.codeExporterIsOpen
     if (window.localStorage) {
       window.localStorage.setItem(
@@ -306,7 +306,7 @@ class App extends React.Component {
     this.setState({ codeExporterIsOpen: newCodeExporterIsOpen })
   }
 
-  _refreshExternalDataSources = () => {
+  _refreshExternalDataSources() {
     const options = { method: `post` }
     if (this.state.refreshToken) {
       options.headers = {

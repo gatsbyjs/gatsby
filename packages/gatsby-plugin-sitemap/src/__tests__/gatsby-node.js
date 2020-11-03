@@ -14,6 +14,8 @@ beforeEach(() => {
 
 describe(`Test plugin sitemap`, () => {
   it(`default settings work properly`, async () => {
+    // Note: in ESM you would not be able to do this
+    // eslint-disable-next-line no-import-assign
     internals.writeFile = jest.fn()
     internals.writeFile.mockResolvedValue(true)
     const graphql = jest.fn()
@@ -46,6 +48,7 @@ describe(`Test plugin sitemap`, () => {
     expect(contents).toMatchSnapshot()
   })
   it(`custom query runs`, async () => {
+    // eslint-disable-next-line no-import-assign
     internals.writeFile = jest.fn()
     internals.writeFile.mockResolvedValue(true)
     const graphql = jest.fn()
@@ -86,7 +89,7 @@ describe(`Test plugin sitemap`, () => {
               path
             }
           }
-        } 
+        }
     }`
     const options = {
       output: `custom-sitemap.xml`,
@@ -136,9 +139,11 @@ describe(`Test plugin sitemap`, () => {
       graphql = jest.fn()
       graphql.mockResolvedValue(queryResult)
 
+      // eslint-disable-next-line no-import-assign
       internals.renameFile = jest.fn()
       internals.renameFile.mockResolvedValue(true)
 
+      // eslint-disable-next-line no-import-assign
       internals.writeFile = jest.fn()
       internals.writeFile.mockResolvedValue(true)
 

@@ -139,6 +139,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
           requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
         )
       } else {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
       }
     }
@@ -302,6 +303,7 @@ const pushTask = task =>
         resolve(task)
       })
       .on(`failed`, err => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`failed to process ${task.url}\n${err}`)
       })
   })
@@ -362,6 +364,7 @@ module.exports = ({
   }
 
   if (!url || isWebUri(url) === undefined) {
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(
       `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
     )

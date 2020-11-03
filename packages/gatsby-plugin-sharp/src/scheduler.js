@@ -9,8 +9,6 @@ const { createOrGetProgressBar } = require(`./utils`)
 const processImages = async (jobId, job, boundActionCreators) => {
   try {
     await worker.IMAGE_PROCESSING(job)
-  } catch (err) {
-    throw err
   } finally {
     boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
   }

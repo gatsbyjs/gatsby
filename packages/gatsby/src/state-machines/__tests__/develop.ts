@@ -29,7 +29,9 @@ const throwService = async (): Promise<void> => {
   throw new Error(`fail`)
 }
 
-const rejectService = async (): Promise<void> => Promise.reject(`fail`)
+const rejectService = async (): Promise<void> =>
+  // eslint-disable-next-line prefer-promise-reject-errors
+  Promise.reject(`fail`)
 
 const machine = developMachine.withConfig(
   {

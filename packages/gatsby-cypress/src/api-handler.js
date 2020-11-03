@@ -1,3 +1,5 @@
+/* eslint-disable no-invalid-this */
+
 let resolve = null
 let awaitingAPI = null
 

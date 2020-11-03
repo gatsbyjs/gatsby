@@ -16,6 +16,7 @@ const support = function (feature) {
 const linkPrefetchStrategy = function (url, options) {
   return new Promise((resolve, reject) => {
     if (typeof document === `undefined`) {
+      // eslint-disable-next-line prefer-promise-reject-errors
       reject()
       return
     }
@@ -47,6 +48,7 @@ const xhrPrefetchStrategy = function (url) {
       if (req.status === 200) {
         resolve()
       } else {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject()
       }
     }

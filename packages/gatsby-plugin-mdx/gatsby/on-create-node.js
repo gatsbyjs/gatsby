@@ -13,10 +13,10 @@ const contentDigest = val => createContentDigest(val)
 function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   const options = defaultOptions(pluginOptions)
 
-  return _unstable_shouldOnCreateNode({ node }, options)
+  return unstable__shouldOnCreateNode({ node }, options)
 }
 
-function _unstable_shouldOnCreateNode({ node }, options) {
+function unstable__shouldOnCreateNode({ node }, options) {
   // options check to stop transformation of the node
   if (options.shouldBlockNodeFromTransformation(node)) {
     return false
@@ -47,7 +47,7 @@ module.exports.onCreateNode = async (
   const { createNode, createParentChildLink } = actions
   const options = defaultOptions(pluginOptions)
 
-  if (!_unstable_shouldOnCreateNode({ node }, options)) {
+  if (!unstable__shouldOnCreateNode({ node }, options)) {
     return
   }
 
@@ -130,7 +130,7 @@ class BabelPluginTransformRelativeImports {
       return {
         visitor: {
           StringLiteral({ node }) {
-            let split = node.value.split(`!`)
+            const split = node.value.split(`!`)
             const nodePath = split.pop()
             const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
             if (nodePath.startsWith(`.`)) {

@@ -63,7 +63,7 @@ module.exports = async (
     const optionsHash = createContentDigest(options)
 
     const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
-    let cachedRawHTML = await cache.get(cacheKey)
+    const cachedRawHTML = await cache.get(cacheKey)
 
     if (cachedRawHTML) {
       return cachedRawHTML
@@ -245,14 +245,15 @@ ${rawHTML}
               return resolve()
             }
 
-            let imageRefs = []
+            const imageRefs = []
             $(`img`).each(function () {
+              // eslint-disable-next-line no-invalid-this
               imageRefs.push($(this))
             })
 
-            for (let thisImg of imageRefs) {
+            for (const thisImg of imageRefs) {
               // Get the details we need.
-              let formattedImgTag = {}
+              const formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)

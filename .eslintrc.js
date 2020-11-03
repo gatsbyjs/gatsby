@@ -39,22 +39,54 @@ module.exports = {
       `as-needed`,
       { requireReturnForObjectLiteral: true },
     ],
+    camelcase: [
+      // Note: duplicate TS rule
+      `error`,
+      {
+        // This rule tries to ensure we use camelCase for all variables, properties
+        // functions, etc. However, it is not always possible to ensure properties
+        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+        // this rule. This allows properties to be whatever they need to be.
+        properties: `never`,
+        // Allow unstable api's to use `unstable_`, which is easier to grep
+        allow: [
+          `^unstable_`,
+          `^GatsbyContentfulFixed_`,
+          `^GatsbyContentfulFluid_`,
+          `^GatsbyContentfulSizes_`,
+          `^GatsbyContentfulResolutions_`,
+        ],
+      },
+    ],
+    "consistent-return": [`error`],
+    "filenames/match-regex": [`error`, `^[a-z-\\d\\.]+$`, true],
+    "guard-for-in": [
+      // `for(a in b)` does not need to be wrapped in nodejs
+      `warn`,
+    ],
+    "new-cap": `warn`,
+    "no-async-promise-executor": [
+      // TODO: we'll want to get rid of cases that do this to preserve errors
+      `warn`,
+    ],
+    "no-console": `off`,
+    "no-inner-declarations": `off`,
+    "no-prototype-builtins": `warn`,
     "no-unused-expressions": [
       `error`,
       {
         allowTaggedTemplates: true,
       },
     ],
-    "consistent-return": [`error`],
-    "filenames/match-regex": [`error`, `^[a-z-\\d\\.]+$`, true],
-    "no-console": `off`,
-    "no-inner-declarations": `off`,
     "prefer-const": `warn`,
     "prettier/prettier": `error`,
     quotes: [`error`, `backtick`],
     "react/display-name": `off`,
     "react/jsx-key": `warn`,
-    "react/no-unescaped-entities": `off`,
+    "react/no-unescaped-entities": [
+      // This suppresses a bunch of obj.hasOwnProperty(key) cases
+      `off`,
+    ],
     "react/prop-types": `off`,
     "require-jsdoc": `off`,
     "valid-jsdoc": `off`,

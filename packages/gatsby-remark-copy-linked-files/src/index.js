@@ -62,7 +62,7 @@ const newLinkURL = (linkNode, options, pathPrefix) => {
 }
 
 function toArray(buf) {
-  let arr = new Array(buf.length)
+  const arr = new Array(buf.length)
 
   for (let i = 0; i < buf.length; i++) {
     arr[i] = buf[i]
@@ -241,7 +241,10 @@ module.exports = (
         selection
           // extract the elements that have the attribute
           .map(function () {
+            // (The `selection` is not a JS builtin so `this` will work)
+            // eslint-disable-next-line no-invalid-this
             const element = $(this)
+            // eslint-disable-next-line no-invalid-this
             const url = $(this).attr(attribute)
             if (url && isRelativeUrl(url)) {
               return { url, element }

@@ -121,7 +121,7 @@ export class AnalyticsTracker {
   osInfo?: IOSInfo // lazy
   trackingEnabled?: boolean // lazy
   componentVersion?: string
-  sessionId: string = this.getSessionId()
+  sessionId: string
   gatsbyCliVersion?: SemVer
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
@@ -149,6 +149,7 @@ export class AnalyticsTracker {
       // ignore
     }
     this.machineId = this.getMachineId()
+    this.sessionId = this.getSessionId()
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.

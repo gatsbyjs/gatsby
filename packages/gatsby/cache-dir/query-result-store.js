@@ -34,7 +34,7 @@ export class PageQueryStore extends React.Component {
     }
   }
 
-  handleMittEvent = () => {
+  handleMittEvent() {
     this.setState({
       pageQueryData: getPageQueryData(),
     })
@@ -95,7 +95,7 @@ export class StaticQueryStore extends React.Component {
     }
   }
 
-  handleMittEvent = () => {
+  handleMittEvent() {
     this.setState({
       staticQueryData: getStaticQueryData(),
     })

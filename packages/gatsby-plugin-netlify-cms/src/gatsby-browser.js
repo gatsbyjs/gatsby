@@ -1,5 +1,3 @@
-/* global __PATH_PREFIX__ */
-
 // Taken from https://github.com/netlify/netlify-identity-widget
 const routes = /(confirmation|invite|recovery|email_change)_token=([^&]+)/
 const errorRoute = /error=access_denied&error_description=403/

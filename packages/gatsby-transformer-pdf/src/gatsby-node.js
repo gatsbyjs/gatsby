@@ -8,6 +8,9 @@ function unstable_shouldOnCreateNode({ node }) {
 
 const convertToJson = path =>
   new Promise((res, rej) => {
+    // Note: `this` is valid in service workers and `undefined` elsewhere but that's okay.
+    //       The API expects a context and `needRawText` argument. Both optional.
+    // eslint-disable-next-line no-invalid-this
     const pdfParser = new PDFParser(this, 1)
     pdfParser.loadPDF(path)
     pdfParser
@@ -15,6 +18,7 @@ const convertToJson = path =>
         res(pdfParser.getRawTextContent())
       })
       .on(`pdfParser_dataError`, errData => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         rej(`PDF to JSON conversion failed!`)
       })
   })
@@ -32,7 +36,7 @@ async function onCreateNode({
 
   const { createNode, createParentChildLink } = actions
 
-  let parsedContent = await convertToJson(node.absolutePath)
+  const parsedContent = await convertToJson(node.absolutePath)
 
   const pdfNode = {
     id: createNodeId(`${node.id} >>> ${node.extension}`),

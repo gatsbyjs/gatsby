@@ -25,7 +25,7 @@ export class ScrollHandler extends React.Component<
 
   _stateStorage: SessionStorage = new SessionStorage()
 
-  scrollListener = (): void => {
+  scrollListener(): void {
     const { key } = this.props.location
 
     if (key) {
@@ -68,19 +68,13 @@ export class ScrollHandler extends React.Component<
     }
   }
 
-  windowScroll = (
-    position: number,
-    prevProps: LocationContext | undefined
-  ): void => {
+  windowScroll(position: number, prevProps: LocationContext | undefined): void {
     if (this.shouldUpdateScroll(prevProps, this.props)) {
       window.scrollTo(0, position)
     }
   }
 
-  scrollToHash = (
-    hash: string,
-    prevProps: LocationContext | undefined
-  ): void => {
+  scrollToHash(hash: string, prevProps: LocationContext | undefined): void {
     const node = document.getElementById(hash.substring(1))
 
     if (node && this.shouldUpdateScroll(prevProps, this.props)) {
@@ -88,10 +82,10 @@ export class ScrollHandler extends React.Component<
     }
   }
 
-  shouldUpdateScroll = (
+  shouldUpdateScroll(
     prevRouterProps: LocationContext | undefined,
     routerProps: LocationContext
-  ): boolean => {
+  ): boolean {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true

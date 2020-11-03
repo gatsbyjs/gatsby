@@ -223,12 +223,15 @@ describe(`Jobs manager`, () => {
         throw new Error(`An error occurred`)
       })
         .mockImplementationOnce(() =>
+          // eslint-disable-next-line prefer-promise-reject-errors
           Promise.reject(new Error(`An error occurred`))
         )
         .mockImplementationOnce(() =>
+          // eslint-disable-next-line prefer-promise-reject-errors
           Promise.reject({ message: `An error occured` })
         )
         .mockImplementationOnce(() =>
+          // eslint-disable-next-line prefer-promise-reject-errors
           Promise.reject({ key: `weird error object` })
         )
 

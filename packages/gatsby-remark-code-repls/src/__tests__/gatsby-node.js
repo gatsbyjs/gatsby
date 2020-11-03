@@ -137,11 +137,11 @@ describe(`gatsby-remark-code-repls`, () => {
 
       await createPages(createPagesParams)
 
-      const { js_external } = JSON.parse(
+      const { js_external: jsExternal } = JSON.parse(
         createPage.mock.calls[0][0].context.payload
       )
 
-      expect(js_external).toBe(``)
+      expect(jsExternal).toBe(``)
     })
 
     describe(`codepen specific`, () => {
@@ -178,12 +178,12 @@ describe(`gatsby-remark-code-repls`, () => {
             externals: [`foo.js`, `bar.js`],
           },
         })
-        const { js_external } = JSON.parse(
+        const { js_external: jsExternal } = JSON.parse(
           createPage.mock.calls[0][0].context.payload
         )
 
-        expect(js_external).toContain(`foo.js`)
-        expect(js_external).toContain(`bar.js`)
+        expect(jsExternal).toContain(`foo.js`)
+        expect(jsExternal).toContain(`bar.js`)
       })
       it(`should support custom, user-defined HTML for index page`, async () => {
         readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])

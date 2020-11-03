@@ -189,7 +189,7 @@ function extendLocalReporterToCatchPluginErrors({
     panic,
     panicOnBuild,
     activityTimer: (...args) => {
-      const activity = reporter.activityTimer.apply(reporter, args)
+      const activity = reporter.activityTimer(...args)
 
       const originalStart = activity.start
       const originalEnd = activity.end
@@ -208,7 +208,7 @@ function extendLocalReporterToCatchPluginErrors({
     },
 
     createProgress: (...args) => {
-      const activity = reporter.createProgress.apply(reporter, args)
+      const activity = reporter.createProgress(...args)
 
       const originalStart = activity.start
       const originalEnd = activity.end

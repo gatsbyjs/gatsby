@@ -150,6 +150,7 @@ module.exports = ({
   }
 
   if (!buffer) {
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(`bad buffer: ${buffer}`)
   }
 
