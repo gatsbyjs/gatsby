@@ -14,7 +14,7 @@
   Fast in every way that matters
 </h3>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
+  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and app
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
