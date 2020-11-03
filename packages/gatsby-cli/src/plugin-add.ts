@@ -34,6 +34,7 @@ async function installPluginPackage(
 
 async function installPluginConfig(
   plugin: string,
+  options: Record<string, unknown> | undefined,
   root: string
 ): Promise<void> {
   const installTimer = reporter.activityTimer(
@@ -43,7 +44,10 @@ async function installPluginConfig(
   installTimer.start()
   reporter.info(`Adding ${plugin}`)
   try {
-    const result = await GatsbyPlugin.create({ root }, { name: plugin })
+    const result = await GatsbyPlugin.create(
+      { root },
+      { name: plugin, options }
+    )
     reporter.info(result._message)
   } catch (err) {
     reporter.error(JSON.parse(err)?.message)
@@ -53,8 +57,9 @@ async function installPluginConfig(
 }
 
 export async function addPlugins(
-  directory: string,
-  plugins?: Array<string>
+  plugins: Array<string>,
+  pluginOptions: Record<string, Record<string, unknown>>,
+  directory: string
 ): Promise<void> {
   if (!plugins?.length) {
     reporter.error(`Please specify a plugin to install`)
@@ -67,6 +72,8 @@ export async function addPlugins(
     pluginList.map(plugin => installPluginPackage(plugin, directory))
   )
   await Promise.all(
-    pluginList.map(plugin => installPluginConfig(plugin, directory))
+    pluginList.map(plugin =>
+      installPluginConfig(plugin, pluginOptions[plugin], directory)
+    )
   )
 }

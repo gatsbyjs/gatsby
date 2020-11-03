@@ -2,6 +2,7 @@ import { reporter } from "./reporter"
 
 export async function installPlugins(
   plugins: Array<string>,
+  pluginOptions: Record<string, Record<string, any> | undefined> = {},
   rootPath: string
 ): Promise<void> {
   let installPluginCommand
@@ -15,13 +16,11 @@ export async function installPlugins(
   }
 
   if (!installPluginCommand) {
-    reporter.error(
-      `Did not install Gatsby, or the version of gatsby-cli is too old`
-    )
+    reporter.error(`gatsby-cli not installed, or is too old`)
     return void 0
   }
 
   const { addPlugins } = require(installPluginCommand)
 
-  return addPlugins(plugins, rootPath)
+  return addPlugins(plugins, pluginOptions, rootPath)
 }

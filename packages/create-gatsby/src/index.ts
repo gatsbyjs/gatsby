@@ -8,6 +8,8 @@ import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
 import type Joi from "joi"
+import { stripIndent } from "common-tags"
+import terminalLink from "terminal-link"
 
 const makeChoices = (
   options: Record<string, string>
@@ -55,13 +57,43 @@ type Schema = Joi.Description & {
   flags?: Record<string, any>
 }
 
+interface IFormPrompt {
+  type: string
+  name: string
+  multiple: boolean
+  message: string
+  choices: Array<{ name: string; initial: unknown; message: string }>
+}
+
+function getName(key: string): string | undefined {
+  const plugins = [cmses, styles] // "features" doesn't map to names
+  for (const types of plugins) {
+    if (key in types) {
+      return types[key as keyof typeof types]
+    }
+  }
+  return key
+}
+
+function docsLink(pluginName: string): string {
+  return c.blueBright(
+    terminalLink(
+      `the plugin docs`,
+      `https://www.gatsbyjs.com/plugins/${pluginName}/`,
+      { fallback: (_, url) => url }
+    )
+  )
+}
+
 const makePluginConfigQuestions = (
   selectedPlugins: Array<PluginName>
-): Array<any> => {
-  const formPrompts = selectedPlugins.map((pluginName: PluginName) => {
+): Array<IFormPrompt> => {
+  const formPrompts: Array<IFormPrompt> = []
+
+  selectedPlugins.forEach((pluginName: PluginName): void => {
     const schema = pluginSchemas[pluginName]
     if (typeof schema === `string` || !(`keys` in schema)) {
-      return []
+      return
     }
     const options: Record<string, Schema> | undefined = schema?.keys
     const choices: Array<{
@@ -85,12 +117,18 @@ const makePluginConfigQuestions = (
       })
     })
 
-    return {
-      type: `form`,
-      name: `config-${pluginName}`,
-      multiple: true,
-      message: `Configure required fields for ${pluginName}:`,
-      choices,
+    if (choices.length) {
+      formPrompts.push({
+        type: `form`,
+        name: `config-${pluginName}`,
+        multiple: true,
+        message: stripIndent`
+        Configure the ${getName(pluginName)} plugin. 
+        See ${docsLink(pluginName)} for help.
+        
+        `,
+        choices,
+      })
     }
   })
   return formPrompts
@@ -154,13 +192,15 @@ export async function run(): Promise<void> {
     plugins.push(...data.features)
   }
 
-  console.log(
-    `\nGreat! A few of the selections you made need to be configured, fill in the options for each plugin now:\n`
-  )
-  const pluginConfig = await prompt<IAnswers>(
-    makePluginConfigQuestions(plugins)
-  )
-  console.log(pluginConfig)
+  const config = makePluginConfigQuestions(plugins)
+  let pluginConfig
+  if (config.length) {
+    console.log(
+      `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
+    )
+    pluginConfig = await prompt<Record<PluginName, {}>>(config)
+    console.log(pluginConfig)
+  }
 
   console.log(`
 
@@ -186,7 +226,9 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     data.project
   )
 
-  console.log(c.bold.green(`Installing plugins...`))
+  if (plugins.length) {
+    console.log(c.bold.green(`Installing plugins...`))
 
-  await installPlugins(plugins, path.resolve(data.project))
+    await installPlugins(plugins, pluginConfig, path.resolve(data.project))
+  }
 }
