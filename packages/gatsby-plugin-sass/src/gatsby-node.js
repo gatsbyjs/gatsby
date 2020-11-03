@@ -84,6 +84,11 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `By default the node implementation of Sass (node-sass) is used. To use the implementation written in Dart (dart-sass), you can install sass instead of node-sass and pass it into the options as the implementation`
       ),
+    cssLoaderOptions: Joi.object({})
+      .unknown(true)
+      .description(
+        `Pass in options for css-loader: https://github.com/webpack-contrib/css-loader/tree/version-1#options`
+      ),
     postCssPlugins: Joi.array()
       .items(Joi.object({}).unknown(true))
       .description(`An array of postCss plugins`),
