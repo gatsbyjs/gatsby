@@ -29,7 +29,7 @@ module.exports = (language = `javascript`) => {
     return
   }
 
-  var invisibles = {
+  let invisibles = {
     tab: /\t/,
     crlf: /\r\n/,
     lf: /\n/,
@@ -44,9 +44,9 @@ module.exports = (language = `javascript`) => {
    * @param {string|number} name The name or index of the token in `tokens`.
    */
   function handleToken(tokens, name) {
-    var value = tokens[name]
+    let value = tokens[name]
 
-    var type = Prism.util.type(value)
+    let type = Prism.util.type(value)
     switch (type) {
       case `RegExp`:
         var inside = {}
@@ -58,7 +58,7 @@ module.exports = (language = `javascript`) => {
         break
 
       case `Array`:
-        for (var i = 0, l = value.length; i < l; i++) {
+        for (let i = 0, l = value.length; i < l; i++) {
           handleToken(value, i)
         }
         break

@@ -98,7 +98,7 @@ export const eslintConfig = (
             ],
           },
         ],
-        //"jsx-a11y/label-has-for": `warn`, was deprecated and replaced with jsx-a11y/has-associated-control in v6.1.0
+        // "jsx-a11y/label-has-for": `warn`, was deprecated and replaced with jsx-a11y/has-associated-control in v6.1.0
         "jsx-a11y/label-has-associated-control": `warn`,
         "jsx-a11y/lang": `warn`,
         "jsx-a11y/media-has-caption": `warn`,

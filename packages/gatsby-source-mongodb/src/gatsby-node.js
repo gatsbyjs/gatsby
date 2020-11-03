@@ -14,8 +14,8 @@ exports.sourceNodes = (
     address: `localhost`,
     port: 27017,
   }
-  let dbName = pluginOptions.dbName || `local`,
-    authUrlPart = ``
+  let dbName = pluginOptions.dbName || `local`
+  let authUrlPart = ``
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 

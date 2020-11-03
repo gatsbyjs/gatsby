@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 
-/// Plugin options are loaded onPreBootstrap in gatsby-node
+// / Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
   base64Width: 20,
   forceBase64Format: ``, // valid formats: png,jpg,webp

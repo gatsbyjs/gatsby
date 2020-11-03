@@ -364,7 +364,7 @@ module.exports = (
             !node.hasOwnProperty(`url`) &&
             node.hasOwnProperty(`identifier`)
           ) {
-            //consider as imageReference node
+            // consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
             // pass original alt from referencing node

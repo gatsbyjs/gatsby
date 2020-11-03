@@ -6,12 +6,12 @@ module.exports = language => {
   }
   if (language.split(`{`).length > 1) {
     let [splitLanguage, ...options] = language.split(`{`)
-    let highlightLines = [],
-      outputLines = [],
-      showLineNumbersLocal = false,
-      numberLinesStartAt,
-      promptUserLocal,
-      promptHostLocal
+    let highlightLines = []
+    let outputLines = []
+    let showLineNumbersLocal = false
+    let numberLinesStartAt
+    let promptUserLocal
+    let promptHostLocal
     // Options can be given in any order and are optional
 
     options.forEach(option => {

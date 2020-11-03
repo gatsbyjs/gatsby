@@ -22,7 +22,7 @@ export class Store {
     try {
       appendFileSync(this.bufferFilePath, event, `utf8`)
     } catch (e) {
-      //ignore
+      // ignore
     }
   }
 

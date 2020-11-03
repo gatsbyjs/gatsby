@@ -55,7 +55,7 @@ const fixtures = new BaseN([true, false], 3)
 
 describe(`mdx-loader`, () => {
   expect.addSnapshotSerializer({
-    print(val /*, serialize */) {
+    print(val /* , serialize */) {
       return prettier.format(val, { parser: `babel` })
     },
     test() {

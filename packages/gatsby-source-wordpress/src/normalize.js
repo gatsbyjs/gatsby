@@ -356,7 +356,7 @@ exports.searchReplaceContentUrls = function ({
   const _blacklist = [`_links`, `__type`]
 
   const blacklistProperties = function (obj = {}, blacklist = []) {
-    for (var i = 0; i < blacklist.length; i++) {
+    for (let i = 0; i < blacklist.length; i++) {
       delete obj[blacklist[i]]
     }
 
@@ -367,9 +367,9 @@ exports.searchReplaceContentUrls = function ({
     const original = Object.assign({}, entity)
 
     try {
-      var whiteList = blacklistProperties(entity, _blacklist)
-      var replaceable = JSON.stringify(whiteList)
-      var replaced = replaceable.replace(
+      let whiteList = blacklistProperties(entity, _blacklist)
+      let replaceable = JSON.stringify(whiteList)
+      let replaced = replaceable.replace(
         new RegExp(sourceUrl, `g`),
         replacementUrl
       )

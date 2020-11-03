@@ -71,7 +71,7 @@ jest.mock(`glob`, () => {
 function getFakeNodes() {
   // Set nodes to something or the cache will fail because it asserts this
   // Actual nodes content should match TS type; these are verified
-  let map /*: Map<string, IReduxNode>*/ = new Map()
+  let map /* : Map<string, IReduxNode>*/ = new Map()
   map.set(`pageA`, {
     id: `pageA`,
     internal: {

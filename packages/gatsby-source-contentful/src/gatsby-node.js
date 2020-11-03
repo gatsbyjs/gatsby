@@ -143,7 +143,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-/***
+/** *
  * Localization algorithm
  *
  * 1. Make list of all resolvable IDs worrying just about the default ids not
@@ -172,7 +172,11 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, deleteNode, touchNode } = actions
 
-  let currentSyncData, contentTypeItems, defaultLocale, locales, space
+  let currentSyncData
+  let contentTypeItems
+  let defaultLocale
+  let locales
+  let space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
       `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +

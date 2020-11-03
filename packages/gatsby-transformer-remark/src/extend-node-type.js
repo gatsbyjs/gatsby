@@ -460,7 +460,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified().use(stringify).stringify(excerptAST)
+      let excerptMarkdown = unified().use(stringify).stringify(excerptAST)
       return excerptMarkdown
     }
 

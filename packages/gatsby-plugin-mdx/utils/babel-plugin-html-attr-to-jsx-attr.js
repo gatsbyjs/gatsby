@@ -501,7 +501,7 @@ const propsKeysVisitor = {
     }
   },
 }
-var jsxAttributeFromHTMLAttributeVisitor = {
+let jsxAttributeFromHTMLAttributeVisitor = {
   JSXAttribute: function (node) {
     const nameNode = node.node.name
     const name = nameNode.name

@@ -31,7 +31,7 @@ module.exports = (
     return aliases[lower] || lower
   }
 
-  //Load language extension if defined
+  // Load language extension if defined
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
@@ -98,7 +98,9 @@ module.exports = (
       diffLanguage
     )
 
-    let numLinesStyle, numLinesClass, numLinesNumber
+    let numLinesStyle
+    let numLinesClass
+    let numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${

@@ -144,7 +144,8 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
   }
 }
 
-let memoizedPrepareTraceSVGInputFile, memoizedTraceSVG
+let memoizedPrepareTraceSVGInputFile
+let memoizedTraceSVG
 const createMemoizedFunctions = () => {
   exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile = _.memoize(
     exports.notMemoizedPrepareTraceSVGInputFile,

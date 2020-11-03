@@ -13,7 +13,11 @@ const readFile = file =>
   })
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let loadNodeContent, actions, node, createdNodes, updatedNodes
+  let loadNodeContent
+  let actions
+  let node
+  let createdNodes
+  let updatedNodes
   const createNodeId = jest.fn()
   let i
 

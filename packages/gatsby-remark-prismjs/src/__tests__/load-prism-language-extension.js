@@ -95,7 +95,7 @@ describe(`extend/add prism language`, () => {
   })
   it(`should add new language`, () => {
     const request = {
-      language: `flexc2`, //Check if it is possible to reset scope somehow, instead of giving a new name.
+      language: `flexc2`, // Check if it is possible to reset scope somehow, instead of giving a new name.
       definition: {
         flexc_keyword: `(__cm|__circ|_lpp_indirect|__accum|__size_t|__ptrdiff_t|__wchar_t|__fixed|__abscall|__extcall|__stkcall|__sat|__i64_t|__i32_t|__i16_t|__r32_t|__r16_t|__u64_t|__u32_t|__u16_t|__a40_t|__a24_t)`,
       },
@@ -116,7 +116,7 @@ describe(`extend/add prism language`, () => {
   it(`should work to make two requests by sending an array`, () => {
     const request = [
       {
-        language: `flexc3`, //Check if it is possible to reset scope somehow, instead of giving a new name.
+        language: `flexc3`, // Check if it is possible to reset scope somehow, instead of giving a new name.
         definition: {
           flexc_keyword: `(__cm|__circ|_lpp_indirect|__accum|__size_t|__ptrdiff_t|__wchar_t|__fixed|__abscall|__extcall|__stkcall|__sat|__i64_t|__i32_t|__i16_t|__r32_t|__r16_t|__u64_t|__u32_t|__u16_t|__a40_t|__a24_t)`,
         },

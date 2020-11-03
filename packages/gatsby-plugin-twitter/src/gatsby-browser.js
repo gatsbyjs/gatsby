@@ -1,6 +1,6 @@
 const injectTwitterScript = () => {
   function addJS(jsCode) {
-    var s = document.createElement(`script`)
+    let s = document.createElement(`script`)
 
     s.type = `text/javascript`
     s.innerText = jsCode

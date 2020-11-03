@@ -7,7 +7,7 @@ const { createFilePath } = require(`./utils`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const cacheId = hash => `create-file-node-from-buffer-${hash}`
 
-/********************
+/** ******************
  * Type Definitions *
  ********************/
 
@@ -103,7 +103,7 @@ async function processBufferNode({
  */
 const processingCache = {}
 
-/***************
+/** *************
  * Entry Point *
  ***************/
 
