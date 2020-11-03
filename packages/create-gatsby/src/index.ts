@@ -2,10 +2,12 @@ import { prompt } from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
+import pluginSchemas from "./plugin-schemas.json"
 import { initStarter } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
+import type Joi from "joi"
 
 const makeChoices = (
   options: Record<string, string>
@@ -44,6 +46,56 @@ const questions = [
   },
 ]
 
+const supportedOptionTypes = [`string`, `boolean`, `number`]
+
+type PluginName = keyof typeof pluginSchemas
+type Schema = Joi.Description & {
+  // Limitation in Joi typings
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  flags?: Record<string, any>
+}
+
+const makePluginConfigQuestions = (
+  selectedPlugins: Array<PluginName>
+): Array<any> => {
+  const formPrompts = selectedPlugins.map((pluginName: PluginName) => {
+    const schema = pluginSchemas[pluginName]
+    if (typeof schema === `string` || !(`keys` in schema)) {
+      return []
+    }
+    const options: Record<string, Schema> | undefined = schema?.keys
+    const choices: Array<{
+      name: string
+      initial: string
+      message: string
+    }> = []
+
+    Object.entries(options).forEach(([name, option]) => {
+      if (option?.flags?.presence !== `required`) {
+        return
+      }
+      choices.push({
+        name,
+        initial:
+          option.flags?.default &&
+          supportedOptionTypes.includes(typeof option.flags?.default)
+            ? option.flags?.default.toString()
+            : undefined,
+        message: name,
+      })
+    })
+
+    return {
+      type: `form`,
+      name: `config-${pluginName}`,
+      multiple: true,
+      message: `Configure required fields for ${pluginName}:`,
+      choices,
+    }
+  })
+  return formPrompts
+}
+
 interface IAnswers {
   project: string
   styling?: keyof typeof styles
@@ -75,7 +127,7 @@ export async function run(): Promise<void> {
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
 
-  const plugins = []
+  const plugins: Array<PluginName> = []
 
   if (data.cms && data.cms !== `none`) {
     messages.push(
@@ -101,6 +153,14 @@ export async function run(): Promise<void> {
     )
     plugins.push(...data.features)
   }
+
+  console.log(
+    `\nGreat! A few of the selections you made need to be configured, fill in the options for each plugin now:\n`
+  )
+  const pluginConfig = await prompt<IAnswers>(
+    makePluginConfigQuestions(plugins)
+  )
+  console.log(pluginConfig)
 
   console.log(`
 
