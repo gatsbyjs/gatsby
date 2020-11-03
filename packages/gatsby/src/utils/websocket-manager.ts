@@ -5,6 +5,7 @@ import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
 import fs from "fs-extra"
 import { readPageData, IPageDataWithQueryResult } from "../utils/page-data"
+import { getPageData as getPageDataExperimental } from "./get-page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
@@ -152,7 +153,9 @@ export class WebsocketManager {
         let pageData = this.pageResults.get(path)
         if (!pageData) {
           try {
-            pageData = await getPageData(path)
+            pageData = process.env.GATSBY_EXPERIMENTAL_GET_PAGE_DATA
+              ? await getPageDataExperimental(path)
+              : await getPageData(path)
 
             this.pageResults.set(path, pageData)
           } catch (err) {
