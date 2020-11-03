@@ -245,7 +245,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
             `CacheOnly`
           ),
           options: Joi.object({
-            networkTimeoutSeconds: Joi.number()
+            networkTimeoutSeconds: Joi.number(),
           }),
         })
       ),
