@@ -2,6 +2,7 @@ import { prompt } from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
+import pluginSchemas from "./plugin-schemas.json"
 import { initStarter } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
@@ -44,6 +45,42 @@ const questions = [
   },
 ]
 
+const supportedOptionTypes = [`string`, `boolean`, `number`]
+
+const makePluginConfigQuestions = (
+  selectedPlugins: Array<string>
+): Array<any> => {
+  const formPrompts = selectedPlugins.map((pluginName: string) => {
+    const schema = pluginSchemas[pluginName]
+    const { keys: options } = schema
+    const choices = Object.keys(schema?.keys).reduce((result, name) => {
+      const option = options[name]
+
+      if (option?.flags?.presence === `required`) {
+        result.push({
+          name,
+          initial:
+            option.flags?.default &&
+            supportedOptionTypes.includes(typeof option.flags?.default)
+              ? option.flags?.default.toString()
+              : undefined,
+          message: name,
+        })
+      }
+      return result
+    }, [])
+
+    return {
+      type: `form`,
+      name: `config-${pluginName}`,
+      multiple: true,
+      message: `Configure required fields for ${pluginName}:`,
+      choices,
+    }
+  })
+  return formPrompts
+}
+
 interface IAnswers {
   project: string
   styling?: keyof typeof styles
@@ -70,6 +107,18 @@ export async function run(): Promise<void> {
   )
   console.log(`Let's answer some questions:\n`)
   const data = await prompt<IAnswers>(questions)
+
+  const selectedPlugins = [data.cms, data.styling, ...data.features].filter(
+    pluginName => pluginName !== `none`
+  )
+
+  console.log(
+    `\nGreat! A few of the selections you made need to be configured, fill in the options for each plugin now:\n`
+  )
+  const pluginConfig = await prompt<IAnswers>(
+    makePluginConfigQuestions(selectedPlugins)
+  )
+  console.log(pluginConfig)
 
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
