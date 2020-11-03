@@ -144,7 +144,7 @@ const getReadmeForPlugin = async (root, name) => {
 
   let readmePath
 
-  const readmes = [`readme`, `readme.md`, `README`, `README.md`]
+  const readmes = [`readme.txt`, `readme`, `readme.md`, `README`, `README.md`]
   while (!readmePath && readmes.length) {
     readmePath = getPath(name, readmes.pop(), root)
   }
