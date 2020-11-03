@@ -12,7 +12,7 @@
     "gatsby-plugin-sharp": "^2.7.0",
     "md5-file": "^5.0.0",
     "mini-svg-data-uri": "^1.2.3",
-    "p-queue": "^2.4.2",
+    "p-queue": "^6.6.2",
     "sqip": "^0.3.3"
   },
   "devDependencies": {

@@ -41,7 +41,7 @@
     "mdast-util-to-string": "^1.1.0",
     "mdast-util-toc": "^3.1.0",
     "mime": "^2.4.6",
-    "p-queue": "^5.0.0",
+    "p-queue": "^6.6.2",
     "pretty-bytes": "^5.3.0",
     "remark": "^10.0.1",
     "remark-retext": "^3.1.3",
