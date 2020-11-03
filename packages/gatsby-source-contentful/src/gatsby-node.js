@@ -87,7 +87,7 @@ For example, to filter locales on only germany \`localeFilter: locale => locale.
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
-        .default(() => true),
+        .default(() => () => true),
       forceFullSync: Joi.boolean()
         .description(
           `Prevents the use of sync tokens when accessing the Contentful API.`
