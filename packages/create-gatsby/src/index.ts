@@ -108,18 +108,6 @@ export async function run(): Promise<void> {
   console.log(`Let's answer some questions:\n`)
   const data = await prompt<IAnswers>(questions)
 
-  const selectedPlugins = [data.cms, data.styling, ...data.features].filter(
-    pluginName => pluginName !== `none`
-  )
-
-  console.log(
-    `\nGreat! A few of the selections you made need to be configured, fill in the options for each plugin now:\n`
-  )
-  const pluginConfig = await prompt<IAnswers>(
-    makePluginConfigQuestions(selectedPlugins)
-  )
-  console.log(pluginConfig)
-
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
@@ -150,6 +138,14 @@ export async function run(): Promise<void> {
     )
     plugins.push(...data.features)
   }
+
+  console.log(
+    `\nGreat! A few of the selections you made need to be configured, fill in the options for each plugin now:\n`
+  )
+  const pluginConfig = await prompt<IAnswers>(
+    makePluginConfigQuestions(plugins)
+  )
+  console.log(pluginConfig)
 
   console.log(`
 
