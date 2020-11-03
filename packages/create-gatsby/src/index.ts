@@ -16,6 +16,9 @@ import terminalLink from "terminal-link"
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
 const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
+// We're using a fork because it points to the canary version of gatsby
+const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
+
 const makeChoices = (
   options: Record<string, string>
 ): Array<{ message: string; name: string }> =>
@@ -238,10 +241,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     return
   }
 
-  await initStarter(
-    `https://github.com/gatsbyjs/gatsby-starter-hello-world.git`,
-    data.project
-  )
+  await initStarter(DEFAULT_STARTER, data.project)
 
   if (plugins.length) {
     console.log(c.bold.green(`Installing plugins...`))
