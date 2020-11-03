@@ -2,9 +2,12 @@ import { run } from "../"
 import { stdin } from "mock-stdin"
 import { stdout } from "stdout-stderr"
 const stdinMock = stdin()
-
+// stdout.print = true
 jest.mock(`execa`)
 jest.mock(`fs-extra`)
+jest.mock(`fs`)
+
+import fs from "fs"
 
 process.chdir = jest.fn()
 
@@ -17,7 +20,19 @@ const Keys = {
   UP: `\x1B\x5B\x41`,
   ENTER: `\x0D`,
   SPACE: `\x20`,
+  BACKSPACE: `\x7f`,
 }
+
+async function skipSteps(count = 4): Promise<void> {
+  for (let i = 0; i < count - 1; i++) {
+    await stdinMock.send(Keys.ENTER)
+    await tick()
+  }
+  await stdinMock.send(Keys.ENTER)
+}
+
+const typeBackspace = (count: number): string =>
+  new Array(count).fill(Keys.BACKSPACE).join(``)
 
 describe(`The create-gatsby CLI`, () => {
   beforeEach(() => {
@@ -49,13 +64,18 @@ describe(`The create-gatsby CLI`, () => {
     await stdinMock.send(Keys.SPACE)
     await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.SPACE)
-    stdinMock.send(Keys.ENTER)
+    await stdinMock.send(Keys.ENTER)
+    await tick()
+    await stdinMock.send(`tokenValue`)
+    await stdinMock.send(Keys.DOWN)
+    await stdinMock.send(`spaceIdValue`)
+    await stdinMock.send(Keys.ENTER)
+
     // Clear the stdout buffer, as we only want to check final output
     stdout.start()
     await tick()
 
     stdout.stop()
-    console.log(stdout.output)
 
     expect(stdout.output).toMatch(
       `Create a new Gatsby site in the folder my-new-site`
@@ -69,7 +89,10 @@ describe(`The create-gatsby CLI`, () => {
     expect(stdout.output).toMatch(
       `Install gatsby-plugin-sitemap, gatsby-plugin-mdx`
     )
-    await tick(1000)
+    stdout.start()
+
+    await stdinMock.send(`n`)
+    await tick()
   })
 
   it(`displays the plugin for the selected CMS to configure`, async () => {
@@ -81,48 +104,92 @@ describe(`The create-gatsby CLI`, () => {
     await stdinMock.send(Keys.ENTER)
     await tick()
     stdout.stop()
-
-    expect(stdout.output).toMatch(`gatsby-source-wordpress`)
-    await tick(1000)
+    stdout.start()
+    await skipSteps(2)
+    await tick()
+    expect(stdout.output).toMatch(
+      `Install and configure the plugin for WordPress`
+    )
+    stdinMock.send(Keys.ENTER)
+    await tick()
   })
 
   it(`displays the plugin for the selected styling solution`, async () => {
     await tick()
     stdinMock.send(`select-styling`)
-    stdinMock.send(Keys.ENTER)
-    await tick()
-    await stdinMock.send(Keys.ENTER)
+    await skipSteps(2)
     await tick()
     await stdinMock.send(Keys.DOWN) // PostCSS is first in the list
     await stdinMock.send(Keys.ENTER)
+    await skipSteps(3)
+    expect(stdout.output).toMatch(
+      `Get you set up to use CSS Modules/PostCSS for styling your site`
+    )
+    stdinMock.send(Keys.ENTER)
     await tick()
-    stdout.stop()
-
-    expect(stdout.output).toMatch(`gatsby-plugin-postcss`)
-    await tick(1000)
   })
 
   it(`doesnt print steps skipped by user`, async () => {
     await tick()
     stdinMock.send(`skip-steps`)
-    stdinMock.send(Keys.ENTER) // skip name
+    await skipSteps()
     await tick()
-    await stdinMock.send(Keys.ENTER) // skip cms step
-    await tick()
-    await stdinMock.send(Keys.ENTER) // skip styling
-    await tick()
-    await stdinMock.send(Keys.ENTER) // skip features
-    // Clear the stdout buffer, as we only want to check final output
-    stdout.start()
-    await tick()
-    stdout.stop()
-
     // this should always be present
     expect(stdout.output).toMatch(`Create a new Gatsby site in the folder`)
     // these steps were skipped
     expect(stdout.output).not.toMatch(`Install and configure the plugin for`)
     expect(stdout.output).not.toMatch(`Get you set up to use`)
-    await tick(1000)
+
+    await stdinMock.send(`n`)
+
+    await tick()
+  })
+
+  it(`complains if the destination folder exists`, async () => {
+    ;((fs.existsSync as unknown) as jest.Mock<
+      boolean,
+      [string]
+    >).mockReturnValueOnce(true)
+    await stdinMock.send(`exists`)
+    await stdinMock.send(Keys.ENTER)
+    stdout.start()
+    ;((fs.existsSync as unknown) as jest.Mock<
+      boolean,
+      [string]
+    >).mockReturnValue(false)
+    await tick()
+    expect(stdout.output).toMatch(`The destination "exists" already exists`)
+    await skipSteps()
+    await tick()
+    expect(stdout.output).toMatch(
+      `Create a new Gatsby site in the folder exists`
+    )
+    await stdinMock.send(Keys.ENTER)
+    await tick()
+  })
+
+  it(`complains if the destination name is invalid`, async () => {
+    await tick()
+    stdout.stop()
+    stdout.start()
+    await stdinMock.send(`bad/name`)
+    await stdinMock.send(Keys.ENTER)
+    await tick()
+    expect(stdout.output).toMatch(
+      `The destination "bad/name" is not a valid filename.`
+    )
+
+    await stdinMock.send(typeBackspace(8))
+    await tick()
+
+    await stdinMock.send(`goodname`)
+    await tick()
+
+    await skipSteps()
+    await tick()
+    expect(stdout.output).toMatch(
+      `Create a new Gatsby site in the folder goodname`
+    )
   })
 
   it.todo(`creates a new project/folder with a gatsby-config`)
