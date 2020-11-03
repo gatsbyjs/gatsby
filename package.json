@@ -7,7 +7,7 @@
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.2",
     "@types/better-queue": "^3.8.2",
-    "@types/bluebird": "^3.5.32",
+    "@types/bluebird": "^3.5.33",
     "@types/cache-manager": "^2.10.3",
     "@types/common-tags": "^1.8.0",
     "@types/eslint": "^6.8.1",
@@ -17,7 +17,7 @@
     "@types/jaeger-client": "^3.15.4",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
-    "@types/lodash": "^4.14.162",
+    "@types/lodash": "^4.14.164",
     "@types/node": "^12.19.3",
     "@types/node-fetch": "^2.5.7",
     "@types/normalize-path": "^3.0.0",
@@ -31,7 +31,7 @@
     "@typescript-eslint/parser": "^2.34.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^24.9.0",
-    "chalk": "^2.4.2",
+    "chalk": "^4.1.0",
     "chokidar": "^3.4.3",
     "cross-env": "^7.0.2",
     "danger": "^10.5.0",
@@ -55,11 +55,11 @@
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^10.0.0",
     "jest-serializer-path": "^0.1.15",
-    "jest-silent-reporter": "^0.2.1",
+    "jest-silent-reporter": "^0.3.0",
     "joi": "^14.3.1",
     "js-yaml": "^3.14.0",
     "lerna": "^3.22.1",
-    "lint-staged": "^8.2.1",
+    "lint-staged": "^10.5.1",
     "markdown-magic": "^0.2.1",
     "npm-packlist": "^2.1.4",
     "npm-run-all": "4.1.5",
@@ -106,18 +106,9 @@
   ],
   "private": true,
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
-      "git add"
-    ],
-    "*.{md,css,scss,yaml,yml}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.svg": [
-      "svgo --pretty --indent=2 --config=svgo.yml --multipass",
-      "git add"
-    ]
+    "*.{js,jsx,ts,tsx}": "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
+    "*.{md,css,scss,yaml,yml}": "prettier --write",
+    "*.svg": "svgo --pretty --indent=2 --config=svgo.yml --multipass"
   },
   "husky": {
     "hooks": {
