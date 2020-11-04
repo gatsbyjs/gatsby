@@ -30,39 +30,19 @@ export function findPageByPath(
     // check various trailing/leading slashes combinations
     const hasLeadingSlash = path.startsWith(`/`)
     const hasTrailingSlash = path.endsWith(`/`)
-    for (const leadingSlash of [true, false]) {
-      for (const trailingSlash of [true, false]) {
-        if (
-          leadingSlash === hasLeadingSlash &&
-          trailingSlash === hasTrailingSlash
-        ) {
-          // we checked this already
-          continue
-        }
 
-        let newPath = path
+    const bare = path.slice(
+      hasLeadingSlash ? 1 : 0,
+      hasTrailingSlash ? -1 : path.length
+    )
 
-        if (leadingSlash !== hasLeadingSlash) {
-          if (leadingSlash) {
-            newPath = `/` + newPath
-          } else {
-            newPath = newPath.substring(1)
-          }
-        }
-
-        if (trailingSlash !== hasTrailingSlash) {
-          if (trailingSlash) {
-            newPath = newPath + `/`
-          } else {
-            newPath = newPath.substring(0, newPath.length - 1)
-          }
-        }
-
-        page = pages.get(newPath)
-        if (page) {
-          return page
-        }
-      }
+    let page
+    ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some(potentialPath => {
+      page = pages.get(potentialPath)
+      return !!page
+    })
+    if (page) {
+      return page
     }
   }
 
