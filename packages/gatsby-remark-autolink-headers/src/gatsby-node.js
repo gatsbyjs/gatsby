@@ -8,8 +8,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .try(Joi.string(), Joi.boolean())
       .description(
         `SVG shape inside a template literal or boolean 'false'. Set your own svg or disable icon.`
-      )
-      .default(true),
+      ),
     className: Joi.string()
       .description(`Set your own class for the anchor.`)
       .default(`anchor`),
