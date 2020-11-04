@@ -14,6 +14,7 @@ import { createFlush } from "./create-flush"
 import { EventStorage } from "./event-storage"
 import { showAnalyticsNotification } from "./show-analytics-notification"
 import { cleanPaths } from "./error-helpers"
+import { getDependencies } from "./get-dependencies"
 
 import { join, sep } from "path"
 import isDocker from "is-docker"
@@ -92,6 +93,8 @@ export interface ITelemetryTagsPayload {
   error?: IStructuredError | Array<IStructuredError>
   cacheStatus?: string
   pluginCachePurged?: string
+  dependencies?: Array<string>
+  devDependencies?: Array<string>
   siteMeasurements?: {
     pagesCount?: number
     clientsCount?: number
@@ -149,6 +152,7 @@ export class AnalyticsTracker {
       // ignore
     }
     this.machineId = this.getMachineId()
+    this.captureMetadataEvent()
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
@@ -461,6 +465,16 @@ export class AnalyticsTracker {
       stdDev: stdDev,
       skewness: !Number.isNaN(skewness) ? skewness : 0,
     }
+  }
+
+  captureMetadataEvent() {
+    const deps = getDependencies()
+    const evt = {
+      dependencies: deps?.dependencies,
+      devDependencies: deps?.devDependencies,
+    }
+
+    this.captureEvent(`METADATA`, evt)
   }
 
   async sendEvents(): Promise<boolean> {
