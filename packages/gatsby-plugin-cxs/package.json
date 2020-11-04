@@ -15,7 +15,7 @@
     "babel-preset-gatsby-package": "^0.6.0-next.0",
     "cross-env": "^7.0.2",
     "cxs": "^6.2.0",
-    "gatsby-plugin-utils": "^0.2.39"
+    "gatsby-plugin-utils": "^0.3.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-cxs#readme",
   "keywords": [
