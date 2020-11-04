@@ -89,7 +89,6 @@ export default [
       `gatsby-telemetry`,
       `gatsby-core-utils`,
       `yoga-layout-prebuilt`,
-      `utila`,
     ],
   },
   {
