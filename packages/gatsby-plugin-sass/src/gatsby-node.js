@@ -166,7 +166,6 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       ),
     outputStyle: Joi.string()
       .valid(`nested`, `expanded`, `compact`, `compressed`)
-      .default(`nested`)
       .description(`Determines the output format of the final CSS style.`),
     precision: Joi.number()
       .default(5)
@@ -193,5 +192,5 @@ When typeof sourceMap === "string", the value of sourceMap will be used as the w
     sourceMapRoot: Joi.string().description(
       `the value will be emitted as sourceRoot in the source map information`
     ),
-  })
+  }).unknown(true)
 }
