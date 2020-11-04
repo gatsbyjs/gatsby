@@ -90,7 +90,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
         `Pass in options for css-loader: https://github.com/webpack-contrib/css-loader/tree/version-1#options`
       ),
     postCssPlugins: Joi.array()
-      .items(Joi.object({}).unknown(true))
+      .items(Joi.any())
       .description(`An array of postCss plugins`),
     sassRuleTest: Joi.object()
       .instance(RegExp)

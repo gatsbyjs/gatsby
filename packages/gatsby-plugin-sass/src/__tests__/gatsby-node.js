@@ -120,7 +120,7 @@ describe(`pluginOptionsSchema`, () => {
     const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       implementation: require(`../gatsby-node.js`),
       cssLoaderOptions: { camelCase: false },
-      postCssPlugins: [{ post: `CSS plugin` }],
+      postCssPlugins: [require(`autoprefixer`)],
       sassRuleTest: /\.global\.s(a|c)ss$/,
       sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
       useResolveUrlLoader: false,
