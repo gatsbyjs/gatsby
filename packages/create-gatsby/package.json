@@ -1,6 +1,6 @@
 {
   "name": "create-gatsby",
-  "version": "0.0.0-3",
+  "version": "0.0.0-4",
   "main": "lib/index.js",
   "bin": "lib/cli.js",
   "license": "MIT",
@@ -28,8 +28,8 @@
     "@types/fs-extra": "^9.0.2",
     "@types/node": "^14.14.5",
     "eslint": "^7.12.1",
-    "mock-stdin": "^1.0.0",
     "joi": "^17.2.1",
+    "mock-stdin": "^1.0.0",
     "prettier": "^2.1.2",
     "stdout-stderr": "^0.1.13",
     "typescript": "^4.0.5"
