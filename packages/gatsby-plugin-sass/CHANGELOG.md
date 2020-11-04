@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.4.1...gatsby-plugin-sass@2.4.2) (2020-11-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-sass:** fix default output style & allow unknown options ([#27822](https://github.com/gatsbyjs/gatsby/issues/27822)) ([#27831](https://github.com/gatsbyjs/gatsby/issues/27831)) ([4ce50ac](https://github.com/gatsbyjs/gatsby/commit/4ce50acc8da19a12ff79c7d913fef9bc78fb735d))
+
 ## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.4.0...gatsby-plugin-sass@2.4.1) (2020-11-03)
 
 ### Bug Fixes

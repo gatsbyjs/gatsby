@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.4.0...gatsby-remark-autolink-headers@2.4.1) (2020-11-04)
+
+### Bug Fixes
+
+- **gatsby-remark-autolink-headers:** remove incorrect default value for icon option ([#27821](https://github.com/gatsbyjs/gatsby/issues/27821)) ([#27830](https://github.com/gatsbyjs/gatsby/issues/27830)) ([dbf41c8](https://github.com/gatsbyjs/gatsby/commit/dbf41c8982518c6a26a7ca5deb459386c8e87e09))
+
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.3.16...gatsby-remark-autolink-headers@2.4.0) (2020-11-02)
 
 ### Features
