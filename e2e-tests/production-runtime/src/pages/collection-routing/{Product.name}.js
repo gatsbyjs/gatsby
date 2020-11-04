@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql, collectionGraphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
 
@@ -18,14 +18,6 @@ export const blogPostQuery = graphql`
     product(id: { eq: $id }) {
       id
       name
-    }
-  }
-`
-
-export const collection = collectionGraphql`
-  {
-    allProduct {
-      ...CollectionPagesQueryFragment
     }
   }
 `

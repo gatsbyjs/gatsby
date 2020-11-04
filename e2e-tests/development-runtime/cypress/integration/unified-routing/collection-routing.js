@@ -24,7 +24,7 @@ describe(`collection-routing`, () => {
     cy.should(`have.text`, `/2018-12-14-hello-world/`)
   })
 
-  it(`can navigate to a collection route that uses unions and collectionGraphql query and see its content rendered`, () => {
+  it(`can navigate to a collection route that uses unions and see its content rendered`, () => {
     cy.findByTestId(`collection-routing-image-0`)
     cy.should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
       .click()
@@ -34,13 +34,6 @@ describe(`collection-routing`, () => {
     cy.should(`have.text`, `gatsby-astronaut`)
     cy.findByTestId(`pagecontext`)
     cy.should(`have.text`, `gatsby-astronaut`)
-  })
-
-  it(`should respect collectionGraphql and create only one image instance`, () => {
-    cy.visit(`/collection-routing/gatsby-icon`)
-    cy.waitForRouteChange()
-    cy.findByTestId(`name`)
-    cy.should(`not.exist`)
   })
 
   it(`should allow normal folder`, () => {

@@ -1,8 +1,5 @@
-import { babelParseToAst } from "gatsby/dist/utils/babel-parse-to-ast"
 import { generateQueryFromString } from "./extract-query"
-import { getGraphQLTag } from "babel-plugin-remove-graphql-queries"
 import fs from "fs-extra"
-import traverse from "@babel/traverse"
 import { Reporter } from "gatsby"
 import { extractModel } from "./path-utils"
 import { CODES, prefixId } from "./error-utils"
@@ -14,7 +11,7 @@ export function collectionExtractQueryString(
 ): string | null {
   let queryString: string | null = null
 
-  let modelType = extractModel(absolutePath)
+  const modelType = extractModel(absolutePath)
 
   // This can happen if you have an invalid path and you are trying to query for that path
   // our path graphql resolution logic does not validate the path before calling this
@@ -25,45 +22,23 @@ export function collectionExtractQueryString(
   const fileContents = fs.readFileSync(absolutePath).toString()
 
   // 2.  If the user is using the collectionGraphql function, we have to
-  //     parse the file and extract it's contents
-  if (fileContents.includes(`collectionGraphql`)) {
-    const ast = babelParseToAst(fileContents, absolutePath)
-
-    traverse(ast, {
-      ExportNamedDeclaration(path) {
-        if (path.node.source) {
-          return
-        }
-        path.traverse({
-          TaggedTemplateExpression(path) {
-            const { text } = getGraphQLTag(path, `collectionGraphql`)
-            if (!text) return
-
-            if (text.includes(`...CollectionPagesQueryFragment`) === false) {
-              reporter.error({
-                id: prefixId(CODES.CollectionGraphQL),
-                context: {
-                  sourceMessage: `Your collection graphql query is incorrect. You must use the fragment "...CollectionPagesQueryFragment" to pull data nodes
-
-Offending query: ${text}`,
-                },
-                filePath: absolutePath,
-              })
-              queryString = ``
-              modelType = ``
-              return
-            }
-
-            queryString = text
-          },
-        })
+  //     warn that this functionality was removed
+  if (
+    fileContents.includes(`collectionGraphql`) ||
+    fileContents.includes(`unstable_collectionGraphql`)
+  ) {
+    reporter.panicOnBuild({
+      id: prefixId(CODES.CollectionGraphQL),
+      context: {
+        sourceMessage: `The "collectionGraphql" (or "unstable_collectionGraphql") API was removed. Please use the "createPages" API instead to filter collection routes.`,
       },
+      filePath: absolutePath,
     })
   }
 
   // 3  This is important, we get the model or query, but we have to create a real graphql
   //    query from it. This generateQueryFromString call does all of that magic
-  queryString = generateQueryFromString(queryString || modelType, absolutePath)
+  queryString = generateQueryFromString(modelType, absolutePath)
 
   return queryString
 }
