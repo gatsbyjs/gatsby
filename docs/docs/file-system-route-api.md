@@ -135,38 +135,7 @@ export const query = graphql`
 }
 ```
 
-If you need to customize the query used for collecting the nodes, you can use the `collectionGraphql` export (much akin to the [`graphql`](/docs/page-query#how-does-the-graphql-tag-work) export). In the example below you filter out every product that is of type "Burger" for the collection route:
-
-```jsx:title=src/pages/products/{Product.name}.js
-import React from "react"
-import { graphql, collectionGraphql } from "gatsby" // highlight-line
-
-export default function Component(props) {
-  return props.data.fields.sku + props.params.name
-}
-
-// If you are customizing the collection query, there is a special fragment you MUST use when using this API. The fragment converts to
-// { nodes { id, [params_from_path] } }
-
-// highlight-start
-export const collectionQuery = collectionGraphql`
-{
-  allProduct(filter: { type: { nin: ["Burger"] } }) {
-    ...CollectionPagesQueryFragment
-  }
-}`
-// highlight-end
-
-export const query = graphql`
-  query ($id: String) {
-    product(id: { eq: $id }) {
-      fields {
-        sku
-      }
-    }
-  }
-}
-```
+If you need to customize the query used for collecting the nodes, you should use the [`createPages`](/docs/node-apis#createPages) API.
 
 ### Routing and linking
 
