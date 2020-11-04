@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.25.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.25.1...gatsby@2.25.2) (2020-11-04)
+
+### Bug Fixes
+
+- **gatsby:** feedback test did not reset 7day check ([#27810](https://github.com/gatsbyjs/gatsby/issues/27810)) ([425c6d6](https://github.com/gatsbyjs/gatsby/commit/425c6d6307d5546e3ddc2502fdb087612c93e3e4))
+
 ## [2.25.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.25.0...gatsby@2.25.1) (2020-11-02)
 
 **Note:** Version bump only for package gatsby
