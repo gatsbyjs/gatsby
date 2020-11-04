@@ -5,7 +5,8 @@ import path from "path"
 import { updateSiteMetadata } from "gatsby-core-utils"
 import { reporter } from "./reporter"
 import { getConfigStore } from "gatsby-core-utils"
-
+import filterStream from "stream-filter"
+import { spin } from "./spin"
 type PackageManager = "yarn" | "npm"
 
 const packageMangerConfigKey = `cli.packageManager`
@@ -97,7 +98,8 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
 const install = async (rootPath: string): Promise<void> => {
   const prevDir = process.cwd()
 
-  reporter.info(`Installing packages...`)
+  const stop = spin(`Installing packages...`)
+
   process.chdir(rootPath)
 
   const npmConfigUserAgent = process.env.npm_config_user_agent
@@ -117,15 +119,41 @@ const install = async (rootPath: string): Promise<void> => {
         }
         await fs.remove(`package-lock.json`)
       }
-      await spawn(`yarnpkg --silent`)
+      const childProcess = spawn(`yarnpkg --silent`, {
+        all: true,
+        stdio: `pipe`,
+      })
+      // eslint-disable-next-line no-unused-expressions
+      childProcess.all
+        ?.pipe(
+          filterStream((data: string) => !data.toString().startsWith(`warning`))
+        )
+        .pipe(process.stderr)
+
+      await childProcess
     } else {
       await fs.remove(`yarn.lock`)
-      await spawn(`npm install --silent`)
+      const childProcess = spawn(`npm install --silent`, {
+        all: true,
+        stdio: `pipe`,
+      })
+      // eslint-disable-next-line no-unused-expressions
+      childProcess.all
+        ?.pipe(
+          filterStream(
+            (data: string) => !data.toString().startsWith(`npm WARN`)
+          )
+        )
+        .pipe(process.stderr)
+
+      await childProcess
     }
   } catch (e) {
     reporter.error(e)
   } finally {
     process.chdir(prevDir)
+    stop()
+    reporter.success(`Installed packages`)
   }
 }
 
@@ -137,7 +165,7 @@ const clone = async (
 ): Promise<void> => {
   const branchProps = branch ? [`-b`, branch] : []
 
-  reporter.info(`Creating new site from git: ${url}`)
+  const stop = spin(`Cloning site template`)
 
   const args = [
     `clone`,
@@ -146,11 +174,12 @@ const clone = async (
     rootPath,
     `--recursive`,
     `--depth=1`,
+    `--quiet`,
   ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
-
-  reporter.success(`Created starter directory layout`)
+  stop()
+  reporter.success(`Created site from template`)
 
   await fs.remove(path.join(rootPath, `.git`))
 
@@ -169,14 +198,6 @@ interface IGetPaths {
   starterPath: string
   rootPath: string
   selectedOtherStarter: boolean
-}
-
-const successMessage = (rootPath: string): void => {
-  reporter.info(`
-Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
-  cd ${rootPath}
-  gatsby develop
-`)
 }
 
 /**
@@ -206,7 +227,5 @@ export async function initStarter(
     },
     false
   )
-
-  successMessage(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }

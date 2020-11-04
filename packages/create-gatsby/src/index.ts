@@ -2,15 +2,12 @@ import { prompt } from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
-import pluginSchemas from "./plugin-schemas.json"
 import { initStarter } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
-import type Joi from "joi"
 import fs from "fs"
-import { stripIndent } from "common-tags"
-import terminalLink from "terminal-link"
+import { PluginName, makePluginConfigQuestions } from "./plugin-options-form"
 
 // eslint-disable-next-line no-control-regex
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
@@ -67,93 +64,6 @@ const questions = [
     choices: makeChoices(features),
   },
 ]
-
-const supportedOptionTypes = [`string`, `boolean`, `number`]
-
-type PluginName = keyof typeof pluginSchemas
-type Schema = Joi.Description & {
-  // Limitation in Joi typings
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  flags?: Record<string, any>
-}
-
-interface IFormPrompt {
-  type: string
-  name: string
-  multiple: boolean
-  message: string
-  choices: Array<{ name: string; initial: unknown; message: string }>
-}
-
-function getName(key: string): string | undefined {
-  const plugins = [cmses, styles] // "features" doesn't map to names
-  for (const types of plugins) {
-    if (key in types) {
-      return types[key as keyof typeof types]
-    }
-  }
-  return key
-}
-
-function docsLink(pluginName: string): string {
-  return c.blueBright(
-    terminalLink(
-      `the plugin docs`,
-      `https://www.gatsbyjs.com/plugins/${pluginName}/`,
-      { fallback: (_, url) => url }
-    )
-  )
-}
-
-const makePluginConfigQuestions = (
-  selectedPlugins: Array<PluginName>
-): Array<IFormPrompt> => {
-  const formPrompts: Array<IFormPrompt> = []
-
-  selectedPlugins.forEach((pluginName: PluginName): void => {
-    const schema = pluginSchemas[pluginName]
-    if (typeof schema === `string` || !(`keys` in schema)) {
-      return
-    }
-    const options: Record<string, Schema> | undefined = schema?.keys
-    const choices: Array<{
-      name: string
-      initial: string
-      message: string
-    }> = []
-
-    Object.entries(options).forEach(([name, option]) => {
-      if (option?.flags?.presence !== `required`) {
-        return
-      }
-      choices.push({
-        name,
-        initial:
-          option.flags?.default &&
-          supportedOptionTypes.includes(typeof option.flags?.default)
-            ? option.flags?.default.toString()
-            : undefined,
-        message: name,
-      })
-    })
-
-    if (choices.length) {
-      formPrompts.push({
-        type: `form`,
-        name: `config-${pluginName}`,
-        multiple: true,
-        message: stripIndent`
-        Configure the ${getName(pluginName)} plugin. 
-        See ${docsLink(pluginName)} for help.
-        
-        `,
-        choices,
-      })
-    }
-  })
-  return formPrompts
-}
-
 interface IAnswers {
   project: string
   styling?: keyof typeof styles
@@ -162,6 +72,9 @@ interface IAnswers {
 }
 
 export async function run(): Promise<void> {
+  const { version } = require(`../package.json`)
+
+  console.log(c.grey.italic(`create-gatsby version ${version}`))
   console.log(
     `
 
@@ -175,6 +88,7 @@ export async function run(): Promise<void> {
   console.log(
     c.red.italic(`Important: This is currently for testing purposes only`)
   )
+
   console.log(
     `This command will generate a new Gatsby site for you with the setup you select.`
   )
@@ -219,7 +133,6 @@ export async function run(): Promise<void> {
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
     pluginConfig = await prompt<Record<PluginName, {}>>(config)
-    console.log(pluginConfig)
   }
 
   console.log(`
@@ -231,9 +144,10 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   const { confirm } = await prompt<{ confirm: boolean }>({
     type: `confirm`,
-    choices: [`Yes`, `No`],
     name: `confirm`,
+    initial: `Yes`,
     message: `Shall we do this?`,
+    format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
   })
 
   if (!confirm) {
@@ -243,9 +157,20 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   await initStarter(DEFAULT_STARTER, data.project)
 
-  if (plugins.length) {
-    console.log(c.bold.green(`Installing plugins...`))
+  console.log(
+    c.green(`✔ `) + c.bold(`Created site in `) + c.green.bold(data.project)
+  )
 
+  if (plugins.length) {
+    console.log(c.bold(`🔌 Installing plugins...`))
     await installPlugins(plugins, pluginConfig, path.resolve(data.project))
   }
+
+  console.log(
+    c.bold(`✨ Your new Gatsby site is ready! Start developing it by running:`)
+  )
+  console.log(`
+    cd ${data.project}
+    gatsby develop
+  `)
 }
