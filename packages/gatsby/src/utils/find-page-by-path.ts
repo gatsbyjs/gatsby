@@ -26,7 +26,7 @@ export function findPageByPath(
   // Gatsby doesn't allow for page path to be empty string,
   // so skipping trying to get page for "" path if we can't
   // find page for `/`
-  else if (page !== `/`) {
+  else if (path !== `/`) {
     // check various trailing/leading slashes combinations
     const hasLeadingSlash = path.startsWith(`/`)
     const hasTrailingSlash = path.endsWith(`/`)
@@ -36,7 +36,6 @@ export function findPageByPath(
       hasTrailingSlash ? -1 : path.length
     )
 
-    let page
     ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some(potentialPath => {
       page = pages.get(potentialPath)
       return !!page
