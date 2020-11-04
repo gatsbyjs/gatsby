@@ -112,7 +112,7 @@
   "gatsby-plugin-styled-components": {},
   "gatsby-plugin-emotion": {},
   "gatsby-plugin-sass": {},
-  "gatsby-plugin-themeui": {},
+  "gatsby-plugin-theme-ui": {},
   "gatsby-plugin-google-analytics": {
     "type": "object",
     "keys": {
