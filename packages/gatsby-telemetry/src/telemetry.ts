@@ -467,7 +467,7 @@ export class AnalyticsTracker {
     }
   }
 
-  captureMetadataEvent() {
+  captureMetadataEvent(): void {
     const deps = getDependencies()
     const evt = {
       dependencies: deps?.dependencies,
