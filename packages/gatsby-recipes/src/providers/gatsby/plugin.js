@@ -25,7 +25,9 @@ const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
   const themePath = path.dirname(
-    require.resolve(path.join(theme, `package.json`), { paths: [directory] })
+    require.resolve(slash(path.join(theme, `package.json`)), {
+      paths: [directory],
+    })
   )
   const themeSrcPath = path.join(themePath, `src`)
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
