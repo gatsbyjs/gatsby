@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "import-plugin-options": "node ./scripts/import-options-schema.js"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
   "dependencies": {
