@@ -31,8 +31,7 @@ async function skipSteps(count = 4): Promise<void> {
   await stdinMock.send(Keys.ENTER)
 }
 
-const typeBackspace = (count: number): string =>
-  new Array(count).fill(Keys.BACKSPACE).join(``)
+const typeBackspace = (count: number): string => Keys.BACKSPACE.repeat(count)
 
 describe(`The create-gatsby CLI`, () => {
   beforeEach(() => {

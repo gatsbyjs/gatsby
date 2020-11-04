@@ -1,4 +1,6 @@
-module.exports = async (args: IProgram): Promise<void> => {
+import { IProgram } from "./types"
+
+module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
   const { report, cmd } = args
   switch (cmd) {
     case `docs`:
@@ -22,10 +24,10 @@ module.exports = async (args: IProgram): Promise<void> => {
         - Maintaining a Plugin (https://www.gatsbyjs.com/docs/maintaining-a-plugin/)
         - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
                    `)
-      return void 0
+      return
 
     default:
       report.error(`Unknown command ${cmd}`)
   }
-  return void 0
+  return
 }
