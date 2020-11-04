@@ -62,19 +62,6 @@ function Index({ data }) {
             </li>
           ))}
         </ul>
-        <h3>collectionGraphql</h3>
-        <p>
-          The example below is a list of parks that are all <em>not</em> the
-          type of <em>Resort</em>. By using <em>collectionGraphql</em> the
-          GraphQL query for creating the routes was adapted.
-        </p>
-        <ul>
-          {data.parksFragment.nodes.map(park => (
-            <li key={park.name}>
-              <Link to={park.gatsbyPath}>{park.name}</Link>
-            </li>
-          ))}
-        </ul>
         <h3>Nested collections</h3>
         <p>
           The example below does a <em>group</em> query on all parks and links
@@ -163,14 +150,6 @@ export const query = graphql`
           name
           gatsbyPath(filePath: "/parks/{park.meta__location__type}/{park.name}")
         }
-      }
-    }
-    parksFragment: allPark(
-      filter: { meta: { location: { type: { ne: "Resort" } } } }
-    ) {
-      nodes {
-        name
-        gatsbyPath(filePath: "/parks/{park.name}")
       }
     }
   }
