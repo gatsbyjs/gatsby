@@ -1,5 +1,5 @@
 {
-  "gatsby-source-wordpress": "TODO: no schema in https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/plugin/gatsby-node.js",
+  "gatsby-source-wordpress-experimental": "TODO: no schema in https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/plugin/gatsby-node.js",
   "gatsby-source-contentful": {
     "type": "object",
     "externals": [{}],
