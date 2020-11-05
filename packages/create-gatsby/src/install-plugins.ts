@@ -3,7 +3,8 @@ import { reporter } from "./reporter"
 export async function installPlugins(
   plugins: Array<string>,
   pluginOptions: Record<string, Record<string, any> | undefined> = {},
-  rootPath: string
+  rootPath: string,
+  packages: Array<string>
 ): Promise<void> {
   let installPluginCommand
 
@@ -22,5 +23,5 @@ export async function installPlugins(
 
   const { addPlugins } = require(installPluginCommand)
 
-  return addPlugins(plugins, pluginOptions, rootPath)
+  return addPlugins(plugins, pluginOptions, rootPath, packages)
 }
