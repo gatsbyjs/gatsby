@@ -107,7 +107,7 @@ This is currently for testing purposes only
   const data = await prompt<IAnswers>(questions)
 
   const messages: Array<string> = [
-    `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
+    `🛠  Create a new Gatsby site in the folder ${c.magenta(data.project)}`,
   ]
 
   const plugins: Array<string> = []
@@ -115,7 +115,7 @@ This is currently for testing purposes only
 
   if (data.cms && data.cms !== `none`) {
     messages.push(
-      `📚 Install and configure the plugin for ${c.red(
+      `📚 Install and configure the plugin for ${c.magenta(
         cmses[data.cms].message
       )}`
     )
@@ -125,7 +125,7 @@ This is currently for testing purposes only
 
   if (data.styling && data.styling !== `none`) {
     messages.push(
-      `🎨 Get you set up to use ${c.green(
+      `🎨 Get you set up to use ${c.magenta(
         styles[data.styling].message
       )} for styling your site`
     )
