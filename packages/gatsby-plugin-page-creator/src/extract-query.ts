@@ -68,14 +68,7 @@ function extractUrlParamsForQuery(createdPath: string): string {
     > => {
       if (part.includes(`{`) && part.includes(`}`)) {
         const fields = extractField(part)
-
-        let derived: Array<string> | string
-
-        if (typeof fields === `string`) {
-          derived = deriveNesting(fields)
-        } else {
-          derived = fields.map(f => deriveNesting(f))
-        }
+        const derived = fields.map(f => deriveNesting(f))
 
         return queryParts.concat(derived)
       }
