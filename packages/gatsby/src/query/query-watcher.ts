@@ -19,7 +19,6 @@ import { boundActionCreators } from "../redux/actions"
 import { IGatsbyStaticQueryComponents } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
-import queryUtil from "./"
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 
 const debug = require(`debug`)(`gatsby:query-watcher`)
@@ -73,7 +72,6 @@ const handleComponentsWithRemovedQueries = (
         type: `REMOVE_STATIC_QUERY`,
         payload: c.id,
       })
-      boundActionCreators.deleteComponentsDependencies([c.id])
     }
   })
 }
@@ -112,9 +110,6 @@ const handleQuery = (
           isNewQuery ? `was added` : `has changed`
         }.`
       )
-
-      boundActionCreators.deleteComponentsDependencies([query.id])
-      queryUtil.enqueueExtractedQueryId(query.id)
     }
     return true
   }
@@ -278,8 +273,6 @@ export const updateStateAndRunQueries = async (
 
       `)
   }
-
-  queryUtil.runQueuedQueries()
 }
 
 export const extractQueries = ({
