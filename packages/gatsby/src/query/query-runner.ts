@@ -50,10 +50,6 @@ async function startQueryJob(
   queryJob: IQueryJob,
   parentSpan: Span | undefined
 ): Promise<ExecutionResult> {
-  const promise = graphqlRunner.query(queryJob.query, queryJob.context, {
-    parentSpan,
-    queryName: queryJob.id,
-  })
   let isPending = true
 
   // Print out warning when query takes too long
@@ -63,12 +59,15 @@ async function startQueryJob(
     }
   }, 15000)
 
-  promise.finally(() => {
+  try {
+    return await graphqlRunner.query(queryJob.query, queryJob.context, {
+      parentSpan,
+      queryName: queryJob.id,
+    })
+  } finally {
     isPending = false
     clearTimeout(timeoutId)
-  })
-
-  return promise
+  }
 }
 
 export async function queryRunner(
