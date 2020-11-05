@@ -27,7 +27,46 @@ interface IQueryJob {
   pluginCreatorId: string
 }
 
-// Run query
+async function startQueryJob(
+  graphqlRunner: GraphQLRunner,
+  queryJob: IQueryJob,
+  parentSpan: Span | undefined
+): Promise<ExecutionResult> {
+  const promise = graphqlRunner.query(queryJob.query, queryJob.context, {
+    parentSpan,
+    queryName: queryJob.id,
+  })
+  let isPending = true
+
+  // Print out warning when query takes too long
+  const timeoutId = setTimeout(() => {
+    if (isPending) {
+      const messageParts = [
+        `Query takes too long:`,
+        `File path: ${queryJob.componentPath}`,
+      ]
+
+      if (queryJob.isPage) {
+        const { path, context } = queryJob.context
+        messageParts.push(`URL path: ${path}`)
+
+        if (!_.isEmpty(context)) {
+          messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+        }
+      }
+
+      report.warn(messageParts.join(`\n`))
+    }
+  }, 15000)
+
+  promise.finally(() => {
+    isPending = false
+    clearTimeout(timeoutId)
+  })
+
+  return promise
+}
+
 export async function queryRunner(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
@@ -35,53 +74,13 @@ export async function queryRunner(
 ): Promise<IExecutionResult> {
   const { program } = store.getState()
 
-  async function startQueryJob(
-    query: string,
-    context: Record<string, unknown>,
-    queryName: string
-  ): Promise<ExecutionResult> {
-    // Check if query takes too long, print out warning
-    const promise = graphqlRunner.query(query, context, {
-      parentSpan,
-      queryName,
-    })
-    let isPending = true
-
-    const timeoutId = setTimeout(() => {
-      if (isPending) {
-        const messageParts = [
-          `Query takes too long:`,
-          `File path: ${queryJob.componentPath}`,
-        ]
-
-        if (queryJob.isPage) {
-          const { path, context } = queryJob.context
-          messageParts.push(`URL path: ${path}`)
-
-          if (!_.isEmpty(context)) {
-            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
-          }
-        }
-
-        report.warn(messageParts.join(`\n`))
-      }
-    }, 15000)
-
-    promise.finally(() => {
-      isPending = false
-      clearTimeout(timeoutId)
-    })
-
-    return promise
-  }
-
   // Run query
   let result: IExecutionResult
   // Nothing to do if the query doesn't exist.
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await startQueryJob(queryJob.query, queryJob.context, queryJob.id)
+    result = await startQueryJob(graphqlRunner, queryJob, parentSpan)
   }
 
   // If there's a graphql error then log the error. If we're building, also
