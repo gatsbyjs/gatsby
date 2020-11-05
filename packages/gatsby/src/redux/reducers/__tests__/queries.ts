@@ -465,6 +465,50 @@ describe(`query extraction`, () => {
     expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: 1 })
   })
 
+  it(`doesn't mark page query as dirty if component has babel errors`, () => {
+    // extract to a valid state first and run to reset initial dirty flag
+    state = editFooQuery(state, ComponentQueries.foo)
+    state = reducer(
+      state,
+      queryExtractionBabelError(
+        { componentPath: `/foo.js`, error: new Error(`Babel error`) },
+        {} as any
+      )
+    )
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
+    state = reducer(
+      state,
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+    )
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0)
+  })
+
+  it(`recovers after component babel errors`, () => {
+    // extract to a valid state first and run to reset initial dirty flag
+    state = editFooQuery(state, ComponentQueries.foo)
+    state = reducer(
+      state,
+      queryExtractionBabelError(
+        { componentPath: `/foo.js`, error: new Error(`Babel error`) },
+        {} as any
+      )
+    )
+    state = reducer(
+      state,
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+    )
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
+    state = reducer(
+      state,
+      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any)
+    )
+    state = reducer(
+      state,
+      queryExtracted(ComponentQueries.fooEdited, {} as any)
+    )
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(2)
+  })
+
   it(`marks all page queries associated with the component as dirty when query text changes`, () => {
     state = editFooQuery(state, ComponentQueries.fooEdited)
 

@@ -105,6 +105,9 @@ export function queriesReducer(
       // TODO: use hash instead of a query text
       const { componentPath, query } = action.payload
       const component = registerComponent(state, componentPath)
+      if (hasFlag(component.errors, FLAG_ERROR_BABEL)) {
+        return state
+      }
       if (component.query !== query) {
         // Invalidate all pages associated with a component when query text changes
         component.pages.forEach(queryId => {
