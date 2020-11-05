@@ -18,12 +18,26 @@ export function isValidCollectionPathImplementation(
   parts.forEach(part => {
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
-    const model = part.match(/\{([a-zA-Z_]\w*)./)?.[1]! // Search for word before first dot, e.g. Model
-    const field = part.match(/((?<=\.).*)}/)?.[1]! // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
+    const model = part.matchAll(/\{([a-zA-Z_]\w*)./g) // Search for word before first dot, e.g. Model
+    const field = part.matchAll(/{.*?((?<=\w\.)[^}]*)}/g) // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
+
+    const models = Array.from(model, m => m[1])
+    const fields = Array.from(field, f => f[1])
 
     try {
-      assert(model, /^[a-zA-Z_]\w*$/, errorMessage(part)) // Check that Model is https://spec.graphql.org/draft/#sec-Names
-      assert(field, /^[a-zA-Z_][\w_()]*$/, errorMessage(part)) // Check that field is foo__bar__baz (and not foo.bar.baz) + https://spec.graphql.org/draft/#sec-Names
+      if (
+        models.length === 0 ||
+        fields.length === 0 ||
+        models.length !== fields.length
+      ) {
+        throw new Error(errorMessage(part))
+      }
+      for (const m of models) {
+        assert(m, /^[a-zA-Z_]\w*$/, errorMessage(part)) // Check that Model is https://spec.graphql.org/draft/#sec-Names
+      }
+      for (const f of fields) {
+        assert(f, /^[a-zA-Z_][\w_()]*$/, errorMessage(part)) // Check that field is foo__bar__baz (and not foo.bar.baz) + https://spec.graphql.org/draft/#sec-Names
+      }
     } catch (e) {
       reporter.panicOnBuild({
         id: prefixId(CODES.CollectionPath),

@@ -1,11 +1,9 @@
 import _ from "lodash"
 import path from "path"
 import {
-  compose,
   convertUnionSyntaxToGraphql,
   extractField,
   extractFieldWithoutUnion,
-  removeFileExtension,
   switchToPeriodDelimiters,
 } from "./path-utils"
 
@@ -17,9 +15,6 @@ export function generateQueryFromString(
 ): string {
   // TODO: 'fields' possibly contains duplicate fields, e.g. field{name},field{description} that should be merged to field{name,description}
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
-  if (queryOrModel.includes(`...CollectionPagesQueryFragment`)) {
-    return fragmentInterpolator(queryOrModel, fields)
-  }
 
   // In case queryOrModel is not capitalized
   const connectionQuery = _.camelCase(`all ${queryOrModel}`)
@@ -40,17 +35,18 @@ export function reverseLookupParams(
   }
 
   absolutePath.split(path.sep).forEach(part => {
-    const extracted = compose(
-      removeFileExtension,
-      extractFieldWithoutUnion
-    )(part)
+    const extracted = extractFieldWithoutUnion(part)
 
-    const results = _.get(
-      queryResults.nodes ? queryResults.nodes[0] : queryResults,
-      // replace __ with accessors '.'
-      switchToPeriodDelimiters(extracted)
-    )
-    reversedParams[extracted] = results
+    extracted.forEach(extract => {
+      if (extract === ``) return
+
+      const results = _.get(
+        queryResults.nodes ? queryResults.nodes[0] : queryResults,
+        // replace __ with accessors '.'
+        switchToPeriodDelimiters(extract)
+      )
+      reversedParams[extract] = results
+    })
   })
 
   return reversedParams
@@ -71,9 +67,17 @@ function extractUrlParamsForQuery(createdPath: string): string {
       string
     > => {
       if (part.includes(`{`) && part.includes(`}`)) {
-        return queryParts.concat(
-          deriveNesting(compose(removeFileExtension, extractField)(part))
-        )
+        const fields = extractField(part)
+
+        let derived: Array<string> | string
+
+        if (typeof fields === `string`) {
+          derived = deriveNesting(fields)
+        } else {
+          derived = fields.map(f => deriveNesting(f))
+        }
+
+        return queryParts.concat(derived)
       }
 
       return queryParts
@@ -100,8 +104,4 @@ function deriveNesting(part: string): string {
       }, ``)
   }
   return part
-}
-
-function fragmentInterpolator(query: string, fields: string): string {
-  return query.replace(`...CollectionPagesQueryFragment`, `nodes{${fields}}`)
 }

@@ -2,7 +2,6 @@ import _ from "lodash"
 import slugify from "@sindresorhus/slugify"
 import { Reporter } from "gatsby"
 import {
-  compose,
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
@@ -32,10 +31,8 @@ export function derivePath(
   // 3.  For each slug parts get the actual value from the node data
   slugParts.forEach(slugPart => {
     // 3.a.  this transforms foo__bar into foo.bar
-    const key = compose(
-      extractFieldWithoutUnion,
-      switchToPeriodDelimiters
-    )(slugPart)
+    const cleanedField = extractFieldWithoutUnion(slugPart)[0]
+    const key = switchToPeriodDelimiters(cleanedField)
 
     // 3.b  We do node or node.nodes here because we support the special group
     //      graphql field, which then moves nodes in another depth

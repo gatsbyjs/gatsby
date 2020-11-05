@@ -25,12 +25,15 @@ export function getCollectionRouteParams(
     }
 
     const key = extractFieldWithoutUnion(part)
-    // Use the previously created regex to match prefix-123 to prefix-(.+)
-    const match = urlParts[i].match(templateRegex[i])
 
-    if (match) {
-      params[key] = match[1]
-    }
+    key.forEach((k, j) => {
+      // Use the previously created regex to match prefix-123 to prefix-(.+)
+      const match = urlParts[i].match(templateRegex[i])
+
+      if (match) {
+        params[k] = match[j + 1]
+      }
+    })
   })
 
   return params
