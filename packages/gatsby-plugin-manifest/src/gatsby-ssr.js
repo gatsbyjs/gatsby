@@ -42,7 +42,7 @@ exports.onRenderBody = (
             type="image/png"
           />
         )
-      }
+      })
       if (icon?.endsWith(`.svg`)) {
         headComponents.push(
           <link
@@ -54,7 +54,7 @@ exports.onRenderBody = (
             type="image/svg+xml"
           />
         )
-      })
+      }
     }
   }
 
