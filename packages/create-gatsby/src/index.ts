@@ -7,7 +7,7 @@ import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
-import { PluginName, makePluginConfigQuestions } from "./plugin-options-form"
+import { makePluginConfigQuestions } from "./plugin-options-form"
 
 // eslint-disable-next-line no-control-regex
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
@@ -17,10 +17,10 @@ const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
 
 const makeChoices = (
-  options: Record<string, string>
+  options: Record<string, { message: string; dependencies?: Array<string> }>
 ): Array<{ message: string; name: string }> =>
   Object.entries(options).map(([name, message]) => {
-    return { name, message }
+    return { name, message: message.message }
   })
 
 const questions = [
@@ -71,6 +71,13 @@ interface IAnswers {
   features?: Array<keyof typeof features>
 }
 
+interface IPluginEntry {
+  message: string
+  dependencies?: Array<string>
+}
+
+export type PluginMap = Record<string, IPluginEntry>
+
 export async function run(): Promise<void> {
   const { version } = require(`../package.json`)
 
@@ -99,31 +106,45 @@ export async function run(): Promise<void> {
     `🛠  Create a new Gatsby site in the folder ${c.blueBright(data.project)}`,
   ]
 
-  const plugins: Array<PluginName> = []
+  const plugins: Array<string> = []
+  const packages: Array<string> = []
 
   if (data.cms && data.cms !== `none`) {
     messages.push(
-      `📚 Install and configure the plugin for ${c.red(cmses[data.cms])}`
+      `📚 Install and configure the plugin for ${c.red(
+        cmses[data.cms].message
+      )}`
     )
     plugins.push(data.cms)
+    packages.push(data.cms, ...(cmses[data.cms].dependencies || []))
   }
 
   if (data.styling && data.styling !== `none`) {
     messages.push(
       `🎨 Get you set up to use ${c.green(
-        styles[data.styling]
+        styles[data.styling].message
       )} for styling your site`
     )
     plugins.push(data.styling)
+    packages.push(data.styling, ...(styles[data.styling].dependencies || []))
   }
 
   if (data.features?.length) {
     messages.push(
       `🔌 Install ${data.features
-        .map((feat: string) => c.magenta(feat))
+        ?.map((feat: string) => c.magenta(feat))
         .join(`, `)}`
     )
     plugins.push(...data.features)
+    const featureDependencies = data.features?.map(
+      featureKey => features[featureKey].dependencies || []
+    )
+    const flattenedDependencies = ([] as Array<string>).concat.apply(
+      [],
+      featureDependencies
+    ) // here until we upgrade to node 11 and can use flatMap
+
+    packages.push(...data.features, ...flattenedDependencies)
   }
 
   const config = makePluginConfigQuestions(plugins)
@@ -132,7 +153,7 @@ export async function run(): Promise<void> {
     console.log(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
-    pluginConfig = await prompt<Record<PluginName, {}>>(config)
+    pluginConfig = await prompt<Record<string, {}>>(config)
   }
 
   console.log(`
@@ -163,7 +184,12 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   if (plugins.length) {
     console.log(c.bold(`🔌 Installing plugins...`))
-    await installPlugins(plugins, pluginConfig, path.resolve(data.project))
+    await installPlugins(
+      plugins,
+      pluginConfig,
+      path.resolve(data.project),
+      packages
+    )
   }
 
   console.log(

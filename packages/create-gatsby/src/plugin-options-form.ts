@@ -7,13 +7,14 @@ import styles from "./styles.json"
 import c from "ansi-colors"
 
 const supportedOptionTypes = [`string`, `boolean`, `number`]
-export type PluginName = keyof typeof pluginSchemas
 
 type Schema = Joi.Description & {
   // Limitation in Joi typings
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   flags?: Record<string, any>
 }
+
+type PluginName = keyof typeof pluginSchemas
 
 interface IFormPrompt {
   type: string
@@ -27,7 +28,7 @@ function getName(key: string): string | undefined {
   const plugins = [cmses, styles] // "features" doesn't map to names
   for (const types of plugins) {
     if (key in types) {
-      return types[key as keyof typeof types]
+      return types[key as keyof typeof types].message
     }
   }
   return key
@@ -44,12 +45,12 @@ function docsLink(pluginName: string): string {
 }
 
 export const makePluginConfigQuestions = (
-  selectedPlugins: Array<PluginName>
+  selectedPlugins: Array<string>
 ): Array<IFormPrompt> => {
   const formPrompts: Array<IFormPrompt> = []
 
-  selectedPlugins.forEach((pluginName: PluginName): void => {
-    const schema = pluginSchemas[pluginName]
+  selectedPlugins.forEach((pluginName: string): void => {
+    const schema = pluginSchemas[pluginName as PluginName]
     if (typeof schema === `string` || !(`keys` in schema)) {
       return
     }
@@ -59,6 +60,10 @@ export const makePluginConfigQuestions = (
       initial: string
       message: string
     }> = []
+
+    if (!options) {
+      return
+    }
 
     Object.entries(options).forEach(([name, option]) => {
       if (option?.flags?.presence !== `required`) {

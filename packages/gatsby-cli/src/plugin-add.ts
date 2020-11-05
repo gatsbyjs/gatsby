@@ -59,7 +59,8 @@ async function installPluginConfig(
 export async function addPlugins(
   plugins: Array<string>,
   pluginOptions: Record<string, Record<string, unknown>>,
-  directory: string
+  directory: string,
+  packages: Array<string> = []
 ): Promise<void> {
   if (!plugins?.length) {
     reporter.error(`Please specify a plugin to install`)
@@ -69,7 +70,7 @@ export async function addPlugins(
   const pluginList = plugins.map(normalizePluginName)
 
   await Promise.all(
-    pluginList.map(plugin => installPluginPackage(plugin, directory))
+    packages.map(plugin => installPluginPackage(plugin, directory))
   )
   await Promise.all(
     pluginList.map(plugin =>

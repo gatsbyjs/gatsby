@@ -48,6 +48,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["src"],
+  "include": ["src/**/*.ts", "src/**/*.json"],
   "exclude": ["**/__tests__/**/*"]
 }
