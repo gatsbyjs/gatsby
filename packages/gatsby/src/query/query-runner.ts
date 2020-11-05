@@ -27,6 +27,24 @@ interface IQueryJob {
   pluginCreatorId: string
 }
 
+function reportLongRunningQueryJob(queryJob): void {
+  const messageParts = [
+    `Query takes too long:`,
+    `File path: ${queryJob.componentPath}`,
+  ]
+
+  if (queryJob.isPage) {
+    const { path, context } = queryJob.context
+    messageParts.push(`URL path: ${path}`)
+
+    if (!_.isEmpty(context)) {
+      messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+    }
+  }
+
+  report.warn(messageParts.join(`\n`))
+}
+
 async function startQueryJob(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
@@ -41,21 +59,7 @@ async function startQueryJob(
   // Print out warning when query takes too long
   const timeoutId = setTimeout(() => {
     if (isPending) {
-      const messageParts = [
-        `Query takes too long:`,
-        `File path: ${queryJob.componentPath}`,
-      ]
-
-      if (queryJob.isPage) {
-        const { path, context } = queryJob.context
-        messageParts.push(`URL path: ${path}`)
-
-        if (!_.isEmpty(context)) {
-          messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
-        }
-      }
-
-      report.warn(messageParts.join(`\n`))
+      reportLongRunningQueryJob(queryJob)
     }
   }, 15000)
 
