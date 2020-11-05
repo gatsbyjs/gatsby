@@ -8,6 +8,8 @@ import type { Sharp } from "sharp"
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
 
+const DEFAULT_BLURRED_IMAGE_WIDTH = 20
+
 type ImageFormat = "jpg" | "png" | "webp" | "" | "auto"
 export interface ISharpGatsbyImageArgs {
   layout?: "fixed" | "fluid" | "constrained"
@@ -228,7 +230,8 @@ export async function generateImageData({
   }
 
   if (placeholder === `blurred`) {
-    const placeholderWidth = args.blurredOptions?.width || 20
+    const placeholderWidth =
+      args.blurredOptions?.width || DEFAULT_BLURRED_IMAGE_WIDTH
     const { src: fallback } = await base64({
       file,
       args: {
