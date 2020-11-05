@@ -97,6 +97,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     }
   }
 
+  // 4.b
   // we don't want to give them this survey right after the seven day feedback survey
   const sevenDayFeedback = getConfigStore().get(sevenDayKey)
   if (sevenDayFeedback) {
