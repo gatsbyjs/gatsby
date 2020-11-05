@@ -28,20 +28,16 @@ gatsby develop
 
 Gatsby will start a hot-reloading development environment accessible by default at `http://localhost:8000`.
 
+4. Now you're ready to make changes to your site!
+
 Try editing the home page in `src/pages/index.js`. Saved changes will live reload in the browser.
 
-### Create a production build
+## What's next?
 
-```shell
-gatsby build
-```
+### Add more features
 
-Gatsby will perform an optimized production build for your site, generating static HTML and per-route JavaScript code bundles.
+[Install and configure additional plugins](/docs/recipes/) to quickly add additional functionality to your site.
 
-### Access documentation for CLI commands
+### Deploy your site
 
-To see detailed documentation for the CLI commands, run `gatsby --help` in the terminal.
-
-For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby new --help`.
-
-For more information on the Gatsby CLI, visit the [CLI reference](/docs/gatsby-cli/) section of the docs.
+Try using [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) to build and deploy your site to one of many hosting providers.
