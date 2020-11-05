@@ -3,7 +3,7 @@ import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
 import crypto from "crypto"
-import { ExecutionResult } from "graphql"
+import { ExecutionResult, GraphQLError } from "graphql"
 
 import path from "path"
 import { store } from "../redux"
@@ -43,6 +43,45 @@ function reportLongRunningQueryJob(queryJob): void {
   }
 
   report.warn(messageParts.join(`\n`))
+}
+
+function panicQueryJobError(
+  queryJob: IQueryJob,
+  errors: ReadonlyArray<GraphQLError>
+): void {
+  let urlPath = undefined
+  let queryContext = {}
+  const plugin = queryJob.pluginCreatorId || `none`
+
+  if (queryJob.isPage) {
+    urlPath = queryJob.context.path
+    queryContext = queryJob.context.context
+  }
+
+  const structuredErrors = errors.map(e => {
+    const structuredError = errorParser({
+      message: e.message,
+      filePath: undefined,
+      location: undefined,
+    })
+
+    structuredError.context = {
+      ...structuredError.context,
+      codeFrame: getCodeFrame(
+        queryJob.query,
+        e.locations && e.locations[0].line,
+        e.locations && e.locations[0].column
+      ),
+      filePath: queryJob.componentPath,
+      ...(urlPath ? { urlPath } : {}),
+      ...queryContext,
+      plugin,
+    }
+
+    return structuredError
+  })
+
+  report.panicOnBuild(structuredErrors)
 }
 
 async function startQueryJob(
@@ -86,44 +125,9 @@ export async function queryRunner(
     result = await startQueryJob(graphqlRunner, queryJob, parentSpan)
   }
 
-  // If there's a graphql error then log the error. If we're building, also
-  // quit.
-  if (result && result.errors) {
-    let urlPath = undefined
-    let queryContext = {}
-    const plugin = queryJob.pluginCreatorId || `none`
-
-    if (queryJob.isPage) {
-      urlPath = queryJob.context.path
-      queryContext = queryJob.context.context
-    }
-
-    const structuredErrors = result.errors
-      .map(e => {
-        const structuredError = errorParser({
-          message: e.message,
-          filePath: undefined,
-          location: undefined,
-        })
-
-        structuredError.context = {
-          ...structuredError.context,
-          codeFrame: getCodeFrame(
-            queryJob.query,
-            e.locations && e.locations[0].line,
-            e.locations && e.locations[0].column
-          ),
-          filePath: queryJob.componentPath,
-          ...(urlPath ? { urlPath } : {}),
-          ...queryContext,
-          plugin,
-        }
-
-        return structuredError
-      })
-      .filter(Boolean)
-
-    report.panicOnBuild(structuredErrors)
+  if (result.errors) {
+    // If there's a graphql error then log the error and exit
+    panicQueryJobError(queryJob, result.errors)
   }
 
   // Add the page context onto the results.
