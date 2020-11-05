@@ -54,6 +54,7 @@ export interface IAggregateStats {
 interface IAnalyticsTrackerConstructorParameters {
   componentId?: SemVer
   gatsbyCliVersion?: SemVer
+  trackingEnabled?: boolean
 }
 
 export interface IStructuredError {
@@ -135,11 +136,15 @@ export class AnalyticsTracker {
   constructor({
     componentId,
     gatsbyCliVersion,
+    trackingEnabled,
   }: IAnalyticsTrackerConstructorParameters = {}) {
     this.componentId = componentId || `gatsby-cli`
     try {
       if (this.store.isTrackingDisabled()) {
         this.trackingEnabled = false
+      }
+      if (trackingEnabled !== undefined) {
+        this.trackingEnabled = trackingEnabled
       }
 
       this.defaultTags = this.getTagsFromEnv()
@@ -468,6 +473,9 @@ export class AnalyticsTracker {
   }
 
   captureMetadataEvent(): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
     const deps = getDependencies()
     const evt = {
       dependencies: deps?.dependencies,
