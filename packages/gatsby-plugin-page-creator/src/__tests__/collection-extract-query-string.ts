@@ -35,6 +35,23 @@ describe(`collectionExtractQueryString`, () => {
     expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
   })
 
+  it(`will create a basic query from the route with minimal length`, async () => {
+    // @ts-ignore
+    patchReadFileSync(`
+      import { graphql } from "gatsby"
+      export const pageQuery = graphql\`
+        { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
+      \`
+      `)
+
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{P.n}`),
+      reporter
+    )
+
+    expect(query).toMatchInlineSnapshot(`"{allP{nodes{n,id}}}"`)
+  })
+
   it(`will create a basic query from the route with a prefix variant 1`, async () => {
     // @ts-ignore
     patchReadFileSync(`
@@ -101,5 +118,73 @@ describe(`collectionExtractQueryString`, () => {
     )
 
     expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
+  })
+
+  it(`will create a basic query with multiple entries`, async () => {
+    // @ts-ignore
+    patchReadFileSync(`
+      import { graphql } from "gatsby"
+      export const pageQuery = graphql\`
+        { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
+      \`
+      `)
+
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{Product.name}-{Product.color}`),
+      reporter
+    )
+
+    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+  })
+
+  it(`will create a basic query with multiple entries and different delimiters variant 1`, async () => {
+    // @ts-ignore
+    patchReadFileSync(`
+      import { graphql } from "gatsby"
+      export const pageQuery = graphql\`
+        { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
+      \`
+      `)
+
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{Product.name}_{Product.color}`),
+      reporter
+    )
+
+    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+  })
+
+  it(`will create a basic query with multiple entries and different delimiters variant 1`, async () => {
+    // @ts-ignore
+    patchReadFileSync(`
+      import { graphql } from "gatsby"
+      export const pageQuery = graphql\`
+        { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
+      \`
+      `)
+
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{Product.name}.{Product.color}`),
+      reporter
+    )
+
+    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+  })
+
+  it(`will create a basic query with multiple entries and different delimiters variant 1`, async () => {
+    // @ts-ignore
+    patchReadFileSync(`
+      import { graphql } from "gatsby"
+      export const pageQuery = graphql\`
+        { allThings(filter: { name: { nin: ["stuff"] }}) { nodes, id } }
+      \`
+      `)
+
+    const query = await collectionExtractQueryString(
+      createPath(`src/pages/{Product.name}__{Product.color}`),
+      reporter
+    )
+
+    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
   })
 })

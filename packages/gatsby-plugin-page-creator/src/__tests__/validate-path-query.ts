@@ -49,7 +49,7 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
   })
 
   it(`works if all the above predicates pass`, async () => {
-    const filePath = `/baz/{bar}`
+    const filePath = `/foo/{bar}-{baz}_{a}.{b}`
     const absolutePath = systemPath.join(
       process.cwd(),
       `src/pages`,
@@ -61,6 +61,6 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
       validatePathQuery(filePath, [`.js`, `.ts`, `.mjs`])
     }).not.toThrow()
 
-    await fs.remove(systemPath.join(process.cwd(), `src`))
+    await fs.remove(systemPath.join(process.cwd(), `src/pages`))
   })
 })

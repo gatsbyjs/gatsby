@@ -33,6 +33,11 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/{Model.bar}/[...name].js`,
     `/products/{M.id}.js`,
     `/products/{M.i}.js`,
+    `/products/{Model.id}-{Model.foo}.js`,
+    `/products/prefix-{Model.id}-{Model.foo}.js`,
+    `/products/{Model.id}-{Model.foo}-postfix.js`,
+    `/products/{Model.id}_{Model.foo}.js`,
+    `/products/{Model.id}.{Model.foo}.js`,
   ])(`%o passes`, path => {
     expect(() =>
       isValidCollectionPathImplementation(compatiblePath(path), reporter)
@@ -61,6 +66,8 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/prefix-{Model.foo.bar.baz}.js`,
     `/{Model.test}/{Model.id.js`,
     `/{Model.test}/Model.id}.js`,
+    `/products/{Model.id}-{Model.}.js`,
+    `/products/{Model.id}-{Model_foo}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 

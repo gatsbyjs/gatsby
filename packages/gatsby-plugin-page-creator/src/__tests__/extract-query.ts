@@ -77,23 +77,6 @@ describe(`extract query`, () => {
         )
       ).toBe(`{ allThing(filter: { main_url: { nin: [] }}) { nodes{id} } }`)
     })
-
-    it(`supports a special fragment`, () => {
-      expect(
-        generateQueryFromString(
-          `{ allMarkdownRemark {
-        group(field: frontmatter___topic) {
-            ...CollectionPagesQueryFragment
-        }}
-    }`,
-          compatiblePath(`/foo/bar/{MarkdownRemark.frontmatter__topic}.js`)
-        )
-      ).toEqual(`{ allMarkdownRemark {
-        group(field: frontmatter___topic) {
-            nodes{frontmatter{topic},id}
-        }}
-    }`)
-    })
   })
 
   describe(`filepath resolution`, () => {
@@ -120,6 +103,12 @@ describe(`extract query`, () => {
         generateQueryFromString(
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}/{Thing.name}.js`)
+        )
+      ).toBe(`{allThing{nodes{id,name}}}`)
+      expect(
+        generateQueryFromString(
+          `Thing`,
+          compatiblePath(`/foo/bar/{Thing.id}-{Thing.name}.js`)
         )
       ).toBe(`{allThing{nodes{id,name}}}`)
     })
