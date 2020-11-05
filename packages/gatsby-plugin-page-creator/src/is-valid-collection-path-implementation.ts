@@ -1,6 +1,7 @@
 import sysPath from "path"
 import { Reporter } from "gatsby"
 import { CODES, prefixId } from "./error-utils"
+import { matchAllPolyfill } from "./path-utils"
 
 // This file is a helper for consumers. It's going to log an error to them if they
 // in any way have an incorrect filepath setup for us to predictably use collection
@@ -18,8 +19,8 @@ export function isValidCollectionPathImplementation(
   parts.forEach(part => {
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
-    const model = part.matchAll(/\{([a-zA-Z_]\w*)./g) // Search for word before first dot, e.g. Model
-    const field = part.matchAll(/{.*?((?<=\w\.)[^}]*)}/g) // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
+    const model = matchAllPolyfill(/\{([a-zA-Z_]\w*)./g, part) // Search for word before first dot, e.g. Model
+    const field = matchAllPolyfill(/{.*?((?<=\w\.)[^}]*)}/g, part) // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
 
     const models = Array.from(model, m => m[1])
     const fields = Array.from(field, f => f[1])

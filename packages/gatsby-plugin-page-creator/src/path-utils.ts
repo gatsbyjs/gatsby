@@ -111,3 +111,18 @@ export function compose(
   return (filePart: string): string =>
     functions.reduce((value, fn) => fn(value), filePart)
 }
+
+export function matchAllPolyfill(
+  regexPattern,
+  sourceString
+): Array<RegExpExecArray> {
+  const output: Array<RegExpExecArray> = []
+  let match: RegExpExecArray | null
+  while ((match = regexPattern.exec(sourceString))) {
+    // get rid of the string copy
+    delete match.input
+    // store the match data
+    output.push(match)
+  }
+  return output
+}
