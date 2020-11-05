@@ -131,7 +131,7 @@ export class GraphQLRunner {
     }
   }
 
-  query(
+  async query(
     query: Query,
     context: Record<string, unknown>,
     {
@@ -177,7 +177,7 @@ export class GraphQLRunner {
       const result =
         errors.length > 0
           ? { errors }
-          : execute({
+          : await execute({
               schema,
               document,
               rootValue: context,
@@ -198,7 +198,7 @@ export class GraphQLRunner {
       // TODO: consider a better strategy for cache purging/invalidation
       this.scheduleClearCache()
 
-      return Promise.resolve(result)
+      return result
     } finally {
       if (tracer) {
         tracer.end()
