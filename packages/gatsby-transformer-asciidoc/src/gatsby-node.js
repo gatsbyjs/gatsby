@@ -88,7 +88,7 @@ async function onCreateNode(
       children: [],
       html,
       document: {
-        title: title.getCombined(),
+        title: title.getCombined() ? title.getCombined() : ``,
         subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
         main: title.getMain(),
       },
