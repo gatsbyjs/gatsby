@@ -182,9 +182,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   await initStarter(DEFAULT_STARTER, data.project)
 
-  console.log(
-    c.green(`✔ `) + c.bold(`Created site in `) + c.green.bold(data.project)
-  )
+  console.log(c.green(`✔ `) + `Created site in ` + c.green(data.project))
 
   if (plugins.length) {
     console.log(c.bold(`🔌 Installing plugins...`))
@@ -197,10 +195,24 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   }
 
   console.log(
-    c.bold(`✨ Your new Gatsby site is ready! Start developing it by running:`)
+    `✨ Your new Gatsby site ${c.bold(
+      path.resolve(data.project)
+    )} has been successfully bootstrapped at ${c.bold(
+      data.project
+    )}. There you can:\n`
   )
   console.log(`
-    cd ${data.project}
-    gatsby develop
+  Start developing with\n
+  ${c.magenta(`gatsby develop`)}\n
+  `)
+
+  console.log(`
+  Create a production build with\n
+  ${c.magenta(`gatsby build`)}\n
+  `)
+
+  console.log(`
+  Head to your new project with\n
+  ${c.magenta(`cd ${data.project}`)}\n
   `)
 }
