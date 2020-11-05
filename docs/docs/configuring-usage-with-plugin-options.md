@@ -8,7 +8,7 @@ _This guide refers to creating plugins, if you are looking for general informati
 
 ## Where to access plugin options
 
-A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/node-apis/), [Browser](/docs/browser-apis/), and [SSR APIs](/docs/ssr-apis/). Consider the following `gatsby-config` with a plugin called `gatsby-plugin-console-log`:
+A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/node-apis/), [Browser](/docs/browser-apis/), and [SSR APIs](/docs/ssr-apis/). Consider the following `gatsby-config.js` with a plugin called `gatsby-plugin-console-log`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 }
 ```
 
-With the `optionA`, `optionB`, and `message` options passed into the plugin, the code for `gatsby-plugin-console-log` is able to access the values `true`, `false`, and `Hello world` by their keys.
+With the `optionA`, `optionB`, and `message` options passed into the plugin, the code for `gatsby-plugin-console-log` is able to access the values `true`, `false`, and `"Hello world"` by their keys.
 
 For example, `gatsby-plugin-console-log` can access the `message` in order to log its value to the console inside of the `onPreInit` API:
 
@@ -52,7 +52,7 @@ The following table lists possible options values and an example plugin that mak
 | Array     | `["/about-us/", "/projects/*"]`  | [`gatsby-plugin-offline`](/packages/gatsby-plugin-offline/)       |
 | Object    | `{ default: "./src/layout.js" }` | [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/)               |
 
-**Note**: Themes (which are a type of plugin) are able to receive options from a site's `gatsby-config` to be used in its `gatsby-config` in order to allow themes to be composed together. This is done by exporting the `gatsby-config` as a function instead of an object. You can see an example of this in the [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog) and [`gatsby-theme-blog-core`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog-core) repositories. Plugins are not capable of this functionality.
+**Note**: Themes (which are a type of plugin) are able to receive options from a site's `gatsby-config.js` to be used in its `gatsby-config.js` in order to allow themes to be composed together. This is done by exporting the `gatsby-config.js` as a function instead of an object. You can see an example of this in the [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog) and [`gatsby-theme-blog-core`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog-core) repositories. Plugins are not capable of this functionality.
 
 ## How to validate plugin options
 
@@ -97,7 +97,7 @@ If users pass options that do not match the schema, the validation will show an 
 
 For example, if an integer is passed into `message` (which is marked as a required string) this message would be shown:
 
-```
+```text
  ERROR #11331  PLUGIN
 
 Invalid plugin options for "gatsby-plugin-console-log":
