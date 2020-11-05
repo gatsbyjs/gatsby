@@ -191,6 +191,7 @@ export async function queryRunner(
     }
   }
 
+  // Broadcast that a page's query has run.
   boundActionCreators.pageQueryRun({
     path: queryJob.id,
     componentPath: queryJob.componentPath,
