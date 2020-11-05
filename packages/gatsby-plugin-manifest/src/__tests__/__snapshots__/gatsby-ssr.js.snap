@@ -33,14 +33,14 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does file name cache busting if "cache_busting_mode" option is set to name 1`] = `
 Array [
   <link
-    href="/favicon-00913339321ee5a854812aea11f8a5d4.svg"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32-00913339321ee5a854812aea11f8a5d4.png"
     rel="icon"
     type="image/png"
+  />,
+  <link
+    href="/favicon-00913339321ee5a854812aea11f8a5d4.svg"
+    rel="icon"
+    type="image/svg+xml"
   />,
   <link
     crossOrigin="anonymous"
@@ -93,14 +93,14 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to query 1`] = `
 Array [
   <link
-    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
     type="image/png"
+  />,
+  <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
   />,
   <link
     crossOrigin="anonymous"
@@ -153,14 +153,14 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to undefined 1`] = `
 Array [
   <link
-    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
     type="image/png"
+  />,
+  <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
   />,
   <link
     crossOrigin="anonymous"
@@ -213,14 +213,14 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting if "cache_busting_mode" option is set to none 1`] = `
 Array [
   <link
-    href="/favicon.svg"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png"
     rel="icon"
     type="image/png"
+  />,
+  <link
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
   />,
   <link
     crossOrigin="anonymous"
@@ -293,14 +293,14 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Adds link favicon tag if "include_favicon" is set to true 1`] = `
 Array [
   <link
-    href="/favicon.svg"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png"
     rel="icon"
     type="image/png"
+  />,
+  <link
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
   />,
   <link
     crossOrigin="anonymous"
@@ -471,14 +471,14 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds "icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
-    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
     type="image/png"
+  />,
+  <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
   />,
   <link
     crossOrigin="anonymous"
