@@ -1,7 +1,7 @@
 import {
   FLAG_DIRTY_PAGE,
   FLAG_DIRTY_TEXT,
-  FLAG_ERROR_BABEL,
+  FLAG_ERROR_EXTRACTION,
   queriesReducer as reducer,
 } from "../queries"
 import {
@@ -474,7 +474,7 @@ describe(`query extraction`, () => {
     expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: FLAG_DIRTY_PAGE })
   })
 
-  it(`doesn't mark page query as dirty if component has babel errors`, () => {
+  it(`doesn't mark page query as dirty if component has query extraction errors`, () => {
     // extract to a valid state first and run to reset initial dirty flag
     state = editFooQuery(state, ComponentQueries.foo)
     state = reducer(
@@ -492,7 +492,7 @@ describe(`query extraction`, () => {
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0)
   })
 
-  it(`recovers after component babel errors`, () => {
+  it(`recovers after component query extraction errors`, () => {
     // extract to a valid state first and run to reset initial dirty flag
     state = editFooQuery(state, ComponentQueries.foo)
     state = reducer(
@@ -550,7 +550,7 @@ describe(`query extraction`, () => {
       queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: FLAG_ERROR_BABEL,
+      errors: FLAG_ERROR_EXTRACTION,
       query: ``,
     })
   })
@@ -568,7 +568,7 @@ describe(`query extraction`, () => {
       queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: FLAG_ERROR_BABEL,
+      errors: FLAG_ERROR_EXTRACTION,
       query: ``,
     })
   })
@@ -591,7 +591,7 @@ describe(`query extraction error`, () => {
       )
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: FLAG_ERROR_BABEL,
+      errors: FLAG_ERROR_EXTRACTION,
     })
   })
 
@@ -604,7 +604,7 @@ describe(`query extraction error`, () => {
       )
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: FLAG_ERROR_BABEL,
+      errors: FLAG_ERROR_EXTRACTION,
     })
   })
 

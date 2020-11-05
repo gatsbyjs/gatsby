@@ -14,7 +14,7 @@ export const FLAG_DIRTY_PAGE = 0b0001
 export const FLAG_DIRTY_TEXT = 0b0010
 export const FLAG_DIRTY_DATA = 0b0100
 
-export const FLAG_ERROR_BABEL = 0b0001
+export const FLAG_ERROR_EXTRACTION = 0b0001
 
 const initialState = (): IGatsbyState["queries"] => {
   return {
@@ -105,7 +105,7 @@ export function queriesReducer(
       // TODO: use hash instead of a query text
       const { componentPath, query } = action.payload
       const component = registerComponent(state, componentPath)
-      if (hasFlag(component.errors, FLAG_ERROR_BABEL)) {
+      if (hasFlag(component.errors, FLAG_ERROR_EXTRACTION)) {
         return state
       }
       if (component.query !== query) {
@@ -126,7 +126,7 @@ export function queriesReducer(
       const { componentPath } = action.payload
       const component = registerComponent(state, componentPath)
       const set = action.type !== `QUERY_EXTRACTION_BABEL_SUCCESS`
-      component.errors = setFlag(component.errors, FLAG_ERROR_BABEL, set)
+      component.errors = setFlag(component.errors, FLAG_ERROR_EXTRACTION, set)
       return state
     }
     case `REPLACE_STATIC_QUERY`: {

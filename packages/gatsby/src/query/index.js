@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
-const { hasFlag, FLAG_ERROR_BABEL } = require(`../redux/reducers/queries`)
+const { hasFlag, FLAG_ERROR_EXTRACTION } = require(`../redux/reducers/queries`)
 const queryQueue = require(`./queue`)
 
 /**
@@ -14,7 +14,7 @@ const calcDirtyQueryIds = state => {
 
   const queriesWithBabelErrors = new Set()
   for (const component of trackedComponents.values()) {
-    if (hasFlag(component.errors, FLAG_ERROR_BABEL)) {
+    if (hasFlag(component.errors, FLAG_ERROR_EXTRACTION)) {
       for (const queryId of component.pages) {
         queriesWithBabelErrors.add(queryId)
       }
