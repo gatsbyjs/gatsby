@@ -91,7 +91,6 @@ export const saveState = (): void => {
   return writeToCache({
     nodes: state.nodes,
     status: state.status,
-    componentDataDependencies: state.componentDataDependencies,
     components: state.components,
     jobsV2: state.jobsV2,
     staticQueryComponents: state.staticQueryComponents,
@@ -100,6 +99,7 @@ export const saveState = (): void => {
     pageData: state.pageData,
     pendingPageDataWrites: state.pendingPageDataWrites,
     staticQueriesByTemplate: state.staticQueriesByTemplate,
+    queries: state.queries,
   })
 }
 
