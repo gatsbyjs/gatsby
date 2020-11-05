@@ -28,18 +28,18 @@ interface IQueryJob {
 }
 
 // Run query
-export const queryRunner = async (
+export async function queryRunner(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
   parentSpan: Span | undefined
-): Promise<IExecutionResult> => {
+): Promise<IExecutionResult> {
   const { program } = store.getState()
 
-  const graphql = (
+  async function startQueryJob(
     query: string,
     context: Record<string, unknown>,
     queryName: string
-  ): Promise<ExecutionResult> => {
+  ): Promise<ExecutionResult> {
     // Check if query takes too long, print out warning
     const promise = graphqlRunner.query(query, context, {
       parentSpan,
@@ -81,7 +81,7 @@ export const queryRunner = async (
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
+    result = await startQueryJob(queryJob.query, queryJob.context, queryJob.id)
   }
 
   // If there's a graphql error then log the error. If we're building, also
