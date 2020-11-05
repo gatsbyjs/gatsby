@@ -46,21 +46,21 @@ const questions = [
     type: `select`,
     name: `cms`,
     message: `Will you be using a CMS?`,
-    hint: `Use arrow keys to move, and enter to select`,
+    hint: `(Single choice) Arrow keys to move, enter to confirm`,
     choices: makeChoices(cmses),
   },
   {
     type: `select`,
     name: `styling`,
     message: `Would you like to install a styling system?`,
-    hint: `Use arrow keys to move, and enter to select`,
+    hint: `(Single choice) Arrow keys to move, enter to confirm`,
     choices: makeChoices(styles),
   },
   {
     type: `multiselect`,
     name: `features`,
     message: `Would you like to install additional features with other plugins?`,
-    hint: `Use arrow keys to move, spacebar to select, and enter to confirm your choices`,
+    hint: `(Multiple choice) Use arrow keys to move, spacebar to select, and enter to confirm your choices`,
     choices: makeChoices(features),
   },
 ]
@@ -93,13 +93,17 @@ export async function run(): Promise<void> {
   )
 
   console.log(
-    c.red.italic(`Important: This is currently for testing purposes only`)
+    c.red(`
+====================================================================================
+This is currently for testing purposes only
+====================================================================================
+    `)
   )
 
   console.log(
     `This command will generate a new Gatsby site for you with the setup you select.`
   )
-  console.log(`Let's answer some questions:\n`)
+  console.log(`${c.white.bold(`Let's answer some questions:\n`)}`)
   const data = await prompt<IAnswers>(questions)
 
   const messages: Array<string> = [
