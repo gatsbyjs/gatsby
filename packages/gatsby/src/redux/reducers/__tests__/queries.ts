@@ -1,4 +1,9 @@
-import { queriesReducer as reducer } from "../queries"
+import {
+  FLAG_DIRTY_PAGE,
+  FLAG_DIRTY_TEXT,
+  FLAG_ERROR_BABEL,
+  queriesReducer as reducer,
+} from "../queries"
 import {
   queryStart,
   pageQueryRun,
@@ -101,8 +106,8 @@ describe(`create page`, () => {
 
     expect(state).toMatchObject({
       trackedQueries: new Map([
-        [`/foo`, { dirty: 1 }],
-        [`/bar`, { dirty: 1 }],
+        [`/foo`, { dirty: FLAG_DIRTY_PAGE }],
+        [`/bar`, { dirty: FLAG_DIRTY_PAGE }],
       ]),
     })
   })
@@ -125,7 +130,7 @@ describe(`create page`, () => {
     state = createPage(state, Pages.foo, { contextModified: true })
 
     expect(state.trackedQueries.get(`/foo`)).toEqual({
-      dirty: 1,
+      dirty: FLAG_DIRTY_PAGE,
     })
   })
 
@@ -253,7 +258,7 @@ describe(`replace static query`, () => {
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
 
     expect(state).toMatchObject({
-      trackedQueries: new Map([[`sq--q1`, { dirty: 2 }]]),
+      trackedQueries: new Map([[`sq--q1`, { dirty: FLAG_DIRTY_TEXT }]]),
     })
   })
 
@@ -271,7 +276,7 @@ describe(`replace static query`, () => {
 
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
     expect(state.trackedQueries.get(`sq--q1`)).toEqual({
-      dirty: 2,
+      dirty: FLAG_DIRTY_TEXT,
     })
   })
 
@@ -451,10 +456,14 @@ describe(`query extraction`, () => {
   it(`marks all page queries associated with the component as dirty on the first run`, () => {
     state = reducer(state, queryExtracted(ComponentQueries.bar, {} as any))
 
-    expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: 3 })
-    expect(state.trackedQueries.get(`/bar2`)).toEqual({ dirty: 3 })
+    expect(state.trackedQueries.get(`/bar`)).toEqual({
+      dirty: FLAG_DIRTY_PAGE | FLAG_DIRTY_TEXT,
+    })
+    expect(state.trackedQueries.get(`/bar2`)).toEqual({
+      dirty: FLAG_DIRTY_PAGE | FLAG_DIRTY_TEXT,
+    })
     // Sanity check
-    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 1 })
+    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: FLAG_DIRTY_PAGE })
   })
 
   it(`doesn't mark page query as dirty if query text didn't change`, () => {
@@ -462,7 +471,7 @@ describe(`query extraction`, () => {
 
     expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 0 })
     // sanity-check (we didn't run or extract /bar)
-    expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: 1 })
+    expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: FLAG_DIRTY_PAGE })
   })
 
   it(`doesn't mark page query as dirty if component has babel errors`, () => {
@@ -506,13 +515,13 @@ describe(`query extraction`, () => {
       state,
       queryExtracted(ComponentQueries.fooEdited, {} as any)
     )
-    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(2)
+    expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(FLAG_DIRTY_TEXT)
   })
 
   it(`marks all page queries associated with the component as dirty when query text changes`, () => {
     state = editFooQuery(state, ComponentQueries.fooEdited)
 
-    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 2 })
+    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: FLAG_DIRTY_TEXT })
   })
 
   it.skip(`marks all static queries associated with this component as dirty`, () => {
@@ -541,7 +550,7 @@ describe(`query extraction`, () => {
       queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: 1,
+      errors: FLAG_ERROR_BABEL,
       query: ``,
     })
   })
@@ -559,7 +568,7 @@ describe(`query extraction`, () => {
       queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: 1,
+      errors: FLAG_ERROR_BABEL,
       query: ``,
     })
   })
@@ -582,7 +591,7 @@ describe(`query extraction error`, () => {
       )
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: 1,
+      errors: FLAG_ERROR_BABEL,
     })
   })
 
@@ -595,7 +604,7 @@ describe(`query extraction error`, () => {
       )
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
-      errors: 1,
+      errors: FLAG_ERROR_BABEL,
     })
   })
 
