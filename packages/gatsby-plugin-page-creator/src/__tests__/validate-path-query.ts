@@ -49,7 +49,7 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
   })
 
   it(`works if all the above predicates pass`, async () => {
-    const filePath = `/foo/{bar}-{baz}_{a}.{b}`
+    const filePath = `/foo/{bar}`
     const absolutePath = systemPath.join(
       process.cwd(),
       `src/pages`,

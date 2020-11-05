@@ -15,6 +15,7 @@ export function getCollectionRouteParams(
   // Create a regex string for later use by creating groups for all { } finds
   // e.g. /foo/prefix-{Product.id} => /foo/prefix-(.+)
   const templateRegex = cleanedUrlTemplate
+    .replace(/\./g, `\\.`) // Escape dots
     .replace(/(\{.*?\})/g, `(.+)`)
     .split(`/`)
   const urlParts = urlPath.split(`/`)

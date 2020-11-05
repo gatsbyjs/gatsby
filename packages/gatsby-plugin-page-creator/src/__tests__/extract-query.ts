@@ -68,15 +68,6 @@ describe(`extract query`, () => {
         )
       ).toBe(`{allThing{nodes{id}}}`)
     })
-
-    it(`works with arguments`, () => {
-      expect(
-        generateQueryFromString(
-          `{ allThing(filter: { main_url: { nin: [] }}) { ...CollectionPagesQueryFragment } }`,
-          compatiblePath(`/foo/bar/{Thing.id}.js`)
-        )
-      ).toBe(`{ allThing(filter: { main_url: { nin: [] }}) { nodes{id} } }`)
-    })
   })
 
   describe(`filepath resolution`, () => {
