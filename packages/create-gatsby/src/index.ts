@@ -29,7 +29,7 @@ const questions = [
     name: `project`,
     message: `What would you like to name the folder where your site will be created?`,
     initial: `my-gatsby-site`,
-    format: value => c.cyan(value),
+    format: (value: string): string => c.cyan(value),
     validate: (value: string): string | boolean => {
       if (INVALID_FILENAMES.test(value)) {
         return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
