@@ -144,26 +144,29 @@ module.exports = (
 
     async function getAST(markdownNode) {
       const cacheKey = astCacheKey(markdownNode)
+
+      const promise = ASTPromiseMap.get(cacheKey)
+      if (promise) {
+        // We are already generating AST, so let's wait for it
+        return promise
+      }
+
       const cachedAST = await cache.get(cacheKey)
       if (cachedAST) {
         return cachedAST
-      } else if (ASTPromiseMap.has(cacheKey)) {
-        // We are already generating AST, so let's wait for it
-        return await ASTPromiseMap.get(cacheKey)
-      } else {
-        const ASTGenerationPromise = getMarkdownAST(markdownNode)
-        ASTGenerationPromise.then(markdownAST => {
-          ASTPromiseMap.delete(cacheKey)
-          return cache.set(cacheKey, markdownAST)
-        }).catch(err => {
-          ASTPromiseMap.delete(cacheKey)
-          return err
-        })
-        // Save new AST to cache and return
-        // We can now release promise, as we cached result
-        ASTPromiseMap.set(cacheKey, ASTGenerationPromise)
-        return ASTGenerationPromise
       }
+
+      const ASTGenerationPromise = getMarkdownAST(markdownNode)
+      ASTPromiseMap.set(cacheKey, ASTGenerationPromise)
+
+      // Return the promise that will cache the result if good, and deletes the promise from local cache either way
+      // Note that if this cache hits for another parse, it won't have to wait for the cache
+      return ASTGenerationPromise.then(markdownAST =>
+        // Return a promise that waits for the cache to be set, but that does return the generated AST
+        cache.set(cacheKey, markdownAST).then(() => markdownAST)
+      ).finally(() => {
+        ASTPromiseMap.delete(cacheKey)
+      })
     }
 
     // Parse a markdown string and its AST representation,
@@ -278,7 +281,7 @@ module.exports = (
           }
         })
 
-        cache.set(headingsCacheKey(markdownNode), headings)
+        await cache.set(headingsCacheKey(markdownNode), headings)
         return headings
       }
     }
@@ -335,7 +338,10 @@ module.exports = (
         } else {
           toc = ``
         }
-        cache.set(tableOfContentsCacheKey(markdownNode, appliedTocOptions), toc)
+        await cache.set(
+          tableOfContentsCacheKey(markdownNode, appliedTocOptions),
+          toc
+        )
         return toc
       }
     }
@@ -356,7 +362,7 @@ module.exports = (
         const htmlAst = markdownASTToHTMLAst(ast)
 
         // Save new HTML AST to cache and return
-        cache.set(htmlAstCacheKey(markdownNode), htmlAst)
+        await cache.set(htmlAstCacheKey(markdownNode), htmlAst)
         return htmlAst
       }
     }
@@ -373,7 +379,7 @@ module.exports = (
         })
 
         // Save new HTML to cache
-        cache.set(htmlCacheKey(markdownNode), html)
+        await cache.set(htmlCacheKey(markdownNode), html)
 
         return html
       }
@@ -536,7 +542,7 @@ module.exports = (
     return resolve({
       html: {
         type: `String`,
-        resolve(markdownNode) {
+        async resolve(markdownNode) {
           return getHTML(markdownNode)
         },
       },
