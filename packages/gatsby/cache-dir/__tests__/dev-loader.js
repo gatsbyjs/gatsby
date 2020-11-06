@@ -279,7 +279,7 @@ describe(`Dev loader`, () => {
   describe(`loadPage`, () => {
     const createSyncRequires = components => {
       return {
-        components,
+        lazyComponents: components,
       }
     }
 
@@ -373,29 +373,6 @@ describe(`Dev loader`, () => {
         page: expectation.payload,
         pageResources: expectation.payload,
       })
-    })
-
-    it(`should return an error when component cannot be loaded`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: false,
-      })
-      const devLoader = new DevLoader(syncRequires, [])
-      const pageData = {
-        path: `/mypage/`,
-        componentChunkName: `chunk`,
-        staticQueryHashes: [],
-      }
-      devLoader.loadPageDataJson = jest.fn(() =>
-        Promise.resolve({
-          payload: pageData,
-          status: `success`,
-        })
-      )
-
-      await devLoader.loadPage(`/mypage/`)
-      const expectation = devLoader.pageDb.get(`/mypage`)
-      expect(expectation).toHaveProperty(`status`, `error`)
-      expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should return an error pageData contains an error`, async () => {

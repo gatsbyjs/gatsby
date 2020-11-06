@@ -2,12 +2,16 @@ import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
 
 class DevLoader extends BaseLoader {
-  constructor(lazySyncRequires, matchPaths) {
-    const loadComponent = chunkName => {
-      delete require.cache[
-        require.resolve(`$virtual/lazy-client-sync-requires`)
-      ]
-      const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
+  constructor(lazyRequires, matchPaths) {
+    // One of the tests doesn't set a path.
+    const loadComponent = (chunkName, path = `/`) => {
+      const realPath = findPath(path)
+      if (process.env.NODE_ENV !== `test`) {
+        delete require.cache[
+          require.resolve(`$virtual/lazy-client-sync-requires`)
+        ]
+        lazyRequires = require(`$virtual/lazy-client-sync-requires`)
+      }
       if (lazyRequires.lazyComponents[chunkName]) {
         return Promise.resolve(lazyRequires.lazyComponents[chunkName])
       } else {
@@ -19,10 +23,22 @@ class DevLoader extends BaseLoader {
           req.setRequestHeader(`Content-Type`, `application/json;charset=UTF-8`)
           req.send(JSON.stringify({ chunkName }))
 
+          // Timeout after 5 seconds (as a precaution webpack fails to update)
+          // and hard refresh
+          const timeoutTimer = setTimeout(() => {
+            clearInterval(checkForUpdates)
+            clearTimeout(timeoutTimer)
+            // window.location.href = realPath
+            window.location.assign(realPath)
+          }, 5000)
+
           const checkForUpdates = setInterval(() => {
-            delete require.cache[
-              require.resolve(`$virtual/lazy-client-sync-requires`)
-            ]
+            clearTimeout(timeoutTimer)
+            if (process.env.NODE_ENV !== `test`) {
+              delete require.cache[
+                require.resolve(`$virtual/lazy-client-sync-requires`)
+              ]
+            }
             const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
             if (lazyRequires.lazyComponents[chunkName]) {
               clearInterval(checkForUpdates)

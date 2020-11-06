@@ -232,28 +232,29 @@ export class BaseLoader {
 
       const finalResult = {}
 
-      const componentChunkPromise = this.loadComponent(componentChunkName).then(
-        component => {
-          finalResult.createdAt = new Date()
-          let pageResources
-          if (!component) {
-            finalResult.status = PageResourceStatus.Error
-          } else {
-            finalResult.status = PageResourceStatus.Success
-            if (result.notFound === true) {
-              finalResult.notFound = true
-            }
-            pageData = Object.assign(pageData, {
-              webpackCompilationHash: allData[0]
-                ? allData[0].webpackCompilationHash
-                : ``,
-            })
-            pageResources = toPageResources(pageData, component)
+      const componentChunkPromise = this.loadComponent(
+        componentChunkName,
+        pageData.path
+      ).then(component => {
+        finalResult.createdAt = new Date()
+        let pageResources
+        if (!component) {
+          finalResult.status = PageResourceStatus.Error
+        } else {
+          finalResult.status = PageResourceStatus.Success
+          if (result.notFound === true) {
+            finalResult.notFound = true
           }
-          // undefined if final result is an error
-          return pageResources
+          pageData = Object.assign(pageData, {
+            webpackCompilationHash: allData[0]
+              ? allData[0].webpackCompilationHash
+              : ``,
+          })
+          pageResources = toPageResources(pageData, component)
         }
-      )
+        // undefined if final result is an error
+        return pageResources
+      })
 
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
