@@ -282,6 +282,31 @@ module.exports = (
       return headings
     }
 
+    function addSlugToUrl(markdownNode, slugField, appliedTocOptions, node) {
+      if (node.url) {
+        if (slugField === undefined) {
+          console.warn(
+            `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
+          )
+          return null
+        }
+
+        node.url = [basePath, slugField, node.url]
+          .join(`/`)
+          .replace(/\/\//g, `/`)
+      }
+
+      if (node.children) {
+        node.children = node.children
+          .map(node =>
+            addSlugToUrl(markdownNode, slugField, appliedTocOptions, node)
+          )
+          .filter(Boolean)
+      }
+
+      return node
+    }
+
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
       let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
@@ -299,41 +324,26 @@ module.exports = (
 
       let toc = ``
       if (tocAst.map) {
-        const addSlugToUrl = function (node) {
-          if (node.url) {
-            const slugField = _.get(
-              markdownNode,
-              appliedTocOptions.pathToSlugField
-            )
-
-            if (slugField === undefined) {
-              console.warn(
-                `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
-              )
-              return null
-            }
-
-            node.url = [basePath, slugField, node.url]
-              .join(`/`)
-              .replace(/\/\//g, `/`)
-          }
-
-          if (node.children) {
-            node.children = node.children
-              .map(node => addSlugToUrl(node))
-              .filter(Boolean)
-          }
-
-          return node
-        }
-
         if (appliedTocOptions.absolute) {
-          tocAst.map = addSlugToUrl(tocAst.map)
+          const slugField = _.get(
+            markdownNode,
+            appliedTocOptions.pathToSlugField
+          )
+
+          tocAst.map = addSlugToUrl(
+            markdownNode,
+            slugField,
+            appliedTocOptions,
+            tocAst.map
+          )
         }
 
-        toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-          allowDangerousHTML: true,
-        })
+        // addSlugToUrl may clear the map
+        if (tocAst.map) {
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+            allowDangerousHTML: true,
+          })
+        }
       }
 
       await cache.set(tocKey, toc)
