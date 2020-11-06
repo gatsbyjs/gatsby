@@ -1,4 +1,4 @@
-import { prompt } from "enquirer"
+import Enquirer, { prompt, Prompt } from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
@@ -7,6 +7,8 @@ import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
+// @ts-ignore
+import { MyInput } from "./components/text"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, rule } from "./components/utils"
 
@@ -102,7 +104,18 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     `This command will generate a new Gatsby site for you with the setup you select.`
   )
   console.log(`${c.white.bold(`Let's answer some questions:\n`)}`)
-  const data = await prompt<IAnswers>(questions)
+
+  const p = (new MyInput({
+    message: `What is your username?`,
+    initial: `jonschlinkert`,
+  }) as unknown) as Prompt
+
+  const enquirer = new Enquirer<IAnswers>()
+  enquirer.register(`input`, (MyInput as unknown) as typeof Prompt)
+
+  await p.run()
+
+  const data = await enquirer.prompt(questions)
 
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.magenta(data.project)}`,
