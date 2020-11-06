@@ -8,7 +8,7 @@ import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
 // @ts-ignore
-import { MyInput } from "./components/text"
+import { TextInput } from "./components/text"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, rule } from "./components/utils"
 
@@ -28,9 +28,11 @@ const makeChoices = (
 
 const questions = [
   {
-    type: `input`,
+    type: `textinput`,
     name: `project`,
     message: `What would you like to name the folder where your site will be created?`,
+    prefix: path.basename(process.cwd()),
+    separator: `/`,
     initial: `my-gatsby-site`,
     format: (value: string): string => c.cyan(value),
     validate: (value: string): string | boolean => {
@@ -101,19 +103,14 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   console.log(c.red(rule()))
 
   console.log(
-    `This command will generate a new Gatsby site for you with the setup you select.`
+    `This command will generate a new Gatsby site for you with the setup you select. ${c.white.bold(
+      `Let's answer some questions:\n`
+    )}`
   )
-  console.log(`${c.white.bold(`Let's answer some questions:\n`)}`)
-
-  const p = (new MyInput({
-    message: `What is your username?`,
-    initial: `jonschlinkert`,
-  }) as unknown) as Prompt
+  console.log(``)
 
   const enquirer = new Enquirer<IAnswers>()
-  enquirer.register(`input`, (MyInput as unknown) as typeof Prompt)
-
-  await p.run()
+  enquirer.register(`textinput`, (TextInput as unknown) as typeof Prompt)
 
   const data = await enquirer.prompt(questions)
 
@@ -168,7 +165,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     console.log(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
-    pluginConfig = await prompt<Record<string, {}>>(config)
+    pluginConfig = await new Enquirer<Record<string, {}>>().prompt(config)
   }
 
   console.log(`
@@ -178,7 +175,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     ${messages.join(`\n    `)}
   `)
 
-  const { confirm } = await prompt<{ confirm: boolean }>({
+  const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
     type: `confirm`,
     name: `confirm`,
     initial: `Yes`,

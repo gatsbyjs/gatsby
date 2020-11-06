@@ -1,10 +1,8 @@
 import { Input } from "enquirer"
-
-export class MyInput extends Input {
-  constructor(options = {}) {
+export class TextInput extends Input {
+  constructor(options) {
     super(options)
-    this.value = options.initial || 0
-    this.cursorHide()
+    this.cursorShow()
   }
   async render() {
     const size = this.state.size
@@ -13,19 +11,32 @@ export class MyInput extends Input {
     const separator = await this.separator()
     const message = await this.message()
 
-    let prompt = [prefix, message, separator].filter(Boolean).join(` `)
+    let prompt = [this.symbols.pointer, ` `, prefix, separator]
+      .filter(Boolean)
+      .join(``)
     this.state.prompt = prompt
 
     const header = await this.header()
     let output = await this.format()
+    const unstyled = this.styles.unstyle(output)
+
+    // Make a fake cursor if we're showing the placeholder
+    if (!this.input?.length && unstyled.length) {
+      this.cursorHide()
+      output =
+        this.styles.highlight(unstyled[0]) +
+        this.styles.placeholder(unstyled.slice(1))
+    } else {
+      this.cursorShow()
+    }
     const help = (await this.error()) || (await this.hint())
     const footer = await this.footer()
 
     if (help && !output.includes(help)) output += ` ` + help
-    prompt += ` !!! ` + output
+    prompt += ` ` + output
 
     this.clear(size)
-    this.write([header, prompt, footer].filter(Boolean).join(`\n`))
+    this.write([header, message, prompt, footer].filter(Boolean).join(`\n`))
     this.restore()
   }
 }
