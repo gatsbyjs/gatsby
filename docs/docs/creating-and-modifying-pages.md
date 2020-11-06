@@ -121,6 +121,7 @@ Using the `id` as an access point to query for other properties in the template 
 
 ```javascript:title=gatsby-node.js
 
+const pathObject = require("path");
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const queryResults = await graphql(`
