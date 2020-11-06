@@ -131,7 +131,7 @@ export class GraphQLRunner {
     }
   }
 
-  query(
+  async query(
     query: Query,
     context: Record<string, unknown>,
     {
@@ -161,6 +161,15 @@ export class GraphQLRunner {
     const document = this.parse(query)
     const errors = this.validate(schema, document)
 
+    // Queries are usually executed in batch. But after the batch is finished
+    // cache just wastes memory without much benefits.
+    // TODO: consider a better strategy for cache purging/invalidation
+    this.scheduleClearCache()
+
+    if (errors.length > 0) {
+      return { errors }
+    }
+
     let tracer
     if (this.graphqlTracing && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
@@ -174,31 +183,22 @@ export class GraphQLRunner {
     }
 
     try {
-      const result =
-        errors.length > 0
-          ? { errors }
-          : execute({
-              schema,
-              document,
-              rootValue: context,
-              contextValue: withResolverContext({
-                schema,
-                schemaComposer: schemaCustomization.composer,
-                context,
-                customContext: schemaCustomization.context,
-                nodeModel: this.nodeModel,
-                stats: this.stats,
-                tracer,
-              }),
-              variableValues: context,
-            })
-
-      // Queries are usually executed in batch. But after the batch is finished
-      // cache just wastes memory without much benefits.
-      // TODO: consider a better strategy for cache purging/invalidation
-      this.scheduleClearCache()
-
-      return Promise.resolve(result)
+      // `execute` will return a promise
+      return execute({
+        schema,
+        document,
+        rootValue: context,
+        contextValue: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context,
+          customContext: schemaCustomization.context,
+          nodeModel: this.nodeModel,
+          stats: this.stats,
+          tracer,
+        }),
+        variableValues: context,
+      })
     } finally {
       if (tracer) {
         tracer.end()
