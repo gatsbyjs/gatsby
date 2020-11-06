@@ -248,8 +248,8 @@ const compressJpg = (
   outputPath,
   outputPathRelativeToPublic,
   options
-) => {
-  return pipeline.toBuffer().then(sharpBuffer =>
+) =>
+  pipeline.toBuffer().then(sharpBuffer =>
     imagemin
       .buffer(sharpBuffer, {
         plugins: [
@@ -259,9 +259,7 @@ const compressJpg = (
           }),
         ],
       })
-      .then(imageminBuffer => {
-        return imageminBuffer
-      })
+      .then(imageminBuffer => imageminBuffer)
       .then(imageminBuffer => {
         if (process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
           return getDrive().then(drive =>
@@ -272,7 +270,6 @@ const compressJpg = (
         }
       })
   )
-}
 
 exports.createArgsDigest = args => {
   const argsDigest = createContentDigest(args)
