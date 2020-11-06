@@ -560,11 +560,10 @@ module.exports = function remarkExtendNodeType(
       },
       htmlAst: {
         type: `JSON`,
-        resolve(markdownNode) {
-          return getHTMLAst(markdownNode).then(ast => {
-            const strippedAst = stripPosition(_.clone(ast), true)
-            return hastReparseRaw(strippedAst)
-          })
+        async resolve(markdownNode) {
+          const ast = await getHTMLAst(markdownNode)
+          const strippedAst = stripPosition(_.clone(ast), true)
+          return hastReparseRaw(strippedAst)
         },
       },
       excerpt: {
@@ -604,19 +603,15 @@ module.exports = function remarkExtendNodeType(
             defaultValue: false,
           },
         },
-        resolve(markdownNode, { pruneLength, truncate }) {
-          return getHTMLAst(markdownNode)
-            .then(fullAST =>
-              getExcerptAst(fullAST, markdownNode, {
-                pruneLength,
-                truncate,
-                excerptSeparator: pluginOptions.excerpt_separator,
-              })
-            )
-            .then(ast => {
-              const strippedAst = stripPosition(_.clone(ast), true)
-              return hastReparseRaw(strippedAst)
-            })
+        async resolve(markdownNode, { pruneLength, truncate }) {
+          const fullAST = await getHTMLAst(markdownNode)
+          const ast = await getExcerptAst(fullAST, markdownNode, {
+            pruneLength,
+            truncate,
+            excerptSeparator: pluginOptions.excerpt_separator,
+          })
+          const strippedAst = stripPosition(_.clone(ast), true)
+          return hastReparseRaw(strippedAst)
         },
       },
       headings: {
@@ -624,20 +619,20 @@ module.exports = function remarkExtendNodeType(
         args: {
           depth: `MarkdownHeadingLevels`,
         },
-        resolve(markdownNode, { depth }) {
-          return getHeadings(markdownNode).then(headings => {
-            const level = depth && headingLevels[depth]
-            if (typeof level === `number`) {
-              headings = headings.filter(heading => heading.depth === level)
-            }
-            return headings
-          })
+        async resolve(markdownNode, { depth }) {
+          let headings = await getHeadings(markdownNode)
+          const level = depth && headingLevels[depth]
+          if (typeof level === `number`) {
+            headings = headings.filter(heading => heading.depth === level)
+          }
+          return headings
         },
       },
       timeToRead: {
         type: `Int`,
-        resolve(markdownNode) {
-          return getHTML(markdownNode).then(timeToRead)
+        async resolve(markdownNode) {
+          const r = await getHTML(markdownNode)
+          return timeToRead(r)
         },
       },
       tableOfContents: {
