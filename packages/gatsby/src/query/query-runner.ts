@@ -116,6 +116,12 @@ export async function queryRunner(
 ): Promise<IExecutionResult> {
   const { program } = store.getState()
 
+  boundActionCreators.queryStart({
+    path: queryJob.id,
+    componentPath: queryJob.componentPath,
+    isPage: queryJob.isPage,
+  })
+
   // Run query
   let result: IExecutionResult
   // Nothing to do if the query doesn't exist.

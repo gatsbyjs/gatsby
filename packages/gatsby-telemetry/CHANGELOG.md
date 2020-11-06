@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.4.0-next.0...gatsby-telemetry@1.4.0-next.1) (2020-11-05)
+
+### Features
+
+- **gatsby-telemetry:** adjust how we capture plugins for telemetry ([#27835](https://github.com/gatsbyjs/gatsby/issues/27835)) ([e824841](https://github.com/gatsbyjs/gatsby/commit/e8248418e7e2685a50d6349b1c986f5bb10ceef1))
+
 ## [1.3.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.38...gatsby-telemetry@1.3.39) (2020-11-02)
 
 **Note:** Version bump only for package gatsby-telemetry
