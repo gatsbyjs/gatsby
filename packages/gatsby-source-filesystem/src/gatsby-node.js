@@ -157,7 +157,11 @@ exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     name: Joi.string(),
     path: Joi.string(),
-    ignore: Joi.array().items(Joi.string()),
+    ignore: Joi.array().items(
+      Joi.string(),
+      Joi.object().regex(),
+      Joi.function()
+    ),
   })
 
 exports.sourceNodes = (api, pluginOptions) => {
