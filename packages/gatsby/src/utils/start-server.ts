@@ -27,9 +27,12 @@ import https from "https"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
+import { reverseFixedPagePath, readPageData } from "./page-data"
+import { findPageByPath } from "./find-page-by-path"
 import { slash } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
+import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
@@ -211,6 +214,47 @@ export async function startServer(
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
     res.end()
+  })
+
+  app.get(`/page-data/:pagePath(*)/page-data.json`, async (req, res, next) => {
+    const requestedPagePath = req.params.pagePath
+    if (!requestedPagePath) {
+      report.verbose(`[page-data-handler] empty requestedPagePath, skipping.`)
+      next()
+    }
+
+    const potentialPagePath = reverseFixedPagePath(requestedPagePath)
+    const page = findPageByPath(store.getState(), potentialPagePath, false)
+
+    if (page) {
+      report.verbose(
+        `[page-data-handler] page for "${requestedPagePath}":\n${JSON.stringify(
+          page,
+          null,
+          2
+        )}`
+      )
+
+      try {
+        const pageData = await readPageData(
+          path.join(store.getState().program.directory, `public`),
+          page.path
+        )
+        res.status(200).send(pageData)
+      } catch (e) {
+        throw new Error(
+          `Error loading a result for the page query in "${potentialPagePath}". Query was not run and no cached result was found.`
+        )
+      }
+    } else {
+      report.verbose(
+        `[page-data-handler] couldn't find page for "${requestedPagePath}" / "${potentialPagePath}"`
+      )
+      res.status(404).send({
+        path: potentialPagePath,
+      })
+      return
+    }
   })
 
   // Disable directory indexing i.e. serving index.html from a directory.

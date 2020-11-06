@@ -24,6 +24,10 @@ export function fixedPagePath(pagePath: string): string {
   return pagePath === `/` ? `index` : pagePath
 }
 
+export function reverseFixedPagePath(pageDataRequestPath: string): string {
+  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
+}
+
 function getFilePath(publicDir: string, pagePath: string): string {
   return path.join(
     publicDir,
