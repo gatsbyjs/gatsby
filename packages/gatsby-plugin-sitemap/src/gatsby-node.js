@@ -109,6 +109,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       Due to how this plugin was built it is currently expected/required to fetch the page paths from allSitePage, 
       but you may use the allSitePage.edges.node or allSitePage.nodes query structure.`
       ),
+      sitemapSize: Joi.number().description(
+        `The number of entries per sitemap file.`
+      ),
     })
     .external(({ query }) => {
       if (query) {
