@@ -80,7 +80,7 @@ const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
   return acc
 }, {})
 
-module.exports = (
+module.exports = function remarkExtendNodeType(
   {
     type,
     basePath,
@@ -92,7 +92,7 @@ module.exports = (
     ...rest
   },
   pluginOptions
-) => {
+) {
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
