@@ -22,7 +22,7 @@ import { version } from "babel-preset-gatsby/package.json"
  *
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
-export default babelLoader.custom(babel => {
+export default babelLoader.custom((babel: Record<string, any>) => {
   const toReturn = {
     // Passed the loader options.
     customOptions({
@@ -30,7 +30,11 @@ export default babelLoader.custom(babel => {
       reactRuntime = `classic`,
       rootDir = process.cwd(),
       ...options
-    }): { custom: Record<string, any>; loader: Record<string, any> } {
+    }: {
+      stage?: string
+      reactRuntime?: string
+      rootDir?: string
+    } = {}): { custom: Record<string, any>; loader: Record<string, any> } {
       return {
         custom: {
           stage,
@@ -51,7 +55,10 @@ export default babelLoader.custom(babel => {
     },
 
     // Passed Babel's 'PartialConfig' object.
-    config(partialConfig, { customOptions }): Record<string, any> {
+    config(
+      partialConfig: Record<string, any>,
+      { customOptions }: Record<string, any>
+    ): Record<string, any> {
       let { options } = partialConfig
       const [
         reduxPresets,
@@ -79,7 +86,7 @@ export default babelLoader.custom(babel => {
       }
 
       // Merge in presets/plugins added from gatsby plugins.
-      reduxPresets.forEach(preset => {
+      reduxPresets.forEach((preset: Record<string, any>) => {
         options.presets = mergeConfigItemOptions({
           items: options.presets,
           itemToMerge: preset,
@@ -88,7 +95,7 @@ export default babelLoader.custom(babel => {
         })
       })
 
-      reduxPlugins.forEach(plugin => {
+      reduxPlugins.forEach((plugin: Record<string, any>) => {
         options.plugins = mergeConfigItemOptions({
           items: options.plugins,
           itemToMerge: plugin,
