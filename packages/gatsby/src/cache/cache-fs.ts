@@ -16,11 +16,11 @@ const wrapCallback = require(`./wrap-callback`)
  * @param {boolean} [args.subdirs] create subdirectories
  * @returns {DiskStore}
  */
-exports.create = function (args) {
+exports.create = function (args): typeof DiskStore {
   return new DiskStore(args && args.options ? args.options : args)
 }
 
-function DiskStore(options) {
+function DiskStore(options): void {
   options = options || {}
 
   this.options = {
@@ -162,14 +162,14 @@ DiskStore.prototype.del = wrapCallback(async function (key) {
 /**
  * cleanup cache on disk -> delete all files from the cache
  */
-DiskStore.prototype.reset = wrapCallback(async function () {
+DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
   const readdir = promisify(fs.readdir)
   const stat = promisify(fs.stat)
   const unlink = promisify(fs.unlink)
 
   return await deletePath(this.options.path, 2)
 
-  async function deletePath(fileOrDir, maxDeep) {
+  async function deletePath(fileOrDir, maxDeep): Promise<void> {
     if (maxDeep < 0) {
       return
     }
@@ -195,7 +195,7 @@ DiskStore.prototype.reset = wrapCallback(async function () {
  * @returns {Promise}
  * @private
  */
-DiskStore.prototype._lock = function (filePath) {
+DiskStore.prototype._lock = function (filePath): Promise<void> {
   return promisify(lockFile.lock)(
     filePath + `.lock`,
     JSON.parse(JSON.stringify(this.options.lockFile)) //the options are modified -> create a copy to prevent that
@@ -209,7 +209,7 @@ DiskStore.prototype._lock = function (filePath) {
  * @returns {Promise}
  * @private
  */
-DiskStore.prototype._unlock = function (filePath) {
+DiskStore.prototype._unlock = function (filePath): Promise<void> {
   return promisify(lockFile.unlock)(filePath + `.lock`)
 }
 
@@ -219,7 +219,7 @@ DiskStore.prototype._unlock = function (filePath) {
  * @returns {string}
  * @private
  */
-DiskStore.prototype._getFilePathByKey = function (key) {
+DiskStore.prototype._getFilePathByKey = function (key): string {
   const hash = crypto
     .createHash(`md5`)
     .update(key + ``)

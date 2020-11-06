@@ -2,7 +2,7 @@ const promisify = require(`util`).promisify
 const fs = require(`fs`)
 const zlib = require(`zlib`)
 
-exports.write = async function (path, data, options) {
+exports.write = async function (path, data, options): Promise<void> {
   const externalBuffers = []
   let dataString = JSON.stringify(data, function replacerFunction(k, value) {
     //Buffers searilize to {data: [...], type: "Buffer"}
@@ -58,7 +58,7 @@ exports.write = async function (path, data, options) {
   )
 }
 
-exports.read = async function (path, options) {
+exports.read = async function (path, options): Promise<string> {
   let zipExtension = ``
   if (options.zip) {
     zipExtension = `.gz`
@@ -134,7 +134,7 @@ exports.read = async function (path, options) {
   return data
 }
 
-exports.delete = async function (path, options) {
+exports.delete = async function (path, options): Promise<void> {
   let zipExtension = ``
   if (options.zip) {
     zipExtension = `.gz`

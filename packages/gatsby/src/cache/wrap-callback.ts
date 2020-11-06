@@ -3,8 +3,10 @@
  * @param {function} fn
  * @returns {function}
  */
-module.exports = function wrapCallback(fn) {
-  return function (...args) {
+module.exports = function wrapCallback<T>(
+  fn: () => Promise<T>
+): () => Promise<T> {
+  return function (...args): Promise<T> {
     let cb
     if (typeof args[args.length - 1] === `function`) {
       cb = args.pop()
