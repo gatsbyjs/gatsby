@@ -144,7 +144,7 @@ function extendErrorIdWithPluginName(pluginName, errorMeta) {
   return errorMeta
 }
 
-function getErrorMapWthPluginName(pluginName, errorMap) {
+function getErrorMapWithPluginName(pluginName, errorMap) {
   const entries = Object.entries(errorMap)
 
   return entries.reduce((memo, [key, val]) => {
@@ -165,21 +165,55 @@ function extendLocalReporterToCatchPluginErrors({
   let panic = reporter.panic
   let panicOnBuild = reporter.panicOnBuild
 
+  const addPluginNameToErrorMeta = (errorMeta, pluginName) =>
+    typeof errorMeta === `string`
+      ? {
+          context: {
+            sourceMessage: errorMeta,
+          },
+          pluginName,
+        }
+      : {
+          ...errorMeta,
+          pluginName,
+        }
+
   if (pluginName && reporter?.setErrorMap) {
     setErrorMap = errorMap =>
-      reporter.setErrorMap(getErrorMapWthPluginName(pluginName, errorMap))
+      reporter.setErrorMap(getErrorMapWithPluginName(pluginName, errorMap))
 
-    error = (errorMeta, error) =>
-      reporter.error(extendErrorIdWithPluginName(pluginName, errorMeta), error)
-
-    panic = (errorMeta, error) =>
-      reporter.panic(extendErrorIdWithPluginName(pluginName, errorMeta), error)
-
-    panicOnBuild = (errorMeta, error) =>
-      reporter.panicOnBuild(
-        extendErrorIdWithPluginName(pluginName, errorMeta),
+    error = (errorMeta, error) => {
+      const errorMetaWithPluginName = addPluginNameToErrorMeta(
+        errorMeta,
+        pluginName
+      )
+      reporter.error(
+        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
         error
       )
+    }
+
+    panic = (errorMeta, error) => {
+      const errorMetaWithPluginName = addPluginNameToErrorMeta(
+        errorMeta,
+        pluginName
+      )
+      reporter.panic(
+        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
+        error
+      )
+    }
+
+    panicOnBuild = (errorMeta, error) => {
+      const errorMetaWithPluginName = addPluginNameToErrorMeta(
+        errorMeta,
+        pluginName
+      )
+      reporter.panicOnBuild(
+        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
+        error
+      )
+    }
   }
 
   return {
