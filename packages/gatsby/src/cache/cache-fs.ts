@@ -2,9 +2,16 @@ const fs = require(`fs`)
 const crypto = require(`crypto`)
 const path = require(`path`)
 const promisify = require(`util`).promisify
-const lockFile = require(`lockfile`)
 const jsonFileStore = require(`./json-file-store`)
 const wrapCallback = require(`./wrap-callback`)
+
+import reporter from "gatsby-cli/lib/reporter"
+
+// Cache read/writes are async. This locking attempts to prevent race conditions.
+// It's not ideal and locks timeout after 10s. It's mostly a port from when this
+// mechanism was using fs-based locks. Doing it in-memory reduces IO pressure and
+// we currently don't support two concurrent builds at the same time anyways.
+const globalGatsbyCacheLock = new Map()
 
 /**
  * construction of the disk storage
@@ -195,11 +202,31 @@ DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
  * @returns {Promise}
  * @private
  */
-DiskStore.prototype._lock = function (filePath): Promise<void> {
-  return promisify(lockFile.lock)(
-    filePath + `.lock`,
-    JSON.parse(JSON.stringify(this.options.lockFile)) //the options are modified -> create a copy to prevent that
-  )
+DiskStore.prototype._lock = function _lock(filePath): Promise<void> {
+  return new Promise((resolve, reject) => innerLock(resolve, reject, filePath))
+}
+
+function innerLock(resolve, reject, filePath): void {
+  try {
+    let lockTime = globalGatsbyCacheLock.get(filePath) ?? 0
+    if (lockTime > 0 && Date.now() - lockTime > 10 * 60 * 1000) {
+      reporter.verbose(
+        `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later.`
+      )
+      lockTime = 0
+      globalGatsbyCacheLock.delete(filePath)
+    }
+
+    if (lockTime > 0) {
+      setTimeout(() => {
+        innerLock(resolve, reject, filePath)
+      }, 400)
+    } else {
+      resolve()
+    }
+  } catch (e) {
+    reject(e)
+  }
 }
 
 /**
@@ -209,8 +236,8 @@ DiskStore.prototype._lock = function (filePath): Promise<void> {
  * @returns {Promise}
  * @private
  */
-DiskStore.prototype._unlock = function (filePath): Promise<void> {
-  return promisify(lockFile.unlock)(filePath + `.lock`)
+DiskStore.prototype._unlock = function _unlock(filePath): Promise<void> {
+  globalGatsbyCacheLock.delete(filePath)
 }
 
 /**
