@@ -8,6 +8,7 @@ import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
 import { makePluginConfigQuestions } from "./plugin-options-form"
+import { center, rule } from "./components/utils"
 
 // eslint-disable-next-line no-control-regex
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
@@ -82,24 +83,20 @@ export type PluginMap = Record<string, IPluginEntry>
 export async function run(): Promise<void> {
   const { version } = require(`../package.json`)
 
-  console.log(c.grey.italic(`create-gatsby version ${version}`))
+  console.log(c.grey(`create-gatsby version ${version}`))
+
   console.log(
     `
 
 
-                         ${c.blueBright.bold.underline(`Welcome to Gatsby!`)}
+${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
    
                 
 `
   )
-
-  console.log(
-    c.red(`
-====================================================================================
-This is currently for testing purposes only
-====================================================================================
-    `)
-  )
+  console.log(c.red(rule()))
+  console.log(c.red(`This is currently for testing purposes only`))
+  console.log(c.red(rule()))
 
   console.log(
     `This command will generate a new Gatsby site for you with the setup you select.`

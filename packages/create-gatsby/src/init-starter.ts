@@ -6,7 +6,7 @@ import { updateSiteMetadata } from "gatsby-core-utils"
 import { reporter } from "./reporter"
 import { getConfigStore } from "gatsby-core-utils"
 import filterStream from "stream-filter"
-import { spin } from "./spin"
+import { spin } from "./components/spin"
 type PackageManager = "yarn" | "npm"
 
 const packageMangerConfigKey = `cli.packageManager`
@@ -192,12 +192,6 @@ const clone = async (
   if (!isGit) {
     await createInitialGitCommit(rootPath)
   }
-}
-
-interface IGetPaths {
-  starterPath: string
-  rootPath: string
-  selectedOtherStarter: boolean
 }
 
 /**
