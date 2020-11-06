@@ -9,6 +9,13 @@ describe(`derive-path`, () => {
     expect(
       derivePath(`product/{product.id}`, { id: `1` }, reporter).derivedPath
     ).toEqual(`product/1`)
+    expect(
+      derivePath(`product/{p.d}`, { d: `1` }, reporter).derivedPath
+    ).toEqual(`product/1`)
+    expect(
+      derivePath(`product/{p123_foo.d123_a}`, { d123_a: `1` }, reporter)
+        .derivedPath
+    ).toEqual(`product/1`)
   })
 
   it(`converts number to string in URL`, () => {
@@ -35,6 +42,13 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`product/1/foo`)
+    expect(
+      derivePath(
+        `product/{Product.id}-{Product.field__name}`,
+        { id: 1, field: { name: `foo` } },
+        reporter
+      ).derivedPath
+    ).toEqual(`product/1-foo`)
   })
 
   it(`has support for nested collections with same field`, () => {
@@ -45,6 +59,13 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`product/foo/bar`)
+    expect(
+      derivePath(
+        `product/{Product.field__name}-{Product.field__category}`,
+        { field: { name: `foo`, category: `bar` } },
+        reporter
+      ).derivedPath
+    ).toEqual(`product/foo-bar`)
   })
 
   it(`has union support`, () => {
@@ -57,6 +78,16 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`product/1`)
+
+    expect(
+      derivePath(
+        `product/{Product.field__(File)__id}-{Product.field__(File)__foo}`,
+        {
+          field: { id: `1`, foo: `123` },
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`product/1-123`)
   })
 
   it(`doesnt remove '/' from slug`, () => {
@@ -81,6 +112,16 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`film/mrs-doubtfire`)
+    expect(
+      derivePath(
+        `film/{Movie.title}-{Movie.actor}`,
+        {
+          title: `Mrs. Doubtfire`,
+          actor: `Mr. Gatsby`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`film/mrs-doubtfire-mr-gatsby`)
   })
 
   it(`supports prefixes`, () => {
@@ -131,6 +172,23 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/dolorespostfix/awesome_another-postfix`)
+  })
+
+  it(`supports nesting, characters in between, weird slugs, unions all in one`, () => {
+    expect(
+      derivePath(
+        `blog/prefix-{M.name}.middle.{M.field__(Union)__color}_postfix/{M.director}--{M.s}`,
+        {
+          name: `Mr. Gatsby`,
+          director: `doug_judy`,
+          field: { color: `purple` },
+          s: `/magic/wonderful`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(
+      `blog/prefix-mr-gatsby.middle.purple_postfix/doug-judy--/magic/wonderful`
+    )
   })
 
   it(`keeps existing slashes around and handles possible double forward slashes`, () => {

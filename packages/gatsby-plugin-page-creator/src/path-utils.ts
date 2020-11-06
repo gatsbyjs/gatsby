@@ -1,6 +1,6 @@
 // Regex created with: https://spec.graphql.org/draft/#sec-Names
 // First char only letter, underscore; rest letter, underscore, digit
-const extractModelRegex = /\{([a-zA-Z_][\w]+)\./
+const extractModelRegex = /\{([a-zA-Z_][\w]*)\./
 
 // Given a absolutePath that has a collection marker it will extract the Model.
 // /foo/bar/{Model.bar} => Model
@@ -47,41 +47,47 @@ export function extractAllCollectionSegments(
 
 const extractFieldWithoutUnionRegex = /\(.*\)__/g
 
-// Given a filePath part that is a collection marker it do this transformation:
-// {Model.bar} => bar
-// {Model.field__bar} => field__bar
-// {Model.field__(Union)__bar} => field__bar
-export function extractFieldWithoutUnion(filePart: string): string {
-  return (
-    extractField(filePart)
-      // Ignore union syntax
-      .replace(extractFieldWithoutUnionRegex, ``)
-  )
+/**
+ * Given a filePath part that is a collection marker it do this transformation:
+ * @param {string} filePart - The individual part of the URL
+ * @returns {Array<string>} - Returns an array of extracted fields (with converted "Unions")
+ * @example
+ * {Model.bar} => bar
+ * {Model.field__bar} => field__bar
+ * {Model.field__(Union)__bar} => field__bar
+ */
+export function extractFieldWithoutUnion(filePart: string): Array<string> {
+  const extracts = extractField(filePart)
+
+  return extracts.map(e => e.replace(extractFieldWithoutUnionRegex, ``))
 }
 
 const extractFieldRegexCurlyBraces = /[{}]/g
 // Regex created with: https://spec.graphql.org/draft/#sec-Names
 // First char only letter, underscore; rest letter, underscore, digit
-const extractFieldGraphQLModel = /[a-zA-Z_][\w]+\./
+const extractFieldGraphQLModel = /[a-zA-Z_][\w]*\./
 
-// Given a filePath part that is a collection marker it do this transformation:
-// {Model.field__(Union)__bar} => field__(Union)__bar
-// Also works with lowercased model
-// {model.field} => field
-// Also works with prefixes/postfixes (due to the regex match)
-// prefix-{model.field} => field
-export function extractField(filePart: string): string {
+/**
+ * Given a filePath part that is a collection marker it do this transformation:
+ * @param {string} filePart - The individual part of the URL
+ * @returns {Array<string>} - Returns an array of extracted fields
+ * @example
+ * {Model.field__(Union)__bar} => field__(Union)__bar
+ * Also works with lowercased model
+ * {model.field} => field
+ * Also works with prefixes/postfixes (due to the regex match)
+ * prefix-{model.field} => field
+ */
+export function extractField(filePart: string): Array<string> {
   const content = filePart.match(curlyBracesContentsRegex)
 
   if (!content) {
-    return ``
+    return [``]
   }
 
-  return (
-    content[0]
-      // Remove curly braces
+  return content.map(c =>
+    c
       .replace(extractFieldRegexCurlyBraces, ``)
-      // Remove Model
       .replace(extractFieldGraphQLModel, ``)
   )
 }
@@ -114,4 +120,25 @@ export function compose(
 ): (filePart: string) => string {
   return (filePart: string): string =>
     functions.reduce((value, fn) => fn(value), filePart)
+}
+
+/**
+ * Since String.prototype.matchAll() is only supported by Node v12+ and we still support Node 10, this is how we need to workaround this
+ * @param regexPattern - Should include the /g flag!
+ * @param sourceString - Input string to match against
+ * @returns An array of RegExpExecArray similar to the shape of .matchAll()
+ */
+export function matchAllPolyfill(
+  regexPattern,
+  sourceString
+): Array<RegExpExecArray> {
+  const output: Array<RegExpExecArray> = []
+  let match: RegExpExecArray | null
+  while ((match = regexPattern.exec(sourceString))) {
+    // get rid of the string copy
+    delete match.input
+    // store the match data
+    output.push(match)
+  }
+  return output
 }

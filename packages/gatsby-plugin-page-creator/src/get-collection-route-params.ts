@@ -15,6 +15,7 @@ export function getCollectionRouteParams(
   // Create a regex string for later use by creating groups for all { } finds
   // e.g. /foo/prefix-{Product.id} => /foo/prefix-(.+)
   const templateRegex = cleanedUrlTemplate
+    .replace(/\./g, `\\.`) // Escape dots
     .replace(/(\{.*?\})/g, `(.+)`)
     .split(`/`)
   const urlParts = urlPath.split(`/`)
@@ -23,14 +24,20 @@ export function getCollectionRouteParams(
     if (!part.includes(`{`) || !part.includes(`}`)) {
       return
     }
-
-    const key = extractFieldWithoutUnion(part)
     // Use the previously created regex to match prefix-123 to prefix-(.+)
     const match = urlParts[i].match(templateRegex[i])
 
-    if (match) {
-      params[key] = match[1]
+    if (!match) {
+      return
     }
+
+    const keys = extractFieldWithoutUnion(part)
+
+    keys.some((k, j) => {
+      params[k] = match[j + 1]
+
+      return !match
+    })
   })
 
   return params
