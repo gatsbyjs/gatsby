@@ -1293,6 +1293,15 @@ export interface Actions {
     plugin?: ActionPlugin,
     traceId?: string
   ): void
+
+  printTypeDefinitions (
+    path?: string,
+    include?: { types?: Array<string>; plugins?: Array<string> },
+    exclude?: { types?: Array<string>; plugins?: Array<string> },
+    withFieldTypes?: boolean,
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {

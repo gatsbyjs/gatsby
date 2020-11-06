@@ -1,5 +1,5 @@
 import { boundActionCreators } from "../redux/actions"
-const { deletePage, deleteComponentsDependencies } = boundActionCreators
+const { deletePage } = boundActionCreators
 
 import { isEqualWith, IsEqualCustomizer } from "lodash"
 import { IGatsbyPage } from "../redux/types"
@@ -17,7 +17,6 @@ export function deleteUntouchedPages(
       page.updatedAt < timeBeforeApisRan &&
       page.path !== `/404.html`
     ) {
-      deleteComponentsDependencies([page.path])
       deletePage(page)
       deletedPages.push(page.path, `/page-data${page.path}`)
     }

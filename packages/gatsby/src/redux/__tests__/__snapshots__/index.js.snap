@@ -2,10 +2,6 @@
 
 exports[`redux db should write redux cache to disk 1`] = `
 Object {
-  "componentDataDependencies": Object {
-    "connections": Map {},
-    "nodes": Map {},
-  },
   "components": Map {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
@@ -57,6 +53,26 @@ Object {
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
     "templatePaths": Set {},
+  },
+  "queries": Object {
+    "byConnection": Map {},
+    "byNode": Map {},
+    "deletedQueries": Set {},
+    "trackedComponents": Map {
+      "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+        "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+        "errors": 0,
+        "pages": Set {
+          "/my-sweet-new-page/",
+        },
+        "query": "",
+      },
+    },
+    "trackedQueries": Map {
+      "/my-sweet-new-page/" => Object {
+        "dirty": 1,
+      },
+    },
   },
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},

@@ -17,9 +17,10 @@ export enum ErrorCategory {
 const errors = {
   "": {
     text: (context): string => {
-      const sourceMessage = context.sourceMessage
-        ? context.sourceMessage
-        : `There was an error`
+      const sourceMessage =
+        context && context.sourceMessage
+          ? context.sourceMessage
+          : `There was an error`
       return sourceMessage
     },
     level: Level.ERROR,
@@ -468,7 +469,9 @@ const errors = {
     text: (context): string =>
       [
         stripIndent(`
-          Invalid plugin options for "${context.pluginName}":
+          Invalid plugin options for "${context.pluginName}"${
+          context.configDir ? `, configured by ${context.configDir}` : ``
+        }:
         `),
       ]
         .concat([``])

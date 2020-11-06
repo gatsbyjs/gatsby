@@ -12,7 +12,7 @@ First install the plugin.
 npm install gatsby-source-graphql
 ```
 
-Provided there is a GraphQL API under a `url`, adding it to an API just requires adding this to the config.
+Provided there is a GraphQL API under a `url`, adding it to an API requires adding this to the config.
 
 ```js:title=gatsby-config.js
 module.exports = {

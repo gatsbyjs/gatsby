@@ -26,43 +26,22 @@ export function findPageByPath(
   // Gatsby doesn't allow for page path to be empty string,
   // so skipping trying to get page for "" path if we can't
   // find page for `/`
-  else if (page !== `/`) {
+  else if (path !== `/`) {
     // check various trailing/leading slashes combinations
     const hasLeadingSlash = path.startsWith(`/`)
     const hasTrailingSlash = path.endsWith(`/`)
-    for (const leadingSlash of [true, false]) {
-      for (const trailingSlash of [true, false]) {
-        if (
-          leadingSlash === hasLeadingSlash &&
-          trailingSlash === hasTrailingSlash
-        ) {
-          // we checked this already
-          continue
-        }
 
-        let newPath = path
+    const bare = path.slice(
+      hasLeadingSlash ? 1 : 0,
+      hasTrailingSlash ? -1 : path.length
+    )
 
-        if (leadingSlash !== hasLeadingSlash) {
-          if (leadingSlash) {
-            newPath = `/` + newPath
-          } else {
-            newPath = newPath.substring(1)
-          }
-        }
-
-        if (trailingSlash !== hasTrailingSlash) {
-          if (trailingSlash) {
-            newPath = newPath + `/`
-          } else {
-            newPath = newPath.substring(0, newPath.length - 1)
-          }
-        }
-
-        page = pages.get(newPath)
-        if (page) {
-          return page
-        }
-      }
+    ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some(potentialPath => {
+      page = pages.get(potentialPath)
+      return !!page
+    })
+    if (page) {
+      return page
     }
   }
 
@@ -74,15 +53,10 @@ export function findPageByPath(
   }
 
   if (fallbackTo404) {
-    page = findPageByPath(state, `/dev-404-page/`, false)
-    if (page) {
-      return page
-    }
-
-    page = findPageByPath(state, `/404.html`, false)
-    if (page) {
-      return page
-    }
+    return (
+      findPageByPath(state, `/dev-404-page/`, false) ??
+      findPageByPath(state, `/404.html`, false)
+    )
   }
   return undefined
 }

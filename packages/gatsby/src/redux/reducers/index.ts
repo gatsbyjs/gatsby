@@ -16,7 +16,6 @@ import { lastActionReducer } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
 import { pageDataStatsReducer } from "./page-data-stats"
 import { componentsReducer } from "./components"
-import { componentDataDependenciesReducer } from "./component-data-dependencies"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
 import { nodesByTypeReducer } from "./nodes-by-type"
@@ -28,6 +27,7 @@ import { pendingPageDataWritesReducer } from "./pending-page-data-writes"
 import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
 import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
+import { queriesReducer } from "./queries"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -46,7 +46,6 @@ export {
   pagesReducer as pages,
   ssrVisitedPageReducer as ssrVisitedPages,
   statusReducer as status,
-  componentDataDependenciesReducer as componentDataDependencies,
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,
   jobsReducer as jobs,
@@ -63,4 +62,5 @@ export {
   pageDataReducer as pageData,
   pendingPageDataWritesReducer as pendingPageDataWrites,
   staticQueriesByTemplateReducer as staticQueriesByTemplate,
+  queriesReducer as queries,
 }

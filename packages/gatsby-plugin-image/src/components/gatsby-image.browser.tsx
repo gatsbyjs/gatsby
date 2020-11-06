@@ -19,19 +19,27 @@ import { Layout } from "../utils"
 
 export type GatsbyImageProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad"
+  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
 > & {
   alt: string
   as?: ElementType
-  layout: Layout
   className?: string
-  height: number
-  images: Pick<MainImageProps, "sources" | "fallback">
-  placeholder: Pick<PlaceholderProps, "sources" | "fallback">
-  width: number
+  image: ISharpGatsbyImageData
   onLoad?: () => void
   onError?: () => void
   onStartLoad?: Function
+}
+
+export interface ISharpGatsbyImageData {
+  layout: Layout
+  height?: number
+  backgroundColor?: string
+  sizes?: string
+  images: Pick<MainImageProps, "sources" | "fallback">
+  placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
+  width?: number
+  maxHeight?: number
+  maxWidth?: number
 }
 
 let hasShownWarning = false
@@ -40,14 +48,19 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   as: Type = `div`,
   style,
   className,
-  layout = `fixed`,
-  width,
-  height,
-  images,
   onStartLoad,
+  image,
   onLoad: customOnLoad,
   ...props
 }) {
+  if (!image) {
+    if (process.env.NODE_ENV === `development`) {
+      console.warn(`[gatsby-plugin-image] Missing image prop`)
+    }
+    return null
+  }
+  const { width, height, layout, images, backgroundColor } = image
+
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
   const unobserveRef = useRef<
@@ -134,10 +147,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
         lazyHydrator.current = lazyHydrate(
           {
-            layout,
-            width,
-            height,
-            images,
+            image,
             isLoading,
             isLoaded,
             toggleIsLoaded: () => {
