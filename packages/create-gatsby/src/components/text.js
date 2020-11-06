@@ -39,7 +39,11 @@ export class TextInput extends Input {
     prompt += ` ` + output
 
     this.clear(size)
-    this.write([header, message, prompt, footer].filter(Boolean).join(`\n`))
+    this.write(
+      [header, message, prompt, await this.error(), footer]
+        .filter(Boolean)
+        .join(`\n`)
+    )
     this.restore()
   }
 }
