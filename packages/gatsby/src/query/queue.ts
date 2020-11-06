@@ -10,6 +10,12 @@ import { ProgressActivityTracker } from "../.."
 export type Task = any
 type TaskResult = any
 
+if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
+  console.info(
+    `GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: Running with concurrency set to \`${process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY}\``
+  )
+}
+
 const createBaseOptions = (): Pick<
   BetterQueue.QueueOptions<Task, TaskResult>,
   "concurrent" | "store"
