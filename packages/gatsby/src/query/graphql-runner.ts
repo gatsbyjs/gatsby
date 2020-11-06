@@ -174,31 +174,31 @@ export class GraphQLRunner {
     }
 
     try {
-      const result =
-        errors.length > 0
-          ? { errors }
-          : await execute({
-              schema,
-              document,
-              rootValue: context,
-              contextValue: withResolverContext({
-                schema,
-                schemaComposer: schemaCustomization.composer,
-                context,
-                customContext: schemaCustomization.context,
-                nodeModel: this.nodeModel,
-                stats: this.stats,
-                tracer,
-              }),
-              variableValues: context,
-            })
-
       // Queries are usually executed in batch. But after the batch is finished
       // cache just wastes memory without much benefits.
       // TODO: consider a better strategy for cache purging/invalidation
       this.scheduleClearCache()
 
-      return result
+      if (errors.length > 0) {
+        return { errors }
+      }
+
+      // `execute` will return a promise
+      return execute({
+        schema,
+        document,
+        rootValue: context,
+        contextValue: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context,
+          customContext: schemaCustomization.context,
+          nodeModel: this.nodeModel,
+          stats: this.stats,
+          tracer,
+        }),
+        variableValues: context,
+      })
     } finally {
       if (tracer) {
         tracer.end()
