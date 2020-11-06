@@ -20,19 +20,20 @@ export function isValidCollectionPathImplementation(
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
     const model = matchAllPolyfill(/\{([a-zA-Z_]\w*)./g, part) // Search for word before first dot, e.g. Model
-    const field = matchAllPolyfill(/{.*?((?<=\w\.)[^}]*)}/g, part) // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
-
-    const models = Array.from(model, m => m[1])
-    const fields = Array.from(field, f => f[1])
+    const field = matchAllPolyfill(/.*?((?<=\w\.)[^}]*)}/g, part) // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
 
     try {
       if (
-        models.length === 0 ||
-        fields.length === 0 ||
-        models.length !== fields.length
+        model.length === 0 ||
+        field.length === 0 ||
+        model.length !== field.length
       ) {
         throw new Error(errorMessage(part))
       }
+
+      const models = Array.from(model, m => m[1])
+      const fields = Array.from(field, f => f[1])
+
       for (const m of models) {
         assert(m, /^[a-zA-Z_]\w*$/, errorMessage(part)) // Check that Model is https://spec.graphql.org/draft/#sec-Names
       }

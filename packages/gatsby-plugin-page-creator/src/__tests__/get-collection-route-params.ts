@@ -49,4 +49,13 @@ describe(`getCollectionRouteParams`, () => {
     expect(params.id).toEqual(`1234`)
     expect(params.name).toEqual(`burger`)
   })
+
+  it(`outputs empty object for no matches`, () => {
+    const filePath = `/products/{Product.id}-test.js`
+    const urlPath = `/products/1234`
+
+    const params = getCollectionRouteParams(filePath, urlPath)
+
+    expect(params).toEqual({})
+  })
 })

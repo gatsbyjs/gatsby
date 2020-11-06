@@ -24,16 +24,19 @@ export function getCollectionRouteParams(
     if (!part.includes(`{`) || !part.includes(`}`)) {
       return
     }
+    // Use the previously created regex to match prefix-123 to prefix-(.+)
+    const match = urlParts[i].match(templateRegex[i])
 
-    const key = extractFieldWithoutUnion(part)
+    if (!match) {
+      return
+    }
 
-    key.forEach((k, j) => {
-      // Use the previously created regex to match prefix-123 to prefix-(.+)
-      const match = urlParts[i].match(templateRegex[i])
+    const keys = extractFieldWithoutUnion(part)
 
-      if (match) {
-        params[k] = match[j + 1]
-      }
+    keys.some((k, j) => {
+      params[k] = match[j + 1]
+
+      return !match
     })
   })
 

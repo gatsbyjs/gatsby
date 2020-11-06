@@ -68,6 +68,14 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/{Model.test}/Model.id}.js`,
     `/products/{Model.id}-{Model.}.js`,
     `/products/{Model.id}-{Model_foo}.js`,
+    `/products/{Model.id}-Model.id}.js`,
+    `/products/Model.id}-{Model.id}.js`,
+    `/products/Model.id}-Model.id}.js`,
+    `/products/{Model.id-{Model.id.js`,
+    `/products/{Model.id-Model.id.js`,
+    `/products/Model.id}-Model.id.js`,
+    `/products/Model.id-{Model.id.js`,
+    `/products/Model.id-Model.id}.js`,
   ])(`%o throws as expected`, path => {
     const part = path.split(`/`)[2]
 
