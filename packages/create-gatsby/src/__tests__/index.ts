@@ -21,7 +21,6 @@ const Keys = {
   ENTER: `\x0D`,
   SPACE: `\x20`,
   BACKSPACE: `\x7f`,
-  TAB: `\t`,
 }
 
 async function skipSteps(count = 3): Promise<void> {
@@ -34,7 +33,12 @@ async function skipSteps(count = 3): Promise<void> {
 }
 
 async function skipSelect(): Promise<void> {
-  await stdinMock.send(Keys.TAB)
+  await stdinMock.send(Keys.DOWN)
+  await stdinMock.send(Keys.DOWN)
+  await stdinMock.send(Keys.DOWN)
+  await stdinMock.send(Keys.DOWN)
+  await stdinMock.send(Keys.DOWN)
+  await stdinMock.send(Keys.DOWN)
   await stdinMock.send(Keys.ENTER)
   await tick()
 }
@@ -74,7 +78,7 @@ describe(`The create-gatsby CLI`, () => {
     await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.SPACE)
-    await stdinMock.send(Keys.TAB)
+    await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.ENTER)
     await tick()
     await stdinMock.send(`tokenValue`)
