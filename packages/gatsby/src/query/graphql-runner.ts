@@ -161,6 +161,15 @@ export class GraphQLRunner {
     const document = this.parse(query)
     const errors = this.validate(schema, document)
 
+    // Queries are usually executed in batch. But after the batch is finished
+    // cache just wastes memory without much benefits.
+    // TODO: consider a better strategy for cache purging/invalidation
+    this.scheduleClearCache()
+
+    if (errors.length > 0) {
+      return { errors }
+    }
+
     let tracer
     if (this.graphqlTracing && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
@@ -174,15 +183,6 @@ export class GraphQLRunner {
     }
 
     try {
-      // Queries are usually executed in batch. But after the batch is finished
-      // cache just wastes memory without much benefits.
-      // TODO: consider a better strategy for cache purging/invalidation
-      this.scheduleClearCache()
-
-      if (errors.length > 0) {
-        return { errors }
-      }
-
       // `execute` will return a promise
       return execute({
         schema,
