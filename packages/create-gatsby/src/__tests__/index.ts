@@ -21,14 +21,22 @@ const Keys = {
   ENTER: `\x0D`,
   SPACE: `\x20`,
   BACKSPACE: `\x7f`,
+  TAB: `\x09`,
 }
 
-async function skipSteps(count = 4): Promise<void> {
+async function skipSteps(count = 3): Promise<void> {
   for (let i = 0; i < count - 1; i++) {
     await stdinMock.send(Keys.ENTER)
     await tick()
   }
   await stdinMock.send(Keys.ENTER)
+  await tick()
+}
+
+async function skipSelect(): Promise<void> {
+  await stdinMock.send(Keys.TAB)
+  await stdinMock.send(Keys.ENTER)
+  await tick()
 }
 
 const typeBackspace = (count: number): string => Keys.BACKSPACE.repeat(count)
@@ -60,9 +68,13 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
 
     await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.SPACE)
     await stdinMock.send(Keys.DOWN)
     await stdinMock.send(Keys.SPACE)
+    await stdinMock.send(Keys.DOWN)
+    await stdinMock.send(Keys.DOWN)
+    await stdinMock.send(Keys.DOWN)
+    await stdinMock.send(Keys.SPACE)
+    await stdinMock.send(Keys.TAB)
     await stdinMock.send(Keys.ENTER)
     await tick()
     await stdinMock.send(`tokenValue`)
@@ -104,8 +116,8 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
     stdout.stop()
     stdout.start()
-    await skipSteps(2)
-    await tick()
+    await skipSteps(1)
+    await skipSelect()
     expect(stdout.output).toMatch(
       `Install and configure the plugin for WordPress`
     )
@@ -117,10 +129,10 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
     stdinMock.send(`select-styling`)
     await skipSteps(2)
-    await tick()
     await stdinMock.send(Keys.DOWN) // PostCSS is first in the list
     await stdinMock.send(Keys.ENTER)
-    await skipSteps(3)
+    await tick()
+    await skipSelect()
     expect(stdout.output).toMatch(
       `Get you set up to use CSS Modules/PostCSS for styling your site`
     )
@@ -132,7 +144,7 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
     stdinMock.send(`skip-steps`)
     await skipSteps()
-    await tick()
+    await skipSelect()
     // this should always be present
     expect(stdout.output).toMatch(`Create a new Gatsby site in the folder`)
     // these steps were skipped
@@ -159,7 +171,7 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
     expect(stdout.output).toMatch(`The destination "exists" already exists`)
     await skipSteps()
-    await tick()
+    await skipSelect()
     expect(stdout.output).toMatch(
       `Create a new Gatsby site in the folder exists`
     )
@@ -185,7 +197,7 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
 
     await skipSteps()
-    await tick()
+    await skipSelect()
     expect(stdout.output).toMatch(
       `Create a new Gatsby site in the folder goodname`
     )
