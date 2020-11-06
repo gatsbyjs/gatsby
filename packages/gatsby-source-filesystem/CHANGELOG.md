@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.4.1...gatsby-source-filesystem@2.4.2) (2020-11-06)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** allow regex and functions for ignore option ([#27877](https://github.com/gatsbyjs/gatsby/issues/27877)) ([d99441a](https://github.com/gatsbyjs/gatsby/commit/d99441afac18513c14ca145cb7569726da7eeec0))
+
 ## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.4.0...gatsby-source-filesystem@2.4.1) (2020-11-04)
 
 **Note:** Version bump only for package gatsby-source-filesystem
