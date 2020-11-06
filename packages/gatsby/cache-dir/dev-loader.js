@@ -3,8 +3,7 @@ import { findPath } from "./find-path"
 
 class DevLoader extends BaseLoader {
   constructor(lazySyncRequires, matchPaths) {
-    const loadComponent = (chunkName, path) => {
-      const realPath = findPath(path)
+    const loadComponent = chunkName => {
       delete require.cache[
         require.resolve(`$virtual/lazy-client-sync-requires`)
       ]
@@ -13,21 +12,20 @@ class DevLoader extends BaseLoader {
         return Promise.resolve(lazyRequires.lazyComponents[chunkName])
       } else {
         return new Promise(resolve => {
-          // do the work
+          // Tell the server the user wants to visit this page
+          // to trigger it compiling the page component's code.
           const req = new XMLHttpRequest()
           req.open(`post`, `/___client-page-visited`, true)
           req.setRequestHeader(`Content-Type`, `application/json;charset=UTF-8`)
           req.send(JSON.stringify({ chunkName }))
 
           const checkForUpdates = setInterval(() => {
-            let lazyRequires = require(`$virtual/lazy-client-sync-requires`)
             delete require.cache[
               require.resolve(`$virtual/lazy-client-sync-requires`)
             ]
-            lazyRequires = require(`$virtual/lazy-client-sync-requires`)
+            const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
             if (lazyRequires.lazyComponents[chunkName]) {
               clearInterval(checkForUpdates)
-              clearTimeout(timeoutTimer)
               resolve(lazyRequires.lazyComponents[chunkName])
             }
           }, 250)
