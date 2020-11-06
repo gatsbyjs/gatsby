@@ -164,13 +164,10 @@ module.exports = (
       return ASTGenerationPromise.then(markdownAST =>
         // Return a promise that waits for the cache to be set, but that does return the generated AST
         cache.set(cacheKey, markdownAST).then(() => markdownAST)
-      ).finally(() => {
-        ASTPromiseMap.delete(cacheKey)
-      })
+      ).finally(() => ASTPromiseMap.delete(cacheKey))
     }
 
-    // Parse a markdown string and its AST representation,
-    // applying the remark plugins if necesserary
+    // Parse a markdown string and its AST representation, applying the remark plugins if necessary
     async function parseString(string, markdownNode) {
       // compiler to inject in the remark plugins
       // so that they can use our parser/generator
@@ -244,10 +241,10 @@ module.exports = (
       // before parsing its content
       //
       // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      for (const plugin of pluginOptions.plugins) {
         const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin.mutateSource)) {
-          return requiredPlugin.mutateSource(
+        if (typeof requiredPlugin.mutateSource === `function`) {
+          await requiredPlugin.mutateSource(
             {
               markdownNode,
               files: fileNodes,
@@ -259,91 +256,88 @@ module.exports = (
             },
             plugin.pluginOptions
           )
-        } else {
-          return Promise.resolve()
         }
-      })
+      }
 
       return parseString(markdownNode.internal.content, markdownNode)
     }
 
     async function getHeadings(markdownNode) {
-      const cachedHeadings = await cache.get(headingsCacheKey(markdownNode))
+      const markdownCacheKey = headingsCacheKey(markdownNode)
+      const cachedHeadings = await cache.get(markdownCacheKey)
       if (cachedHeadings) {
         return cachedHeadings
-      } else {
-        const ast = await getAST(markdownNode)
-        const headings = select(ast, `heading`).map(heading => {
-          return {
-            id: getHeadingID(heading),
-            value: mdastToString(heading),
-            depth: heading.depth,
-          }
-        })
-
-        await cache.set(headingsCacheKey(markdownNode), headings)
-        return headings
       }
+
+      const ast = await getAST(markdownNode)
+      const headings = select(ast, `heading`).map(heading => {
+        return {
+          id: getHeadingID(heading),
+          value: mdastToString(heading),
+          depth: heading.depth,
+        }
+      })
+
+      await cache.set(markdownCacheKey, headings)
+      return headings
     }
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
       let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+
+      const tocKey = tableOfContentsCacheKey(markdownNode, appliedTocOptions)
+
       // get cached toc
-      const cachedToc = await cache.get(
-        tableOfContentsCacheKey(markdownNode, appliedTocOptions)
-      )
+      const cachedToc = await cache.get(tocKey)
       if (cachedToc) {
         return cachedToc
-      } else {
-        const ast = await getAST(markdownNode)
-        const tocAst = mdastToToc(ast, appliedTocOptions)
-
-        let toc
-        if (tocAst.map) {
-          const addSlugToUrl = function (node) {
-            if (node.url) {
-              if (
-                _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
-                undefined
-              ) {
-                console.warn(
-                  `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
-                )
-                return null
-              }
-              node.url = [
-                basePath,
-                _.get(markdownNode, appliedTocOptions.pathToSlugField),
-                node.url,
-              ]
-                .join(`/`)
-                .replace(/\/\//g, `/`)
-            }
-            if (node.children) {
-              node.children = node.children
-                .map(node => addSlugToUrl(node))
-                .filter(Boolean)
-            }
-
-            return node
-          }
-          if (appliedTocOptions.absolute) {
-            tocAst.map = addSlugToUrl(tocAst.map)
-          }
-
-          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-            allowDangerousHTML: true,
-          })
-        } else {
-          toc = ``
-        }
-        await cache.set(
-          tableOfContentsCacheKey(markdownNode, appliedTocOptions),
-          toc
-        )
-        return toc
       }
+
+      const ast = await getAST(markdownNode, cache)
+      const tocAst = mdastToToc(ast, appliedTocOptions)
+
+      let toc = ``
+      if (tocAst.map) {
+        const addSlugToUrl = function (node) {
+          if (node.url) {
+            const slugField = _.get(
+              markdownNode,
+              appliedTocOptions.pathToSlugField
+            )
+
+            if (slugField === undefined) {
+              console.warn(
+                `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
+              )
+              return null
+            }
+
+            node.url = [basePath, slugField, node.url]
+              .join(`/`)
+              .replace(/\/\//g, `/`)
+          }
+
+          if (node.children) {
+            node.children = node.children
+              .map(node => addSlugToUrl(node))
+              .filter(Boolean)
+          }
+
+          return node
+        }
+
+        if (appliedTocOptions.absolute) {
+          tocAst.map = addSlugToUrl(tocAst.map)
+        }
+
+        toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+          allowDangerousHTML: true,
+        })
+      }
+
+      await cache.set(tocKey, toc)
+      return toc
     }
 
     function markdownASTToHTMLAst(ast) {
@@ -358,7 +352,7 @@ module.exports = (
       if (cachedAst) {
         return cachedAst
       } else {
-        const ast = await getAST(markdownNode)
+        const ast = await getAST(markdownNode, cache)
         const htmlAst = markdownASTToHTMLAst(ast)
 
         // Save new HTML AST to cache and return
@@ -397,6 +391,7 @@ module.exports = (
             nextNode.type === `raw` && nextNode.value === excerptSeparator
         )
       }
+
       if (!fullAST.children.length) {
         return fullAST
       }
@@ -406,6 +401,7 @@ module.exports = (
         return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
       })
       const unprunedExcerpt = getConcatenatedValue(excerptAST)
+
       if (
         !unprunedExcerpt ||
         (pruneLength && unprunedExcerpt.length < pruneLength)
@@ -429,6 +425,7 @@ module.exports = (
           omission: `…`,
         })
       }
+
       return excerptAST
     }
 
@@ -444,10 +441,10 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      const html = hastToHTML(excerptAST, {
+
+      return hastToHTML(excerptAST, {
         allowDangerousHTML: true,
       })
-      return html
     }
 
     async function getExcerptMarkdown(
@@ -460,14 +457,15 @@ module.exports = (
       if (excerptSeparator && markdownNode.excerpt !== ``) {
         return markdownNode.excerpt
       }
+
       const ast = await getMarkdownAST(markdownNode)
       const excerptAST = await getExcerptAst(ast, markdownNode, {
         pruneLength,
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified().use(stringify).stringify(excerptAST)
-      return excerptMarkdown
+
+      return unified().use(stringify).stringify(excerptAST)
     }
 
     async function getExcerptPlain(
@@ -476,40 +474,41 @@ module.exports = (
       truncate,
       excerptSeparator
     ) {
-      const text = await getAST(markdownNode).then(ast => {
-        const excerptNodes = []
-        let isBeforeSeparator = true
-        visit(
-          ast,
-          node => isBeforeSeparator,
-          node => {
-            if (excerptSeparator && node.value === excerptSeparator) {
-              isBeforeSeparator = false
-            } else if (node.type === `text` || node.type === `inlineCode`) {
-              excerptNodes.push(node.value)
-            } else if (node.type === `image`) {
-              excerptNodes.push(node.alt)
-            } else if (SpaceMarkdownNodeTypesSet.has(node.type)) {
-              // Add a space when encountering one of these node types.
-              excerptNodes.push(` `)
-            }
+      const ast = await getAST(markdownNode)
+
+      const excerptNodes = []
+      let isBeforeSeparator = true
+      visit(
+        ast,
+        node => isBeforeSeparator,
+        node => {
+          if (excerptSeparator && node.value === excerptSeparator) {
+            isBeforeSeparator = false
+          } else if (node.type === `text` || node.type === `inlineCode`) {
+            excerptNodes.push(node.value)
+          } else if (node.type === `image`) {
+            excerptNodes.push(node.alt)
+          } else if (SpaceMarkdownNodeTypesSet.has(node.type)) {
+            // Add a space when encountering one of these node types.
+            excerptNodes.push(` `)
           }
-        )
-
-        const excerptText = excerptNodes.join(``).trim()
-
-        if (excerptSeparator && !isBeforeSeparator) {
-          return excerptText
         }
-        if (!truncate) {
-          return prune(excerptText, pruneLength, `…`)
-        }
-        return _.truncate(excerptText, {
-          length: pruneLength,
-          omission: `…`,
-        })
+      )
+
+      const excerptText = excerptNodes.join(``).trim()
+
+      if (excerptSeparator && !isBeforeSeparator) {
+        return excerptText
+      }
+
+      if (!truncate) {
+        return prune(excerptText, pruneLength, `…`)
+      }
+
+      return _.truncate(excerptText, {
+        length: pruneLength,
+        omission: `…`,
       })
-      return text
     }
 
     async function getExcerpt(
@@ -523,7 +522,9 @@ module.exports = (
           truncate,
           excerptSeparator
         )
-      } else if (format === `MARKDOWN`) {
+      }
+
+      if (format === `MARKDOWN`) {
         return getExcerptMarkdown(
           markdownNode,
           pruneLength,
@@ -531,6 +532,7 @@ module.exports = (
           excerptSeparator
         )
       }
+
       return getExcerptPlain(
         markdownNode,
         pruneLength,
