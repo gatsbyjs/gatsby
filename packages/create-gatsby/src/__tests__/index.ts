@@ -18,7 +18,7 @@ const Keys = {
   // pulled from https://tldp.org/LDP/abs/html/escapingsection.html
   DOWN: `\x1B\x5B\x42`,
   UP: `\x1B\x5B\x41`,
-  ENTER: `\x0D`,
+  ENTER: `\x0D\x0a`,
   SPACE: `\x20`,
   BACKSPACE: `\x7f`,
 }
