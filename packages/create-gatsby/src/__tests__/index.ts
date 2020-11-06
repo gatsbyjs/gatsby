@@ -21,7 +21,7 @@ const Keys = {
   ENTER: `\x0D`,
   SPACE: `\x20`,
   BACKSPACE: `\x7f`,
-  TAB: `\x09`,
+  TAB: `\t`,
 }
 
 async function skipSteps(count = 3): Promise<void> {
