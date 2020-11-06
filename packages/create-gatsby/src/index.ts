@@ -1,4 +1,4 @@
-import Enquirer, { prompt, Prompt } from "enquirer"
+import Enquirer, { Prompt } from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
@@ -9,6 +9,8 @@ import path from "path"
 import fs from "fs"
 // @ts-ignore
 import { TextInput } from "./components/text"
+// @ts-ignore
+import { SelectInput, MultiSelectInput } from "./components/select"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, rule } from "./components/utils"
 
@@ -20,11 +22,21 @@ const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
 
 const makeChoices = (
-  options: Record<string, { message: string; dependencies?: Array<string> }>
-): Array<{ message: string; name: string }> =>
-  Object.entries(options).map(([name, message]) => {
+  options: Record<string, { message: string; dependencies?: Array<string> }>,
+  multi = false
+): Array<{ message: string; name: string; disabled?: boolean }> => {
+  const entries = Object.entries(options).map(([name, message]) => {
     return { name, message: message.message }
   })
+
+  if (multi) {
+    return entries
+  }
+  const none = { name: `none`, message: `No (or I'll add it later)` }
+  const divider = { name: `–`, role: `separator`, message: `–` }
+
+  return [none, divider, ...entries]
+}
 
 const questions = [
   {
@@ -49,25 +61,25 @@ const questions = [
     },
   },
   {
-    type: `select`,
+    type: `selectinput`,
     name: `cms`,
     message: `Will you be using a CMS?`,
     hint: `(Single choice) Arrow keys to move, enter to confirm`,
     choices: makeChoices(cmses),
   },
   {
-    type: `select`,
+    type: `selectinput`,
     name: `styling`,
     message: `Would you like to install a styling system?`,
     hint: `(Single choice) Arrow keys to move, enter to confirm`,
     choices: makeChoices(styles),
   },
   {
-    type: `multiselect`,
+    type: `multiselectinput`,
     name: `features`,
     message: `Would you like to install additional features with other plugins?`,
     hint: `(Multiple choice) Use arrow keys to move, spacebar to select, and enter to confirm your choices`,
-    choices: makeChoices(features),
+    choices: makeChoices(features, true),
   },
 ]
 interface IAnswers {
@@ -111,6 +123,11 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   const enquirer = new Enquirer<IAnswers>()
   enquirer.register(`textinput`, (TextInput as unknown) as typeof Prompt)
+  enquirer.register(`selectinput`, (SelectInput as unknown) as typeof Prompt)
+  enquirer.register(
+    `multiselectinput`,
+    (MultiSelectInput as unknown) as typeof Prompt
+  )
 
   const data = await enquirer.prompt(questions)
 

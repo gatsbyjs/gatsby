@@ -1,8 +1,7 @@
 {
-  "none": {"message": "No (or I'll add it later)"},
-  "gatsby-source-wordpress-experimental": {"message": "WordPress"},
-  "gatsby-source-contentful": {"message": "Contentful"},
-  "gatsby-source-datocms": {"message": "DatoCMS"},
-  "gatsby-source-sanity": {"message": "Sanity"},
-  "gatsby-source-agility": {"message": "AgilityCMS"}
+  "gatsby-source-wordpress-experimental": { "message": "WordPress" },
+  "gatsby-source-contentful": { "message": "Contentful" },
+  "gatsby-source-datocms": { "message": "DatoCMS" },
+  "gatsby-source-sanity": { "message": "Sanity" },
+  "gatsby-source-agility": { "message": "AgilityCMS" }
 }

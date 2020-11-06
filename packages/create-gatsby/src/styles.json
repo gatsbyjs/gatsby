@@ -1,8 +1,10 @@
 {
-  "none": {"message": "No (or I'll add it later)"},
-  "gatsby-plugin-postcss": {"message": "CSS Modules/PostCSS"},
-  "gatsby-plugin-styled-components": {"message": "styled-components"},
-  "gatsby-plugin-emotion": {"message": "Emotion"},
-  "gatsby-plugin-sass": {"message": "Sass"},
-  "gatsby-plugin-theme-ui": {"message": "Theme-UI", "dependencies": ["theme-ui"]}
+  "gatsby-plugin-postcss": { "message": "CSS Modules/PostCSS" },
+  "gatsby-plugin-styled-components": { "message": "styled-components" },
+  "gatsby-plugin-emotion": { "message": "Emotion" },
+  "gatsby-plugin-sass": { "message": "Sass" },
+  "gatsby-plugin-theme-ui": {
+    "message": "Theme-UI",
+    "dependencies": ["theme-ui"]
+  }
 }
