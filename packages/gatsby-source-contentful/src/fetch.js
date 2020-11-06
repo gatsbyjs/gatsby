@@ -52,9 +52,9 @@ module.exports = async function contentfulFetch({
       reporter.panic({
         id: CODES.LocalesMissing,
         context: {
-          sourceMessage: `Please check if your localeFilter is configured properly. Locales '${
-            contentfulLocales.map(item => item.code).join(`,`)
-          }' were found but were filtered down to none.`,
+          sourceMessage: `Please check if your localeFilter is configured properly. Locales '${contentfulLocales
+            .map(item => item.code)
+            .join(`,`)}' were found but were filtered down to none.`,
         },
       })
     }
