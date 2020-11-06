@@ -53,15 +53,8 @@ export function findPageByPath(
   }
 
   if (fallbackTo404) {
-    page = findPageByPath(state, `/dev-404-page/`, false)
-    if (page) {
-      return page
-    }
-
-    page = findPageByPath(state, `/404.html`, false)
-    if (page) {
-      return page
-    }
+    return findPageByPath(state, `/dev-404-page/`, false)
+      ?? findPageByPath(state, `/404.html`, false)
   }
   return undefined
 }
