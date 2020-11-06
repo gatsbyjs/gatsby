@@ -27,6 +27,7 @@ import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
 import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
 import { queriesReducer } from "./queries"
+import { clientVisitedPageReducer } from "./client-visited-page"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -43,6 +44,7 @@ export {
   configReducer as config,
   schemaReducer as schema,
   pagesReducer as pages,
+  clientVisitedPageReducer as clientVisitedPages,
   statusReducer as status,
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,

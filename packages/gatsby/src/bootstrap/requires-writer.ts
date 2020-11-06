@@ -162,11 +162,18 @@ const getMatchPaths = (
 
 const createHash = (
   matchPaths: Array<IGatsbyPageMatchPath>,
-  components: Array<IGatsbyPageComponent>
+  components: Array<IGatsbyPageComponent>,
+  cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
-    .update(JSON.stringify({ matchPaths, components }))
+    .update(
+      JSON.stringify({
+        matchPaths,
+        components,
+        cleanedClientVisitedPageComponents,
+      })
+    )
     .digest(`hex`)
 
 // Write out pages information.
@@ -176,8 +183,22 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
+  const clientVisitedPageComponents = [...state.clientVisitedPages.values()]
 
-  const newHash = createHash(matchPaths, components)
+  // Remove any page components that no longer exist.
+  const cleanedClientVisitedPageComponents = components.filter(c =>
+    clientVisitedPageComponents.some(s => s === c.componentChunkName)
+  )
+  console.log({
+    clientVisitedPageComponents,
+    cleanedClientVisitedPageComponents,
+  })
+
+  const newHash = createHash(
+    matchPaths,
+    components,
+    cleanedClientVisitedPageComponents
+  )
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
@@ -210,6 +231,23 @@ const preferDefault = m => (m && m.default) || m
     )
     .join(`,\n`)}
 }\n\n`
+
+  // Create file with sync requires of visited page components files.
+  let lazyClientSyncRequires = `${hotImport}
+  // prefer default export if available
+  const preferDefault = m => (m && m.default) || m
+  \n\n`
+  lazyClientSyncRequires += `exports.lazyComponents = {\n${cleanedClientVisitedPageComponents
+    .map(
+      (c: IGatsbyPageComponent): string =>
+        `  "${
+          c.componentChunkName
+        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+    )
+    .join(`,\n`)}
+  }\n\n`
+
+  writeModule(`$virtual/lazy-client-sync-requires`, lazyClientSyncRequires)
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
@@ -264,45 +302,12 @@ const preferDefault = m => (m && m.default) || m
   return true
 }
 
-const debouncedWriteAll = _.debounce(
-  async (): Promise<void> => {
-    const activity = reporter.activityTimer(`write out requires`, {
-      id: `requires-writer`,
-    })
-    activity.start()
-    await writeAll(store.getState())
-    activity.end()
-  },
-  500,
-  {
-    // using "leading" can cause double `writeAll` call - particularly
-    // when refreshing data using `/__refresh` hook.
-    leading: false,
-  }
-)
-
 /**
- * Start listening to CREATE/DELETE_PAGE events so we can rewrite
+ * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
  * files as required
  */
-export const startListener = (): void => {
-  emitter.on(`CREATE_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
-
-  emitter.on(`CREATE_PAGE_END`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
-
-  emitter.on(`DELETE_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
-
-  emitter.on(`DELETE_PAGE_BY_PATH`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
-}
+emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
+  console.log(`CREATE_CLIENT_VISITED_PAGE`)
+  reporter.pendingActivity({ id: `requires-writer` })
+  writeAll(store.getState())
+})

@@ -7,6 +7,7 @@ import webpackDevMiddleware, {
 import got from "got"
 import webpack from "webpack"
 import express from "express"
+import bodyParser from "body-parser"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
@@ -24,6 +25,7 @@ import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
+import { boundActionCreators } from "../redux/actions"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
@@ -35,6 +37,8 @@ import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
+
+const { createClientVisitedPage } = boundActionCreators
 
 interface IServer {
   compiler: webpack.Compiler
@@ -113,6 +117,18 @@ export async function startServer(
   )
 
   const compiler = webpack(devConfig)
+
+  app.use(bodyParser.json())
+  // Listen for the client marking a page as visited (meaning we need to
+  // compile its page component.
+  app.post(`/___client-page-visited`, (req, res, next) => {
+    if (req.body?.chunkName) {
+      createClientVisitedPage(req.body.chunkName)
+      res.send(`ok`)
+    } else {
+      next()
+    }
+  })
 
   /**
    * Set up the express app.

@@ -8,13 +8,16 @@ import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
-import syncRequires from "$virtual/sync-requires"
+import lazySyncRequires from "$virtual/lazy-client-sync-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
 window.___emitter = emitter
 
-const loader = new DevLoader(syncRequires, matchPaths)
+console.log({ lazySyncRequires })
+window.lazySyncRequires = lazySyncRequires
+
+const loader = new DevLoader(lazySyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
