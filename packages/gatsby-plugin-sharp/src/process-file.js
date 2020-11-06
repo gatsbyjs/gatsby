@@ -10,6 +10,8 @@ const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
 const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
 
+const { getDrive } = require(`gatsby/dist/utils/cache-server`)
+
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
 // default as there's been problems with segfaulting in the past but we'll be
@@ -59,6 +61,7 @@ sharp.concurrency(cpuCoreCount())
  * @param {Transform[]} transforms
  */
 exports.processFile = (file, transforms, options = {}) => {
+  console.log(`processFile`)
   let pipeline
   try {
     pipeline = !options.failOnError
@@ -75,7 +78,7 @@ exports.processFile = (file, transforms, options = {}) => {
 
   return transforms.map(async transform => {
     try {
-      const { outputPath, args } = transform
+      const { outputPath, outputPathRelativeToPublic, args } = transform
       debug(`Start processing ${outputPath}`)
       await fs.ensureDir(path.dirname(outputPath))
 
@@ -156,22 +159,38 @@ exports.processFile = (file, transforms, options = {}) => {
 
       // lets decide how we want to save this transform
       if (transformArgs.toFormat === `png`) {
-        await compressPng(clonedPipeline, outputPath, {
-          pngQuality: transformArgs.pngQuality,
-          quality: transformArgs.quality,
-          pngCompressionSpeed: transformArgs.compressionSpeed,
-          stripMetadata: options.stripMetadata,
-        })
+        await compressPng(
+          clonedPipeline,
+          outputPath,
+          outputPathRelativeToPublic,
+          {
+            pngQuality: transformArgs.pngQuality,
+            quality: transformArgs.quality,
+            pngCompressionSpeed: transformArgs.compressionSpeed,
+            stripMetadata: options.stripMetadata,
+          }
+        )
         return transform
       }
 
       if (options.useMozJpeg && transformArgs.toFormat === `jpg`) {
-        await compressJpg(clonedPipeline, outputPath, transformArgs)
+        await compressJpg(
+          clonedPipeline,
+          outputPath,
+          outputPathRelativeToPublic,
+          transformArgs
+        )
         return transform
       }
 
       try {
-        await clonedPipeline.toFile(outputPath)
+        if (process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
+          const data = await clonedPipeline.toBuffer(outputPath)
+          const drive = await getDrive()
+          await drive.writeFile(outputPathRelativeToPublic, data)
+        } else {
+          await clonedPipeline.toFile(outputPath)
+        }
       } catch (err) {
         throw new Error(
           `Failed to write ${file} into ${outputPath}. (${err.message})`
@@ -190,7 +209,12 @@ exports.processFile = (file, transforms, options = {}) => {
   })
 }
 
-const compressPng = (pipeline, outputPath, options) =>
+const compressPng = (
+  pipeline,
+  outputPath,
+  outputPathRelativeToPublic,
+  options
+) =>
   pipeline.toBuffer().then(sharpBuffer =>
     imagemin
       .buffer(sharpBuffer, {
@@ -207,11 +231,25 @@ const compressPng = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
+      .then(imageminBuffer => {
+        if (process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
+          return getDrive().then(drive =>
+            drive.promises.writeFile(outputPathRelativeToPublic, imageminBuffer)
+          )
+        } else {
+          return fs.writeFile(outputPath, imageminBuffer)
+        }
+      })
   )
 
-const compressJpg = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
+const compressJpg = (
+  pipeline,
+  outputPath,
+  outputPathRelativeToPublic,
+  options
+) => {
+  console.log(`compressJpg`, outputPath, options)
+  return pipeline.toBuffer().then(sharpBuffer =>
     imagemin
       .buffer(sharpBuffer, {
         plugins: [
@@ -221,8 +259,21 @@ const compressJpg = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
+      .then(imageminBuffer => {
+        console.log(`writing file`)
+        return imageminBuffer
+      })
+      .then(imageminBuffer => {
+        if (process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
+          return getDrive().then(drive =>
+            drive.promises.writeFile(outputPathRelativeToPublic, imageminBuffer)
+          )
+        } else {
+          return fs.writeFile(outputPath, imageminBuffer)
+        }
+      })
   )
+}
 
 exports.createArgsDigest = args => {
   const argsDigest = createContentDigest(args)

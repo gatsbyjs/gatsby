@@ -18,13 +18,17 @@ exports.IMAGE_PROCESSING_JOB_NAME = `IMAGE_PROCESSING`
  * @param {(job: WorkerInput, callback: Function) => undefined} task
  */
 const q = queue(
-  async ({ inputPaths, outputDir, args }) =>
+  async ({ inputPaths, outputDir, relativeToPublicPath, args }) =>
     Promise.all(
       processFile(
         inputPaths[0].path,
         args.operations.map(operation => {
           return {
             outputPath: path.join(outputDir, operation.outputPath),
+            outputPathRelativeToPublic: path.join(
+              relativeToPublicPath,
+              operation.outputPath
+            ),
             args: operation.args,
           }
         }),
@@ -38,9 +42,16 @@ const q = queue(
  * @param {{inputPaths: string[], outputDir: string, args: WorkerInput}} args
  * @return Promise
  */
-exports.IMAGE_PROCESSING = ({ inputPaths, outputDir, args }) =>
+exports.IMAGE_PROCESSING = ({
+  inputPaths,
+  relativeToPublicPath,
+  outputDir,
+  args,
+}) =>
   new Promise((resolve, reject) => {
-    q.push({ inputPaths, outputDir, args }, function (err) {
+    q.push({ inputPaths, relativeToPublicPath, outputDir, args }, function (
+      err
+    ) {
       if (err) {
         return reject(err)
       }

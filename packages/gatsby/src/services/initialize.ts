@@ -7,6 +7,7 @@ import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 
+import { startCacheServer } from "../utils/cache-server"
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
@@ -74,6 +75,7 @@ export async function initialize({
   startPluginRunner()
 
   const directory = slash(args.directory)
+  startCacheServer(directory)
 
   const program = {
     ...args,

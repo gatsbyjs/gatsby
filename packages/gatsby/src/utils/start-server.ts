@@ -11,6 +11,10 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
+import hyperdrive from "hyperdrive"
+import net from "net"
+import { getService } from "gatsby-core-utils"
+import path from "path"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
@@ -21,6 +25,7 @@ import launchEditor from "react-dev-utils/launchEditor"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
+const { getDrive } = require(`./cache-server`)
 import http from "http"
 import https from "https"
 
@@ -218,6 +223,29 @@ export async function startServer(
   //
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
+
+  app.use(async (req, res, next) => {
+    const filePath = decodeURI(path.join(`public`, req.path))
+    const drive = await getDrive()
+    console.log({ filePath })
+    let exists = false
+    try {
+      const stat = await drive.promises.stat(filePath)
+      console.log(stat, stat.isFile())
+      if (stat.isFile()) {
+        exists = true
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    const files = await drive.promises.readdir(`/`)
+    console.log(JSON.stringify(files, null, 4))
+    if (exists) {
+      drive.createReadStream(filePath).pipe(res)
+    } else {
+      next()
+    }
+  })
 
   const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
     logLevel: `silent`,

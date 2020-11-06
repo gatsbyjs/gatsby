@@ -15,7 +15,7 @@ import { isCI } from "./ci"
 
 const globalConfigPath = xdgBasedir.config || tmp.fileSync().name
 
-const getSiteDir = (programPath: string): string => {
+export const getSiteDir = (programPath: string): string => {
   const hash = createContentDigest(programPath)
 
   return path.join(globalConfigPath, `gatsby`, `sites`, hash)
@@ -75,6 +75,7 @@ export const getService = async <T = Record<string, unknown>>(
 
   const siteDir = getSiteDir(programPath)
   const serviceDataFile = getDataFilePath(siteDir, serviceName)
+  console.log({ programPath, serviceName, siteDir, serviceDataFile })
 
   try {
     if (

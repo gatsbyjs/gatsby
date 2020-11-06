@@ -8,6 +8,8 @@ import { createContentDigest, slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
 
+import { enqueueLocalJob } from "./local-job-manager"
+
 enum MESSAGE_TYPES {
   JOB_CREATED = `JOB_CREATED`,
   JOB_COMPLETED = `JOB_COMPLETED`,
@@ -111,25 +113,31 @@ async function runLocalWorker<T>(
   workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
   job: InternalJob
 ): Promise<T> {
-  await fs.ensureDir(job.outputDir)
+  console.log({ job })
+  if (process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
+    // TODO this needs to wait for the job to be finished.
+    enqueueLocalJob(job)
+  } else {
+    await fs.ensureDir(job.outputDir)
 
-  return new Promise((resolve, reject) => {
-    // execute worker nextTick
-    // TODO should we think about threading/queueing here?
-    setImmediate(() => {
-      try {
-        resolve(
-          workerFn({
-            inputPaths: job.inputPaths,
-            outputDir: job.outputDir,
-            args: job.args,
-          } as InternalJob)
-        )
-      } catch (err) {
-        reject(new WorkerError(err))
-      }
+    return new Promise((resolve, reject) => {
+      // execute worker nextTick
+      // TODO should we think about threading/queueing here?
+      setImmediate(() => {
+        try {
+          resolve(
+            workerFn({
+              inputPaths: job.inputPaths,
+              outputDir: job.outputDir,
+              args: job.args,
+            } as InternalJob)
+          )
+        } catch (err) {
+          reject(new WorkerError(err))
+        }
+      })
     })
-  })
+  }
 }
 
 function listenForJobMessages(): void {
@@ -230,7 +238,8 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
  */
 export function createInternalJob(
   job: JobInput | InternalJob,
-  plugin: { name: string; version: string; resolve: string }
+  plugin: { name: string; version: string; resolve: string },
+  directory: string
 ): InternalJob {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (isInternalJob(job)) {
@@ -249,12 +258,15 @@ export function createInternalJob(
     }
   })
 
+  const absoluteOutputDir = convertPathsToAbsolute(outputDir)
   const internalJob: InternalJob = {
     id: uuidv4(),
     name,
     contentDigest: ``,
     inputPaths: inputPathsWithContentDigest,
-    outputDir: convertPathsToAbsolute(outputDir),
+    outputDir: absoluteOutputDir,
+    programPath: directory,
+    relativeToPublicPath: path.relative(directory, absoluteOutputDir),
     args,
     plugin: {
       name: plugin.name,
@@ -315,6 +327,7 @@ export async function enqueueJob(job: InternalJob): Promise<object> {
     }
     deferred.resolve(result)
   } catch (err) {
+    console.log(err)
     deferred.reject(new WorkerError(err))
   } finally {
     // when all jobs are done we end the activity
