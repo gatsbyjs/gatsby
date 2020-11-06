@@ -30,8 +30,9 @@ async function queryResult(
     {
       type: { name: `MarkdownRemark` },
       cache: {
-        get: () => null,
-        set: () => null,
+        // GatsbyCache
+        get: async () => null,
+        set: async () => null,
       },
       getNodesByType: type => [],
       ...additionalParameters,
