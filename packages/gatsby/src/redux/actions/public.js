@@ -1395,7 +1395,7 @@ actions.removePageData = (id: PageDataRemove) => {
  * Record that a page was visited in the Client..
  *
  * @param {Object} $0
- * @param {string} $0.id the path to the page.
+ * @param {string} $0.id the chunkName for the page component.
  */
 actions.createClientVisitedPage = (chunkName: string) => {
   return {

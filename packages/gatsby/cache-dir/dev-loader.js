@@ -4,8 +4,7 @@ import { findPath } from "./find-path"
 class DevLoader extends BaseLoader {
   constructor(lazyRequires, matchPaths) {
     // One of the tests doesn't set a path.
-    const loadComponent = (chunkName, path = `/`) => {
-      const realPath = findPath(path)
+    const loadComponent = chunkName => {
       if (process.env.NODE_ENV !== `test`) {
         delete require.cache[
           require.resolve(`$virtual/lazy-client-sync-requires`)
@@ -23,17 +22,7 @@ class DevLoader extends BaseLoader {
           req.setRequestHeader(`Content-Type`, `application/json;charset=UTF-8`)
           req.send(JSON.stringify({ chunkName }))
 
-          // Timeout after 5 seconds (as a precaution webpack fails to update)
-          // and hard refresh
-          const timeoutTimer = setTimeout(() => {
-            clearInterval(checkForUpdates)
-            clearTimeout(timeoutTimer)
-            // window.location.href = realPath
-            window.location.assign(realPath)
-          }, 5000)
-
           const checkForUpdates = setInterval(() => {
-            clearTimeout(timeoutTimer)
             if (process.env.NODE_ENV !== `test`) {
               delete require.cache[
                 require.resolve(`$virtual/lazy-client-sync-requires`)
@@ -44,7 +33,7 @@ class DevLoader extends BaseLoader {
               clearInterval(checkForUpdates)
               resolve(lazyRequires.lazyComponents[chunkName])
             }
-          }, 250)
+          }, 100)
         })
       }
     }
