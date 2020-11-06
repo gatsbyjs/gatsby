@@ -3,7 +3,7 @@ import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
 import crypto from "crypto"
-import { ExecutionResult } from "graphql"
+import { ExecutionResult, GraphQLError } from "graphql"
 
 import path from "path"
 import { store } from "../redux"
@@ -27,53 +27,94 @@ interface IQueryJob {
   pluginCreatorId: string
 }
 
-// Run query
-export const queryRunner = async (
+function reportLongRunningQueryJob(queryJob): void {
+  const messageParts = [
+    `Query takes too long:`,
+    `File path: ${queryJob.componentPath}`,
+  ]
+
+  if (queryJob.isPage) {
+    const { path, context } = queryJob.context
+    messageParts.push(`URL path: ${path}`)
+
+    if (!_.isEmpty(context)) {
+      messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+    }
+  }
+
+  report.warn(messageParts.join(`\n`))
+}
+
+function panicQueryJobError(
+  queryJob: IQueryJob,
+  errors: ReadonlyArray<GraphQLError>
+): void {
+  let urlPath = undefined
+  let queryContext = {}
+  const plugin = queryJob.pluginCreatorId || `none`
+
+  if (queryJob.isPage) {
+    urlPath = queryJob.context.path
+    queryContext = queryJob.context.context
+  }
+
+  const structuredErrors = errors.map(e => {
+    const structuredError = errorParser({
+      message: e.message,
+      filePath: undefined,
+      location: undefined,
+    })
+
+    structuredError.context = {
+      ...structuredError.context,
+      codeFrame: getCodeFrame(
+        queryJob.query,
+        e.locations && e.locations[0].line,
+        e.locations && e.locations[0].column
+      ),
+      filePath: queryJob.componentPath,
+      ...(urlPath ? { urlPath } : {}),
+      ...queryContext,
+      plugin,
+    }
+
+    return structuredError
+  })
+
+  report.panicOnBuild(structuredErrors)
+}
+
+async function startQueryJob(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
   parentSpan: Span | undefined
-): Promise<IExecutionResult> => {
-  const { program } = store.getState()
+): Promise<ExecutionResult> {
+  let isPending = true
 
-  const graphql = (
-    query: string,
-    context: Record<string, unknown>,
-    queryName: string
-  ): Promise<ExecutionResult> => {
-    // Check if query takes too long, print out warning
-    const promise = graphqlRunner.query(query, context, {
+  // Print out warning when query takes too long
+  const timeoutId = setTimeout(() => {
+    if (isPending) {
+      reportLongRunningQueryJob(queryJob)
+    }
+  }, 15000)
+
+  try {
+    return await graphqlRunner.query(queryJob.query, queryJob.context, {
       parentSpan,
-      queryName,
+      queryName: queryJob.id,
     })
-    let isPending = true
-
-    const timeoutId = setTimeout(() => {
-      if (isPending) {
-        const messageParts = [
-          `Query takes too long:`,
-          `File path: ${queryJob.componentPath}`,
-        ]
-
-        if (queryJob.isPage) {
-          const { path, context } = queryJob.context
-          messageParts.push(`URL path: ${path}`)
-
-          if (!_.isEmpty(context)) {
-            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
-          }
-        }
-
-        report.warn(messageParts.join(`\n`))
-      }
-    }, 15000)
-
-    promise.finally(() => {
-      isPending = false
-      clearTimeout(timeoutId)
-    })
-
-    return promise
+  } finally {
+    isPending = false
+    clearTimeout(timeoutId)
   }
+}
+
+export async function queryRunner(
+  graphqlRunner: GraphQLRunner,
+  queryJob: IQueryJob,
+  parentSpan: Span | undefined
+): Promise<IExecutionResult> {
+  const { program } = store.getState()
 
   boundActionCreators.queryStart({
     path: queryJob.id,
@@ -87,47 +128,12 @@ export const queryRunner = async (
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
+    result = await startQueryJob(graphqlRunner, queryJob, parentSpan)
   }
 
-  // If there's a graphql error then log the error. If we're building, also
-  // quit.
-  if (result && result.errors) {
-    let urlPath = undefined
-    let queryContext = {}
-    const plugin = queryJob.pluginCreatorId || `none`
-
-    if (queryJob.isPage) {
-      urlPath = queryJob.context.path
-      queryContext = queryJob.context.context
-    }
-
-    const structuredErrors = result.errors
-      .map(e => {
-        const structuredError = errorParser({
-          message: e.message,
-          filePath: undefined,
-          location: undefined,
-        })
-
-        structuredError.context = {
-          ...structuredError.context,
-          codeFrame: getCodeFrame(
-            queryJob.query,
-            e.locations && e.locations[0].line,
-            e.locations && e.locations[0].column
-          ),
-          filePath: queryJob.componentPath,
-          ...(urlPath ? { urlPath } : {}),
-          ...queryContext,
-          plugin,
-        }
-
-        return structuredError
-      })
-      .filter(Boolean)
-
-    report.panicOnBuild(structuredErrors)
+  if (result.errors) {
+    // If there's a graphql error then log the error and exit
+    panicQueryJobError(queryJob, result.errors)
   }
 
   // Add the page context onto the results.
@@ -191,6 +197,7 @@ export const queryRunner = async (
     }
   }
 
+  // Broadcast that a page's query has run.
   boundActionCreators.pageQueryRun({
     path: queryJob.id,
     componentPath: queryJob.componentPath,
