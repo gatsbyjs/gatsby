@@ -1171,7 +1171,6 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
-  console.log(`createJobV2`, job)
   const currentState = getState()
   const internalJob = createInternalJob(
     job,

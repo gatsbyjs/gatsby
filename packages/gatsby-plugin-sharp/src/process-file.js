@@ -61,7 +61,6 @@ sharp.concurrency(cpuCoreCount())
  * @param {Transform[]} transforms
  */
 exports.processFile = (file, transforms, options = {}) => {
-  console.log(`processFile`)
   let pipeline
   try {
     pipeline = !options.failOnError
@@ -80,7 +79,9 @@ exports.processFile = (file, transforms, options = {}) => {
     try {
       const { outputPath, outputPathRelativeToPublic, args } = transform
       debug(`Start processing ${outputPath}`)
-      await fs.ensureDir(path.dirname(outputPath))
+      if (!process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
+        await fs.ensureDir(path.dirname(outputPath))
+      }
 
       const transformArgs = healOptions(
         { defaultQuality: options.defaultQuality },
@@ -248,7 +249,6 @@ const compressJpg = (
   outputPathRelativeToPublic,
   options
 ) => {
-  console.log(`compressJpg`, outputPath, options)
   return pipeline.toBuffer().then(sharpBuffer =>
     imagemin
       .buffer(sharpBuffer, {
@@ -260,7 +260,6 @@ const compressJpg = (
         ],
       })
       .then(imageminBuffer => {
-        console.log(`writing file`)
         return imageminBuffer
       })
       .then(imageminBuffer => {

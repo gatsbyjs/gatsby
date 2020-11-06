@@ -227,19 +227,17 @@ export async function startServer(
   app.use(async (req, res, next) => {
     const filePath = decodeURI(path.join(`public`, req.path))
     const drive = await getDrive()
-    console.log({ filePath })
     let exists = false
     try {
       const stat = await drive.promises.stat(filePath)
-      console.log(stat, stat.isFile())
       if (stat.isFile()) {
         exists = true
       }
     } catch (e) {
-      console.log(e)
+      if (e.name !== `FileNotFound`) {
+        console.log(e)
+      }
     }
-    const files = await drive.promises.readdir(`/`)
-    console.log(JSON.stringify(files, null, 4))
     if (exists) {
       drive.createReadStream(filePath).pipe(res)
     } else {

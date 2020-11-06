@@ -95,7 +95,9 @@ function prepareQueue({ file, args }) {
   const outputFilePath = path.join(argsDigestShort, imgSrc)
 
   // make sure outputDir is created
-  fs.ensureDirSync(outputDir)
+  if (!process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
+    fs.ensureDirSync(outputDir)
+  }
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,

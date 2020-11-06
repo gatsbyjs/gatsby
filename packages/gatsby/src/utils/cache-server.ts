@@ -19,14 +19,11 @@ export const getDrive = async () => {
 export const startCacheServer = async (
   programPath = `/Users/kylemathews/programs/blog`
 ) => {
-  console.log(`inside`)
-
   const expressPort = 12020
   const hyperdrivePort = 12021
 
   // Start hyperdrive
   const pathToDB = path.join(getSiteDir(programPath), `site-db`)
-  console.log({ pathToDB })
   console.time(`start hyperdrive`)
   drive = hyperdrive(pathToDB)
   console.timeEnd(`start hyperdrive`)
@@ -44,7 +41,6 @@ export const startCacheServer = async (
 
   await drive.promises.ready()
   const key = drive.key.toString(`hex`)
-  console.log(`drive key:`, key)
 
   await createServiceLock(programPath, `local-cache-server`, {
     expressPort,
@@ -67,15 +63,12 @@ export const startCacheServer = async (
     }
     const workerFn = worker[job.name]
 
-    console.log(`/jobs`, job)
     const result = await workerFn({
       inputPaths: job.inputPaths,
       outputDir: job.outputDir,
       relativeToPublicPath: job.relativeToPublicPath,
       args: job.args,
     })
-
-    console.log({ result })
 
     drive.writeFile(
       path.join(`/job-results/`, req.body.id.toString()),

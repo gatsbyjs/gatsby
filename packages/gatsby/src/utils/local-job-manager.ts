@@ -16,7 +16,6 @@ const waitForJobToFinish = async jobId => {
       const file = JSON.parse(
         await drive.promises.readFile(jobResultPath, `utf-8`)
       )
-      console.log(`job-results`, file)
       watcher.destroy()
       resolve()
     })
@@ -30,14 +29,14 @@ export const enqueueLocalJob = async (job): Promise<void> => {
     job.programPath,
     `local-cache-server`
   )
-  console.log(`enquing job on cache server`)
+  console.log(`enquing job on cache server`, job.id)
+  console.time(`process job ${job.id}`)
   fetch(`http://localhost:${localCacheServer.expressPort}/jobs`, {
     method: `post`,
     body: JSON.stringify(job),
     headers: { "Content-Type": `application/json` },
   })
 
-  console.time(`process job ${job.id}`)
   await waitForJobToFinish(job.id)
   console.timeEnd(`process job ${job.id}`)
 }

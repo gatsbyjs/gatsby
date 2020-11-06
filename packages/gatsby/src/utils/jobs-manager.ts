@@ -113,10 +113,9 @@ async function runLocalWorker<T>(
   workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
   job: InternalJob
 ): Promise<T> {
-  console.log({ job })
   if (process.env.GATSBY_EXPERIMENTAL_CACHE_SERVER) {
     // TODO this needs to wait for the job to be finished.
-    enqueueLocalJob(job)
+    await enqueueLocalJob(job)
   } else {
     await fs.ensureDir(job.outputDir)
 

@@ -75,7 +75,6 @@ export const getService = async <T = Record<string, unknown>>(
 
   const siteDir = getSiteDir(programPath)
   const serviceDataFile = getDataFilePath(siteDir, serviceName)
-  console.log({ programPath, serviceName, siteDir, serviceDataFile })
 
   try {
     if (
