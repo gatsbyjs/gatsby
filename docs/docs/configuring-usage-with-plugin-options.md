@@ -276,6 +276,14 @@ describe(`pluginOptionsSchema`, () => {
 })
 ```
 
+### Opting out of plugin option validation
+
+If you are running your site and run into an error trying to develop or build your site due to plugin options failing that are undocumented or seem erroneous, you can add the `SKIP_PLUGIN_OPTION_VALIDATION` flag set to `true`. It can be prepended to your develop and build scripts, included as an [environment variable](/docs/environment-variables/) in a .env file, or included before your `gatsby develop` command like this:
+
+```shell
+SKIP_PLUGIN_OPTION_VALIDATION=true gatsby develop
+```
+
 ## Additional resources
 
 - [Example Gatsby site using plugin options with a local plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-plugin-options)
