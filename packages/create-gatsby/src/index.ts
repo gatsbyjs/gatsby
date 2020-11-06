@@ -12,7 +12,7 @@ import { TextInput } from "./components/text"
 // @ts-ignore
 import { SelectInput, MultiSelectInput } from "./components/select"
 import { makePluginConfigQuestions } from "./plugin-options-form"
-import { center, rule } from "./components/utils"
+import { center, rule, wrap } from "./components/utils"
 
 // eslint-disable-next-line no-control-regex
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
@@ -111,13 +111,18 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 `
   )
   console.log(c.red(rule()))
-  console.log(c.red(`This is currently for testing purposes only`))
+  console.log(center(c.red(`⚠️  This is currently for testing purposes only`)))
   console.log(c.red(rule()))
 
   console.log(
-    `This command will generate a new Gatsby site for you with the setup you select. ${c.white.bold(
-      `Let's answer some questions:\n`
-    )}`
+    wrap(
+      `This command will generate a new Gatsby site for you in ${c.bold(
+        process.cwd()
+      )} with the setup you select. ${c.white.bold(
+        `Let's answer some questions:\n`
+      )}`,
+      process.stdout.columns
+    )
   )
   console.log(``)
 

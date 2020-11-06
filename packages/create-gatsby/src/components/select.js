@@ -96,7 +96,7 @@ export class MultiSelectInput extends SelectInput {
         role: `separator`,
       },
       {
-        message: `Done`,
+        message: this.styles.bold(`Done`),
         name: `___done`,
       },
     ]

@@ -4939,6 +4939,11 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
+ansi-wordwrap@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ansi-wordwrap/-/ansi-wordwrap-1.0.2.tgz#0195cc379ec07ce9bc263500efaa8a13dbb93fd7"
+  integrity sha512-kpF1wxavNq9oWFepGI+VDdA1h+NQW0gUfNZFBw6Ukujz6L5f0GGUqnTRgoY0//0D8cYIcpR93+deF/IX0ORcmA==
+
 ansi-wrap@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/ansi-wrap/-/ansi-wrap-0.1.0.tgz#a82250ddb0015e9a27ca82e82ea603bbfa45efaf"
