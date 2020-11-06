@@ -18,7 +18,7 @@ class DevLoader extends BaseLoader {
           // do the work
           const req = new XMLHttpRequest()
           req.open(`post`, `/___client-page-visited`, true)
-          req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+          req.setRequestHeader(`Content-Type`, `application/json;charset=UTF-8`)
           req.send(JSON.stringify({ chunkName }))
 
           // Timeout after 3 seconds and hard refresh — webpack seems to
