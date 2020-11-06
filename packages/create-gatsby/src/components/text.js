@@ -11,7 +11,12 @@ export class TextInput extends Input {
     const separator = await this.separator()
     const message = await this.message()
 
-    let prompt = [this.symbols.pointer, ` `, prefix, separator]
+    let prompt = [
+      prefix,
+      ` `,
+      this.styles.muted(await this.element(`hint`)),
+      separator,
+    ]
       .filter(Boolean)
       .join(``)
     this.state.prompt = prompt
@@ -29,10 +34,8 @@ export class TextInput extends Input {
     } else {
       this.cursorShow()
     }
-    const help = (await this.error()) || (await this.hint())
     const footer = await this.footer()
 
-    if (help && !output.includes(help)) output += ` ` + help
     prompt += ` ` + output
 
     this.clear(size)

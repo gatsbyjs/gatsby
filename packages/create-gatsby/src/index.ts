@@ -31,7 +31,7 @@ const questions = [
     type: `textinput`,
     name: `project`,
     message: `What would you like to name the folder where your site will be created?`,
-    prefix: path.basename(process.cwd()),
+    hint: path.basename(process.cwd()),
     separator: `/`,
     initial: `my-gatsby-site`,
     format: (value: string): string => c.cyan(value),
