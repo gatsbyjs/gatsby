@@ -18,7 +18,6 @@ export const clientVisitedPageReducer = (
       return new Set<string>(defaults)
 
     case `CREATE_CLIENT_VISITED_PAGE`: {
-      console.log(`reducer`, action)
       state.add(action.payload.componentChunkName)
 
       return state

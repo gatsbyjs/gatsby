@@ -28,7 +28,6 @@ class EnsureResources extends React.Component {
 
   loadResources(rawPath) {
     loader.loadPage(rawPath).then(pageResources => {
-      console.log(`loadResources then function`)
       if (pageResources && pageResources.status !== PageResourceStatus.Error) {
         this.setState({
           location: { ...window.location },

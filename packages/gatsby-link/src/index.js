@@ -207,7 +207,6 @@ class GatsbyLink extends React.Component {
                 ___loader.hovering(parsePath(prefixedTo).pathname)
               }}
               onClick={e => {
-                console.log(`====onClick link`, { prefixedTo, state })
                 if (onClick) {
                   onClick(e)
                 }

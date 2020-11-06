@@ -232,12 +232,10 @@ export class BaseLoader {
 
       const finalResult = {}
 
-      console.log({ pageData })
       const componentChunkPromise = this.loadComponent(
         componentChunkName,
         pageData.path
       ).then(component => {
-        console.log(`component loaded`, { component })
         finalResult.createdAt = new Date()
         let pageResources
         if (!component) {
@@ -286,10 +284,6 @@ export class BaseLoader {
 
       return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
         ([pageResources, staticQueryResults]) => {
-          console.log(`Promise.all finished`, {
-            pageResources,
-            staticQueryResults,
-          })
           let payload
           if (pageResources) {
             payload = { ...pageResources, staticQueryResults }
@@ -309,7 +303,6 @@ export class BaseLoader {
 
     inFlightPromise
       .then(response => {
-        console.log(`inFlightPromise`, { response })
         this.inFlightDb.delete(pagePath)
       })
       .catch(error => {

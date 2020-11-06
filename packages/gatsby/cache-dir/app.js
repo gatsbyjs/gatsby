@@ -14,7 +14,6 @@ import matchPaths from "$virtual/match-paths.json"
 
 window.___emitter = emitter
 
-console.log({ lazySyncRequires })
 window.lazySyncRequires = lazySyncRequires
 
 const loader = new DevLoader(lazySyncRequires, matchPaths)

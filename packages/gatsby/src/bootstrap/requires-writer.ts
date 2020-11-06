@@ -178,7 +178,6 @@ const createHash = (
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
@@ -189,10 +188,6 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const cleanedClientVisitedPageComponents = components.filter(c =>
     clientVisitedPageComponents.some(s => s === c.componentChunkName)
   )
-  console.log({
-    clientVisitedPageComponents,
-    cleanedClientVisitedPageComponents,
-  })
 
   const newHash = createHash(
     matchPaths,
@@ -202,7 +197,6 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // console.log(`on requiresWriter END1`)
     return false
   }
 
@@ -307,7 +301,6 @@ const preferDefault = m => (m && m.default) || m
  * files as required
  */
 emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
-  console.log(`CREATE_CLIENT_VISITED_PAGE`)
   reporter.pendingActivity({ id: `requires-writer` })
   writeAll(store.getState())
 })
