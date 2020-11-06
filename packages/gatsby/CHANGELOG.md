@@ -3,6 +3,128 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.26.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0-next.1) (2020-11-05)
+
+### Bug Fixes
+
+- **docs:** Update documentation for createPages ([#27735](https://github.com/gatsbyjs/gatsby/issues/27735)) ([27c3083](https://github.com/gatsbyjs/gatsby/commit/27c3083a8dccbab06f72f7259ddf6a79b7043bbd))
+- **gatsby:** Remove version annotation in createPages ([#27851](https://github.com/gatsbyjs/gatsby/issues/27851)) ([b57e41f](https://github.com/gatsbyjs/gatsby/commit/b57e41f04616a6a7da72213a57e33b9e361c56c0))
+
+## [2.25.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.25.0...gatsby@2.25.1) (2020-11-02)
+
+**Note:** Version bump only for package gatsby
+
+# [2.25.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.92...gatsby@2.25.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.24.92](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.91...gatsby@2.24.92) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby:** include graphql type definition in published files ([#27646](https://github.com/gatsbyjs/gatsby/issues/27646)) ([875b214](https://github.com/gatsbyjs/gatsby/commit/875b214a7dd58d1e532a605d45906e5942a4e2c5))
+- **gatsby:** print real plugin loading error in verbose ([#27664](https://github.com/gatsbyjs/gatsby/issues/27664)) ([c947568](https://github.com/gatsbyjs/gatsby/commit/c9475689615eb1b4e34f599e80c36bcef76ee77a))
+- **gatsby:** purge jobsV2 results when cache is corrupt ([#27700](https://github.com/gatsbyjs/gatsby/issues/27700)) ([a6ecfb2](https://github.com/gatsbyjs/gatsby/commit/a6ecfb2b01d761e8a3612b8ea132c698659923d9))
+- **gatsby:** show theme that has faulty config ([#27708](https://github.com/gatsbyjs/gatsby/issues/27708)) ([d7d1b97](https://github.com/gatsbyjs/gatsby/commit/d7d1b97e69cc5fa8030722a792a56e6d30937d2d))
+
+### Features
+
+- **gatsby:** allow configuration of default socket type ([#27734](https://github.com/gatsbyjs/gatsby/issues/27734)) ([f43a6bd](https://github.com/gatsbyjs/gatsby/commit/f43a6bd8ab3226afdfa79519d477c2a43f86e66d))
+- Add "gatsby plugin" command ([#27725](https://github.com/gatsbyjs/gatsby/issues/27725)) ([5869cc5](https://github.com/gatsbyjs/gatsby/commit/5869cc5ab2189b257944a4c3f99af564be81ea80))
+
+## [2.24.91](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.90...gatsby@2.24.91) (2020-10-28)
+
+### Bug Fixes
+
+- **gatsby:** fix subplugin validation ([#27616](https://github.com/gatsbyjs/gatsby/issues/27616)) ([65deab8](https://github.com/gatsbyjs/gatsby/commit/65deab8b47802262d19f7577ba5db302a2cd22e6))
+
+## [2.24.90](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.89...gatsby@2.24.90) (2020-10-28)
+
+### Performance Improvements
+
+- **gatsby:** cache `createNodeId` locally ([#27686](https://github.com/gatsbyjs/gatsby/issues/27686)) ([5acfb60](https://github.com/gatsbyjs/gatsby/commit/5acfb605e971a6296a4dd588eb5a96031f9948cd))
+
+## [2.24.89](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.88...gatsby@2.24.89) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** leak less in chokidar listeners ([#27685](https://github.com/gatsbyjs/gatsby/issues/27685)) ([e0a3645](https://github.com/gatsbyjs/gatsby/commit/e0a3645d7c788b7c589d69187840305a650678f7))
+
+## [2.24.88](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.87...gatsby@2.24.88) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby:** add missing printTypeDefinitions ([#27670](https://github.com/gatsbyjs/gatsby/issues/27670)) ([2da94bf](https://github.com/gatsbyjs/gatsby/commit/2da94bfcd612d10b0816e38a95e43651986fd94b))
+- **gatsby:** better heuristic for automatic cache purging ([#27682](https://github.com/gatsbyjs/gatsby/issues/27682)) ([a5665d2](https://github.com/gatsbyjs/gatsby/commit/a5665d28f585c7f8727e2bbaccb4ab0fffeaa8e7))
+
+## [2.24.87](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.86...gatsby@2.24.87) (2020-10-26)
+
+**Note:** Version bump only for package gatsby
+
+## [2.24.86](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.85...gatsby@2.24.86) (2020-10-26)
+
+### Features
+
+- **gatsby:** disable automatic by default ([#27615](https://github.com/gatsbyjs/gatsby/issues/27615)) ([18c182a](https://github.com/gatsbyjs/gatsby/commit/18c182a574475c9c06dbbeb7ddae27f5cb008fe9))
+
+## [2.24.85](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.84...gatsby@2.24.85) (2020-10-22)
+
+### Bug Fixes
+
+- **gatsby:** trigger location effects in navigation ([#27594](https://github.com/gatsbyjs/gatsby/issues/27594)) ([642eeb1](https://github.com/gatsbyjs/gatsby/commit/642eeb10a56a0618f2f0c608a035293cd3d5269f))
+
+## [2.24.84](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.83...gatsby@2.24.84) (2020-10-21)
+
+### Bug Fixes
+
+- duplicate types to solve circular dependency ([#27578](https://github.com/gatsbyjs/gatsby/issues/27578)) ([029ec48](https://github.com/gatsbyjs/gatsby/commit/029ec489a271ddeb7ad3fa174bd536c1b38db246))
+
+## [2.24.83](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.82...gatsby@2.24.83) (2020-10-20)
+
+### Bug Fixes
+
+- **gatsby:** Handle double prefix case for `extendErrorIdWithPluginName` ([#27547](https://github.com/gatsbyjs/gatsby/issues/27547)) ([b4d8342](https://github.com/gatsbyjs/gatsby/commit/b4d8342008de8fac199e3a524130573ba81ed354))
+
+## [2.24.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.81...gatsby@2.24.82) (2020-10-19)
+
+### Bug Fixes
+
+- **gatsby:** notify when Gatsby cache is incomplete ([#27549](https://github.com/gatsbyjs/gatsby/issues/27549)) ([2d6a153](https://github.com/gatsbyjs/gatsby/commit/2d6a1535ca2fa45bc6821d3273c32e18f66913fc))
+
+## [2.24.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.80...gatsby@2.24.81) (2020-10-19)
+
+### Features
+
+- **gatsby-plugin-utils:** save validation resulting value to plugin options ([#27381](https://github.com/gatsbyjs/gatsby/issues/27381)) ([0073fb1](https://github.com/gatsbyjs/gatsby/commit/0073fb167e7ccddefbff8872b5b9bd488660804d))
+
+## [2.24.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.79...gatsby@2.24.80) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby:** refresh browser when receiving update and runtime errored ([#27467](https://github.com/gatsbyjs/gatsby/issues/27467)) ([f227e85](https://github.com/gatsbyjs/gatsby/commit/f227e85728168d104ed0a7982823923dcd3bba62))
+
+### Performance Improvements
+
+- **gatsby:** test sync before calling onCreateNode ([#27442](https://github.com/gatsbyjs/gatsby/issues/27442)) ([6400383](https://github.com/gatsbyjs/gatsby/commit/6400383287db9967a7124df7fb0d096408372b95))
+
+## [2.24.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.78...gatsby@2.24.79) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby:** add runtime check for react 17 ([#27468](https://github.com/gatsbyjs/gatsby/issues/27468)) ([239d539](https://github.com/gatsbyjs/gatsby/commit/239d539b76421f210a0db901786021ac45a42ac7))
+
+## [2.24.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.77...gatsby@2.24.78) (2020-10-15)
+
+### Features
+
+- **gatsby-plugin-typescript:** Add schema ([#27361](https://github.com/gatsbyjs/gatsby/issues/27361)) ([072ef6c](https://github.com/gatsbyjs/gatsby/commit/072ef6c992168c89505143670013d5d8147f4ab4))
+
+## [2.24.77](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.76...gatsby@2.24.77) (2020-10-14)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.24.76](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.75...gatsby@2.24.76) (2020-10-13)
 
 ### Bug Fixes

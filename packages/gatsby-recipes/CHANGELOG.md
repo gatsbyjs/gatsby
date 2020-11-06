@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.0...gatsby-recipes@0.3.0-next.1) (2020-11-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix GatsbyShadowFile resource — don't error if package isn't installed ([#27790](https://github.com/gatsbyjs/gatsby/issues/27790)) ([3817174](https://github.com/gatsbyjs/gatsby/commit/3817174822c61aeafd3efac5fb670604d895d89d))
+- **recipe:** add brackets to directory names ([#27812](https://github.com/gatsbyjs/gatsby/issues/27812)) ([5f8beb7](https://github.com/gatsbyjs/gatsby/commit/5f8beb77b64505e4e967b9e2307e991988c8cda5))
+
+## [0.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.35...gatsby-recipes@0.2.36) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Only remove the ".mdx" ending if running local recipe ([#27718](https://github.com/gatsbyjs/gatsby/issues/27718)) ([409a36a](https://github.com/gatsbyjs/gatsby/commit/409a36a2c41dd575627f4e9c9bfcd104a29663a7))
+
+## [0.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.34...gatsby-recipes@0.2.35) (2020-11-02)
+
+### Features
+
+- **recipes:** Export providers ([#27724](https://github.com/gatsbyjs/gatsby/issues/27724)) ([023daf2](https://github.com/gatsbyjs/gatsby/commit/023daf201181c15456a3ec9fe075bab54c2a1248))
+
+## [0.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.33...gatsby-recipes@0.2.34) (2020-10-26)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.32...gatsby-recipes@0.2.33) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.31...gatsby-recipes@0.2.32) (2020-10-19)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Added isLocal prop to wordpress recipe ([#27523](https://github.com/gatsbyjs/gatsby/issues/27523)) ([10d3451](https://github.com/gatsbyjs/gatsby/commit/10d345111d37f6c4ef1cfd896d050f8dfdd2d349))
+
 ## [0.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.30...gatsby-recipes@0.2.31) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-recipes

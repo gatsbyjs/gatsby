@@ -14,6 +14,12 @@ import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IFlattenedPlugin } from "../types"
 
+afterEach(() => {
+  Object.keys(reporter).forEach(method => {
+    reporter[method].mockClear()
+  })
+})
+
 describe(`Load plugins`, () => {
   /**
    * Replace the resolve path and version string.
@@ -120,20 +126,7 @@ describe(`Load plugins`, () => {
       expect(plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            browserAPIs: [],
-            id: ``,
             name: `gatsby-plugin-typescript`,
-            nodeAPIs: [
-              `resolvableExtensions`,
-              `onCreateBabelConfig`,
-              `onCreateWebpackConfig`,
-            ],
-            pluginOptions: {
-              plugins: [],
-            },
-            resolve: ``,
-            ssrAPIs: [],
-            version: `1.0.0`,
           }),
         ])
       )
@@ -162,13 +155,16 @@ describe(`Load plugins`, () => {
             id: ``,
             name: `gatsby-plugin-typescript`,
             nodeAPIs: [
+              `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
               `onCreateWebpackConfig`,
             ],
             pluginOptions: {
-              plugins: [],
+              allExtensions: false,
+              isTSX: false,
               jsxPragma: `h`,
+              plugins: [],
             },
             resolve: ``,
             ssrAPIs: [],
@@ -229,6 +225,7 @@ describe(`Load plugins`, () => {
         Array [
           Object {
             "context": Object {
+              "configDir": null,
               "pluginName": "gatsby-plugin-google-analytics",
               "validationErrors": Array [
                 Object {
@@ -266,6 +263,7 @@ describe(`Load plugins`, () => {
         Array [
           Object {
             "context": Object {
+              "configDir": null,
               "pluginName": "gatsby-plugin-google-analytics",
               "validationErrors": Array [
                 Object {
@@ -277,6 +275,84 @@ describe(`Load plugins`, () => {
                   "message": "\\"anonymize\\" must be a boolean",
                   "path": Array [
                     "anonymize",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
+      expect(mockProcessExit).toHaveBeenCalledWith(1)
+    })
+
+    it(`defaults plugin options to the ones defined in the schema`, async () => {
+      let plugins = await loadPlugins({
+        plugins: [
+          {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+              trackingId: `fake`,
+            },
+          },
+        ],
+      })
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(
+        plugins.find(plugin => plugin.name === `gatsby-plugin-google-analytics`)
+          .pluginOptions
+      ).toEqual({
+        // All the options that have defaults are defined
+        anonymize: false,
+        exclude: [],
+        head: false,
+        pageTransitionDelay: 0,
+        plugins: [],
+        respectDNT: false,
+        trackingId: `fake`,
+      })
+    })
+
+    it(`validates subplugin schemas`, async () => {
+      await loadPlugins({
+        plugins: [
+          {
+            resolve: `gatsby-transformer-remark`,
+            options: {
+              plugins: [
+                {
+                  resolve: `gatsby-remark-autolink-headers`,
+                  options: {
+                    maintainCase: `should be boolean`,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      })
+
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "configDir": null,
+              "pluginName": "gatsby-remark-autolink-headers",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "maintainCase",
+                    "label": "maintainCase",
+                    "value": "should be boolean",
+                  },
+                  "message": "\\"maintainCase\\" must be a boolean",
+                  "path": Array [
+                    "maintainCase",
                   ],
                   "type": "boolean.base",
                 },

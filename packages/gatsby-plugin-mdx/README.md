@@ -501,6 +501,8 @@ export const wrapRootElement = ({ element }) => (
 
 The following components can be customized with the MDXProvider:
 
+<!-- prettier-ignore-start -->
+
 | Tag             | Name                                                                 | Syntax                                              |
 | --------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
 | `p`             | [Paragraph](https://github.com/syntax-tree/mdast#paragraph)          |                                                     |
@@ -527,6 +529,7 @@ The following components can be customized with the MDXProvider:
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
+<!-- prettier-ignore-end -->
 
 It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate

@@ -28,7 +28,7 @@ Passing `nodeId` tells Gatsby that the page depends specifically on this node. S
 
 ## How dependencies are stored
 
-Page -> Node dependencies are tracked via the `componentDataDependencies` redux namespace.
+Page -> Node dependencies are tracked via the `componentDataDependencies` Redux namespace.
 
 ```javascript
 {

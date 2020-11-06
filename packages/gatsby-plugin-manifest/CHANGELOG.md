@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.5.0...gatsby-plugin-manifest@2.5.1) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** create directories recursively ([#27793](https://github.com/gatsbyjs/gatsby/issues/27793)) ([085d188](https://github.com/gatsbyjs/gatsby/commit/085d1888481881456bbaf4a988cfb7578f28f0d9))
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.37...gatsby-plugin-manifest@2.5.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.4.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.36...gatsby-plugin-manifest@2.4.37) (2020-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.35...gatsby-plugin-manifest@2.4.36) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** fix plugin option schema and add a test for it ([#27565](https://github.com/gatsbyjs/gatsby/issues/27565)) ([49fdb53](https://github.com/gatsbyjs/gatsby/commit/49fdb53ecd1857b67d7bb078bcd2bb42e352b7cb))
+
+## [2.4.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.34...gatsby-plugin-manifest@2.4.35) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 ## [2.4.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.33...gatsby-plugin-manifest@2.4.34) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

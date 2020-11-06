@@ -35,6 +35,18 @@ function onCreateWebpackConfig({ actions, loaders }) {
   })
 }
 
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
+    jsxPragma: Joi.string()
+      .description(`Replace the function used when compiling JSX expressions.`)
+      .default(`React`),
+    allExtensions: Joi.boolean()
+      .description(`Indicates that every file should be parsed as TS or TSX.`)
+      .default(false)
+      .when(`isTSX`, { is: true, then: Joi.valid(true) }),
+  })
+
 exports.resolvableExtensions = resolvableExtensions
 exports.onCreateBabelConfig = onCreateBabelConfig
 exports.onCreateWebpackConfig = onCreateWebpackConfig

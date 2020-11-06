@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.37...gatsby-source-filesystem@2.4.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.3.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.36...gatsby-source-filesystem@2.3.37) (2020-10-27)
+
+### Performance Improvements
+
+- **gatsby-source-filesystem:** dont JSON parse/stringify the node ([#27597](https://github.com/gatsbyjs/gatsby/issues/27597)) ([ffbec4c](https://github.com/gatsbyjs/gatsby/commit/ffbec4c5e56496ad8169415e9b4a93ba47c18398))
+
+## [2.3.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.35...gatsby-source-filesystem@2.3.36) (2020-10-26)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem,gatsby-transformer-sharp:** Use custom errors ([#27576](https://github.com/gatsbyjs/gatsby/issues/27576)) ([752e27a](https://github.com/gatsbyjs/gatsby/commit/752e27a2614ea6ee6d52d4cac161035108e977e7))
+
+## [2.3.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.34...gatsby-source-filesystem@2.3.35) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ## [2.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.33...gatsby-source-filesystem@2.3.34) (2020-10-08)
 
 **Note:** Version bump only for package gatsby-source-filesystem

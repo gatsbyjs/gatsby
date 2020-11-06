@@ -3,6 +3,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
+import { boundActionCreators } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
 
 export async function createPages({
@@ -39,13 +40,15 @@ export async function createPages({
     } (use --verbose for breakdown)`
   )
 
-  reporter.verbose(
-    `Number of node types: ${
-      store.getState().nodesByType.size
-    }. Nodes per type: ${[...store.getState().nodesByType.entries()]
-      .map(([type, nodes]) => type + `: ` + nodes.size)
-      .join(`, `)}`
-  )
+  if (process.env.gatsby_log_level === `verbose`) {
+    reporter.verbose(
+      `Number of node types: ${
+        store.getState().nodesByType.size
+      }. Nodes per type: ${[...store.getState().nodesByType.entries()]
+        .map(([type, nodes]) => type + `: ` + nodes.size)
+        .join(`, `)}`
+    )
+  }
 
   activity.end()
 
@@ -71,6 +74,8 @@ export async function createPages({
     }`
   )
   tim.end()
+
+  boundActionCreators.apiFinished({ apiName: `createPages` })
 
   return {
     changedPages,

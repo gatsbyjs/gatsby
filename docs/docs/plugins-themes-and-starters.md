@@ -17,7 +17,7 @@ Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly 
 
 A Gatsby theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Since they are plugins, themes can be packaged and distributed through a registry like npm or yarn, and versions can be updated through a site's `package.json` file.
 
-With a Gatsby theme, all of your default configuration (shared functionality, data sourcing, design) is abstracted out of your site and into an installable package. A theme might differ from a typical plugin in that it packages up usage of a plugin into a consumable API, making it easy to include functionality without having to type out all of the code by hand (such as GraphQL queries). To understand more of the motivation for Gatsby themes, check out the docs on [What are Gatsby Themes?](/docs/themes/what-are-gatsby-themes/)
+With a Gatsby theme, all of your default configuration (shared functionality, data sourcing, design) is abstracted out of your site and into an installable package. A theme might differ from a typical plugin in that it packages up usage of a plugin into a consumable API, making it possible to include functionality without having to type out all of the code by hand (such as GraphQL queries). To understand more of the motivation for Gatsby themes, check out the docs on [What are Gatsby Themes?](/docs/themes/what-are-gatsby-themes/)
 
 - [Themes docs](/docs/themes/)
 - [Using a theme](/docs/themes/using-a-gatsby-theme/)
@@ -58,7 +58,7 @@ The following tables put plugins, themes, and starters side-by-side, showing wha
 
 ### Differences and considerations in maintenance
 
-When it comes to maintaining a Gatsby site, plugins and themes offer a distinct advantage to starters by being distributed as packages. This means making changes in multiple Gatsby sites is as easy as a new install of an updated package upstream. It's difficult to sync changes across multiple sites derived from the same starter.
+When it comes to maintaining a Gatsby site, plugins and themes offer a distinct advantage to starters by being distributed as packages. This means making changes in multiple Gatsby sites is done by a new install of an updated package upstream. It's difficult to sync changes across multiple sites derived from the same starter.
 
 | Maintenance        | Plugin | Theme | Starter |
 | ------------------ | ------ | ----- | ------- |

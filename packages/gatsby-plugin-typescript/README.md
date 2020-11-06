@@ -36,6 +36,7 @@ module.exports = {
 ```
 
 For more detailed documentation on the available options, visit https://babeljs.io/docs/en/babel-preset-typescript#options.
+To add TypeScript Babel plugins (e.g. `@babel/plugin-proposal-decorators`), you can try using a [custom .babelrc file](https://www.gatsbyjs.com/docs/babel/#how-to-use-a-custom-babelrc-file).
 
 ## Caveats
 
@@ -57,7 +58,7 @@ compiler is not involved, the following applies:
 > and import x, {y} from "z".
 >
 > Does not support baseUrl.
-> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.org/packages/gatsby-plugin-root-import/)
+> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.com/packages/gatsby-plugin-root-import/)
 > and configure it to point the baseUrl value (also set baseUrl option in tsconfig.json file).
 
 https://babeljs.io/docs/en/babel-plugin-transform-typescript.html

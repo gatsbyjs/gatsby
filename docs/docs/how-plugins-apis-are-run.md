@@ -16,7 +16,7 @@ _Note: this section only explains how `gatsby-node` plugins are run. Not browser
 
 ## Early in the build
 
-Early in the bootstrap phase, you [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into redux under the `flattenedPlugins` namespace. Each plugin in redux contains the following fields:
+Early in the bootstrap phase, you [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into Redux under the `flattenedPlugins` namespace. Each plugin in Redux contains the following fields:
 
 - **resolve**: absolute path to the plugin's directory
 - **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g. `Plugin query-runner`
@@ -27,7 +27,7 @@ Early in the bootstrap phase, you [load all the configured plugins](https://gith
 - **browserAPIs**: List of browser APIs that this plugin implements
 - **ssrAPIs**: List of SSR APIs that this plugin implements
 
-In addition, you also create a lookup from API to the plugins that implement it and save this to redux as `api-to-plugins`. This is implemented in [load-plugins/validate.js](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/validate.js#L106)
+In addition, you also create a lookup from API to the plugins that implement it and save this to Redux as `api-to-plugins`. This is implemented in [load-plugins/validate.js](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/validate.js#L106)
 
 ## apiRunInstance
 

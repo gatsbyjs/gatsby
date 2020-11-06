@@ -1,7 +1,7 @@
 import { emitter, store } from "../redux"
 import apiRunnerNode from "../utils/api-runner-node"
 import { boundActionCreators } from "../redux/actions"
-const { deletePage, deleteComponentsDependencies } = boundActionCreators
+const { deletePage } = boundActionCreators
 import report from "gatsby-cli/lib/reporter"
 import {
   ICreateNodeAction,
@@ -39,7 +39,6 @@ const runCreatePages = async (): Promise<void> => {
       page.updatedAt < timestamp &&
       page.path !== `/404.html`
     ) {
-      deleteComponentsDependencies([page.path])
       deletePage(page)
     }
   })

@@ -317,7 +317,7 @@ always starting from the Node types created by source and transformer plugins.
 
 > Note that the `Frontmatter` type must not implement the Node interface since
 > it is not a top-level type created by source or transformer plugins: it has no
-> `id` field, and is just there to describe the data shape on a nested field.
+> `id` field, and is there to describe the data shape on a nested field.
 
 #### Gatsby Type Builders
 
@@ -689,7 +689,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 ```
 
 Also note that field extensions can decide themselves if an existing field resolver
-should be wrapped or overwritten. The above examples have all decided to simply return
+should be wrapped or overwritten. The above examples have all decided to return
 a new `resolve` function. Because the `extend` function receives the current field
 config as its second argument, an extension can also decide to wrap an existing resolver:
 

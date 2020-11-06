@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.1.0...gatsby-source-contentful@3.1.1) (2020-11-03)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** default function returned invalid value ([#27797](https://github.com/gatsbyjs/gatsby/issues/27797)) ([e688bf0](https://github.com/gatsbyjs/gatsby/commit/e688bf0240dd06e232335f84933a677873ff1744))
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.7...gatsby-source-contentful@3.1.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.6...gatsby-source-contentful@3.0.7) (2020-11-02)
+
+### Features
+
+- log Contentful API responses when --verbose flag is set ([#27713](https://github.com/gatsbyjs/gatsby/issues/27713)) ([5611c0f](https://github.com/gatsbyjs/gatsby/commit/5611c0f4b1f03662e7f11813d08ee56cd2ca74f5))
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.5...gatsby-source-contentful@3.0.6) (2020-10-28)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.4...gatsby-source-contentful@3.0.5) (2020-10-27)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.3...gatsby-source-contentful@3.0.4) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-contentful ([#27539](https://github.com/gatsbyjs/gatsby/issues/27539)) ([0e54bae](https://github.com/gatsbyjs/gatsby/commit/0e54baefd5c6d460d89be6d684cb0bf6173445ca))
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.2...gatsby-source-contentful@3.0.3) (2020-10-22)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** set default for contentful asset workers ([#27586](https://github.com/gatsbyjs/gatsby/issues/27586)) ([d372db8](https://github.com/gatsbyjs/gatsby/commit/d372db810bbfc8a695b6220f0fe586149ec02def))
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.1...gatsby-source-contentful@3.0.2) (2020-10-21)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fixed contentful asset download stalling with high number of assets ([#27563](https://github.com/gatsbyjs/gatsby/issues/27563)) ([dc0ce0c](https://github.com/gatsbyjs/gatsby/commit/dc0ce0c1152d486bc1e58ac7fcaac36924437de8))
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.0.0...gatsby-source-contentful@3.0.1) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.56...gatsby-source-contentful@3.0.0) (2020-10-19)
+
+### Performance Improvements
+
+- **gatsby-plugin-contentful:** drop the super expensive fixids cycle ([#27318](https://github.com/gatsbyjs/gatsby/issues/27318)) ([b316505](https://github.com/gatsbyjs/gatsby/commit/b3165058bce5dca1a0145dd2f0d518aaa6750add))
+
+### BREAKING CHANGES
+
+- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries  those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
+
+If you were relying on the `id` property in the `sys` object, you should be aware that it is no longer "normalized". In particular, it will no longer get a 'c' prefixed to the id.
+
+## [2.3.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.55...gatsby-source-contentful@2.3.56) (2020-10-19)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.54...gatsby-source-contentful@2.3.55) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.53...gatsby-source-contentful@2.3.54) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.52...gatsby-source-contentful@2.3.53) (2020-10-15)
+
+### Features
+
+- **gatsby-source-contentful:** add tool to force-cache remote data to debug ([#27404](https://github.com/gatsbyjs/gatsby/issues/27404)) ([2964b62](https://github.com/gatsbyjs/gatsby/commit/2964b62962f51a738d907bbcd03811595907fc18))
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** change O(n\*m) loop to O(n+m) ([#27448](https://github.com/gatsbyjs/gatsby/issues/27448)) ([e6162dd](https://github.com/gatsbyjs/gatsby/commit/e6162dd97ee90d4f1ffab58ea8a70e1c8bbff292))
+- **gatsby-source-contentful:** do not linear search on a potentially large set ([#27447](https://github.com/gatsbyjs/gatsby/issues/27447)) ([9d304ed](https://github.com/gatsbyjs/gatsby/commit/9d304ed3c63069a976bc4be85df2e876512149e0))
+
 ## [2.3.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.51...gatsby-source-contentful@2.3.52) (2020-10-13)
 
 ### Bug Fixes

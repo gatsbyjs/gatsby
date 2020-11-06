@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.3.14...gatsby-source-lever@2.3.15) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-lever ([#27653](https://github.com/gatsbyjs/gatsby/issues/27653)) ([d6558b0](https://github.com/gatsbyjs/gatsby/commit/d6558b03a182c04cee9e0f0f850d88694c5de9f9))
+
 ## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.3.13...gatsby-source-lever@2.3.14) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-source-lever

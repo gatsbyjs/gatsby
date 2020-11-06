@@ -418,7 +418,10 @@ export default class FileParser {
       return null
     }
 
-    if (!text.includes(`graphql`)) return null
+    // We do a quick check so we can exit early if this is a file we're not interested in.
+    // We only process files that either include graphql, or static images
+    if (!text.includes(`graphql`) && !text.includes(`gatsby-plugin-image`))
+      return null
     const hash = crypto
       .createHash(`md5`)
       .update(file)

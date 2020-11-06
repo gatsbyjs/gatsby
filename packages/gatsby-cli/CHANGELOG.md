@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.13.0-next.0...gatsby-cli@2.13.0-next.1) (2020-11-05)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.115](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.114...gatsby-cli@2.12.115) (2020-11-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.114](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.113...gatsby-cli@2.12.114) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby:** show theme that has faulty config ([#27708](https://github.com/gatsbyjs/gatsby/issues/27708)) ([d7d1b97](https://github.com/gatsbyjs/gatsby/commit/d7d1b97e69cc5fa8030722a792a56e6d30937d2d))
+
+### Features
+
+- Add "gatsby plugin" command ([#27725](https://github.com/gatsbyjs/gatsby/issues/27725)) ([5869cc5](https://github.com/gatsbyjs/gatsby/commit/5869cc5ab2189b257944a4c3f99af564be81ea80))
+
+## [2.12.113](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.112...gatsby-cli@2.12.113) (2020-10-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.112](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.111...gatsby-cli@2.12.112) (2020-10-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.111](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.110...gatsby-cli@2.12.111) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.110](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.109...gatsby-cli@2.12.110) (2020-10-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.109](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.108...gatsby-cli@2.12.109) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.108](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.107...gatsby-cli@2.12.108) (2020-10-15)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.12.107](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.106...gatsby-cli@2.12.107) (2020-10-09)
 
 **Note:** Version bump only for package gatsby-cli

@@ -16,7 +16,7 @@ The namespaces in Gatsby's Redux store are a great overview of the Gatsby intern
 - **Jobs** - Long-running and CPU-intensive processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
 - **webpack** - Config for the [webpack](/docs/webpack-and-ssr/) bundler which handles code optimization and splitting of delivered JavaScript bundles.
 
-The Gatsby [redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
+The Gatsby [Redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
 
 ## Actions
 
