@@ -271,6 +271,13 @@ export async function validateConfigPluginsOptions(
   rootDir: string | null
 ): Promise<void> {
   if (!config.plugins) return
+  if (process.env.SKIP_PLUGIN_OPTION_VALIDATION) {
+    reporter.warn(`you have enabled the SKIP_PLUGIN_OPTION_VALIDATION flag,`)
+    reporter.warn(
+      `meaning Gatsby will not enforce types based on plugin's option schemas.`
+    )
+    return
+  }
 
   const { errors, plugins } = await validatePluginsOptions(
     config.plugins,
