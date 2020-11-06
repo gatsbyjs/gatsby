@@ -114,4 +114,8 @@ export class MultiSelectInput extends SelectInput {
   submit() {
     return this.space()
   }
+
+  next() {
+    return this.index === this.choices.length - 1 ? super.next() : this.end()
+  }
 }
