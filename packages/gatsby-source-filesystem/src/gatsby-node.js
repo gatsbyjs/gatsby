@@ -4,6 +4,13 @@ const path = require(`path`)
 const { Machine, interpret } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
+const { ERROR_MAP } = require(`./error-utils`)
+
+exports.onPreInit = ({ reporter }) => {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+}
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states.
@@ -146,14 +153,12 @@ const createFSMachine = (
   return interpret(fsMachine).start()
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = ({ Joi }) =>
-    Joi.object({
-      name: Joi.string(),
-      path: Joi.string(),
-      ignore: Joi.array().items(Joi.string()),
-    })
-}
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    name: Joi.string(),
+    path: Joi.string(),
+    ignore: Joi.array().items(Joi.string()),
+  })
 
 exports.sourceNodes = (api, pluginOptions) => {
   // Validate that the path exists.

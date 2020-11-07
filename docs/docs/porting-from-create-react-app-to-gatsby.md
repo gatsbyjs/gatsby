@@ -55,7 +55,7 @@ After installation, the key things that need to change are:
 
 2. converting routes into pages in the `/pages` directory
 
-The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
+The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with the above steps.
 
 ### Project structure
 

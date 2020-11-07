@@ -39,13 +39,15 @@ export async function createPages({
     } (use --verbose for breakdown)`
   )
 
-  reporter.verbose(
-    `Number of node types: ${
-      store.getState().nodesByType.size
-    }. Nodes per type: ${[...store.getState().nodesByType.entries()]
-      .map(([type, nodes]) => type + `: ` + nodes.size)
-      .join(`, `)}`
-  )
+  if (process.env.gatsby_log_level === `verbose`) {
+    reporter.verbose(
+      `Number of node types: ${
+        store.getState().nodesByType.size
+      }. Nodes per type: ${[...store.getState().nodesByType.entries()]
+        .map(([type, nodes]) => type + `: ` + nodes.size)
+        .join(`, `)}`
+    )
+  }
 
   activity.end()
 

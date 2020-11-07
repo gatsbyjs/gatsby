@@ -1,26 +1,26 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const babel = require(`@babel/core`)
-const t = require(`@babel/types`)
-const declare = require(`@babel/helper-plugin-utils`).declare
-const Joi = require(`@hapi/joi`)
-const glob = require(`glob`)
-const prettier = require(`prettier`)
-const resolveCwd = require(`resolve-cwd`)
-const { slash } = require(`gatsby-core-utils`)
-const fetch = require(`node-fetch`)
+import fs from "fs-extra"
+import path from "path"
+import { transform } from "@babel/core"
+import * as t from "@babel/types"
+import { declare } from "@babel/helper-plugin-utils"
+import * as Joi from "@hapi/joi"
+import glob from "glob"
+import prettier from "prettier"
+import resolveCwd from "resolve-cwd"
+import { slash } from "gatsby-core-utils"
+import fetch from "node-fetch"
 
-const lock = require(`../lock`)
-const getDiff = require(`../utils/get-diff`)
-const resourceSchema = require(`../resource-schema`)
+import lock from "../lock"
+import getDiff from "../utils/get-diff"
+import resourceSchema from "../resource-schema"
 
-const isDefaultExport = require(`./utils/is-default-export`)
-const buildPluginNode = require(`./utils/build-plugin-node`)
-const getObjectFromNode = require(`./utils/get-object-from-node`)
-const { getValueFromNode } = require(`./utils/get-object-from-node`)
-const { REQUIRES_KEYS } = require(`./utils/constants`)
+import isDefaultExport from "./utils/is-default-export"
+import buildPluginNode from "./utils/build-plugin-node"
+import getObjectFromNode from "./utils/get-object-from-node"
+import { getValueFromNode } from "./utils/get-object-from-node"
+import { REQUIRES_KEYS } from "./utils/constants"
 
-const { read: readPackageJSON } = require(`../npm/package`)
+import { read as readPackageJSON } from "../npm/package"
 
 const fileExists = filePath => fs.existsSync(filePath)
 
@@ -155,7 +155,7 @@ const addPluginToConfig = (src, { name, options, key }) => {
     key,
   })
 
-  const { code } = babel.transform(src, {
+  const { code } = transform(src, {
     plugins: [addPlugins.plugin],
     configFile: false,
   })
@@ -170,7 +170,7 @@ const removePluginFromConfig = (src, { id, name, key }) => {
     shouldAdd: false,
   })
 
-  const { code } = babel.transform(src, {
+  const { code } = transform(src, {
     plugins: [addPlugins.plugin],
     configFile: false,
   })
@@ -181,7 +181,7 @@ const removePluginFromConfig = (src, { id, name, key }) => {
 const getPluginsFromConfig = src => {
   const getPlugins = new BabelPluginGetPluginsFromGatsbyConfig()
 
-  babel.transform(src, {
+  transform(src, {
     plugins: [getPlugins.plugin],
     configFile: false,
   })
@@ -480,17 +480,12 @@ class BabelPluginGetPluginsFromGatsbyConfig {
   }
 }
 
-module.exports.addPluginToConfig = addPluginToConfig
-module.exports.getPluginsFromConfig = getPluginsFromConfig
-module.exports.removePluginFromConfig = removePluginFromConfig
+export { addPluginToConfig, getPluginsFromConfig, removePluginFromConfig }
+export { create, create as update, read, destroy }
 
-module.exports.create = create
-module.exports.update = create
-module.exports.read = read
-module.exports.destroy = destroy
-module.exports.config = {}
+export const config = {}
 
-module.exports.all = async ({ root }) => {
+export const all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
@@ -523,10 +518,9 @@ const validate = resource => {
   return Joi.validate(resource, schema, { abortEarly: false })
 }
 
-exports.schema = schema
-exports.validate = validate
+export { schema, validate }
 
-module.exports.plan = async (
+export const plan = async (
   { root },
   { id, key, name, options, isLocal = false }
 ) => {

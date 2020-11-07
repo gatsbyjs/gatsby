@@ -1,7 +1,6 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
-const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
 module.exports = async function contentfulFetch({
@@ -17,6 +16,18 @@ module.exports = async function contentfulFetch({
     host: pluginConfig.get(`host`),
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
+    responseLogger: response => {
+      const meta = [
+        `size: ${response.headers[`content-length`]}B`,
+        `response id: ${response.headers[`x-contentful-request-id`]}`,
+        `cache: ${response.headers[`x-cache`]}`,
+      ]
+      reporter.verbose(
+        `${response.config.method} /${response.config.url}: ${
+          response.status
+        } ${response.statusText} (${meta.join(` `)})`
+      )
+    },
   }
 
   const client = contentful.createClient(contentfulClientOptions)
@@ -109,22 +120,6 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
-
-  if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
-    reporter.info(
-      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful_id\``
-    )
-  } else {
-    // Traverse entire data model and enforce every `sys.id` to be a string
-    // and if that string starts with a number, to prefix it with `c`. Assigns
-    // original `id` to `contentful_id`.
-    // Expensive at scale.
-    contentTypeItems.forEach(normalize.fixIds)
-    currentSyncData.entries.forEach(normalize.fixIds)
-    currentSyncData.assets.forEach(normalize.fixIds)
-    currentSyncData.deletedEntries.forEach(normalize.fixIds)
-    currentSyncData.deletedAssets.forEach(normalize.fixIds)
-  }
 
   const result = {
     currentSyncData,

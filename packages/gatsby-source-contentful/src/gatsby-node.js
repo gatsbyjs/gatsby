@@ -5,15 +5,10 @@ const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
 const fetch = require(`node-fetch`)
-const { Joi } = require(`gatsby-plugin-utils`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const {
-  createPluginConfig,
-  maskText,
-  formatPluginOptionsForCLI,
-} = require(`./plugin-options`)
+const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -29,24 +24,6 @@ const restrictedNodeFields = [
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
-
-// TODO: Remove once pluginOptionsSchema is stable
-exports.onPreInit = ({ reporter }, options) => {
-  const result = pluginOptionsSchema({ Joi }).validate(options, {
-    abortEarly: false,
-    externals: false,
-  })
-  if (result.error) {
-    const errors = {}
-    result.error.details.forEach(detail => {
-      errors[detail.path[0]] = detail.message
-    })
-    reporter.panic(`Problems with gatsby-source-contentful plugin options:
-${formatPluginOptionsForCLI(options, errors)}`)
-  }
-
-  options = result.value
-}
 
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
@@ -110,7 +87,7 @@ For example, to filter locales on only germany \`localeFilter: locale => locale.
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
-        .default(() => true),
+        .default(() => () => true),
       forceFullSync: Joi.boolean()
         .description(
           `Prevents the use of sync tokens when accessing the Contentful API.`
@@ -122,6 +99,12 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
           `Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.`
         )
         .default(100),
+      assetDownloadWorkers: Joi.number()
+        .integer()
+        .description(
+          `Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.`
+        )
+        .default(50),
       proxy: Joi.object()
         .keys({
           host: Joi.string().required(),
@@ -158,9 +141,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     })
     .external(validateContentfulAccess)
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = pluginOptionsSchema
-}
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 /***
  * Localization algorithm
@@ -562,6 +543,7 @@ exports.sourceNodes = async (
       getCache,
       getNodesByType,
       reporter,
+      assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
   }
 

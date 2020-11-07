@@ -574,6 +574,7 @@ export interface ISetResolvedThemesAction {
 
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
+  cacheIsCorrupt?: boolean
 }
 
 export interface IRemovePageDataAction {

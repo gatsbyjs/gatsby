@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.16...gatsby-plugin-netlify-cms@4.3.17) (2020-10-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** Report URL with expected protocol and port ([#27583](https://github.com/gatsbyjs/gatsby/issues/27583)) ([1e5140f](https://github.com/gatsbyjs/gatsby/commit/1e5140f9d5949e1a2df719bea728498f3602be37))
+
 ## [4.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.3.15...gatsby-plugin-netlify-cms@4.3.16) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

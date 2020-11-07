@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.20...gatsby-transformer-sharp@2.5.21) (2020-11-02)
+
+### Features
+
+- Add new image resolvers ([#27443](https://github.com/gatsbyjs/gatsby/issues/27443)) ([e2022c2](https://github.com/gatsbyjs/gatsby/commit/e2022c23203c9d0bf43d7de74d8999a7c738391f)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
+## [2.5.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.19...gatsby-transformer-sharp@2.5.20) (2020-10-26)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem,gatsby-transformer-sharp:** Use custom errors ([#27576](https://github.com/gatsbyjs/gatsby/issues/27576)) ([752e27a](https://github.com/gatsbyjs/gatsby/commit/752e27a2614ea6ee6d52d4cac161035108e977e7))
+
+## [2.5.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.18...gatsby-transformer-sharp@2.5.19) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
 ## [2.5.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.17...gatsby-transformer-sharp@2.5.18) (2020-10-16)
 
 ### Performance Improvements

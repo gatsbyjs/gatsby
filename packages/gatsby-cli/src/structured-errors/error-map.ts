@@ -468,7 +468,9 @@ const errors = {
     text: (context): string =>
       [
         stripIndent(`
-          Invalid plugin options for "${context.pluginName}":
+          Invalid plugin options for "${context.pluginName}"${
+          context.configDir ? `, configured by ${context.configDir}` : ``
+        }:
         `),
       ]
         .concat([``])
@@ -535,6 +537,20 @@ const errors = {
       `Directory ${context.rootPath} is already an npm project`,
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  // Watchdog
+  "11701": {
+    text: (context): string =>
+      `Terminating the process (due to GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT):\n\nGatsby is in "${
+        context.status
+      }" state without any updates for ${(
+        context.stuckStatusWatchdogTimeoutDelay / 1000
+      ).toFixed(
+        3
+      )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
+        context.stuckStatusDiagnosticMessage
+      }`,
+    level: Level.ERROR,
   },
 }
 

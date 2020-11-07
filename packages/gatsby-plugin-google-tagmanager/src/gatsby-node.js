@@ -12,33 +12,31 @@ exports.onPreInit = (args, options) => {
   }
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = ({ Joi }) =>
-    Joi.object({
-      id: Joi.string().description(
-        `Google Tag Manager ID that can be found in your Tag Manager dashboard.`
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    id: Joi.string().description(
+      `Google Tag Manager ID that can be found in your Tag Manager dashboard.`
+    ),
+    includeInDevelopment: Joi.boolean()
+      .default(false)
+      .description(
+        `Include Google Tag Manager when running in development mode.`
       ),
-      includeInDevelopment: Joi.boolean()
-        .default(false)
-        .description(
-          `Include Google Tag Manager when running in development mode.`
-        ),
-      defaultDataLayer: Joi.object()
-        .default(null)
-        .description(
-          `Data layer to be set before Google Tag Manager is loaded. Should be an object or a function.`
-        ),
-      gtmAuth: Joi.string().description(
-        `Google Tag Manager environment auth string.`
+    defaultDataLayer: Joi.object()
+      .default(null)
+      .description(
+        `Data layer to be set before Google Tag Manager is loaded. Should be an object or a function.`
       ),
-      gtmPreview: Joi.string().description(
-        `Google Tag Manager environment preview name.`
+    gtmAuth: Joi.string().description(
+      `Google Tag Manager environment auth string.`
+    ),
+    gtmPreview: Joi.string().description(
+      `Google Tag Manager environment preview name.`
+    ),
+    dataLayerName: Joi.string().description(`Data layer name.`),
+    routeChangeEventName: Joi.string()
+      .default(`gatsby-route-change`)
+      .description(
+        `Name of the event that is triggered on every Gatsby route change.`
       ),
-      dataLayerName: Joi.string().description(`Data layer name.`),
-      routeChangeEventName: Joi.string()
-        .default(`gatsby-route-change`)
-        .description(
-          `Name of the event that is triggered on every Gatsby route change.`
-        ),
-    })
-}
+  })
