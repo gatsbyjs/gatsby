@@ -53,22 +53,28 @@ export const startCacheServer = async (
   app.use(bodyParser.json())
 
   app.post(`/jobs`, async (req, res) => {
+    let result
     const job = req.body
-    const worker = require(path.posix.join(
-      job.plugin.resolve,
-      `gatsby-worker.js`
-    ))
-    if (!worker[job.name]) {
-      throw new Error(`No worker function found for ${job.name}`)
-    }
-    const workerFn = worker[job.name]
+    if (job.name === `DOWNLOAD_IMAGE`) {
+      console.log(job)
+      return res.send(`ok`)
+    } else {
+      const worker = require(path.posix.join(
+        job.plugin.resolve,
+        `gatsby-worker.js`
+      ))
+      if (!worker[job.name]) {
+        throw new Error(`No worker function found for ${job.name}`)
+      }
+      const workerFn = worker[job.name]
 
-    const result = await workerFn({
-      inputPaths: job.inputPaths,
-      outputDir: job.outputDir,
-      relativeToPublicPath: job.relativeToPublicPath,
-      args: job.args,
-    })
+      result = await workerFn({
+        inputPaths: job.inputPaths,
+        outputDir: job.outputDir,
+        relativeToPublicPath: job.relativeToPublicPath,
+        args: job.args,
+      })
+    }
 
     drive.writeFile(
       path.join(`/job-results/`, req.body.id.toString()),
@@ -93,4 +99,31 @@ export const startCacheServer = async (
   return
 }
 
-// startCacheServer()
+// randomly pick URLs to send over & once result comes back, send another
+// until they're all downloaded.
+const urls = [
+  `https://unsplash.com/photos/ObOpJxjNNiQ/download`,
+  `https://unsplash.com/photos/9B_g1pomddw/download`,
+  `https://unsplash.com/photos/musOb4yMhck/download`,
+]
+
+const enqueueCreateRemoteFileNodeJob = async url => {
+  console.log(`inside`)
+  const fetch = require(`node-fetch`)
+  const programPath = `/Users/kylemathews/programs/blog`
+  const localCacheServer = await getService(programPath, `local-cache-server`)
+  fetch(`http://localhost:${localCacheServer?.expressPort}/jobs`, {
+    method: `post`,
+    body: JSON.stringify({
+      name: `DOWNLOAD_IMAGE`,
+      url,
+    }),
+    headers: { "Content-Type": `application/json` },
+  })
+
+  // await waitForJobToFinish(job.id)
+}
+
+setTimeout(() => enqueueCreateRemoteFileNodeJob(urls[0]), 1000)
+
+startCacheServer()
