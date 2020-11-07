@@ -17,9 +17,10 @@ export enum ErrorCategory {
 const errors = {
   "": {
     text: (context): string => {
-      const sourceMessage = context.sourceMessage
-        ? context.sourceMessage
-        : `There was an error`
+      const sourceMessage =
+        context && context.sourceMessage
+          ? context.sourceMessage
+          : `There was an error`
       return sourceMessage
     },
     level: Level.ERROR,

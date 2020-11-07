@@ -2,15 +2,18 @@
 
 exports[`add page data dependency lets you add both a node and connection in one action 1`] = `
 Object {
-  "connections": Map {
+  "byConnection": Map {
     "MarkdownRemark" => Set {
       "/hi/",
     },
   },
-  "nodes": Map {
+  "byNode": Map {
     "SuperCoolNode" => Set {
       "/hi/",
     },
   },
+  "deletedQueries": Set {},
+  "trackedComponents": Map {},
+  "trackedQueries": Map {},
 }
 `;

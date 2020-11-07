@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-custom-blocks",
   "description": "Gatsby remark plugin for adding custom blocks in markdown",
-  "version": "2.3.14",
+  "version": "2.4.0-next.0",
   "author": "Mohammad Asad Mohammad <m91.alahmadi@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
-    "babel-preset-gatsby-package": "^0.5.3",
+    "babel-preset-gatsby-package": "^0.6.0-next.0",
     "cross-env": "^7.0.2",
     "rimraf": "^3.0.2",
     "unist-util-find": "^1.0.1"

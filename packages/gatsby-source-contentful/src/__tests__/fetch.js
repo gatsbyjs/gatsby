@@ -185,9 +185,11 @@ it(`panics when localeFilter reduces locale list to 0`, async () => {
   })
 
   expect(reporter.panic).toBeCalledWith(
-    expect.stringContaining(
-      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`
-    )
+    expect.objectContaining({
+      context: {
+        sourceMessage: `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`,
+      },
+    })
   )
 })
 
@@ -200,11 +202,23 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Accessing your Contentful space failed`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Accessing your Contentful space failed`
+          ),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -225,11 +239,21 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`You seem to be offline`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(`You seem to be offline`),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -250,11 +274,23 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Check if host and spaceId settings are correct`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Check if host and spaceId settings are correct`
+          ),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -278,13 +314,23 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(
-        `Check if accessToken and environment are correct`
-      )
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Check if accessToken and environment are correct`
+          ),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.0...gatsby-recipes@0.3.0-next.1) (2020-11-05)
+
+### Bug Fixes
+
+- **gatsby-recipes:** fix GatsbyShadowFile resource — don't error if package isn't installed ([#27790](https://github.com/gatsbyjs/gatsby/issues/27790)) ([3817174](https://github.com/gatsbyjs/gatsby/commit/3817174822c61aeafd3efac5fb670604d895d89d))
+- **recipe:** add brackets to directory names ([#27812](https://github.com/gatsbyjs/gatsby/issues/27812)) ([5f8beb7](https://github.com/gatsbyjs/gatsby/commit/5f8beb77b64505e4e967b9e2307e991988c8cda5))
+
 ## [0.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.35...gatsby-recipes@0.2.36) (2020-11-02)
 
 ### Bug Fixes

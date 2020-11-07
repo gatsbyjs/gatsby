@@ -14,11 +14,12 @@ describe(`Telemetry`, () => {
     expect(EventStorage).toHaveBeenCalledTimes(1)
     expect(
       (EventStorage as jest.Mock).mock.instances[0].addEvent
-    ).toHaveBeenCalledTimes(1)
+    ).toHaveBeenCalledTimes(2)
   })
 
   it(`Doesn't add event to store if telemetry tracking is turned off`, () => {
-    telemetry.trackingEnabled = false
+    ;(EventStorage as jest.Mock).mockReset()
+    telemetry = new AnalyticsTracker({ trackingEnabled: false })
     telemetry.trackActivity(`demo`)
     expect(
       (EventStorage as jest.Mock).mock.instances[0].addEvent

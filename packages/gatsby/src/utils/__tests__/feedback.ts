@@ -38,6 +38,7 @@ const clearStateToAllowHeuristicsToPass = (): void => {
   delete process.env.GATSBY_FEEDBACK_DISABLED
   // Heuristic 4
   getConfigStore().set(`feedback.lastRequestDate`, dateFromSixMonthsAgo)
+  getConfigStore().set(`feedback.sevenDayFeedbackDate`, dateFromSixMonthsAgo)
   // Heuristic 5
   ;(getGatsbyVersion as jest.Mock).mockReturnValue(`2.1.1`)
 }
