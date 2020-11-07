@@ -24,7 +24,7 @@ This example shows how to set up the [Open Sans](https://fonts.google.com/specim
 
 1. Run `npm install fontsource-open-sans` to download the necessary package files.
 
-2. Then within your app entry file or site component, import it in. In Gatsby, it is recommended you import it via the layout template (`layout.js`), however, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
+2. Then within your app entry file or site component, import the font package. It is recommended you import it via the layout template (`layout.js`). However, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
 import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
