@@ -58,8 +58,8 @@ export async function downloadLibs({ binariesDir, platform }) {
       await execa(
         `wget`,
         [
-          `-O`,
           `-nv`,
+          `-O`,
           `ffmpeg.zip`,
           `https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz`,
         ],
