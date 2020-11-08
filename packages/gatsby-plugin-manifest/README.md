@@ -99,12 +99,12 @@ Add the following line to the plugin options
   icon: `src/images/icon.png`, // This path is relative to the root of the site.
   icons: [
     {
-      src: `/favicons/android-chrome-192x192.png`,
+      src: `/favicons/android-chrome-192x192.png`, // This path is relative to the static folder
       sizes: `192x192`,
       type: `image/png`,
     },
     {
-      src: `/favicons/android-chrome-512x512.png`,
+      src: `/favicons/android-chrome-512x512.png`, // This path is relative to the static folder
       sizes: `512x512`,
       type: `image/png`,
     },
@@ -122,12 +122,12 @@ Add the following line to the plugin options
 ```js
 icons: [
   {
-    src: `/favicons/android-chrome-192x192.png`,
+    src: `/favicons/android-chrome-192x192.png`, // This path is relative to the static folder
     sizes: `192x192`,
     type: `image/png`,
   },
   {
-    src: `/favicons/android-chrome-512x512.png`,
+    src: `/favicons/android-chrome-512x512.png`, // This path is relative to the static folder
     sizes: `512x512`,
     type: `image/png`,
   },
