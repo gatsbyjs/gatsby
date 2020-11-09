@@ -737,7 +737,8 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: IGatsbyNode
+  // FIXME: figure out why payload can be undefined here
+  payload: IGatsbyNode | void
 }
 
 export interface IDeleteNodesAction {
