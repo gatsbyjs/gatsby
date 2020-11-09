@@ -10,7 +10,6 @@ benchmarks/**/public
 e2e-tests/**/public
 examples/**/public
 integration-tests/**/public
-www
 
 # cache-dirs
 **/.cache
@@ -31,6 +30,3 @@ packages/gatsby/gatsby-admin-public/styles.*
 
 # coverage
 coverage
-
-# forestry files
-.forestry/**/*
