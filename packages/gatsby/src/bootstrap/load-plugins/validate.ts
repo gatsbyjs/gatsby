@@ -1,4 +1,5 @@
 import _ from "lodash"
+import path from "path"
 import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
@@ -174,7 +175,8 @@ export async function handleBadExports({
 }
 
 async function validatePluginsOptions(
-  plugins: Array<IPluginRefObject>
+  plugins: Array<IPluginRefObject>,
+  rootDir: string | null
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -227,16 +229,25 @@ async function validatePluginsOptions(
             errors: subErrors,
             plugins: subPlugins,
           } = await validatePluginsOptions(
-            plugin.options.plugins as Array<IPluginRefObject>
+            plugin.options.plugins as Array<IPluginRefObject>,
+            rootDir
           )
           plugin.options.plugins = subPlugins
           errors += subErrors
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
+          // If rootDir and plugin.parentDir are the same, i.e. if this is a plugin a user configured in their gatsby-config.js (and not a sub-theme that added it), this will be ""
+          // Otherwise, this will contain (and show) the relative path
+          const configDir =
+            (plugin.parentDir &&
+              rootDir &&
+              path.relative(rootDir, plugin.parentDir)) ||
+            null
           reporter.error({
             id: `11331`,
             context: {
+              configDir,
               validationErrors: error.details,
               pluginName: plugin.resolve,
             },
@@ -256,11 +267,15 @@ async function validatePluginsOptions(
 }
 
 export async function validateConfigPluginsOptions(
-  config: ISiteConfig = {}
+  config: ISiteConfig = {},
+  rootDir: string | null
 ): Promise<void> {
   if (!config.plugins) return
 
-  const { errors, plugins } = await validatePluginsOptions(config.plugins)
+  const { errors, plugins } = await validatePluginsOptions(
+    config.plugins,
+    rootDir
+  )
 
   config.plugins = plugins
 

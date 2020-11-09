@@ -18,7 +18,7 @@ export default function socketIo() {
       try {
         // force websocket as transport
         socket = io({
-          transports: [`websocket`],
+          transports: [process.env.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT],
         })
 
         // when websocket fails, we'll try polling

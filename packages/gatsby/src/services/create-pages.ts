@@ -3,6 +3,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
+import { boundActionCreators } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
 
 export async function createPages({
@@ -73,6 +74,8 @@ export async function createPages({
     }`
   )
   tim.end()
+
+  boundActionCreators.apiFinished({ apiName: `createPages` })
 
   return {
     changedPages,

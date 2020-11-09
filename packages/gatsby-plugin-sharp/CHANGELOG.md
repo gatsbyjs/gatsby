@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.44...gatsby-plugin-sharp@2.7.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.6.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.43...gatsby-plugin-sharp@2.6.44) (2020-11-02)
+
+### Features
+
+- Add new image resolvers ([#27443](https://github.com/gatsbyjs/gatsby/issues/27443)) ([e2022c2](https://github.com/gatsbyjs/gatsby/commit/e2022c23203c9d0bf43d7de74d8999a7c738391f)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
 ## [2.6.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.42...gatsby-plugin-sharp@2.6.43) (2020-10-19)
 
 ### Performance Improvements
