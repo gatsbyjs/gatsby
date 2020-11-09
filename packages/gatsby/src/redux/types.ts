@@ -230,7 +230,6 @@ export interface IGatsbyState {
   staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>
   pendingPageDataWrites: {
     pagePaths: Set<string>
-    templatePaths: Set<SystemPath>
   }
   // @deprecated
   jobs: {
@@ -341,7 +340,7 @@ export type ActionsUnion =
   | ISetStaticQueriesByTemplateAction
   | IAddPendingPageDataWriteAction
   | IAddPendingTemplateDataWriteAction
-  | IClearPendingPageDataWritesAction
+  | IClearPendingPageDataWriteAction
   | ICreateResolverContext
   | IClearSchemaCustomizationAction
   | ISetSchemaComposerAction
@@ -652,11 +651,15 @@ export interface IAddPendingTemplateDataWriteAction {
   type: `ADD_PENDING_TEMPLATE_DATA_WRITE`
   payload: {
     componentPath: SystemPath
+    pages: Array<string>
   }
 }
 
-export interface IClearPendingPageDataWritesAction {
-  type: `CLEAR_PENDING_PAGE_DATA_WRITES`
+export interface IClearPendingPageDataWriteAction {
+  type: `CLEAR_PENDING_PAGE_DATA_WRITE`
+  payload: {
+    page: string
+  }
 }
 
 export interface IDeletePageAction {
