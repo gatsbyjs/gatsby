@@ -244,14 +244,16 @@ async function validatePluginsOptions(
               rootDir &&
               path.relative(rootDir, plugin.parentDir)) ||
             null
-          reporter.error({
-            id: `11331`,
-            context: {
-              configDir,
-              validationErrors: error.details,
-              pluginName: plugin.resolve,
-            },
-          })
+          if (!process.env.SKIP_PLUGIN_OPTION_VALIDATION) {
+            reporter.error({
+              id: `11331`,
+              context: {
+                configDir,
+                validationErrors: error.details,
+                pluginName: plugin.resolve,
+              },
+            })
+          }
           errors++
 
           return plugin
@@ -271,13 +273,6 @@ export async function validateConfigPluginsOptions(
   rootDir: string | null
 ): Promise<void> {
   if (!config.plugins) return
-  if (process.env.SKIP_PLUGIN_OPTION_VALIDATION) {
-    reporter.warn(`you have enabled the SKIP_PLUGIN_OPTION_VALIDATION flag,`)
-    reporter.warn(
-      `so Gatsby will not verify your plugin configurations.`
-    )
-    return
-  }
 
   const { errors, plugins } = await validatePluginsOptions(
     config.plugins,
@@ -287,7 +282,13 @@ export async function validateConfigPluginsOptions(
   config.plugins = plugins
 
   if (errors > 0) {
-    process.exit(1)
+    if (process.env.SKIP_PLUGIN_OPTION_VALIDATION) {
+      reporter.warn(`you have enabled the SKIP_PLUGIN_OPTION_VALIDATION flag,`)
+      reporter.warn(`so Gatsby will not verify your plugin configurations.`)
+      return
+    } else {
+      reporter.panic(`Plugins in your gatsby-config failed to pass validation.`)
+    }
   }
 }
 

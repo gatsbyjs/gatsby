@@ -283,7 +283,9 @@ If you are running your site and run into an error trying to develop or build yo
 ```shell
 SKIP_PLUGIN_OPTION_VALIDATION=true gatsby develop
 ```
+
 Please also [submit an issue](https://github.com/gatsbyjs/gatsby/issues) if you believe the options are failing incorrectly.
+
 ## Additional resources
 
 - [Example Gatsby site using plugin options with a local plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-plugin-options)
