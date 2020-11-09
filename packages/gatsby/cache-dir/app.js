@@ -101,6 +101,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
+    // TODO replace with hydrate once dev SSR is ready
+    // but only for SSRed pages.
     ReactDOM.render
   )[0]
 

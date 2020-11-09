@@ -141,7 +141,7 @@ module.exports = async (
         }
       case `build-html`:
       case `develop-html`:
-        // A temp file required by static-site-generator-plugin. See plugins() below.
+        // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
@@ -178,7 +178,9 @@ module.exports = async (
         }
       case `develop-html`:
         return {
-          main: directoryPath(`.cache/develop-static-entry`),
+          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+            ? directoryPath(`.cache/new-develop-static-entry`)
+            : directoryPath(`.cache/develop-static-entry`),
         }
       case `build-html`:
         return {

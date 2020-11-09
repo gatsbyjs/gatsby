@@ -415,6 +415,7 @@ export default (pagePath, callback) => {
         headComponents.unshift(
           <style
             data-href={`${__PATH_PREFIX__}/${style.name}`}
+            id={`gatsby-global-css`}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
                 join(process.cwd(), `public`, style.name),
