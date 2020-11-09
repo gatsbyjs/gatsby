@@ -62,10 +62,10 @@ const MOCK_FILE_INFO = {
   }),
 }
 
-let StaticEntry
+let staticEntry
 beforeEach(() => {
   fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
-  StaticEntry = require(`../static-entry`).default
+  staticEntry = require(`../static-entry`).default
 })
 
 const reverseHeadersPlugin = {
@@ -283,7 +283,7 @@ describe(`static-entry sanity checks`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, null)
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      StaticEntry(`/about/`, (_, html) => {
+      staticEntry(`/about/`, (_, html) => {
         done()
       })
     })
@@ -295,7 +295,7 @@ describe(`static-entry sanity checks`, () => {
       ])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      StaticEntry(`/about/`, (_, html) => {
+      staticEntry(`/about/`, (_, html) => {
         done()
       })
     })
@@ -304,7 +304,7 @@ describe(`static-entry sanity checks`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      StaticEntry(`/about/`, (_, html) => {
+      staticEntry(`/about/`, (_, html) => {
         done()
       })
     })
@@ -313,7 +313,7 @@ describe(`static-entry sanity checks`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [[], []])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      StaticEntry(`/about/`, (_, html) => {
+      staticEntry(`/about/`, (_, html) => {
         done()
       })
     })
@@ -327,7 +327,7 @@ describe(`static-entry sanity checks`, () => {
       ])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      StaticEntry(`/about/`, (_, html) => {
+      staticEntry(`/about/`, (_, html) => {
         done()
       })
     })
@@ -344,7 +344,7 @@ describe(`static-entry`, () => {
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    StaticEntry(`/about/`, (_, html) => {
+    staticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -356,7 +356,7 @@ describe(`static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    StaticEntry(`/about/`, (_, html) => {
+    staticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -368,14 +368,14 @@ describe(`static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    StaticEntry(`/about/`, (_, html) => {
+    staticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
   })
 
   test(`onPreRenderHTML does not add metatag note for development environment`, done => {
-    StaticEntry(`/about/`, (_, html) => {
+    staticEntry(`/about/`, (_, html) => {
       expect(html).not.toContain(
         `<meta name="note" content="environment=development"/>`
       )
