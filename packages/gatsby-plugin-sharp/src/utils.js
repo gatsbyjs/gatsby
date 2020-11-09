@@ -149,7 +149,6 @@ export function fixedImageSizes({
   srcSetBreakpoints,
   reporter,
 }) {
-  let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
   const { fit = `cover` } = transformOptions
   // Sort, dedupe and ensure there's a 1
@@ -210,7 +209,7 @@ export function fixedImageSizes({
     }
   }
 
-  sizes = densities
+  const sizes = densities
     .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
     .map(density => Math.round(density * width))
     .filter(size => size <= imgDimensions.width)
@@ -277,8 +276,8 @@ export function fluidImageSizes({
     maxWidth = maxHeight * aspectRatio
   }
 
-  let originalMaxWidth = maxWidth
-  let isTopSizeOverriden =
+  const originalMaxWidth = maxWidth
+  const isTopSizeOverriden =
     imgDimensions.width < maxWidth || imgDimensions.height < maxHeight
   if (isTopSizeOverriden) {
     maxWidth = imgDimensions.width
