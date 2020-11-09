@@ -87,10 +87,12 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
 
 export default async ({
   webhookBody,
+  pluginName,
   parentSpan,
   deferNodeMutation = false,
 }: {
   webhookBody: unknown
+  pluginName?: string
   parentSpan: Span
   deferNodeMutation: boolean
 }): Promise<void> => {
@@ -100,6 +102,7 @@ export default async ({
     deferNodeMutation,
     parentSpan,
     webhookBody: webhookBody || {},
+    pluginName,
   })
 
   const state = store.getState()

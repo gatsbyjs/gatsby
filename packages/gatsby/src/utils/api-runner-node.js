@@ -491,9 +491,46 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // call an action which will trigger the same API being called.
     // `onCreatePage` is the only example right now. In these cases, we should
     // avoid calling the originating plugin again.
-    const implementingPlugins = plugins.filter(
+    let implementingPlugins = plugins.filter(
       plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
     )
+
+    reporter.info(`
+    
+    
+      sup bitches!!!
+    
+    
+    `)
+    console.log(
+      `
+
+
+        I'm here bitches!!!
+      
+
+      
+      `
+    )
+    if (api === `sourceNodes` && args.pluginName) {
+      console.log(
+        `
+      
+
+        Here I am!
+
+        (rock you like a hurricaine)
+      
+
+        ${args.pluginName}
+        `,
+        implementingPlugins
+      )
+
+      implementingPlugins = implementingPlugins.filter(
+        plugin => plugin.name === args.pluginName
+      )
+    }
 
     const apiRunInstance = {
       api,

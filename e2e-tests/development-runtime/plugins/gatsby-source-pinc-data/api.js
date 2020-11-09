@@ -1,10 +1,8 @@
-// copy entire sub-plugin including this stuff
 const fs = require(`fs`)
 const util = require(`util`)
 const path = require(`path`)
 
-// Make sure node type matches!
-const NODE_TYPE = `FakeData`
+const NODE_TYPE = `PincData`
 
 const readFile = file =>
   util
@@ -29,7 +27,7 @@ const getNode = (data, { createNodeId, createContentDigest }) => {
   const nodeContent = JSON.stringify(data)
 
   const meta = {
-    id: createNodeId(`fake-data-${data.uuid}`),
+    id: createNodeId(`pinc-data-${data.uuid}`),
     parent: null,
     children: [],
     internal: {
@@ -66,7 +64,7 @@ module.exports = {
         uuid,
         title: `Hello World (${uuid})`,
         message: `
-This is fake data to test Gatsby Preview.
+This is PINC data to test Gatsby Preview.
 What are you doing here, anyways? Be gone!
 
 (also pretend this is randomized, it is not)
