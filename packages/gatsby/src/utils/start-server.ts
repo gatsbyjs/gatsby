@@ -291,7 +291,7 @@ export async function startServer(
    **/
   const server = new http.Server(app)
 
-  websocketManager.init({ server, directory: program.directory })
+  websocketManager.init({ server })
 
   // hardcoded `localhost`, because host should match `target` we set
   // in http proxy in `develop-proxy`
