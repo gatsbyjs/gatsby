@@ -23,7 +23,6 @@ const keys = (): {
   BACKSPACE: string
 } => {
   const platform = process.platform
-  console.log(platform)
 
   switch (platform) {
     case `linux`:
