@@ -20,7 +20,7 @@ const Keys = {
   UP: `\x1B\x5B\x41`,
   ENTER: `\x0D\x0A`,
   SPACE: `\x20`,
-  BACKSPACE: `\x7f`,
+  BACKSPACE: `\x7F`,
 }
 
 async function skipSteps(count = 3): Promise<void> {
@@ -198,7 +198,6 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
 
     await stdinMock.send(`goodname`)
-    await tick()
 
     await skipSteps()
     await skipSelect()
