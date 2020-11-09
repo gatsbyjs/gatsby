@@ -1,6 +1,7 @@
 import { nodesReducer } from "./nodes"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { pagesReducer } from "./pages"
+import { ssrVisitedPageReducer } from "./ssr-visited-page"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
 import { definitionsReducer } from "./definitions"
@@ -43,6 +44,7 @@ export {
   configReducer as config,
   schemaReducer as schema,
   pagesReducer as pages,
+  ssrVisitedPageReducer as ssrVisitedPages,
   statusReducer as status,
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,

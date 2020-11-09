@@ -274,6 +274,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
+  ssrVisitedPages: Set<string>
 }
 
 export interface ICachedReduxState {
@@ -589,6 +590,12 @@ interface ISetSchemaComposerAction {
   payload: SchemaComposer<any>
 }
 
+export interface ICreateSSRVisitedPage {
+  type: `CREATE_SSR_VISITED_PAGE`
+  payload: IGatsbyPage
+  plugin?: IGatsbyPlugin
+}
+
 export interface ICreatePageAction {
   type: `CREATE_PAGE`
   payload: IGatsbyPage
@@ -737,8 +744,7 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  // FIXME: figure out why payload can be undefined here
-  payload: IGatsbyNode | void
+  payload: IGatsbyNode
 }
 
 export interface IDeleteNodesAction {

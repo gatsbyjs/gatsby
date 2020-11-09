@@ -5,7 +5,7 @@ const { match } = require(`@reach/router/lib/utils`)
 const now = Date.now()
 
 const generatePagesState = pages => {
-  let state = new Map()
+  const state = new Map()
   pages.forEach(page => {
     state.set(page.path, {
       component: ``,
@@ -30,7 +30,9 @@ describe(`requires-writer`, () => {
   const program = {
     directory: `/dir`,
   }
-  let originalDateNow = global.Date.now
+  const ssrVisitedPages = new Set(`hi`)
+
+  const originalDateNow = global.Date.now
 
   beforeEach(() => {
     global.Date.now = () => now
@@ -61,6 +63,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       expect(spy).toBeCalledWith(
@@ -108,6 +111,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -141,6 +145,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -165,6 +170,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -219,6 +225,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -245,6 +252,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       const matchPathsForInvertedInput = matchPaths
@@ -252,6 +260,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        ssrVisitedPages,
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -263,6 +272,7 @@ describe(`requires-writer`, () => {
         await requiresWriter.writeAll({
           pages,
           program,
+          ssrVisitedPages,
         })
 
         const allMatchingPages = matchPaths
