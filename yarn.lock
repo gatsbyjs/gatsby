@@ -4219,10 +4219,22 @@
   dependencies:
     "@types/webpack" "*"
 
-"@types/webpack@*", "@types/webpack@^4.41.23":
+"@types/webpack@*":
   version "4.41.23"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.23.tgz#1925f42a7325be4ae0fce38329f1cc27768fcda7"
   integrity sha512-ojA4CupZg8RCzVJLugWlvqrHpT59GWhqFxbinlsnvk10MjQCWB+ot7XDACctbWhnhtdhYK7+HOH1JxkVLiZhMg==
+  dependencies:
+    "@types/anymatch" "*"
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    "@types/webpack-sources" "*"
+    source-map "^0.6.0"
+
+"@types/webpack@^4.41.24":
+  version "4.41.24"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.24.tgz#75b664abe3d5bcfe54e64313ca3b43e498550422"
+  integrity sha512-1A0MXPwZiMOD3DPMuOKUKcpkdPo8Lq33UGggZ7xio6wJ/jV1dAu5cXDrOfGDnldUroPIRLsr/DT43/GqOA4RFQ==
   dependencies:
     "@types/anymatch" "*"
     "@types/node" "*"
@@ -24971,10 +24983,10 @@ url-parse@^1.1.8, url-parse@^1.4.3:
     querystringify "^2.0.0"
     requires-port "^1.0.0"
 
-url-polyfill@^1.1.12:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.12.tgz#6cdaa17f6b022841b3aec0bf8dbd87ac0cd33331"
-  integrity sha512-mYFmBHCapZjtcNHW0MDq9967t+z4Dmg5CJ0KqysK3+ZbyoNOWQHksGCTWwDhxGXllkWlOc10Xfko6v4a3ucM6A==
+url-polyfill@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.10.tgz#fd5bbcf66c9491fa682b0cb6d6a855e1643a9281"
+  integrity sha512-vSaPpaRgBrf41+Uky1myiSh6gpcbw8FpwHYnEy0abxndojOBnIs+yh/49gKYFLtUMP9qoNWjn6j9aUVy23Ie2A==
 
 url-template@^2.0.8:
   version "2.0.8"
