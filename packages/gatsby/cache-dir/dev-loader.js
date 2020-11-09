@@ -22,7 +22,7 @@ class DevLoader extends BaseLoader {
           req.setRequestHeader(`Content-Type`, `application/json;charset=UTF-8`)
           req.send(JSON.stringify({ chunkName }))
 
-          const checkForUpdates = setInterval(() => {
+          const checkForUpdates = () => {
             if (process.env.NODE_ENV !== `test`) {
               delete require.cache[
                 require.resolve(`$virtual/lazy-client-sync-requires`)
@@ -30,10 +30,12 @@ class DevLoader extends BaseLoader {
             }
             const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
             if (lazyRequires.lazyComponents[chunkName]) {
-              clearInterval(checkForUpdates)
-              resolve(lazyRequires.lazyComponents[chunkName])
+              return resolve(lazyRequires.lazyComponents[chunkName])
             }
-          }, 100)
+            
+            setTimeout(checkForUpdates, 100)
+          }
+          setTimeout(checkForUpdates, 100)
         })
       }
     }
