@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.2.0-next.1...gatsby-source-contentful@4.0.0-next.0) (2020-11-09)
+
+- Refactor Rich Text implementation in gatsby-source-contentful (#25249) ([a256346](https://github.com/gatsbyjs/gatsby/commit/a25634698205181e84f1067ebba0c4816fb742ed)), closes [#25249](https://github.com/gatsbyjs/gatsby/issues/25249) [#24221](https://github.com/gatsbyjs/gatsby/issues/24221)
+
+### BREAKING CHANGES
+
+- - Entities references in Rich Text fields are no more automatically resolved
+- Use the `raw` subfield instead of `json`
+- Use GraphQL to define your referenced data with the new `references` field
+- Removes the `resolveFieldLocales` as the new `references` field automatically resolves locales
+- To render Rich Text fields unse the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
+
+- perf(gatsby-source-contentful): use getNodesByType to locate Rich Text references
+
+- clean up from rebase
+
+- refactor to use a query for entry references
+
+- simplify and reduce complexity of rich text raw field value injection
+
+- performance: directly inject references into Rich Text field, skipping the extra node type
+
+- remove plugin config for no more existing rich text resolveFieldLocales
+
+- add hint to remove extra traversal of rich text as soon fixIds is gone
+
+- add first test for rich text
+
+- clean up code and use more Maps
+
+- align readme for new rich text changes
+
+- remove workarounds for fixIds
+
+- add typescript types for rich text render function
+
+- add tests for rich text rendering
+
+- Dirty lock file
+
+Co-authored-by: Peter van der Zee <github-public@qfox.nl>
+Co-authored-by: gatsbybot <mathews.kyle+gatsbybot@gmail.com>
+
 # [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.2.0-next.0...gatsby-source-contentful@3.2.0-next.1) (2020-11-09)
 
 **Note:** Version bump only for package gatsby-source-contentful
