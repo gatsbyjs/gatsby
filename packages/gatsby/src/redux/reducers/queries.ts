@@ -170,6 +170,9 @@ export function queriesReducer(
     case `CREATE_NODE`:
     case `DELETE_NODE`: {
       const node = action.payload
+      if (!node) {
+        return state
+      }
       const queriesByNode = state.byNode.get(node.id) ?? []
       const queriesByConnection =
         state.byConnection.get(node.internal.type) ?? []
