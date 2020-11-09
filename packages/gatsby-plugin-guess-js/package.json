@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-guess-js",
-  "version": "1.4.0-next.0",
+  "version": "1.4.0-next.1",
   "description": "Gatsby plugin providing drop-in integration with Guess.js to enabling using machine learning and analytics data to power prefetching",
   "main": "index.js",
   "scripts": {

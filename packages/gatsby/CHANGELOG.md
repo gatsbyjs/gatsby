@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.26.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.1...gatsby@2.26.0-next.2) (2020-11-09)
+
+### Features
+
+- **gatsby-cli:** Augment plugin errors with plugin name ([#27435](https://github.com/gatsbyjs/gatsby/issues/27435)) ([700d245](https://github.com/gatsbyjs/gatsby/commit/700d2454c824dcfbf7535a40df5032e1dc208c0c))
+
+# [2.26.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0-next.1) (2020-11-05)
+
+### Bug Fixes
+
+- **docs:** Update documentation for createPages ([#27735](https://github.com/gatsbyjs/gatsby/issues/27735)) ([27c3083](https://github.com/gatsbyjs/gatsby/commit/27c3083a8dccbab06f72f7259ddf6a79b7043bbd))
+- **gatsby:** Remove version annotation in createPages ([#27851](https://github.com/gatsbyjs/gatsby/issues/27851)) ([b57e41f](https://github.com/gatsbyjs/gatsby/commit/b57e41f04616a6a7da72213a57e33b9e361c56c0))
+
 ## [2.25.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.25.0...gatsby@2.25.1) (2020-11-02)
 
 **Note:** Version bump only for package gatsby
