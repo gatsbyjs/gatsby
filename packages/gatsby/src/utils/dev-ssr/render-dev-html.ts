@@ -1,7 +1,4 @@
 import JestWorker from "jest-worker"
-import fs from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
-import report from "gatsby-cli/lib/reporter"
 import _ from "lodash"
 
 import { startListener } from "../../bootstrap/requires-writer"
