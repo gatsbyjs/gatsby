@@ -234,6 +234,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       modifyURLPrefix: Joi.object().pattern(MATCH_ALL_KEYS, Joi.string()),
       cacheId: Joi.string(),
       dontCacheBustURLsMatching: Joi.object().instance(RegExp),
+      maximumFileSizeToCacheInBytes: Joi.number(),
       runtimeCaching: Joi.array().items(
         Joi.object({
           urlPattern: Joi.object().instance(RegExp),
