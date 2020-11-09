@@ -1,5 +1,5 @@
 const fetch = require(`node-fetch`)
-const { execFile } = require("child_process")
+const execa = require(`execa`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
@@ -10,16 +10,9 @@ describe(`SSR`, () => {
     expect(html).toMatchSnapshot()
   })
   test(`dev & build outputs match`, async () => {
-    const childProcess = execFile(`yarn`, [`test-output`])
-    let exitCode
-    await new Promise(resolve => {
-      childProcess.on(`exit`, code => {
-        exitCode = { exitCode: code }
-        resolve()
-      })
-    })
+    const childProcess = await execa(`yarn`, [`test-output`])
 
-    expect(exitCode).toEqual({ exitCode: 0 })
+    expect(childProcess.exitCode).toEqual({ exitCode: 0 })
   })
   test(`it generates an error page correctly`, async () => {
     const src = path.join(__dirname, `/fixtures/bad-page.js`)
