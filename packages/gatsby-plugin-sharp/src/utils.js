@@ -313,7 +313,6 @@ export function fluidImageSizes({
     aspectRatio,
     presentationWidth: originalMaxWidth,
     presentationHeight: Math.round(originalMaxWidth / aspectRatio),
-    isTopSizeOverriden,
     unscaledWidth: maxWidth,
   }
 }
