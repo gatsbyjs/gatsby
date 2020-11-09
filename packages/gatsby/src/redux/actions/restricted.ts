@@ -1,14 +1,13 @@
 import { camelCase } from "lodash"
-import { GraphQLSchema, GraphQLOutputType } from "graphql"
+import { GraphQLSchema } from "graphql"
 import { ActionCreator } from "redux"
 import { ThunkAction } from "redux-thunk"
 import report from "gatsby-cli/lib/reporter"
-import { parseTypeDef } from "../../schema/types/type-defs"
+import { parseTypeDef, TypeOrTypeDef } from "../../schema/types/type-defs"
 import {
   GraphQLFieldExtensionDefinition,
   reservedExtensionNames,
 } from "../../schema/extensions"
-import { GatsbyGraphQLType } from "../../schema/types/type-builders"
 import {
   IGatsbyPlugin,
   ActionsUnion,
@@ -201,11 +200,7 @@ export const actions = {
    * }
    */
   createTypes: (
-    types:
-      | string
-      | GraphQLOutputType
-      | GatsbyGraphQLType<any, any>
-      | Array<string | GraphQLOutputType | GatsbyGraphQLType<any, any>>,
+    types: TypeOrTypeDef | Array<TypeOrTypeDef>,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateTypes => {

@@ -3,6 +3,7 @@ import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
+import { TypeOrTypeDef } from "../schema/types/type-defs"
 import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
@@ -261,7 +262,8 @@ export interface IGatsbyState {
     } | null
     thirdPartySchemas: Array<GraphQLSchema>
     types: Array<
-      string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin }
+      | string
+      | { typeOrTypeDef: DocumentNode | TypeOrTypeDef; plugin: IGatsbyPlugin }
     >
   }
   themes: any // TODO
@@ -546,7 +548,7 @@ export interface ICreateTypes {
   type: `CREATE_TYPES`
   plugin: IGatsbyPlugin
   traceId?: string
-  payload: DocumentNode | Array<DocumentNode>
+  payload: DocumentNode | TypeOrTypeDef | Array<DocumentNode | TypeOrTypeDef>
 }
 
 export interface ICreateFieldExtension {
