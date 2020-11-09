@@ -4,7 +4,7 @@
   "gatsby-plugin-emotion": { "message": "Emotion", "dependencies": ["@emotion/core", "@emotion/styled"] },
   "gatsby-plugin-sass": { "message": "Sass", "dependencies": ["node-sass"] },
   "gatsby-plugin-theme-ui": {
-    "message": "Theme-UI",
+    "message": "Theme UI",
     "dependencies": ["theme-ui"]
   }
 }
