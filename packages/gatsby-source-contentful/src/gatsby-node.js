@@ -5,15 +5,10 @@ const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
 const fetch = require(`node-fetch`)
-const { Joi } = require(`gatsby-plugin-utils`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const {
-  createPluginConfig,
-  maskText,
-  formatPluginOptionsForCLI,
-} = require(`./plugin-options`)
+const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -29,24 +24,6 @@ const restrictedNodeFields = [
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
-
-// TODO: Remove once pluginOptionsSchema is stable
-exports.onPreInit = ({ reporter }, options) => {
-  const result = pluginOptionsSchema({ Joi }).validate(options, {
-    abortEarly: false,
-    externals: false,
-  })
-  if (result.error) {
-    const errors = {}
-    result.error.details.forEach(detail => {
-      errors[detail.path[0]] = detail.message
-    })
-    reporter.panic(`Problems with gatsby-source-contentful plugin options:
-${formatPluginOptionsForCLI(options, errors)}`)
-  }
-
-  options = result.value
-}
 
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
@@ -110,7 +87,7 @@ For example, to filter locales on only germany \`localeFilter: locale => locale.
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
-        .default(() => true),
+        .default(() => () => true),
       forceFullSync: Joi.boolean()
         .description(
           `Prevents the use of sync tokens when accessing the Contentful API.`
@@ -152,21 +129,10 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .default(true),
       // default plugins passed by gatsby
       plugins: Joi.array(),
-      richText: Joi.object()
-        .keys({
-          resolveFieldLocales: Joi.boolean()
-            .description(
-              `If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to \`true\`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.`
-            )
-            .default(false),
-        })
-        .default({}),
     })
     .external(validateContentfulAccess)
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = pluginOptionsSchema
-}
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 /***
  * Localization algorithm
@@ -195,7 +161,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode } = actions
+  const { createNode, deleteNode, touchNode, createTypes } = actions
 
   let currentSyncData, contentTypeItems, defaultLocale, locales, space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
@@ -287,46 +253,86 @@ exports.sourceNodes = async (
         `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
       )
     }
-
-    const fetchActivity = reporter.activityTimer(
-      `Contentful: Fetch data (${sourceId})`,
-      {
-        parentSpan,
-      }
-    )
-
-    fetchActivity.start()
-    ;({
-      currentSyncData,
-      contentTypeItems,
-      defaultLocale,
-      locales,
-      space,
-    } = await fetchData({
-      syncToken,
-      reporter,
-      pluginConfig,
-      parentSpan,
-    }))
-
-    if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
-      reporter.info(
-        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
-          process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
-      )
-      fs.writeFileSync(
-        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
-        v8.serialize({
-          currentSyncData,
-          contentTypeItems,
-          defaultLocale,
-          locales,
-          space,
-        })
-      )
-    }
-    fetchActivity.end()
   }
+
+  const fetchActivity = reporter.activityTimer(
+    `Contentful: Fetch data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+
+  fetchActivity.start()
+  ;({
+    currentSyncData,
+    contentTypeItems,
+    defaultLocale,
+    locales,
+    space,
+  } = await fetchData({
+    syncToken,
+    reporter,
+    pluginConfig,
+    parentSpan,
+  }))
+
+  createTypes(`
+  interface ContentfulEntry @nodeInterface {
+    contentful_id: String!
+    id: ID!
+    node_locale: String!
+  }
+`)
+
+  createTypes(`
+  interface ContentfulReference {
+    contentful_id: String!
+    id: ID!
+  }
+`)
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulAsset`,
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      interfaces: [`ContentfulReference`, `Node`],
+    })
+  )
+
+  const gqlTypes = contentTypeItems.map(contentTypeItem =>
+    schema.buildObjectType({
+      name: _.upperFirst(_.camelCase(`Contentful ${contentTypeItem.name}`)),
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+        node_locale: { type: `String!` },
+      },
+      interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+    })
+  )
+
+  createTypes(gqlTypes)
+
+  if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
+    reporter.info(
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+    )
+    fs.writeFileSync(
+      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
+      v8.serialize({
+        currentSyncData,
+        contentTypeItems,
+        defaultLocale,
+        locales,
+        space,
+      })
+    )
+  }
+  fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
     `Contentful: Proccess data (${sourceId})`,
@@ -375,6 +381,37 @@ exports.sourceNodes = async (
   })
 
   mergedSyncData.entries = res.items
+
+  // Inject raw API output to rich text fields
+  const richTextFieldMap = new Map()
+  contentTypeItems.forEach(contentType => {
+    richTextFieldMap.set(
+      contentType.sys.id,
+      contentType.fields
+        .filter(field => field.type === `RichText`)
+        .map(field => field.id)
+    )
+  })
+
+  const rawEntries = new Map()
+  mergedSyncDataRaw.entries.forEach(rawEntry =>
+    rawEntries.set(rawEntry.sys.id, rawEntry)
+  )
+
+  mergedSyncData.entries.forEach(entry => {
+    const contentTypeId = entry.sys.contentType.sys.id
+    const richTextFieldIds = richTextFieldMap.get(contentTypeId)
+    if (richTextFieldIds) {
+      richTextFieldIds.forEach(richTextFieldId => {
+        if (!entry.fields[richTextFieldId]) {
+          return
+        }
+        entry.fields[richTextFieldId] = rawEntries.get(entry.sys.id).fields[
+          richTextFieldId
+        ]
+      })
+    }
+  })
 
   const entryList = normalize.buildEntryList({
     mergedSyncData,
@@ -532,7 +569,6 @@ exports.sourceNodes = async (
         locales,
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
-        richTextOptions: pluginConfig.get(`richText`),
       })
     )
   }
@@ -578,7 +614,7 @@ exports.sourceNodes = async (
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
+exports.onPreExtractQueries = async ({ store }) => {
   const program = store.getState().program
 
   const CACHE_DIR = path.resolve(

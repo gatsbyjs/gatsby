@@ -200,14 +200,18 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   })
 
   Object.entries(staticQueries).forEach(([id, query]) => {
-    store.dispatch({
-      type: `REPLACE_STATIC_QUERY`,
-      payload: {
-        id: `sq--${id}`,
-        hash: `sq--${id}`,
-        query,
-      },
-    })
+    // Mimic real code behavior by only calling this action when static query text changes
+    const lastQuery = mockPersistedState.staticQueryComponents?.get(`sq--${id}`)
+    if (lastQuery?.query !== query) {
+      store.dispatch({
+        type: `REPLACE_STATIC_QUERY`,
+        payload: {
+          id: `sq--${id}`,
+          hash: `sq--${id}`,
+          query,
+        },
+      })
+    }
   })
 
   const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
@@ -1238,9 +1242,7 @@ describe(`query caching between builds`, () => {
       expect(staticQueriesThatRan).toEqual([])
     }, 999999)
 
-    // TO-DO: this is known issue - we always rerun queries for pages with no dependencies
-    // this mean that we will retry to rerun them every time we restart gatsby
-    it.skip(`rerunning should not run any queries (with restart)`, async () => {
+    it(`rerunning should not run any queries (with restart)`, async () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,

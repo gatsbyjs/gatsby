@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.13.0-next.1...gatsby-cli@2.13.0-next.2) (2020-11-09)
+
+### Features
+
+- **gatsby-cli:** Augment plugin errors with plugin name ([#27435](https://github.com/gatsbyjs/gatsby/issues/27435)) ([700d245](https://github.com/gatsbyjs/gatsby/commit/700d2454c824dcfbf7535a40df5032e1dc208c0c))
+
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.13.0-next.0...gatsby-cli@2.13.0-next.1) (2020-11-05)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.115](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.114...gatsby-cli@2.12.115) (2020-11-02)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.12.114](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.113...gatsby-cli@2.12.114) (2020-11-02)
 
 ### Bug Fixes

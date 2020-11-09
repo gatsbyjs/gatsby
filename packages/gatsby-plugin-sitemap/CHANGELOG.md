@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.6.0-next.0...gatsby-plugin-sitemap@2.6.0-next.1) (2020-11-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** fixed missing sitemapSize config entry ([#27866](https://github.com/gatsbyjs/gatsby/issues/27866)) ([f0689ff](https://github.com/gatsbyjs/gatsby/commit/f0689ffce82e8b59a02df5c338470bd31a5154f2))
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.4.17...gatsby-plugin-sitemap@2.5.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.4.16...gatsby-plugin-sitemap@2.4.17) (2020-10-15)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

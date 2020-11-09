@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.5.0-next.0...gatsby-plugin-google-tagmanager@2.5.0-next.1) (2020-11-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-tagmanager:** allow functions for defaultDataLayer option ([#27886](https://github.com/gatsbyjs/gatsby/issues/27886)) ([631f3c4](https://github.com/gatsbyjs/gatsby/commit/631f3c401ed7c4d659604d5dd3170521bd477a61))
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.16...gatsby-plugin-google-tagmanager@2.4.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.15...gatsby-plugin-google-tagmanager@2.3.16) (2020-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-google-tagmanager
