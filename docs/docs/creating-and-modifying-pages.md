@@ -54,6 +54,8 @@ This example assumes that each markdown page has a `path` set in the frontmatter
 of the markdown file.
 
 ```javascript:title=gatsby-node.js
+const path = require("path")
+
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -120,6 +122,7 @@ In the initial approach you have seen how the `gatsby-node.js` file would have a
 Using the `id` as an access point to query for other properties in the template is the default approach. However, suppose you had a list of products with properties you would like to query for. Handling the query entirely from `gatsby-node.js` would result in the query looking like this:
 
 ```javascript:title=gatsby-node.js
+const path = require("path")
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;

@@ -3,7 +3,6 @@ const stringify = require(`json-stringify-safe`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const digest = str => createContentDigest(str)
-const { getNormalizedRichTextField } = require(`./rich-text`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -206,29 +205,6 @@ function prepareTextNode(node, key, text, createNodeId) {
   return textNode
 }
 
-function prepareRichTextNode(node, key, content, createNodeId) {
-  const str = stringify(content)
-  const richTextNode = {
-    ...content,
-    id: createNodeId(`${node.id}${key}RichTextNode`),
-    parent: node.id,
-    children: [],
-    [key]: str,
-    internal: {
-      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
-      mediaType: `text/richtext`,
-      content: str,
-      contentDigest: digest(str),
-    },
-    sys: {
-      type: node.sys.type,
-    },
-  }
-
-  node.children = node.children.concat([richTextNode.id])
-
-  return richTextNode
-}
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
@@ -266,7 +242,6 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
-  richTextOptions,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -314,25 +289,6 @@ exports.createNodesForContentType = ({
         const localizedField = fieldProps.localized
           ? getField(v)
           : v[defaultLocale]
-
-        if (
-          fieldProps.type === `RichText` &&
-          richTextOptions &&
-          richTextOptions.resolveFieldLocales
-        ) {
-          const contentTypesById = new Map()
-          contentTypeItems.forEach(contentTypeItem =>
-            contentTypesById.set(contentTypeItem.sys.id, contentTypeItem)
-          )
-
-          return getNormalizedRichTextField({
-            field: localizedField,
-            fieldProps,
-            contentTypesById,
-            getField,
-            defaultLocale,
-          })
-        }
 
         return localizedField
       })
@@ -495,17 +451,42 @@ exports.createNodesForContentType = ({
           fieldType === `RichText` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
-          const richTextNode = prepareRichTextNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
+          const fieldValue = entryItemFields[entryItemFieldKey]
 
-          childrenNodes.push(richTextNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
+          const rawReferences = []
 
-          delete entryItemFields[entryItemFieldKey]
+          // Locate all Contentful Links within the rich text data
+          const traverse = obj => {
+            for (let k in obj) {
+              const v = obj[k]
+              if (v && v.sys && v.sys.type === `Link`) {
+                rawReferences.push(v)
+              } else if (v && typeof v === `object`) {
+                traverse(v)
+              }
+            }
+          }
+
+          traverse(fieldValue)
+
+          // Build up resolvable reference list
+          const resolvableReferenceIds = new Set()
+          rawReferences
+            .filter(function (v) {
+              return resolvable.has(
+                `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+              )
+            })
+            .forEach(function (v) {
+              resolvableReferenceIds.add(
+                mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
+              )
+            })
+
+          entryItemFields[entryItemFieldKey] = {
+            raw: stringify(fieldValue),
+            references___NODE: [...resolvableReferenceIds],
+          }
         } else if (
           fieldType === `Object` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
