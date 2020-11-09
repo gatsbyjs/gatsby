@@ -2,8 +2,8 @@ import React from "react"
 import fs from "fs"
 const { join } = require(`path`)
 
-import SSRDevelopStaticEntry from "../ssr-develop-static-entry"
-import DevelopStaticEntry from "../develop-static-entry"
+import ssrDevelopStaticEntry from "../ssr-develop-static-entry"
+import developStaticEntry from "../develop-static-entry"
 
 jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
@@ -161,7 +161,7 @@ describe(`develop-static-entry`, () => {
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    SSRDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -173,7 +173,7 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    SSRDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -185,14 +185,14 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    SSRDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
   })
 
   test(`SSR: onPreRenderHTML adds metatag note for development environment`, done => {
-    SSRDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -203,7 +203,7 @@ describe(`develop-static-entry`, () => {
   test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
     global.plugins = [reverseHeadersPlugin]
 
-    SSRDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -214,7 +214,7 @@ describe(`develop-static-entry`, () => {
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    developStaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -226,7 +226,7 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    developStaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -238,14 +238,14 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    developStaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
   })
 
   test(`onPreRenderHTML adds metatag note for development environment`, done => {
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    developStaticEntry(`/about/`, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -256,7 +256,7 @@ describe(`develop-static-entry`, () => {
   test(`onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
     global.plugins = [reverseHeadersPlugin]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    developStaticEntry(`/about/`, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
