@@ -97,14 +97,15 @@ Add the following line to the plugin options
 
 ```js
   icon: `src/images/icon.png`, // This path is relative to the root of the site.
+  // All entries in src are relative to the static folder
   icons: [
     {
-      src: `/favicons/android-chrome-192x192.png`, // This path is relative to the static folder
+      src: `/favicons/android-chrome-192x192.png`,
       sizes: `192x192`,
       type: `image/png`,
     },
     {
-      src: `/favicons/android-chrome-512x512.png`, // This path is relative to the static folder
+      src: `/favicons/android-chrome-512x512.png`,
       sizes: `512x512`,
       type: `image/png`,
     },
@@ -120,14 +121,15 @@ The hybrid option allows the most flexibility while still not requiring you to c
 Add the following line to the plugin options
 
 ```js
+// All entries in src are relative to the static folder
 icons: [
   {
-    src: `/favicons/android-chrome-192x192.png`, // This path is relative to the static folder
+    src: `/favicons/android-chrome-192x192.png`,
     sizes: `192x192`,
     type: `image/png`,
   },
   {
-    src: `/favicons/android-chrome-512x512.png`, // This path is relative to the static folder
+    src: `/favicons/android-chrome-512x512.png`,
     sizes: `512x512`,
     type: `image/png`,
   },
