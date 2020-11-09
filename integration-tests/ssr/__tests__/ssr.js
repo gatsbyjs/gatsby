@@ -28,6 +28,7 @@ describe(`SSR`, () => {
 
     const pageUrl = `http://localhost:8000/bad-page/`
     await new Promise(resolve => {
+      // Poll until the new page is bundled (so starts returning a non-404 status).
       const testInterval = setInterval(() => {
         fetch(pageUrl).then(res => {
           if (res.status !== 404) {
