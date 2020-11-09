@@ -274,7 +274,7 @@ export async function validateConfigPluginsOptions(
   if (process.env.SKIP_PLUGIN_OPTION_VALIDATION) {
     reporter.warn(`you have enabled the SKIP_PLUGIN_OPTION_VALIDATION flag,`)
     reporter.warn(
-      `meaning Gatsby will not enforce types based on plugin's option schemas.`
+      `so Gatsby will not verify your plugin configurations.`
     )
     return
   }
