@@ -1,6 +1,7 @@
 import { run } from "../"
 import { stdin } from "mock-stdin"
 import { stdout } from "stdout-stderr"
+
 const stdinMock = stdin()
 // stdout.print = true
 jest.mock(`execa`)
@@ -14,36 +15,62 @@ process.chdir = jest.fn()
 const tick = (interval = 1): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, interval))
 
-const Keys = {
-  // pulled from https://tldp.org/LDP/abs/html/escapingsection.html
-  DOWN: `\x1B\x5B\x42`,
-  UP: `\x1B\x5B\x41`,
-  ENTER: `\x0D\x0A`,
-  SPACE: `\x20`,
-  BACKSPACE: `\x7F`,
+const keys = (): {DOWN: string, UP: string, ENTER: string, SPACE: string, BACKSPACE: string} => {
+  const platform = process.platform
+  console.log(platform)
+
+  switch(platform) { 
+    case 'linux':  
+        return {
+          DOWN: `\x1B\x5B\x42`,
+          UP: `\x1B\x5B\x41`,
+          ENTER: `\n`,
+          SPACE: `\x20`,
+          BACKSPACE: `\x7F`
+        }
+        break; 
+    case 'win32': 
+        return {
+          DOWN: `\x1B\x5B\x42`,
+          UP: `\x1B\x5B\x41`,
+          ENTER: `\r\n`,
+          SPACE: `\x20`,
+          BACKSPACE: `\x08`
+        }
+        break;     
+    default:  
+        // pulled from https://tldp.org/LDP/abs/html/escapingsection.html
+        return {
+          DOWN: `\x1B\x5B\x42`,
+          UP: `\x1B\x5B\x41`,
+          ENTER: `\r`,
+          SPACE: `\x20`,
+          BACKSPACE: `\x7F`
+        }
+} 
 }
 
 async function skipSteps(count = 3): Promise<void> {
   for (let i = 0; i < count - 1; i++) {
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().ENTER)
     await tick()
   }
-  await stdinMock.send(Keys.ENTER)
+  await stdinMock.send(keys().ENTER)
   await tick()
 }
 
 async function skipSelect(): Promise<void> {
-  await stdinMock.send(Keys.DOWN)
-  await stdinMock.send(Keys.DOWN)
-  await stdinMock.send(Keys.DOWN)
-  await stdinMock.send(Keys.DOWN)
-  await stdinMock.send(Keys.DOWN)
-  await stdinMock.send(Keys.DOWN)
-  await stdinMock.send(Keys.ENTER)
+  await stdinMock.send(keys().DOWN)
+  await stdinMock.send(keys().DOWN)
+  await stdinMock.send(keys().DOWN)
+  await stdinMock.send(keys().DOWN)
+  await stdinMock.send(keys().DOWN)
+  await stdinMock.send(keys().DOWN)
+  await stdinMock.send(keys().ENTER)
   await tick()
 }
 
-const typeBackspace = (count: number): string => Keys.BACKSPACE.repeat(count)
+const typeBackspace = (count: number): string => keys().BACKSPACE.repeat(count)
 
 describe(`The create-gatsby CLI`, () => {
   beforeEach(() => {
@@ -60,31 +87,31 @@ describe(`The create-gatsby CLI`, () => {
   it(`runs`, async () => {
     await tick()
     stdinMock.send(`my-new-site`)
-    stdinMock.send(Keys.ENTER)
+    stdinMock.send(keys().ENTER)
     await tick()
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.ENTER)
-    await tick()
-
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().ENTER)
     await tick()
 
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.SPACE)
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.SPACE)
-    await stdinMock.send(Keys.DOWN)
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().ENTER)
+    await tick()
+
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().SPACE)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().SPACE)
+    await stdinMock.send(keys().DOWN)
+    await stdinMock.send(keys().ENTER)
     await tick()
     await stdinMock.send(`tokenValue`)
-    await stdinMock.send(Keys.DOWN)
+    await stdinMock.send(keys().DOWN)
     await stdinMock.send(`spaceIdValue`)
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().ENTER)
 
     // Clear the stdout buffer, as we only want to check final output
     stdout.start()
@@ -113,10 +140,10 @@ describe(`The create-gatsby CLI`, () => {
   it(`displays the plugin for the selected CMS to configure`, async () => {
     await tick()
     stdinMock.send(`select-cms`)
-    stdinMock.send(Keys.ENTER)
+    stdinMock.send(keys().ENTER)
     await tick()
-    await stdinMock.send(Keys.DOWN) // WordPress is first in the list
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().DOWN) // WordPress is first in the list
+    await stdinMock.send(keys().ENTER)
     await tick()
     stdout.stop()
     stdout.start()
@@ -125,7 +152,7 @@ describe(`The create-gatsby CLI`, () => {
     expect(stdout.output).toMatch(
       `Install and configure the plugin for WordPress`
     )
-    stdinMock.send(Keys.ENTER)
+    stdinMock.send(keys().ENTER)
     await tick()
   })
 
@@ -133,14 +160,14 @@ describe(`The create-gatsby CLI`, () => {
     await tick()
     stdinMock.send(`select-styling`)
     await skipSteps(2)
-    await stdinMock.send(Keys.DOWN) // PostCSS is first in the list
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().DOWN) // PostCSS is first in the list
+    await stdinMock.send(keys().ENTER)
     await tick()
     await skipSelect()
     expect(stdout.output).toMatch(
       `Get you set up to use CSS Modules/PostCSS for styling your site`
     )
-    stdinMock.send(Keys.ENTER)
+    stdinMock.send(keys().ENTER)
     await tick()
   })
 
@@ -166,7 +193,7 @@ describe(`The create-gatsby CLI`, () => {
       [string]
     >).mockReturnValueOnce(true)
     await stdinMock.send(`exists`)
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().ENTER)
     stdout.start()
     ;((fs.existsSync as unknown) as jest.Mock<
       boolean,
@@ -179,7 +206,7 @@ describe(`The create-gatsby CLI`, () => {
     expect(stdout.output).toMatch(
       `Create a new Gatsby site in the folder exists`
     )
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().ENTER)
     await tick()
   })
 
@@ -188,7 +215,7 @@ describe(`The create-gatsby CLI`, () => {
     stdout.stop()
     stdout.start()
     await stdinMock.send(`bad/name`)
-    await stdinMock.send(Keys.ENTER)
+    await stdinMock.send(keys().ENTER)
     await tick()
     expect(stdout.output).toMatch(
       `The destination "bad/name" is not a valid filename.`
