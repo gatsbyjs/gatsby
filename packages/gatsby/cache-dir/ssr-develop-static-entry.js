@@ -5,10 +5,11 @@ import { merge } from "lodash"
 import { join } from "path"
 import apiRunner from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
-import syncRequires from "$virtual/sync-requires"
+import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
+
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
