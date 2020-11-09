@@ -183,7 +183,6 @@ export function fixedImageSizes({
   }
 
   const originalWidth = width // will use this for presentationWidth, don't want to lose it
-
   const isTopSizeOverriden =
     imgDimensions.width < width || imgDimensions.height < height
 
@@ -202,8 +201,13 @@ export function fixedImageSizes({
                        If possible, replace the current image with a larger one.
                        `)
 
-    width = imgDimensions.width
-    height = imgDimensions.height
+    if (fixedDimension === `width`) {
+      width = imgDimensions.width
+      height = Math.round(width / aspectRatio)
+    } else {
+      height = imgDimensions.height
+      width = height * aspectRatio
+    }
   }
 
   sizes = densities
@@ -216,7 +220,7 @@ export function fixedImageSizes({
     aspectRatio,
     presentationWidth: originalWidth,
     presentationHeight: Math.round(originalWidth / aspectRatio),
-    isTopSizeOverriden,
+    unscaledWidth: width,
   }
 }
 
@@ -310,6 +314,7 @@ export function fluidImageSizes({
     presentationWidth: originalMaxWidth,
     presentationHeight: Math.round(originalMaxWidth / aspectRatio),
     isTopSizeOverriden,
+    unscaledWidth: maxWidth,
   }
 }
 

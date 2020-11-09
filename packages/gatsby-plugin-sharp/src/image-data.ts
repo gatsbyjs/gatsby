@@ -4,7 +4,6 @@ import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
-import type { Sharp } from "sharp"
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
 
@@ -24,6 +23,7 @@ export interface ISharpGatsbyImageArgs {
   quality?: number
   transformOptions: {
     fit?: "contain" | "cover" | "fill" | "inside" | "outside"
+    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
   }
   jpgOptions: Record<string, unknown>
   pngOptions: Record<string, unknown>
@@ -32,6 +32,7 @@ export interface ISharpGatsbyImageArgs {
 }
 export type FileNode = Node & {
   absolutePath?: string
+  extension: string
 }
 
 export interface IImageMetadata {
@@ -57,7 +58,7 @@ export async function getImageMetadata(
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
-  const pipeline: Sharp = sharp(file.absolutePath)
+  const pipeline = sharp(file.absolutePath)
 
   const { width, height, density, format } = await pipeline.metadata()
 
@@ -87,6 +88,13 @@ export interface IImageDataArgs {
   reporter: Reporter
 }
 
+function normalizeFormat(format: string): ImageFormat {
+  if (format === `jpeg`) {
+    return `jpg`
+  }
+  return format as ImageFormat
+}
+
 export async function generateImageData({
   file,
   args,
@@ -98,8 +106,14 @@ export async function generateImageData({
     layout = `fixed`,
     placeholder = `blurred`,
     tracedSVGOptions = {},
+    transformOptions = {},
     quality,
   } = args
+
+  const {
+    fit = `cover`,
+    cropFocus = sharp.strategy.attention,
+  } = transformOptions
 
   const formats = new Set(args.formats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
@@ -116,7 +130,7 @@ export async function generateImageData({
   let primaryFormat: ImageFormat | undefined
   let options: Record<string, unknown> | undefined
   if (useAuto) {
-    primaryFormat = (metadata.format || file.extension) as ImageFormat
+    primaryFormat = normalizeFormat(metadata.format || file.extension)
   } else if (formats.has(`png`)) {
     primaryFormat = `png`
     options = args.pngOptions
@@ -133,7 +147,7 @@ export async function generateImageData({
     presentationWidth: number
     presentationHeight: number
     aspectRatio: number
-    isTopSizeOverriden: boolean
+    unscaledWidth: number
   } = calculateImageSizes({
     file,
     layout,
@@ -146,7 +160,9 @@ export async function generateImageData({
     const width = Math.round(outputWidth)
     const transform = createTransformObject({
       quality,
-      ...args.transformOptions,
+      ...transformOptions,
+      fit,
+      cropFocus,
       ...options,
       tracedSVGOptions,
       width,
@@ -166,20 +182,17 @@ export async function generateImageData({
 
   const srcSet = getSrcSet(images)
 
-  const widthOfMaxSize = imageSizes.isTopSizeOverriden
-    ? metadata.width
-    : imageSizes.presentationWidth
-
-  const sizes = args.sizes || getSizes(widthOfMaxSize, layout)
+  const sizes = args.sizes || getSizes(imageSizes.unscaledWidth, layout)
 
   const primaryIndex = imageSizes.sizes.findIndex(
-    size => size === widthOfMaxSize
+    size => size === imageSizes.unscaledWidth
   )
 
   if (primaryIndex === -1) {
-    reporter.panic(
+    reporter.error(
       `No image of the specified size found. Images may not have been processed correctly.`
     )
+    return undefined
   }
 
   const primaryImage = images[primaryIndex]
