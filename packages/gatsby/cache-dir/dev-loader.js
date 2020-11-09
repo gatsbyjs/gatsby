@@ -30,9 +30,9 @@ class DevLoader extends BaseLoader {
             }
             const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
             if (lazyRequires.lazyComponents[chunkName]) {
-              return resolve(lazyRequires.lazyComponents[chunkName])
+              resolve(lazyRequires.lazyComponents[chunkName])
             }
-            
+
             setTimeout(checkForUpdates, 100)
           }
           setTimeout(checkForUpdates, 100)

@@ -186,7 +186,10 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   // Remove any page components that no longer exist.
   const cleanedClientVisitedPageComponents = components.filter(component =>
-    clientVisitedPageComponents.some(pageComponentChunkName => pageComponentChunkName === component.componentChunkName)
+    clientVisitedPageComponents.some(
+      pageComponentChunkName =>
+        pageComponentChunkName === component.componentChunkName
+    )
   )
 
   const newHash = createHash(
