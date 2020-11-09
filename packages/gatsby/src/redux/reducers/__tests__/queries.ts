@@ -826,6 +826,13 @@ describe(`create node`, () => {
 })
 
 describe(`delete node`, () => {
+  it(`accounts for undefined payload`, () => {
+    const runDeleteNode = (): void => {
+      reducer(state, { type: `DELETE_NODE`, payload: undefined })
+    }
+    expect(runDeleteNode).not.toThrow(`Cannot read property 'id' of undefined`)
+  })
+
   it.todo(`marks page query as dirty when it has this node as a dependency`)
   it.todo(`marks static query as dirty when it has this node as a dependency`)
   it.todo(

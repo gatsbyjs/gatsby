@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.1...gatsby-recipes@0.3.0-next.2) (2020-11-09)
+
+### Bug Fixes
+
+- **recipes:** Resolve themes relative to root ([#27836](https://github.com/gatsbyjs/gatsby/issues/27836)) ([57b8023](https://github.com/gatsbyjs/gatsby/commit/57b8023890a764d562cd8f667d03084e9a8a5560))
+
 # [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.0...gatsby-recipes@0.3.0-next.1) (2020-11-05)
 
 ### Bug Fixes

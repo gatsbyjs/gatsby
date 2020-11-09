@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.4.0-next.0...gatsby-source-shopify@3.4.0-next.1) (2020-11-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 # [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.39...gatsby-source-shopify@3.3.0) (2020-11-02)
 
 **Note:** Version bump only for package gatsby-source-shopify

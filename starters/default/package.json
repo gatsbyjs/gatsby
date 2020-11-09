@@ -11,7 +11,7 @@
     "gatsby-plugin-offline": "^3.3.2",
     "gatsby-plugin-react-helmet": "^3.3.14",
     "gatsby-plugin-sharp": "^2.7.1",
-    "gatsby-source-filesystem": "^2.4.1",
+    "gatsby-source-filesystem": "^2.4.2",
     "gatsby-transformer-sharp": "^2.5.21",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
