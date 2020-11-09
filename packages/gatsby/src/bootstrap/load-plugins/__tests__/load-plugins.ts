@@ -284,7 +284,7 @@ describe(`Load plugins`, () => {
           },
         ]
       `)
-      expect(mockProcessExit).toHaveBeenCalledWith(1)
+      expect(reporter.panic).toHaveBeenCalled()
     })
 
     it(`defaults plugin options to the ones defined in the schema`, async () => {
@@ -362,7 +362,7 @@ describe(`Load plugins`, () => {
           },
         ]
       `)
-      expect(mockProcessExit).toHaveBeenCalledWith(1)
+      expect(reporter.panic).toHaveBeenCalled()
     })
   })
 })
