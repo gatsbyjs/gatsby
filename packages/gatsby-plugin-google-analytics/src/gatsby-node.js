@@ -35,6 +35,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     sampleRate: Joi.number(),
     siteSpeedSampleRate: Joi.number(),
     cookieDomain: Joi.string(),
+    cookieFlags: Joi.string(),
     name: Joi.string(),
     clientId: Joi.string(),
     alwaysSendReferrer: Joi.boolean(),
