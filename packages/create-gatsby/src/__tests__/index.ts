@@ -15,39 +15,43 @@ process.chdir = jest.fn()
 const tick = (interval = 1): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, interval))
 
-const keys = (): {DOWN: string, UP: string, ENTER: string, SPACE: string, BACKSPACE: string} => {
+const keys = (): {
+  DOWN: string
+  UP: string
+  ENTER: string
+  SPACE: string
+  BACKSPACE: string
+} => {
   const platform = process.platform
   console.log(platform)
 
-  switch(platform) { 
-    case 'linux':  
-        return {
-          DOWN: `\x1B\x5B\x42`,
-          UP: `\x1B\x5B\x41`,
-          ENTER: `\n`,
-          SPACE: `\x20`,
-          BACKSPACE: `\x7F`
-        }
-        break; 
-    case 'win32': 
-        return {
-          DOWN: `\x1B\x5B\x42`,
-          UP: `\x1B\x5B\x41`,
-          ENTER: `\r\n`,
-          SPACE: `\x20`,
-          BACKSPACE: `\x08`
-        }
-        break;     
-    default:  
-        // pulled from https://tldp.org/LDP/abs/html/escapingsection.html
-        return {
-          DOWN: `\x1B\x5B\x42`,
-          UP: `\x1B\x5B\x41`,
-          ENTER: `\r`,
-          SPACE: `\x20`,
-          BACKSPACE: `\x7F`
-        }
-} 
+  switch (platform) {
+    case `linux`:
+      return {
+        DOWN: `\x1B\x5B\x42`,
+        UP: `\x1B\x5B\x41`,
+        ENTER: `\n`,
+        SPACE: `\x20`,
+        BACKSPACE: `\x7F`,
+      }
+    case `win32`:
+      return {
+        DOWN: `\x1B\x5B\x42`,
+        UP: `\x1B\x5B\x41`,
+        ENTER: `\r\n`,
+        SPACE: `\x20`,
+        BACKSPACE: `\x08`,
+      }
+    default:
+      // pulled from https://tldp.org/LDP/abs/html/escapingsection.html
+      return {
+        DOWN: `\x1B\x5B\x42`,
+        UP: `\x1B\x5B\x41`,
+        ENTER: `\r`,
+        SPACE: `\x20`,
+        BACKSPACE: `\x7F`,
+      }
+  }
 }
 
 async function skipSteps(count = 3): Promise<void> {
