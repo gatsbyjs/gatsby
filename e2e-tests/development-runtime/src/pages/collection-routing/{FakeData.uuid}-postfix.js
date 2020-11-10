@@ -3,7 +3,7 @@ import { Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
 
-export default function FakeData({ data: { fake }, pageContext: { uuid } }) {
+export default function FakeDataPostfix({ data: { fake }, pageContext: { uuid } }) {
   return (
     <Layout>
       <h1>{fake.title}</h1>

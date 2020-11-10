@@ -98,11 +98,6 @@ function graphql() {
   )
 }
 
-function unstable_collectionGraphql() {
-  // TODO: Strip this out of the component and throw error if it gets called
-  return null
-}
-
 export {
   Link,
   withAssetPrefix,
@@ -119,6 +114,4 @@ export {
   PageRenderer,
   useStaticQuery,
   prefetchPathname,
-  // Experimental API
-  unstable_collectionGraphql,
 }
