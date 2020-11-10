@@ -126,6 +126,22 @@ describe(`run`, () => {
     })
   })
 
+  it(`should pass a single question`, async () => {
+    enquirer.on(`prompt`, prompt => {
+      prompt.once(`run`, async () => {
+        if (prompt.name === `project`) {
+          await stringInput(prompt, `my-new-site`)
+          await prompt.submit()
+        }
+      })
+    })
+
+    const data = await enquirer.prompt(questions[0])
+    expect(data).toEqual({
+      project: `my-new-site`,
+    })
+  })
+
   it(`can select a CMS`, async () => {
     enquirer.on(`prompt`, prompt => {
       prompt.once(`run`, async () => {
