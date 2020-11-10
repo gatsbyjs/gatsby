@@ -18,9 +18,13 @@ const prefetchPathname = loader.enqueue
 const StaticQueryContext = React.createContext({})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
+  const combinedStaticQueryData = {
+    ...staticQueryData,
+    ...loader.getStaticQueryResults(),
+  }
   const finalData = data
     ? data.data
-    : staticQueryData[query] && staticQueryData[query].data
+    : combinedStaticQueryData[query] && combinedStaticQueryData[query].data
 
   return (
     <React.Fragment>
