@@ -18,10 +18,10 @@ jest.mock(`gatsby/package.json`, () => {
   }
 })
 jest.mock(
-  `$virtual/sync-requires`,
+  `$virtual/ssr-sync-requires`,
   () => {
     return {
-      lazyComponents: {
+      components: {
         "page-component---src-pages-test-js": () => null,
       },
     }
