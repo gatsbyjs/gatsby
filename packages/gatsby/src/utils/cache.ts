@@ -16,7 +16,7 @@ interface ICacheProperties {
   store?: Store
 }
 
-export default class Cache {
+export default class GatsbyCache {
   public name: string
   public store: Store
   public directory: string
@@ -28,7 +28,7 @@ export default class Cache {
     this.directory = path.join(process.cwd(), `.cache/caches/${name}`)
   }
 
-  init(): Cache {
+  init(): GatsbyCache {
     fs.ensureDirSync(this.directory)
 
     const configs: Array<StoreConfig> = [
@@ -58,7 +58,7 @@ export default class Cache {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `GatsbyCache wasn't initialised yet, please run the init method first`
         )
       }
       this.cache.get<T>(key, (err, res) => {
@@ -75,7 +75,7 @@ export default class Cache {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `GatsbyCache wasn't initialised yet, please run the init method first`
         )
       }
       this.cache.set(key, value, args, err => {

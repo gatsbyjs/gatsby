@@ -275,10 +275,11 @@ const getUninitializedCache = plugin => {
     (plugin && plugin !== `default-site-plugin` ? ` (called in ${plugin})` : ``)
 
   return {
-    get() {
+    // GatsbyCache
+    async get() {
       throw new Error(message)
     },
-    set() {
+    async set() {
       throw new Error(message)
     },
   }
