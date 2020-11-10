@@ -40,7 +40,9 @@ const makeChoices = (
   return [none, divider, ...entries]
 }
 
-export const validateProjectName = async (value: string): Promise<string | boolean> => {
+export const validateProjectName = async (
+  value: string
+): Promise<string | boolean> => {
   if (INVALID_FILENAMES.test(value)) {
     return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
   }
@@ -62,7 +64,7 @@ export const questions = [
     separator: `/`,
     initial: `my-gatsby-site`,
     format: (value: string): string => c.cyan(value),
-    validate: validateProjectName
+    validate: validateProjectName,
   },
   {
     type: `selectinput`,
@@ -98,15 +100,14 @@ interface IPluginEntry {
   dependencies?: Array<string>
 }
 
-
-export const plugin = (enquirer: any) => {
+export const plugin = (enquirer: any): void => {
   enquirer.register(`textinput`, (TextInput as unknown) as typeof Prompt)
   enquirer.register(`selectinput`, (SelectInput as unknown) as typeof Prompt)
   enquirer.register(
     `multiselectinput`,
     (MultiSelectInput as unknown) as typeof Prompt
   )
-};
+}
 
 export type PluginMap = Record<string, IPluginEntry>
 
@@ -144,9 +145,8 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   enquirer.use(plugin)
 
-  //@ts-ignore
+  // @ts-ignore
   const data = await enquirer.prompt(questions)
-
 
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.magenta(data.project)}`,
