@@ -1,9 +1,8 @@
 export default function pluginOptionSchema({ Joi }) {
-
   /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest
-  *  
-  * Currently based on https://www.w3.org/TR/2020/WD-appmanifest-20201019/
-  */
+   *
+   * Currently based on https://www.w3.org/TR/2020/WD-appmanifest-20201019/
+   */
 
   const platform = Joi.string()
     .optional()
@@ -64,32 +63,34 @@ export default function pluginOptionSchema({ Joi }) {
       .items(ManifestImageResource)
       .description(
         `The icons member of an ShortcutItem member serve as iconic representations of the shortcut in various contexts. `
-      )
+      ),
   })
 
-  const ExternalApplicationResource = Joi.object().keys({
-    platform: platform.required(),
-    url: Joi.string()
-      .uri()
-      .required()
-      .description(`The URL at which the application can be found.`),
-    id: Joi.string()
-      .required()
-      .description(
-        `The ID used to represent the application on the specified platform.`
-      ),
-    min_version: Joi.string()
-      .optional()
-      .description(
-        `The minimum version of the application that is considered related to this web app.`
-      ),
-    fingerprints: Joi.array()
-      .optional()
-      .items(FingerPrint)
-      .description(
-        `Each Fingerprints represents a set of cryptographic fingerprints used for verifying the application.`
-      ),
-  }).or('url', 'id')
+  const ExternalApplicationResource = Joi.object()
+    .keys({
+      platform: platform.required(),
+      url: Joi.string()
+        .uri()
+        .required()
+        .description(`The URL at which the application can be found.`),
+      id: Joi.string()
+        .required()
+        .description(
+          `The ID used to represent the application on the specified platform.`
+        ),
+      min_version: Joi.string()
+        .optional()
+        .description(
+          `The minimum version of the application that is considered related to this web app.`
+        ),
+      fingerprints: Joi.array()
+        .optional()
+        .items(FingerPrint)
+        .description(
+          `Each Fingerprints represents a set of cryptographic fingerprints used for verifying the application.`
+        ),
+    })
+    .or("url", "id")
 
   const WebAppManifest = Joi.object().keys({
     background_color: Joi.string()
@@ -209,10 +210,10 @@ export default function pluginOptionSchema({ Joi }) {
       theme_color_in_head: Joi.boolean().default(true),
       cache_busting_mode: Joi.string()
         .valid(`none`, `query`, `name`)
-        .default('query'),
+        .default("query"),
       crossOrigin: Joi.string()
         .valid(`anonymous`, `use-credentials`)
-        .default('anonymous'),
+        .default("anonymous"),
       include_favicon: Joi.boolean().default(true),
       icon_options: ManifestImageResource.keys({
         src: Joi.string().forbidden(),
@@ -232,6 +233,4 @@ export default function pluginOptionSchema({ Joi }) {
     .with(`localize`, `lang`)
 
   return WebAppManifest.concat(GatsbyPluginOptions)
-
-
 }

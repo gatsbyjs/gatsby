@@ -206,7 +206,7 @@ const makeManifest = async ({
     if (metadata.width !== metadata.height) {
       reporter.warn(
         `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square.\n` +
-        `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
+          `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
       )
     }
 
