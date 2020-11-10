@@ -191,10 +191,12 @@ export class WebsocketManager {
         let pageData = this.pageResults.get(path)
         if (!pageData) {
           try {
-            pageData = process.env.GATSBY_EXPERIMENTAL_GET_PAGE_DATA
-              ? await getPageDataExperimental(path)
-              : await getPageData(path)
+            // pageData = process.env.GATSBY_EXPERIMENTAL_GET_PAGE_DATA
+            //   ? await getPageDataExperimental(path)
+            //   : await getPageData(path)
 
+            // FIXME
+            pageData = await getPageDataExperimental(path)
             this.pageResults.set(path, pageData)
           } catch (err) {
             console.log(err.message)
