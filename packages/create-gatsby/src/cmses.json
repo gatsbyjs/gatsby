@@ -3,5 +3,5 @@
   "gatsby-source-contentful": { "message": "Contentful" },
   "gatsby-source-sanity": { "message": "Sanity" },
   "gatsby-source-shopify": { "message": "Shopify" },
-  "gatsby-source-prismic-graphql": { "message": "Prismic GraphQL" }
+  "gatsby-source-prismic": { "message": "Prismic" }
 }
