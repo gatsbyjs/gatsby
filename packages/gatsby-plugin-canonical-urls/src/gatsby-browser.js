@@ -1,4 +1,4 @@
-import url from "url"
+const url = require(`url`)
 
 exports.onRouteUpdate = (
   { location },
