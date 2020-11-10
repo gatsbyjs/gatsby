@@ -1,17 +1,10 @@
-const defaultConfig = {
-  legacy: true,
-  theme_color_in_head: true,
-  cache_busting_mode: `query`,
-  crossOrigin: `anonymous`,
-  include_favicon: true,
-}
-
 export default function pluginOptionSchema({ Joi }) {
 
   /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest
   *  
   * Currently based on https://www.w3.org/TR/2019/WD-appmanifest-20190911/
   */
+
   const platform = Joi.string()
     .optional()
     .empty(``)
@@ -205,34 +198,36 @@ export default function pluginOptionSchema({ Joi }) {
       ),
   })
 
-  return WebAppManifest.concat(
-    Joi.object()
-      .keys({
-        icon: Joi.string(),
-        legacy: Joi.boolean().default(defaultConfig.legacy),
-        theme_color_in_head: Joi.boolean().default(
-          defaultConfig.theme_color_in_head
-        ),
-        cache_busting_mode: Joi.string()
-          .valid(`none`, `query`, `name`)
-          .default(defaultConfig.cache_busting_mode),
-        crossOrigin: Joi.string().default(defaultConfig.crossOrigin),
-        include_favicon: Joi.boolean().default(defaultConfig.include_favicon),
-        icon_options: ImageResource.keys({
-          src: Joi.string().forbidden(),
-          sizes: Joi.string().forbidden(),
-        }),
+  const GatsbyPluginOptions = Joi.object()
+    .keys({
+      icon: Joi.string(),
+      legacy: Joi.boolean().default(true),
+      theme_color_in_head: Joi.boolean().default(true),
+      cache_busting_mode: Joi.string()
+        .valid(`none`, `query`, `name`)
+        .default('query'),
+      crossOrigin: Joi.string()
+        .valid(`anonymous`, `use-credentials`)
+        .default('anonymous'),
+      include_favicon: Joi.boolean().default(true),
+      icon_options: ImageResource.keys({
+        src: Joi.string().forbidden(),
+        sizes: Joi.string().forbidden(),
+      }),
 
-        localize: Joi.array()
-          .items(
-            WebAppManifest.keys({
-              lang: Joi.required(),
-              start_url: Joi.required(),
-            })
-          )
-          .description(`Used for localizing your WebAppManifest`),
-      })
-      .or(`icon`, `icons`)
-      .with(`localize`, `lang`)
+      localize: Joi.array()
+        .items(
+          WebAppManifest.keys({
+            lang: Joi.required(),
+            start_url: Joi.required(),
+          })
+        )
+        .description(`Used for localizing your WebAppManifest`),
+    })
+    .or(`icon`, `icons`)
+    .with(`localize`, `lang`)
+
+  return WebAppManifest.concat(GatsbyPluginOptions)
+
   )
 }
