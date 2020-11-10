@@ -1527,7 +1527,7 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
 
 export interface NodeInput {
   id: string
-  parent?: string
+  parent?: string | null
   children?: string[]
   internal: {
     type: string
@@ -1540,7 +1540,7 @@ export interface NodeInput {
 }
 
 export interface Node extends NodeInput {
-  parent: string
+  parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
     owner: string
