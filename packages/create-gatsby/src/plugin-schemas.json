@@ -1,5 +1,16 @@
 {
-  "gatsby-source-wordpress-experimental": "TODO: no schema in https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/plugin/gatsby-node.js",
+  "gatsby-source-wordpress-experimental": {
+    "type": "object",
+    "keys": {
+      "url": {
+        "type": "string",
+        "flags": {
+          "description": "This should be the full url of your GraphQL endpoint set up by WP GraphQL",
+          "presence": "required"
+        }
+      }
+    }
+  },
   "gatsby-source-contentful": {
     "type": "object",
     "externals": [{}],
@@ -105,9 +116,68 @@
       }
     }
   },
-  "gatsby-source-datocms": "TODO: no schema in https://github.com/datocms/gatsby-source-datocms/blob/master/src/gatsby-node.js",
-  "gatsby-source-sanity": "TODO: no schema in https://github.com/sanity-io/gatsby-source-sanity/blob/main/src/gatsby-node.ts",
-  "gatsby-source-agility": "TODO: no schema in https://github.com/agility/gatsby-source-agilitycms/blob/master/gatsby-node.js",
+  "gatsby-source-sanity": {
+    "type": "object",
+    "keys": {
+      "projectId": {
+        "type": "string",
+        "flags": {
+          "description": "Your Sanity project's ID",
+          "presence": "required"
+        }
+      },
+      "dataset": {
+        "type": "string",
+        "flags": {
+          "description": "The dataset to fetch from",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-shopify": {
+    "type": "object",
+    "keys": {
+      "shopName": {
+        "type": "string",
+        "flags": {
+          "description": "The domain name of your Shopify shop",
+          "presence": "required"
+        }
+      },
+      "accessToken": {
+        "type": "string",
+        "flags": {
+          "description": "An API access token to your Shopify shop",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-datocms": {
+    "type": "object",
+    "keys": {
+      "apiToken": {
+        "type": "string",
+        "flags": {
+          "description": "Your read-only API token under the Settings > API tokens section of your administrative area in DatoCMS",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-agility": {
+    "type": "object",
+    "keys": {
+      "guid": {
+        "type": "string",
+        "flags": {
+          "description": "your Agility Content Fetch API Guid",
+          "presence": "required"
+        }
+      }
+    }
+  },
   "gatsby-plugin-postcss": {},
   "gatsby-plugin-styled-components": {},
   "gatsby-plugin-emotion": {},
