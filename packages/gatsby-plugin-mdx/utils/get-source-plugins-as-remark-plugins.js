@@ -3,8 +3,6 @@ const _ = require(`lodash`)
 const debug = require(`debug`)(`get-source-plugins-as-remark-plugins`)
 const { interopDefault } = require(`./interop-default`)
 
-let fileNodes
-
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
@@ -39,8 +37,6 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
       }
   }
 
-  fileNodes = getNodesByType(`File`)
-
   // return list of remarkPlugins
   const userPlugins = gatsbyRemarkPlugins
     .filter(plugin => {
@@ -62,7 +58,9 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               markdownNode: mdxNode,
               getNode,
               getNodesByType,
-              files: fileNodes,
+              get files() {
+                return getNodesByType(`File`)
+              },
               pathPrefix,
               reporter,
               cache,
