@@ -1,6 +1,6 @@
 # gatsby-plugin-image (beta)
 
-This plugin is a replacement for gatsby-image. It adds [static images](#staticimage), and a [new higher-performance gatsby-image component](#gatsbyimage). It also adds [a new GraphQL resolver](#graphql-resolver) to gatsby-transformer-sharp
+This plugin is a replacement for gatsby-image. It adds [static images](#staticimage), and a [new higher-performance gatsby-image component](#gatsbyimage). It also adds [a new GraphQL resolver](#graphql-resolver) to gatsby-transformer-sharp.
 
 ## Contents
 
@@ -116,9 +116,9 @@ The only required prop is `src`. The default type is `fixed`. The other props ma
 
 Speedy, optimized images without the work.
 
-gatsby-image is a React component specially designed to give your users a great image experience. It combines speed and best practices.
+GatsbyImage is a React component specially designed to give your users a great image experience. It combines speed and best practices.
 
-Note: gatsby-image is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. You can build your own GatsbyImage with the utilities we export from this package.
+Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. You can build your own GatsbyImage with the utilities we export from this package.
 
 ## Table of Contents
 
