@@ -40,7 +40,20 @@ const makeChoices = (
   return [none, divider, ...entries]
 }
 
-const questions = [
+export const validateProjectName = async (value: string): Promise<string | boolean> => {
+  if (INVALID_FILENAMES.test(value)) {
+    return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
+  }
+  if (process.platform === `win32` && INVALID_WINDOWS.test(value)) {
+    return `The destination "${value}" is not a valid Windows filename. Please try another name`
+  }
+  if (fs.existsSync(path.resolve(value))) {
+    return `The destination "${value}" already exists. Please choose a different name`
+  }
+  return true
+}
+
+export const questions = [
   {
     type: `textinput`,
     name: `project`,
@@ -49,18 +62,7 @@ const questions = [
     separator: `/`,
     initial: `my-gatsby-site`,
     format: (value: string): string => c.cyan(value),
-    validate: (value: string): string | boolean => {
-      if (INVALID_FILENAMES.test(value)) {
-        return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
-      }
-      if (process.platform === `win32` && INVALID_WINDOWS.test(value)) {
-        return `The destination "${value}" is not a valid Windows filename. Please try another name`
-      }
-      if (fs.existsSync(path.resolve(value))) {
-        return `The destination "${value}" already exists. Please choose a different name`
-      }
-      return true
-    },
+    validate: validateProjectName
   },
   {
     type: `selectinput`,
@@ -96,6 +98,16 @@ interface IPluginEntry {
   dependencies?: Array<string>
 }
 
+
+export const plugin = (enquirer: any) => {
+  enquirer.register(`textinput`, (TextInput as unknown) as typeof Prompt)
+  enquirer.register(`selectinput`, (SelectInput as unknown) as typeof Prompt)
+  enquirer.register(
+    `multiselectinput`,
+    (MultiSelectInput as unknown) as typeof Prompt
+  )
+};
+
 export type PluginMap = Record<string, IPluginEntry>
 
 export async function run(): Promise<void> {
@@ -129,14 +141,12 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   console.log(``)
 
   const enquirer = new Enquirer<IAnswers>()
-  enquirer.register(`textinput`, (TextInput as unknown) as typeof Prompt)
-  enquirer.register(`selectinput`, (SelectInput as unknown) as typeof Prompt)
-  enquirer.register(
-    `multiselectinput`,
-    (MultiSelectInput as unknown) as typeof Prompt
-  )
 
+  enquirer.use(plugin)
+
+  //@ts-ignore
   const data = await enquirer.prompt(questions)
+
 
   const messages: Array<string> = [
     `🛠  Create a new Gatsby site in the folder ${c.magenta(data.project)}`,
