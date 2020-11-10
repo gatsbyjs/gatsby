@@ -3,7 +3,7 @@ import { stdin } from "mock-stdin"
 import { stdout } from "stdout-stderr"
 
 const stdinMock = stdin()
-// stdout.print = true
+//stdout.print = true
 jest.mock(`execa`)
 jest.mock(`fs-extra`)
 jest.mock(`fs`)
@@ -152,10 +152,12 @@ describe(`The create-gatsby CLI`, () => {
     stdout.start()
     await skipSteps(1)
     await skipSelect()
+    await stdinMock.send(keys().ENTER)
+    await tick()
     expect(stdout.output).toMatch(
       `Install and configure the plugin for WordPress`
     )
-    stdinMock.send(keys().ENTER)
+    stdinMock.send(`n`)
     await tick()
   })
 
@@ -170,7 +172,7 @@ describe(`The create-gatsby CLI`, () => {
     expect(stdout.output).toMatch(
       `Get you set up to use CSS Modules/PostCSS for styling your site`
     )
-    stdinMock.send(keys().ENTER)
+    stdinMock.send(`n`)
     await tick()
   })
 
@@ -209,7 +211,7 @@ describe(`The create-gatsby CLI`, () => {
     expect(stdout.output).toMatch(
       `Create a new Gatsby site in the folder exists`
     )
-    await stdinMock.send(keys().ENTER)
+    await stdinMock.send(`n`)
     await tick()
   })
 
