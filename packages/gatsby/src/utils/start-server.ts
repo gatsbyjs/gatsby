@@ -244,9 +244,10 @@ export async function startServer(
             page.path
           )
           res.status(200).send(pageData)
+          return
         } catch (e) {
           report.error(
-            `Error loading a result for the page query in "${potentialPagePath}". Query was not run and no cached result was found.`,
+            `Error loading a result for the page query in "${requestedPagePath}" / "${potentialPagePath}". Query was not run and no cached result was found.`,
             e
           )
         }
@@ -254,10 +255,11 @@ export async function startServer(
         report.verbose(
           `[page-data-handler] couldn't find page for "${requestedPagePath}" / "${potentialPagePath}"`
         )
-        res.status(404).send({
-          path: potentialPagePath,
-        })
       }
+
+      res.status(404).send({
+        path: potentialPagePath,
+      })
     }
   )
 
