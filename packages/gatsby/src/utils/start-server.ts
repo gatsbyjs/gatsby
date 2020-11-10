@@ -124,6 +124,31 @@ export async function startServer(
   app.post(`/___client-page-visited`, (req, res, next) => {
     if (req.body?.chunkName) {
       createClientVisitedPage(req.body.chunkName)
+
+      // Find the component page for this componentChunkName.
+      const pages = store.getState().pages
+      function getByChunkName(map, searchValue): void | string {
+        for (const [key, value] of map.entries()) {
+          if (value.componentChunkName === searchValue) return key
+        }
+
+        return undefined
+      }
+      const pageKey = getByChunkName(pages, req.body.chunkName)
+
+      // Trigger Gatsby to rewrite the page data for the pages
+      // owned by this component so staticQueryHashes are written.
+      if (pageKey) {
+        const page = pages.get(pageKey)
+        if (page) {
+          store.dispatch({
+            type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+            payload: {
+              componentPath: page.component,
+            },
+          })
+        }
+      }
       res.send(`ok`)
     } else {
       next()

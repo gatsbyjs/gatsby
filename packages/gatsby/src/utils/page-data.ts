@@ -13,6 +13,7 @@ interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
+  notInDevBundle: boolean
   staticQueryHashes: Array<string>
 }
 
@@ -66,6 +67,7 @@ export async function writePageData(
     componentChunkName,
     matchPath,
     path: pagePath,
+    notInDevBundle,
     staticQueryHashes,
   }: IPageData
 ): Promise<IPageDataWithQueryResult> {
@@ -82,6 +84,8 @@ export async function writePageData(
     componentChunkName,
     path: pagePath,
     matchPath,
+    // TODO how to exclude from production build?
+    notInDevBundle,
     result,
     staticQueryHashes,
   }
@@ -121,6 +125,7 @@ export async function flush(): Promise<void> {
     pages,
     program,
     staticQueriesByTemplate,
+    clientVisitedPages,
   } = store.getState()
 
   const { pagePaths, templatePaths } = pendingPageDataWrites
@@ -149,10 +154,13 @@ export async function flush(): Promise<void> {
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 
+      const notInDevBundle = !clientVisitedPages.has(page.componentChunkName)
+
       const result = await writePageData(
         path.join(program.directory, `public`),
         {
           ...page,
+          notInDevBundle,
           staticQueryHashes,
         }
       )

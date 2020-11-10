@@ -57,7 +57,7 @@ const useStaticQuery = query => {
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
-  const context = React.useContext(StaticQueryContext)
+  const context = React.useContext(StaticQueryContext) || {}
 
   // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
   // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
@@ -71,8 +71,17 @@ useStaticQuery(graphql\`${query}\`);
 `)
   }
 
-  if (context?.[query]?.data) {
-    return context[query].data
+  // Merge data loaded via socket.io & xhr
+  //
+  // TODO just load data over xhr & socket.io just triggers
+  // re-fetches
+  const staticQueryData = {
+    ...context,
+    ...loader.getStaticQueryResults(),
+  }
+
+  if (staticQueryData?.[query]?.data) {
+    return staticQueryData[query].data
   } else {
     throw new Error(
       `The result of this StaticQuery could not be fetched.\n\n` +

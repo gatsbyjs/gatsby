@@ -114,9 +114,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const preferDefault = m => (m && m.default) || m
     let Root = preferDefault(require(`./root`))
     domReady(() => {
-      renderer(<Root />, rootElement, () => {
-        apiRunner(`onInitialClientRender`)
-      })
+      // Hot reloading can by-pass the above loadPage promise so we
+      // run this again.
+      loader.loadPage(window.location.pathname).then(() =>
+        renderer(<Root />, rootElement, () => {
+          apiRunner(`onInitialClientRender`)
+        })
+      )
     })
   })
 })

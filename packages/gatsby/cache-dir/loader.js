@@ -141,6 +141,26 @@ export class BaseLoader {
             throw new Error(`not a valid pageData response`)
           }
 
+          // Handle the page not being in the bundle yet.
+          if (jsonPayload.notInDevBundle) {
+            // Tell the server the user wants to visit this page
+            // to trigger it including the page component's code in the
+            // commons bundles.
+            const req = new XMLHttpRequest()
+            req.open(`post`, `/___client-page-visited`, true)
+            req.setRequestHeader(
+              `Content-Type`,
+              `application/json;charset=UTF-8`
+            )
+            req.send(
+              JSON.stringify({ chunkName: jsonPayload.componentChunkName })
+            )
+
+            return new Promise(resolve =>
+              setTimeout(() => resolve(this.fetchPageDataJson(loadObj)), 100)
+            )
+          }
+
           return Object.assign(loadObj, {
             status: PageResourceStatus.Success,
             payload: jsonPayload,
@@ -519,6 +539,8 @@ export const publicLoader = {
     return instance.i.loadPageSync(rawPath)
   },
   enqueue: rawPath => instance.prefetch(rawPath),
+
+  getStaticQueryResults: () => instance.staticQueryDb,
 
   // Real methods
   getResourceURLsForPathname: rawPath =>
