@@ -18,6 +18,7 @@ afterEach(() => {
   Object.keys(reporter).forEach(method => {
     reporter[method].mockClear()
   })
+  mockProcessExit.mockClear()
 })
 
 describe(`Load plugins`, () => {
@@ -285,6 +286,25 @@ describe(`Load plugins`, () => {
         ]
       `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)
+    })
+
+    it(`allows unknown options`, async () => {
+      const plugins = [
+        {
+          resolve: `gatsby-plugin-google-analytics`,
+          options: {
+            trackingId: `yes`,
+            doesThisExistInTheSchema: `no`,
+          },
+        },
+      ]
+      await loadPlugins({
+        plugins,
+      })
+
+      console.log((reporter.error as jest.Mock).mock.calls)
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(0)
+      expect(mockProcessExit).not.toHaveBeenCalled()
     })
 
     it(`defaults plugin options to the ones defined in the schema`, async () => {

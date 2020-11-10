@@ -219,6 +219,9 @@ async function validatePluginsOptions(
           })
         }
 
+        // Allow unknown keys to avoid users hitting blocking errors due to incomplete schemas
+        optionsSchema = optionsSchema.unknown(true)
+
         plugin.options = await validateOptionsSchema(
           optionsSchema,
           (plugin.options as IPluginInfoOptions) || {}
