@@ -221,7 +221,6 @@ export async function startServer(
     async (req, res, next): Promise<void> => {
       const requestedPagePath = req.params.pagePath
       if (!requestedPagePath) {
-        report.verbose(`[page-data-handler] empty requestedPagePath, skipping.`)
         next()
         return
       }
@@ -230,14 +229,6 @@ export async function startServer(
       const page = findPageByPath(store.getState(), potentialPagePath, false)
 
       if (page) {
-        report.verbose(
-          `[page-data-handler] page for "${requestedPagePath}":\n${JSON.stringify(
-            page,
-            null,
-            2
-          )}`
-        )
-
         try {
           const pageData = await readPageData(
             path.join(store.getState().program.directory, `public`),
@@ -251,10 +242,6 @@ export async function startServer(
             e
           )
         }
-      } else {
-        report.verbose(
-          `[page-data-handler] couldn't find page for "${requestedPagePath}" / "${potentialPagePath}"`
-        )
       }
 
       res.status(404).send({
