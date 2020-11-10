@@ -302,8 +302,14 @@ describe(`Load plugins`, () => {
         plugins,
       })
 
-      console.log((reporter.error as jest.Mock).mock.calls)
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(0)
+      expect(reporter.warn as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          "Warning: there are unknown plugin options for \\"gatsby-plugin-google-analytics\\": doesThisExistInTheSchema
+        Please open an issue at ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",
+        ]
+      `)
       expect(mockProcessExit).not.toHaveBeenCalled()
     })
 

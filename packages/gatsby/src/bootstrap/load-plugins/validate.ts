@@ -15,6 +15,7 @@ import {
   ISiteConfig,
 } from "./types"
 import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
+import { stripIndent } from "common-tags"
 
 interface IApi {
   version?: string
@@ -219,9 +220,6 @@ async function validatePluginsOptions(
           })
         }
 
-        // Allow unknown keys to avoid users hitting blocking errors due to incomplete schemas
-        optionsSchema = optionsSchema.unknown(true)
-
         plugin.options = await validateOptionsSchema(
           optionsSchema,
           (plugin.options as IPluginInfoOptions) || {}
@@ -240,6 +238,14 @@ async function validatePluginsOptions(
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
+          // Show a small warning on unknown options rather than erroring
+          const validationWarnings = error.details.filter(
+            err => err.type === `object.unknown`
+          )
+          const validationErrors = error.details.filter(
+            err => err.type !== `object.unknown`
+          )
+
           // If rootDir and plugin.parentDir are the same, i.e. if this is a plugin a user configured in their gatsby-config.js (and not a sub-theme that added it), this will be ""
           // Otherwise, this will contain (and show) the relative path
           const configDir =
@@ -247,15 +253,35 @@ async function validatePluginsOptions(
               rootDir &&
               path.relative(rootDir, plugin.parentDir)) ||
             null
-          reporter.error({
-            id: `11331`,
-            context: {
-              configDir,
-              validationErrors: error.details,
-              pluginName: plugin.resolve,
-            },
-          })
-          errors++
+          if (validationErrors.length > 0) {
+            reporter.error({
+              id: `11331`,
+              context: {
+                configDir,
+                validationErrors: error.details,
+                pluginName: plugin.resolve,
+              },
+            })
+            errors++
+          }
+
+          if (validationWarnings.length > 0) {
+            reporter.warn(
+              stripIndent(`
+                Warning: there are unknown plugin options for "${
+                  plugin.resolve
+                }"${
+                configDir ? `, configured by ${configDir}` : ``
+              }: ${validationWarnings
+                .map(error => error.path.join(`.`))
+                .join(`, `)}
+                Please open an issue at ghub.io/${
+                  plugin.resolve
+                } if you believe this option is valid.
+              `)
+            )
+            // We do not increment errors++ here as we do not want to process.exit if there are only warnings
+          }
 
           return plugin
         }
