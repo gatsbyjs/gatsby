@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.4.0-next.0...gatsby-source-mongodb@2.4.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-mongodb ([#27907](https://github.com/gatsbyjs/gatsby/issues/27907)) ([f918155](https://github.com/gatsbyjs/gatsby/commit/f918155d6f3505c10bf9c598f5505442b80a5906))
+
 ## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.3.11...gatsby-source-mongodb@2.3.12) (2020-09-28)
 
 ### Bug Fixes
