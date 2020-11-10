@@ -2,7 +2,7 @@ export default function pluginOptionSchema({ Joi }) {
 
   /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest
   *  
-  * Currently based on https://www.w3.org/TR/2019/WD-appmanifest-20190911/
+  * Currently based on https://www.w3.org/TR/2020/WD-appmanifest-20201019/
   */
 
   const platform = Joi.string()
@@ -18,7 +18,8 @@ export default function pluginOptionSchema({ Joi }) {
       .required()
       .description(`syntax and semantics are platform-defined`),
   })
-  const ImageResource = Joi.object().keys({
+
+  const ManifestImageResource = Joi.object().keys({
     sizes: Joi.string()
       .optional()
       .description(`A string containing space-separated image dimensions`),
@@ -31,12 +32,39 @@ export default function pluginOptionSchema({ Joi }) {
       `A hint as to the media type of the image. The purpose of this member is to allow a user agent to quickly ignore images with media types it does not support.`
     ),
     purpose: Joi.string()
-
-      .valid(`badge`, `maskable`, `any`)
+      .optional()
       .description(
         `Defines the purpose of the image, for example if the image is intended to serve some special purpose in the context of the host OS.`
       ),
-    platform: platform,
+  })
+
+  const ShortcutItem = Joi.object().keys({
+    name: Joi.string()
+      .required()
+      .description(
+        `The name member of a ShortcutItem is a string that represents the name of the shortcut as it is usually displayed to the user in a context menu. `
+      ),
+    short_name: Joi.string()
+      .optional()
+      .description(
+        `The short_name member of a ShortcutItem is a string that represents a short version of the name of the shortcut. `
+      ),
+    description: Joi.string()
+      .optional()
+      .description(
+        `The description member of a ShortcutItem is a string that allows the developer to describe the purpose of the shortcut. `
+      ),
+    url: Joi.string()
+      .required()
+      .description(
+        `The url member of a ShortcutItem is a URL within scope of a processed manifest that opens when the associated shortcut is activated. `
+      ),
+    icons: Joi.array()
+      .optional()
+      .items(ManifestImageResource)
+      .description(
+        `The icons member of an ShortcutItem member serve as iconic representations of the shortcut in various contexts. `
+      )
   })
 
   const ExternalApplicationResource = Joi.object().keys({
@@ -47,11 +75,11 @@ export default function pluginOptionSchema({ Joi }) {
       .description(`The URL at which the application can be found.`),
     id: Joi.string()
       .required()
-
       .description(
         `The ID used to represent the application on the specified platform.`
       ),
     min_version: Joi.string()
+      .numeric()
       .optional()
       .description(
         `The minimum version of the application that is considered related to this web app.`
@@ -62,7 +90,7 @@ export default function pluginOptionSchema({ Joi }) {
       .description(
         `Each Fingerprints represents a set of cryptographic fingerprints used for verifying the application.`
       ),
-  })
+  }).or('url', 'id')
 
   const ServiceWorkerRegistrationObject = Joi.object()
     .optional()
@@ -76,12 +104,10 @@ export default function pluginOptionSchema({ Joi }) {
       type: Joi.string()
         .optional()
         .valid(`classic`, `module`)
-        .default(`classic`)
         .description(`Service workers type`),
       update_via_cache: Joi.string()
         .optional()
         .valid(`imports`, `all`, `none`)
-        .default(`imports`)
         .description(
           `Determines the update via cache mode for the service worker.`
         ),
@@ -110,14 +136,12 @@ export default function pluginOptionSchema({ Joi }) {
     dir: Joi.string()
       .optional()
       .valid(`auto`, `ltr`, `rtl`)
-      .default(`auto`)
       .description(
         `The base direction in which to display direction-capable members of the manifest.`
       ),
     display: Joi.string()
       .optional()
       .valid(`fullscreen`, `standalone`, `minimal-ui`, `browser`)
-      .default(`browser`)
       .description(
         `The display member is a string that determines the developers’ preferred display mode for the website`
       ),
@@ -129,7 +153,7 @@ export default function pluginOptionSchema({ Joi }) {
       ),
     icons: Joi.array()
       .optional()
-      .items(ImageResource)
+      .items(ManifestImageResource)
       .description(
         `The icons member specifies an array of objects representing image files that can serve as application icons for different contexts.`
       ),
@@ -154,13 +178,12 @@ export default function pluginOptionSchema({ Joi }) {
         `portrait`,
         `portrait-primary`,
         `portrait-secondary`
-      )
+      ) // From: https://www.w3.org/TR/screen-orientation/#screenorientation-interface
       .description(
         `The orientation member defines the default orientation for all the website's top-level browsing contexts`
       ),
     prefer_related_applications: Joi.boolean()
       .optional()
-      .default(false)
       .description(
         `The prefer_related_applications member is a boolean value that specifies that applications listed in related_applications should be preferred over the web application.`
       ),
@@ -177,14 +200,20 @@ export default function pluginOptionSchema({ Joi }) {
       ),
     screenshots: Joi.array()
       .optional()
+      .items(ManifestImageResource)
       .description(
         `The screenshots member defines an array of screenshots intended to showcase the application.`
       ),
-    serviceworker: ServiceWorkerRegistrationObject,
     short_name: Joi.string()
       .optional()
       .description(
         `The short_name member is a string that represents the name of the web application displayed to the user if there is not enough space to display name.`
+      ),
+    shortcuts: Joi.array()
+      .optional()
+      .items(ShortcutItem)
+      .description(
+        `Each ShortcutItem represents a link to a key task or page within a web app. `
       ),
     start_url: Joi.string()
       .optional()
@@ -210,7 +239,7 @@ export default function pluginOptionSchema({ Joi }) {
         .valid(`anonymous`, `use-credentials`)
         .default('anonymous'),
       include_favicon: Joi.boolean().default(true),
-      icon_options: ImageResource.keys({
+      icon_options: ManifestImageResource.keys({
         src: Joi.string().forbidden(),
         sizes: Joi.string().forbidden(),
       }),
@@ -229,5 +258,5 @@ export default function pluginOptionSchema({ Joi }) {
 
   return WebAppManifest.concat(GatsbyPluginOptions)
 
-  )
+
 }
