@@ -142,7 +142,10 @@ export class BaseLoader {
           }
 
           // Handle the page not being in the bundle yet.
-          if (jsonPayload.notInDevBundle) {
+          if (
+            process.env.NODE_ENV === `development` &&
+            jsonPayload.notInDevBundle
+          ) {
             // Tell the server the user wants to visit this page
             // to trigger it including the page component's code in the
             // commons bundles.
