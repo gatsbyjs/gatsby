@@ -29,6 +29,7 @@ type QueryResultsMap = Map<string, IStaticQueryResult>
  * Get page query result for given page path.
  * @param {string} pagePath Path to a page.
  */
+// @ts-ignore
 async function getPageData(pagePath: string): Promise<IPageQueryResult> {
   const state = store.getState()
   const publicDir = path.join(state.program.directory, `public`)
