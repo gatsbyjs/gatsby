@@ -84,9 +84,11 @@ useStaticQuery(graphql\`${query}\`);
     ...loader.getStaticQueryResults(),
   }
 
+  console.log({ staticQueryData, query })
   if (staticQueryData?.[query]?.data) {
     return staticQueryData[query].data
   } else {
+    // window.location.reload()
     throw new Error(
       `The result of this StaticQuery could not be fetched.\n\n` +
         `This is likely a bug in Gatsby and if refreshing the page does not fix it, ` +

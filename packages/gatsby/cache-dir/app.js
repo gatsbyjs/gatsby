@@ -106,11 +106,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ReactDOM.render
   )[0]
 
+  console.log(`loading pages`)
+  const loadPagePromise = loader.loadPage(`/dev-404-page/`)
+  console.log(`dev-404-page`, { loadPagePromise })
+  loadPagePromise.then(() => console.log(`====loaded dev-404-page`))
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
+    console.log(`pages loaded!`)
     const preferDefault = m => (m && m.default) || m
     let Root = preferDefault(require(`./root`))
     domReady(() => {

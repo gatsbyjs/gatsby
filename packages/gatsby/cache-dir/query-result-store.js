@@ -1,13 +1,21 @@
 import React from "react"
 import { StaticQueryContext } from "gatsby"
 import {
-  getPageQueryData,
   registerPath as socketRegisterPath,
   unregisterPath as socketUnregisterPath,
-  getStaticQueryData,
+  getStaticQueryData as socketGetStaticQueryData,
 } from "./socketIo"
+import loader from "./loader"
 import PageRenderer from "./page-renderer"
 import normalizePagePath from "./normalize-page-path"
+
+// Pulled from react-compat
+// https://github.com/developit/preact-compat/blob/7c5de00e7c85e2ffd011bf3af02899b63f699d3a/src/index.js#L349
+function shallowDiffers(a, b) {
+  for (let i in a) if (!(i in b)) return true
+  for (let i in b) if (a[i] !== b[i]) return true
+  return false
+}
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -28,16 +36,20 @@ const getPathFromProps = props =>
 export class PageQueryStore extends React.Component {
   constructor(props) {
     super(props)
+    console.log(`constructor PageQueryStore`)
     this.state = {
-      pageQueryData: getPageQueryData(),
+      pageQueryData: loader.getPageQueryData(),
       path: null,
     }
   }
 
-  handleMittEvent = () => {
-    this.setState({
-      pageQueryData: getPageQueryData(),
-    })
+  handleMittEvent = msg => {
+    console.log(`handleMittEvent`, { msg })
+    if (msg === `onPostLoadPageResources`) {
+      this.setState({
+        pageQueryData: loader.getPageQueryData(),
+      })
+    }
   }
 
   componentDidMount() {
@@ -68,16 +80,23 @@ export class PageQueryStore extends React.Component {
     // - location changed
     // - page data for path changed
 
+    const curProps = this.state.pageQueryData.get(this.state.path)?.payload
+      ?.result
+    const nextRealProps = nextState.pageQueryData.get(nextState.path)?.payload
+      ?.result
+
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
-      this.state.pageQueryData[normalizePagePath(nextState.path)] !==
-        nextState.pageQueryData[normalizePagePath(nextState.path)]
+      shallowDiffers(curProps.pageContext, nextRealProps.pageContext) ||
+      shallowDiffers(curProps.data, curProps.pageContext)
     )
   }
 
   render() {
-    const data = this.state.pageQueryData[getPathFromProps(this.props)]
+    const data = this.state.pageQueryData.get(getPathFromProps(this.props))
+      .payload
+    console.log({ data })
     // eslint-disable-next-line
     if (!data) {
       return <div />
@@ -91,13 +110,19 @@ export class StaticQueryStore extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      staticQueryData: getStaticQueryData(),
+      staticQueryData: {
+        ...socketGetStaticQueryData(),
+        ...loader.getStaticQueryResults(),
+      },
     }
   }
 
   handleMittEvent = () => {
     this.setState({
-      staticQueryData: getStaticQueryData(),
+      staticQueryData: {
+        ...socketGetStaticQueryData(),
+        ...loader.getStaticQueryResults(),
+      },
     })
   }
 

@@ -42,17 +42,14 @@ class DevLoader extends BaseLoader {
     super(loadComponent, matchPaths)
   }
 
-  loadPage(pagePath) {
+  loadPage(pagePath, refresh) {
     const realPath = findPath(pagePath)
-    return super.loadPage(realPath).then(result =>
-      require(`./socketIo`)
-        .getPageData(realPath)
-        .then(() => result)
-    )
+    return super.loadPage(realPath, refresh)
   }
 
-  loadPageDataJson(rawPath) {
-    return super.loadPageDataJson(rawPath).then(data => {
+  loadPageDataJson(rawPath, refresh) {
+    return super.loadPageDataJson(rawPath, refresh).then(data => {
+      ___emitter.emit(`onLoadPageDataJson`, null)
       // when we can't find a proper 404.html we fallback to dev-404-page
       // we need to make sure to mark it as not found.
       if (
@@ -72,7 +69,7 @@ class DevLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
+    return super.loadPage(pagePath)
   }
 }
 

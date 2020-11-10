@@ -210,9 +210,11 @@ export class BaseLoader {
     })
   }
 
-  loadPageDataJson(rawPath) {
+  loadPageDataJson(rawPath, refresh = false) {
     const pagePath = findPath(rawPath)
-    if (this.pageDataDb.has(pagePath)) {
+    console.trace()
+    console.log({ pagePath, refresh })
+    if (!refresh && this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
 
@@ -228,20 +230,24 @@ export class BaseLoader {
   }
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
-  loadPage(rawPath) {
+  loadPage(rawPath, refresh = false) {
+    console.log({ rawPath, refresh })
     const pagePath = findPath(rawPath)
-    if (this.pageDb.has(pagePath)) {
+    if (!refresh && this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       return Promise.resolve(page.payload)
     }
 
+    console.log(`loading`)
+
     if (this.inFlightDb.has(pagePath)) {
+      console.log(`returning existing promise`, { pagePath })
       return this.inFlightDb.get(pagePath)
     }
 
     const inFlightPromise = Promise.all([
       this.loadAppData(),
-      this.loadPageDataJson(pagePath),
+      this.loadPageDataJson(pagePath, refresh),
     ]).then(allData => {
       const result = allData[1]
       if (result.status === PageResourceStatus.Error) {
@@ -306,10 +312,12 @@ export class BaseLoader {
 
       return Promise.all([componentChunkPromise, staticQueryBatchPromise]).then(
         ([pageResources, staticQueryResults]) => {
+          console.log(`finished loading`, { pagePath, pageResources })
           let payload
           if (pageResources) {
             payload = { ...pageResources, staticQueryResults }
             finalResult.payload = payload
+            console.log(`emitting onPostLoadPageResources`)
             emitter.emit(`onPostLoadPageResources`, {
               page: payload,
               pageResources: payload,
@@ -323,8 +331,10 @@ export class BaseLoader {
       )
     })
 
+    console.log({ pagePath, inFlightPromise })
     inFlightPromise
       .then(response => {
+        console.log(`deleting promise`, { pagePath, response })
         this.inFlightDb.delete(pagePath)
       })
       .catch(error => {
@@ -334,6 +344,7 @@ export class BaseLoader {
 
     this.inFlightDb.set(pagePath, inFlightPromise)
 
+    inFlightPromise.pagePath = pagePath
     return inFlightPromise
   }
 
@@ -544,11 +555,12 @@ export const publicLoader = {
   enqueue: rawPath => instance.prefetch(rawPath),
 
   getStaticQueryResults: () => instance.staticQueryDb,
+  getPageQueryData: () => instance.pageDataDb,
 
   // Real methods
   getResourceURLsForPathname: rawPath =>
     instance.getResourceURLsForPathname(rawPath),
-  loadPage: rawPath => instance.loadPage(rawPath),
+  loadPage: (rawPath, refresh) => instance.loadPage(rawPath, refresh),
   loadPageSync: rawPath => instance.loadPageSync(rawPath),
   prefetch: rawPath => instance.prefetch(rawPath),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),

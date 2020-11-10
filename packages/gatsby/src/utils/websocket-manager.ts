@@ -175,14 +175,14 @@ export class WebsocketManager {
       const getDataForPath = async (path: string): Promise<void> => {
         const page = findPageByPath(store.getState(), path)
         if (!page) {
-          socket.send({
-            type: `pageQueryResult`,
-            why: `getDataForPath-notfound`,
-            payload: {
-              id: path,
-              result: undefined,
-            },
-          })
+          // socket.send({
+          // type: `pageQueryResult`,
+          // why: `getDataForPath-notfound`,
+          // payload: {
+          // id: path,
+          // result: undefined,
+          // },
+          // })
           return
         }
         path = page.path
@@ -209,18 +209,18 @@ export class WebsocketManager {
               this.staticQueryResults.set(queryId, staticQueryResult)
             }
 
-            socket.send({
-              type: `staticQueryResult`,
-              payload: staticQueryResult,
-            })
+            // socket.send({
+            // type: `staticQueryResult`,
+            // payload: staticQueryResult,
+            // })
           })
         )
 
-        socket.send({
-          type: `pageQueryResult`,
-          why: `getDataForPath`,
-          payload: pageData,
-        })
+        // socket.send({
+        // type: `pageQueryResult`,
+        // why: `getDataForPath`,
+        // payload: pageData,
+        // })
 
         if (this.clients.size > 0) {
           telemetry.trackCli(
@@ -282,7 +282,7 @@ export class WebsocketManager {
     this.pageResults.set(data.id, data)
 
     if (this.websocket) {
-      this.websocket.send({ type: `pageQueryResult`, payload: data })
+      this.websocket.send({ type: `pageQueryResult`, payload: data.id })
 
       if (this.clients.size > 0) {
         telemetry.trackCli(

@@ -74,6 +74,7 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    console.log(`ensure-resources render`)
     if (process.env.NODE_ENV !== `production` && !this.state.pageResources) {
       throw new Error(
         `EnsureResources was not able to find resources for path: "${this.props.location.pathname}"
