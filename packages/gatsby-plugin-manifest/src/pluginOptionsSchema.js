@@ -79,7 +79,6 @@ export default function pluginOptionSchema({ Joi }) {
         `The ID used to represent the application on the specified platform.`
       ),
     min_version: Joi.string()
-      .numeric()
       .optional()
       .description(
         `The minimum version of the application that is considered related to this web app.`
@@ -91,30 +90,6 @@ export default function pluginOptionSchema({ Joi }) {
         `Each Fingerprints represents a set of cryptographic fingerprints used for verifying the application.`
       ),
   }).or('url', 'id')
-
-  const ServiceWorkerRegistrationObject = Joi.object()
-    .optional()
-    .keys({
-      src: Joi.string()
-        .required()
-        .description(` URL representing a service worker. `),
-      scope: Joi.string()
-        .optional()
-        .description(`service worker's associated scope URL`),
-      type: Joi.string()
-        .optional()
-        .valid(`classic`, `module`)
-        .description(`Service workers type`),
-      update_via_cache: Joi.string()
-        .optional()
-        .valid(`imports`, `all`, `none`)
-        .description(
-          `Determines the update via cache mode for the service worker.`
-        ),
-    })
-    .description(
-      `represents a service worker registration for the web application. `
-    )
 
   const WebAppManifest = Joi.object().keys({
     background_color: Joi.string()
