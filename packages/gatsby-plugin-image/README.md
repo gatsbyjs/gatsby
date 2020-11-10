@@ -10,7 +10,27 @@ This plugin is a replacement for gatsby-image. It adds [static images](#staticim
 
 ## Usage
 
-Install `gatsby-plugin-image` and `gatsby-plugin-sharp`, then add them to your `gatsby-config.js`. For `GatsbyImage` you also need `gatsby-transformer-sharp`. Upgrade `gatsby` to at least `2.24.78`.
+1. Install `gatsby-plugin-image` and `gatsby-plugin-sharp`:
+
+```shell
+npm install gatsby-plugin-image gatsby-plugin-sharp
+```
+
+If you're using the new `GatsbyImage` in addition to `StaticImage`, you'll also want to install `gatsby-transformer-sharp`.
+
+2. Upgrade `gatsby` to at least `2.24.78`.
+
+3. Add the plugins to your `gatsby-config.js`:
+
+```javascript
+module.exports = {
+  plugins: [
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    // `gatsby-transformer-sharp`
+  ],
+}
+```
 
 # StaticImage
 
@@ -89,25 +109,6 @@ const width = 300
 }
 ```
 
-## Installation
-
-```shell
-npm install gatsby-plugin-image gatsby-plugin-sharp
-```
-
-...then add it to your `gatsby-config.js`:
-
-```js
-module.exports = {
-  //...
-  plugins: [
-    "gatsby-plugin-sharp",
-    "gatsby-plugin-image",
-    //...
-  ],
-}
-```
-
 ### API
 
 The only required prop is `src`. The default type is `fixed`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
@@ -124,7 +125,6 @@ Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for f
 
 - [Problem](#problem)
 - [Solution](#solution)
-- [Install](#install)
 - [How to use](#how-to-use)
 - [Types of Responsive Images](#three-types-of-responsive-images)
 - [Gatsby Image Props](#gatsby-plugin-image-props)
@@ -163,30 +163,14 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1. Import `{ GatsbyImage } from "gatsby-plugin-image"` and use it in place of the built-in `img`.
+1. Import `{ GatsbyImage } from "gatsby-plugin-image"`.
 2. Write a GraphQL query with all necessary fields needed by `gatsby-plugin-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-plugin-image` component automatically sets up the "blur-up"
 effect as well as lazy loading of images further down the screen.
 
-## Install
-
-```shell
-npm install gatsby-plugin-image gatsby-transformer-sharp gatsby-plugin-sharp
-```
-
-Then in your `gatsby-config.js`:
-
-```js
-plugins: [
-  `gatsby-transformer-sharp`,
-  `gatsby-plugin-sharp`,
-  `gatsby-plugin-image`,
-]
-```
-
-Also, make sure you have set up a source plugin, so your images are available in GraphQL queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+Make sure you have set up a source plugin, so your images are available in GraphQL queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
 
 ```js
 const path = require(`path`)
@@ -223,7 +207,7 @@ export default ({ data }) => {
 
   return (
     <div>
-      <h1>Hello gatsby-image</h1>
+      <h1>Hello GatsbyImage</h1>
       <GatsbyImage image={imageData} alt="my gatsby image" />
     </div>
   )
@@ -330,10 +314,10 @@ The optional helper function `getImage` takes a file node and returns `file?.chi
 Because this no longer uses fragments to specify which fields to return, it instead uses arguments passed to the resolver. These include:
 
 - `placeholder`: Format of generated placeholder image.
-  - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image. _Currently disabled until sharp is updated_
   - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
   - `TRACED_SVG`: a low-resolution traced SVG of the image.
   - `NONE`: no placeholder. Set "background" to use a fixed background color.
+  - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image. _Currently disabled until sharp is updated_
 - `layout`: The layout for the image.
   - `FIXED:` A static image sized, that does not resize according to the screen width
   - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
