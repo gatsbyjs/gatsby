@@ -80,15 +80,6 @@ module.exports = {
       },
     },
     {
-      files: ["www/**/*"],
-      rules: {
-        // We need to import React to use the Fragment shorthand (`<>`).
-        // When we use theme-ui's JSX pragma, it lists React as an unused var
-        // even though it's still needed.
-        "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
-      },
-    },
-    {
       files: ["*.ts", "*.tsx"],
       parser: "@typescript-eslint/parser",
       plugins: ["@typescript-eslint/eslint-plugin"],
