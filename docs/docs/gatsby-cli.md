@@ -54,17 +54,7 @@ gatsby new my-awesome-site
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
-
-```shell
-gatsby new
-? What is your project called? › my-gatsby-project
-? What starter would you like to use? › - Use arrow-keys. Return to submit.
-❯  gatsby-starter-default
-   gatsby-starter-hello-world
-   gatsby-starter-blog
-   (Use a different starter)
-```
+- If you leave out both of the arguments, the CLI will run an interactive experience from the `create-gatsby` package that will prompt you with questions about the kind of site you're building, and install the plugins you'll need automatically.
 
 See the [Gatsby starters docs](/docs/gatsby-starters/) for more details.
 
