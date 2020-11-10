@@ -117,6 +117,14 @@ describe(`websocket-manager`, () => {
         payload: { ...pageObject, component: `not-important`, context: {} },
         plugin: { name: `websocket-manager-test` },
       })
+      store.dispatch({
+        type: `QUERY_START`,
+        payload: { path: pageObject.path },
+      })
+      store.dispatch({
+        type: `PAGE_QUERY_RUN`,
+        payload: { path: pageObject.path },
+      })
     })
 
     store.dispatch({
