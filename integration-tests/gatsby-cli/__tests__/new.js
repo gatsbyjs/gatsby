@@ -78,4 +78,10 @@ describe(`gatsby new`, () => {
 
     expect(code).toBe(1)
   })
+
+  it(`an empty gatsby new (without args) runs create-gatsby`, () => {
+    const [_, logs] = GatsbyCLI.from(cwd).invoke([`new`])
+
+    logs.should.contain(`Welcome to Gatsby!`)
+  })
 })
