@@ -604,19 +604,25 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         if (file) {
           const { fileName, lineNumber: line, columnNumber: column } = file
 
-          const code = fs.readFileSync(fileName, { encoding: `utf-8` })
-          codeFrame = codeFrameColumns(
-            code,
-            {
-              start: {
-                line,
-                column,
+          try {
+            const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+            codeFrame = codeFrameColumns(
+              code,
+              {
+                start: {
+                  line,
+                  column,
+                },
               },
-            },
-            {
-              highlightCode: true,
-            }
-          )
+              {
+                highlightCode: true,
+              }
+            )
+          } catch (_e) {
+            // sometimes stack trace point to not existing file
+            // particularly when file is transpiled and path actually changes
+            // (like pointing to not existing `src` dir or original typescript file)
+          }
 
           structuredError.location = {
             start: { line: line, column: column },
