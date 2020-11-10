@@ -2,9 +2,16 @@ import io from "socket.io-client"
 import { reportError, clearError } from "./error-overlay-handler"
 import loader from "./loader"
 import normalizePagePath from "./normalize-page-path"
+import { debounce } from "lodash"
 
 let socket = null
 let staticQueryData = {}
+
+const debouncedLoadPage = debounce(
+  () => loader.loadPage(window.location.pathname, true),
+  100,
+  { leading: true }
+)
 
 export const getStaticQueryData = () => staticQueryData
 
@@ -53,8 +60,7 @@ export default function socketIo() {
           }
 
           if (msg.type === `pageQueryResult`) {
-            const normalizedPath = normalizePagePath(msg.payload)
-            loader.loadPage(normalizedPath, true)
+            debouncedLoadPage()
           }
 
           if (msg.type && msg.payload) {

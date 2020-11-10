@@ -212,7 +212,6 @@ export class BaseLoader {
 
   loadPageDataJson(rawPath, refresh = false) {
     const pagePath = findPath(rawPath)
-    console.trace()
     console.log({ pagePath, refresh })
     if (!refresh && this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
