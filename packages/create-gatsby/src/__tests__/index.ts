@@ -1,11 +1,10 @@
 import { run, questions, validateProjectName, plugin } from "../"
 import fs from "fs"
-import {TextInput} from "../components/text"
+import { TextInput } from "../components/text"
 import { SelectInput, MultiSelectInput } from "../components/select"
 import path from "path"
 import { assert } from "joi"
 import Enquirer, { Prompt } from "enquirer"
-
 
 // describe(`The create-gatsby CLI`, () => {
 //   beforeEach(() => {
@@ -124,29 +123,29 @@ import Enquirer, { Prompt } from "enquirer"
 //     await tick()
 //   })
 
-  // it(`complains if the destination folder exists`, async () => {
-  //   await tick(1000)
-  //   ;((fs.existsSync as unknown) as jest.Mock<
-  //     boolean,
-  //     [string]
-  //   >).mockReturnValueOnce(true)
-  //   await stdinMock.send(`exists`)
-  //   await stdinMock.send(keys().ENTER)
-  //   stdout.start()
-  //   ;((fs.existsSync as unknown) as jest.Mock<
-  //     boolean,
-  //     [string]
-  //   >).mockReturnValue(false)
-  //   await tick()
-  //   expect(stdout.output).toMatch(`The destination "exists" already exists`)
-  //   await skipSteps()
-  //   await skipSelect()
-  //   expect(stdout.output).toMatch(
-  //     `Create a new Gatsby site in the folder exists`
-  //   )
-  //   await stdinMock.send(`n`)
-  //   await tick()
-  // })
+// it(`complains if the destination folder exists`, async () => {
+//   await tick(1000)
+//   ;((fs.existsSync as unknown) as jest.Mock<
+//     boolean,
+//     [string]
+//   >).mockReturnValueOnce(true)
+//   await stdinMock.send(`exists`)
+//   await stdinMock.send(keys().ENTER)
+//   stdout.start()
+//   ;((fs.existsSync as unknown) as jest.Mock<
+//     boolean,
+//     [string]
+//   >).mockReturnValue(false)
+//   await tick()
+//   expect(stdout.output).toMatch(`The destination "exists" already exists`)
+//   await skipSteps()
+//   await skipSelect()
+//   expect(stdout.output).toMatch(
+//     `Create a new Gatsby site in the folder exists`
+//   )
+//   await stdinMock.send(`n`)
+//   await tick()
+// })
 
 //   it(`complains if the destination name is invalid`, async () => {
 //     await tick(1000)
@@ -174,23 +173,24 @@ import Enquirer, { Prompt } from "enquirer"
 //   it.todo(`creates a new project/folder with a gatsby-config`)
 // })
 
+let enquirer
 
 async function stringInput(prompt: any, word: string): Promise<void> {
-  for (let char of word) {
+  for (const char of word) {
     await prompt.keypress(char)
   }
 }
 
-describe('run', () => {
-    const enquirer = new Enquirer<IAnswers>()
+describe(`run`, () => {
+  beforeEach(() => {
+    enquirer = new Enquirer<IAnswers>()
     enquirer.use(plugin)
-
+  })
 
   // afterEach(() => {
 
   // })
 
-  
   // it('should not accept bad name', async () => {
   //   enquirer.on('prompt', prompt => {
   //     prompt.once('run', async () => {
@@ -211,7 +211,7 @@ describe('run', () => {
   //       await prompt.submit()
   //     })
   //   })
-  
+
   //   const data = await enquirer.prompt(questions)
   //   expect(data).toEqual({
   //     project: 'goodname',
@@ -230,38 +230,21 @@ describe('run', () => {
   //   expect(result).toBe(`The destination "exists" already exists. Please choose a different name`)
   // })
 
-  it('should take project name', async () => {
-    enquirer.on('prompt', prompt => {
-      prompt.once('run', async () => {
-        await stringInput(prompt, 'goodname')
-        await prompt.submit()
-        await prompt.submit()
-        await prompt.keypress(null, {name: 'tab'})
-        await prompt.submit()
-      })
-    })
-  
-    const data = await enquirer.prompt(questions)
-    expect(data).toEqual({"cms": "gatsby-source-wordpress-experimental", "features": [], "project": "goodname", "styling": "gatsby-plugin-postcss"})
-  })
-
-
-  // it('can select a CMS', async () => {
+  // it('should take project name', async () => {
   //   enquirer.on('prompt', prompt => {
   //     prompt.once('run', async () => {
   //       await stringInput(prompt, 'goodname')
   //       await prompt.submit()
-  //       await prompt.keypress(null, {name: 'down'})
-  //       await prompt.keypress(null, {name: 'down'})
   //       await prompt.submit()
   //       await prompt.keypress(null, {name: 'tab'})
   //       await prompt.submit()
   //     })
   //   })
-  
+
   //   const data = await enquirer.prompt(questions)
   //   expect(data).toEqual({"cms": "gatsby-source-wordpress-experimental", "features": [], "project": "goodname", "styling": "gatsby-plugin-postcss"})
   // })
+
   // it('should take project name', async () => {
   //   enquirer.on('prompt', prompt => {
   //     prompt.once('run', async () => {
@@ -281,10 +264,36 @@ describe('run', () => {
   //       await prompt.submit()
   //     })
   //   })
-  
+
   //   const data = await enquirer.prompt(questions)
   //   console.log(data)
   //   expect(data).toEqual({"cms": "gatsby-source-contentful", "project": "my-new-site", "styling": "gatsby-plugin-postcss", "features": ["gatsby-plugin-react-helmet", "gatsby-plugin-offline"]})
   // })
 })
 
+// describe('test', () => {
+//   let enquirer
+//   beforeEach(() => {
+//     enquirer = new Enquirer<IAnswers>()
+//     enquirer.use(plugin)
+//   })
+
+//   it('can select a CMS', async () => {
+//     enquirer.on('prompt', prompt => {
+//       prompt.once('run', async () => {
+//         await stringInput(prompt, 'my-new-site')
+//         await prompt.keypress(null, {name: 'enter'})
+//         await prompt.keypress(null, {name: 'down'})
+//         // await prompt.keypress(null, {name: 'down'})
+//         await prompt.keypress(null, {name: 'enter'})
+//         await prompt.keypress(null, {name: 'enter'})
+//         await prompt.keypress(null, {name: 'tab'})
+//         await prompt.keypress(null, {name: 'enter'})
+//       })
+//     })
+
+//     const data = await enquirer.prompt(questions)
+//     console.log(data)
+//     // expect(data).toEqual({"cms": "gatsby-source-wordpress-experimental", "features": [], "project": "goodname", "styling": "gatsby-plugin-postcss"})
+//   })
+// })
