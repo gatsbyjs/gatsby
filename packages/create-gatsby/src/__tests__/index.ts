@@ -12,7 +12,7 @@ import fs from "fs"
 
 process.chdir = jest.fn()
 
-const tick = (interval = 100): Promise<void> =>
+const tick = (interval = 1): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, interval))
 
 const keys = (): {
@@ -31,7 +31,7 @@ const keys = (): {
         UP: `\x1B\x5B\x41`,
         ENTER: `\n`,
         SPACE: `\x20`,
-        BACKSPACE: `\x7F`,
+        BACKSPACE: `\b`,
       }
     case `win32`:
       return {
@@ -39,7 +39,7 @@ const keys = (): {
         UP: `\x1B\x5B\x41`,
         ENTER: `\r\n`,
         SPACE: `\x20`,
-        BACKSPACE: `\x08`,
+        BACKSPACE: `\b`,
       }
     default:
       // pulled from https://tldp.org/LDP/abs/html/escapingsection.html
@@ -48,7 +48,7 @@ const keys = (): {
         UP: `\x1B\x5B\x41`,
         ENTER: `\r`,
         SPACE: `\x20`,
-        BACKSPACE: `\x7F`,
+        BACKSPACE: `\b`,
       }
   }
 }
@@ -88,7 +88,7 @@ describe(`The create-gatsby CLI`, () => {
   })
 
   it(`runs`, async () => {
-    await tick()
+    await tick(1000)
     stdinMock.send(`my-new-site`)
     stdinMock.send(keys().ENTER)
     await tick()
@@ -141,7 +141,7 @@ describe(`The create-gatsby CLI`, () => {
   })
 
   it(`displays the plugin for the selected CMS to configure`, async () => {
-    await tick()
+    await tick(1000)
     stdinMock.send(`select-cms`)
     stdinMock.send(keys().ENTER)
     await tick()
@@ -162,7 +162,7 @@ describe(`The create-gatsby CLI`, () => {
   })
 
   it(`displays the plugin for the selected styling solution`, async () => {
-    await tick()
+    await tick(1000)
     stdinMock.send(`select-styling`)
     await skipSteps(2)
     await stdinMock.send(keys().DOWN) // PostCSS is first in the list
@@ -177,7 +177,7 @@ describe(`The create-gatsby CLI`, () => {
   })
 
   it(`doesnt print steps skipped by user`, async () => {
-    await tick()
+    await tick(1000)
     stdinMock.send(`skip-steps`)
     await skipSteps()
     await skipSelect()
@@ -193,6 +193,7 @@ describe(`The create-gatsby CLI`, () => {
   })
 
   it(`complains if the destination folder exists`, async () => {
+    await tick(1000)
     ;((fs.existsSync as unknown) as jest.Mock<
       boolean,
       [string]
@@ -216,7 +217,7 @@ describe(`The create-gatsby CLI`, () => {
   })
 
   it(`complains if the destination name is invalid`, async () => {
-    await tick()
+    await tick(1000)
     stdout.stop()
     stdout.start()
     await stdinMock.send(`bad/name`)
