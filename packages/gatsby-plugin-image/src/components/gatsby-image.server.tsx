@@ -44,6 +44,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     layout
   )
 
+
   const cleanedImages: ISharpGatsbyImageData["images"] = {
     fallback: undefined,
     sources: [],
@@ -57,6 +58,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     }
   }
 
+  // QUESTION-1: sources is not used in getMainProps
+  // I'm not sure to understand the purpose.
   if (images.sources) {
     cleanedImages.sources = images.sources.map(source => {
       return {
