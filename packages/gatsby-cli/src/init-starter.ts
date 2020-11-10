@@ -1,4 +1,3 @@
-import opn from "better-opn"
 import { execSync } from "child_process"
 import execa from "execa"
 import { sync as existsSync } from "fs-exists-cached"
@@ -7,7 +6,6 @@ import { trackCli, trackError } from "gatsby-telemetry"
 import hostedGitInfo from "hosted-git-info"
 import isValid from "is-valid-path"
 import sysPath from "path"
-import prompts from "prompts"
 import url from "url"
 import { updateSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
@@ -208,57 +206,17 @@ const clone = async (
 interface IGetPaths {
   starterPath: string
   rootPath: string
-  selectedOtherStarter: boolean
 }
 
 const getPaths = async (
   starterPath?: string,
   rootPath?: string
 ): Promise<IGetPaths> => {
-  let selectedOtherStarter = false
-
-  // if no args are passed, prompt user for path and starter
-  if (!starterPath && !rootPath) {
-    const response = await prompts.prompt([
-      {
-        type: `text`,
-        name: `path`,
-        message: `What is your project called?`,
-        initial: `my-gatsby-project`,
-      },
-      {
-        type: `select`,
-        name: `starter`,
-        message: `What starter would you like to use?`,
-        choices: [
-          { title: `gatsby-starter-default`, value: `gatsby-starter-default` },
-          {
-            title: `gatsby-starter-hello-world`,
-            value: `gatsby-starter-hello-world`,
-          },
-          { title: `gatsby-starter-blog`, value: `gatsby-starter-blog` },
-          { title: `(Use a different starter)`, value: `different` },
-        ],
-        initial: 0,
-      },
-    ])
-    // exit gracefully if responses aren't provided
-    if (!response.starter || !response.path.trim()) {
-      throw new Error(
-        `Please mention both starter package and project name along with path(if its not in the root)`
-      )
-    }
-
-    selectedOtherStarter = response.starter === `different`
-    starterPath = `gatsbyjs/${response.starter}`
-    rootPath = response.path
-  }
-
   // set defaults if no root or starter has been set yet
   rootPath = rootPath || process.cwd()
   starterPath = starterPath || `gatsbyjs/gatsby-starter-default`
 
-  return { starterPath, rootPath, selectedOtherStarter }
+  return { starterPath, rootPath }
 }
 
 const successMessage = (path: string): void => {
@@ -277,20 +235,10 @@ export async function initStarter(
   starter?: string,
   root?: string
 ): Promise<void> {
-  const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
-    starter,
-    root
-  )
+  const { starterPath, rootPath } = await getPaths(starter, root)
 
   const urlObject = url.parse(rootPath)
 
-  if (selectedOtherStarter) {
-    report.info(
-      `Opening the starter library at https://gatsby.dev/starters?v=2...\nThe starter library has a variety of options for starters you can browse\n\nYou can then use the gatsby new command with the link to a repository of a starter you'd like to use, for example:\ngatsby new ${rootPath} https://github.com/gatsbyjs/gatsby-starter-default`
-    )
-    opn(`https://gatsby.dev/starters?v=2`)
-    return
-  }
   if (urlObject.protocol && urlObject.host) {
     trackError(`NEW_PROJECT_NAME_MISSING`)
 
