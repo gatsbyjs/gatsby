@@ -406,7 +406,10 @@ export class BaseLoader {
   }
 
   hovering(rawPath) {
-    this.loadPage(rawPath)
+    this.loadPage(
+      rawPath,
+      process.env.NODE_ENV === `development` ? true : false
+    )
   }
 
   getResourceURLsForPathname(rawPath) {
