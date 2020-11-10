@@ -12,7 +12,7 @@ import fs from "fs"
 
 process.chdir = jest.fn()
 
-const tick = (interval = 10): Promise<void> =>
+const tick = (interval = 100): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, interval))
 
 const keys = (): {

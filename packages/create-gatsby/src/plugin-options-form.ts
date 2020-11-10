@@ -21,7 +21,12 @@ interface IFormPrompt {
   name: string
   multiple: boolean
   message: string
-  choices: Array<{ name: string; initial: unknown; message: string }>
+  choices: Array<{
+    name: string
+    initial: unknown
+    message: string
+    hint?: string
+  }>
 }
 
 function getName(key: string): string | undefined {
@@ -59,6 +64,7 @@ export const makePluginConfigQuestions = (
       name: string
       initial: string
       message: string
+      hint?: string
     }> = []
 
     if (!options) {
@@ -77,12 +83,13 @@ export const makePluginConfigQuestions = (
             ? option.flags?.default.toString()
             : undefined,
         message: name,
+        hint: option.flags?.description,
       })
     })
 
     if (choices.length) {
       formPrompts.push({
-        type: `form`,
+        type: `forminput`,
         name: pluginName,
         multiple: true,
         message: stripIndent`

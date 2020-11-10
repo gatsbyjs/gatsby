@@ -8,6 +8,8 @@ import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
 // @ts-ignore
+import { FormInput } from "./components/form"
+// @ts-ignore
 import { TextInput } from "./components/text"
 // @ts-ignore
 import { SelectInput, MultiSelectInput } from "./components/select"
@@ -187,7 +189,12 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     console.log(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
-    pluginConfig = await new Enquirer<Record<string, {}>>().prompt(config)
+
+    const enquirer = new Enquirer<Record<string, {}>>()
+
+    enquirer.register(`forminput`, (FormInput as unknown) as typeof Prompt)
+
+    pluginConfig = await enquirer.prompt(config)
   }
 
   console.log(`
