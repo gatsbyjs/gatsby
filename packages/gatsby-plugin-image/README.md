@@ -284,9 +284,7 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        gatsbyImage(layout: FIXED, width: 125, height: 125) {
-          imageData
-        }
+        gatsbyImageData(layout: FIXED, width: 125, height: 125)
       }
     }
   }
