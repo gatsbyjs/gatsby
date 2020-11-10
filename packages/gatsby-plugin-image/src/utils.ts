@@ -30,7 +30,6 @@ export interface ICommonImageProps {
 export interface IFluidImageProps extends ICommonImageProps {
   maxWidth?: number
   maxHeight?: number
-  srcSetBreakpoints?: Array<number>
   fit?: number
   background?: number
 }

@@ -6,7 +6,6 @@ import { declare } from "@babel/helper-plugin-utils"
 import * as Joi from "@hapi/joi"
 import glob from "glob"
 import prettier from "prettier"
-import resolveCwd from "resolve-cwd"
 import { slash } from "gatsby-core-utils"
 import fetch from "node-fetch"
 
@@ -25,7 +24,11 @@ import { read as readPackageJSON } from "../npm/package"
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
+  const themePath = path.dirname(
+    require.resolve(slash(path.join(theme, `package.json`)), {
+      paths: [directory],
+    })
+  )
   const themeSrcPath = path.join(themePath, `src`)
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,

@@ -8,6 +8,7 @@ import got from "got"
 import webpack from "webpack"
 import express from "express"
 import bodyParser from "body-parser"
+import compression from "compression"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
@@ -163,6 +164,7 @@ export async function startServer(
   /**
    * Set up the express app.
    **/
+  app.use(compression())
   app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     webpackHotMiddleware(compiler, {

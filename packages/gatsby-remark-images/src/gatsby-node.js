@@ -27,7 +27,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       ),
     wrapperStyle: Joi.alternatives().try(
       Joi.object({}).unknown(true),
-      Joi.function().maxArity(1)
+      Joi.function().maxArity(1),
+      Joi.string()
     ),
     backgroundColor: Joi.string().default(`white`)
       .description(`Set the background color of the image to match the background image of your design.
