@@ -161,10 +161,15 @@ module.exports = function remarkExtendNodeType(
 
       // Return the promise that will cache the result if good, and deletes the promise from local cache either way
       // Note that if this cache hits for another parse, it won't have to wait for the cache
-      return ASTGenerationPromise.then(markdownAST =>
-        // Return a promise that waits for the cache to be set, but that does return the generated AST
-        cache.set(cacheKey, markdownAST).then(() => markdownAST)
-      ).finally(() => ASTPromiseMap.delete(cacheKey))
+      try {
+        const markdownAST = await ASTGenerationPromise
+
+        await cache.set(cacheKey, markdownAST)
+
+        return markdownAST
+      } finally {
+        ASTPromiseMap.delete(cacheKey)
+      }
     }
 
     // Parse a markdown string and its AST representation, applying the remark plugins if necessary
