@@ -1,18 +1,20 @@
 import { run } from "../"
 import { stdin } from "mock-stdin"
 import { stdout } from "stdout-stderr"
+import fs from "fs"
 
-const stdinMock = stdin()
-//stdout.print = true
+let stdinMock
+beforeAll(() => (stdinMock = stdin()))
+afterAll(() => stdinMock.restore())
+
+// stdout.print = true
 jest.mock(`execa`)
 jest.mock(`fs-extra`)
 jest.mock(`fs`)
 
-import fs from "fs"
-
 process.chdir = jest.fn()
 
-const tick = (interval = 1): Promise<void> =>
+const tick = (interval = 10): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, interval))
 
 const keys = (): {
@@ -46,9 +48,9 @@ const keys = (): {
       return {
         DOWN: `\x1B\x5B\x42`,
         UP: `\x1B\x5B\x41`,
-        ENTER: `\r`,
+        ENTER: `\x0D`,
         SPACE: `\x20`,
-        BACKSPACE: `\b`,
+        BACKSPACE: `\x7F`,
       }
   }
 }
