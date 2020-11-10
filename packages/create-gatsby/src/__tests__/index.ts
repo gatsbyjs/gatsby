@@ -16,6 +16,7 @@ describe(`run`, () => {
   beforeEach(() => {
     enquirer = new Enquirer<IAnswers>()
     enquirer.use(plugin)
+    jest.setTimeout(10000)
   })
 
   it(`should not accept bad name`, async () => {
