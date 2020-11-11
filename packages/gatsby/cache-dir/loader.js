@@ -543,7 +543,7 @@ export const publicLoader = {
   },
   enqueue: rawPath => instance.prefetch(rawPath),
 
-  getStaticQueryResults: () => instance.staticQueryDb,
+  getStaticQueryResults: () => instance?.staticQueryDb,
 
   // Real methods
   getResourceURLsForPathname: rawPath =>
