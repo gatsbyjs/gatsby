@@ -180,7 +180,6 @@ export default { ${scopeIdentifiers.join(`, `)} }`
       configFile: false,
       plugins: [instance.plugin],
     })
-
     scopeFileContent = result.code
   }
 
