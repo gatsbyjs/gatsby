@@ -16,6 +16,7 @@ import {
 } from "./types"
 import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
 import { stripIndent } from "common-tags"
+import { trackCli } from "gatsby-telemetry"
 
 interface IApi {
   version?: string
@@ -280,6 +281,12 @@ async function validatePluginsOptions(
                 } if you believe this option is valid.
               `)
             )
+            trackCli(`UNKNOWN_PLUGIN_OPTION`, {
+              name: plugin.resolve,
+              valueString: validationWarnings
+                .map(error => error.path.join(`.`))
+                .join(`, `),
+            })
             // We do not increment errors++ here as we do not want to process.exit if there are only warnings
           }
 
