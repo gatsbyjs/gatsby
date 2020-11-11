@@ -259,7 +259,7 @@ async function validatePluginsOptions(
               id: `11331`,
               context: {
                 configDir,
-                validationErrors: error.details,
+                validationErrors,
                 pluginName: plugin.resolve,
               },
             })
