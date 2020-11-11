@@ -2,6 +2,6 @@
   "gatsby-source-wordpress-experimental": { "message": "WordPress" },
   "gatsby-source-contentful": { "message": "Contentful" },
   "gatsby-source-sanity": { "message": "Sanity" },
-  "gatsby-source-shopify": { "message": "Shopify" },
-  "gatsby-source-prismic": { "message": "Prismic" }
+  "gatsby-source-datocms": { "message": "DatoCMS" },
+  "gatsby-source-shopify": { "message": "Shopify" }
 }
