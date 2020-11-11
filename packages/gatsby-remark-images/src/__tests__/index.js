@@ -67,7 +67,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   return {
     files: [].concat(imagePaths).map(imagePath => {
       return {
-        absolutePath: `${dirName}/${imagePath.split('?')[0]}`,
+        absolutePath: `${dirName}/${imagePath.split(`?`)[0]}`,
       }
     }),
     markdownNode: createNode(content),

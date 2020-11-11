@@ -71,7 +71,7 @@ module.exports = (
 
   const getImageInfo = uri => {
     const url = new URL(uri)
-    url.search = '';
+    url.search = ``
     return {
       ext: path.extname(url.pathname).split(`.`).pop(),
       url: url.toString(),

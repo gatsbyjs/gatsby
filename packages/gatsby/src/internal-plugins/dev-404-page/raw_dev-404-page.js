@@ -15,7 +15,9 @@ class Dev404Page extends React.Component {
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
     const urlState = new URLSearchParams(location.search)
 
-    const initialPagePathSearchTerms = urlState.get('filter') ? urlState.get('filter') : ``
+    const initialPagePathSearchTerms = urlState.has(`filter`)
+      ? urlState.get(`filter`)
+      : ``
 
     this.state = {
       showCustom404: false,
@@ -67,7 +69,7 @@ class Dev404Page extends React.Component {
     } = this.props
 
     const searchMap = new URLSearchParams(search)
-    searchMap.set('filter', searchValue)
+    searchMap.set(`filter`, searchValue)
 
     const newSearch = searchMap.toString()
 
