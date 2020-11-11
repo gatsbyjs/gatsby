@@ -8,7 +8,6 @@ const {
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
 const path = require(`path`)
-const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
 const { fluid, stats, traceSVG } = require(`gatsby-plugin-sharp`)
@@ -71,11 +70,11 @@ module.exports = (
   )
 
   const getImageInfo = uri => {
-    const { url, query } = queryString.parseUrl(uri)
+    const url = new URL(uri)
+    url.search = '';
     return {
-      ext: path.extname(url).split(`.`).pop(),
-      url,
-      query,
+      ext: path.extname(url.pathname).split(`.`).pop(),
+      url: url.toString(),
     }
   }
 
