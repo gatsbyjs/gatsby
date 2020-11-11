@@ -1,5 +1,5 @@
 import { reporter } from "./reporter"
-
+import path from "path"
 export async function installPlugins(
   plugins: Array<string>,
   pluginOptions: Record<string, Record<string, any> | undefined> = {},
@@ -7,10 +7,28 @@ export async function installPlugins(
   packages: Array<string>
 ): Promise<void> {
   let installPluginCommand
+  let gatsbyPath
+
+  try {
+    gatsbyPath = require.resolve(`gatsby/package.json`, {
+      paths: [rootPath],
+    })
+  } catch (e) {
+    // Not found
+    console.warn(e)
+  }
+
+  if (!gatsbyPath) {
+    reporter.error(
+      `Could not find "gatsby" in ${rootPath}. Perhaps it wasn't installed properly?`
+    )
+    return
+  }
 
   try {
     installPluginCommand = require.resolve(`gatsby-cli/lib/plugin-add`, {
-      paths: [rootPath],
+      // Try to find gatsby-cli in the site root, or in the site's gatsby dir
+      paths: [rootPath, path.dirname(gatsbyPath)],
     })
   } catch (e) {
     // The file is missing
@@ -18,10 +36,10 @@ export async function installPlugins(
 
   if (!installPluginCommand) {
     reporter.error(`gatsby-cli not installed, or is too old`)
-    return void 0
+    return
   }
 
   const { addPlugins } = require(installPluginCommand)
 
-  return addPlugins(plugins, pluginOptions, rootPath, packages)
+  await addPlugins(plugins, pluginOptions, rootPath, packages)
 }

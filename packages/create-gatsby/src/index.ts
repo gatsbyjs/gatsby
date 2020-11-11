@@ -2,7 +2,7 @@ import Enquirer from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
-import { initStarter } from "./init-starter"
+import { initStarter, getPackageManager } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
@@ -212,39 +212,36 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     return
   }
 
-  await initStarter(DEFAULT_STARTER, data.project)
+  await initStarter(DEFAULT_STARTER, data.project, packages)
 
   console.log(c.green(`✔ `) + `Created site in ` + c.green(data.project))
 
   if (plugins.length) {
     console.log(c.bold(`🔌 Installing plugins...`))
-    await installPlugins(
-      plugins,
-      pluginConfig,
-      path.resolve(data.project),
-      packages
-    )
+    await installPlugins(plugins, pluginConfig, path.resolve(data.project), [])
   }
 
+  const pm = await getPackageManager()
+
+  const runCommand = pm === `npm` ? `npm run` : `yarn`
+
   console.log(
-    `✨ Your new Gatsby site ${c.bold(
-      path.resolve(data.project)
-    )} has been successfully bootstrapped at ${c.bold(
+    `🎉 Your new Gatsby site ${c.bold(
       data.project
-    )}. There you can:\n`
+    )} has been successfully bootstrapped at ${c.bold(
+      path.resolve(data.project)
+    )}.
+    `
   )
-  console.log(`
-  Start developing with\n
-  ${c.magenta(`gatsby develop`)}\n
+  console.log(`Start by going to the directory with\n
+  ${c.magenta(`cd ${data.project}`)}
   `)
 
-  console.log(`
-  Create a production build with\n
-  ${c.magenta(`gatsby build`)}\n
+  console.log(`Start the local development server with\n
+  ${c.magenta(`${runCommand} develop`)}
   `)
 
-  console.log(`
-  Head to your new project with\n
-  ${c.magenta(`cd ${data.project}`)}\n
+  console.log(`See all commands at\n
+  ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
 }

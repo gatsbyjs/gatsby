@@ -44,16 +44,6 @@ const checkForYarn = (): boolean => {
   }
 }
 
-const isAlreadyGitRepository = async (): Promise<boolean> => {
-  try {
-    return await spawn(`git rev-parse --is-inside-work-tree`, {
-      stdio: `pipe`,
-    }).then(output => output.stdout === `true`)
-  } catch (err) {
-    return false
-  }
-}
-
 // Initialize newly cloned directory as a git repo
 const gitInit = async (
   rootPath: string
@@ -94,15 +84,23 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
   }
 }
 
+const filter = (pattern: string): NodeJS.ReadWriteStream =>
+  filterStream((data: string): boolean => !data.toString().startsWith(pattern))
+
 // Executes `npm install` or `yarn install` in rootPath.
-const install = async (rootPath: string): Promise<void> => {
+const install = async (
+  rootPath: string,
+  packages: Array<string>
+): Promise<void> => {
   const prevDir = process.cwd()
 
-  const stop = spin(`Installing packages...`)
+  let stop = spin(`Installing packages...`)
 
   process.chdir(rootPath)
 
   const npmConfigUserAgent = process.env.npm_config_user_agent
+
+  const silent = `--silent`
 
   try {
     if (!getPackageManager()) {
@@ -119,32 +117,39 @@ const install = async (rootPath: string): Promise<void> => {
         }
         await fs.remove(`package-lock.json`)
       }
-      const childProcess = spawn(`yarnpkg --silent`, {
+
+      const args = packages.length ? [`add`, silent, ...packages] : [silent]
+
+      const childProcess = spawnWithArgs(`yarnpkg`, args, {
         all: true,
         stdio: `pipe`,
       })
       // eslint-disable-next-line no-unused-expressions
-      childProcess.all
-        ?.pipe(
-          filterStream((data: string) => !data.toString().startsWith(`warning`))
-        )
-        .pipe(process.stderr)
+      childProcess.all?.pipe(filter(`warning`)).pipe(process.stderr)
 
       await childProcess
     } else {
       await fs.remove(`yarn.lock`)
-      const childProcess = spawn(`npm install --silent`, {
+
+      let childProcess = spawnWithArgs(`npm`, [`install`, silent], {
         all: true,
         stdio: `pipe`,
       })
       // eslint-disable-next-line no-unused-expressions
-      childProcess.all
-        ?.pipe(
-          filterStream(
-            (data: string) => !data.toString().startsWith(`npm WARN`)
-          )
-        )
-        .pipe(process.stderr)
+      childProcess.all?.pipe(filter(`npm WARN`)).pipe(process.stderr)
+
+      await childProcess
+
+      stop()
+
+      stop = spin(`Installing plugins...`)
+
+      childProcess = spawnWithArgs(`npm`, [`install`, silent, ...packages], {
+        all: true,
+        stdio: `pipe`,
+      })
+      // eslint-disable-next-line no-unused-expressions
+      childProcess.all?.pipe(filter(`npm WARN`)).pipe(process.stderr)
 
       await childProcess
     }
@@ -182,16 +187,12 @@ const clone = async (
   reporter.success(`Created site from template`)
 
   await fs.remove(path.join(rootPath, `.git`))
+}
 
-  await install(rootPath)
-  const isGit = await isAlreadyGitRepository()
-  if (!isGit) {
-    await gitInit(rootPath)
-  }
+async function gitSetup(rootPath: string): Promise<void> {
+  await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
-  if (!isGit) {
-    await createInitialGitCommit(rootPath)
-  }
+  await createInitialGitCommit(rootPath)
 }
 
 /**
@@ -199,11 +200,14 @@ const clone = async (
  */
 export async function initStarter(
   starter: string,
-  rootPath: string
+  rootPath: string,
+  packages: Array<string>
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
+
+  await install(rootPath, packages)
 
   const sitePackageJson = await fs
     .readJSON(path.join(sitePath, `package.json`))
@@ -221,5 +225,6 @@ export async function initStarter(
     },
     false
   )
+  await gitSetup(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }
