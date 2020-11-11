@@ -128,9 +128,9 @@ At this point, you’ve got a fully functional Gatsby website. For additional in
 
 ## 🎓 Learning Gatsby
 
-Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
+Full Documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most Developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
 - **To dive straight into code samples head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the “<i>Guides</i>”, “<i>API Reference</i>”, and “<i>Advanced Tutorials</i>” sections in the sidebar.
 
@@ -155,7 +155,7 @@ Whether you're helping us fix bugs, improve the docs, or spread the word, we had
 
 Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
-### A note on how this repository is organized
+### A note on how this Repository is Organized
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
 
