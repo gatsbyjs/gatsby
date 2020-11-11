@@ -1,10 +1,9 @@
 import { questions, plugin } from "../"
-import fs from "fs"
 import Enquirer, { Prompt } from "enquirer"
 
 jest.mock(`fs`)
 
-async function stringInput(prompt: any, word: string): Promise<void> {
+async function stringInput(prompt: Prompt, word: string): Promise<void> {
   for (const char of word) {
     await prompt.keypress(char)
   }
@@ -127,7 +126,7 @@ describe(`run`, () => {
   // })
 
   it(`should pass the name`, async () => {
-    enquirer.on(`prompt`, prompt => {
+    enquirer.once(`prompt`, prompt => {
       prompt.once(`run`, async () => {
         if (prompt.name === `project`) {
           await stringInput(prompt, `my-new-site`)
@@ -143,7 +142,7 @@ describe(`run`, () => {
   })
 
   it(`can select a CMS`, async () => {
-    enquirer.on(`prompt`, prompt => {
+    enquirer.once(`prompt`, prompt => {
       prompt.once(`run`, async () => {
         await prompt.keypress(null, { name: `down` })
         await prompt.keypress(null, { name: `down` })
@@ -158,7 +157,7 @@ describe(`run`, () => {
   })
 
   it(`can select a styling library`, async () => {
-    enquirer.on(`prompt`, prompt => {
+    enquirer.once(`prompt`, prompt => {
       prompt.once(`run`, async () => {
         await prompt.keypress(null, { name: `down` })
         await prompt.submit()
@@ -172,15 +171,15 @@ describe(`run`, () => {
   })
 
   it(`can select additional plugins`, async () => {
-    enquirer.on(`prompt`, prompt => {
+    enquirer.once(`prompt`, prompt => {
       prompt.once(`run`, async () => {
         await prompt.keypress(null, { name: `down` })
         await prompt.keypress(null, { name: `space` })
         await prompt.keypress(null, { name: `down` })
         await prompt.keypress(null, { name: `down` })
         await prompt.keypress(null, { name: `space` })
-        await prompt.keypress(null, { name: `tab` })
-        await prompt.submit()
+        await prompt.next() // tab
+        await prompt.submit() // enter
       })
     })
 
