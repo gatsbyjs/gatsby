@@ -27,5 +27,7 @@ describe(`client-side-routing`, () => {
 
     cy.findByTestId(`splat`)
     cy.should(`have.text`, `dolores`)
+    cy.findByTestId(`title`)
+    cy.should(`have.text`, `Named SPLAT`)
   })
 })

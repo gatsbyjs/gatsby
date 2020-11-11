@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.6.0-next.0...babel-preset-gatsby-package@0.6.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for babel-preset-gatsby-package ([#27905](https://github.com/gatsbyjs/gatsby/issues/27905)) ([34bf36b](https://github.com/gatsbyjs/gatsby/commit/34bf36b449afde745dd192d80fca015f003acec6))
+
 ## [0.5.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.5.2...babel-preset-gatsby-package@0.5.3) (2020-09-15)
 
 **Note:** Version bump only for package babel-preset-gatsby-package

@@ -22,8 +22,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 CYPRESS_SUPPORT=y gatsby build",
-    "build:offline": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "build:offline": "cross-env TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "serve": "gatsby serve",

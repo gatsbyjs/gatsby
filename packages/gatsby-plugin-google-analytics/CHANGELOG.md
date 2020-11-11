@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.5.0-next.0...gatsby-plugin-google-analytics@2.5.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** add cookieFlags to options schema ([#27923](https://github.com/gatsbyjs/gatsby/issues/27923)) ([557139e](https://github.com/gatsbyjs/gatsby/commit/557139ed20fb18db08686db42284511ab8f9bdfd))
+- **gatsby-plugin-google-analytics:** add optional options to options schema ([#27914](https://github.com/gatsbyjs/gatsby/issues/27914)) ([3cdf29f](https://github.com/gatsbyjs/gatsby/commit/3cdf29f2c337a0a0960127f9670d356b34aa1a0c))
+
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.19...gatsby-plugin-google-analytics@2.4.0) (2020-11-02)
 
 ### Features

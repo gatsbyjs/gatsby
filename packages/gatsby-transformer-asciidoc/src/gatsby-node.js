@@ -87,11 +87,17 @@ async function onCreateNode(
       },
       children: [],
       html,
-      document: {
-        title: title.getCombined(),
-        subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
-        main: title.getMain(),
-      },
+      document: title
+        ? {
+            title: title.getCombined(),
+            subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
+            main: title.getMain(),
+          }
+        : {
+            title: ``,
+            subtitle: ``,
+            main: ``,
+          },
       revision,
       author,
       pageAttributes,
