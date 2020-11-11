@@ -9,7 +9,7 @@ async function stringInput(prompt: Prompt, word: string): Promise<void> {
   }
 }
 
-describe(`run`, () => {
+xdescribe(`run`, () => {
   let enquirer
 
   beforeEach(() => {
