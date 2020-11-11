@@ -160,6 +160,25 @@ plugins: [
 ]
 ```
 
+### `identityWidgetInitConfig`
+
+(_optional_, type: `object`, default: `{}`)
+
+Customize the configuration object passed to the Netlify Identity [init](https://github.com/netlify/netlify-identity-widget#netlifyidentityinitopts/) function.
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-netlify-cms`,
+    options: {
+      identityWidgetInitConfig: {
+        APIUrl: "https://my-site.netlify.com/.netlify/identity"
+      },
+    },
+  },
+]
+```
+
 ### `publicPath`
 
 (_optional_, type: `string`, default: `"admin"`)
