@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.25.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.25.3...gatsby@2.25.4) (2020-11-11)
+
+### Bug Fixes
+
+- **gatsby:** don't hide original error if stack-trace point to not existing file ([#27953](https://github.com/gatsbyjs/gatsby/issues/27953)) ([#27966](https://github.com/gatsbyjs/gatsby/issues/27966)) ([0c5845d](https://github.com/gatsbyjs/gatsby/commit/0c5845d37f73431e620944e328c88c4741fc2eae))
+
 ## [2.25.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.25.2...gatsby@2.25.3) (2020-11-05)
 
 **Note:** Version bump only for package gatsby
