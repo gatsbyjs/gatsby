@@ -7,7 +7,11 @@ const accessTokenRoute = /access_token=/
 
 exports.onInitialClientRender = (
   _,
-  { enableIdentityWidget = true, identityWidgetInitConfig = {}, publicPath = `admin` }
+  {
+    enableIdentityWidget = true,
+    identityWidgetInitConfig = {},
+    publicPath = `admin`
+  }
 ) => {
   const hash = (document.location.hash || ``).replace(/^#\/?/, ``)
 
