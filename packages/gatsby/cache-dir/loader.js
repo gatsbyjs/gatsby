@@ -286,7 +286,7 @@ export class BaseLoader {
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
           // Check for cache in case this static query result has already been loaded
-          if (this.staticQueryDb[staticQueryHash]) {
+          if (!refresh && this.staticQueryDb[staticQueryHash]) {
             const jsonPayload = this.staticQueryDb[staticQueryHash]
             return { staticQueryHash, jsonPayload }
           }
