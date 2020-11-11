@@ -97,8 +97,7 @@ Add the following line to the plugin options
 
 ```js
   icon: `src/images/icon.png`, // This path is relative to the root of the site.
-  // All entries in src are relative to the static folder
-  icons: [
+  icons: [ // The paths defined in src are relative to the root of the site when hosted
     {
       src: `/favicons/android-chrome-192x192.png`,
       sizes: `192x192`,
@@ -121,8 +120,7 @@ The hybrid option allows the most flexibility while still not requiring you to c
 Add the following line to the plugin options
 
 ```js
-// All entries in src are relative to the static folder
-icons: [
+icons: [ // The paths defined in src are relative to the root of the site when hosted
   {
     src: `/favicons/android-chrome-192x192.png`,
     sizes: `192x192`,
