@@ -2,11 +2,13 @@ export default function pluginOptionSchema({ Joi }) {
   /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest
    *
    * Currently based on https://www.w3.org/TR/2020/WD-appmanifest-20201019/
+   * and the August 4th 2020 version of https://w3c.github.io/manifest-app-info/
    */
 
   const platform = Joi.string()
     .optional()
     .empty(``)
+    .valid("narrow", "wide", "chromeos", "ios", "kaios", "macos", "windows", "windows10x", "xbox", " chrome_web_store", "play", "itunes", "microsoft") //https://w3c.github.io/manifest-app-info/#platform-member
     .description(`The platform on which the application can be found.`)
 
   const FingerPrint = Joi.object().keys({
@@ -18,7 +20,7 @@ export default function pluginOptionSchema({ Joi }) {
       .description(`syntax and semantics are platform-defined`),
   })
 
-  const ManifestImageResource = Joi.object().keys({
+  const ImageResource = Joi.object().keys({
     sizes: Joi.string()
       .optional()
       .description(`A string containing space-separated image dimensions`),
@@ -27,9 +29,15 @@ export default function pluginOptionSchema({ Joi }) {
       .description(
         `The path to the image file. If src is a relative URL, the base URL will be the URL of the manifest.`
       ),
-    type: Joi.string().description(
-      `A hint as to the media type of the image. The purpose of this member is to allow a user agent to quickly ignore images with media types it does not support.`
-    ),
+    type: Joi.string()
+      .optional()
+      .description(
+        `A hint as to the media type of the image. The purpose of this member is to allow a user agent to quickly ignore images with media types it does not support.`
+      ),
+
+  })
+
+  const ManifestImageResource = ImageResource.keys({
     purpose: Joi.string()
       .optional()
       .description(
@@ -176,7 +184,12 @@ export default function pluginOptionSchema({ Joi }) {
       ),
     screenshots: Joi.array()
       .optional()
-      .items(ManifestImageResource)
+      .items(ManifestImageResource.keys({
+        label: Joi.string()
+          .optional()
+          .description(`The label member is a string that serves as the accessible name of that screenshots object.`),
+        platform: platform
+      }))
       .description(
         `The screenshots member defines an array of screenshots intended to showcase the application.`
       ),
