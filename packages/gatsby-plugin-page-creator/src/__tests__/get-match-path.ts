@@ -25,4 +25,10 @@ describe(`getMatchPath`, () => {
       `/products/:brand/offer/:coupon`
     )
   })
+
+  it(`handles collection paths in-between`, () => {
+    expect(getMatchPath(`/products/{Model.foo}/[...page]`)).toEqual(
+      `/products/{Model.foo}/*page`
+    )
+  })
 })

@@ -3,7 +3,6 @@ import { ActionsUnion, IGatsbyState } from "../types"
 export const pendingPageDataWritesReducer = (
   state: IGatsbyState["pendingPageDataWrites"] = {
     pagePaths: new Set(),
-    templatePaths: new Set(),
   },
   action: ActionsUnion
 ): IGatsbyState["pendingPageDataWrites"] => {
@@ -12,13 +11,15 @@ export const pendingPageDataWritesReducer = (
       state.pagePaths.add(action.payload.path)
       return state
 
-    case `ADD_PENDING_TEMPLATE_DATA_WRITE`:
-      state.templatePaths.add(action.payload.componentPath)
+    case `ADD_PENDING_TEMPLATE_DATA_WRITE`: {
+      for (const page of action.payload.pages) {
+        state.pagePaths.add(page)
+      }
       return state
+    }
 
-    case `CLEAR_PENDING_PAGE_DATA_WRITES`: {
-      state.pagePaths.clear()
-      state.templatePaths.clear()
+    case `CLEAR_PENDING_PAGE_DATA_WRITE`: {
+      state.pagePaths.delete(action.payload.page)
       return state
     }
 

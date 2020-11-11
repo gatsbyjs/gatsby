@@ -1,4 +1,4 @@
-const {
+import {
   GraphQLInputObjectType,
   GraphQLBoolean,
   GraphQLString,
@@ -6,14 +6,19 @@ const {
   GraphQLFloat,
   GraphQLEnumType,
   GraphQLNonNull,
-} = require(`gatsby/graphql`)
-const sharp = require(`./safe-sharp`)
-const { Potrace } = require(`potrace`)
+  GraphQLInputFieldConfigMap,
+} from "gatsby/graphql"
+import { Potrace } from "potrace"
+import type Sharp from "sharp"
+
+const sharp: typeof Sharp = require(`./safe-sharp`)
+const DEFAULT_PNG_COMPRESSION_SPEED = 4
 
 export const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
   values: {
     NO_CHANGE: { value: `` },
+    AUTO: { value: `` },
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
@@ -34,7 +39,7 @@ export const ImagePlaceholderType = new GraphQLEnumType({
   values: {
     DOMINANT_COLOR: { value: `dominantColor` },
     TRACED_SVG: { value: `tracedSVG` },
-    BASE64: { value: `base64` },
+    BLURRED: { value: `blurred` },
     NONE: { value: `none` },
   },
 })
@@ -67,9 +72,66 @@ export const ImageCropFocusType = new GraphQLEnumType({
   },
 })
 
+export const PNGOptionsType = new GraphQLInputObjectType({
+  name: `PNGOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      quality: {
+        type: GraphQLInt,
+      },
+      compressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
+    }
+  },
+})
+
+export const JPGOptionsType = new GraphQLInputObjectType({
+  name: `JPGOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      quality: {
+        type: GraphQLInt,
+      },
+      progressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+    }
+  },
+})
+
+export const BlurredOptionsType = new GraphQLInputObjectType({
+  name: `BlurredOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      width: {
+        type: GraphQLInt,
+        description: `Width of the generated low-res preview. Default is 20px`,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        description: `Force the output format for the low-res preview. Default is to use the same format as the input. You should rarely need to change this`,
+      },
+    }
+  },
+})
+
+export const WebPOptionsType = new GraphQLInputObjectType({
+  name: `WebPOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      quality: {
+        type: GraphQLInt,
+      },
+    }
+  },
+})
+
 export const DuotoneGradientType = new GraphQLInputObjectType({
   name: `DuotoneGradient`,
-  fields: () => {
+  fields: (): GraphQLInputFieldConfigMap => {
     return {
       highlight: { type: new GraphQLNonNull(GraphQLString) },
       shadow: { type: new GraphQLNonNull(GraphQLString) },
@@ -92,7 +154,7 @@ export const PotraceTurnPolicyType = new GraphQLEnumType({
 
 export const PotraceType = new GraphQLInputObjectType({
   name: `Potrace`,
-  fields: () => {
+  fields: (): GraphQLInputFieldConfigMap => {
     return {
       turnPolicy: {
         type: PotraceTurnPolicyType,
@@ -105,6 +167,38 @@ export const PotraceType = new GraphQLInputObjectType({
       blackOnWhite: { type: GraphQLBoolean },
       color: { type: GraphQLString },
       background: { type: GraphQLString },
+    }
+  },
+})
+
+export const TransformOptionsType = new GraphQLInputObjectType({
+  name: `TransformOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      grayscale: {
+        type: GraphQLBoolean,
+        defaultValue: false,
+      },
+      duotone: {
+        type: DuotoneGradientType,
+        defaultValue: false,
+      },
+      rotate: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: sharp.strategy.attention,
+      },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
     }
   },
 })

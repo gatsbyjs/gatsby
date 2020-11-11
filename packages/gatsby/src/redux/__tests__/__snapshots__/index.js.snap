@@ -52,7 +52,6 @@ Object {
   "pageDataStats": Map {},
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
-    "templatePaths": Set {},
   },
   "queries": Object {
     "byConnection": Map {},
