@@ -49,7 +49,6 @@ class DevLoader extends BaseLoader {
 
   loadPageDataJson(rawPath, refresh) {
     return super.loadPageDataJson(rawPath, refresh).then(data => {
-      ___emitter.emit(`onLoadPageDataJson`, null)
       // when we can't find a proper 404.html we fallback to dev-404-page
       // we need to make sure to mark it as not found.
       if (
