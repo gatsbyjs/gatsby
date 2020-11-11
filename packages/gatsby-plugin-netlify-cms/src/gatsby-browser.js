@@ -10,7 +10,7 @@ exports.onInitialClientRender = (
   {
     enableIdentityWidget = true,
     identityWidgetInitConfig = {},
-    publicPath = `admin`
+    publicPath = `admin`,
   }
 ) => {
   const hash = (document.location.hash || ``).replace(/^#\/?/, ``)

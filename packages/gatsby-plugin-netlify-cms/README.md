@@ -172,7 +172,7 @@ plugins: [
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
       identityWidgetInitConfig: {
-        APIUrl: "https://my-site.netlify.com/.netlify/identity"
+        APIUrl: "https://my-site.netlify.com/.netlify/identity",
       },
     },
   },
