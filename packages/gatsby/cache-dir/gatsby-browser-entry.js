@@ -80,8 +80,8 @@ useStaticQuery(graphql\`${query}\`);
   // TODO just load data over xhr & socket.io just triggers
   // re-fetches
   const staticQueryData = {
-    ...context,
     ...loader.getStaticQueryResults(),
+    ...context,
   }
 
   console.log({ staticQueryData, query })
