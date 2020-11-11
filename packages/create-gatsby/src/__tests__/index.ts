@@ -1,9 +1,13 @@
-import { questions, plugin } from "../"
-import Enquirer, { Prompt } from "enquirer"
+import { questions } from "../"
+import { plugin } from "../components/plugin"
+import Enquirer from "enquirer"
 
 jest.mock(`fs`)
 
-async function stringInput(prompt: Prompt, word: string): Promise<void> {
+async function stringInput(
+  prompt: { keypress(key: string): void },
+  word: string
+): Promise<void> {
   for (const char of word) {
     await prompt.keypress(char)
   }
@@ -13,7 +17,7 @@ xdescribe(`run`, () => {
   let enquirer
 
   beforeEach(() => {
-    enquirer = new Enquirer<IAnswers>()
+    enquirer = new Enquirer()
     enquirer.use(plugin)
     jest.setTimeout(10000)
   })

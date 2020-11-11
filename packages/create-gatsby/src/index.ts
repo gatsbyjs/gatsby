@@ -1,4 +1,4 @@
-import Enquirer, { Prompt } from "enquirer"
+import Enquirer from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
@@ -7,12 +7,7 @@ import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
-// @ts-ignore
-import { FormInput } from "./components/form"
-// @ts-ignore
-import { TextInput } from "./components/text"
-// @ts-ignore
-import { SelectInput, MultiSelectInput } from "./components/select"
+import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, rule, wrap } from "./components/utils"
 
@@ -55,7 +50,9 @@ export const validateProjectName = async (
   return true
 }
 
-export const questions = [
+// The enquirer types are not accurate
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const questions: any = [
   {
     type: `textinput`,
     name: `project`,
@@ -100,15 +97,6 @@ interface IPluginEntry {
   dependencies?: Array<string>
 }
 
-export const plugin = (enquirer: any): void => {
-  enquirer.register(`textinput`, (TextInput as unknown) as typeof Prompt)
-  enquirer.register(`selectinput`, (SelectInput as unknown) as typeof Prompt)
-  enquirer.register(
-    `multiselectinput`,
-    (MultiSelectInput as unknown) as typeof Prompt
-  )
-}
-
 export type PluginMap = Record<string, IPluginEntry>
 
 export async function run(): Promise<void> {
@@ -145,7 +133,6 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   enquirer.use(plugin)
 
-  // @ts-ignore
   const data = await enquirer.prompt(questions)
 
   const messages: Array<string> = [
@@ -201,9 +188,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     )
 
     const enquirer = new Enquirer<Record<string, {}>>()
-
-    enquirer.register(`forminput`, (FormInput as unknown) as typeof Prompt)
-
+    enquirer.use(plugin)
     pluginConfig = await enquirer.prompt(config)
   }
 
