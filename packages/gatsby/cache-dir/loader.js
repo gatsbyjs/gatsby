@@ -556,7 +556,7 @@ export const publicLoader = {
   },
   enqueue: rawPath => instance.prefetch(rawPath),
 
-  getStaticQueryResults: () => instance.staticQueryDb,
+  getStaticQueryResults: () => instance?.staticQueryDb,
   getPageQueryData: () => instance.pageDataDb,
 
   // Real methods
