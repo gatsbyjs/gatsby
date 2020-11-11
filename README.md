@@ -147,11 +147,11 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 ## ❗ Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://www.gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+Gatsby is dedicated to building a welcoming, diverse, safefully community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://www.gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
 ## 🤝 How to Contribute
 
-Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
+Whether you're helping us fix bugs, improve the docs, or spread the word, we had love to have you as part of the Gatsby community! :muscle::purple_heart:
 
 Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
