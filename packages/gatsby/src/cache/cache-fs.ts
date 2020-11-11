@@ -213,7 +213,7 @@ DiskStore.prototype._lock = function _lock(filePath): Promise<void> {
 function innerLock(resolve, reject, filePath): void {
   try {
     let lockTime = globalGatsbyCacheLock.get(filePath) ?? 0
-    if (lockTime > 0 && Date.now() - lockTime > 10 * 60 * 1000) {
+    if (lockTime > 0 && Date.now() - lockTime > 10 * 1000) {
       reporter.verbose(
         `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later.`
       )
@@ -224,7 +224,7 @@ function innerLock(resolve, reject, filePath): void {
     if (lockTime > 0) {
       setTimeout(() => {
         innerLock(resolve, reject, filePath)
-      }, 400)
+      }, 50)
     } else {
       resolve()
     }
