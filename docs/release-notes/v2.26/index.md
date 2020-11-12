@@ -11,7 +11,7 @@ Welcome to `gatsby@2.26.0` release (November 2020).
 Key highlights of this release:
 
 - [New Image Plugin](#gatsby-plugin-image010-beta) - access static images without GraphQL, high Lighthouse scores again
-- [File System Route API](#file-system-route-api) - create pages from your data using filename conventions
+- [File System Route API](#file-system-route-api) - create routes from your data using filename conventions
 - [New Release Process](#new-release-process) - more stability and clarity around Gatsby releases
 - [gatsby-source-contentful v4.0](#gatsby-source-contentful400) - new RichText implementation, performance improvements
 
