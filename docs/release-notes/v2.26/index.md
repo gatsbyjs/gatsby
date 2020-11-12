@@ -57,11 +57,54 @@ See PR [#27948](https://github.com/gatsbyjs/gatsby/pull/27948) for details.
 
 ## gatsby-plugin-image@0.1.0 (beta)
 
-New image plugin to replace `gatsby-image`, which greatly improves performance (Lighthouse 💯 again)
-and adds easy static images (no GraphQL). Part of it is also a new, simpler API for `gatsby-transformer-sharp`.
+[New image plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) to replace `gatsby-image`, which greatly improves performance (Lighthouse 💯 again) and adds easy static images (no GraphQL). Part of it is also a new, simpler API for `gatsby-transformer-sharp`.
 
-- [Full announcement and discussion](https://github.com/gatsbyjs/gatsby/discussions/27950)
-- [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image)
+### StaticImage
+
+This component is a new, simpler way to use Gatsby's image processing for static images without needing to write GraphQL queries:
+
+```js
+import React from "react"
+import { StaticImage } from "gatsby-plugin-image"
+
+export const Dino = () => (
+  <StaticImage width={100} height={100} src="trex.png" alt="T-Rex" />
+)
+```
+
+### GatsbyImage
+
+This is a complete rewrite of the Gatsby Image component, using native lazy loading whenever possible.
+In our tests it allows sites whose Lighthouse scores dropped in recent updates to get back to 100s across the board.
+
+### Simpler GraphQL for non-static images
+
+Instead of having to remember lots of different fragments for different image types,
+you can pass all your options as field arguments (and get inline help in GraphiQL):
+
+```graphql
+query {
+  file(relativePath: { eq: "plant.jpg" }) {
+    childImageSharp {
+      gatsbyImageData(maxWidth: 720, layout: FLUID, placeholder: TRACED_SVG)
+    }
+  }
+}
+```
+
+You then use the data like this:
+
+```jsx
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
+export function Plant({ data }) {
+  const imageData = getImage(data.file)
+  return <GatsbyImage image={imageData} alt="Plant" />
+}
+```
+
+- [Details, Migration guide and discussion](https://github.com/gatsbyjs/gatsby/discussions/27950)
+- [Documentation](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image)
 
 ## gatsby-source-contentful@4.0.0
 
