@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.4.0-next.0...gatsby-source-npm-package-search@2.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
 ## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.3.15...gatsby-source-npm-package-search@2.3.16) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-source-npm-package-search

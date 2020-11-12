@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.4.0-next.0...gatsby-plugin-mdx@1.4.0-next.1) (2020-11-10)
+
+### Performance Improvements
+
+- **gatsby-plugin-mdx:** lazily fetch file nodes for plugins ([#27937](https://github.com/gatsbyjs/gatsby/issues/27937)) ([e546e9a](https://github.com/gatsbyjs/gatsby/commit/e546e9a8c405aadafbfce332f51d79acf008fe13))
+
 # [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.53...gatsby-plugin-mdx@1.3.0) (2020-11-02)
 
 ### Features

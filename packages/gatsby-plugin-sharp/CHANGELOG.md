@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.8.0-next.0...gatsby-plugin-sharp@2.8.0-next.1) (2020-11-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** Resolver API changes ([#27783](https://github.com/gatsbyjs/gatsby/issues/27783)) ([fe0b5de](https://github.com/gatsbyjs/gatsby/commit/fe0b5de77d223f5c13a9b315b650d8514cbdb9f9)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
 # [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.44...gatsby-plugin-sharp@2.7.0) (2020-11-02)
 
 ### Features
