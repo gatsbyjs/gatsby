@@ -43,6 +43,8 @@ Some examples:
 
 - `src/pages/products/{Product.name}.js` will generate pages for all products with a path like `/products/burger`
 - `src/pages/products/{Product.fields__sku}.js` will generate pages for all products with a path like `/products/001923`
+- `src/pages/users/[id].js` will generate a route like `/users/:id`
+- `src/pages/image/[...].js` will generate a route like `/image/*`
 
 See [Full Documentation](https://www.gatsbyjs.com/docs/file-system-route-api/),
 [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api)
