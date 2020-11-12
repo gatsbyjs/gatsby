@@ -15,7 +15,7 @@ describe(`gatsby feedback`, () => {
       `Hello! Will you help Gatsby improve by taking a four question survey?`
     )
     logs.should.contain(
-      `It takes less than five minutes and your ideas and feedback will be very helpful`
+      `It will only take less than five minutes and your ideas and feedback will be very helpful`
     )
     logs.should.contain(
       `Give us your feedback here: https://gatsby.dev/feedback`
