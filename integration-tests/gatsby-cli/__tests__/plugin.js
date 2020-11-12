@@ -15,12 +15,12 @@ describe(`gatsby plugin`, () => {
   afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`lists plugins`, async () => {
-    const [getLogs] = GatsbyCLI.from(cwd).invoke([`plugin`, `ls`])
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([`plugin`, `ls`])
 
-    const logs = getLogs()
     logs.should.contain(`gatsby-source-filesystem`)
     logs.should.contain(`gatsby-plugin-offline`)
     logs.should.not.contain(`ignore comments`)
+    expect(code).toBe(0)
 
   })
 })
