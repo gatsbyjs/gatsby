@@ -328,6 +328,8 @@ jobs:
 
   e2e_tests_development_runtime_fast_refresh:
     <<: *e2e_tests_development_runtime_alias
+    environment:
+      GATSBY_HOT_LOADER: fast-refresh
 
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
@@ -602,8 +604,6 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime_fast_refresh:
           <<: *e2e-test-workflow
-          environment:
-            GATSBY_HOT_LOADER: fast-refresh
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - themes_e2e_tests_production_runtime:
