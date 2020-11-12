@@ -9,12 +9,6 @@ dictionary.txt                                  @gatsbyjs/documentation
 # Benchmarks
 /benchmarks/                                    @duffn @pvdz @smthomas
 
-# All blog posts must be reviewed by the content team.
-/docs/blog/                                     @gatsbyjs/content
-
-# The website auto-deploys, so we need an extra check to avoid shenanigans.
-/www/                                           @gatsbyjs/website
-
 # Themes
 
 /packages/gatsby-plugin-mdx/                    @gatsbyjs/themes-core

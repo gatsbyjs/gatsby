@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.4.0-next.0...gatsby-plugin-page-creator@2.4.0-next.1) (2020-11-10)
+
+### Features
+
+- File System Route API - General Availability ([#27424](https://github.com/gatsbyjs/gatsby/issues/27424)) ([07eeb2e](https://github.com/gatsbyjs/gatsby/commit/07eeb2ec35deadd212f009ce26f55f38d8304b11))
+
 ## [2.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.33...gatsby-plugin-page-creator@2.3.34) (2020-10-26)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

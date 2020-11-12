@@ -22,7 +22,8 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .description(
         `Include Google Tag Manager when running in development mode.`
       ),
-    defaultDataLayer: Joi.object()
+    defaultDataLayer: Joi.alternatives()
+      .try(Joi.object(), Joi.function())
       .default(null)
       .description(
         `Data layer to be set before Google Tag Manager is loaded. Should be an object or a function.`

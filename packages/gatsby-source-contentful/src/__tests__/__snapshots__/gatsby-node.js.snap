@@ -445,3 +445,19 @@ Object {
   "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
+
+exports[`gatsby-node stores rich text as raw with references attached 1`] = `
+Array [
+  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry",
+  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry",
+  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset",
+]
+`;
+
+exports[`gatsby-node stores rich text as raw with references attached 2`] = `
+Array [
+  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry___nl",
+  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry___nl",
+  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset___nl",
+]
+`;

@@ -292,28 +292,52 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     const testsCases = [
       { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
       {
-        args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.fill },
+        args: {
+          maxWidth: 20,
+          maxHeight: 20,
+          transformOptions: { fit: sharp.fit.fill },
+        },
         result: [20, 20],
       },
       {
-        args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.inside },
+        args: {
+          maxWidth: 20,
+          maxHeight: 20,
+          transformOptions: { fit: sharp.fit.inside },
+        },
         result: [20, 10],
       },
       {
-        args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.outside },
+        args: {
+          maxWidth: 20,
+          maxHeight: 20,
+          transformOptions: { fit: sharp.fit.outside },
+        },
         result: [41, 20],
       },
       { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
       {
-        args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.fill },
+        args: {
+          maxWidth: 200,
+          maxHeight: 200,
+          transformOptions: { fit: sharp.fit.fill },
+        },
         result: [200, 200],
       },
       {
-        args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.inside },
+        args: {
+          maxWidth: 200,
+          maxHeight: 200,
+          transformOptions: { fit: sharp.fit.inside },
+        },
         result: [200, 97],
       },
       {
-        args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.outside },
+        args: {
+          maxWidth: 200,
+          maxHeight: 200,
+          transformOptions: { fit: sharp.fit.outside },
+        },
         result: [413, 200],
       },
     ]
@@ -341,28 +365,52 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     const testsCases = [
       { args: { width: 20, height: 20 }, result: [20, 20] },
       {
-        args: { width: 20, height: 20, fit: sharp.fit.fill },
+        args: {
+          width: 20,
+          height: 20,
+          transformOptions: { fit: sharp.fit.fill },
+        },
         result: [20, 20],
       },
       {
-        args: { width: 20, height: 20, fit: sharp.fit.inside },
+        args: {
+          width: 20,
+          height: 20,
+          transformOptions: { fit: sharp.fit.inside },
+        },
         result: [20, 10],
       },
       {
-        args: { width: 20, height: 20, fit: sharp.fit.outside },
+        args: {
+          width: 20,
+          height: 20,
+          transformOptions: { fit: sharp.fit.outside },
+        },
         result: [41, 20],
       },
       { args: { width: 200, height: 200 }, result: [200, 200] },
       {
-        args: { width: 200, height: 200, fit: sharp.fit.fill },
+        args: {
+          width: 200,
+          height: 200,
+          transformOptions: { fit: sharp.fit.fill },
+        },
         result: [200, 200],
       },
       {
-        args: { width: 200, height: 200, fit: sharp.fit.inside },
+        args: {
+          width: 200,
+          height: 200,
+          transformOptions: { fit: sharp.fit.inside },
+        },
         result: [200, 97],
       },
       {
-        args: { width: 200, height: 200, fit: sharp.fit.outside },
+        args: {
+          width: 200,
+          height: 200,
+          transformOptions: { fit: sharp.fit.outside },
+        },
         result: [413, 200],
       },
     ]

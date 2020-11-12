@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql, unstable_collectionGraphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Image from "gatsby-image"
 
 import Layout from "../../components/layout"
@@ -28,15 +28,6 @@ export const blogPostQuery = graphql`
           name
         }
       }
-    }
-  }
-`
-
-// This should filter it down to just a single instance
-export const collectionQuery = unstable_collectionGraphql`
-  {
-    allImageSharp(limit: 1, skip: 1) {
-      ...CollectionPagesQueryFragment
     }
   }
 `

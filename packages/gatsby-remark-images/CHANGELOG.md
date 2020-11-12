@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.5.0-next.0...gatsby-remark-images@3.5.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** allow strings for the wrapperStyle option ([#27912](https://github.com/gatsbyjs/gatsby/issues/27912)) ([d64603e](https://github.com/gatsbyjs/gatsby/commit/d64603ed0db00a0032f84460a91bb65e63b4b884))
+
 # [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.40...gatsby-remark-images@3.4.0) (2020-11-02)
 
 ### Features
