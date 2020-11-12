@@ -288,10 +288,7 @@ icon.svg`,
       `)
     })
 
-    // Relates to QUESTION-1
-    // This tests just output an image with a "default behaviour"
-    // It looks that modifying the sources doesn't have impact on the output?
-    it(`FIXME: has valid sizes and srcSet when provided in the images`, () => {
+    it(`has valid sizes and srcSet when provided in the images`, () => {
       const sources: Array<SourceProps> = [
         {
           media: `some-media`,
@@ -314,21 +311,28 @@ icon.svg`,
         backgroundColor: `red`,
       }
 
-      render(
+      const { container } = render(
         <GatsbyImage image={image} alt="A fake image for testing purpose" />
       )
 
-      const img = screen.getByRole(`img`)
-      expect(img).toMatchInlineSnapshot(`
-        <img
-          alt="A fake image for testing purpose"
-          data-gatsby-image-ssr=""
-          data-main-image=""
-          decoding="async"
-          loading="lazy"
-          sizes="192x192"
-          style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
-        />
+      const picture = container.querySelector(`picture`)
+
+      expect(picture).toMatchInlineSnapshot(`
+        <picture>
+          <source
+            media="some-media"
+            srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
+          />
+          <img
+            alt="A fake image for testing purpose"
+            data-gatsby-image-ssr=""
+            data-main-image=""
+            decoding="async"
+            loading="lazy"
+            sizes="192x192"
+            style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
+          />
+        </picture>
       `)
     })
   })
