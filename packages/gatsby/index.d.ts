@@ -26,10 +26,10 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export const useScrollRestoration: (
+export const useScrollRestoration: <T extends HTMLElement>(
   key: string
 ) => {
-  ref: React.MutableRefObject<HTMLElement | undefined>
+  ref: React.MutableRefObject<T | null>
   onScroll(): void
 }
 
