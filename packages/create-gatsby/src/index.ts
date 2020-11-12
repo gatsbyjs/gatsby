@@ -10,6 +10,7 @@ import fs from "fs"
 import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, rule, wrap } from "./components/utils"
+import { stripIndent } from "common-tags"
 
 // eslint-disable-next-line no-control-regex
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
@@ -81,7 +82,7 @@ export const questions: any = [
     type: `multiselectinput`,
     name: `features`,
     message: `Would you like to install additional features with other plugins?`,
-    hint: `(Multiple choice) Use arrow keys to move, spacebar to select, and enter to confirm your choices`,
+    hint: `(Multiple choice) Use arrow keys to move, enter to select, and choose "Done" to confirm your choices`,
     choices: makeChoices(features, true),
   },
 ]
@@ -93,11 +94,30 @@ interface IAnswers {
 }
 
 interface IPluginEntry {
+  /**
+   * Message displayed in the menu when selecting the plugin
+   */
   message: string
+  /**
+   * Extra NPM packages to install
+   */
   dependencies?: Array<string>
+  /**
+   * Items are either the plugin name, or the plugin name and key, separated by a colon (":")
+   * This allows duplicate entries for plugins such as gatsby-source-filesystem.
+   */
+  plugins?: Array<string>
+  /**
+   * Keys must match plugin names or name:key combinations from the plugins array
+   */
+  options?: PluginConfigMap
 }
 
 export type PluginMap = Record<string, IPluginEntry>
+
+export type PluginConfigMap = Record<string, Record<string, unknown>>
+
+const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
   const { version } = require(`../package.json`)
@@ -141,6 +161,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   const plugins: Array<string> = []
   const packages: Array<string> = []
+  let pluginConfig: PluginConfigMap = {}
 
   if (data.cms && data.cms !== `none`) {
     messages.push(
@@ -149,7 +170,12 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       )}`
     )
     plugins.push(data.cms)
-    packages.push(data.cms, ...(cmses[data.cms].dependencies || []))
+    packages.push(
+      data.cms,
+      ...(cmses[data.cms].dependencies || []),
+      ...(cmses[data.cms].plugins || [])
+    )
+    pluginConfig = { ...pluginConfig, ...cmses[data.cms].options }
   }
 
   if (data.styling && data.styling !== `none`) {
@@ -159,7 +185,12 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       )} for styling your site`
     )
     plugins.push(data.styling)
-    packages.push(data.styling, ...(styles[data.styling].dependencies || []))
+    packages.push(
+      data.styling,
+      ...(styles[data.styling].dependencies || []),
+      ...(styles[data.styling].plugins || [])
+    )
+    pluginConfig = { ...pluginConfig, ...styles[data.styling].options }
   }
 
   if (data.features?.length) {
@@ -169,19 +200,25 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
         .join(`, `)}`
     )
     plugins.push(...data.features)
-    const featureDependencies = data.features?.map(
-      featureKey => features[featureKey].dependencies || []
-    )
+    const featureDependencies = data.features?.map(featureKey => [
+      // Spread in extra dependencies
+      ...(features[featureKey].dependencies || []),
+      // Spread in plugins, stripping the optional key
+      ...(features[featureKey].plugins || []),
+    ])
     const flattenedDependencies = ([] as Array<string>).concat.apply(
       [],
       featureDependencies
     ) // here until we upgrade to node 11 and can use flatMap
 
     packages.push(...data.features, ...flattenedDependencies)
+    // Merge plugin options
+    pluginConfig = data.features.reduce((prev, key) => {
+      return { ...prev, ...features[key].options }
+    }, pluginConfig)
   }
 
   const config = makePluginConfigQuestions(plugins)
-  let pluginConfig
   if (config.length) {
     console.log(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
@@ -189,7 +226,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     const enquirer = new Enquirer<Record<string, {}>>()
     enquirer.use(plugin)
-    pluginConfig = await enquirer.prompt(config)
+    pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }
   }
 
   console.log(`
@@ -226,11 +263,11 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   const runCommand = pm === `npm` ? `npm run` : `yarn`
 
   console.log(
-    `🎉 Your new Gatsby site ${c.bold(
+    stripIndent`
+    🎉 Your new Gatsby site ${c.bold(
       data.project
-    )} has been successfully bootstrapped at ${c.bold(
-      path.resolve(data.project)
-    )}.
+    )} has been successfully bootstrapped 
+    at ${c.bold(path.resolve(data.project))}.
     `
   )
   console.log(`Start by going to the directory with\n

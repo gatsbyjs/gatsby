@@ -1,8 +1,9 @@
 import { reporter } from "./reporter"
 import path from "path"
+import { PluginConfigMap } from "."
 export async function installPlugins(
   plugins: Array<string>,
-  pluginOptions: Record<string, Record<string, any> | undefined> = {},
+  pluginOptions: PluginConfigMap = {},
   rootPath: string,
   packages: Array<string>
 ): Promise<void> {

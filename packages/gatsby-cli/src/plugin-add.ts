@@ -41,12 +41,15 @@ async function installPluginConfig(
     `Adding ${plugin} to gatsby-config`
   )
 
+  // Plugins can optionally include a key, to allow duplicates
+  const [pluginName, pluginKey] = plugin.split(`:`)
+
   installTimer.start()
-  reporter.info(`Adding ${plugin}`)
+  reporter.info(`Adding ${pluginName}`)
   try {
     const result = await GatsbyPlugin.create(
       { root },
-      { name: plugin, options }
+      { name: plugin, options, key: pluginKey }
     )
     reporter.info(result._message)
   } catch (err) {
