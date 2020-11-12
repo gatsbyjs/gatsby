@@ -209,7 +209,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       return [
         // Spread in extra dependencies
         ...(features[featureKey].dependencies || []),
-        // Spread in plugins, stripping the optional key
+        // Spread in plugins
         ...extraPlugins,
       ]
     })
