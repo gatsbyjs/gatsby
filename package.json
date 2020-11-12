@@ -93,7 +93,7 @@
     "yargs": "^10.1.2"
   },
   "resolutions": {
-    "theme-ui": "0.4.0-rc.1",
+    "theme-ui": "0.4.0-rc.8",
     "csstype": "2.6.13"
   },
   "engines": {
