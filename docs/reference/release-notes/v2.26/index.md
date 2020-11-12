@@ -130,7 +130,7 @@ size, so it is possible you may need to use a lower value for your particular si
 ## gatsby-plugin-mdx@1.4.0
 
 There was a significant performance improvement by making a certain node fetching step lazy.
-This is especially noticeable at scale. See PR [#27937](https://github.com/gatsby/gatsby/issues/27937) for details.
+This is especially noticeable at scale. See PR [#27937](https://github.com/gatsbyjs/gatsby/pull/27937) for details.
 
 ## Work in progress
 

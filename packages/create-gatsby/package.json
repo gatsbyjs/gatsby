@@ -13,6 +13,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
   "dependencies": {
     "@babel/runtime": "^7.12.1",
+    "ansi-colors": "^4.1.1",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.0",
     "enquirer": "^2.3.6",
