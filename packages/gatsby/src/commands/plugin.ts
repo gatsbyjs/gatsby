@@ -1,4 +1,6 @@
 import { IProgram } from "./types"
+import { GatsbyPlugin } from "gatsby-recipes"
+import path from "path"
 
 module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
   const { report, cmd } = args
@@ -25,6 +27,13 @@ module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
         - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
                    `)
       return
+    case `ls`:
+      const path = path.resolve(
+        `./gatsby-config.js`
+      )
+      console.log(path)
+      // const list = GatsbyPlugin.
+    return
 
     default:
       report.error(`Unknown command ${cmd}`)
