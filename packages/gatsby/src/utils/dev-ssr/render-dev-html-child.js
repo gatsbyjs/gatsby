@@ -77,7 +77,7 @@ const parseError = function ({ err, directory, componentPath }) {
 
   // Try to generate a codeFrame
   try {
-    const code = fs.readFileSync(filename + `dsf`, `utf-8`)
+    const code = fs.readFileSync(filename, `utf-8`)
     const line = position.line
     const row = position.row
     ansiHTML.setColors({
