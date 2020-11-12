@@ -291,7 +291,6 @@ export async function initStarter(
     opn(`https://gatsby.dev/starters?v=2`)
     return
   }
-
   if (urlObject.protocol && urlObject.host) {
     trackError(`NEW_PROJECT_NAME_MISSING`)
 
