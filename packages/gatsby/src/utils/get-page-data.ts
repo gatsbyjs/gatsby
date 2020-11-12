@@ -7,12 +7,9 @@ import {
   readPageData as readPageDataUtil,
 } from "./page-data"
 
-export interface IPageQueryResult {
-  id: string
-  result: IPageDataWithQueryResult
-}
-
-export async function getPageData(pagePath: string): Promise<IPageQueryResult> {
+export async function getPageData(
+  pagePath: string
+): Promise<IPageDataWithQueryResult> {
   const { queries } = store.getState()
 
   const query = queries.trackedQueries.get(pagePath)
@@ -31,7 +28,9 @@ export async function getPageData(pagePath: string): Promise<IPageQueryResult> {
   return readPageData(pagePath)
 }
 
-async function waitNextPageData(pagePath: string): Promise<IPageQueryResult> {
+async function waitNextPageData(
+  pagePath: string
+): Promise<IPageDataWithQueryResult> {
   return new Promise(resolve => {
     const listener = (data: IClearPendingPageDataWriteAction): void => {
       if (data.payload.page === pagePath) {
@@ -43,16 +42,14 @@ async function waitNextPageData(pagePath: string): Promise<IPageQueryResult> {
   })
 }
 
-async function readPageData(pagePath): Promise<IPageQueryResult> {
+async function readPageData(pagePath): Promise<IPageDataWithQueryResult> {
   const { program } = store.getState()
+
   try {
-    return {
-      id: pagePath,
-      result: await readPageDataUtil(
-        path.join(program.directory, `public`),
-        pagePath
-      ),
-    }
+    return await readPageDataUtil(
+      path.join(program.directory, `public`),
+      pagePath
+    )
   } catch (err) {
     throw new Error(
       `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`

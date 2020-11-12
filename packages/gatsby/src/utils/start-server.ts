@@ -28,7 +28,12 @@ import https from "https"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import { reverseFixedPagePath, readPageData } from "./page-data"
+import {
+  reverseFixedPagePath,
+  readPageData,
+  IPageDataWithQueryResult,
+} from "./page-data"
+import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
 import { slash } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -232,10 +237,14 @@ export async function startServer(
 
       if (page) {
         try {
-          const pageData = await readPageData(
-            path.join(store.getState().program.directory, `public`),
-            page.path
-          )
+          const pageData: IPageDataWithQueryResult = process.env
+            .GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+            ? await getPageDataExperimental(page.path)
+            : await readPageData(
+                path.join(store.getState().program.directory, `public`),
+                page.path
+              )
+
           res.status(200).send(pageData)
           return
         } catch (e) {
