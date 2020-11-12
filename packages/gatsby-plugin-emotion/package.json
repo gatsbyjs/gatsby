@@ -19,6 +19,7 @@
   "peerDependencies": {
     "@babel/core": "^7.12.3",
     "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.0.0",
     "gatsby": "^2.25.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
