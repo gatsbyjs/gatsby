@@ -66,6 +66,7 @@ export const renderDevHTML = ({
     try {
       const htmlString = await worker.renderHTML({
         path,
+        componentPath: pageObj.component,
         htmlComponentRendererPath,
         directory,
         isClientOnlyPage,

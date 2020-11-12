@@ -51,7 +51,7 @@ const colors = {
 }
 
 // Code borrowed and modified from https://github.com/watilde/parse-error
-const parseError = function (err, directory) {
+const parseError = function ({ err, directory, componentPath }) {
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)
@@ -64,50 +64,54 @@ const parseError = function (err, directory) {
     ...position.filename.split(`/`).slice(2)
   )
 
-  let code
-  try {
-    code = fs.readFileSync(filename, `utf-8`)
-  } catch (e) {
-    console.log(`Couldn't read the file ${filename}`)
-    console.log(`original error`, err)
-    return `404 page`
-  }
-  const line = position.line
-  const row = position.row
-  ansiHTML.setColors({
-    reset: [colors.text, colors.background], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
-    black: `aaa`, // String
-    red: colors.keyword,
-    green: colors.green,
-    yellow: colors.yellow,
-    blue: `eee`,
-    magenta: `fff`,
-    cyan: colors.darkGreen,
-    lightgrey: `888`,
-    darkgrey: colors.comment,
-  })
-  const codeFrame = ansiHTML(
-    codeFrameColumns(
-      code,
-      {
-        start: { line: line, column: row },
-      },
-      { forceColor: true }
-    )
-  )
   const splitMessage = err.message ? err.message.split(`\n`) : [``]
   const message = splitMessage[splitMessage.length - 1]
   const type = err.type ? err.type : err.name
+
   const data = {
-    filename: sysPath.relative(directory, filename),
-    code,
-    codeFrame,
-    line: line,
-    row: row,
+    filename: sysPath.relative(directory, componentPath),
     message: message,
     type: type,
     stack: stack,
   }
+
+  // Try to generate a codeFrame
+  try {
+    const code = fs.readFileSync(filename + `dsf`, `utf-8`)
+    const line = position.line
+    const row = position.row
+    ansiHTML.setColors({
+      reset: [colors.text, colors.background], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      black: `aaa`, // String
+      red: colors.keyword,
+      green: colors.green,
+      yellow: colors.yellow,
+      blue: `eee`,
+      magenta: `fff`,
+      cyan: colors.darkGreen,
+      lightgrey: `888`,
+      darkgrey: colors.comment,
+    })
+    const codeFrame = ansiHTML(
+      codeFrameColumns(
+        code,
+        {
+          start: { line: line, column: row },
+        },
+        { forceColor: true }
+      )
+    )
+
+    data.line = line
+    data.row = row
+    data.codeFrame = codeFrame
+  } catch (e) {
+    console.log(
+      `Couldn't read the file ${filename}, possibly due to source maps failing`
+    )
+    console.log(`original error`, err)
+  }
+
   return data
 }
 
@@ -115,6 +119,7 @@ exports.parseError = parseError
 
 exports.renderHTML = ({
   path,
+  componentPath,
   htmlComponentRendererPath,
   isClientOnlyPage = false,
   directory,
@@ -150,7 +155,7 @@ exports.renderHTML = ({
         console.log(err)
         reject(err)
       } else {
-        const error = parseError(err, directory)
+        const error = parseError({ err, directory, componentPath })
         reject(error)
       }
     }

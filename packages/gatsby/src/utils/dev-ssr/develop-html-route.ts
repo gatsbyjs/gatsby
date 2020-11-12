@@ -51,15 +51,18 @@ export const route = ({ app, program, store }): any =>
           column: error.row,
         },
       })
-      res.status(500).send(`<title>Develop SSR Error</title><h1>Error<h1>
+      let errorHtml = `<title>Develop SSR Error</title><h1>Error<h1>
         <h2>The page didn't SSR correctly</h2>
         <ul>
           <li><strong>URL path:</strong> <code>${req.path}</code></li>
           <li><strong>File path:</strong> <code>${error.filename}</code></li>
         </ul>
         <h3>error message</h3>
-        <p><code>${error.message}</code></p>
-        <pre style="background:#fdfaf6;padding:8px;">${error.codeFrame}</pre>`)
+        <p><code>${error.message}</code></p>`
+      if (error.codeFrame) {
+        errorHtml += `<pre style="background:#fdfaf6;padding:8px;">${error.codeFrame}</pre>`
+      }
+      res.status(500).send(errorHtml)
     }
 
     htmlActivity.end()
