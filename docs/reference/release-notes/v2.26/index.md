@@ -3,7 +3,7 @@ date: "2020-11-12"
 version: "2.26.0"
 ---
 
-# [v2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.27.0-next.0) (November 2020)
+# [v2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0) (November 2020)
 
 ---
 
@@ -192,4 +192,4 @@ And that means having documentation that helps y’all find the information you 
 
 ## Contributors
 
-A big **Thank You** to [everyone who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.27.0-next.0) to this release 💜
+A big **Thank You** to [everyone who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0) to this release 💜
