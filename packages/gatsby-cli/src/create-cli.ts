@@ -505,7 +505,11 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         const starterStr = starter ? String(starter) : undefined
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
-        if (!starterStr && !rootPathStr) {
+        if (
+          process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW &&
+          !starterStr &&
+          !rootPathStr
+        ) {
           await runCreateGatsby()
         } else {
           await initStarter(starterStr, rootPathStr)
