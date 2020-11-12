@@ -56,7 +56,7 @@ export const makePluginConfigQuestions = (
 
   selectedPlugins.forEach((pluginName: string): void => {
     const schema = pluginSchemas[pluginName as PluginName]
-    if (typeof schema === `string` || !(`keys` in schema)) {
+    if (!schema || typeof schema === `string` || !(`keys` in schema)) {
       return
     }
     const options: Record<string, Schema> | undefined = schema?.keys
