@@ -10,8 +10,7 @@ exports[`SSR it generates an error page correctly 1`] = `
           <li><strong>File path:</strong> <code>src/pages/bad-page.js</code></li>
         </ul>
         <h3>error message</h3>
-        <p><code>window is not defined</code></p>
-        <pre style=\\"background:#fdfaf6;padding:8px;\\"><span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 2 | </span></span>
+        <p><code>window is not defined</code></p><pre style=\\"background:#fdfaf6;padding:8px;\\"><span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 2 | </span></span>
 <span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 3 | </span><span style=\\"color:#006500;\\">const</span> <span style=\\"color:#DB3A00;\\">Component</span> <span style=\\"color:#DB3A00;\\">=</span> () <span style=\\"color:#DB3A00;\\">=></span> {</span>
 <span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 4 | </span>  <span style=\\"color:#006500;\\">const</span> a <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width</span>
 <span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\">   | </span>            <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
