@@ -13,42 +13,92 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- - Entities references in Rich Text fields are no more automatically resolved
+This major release improves Contentful's Richtext experience. If you are not using the Rich Text Contentful field type there are no breaking changes. 
+
+If you do, follow the migration guide.
+
+#### Richtext migration
+
+- Entities references in Rich Text fields are no more automatically resolved
 - Use the `raw` subfield instead of `json`
 - Use GraphQL to define your referenced data with the new `references` field
-- Removes the `resolveFieldLocales` as the new `references` field automatically resolves locales
-- To render Rich Text fields unse the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
+- Removes the `resolveFieldLocales` option as the new `references` field automatically resolves locales
+- To render Rich Text fields use the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
 
-- perf(gatsby-source-contentful): use getNodesByType to locate Rich Text references
+Check this example code for a page template:
 
-- clean up from rebase
+```javascript
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Img from "gatsby-image"
+import * as propTypes from "prop-types"
 
-- refactor to use a query for entry references
+// Import the new rendering and the render node definitions
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { BLOCKS, INLINES } from "@contentful/rich-text-types"
 
-- simplify and reduce complexity of rich text raw field value injection
+import Layout from "../components/layout"
 
-- performance: directly inject references into Rich Text field, skipping the extra node type
+// Setting the rendering options. Same as:
+// https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer
+const options = {
+  renderNode: {
+    [INLINES.ENTRY_HYPERLINK]: ({
+      data: {
+        target: { slug, title },
+      },
+    }) => <Link to={slug}>{title}</Link>,
+    [BLOCKS.EMBEDDED_ASSET]: node => <Img {...node.data.target} />,
+  },
+}
 
-- remove plugin config for no more existing rich text resolveFieldLocales
+function PageTemplate({ data }) {
+  const { title, description } = data.contentfulPage
 
-- add hint to remove extra traversal of rich text as soon fixIds is gone
+  return (
+    <Layout>
+      <h1>{title}</h1>
+      {/* Render the Rich Text field data: */}
+      {description && renderRichText(description, options)}
+    </Layout>
+  )
+}
 
-- add first test for rich text
+PageTemplate.propTypes = {
+  data: propTypes.object.isRequired,
+}
 
-- clean up code and use more Maps
+export default PageTemplate
 
-- align readme for new rich text changes
+export const pageQuery = graphql`
+  query pageQuery($id: String!) {
+    contentfulPage(id: { eq: $id }) {
+      title
+      slug
+      description {
+        raw
+        references {
+          ... on ContentfulPage {
+            # contentful_id is required to resolve the references
+            contentful_id
+            title
+            slug
+          }
+          ... on ContentfulAsset {
+            # contentful_id is required to resolve the references
+            contentful_id
+            fluid(maxWidth: 600) {
+              ...GatsbyContentfulFluid_withWebp
+            }
+          }
+        }
+      }
+    }
+  }
+`
+```
 
-- remove workarounds for fixIds
-
-- add typescript types for rich text render function
-
-- add tests for rich text rendering
-
-- Dirty lock file
-
-Co-authored-by: Peter van der Zee <github-public@qfox.nl>
-Co-authored-by: gatsbybot <mathews.kyle+gatsbybot@gmail.com>
+Find more information in [the PR leading to this change](https://github.com/gatsbyjs/gatsby/pull/25249).
 
 # [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.2.0-next.0...gatsby-source-contentful@3.2.0-next.1) (2020-11-09)
 
