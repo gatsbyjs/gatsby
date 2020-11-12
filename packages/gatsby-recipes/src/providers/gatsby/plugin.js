@@ -518,6 +518,13 @@ export const all = async ({ root }) => {
   return Promise.all(plugins.map(({ name }) => read({ root }, name)))
 }
 
+export const list = async ({ root }) => {
+  const configSrc = await readConfigFile(root)
+  const plugins = getPluginsFromConfig(configSrc)
+
+  return plugins.map(({ name }) => name)
+}
+
 const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),

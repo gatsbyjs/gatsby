@@ -28,11 +28,10 @@ module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
                    `)
       return
     case `ls`:
-      const path = path.resolve(
-        `./gatsby-config.js`
-      )
-      console.log(path)
-      // const list = GatsbyPlugin.
+      const root = path.resolve()
+      // console.log(typeof root)
+      const plugins = await GatsbyPlugin.list({root})
+      console.log(plugins)
     return
 
     default:
