@@ -39,7 +39,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     quality: Joi.number()
       .default(50)
       .description(`The quality level of the generated files.`),
-    withWebp: Joi.boolean()
+    withWebp: Joi.alternatives()
+      .try(Joi.object({ quality: Joi.number() }), Joi.boolean())
       .default(false)
       .description(
         `Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the WebP files. For example, pass { quality: 80 } to have the WebP images be at quality level 80.`

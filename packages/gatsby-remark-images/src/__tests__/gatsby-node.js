@@ -12,7 +12,7 @@ describe(`pluginOptionsSchema`, () => {
       `"wrapperStyle" must be one of [object, string]`,
       `"backgroundColor" must be a string`,
       `"quality" must be a number`,
-      `"withWebp" must be a boolean`,
+      `"withWebp" must be one of [object, boolean]`,
       `"tracedSVG" must be a boolean`,
       `"loading" must be one of [lazy, eager, auto]`,
       `"disableBgImageOnAlpha" must be a boolean`,
@@ -29,7 +29,7 @@ describe(`pluginOptionsSchema`, () => {
       wrapperStyle: true,
       backgroundColor: 123,
       quality: `This should be a number`,
-      withWebp: `This should be a boolean`,
+      withWebp: `This should be a boolean or an object`,
       tracedSVG: `This should be a boolean`,
       loading: `This should be lazy, eager or auto`,
       disableBgImageOnAlpha: `This should be a boolean`,
@@ -56,6 +56,14 @@ describe(`pluginOptionsSchema`, () => {
       disableBgImageOnAlpha: true,
       disableBgImage: true,
       srcSetBreakpoints: [400, 600, 800],
+    })
+
+    expect(isValid).toBe(true)
+  })
+
+  it(`should validate the withWebp prop`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      withWebp: { quality: 100 },
     })
 
     expect(isValid).toBe(true)
