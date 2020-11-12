@@ -36,8 +36,8 @@ to Gatsby releases.
 
 ### File System Route API
 
-This new API enables you to create pages from your GraphQL data using filename conventions,
-e.g. to create individual blog post pages for your blog.
+This new API enables you to create routes from your GraphQL data using filename conventions,
+e.g. to create individual blog post pages for your blog. It also allows for creating client-only routes more easily.
 
 Some examples:
 
