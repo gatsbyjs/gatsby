@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-This major release improves Contentful's Richtext experience. If you are not using the Rich Text Contentful field type there are no breaking changes. 
+This major release improves Contentful's Richtext experience. If you are not using the Rich Text Contentful field type there are no breaking changes.
 
 If you do, follow the migration guide.
 
@@ -28,15 +28,15 @@ If you do, follow the migration guide.
 Check this example code for a page template:
 
 ```javascript
-import React from "react";
-import { graphql, Link } from "gatsby";
-import Img from "gatsby-image";
-import * as propTypes from "prop-types";
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Img from "gatsby-image"
+import * as propTypes from "prop-types"
 
 // Import the new rendering and the render node definitions
-import { renderRichText } from "gatsby-source-contentful/rich-text";
-import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import Layout from "../components/layout";
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { BLOCKS, INLINES } from "@contentful/rich-text-types"
+import Layout from "../components/layout"
 // Setting the rendering options. Same as:
 // https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer
 const options = {
@@ -46,23 +46,23 @@ const options = {
         target: { slug, title },
       },
     }) => <Link to={slug}>{title}</Link>,
-    [BLOCKS.EMBEDDED_ASSET]: (node) => <Img {...node.data.target} />,
+    [BLOCKS.EMBEDDED_ASSET]: node => <Img {...node.data.target} />,
   },
-};
+}
 function PageTemplate({ data }) {
-  const { title, description } = data.contentfulPage;
+  const { title, description } = data.contentfulPage
   return (
     <Layout>
       <h1>{title}</h1>
       {/* Render the Rich Text field data: */}
       {description && renderRichText(description, options)}
     </Layout>
-  );
+  )
 }
 PageTemplate.propTypes = {
   data: propTypes.object.isRequired,
-};
-export default PageTemplate;
+}
+export default PageTemplate
 export const pageQuery = graphql`
   query pageQuery($id: String!) {
     contentfulPage(id: { eq: $id }) {
@@ -88,7 +88,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Find more information in [the PR leading to this change](https://github.com/gatsbyjs/gatsby/pull/25249).
@@ -153,7 +153,7 @@ Find more information in [the PR leading to this change](https://github.com/gats
 
 ### BREAKING CHANGES
 
-- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries  those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
+- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
 
 If you were relying on the `id` property in the `sys` object, you should be aware that it is no longer "normalized". In particular, it will no longer get a 'c' prefixed to the id.
 
