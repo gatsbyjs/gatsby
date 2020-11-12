@@ -307,3 +307,46 @@ emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
   reporter.pendingActivity({ id: `requires-writer` })
   writeAll(store.getState())
 })
+
+const debouncedWriteAll = _.debounce(
+  async (): Promise<void> => {
+    const activity = reporter.activityTimer(`write out requires`, {
+      id: `requires-writer`,
+    })
+    activity.start()
+    await writeAll(store.getState())
+    activity.end()
+  },
+  500,
+  {
+    // using "leading" can cause double `writeAll` call - particularly
+    // when refreshing data using `/__refresh` hook.
+    leading: false,
+  }
+)
+
+/**
+ * Start listening to CREATE/DELETE_PAGE events so we can rewrite
+ * files as required
+ */
+export const startListener = (): void => {
+  emitter.on(`CREATE_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+
+  emitter.on(`CREATE_PAGE_END`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+
+  emitter.on(`DELETE_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+
+  emitter.on(`DELETE_PAGE_BY_PATH`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+}
