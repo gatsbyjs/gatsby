@@ -13,7 +13,7 @@ interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
-  notInDevBundle: boolean
+  notInDevBundle?: boolean
   staticQueryHashes: Array<string>
 }
 
@@ -78,17 +78,24 @@ export async function writePageData(
     `json`,
     `${pagePath.replace(/\//g, `_`)}.json`
   )
+
   const outputFilePath = getFilePath(publicDir, pagePath)
   const result = await fs.readJSON(inputFilePath)
   const body = {
     componentChunkName,
     path: pagePath,
     matchPath,
-    // TODO how to exclude from production build?
     notInDevBundle,
     result,
     staticQueryHashes,
   }
+  if (process.env.gatsby_executing_command === `develop`) {
+    const { clientVisitedPages } = store.getState()
+    body.notInDevBundle = !clientVisitedPages.has(componentChunkName)
+  } else {
+    delete body.notInDevBundle
+  }
+
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
@@ -125,7 +132,6 @@ export async function flush(): Promise<void> {
     pages,
     program,
     staticQueriesByTemplate,
-    clientVisitedPages,
   } = store.getState()
 
   const { pagePaths, templatePaths } = pendingPageDataWrites
@@ -154,13 +160,10 @@ export async function flush(): Promise<void> {
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 
-      const notInDevBundle = !clientVisitedPages.has(page.componentChunkName)
-
       const result = await writePageData(
         path.join(program.directory, `public`),
         {
           ...page,
-          notInDevBundle,
           staticQueryHashes,
         }
       )
