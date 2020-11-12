@@ -18,7 +18,7 @@
     "enquirer": "^2.3.6",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
-    "gatsby-core-utils": "^1.4.0-next.0",
+    "gatsby-core-utils": "^1.5.0-next.0",
     "stream-filter": "^2.1.0",
     "string-length": "^4.0.1",
     "terminal-link": "^2.1.1"
