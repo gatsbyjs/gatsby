@@ -94,6 +94,41 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     icon_options: Joi.object({
       purpose: Joi.string(),
     }),
+    categories: Joi.array().items(Joi.string()),
+    dir: Joi.string().valid(`auto`, `ltr`, `rtl`),
+    iarc_rating_id: Joi.string(),
+    orientation: Joi.string().valid(
+      `any`,
+      `natural`,
+      `landscape`,
+      `landscape-primary`,
+      `landscape-secondary`,
+      `portrait`,
+      `portrait-primary`,
+      `portrait-secondary`
+    ),
+    related_applications: Joi.array.items(
+      Joi.object({
+        platform: Joi.string(),
+        url: Joi.string(),
+      })
+    ),
+    prefer_related_applications: Joi.boolean(),
+    scope: Joi.string(),
+    screenshots: Joi.array().items(
+      Joi.object({
+        src: Joi.string(),
+        sizes: Joi.string(),
+        type: Joi.string(),
+      })
+    ),
+    shortcuts: Joi.array().items(
+      Joi.object({
+        name: Joi.string(),
+        url: Joi.string(),
+        description: Joi.string(),
+      })
+    ),
   })
 
 /**
