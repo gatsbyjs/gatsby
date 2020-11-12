@@ -8,7 +8,21 @@ export default function pluginOptionSchema({ Joi }) {
   const platform = Joi.string()
     .optional()
     .empty(``)
-    .valid("narrow", "wide", "chromeos", "ios", "kaios", "macos", "windows", "windows10x", "xbox", " chrome_web_store", "play", "itunes", "microsoft") //https://w3c.github.io/manifest-app-info/#platform-member
+    .valid(
+      `narrow`,
+      `wide`,
+      `chromeos`,
+      `ios`,
+      `kaios`,
+      `macos`,
+      `windows`,
+      `windows10x`,
+      `xbox`,
+      `chrome_web_store`,
+      `play`,
+      `itunes`,
+      `microsoft`
+    ) //https://w3c.github.io/manifest-app-info/#platform-member
     .description(`The platform on which the application can be found.`)
 
   const FingerPrint = Joi.object().keys({
@@ -34,7 +48,6 @@ export default function pluginOptionSchema({ Joi }) {
       .description(
         `A hint as to the media type of the image. The purpose of this member is to allow a user agent to quickly ignore images with media types it does not support.`
       ),
-
   })
 
   const ManifestImageResource = ImageResource.keys({
@@ -98,7 +111,7 @@ export default function pluginOptionSchema({ Joi }) {
           `Each Fingerprints represents a set of cryptographic fingerprints used for verifying the application.`
         ),
     })
-    .or("url", "id")
+    .or(`url`, `id`)
 
   const WebAppManifest = Joi.object().keys({
     background_color: Joi.string()
@@ -184,12 +197,16 @@ export default function pluginOptionSchema({ Joi }) {
       ),
     screenshots: Joi.array()
       .optional()
-      .items(ManifestImageResource.keys({
-        label: Joi.string()
-          .optional()
-          .description(`The label member is a string that serves as the accessible name of that screenshots object.`),
-        platform: platform
-      }))
+      .items(
+        ManifestImageResource.keys({
+          label: Joi.string()
+            .optional()
+            .description(
+              `The label member is a string that serves as the accessible name of that screenshots object.`
+            ),
+          platform: platform,
+        })
+      )
       .description(
         `The screenshots member defines an array of screenshots intended to showcase the application.`
       ),
@@ -223,10 +240,10 @@ export default function pluginOptionSchema({ Joi }) {
       theme_color_in_head: Joi.boolean().default(true),
       cache_busting_mode: Joi.string()
         .valid(`none`, `query`, `name`)
-        .default("query"),
+        .default(`query`),
       crossOrigin: Joi.string()
         .valid(`anonymous`, `use-credentials`)
-        .default("anonymous"),
+        .default(`anonymous`),
       include_favicon: Joi.boolean().default(true),
       icon_options: ManifestImageResource.keys({
         src: Joi.string().forbidden(),
