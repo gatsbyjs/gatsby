@@ -41,6 +41,7 @@ module.exports = {
     // configuration as well as setting up optimized server
     // rendering and client re-hydration.
     `gatsby-plugin-glamor`,
+    `gatsby-plugin-image`,
     // This plugin takes your configuration and generates a
     // web manifest file so Gatsbygram can be added to your
     // homescreen on Android.

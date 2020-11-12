@@ -2,7 +2,7 @@ import * as PropTypes from "prop-types"
 import React from "react"
 import HeartIcon from "react-icons/lib/fa/heart"
 import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage as Img } from "gatsby-plugin-image/compat"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
