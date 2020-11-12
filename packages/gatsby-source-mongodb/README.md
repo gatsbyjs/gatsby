@@ -16,6 +16,7 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { dbName: `local`, collection: `documents` },
+      query: { documents: { as_of: { $gte: 1604397088013 } } },
     },
   ],
 }
