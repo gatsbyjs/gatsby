@@ -252,7 +252,12 @@ export async function startServer(
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method,
+                decompress: false,
+                followRedirect: false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )
