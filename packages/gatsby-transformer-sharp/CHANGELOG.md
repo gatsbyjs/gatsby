@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.6.0-next.1...gatsby-transformer-sharp@2.6.0) (2020-11-12)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** create child nodes only for Files ([#27992](https://github.com/gatsbyjs/gatsby/issues/27992)) ([#27994](https://github.com/gatsbyjs/gatsby/issues/27994)) ([048472d](https://github.com/gatsbyjs/gatsby/commit/048472d43fc63d0fc00e005c8346a4acfe393a8e))
+
 # [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.6.0-next.0...gatsby-transformer-sharp@2.6.0-next.1) (2020-11-10)
 
 ### Features

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.26.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.3...gatsby@2.26.0) (2020-11-12)
+
+### Bug Fixes
+
+- **gatsby:** don't hide original error if stack-trace point to not existing file ([#27953](https://github.com/gatsbyjs/gatsby/issues/27953)) ([9109758](https://github.com/gatsbyjs/gatsby/commit/9109758ec8bffb03ca4c93a4077e3bdac69fa3cb))
+
+### Features
+
+- **gatsby:** enable compression in the dev server ([#27948](https://github.com/gatsbyjs/gatsby/issues/27948)) ([ebd5e2a](https://github.com/gatsbyjs/gatsby/commit/ebd5e2af53c00e80444110aab428e50a9b357c6e))
+
 # [2.26.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.2...gatsby@2.26.0-next.3) (2020-11-10)
 
 ### Bug Fixes
