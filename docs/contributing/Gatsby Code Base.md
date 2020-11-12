@@ -2,7 +2,6 @@
 
 Following is a list of folder in the [Gatsby Code Base](https://github.com/gatsbyjs/gatsby). Take a look at them and start contributing.
 
-
 * [Benchmarks](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks)
 * [Docs](https://github.com/gatsbyjs/gatsby/tree/master/docs)
 * [e2e-tests](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests)
