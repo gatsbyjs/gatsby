@@ -169,11 +169,12 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
         cmses[data.cms].message
       )}`
     )
-    plugins.push(data.cms)
+    const extraPlugins = cmses[data.cms].plugins || []
+    plugins.push(data.cms, ...extraPlugins)
     packages.push(
       data.cms,
       ...(cmses[data.cms].dependencies || []),
-      ...(cmses[data.cms].plugins || [])
+      ...extraPlugins
     )
     pluginConfig = { ...pluginConfig, ...cmses[data.cms].options }
   }
@@ -184,11 +185,13 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
         styles[data.styling].message
       )} for styling your site`
     )
-    plugins.push(data.styling)
+    const extraPlugins = styles[data.styling].plugins || []
+
+    plugins.push(data.styling, ...extraPlugins)
     packages.push(
       data.styling,
       ...(styles[data.styling].dependencies || []),
-      ...(styles[data.styling].plugins || [])
+      ...extraPlugins
     )
     pluginConfig = { ...pluginConfig, ...styles[data.styling].options }
   }
@@ -200,12 +203,16 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
         .join(`, `)}`
     )
     plugins.push(...data.features)
-    const featureDependencies = data.features?.map(featureKey => [
-      // Spread in extra dependencies
-      ...(features[featureKey].dependencies || []),
-      // Spread in plugins, stripping the optional key
-      ...(features[featureKey].plugins || []),
-    ])
+    const featureDependencies = data.features?.map(featureKey => {
+      const extraPlugins = features[featureKey].plugins || []
+      plugins.push(...extraPlugins)
+      return [
+        // Spread in extra dependencies
+        ...(features[featureKey].dependencies || []),
+        // Spread in plugins, stripping the optional key
+        ...extraPlugins,
+      ]
+    })
     const flattenedDependencies = ([] as Array<string>).concat.apply(
       [],
       featureDependencies
@@ -249,10 +256,10 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     return
   }
 
-  await initStarter(DEFAULT_STARTER, data.project, packages)
+  await initStarter(DEFAULT_STARTER, data.project, packages.map(removeKey))
 
   console.log(c.green(`✔ `) + `Created site in ` + c.green(data.project))
-
+  console.log({ plugins, pluginConfig })
   if (plugins.length) {
     console.log(c.bold(`🔌 Installing plugins...`))
     await installPlugins(plugins, pluginConfig, path.resolve(data.project), [])
