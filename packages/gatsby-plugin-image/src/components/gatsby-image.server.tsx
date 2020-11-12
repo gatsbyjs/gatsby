@@ -44,7 +44,6 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     layout
   )
 
-
   const cleanedImages: ISharpGatsbyImageData["images"] = {
     fallback: undefined,
     sources: [],
