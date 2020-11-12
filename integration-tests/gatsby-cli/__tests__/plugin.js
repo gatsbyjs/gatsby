@@ -19,7 +19,7 @@ describe(`gatsby plugin`, () => {
 
     logs.should.contain(`gatsby-source-filesystem`)
     logs.should.contain(`gatsby-plugin-offline`)
-    logs.should.not.contain(`ignore comments`)
+    expect(logs).toEqual(expect.not.stringContaining(`ignore comments`))
     expect(code).toBe(0)
 
   })
