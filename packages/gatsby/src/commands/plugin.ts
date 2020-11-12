@@ -27,13 +27,13 @@ module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
         - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
                    `)
       return
-    case `ls`:
+    case `ls`: {
       const root = path.resolve()
-      // console.log(typeof root)
-      const plugins = await GatsbyPlugin.list({root})
+      const plugins = await GatsbyPlugin.list({ root })
       console.log(plugins)
-    return
 
+      return
+    }
     default:
       report.error(`Unknown command ${cmd}`)
   }
