@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.1.0-next.0...gatsby-plugin-styletron@5.1.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
 ## [5.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.0.10...gatsby-plugin-styletron@5.0.11) (2020-09-28)
 
 **Note:** Version bump only for package gatsby-plugin-styletron

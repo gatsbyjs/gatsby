@@ -21,6 +21,8 @@ let bar
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
 
+let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
+
 /********************
  * Type Definitions *
  ********************/
@@ -206,6 +208,48 @@ async function processRemoteNode({
   ext,
   name,
 }) {
+  let filename
+  if (process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER) {
+    filename = await fetchPlaceholder({
+      fromPath: process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
+      url,
+      cache,
+      ext,
+      name,
+    })
+  } else {
+    filename = await fetchRemoteNode({
+      url,
+      cache,
+      auth,
+      httpHeaders,
+      ext,
+      name,
+    })
+  }
+
+  // Create the file node.
+  const fileNode = await createFileNode(filename, createNodeId, {})
+  fileNode.internal.description = `File "${url}"`
+  fileNode.url = url
+  fileNode.parent = parentNodeId
+  // Override the default plugin as gatsby-source-filesystem needs to
+  // be the owner of File nodes or there'll be conflicts if any other
+  // File nodes are created through normal usages of
+  // gatsby-source-filesystem.
+  await createNode(fileNode, { name: `gatsby-source-filesystem` })
+
+  return fileNode
+}
+
+async function fetchRemoteNode({
+  url,
+  cache,
+  auth = {},
+  httpHeaders = {},
+  ext,
+  name,
+}) {
   const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
@@ -237,7 +281,7 @@ async function processRemoteNode({
   // Fetch the file.
   const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
 
-  if (response.statusCode == 200) {
+  if (response.statusCode === 200) {
     // Save the response headers for future requests.
     await cache.set(cacheIdForHeaders(url), response.headers)
   }
@@ -267,18 +311,20 @@ async function processRemoteNode({
     await fs.remove(tmpFilename)
   }
 
-  // Create the file node.
-  const fileNode = await createFileNode(filename, createNodeId, {})
-  fileNode.internal.description = `File "${url}"`
-  fileNode.url = url
-  fileNode.parent = parentNodeId
-  // Override the default plugin as gatsby-source-filesystem needs to
-  // be the owner of File nodes or there'll be conflicts if any other
-  // File nodes are created through normal usages of
-  // gatsby-source-filesystem.
-  await createNode(fileNode, { name: `gatsby-source-filesystem` })
+  return filename
+}
 
-  return fileNode
+async function fetchPlaceholder({ fromPath, url, cache, ext, name }) {
+  const pluginCacheDir = cache.directory
+  const digest = createContentDigest(url)
+
+  if (!ext) {
+    ext = getRemoteFileExtension(url)
+  }
+
+  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
+  fs.copySync(fromPath, filename)
+  return filename
 }
 
 /**
@@ -321,7 +367,7 @@ const pushTask = task =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({
+module.exports = function createRemoteFileNode({
   url,
   cache,
   createNode,
@@ -333,7 +379,21 @@ module.exports = ({
   ext = null,
   name = null,
   reporter,
-}) => {
+}) {
+  if (showFlagWarning) {
+    showFlagWarning = false
+    // Note: This will use a placeholder image as the default for every file that is downloaded through this API.
+    //       That may break certain cases, in particular when the file is not meant to be an image or when the image
+    //       is expected to be of a particular type that is other than the placeholder. This API is meant to bypass
+    //       the remote download for local testing only.
+    console.info(
+      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: Any file downloaded by \`createRemoteFileNode\` will use the same placeholder image and skip the remote fetch. Note: This is an experimental flag that can change/disappear at any point.`
+    )
+    console.info(
+      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: File to use: \`${process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER}\``
+    )
+  }
+
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
