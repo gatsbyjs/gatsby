@@ -6,7 +6,7 @@ describe(`pluginOptionsSchema`, () => {
     const expectedErrors = [
       `"maxWidth" must be a number`,
       `"linkImagesToOriginal" must be a boolean`,
-      `"showCaptions" must be a boolean`,
+      `"showCaptions" must be one of [boolean, array]`,
       `"markdownCaptions" must be a boolean`,
       `"sizeByPixelDensity" must be a boolean`,
       `"wrapperStyle" must be one of [object, string]`,
@@ -67,5 +67,39 @@ describe(`pluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(true)
+  })
+
+  describe(`allow to use array of valid strings for "showCaptions"`, () => {
+    it(`["title", "alt"]`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`title`, `alt`],
+      })
+
+      expect(isValid).toBe(true)
+    })
+
+    it(`["title"]`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`title`],
+      })
+
+      expect(isValid).toBe(true)
+    })
+
+    it(`["alt"]`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`alt`],
+      })
+
+      expect(isValid).toBe(true)
+    })
+
+    it(`["not valid"] (should fail validation)`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`not valid`],
+      })
+
+      expect(isValid).toBe(false)
+    })
   })
 })
