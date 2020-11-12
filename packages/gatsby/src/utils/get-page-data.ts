@@ -45,11 +45,17 @@ async function waitNextPageData(pagePath: string): Promise<IPageQueryResult> {
 
 async function readPageData(pagePath): Promise<IPageQueryResult> {
   const { program } = store.getState()
-  return {
-    id: pagePath,
-    result: await readPageDataUtil(
-      path.join(program.directory, `public`),
-      pagePath
-    ),
+  try {
+    return {
+      id: pagePath,
+      result: await readPageDataUtil(
+        path.join(program.directory, `public`),
+        pagePath
+      ),
+    }
+  } catch (err) {
+    throw new Error(
+      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+    )
   }
 }
