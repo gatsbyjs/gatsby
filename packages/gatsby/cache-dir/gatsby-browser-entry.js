@@ -19,8 +19,8 @@ const StaticQueryContext = React.createContext({})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const combinedStaticQueryData = {
-    ...staticQueryData,
     ...loader.getStaticQueryResults(),
+    ...staticQueryData,
   }
   const finalData = data
     ? data.data
