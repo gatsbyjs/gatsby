@@ -1,7 +1,7 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
-import tellServerWantToVisitPage from "./tell-server-want-to-visit-page"
+import ensureComponentInBundle from "./ensure-page-component-in-bundle"
 
 /**
  * Available resource loading statuses
@@ -27,6 +27,7 @@ const stripSurroundingSlashes = s => {
 
 const createPageDataUrl = path => {
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
+  console.log({ fixedPath })
   return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
 }
 
@@ -142,19 +143,39 @@ export class BaseLoader {
             throw new Error(`not a valid pageData response`)
           }
 
-          // Handle the page not being in the bundle yet.
-          if (
-            process.env.NODE_ENV === `development` &&
-            jsonPayload.notInDevBundle
-          ) {
-            // Tell the server the user wants to visit this page
-            // to trigger it including the page component's code in the
-            // commons bundles.
-            tellServerWantToVisitPage(jsonPayload.componentChunkName)
+          console.log({ jsonPayload })
+          // In development, check if the page is in the bundle yet.
+          if (process.env.NODE_ENV === `development`) {
+            if (process.env.NODE_ENV !== `test`) {
+              delete require.cache[
+                require.resolve(`$virtual/lazy-client-sync-requires`)
+              ]
+            }
 
-            return new Promise(resolve =>
-              setTimeout(() => resolve(this.fetchPageDataJson(loadObj)), 100)
-            )
+            const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
+            console.log({
+              chunkName: jsonPayload.componentChunkName,
+              lazyRequires,
+              notVisitedPageComponent:
+                lazyRequires.notVisitedPageComponents[
+                  jsonPayload.componentChunkName
+                ],
+            })
+            if (
+              lazyRequires.notVisitedPageComponents[
+                jsonPayload.componentChunkName
+              ]
+            ) {
+              console.log(`ensure`, jsonPayload.componentChunkName)
+              // Tell the server the user wants to visit this page
+              // to trigger it including the page component's code in the
+              // commons bundles.
+              ensureComponentInBundle(jsonPayload.componentChunkName)
+
+              return new Promise(resolve =>
+                setTimeout(() => resolve(this.fetchPageDataJson(loadObj)), 100)
+              )
+            }
           }
 
           return Object.assign(loadObj, {

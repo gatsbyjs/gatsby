@@ -163,7 +163,8 @@ const getMatchPaths = (
 const createHash = (
   matchPaths: Array<IGatsbyPageMatchPath>,
   components: Array<IGatsbyPageComponent>,
-  cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent>
+  cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent>,
+  notVisitedPageComponents: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
@@ -172,6 +173,7 @@ const createHash = (
         matchPaths,
         components,
         cleanedClientVisitedPageComponents,
+        notVisitedPageComponents,
       })
     )
     .digest(`hex`)
@@ -192,10 +194,20 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     )
   )
 
+  // Get list of page components that the user has _not_ visited.
+  const notVisitedPageComponents = components.filter(
+    component =>
+      // Filter out page components the user has visited.
+      !cleanedClientVisitedPageComponents.some(
+        c => c.componentChunkName === component.componentChunkName
+      )
+  )
+
   const newHash = createHash(
     matchPaths,
     components,
-    cleanedClientVisitedPageComponents
+    cleanedClientVisitedPageComponents,
+    notVisitedPageComponents
   )
 
   if (newHash === lastHash) {
@@ -240,6 +252,14 @@ const preferDefault = m => (m && m.default) || m
         `  "${
           c.componentChunkName
         }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+    )
+    .join(`,\n`)}
+  }\n\n`
+
+  // Add list of not visited components.
+  lazyClientSyncRequires += `exports.notVisitedPageComponents = {\n${notVisitedPageComponents
+    .map(
+      (c: IGatsbyPageComponent): string => `  "${c.componentChunkName}": true`
     )
     .join(`,\n`)}
   }\n\n`

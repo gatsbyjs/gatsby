@@ -130,6 +130,7 @@ export async function startServer(
         // Tell Gatsby there's a new page component to trigger it
         // being added to the bundle.
         createClientVisitedPage(req.body.chunkName)
+        console.log(`createClientVisitedPage`, req.body.chunkName)
 
         // Tell Gatsby to rewrite the page data for the pages
         // owned by this component to update it to say that

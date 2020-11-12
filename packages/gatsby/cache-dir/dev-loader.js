@@ -1,42 +1,11 @@
 import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
-import tellServerWantToVisitPage from "./tell-server-want-to-visit-page"
+import ensureComponentInBundle from "./ensure-page-component-in-bundle"
 
 class DevLoader extends BaseLoader {
   constructor(lazyRequires, matchPaths) {
     // One of the tests doesn't set a path.
-    const loadComponent = chunkName => {
-      if (process.env.NODE_ENV !== `test`) {
-        delete require.cache[
-          require.resolve(`$virtual/lazy-client-sync-requires`)
-        ]
-        lazyRequires = require(`$virtual/lazy-client-sync-requires`)
-      }
-      if (lazyRequires.lazyComponents[chunkName]) {
-        return Promise.resolve(lazyRequires.lazyComponents[chunkName])
-      } else {
-        return new Promise(resolve => {
-          // Tell the server the user wants to visit this page
-          // to trigger it compiling the page component's code.
-          tellServerWantToVisitPage(chunkName)
-
-          const checkForUpdates = () => {
-            if (process.env.NODE_ENV !== `test`) {
-              delete require.cache[
-                require.resolve(`$virtual/lazy-client-sync-requires`)
-              ]
-            }
-            const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
-            if (lazyRequires.lazyComponents[chunkName]) {
-              resolve(lazyRequires.lazyComponents[chunkName])
-            }
-
-            setTimeout(checkForUpdates, 100)
-          }
-          setTimeout(checkForUpdates, 100)
-        })
-      }
-    }
+    const loadComponent = chunkName => ensureComponentInBundle(chunkName)
     super(loadComponent, matchPaths)
   }
 

@@ -13,7 +13,6 @@ interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
-  notInDevBundle?: boolean
   staticQueryHashes: Array<string>
 }
 
@@ -67,7 +66,6 @@ export async function writePageData(
     componentChunkName,
     matchPath,
     path: pagePath,
-    notInDevBundle,
     staticQueryHashes,
   }: IPageData
 ): Promise<IPageDataWithQueryResult> {
@@ -85,15 +83,8 @@ export async function writePageData(
     componentChunkName,
     path: pagePath,
     matchPath,
-    notInDevBundle,
     result,
     staticQueryHashes,
-  }
-  if (process.env.gatsby_executing_command === `develop`) {
-    const { clientVisitedPages } = store.getState()
-    body.notInDevBundle = !clientVisitedPages.has(componentChunkName)
-  } else {
-    delete body.notInDevBundle
   }
 
   const bodyStr = JSON.stringify(body)
