@@ -3,7 +3,7 @@
 const path = require("path")
 const fs = require("fs-extra")
 const pluginPath= process.argv[2]
-const Joi  = require("joi")
+const Joi  = require("gatsby-plugin-utils")
 async function run() {
     if(!pluginPath) {
         console.error("Please pass a path to the plugin directory")

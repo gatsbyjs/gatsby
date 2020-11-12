@@ -18,4 +18,4 @@ yarn create gatsby
 
 It will ask you questions about what you're building, and set up a Gatsby project for you.
 
-_Note: this package is different from the Gatsby CLI, it is intended solely to create new sites. The Gatsby CLI supports a similar functionality legacy functionality with the `gatsby new` command._
+_Note: this package is different from the Gatsby CLI, it is intended solely to create new sites.._
