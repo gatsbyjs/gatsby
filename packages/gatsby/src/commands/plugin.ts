@@ -29,7 +29,7 @@ module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
       return
     case `ls`: {
       const root = path.resolve()
-      const plugins = await GatsbyPlugin.list({ root })
+      const plugins = await GatsbyPlugin.all({ root }, false)
       console.log(plugins)
 
       return
