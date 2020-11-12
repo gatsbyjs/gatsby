@@ -7,6 +7,7 @@ import { SourceProps } from "../picture"
 type GlobalOverride = NodeJS.Global &
   typeof global.globalThis & {
     SERVER: boolean
+    GATSBY___IMAGE: boolean
   }
 
 // Prevents terser for bailing because we're not in a babel plugin
@@ -16,11 +17,13 @@ describe(`GatsbyImage server`, () => {
   beforeEach(() => {
     console.warn = jest.fn()
     ;(global as GlobalOverride).SERVER = true
+    ;(global as GlobalOverride).GATSBY___IMAGE = true
   })
 
   afterEach(() => {
     jest.clearAllMocks()
     ;(global as GlobalOverride).SERVER = undefined
+    ;(global as GlobalOverride).GATSBY___IMAGE = undefined
   })
 
   it(`shows nothing when the image props is not passed`, () => {
@@ -175,7 +178,7 @@ describe(`GatsbyImage server`, () => {
           decoding="async"
           loading="lazy"
           sizes="192x192"
-          style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
+          style="opacity: 0;"
         />
       `)
     })
@@ -207,7 +210,7 @@ describe(`GatsbyImage server`, () => {
           decoding="async"
           loading="lazy"
           sizes="192x192"
-          style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
+          style="opacity: 0;"
         />
       `)
     })
@@ -249,7 +252,7 @@ icon.svg`,
           decoding="async"
           loading="lazy"
           sizes="192x192"
-          style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
+          style="opacity: 0;"
         />
       `)
     })
@@ -283,7 +286,7 @@ icon.svg`,
           decoding="async"
           loading="lazy"
           sizes="192x192"
-          style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
+          style="opacity: 0;"
         />
       `)
     })
@@ -330,9 +333,89 @@ icon.svg`,
             decoding="async"
             loading="lazy"
             sizes="192x192"
-            style="opacity: 0; height: 100%; left: 0px; position: absolute; top: 0px; transform: translateZ(0); transition: opacity 250ms linear; width: 100%; will-change: opacity; object-fit: cover;"
+            style="opacity: 0;"
           />
         </picture>
+      `)
+    })
+  })
+
+  describe(`placeholder verifications`, () => {
+    it(`has a placeholder in a div with valid styles for fluid layout`, () => {
+      const image: ISharpGatsbyImageData = {
+        width: 100,
+        height: 100,
+        layout: `fluid`,
+        images: {},
+        placeholder: { sources: [] },
+        sizes: `192x192`,
+        backgroundColor: `red`,
+      }
+
+      const { container } = render(
+        <GatsbyImage image={image} alt="A fake image for testing purpose" />
+      )
+      const placeholder = container.querySelector(`[data-placeholder-image=""]`)
+
+      expect(placeholder).toMatchInlineSnapshot(`
+        <div
+          aria-hidden="true"
+          data-placeholder-image=""
+          sources=""
+          style="opacity: 1; transition: opacity 500ms linear; background-color: red; position: relative;"
+        />
+      `)
+    })
+
+    it(`has a placeholder in a div with valid styles for fixed layout`, () => {
+      const image: ISharpGatsbyImageData = {
+        width: 100,
+        height: 100,
+        layout: `fixed`,
+        images: {},
+        placeholder: { sources: [] },
+        sizes: `192x192`,
+        backgroundColor: `red`,
+      }
+
+      const { container } = render(
+        <GatsbyImage image={image} alt="A fake image for testing purpose" />
+      )
+      const placeholder = container.querySelector(`[data-placeholder-image=""]`)
+
+      expect(placeholder).toMatchInlineSnapshot(`
+        <div
+          aria-hidden="true"
+          data-placeholder-image=""
+          sources=""
+          style="opacity: 1; transition: opacity 500ms linear; width: 100px; height: 100px; background-color: red; position: relative;"
+        />
+      `)
+    })
+
+    it(`has a placeholder in a div with valid styles for constrained layout`, () => {
+      const image: ISharpGatsbyImageData = {
+        width: 100,
+        height: 100,
+        layout: `constrained`,
+        images: {},
+        placeholder: { sources: [] },
+        sizes: `192x192`,
+        backgroundColor: `red`,
+      }
+
+      const { container } = render(
+        <GatsbyImage image={image} alt="A fake image for testing purpose" />
+      )
+      const placeholder = container.querySelector(`[data-placeholder-image=""]`)
+
+      expect(placeholder).toMatchInlineSnapshot(`
+        <div
+          aria-hidden="true"
+          data-placeholder-image=""
+          sources=""
+          style="opacity: 1; transition: opacity 500ms linear; display: inline-block; background-color: red; position: relative;"
+        />
       `)
     })
   })
