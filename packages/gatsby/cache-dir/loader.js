@@ -1,6 +1,7 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
+import tellServerWantToVisitPage from "./tell-server-want-to-visit-page"
 
 /**
  * Available resource loading statuses
@@ -149,15 +150,7 @@ export class BaseLoader {
             // Tell the server the user wants to visit this page
             // to trigger it including the page component's code in the
             // commons bundles.
-            const req = new XMLHttpRequest()
-            req.open(`post`, `/___client-page-visited`, true)
-            req.setRequestHeader(
-              `Content-Type`,
-              `application/json;charset=UTF-8`
-            )
-            req.send(
-              JSON.stringify({ chunkName: jsonPayload.componentChunkName })
-            )
+            tellServerWantToVisitPage(jsonPayload.componentChunkName)
 
             return new Promise(resolve =>
               setTimeout(() => resolve(this.fetchPageDataJson(loadObj)), 100)

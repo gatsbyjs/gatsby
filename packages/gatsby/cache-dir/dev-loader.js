@@ -1,5 +1,6 @@
 import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
+import tellServerWantToVisitPage from "./tell-server-want-to-visit-page"
 
 class DevLoader extends BaseLoader {
   constructor(lazyRequires, matchPaths) {
@@ -17,10 +18,7 @@ class DevLoader extends BaseLoader {
         return new Promise(resolve => {
           // Tell the server the user wants to visit this page
           // to trigger it compiling the page component's code.
-          const req = new XMLHttpRequest()
-          req.open(`post`, `/___client-page-visited`, true)
-          req.setRequestHeader(`Content-Type`, `application/json;charset=UTF-8`)
-          req.send(JSON.stringify({ chunkName }))
+          tellServerWantToVisitPage(chunkName)
 
           const checkForUpdates = () => {
             if (process.env.NODE_ENV !== `test`) {
