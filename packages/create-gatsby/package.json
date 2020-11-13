@@ -29,7 +29,7 @@
     "eslint": "^7.12.1",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
-    "gatsby-plugin-utils": "^0.3.0-next.0",
+    "gatsby-plugin-utils": "^0.4.0-next.0",
     "joi": "^17.2.1",
     "microbundle": "^0.12.4",
     "prettier": "^2.1.2",
