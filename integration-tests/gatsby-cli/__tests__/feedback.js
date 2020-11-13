@@ -11,13 +11,16 @@ describe(`gatsby feedback`, () => {
       `feedback`
     )
 
-    logs.should.contain(
+    logs.should.contain
+    (
       `Hello! Will you help Gatsby improve by taking a four question survey?`
     )
-    logs.should.contain(
+    logs.should.contain
+    (
       `It will only take less than five minutes and your ideas and feedback will be very helpful`
     )
-    logs.should.contain(
+    logs.should.contain
+    (
       `Give us your feedback here: https://gatsby.dev/feedback`
     )
     expect(status).toBe(0)
