@@ -51,7 +51,7 @@ const styles = {
   },
 }
 
-const infoMessage = `<small style="display: block; color: #ec1818; margin-bottom: 1rem">
+const InfoMessage = `<small style="display: block; color: #ec1818; margin-bottom: 1rem">
 This error occurred during the build process and can only be
 dismissed by fixing the error.
 </small>`
@@ -93,6 +93,7 @@ export default function Overlay({ header, body, dismiss }) {
             </svg>
           </button>
         </div>
+        <InfoMessage />
         <div style={styles.errorInformation}>{body}</div>
       </section>
     </>
