@@ -1,7 +1,7 @@
 import { GatsbyPlugin } from "gatsby-recipes"
 import reporter from "../reporter"
 
-export default async(root: string, cmd: string | undefined): Promise<void> => {
+export default async (root: string, cmd: string | undefined): Promise<void> => {
   switch (cmd) {
     case `docs`:
       console.log(`

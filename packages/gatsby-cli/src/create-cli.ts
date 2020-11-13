@@ -415,7 +415,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       cmd: string | undefined
     }>) => {
       await pluginHandler(siteInfo.directory, cmd)
-    }
+    },
   })
 }
 
