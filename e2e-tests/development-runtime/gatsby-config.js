@@ -29,7 +29,6 @@ module.exports = {
     },
     `gatsby-source-fake-data`,
     `gatsby-transformer-sharp`,
-    `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
