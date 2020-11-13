@@ -1,5 +1,5 @@
 import { NPMPackage, GatsbyPlugin } from "gatsby-recipes"
-import reporter from "./reporter"
+import reporter from "../reporter"
 const normalizePluginName = (plugin: string): string => {
   if (plugin.startsWith(`gatsby-`)) {
     return plugin

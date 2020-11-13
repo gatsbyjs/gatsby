@@ -1,9 +1,7 @@
-import { IProgram } from "./types"
 import { GatsbyPlugin } from "gatsby-recipes"
-import path from "path"
+import reporter from "../reporter"
 
-module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
-  const { report, cmd } = args
+export default async(root: string, cmd: string | undefined): Promise<void> => {
   switch (cmd) {
     case `docs`:
       console.log(`
@@ -28,14 +26,12 @@ module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
                    `)
       return
     case `ls`: {
-      const root = path.resolve()
       const plugins = await GatsbyPlugin.all({ root }, false)
       console.log(plugins)
-
       return
     }
     default:
-      report.error(`Unknown command ${cmd}`)
+      reporter.error(`Unknown command ${cmd}`)
   }
   return
 }

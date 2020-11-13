@@ -27,7 +27,7 @@ export async function installPlugins(
   }
 
   try {
-    installPluginCommand = require.resolve(`gatsby-cli/lib/plugin-add`, {
+    installPluginCommand = require.resolve(`gatsby-cli/lib/handlers/plugin-add`, {
       // Try to find gatsby-cli in the site root, or in the site's gatsby dir
       paths: [rootPath, path.dirname(gatsbyPath)],
     })

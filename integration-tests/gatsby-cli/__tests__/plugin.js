@@ -1,9 +1,5 @@
 import { GatsbyCLI } from "../test-helpers"
 
-const timeout = seconds =>
-  new Promise(resolve => {
-    setTimeout(resolve, seconds * 1000)
-  })
 
 const MAX_TIMEOUT = 2147483647
 jest.setTimeout(MAX_TIMEOUT)
@@ -24,3 +20,4 @@ describe(`gatsby plugin`, () => {
 
   })
 })
+                      

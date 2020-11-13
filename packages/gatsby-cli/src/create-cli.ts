@@ -18,6 +18,7 @@ import { recipesHandler } from "./recipes"
 import { startGraphQLServer } from "gatsby-recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
+import pluginHandler from "./handlers/plugin"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
@@ -408,7 +409,13 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           describe: `The plugin names`,
           type: `string`,
         }),
-    handler: getCommandHandler(`plugin`),
+    handler: async ({
+      cmd,
+    }: yargs.Arguments<{
+      cmd: string | undefined
+    }>) => {
+      await pluginHandler(siteInfo.directory, cmd)
+    }
   })
 }
 
