@@ -2,6 +2,10 @@
 title: Gatsby Code Base
 ---
 
+This page gives you a quick access to the Gatsby code base. Go through the folders, check the issues page and start contributing. For more details on how to contribe, take a look at [How to Contribute](contributing/how-to-contribute/) page. 
+
+Take a look at [Pair Programming](/contributing/pair-programming/) to work together with other contributors.
+
 Start contributing here
 =======================
 
