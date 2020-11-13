@@ -47,24 +47,27 @@ export default function UpdateImport(babel) {
           }
         }
       },
-      JSXOpeningElement: path => {
-        let imageType = `fixed`
-        const { node } = path
+      JSXOpeningElement({ node }) {
+        // t.isVariableDeclaration(path) === true
         if (node.name.name !== imageImportName) {
           return
         } else {
           node.name.name = `GatsbyImage`
-        }
-
-        const imageProps = node.attributes.filter(
-          attribute =>
-            attribute.name.name === `fixed` || attribute.name.name === `fluid`
-        )
-        if (imageProps.length > 0) {
-          const mainImage = imageProps[0]
-          imageType = mainImage.name.name
-          mainImage.name.name = `image`
-          console.log(mainImage.value.expression)
+          const [prop] = node.attributes.filter(
+            ({ name }) => name.name === `fluid` || name.name === `fixed`
+          )
+          if (prop) {
+            prop.name = t.JSXIdentifier(`image`)
+            // data.file.childImageSharp.gatsbyImageData
+            const newImageExpression = t.memberExpression(
+              t.memberExpression(
+                t.memberExpression(t.identifier(`data`), t.identifier(`file`)),
+                t.identifier(`childImageSharp`)
+              ),
+              t.identifier(`gatsbyImageData`)
+            )
+            prop.value = t.JSXExpressionContainer(newImageExpression)
+          }
         }
       },
     },
@@ -84,3 +87,24 @@ export default function UpdateImport(babel) {
 //   subExpression = subExpression.object
 // }
 // }
+
+// JSXOpeningElement: path => {
+//     let imageType = `fixed`
+//     const { node } = path
+//     if (node.name.name !== imageImportName) {
+//       return
+//     } else {
+//       node.name.name = `GatsbyImage`
+//     }
+
+//     const imageProps = node.attributes.filter(
+//       attribute =>
+//         attribute.name.name === `fixed` || attribute.name.name === `fluid`
+//     )
+//     if (imageProps.length > 0) {
+//       const mainImage = imageProps[0]
+//       imageType = mainImage.name.name
+//       mainImage.name.name = `image`
+//       console.log(mainImage.value.expression)
+//     }
+//   },
