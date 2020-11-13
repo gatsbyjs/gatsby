@@ -23160,14 +23160,6 @@ stream-each@^1.1.0:
     end-of-stream "^1.1.0"
     stream-shift "^1.0.0"
 
-stream-filter@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/stream-filter/-/stream-filter-2.1.0.tgz#bdff4eee3cde4c1525e02b78dde93d821fe529bd"
-  integrity sha1-vf9O7jzeTBUl4Ct43ek9gh/lKb0=
-  dependencies:
-    through2 "^2.0.1"
-    xtend "^4.0.1"
-
 stream-http@^2.7.2:
   version "2.8.3"
   resolved "https://registry.yarnpkg.com/stream-http/-/stream-http-2.8.3.tgz#b2d242469288a5a27ec4fe8933acf623de6514fc"
