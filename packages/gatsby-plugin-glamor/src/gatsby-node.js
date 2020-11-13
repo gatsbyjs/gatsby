@@ -20,3 +20,5 @@ exports.onCreateBabelConfig = ({ actions }) => {
     },
   })
 }
+
+exports.pluginOptionsSchema = ({ Joi }) => Joi.object({})
