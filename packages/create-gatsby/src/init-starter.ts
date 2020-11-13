@@ -4,7 +4,7 @@ import fs from "fs-extra"
 import path from "path"
 import { reporter } from "./reporter"
 import filterStream from "stream-filter"
-import { spin } from "./components/spin"
+import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 
