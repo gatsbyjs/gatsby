@@ -337,6 +337,13 @@ jobs:
       CYPRESS_PROJECT_ID: 917bea
       CYPRESS_RECORD_KEY: 4750fb36-4576-4638-a617-d243a381acef
 
+  e2e_tests_development_runtime_query_on_demand:
+    <<: *e2e_tests_development_runtime_alias
+    environment:
+      GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND: true
+      CYPRESS_PROJECT_ID: konj5u
+      CYPRESS_RECORD_KEY: e38d5b36-5188-4e26-88c1-7c0f9e283fdb
+
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
 
@@ -620,6 +627,8 @@ workflows:
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime_fast_refresh:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime_query_on_demand:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
