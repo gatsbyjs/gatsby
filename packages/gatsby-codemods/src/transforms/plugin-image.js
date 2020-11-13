@@ -43,6 +43,7 @@ export default function UpdateImport(babel) {
           if (parent.source.value !== `gatsby-image`) {
             return
           } else {
+            imageImportName = path.node.local.name
             path.node.local.name = `{ GatsbyImage }`
           }
         }
