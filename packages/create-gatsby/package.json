@@ -1,6 +1,6 @@
 {
   "name": "create-gatsby",
-  "version": "0.0.0-8",
+  "version": "0.0.0-9",
   "main": "lib/index.js",
   "bin": "cli.js",
   "license": "MIT",
@@ -36,6 +36,7 @@
     "stream-filter": "^2.1.0",
     "string-length": "^4.0.1",
     "terminal-link": "^2.1.1",
+    "tiny-spin": "^1.0.2",
     "typescript": "^4.0.5"
   },
   "repository": {

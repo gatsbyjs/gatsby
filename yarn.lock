@@ -974,6 +974,8 @@
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-reserved-words/-/plugin-transform-reserved-words-7.10.4.tgz#8f2682bcdcef9ed327e1b0861585d7013f8a54dd"
   integrity sha512-hGsw1O6Rew1fkFbDImZIEqA8GoidwTAilwCyWqLBM9f+e/u/sQMQu7uX6dyokfOayRuuVfKOW4O7HvaBWM+JlQ==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.10.4"
 
 "@babel/plugin-transform-runtime@^7.11.5":
   version "7.11.5"
@@ -11197,10 +11199,10 @@ gatsby-design-tokens@^2.0.2:
   dependencies:
     hex2rgba "^0.0.1"
 
-gatsby-interface@^0.0.231:
-  version "0.0.231"
-  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.231.tgz#26f22c52423aee85641923e966e786dbacc17508"
-  integrity sha512-PCIfWVl8QfNuvcYYzNy1ZZGpK3oFn7QQlcCpoB/sjCciYxWRv7PEvjyGUD3Hiv1lZxJPCDjHY6TSIG8xTaVacQ==
+gatsby-interface@^0.0.225:
+  version "0.0.225"
+  resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.225.tgz#f2962d8f2e40163ff1bf908f3083ef634a3f4730"
+  integrity sha512-pJtp9uRSQL8OQCIQeADLOhVqMi2zRSHV6cwo3DwlVvwV264LffCirk1oYoJxldMbIyf0TEx3ouvoRWSIeq/8zw==
   dependencies:
     "@mdx-js/react" "^1.5.2"
     "@reach/alert" "0.10.3"
@@ -24144,6 +24146,11 @@ tiny-lr@^1.1.0:
     livereload-js "^2.3.0"
     object-assign "^4.1.0"
     qs "^6.4.0"
+
+tiny-spin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/tiny-spin/-/tiny-spin-1.0.2.tgz#a30ab6ef3b0b534fef9becc99874b49fb4115d23"
+  integrity sha512-w+LQXNFIrts+pOjuf1/UivYCd4znPiH/c5X8500Qv6n7FpUDaaB5Q1JSuZN3MIj65qQHzoXcKT9QAz3Tg/djFQ==
 
 tiny-warning@^1.0.0, tiny-warning@^1.0.2:
   version "1.0.3"
