@@ -26,8 +26,15 @@ export default async (root: string, cmd: string | undefined): Promise<void> => {
                    `)
       return
     case `ls`: {
-      const plugins = await GatsbyPlugin.all({ root }, false)
-      console.log(plugins)
+      try {
+        const plugins = await GatsbyPlugin.all({ root }, false)
+        console.log(plugins)
+      } catch {
+        reporter.error(
+          `There was a problem parsing your \`gatsby-config.js\` file.\nIt may be malformed. Or, the syntax you're using is not currently supported by this command.`
+        )
+      }
+
       return
     }
     default:
