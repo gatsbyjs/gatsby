@@ -21,7 +21,7 @@ const runTests = () => {
     })
   })
 
-  it(`should redirect page to index page even there is a such page`, () => {
+  it(`should redirect page to index page even if there is a such page`, () => {
     cy.visit(`/redirect`).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/`)

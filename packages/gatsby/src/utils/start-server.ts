@@ -265,7 +265,7 @@ export async function startServer(
   // This can lead to serving stale html files during development.
   //
   // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
+  app.use(developStatic(`public`, { index: false, redirect: false }))
 
   const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
     logLevel: `silent`,
