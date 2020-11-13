@@ -62,6 +62,10 @@ If you need an answer right away, check out the
 [Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
 useful resources.
 
+### GitHub Discussions
+
+Directly integrated into the repository, you can use [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions) to ask for help or share ideas.
+
 ### Hashnode
 
 Many members of the community also use Hashnode to ask questions and share their tips. Read through
