@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { run } from "."
+const { run } = require("./lib")
 
 run().catch(e => {
   console.warn(e)

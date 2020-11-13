@@ -2,11 +2,10 @@ import { execSync } from "child_process"
 import execa from "execa"
 import fs from "fs-extra"
 import path from "path"
-import { updateSiteMetadata } from "gatsby-core-utils"
 import { reporter } from "./reporter"
-import { getConfigStore } from "gatsby-core-utils"
 import filterStream from "stream-filter"
 import { spin } from "./components/spin"
+import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 
 const packageMangerConfigKey = `cli.packageManager`
@@ -209,22 +208,6 @@ export async function initStarter(
 
   await install(rootPath, packages)
 
-  const sitePackageJson = await fs
-    .readJSON(path.join(sitePath, `package.json`))
-    .catch(() => {
-      reporter.verbose(
-        `Could not read "${path.join(sitePath, `package.json`)}"`
-      )
-    })
-
-  await updateSiteMetadata(
-    {
-      name: sitePackageJson?.name || rootPath,
-      sitePath,
-      lastRun: Date.now(),
-    },
-    false
-  )
   await gitSetup(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }

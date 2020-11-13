@@ -18,7 +18,7 @@ const isPrimitive = val =>
  * @api public
  */
 
-module.exports = (prompt, options = {}) => {
+export default (prompt, options = {}) => {
   prompt.cursorHide()
 
   let { input = ``, initial = ``, pos, showCursor = true, color } = options
