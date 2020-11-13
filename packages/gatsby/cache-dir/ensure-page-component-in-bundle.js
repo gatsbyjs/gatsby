@@ -2,8 +2,6 @@ const didCallServer = new Set()
 
 const ensureComponentInBundle = chunkName =>
   new Promise(resolve => {
-    console.log(`ensureComponentInBundle`, { chunkName, didCallServer })
-    console.trace()
     if (!didCallServer.has(chunkName)) {
       const req = new XMLHttpRequest()
       req.open(`post`, `/___client-page-visited`, true)
@@ -24,7 +22,6 @@ const ensureComponentInBundle = chunkName =>
       }
 
       const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
-      console.log({ chunkName, lazyRequires })
       if (lazyRequires.lazyComponents[chunkName]) {
         resolve(lazyRequires.lazyComponents[chunkName])
       } else {

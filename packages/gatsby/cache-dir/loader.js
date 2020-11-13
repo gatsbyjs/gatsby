@@ -27,7 +27,6 @@ const stripSurroundingSlashes = s => {
 
 const createPageDataUrl = path => {
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
-  console.log({ fixedPath })
   return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
 }
 
@@ -143,7 +142,6 @@ export class BaseLoader {
             throw new Error(`not a valid pageData response`)
           }
 
-          console.log({ jsonPayload })
           // In development, check if the page is in the bundle yet.
           if (process.env.NODE_ENV === `development`) {
             if (process.env.NODE_ENV !== `test`) {
@@ -153,20 +151,11 @@ export class BaseLoader {
             }
 
             const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
-            console.log({
-              chunkName: jsonPayload.componentChunkName,
-              lazyRequires,
-              notVisitedPageComponent:
-                lazyRequires.notVisitedPageComponents[
-                  jsonPayload.componentChunkName
-                ],
-            })
             if (
               lazyRequires.notVisitedPageComponents[
                 jsonPayload.componentChunkName
               ]
             ) {
-              console.log(`ensure`, jsonPayload.componentChunkName)
               // Tell the server the user wants to visit this page
               // to trigger it including the page component's code in the
               // commons bundles.
