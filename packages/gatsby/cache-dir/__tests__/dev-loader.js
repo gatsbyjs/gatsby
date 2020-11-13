@@ -11,6 +11,20 @@ jest.mock(`../socketIo`, () => {
   }
 })
 
+jest.mock(
+  `$virtual/lazy-client-sync-requires`,
+  () => {
+    return {
+      lazyComponents: {
+        instance: { chunkName: `bar` },
+        chunk: { chunkName: `bar` },
+      },
+      notVisitedPageComponents: { foo: true },
+    }
+  },
+  { virtual: true }
+)
+
 describe(`Dev loader`, () => {
   let originalBasePath
   let originalPathPrefix
