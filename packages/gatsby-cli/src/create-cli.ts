@@ -503,6 +503,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         const starterStr = starter ? String(starter) : undefined
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
+        // We only run the interactive CLI when there are no arguments passed in
         if (
           process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW &&
           !starterStr &&
