@@ -9,7 +9,7 @@ import {
 export async function getPageData(
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const { queries } = store.getState()
+  const { queries, pendingPageDataWrites } = store.getState()
 
   const query = queries.trackedQueries.get(pagePath)
 
@@ -21,6 +21,9 @@ export async function getPageData(
   }
   if (query.dirty !== 0) {
     emitter.emit(`QUERY_RUN_REQUESTED`, { pagePath })
+    return waitNextPageData(pagePath)
+  }
+  if (pendingPageDataWrites.pagePaths.has(pagePath)) {
     return waitNextPageData(pagePath)
   }
   // Results are up-to-date
