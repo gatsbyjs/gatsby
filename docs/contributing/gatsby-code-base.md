@@ -5,31 +5,19 @@ title: Gatsby Code Base
 Start contributing here
 =======================
 
-Following is a list of folder in the [Gatsby Code Base](https://github.com/gatsbyjs/gatsby). Take a look at them and start contributing.
+#### Following is a list of folder in the [Gatsby Code Base](https://github.com/gatsbyjs/gatsby). Take a look at them and start contributing.
 
-   1. [Benchmarks](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks).
-   
-   2. [Docs](https://github.com/gatsbyjs/gatsby/tree/master/docs).
-   
-   3. [e2e-tests](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests).
-   
-   4. [Examples](https://github.com/gatsbyjs/gatsby/tree/master/examples).
-   
-   5. [Integration-tests](https://github.com/gatsbyjs/gatsby/tree/master/integration-tests).
-   
-   6. [Packages](https://github.com/gatsbyjs/gatsby/tree/master/packages).
-   
-   7. [Peril](https://github.com/gatsbyjs/gatsby/tree/master/peril).
-   
-   8. [Plop-templates](https://github.com/gatsbyjs/gatsby/tree/master/plop-templates).
-   
-   9. [RFCS](https://github.com/gatsbyjs/gatsby/tree/master/rfcs).
-   
-   10. [Scripts](https://github.com/gatsbyjs/gatsby/tree/master/scripts).
-   
-   11. [Starters](https://github.com/gatsbyjs/gatsby/tree/master/starters).
-
----
+* [Benchmarks](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks).
+* [Docs](https://github.com/gatsbyjs/gatsby/tree/master/docs).
+* [e2e-tests](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests).
+* [Examples](https://github.com/gatsbyjs/gatsby/tree/master/examples).
+* [Integration-tests](https://github.com/gatsbyjs/gatsby/tree/master/integration-tests).
+* [Packages](https://github.com/gatsbyjs/gatsby/tree/master/packages).
+* [Peril](https://github.com/gatsbyjs/gatsby/tree/master/peril).
+* [Plop-templates](https://github.com/gatsbyjs/gatsby/tree/master/plop-templates).
+* [RFCS](https://github.com/gatsbyjs/gatsby/tree/master/rfcs).
+* [Scripts](https://github.com/gatsbyjs/gatsby/tree/master/scripts).
+* [Starters](https://github.com/gatsbyjs/gatsby/tree/master/starters).
 
 **Also take a look at the [Issues](https://github.com/gatsbyjs/gatsby/issues) page to find an open issue.**
 
