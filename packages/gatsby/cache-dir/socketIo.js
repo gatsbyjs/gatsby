@@ -2,13 +2,18 @@ import io from "socket.io-client"
 import { reportError, clearError } from "./error-overlay-handler"
 import loader from "./loader"
 import normalizePagePath from "./normalize-page-path"
+import { findPath } from "./find-path"
 import { debounce } from "lodash"
 
 let socket = null
 let staticQueryData = {}
 
 const debouncedLoadPage = debounce(
-  () => loader.loadPage(window.location.pathname, true),
+  () => {
+    loader.loadPage(window.location.pathname, true)
+    loader.loadPage(`404.html`, true)
+    loader.loadPage(`/dev-404-page/`, true)
+  },
   100,
   { leading: true }
 )
@@ -60,6 +65,19 @@ export default function socketIo() {
           }
 
           if (msg.type === `pageQueryResult`) {
+            console.log(`yo`, loader)
+            console.log(msg, msg.payload)
+            console.log(findPath(msg.payload))
+            const realPath = findPath(msg.payload)
+            // If this isn't the current page (which we refresh on every websocket
+            // invalidation) and we have loaded this page already, refresh.
+            if (
+              window.location.pathname !== realPath &&
+              loader.getPageQueryData().has(realPath)
+            ) {
+              console.log(`loading payload`, realPath)
+              loader.loadPage(realPath, true)
+            }
             debouncedLoadPage()
           }
 

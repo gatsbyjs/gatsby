@@ -279,6 +279,7 @@ export class WebsocketManager {
   }
 
   emitPageData = (data: IPageQueryResult): void => {
+    console.log(`emitPageData`, data.id)
     this.pageResults.set(data.id, data)
 
     if (this.websocket) {

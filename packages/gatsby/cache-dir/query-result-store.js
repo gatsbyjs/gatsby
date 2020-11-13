@@ -12,8 +12,10 @@ import normalizePagePath from "./normalize-page-path"
 // Pulled from react-compat
 // https://github.com/developit/preact-compat/blob/7c5de00e7c85e2ffd011bf3af02899b63f699d3a/src/index.js#L349
 function shallowDiffers(a, b) {
-  for (let i in a) if (!(i in b)) return true
-  for (let i in b) if (a[i] !== b[i]) return true
+  if (a && b) {
+    for (let i in a) if (!(i in b)) return true
+    for (let i in b) if (a[i] !== b[i]) return true
+  }
   return false
 }
 
@@ -85,11 +87,12 @@ export class PageQueryStore extends React.Component {
     const nextRealProps = nextState.pageQueryData.get(nextState.path)?.payload
       ?.result
 
+    console.log({ curProps, nextRealProps })
+
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
-      shallowDiffers(curProps.pageContext, nextRealProps.pageContext) ||
-      shallowDiffers(curProps.data, curProps.pageContext)
+      curProps !== nextRealProps
     )
   }
 
@@ -111,17 +114,18 @@ export class StaticQueryStore extends React.Component {
     super(props)
     this.state = {
       staticQueryData: {
-        ...socketGetStaticQueryData(),
         ...loader.getStaticQueryResults(),
+        ...socketGetStaticQueryData(),
       },
     }
   }
 
-  handleMittEvent = () => {
+  handleMittEvent = msg => {
+    console.log(msg)
     this.setState({
       staticQueryData: {
-        ...socketGetStaticQueryData(),
         ...loader.getStaticQueryResults(),
+        ...socketGetStaticQueryData(),
       },
     })
   }
@@ -138,10 +142,11 @@ export class StaticQueryStore extends React.Component {
     // We want to update this component when:
     // - static query results changed
 
-    return this.state.staticQueryData !== nextState.staticQueryData
+    return shallowDiffers(this.state.staticQueryData, nextState.staticQueryData)
   }
 
   render() {
+    console.log(this.state.staticQueryData)
     return (
       <StaticQueryContext.Provider value={this.state.staticQueryData}>
         {this.props.children}

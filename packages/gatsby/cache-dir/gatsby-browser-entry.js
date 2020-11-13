@@ -19,8 +19,8 @@ const StaticQueryContext = React.createContext({})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const combinedStaticQueryData = {
-    ...staticQueryData,
     ...loader.getStaticQueryResults(),
+    ...staticQueryData,
   }
   const finalData = data
     ? data.data
@@ -76,9 +76,7 @@ useStaticQuery(graphql\`${query}\`);
   }
 
   // Merge data loaded via socket.io & xhr
-  //
-  // TODO just load data over xhr & socket.io just triggers
-  // re-fetches
+  // We favor socket.io data as it'll be the freshest.
   const staticQueryData = {
     ...loader.getStaticQueryResults(),
     ...context,
