@@ -1,9 +1,6 @@
 import path from "path"
 import resolveCwd from "resolve-cwd"
 import yargs from "yargs"
-import report from "./reporter"
-import { setStore } from "./reporter/redux"
-import { getLocalGatsbyVersion } from "./util/version"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
 import clipboardy from "clipboardy"
@@ -13,9 +10,13 @@ import {
   setTelemetryEnabled,
   isTrackingEnabled,
 } from "gatsby-telemetry"
+import { startGraphQLServer } from "gatsby-recipes"
+import { run as runCreateGatsby } from "create-gatsby"
+import report from "./reporter"
+import { setStore } from "./reporter/redux"
+import { getLocalGatsbyVersion } from "./util/version"
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
-import { startGraphQLServer } from "gatsby-recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
@@ -502,7 +503,16 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         const starterStr = starter ? String(starter) : undefined
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
-        await initStarter(starterStr, rootPathStr)
+        // We only run the interactive CLI when there are no arguments passed in
+        if (
+          process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW &&
+          !starterStr &&
+          !rootPathStr
+        ) {
+          await runCreateGatsby()
+        } else {
+          await initStarter(starterStr, rootPathStr)
+        }
       }),
     })
     .command({

@@ -19,6 +19,7 @@
     "common-tags": "^1.8.0",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
+    "create-gatsby": "^0.0.0-9",
     "envinfo": "^7.7.3",
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
