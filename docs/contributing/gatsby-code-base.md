@@ -2,7 +2,8 @@
 title: Gatsby Code Base
 ---
 
-## Start contributing here
+Start contributing here
+=======================
 
 Following is a list of folder in the [Gatsby Code Base](https://github.com/gatsbyjs/gatsby). Take a look at them and start contributing.
 
@@ -27,6 +28,8 @@ Following is a list of folder in the [Gatsby Code Base](https://github.com/gatsb
    10. [Scripts](https://github.com/gatsbyjs/gatsby/tree/master/scripts).
    
    11. [Starters](https://github.com/gatsbyjs/gatsby/tree/master/starters).
+
+---
 
 **Also take a look at the [Issues](https://github.com/gatsbyjs/gatsby/issues) page to find an open issue.**
 
