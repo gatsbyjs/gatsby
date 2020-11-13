@@ -106,6 +106,7 @@ export interface ITelemetryTagsPayload {
   }
   errorV2?: IStructuredErrorV2
   valueString?: string
+  valueStringArray?: Array<string>
   valueInteger?: number
 }
 
