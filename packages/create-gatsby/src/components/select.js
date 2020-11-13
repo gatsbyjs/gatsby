@@ -10,6 +10,12 @@ export class SelectInput extends Select {
         )
         .join(`\n`)
     }
+
+    // On first render, this is undefined
+    if (!this.selected) {
+      return ``
+    }
+
     return this.styles.primary(
       this.symbols.middot + ` ` + this.selected.message
     )
@@ -32,30 +38,33 @@ export class SelectInput extends Select {
       return undefined
     }
 
-    let styles = this.styles
-    let focused = this.index === i
-    let style = focused ? styles.primary : val => val
-    let ele = await this.resolve(val[focused ? `on` : `off`] || val, this.state)
+    const styles = this.styles
+    const focused = this.index === i
+    const style = focused ? styles.primary : val => val
+    const ele = await this.resolve(
+      val[focused ? `on` : `off`] || val,
+      this.state
+    )
     return focused ? style(ele) : ` `.repeat(ele.length)
   }
 
   async render() {
-    let { submitted, size } = this.state
+    const { submitted, size } = this.state
 
     let prompt = ``
-    let header = await this.header()
-    let prefix = await this.prefix()
-    let message = await this.message()
+    const header = await this.header()
+    const prefix = await this.prefix()
+    const message = await this.message()
 
     if (this.options.promptLine !== false) {
       prompt = [prefix, message].join(` `)
       this.state.prompt = prompt
     }
 
-    let output = await this.format()
-    let help = (await this.error()) || (await this.hint())
-    let body = await this.renderChoices()
-    let footer = await this.footer()
+    const output = await this.format()
+    const help = (await this.error()) || (await this.hint())
+    const body = await this.renderChoices()
+    const footer = await this.footer()
 
     if (output) prompt += `\n` + output
     if (help && !prompt.includes(help)) prompt += `\n` + help
@@ -83,6 +92,8 @@ export class MultiSelectInput extends SelectInput {
   }
 
   toggle(choice, enabled) {
+    if (!choice) return
+
     if (choice.name === `___done`) {
       super.submit()
     } else {

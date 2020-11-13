@@ -16,6 +16,8 @@ export function center(
   padding = ` `,
   width = DEFAULT_WIDTH
 ): string {
-  const pad = padding.repeat(Math.round((width - stringLength(text)) / 2))
+  const count = Math.round((width - stringLength(text)) / 2)
+
+  const pad = padding.repeat(count > 0 ? count : 0)
   return pad + text
 }

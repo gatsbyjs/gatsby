@@ -91,11 +91,12 @@ export const questions: any = [
     choices: makeChoices(features, true),
   },
 ]
-interface IAnswers {
+export interface IAnswers {
   project: string
   styling?: keyof typeof styles
   cms?: keyof typeof cmses
   features?: Array<keyof typeof features>
+  hasConfirmed: boolean
 }
 
 /**
@@ -127,7 +128,17 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
-export async function run(): Promise<void> {
+export const createCli = (): Enquirer<IAnswers> => {
+  const cli = new Enquirer<IAnswers>()
+
+  cli.use(plugin)
+
+  return cli
+}
+
+export async function run(
+  cli: Enquirer<IAnswers> = createCli()
+): Promise<void> {
   const { version } = require(`../package.json`)
 
   console.log(c.grey(`create-gatsby version ${version}`))
@@ -137,8 +148,8 @@ export async function run(): Promise<void> {
 
 
 ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
-   
-                
+
+
 `
   )
   console.log(c.red(rule()))
@@ -161,11 +172,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   )
   console.log(``)
 
-  const enquirer = new Enquirer<IAnswers>()
-
-  enquirer.use(plugin)
-
-  const data = await enquirer.prompt(questions)
+  const data = await cli.prompt(questions)
 
   const messages: Array<string> = [
     `${w(`🛠  `)}Create a new Gatsby site in the folder ${c.magenta(
@@ -240,14 +247,27 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   }
 
   const config = makePluginConfigQuestions(plugins)
+
   if (config.length) {
     console.log(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
 
-    const enquirer = new Enquirer<Record<string, {}>>()
-    enquirer.use(plugin)
-    pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    // We are adding dynamic keys corresponding to the plugins and CMS selected in the previous steps.
+    // In order to be confident about what's in this object, we need to extract every other deterministic information
+    // and spread the dynamic CMS / plugins name and configs
+    const {
+      hasConfirmed,
+      project,
+      cms,
+      features,
+      styling,
+      ...result
+    } = await cli.prompt(config)
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
+    pluginConfig = { ...pluginConfig, ...result }
   }
 
   console.log(`
@@ -257,15 +277,15 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     ${messages.join(`\n    `)}
   `)
 
-  const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
+  const { hasConfirmed } = await cli.prompt({
     type: `confirm`,
-    name: `confirm`,
+    name: `hasConfirmed`,
     initial: `Yes`,
     message: `Shall we do this?`,
     format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
   })
 
-  if (!confirm) {
+  if (!hasConfirmed) {
     console.log(`OK, bye!`)
     return
   }
@@ -289,7 +309,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
       data.project
-    )} has been successfully bootstrapped 
+    )} has been successfully bootstrapped
     at ${c.bold(path.resolve(data.project))}.
     `
   )
