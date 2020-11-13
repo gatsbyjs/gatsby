@@ -11,6 +11,7 @@ import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
+import FastRefreshOverlay from "./fast-refresh-overlay"
 
 import { reportError, clearError } from "./error-overlay-handler"
 
@@ -135,4 +136,8 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
+export default () => (
+  <FastRefreshOverlay>
+    <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
+  </FastRefreshOverlay>
+)
