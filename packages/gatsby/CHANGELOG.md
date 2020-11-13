@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.26.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0...gatsby@2.26.1) (2020-11-13)
+
+### Bug Fixes
+
+- **gatsby:** allow unknown plugin options ([#27938](https://github.com/gatsbyjs/gatsby/issues/27938)) ([#28010](https://github.com/gatsbyjs/gatsby/issues/28010)) ([8f16b9d](https://github.com/gatsbyjs/gatsby/commit/8f16b9d130046d97b93f1be683d2936abafc4dcd))
+
+### Reverts
+
+- Revert "fix(gatsby): refresh browser when receiving update and runtime errored (#27467)" (#28034) (#28038) ([9f24f25](https://github.com/gatsbyjs/gatsby/commit/9f24f25490c83880985d022603e0291885464367)), closes [#27467](https://github.com/gatsbyjs/gatsby/issues/27467) [#28034](https://github.com/gatsbyjs/gatsby/issues/28034) [#28038](https://github.com/gatsbyjs/gatsby/issues/28038)
+
 # [2.26.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.3...gatsby@2.26.0) (2020-11-12)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.5.0...gatsby-plugin-sass@2.5.1) (2020-11-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-sass:** loosely check postCssPlugins ([#27829](https://github.com/gatsbyjs/gatsby/issues/27829)) ([#28037](https://github.com/gatsbyjs/gatsby/issues/28037)) ([ae4c51e](https://github.com/gatsbyjs/gatsby/commit/ae4c51e6a07374a7a063bf4c302377b93cd249e1))
+
 # [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.5.0-next.2...gatsby-plugin-sass@2.5.0) (2020-11-12)
 
 **Note:** Version bump only for package gatsby-plugin-sass
