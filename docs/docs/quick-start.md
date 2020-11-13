@@ -19,6 +19,28 @@ npm install -g gatsby-cli
 
 > The above command installs Gatsby CLI globally on your machine.
 
+#### Install the Gatsby CLI on Linux
+
+The issue is npm try to install gatsby-cli globally (-g) which means it will write library /usr/lib/node_modules/ and executable in /usr/bin/ but your user is more than likely don't have the right to write in those folder.
+
+The solution is to give write access to the group of those directory. To find a group where your user is member with `grep $(whoami) /etc/group`. Note: if the previous command return nothing you could identify your main group with `id -g` which instead of a group name will give you a group id.
+
+An example the group `users`
+
+```shell
+sudo chown :users /usr/lib/node_modules /usr/bin
+sudo chmod g+ws /usr/lib/node_modules /usr/bin
+npm install -g gatsby-cli
+```
+
+An example the group id `100`
+
+```shell
+sudo chown :100 /usr/lib/node_modules /usr/bin
+sudo chmod g+ws /usr/lib/node_modules /usr/bin
+npm install -g gatsby-cli
+```
+
 ### Create a new site
 
 ```shell
