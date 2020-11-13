@@ -1,7 +1,6 @@
 import * as path from "path"
 import { store, emitter } from "../redux"
 import { IClearPendingPageDataWriteAction } from "../redux/types"
-import * as actions from "../redux/actions/internal"
 import {
   IPageDataWithQueryResult,
   readPageData as readPageDataUtil,
@@ -21,7 +20,7 @@ export async function getPageData(
     return waitNextPageData(pagePath)
   }
   if (query.dirty !== 0) {
-    store.dispatch(actions.queryRunRequested({ path: pagePath, isPage: true }))
+    emitter.emit(`QUERY_RUN_REQUESTED`, { pagePath })
     return waitNextPageData(pagePath)
   }
   // Results are up-to-date

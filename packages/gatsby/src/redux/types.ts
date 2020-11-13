@@ -311,7 +311,6 @@ export type ActionsUnion =
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
   | IQueryExtractionGraphQLErrorAction
-  | IQueryRunRequestedAction
   | IQueryStartAction
   | IRemoveStaticQuery
   | IReplaceComponentQueryAction
@@ -521,11 +520,6 @@ export interface IPageQueryRunAction {
     componentPath: string
     isPage: boolean
   }
-}
-
-export interface IQueryRunRequestedAction {
-  type: `QUERY_RUN_REQUESTED`
-  payload: { path: string; isPage: boolean }
 }
 
 export interface IQueryStartAction {

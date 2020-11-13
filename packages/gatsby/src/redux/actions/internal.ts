@@ -20,7 +20,6 @@ import {
   ISetGraphQLDefinitionsAction,
   IQueryStartAction,
   IApiFinishedAction,
-  IQueryRunRequestedAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -234,16 +233,6 @@ export const pageQueryRun = (
     plugin,
     traceId,
     payload: { path, componentPath, isPage },
-  }
-}
-
-export const queryRunRequested = ({
-  path,
-  isPage,
-}): IQueryRunRequestedAction => {
-  return {
-    type: `QUERY_RUN_REQUESTED`,
-    payload: { path, isPage },
   }
 }
 
