@@ -1,36 +1,11 @@
-// import { declare } from "@babel/helper-plugin-utils"
+import * as t from "@babel/types"
 // import { transform } from "@babel/core"
-// import { ImportSpecifier } from "jscodeshift"
 
 // const src = `import { GatsbyImage } from "gatsby-plugin-image/compat"`
 
 // const updateImport = new BabelPluginGatsbyImageImport({})
 
-// transform(src, { plugins: [updateImport.plugin] })
-
-// class BabelPluginGatsbyImageImport {
-//   constructor() {
-//     this.state = []
-
-//     this.plugin = declare(api => {
-//       api.assertVersion(7)
-
-//       return {
-//         visitor: {
-//           ImportDeclaration: path => {
-//             const { source } = path
-
-//             if (source.value !== `gatsby-image`) {
-//               return
-//             }
-
-//             specifiers => {}
-//           },
-//         },
-//       }
-//     })
-//   }
-// }
+// transform(src, UpdateImport)
 
 export default function UpdateImport(babel) {
   const { types: t } = babel
