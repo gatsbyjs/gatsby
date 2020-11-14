@@ -77,37 +77,20 @@ export default function UpdateImport(babel) {
   }
 }
 
-// if (mainImage.value.expression.type === `Identifier`) {
-//     mainImage.value.expression.name = `data.file.childImageSharp.gatsbyImageData`
-// } else if (mainImage.value.expression.type === `MemberExpression`) {
-// let subExpression = mainImage.value.expression.object
-// while(subExpression) {
-//   if (subExpression.property) {
-//      subExpression.property.name = ``
-//   } else {
-//     subExpression.name = ``
-//   }
-//   subExpression = subExpression.object
-// }
-// }
-
-// JSXOpeningElement: path => {
-//     let imageType = `fixed`
-//     const { node } = path
-//     if (node.name.name !== imageImportName) {
-//       return
-//     } else {
-//       node.name.name = `GatsbyImage`
+//GRAPHQL BELOW
+// SelectionSet:
+// path => {
+//   const relativeSelection = path.selections.filter(
+//     ({ name }) => name.value === `childImageSharp`
+//   )
+//   const fixedOrFluid = relativeSelection.selectionSet.selections.filter(
+//     ({ name }) => {
+//       return name.value === `fixed` || name.value === `fluid`
 //     }
-
-//     const imageProps = node.attributes.filter(
-//       attribute =>
-//         attribute.name.name === `fixed` || attribute.name.name === `fluid`
-//     )
-//     if (imageProps.length > 0) {
-//       const mainImage = imageProps[0]
-//       imageType = mainImage.name.name
-//       mainImage.name.name = `image`
-//       console.log(mainImage.value.expression)
-//     }
-//   },
+//   )
+//   const allArguments = fixedOrFluid[0].arguments
+//   relativeSelection[0] = t.selectionSet(
+//     t.field(`gatsbyImageData`),
+//     allArguments
+//   )
+// }
