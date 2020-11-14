@@ -212,7 +212,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   if (data.features?.length) {
     messages.push(
-      `${w(`🔌  `)}Install ${data.features
+      `${w(`🔌 `)}Install ${data.features
         ?.map((feat: string) => c.magenta(feat))
         .join(`, `)}`
     )
