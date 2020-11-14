@@ -236,6 +236,7 @@ heroku
 heroku-buildpack-static
 hinzufügen
 HTTPS
+https
 i18n
 IaaS
 IAM
@@ -456,6 +457,7 @@ useStaticQuery
 Util
 UX
 v0
+v1
 v2
 V2
 v3
