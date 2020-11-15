@@ -17,14 +17,13 @@ describe(`create-gatsby-app`, () => {
 
   beforeEach(() => {
     cli = createCli()
-    jest.setTimeout(10000)
   })
 
   afterEach(() => {
     jest.resetAllMocks()
   })
 
-  it(`creates a project only using the project name`, async () => {
+  it.only(`creates a project only using the project name`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
