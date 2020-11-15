@@ -96,7 +96,7 @@
     "watch:babel": "npm run build:babel -- --watch",
     "watch:rollup": "npm run build:rollup -- -w",
     "watch": "npm-run-all -p watch:babel watch:rollup",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node -e \"try{require('./scripts/postinstall')}catch(e){}\" || true"
   },
   "engines": {
     "node": ">=10.13.0"

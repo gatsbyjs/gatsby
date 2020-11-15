@@ -1,5 +1,5 @@
 try {
-  const showAnalyticsNotification = require(`./showAnalyticsNotification`)
+  const { showAnalyticsNotification } = require(`./show-analytics-notification`)
   const { isCI } = require(`gatsby-core-utils`)
   const { EventStorage } = require(`./event-storage`)
 
