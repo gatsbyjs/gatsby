@@ -97,6 +97,7 @@ Conf
 config
 Config
 config.
+Config.
 configs
 Construye
 contentDigest
@@ -159,6 +160,7 @@ Etsy
 executables
 Expedia
 F8
+Facebook
 Fastly
 favicon
 favicons
@@ -177,6 +179,7 @@ frontend
 frontmatter
 Frontmatter
 Gatsbot
+gatsbot
 gatsby
 gatsby-cli
 Gatsby-CLI
@@ -210,6 +213,7 @@ generalistic
 Getform
 Gitalk
 Gitee
+GitHub
 GitLab
 GitLab's
 Gitpod
@@ -235,6 +239,8 @@ Hashnode
 heroku
 heroku-buildpack-static
 hinzufügen
+HTTP
+http
 HTTPS
 https
 i18n
@@ -304,6 +310,7 @@ namespaces
 natively
 Netlify
 Netlify's
+nginx
 Nginx
 NGINX
 nodemailer
@@ -376,6 +383,7 @@ repo
 Repo
 repo's
 repos
+repository
 résumé
 revalidated
 roadmaps
@@ -402,6 +410,7 @@ signups
 siteMetadata
 Sitesi
 siteUrl
+Snapchat
 SnipCard
 Snipcart
 Snipcart-specific
