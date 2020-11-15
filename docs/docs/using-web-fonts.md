@@ -28,6 +28,11 @@ This example shows how to set up the [Open Sans](https://fonts.google.com/specim
 
 ```jsx:title=src/components/layout.js
 import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
+```
+
+If you wish to select a particular weight or style, you may specify it by changing the import path.
+
+```jsx:title=src/components/layout.js
 import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
 import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
 ```
