@@ -134,4 +134,49 @@ exports.onCreatePage = async ({ page, actions }) => {
       },
     })
   }
+
+  if (page.path.includes(`query-data-caches`)) {
+    if (page.path.includes(`with-trailing-slash`)) {
+      // just make sure it actually has trailing slash
+      const hasTrailingSlash = /\/$/.test(page.path)
+      if (!hasTrailingSlash) {
+        throw new Error(
+          `Page reporting to have trailing slash, doesn't have it`
+        )
+      }
+    }
+
+    if (page.path.includes(`no-trailing-slash`)) {
+      // strip both slashes
+      deletePage(page)
+      createPage({
+        ...page,
+        path: page.path.replace(/\/$/, ``),
+      })
+    }
+  }
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    QueryDataCachesJson: {
+      // this field doesn't do anything useful on its own
+      // it's only added so we can use it to make sure query text
+      // in various queries used by `query-data-caches` is different
+      // at least a little bit, so the static queries is different
+      // between initial and second page
+      dummy: {
+        type: `String`,
+        args: {
+          text: {
+            type: `String`,
+          },
+        },
+        resolve(_source, args) {
+          return args.text
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
 }
