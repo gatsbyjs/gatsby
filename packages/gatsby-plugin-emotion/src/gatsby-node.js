@@ -29,6 +29,6 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     cssPropOptimization: Joi.boolean()
       .default(true)
       .description(
-        `This option assumes that you are using something to make @emotion/core’s jsx function work for all jsx. If you are not doing so and you do not want such optimizations to occur, disable this option.`
+        `This option assumes that you are using something to make @emotion/react’s jsx function work for all jsx. If you are not doing so and you do not want such optimizations to occur, disable this option.`
       ),
   })
