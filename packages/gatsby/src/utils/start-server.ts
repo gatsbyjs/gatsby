@@ -7,6 +7,7 @@ import webpackDevMiddleware, {
 import got from "got"
 import webpack from "webpack"
 import express from "express"
+import compression from "compression"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
@@ -27,9 +28,12 @@ import https from "https"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
+import { reverseFixedPagePath, readPageData } from "./page-data"
+import { findPageByPath } from "./find-page-by-path"
 import { slash } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
+import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
@@ -117,6 +121,7 @@ export async function startServer(
   /**
    * Set up the express app.
    **/
+  app.use(compression())
   app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     webpackHotMiddleware(compiler, {
@@ -213,6 +218,40 @@ export async function startServer(
     res.end()
   })
 
+  app.get(
+    `/page-data/:pagePath(*)/page-data.json`,
+    async (req, res, next): Promise<void> => {
+      const requestedPagePath = req.params.pagePath
+      if (!requestedPagePath) {
+        next()
+        return
+      }
+
+      const potentialPagePath = reverseFixedPagePath(requestedPagePath)
+      const page = findPageByPath(store.getState(), potentialPagePath, false)
+
+      if (page) {
+        try {
+          const pageData = await readPageData(
+            path.join(store.getState().program.directory, `public`),
+            page.path
+          )
+          res.status(200).send(pageData)
+          return
+        } catch (e) {
+          report.error(
+            `Error loading a result for the page query in "${requestedPagePath}" / "${potentialPagePath}". Query was not run and no cached result was found.`,
+            e
+          )
+        }
+      }
+
+      res.status(404).send({
+        path: potentialPagePath,
+      })
+    }
+  )
+
   // Disable directory indexing i.e. serving index.html from a directory.
   // This can lead to serving stale html files during development.
   //
@@ -294,7 +333,7 @@ export async function startServer(
    **/
   const server = new http.Server(app)
 
-  const socket = websocketManager.init({ server, directory: program.directory })
+  const socket = websocketManager.init({ server })
 
   // hardcoded `localhost`, because host should match `target` we set
   // in http proxy in `develop-proxy`

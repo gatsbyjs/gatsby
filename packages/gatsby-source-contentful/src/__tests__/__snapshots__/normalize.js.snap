@@ -2206,7 +2206,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
       "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
@@ -2223,7 +2223,7 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
       "internal": Object {
-        "contentDigest": "29b0c61953be87f13bc9f653dc32823a",
+        "contentDigest": "35e910edc98eb7aa186d2d9a36f3b128",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2240,7 +2240,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
       "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
@@ -2257,7 +2257,7 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
       "internal": Object {
-        "contentDigest": "7d02f380b10a37f233f9de38e84daea9",
+        "contentDigest": "2aa0bb999f7ef8116687bbbc62deffea",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2410,7 +2410,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "contentful_id": "c2Y8LhXLnYAYqKCGEWG4EKI",
       "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
@@ -2427,7 +2427,7 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
       "internal": Object {
-        "contentDigest": "7155fd824e8d1e629e94e19e2bbfddcb",
+        "contentDigest": "9f34d0a8394067db13d89d6e4a84426a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2444,7 +2444,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "contentful_id": "c2Y8LhXLnYAYqKCGEWG4EKI",
       "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
@@ -2461,7 +2461,7 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
       "internal": Object {
-        "contentDigest": "c22412ba6731dd5d65f722219697f6b4",
+        "contentDigest": "abe55112187644d6efb8bfda7dbb22eb",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2478,7 +2478,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "contentful_id": "c6t4HKjytPi0mYgs240wkG",
       "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
@@ -2495,7 +2495,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "internal": Object {
-        "contentDigest": "9674f8d88657a9506cbeec22086c3cc4",
+        "contentDigest": "2d9ae0b67238ec9d9dd1001b4748caf8",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2512,7 +2512,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "contentful_id": "c6t4HKjytPi0mYgs240wkG",
       "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
@@ -2529,7 +2529,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "internal": Object {
-        "contentDigest": "4bd8fe775341c3af881b50b8946c0bed",
+        "contentDigest": "79c5fa4d4795c7a8ecd01b1a90f3e9b2",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2546,7 +2546,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "contentful_id": "c1MgbdJNTsMWKI0W68oYqkU",
       "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
@@ -2563,7 +2563,7 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset",
       "internal": Object {
-        "contentDigest": "52e5ae7190795bde9593a3af35e29dda",
+        "contentDigest": "dd9e0b22445c53c103f648c9cc3278ce",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2580,7 +2580,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "contentful_id": "c1MgbdJNTsMWKI0W68oYqkU",
       "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
@@ -2597,7 +2597,7 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset___de",
       "internal": Object {
-        "contentDigest": "c1ecab424cc9351b6c34c25204276249",
+        "contentDigest": "d260ba76ed130a6ed6eeadc57f57fac0",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2614,7 +2614,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
@@ -2631,7 +2631,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "internal": Object {
-        "contentDigest": "738cac15e3bb4c6d4830b3fc0ec45af9",
+        "contentDigest": "0abea528e3796d22c5fe73e85e8f80fc",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2648,7 +2648,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
@@ -2665,7 +2665,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "internal": Object {
-        "contentDigest": "488ace4a8e828d61893bae98001dc1f7",
+        "contentDigest": "d73002d0c2cce9479471ccabf2e630b4",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2682,7 +2682,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "contentful_id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
@@ -2699,7 +2699,7 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
       "internal": Object {
-        "contentDigest": "79197acfeddb216cb331db984d5e7b55",
+        "contentDigest": "4a400397c4d21bc4ec318740ca865a8a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2716,7 +2716,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "contentful_id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
@@ -2733,7 +2733,7 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset___de",
       "internal": Object {
-        "contentDigest": "24b59970db0fb066b8b9fad476b0d612",
+        "contentDigest": "14554ba5ba9455f0a4f4039df274db2d",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2818,7 +2818,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "contentful_id": "c10TkaLheGeQG6qQGqWYqUI",
       "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
@@ -2835,7 +2835,7 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       "internal": Object {
-        "contentDigest": "70a6136d30af841ad78e3dfd65f8edec",
+        "contentDigest": "a4efe36df993084643a6d20370c6a091",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2852,7 +2852,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "contentful_id": "c10TkaLheGeQG6qQGqWYqUI",
       "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
@@ -2869,7 +2869,7 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       "internal": Object {
-        "contentDigest": "971f33d62c6b0e07c4fb394f73031218",
+        "contentDigest": "b9ffd9615b759412feb9f9189b3ba6ae",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2886,7 +2886,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "contentful_id": "c6s3iG2OVmoUcosmA8ocqsG",
       "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
@@ -2903,7 +2903,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset",
       "internal": Object {
-        "contentDigest": "ee684e7781088eb7a1f7e5038e30c6d8",
+        "contentDigest": "30c3390f1d03cfa8ba537db944b7e2c4",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2920,7 +2920,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "contentful_id": "c6s3iG2OVmoUcosmA8ocqsG",
       "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
@@ -2937,7 +2937,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset___de",
       "internal": Object {
-        "contentDigest": "3d864d134ad2b975aed2e793545eb9b3",
+        "contentDigest": "6c205777fe39b5ed2bfe009b7e1058cd",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2985,12 +2985,12 @@ Array [
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___EntrytitleTextNode",
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___EntrycategoryDescriptionTextNode",
       ],
-      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry",
       "internal": Object {
-        "contentDigest": "9b9cac2e295e347a16a950e6f7b15571",
+        "contentDigest": "8ae74b372d9414c1fac80d2e95c65cee",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -3022,12 +3022,12 @@ Array [
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___EntrytitleTextNode",
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___EntrycategoryDescriptionTextNode",
       ],
-      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "id": "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry",
       "internal": Object {
-        "contentDigest": "643d5e1889f2e9674ab3ea0896323d01",
+        "contentDigest": "c15a3faddd6e32373f09eae482f6c8f6",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -3146,12 +3146,12 @@ Array [
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry___detitleTextNode",
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry___decategoryDescriptionTextNode",
       ],
-      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry___de",
       "internal": Object {
-        "contentDigest": "87cfbb679fd6345cdffa60ad555199c8",
+        "contentDigest": "f1c5165d5e948deff6e1a29fcf9cd07e",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -3183,12 +3183,12 @@ Array [
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry___detitleTextNode",
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry___decategoryDescriptionTextNode",
       ],
-      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "id": "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry___de",
       "internal": Object {
-        "contentDigest": "2d069688f658d34a5fd3f2204e730f28",
+        "contentDigest": "3c17f5c3162133331eb0ef8ffa370792",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -3307,12 +3307,12 @@ Array [
       ],
       "companyDescription___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___EntrycompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___EntrycompanyNameTextNode",
-      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry",
       "internal": Object {
-        "contentDigest": "580eeb06324c435e82b5c488e75b4118",
+        "contentDigest": "da0124970e9a1f2d7e06d4b551d1af4b",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
@@ -3350,12 +3350,12 @@ Array [
       ],
       "companyDescription___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___EntrycompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___EntrycompanyNameTextNode",
-      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry",
       "internal": Object {
-        "contentDigest": "6f9e853587ae4d1fe21c8c979aa19afc",
+        "contentDigest": "2d60eb41e6a25ab7abe86546a6bcf74f",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
@@ -3570,12 +3570,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry___decompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry___decompanyNameTextNode",
-      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry___de",
       "internal": Object {
-        "contentDigest": "6be037832d8ca29f0767fbf415c5aa81",
+        "contentDigest": "5cd46843eda89b75435a08a11c59ced6",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
@@ -3613,12 +3613,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry___decompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry___decompanyNameTextNode",
-      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry___de",
       "internal": Object {
-        "contentDigest": "67903b8a2e453f00e4ccba1fa56df9aa",
+        "contentDigest": "ffdbc318cc4d763c8fb303221e7f6b77",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
@@ -3831,14 +3831,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___EntryproductNameTextNode",
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset",
       ],
       "internal": Object {
-        "contentDigest": "9995ede420944f089daee32c8c70329e",
+        "contentDigest": "bdeb1bfc3376c22a169171fce3ed33cd",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3884,14 +3884,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___EntryproductNameTextNode",
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset",
       ],
       "internal": Object {
-        "contentDigest": "fb3b7210cf77b96c47d0d16e568d0292",
+        "contentDigest": "f58ac3060f040a2974e57dd179c42b04",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3935,14 +3935,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___EntryproductNameTextNode",
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       ],
       "internal": Object {
-        "contentDigest": "878bf305da3d5ad045477a0cb17bdf57",
+        "contentDigest": "291a53bbe63fa567af3676d64648722b",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3988,14 +3988,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___EntryproductNameTextNode",
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset",
       ],
       "internal": Object {
-        "contentDigest": "e5119edbf38ed58d35a77e8ce29ebf2d",
+        "contentDigest": "a557138fa4ce0a535f9f66136699a0fd",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -4194,14 +4194,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry___deproductNameTextNode",
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "025037ad5cd1ca97e4c0109320fa9ecb",
+        "contentDigest": "314c43d9286a7d9d910c7e4370054ee3",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4247,14 +4247,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry___deproductNameTextNode",
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "e47eabf21a76002308217ea0ad8e2d16",
+        "contentDigest": "b7bad8635a235f11b54fc71349a70050",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4298,14 +4298,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry___deproductNameTextNode",
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "96362dba5da6150d945c5194e4a24b45",
+        "contentDigest": "1b91e36f7024d034e366c0d6900bf33d",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4351,14 +4351,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry___deproductNameTextNode",
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "7228f08d874fa6832e07ecb0727ed4b4",
+        "contentDigest": "231053a720a18c75a81be04dba0794d9",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4553,11 +4553,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___EntryjsonTestJSONNode",
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___EntryjsonStringTest0JSONNode",
       ],
-      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry",
       "internal": Object {
-        "contentDigest": "1b6d6d192cd0fe29415cd80dc7b33ca5",
+        "contentDigest": "d208a2b2d27f50575ff4d681b999b0d5",
         "type": "ContentfulJsonTest",
       },
       "jsonStringTest___NODE": Array [
@@ -4710,11 +4710,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry___dejsonTestJSONNode",
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry___dejsonStringTest0JSONNode",
       ],
-      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry___de",
       "internal": Object {
-        "contentDigest": "56232867be3327148c480da021d1da40",
+        "contentDigest": "d93a2216590e660965c79b380b780f09",
         "type": "ContentfulJsonTest",
       },
       "jsonStringTest___NODE": Array [
@@ -4867,11 +4867,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___EntrycontentTextNode",
       ],
       "content___NODE": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___EntrycontentTextNode",
-      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry",
       "internal": Object {
-        "contentDigest": "dad0037bd4282c330f0894702a8cdedb",
+        "contentDigest": "0fbae909fc72bbdb25086a8e9ea7cc4f",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "en-US",
@@ -4977,11 +4977,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___decontentTextNode",
       ],
       "content___NODE": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___decontentTextNode",
-      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___de",
       "internal": Object {
-        "contentDigest": "8fed69826223c2c6b2c5f49d9c64f114",
+        "contentDigest": "84eac41affd5cede405bd23d0eb02274",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "de",
@@ -7273,7 +7273,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
       "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
@@ -7290,7 +7290,7 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
       "internal": Object {
-        "contentDigest": "29b0c61953be87f13bc9f653dc32823a",
+        "contentDigest": "35e910edc98eb7aa186d2d9a36f3b128",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7307,7 +7307,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
       "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
@@ -7324,7 +7324,7 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
       "internal": Object {
-        "contentDigest": "7d02f380b10a37f233f9de38e84daea9",
+        "contentDigest": "2aa0bb999f7ef8116687bbbc62deffea",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7477,7 +7477,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "contentful_id": "c2Y8LhXLnYAYqKCGEWG4EKI",
       "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
@@ -7494,7 +7494,7 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
       "internal": Object {
-        "contentDigest": "7155fd824e8d1e629e94e19e2bbfddcb",
+        "contentDigest": "9f34d0a8394067db13d89d6e4a84426a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7511,7 +7511,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "contentful_id": "c2Y8LhXLnYAYqKCGEWG4EKI",
       "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
@@ -7528,7 +7528,7 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
       "internal": Object {
-        "contentDigest": "c22412ba6731dd5d65f722219697f6b4",
+        "contentDigest": "abe55112187644d6efb8bfda7dbb22eb",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7545,7 +7545,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "contentful_id": "c6t4HKjytPi0mYgs240wkG",
       "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
@@ -7562,7 +7562,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "internal": Object {
-        "contentDigest": "9674f8d88657a9506cbeec22086c3cc4",
+        "contentDigest": "2d9ae0b67238ec9d9dd1001b4748caf8",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7579,7 +7579,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "contentful_id": "c6t4HKjytPi0mYgs240wkG",
       "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
@@ -7596,7 +7596,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "internal": Object {
-        "contentDigest": "4bd8fe775341c3af881b50b8946c0bed",
+        "contentDigest": "79c5fa4d4795c7a8ecd01b1a90f3e9b2",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7613,7 +7613,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "contentful_id": "c1MgbdJNTsMWKI0W68oYqkU",
       "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
@@ -7630,7 +7630,7 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset",
       "internal": Object {
-        "contentDigest": "52e5ae7190795bde9593a3af35e29dda",
+        "contentDigest": "dd9e0b22445c53c103f648c9cc3278ce",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7647,7 +7647,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "contentful_id": "c1MgbdJNTsMWKI0W68oYqkU",
       "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
@@ -7664,7 +7664,7 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset___de",
       "internal": Object {
-        "contentDigest": "c1ecab424cc9351b6c34c25204276249",
+        "contentDigest": "d260ba76ed130a6ed6eeadc57f57fac0",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7681,7 +7681,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
@@ -7698,7 +7698,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "internal": Object {
-        "contentDigest": "738cac15e3bb4c6d4830b3fc0ec45af9",
+        "contentDigest": "0abea528e3796d22c5fe73e85e8f80fc",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7715,7 +7715,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
@@ -7732,7 +7732,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "internal": Object {
-        "contentDigest": "488ace4a8e828d61893bae98001dc1f7",
+        "contentDigest": "d73002d0c2cce9479471ccabf2e630b4",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7749,7 +7749,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "contentful_id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
@@ -7766,7 +7766,7 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
       "internal": Object {
-        "contentDigest": "79197acfeddb216cb331db984d5e7b55",
+        "contentDigest": "4a400397c4d21bc4ec318740ca865a8a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7783,7 +7783,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "contentful_id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
@@ -7800,7 +7800,7 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset___de",
       "internal": Object {
-        "contentDigest": "24b59970db0fb066b8b9fad476b0d612",
+        "contentDigest": "14554ba5ba9455f0a4f4039df274db2d",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7885,7 +7885,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "contentful_id": "c10TkaLheGeQG6qQGqWYqUI",
       "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
@@ -7902,7 +7902,7 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       "internal": Object {
-        "contentDigest": "70a6136d30af841ad78e3dfd65f8edec",
+        "contentDigest": "a4efe36df993084643a6d20370c6a091",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7919,7 +7919,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "contentful_id": "c10TkaLheGeQG6qQGqWYqUI",
       "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
@@ -7936,7 +7936,7 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       "internal": Object {
-        "contentDigest": "971f33d62c6b0e07c4fb394f73031218",
+        "contentDigest": "b9ffd9615b759412feb9f9189b3ba6ae",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -7953,7 +7953,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "contentful_id": "c6s3iG2OVmoUcosmA8ocqsG",
       "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
@@ -7970,7 +7970,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset",
       "internal": Object {
-        "contentDigest": "ee684e7781088eb7a1f7e5038e30c6d8",
+        "contentDigest": "30c3390f1d03cfa8ba537db944b7e2c4",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -7987,7 +7987,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "contentful_id": "c6s3iG2OVmoUcosmA8ocqsG",
       "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
@@ -8004,7 +8004,7 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset___de",
       "internal": Object {
-        "contentDigest": "3d864d134ad2b975aed2e793545eb9b3",
+        "contentDigest": "6c205777fe39b5ed2bfe009b7e1058cd",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -8047,12 +8047,12 @@ Array [
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___EntrytitleTextNode",
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___EntrycategoryDescriptionTextNode",
       ],
-      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry",
       "internal": Object {
-        "contentDigest": "d8375b1c6d4cbf0d9820315b877f1432",
+        "contentDigest": "9c95b2b47df0c8ba462650d1b88764a9",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -8086,12 +8086,12 @@ Array [
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___EntrytitleTextNode",
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___EntrycategoryDescriptionTextNode",
       ],
-      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "id": "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry",
       "internal": Object {
-        "contentDigest": "a9906a46abc1965beb1acb34a6df9f3b",
+        "contentDigest": "6e8b0e65860b9bf611ea93aae9a849be",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -8208,12 +8208,12 @@ Array [
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry___detitleTextNode",
         "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry___decategoryDescriptionTextNode",
       ],
-      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___Entry___de",
       "internal": Object {
-        "contentDigest": "e3f13566854a8a15bd34d053a5a992b4",
+        "contentDigest": "700ab879fbe8f102e2ed29ffa0a5ae95",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -8247,12 +8247,12 @@ Array [
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry___detitleTextNode",
         "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry___decategoryDescriptionTextNode",
       ],
-      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "id": "rocybtov1ozk___c24DPGBDeGEaYy8ms4Y8QMQ___Entry___de",
       "internal": Object {
-        "contentDigest": "621382fd0de5c205210e14dd93be410a",
+        "contentDigest": "bf67c44850f042528347000019af37ad",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -8370,12 +8370,12 @@ Array [
       ],
       "companyDescription___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___EntrycompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___EntrycompanyNameTextNode",
-      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry",
       "internal": Object {
-        "contentDigest": "7be915aa0dc64625073357cce53c766a",
+        "contentDigest": "fb6e4267357b5df309ccdac2ea9bfe2b",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
@@ -8414,12 +8414,12 @@ Array [
       ],
       "companyDescription___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___EntrycompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___EntrycompanyNameTextNode",
-      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry",
       "internal": Object {
-        "contentDigest": "5d880553a2059651eb2036bd1f127b1a",
+        "contentDigest": "c68e61ab4a92adb34e2d5a672af54f98",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
@@ -8633,12 +8633,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry___decompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry___decompanyNameTextNode",
-      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "rocybtov1ozk___c651CQ8rLoIYCeY6G0QG22q___Entry___de",
       "internal": Object {
-        "contentDigest": "96ba66631e6d396dca7fd0cd7b6fad09",
+        "contentDigest": "26b8ba9c864cfe7c3cdaeb15cc9f740e",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
@@ -8677,12 +8677,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry___decompanyDescriptionTextNode",
       "companyName___NODE": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry___decompanyNameTextNode",
-      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "rocybtov1ozk___c4LgMotpNF6W20YKmuemW0a___Entry___de",
       "internal": Object {
-        "contentDigest": "0cabecaf17ba9b9ddf4e2967253525c0",
+        "contentDigest": "eba7bedd10a32a3b82442677e5901283",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
@@ -8898,14 +8898,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___EntryproductNameTextNode",
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset",
       ],
       "internal": Object {
-        "contentDigest": "f4304b5ccfe20941d402695bfb67f31a",
+        "contentDigest": "94074a3955824ecd875a65a5809f67ed",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8951,14 +8951,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___EntryproductNameTextNode",
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset",
       ],
       "internal": Object {
-        "contentDigest": "e2c12a2a90a938e28e5c4309a8741dce",
+        "contentDigest": "4d608e1318ba9f02e37a40b63e2cf99f",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -9002,14 +9002,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___EntryproductNameTextNode",
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       ],
       "internal": Object {
-        "contentDigest": "ad9a9c05c5976a06b9e663f396a795c4",
+        "contentDigest": "995514506ffdf97a46d4c451b949db2a",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -9055,14 +9055,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___EntryproductNameTextNode",
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___EntryproductDescriptionTextNode",
       ],
-      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry",
       "image___NODE": Array [
         "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset",
       ],
       "internal": Object {
-        "contentDigest": "9f513ada1e30b369d4b30ae982c50da7",
+        "contentDigest": "3803ca9e54a431616b46be968c8ed118",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -9261,14 +9261,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry___deproductNameTextNode",
         "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "rocybtov1ozk___c5KsDBWseXY6QegucYAoacS___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "c435779d761d09f4119aa6dd354e2977",
+        "contentDigest": "dcfe5ad7a73fc865cd1b9022d54505a5",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9314,14 +9314,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry___deproductNameTextNode",
         "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "rocybtov1ozk___c3DVqIYj4dOwwcKu6sgqOgg___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "fe09ed4a07f8a8363b108f371ba026d3",
+        "contentDigest": "7a589ece48dbc624a0421c04c82435d0",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9365,14 +9365,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry___deproductNameTextNode",
         "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "rocybtov1ozk___c6dbjWqNd9SqccegcqYq224___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "d53aeed01fa4c620de7bc4bc4a2ddc5b",
+        "contentDigest": "da352d837407d44ff2ef78403765f79f",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9418,14 +9418,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry___deproductNameTextNode",
         "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry___deproductDescriptionTextNode",
       ],
-      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "rocybtov1ozk___c4BqrajvA8E6qwgkieoqmqO___Entry___de",
       "image___NODE": Array [
         "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset___de",
       ],
       "internal": Object {
-        "contentDigest": "cc67e7b8b8496ed399e71b1d5436801c",
+        "contentDigest": "4763ada8bf9272f7a0918753408d7aba",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9620,11 +9620,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___EntryjsonTestJSONNode",
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___EntryjsonStringTest0JSONNode",
       ],
-      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry",
       "internal": Object {
-        "contentDigest": "467c92f28ae3776da61e779764f4ded8",
+        "contentDigest": "f9989a9c232763f2f61bf713a2de5805",
         "type": "ContentfulJsonTest",
       },
       "jsonStringTest___NODE": Array [
@@ -9777,11 +9777,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry___dejsonTestJSONNode",
         "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry___dejsonStringTest0JSONNode",
       ],
-      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "rocybtov1ozk___c71mfnH4QKsSsQmgoaQuq6O___Entry___de",
       "internal": Object {
-        "contentDigest": "04725398c6ec477deee89e7c389f914d",
+        "contentDigest": "65092ace3f0da3bad384770f60947b02",
         "type": "ContentfulJsonTest",
       },
       "jsonStringTest___NODE": Array [
@@ -9934,11 +9934,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___EntrycontentTextNode",
       ],
       "content___NODE": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___EntrycontentTextNode",
-      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry",
       "internal": Object {
-        "contentDigest": "2a2fef2e7d5ef79f433729dcb0e931f3",
+        "contentDigest": "abaf590a5a4602f6553d57e84a4baf78",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "en-US",
@@ -10044,11 +10044,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___decontentTextNode",
       ],
       "content___NODE": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___decontentTextNode",
-      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___de",
       "internal": Object {
-        "contentDigest": "810cbd95a73bab2f87c3ee393dfb27cf",
+        "contentDigest": "64a7065788c0414455f8631b7cf3759a",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "de",

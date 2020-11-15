@@ -144,6 +144,7 @@ export async function startWebpackServer({
                 type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
                 payload: {
                   componentPath,
+                  pages: state.components.get(componentPath)?.pages ?? [],
                 },
               })
               store.dispatch({

@@ -8,7 +8,7 @@ import { readPageData, IPageDataWithQueryResult } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
-import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
+import { findPageByPath } from "./find-page-by-path"
 import socketIO from "socket.io"
 
 export interface IPageQueryResult {
@@ -29,18 +29,21 @@ type QueryResultsMap = Map<string, IStaticQueryResult>
  * @param {string} pagePath Path to a page.
  */
 async function getPageData(pagePath: string): Promise<IPageQueryResult> {
-  const { program, pages } = store.getState()
-  const publicDir = path.join(program.directory, `public`)
+  const state = store.getState()
+  const publicDir = path.join(state.program.directory, `public`)
 
   const result: IPageQueryResult = {
     id: pagePath,
     result: undefined,
   }
-  if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
+
+  const page = findPageByPath(state, pagePath)
+  if (page) {
+    result.id = page.path
     try {
       const pageData: IPageDataWithQueryResult = await readPageData(
         publicDir,
-        pagePath
+        page.path
       )
 
       result.result = pageData
@@ -93,11 +96,14 @@ function hashPaths(paths: Array<string>): Array<string> {
   return paths.map(path => createHash(`sha256`).update(path).digest(`hex`))
 }
 
-const getRoomNameFromPath = (path: string): string => `path-${path}`
+interface IClientInfo {
+  activePath: string | null
+  socket: socketIO.Socket
+}
 
 export class WebsocketManager {
   activePaths: Set<string> = new Set()
-  connectedClients = 0
+  clients: Set<IClientInfo> = new Set()
   errors: Map<string, string> = new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
@@ -106,7 +112,6 @@ export class WebsocketManager {
   init = ({
     server,
   }: {
-    directory: string
     server: HTTPSServer | HTTPServer
   }): socketIO.Server => {
     this.websocket = socketIO(server, {
@@ -116,17 +121,47 @@ export class WebsocketManager {
       pingTimeout: 30000,
     })
 
-    this.websocket.on(`connection`, socket => {
-      let activePath: string | null = null
-      if (socket?.handshake?.headers?.referer) {
-        const path = url.parse(socket.handshake.headers.referer).path
-        if (path) {
-          activePath = path
-          this.activePaths.add(path)
+    const updateServerActivePaths = (): void => {
+      const serverActivePaths = new Set<string>()
+      for (const client of this.clients) {
+        if (client.activePath) {
+          serverActivePaths.add(client.activePath)
         }
       }
+      this.activePaths = serverActivePaths
+    }
 
-      this.connectedClients += 1
+    this.websocket.on(`connection`, socket => {
+      const clientInfo: IClientInfo = {
+        activePath: null,
+        socket,
+      }
+      this.clients.add(clientInfo)
+
+      const setActivePath = (
+        newActivePath: string | null,
+        fallbackTo404: boolean = false
+      ): void => {
+        let activePagePath: string | null = null
+        if (newActivePath) {
+          const page = findPageByPath(
+            store.getState(),
+            newActivePath,
+            fallbackTo404
+          )
+          if (page) {
+            activePagePath = page.path
+          }
+        }
+        clientInfo.activePath = activePagePath
+        updateServerActivePaths()
+      }
+
+      if (socket?.handshake?.headers?.referer) {
+        const path = url.parse(socket.handshake.headers.referer).path
+        setActivePath(path, true)
+      }
+
       this.errors.forEach((message, errorID) => {
         socket.send({
           type: `overlayError`,
@@ -137,18 +172,21 @@ export class WebsocketManager {
         })
       })
 
-      const leaveRoom = (path: string): void => {
-        socket.leave(getRoomNameFromPath(path))
-        if (!this.websocket) return
-        const leftRoom = this.websocket.sockets.adapter.rooms[
-          getRoomNameFromPath(path)
-        ]
-        if (!leftRoom || leftRoom.length === 0) {
-          this.activePaths.delete(path)
-        }
-      }
-
       const getDataForPath = async (path: string): Promise<void> => {
+        const page = findPageByPath(store.getState(), path)
+        if (!page) {
+          socket.send({
+            type: `pageQueryResult`,
+            why: `getDataForPath-notfound`,
+            payload: {
+              id: path,
+              result: undefined,
+            },
+          })
+          return
+        }
+        path = page.path
+
         let pageData = this.pageResults.get(path)
         if (!pageData) {
           try {
@@ -184,12 +222,12 @@ export class WebsocketManager {
           payload: pageData,
         })
 
-        if (this.connectedClients > 0) {
+        if (this.clients.size > 0) {
           telemetry.trackCli(
             `WEBSOCKET_PAGE_DATA_UPDATE`,
             {
               siteMeasurements: {
-                clientsCount: this.connectedClients,
+                clientsCount: this.clients.size,
                 paths: hashPaths(Array.from(this.activePaths)),
               },
             },
@@ -201,20 +239,16 @@ export class WebsocketManager {
       socket.on(`getDataForPath`, getDataForPath)
 
       socket.on(`registerPath`, (path: string): void => {
-        socket.join(getRoomNameFromPath(path))
-        if (path) {
-          activePath = path
-          this.activePaths.add(path)
-        }
+        setActivePath(path, true)
       })
 
       socket.on(`disconnect`, (): void => {
-        if (activePath) leaveRoom(activePath)
-        this.connectedClients -= 1
+        setActivePath(null)
+        this.clients.delete(clientInfo)
       })
 
-      socket.on(`unregisterPath`, (path: string): void => {
-        leaveRoom(path)
+      socket.on(`unregisterPath`, (_path: string): void => {
+        setActivePath(null)
       })
     })
 
@@ -229,12 +263,12 @@ export class WebsocketManager {
     if (this.websocket) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
 
-      if (this.connectedClients > 0) {
+      if (this.clients.size > 0) {
         telemetry.trackCli(
           `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
           {
             siteMeasurements: {
-              clientsCount: this.connectedClients,
+              clientsCount: this.clients.size,
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
@@ -245,18 +279,17 @@ export class WebsocketManager {
   }
 
   emitPageData = (data: IPageQueryResult): void => {
-    data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
 
     if (this.websocket) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
 
-      if (this.connectedClients > 0) {
+      if (this.clients.size > 0) {
         telemetry.trackCli(
           `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
           {
             siteMeasurements: {
-              clientsCount: this.connectedClients,
+              clientsCount: this.clients.size,
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
@@ -274,7 +307,10 @@ export class WebsocketManager {
     }
 
     if (this.websocket) {
-      this.websocket.send({ type: `overlayError`, payload: { id, message } })
+      this.websocket.send({
+        type: `overlayError`,
+        payload: { id, message },
+      })
     }
   }
 }

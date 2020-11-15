@@ -18,6 +18,8 @@ import {
   ISetSiteConfig,
   IDefinitionMeta,
   ISetGraphQLDefinitionsAction,
+  IQueryStartAction,
+  IApiFinishedAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -81,6 +83,15 @@ export const replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+export const apiFinished = (
+  payload: IApiFinishedAction["payload"]
+): IApiFinishedAction => {
+  return {
+    type: `API_FINISHED`,
+    payload,
   }
 }
 
@@ -219,6 +230,19 @@ export const pageQueryRun = (
 ): IPageQueryRunAction => {
   return {
     type: `PAGE_QUERY_RUN`,
+    plugin,
+    traceId,
+    payload: { path, componentPath, isPage },
+  }
+}
+
+export const queryStart = (
+  { path, componentPath, isPage },
+  plugin: IGatsbyPlugin,
+  traceId?: string
+): IQueryStartAction => {
+  return {
+    type: `QUERY_START`,
     plugin,
     traceId,
     payload: { path, componentPath, isPage },

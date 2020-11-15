@@ -169,4 +169,4 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [GatsbyJs](https://www.gatsbyjs.com) and our example sites.
+Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [Gatsby](https://www.gatsbyjs.com) and our example sites.

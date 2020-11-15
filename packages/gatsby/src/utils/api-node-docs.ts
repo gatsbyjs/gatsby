@@ -11,6 +11,14 @@ export const resolvableExtensions = true
  * complete so you can query your data in order to create pages.
  *
  * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
+ *
+ * @param {object} $0 See the [documentation for `Node API Helpers` for more details](/docs/node-api-helpers)
+ * @param {Actions} $0.actions See the [list of documented actions](/docs/actions)
+ * @param {function} $0.actions.createPages [Documentation for this action](/docs/actions/#createPage)
+ * @param {function} $0.graphql: Query GraphQL API. See [examples here](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs)
+ * @param {GatsbyReporter} $0.reporter Log issues. See [GatsbyReporter documentation](/docs/node-api-helpers/#GatsbyReporter) for more details
+ * @returns {Promise<void>} No return value required, but the caller will `await` any promise that's returned
+ *
  * @example
  * const path = require(`path`)
  *
@@ -132,6 +140,17 @@ export const sourceNodes = true
  * }
  */
 export const onCreateNode = true
+
+/**
+ * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+ * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+ * Note: this API does not receive the regular `api` that other callbacks get as first arg.
+ *
+ * @gatsbyVersion 2.24.80
+ * @example
+ * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+ */
+export const unstable_shouldOnCreateNode = true
 
 /**
  * Called when a new page is created. This extension API is useful
@@ -430,8 +449,17 @@ export const onPreExtractQueries = true
 export const onCreateDevServer = true
 
 /**
- * Called during `gatsby develop` bootstrap to get and validate a plugins options schema
- * @param {Joi} $0.Joi The instance of Joi to define the schema with
- *
+ * Run during the bootstrap phase. Plugins can use this to define a schema for their options using
+ * [Joi](https://joi.dev) to validate the options users pass to the plugin.
+ * @gatsbyVersion 2.25.0
+ * @param {object} $0
+ * @param {Joi} $0.Joi The instance of [Joi](https://joi.dev) to define the schema
+ * @example
+ * exports.pluginOptionsSchema = ({ Joi }) => {
+ *   return Joi.object({
+ *     // Validate that the anonymize option is defined by the user and is a boolean
+ *     anonymize: Joi.boolean().required(),
+ *   })
+ * }
  */
 export const pluginOptionsSchema = true

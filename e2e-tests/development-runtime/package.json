@@ -5,6 +5,7 @@
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
     "gatsby": "^2.4.4",
+    "gatsby-plugin-image": "^0.0.2",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-offline": "^2.1.0",
@@ -27,7 +28,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",

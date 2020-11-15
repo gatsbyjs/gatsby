@@ -86,6 +86,12 @@ module.exports = async (
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
+    if (stage === `develop`) {
+      envObject.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT = JSON.stringify(
+        process.env.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT || `websocket`
+      )
+    }
+
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
     return Object.keys(mergedEnvVars).reduce(

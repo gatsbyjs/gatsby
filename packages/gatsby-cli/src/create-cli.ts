@@ -1,9 +1,6 @@
 import path from "path"
 import resolveCwd from "resolve-cwd"
 import yargs from "yargs"
-import report from "./reporter"
-import { setStore } from "./reporter/redux"
-import { getLocalGatsbyVersion } from "./util/version"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
 import clipboardy from "clipboardy"
@@ -13,9 +10,13 @@ import {
   setTelemetryEnabled,
   isTrackingEnabled,
 } from "gatsby-telemetry"
+import { startGraphQLServer } from "gatsby-recipes"
+import { run as runCreateGatsby } from "create-gatsby"
+import report from "./reporter"
+import { setStore } from "./reporter/redux"
+import { getLocalGatsbyVersion } from "./util/version"
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
-import { startGraphQLServer } from "gatsby-recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
@@ -393,6 +394,23 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       }
     ),
   })
+
+  cli.command({
+    command: `plugin <cmd> [plugins...]`,
+    describe: `Useful commands relating to Gatsby plugins`,
+    builder: yargs =>
+      yargs
+        .positional(`cmd`, {
+          choices: [`docs`],
+          describe: "Valid commands include `docs`.",
+          type: `string`,
+        })
+        .positional(`plugins`, {
+          describe: `The plugin names`,
+          type: `string`,
+        }),
+    handler: getCommandHandler(`plugin`),
+  })
 }
 
 function isLocalGatsbySite(): boolean {
@@ -485,7 +503,16 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         const starterStr = starter ? String(starter) : undefined
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
-        await initStarter(starterStr, rootPathStr)
+        // We only run the interactive CLI when there are no arguments passed in
+        if (
+          process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW &&
+          !starterStr &&
+          !rootPathStr
+        ) {
+          await runCreateGatsby()
+        } else {
+          await initStarter(starterStr, rootPathStr)
+        }
       }),
     })
     .command({
@@ -506,42 +533,6 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         const enabled = Boolean(enable) || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
-      }),
-    })
-    .command({
-      command: `plugin [cmd]`,
-      describe: `Useful commands relating to Gatsby plugins`,
-      builder: yargs =>
-        yargs.positional(`cmd`, {
-          choices: [`docs`],
-          describe: "Valid commands include `docs`.",
-          type: `string`,
-        }),
-      handler: handlerP(({ cmd }) => {
-        if (cmd === `docs`) {
-          console.log(`
-      Using a plugin:
-      - What is a Plugin? (https://www.gatsbyjs.com/docs/what-is-a-plugin/)
-      - Using a Plugin in Your Site (https://www.gatsbyjs.com/docs/using-a-plugin-in-your-site/)
-      - What You Don't Need Plugins For (https://www.gatsbyjs.com/docs/what-you-dont-need-plugins-for/)
-      - Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.com/docs/loading-plugins-from-your-local-plugins-folder/)
-      - Plugin Library (https://www.gatsbyjs.com/plugins/)
-
-      Creating a plugin:
-      - Naming a Plugin (https://www.gatsbyjs.com/docs/naming-a-plugin/)
-      - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.com/docs/files-gatsby-looks-for-in-a-plugin/)
-      - Creating a Generic Plugin (https://www.gatsbyjs.com/docs/creating-a-generic-plugin/)
-      - Creating a Local Plugin (https://www.gatsbyjs.com/docs/creating-a-local-plugin/)
-      - Creating a Source Plugin (https://www.gatsbyjs.com/docs/creating-a-source-plugin/)
-      - Creating a Transformer Plugin (https://www.gatsbyjs.com/docs/creating-a-transformer-plugin/)
-      - Submit to Plugin Library (https://www.gatsbyjs.com/contributing/submit-to-plugin-library/)
-      - Source Plugin Tutorial (https://www.gatsbyjs.com/tutorial/source-plugin-tutorial/)
-      - Maintaining a Plugin (https://www.gatsbyjs.com/docs/maintaining-a-plugin/)
-      - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
-                 `)
-        } else {
-          console.log(`Current valid subcommands are: 'docs'`) // right now this is hardcoded because we only have a single command
-        }
       }),
     })
     .command({
@@ -567,6 +558,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
 
       handler: handlerP(({ cmd, key, value }: yargs.Arguments) => {
         if (!getPackageManager()) {
+          trackCli(`SET_DEFAULT_PACKAGE_MANAGER`, { name: `npm` })
           setPackageManager(`npm`)
         }
 
@@ -579,8 +571,10 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
             if (value) {
               // @ts-ignore
               setPackageManager(value)
+              trackCli(`SET_PACKAGE_MANAGER`, { name: `${value}` })
               return
             } else {
+              trackCli(`SET_PACKAGE_MANAGER`, { name: `npm` })
               setPackageManager(`npm`)
             }
           } else {

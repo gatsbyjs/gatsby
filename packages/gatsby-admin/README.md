@@ -46,7 +46,7 @@ Admin does not support all `gatsby-config.js` formats. If yours is not supported
 
 The Gatsby Admin interface (this package) is a standard Gatsby site.
 
-It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experimantal extension) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) for styling.
+It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experimental extension) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) for styling.
 
 It fetches its data from the [gatsby-recipes GraphQL server](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/src/graphql-server), which exposes all the information Admin needs about the locally running Gatsby site, using [urql](https://github.com/FormidableLabs/urql).
 

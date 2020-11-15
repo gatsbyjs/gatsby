@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.4.0-next.0...gatsby-plugin-lodash@3.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
 ## [3.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.3.12...gatsby-plugin-lodash@3.3.13) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-lodash

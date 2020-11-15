@@ -22,10 +22,11 @@ exports.onCreateWebpackConfig = (
   const config = getConfig()
   const cssRules = findCssRules(config)
 
+  delete postcssLoaderOptions.plugins
+
   if (!postcssLoaderOptions.postcssOptions) {
     postcssLoaderOptions.postcssOptions = {}
   }
-  delete postcssLoaderOptions.postcssOptions.plugins
 
   if (postCssPlugins) {
     postcssLoaderOptions.postcssOptions.plugins = postCssPlugins

@@ -185,24 +185,28 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
+function unstable_shouldOnCreateNode({ node }) {
+  return (
+    node.internal.type === `File` &&
+    (node.internal.mediaType === `application/javascript` ||
+      node.extension === `tsx` ||
+      node.extension === `ts`)
+  )
+}
+
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
 exports.onCreateNode = async ({ node, actions, ...helpers }) => {
-  const { createNodeId, createContentDigest } = helpers
-  const { createNode, createParentChildLink } = actions
-
-  if (
-    node.internal.type !== `File` ||
-    !(
-      node.internal.mediaType === `application/javascript` ||
-      node.extension === `tsx` ||
-      node.extension === `ts`
-    )
-  ) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return null
   }
+
+  const { createNodeId, createContentDigest } = helpers
+  const { createNode, createParentChildLink } = actions
 
   let documentationJson
   try {

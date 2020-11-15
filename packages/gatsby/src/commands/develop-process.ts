@@ -8,8 +8,10 @@ import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 import { store } from "../redux"
@@ -86,7 +88,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   process.on(
     `SIGINT`,
     async (): Promise<void> => {
-      if (await userPassesFeedbackRequestHeuristic()) {
+      if (await userGetsSevenDayFeedback()) {
+        showSevenDayFeedbackRequest()
+      } else if (await userPassesFeedbackRequestHeuristic()) {
         showFeedbackRequest()
       }
       process.exit(0)

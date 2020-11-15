@@ -6,6 +6,9 @@ contact_links:
   - name: Gatsby Discord
     url: https://gatsby.dev/discord
     about: Ask questions, get help and discuss new things you're building with the Gatsby community
+  - name: Gatsby Discussions
+    url: https://github.com/gatsbyjs/gatsby/discussions
+    about: Have a question or feature request?
   - name: AskGatsbyJS Twitter
     url: https://twitter.com/AskGatsbyJS
     about: The official Twitter account to ask questions and get help with Gatsby
