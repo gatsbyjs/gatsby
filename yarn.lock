@@ -43,6 +43,11 @@
     asciidoctor-opal-runtime "0.3.0"
     unxhr "1.0.1"
 
+"@ascorbic/worker-threads-shim@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ascorbic/worker-threads-shim/-/worker-threads-shim-1.0.0.tgz#d003ac1f9aacc9d95d8a0e453bce256d7fa99923"
+  integrity sha512-CEvYpC2w2t7tDWgloPA8ETra79cZzi2IdeM0bluTTkvWcnEdLWYStM12ymq2VRE3OMR8OtmKD4l026dUel1d+w==
+
 "@babel/cli@^7.11.6", "@babel/cli@^7.8.7":
   version "7.11.6"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.11.6.tgz#1fcbe61c2a6900c3539c06ee58901141f3558482"
