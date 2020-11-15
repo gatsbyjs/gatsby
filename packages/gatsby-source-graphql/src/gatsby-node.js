@@ -114,13 +114,11 @@ exports.sourceNodes = async (
         defaultTransforms,
         options,
       })
-    : wrapSchema(
-        {
-          schema: introspectionSchema,
-          executor: linkToExecutor(link),
-        },
-        defaultTransforms
-      )
+    : wrapSchema({
+        schema: introspectionSchema,
+        executor: linkToExecutor(link),
+        transforms: defaultTransforms,
+      })
 
   addThirdPartySchema({ schema })
 
