@@ -33,7 +33,7 @@ describe(`create-gatsby-app`, () => {
             break
 
           case `features`:
-            await p.keypress(null, { name: `tab` })
+            await p.keypress(null, { name: `up` })
 
             break
         }
@@ -61,7 +61,7 @@ describe(`create-gatsby-app`, () => {
             break
 
           case `features`:
-            await p.keypress(null, { name: `tab` })
+            await p.keypress(null, { name: `up` })
             break
 
           case `styling`:
@@ -90,7 +90,7 @@ describe(`create-gatsby-app`, () => {
     )
   })
 
-  it.skip(`creates a project with a project name and a CMS`, async () => {
+  it(`creates a project with a project name and a CMS`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
@@ -99,7 +99,7 @@ describe(`create-gatsby-app`, () => {
             break
 
           case `features`:
-            await p.keypress(null, { name: `tab` })
+            await p.keypress(null, { name: `up` })
             break
 
           case `cms`:
@@ -138,7 +138,7 @@ describe(`create-gatsby-app`, () => {
     )
   })
 
-  it.skip(`creates a project with a project name, a CMS, a styling system, and google analytics`, async () => {
+  it(`creates a project with a project name, a CMS, a styling system, and google analytics`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
@@ -152,7 +152,7 @@ describe(`create-gatsby-app`, () => {
 
           case `features`:
             await p.keypress(null, { name: `enter` })
-            await p.keypress(null, { name: `tab` })
+            await p.keypress(null, { name: `up` })
             break
 
           case `cms`:
