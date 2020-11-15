@@ -155,10 +155,10 @@ const errorParser = ({
 
 export default errorParser
 
-interface ILocOfGraphQLDocInSrcFile {
+export interface ILocOfGraphQLDocInSrcFile {
   start: SourceLocation
   end: SourceLocation
-  fileName: boolean
+  fileName?: boolean
 }
 
 export const locInGraphQlToLocInFile = (
