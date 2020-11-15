@@ -105,6 +105,9 @@ export interface ITelemetryTagsPayload {
     queryStats?: unknown
   }
   errorV2?: IStructuredErrorV2
+  valueString?: string
+  valueStringArray?: Array<string>
+  valueInteger?: number
 }
 
 export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {

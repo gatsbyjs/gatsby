@@ -90,6 +90,9 @@ describe(`redirect`, () => {
         pagePath: `/404.html`,
         filter: `page-data`,
       })
+      cy.task(`blockPageComponent`, {
+        path: `pages/404.js`,
+      })
     })
 
     after(() => {

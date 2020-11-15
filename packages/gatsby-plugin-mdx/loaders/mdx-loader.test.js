@@ -79,7 +79,44 @@ describe(`mdx-loader`, () => {
           getNodesByType(_type) {
             return fixtures.map(([, node]) => node)
           },
-          pluginOptions: {},
+          pluginOptions: {
+            lessBabel: false, // default
+          },
+          cache: {
+            get() {
+              return false
+            },
+            set() {
+              return
+            },
+          },
+        },
+        resourcePath: fakeGatsbyNode.absolutePath,
+      })
+      await loader(content)
+    }
+  )
+
+  test.each(fixtures)(
+    `snapshot [lessBabel=true] with %s`,
+    async (filename, fakeGatsbyNode, content) => {
+      const loader = mdxLoader.bind({
+        async() {
+          return (err, result) => {
+            expect(err).toBeNull()
+            expect(result).toMatchSnapshot()
+          }
+        },
+        query: {
+          getNodes(_type) {
+            return fixtures.map(([, node]) => node)
+          },
+          getNodesByType(_type) {
+            return fixtures.map(([, node]) => node)
+          },
+          pluginOptions: {
+            lessBabel: true,
+          },
           cache: {
             get() {
               return false
