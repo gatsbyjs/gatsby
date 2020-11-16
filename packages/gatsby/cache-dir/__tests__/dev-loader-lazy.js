@@ -6,6 +6,20 @@ import emitter from "../emitter"
 jest.mock(`../emitter`)
 jest.mock(`../socketIo`, () => jest.fn())
 
+jest.mock(
+  `$virtual/lazy-client-sync-requires`,
+  () => {
+    return {
+      lazyComponents: {
+        instance: { chunkName: `bar` },
+        chunk: { chunkName: `bar` },
+      },
+      notVisitedPageComponents: { foo: true },
+    }
+  },
+  { virtual: true }
+)
+
 describe(`Dev loader`, () => {
   let originalBasePath
   let originalPathPrefix
@@ -14,11 +28,17 @@ describe(`Dev loader`, () => {
     originalPathPrefix = global.__PATH_PREFIX__
     global.__BASE_PATH__ = ``
     global.__PATH_PREFIX__ = ``
+    process.env = Object.assign(process.env, {
+      GATSBY_EXPERIMENT_LAZY_DEVJS: true,
+    })
   })
 
   afterEach(() => {
     global.__BASE_PATH__ = originalBasePath
     global.__PATH_PREFIX__ = originalPathPrefix
+    process.env = Object.assign(process.env, {
+      GATSBY_EXPERIMENT_LAZY_DEVJS: false,
+    })
   })
 
   describe(`loadPageDataJson`, () => {
@@ -274,7 +294,7 @@ describe(`Dev loader`, () => {
   describe(`loadPage`, () => {
     const createSyncRequires = components => {
       return {
-        components,
+        lazyComponents: components,
       }
     }
 
@@ -368,29 +388,6 @@ describe(`Dev loader`, () => {
         page: expectation.payload,
         pageResources: expectation.payload,
       })
-    })
-
-    it(`should return an error when component cannot be loaded`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: false,
-      })
-      const devLoader = new DevLoader(syncRequires, [])
-      const pageData = {
-        path: `/mypage/`,
-        componentChunkName: `chunk`,
-        staticQueryHashes: [],
-      }
-      devLoader.loadPageDataJson = jest.fn(() =>
-        Promise.resolve({
-          payload: pageData,
-          status: `success`,
-        })
-      )
-
-      await devLoader.loadPage(`/mypage/`)
-      const expectation = devLoader.pageDb.get(`/mypage`)
-      expect(expectation).toHaveProperty(`status`, `error`)
-      expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should return an error pageData contains an error`, async () => {

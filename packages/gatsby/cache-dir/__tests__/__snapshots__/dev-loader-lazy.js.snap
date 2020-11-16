@@ -2,7 +2,9 @@
 
 exports[`Dev loader loadPage should be successful when component can be loaded 1`] = `
 Object {
-  "component": "instance",
+  "component": Object {
+    "chunkName": "bar",
+  },
   "json": Object {
     "pageContext": "something something",
   },

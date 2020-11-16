@@ -1,7 +1,6 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
-import ensureComponentInBundle from "./ensure-page-component-in-bundle"
 
 /**
  * Available resource loading statuses
@@ -143,7 +142,12 @@ export class BaseLoader {
           }
 
           // In development, check if the page is in the bundle yet.
-          if (process.env.NODE_ENV === `development`) {
+          if (
+            process.env.NODE_ENV === `development` &&
+            process.env.GATSBY_EXPERIMENT_LAZY_DEVJS
+          ) {
+            const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
+              .default
             if (process.env.NODE_ENV !== `test`) {
               delete require.cache[
                 require.resolve(`$virtual/lazy-client-sync-requires`)

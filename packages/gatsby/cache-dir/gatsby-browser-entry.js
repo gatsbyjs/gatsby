@@ -18,10 +18,15 @@ const prefetchPathname = loader.enqueue
 const StaticQueryContext = React.createContext({})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
-  const combinedStaticQueryData = {
-    ...loader.getStaticQueryResults(),
-    ...staticQueryData,
+  let combinedStaticQueryData = staticQueryData
+
+  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+    combinedStaticQueryData = {
+      ...loader.getStaticQueryResults(),
+      ...staticQueryData,
+    }
   }
+
   const finalData = data
     ? data.data
     : combinedStaticQueryData[query] && combinedStaticQueryData[query].data
@@ -75,24 +80,35 @@ useStaticQuery(graphql\`${query}\`);
 `)
   }
 
-  // Merge data loaded via socket.io & xhr
-  //
-  // TODO just load data over xhr & socket.io just triggers
-  // re-fetches
-  const staticQueryData = {
-    ...loader.getStaticQueryResults(),
-    ...context,
+  let queryNotFound = false
+  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+    // Merge data loaded via socket.io & xhr
+    const staticQueryData = {
+      ...loader.getStaticQueryResults(),
+      ...context,
+    }
+    if (staticQueryData[query]?.data) {
+      return staticQueryData[query].data
+    } else {
+      queryNotFound = true
+    }
+  } else {
+    if (context[query]?.data) {
+      return context[query].data
+    } else {
+      queryNotFound = true
+    }
   }
 
-  if (staticQueryData?.[query]?.data) {
-    return staticQueryData[query].data
-  } else {
+  if (queryNotFound) {
     throw new Error(
       `The result of this StaticQuery could not be fetched.\n\n` +
         `This is likely a bug in Gatsby and if refreshing the page does not fix it, ` +
         `please open an issue in https://github.com/gatsbyjs/gatsby/issues`
     )
   }
+
+  return null
 }
 
 StaticQuery.propTypes = {

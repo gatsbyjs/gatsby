@@ -1,6 +1,5 @@
 import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
-import ensureComponentInBundle from "./ensure-page-component-in-bundle"
 
 import getSocket from "./socketIo"
 import normalizePagePath from "./normalize-page-path"
@@ -23,9 +22,16 @@ function mergePageEntry(cachedPage, newPageData) {
 }
 
 class DevLoader extends BaseLoader {
-  constructor(lazyRequires, matchPaths) {
-    // One of the tests doesn't set a path.
-    const loadComponent = chunkName => ensureComponentInBundle(chunkName)
+  constructor(syncRequires, matchPaths) {
+    let loadComponent
+    if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+      const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
+      loadComponent = chunkName => ensureComponentInBundle.default(chunkName)
+    } else {
+      loadComponent = chunkName =>
+        Promise.resolve(syncRequires.components[chunkName])
+    }
+
     super(loadComponent, matchPaths)
 
     const socket = getSocket()
@@ -40,7 +46,7 @@ class DevLoader extends BaseLoader {
           this.handlePageQueryResultHotUpdate(msg)
         }
       })
-    } else {
+    } else if (process.env.NODE_ENV !== `test`) {
       console.warn(`Could not get web socket`)
     }
   }
