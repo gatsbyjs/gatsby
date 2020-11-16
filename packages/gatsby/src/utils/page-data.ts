@@ -24,6 +24,10 @@ export function fixedPagePath(pagePath: string): string {
   return pagePath === `/` ? `index` : pagePath
 }
 
+export function reverseFixedPagePath(pageDataRequestPath: string): string {
+  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
+}
+
 function getFilePath(publicDir: string, pagePath: string): string {
   return path.join(
     publicDir,
@@ -119,24 +123,14 @@ export async function flush(): Promise<void> {
   isFlushing = true
   const {
     pendingPageDataWrites,
-    components,
     pages,
     program,
     staticQueriesByTemplate,
   } = store.getState()
 
-  const { pagePaths, templatePaths } = pendingPageDataWrites
+  const { pagePaths } = pendingPageDataWrites
 
-  const pagesToWrite = Array.from(templatePaths).reduce(
-    (set, componentPath) => {
-      const templateComponent = components.get(componentPath)
-      if (templateComponent) {
-        templateComponent.pages.forEach(set.add.bind(set))
-      }
-      return set
-    },
-    new Set(pagePaths.values())
-  )
+  const pagesToWrite = pagePaths.values()
 
   for (const pagePath of pagesToWrite) {
     const page = pages.get(pagePath)
@@ -166,11 +160,14 @@ export async function flush(): Promise<void> {
         })
       }
     }
+    store.dispatch({
+      type: `CLEAR_PENDING_PAGE_DATA_WRITE`,
+      payload: {
+        page: pagePath,
+      },
+    })
   }
 
-  store.dispatch({
-    type: `CLEAR_PENDING_PAGE_DATA_WRITES`,
-  })
   isFlushing = false
   return
 }

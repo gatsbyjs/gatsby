@@ -13,42 +13,85 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- - Entities references in Rich Text fields are no more automatically resolved
+This major release improves Contentful's Richtext experience. If you are not using the Rich Text Contentful field type there are no breaking changes.
+
+If you do, follow the migration guide.
+
+#### Richtext migration
+
+- Entities references in Rich Text fields are no more automatically resolved
 - Use the `raw` subfield instead of `json`
 - Use GraphQL to define your referenced data with the new `references` field
-- Removes the `resolveFieldLocales` as the new `references` field automatically resolves locales
-- To render Rich Text fields unse the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
+- Removes the `resolveFieldLocales` option as the new `references` field automatically resolves locales
+- To render Rich Text fields use the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
 
-- perf(gatsby-source-contentful): use getNodesByType to locate Rich Text references
+Check this example code for a page template:
 
-- clean up from rebase
+```javascript
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Img from "gatsby-image"
+import * as propTypes from "prop-types"
 
-- refactor to use a query for entry references
+// Import the new rendering and the render node definitions
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { BLOCKS, INLINES } from "@contentful/rich-text-types"
+import Layout from "../components/layout"
+// Setting the rendering options. Same as:
+// https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer
+const options = {
+  renderNode: {
+    [INLINES.ENTRY_HYPERLINK]: ({
+      data: {
+        target: { slug, title },
+      },
+    }) => <Link to={slug}>{title}</Link>,
+    [BLOCKS.EMBEDDED_ASSET]: node => <Img {...node.data.target} />,
+  },
+}
+function PageTemplate({ data }) {
+  const { title, description } = data.contentfulPage
+  return (
+    <Layout>
+      <h1>{title}</h1>
+      {/* Render the Rich Text field data: */}
+      {description && renderRichText(description, options)}
+    </Layout>
+  )
+}
+PageTemplate.propTypes = {
+  data: propTypes.object.isRequired,
+}
+export default PageTemplate
+export const pageQuery = graphql`
+  query pageQuery($id: String!) {
+    contentfulPage(id: { eq: $id }) {
+      title
+      slug
+      description {
+        raw
+        references {
+          ... on ContentfulPage {
+            # contentful_id is required to resolve the references
+            contentful_id
+            title
+            slug
+          }
+          ... on ContentfulAsset {
+            # contentful_id is required to resolve the references
+            contentful_id
+            fluid(maxWidth: 600) {
+              ...GatsbyContentfulFluid_withWebp
+            }
+          }
+        }
+      }
+    }
+  }
+`
+```
 
-- simplify and reduce complexity of rich text raw field value injection
-
-- performance: directly inject references into Rich Text field, skipping the extra node type
-
-- remove plugin config for no more existing rich text resolveFieldLocales
-
-- add hint to remove extra traversal of rich text as soon fixIds is gone
-
-- add first test for rich text
-
-- clean up code and use more Maps
-
-- align readme for new rich text changes
-
-- remove workarounds for fixIds
-
-- add typescript types for rich text render function
-
-- add tests for rich text rendering
-
-- Dirty lock file
-
-Co-authored-by: Peter van der Zee <github-public@qfox.nl>
-Co-authored-by: gatsbybot <mathews.kyle+gatsbybot@gmail.com>
+Find more information in [the PR leading to this change](https://github.com/gatsbyjs/gatsby/pull/25249).
 
 # [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.2.0-next.0...gatsby-source-contentful@3.2.0-next.1) (2020-11-09)
 
@@ -110,7 +153,7 @@ Co-authored-by: gatsbybot <mathews.kyle+gatsbybot@gmail.com>
 
 ### BREAKING CHANGES
 
-- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries  those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
+- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
 
 If you were relying on the `id` property in the `sys` object, you should be aware that it is no longer "normalized". In particular, it will no longer get a 'c' prefixed to the id.
 

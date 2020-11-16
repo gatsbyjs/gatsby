@@ -5,7 +5,7 @@ import manager, {
   MultiCache,
 } from "cache-manager"
 import fs from "fs-extra"
-import fsStore from "cache-manager-fs-hash"
+import fsStore from "../cache/cache-fs"
 import path from "path"
 
 const MAX_CACHE_SIZE = 250
