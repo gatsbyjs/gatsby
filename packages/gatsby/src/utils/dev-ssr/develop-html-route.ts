@@ -7,7 +7,7 @@ import { renderDevHTML } from "./render-dev-html"
 export const route = ({ app, program, store }): any =>
   // Render an HTML page and serve it.
   app.get(`*`, async (req, res, next) => {
-    trackCli(`GATSBY_EXPERIMENTAL_DEV_SSR`)
+    trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
 
     const pathObj = findPageByPath(store.getState(), req.path)
 
