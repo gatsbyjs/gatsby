@@ -105,7 +105,7 @@ export default function UpdateImport({ types: t }) {
 
                 const mainFragment = fragments.filter(
                   ({ name }) =>
-                    name !== `GatsbyImageSharpFluidLimitPresentationSize`
+                    name.value !== `GatsbyImageSharpFluidLimitPresentationSize`
                 )
 
                 processArguments(fixedOrFluidField.arguments, mainFragment[0])
