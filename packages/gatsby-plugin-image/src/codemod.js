@@ -53,7 +53,7 @@ export default function UpdateImport({ types: t }) {
             ({ name }) => name.name === `fluid` || name.name === `fixed`
           )
           if (prop) {
-            prop.name = t.JSXIdentifier(`image`)
+            prop.name = t.jsxIdentifier(`image`)
             // this expression is equivalent to data.file.childImageSharp.gatsbyImageData
             const newImageExpression = t.memberExpression(
               t.memberExpression(
@@ -62,7 +62,7 @@ export default function UpdateImport({ types: t }) {
               ),
               t.identifier(`gatsbyImageData`)
             )
-            prop.value = t.JSXExpressionContainer(newImageExpression)
+            prop.value = t.jsxExpressionContainer(newImageExpression)
           }
         }
       },
