@@ -173,6 +173,7 @@ describe(`GatsbyImage browser`, () => {
   })
 
   it(`relies on intersection observer when the SSR element is not resolved`, async () => {
+    ;(hooks as any).hasNativeLazyLoadSupport = true
     const onStartLoadSpy = jest.fn()
 
     const { container } = render(
@@ -186,56 +187,23 @@ describe(`GatsbyImage browser`, () => {
     await waitFor(() => container.querySelector(`[data-main-image=""]`))
 
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="gatsby-image-wrapper"
-          data-gatsby-image-wrapper=""
-          style="position: relative;"
-        >
-          <div
-            aria-hidden="true"
-            style="padding-top: 100%;"
-          />
-          <div
-            aria-hidden="true"
-            data-placeholder-image=""
-            sources=""
-            style="opacity: 1; transition: opacity 500ms linear; background-color: red; position: relative;"
-          />
-          <img
-            alt="Alt content"
-            data-main-image=""
-            decoding="async"
-            src="some-src-fallback.jpg"
-            style="opacity: 0;"
-          />
-          <script
-            type="module"
-          >
-            
-      const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
-      if (hasNativeLazyLoadSupport) {
-        const gatsbyImages = document.querySelectorAll('img[data-main-image]');
-        for (let mainImage of gatsbyImages) {
-          if (mainImage.dataset.src) {
-            mainImage.setAttribute('src', mainImage.dataset.src)
-            mainImage.removeAttribute('data-src')
-          }
-          if (mainImage.dataset.srcset) {
-            mainImage.setAttribute('srcset', mainImage.dataset.srcset)
-            mainImage.removeAttribute('data-srcset')
-          }
+  })
 
-          if (mainImage.complete) {
-            mainImage.style.opacity = 1;
-          }
-        }
-      }
+  it(`relies on intersection observer when browser does not support lazy loading`, async () => {
+    ;(hooks as any).hasNativeLazyLoadSupport = false
+    const onStartLoadSpy = jest.fn()
 
-          </script>
-        </div>
-      </div>
-    `)
+    const { container } = render(
+      <GatsbyImage
+        image={image}
+        alt="Alt content"
+        onStartLoad={onStartLoadSpy}
+      />,
+      { container: beforeHydrationContent, hydrate: true }
+    )
+
+    await waitFor(() => container.querySelector(`[data-main-image=""]`))
+
+    expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
   })
 })
