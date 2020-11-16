@@ -22,8 +22,7 @@ const runWebpack = (
   directory
 ): Bluebird<webpack.Stats> =>
   new Bluebird((resolve, reject) => {
-    if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-      // || stage === `build-html`) {
+    if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
       webpack(compilerConfig).run((err, stats) => {
         if (err) {
           return reject(err)
