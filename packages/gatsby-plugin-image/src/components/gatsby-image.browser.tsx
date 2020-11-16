@@ -98,12 +98,14 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
           customOnLoad?.()
           storeImageloaded(JSON.stringify(images))
         }
+
         hasSSRHtml.addEventListener(`load`, function onLoad() {
           hasSSRHtml.removeEventListener(`load`, onLoad)
 
           customOnLoad?.()
           storeImageloaded(JSON.stringify(images))
         })
+
         return undefined
       }
 
@@ -139,6 +141,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   useEffect(() => {
     if (root.current) {
       const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
+
       // On first server hydration do nothing
       if (hasNativeLazyLoadSupport && hasSSRHtml && !hydrated.current) {
         return
