@@ -137,8 +137,8 @@ export async function run(): Promise<void> {
 
 
 ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
-
-
+   
+                
 `
   )
   console.log(c.red(rule()))
@@ -289,7 +289,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
       data.project
-    )} has been successfully bootstrapped
+    )} has been successfully bootstrapped 
     at ${c.bold(path.resolve(data.project))}.
     `
   )
