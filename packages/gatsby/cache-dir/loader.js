@@ -532,7 +532,3 @@ export default publicLoader
 export function getStaticQueryResults() {
   return instance.staticQueryDb
 }
-
-export function getPageDataDb() {
-  return instance.pageDataDb
-}

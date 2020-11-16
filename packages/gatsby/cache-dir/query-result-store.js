@@ -6,7 +6,7 @@ import {
 } from "./socketIo"
 import PageRenderer from "./page-renderer"
 import normalizePagePath from "./normalize-page-path"
-import { getStaticQueryResults, getPageDataDb } from "./loader"
+import loader, { getStaticQueryResults } from "./loader"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -36,8 +36,8 @@ export class PageQueryStore extends React.Component {
   handleMittEvent = () => {
     this.setState(state => {
       return {
-        pageData: state.path
-          ? getPageDataDb().get(normalizePagePath(state.path))
+        page: state.path
+          ? loader.loadPageSync(normalizePagePath(state.path))
           : null,
       }
     })
@@ -62,9 +62,7 @@ export class PageQueryStore extends React.Component {
       socketRegisterPath(newPath)
       return {
         path: newPath,
-        pageData: newPath
-          ? getPageDataDb().get(normalizePagePath(newPath))
-          : null,
+        page: newPath ? loader.loadPageSync(normalizePagePath(newPath)) : null,
       }
     }
 
@@ -79,19 +77,17 @@ export class PageQueryStore extends React.Component {
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
-      this.state.pageData !== nextState.pageData
+      this.state.page !== nextState.page
     )
   }
 
   render() {
-    const data = this.state.pageData?.payload
-
     // eslint-disable-next-line
-    if (!data) {
+    if (!this.state.page) {
       return <div />
     }
 
-    return <PageRenderer {...this.props} {...data.result} />
+    return <PageRenderer {...this.props} {...this.state.page.json} />
   }
 }
 
