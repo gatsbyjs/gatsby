@@ -3522,17 +3522,17 @@
     "@testing-library/dom" "^6.15.0"
     "@types/testing-library__react" "^9.1.2"
 
-"@theme-ui/color-modes@^0.4.0-rc.1":
-  version "0.4.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@theme-ui/color-modes/-/color-modes-0.4.0-rc.1.tgz#c8c7e7297d22ffcf4a0b6db42def4527da26fdf2"
-  integrity sha512-ySJIO3MVIvPiso+NDFQastmnGzZMl2Q6tpJRNPwgyNhkYeOJznYtmexQFQ+CKqt/u9plevBhwaVOvlwRoDuhbw==
+"@theme-ui/color-modes@^0.4.0-rc.7":
+  version "0.4.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@theme-ui/color-modes/-/color-modes-0.4.0-rc.7.tgz#31ef49475da124b9c0c3c8975648d75622a0a7b7"
+  integrity sha512-t/DwgoWb/zvCSnho3Tsr9Vju7etFBS2Ys2IbfkECoBCWqEL2uM5r//1gHHPOrMmgw44oE34PXOH5t5y8l8FsxQ==
   dependencies:
     "@emotion/core" "^10.0.0"
-    "@theme-ui/core" "^0.4.0-rc.1"
-    "@theme-ui/css" "^0.4.0-rc.1"
+    "@theme-ui/core" "^0.4.0-rc.7"
+    "@theme-ui/css" "^0.4.0-rc.7"
     deepmerge "^4.2.2"
 
-"@theme-ui/components@>= 0.4.0-rc.1", "@theme-ui/components@^0.4.0-rc.1":
+"@theme-ui/components@>= 0.4.0-rc.1":
   version "0.4.0-rc.1"
   resolved "https://registry.yarnpkg.com/@theme-ui/components/-/components-0.4.0-rc.1.tgz#98b42de03bc9d00d31a8eb19395297e6f4a93c80"
   integrity sha512-xyHme8TIxhKxAefbvus6QfBo2Azh0gfpKC7fGteJqsI6gqkBpLPl+kXVf7s4XbhenXIcJDvCTQaV020hBcYYBA==
@@ -3544,13 +3544,25 @@
     "@styled-system/space" "^5.1.2"
     "@theme-ui/css" "^0.4.0-rc.1"
 
-"@theme-ui/core@^0.4.0-rc.1":
-  version "0.4.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@theme-ui/core/-/core-0.4.0-rc.1.tgz#52bab9e4ed9c35a19092992e5dd3b52c6b7e89c2"
-  integrity sha512-4Kjv0zi5/wGcD7H7I0CTCziSvf8Brrgmc9IdgtjEuz99wNx8u5XmXtIV9slPUW4MzVY7RShbYfrj34t5vkRJdA==
+"@theme-ui/components@^0.4.0-rc.8":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@theme-ui/components/-/components-0.4.0.tgz#9da8f3c59291f2150494fdc6afea40200f56c5a1"
+  integrity sha512-P0+BaWewKVx7IybPfbtNl2Jbyt54LF8/GqpCAzYR2VFOaU0r5fOqLFyyxjK7msqziLpfkwdVtTqaB0qHJww55g==
   dependencies:
     "@emotion/core" "^10.0.0"
-    "@theme-ui/css" "^0.4.0-rc.1"
+    "@emotion/styled" "^10.0.0"
+    "@styled-system/color" "^5.1.2"
+    "@styled-system/should-forward-prop" "^5.1.2"
+    "@styled-system/space" "^5.1.2"
+    "@theme-ui/css" "^0.4.0-rc.5"
+
+"@theme-ui/core@^0.4.0-rc.7":
+  version "0.4.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@theme-ui/core/-/core-0.4.0-rc.7.tgz#e4b78808a3c767e46080b13960f0b1e623177e0a"
+  integrity sha512-OBlAQkbUz/XVatAzzMKWmbT39ED7EqafOtlQ4FmXKHY3ngfBVQgJdawXTVh/krpKdonzObwDemVzp3F8TDi8UQ==
+  dependencies:
+    "@emotion/core" "^10.0.0"
+    "@theme-ui/css" "^0.4.0-rc.7"
     deepmerge "^4.2.2"
 
 "@theme-ui/css@>= 0.4.0-rc.1", "@theme-ui/css@^0.4.0-rc.1":
@@ -3560,24 +3572,31 @@
   dependencies:
     csstype "^2.5.7"
 
-"@theme-ui/mdx@^0.4.0-rc.1":
-  version "0.4.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@theme-ui/mdx/-/mdx-0.4.0-rc.1.tgz#ce9b6a15dde889ba4f3db6051b56f3d4e24488f8"
-  integrity sha512-bVxtwawmUp3rFaEjVe72+H5q7StkJDpaY0WMrEwNXwa9myfQ5zMD97ORh37fev0wVhZqJy/fslFrFZF/szEnyw==
+"@theme-ui/css@^0.4.0-rc.5", "@theme-ui/css@^0.4.0-rc.7":
+  version "0.4.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@theme-ui/css/-/css-0.4.0-rc.7.tgz#7cc8e998726128db05ea1179ee599523da74e55d"
+  integrity sha512-JWZOOSWYRlZivrptOzp4hrtarZJ5rsmUfqAGT2iex5zks8Sv31PRr4eMOTFow9hvqicpnc8WaJQqO3ltk6fCKA==
+  dependencies:
+    csstype "^2.5.7"
+
+"@theme-ui/mdx@^0.4.0-rc.7":
+  version "0.4.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@theme-ui/mdx/-/mdx-0.4.0-rc.7.tgz#a335a055a0085711d31051ad8253929eb51c2d5d"
+  integrity sha512-7TavOcnLKaFUCQzEqgSjMypERN19PoawE0M36dJXTwIvt057GjOJ1YIrg/bmjzZWCX8s+GCsSbcmv8HPuIC/Uw==
   dependencies:
     "@emotion/core" "^10.0.0"
     "@emotion/styled" "^10.0.0"
     "@mdx-js/react" "^1.0.0"
 
-"@theme-ui/theme-provider@^0.4.0-rc.1":
-  version "0.4.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@theme-ui/theme-provider/-/theme-provider-0.4.0-rc.1.tgz#672b19364db6ee0bac22ee5debdf61ce648267d6"
-  integrity sha512-8HJ3HGL1rzDwGsysK1AdhnTiN2t56MGT+GHPIhSqqeL29dA6GvBBgaFJkv++xWPd3wBPqBC8a2CgutxSUPu1aA==
+"@theme-ui/theme-provider@^0.4.0-rc.7":
+  version "0.4.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@theme-ui/theme-provider/-/theme-provider-0.4.0-rc.7.tgz#c2879162192f0f02cd4ca9116836f146be768fda"
+  integrity sha512-C1bvsJvvVl3HWvtLRzmcpsLoLJQ8ZroIhR99G14n+9VyqX+rMS9OFd+iaJbJhIDnXCVOehxsSPZr5I3fgzHziw==
   dependencies:
     "@emotion/core" "^10.0.0"
-    "@theme-ui/color-modes" "^0.4.0-rc.1"
-    "@theme-ui/core" "^0.4.0-rc.1"
-    "@theme-ui/mdx" "^0.4.0-rc.1"
+    "@theme-ui/color-modes" "^0.4.0-rc.7"
+    "@theme-ui/core" "^0.4.0-rc.7"
+    "@theme-ui/mdx" "^0.4.0-rc.7"
 
 "@turist/fetch@^7.1.7":
   version "7.1.7"
@@ -23915,17 +23934,17 @@ text-table@0.2.0, text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-theme-ui@0.4.0-rc.1, "theme-ui@>= 0.4.0-rc.1", theme-ui@^0.2.49, theme-ui@^0.4.0-rc.8:
-  version "0.4.0-rc.1"
-  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.4.0-rc.1.tgz#bbf7b2cf679a09fda4430f2768b59ce253a6c6ac"
-  integrity sha512-c5pGGMTnC34QBJg16ZB5c5JAwDcvFDpFwhA9/qoypoLSzn6RqIqCRDeBnm0q/KP9thZqFToEXSHhiFQwrjMn9g==
+theme-ui@0.4.0-rc.8, "theme-ui@>= 0.4.0-rc.1", theme-ui@^0.2.49, theme-ui@^0.4.0-rc.8:
+  version "0.4.0-rc.8"
+  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.4.0-rc.8.tgz#e0c00b4b579fb7ad8f3bc5dae43346c7f89882a0"
+  integrity sha512-SQrBJVPVujCKwSSORtl0oUi0s2Ub8IwbpVhJUyKC2ohyPcnWgYe8l+epkn9EwO3oLlC5ugDYHdF/daG/vaGiww==
   dependencies:
-    "@theme-ui/color-modes" "^0.4.0-rc.1"
-    "@theme-ui/components" "^0.4.0-rc.1"
-    "@theme-ui/core" "^0.4.0-rc.1"
-    "@theme-ui/css" "^0.4.0-rc.1"
-    "@theme-ui/mdx" "^0.4.0-rc.1"
-    "@theme-ui/theme-provider" "^0.4.0-rc.1"
+    "@theme-ui/color-modes" "^0.4.0-rc.7"
+    "@theme-ui/components" "^0.4.0-rc.8"
+    "@theme-ui/core" "^0.4.0-rc.7"
+    "@theme-ui/css" "^0.4.0-rc.7"
+    "@theme-ui/mdx" "^0.4.0-rc.7"
+    "@theme-ui/theme-provider" "^0.4.0-rc.7"
 
 then-request@^2.0.1:
   version "2.2.0"
