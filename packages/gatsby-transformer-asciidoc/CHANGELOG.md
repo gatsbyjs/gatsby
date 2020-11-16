@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.5.0-next.0...gatsby-transformer-asciidoc@1.5.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **gatsby-transformer-asciidoc:** fails when doc doesn't have title ([#27865](https://github.com/gatsbyjs/gatsby/issues/27865)) ([ce43564](https://github.com/gatsbyjs/gatsby/commit/ce43564edae4bf5e11b3e58fa59f4b48d564919f))
+
 # [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.4.0-next.0...gatsby-transformer-asciidoc@1.4.0-next.1) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-transformer-asciidoc

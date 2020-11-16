@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.7.0-next.0...gatsby-plugin-manifest@2.7.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **plugin-manifest:** Allow for all valid WebAppManifest properties ([#27951](https://github.com/gatsbyjs/gatsby/issues/27951)) ([88b990a](https://github.com/gatsbyjs/gatsby/commit/88b990ab44c1cd9acc9e1b7367991a3c194dd308))
+
 # [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.6.0-next.0...gatsby-plugin-manifest@2.6.0-next.1) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

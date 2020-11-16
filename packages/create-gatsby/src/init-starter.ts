@@ -2,11 +2,9 @@ import { execSync } from "child_process"
 import execa from "execa"
 import fs from "fs-extra"
 import path from "path"
-import { updateSiteMetadata } from "gatsby-core-utils"
 import { reporter } from "./reporter"
-import { getConfigStore } from "gatsby-core-utils"
-import filterStream from "stream-filter"
-import { spin } from "./components/spin"
+import { spin } from "tiny-spin"
+import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 
 const packageMangerConfigKey = `cli.packageManager`
@@ -18,20 +16,6 @@ export const setPackageManager = (packageManager: PackageManager): void => {
   getConfigStore().set(packageMangerConfigKey, packageManager)
 }
 
-const spawnWithArgs = (
-  file: string,
-  args: Array<string>,
-  options?: execa.Options
-): execa.ExecaChildProcess =>
-  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
-
-const spawn = (
-  cmd: string,
-  options?: execa.Options
-): execa.ExecaChildProcess => {
-  const [file, ...args] = cmd.split(/\s+/)
-  return spawnWithArgs(file, args, options)
-}
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
@@ -50,7 +34,7 @@ const gitInit = async (
 ): Promise<execa.ExecaReturnBase<string>> => {
   reporter.info(`Initialising git in ${rootPath}`)
 
-  return await spawn(`git init`, { cwd: rootPath })
+  return await execa(`git`, [`init`], { cwd: rootPath })
 }
 
 // Create a .gitignore file if it is missing in the new directory
@@ -70,7 +54,7 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
 const createInitialGitCommit = async (rootPath: string): Promise<void> => {
   reporter.info(`Create initial git commit in ${rootPath}`)
 
-  await spawn(`git add -A`, { cwd: rootPath })
+  await execa(`git`, [`add`, `-A`], { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
   // pgp signatures (with password)
   try {
@@ -83,9 +67,6 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
     fs.removeSync(path.join(rootPath, `.git`))
   }
 }
-
-const filter = (pattern: string): NodeJS.ReadWriteStream =>
-  filterStream((data: string): boolean => !data.toString().startsWith(pattern))
 
 // Executes `npm install` or `yarn install` in rootPath.
 const install = async (
@@ -113,48 +94,24 @@ const install = async (
     if (getPackageManager() === `yarn` && checkForYarn()) {
       if (await fs.pathExists(`package-lock.json`)) {
         if (!(await fs.pathExists(`yarn.lock`))) {
-          await spawn(`yarnpkg import`)
+          await execa(`yarnpkg`, [`import`])
         }
         await fs.remove(`package-lock.json`)
       }
 
       const args = packages.length ? [`add`, silent, ...packages] : [silent]
-
-      const childProcess = spawnWithArgs(`yarnpkg`, args, {
-        all: true,
-        stdio: `pipe`,
-      })
-      // eslint-disable-next-line no-unused-expressions
-      childProcess.all?.pipe(filter(`warning`)).pipe(process.stderr)
-
-      await childProcess
+      await execa(`yarnpkg`, args)
     } else {
       await fs.remove(`yarn.lock`)
 
-      let childProcess = spawnWithArgs(`npm`, [`install`, silent], {
-        all: true,
-        stdio: `pipe`,
-      })
-      // eslint-disable-next-line no-unused-expressions
-      childProcess.all?.pipe(filter(`npm WARN`)).pipe(process.stderr)
-
-      await childProcess
-
+      await execa(`npm`, [`install`, silent])
       stop()
-
       stop = spin(`Installing plugins...`)
-
-      childProcess = spawnWithArgs(`npm`, [`install`, silent, ...packages], {
-        all: true,
-        stdio: `pipe`,
-      })
-      // eslint-disable-next-line no-unused-expressions
-      childProcess.all?.pipe(filter(`npm WARN`)).pipe(process.stderr)
-
-      await childProcess
+      await execa(`npm`, [`install`, silent, ...packages])
+      stop()
     }
   } catch (e) {
-    reporter.error(e)
+    reporter.panic(e.message)
   } finally {
     process.chdir(prevDir)
     stop()
@@ -182,10 +139,13 @@ const clone = async (
     `--quiet`,
   ].filter(arg => Boolean(arg))
 
-  await spawnWithArgs(`git`, args)
+  try {
+    await execa(`git`, args)
+  } catch (err) {
+    reporter.panic(err.message)
+  }
   stop()
   reporter.success(`Created site from template`)
-
   await fs.remove(path.join(rootPath, `.git`))
 }
 
@@ -209,22 +169,6 @@ export async function initStarter(
 
   await install(rootPath, packages)
 
-  const sitePackageJson = await fs
-    .readJSON(path.join(sitePath, `package.json`))
-    .catch(() => {
-      reporter.verbose(
-        `Could not read "${path.join(sitePath, `package.json`)}"`
-      )
-    })
-
-  await updateSiteMetadata(
-    {
-      name: sitePackageJson?.name || rootPath,
-      sitePath,
-      lastRun: Date.now(),
-    },
-    false
-  )
   await gitSetup(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }

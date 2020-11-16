@@ -41,7 +41,7 @@ async function installPluginConfig(
   const [pluginName, pluginKey] = plugin.split(`:`)
 
   const installTimer = reporter.activityTimer(
-    `Adding ${plugin} to gatsby-config`
+    `Adding ${pluginName} ${pluginKey ? `(${pluginKey}) ` : ``}to gatsby-config`
   )
 
   installTimer.start()
