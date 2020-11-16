@@ -190,7 +190,16 @@ export function queriesReducer(
       const { path } = action.payload
       const query = registerQuery(state, path)
       query.dirty = 0
-      query.running = 0 // TODO: also reset the state on pre-bootstrap (as it could've been persisted)
+      query.running = 0 // TODO: also
+      return state
+    }
+    case `SET_PROGRAM_STATUS`: {
+      if (action.payload === `BOOTSTRAP_FINISHED`) {
+        // Reset the running state (as it could've been persisted)
+        for (const [, query] of state.trackedQueries) {
+          query.running = 0
+        }
+      }
       return state
     }
     default:
