@@ -366,9 +366,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     const truncatedPath = truncatePath(page.path)
     report.warn(
       report.stripIndent(`
-        The path to the following page is longer than the supported limit on most 
+        The path to the following page is longer than the supported limit on most
         operating systems and will cause an ENAMETOOLONG error. The path has been
-        truncated to prevent this. 
+        truncated to prevent this.
 
         Original Path: ${page.path}
 
@@ -1069,7 +1069,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config.options Options to pass to the Babel plugin.
  * @example
  * setBabelPlugin({
- *   name:  `babel-plugin-emotion`,
+ *   name:  `@emotion/babel-plugin`,
  *   options: {
  *     sourceMap: true,
  *   },

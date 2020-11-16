@@ -3,7 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { PageProps } from "gatsby"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
-import { Global } from "@emotion/core"
+import { Global } from "@emotion/react"
 import { useMutation } from "urql"
 import { useState, Fragment, useEffect } from "react"
 import {
