@@ -1,10 +1,9 @@
 /* eslint-disable no-invalid-this */
-import path from "path"
+
 import { store } from "../redux"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
-import fs from "fs-extra"
-import { readPageData, IPageDataWithQueryResult } from "../utils/page-data"
+import { IPageDataWithQueryResult } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
@@ -23,74 +22,6 @@ export interface IStaticQueryResult {
 
 type PageResultsMap = Map<string, IPageQueryResult>
 type QueryResultsMap = Map<string, IStaticQueryResult>
-
-/**
- * Get page query result for given page path.
- * @param {string} pagePath Path to a page.
- */
-async function getPageData(pagePath: string): Promise<IPageQueryResult> {
-  const state = store.getState()
-  const publicDir = path.join(state.program.directory, `public`)
-
-  const result: IPageQueryResult = {
-    id: pagePath,
-    result: undefined,
-  }
-
-  const page = findPageByPath(state, pagePath)
-  if (page) {
-    result.id = page.path
-    try {
-      const pageData: IPageDataWithQueryResult = await readPageData(
-        publicDir,
-        page.path
-      )
-
-      result.result = pageData
-    } catch (err) {
-      throw new Error(
-        `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
-      )
-    }
-  }
-
-  return result
-}
-
-/**
- * Get page query result for given page path.
- * @param {string} pagePath Path to a page.
- */
-async function getStaticQueryData(
-  staticQueryId: string
-): Promise<IStaticQueryResult> {
-  const { program } = store.getState()
-  const publicDir = path.join(program.directory, `public`)
-
-  const filePath = path.join(
-    publicDir,
-    `page-data`,
-    `sq`,
-    `d`,
-    `${staticQueryId}.json`
-  )
-
-  const result: IStaticQueryResult = {
-    id: staticQueryId,
-    result: undefined,
-  }
-  if (await fs.pathExists(filePath)) {
-    try {
-      const fileResult = await fs.readJson(filePath)
-
-      result.result = fileResult
-    } catch (err) {
-      // ignore errors
-    }
-  }
-
-  return result
-}
 
 function hashPaths(paths: Array<string>): Array<string> {
   return paths.map(path => createHash(`sha256`).update(path).digest(`hex`))
@@ -171,72 +102,6 @@ export class WebsocketManager {
           },
         })
       })
-
-      const getDataForPath = async (path: string): Promise<void> => {
-        const page = findPageByPath(store.getState(), path)
-        if (!page) {
-          socket.send({
-            type: `pageQueryResult`,
-            why: `getDataForPath-notfound`,
-            payload: {
-              id: path,
-              result: undefined,
-            },
-          })
-          return
-        }
-        path = page.path
-
-        let pageData = this.pageResults.get(path)
-        if (!pageData) {
-          try {
-            pageData = await getPageData(path)
-
-            this.pageResults.set(path, pageData)
-          } catch (err) {
-            console.log(err.message)
-            return
-          }
-        }
-
-        const staticQueryHashes = pageData.result?.staticQueryHashes ?? []
-        await Promise.all(
-          staticQueryHashes.map(async queryId => {
-            let staticQueryResult = this.staticQueryResults.get(queryId)
-
-            if (!staticQueryResult) {
-              staticQueryResult = await getStaticQueryData(queryId)
-              this.staticQueryResults.set(queryId, staticQueryResult)
-            }
-
-            socket.send({
-              type: `staticQueryResult`,
-              payload: staticQueryResult,
-            })
-          })
-        )
-
-        socket.send({
-          type: `pageQueryResult`,
-          why: `getDataForPath`,
-          payload: pageData,
-        })
-
-        if (this.clients.size > 0) {
-          telemetry.trackCli(
-            `WEBSOCKET_PAGE_DATA_UPDATE`,
-            {
-              siteMeasurements: {
-                clientsCount: this.clients.size,
-                paths: hashPaths(Array.from(this.activePaths)),
-              },
-            },
-            { debounce: true }
-          )
-        }
-      }
-
-      socket.on(`getDataForPath`, getDataForPath)
 
       socket.on(`registerPath`, (path: string): void => {
         setActivePath(path, true)

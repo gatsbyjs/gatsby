@@ -369,7 +369,15 @@ export class BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    throw new Error(`doPrefetch not implemented`)
+    const pageDataUrl = createPageDataUrl(pagePath)
+    return prefetchHelper(pageDataUrl, {
+      crossOrigin: `anonymous`,
+      as: `fetch`,
+    }).then(() =>
+      // This was just prefetched, so will return a response from
+      // the cache instead of making another request to the server
+      this.loadPageDataJson(pagePath)
+    )
   }
 
   hovering(rawPath) {
@@ -448,27 +456,15 @@ export class ProdLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    const pageDataUrl = createPageDataUrl(pagePath)
-    return prefetchHelper(pageDataUrl, {
-      crossOrigin: `anonymous`,
-      as: `fetch`,
+    return super.doPrefetch(pagePath).then(result => {
+      if (result.status !== PageResourceStatus.Success) {
+        return Promise.resolve()
+      }
+      const pageData = result.payload
+      const chunkName = pageData.componentChunkName
+      const componentUrls = createComponentUrls(chunkName)
+      return Promise.all(componentUrls.map(prefetchHelper)).then(() => pageData)
     })
-      .then(() =>
-        // This was just prefetched, so will return a response from
-        // the cache instead of making another request to the server
-        this.loadPageDataJson(pagePath)
-      )
-      .then(result => {
-        if (result.status !== PageResourceStatus.Success) {
-          return Promise.resolve()
-        }
-        const pageData = result.payload
-        const chunkName = pageData.componentChunkName
-        const componentUrls = createComponentUrls(chunkName)
-        return Promise.all(componentUrls.map(prefetchHelper)).then(
-          () => pageData
-        )
-      })
   }
 
   loadPageDataJson(rawPath) {
