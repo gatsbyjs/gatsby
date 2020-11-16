@@ -15,14 +15,12 @@ import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 
+import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
-import { buildRenderer } from "../commands/build-html"
-import { renderDevHTML, initDevWorkerPool } from "./dev-ssr/render-dev-html"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import * as WorkerPool from "../utils/worker/pool"
-import { route as developHtmlRoute } from "./dev-ssr/develop-html-route"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
@@ -73,7 +71,46 @@ export async function startServer(
   })
   webpackActivity.start()
 
-  initDevWorkerPool()
+  // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
+  const directoryPath = withBasePath(directory)
+  const { buildHTML } = require(`../commands/build-html`)
+  const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
+    try {
+      await buildHTML({
+        program,
+        stage: Stage.DevelopHTML,
+        pagePaths: [`/`],
+        workerPool,
+        activity,
+      })
+    } catch (err) {
+      if (err.name !== `WebpackError`) {
+        report.panic(err)
+        return
+      }
+      report.panic(
+        report.stripIndent`
+          There was an error compiling the html.js component for the development server.
+          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
+        `,
+        err
+      )
+    }
+  }
+  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
+
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const { buildRenderer } = require(`../commands/build-html`)
+    await buildRenderer(program, Stage.DevelopHTML)
+    const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
+    initDevWorkerPool()
+  } else {
+    indexHTMLActivity.start()
+
+    await createIndexHtml(indexHTMLActivity)
+
+    indexHTMLActivity.end()
+  }
 
   const devConfig = await webpackConfig(
     program,
@@ -82,8 +119,6 @@ export async function startServer(
     program.port,
     { parentSpan: webpackActivity.span }
   )
-
-  await buildRenderer(program, Stage.DevelopHTML)
 
   const compiler = webpack(devConfig)
 
@@ -291,13 +326,10 @@ export async function startServer(
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Setup HTML route.
-    developHtmlRoute({ app, program, store })
+    const { route } = require(`./dev-ssr/develop-html-route`)
+    route({ app, program, store })
   }
 
-  // We still need this even w/ ssr for the dev 404 page.
-  const genericHtmlPath = process.env.GATSBY_EXPERIMENTAL_DEV_SSR
-    ? `/dev-404-page/`
-    : `/`
   app.use(async (req, res) => {
     const fullUrl = req.protocol + `://` + req.get(`host`) + req.originalUrl
     // This isn't used in development.
@@ -307,20 +339,29 @@ export async function startServer(
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
-      try {
-        const renderResponse = await renderDevHTML({
-          path: genericHtmlPath,
-          // Let renderDevHTML figure it out.
-          page: undefined,
-          store,
-          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
-          directory: program.directory,
+      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        try {
+          const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
+          const renderResponse = await renderDevHTML({
+            path: `/dev-404-page/`,
+            // Let renderDevHTML figure it out.
+            page: undefined,
+            store,
+            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            directory: program.directory,
+          })
+          const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
+          res.status(status).send(renderResponse)
+        } catch (e) {
+          report.error(e)
+          res.send(e).status(500)
+        }
+      } else {
+        res.sendFile(directoryPath(`public/index.html`), err => {
+          if (err) {
+            res.status(500).end()
+          }
         })
-        const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
-        res.status(status).send(renderResponse)
-      } catch (e) {
-        report.error(e)
-        res.send(e).status(500)
       }
     }
   })
@@ -330,11 +371,26 @@ export async function startServer(
    **/
   const server = new http.Server(app)
 
-  websocketManager.init({ server })
+  const socket = websocketManager.init({ server })
 
   // hardcoded `localhost`, because host should match `target` we set
   // in http proxy in `develop-proxy`
   const listener = server.listen(program.port, `localhost`)
+
+  if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const chokidar = require(`chokidar`)
+    const { slash } = require(`gatsby-core-utils`)
+    // Register watcher that rebuilds index.html every time html.js changes.
+    const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+      slash(directoryPath(path))
+    )
+
+    chokidar.watch(watchGlobs).on(`change`, async () => {
+      await createIndexHtml(indexHTMLActivity)
+      // eslint-disable-next-line no-unused-expressions
+      socket?.to(`clients`).emit(`reload`)
+    })
+  }
 
   return {
     compiler,

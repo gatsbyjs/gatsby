@@ -7,7 +7,6 @@ import { chunk } from "lodash"
 import webpack from "webpack"
 
 import webpackConfig from "../utils/webpack.config"
-import { restartWorker } from "../utils/dev-ssr/render-dev-html"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
 import { IProgram, Stage } from "./types"
@@ -23,7 +22,8 @@ const runWebpack = (
   directory
 ): Bluebird<webpack.Stats> =>
   new Bluebird((resolve, reject) => {
-    if (stage === `build-html`) {
+    if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+      // || stage === `build-html`) {
       webpack(compilerConfig).run((err, stats) => {
         if (err) {
           return reject(err)
@@ -31,7 +31,10 @@ const runWebpack = (
           return resolve(stats)
         }
       })
-    } else if (stage === `develop-html`) {
+    } else if (
+      process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
+      stage === `develop-html`
+    ) {
       webpack(compilerConfig).watch(
         {
           ignored: /node_modules/,
@@ -42,6 +45,9 @@ const runWebpack = (
           } else {
             newHash = stats.hash || ``
 
+            const {
+              restartWorker,
+            } = require(`../utils/dev-ssr/render-dev-html`)
             // Make sure we use the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
               restartWorker(`${directory}/public/render-page.js`)

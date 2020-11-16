@@ -1,5 +1,5 @@
 import report from "gatsby-cli/lib/reporter"
-import { trackCli } from "gatsby-telemetry"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 import { findPageByPath } from "../find-page-by-path"
 import { renderDevHTML } from "./render-dev-html"
