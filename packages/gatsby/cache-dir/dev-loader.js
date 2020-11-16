@@ -9,8 +9,11 @@ import { findPath } from "./find-path"
 import getSocket from "./socketIo"
 import normalizePagePath from "./normalize-page-path"
 
+// TODO move away from lodash
+import isEqual from "lodash/isEqual"
+
 function didDataChange(a, b) {
-  return JSON.stringify(a) !== JSON.stringify(b)
+  return !isEqual(a, b)
 }
 
 function mergePageEntry(cachedPage, newPageData) {
@@ -110,9 +113,7 @@ class DevLoader extends BaseLoader {
   loadPage(pagePath) {
     const realPath = findPath(pagePath)
     return super.loadPage(realPath).then(result => {
-      const isNotFound = this.pageDb.get(realPath)?.notFound
-
-      if (isNotFound) {
+      if (this.isPageNotFound(realPath)) {
         this.notFoundPagePathsInCaches.add(realPath)
       }
 
@@ -142,8 +143,7 @@ class DevLoader extends BaseLoader {
 
   doPrefetch(pagePath) {
     return super.doPrefetch(pagePath).then(result => {
-      const pageData = result.payload
-      return pageData
+      return result.payload
     })
   }
 }
