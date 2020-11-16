@@ -6,8 +6,8 @@
   "dependencies": {
     "cypress": "^3.1.0",
     "cypress-image-snapshot": "^3.1.1",
-    "gatsby": "^2.0.118",
-    "gatsby-plugin-image": "^0.0.2",
+    "gatsby": "2.27.0-next.1-dev-1605519933925",
+    "gatsby-plugin-image": "0.2.0-next.0-dev-1605521028719",
     "gatsby-plugin-sharp": "^2.0.20",
     "gatsby-source-filesystem": "^2.3.35",
     "gatsby-transformer-sharp": "^2.5.19",

@@ -12,7 +12,7 @@ import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../utils"
-import { ISharpGatsbyImageData } from "./gatsby-image.browser"
+import { IGatsbyImageData } from "./gatsby-image.browser"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -32,11 +32,11 @@ export function hasImageLoaded(cacheKey: string): boolean {
 
 export type FileNode = Node & {
   childImageSharp?: Node & {
-    gatsbyImageData?: ISharpGatsbyImageData
+    gatsbyImageData?: IGatsbyImageData
   }
 }
 
-export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
+export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
   file?.childImageSharp?.gatsbyImageData
 
 export function getWrapperProps(
