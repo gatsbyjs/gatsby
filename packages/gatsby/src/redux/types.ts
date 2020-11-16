@@ -210,6 +210,7 @@ export interface IGatsbyState {
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
     byConnection: Map<string, Set<Identifier>>
+    queryNodes: Map<Identifier, Set<Identifier>>
     trackedQueries: Map<Identifier, IQueryState>
     trackedComponents: Map<string, IComponentState>
     deletedQueries: Set<Identifier>
