@@ -1,0 +1,41 @@
+{
+  "name": "gatsby-plugin-functions",
+  "version": "1.0.0",
+  "description": "Gatsby plugin that automatically creates serverless functions from files in specified directories",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "author": "Sid Chatterjee <me@sidharthachatterjee.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-functions"
+  },
+  "dependencies": {
+    "@babel/traverse": "^7.11.5",
+    "@sindresorhus/slugify": "^1.1.0",
+    "chokidar": "^3.4.2",
+    "fs-exists-cached": "^1.0.0",
+    "gatsby-page-utils": "^0.4.0-next.0",
+    "globby": "^11.0.1",
+    "graphql": "^14.7.0",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.7.0-next.0",
+    "cross-env": "^7.0.2"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-functions#readme",
+  "license": "MIT"
+}
