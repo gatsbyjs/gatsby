@@ -1,20 +1,10 @@
-import {
-  BaseLoader,
-  PageResourceStatus,
-  getStaticQueryResults,
-  getPageDataDb,
-  getPageDb,
-} from "./loader"
+import { BaseLoader, PageResourceStatus } from "./loader"
 import { findPath } from "./find-path"
 import getSocket from "./socketIo"
 import normalizePagePath from "./normalize-page-path"
 
 // TODO move away from lodash
 import isEqual from "lodash/isEqual"
-
-function didDataChange(a, b) {
-  return !isEqual(a, b)
-}
 
 function mergePageEntry(cachedPage, newPageData) {
   return {
@@ -43,66 +33,9 @@ class DevLoader extends BaseLoader {
     if (socket) {
       socket.on(`message`, msg => {
         if (msg.type === `staticQueryResult`) {
-          const newResult = msg.payload.result
-
-          const cacheKey = msg.payload.id
-          const cachedStaticQueries = getStaticQueryResults()
-          const cachedResult = cachedStaticQueries[cacheKey]
-          if (didDataChange(newResult, cachedResult)) {
-            cachedStaticQueries[cacheKey] = newResult
-            ___emitter.emit(`staticQueryResult`, newResult)
-          }
+          this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
-          const newPageData = msg.payload.result
-
-          const pageDataDbCacheKey = normalizePagePath(msg.payload.id)
-          const cachedPageDataDb = getPageDataDb()
-          const cachedPageData = cachedPageDataDb.get(pageDataDbCacheKey)
-            ?.payload
-
-          if (didDataChange(newPageData, cachedPageData)) {
-            // always update canonical key for pageDataDb
-            cachedPageDataDb.set(pageDataDbCacheKey, {
-              pagePath: pageDataDbCacheKey,
-              payload: newPageData,
-              status: `success`,
-            })
-
-            const cachedPageDb = getPageDb()
-            const cachedPage = cachedPageDb.get(pageDataDbCacheKey)
-            if (cachedPage) {
-              cachedPageDb.set(
-                pageDataDbCacheKey,
-                mergePageEntry(cachedPage, newPageData)
-              )
-            }
-
-            // Additionally if those are query results for "/404.html"
-            // we have to update all paths user wanted to visit, but didn't have
-            // page for it, because we do store them under (normalized) path
-            // user wanted to visit
-            if (pageDataDbCacheKey === `/404.html`) {
-              this.notFoundPagePathsInCaches.forEach(notFoundPath => {
-                const previousPageDataEntry = cachedPageDataDb.get(notFoundPath)
-                if (previousPageDataEntry) {
-                  cachedPageDataDb.set(notFoundPath, {
-                    ...previousPageDataEntry,
-                    payload: newPageData,
-                  })
-                }
-
-                const previousPageEntry = cachedPageDb.get(notFoundPath)
-                if (previousPageEntry) {
-                  cachedPageDb.set(
-                    notFoundPath,
-                    mergePageEntry(previousPageEntry, newPageData)
-                  )
-                }
-              })
-            }
-
-            ___emitter.emit(`pageQueryResult`, newPageData)
-          }
+          this.handlePageQueryResultHotUpdate(msg)
         }
       })
     } else {
@@ -142,9 +75,68 @@ class DevLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    return super.doPrefetch(pagePath).then(result => {
-      return result.payload
-    })
+    return super.doPrefetch(pagePath).then(result => result.payload)
+  }
+
+  handleStaticQueryResultHotUpdate(msg) {
+    const newResult = msg.payload.result
+
+    const cacheKey = msg.payload.id
+    const cachedResult = this.staticQueryDb[cacheKey]
+    if (!isEqual(newResult, cachedResult)) {
+      this.staticQueryDb[cacheKey] = newResult
+      ___emitter.emit(`staticQueryResult`, newResult)
+    }
+  }
+
+  handlePageQueryResultHotUpdate(msg) {
+    const newPageData = msg.payload.result
+
+    const pageDataDbCacheKey = normalizePagePath(msg.payload.id)
+    const cachedPageData = this.pageDataDb.get(pageDataDbCacheKey)?.payload
+
+    if (!isEqual(newPageData, cachedPageData)) {
+      // always update canonical key for pageDataDb
+      this.pageDataDb.set(pageDataDbCacheKey, {
+        pagePath: pageDataDbCacheKey,
+        payload: newPageData,
+        status: `success`,
+      })
+
+      const cachedPage = this.pageDb.get(pageDataDbCacheKey)
+      if (cachedPage) {
+        this.pageDb.set(
+          pageDataDbCacheKey,
+          mergePageEntry(cachedPage, newPageData)
+        )
+      }
+
+      // Additionally if those are query results for "/404.html"
+      // we have to update all paths user wanted to visit, but didn't have
+      // page for it, because we do store them under (normalized) path
+      // user wanted to visit
+      if (pageDataDbCacheKey === `/404.html`) {
+        this.notFoundPagePathsInCaches.forEach(notFoundPath => {
+          const previousPageDataEntry = this.pageDataDb.get(notFoundPath)
+          if (previousPageDataEntry) {
+            this.pageDataDb.set(notFoundPath, {
+              ...previousPageDataEntry,
+              payload: newPageData,
+            })
+          }
+
+          const previousPageEntry = this.pageDb.get(notFoundPath)
+          if (previousPageEntry) {
+            this.pageDb.set(
+              notFoundPath,
+              mergePageEntry(previousPageEntry, newPageData)
+            )
+          }
+        })
+      }
+
+      ___emitter.emit(`pageQueryResult`, newPageData)
+    }
   }
 }
 

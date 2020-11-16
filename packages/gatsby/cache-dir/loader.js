@@ -536,7 +536,3 @@ export function getStaticQueryResults() {
 export function getPageDataDb() {
   return instance.pageDataDb
 }
-
-export function getPageDb() {
-  return instance.pageDb
-}
