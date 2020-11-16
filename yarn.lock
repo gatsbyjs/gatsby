@@ -2912,10 +2912,10 @@
   resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.6.16.tgz#07a7342f6b61ea1ecbfb31e6e23bf7a8c79b9b57"
   integrity sha512-SFtLGIGZummuyMDPRL5KdmpgI8U19Ble28UjEWihPjGxF1Lgj8aDjLWY8KiaUy9eqb9CKiVCqEIrK9jbnANfkw==
 
-"@mdx-js/util@1.6.18":
-  version "1.6.18"
-  resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.6.18.tgz#c7563bf72cb4520b8b7100b64006a64be717e936"
-  integrity sha512-axMe+NoLF55OlXPbhRn4GNCHcL1f5W3V3c0dWzg05S9JXm3Ecpxzxaht3g3vTP0dcqBL/yh/xCvzK0ZpO54Eug==
+"@mdx-js/util@1.6.21":
+  version "1.6.21"
+  resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.6.21.tgz#25f97a0a1b76e78c16ae5d98c6c73e1be8d89e39"
+  integrity sha512-6sANhqfEHu6gdHZSrzDjN18Y48mIon8f2Os6J+IFmMHN0IhNG/0PUIIsI07kA1sZ9t6vgZNBloVmcDa5WOSe6A==
 
 "@mdx-js/util@^2.0.0-next.7":
   version "2.0.0-next.7"
@@ -21050,16 +21050,16 @@ remark-mdx@1.6.16:
     remark-parse "8.0.3"
     unified "9.1.0"
 
-remark-mdx@^1.6.18:
-  version "1.6.18"
-  resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-1.6.18.tgz#d8c76017c95824cc7fb853bb2759add8ba0cf319"
-  integrity sha512-xNhjv4kJZ8L6RV68yK8fQ6XWlvSIFOE5VPmM7wMKSwkvwBu6tlUJy0gRF2WiZ4fPPOj6jpqlVB9QakipvZuEqg==
+remark-mdx@^1.6.18, remark-mdx@^1.6.21:
+  version "1.6.21"
+  resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-1.6.21.tgz#0c1a7e042e50938ff89ad8dd7e8e219d4b0404ce"
+  integrity sha512-IGb3l46a6NFi62egT+WXeTT3T8wYTunmPCEGTfDO6oRAfuss9VAb/3InVCKKGXXoiNi0mTuplI0EFusdCLGk3A==
   dependencies:
     "@babel/core" "7.11.6"
     "@babel/helper-plugin-utils" "7.10.4"
     "@babel/plugin-proposal-object-rest-spread" "7.11.0"
     "@babel/plugin-syntax-jsx" "7.10.4"
-    "@mdx-js/util" "1.6.18"
+    "@mdx-js/util" "1.6.21"
     is-alphabetical "1.0.4"
     remark-parse "8.0.3"
     unified "9.2.0"
