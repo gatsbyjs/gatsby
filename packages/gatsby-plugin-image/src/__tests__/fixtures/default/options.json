@@ -1,5 +1,5 @@
 {
     "sourceType": "module",
     "presets": ["@babel/preset-react"],
-    "plugins": ["/Users/laurie/Documents/Gatsby/gatsby/packages/gatsby-plugin-image/src/codemod.js"]
+    "plugins": ["gatsby-plugin-image/src/codemod.js"]
 }
