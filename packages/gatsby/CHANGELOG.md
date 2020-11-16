@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.27.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **gatsby:** allow unknown plugin options ([#27938](https://github.com/gatsbyjs/gatsby/issues/27938)) ([412b523](https://github.com/gatsbyjs/gatsby/commit/412b523fcb2909eabc3fae00f4bba5c3b59cc466))
+- **gatsby:** don't hide original error if stack-trace point to not existing file ([#27953](https://github.com/gatsbyjs/gatsby/issues/27953)) ([5e2b3ee](https://github.com/gatsbyjs/gatsby/commit/5e2b3eeb4af46a203de80fa8ce45774f9c6c3fa5))
+
+### Features
+
+- **create-gatsby:** Add create-gatsby ([#27703](https://github.com/gatsbyjs/gatsby/issues/27703)) ([2371fd5](https://github.com/gatsbyjs/gatsby/commit/2371fd584d6824444d93f8667c45421c34aa5f54)), closes [#27801](https://github.com/gatsbyjs/gatsby/issues/27801) [#27995](https://github.com/gatsbyjs/gatsby/issues/27995)
+- **develop:** add explicit express handler for page-data requests ([#27882](https://github.com/gatsbyjs/gatsby/issues/27882)) ([3d0de4a](https://github.com/gatsbyjs/gatsby/commit/3d0de4a93f23271417028843297b78a0d9450c3f))
+
+### Performance Improvements
+
+- **gatsby:** pull in cache lib and change lock from fs to mem ([#27873](https://github.com/gatsbyjs/gatsby/issues/27873)) ([84aae96](https://github.com/gatsbyjs/gatsby/commit/84aae96434b2432420dbdb851477c67c30b6c732))
+
+### Reverts
+
+- Revert "fix(gatsby): refresh browser when receiving update and runtime errored (#27467)" (#28034) ([076b59f](https://github.com/gatsbyjs/gatsby/commit/076b59fdd259be238d79bbbcda7fdb9c578adcd6)), closes [#27467](https://github.com/gatsbyjs/gatsby/issues/27467) [#28034](https://github.com/gatsbyjs/gatsby/issues/28034)
+
 # [2.26.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.2...gatsby@2.26.0-next.3) (2020-11-10)
 
 ### Bug Fixes

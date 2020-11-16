@@ -28,7 +28,7 @@ describe(`gatsby new`, () => {
     await clean(dir)
   })
 
-  it(`a default starter creates a gatsby site`, () => {
+  it(`creates a gatsby site with the default starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([`new`, `gatsby-default`])
 
     logs.should.contain(
@@ -45,7 +45,7 @@ describe(`gatsby new`, () => {
     expect(code).toBe(0)
   })
 
-  it(`a theme starter creates a gatsby site`, () => {
+  it(`creates a gatsby site with the blog starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
@@ -66,7 +66,7 @@ describe(`gatsby new`, () => {
     expect(code).toBe(0)
   })
 
-  it(`an invalid starter fails to create a gatsby site`, () => {
+  it(`fails to create a gatsby site with an invalid starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-invalid`,
@@ -77,5 +77,18 @@ describe(`gatsby new`, () => {
     logs.should.contain(`starter tHiS-Is-A-fAkE-sTaRtEr doesn't exist`)
 
     expect(code).toBe(1)
+  })
+
+  it(`runs the prompted starter selection process when no arguments are passed`, () => {
+    const [_, logs] = GatsbyCLI.from(cwd).invoke([`new`])
+
+    logs.should.contain(`What is your project called?`)
+  })
+
+  it(`runs create-gatsby when no arguments are provided to gatsby new with the GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW flag set`, () => {
+    process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW = true // when this flag is removed we can remove this line
+    const [_, logs] = GatsbyCLI.from(cwd).invoke([`new`])
+
+    logs.should.contain(`Welcome to Gatsby!`)
   })
 })
