@@ -51,7 +51,7 @@ describe(`create-gatsby-app`, () => {
     expect(installPlugins).not.toBeCalled()
   })
 
-  it(`creates a project with a project name and a CSS tool`, async () => {
+  it.only(`creates a project with a project name and a CSS tool`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
