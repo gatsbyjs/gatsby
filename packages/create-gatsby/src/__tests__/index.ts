@@ -89,7 +89,7 @@ describe(`create-gatsby-app`, () => {
     )
   })
 
-  it.only(`creates a project with a project name and a CMS`, async () => {
+  it(`creates a project with a project name and a CMS`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
@@ -137,7 +137,7 @@ describe(`create-gatsby-app`, () => {
     )
   })
 
-  it(`creates a project with a project name, a CMS, a styling system, and google analytics`, async () => {
+  it.only(`creates a project with a project name, a CMS, a styling system, and google analytics`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
