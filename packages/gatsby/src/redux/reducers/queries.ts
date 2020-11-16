@@ -107,12 +107,12 @@ export function queriesReducer(
       }
       if (component.query !== query) {
         // Invalidate all pages associated with a component when query text changes
-        component.pages.forEach(queryId => {
+        for (const queryId of component.pages) {
           const query = state.trackedQueries.get(queryId)
           if (query) {
             query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
           }
-        })
+        }
         component.query = query
       }
       return state
@@ -165,18 +165,18 @@ export function queriesReducer(
       const queriesByConnection =
         state.byConnection.get(node.internal.type) ?? []
 
-      queriesByNode.forEach(queryId => {
+      for (const queryId of queriesByNode) {
         const query = state.trackedQueries.get(queryId)
         if (query) {
           query.dirty = setFlag(query.dirty, FLAG_DIRTY_DATA)
         }
-      })
-      queriesByConnection.forEach(queryId => {
+      }
+      for (const queryId of queriesByConnection) {
         const query = state.trackedQueries.get(queryId)
         if (query) {
           query.dirty = setFlag(query.dirty, FLAG_DIRTY_DATA)
         }
-      })
+      }
       return state
     }
     case `PAGE_QUERY_RUN`: {
@@ -231,9 +231,12 @@ function addConnectionDependency(
 ): IGatsbyState["queries"] {
   // Note: not using two-side maps for connections as associated overhead
   //   for small number of elements is greater then benefits, so no perf. gains
-  const queryIds = state.byConnection.get(connection) ?? new Set<QueryId>()
+  let queryIds = state.byConnection.get(connection)
+  if (!queryIds) {
+    queryIds = new Set()
+    state.byConnection.set(connection, queryIds)
+  }
   queryIds.add(queryId)
-  state.byConnection.set(connection, queryIds)
   return state
 }
 
@@ -255,9 +258,9 @@ function clearConnectionDependencies(
   state: IGatsbyState["queries"],
   queryId: QueryId
 ): IGatsbyState["queries"] {
-  state.byConnection.forEach(queryIds => {
+  for (const [, queryIds] of state.byConnection) {
     queryIds.delete(queryId)
-  })
+  }
   return state
 }
 
