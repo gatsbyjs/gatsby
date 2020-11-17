@@ -14,18 +14,28 @@ import http from "http"
 import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
+import launchEditor from "react-dev-utils/launchEditor"
+import { slash, isCI } from "gatsby-core-utils"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
 import report from "gatsby-cli/lib/reporter"
-import launchEditor from "react-dev-utils/launchEditor"
 import * as WorkerPool from "../utils/worker/pool"
+import {
+  showExperimentNoticeAfterTimeout,
+  CancelExperimentNoticeCallbackOrUndefined,
+} from "../utils/show-experiment-notice"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import { reverseFixedPagePath, readPageData } from "./page-data"
+import {
+  reverseFixedPagePath,
+  readPageData,
+  IPageDataWithQueryResult,
+} from "./page-data"
+import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
@@ -40,6 +50,7 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
+  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: JestWorker
   webpackWatching: IWebpackWatchingPauseResume
@@ -110,6 +121,30 @@ export async function startServer(
     await createIndexHtml(indexHTMLActivity)
 
     indexHTMLActivity.end()
+  }
+
+  const TWENTY_SECONDS = 20 * 1000
+  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
+  if (
+    process.env.gatsby_executing_command === `develop` &&
+    !process.env.GATSBY_EXPERIMENT_DEVJS_LAZY &&
+    !isCI()
+  ) {
+    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
+      `LAZY_DEVJS`,
+      report.stripIndent(`
+Your local development experience is about to get better, faster, and stronger!
+
+Your friendly Gatsby maintainers detected your site takes longer than ideal to bundle your JavaScript. We're working right now to improve this.
+
+If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with LAZY_DEVJS enabled.
+
+GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop
+
+Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.dev/lazy-devjs-umbrella
+      `),
+      TWENTY_SECONDS
+    )
   }
 
   const devConfig = await webpackConfig(
@@ -236,10 +271,14 @@ export async function startServer(
 
       if (page) {
         try {
-          const pageData = await readPageData(
-            path.join(store.getState().program.directory, `public`),
-            page.path
-          )
+          const pageData: IPageDataWithQueryResult = process.env
+            .GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+            ? await getPageDataExperimental(page.path)
+            : await readPageData(
+                path.join(store.getState().program.directory, `public`),
+                page.path
+              )
+
           res.status(200).send(pageData)
           return
         } catch (e) {
@@ -396,6 +435,7 @@ export async function startServer(
     compiler,
     listener,
     webpackActivity,
+    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,

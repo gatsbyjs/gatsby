@@ -1,6 +1,7 @@
 /* eslint-disable no-invalid-this */
 
-import { store } from "../redux"
+import { store, emitter } from "../redux"
+import { clearDirtyQueriesListToEmitViaWebsocket } from "../redux/actions/internal"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
 import { IPageDataWithQueryResult } from "../utils/page-data"
@@ -117,6 +118,13 @@ export class WebsocketManager {
       })
     })
 
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+      emitter.on(`CREATE_PAGE`, this.emitDirtyQueriesIds)
+      emitter.on(`CREATE_NODE`, this.emitDirtyQueriesIds)
+      emitter.on(`DELETE_NODE`, this.emitDirtyQueriesIds)
+      emitter.on(`QUERY_EXTRACTED`, this.emitDirtyQueriesIds)
+    }
+
     return this.websocket
   }
 
@@ -176,6 +184,22 @@ export class WebsocketManager {
         type: `overlayError`,
         payload: { id, message },
       })
+    }
+  }
+
+  emitDirtyQueriesIds = (): void => {
+    const dirtyQueries = store.getState().queries
+      .dirtyQueriesListToEmitViaWebsocket
+
+    if (dirtyQueries.length > 0) {
+      if (this.websocket) {
+        this.websocket.send({
+          type: `dirtyQueries`,
+          payload: { dirtyQueries },
+        })
+
+        store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+      }
     }
   }
 }

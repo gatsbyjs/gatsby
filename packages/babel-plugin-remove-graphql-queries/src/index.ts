@@ -166,8 +166,12 @@ function isGraphqlTag(tag: NodePath, tagName: string = `graphql`): boolean {
     return (tag.get(`property`) as NodePath<Identifier>).node.name === tagName
   }
 
-  if (importPath.isImportSpecifier())
-    return importPath.node.imported.name === tagName
+  if (importPath.isImportSpecifier()) {
+    if (importPath.node.imported.type === `Identifier`) {
+      return importPath.node.imported.name === tagName
+    }
+    return false
+  }
 
   if (importPath.isObjectProperty())
     return (importPath.get(`key`) as NodePath<Identifier>).node.name === tagName
