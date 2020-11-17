@@ -1,95 +1,170 @@
-import React, { useLayoutEffect, useState } from "react"
+import React from "react"
 import client from "webpack-hot-middleware/client"
+import ansiHTML from "ansi-html"
 
-import ErrorBoundary from "./components/error-boundary"
-import BuildErrorOverlay from "./build-error-overlay"
-import RuntimeErrorOverlay from "./runtime-error-overlay"
-import BoundaryErrorOverlay from "./boundary-error-overlay"
+import Overlay from "./overlay"
 
-export const ErrorContext = React.createContext({
-  problems: [],
-  currentIndex: 0,
-  setCurrentIndex: () => void 0,
-  dismiss: () => void 0,
-})
+const styles = {
+  button: {
+    alignItems: `center`,
+    borderRadius: `4px`,
+    justifyContent: `center`,
+    lineHeight: 1,
+    cursor: `pointer`,
+    color: `#fff`,
+    border: `1px solid rgb(102, 51, 153)`,
+    background: `#9158ca`,
+    fontWeight: 600,
+    fontSize: `0.875rem`,
+    height: `2rem`,
+    minWidth: `2rem`,
+    padding: `0.25rem 0.75rem`,
+  },
+}
 
-export default function FastRefreshOverlay(props) {
-  const [problems, setProblems] = useState([])
-  const [currentIndex, setCurrentIndex] = useState(0)
+function prettifyStack(errorInformation) {
+  console.log(errorInformation)
+  return ansiHTML(errorInformation.join(`\n`))
+}
 
-  useLayoutEffect(() => {
+export default class FastRefreshOverlay extends React.Component {
+  state = {
+    problems: [],
+    currentIndex: 0,
+  }
+
+  _isMounted = false
+
+  dismiss = () => {
+    // eslint-disable-next-line no-invalid-this
+    this.setState({ problems: [], currenIndex: 0 })
+  }
+
+  addProblems = problem => {
+    // eslint-disable-next-line no-invalid-this
+    this.setState(prevState => {
+      return { problems: [...prevState.problems, problem] }
+    })
+  }
+
+  componentDidMount() {
+    this._isMounted = true
+
     client.useCustomOverlay({
-      showProblems(_, data) {
-        setProblems(s =>
-          s.concat({
+      showProblems: (_, data) => {
+        if (this._isMounted) {
+          this.addProblems({
             type: `BUILD_ERROR`,
             error: data[0],
           })
-        )
+        }
       },
-      clear() {
-        setProblems([])
-        setCurrentIndex(0)
+      clear: () => {
+        if (this._isMounted) {
+          this.setState({ problems: [], currentIndex: 0 })
+        }
       },
     })
 
-    window.addEventListener(`error`, error => {
-      setProblems(s =>
-        s.concat({
-          type: `RUNTIME_ERROR`,
-          error,
-        })
-      )
-    })
+    // TODO: Maybe only do this? Investigate if third-party stuff should be visible
 
-    window.addEventListener(`unhandledrejection`, error => {
-      setProblems(s =>
-        s.concat({
-          type: `RUNTIME_ERROR`,
-          error: error.reason,
-        })
-      )
-    })
+    // window.addEventListener(`error`, error => {
+    //   setProblems(s =>
+    //     s.concat({
+    //       type: `RUNTIME_ERROR`,
+    //       error,
+    //     })
+    //   )
+    // })
 
-    return () => {
-      console.log(`unmounting????`)
-    }
-  }, [])
+    // TODO: Add e2e test case, e.g. useEffect in a component to fetch invalid URL
 
-  const dismiss = () => {
-    setProblems([])
-    setCurrentIndex(0)
+    // window.addEventListener(`unhandledrejection`, error => {
+    //   setProblems(s =>
+    //     s.concat({
+    //       type: `RUNTIME_ERROR`,
+    //       error: error.reason,
+    //     })
+    //   )
+    // })
   }
 
-  const problem = problems[currentIndex]
-  const hasBuildError = problem && problem.type === `BUILD_ERROR`
-
-  if (problem) {
-    console.log(problems)
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
-  return (
-    <ErrorBoundary
-      onError={error =>
-        setProblems(s => s.concat({ type: `BOUNDARY_ERROR`, error }))
+  componentDidCatch(error) {
+    this.setState(prevState => {
+      return {
+        problems: [...prevState.problems, { type: `RUNTIME_ERROR`, error }],
       }
-    >
-      <div style={{ filter: hasBuildError ? `blur(10px)` : `` }}>
-        {props.children}
-      </div>
+    })
+  }
 
-      <ErrorContext.Provider
-        value={{
-          problems,
-          currentIndex,
-          setCurrentIndex: index => setCurrentIndex(index),
-          dismiss,
-        }}
-      >
-        <BoundaryErrorOverlay />
-        <BuildErrorOverlay />
-        <RuntimeErrorOverlay />
-      </ErrorContext.Provider>
-    </ErrorBoundary>
-  )
+  render() {
+    const { problems, currentIndex } = this.state
+    const problem = problems[currentIndex]
+    const hasBuildError = problem?.type === `BUILD_ERROR`
+    const hasRuntimeError = problem?.type === `RUNTIME_ERROR`
+
+    console.log({ problem, currentIndex })
+
+    let header
+    let body
+
+    if (hasRuntimeError) {
+      header = (
+        <p style={{ fontSize: `22px`, marginBottom: 0 }}>
+          Unhandled Runtime Error
+        </p>
+      )
+      body = <div>{problem.error.stack}</div>
+    }
+
+    if (hasBuildError) {
+      const [file, cause, ...errorInformation] = problem.error.split(`\n`)
+
+      const open = () => {
+        window.fetch(
+          `/__open-stack-frame-in-editor?fileName=` +
+            window.encodeURIComponent(file) +
+            `&lineNumber=` +
+            window.encodeURIComponent(1) // TODO
+        )
+      }
+
+      header = (
+        <>
+          <div style={{ flex: 1 }}>
+            <p style={{ marginBottom: 0 }}>{cause}</p>
+            <a style={{ fontSize: `22px` }}>{file}</a>
+          </div>
+          <button onClick={open} style={styles.button}>
+            OPEN IN EDITOR
+          </button>
+        </>
+      )
+
+      body = (
+        <pre>
+          <code
+            dangerouslySetInnerHTML={{
+              __html: prettifyStack(errorInformation),
+            }}
+          />
+        </pre>
+      )
+    }
+
+    if (problem) {
+      return (
+        <>
+          <div style={{ filter: `blur(10px)` }}>{this.props.children}</div>
+          <Overlay header={header} body={body} dismiss={this.dismiss} />
+        </>
+      )
+    }
+
+    return this.props.children
+  }
 }

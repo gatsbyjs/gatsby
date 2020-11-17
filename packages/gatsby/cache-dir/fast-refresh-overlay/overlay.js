@@ -1,5 +1,4 @@
-import React, { useContext } from "react"
-import { ErrorContext } from "../"
+import React from "react"
 
 const styles = {
   background: {
@@ -12,13 +11,12 @@ const styles = {
     width: `100%`,
   },
   overlay: {
-    fontFamily: `monospace`,
+    fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     border: `5px`,
     background: `#ffffff`,
     position: `fixed`,
     width: `90%`,
     maxHeight: `90%`,
-    transform: `translateY(50%)`,
     top: 0,
     left: `5%`,
     boxShadow: `rgba(46, 41, 51, 0.08) 0px 1px 2px, rgba(71, 63, 79, 0.08) 0px 2px 4px`,
@@ -51,20 +49,10 @@ const styles = {
   },
 }
 
-const InfoMessage = `<small style="display: block; color: #ec1818; margin-bottom: 1rem">
-This error occurred during the build process and can only be
-dismissed by fixing the error.
-</small>`
-
 export default function Overlay({ header, body, dismiss }) {
-  const context = useContext(ErrorContext)
-  const count = context.errors.length
-  console.log({ count })
-
   return (
     <>
       <div style={styles.background} />
-
       <section style={styles.overlay}>
         <div style={styles.header}>
           {header}
@@ -93,7 +81,6 @@ export default function Overlay({ header, body, dismiss }) {
             </svg>
           </button>
         </div>
-        <InfoMessage />
         <div style={styles.errorInformation}>{body}</div>
       </section>
     </>
