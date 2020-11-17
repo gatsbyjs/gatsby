@@ -35,107 +35,54 @@ export default function UpdateImport({ types: t }) {
         const { source } = node
         if (source.value !== `gatsby-image`) {
           return
-        } else {
-          imageImportName = node.specifiers[0].local.name
-          const namedImport = t.importSpecifier(
-            t.identifier(`GatsbyImage`),
-            t.identifier(`GatsbyImage`)
-          )
-          node.specifiers = [namedImport]
         }
+        imageImportName = node.specifiers[0].local.name
+        const namedImport = t.importSpecifier(
+          t.identifier(`GatsbyImage`),
+          t.identifier(`GatsbyImage`)
+        )
+        node.specifiers = [namedImport]
       },
       JSXOpeningElement({ node }) {
         if (node.name.name !== imageImportName) {
           return
-        } else {
-          node.name.name = `GatsbyImage`
-          const [prop] = node.attributes.filter(
-            ({ name }) => name.name === `fluid` || name.name === `fixed`
+        }
+        node.name.name = `GatsbyImage`
+        const [prop] = node.attributes.filter(
+          ({ name }) => name.name === `fluid` || name.name === `fixed`
+        )
+        if (prop) {
+          prop.name = t.jsxIdentifier(`image`)
+          // this expression is equivalent to data.file.childImageSharp.gatsbyImageData
+          const newImageExpression = t.memberExpression(
+            t.memberExpression(
+              t.memberExpression(t.identifier(`data`), t.identifier(`file`)),
+              t.identifier(`childImageSharp`)
+            ),
+            t.identifier(`gatsbyImageData`)
           )
-          if (prop) {
-            prop.name = t.jsxIdentifier(`image`)
-            // this expression is equivalent to data.file.childImageSharp.gatsbyImageData
-            const newImageExpression = t.memberExpression(
-              t.memberExpression(
-                t.memberExpression(t.identifier(`data`), t.identifier(`file`)),
-                t.identifier(`childImageSharp`)
-              ),
-              t.identifier(`gatsbyImageData`)
-            )
-            prop.value = t.jsxExpressionContainer(newImageExpression)
-          }
+          prop.value = t.jsxExpressionContainer(newImageExpression)
         }
       },
       TaggedTemplateExpression({ node }) {
         if (node.tag.name !== `graphql`) {
           return
-        } else {
-          const query = node.quasi.quasis[0].value.raw
-          try {
-            const ast = graphql.parse(query)
-
-            graphql.visit(ast, {
-              SelectionSet(node) {
-                const [sharpField] = node.selections.filter(
-                  ({ name }) => name.value === `childImageSharp`
-                )
-
-                if (!sharpField) {
-                  return
-                }
-                const [
-                  fixedOrFluidField,
-                ] = sharpField.selectionSet.selections.filter(
-                  ({ name }) => name.value === `fixed` || name.value === `fluid`
-                )
-
-                if (!fixedOrFluidField) {
-                  return
-                }
-                let imageType = fixedOrFluidField.name.value
-                const fragments = fixedOrFluidField.selectionSet.selections
-
-                const isConstrained =
-                  fragments.filter(
-                    ({ name }) =>
-                      name.value ===
-                      `GatsbyImageSharpFluidLimitPresentationSize`
-                  ).length > 0
-                if (isConstrained) imageType = `constrained`
-
-                const mainFragment = fragments.filter(
-                  ({ name }) =>
-                    name.value !== `GatsbyImageSharpFluidLimitPresentationSize`
-                )
-
-                processArguments(fixedOrFluidField.arguments, mainFragment[0])
-
-                const typeArgument = {
-                  kind: `Argument`,
-                  name: {
-                    kind: `Name`,
-                    value: `layout`,
-                  },
-                  value: {
-                    kind: `EnumValue`,
-                    value: typeMapper[imageType],
-                  },
-                }
-
-                fixedOrFluidField.name.value = `gatsbyImageData`
-
-                fixedOrFluidField.arguments.push(typeArgument)
-                delete fixedOrFluidField.selectionSet
-              },
-            })
-
-            node.quasi.quasis[0].value.raw = graphql.print(ast)
-          } catch (err) {
-            throw new Error(
-              `GatsbyImageCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
-            )
-          }
         }
+        const query = node.quasi.quasis[0].value.raw
+
+        const transformedGraphQLQuery = processGraphQLQuery(query)
+        node.quasi.quasis[0].value.raw = graphql.print(transformedGraphQLQuery)
+      },
+      CallExpression({ node }) {
+        if (node.callee.name !== `graphql`) {
+          return
+        }
+        const query = node.arguments[0].quasis[0].value.raw
+
+        const transformedGraphQLQuery = processGraphQLQuery(query)
+        node.arguments[0].quasis[0].value.raw = graphql.print(
+          transformedGraphQLQuery
+        )
       },
     },
   }
@@ -163,4 +110,67 @@ function processArguments(queryArguments, fragment) {
     queryArguments.push(placeholderArgument)
   }
   return
+}
+
+function processGraphQLQuery(query) {
+  try {
+    const ast = graphql.parse(query)
+
+    graphql.visit(ast, {
+      SelectionSet(node) {
+        const [sharpField] = node.selections.filter(
+          ({ name }) => name.value === `childImageSharp`
+        )
+
+        if (!sharpField) {
+          return
+        }
+        const [fixedOrFluidField] = sharpField.selectionSet.selections.filter(
+          ({ name }) => name.value === `fixed` || name.value === `fluid`
+        )
+
+        if (!fixedOrFluidField) {
+          return
+        }
+        let imageType = fixedOrFluidField.name.value
+        const fragments = fixedOrFluidField.selectionSet.selections
+
+        const isConstrained =
+          fragments.filter(
+            ({ name }) =>
+              name.value === `GatsbyImageSharpFluidLimitPresentationSize`
+          ).length > 0
+        if (isConstrained) imageType = `constrained`
+
+        const mainFragment = fragments.filter(
+          ({ name }) =>
+            name.value !== `GatsbyImageSharpFluidLimitPresentationSize`
+        )
+
+        processArguments(fixedOrFluidField.arguments, mainFragment[0])
+
+        const typeArgument = {
+          kind: `Argument`,
+          name: {
+            kind: `Name`,
+            value: `layout`,
+          },
+          value: {
+            kind: `EnumValue`,
+            value: typeMapper[imageType],
+          },
+        }
+
+        fixedOrFluidField.name.value = `gatsbyImageData`
+
+        fixedOrFluidField.arguments.push(typeArgument)
+        delete fixedOrFluidField.selectionSet
+      },
+    })
+    return ast
+  } catch (err) {
+    throw new Error(
+      `GatsbyImageCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
+    )
+  }
 }
