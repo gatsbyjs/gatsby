@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@graphql-tools/links": "^6.2.5",
-    "@graphql-tools/utils": "^6.2.4",
-    "@graphql-tools/wrap": "^6.2.4",
+    "@graphql-tools/links": "^7.0.3",
+    "@graphql-tools/utils": "^7.0.2",
+    "@graphql-tools/wrap": "^7.0.1",
     "apollo-link": "1.2.14",
     "apollo-link-http": "^1.5.17",
     "dataloader": "^2.0.0",
