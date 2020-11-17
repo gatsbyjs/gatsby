@@ -238,7 +238,6 @@ DiskStore.prototype._lock = function _lock(filePath): Promise<void> {
     innerLock(resolve, reject, filePath, rid)
   ).then(() => {
     global.debugging.push(rid + ` lock(` + filePath + `) received`)
-    globalGatsbyCacheLock.set(filePath, Date.now())
   })
 }
 
@@ -271,6 +270,8 @@ function innerLock(resolve, reject, filePath, rid): void {
       }, 50)
     } else {
       global.debugging.push(rid + ` have lock for ` + filePath)
+      // set sync
+      globalGatsbyCacheLock.set(filePath, Date.now())
       resolve()
     }
   } catch (e) {
