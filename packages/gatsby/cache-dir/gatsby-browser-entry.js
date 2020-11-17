@@ -11,7 +11,7 @@ import Link, {
 } from "gatsby-link"
 import { useScrollRestoration } from "gatsby-react-router-scroll"
 import PageRenderer from "./public-page-renderer"
-import loader from "./loader"
+import loader, { getStaticQueryResults } from "./loader"
 
 const prefetchPathname = loader.enqueue
 
@@ -21,8 +21,10 @@ function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   let combinedStaticQueryData = staticQueryData
 
   if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+    // when we remove the flag, we don't need to combine them
+    // w/ changes @pieh made.
     combinedStaticQueryData = {
-      ...loader.getStaticQueryResults(),
+      ...getStaticQueryResults(),
       ...staticQueryData,
     }
   }
@@ -83,8 +85,10 @@ useStaticQuery(graphql\`${query}\`);
   let queryNotFound = false
   if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
     // Merge data loaded via socket.io & xhr
+    // when we remove the flag, we don't need to combine them
+    // w/ changes @pieh made.
     const staticQueryData = {
-      ...loader.getStaticQueryResults(),
+      ...getStaticQueryResults(),
       ...context,
     }
     if (staticQueryData[query]?.data) {
