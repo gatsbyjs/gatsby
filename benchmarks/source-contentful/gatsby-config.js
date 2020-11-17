@@ -27,6 +27,7 @@ module.exports = {
     {
       resolve: "gatsby-source-contentful",
       options: contentfulConfig,
+      pageLimit: 1000,
     },
   ],
 }

@@ -141,13 +141,6 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
                 
 `
   )
-  console.log(c.red(rule()))
-  console.log(
-    center(
-      c.red(`${c.symbols.warning} This is currently for testing purposes only`)
-    )
-  )
-  console.log(c.red(rule()))
 
   console.log(
     wrap(
