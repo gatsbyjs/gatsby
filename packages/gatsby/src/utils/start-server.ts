@@ -12,6 +12,9 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
+import telemetry from "gatsby-telemetry"
+import http from "http"
+import https from "https"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
@@ -20,10 +23,11 @@ import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import cors from "cors"
-import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
-import http from "http"
-import https from "https"
+import {
+  showExperimentNoticeAfterTimeout,
+  CancelExperimentNoticeCallbackOrUndefined,
+} from "../utils/show-experiment-notice"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
@@ -35,7 +39,7 @@ import {
 } from "./page-data"
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
-import { slash } from "gatsby-core-utils"
+import { slash, isCI } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
 import * as path from "path"
@@ -49,6 +53,7 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
+  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: JestWorker
   webpackWatching: IWebpackWatchingPauseResume
@@ -112,6 +117,30 @@ export async function startServer(
     id: `webpack-develop`,
   })
   webpackActivity.start()
+
+  const TWENTY_SECONDS = 20 * 1000
+  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
+  if (
+    process.env.gatsby_executing_command === `develop` &&
+    !process.env.GATSBY_EXPERIMENT_DEVJS_LAZY &&
+    !isCI()
+  ) {
+    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
+      `LAZY_DEVJS`,
+      report.stripIndent(`
+Your local development experience is about to get better, faster, and stronger!
+
+Your friendly Gatsby maintainers detected your site takes longer than ideal to bundle your JavaScript. We're working right now to improve this.
+
+If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with LAZY_DEVJS enabled.
+
+GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop
+
+Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.dev/lazy-devjs-umbrella
+      `),
+      TWENTY_SECONDS
+    )
+  }
 
   const devConfig = await webpackConfig(
     program,
@@ -363,6 +392,7 @@ export async function startServer(
     compiler,
     listener,
     webpackActivity,
+    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,
