@@ -30,7 +30,7 @@ export const trackCli = (eventType: string, args?: ITrackCliArgs): void => {
     method: `POST`,
     headers: {
       "content-type": `application/json`,
-      "user-agent": `Gatsby Telemetry`,
+      "user-agent": `create-gatsby:${gatsbyCliVersion}`,
     },
     body: JSON.stringify({
       eventType,
