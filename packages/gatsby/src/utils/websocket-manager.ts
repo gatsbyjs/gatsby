@@ -197,9 +197,9 @@ export class WebsocketManager {
           type: `dirtyQueries`,
           payload: { dirtyQueries },
         })
-      }
 
-      store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+        store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+      }
     }
   }
 }
