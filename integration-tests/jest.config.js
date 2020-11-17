@@ -15,5 +15,5 @@ module.exports = {
     `__tests__/fixtures`,
     `.cache`,
   ],
-  transform: { "^.+\\.js$": `<rootDir>/jest-transformer.js` },
+  transform: { "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js` },
 }
