@@ -1,4 +1,6 @@
 import graphql from "gatsby/graphql"
+import { parse, print } from "recast"
+import { transformFromAstSync, parseSync } from "@babel/core"
 
 const legacyFragments = [
   `GatsbyImageSharpFixed`,
@@ -27,13 +29,42 @@ const typeMapper = {
   constrained: `CONSTRAINED`,
 }
 
-export default function UpdateImport({ types: t }) {
-  let imageImportName = ``
+export function babelRecast(code) {
+  const transformedAst = parse(code, {
+    parser: {
+      parse: source =>
+        parseSync(source, {
+          plugins: [
+            // [`@babel/plugin-syntax-typescript`, { isTSX: true }],
+            `@babel/plugin-syntax-jsx`,
+          ],
+        }),
+    },
+  })
+
+  const options = {
+    cloneInputAst: false,
+    code: false,
+    ast: true,
+    plugins: [updateImport],
+  }
+
+  const { ast } = transformFromAstSync(transformedAst, code, options)
+
+  const result = print(ast).code
+  return result
+}
+
+export default function updateImport({ types: t }) {
+  let imageImportName = `GatsbyImage`
   return {
     visitor: {
-      ImportDeclaration: ({ node }) => {
-        const { source } = node
-        if (source.value !== `gatsby-image`) {
+      ImportDeclaration: path => {
+        const { node } = path
+        if (
+          node.source.value !== `gatsby-image` &&
+          node.source.value !== `gatsby-plugin-image/compat`
+        ) {
           return
         }
         imageImportName = node.specifiers[0].local.name
@@ -41,28 +72,43 @@ export default function UpdateImport({ types: t }) {
           t.identifier(`GatsbyImage`),
           t.identifier(`GatsbyImage`)
         )
-        node.specifiers = [namedImport]
+        const newImport = t.ImportDeclaration(
+          [namedImport],
+          t.stringLiteral(`gatsby-plugin-image`)
+        )
+        path.replaceWith(newImport)
       },
-      JSXOpeningElement({ node }) {
+      JSXOpeningElement(path) {
+        const { node } = path
         if (node.name.name !== imageImportName) {
           return
         }
-        node.name.name = `GatsbyImage`
-        const [prop] = node.attributes.filter(
-          ({ name }) => name.name === `fluid` || name.name === `fixed`
+        const componentName = t.jsxIdentifier(`GatsbyImage`)
+
+        const otherAttributes = node.attributes.filter(
+          ({ name }) => name.name !== `fluid` && name.name !== `fixed`
         )
-        if (prop) {
-          prop.name = t.jsxIdentifier(`image`)
-          // this expression is equivalent to data.file.childImageSharp.gatsbyImageData
-          const newImageExpression = t.memberExpression(
-            t.memberExpression(
-              t.memberExpression(t.identifier(`data`), t.identifier(`file`)),
-              t.identifier(`childImageSharp`)
-            ),
-            t.identifier(`gatsbyImageData`)
+
+        // this expression is equivalent to data.file.childImageSharp.gatsbyImageData
+        const newImageExpression = t.memberExpression(
+          t.memberExpression(
+            t.memberExpression(t.identifier(`data`), t.identifier(`file`)),
+            t.identifier(`childImageSharp`)
+          ),
+          t.identifier(`gatsbyImageData`)
+        )
+        // create new prop
+        const updatedAttribute = t.jsxAttribute(
+          t.jsxIdentifier(`image`),
+          t.jsxExpressionContainer(newImageExpression)
+        )
+        path.replaceWith(
+          t.jsxOpeningElement(
+            componentName,
+            [updatedAttribute, ...otherAttributes],
+            true
           )
-          prop.value = t.jsxExpressionContainer(newImageExpression)
-        }
+        )
       },
       TaggedTemplateExpression({ node }) {
         if (node.tag.name !== `graphql`) {

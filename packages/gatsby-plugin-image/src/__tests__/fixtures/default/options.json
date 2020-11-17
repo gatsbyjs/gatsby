@@ -1,5 +1,6 @@
 {
     "sourceType": "module",
-    "presets": ["@babel/preset-react"],
-    "plugins": ["gatsby-plugin-image/src/codemod.js"]
+    "plugins": ["gatsby-plugin-image/src/codemod.js",
+         "@babel/plugin-syntax-jsx"
+]
 }

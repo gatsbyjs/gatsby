@@ -2,7 +2,9 @@ import React from "react"
 import { graphl } from "gatsby"
 import Img from "gatsby-image"
 
-<Img fixed={data.file.childImageSharp.fixed} alt="headshot"/>
+<Img 
+fixed={data.file.childImageSharp.fixed}
+ alt="headshot"/>
 
 export const query = graphql`
   query {
