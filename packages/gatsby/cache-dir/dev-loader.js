@@ -77,6 +77,9 @@ class DevLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+      return Promise.resolve()
+    }
     return super.doPrefetch(pagePath).then(result => result.payload)
   }
 
