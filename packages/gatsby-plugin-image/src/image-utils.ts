@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-expressions */
 import { stripIndent } from "common-tags"
-import { reporter } from "create-gatsby/src/reporter"
 import { IGatsbyImageData } from "."
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
@@ -149,7 +148,7 @@ export function generateImageData(
     throw new Error(`generateImageSource must be a function`)
   }
 
-  const formats = new Set(args.formats || [`auto`, `webp`])
+  const formats = new Set<ImageFormat>(args.formats || [`auto`, `webp`])
 
   if (formats.size === 0 || formats.has(`auto`)) {
     formats.delete(`auto`)
