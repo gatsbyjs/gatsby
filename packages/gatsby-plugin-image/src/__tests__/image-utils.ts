@@ -63,7 +63,7 @@ describe(`the image data helper`, () => {
     const data = generateImageData({ ...args, generateImageSource })
     expect(data).toMatchInlineSnapshot(`
       Object {
-        "height": undefined,
+        "height": 300,
         "images": Object {
           "fallback": Object {
             "sizes": "400px",

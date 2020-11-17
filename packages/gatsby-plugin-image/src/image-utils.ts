@@ -223,7 +223,24 @@ export function generateImageData(
     }
   })
 
-  return { images: result, layout, width, height }
+  const imageProps: IGatsbyImageData = { images: result, layout }
+  switch (layout) {
+    case `fixed`:
+      imageProps.width = imageSizes.presentationWidth
+      imageProps.height = imageSizes.presentationHeight
+      break
+
+    case `fluid`:
+      imageProps.width = 1
+      imageProps.height = 1 / imageSizes.aspectRatio
+      break
+
+    case `constrained`:
+      imageProps.width = args.maxWidth || imageSizes.presentationWidth || 1
+      imageProps.height = (imageProps.width || 1) / imageSizes.aspectRatio
+  }
+
+  return imageProps
 }
 
 const dedupeAndSortDensities = (values: Array<number>): Array<number> =>
