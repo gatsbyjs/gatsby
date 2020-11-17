@@ -235,7 +235,7 @@ DiskStore.prototype._lock = function _lock(filePath): Promise<void> {
   const rid = ++lockRid
   global.debugging.push(rid + ` lock(` + filePath + `) requested`)
   return new Promise((resolve, reject) =>
-    innerLock(resolve, reject, filePath)
+    innerLock(resolve, reject, filePath, rid)
   ).then(() => {
     global.debugging.push(rid + ` lock(` + filePath + `) received`)
     globalGatsbyCacheLock.set(filePath, Date.now())
