@@ -23,6 +23,7 @@ export interface ITrackCliArgs {
   valueString?: string
   exitCode?: number
   valueStringArray?: Array<string>
+  siteHash?: string
 }
 
 export const trackCli = (eventType: string, args?: ITrackCliArgs): void => {
