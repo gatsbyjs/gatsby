@@ -291,7 +291,7 @@ export const endActivity = ({
   if (
     activity.id === `webpack-develop` &&
     !process.env.GATSBY_EXPERIMENT_DEVJS_LAZY &&
-    durationMS > 20
+    durationS > 3
   ) {
     console.log(activity, durationS)
     console.log(actionsToEmit)
