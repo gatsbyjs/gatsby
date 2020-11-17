@@ -38,6 +38,8 @@ import reporter from "gatsby-cli/lib/reporter"
 // we currently don't support two concurrent builds at the same time anyways.
 const globalGatsbyCacheLock = new Map()
 
+global.debugging = []
+
 /**
  * construction of the disk storage
  * @param {object} [args] options of disk store
@@ -221,6 +223,8 @@ DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
   }
 })
 
+let lockRid = 0
+
 /**
  * locks a file so other forks that want to use the same file have to wait
  * @param {string} filePath
@@ -228,17 +232,30 @@ DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
  * @private
  */
 DiskStore.prototype._lock = function _lock(filePath): Promise<void> {
+  const rid = ++lockRid
+  global.debugging.push(rid + ` lock(` + filePath + `) requested`)
   return new Promise((resolve, reject) =>
     innerLock(resolve, reject, filePath)
   ).then(() => {
+    global.debugging.push(rid + ` lock(` + filePath + `) received`)
     globalGatsbyCacheLock.set(filePath, Date.now())
   })
 }
 
-function innerLock(resolve, reject, filePath): void {
+function innerLock(resolve, reject, filePath, rid): void {
   try {
     let lockTime = globalGatsbyCacheLock.get(filePath) ?? 0
+    global.debugging.push(
+      rid +
+        ` lock time for ` +
+        filePath +
+        ` is ` +
+        lockTime +
+        `, cond: ` +
+        (lockTime > 0 && Date.now() - lockTime > 10 * 1000)
+    )
     if (lockTime > 0 && Date.now() - lockTime > 10 * 1000) {
+      global.debugging.push(rid + ` lock timeout for ` + filePath)
       reporter.verbose(
         `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later.`
       )
@@ -247,10 +264,12 @@ function innerLock(resolve, reject, filePath): void {
     }
 
     if (lockTime > 0) {
+      global.debugging.push(rid + ` waiting 50ms for ` + filePath)
       setTimeout(() => {
-        innerLock(resolve, reject, filePath)
+        innerLock(resolve, reject, filePath, rid)
       }, 50)
     } else {
+      global.debugging.push(rid + ` have lock for ` + filePath)
       resolve()
     }
   } catch (e) {
@@ -266,6 +285,7 @@ function innerLock(resolve, reject, filePath): void {
  * @private
  */
 DiskStore.prototype._unlock = function _unlock(filePath): Promise<void> {
+  global.debugging.push(`lock(` + filePath + `) released`)
   globalGatsbyCacheLock.delete(filePath)
 }
 

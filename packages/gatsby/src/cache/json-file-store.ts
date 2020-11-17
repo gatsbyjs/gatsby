@@ -28,6 +28,7 @@ const fs = require(`fs`)
 const zlib = require(`zlib`)
 
 exports.write = async function (path, data, options): Promise<void> {
+  global.debugging.push(`writing to ` + path)
   const externalBuffers = []
   let dataString = JSON.stringify(data, function replacerFunction(k, value) {
     //Buffers searilize to {data: [...], type: "Buffer"}
@@ -84,6 +85,8 @@ exports.write = async function (path, data, options): Promise<void> {
 }
 
 exports.read = async function (path, options): Promise<string> {
+  global.debugging.push(`reading from ` + path)
+
   let zipExtension = ``
   if (options.zip) {
     zipExtension = `.gz`
@@ -137,7 +140,9 @@ exports.read = async function (path, options): Promise<string> {
       "json-file-store failed to JSON.parse this string: `" +
         dataString.replace(/\n/g, `⏎`) +
         "`\n" +
-        e.message
+        e.message +
+        `\ndebugging:` +
+        global.debugging.map(s => `- ` + s).join(`\n`)
     )
   }
 
