@@ -29,16 +29,24 @@ const typeMapper = {
   constrained: `CONSTRAINED`,
 }
 
-export function babelRecast(code) {
+function parsing(source, relativeFileName) {
+  const test = parseSync(source, {
+    plugins: [`@babel/plugin-syntax-jsx`],
+    overrides: [
+      {
+        test: [`**/*.ts`, `**/*.tsx`],
+        plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
+      },
+    ],
+    filename: relativeFileName,
+  })
+  return test
+}
+
+export function babelRecast(code, relativeFileName) {
   const transformedAst = parse(code, {
     parser: {
-      parse: source =>
-        parseSync(source, {
-          plugins: [
-            // [`@babel/plugin-syntax-typescript`, { isTSX: true }],
-            `@babel/plugin-syntax-jsx`,
-          ],
-        }),
+      parse: source => parsing(source, relativeFileName),
     },
   })
 
