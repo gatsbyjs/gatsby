@@ -162,11 +162,12 @@ export async function initialize({
 
   activity.end()
 
-  if (
-    process.env.gatsby_executing_command === `develop` &&
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-  ) {
-    if (isCI()) {
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.gatsby_executing_command !== `develop`) {
+      // we don't want to ever have this flag enabled for anything than develop
+      // in case someone have this env var globally set
+      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = undefined
+    } else if (isCI()) {
       process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = undefined
       reporter.warn(
         `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
