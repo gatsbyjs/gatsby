@@ -286,6 +286,26 @@ export const endActivity = ({
     }
   }
 
+  // Show message if they haven't already enabled the feature and the js build
+  // duration is greater than 20 seconds (much longer than normal.
+  if (
+    activity.id === `webpack-develop` &&
+    !process.env.GATSBY_EXPERIMENT_DEVJS_LAZY &&
+    durationMS > 20
+  ) {
+    console.log(activity, durationS)
+    console.log(actionsToEmit)
+    if (durationS > 3) {
+      console.log(`===================
+Try out this
+
+GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop
+
+Please let us know how it goes (good or bad) @ the umbrella issue: https://github.com/gatsbyjs/gatsby/issue/23332
+===================`)
+    }
+  }
+
   const globalStatus = getGlobalStatus(id, status)
   actionsToEmit.push(setStatus(globalStatus))
 
