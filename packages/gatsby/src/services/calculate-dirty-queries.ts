@@ -27,17 +27,17 @@ export async function calculateDirtyQueries({
     // we want to make sure we run queries for pages that user currently
     // view in the browser
     if (websocketManager?.activePaths) {
-      websocketManager.activePaths.forEach(
-        pagePathFilter.add.bind(pagePathFilter)
-      )
+      for (const activePath of websocketManager.activePaths) {
+        pagePathFilter.add(activePath)
+      }
     }
 
     // we also want to make sure we include pages that were requested from
     // via `page-data` fetches or websocket requests
     if (currentlyHandledPendingQueryRuns) {
-      currentlyHandledPendingQueryRuns.forEach(
-        pagePathFilter.add.bind(pagePathFilter)
-      )
+      for (const pendingQuery of currentlyHandledPendingQueryRuns) {
+        pagePathFilter.add(pendingQuery)
+      }
     }
 
     // static queries are also not on demand
