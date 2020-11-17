@@ -266,6 +266,7 @@ function innerLock(resolve, reject, filePath, rid): void {
     if (lockTime > 0) {
       global.debugging.push(rid + ` waiting 50ms for ` + filePath)
       setTimeout(() => {
+        global.debugging.push(rid + ` trying again for ` + filePath)
         innerLock(resolve, reject, filePath, rid)
       }, 50)
     } else {
