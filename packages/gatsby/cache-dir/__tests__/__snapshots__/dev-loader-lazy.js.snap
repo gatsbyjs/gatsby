@@ -18,3 +18,5 @@ Object {
   "staticQueryResults": Object {},
 }
 `;
+
+exports[`Dev loader loadPage should return an error when component cannot be loaded 1`] = `"Loading the page component chunky timed out after 10 seconds"`;

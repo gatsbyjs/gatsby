@@ -390,6 +390,31 @@ describe(`Dev loader`, () => {
       })
     })
 
+    it(`should return an error when component cannot be loaded`, async () => {
+      jest.setTimeout(10000)
+      try {
+        const syncRequires = createSyncRequires({
+          chunk: `does-not-exist`,
+        })
+        const devLoader = new DevLoader(syncRequires, [])
+        const pageData = {
+          path: `/mypage/`,
+          componentChunkName: `chunky`,
+          staticQueryHashes: [],
+        }
+        devLoader.loadPageDataJson = jest.fn(() =>
+          Promise.resolve({
+            payload: pageData,
+            status: `success`,
+          })
+        )
+
+        await devLoader.loadPage(`/mypage/`)
+      } catch (e) {
+        expect(e).toMatchSnapshot()
+      }
+    })
+
     it(`should return an error pageData contains an error`, async () => {
       const syncRequires = createSyncRequires({
         chunk: `instance`,
