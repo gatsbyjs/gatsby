@@ -16,6 +16,8 @@ export const FLAG_DIRTY_DATA = 0b0100
 
 export const FLAG_ERROR_EXTRACTION = 0b0001
 
+export const FLAG_RUNNING_INFLIGHT = 0b0001
+
 const initialState = (): IGatsbyState["queries"] => {
   return {
     byNode: new Map<NodeId, Set<QueryId>>(),
@@ -30,6 +32,7 @@ const initialState = (): IGatsbyState["queries"] => {
 const initialQueryState = (): IQueryState => {
   return {
     dirty: -1, // unknown, must be set right after init
+    running: 0,
   }
 }
 
@@ -153,6 +156,10 @@ export function queriesReducer(
       const { path } = action.payload
       state = clearNodeDependencies(state, path)
       state = clearConnectionDependencies(state, path)
+      const query = state.trackedQueries.get(path)
+      if (query) {
+        query.running = setFlag(query.running, FLAG_RUNNING_INFLIGHT)
+      }
       return state
     }
     case `CREATE_NODE`:
@@ -183,6 +190,16 @@ export function queriesReducer(
       const { path } = action.payload
       const query = registerQuery(state, path)
       query.dirty = 0
+      query.running = 0 // TODO: also
+      return state
+    }
+    case `SET_PROGRAM_STATUS`: {
+      if (action.payload === `BOOTSTRAP_FINISHED`) {
+        // Reset the running state (as it could've been persisted)
+        for (const [, query] of state.trackedQueries) {
+          query.running = 0
+        }
+      }
       return state
     }
     default:
