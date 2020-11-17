@@ -72,7 +72,7 @@ export default function updateImport({ types: t }) {
           t.identifier(`GatsbyImage`),
           t.identifier(`GatsbyImage`)
         )
-        const newImport = t.ImportDeclaration(
+        const newImport = t.importDeclaration(
           [namedImport],
           t.stringLiteral(`gatsby-plugin-image`)
         )
