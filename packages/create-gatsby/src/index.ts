@@ -17,6 +17,8 @@ import crypto from "crypto"
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
 
+const md5 = (str: string): string =>
+  crypto.createHash(`md5`).update(str).digest(`hex`)
 /**
  * Hide string on windows (for emojis)
  */
@@ -329,7 +331,8 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
 
-  trackCli(`CREATE_GATSBY_SUCCESS`)
+  const siteHash = md5(path.resolve(data.project))
+  trackCli(`CREATE_GATSBY_SUCCESS`, { siteHash })
 }
 
 process.on(`exit`, exitCode => {
