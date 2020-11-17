@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.10.4",
-    "@babel/core": "^7.11.6",
-    "@babel/parser": "^7.11.5",
-    "@babel/runtime": "^7.11.2",
-    "@babel/traverse": "^7.11.5",
-    "@babel/types": "^7.11.5",
+    "@babel/core": "^7.12.3",
+    "@babel/parser": "^7.12.5",
+    "@babel/runtime": "^7.12.5",
+    "@babel/traverse": "^7.12.5",
+    "@babel/types": "^7.12.6",
     "@hapi/joi": "^15.1.1",
     "@mikaelkristiansson/domready": "^1.0.10",
     "@nodelib/fs.walk": "^1.2.4",
@@ -159,8 +159,8 @@
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/runtime": "^7.11.2",
+    "@babel/cli": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@types/hapi__joi": "^16.0.12",
     "@types/micromatch": "^4.0.1",
     "@types/normalize-path": "^3.0.0",

@@ -17,7 +17,7 @@
   ],
   "devDependencies": {
     "@ascorbic/worker-threads-shim": "^1.0.0",
-    "@babel/runtime": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@types/configstore": "^4.0.0",
     "@types/fs-extra": "^9.0.2",
     "@types/node": "^14.14.5",
@@ -25,7 +25,7 @@
     "common-tags": "^1.8.0",
     "enquirer": "^2.3.6",
     "eslint": "^7.12.1",
-    "execa": "^4.0.3",
+    "execa": "^4.1.0",
     "fs-extra": "^9.0.1",
     "gatsby-plugin-utils": "^0.4.0-next.0",
     "joi": "^17.2.1",
