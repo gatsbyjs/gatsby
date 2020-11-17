@@ -5,6 +5,8 @@ import React from "react"
 import { graphl } from "gatsby"
 import Img from "gatsby-image"
 
+
+// are comments happy?
 <Img 
 fixed={data.file.childImageSharp.fixed}
 alt="headshot"/>
@@ -37,6 +39,8 @@ import React from "react"
 import { graphl } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image";
 
+
+// are comments happy?
 <GatsbyImage image={data.file.childImageSharp.gatsbyImageData} alt="headshot" />
 `
     )
