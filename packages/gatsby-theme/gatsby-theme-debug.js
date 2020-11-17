@@ -2,7 +2,7 @@
 const path = require('path')
 const globby = require('globby')
 const { sortBy, uniq } = require("lodash");
-const loadThemes = require("gatsby/dist/bootstrap/load-themes");
+const { loadThemes } = require("gatsby/dist/bootstrap/load-themes");
 const { distance: levenshtein } = require('fastest-levenshtein')
 
 let errorsFound = []
