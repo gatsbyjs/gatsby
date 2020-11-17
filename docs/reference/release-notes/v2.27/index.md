@@ -22,6 +22,7 @@ Sneak peek to next releases:
 
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop)
 - [Documentation Reorganization](#documentation-reorganization)
+- [Experimental: SSR in develop](#experimental-ssr-in-develop)
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
@@ -69,6 +70,15 @@ but it has a steep learning curve. We want to make it easier to get started with
 And that means having documentation that helps y’all find the information you need when you need it.
 
 [Announcement and discussion](https://github.com/gatsbyjs/gatsby/discussions/27856).
+
+## Experimental: SSR in Development
+One of the least enjoyable bugs to encounter in Gatsby is when your build fails due to code trying to reference `window` or `document` or other globals that are only accessible in the browser and not in node.js when doing SSR.
+
+Currently the only way to debug this is to change some code and rebuild and then repeat until the problem is solved. This is a very slow way to debug. Worst, these sorts of bugs are often only encountered after a long development period. It's no fun to push code you're proud of to CI only to discover it's broken.
+
+With this coming feature, we'll SSR pages during development when do a full refresh of a page (navigating between pages will still only do a client-side render). This will help you both discover build errors earlier _and_ fix them faster.
+
+Try it out immediately by running `GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop`. Join in the discussion in its umbrella issue at https://github.com/gatsbyjs/gatsby/issues/28138
 
 ## Contributors
 
