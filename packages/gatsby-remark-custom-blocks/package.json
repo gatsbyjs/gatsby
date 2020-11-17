@@ -16,7 +16,7 @@
     "babel-preset-gatsby-package": "^0.7.0-next.0",
     "cross-env": "^7.0.2",
     "rimraf": "^3.0.2",
-    "unist-util-find": "^1.0.1"
+    "unist-util-find": "^1.0.2"
   },
   "files": [
     "index.js",
