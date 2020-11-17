@@ -271,6 +271,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/artifacts
 
+  integration_tests_ssr:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/ssr
+
   e2e_tests_path-prefix:
     <<: *e2e-executor
     environment:
@@ -581,6 +587,8 @@ workflows:
       - integration_tests_structured_logging:
           <<: *e2e-test-workflow
       - integration_tests_artifacts:
+          <<: *e2e-test-workflow
+      - integration_tests_ssr:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:

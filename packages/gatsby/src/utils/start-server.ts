@@ -1,5 +1,3 @@
-import chokidar from "chokidar"
-
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware, {
   WebpackDevMiddleware,
@@ -12,17 +10,17 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
-import telemetry from "gatsby-telemetry"
 import http from "http"
 import https from "https"
+import cors from "cors"
+import telemetry from "gatsby-telemetry"
+import launchEditor from "react-dev-utils/launchEditor"
+import { isCI } from "gatsby-core-utils"
 
+import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
-import { buildHTML } from "../commands/build-html"
-import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
-import launchEditor from "react-dev-utils/launchEditor"
-import cors from "cors"
 import * as WorkerPool from "../utils/worker/pool"
 import {
   showExperimentNoticeAfterTimeout,
@@ -39,7 +37,6 @@ import {
 } from "./page-data"
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
-import { slash, isCI } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
 import * as path from "path"
@@ -78,10 +75,16 @@ export async function startServer(
   app: Express,
   workerPool: JestWorker = WorkerPool.create()
 ): Promise<IServer> {
-  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
-  indexHTMLActivity.start()
   const directory = program.directory
+
+  const webpackActivity = report.activityTimer(`Building development bundle`, {
+    id: `webpack-develop`,
+  })
+  webpackActivity.start()
+
+  // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
+  const { buildHTML } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
       await buildHTML({
@@ -99,24 +102,26 @@ export async function startServer(
       report.panic(
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
-
           See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
         err
       )
     }
   }
+  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
 
-  await createIndexHtml(indexHTMLActivity)
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const { buildRenderer } = require(`../commands/build-html`)
+    await buildRenderer(program, Stage.DevelopHTML)
+    const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
+    initDevWorkerPool()
+  } else {
+    indexHTMLActivity.start()
 
-  indexHTMLActivity.end()
+    await createIndexHtml(indexHTMLActivity)
 
-  // report.stateUpdate(`webpack`, `IN_PROGRESS`)
-
-  const webpackActivity = report.activityTimer(`Building development bundle`, {
-    id: `webpack-develop`,
-  })
-  webpackActivity.start()
+    indexHTMLActivity.end()
+  }
 
   const TWENTY_SECONDS = 20 * 1000
   let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
@@ -358,12 +363,46 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
   })
 
   // Render an HTML page and serve it.
-  app.use((_, res) => {
-    res.sendFile(directoryPath(`public/index.html`), err => {
-      if (err) {
-        res.status(500).end()
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    // Setup HTML route.
+    const { route } = require(`./dev-ssr/develop-html-route`)
+    route({ app, program, store })
+  }
+
+  app.use(async (req, res) => {
+    const fullUrl = req.protocol + `://` + req.get(`host`) + req.originalUrl
+    // This isn't used in development.
+    if (fullUrl.endsWith(`app-data.json`)) {
+      res.json({ webpackCompilationHash: `123` })
+      // If this gets here, it's a non-existant file so just send back 404.
+    } else if (fullUrl.endsWith(`.json`)) {
+      res.json({}).status(404)
+    } else {
+      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        try {
+          const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
+          const renderResponse = await renderDevHTML({
+            path: `/dev-404-page/`,
+            // Let renderDevHTML figure it out.
+            page: undefined,
+            store,
+            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            directory: program.directory,
+          })
+          const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
+          res.status(status).send(renderResponse)
+        } catch (e) {
+          report.error(e)
+          res.send(e).status(500)
+        }
+      } else {
+        res.sendFile(directoryPath(`public/index.html`), err => {
+          if (err) {
+            res.status(500).end()
+          }
+        })
       }
-    })
+    }
   })
 
   /**
@@ -377,16 +416,20 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
   // in http proxy in `develop-proxy`
   const listener = server.listen(program.port, `localhost`)
 
-  // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-    slash(directoryPath(path))
-  )
+  if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const chokidar = require(`chokidar`)
+    const { slash } = require(`gatsby-core-utils`)
+    // Register watcher that rebuilds index.html every time html.js changes.
+    const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+      slash(directoryPath(path))
+    )
 
-  chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml(indexHTMLActivity)
-    // eslint-disable-next-line no-unused-expressions
-    socket?.to(`clients`).emit(`reload`)
-  })
+    chokidar.watch(watchGlobs).on(`change`, async () => {
+      await createIndexHtml(indexHTMLActivity)
+      // eslint-disable-next-line no-unused-expressions
+      socket?.to(`clients`).emit(`reload`)
+    })
+  }
 
   return {
     compiler,

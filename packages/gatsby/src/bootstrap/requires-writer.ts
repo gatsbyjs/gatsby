@@ -171,7 +171,6 @@ const createHash = (
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
@@ -181,7 +180,6 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // console.log(`on requiresWriter END1`)
     return false
   }
 
@@ -210,6 +208,10 @@ const preferDefault = m => (m && m.default) || m
     )
     .join(`,\n`)}
 }\n\n`
+
+  // webpack only seems to trigger re-renders once per virtual
+  // file so we need a seperate one for each webpack instance.
+  writeModule(`$virtual/ssr-sync-requires`, syncRequires)
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available

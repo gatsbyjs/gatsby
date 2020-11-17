@@ -4,6 +4,7 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
 import { Compiler } from "webpack"
 import { isEqual } from "lodash"
+import { Stage } from "../commands/types"
 
 import {
   reportWebpackWarnings,
@@ -121,7 +122,7 @@ export async function startWebpackServer({
 
         if (!isSuccessful) {
           const errors = structureWebpackErrors(
-            `develop`,
+            Stage.Develop,
             stats.compilation.errors
           )
           webpackActivity.panicOnBuild(errors)

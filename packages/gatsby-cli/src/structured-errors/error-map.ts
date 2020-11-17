@@ -539,6 +539,20 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
   },
+  "11614": {
+    text: ({
+      path,
+      filePath,
+      line,
+      column,
+    }): string => `The path "${path}" errored during SSR.
+
+    Edit its component ${filePath}${
+      line ? `:${line}:${column}` : ``
+    } to resolve the error.`,
+    level: Level.WARNING,
+    docsUrl: `https://gatsby.dev/debug-html`,
+  },
   // Watchdog
   "11701": {
     text: (context): string =>
