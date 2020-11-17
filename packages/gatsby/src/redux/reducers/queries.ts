@@ -116,7 +116,7 @@ export function queriesReducer(
           const query = state.trackedQueries.get(queryId)
           if (query) {
             query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
-            state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
+            state = trackDirtyQuery(state, queryId)
           }
         }
         component.query = query
