@@ -135,19 +135,15 @@ function processGraphQLQuery(query) {
         let imageType = fixedOrFluidField.name.value
         const fragments = fixedOrFluidField.selectionSet.selections
 
-        const isConstrained =
-          fragments.filter(
-            ({ name }) =>
-              name.value === `GatsbyImageSharpFluidLimitPresentationSize`
-          ).length > 0
-        if (isConstrained) imageType = `constrained`
-
-        const mainFragment = fragments.filter(
+        const presentationSizeFragment = fragments.find(
           ({ name }) =>
-            name.value !== `GatsbyImageSharpFluidLimitPresentationSize`
+            name.value === `GatsbyImageSharpFluidLimitPresentationSize`
         )
-
-        processArguments(fixedOrFluidField.arguments, mainFragment[0])
+        if (presentationSizeFragment) {
+          imageType = `constrained`
+          delete fragments[presentationSizeFragment]
+        }
+        processArguments(fixedOrFluidField.arguments, fragments[0])
 
         const typeArgument = {
           kind: `Argument`,
