@@ -26,7 +26,7 @@ export function showExperimentNoticeAfterTimeout(
   }
 
   const noticeTimeout = setTimeout(() => {
-    reporter.info(noticeText)
+    reporter.info(`\n\n${noticeText}\n\n`)
 
     getConfigStore().set(configStoreKey, Date.now())
   }, showNoticeAfterMs)
