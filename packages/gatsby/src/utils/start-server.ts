@@ -15,7 +15,7 @@ import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
-import { slash, isCI } from "gatsby-core-utils"
+import { isCI } from "gatsby-core-utils"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
