@@ -36,7 +36,7 @@ if (
   process.env.gatsby_executing_command === `develop` &&
   !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
   !isCI() &&
-  sampleSiteForExperiment(`DEV_SSR`, 100)
+  sampleSiteForExperiment(`DEV_SSR`, 1)
 ) {
   showExperimentNoticeAfterTimeout(
     `devSSR`,
