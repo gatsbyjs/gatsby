@@ -126,7 +126,7 @@ export async function startServer(
     // Listen for the client marking a page as visited (meaning we need to
     // compile its page component.
     const chunkCalls = new Set()
-    app.post(`/___client-page-visited`, (req, res, next) => {
+    app.post(`/___client-page-visited`, bodyParser.json(), (req, res, next) => {
       if (req.body?.chunkName) {
         // Ignore all but the first POST.
         if (!chunkCalls.has(req.body.chunkName)) {
