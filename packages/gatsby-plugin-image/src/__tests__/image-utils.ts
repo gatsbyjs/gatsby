@@ -54,35 +54,19 @@ describe(`the image data helper`, () => {
       format
     ): IImage => {
       return {
-        src: `https://example.com/${file}?width=${width}&height=${height}`,
+        src: `https://example.com/${file}/${width}/${height}/image.${format}`,
         width,
         height,
         format,
       }
     }
     const data = generateImageData({ ...args, generateImageSource })
-    expect(data).toMatchInlineSnapshot(`
-      Object {
-        "height": 300,
-        "images": Object {
-          "fallback": Object {
-            "sizes": "400px",
-            "src": "https://example.com/afile.jpg?width=400&height=300",
-            "srcSet": "https://example.com/afile.jpg?width=400&height=300 400w,
-      https://example.com/afile.jpg?width=800&height=600 800w",
-          },
-          "sources": Array [
-            Object {
-              "sizes": "400px",
-              "srcSet": "https://example.com/afile.jpg?width=400&height=300 400w,
-      https://example.com/afile.jpg?width=800&height=600 800w",
-              "type": "image/webp",
-            },
-          ],
-        },
-        "layout": "fixed",
-        "width": 400,
-      }
-    `)
+    expect(data?.images?.fallback?.src).toEqual(
+      `https://example.com/afile.jpg/400/300/image.jpg`
+    )
+
+    expect(data.images?.sources?.[0].srcSet).toEqual(
+      `https://example.com/afile.jpg/400/300/image.webp 400w,\nhttps://example.com/afile.jpg/800/600/image.webp 800w`
+    )
   })
 })
