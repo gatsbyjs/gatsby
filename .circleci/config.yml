@@ -117,6 +117,23 @@ aliases:
       - notify-status:
           condition: << parameters.nightly >>
 
+  e2e_tests_development_runtime_lazy_alias:
+    &e2e_tests_development_runtime_lazy_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: ihj5mz
+      CYPRESS_RECORD_KEY: 01acdce8-75bd-4280-9839-6cb215b2c84b
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/lazy-development-runtime
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
   e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
     <<: *e2e-executor
     parameters:
@@ -331,6 +348,13 @@ jobs:
 
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_lazy_devjs:
+    <<: *e2e_tests_development_runtime_alias
+    environment:
+      GATSBY_EXPERIMENT_LAZY_DEVJS: true
+      CYPRESS_PROJECT_ID: ihj5mz
+      CYPRESS_RECORD_KEY: 01acdce8-75bd-4280-9839-6cb215b2c84b
 
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
@@ -604,6 +628,8 @@ workflows:
       - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime_lazy_devjs:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow

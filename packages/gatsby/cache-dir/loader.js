@@ -141,6 +141,36 @@ export class BaseLoader {
             throw new Error(`not a valid pageData response`)
           }
 
+          // In development, check if the page is in the bundle yet.
+          if (
+            process.env.NODE_ENV === `development` &&
+            process.env.GATSBY_EXPERIMENT_LAZY_DEVJS
+          ) {
+            const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
+              .default
+            if (process.env.NODE_ENV !== `test`) {
+              delete require.cache[
+                require.resolve(`$virtual/lazy-client-sync-requires`)
+              ]
+            }
+
+            const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
+            if (
+              lazyRequires.notVisitedPageComponents[
+                jsonPayload.componentChunkName
+              ]
+            ) {
+              // Tell the server the user wants to visit this page
+              // to trigger it including the page component's code in the
+              // commons bundles.
+              ensureComponentInBundle(jsonPayload.componentChunkName)
+
+              return new Promise(resolve =>
+                setTimeout(() => resolve(this.fetchPageDataJson(loadObj)), 100)
+              )
+            }
+          }
+
           return Object.assign(loadObj, {
             status: PageResourceStatus.Success,
             payload: jsonPayload,

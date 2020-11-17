@@ -80,6 +80,7 @@ export async function writePageData(
     `json`,
     `${pagePath.replace(/\//g, `_`)}.json`
   )
+
   const outputFilePath = getFilePath(publicDir, pagePath)
   const result = await fs.readJSON(inputFilePath)
   const body = {
@@ -89,6 +90,7 @@ export async function writePageData(
     result,
     staticQueryHashes,
   }
+
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
