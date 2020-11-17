@@ -7,14 +7,14 @@ const gatsbyCliVersion = require(`../package.json`).version
 const analyticsApi =
   process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
 
-let machineId = store.get(`telemetry.machineId`)
 const getMachineId = (): string => {
-  if (typeof machineId === `string`) {
-    return machineId
+  let machineId = store.get(`telemetry.machineId`)
+
+  if (typeof machineId !== `string`) {
+    machineId = uuidv4()
+    store.set(`telemetry.machineId`, machineId)
   }
 
-  machineId = uuidv4()
-  store.set(`telemetry.machineId`, machineId)
   return machineId
 }
 
