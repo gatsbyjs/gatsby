@@ -220,7 +220,10 @@ export class BaseLoader {
   loadPageDataJson(rawPath) {
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
-      return Promise.resolve(this.pageDataDb.get(pagePath))
+      const pageData = this.pageDataDb.get(pagePath)
+      if (!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND || !pageData.stale) {
+        return Promise.resolve(pageData)
+      }
     }
 
     return this.fetchPageDataJson({ pagePath }).then(pageData => {
@@ -239,7 +242,12 @@ export class BaseLoader {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
-      return Promise.resolve(page.payload)
+      if (
+        !process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND ||
+        !page.payload.stale
+      ) {
+        return Promise.resolve(page.payload)
+      }
     }
 
     if (this.inFlightDb.has(pagePath)) {

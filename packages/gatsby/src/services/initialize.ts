@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
+import { slash, isCI } from "gatsby-core-utils"
 import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
@@ -161,6 +161,22 @@ export async function initialize({
   store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
+
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.gatsby_executing_command !== `develop`) {
+      // we don't want to ever have this flag enabled for anything than develop
+      // in case someone have this env var globally set
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    } else if (isCI()) {
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      reporter.warn(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
+      )
+    } else {
+      reporter.info(`Using experimental Query on Demand feature`)
+      telemetry.trackFeatureIsUsed(`QueryOnDemand`)
+    }
+  }
 
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))

@@ -18,36 +18,32 @@ Some examples of web font services include [Google Fonts](https://fonts.google.c
 
 ### Using Google Fonts
 
-The fastest way to get started using Google Fonts is by choosing a font from [the typefaces project](https://github.com/KyleAMathews/typefaces). This example shows how you can add Open Sans to your project.
+The fastest way to get started using Google Fonts is by choosing a font from [Fontsource](https://github.com/fontsource/fontsource).
 
-First, install the typeface package with npm:
+This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-```bash
-npm install --save typeface-open-sans
-```
+1. Run `npm install fontsource-open-sans` to download the necessary package files.
 
-Or with yarn:
-
-```bash
-yarn add typeface-open-sans
-```
-
-In your `layout.js` file, import the typeface.
+2. Then within your app entry file or site component, import the font package. It is recommended you import it via the layout template (`layout.js`). However, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
-import "typeface-open-sans"
+import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
 ```
 
-Next, add the typeface name to the appropriate place in your CSS. In this case, you will override the `body` element's `font-family` default values.
+If you wish to select a particular weight or style, you may specify it by changing the import path.
+
+```jsx:title=src/components/layout.js
+import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
+import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
+```
+
+**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
+
+3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  color: hsla(0, 0%, 0%, 0.8);
-  // highlight-next-line
-  font-family: "Open Sans", georgia, serif;
-  font-weight: normal;
-  word-wrap: break-word;
-  font-kerning: normal;
+  font-family: "Open Sans";
 }
 ```
 
