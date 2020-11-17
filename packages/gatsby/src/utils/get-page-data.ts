@@ -6,6 +6,8 @@ import {
   readPageData as readPageDataUtil,
 } from "./page-data"
 
+const WAIT_TIMEOUT = 10 * 1000
+
 export async function getPageData(
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
@@ -34,13 +36,20 @@ async function waitNextPageData(
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
   return new Promise(resolve => {
-    const listener = (data: IClearPendingPageDataWriteAction): void => {
+    emitter.on(`CLEAR_PENDING_PAGE_DATA_WRITE`, listener)
+    const timeout = setTimeout(finalize, WAIT_TIMEOUT)
+
+    function finalize(): void {
+      emitter.off(`CLEAR_PENDING_PAGE_DATA_WRITE`, listener)
+      clearTimeout(timeout)
+      resolve(readPageData(pagePath))
+    }
+
+    function listener(data: IClearPendingPageDataWriteAction): void {
       if (data.payload.page === pagePath) {
-        emitter.off(`CLEAR_PENDING_PAGE_DATA_WRITE`, listener)
-        resolve(readPageData(pagePath))
+        finalize()
       }
     }
-    emitter.on(`CLEAR_PENDING_PAGE_DATA_WRITE`, listener)
   })
 }
 
