@@ -177,6 +177,9 @@ export async function initialize({
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
+  if (process.env.GATSBY_EXPERIMENT_DEVJS_LAZY) {
+    telemetry.trackFeatureIsUsed(`lazy-dev-js-bundling`)
+  }
 
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
