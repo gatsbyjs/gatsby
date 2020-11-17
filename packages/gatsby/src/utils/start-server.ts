@@ -122,7 +122,6 @@ export async function startServer(
     const bodyParser = require(`body-parser`)
     const { boundActionCreators } = require(`../redux/actions`)
     const { createClientVisitedPage } = boundActionCreators
-    app.use(bodyParser.json())
     // Listen for the client marking a page as visited (meaning we need to
     // compile its page component.
     const chunkCalls = new Set()
