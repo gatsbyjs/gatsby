@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import { v4 as uuidv4 } from "uuid"
+import uuidv4 from "uuid/v4"
 import { getConfigStore } from "./get-config-store"
 
 const store = getConfigStore()
