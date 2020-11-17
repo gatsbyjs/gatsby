@@ -13,6 +13,11 @@ Object {
     },
   },
   "deletedQueries": Set {},
+  "queryNodes": Map {
+    "/hi/" => Set {
+      "SuperCoolNode",
+    },
+  },
   "trackedComponents": Map {},
   "trackedQueries": Map {},
 }
