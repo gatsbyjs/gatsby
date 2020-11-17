@@ -228,11 +228,7 @@ DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
  * @private
  */
 DiskStore.prototype._lock = function _lock(filePath): Promise<void> {
-  return new Promise((resolve, reject) =>
-    innerLock(resolve, reject, filePath)
-  ).then(() => {
-    globalGatsbyCacheLock.set(filePath, Date.now())
-  })
+  return new Promise((resolve, reject) => innerLock(resolve, reject, filePath))
 }
 
 function innerLock(resolve, reject, filePath): void {
@@ -251,6 +247,8 @@ function innerLock(resolve, reject, filePath): void {
         innerLock(resolve, reject, filePath)
       }, 50)
     } else {
+      // set sync
+      globalGatsbyCacheLock.set(filePath, Date.now())
       resolve()
     }
   } catch (e) {

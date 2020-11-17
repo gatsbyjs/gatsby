@@ -40,6 +40,7 @@ export async function startWebpackServer({
   let {
     compiler,
     webpackActivity,
+    cancelDevJSNotice,
     websocketManager,
     webpackWatching,
   } = await startServer(program, app, workerPool)
@@ -76,6 +77,10 @@ export async function startWebpackServer({
       stats,
       done
     ) {
+      if (cancelDevJSNotice) {
+        cancelDevJSNotice()
+      }
+
       // "done" event fires when Webpack has finished recompiling the bundle.
       // Whether or not you have warnings or errors, you will get this event.
 

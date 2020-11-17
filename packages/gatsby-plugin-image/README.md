@@ -317,7 +317,7 @@ Because this no longer uses fragments to specify which fields to return, it inst
   - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
   - `TRACED_SVG`: a low-resolution traced SVG of the image.
   - `NONE`: no placeholder. Set "background" to use a fixed background color.
-  - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image. _Currently disabled until sharp is updated_
+  - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
 - `layout`: The layout for the image.
   - `FIXED:` A static image sized, that does not resize according to the screen width
   - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.

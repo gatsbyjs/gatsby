@@ -154,6 +154,7 @@ export interface IStateProgram extends IProgram {
 
 export interface IQueryState {
   dirty: number
+  running: number
 }
 
 export interface IComponentState {
@@ -210,9 +211,11 @@ export interface IGatsbyState {
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
     byConnection: Map<string, Set<Identifier>>
+    queryNodes: Map<Identifier, Set<Identifier>>
     trackedQueries: Map<Identifier, IQueryState>
     trackedComponents: Map<string, IComponentState>
     deletedQueries: Set<Identifier>
+    dirtyQueriesListToEmitViaWebsocket: Array<string>
   }
   components: Map<
     SystemPath,
@@ -305,6 +308,7 @@ export type ActionsUnion =
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
+  | IQueryClearDirtyQueriesListToEmitViaWebsocket
   | IQueryExtractedAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
@@ -469,6 +473,10 @@ export interface IReplaceStaticQueryAction {
     query: string
     hash: string
   }
+}
+
+export interface IQueryClearDirtyQueriesListToEmitViaWebsocket {
+  type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`
 }
 
 export interface IQueryExtractedAction {
