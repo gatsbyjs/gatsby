@@ -85,6 +85,9 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
+    envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
+      !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    )
 
     if (stage === `develop`) {
       envObject.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT = JSON.stringify(

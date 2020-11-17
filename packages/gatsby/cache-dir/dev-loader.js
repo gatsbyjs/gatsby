@@ -36,6 +36,8 @@ class DevLoader extends BaseLoader {
           this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
           this.handlePageQueryResultHotUpdate(msg)
+        } else if (msg.type === `dirtyQueries`) {
+          this.handleDirtyPageQueryMessage(msg)
         }
       })
     } else {
@@ -75,6 +77,9 @@ class DevLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+      return Promise.resolve()
+    }
     return super.doPrefetch(pagePath).then(result => result.payload)
   }
 
@@ -137,6 +142,41 @@ class DevLoader extends BaseLoader {
 
       ___emitter.emit(`pageQueryResult`, newPageData)
     }
+  }
+
+  handleDirtyPageQueryMessage(msg) {
+    msg.payload.dirtyQueries.forEach(dirtyQueryId => {
+      if (dirtyQueryId === `/dev-404-page/` || dirtyQueryId === `/404.html`) {
+        // those pages are not on demand so skipping
+        return
+      }
+
+      const normalizedId = normalizePagePath(dirtyQueryId)
+
+      // We can't just delete items in caches, because then
+      // using history.back() would show dev-404 page
+      // due to our special handling of it in root.js (loader.isPageNotFound check)
+      // so instead we mark it as stale and instruct loader's async methods
+      // to refetch resources if they are marked as stale
+
+      const cachedPageData = this.pageDataDb.get(normalizedId)
+      if (cachedPageData) {
+        // if we have page data in cache, mark it as stale
+        this.pageDataDb.set(normalizedId, {
+          ...cachedPageData,
+          stale: true,
+        })
+      }
+
+      const cachedPage = this.pageDb.get(normalizedId)
+      if (cachedPage) {
+        // if we have page data in cache, mark it as stale
+        this.pageDb.set(normalizedId, {
+          ...cachedPage,
+          payload: { ...cachedPage.payload, stale: true },
+        })
+      }
+    })
   }
 }
 

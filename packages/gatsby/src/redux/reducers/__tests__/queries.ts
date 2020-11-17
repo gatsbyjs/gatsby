@@ -88,6 +88,7 @@ it(`has expected initial state`, () => {
       "byConnection": Map {},
       "byNode": Map {},
       "deletedQueries": Set {},
+      "dirtyQueriesListToEmitViaWebsocket": Array [],
       "queryNodes": Map {},
       "trackedComponents": Map {},
       "trackedQueries": Map {},
