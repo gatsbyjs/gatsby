@@ -55,7 +55,7 @@ export function babelRecast(code) {
   return result
 }
 
-export default function updateImport({ types: t }) {
+export default function updateImport({ types: t, template }) {
   let imageImportName = `GatsbyImage`
   return {
     visitor: {
@@ -68,14 +68,8 @@ export default function updateImport({ types: t }) {
           return
         }
         imageImportName = node.specifiers[0].local.name
-        const namedImport = t.importSpecifier(
-          t.identifier(`GatsbyImage`),
-          t.identifier(`GatsbyImage`)
-        )
-        const newImport = t.importDeclaration(
-          [namedImport],
-          t.stringLiteral(`gatsby-plugin-image`)
-        )
+        const newImport = template.statement
+          .ast`import { GatsbyImage } from "gatsby-plugin-image"`
         path.replaceWith(newImport)
       },
       JSXOpeningElement(path) {
@@ -88,16 +82,11 @@ export default function updateImport({ types: t }) {
         const otherAttributes = node.attributes.filter(
           ({ name }) => name.name !== `fluid` && name.name !== `fixed`
         )
+        const newImageExpression = template.expression
+          .ast`data.file.childImageSharp.gatsbyImageData`
+        newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
 
-        // this expression is equivalent to data.file.childImageSharp.gatsbyImageData
-        const newImageExpression = t.memberExpression(
-          t.memberExpression(
-            t.memberExpression(t.identifier(`data`), t.identifier(`file`)),
-            t.identifier(`childImageSharp`)
-          ),
-          t.identifier(`gatsbyImageData`)
-        )
-        // create new prop
+        // // create new prop
         const updatedAttribute = t.jsxAttribute(
           t.jsxIdentifier(`image`),
           t.jsxExpressionContainer(newImageExpression)
