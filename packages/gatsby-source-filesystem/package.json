@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-filesystem",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-  "version": "2.6.0-next.0",
+  "version": "2.7.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,7 +12,7 @@
     "chokidar": "^3.4.2",
     "file-type": "^12.4.2",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.5.0-next.0",
+    "gatsby-core-utils": "^1.6.0-next.0",
     "got": "^9.6.0",
     "md5-file": "^5.0.0",
     "mime": "^2.4.6",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.7.0-next.0",
+    "babel-preset-gatsby-package": "^0.8.0-next.0",
     "cross-env": "^7.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme",

@@ -24,7 +24,7 @@ function mergePageEntry(cachedPage, newPageData) {
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
     let loadComponent
-    if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+    if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
       const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
       loadComponent = chunkName => ensureComponentInBundle.default(chunkName)
     } else {

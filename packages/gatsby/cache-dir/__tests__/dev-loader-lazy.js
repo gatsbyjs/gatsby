@@ -29,7 +29,7 @@ describe(`Dev loader`, () => {
     global.__BASE_PATH__ = ``
     global.__PATH_PREFIX__ = ``
     process.env = Object.assign(process.env, {
-      GATSBY_EXPERIMENT_LAZY_DEVJS: true,
+      GATSBY_EXPERIMENTAL_LAZY_DEVJS: true,
     })
   })
 
@@ -37,7 +37,7 @@ describe(`Dev loader`, () => {
     global.__BASE_PATH__ = originalBasePath
     global.__PATH_PREFIX__ = originalPathPrefix
     process.env = Object.assign(process.env, {
-      GATSBY_EXPERIMENT_LAZY_DEVJS: false,
+      GATSBY_EXPERIMENTAL_LAZY_DEVJS: false,
     })
   })
 

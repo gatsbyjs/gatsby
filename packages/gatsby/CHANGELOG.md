@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.1...gatsby@2.28.0-next.0) (2020-11-18)
+
+### Bug Fixes
+
+- **gatsby:** fix race condition in cache lock ([#28097](https://github.com/gatsbyjs/gatsby/issues/28097)) ([5b2d9b6](https://github.com/gatsbyjs/gatsby/commit/5b2d9b6343019f458e1c1f1d5c38b9b43ff47c32))
+- **gatsby:** rename env var for lazy dev bundling to make consistent with other experiments ([#28150](https://github.com/gatsbyjs/gatsby/issues/28150)) ([9e3ceec](https://github.com/gatsbyjs/gatsby/commit/9e3ceeccf2e6821429c7ae808588956fe7e3ef67))
+
+### Features
+
+- **develop:** add query on demand behind feature flag ([#28127](https://github.com/gatsbyjs/gatsby/issues/28127)) ([088eef4](https://github.com/gatsbyjs/gatsby/commit/088eef4fe125d03427712c557fbf19e96034d66d))
+- **gatsby:** invite (1%) of Gatsby users to try out develop ssr ([#28139](https://github.com/gatsbyjs/gatsby/issues/28139)) ([a612f26](https://github.com/gatsbyjs/gatsby/commit/a612f26cab94a7672f6c63067368ec6efc49ec49))
+- **gatsby:** invite people with long develop bundling times to try the lazy dev js bundling feature ([#28116](https://github.com/gatsbyjs/gatsby/issues/28116)) ([a737ea7](https://github.com/gatsbyjs/gatsby/commit/a737ea77ded04e0896d43ec233589b1dd8be7e63))
+- **gatsby:** lazy bundle page components in dev server ([#27884](https://github.com/gatsbyjs/gatsby/issues/27884)) ([04349a0](https://github.com/gatsbyjs/gatsby/commit/04349a042f9106a88b7a9054c0e1c4dc70469d1f))
+- **gatsby:** SSR pages during development ([#27432](https://github.com/gatsbyjs/gatsby/issues/27432)) ([23da2c3](https://github.com/gatsbyjs/gatsby/commit/23da2c3fb2e16b7e3fe1e15c19decd799000a212))
+- add utility to show experiment invitation notices ([#28120](https://github.com/gatsbyjs/gatsby/issues/28120)) ([195d623](https://github.com/gatsbyjs/gatsby/commit/195d6233e2615074e2e5ce95d05e09d264ac1066))
+
+### Performance Improvements
+
+- **gatsby:** fix performance regression with query dependency cleaning ([#28032](https://github.com/gatsbyjs/gatsby/issues/28032)) ([de5517b](https://github.com/gatsbyjs/gatsby/commit/de5517b9db0b86c8b1729cb67c570a105596a97b))
+
 # [2.27.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0-next.1) (2020-11-16)
 
 ### Bug Fixes

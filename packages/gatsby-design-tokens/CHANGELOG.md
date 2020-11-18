@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.2.0-next.0...gatsby-design-tokens@2.3.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.12...gatsby-design-tokens@2.0.13) (2020-10-01)
 
 **Note:** Version bump only for package gatsby-design-tokens

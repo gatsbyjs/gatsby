@@ -127,7 +127,7 @@ export async function startServer(
   let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
     process.env.gatsby_executing_command === `develop` &&
-    !process.env.GATSBY_EXPERIMENT_DEVJS_LAZY &&
+    !process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
     !isCI()
   ) {
     cancelDevJSNotice = showExperimentNoticeAfterTimeout(
@@ -139,7 +139,7 @@ Your friendly Gatsby maintainers detected your site takes longer than ideal to b
 
 If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with LAZY_DEVJS enabled.
 
-GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop
+GATSBY_EXPERIMENTAL_LAZY_DEVJS=true gatsby develop
 
 Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.dev/lazy-devjs-umbrella
       `),
@@ -157,7 +157,7 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
 
   const compiler = webpack(devConfig)
 
-  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     const bodyParser = require(`body-parser`)
     const { boundActionCreators } = require(`../redux/actions`)
     const { createClientVisitedPage } = boundActionCreators
