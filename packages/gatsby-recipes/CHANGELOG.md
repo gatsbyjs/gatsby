@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.1...gatsby-recipes@0.5.0-next.0) (2020-11-18)
+
+### Features
+
+- **gatsby:** SSR pages during development ([#27432](https://github.com/gatsbyjs/gatsby/issues/27432)) ([23da2c3](https://github.com/gatsbyjs/gatsby/commit/23da2c3fb2e16b7e3fe1e15c19decd799000a212))
+- **recipes-list:** add chakra-ui ([#28013](https://github.com/gatsbyjs/gatsby/issues/28013)) ([51b9041](https://github.com/gatsbyjs/gatsby/commit/51b9041d1f5977f22ee23c7e68bcd6b12999c2c4))
+
 # [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.0...gatsby-recipes@0.4.0-next.1) (2020-11-16)
 
 ### Features
