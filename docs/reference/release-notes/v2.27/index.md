@@ -33,8 +33,11 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 ### Queries on Demand
 
 When developing a Gatsby site there's no need to run all graphql queries before serving the site.
-Instead, Gatsby could run queries for pages as they're requested by a browser.
-This would avoid having to wait for slower queries (like image processing) if you're editing an unrelated part of a site.
+Instead, Gatsby will run queries for pages as they're requested by a browser.
+Think of it like lazily loading the data your pages need, when they need it!
+
+This avoids having to wait for slower queries (like image processing) if you're editing an unrelated part of a site.
+What this means for you: faster local development experience, up to 2x faster in many cases!
 
 This feature is available under a flag.
 
@@ -51,7 +54,8 @@ Please try it and [let us know](https://github.com/gatsbyjs/gatsby/discussions/2
 
 ### Experimental: Lazy images in develop
 
-We've got some feedback that the more image-heavy your website gets, the slower `gatsby develop`.
+We've got some feedback that the more images your website contains, the slower your local development experience gets.
+You spend time waiting for images to process, instead of you know, developing! No longer!
 This experimental version of `gatsby-plugin-sharp` only does image processing when the page gets requested.
 
 Try early alpha (and [let us know](https://github.com/gatsbyjs/gatsby/discussions/27603) if you have any issues with it):
@@ -73,6 +77,7 @@ And that means having documentation that helps y’all find the information you 
 [Announcement and discussion](https://github.com/gatsbyjs/gatsby/discussions/27856).
 
 ## Experimental: SSR in Development
+
 One of the least enjoyable bugs to encounter in Gatsby is when your build fails due to code trying to reference `window` or `document` or other browser globals that are not accessible in node.js during SSR.
 
 Currently the only way to debug these is to change some code and rebuild and repeat until the problem is solved. This is a very slow way to debug. Worst, these sorts of bugs are often only encountered after a long development period. It's no fun to push code you're proud of to CI only to discover it's broken.
@@ -82,6 +87,7 @@ With this coming feature, we'll SSR pages during development when do a full refr
 Try it out immediately by running `GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop`. Join in the discussion in its umbrella issue at https://github.com/gatsbyjs/gatsby/issues/28138
 
 ## Experimental: Lazy page bundling in development
+
 An obstacle to Gatsby being a delightful experience for larger sites is JavaScript compilation can start to get annoyingly slow. For example, gatsbyjs.com takes over two minutes currently (with a cold cache) to compile and bundle the code for the many page components. Not acceptable!
 
 We knew we needed to make this lazy and have shipped experimental support for this.
