@@ -5,8 +5,8 @@ disableTableOfContents: true
 ---
 
 import { Link } from "gatsby"
-import SectionWithSideLinks from "@components/docs-landing-page/section-with-side-links"
-import EmailCaptureForm from "@components/email-capture-form"
+import SectionWithSideLinks from "../../www/src/components/docs-landing-page/section-with-side-links"
+import EmailCaptureForm from "../../www/src/components/email-capture-form"
 
 Gatsby is a blazing fast modern site generator for React.
 
