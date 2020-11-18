@@ -22,7 +22,7 @@ Sneak peek to next releases:
 
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop)
 - [Documentation Reorganization](#documentation-reorganization)
-- [Experimental: SSR in develop](#experimental-ssr-in-develop)
+- [Experimental: SSR in develop](#experimental-ssr-in-development)
 - [Experimental: Lazy page bundling in development](#experimental-lazy-page-bundling-in-development)
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
