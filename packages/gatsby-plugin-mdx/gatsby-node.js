@@ -90,6 +90,11 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       )
       .default([])
       .description(`Use Gatsby-specific remark plugins`),
+    lessBabel: Joi.boolean()
+      .default(false)
+      .description(
+        "Enable fast parsing mode? This may break certain implied transformation dependencies. Disable if you have problems"
+      ),
     remarkPlugins: Joi.array()
       .items(
         Joi.function(),

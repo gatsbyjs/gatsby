@@ -12,6 +12,7 @@ const isLiteral = node =>
 const getValueFromNode = node => {
   if (t.isTemplateLiteral(node)) {
     delete node.leadingComments
+    delete node.trailingComments
     const literalContents = generate(node).code
     return unwrapTemplateLiteral(literalContents)
   }

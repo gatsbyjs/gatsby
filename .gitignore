@@ -26,8 +26,6 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-examples/biz-website/public/
-examples/blog/public/
 integration-tests/gatsby-cli/execution-folder/*
 *.un~
 dist

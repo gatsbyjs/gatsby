@@ -15,7 +15,7 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^2.25.3",
+    "gatsby": "^2.26.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
