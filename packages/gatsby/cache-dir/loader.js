@@ -144,7 +144,7 @@ export class BaseLoader {
           // In development, check if the page is in the bundle yet.
           if (
             process.env.NODE_ENV === `development` &&
-            process.env.GATSBY_EXPERIMENT_LAZY_DEVJS
+            process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS
           ) {
             const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
               .default

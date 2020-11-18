@@ -20,7 +20,7 @@ const StaticQueryContext = React.createContext({})
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   let combinedStaticQueryData = staticQueryData
 
-  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     // when we remove the flag, we don't need to combine them
     // w/ changes @pieh made.
     combinedStaticQueryData = {
@@ -83,7 +83,7 @@ useStaticQuery(graphql\`${query}\`);
   }
 
   let queryNotFound = false
-  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     // Merge data loaded via socket.io & xhr
     // when we remove the flag, we don't need to combine them
     // w/ changes @pieh made.

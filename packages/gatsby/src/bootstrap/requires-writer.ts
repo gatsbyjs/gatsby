@@ -187,7 +187,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   let cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent> = components
   let notVisitedPageComponents: Array<IGatsbyPageComponent> = components
-  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     const clientVisitedPageComponents = [...state.clientVisitedPages.values()]
     // Remove any page components that no longer exist.
     cleanedClientVisitedPageComponents = components.filter(component =>
@@ -249,7 +249,7 @@ const preferDefault = m => (m && m.default) || m
   // file so we need a seperate one for each webpack instance.
   writeModule(`$virtual/ssr-sync-requires`, syncRequires)
 
-  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     // Create file with sync requires of visited page components files.
     let lazyClientSyncRequires = `${hotImport}
   // prefer default export if available
@@ -331,7 +331,7 @@ const preferDefault = m => (m && m.default) || m
   return true
 }
 
-if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
   /**
    * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
    * files as required
