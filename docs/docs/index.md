@@ -4,6 +4,8 @@ description: The one stop location for tutorials, guides, and information about 
 disableTableOfContents: true
 ---
 
+import { Link } from "gatsby"
+import SectionWithSideLinks from "@components/docs-landing-page/section-with-side-links"
 import EmailCaptureForm from "@components/email-capture-form"
 
 Gatsby is a blazing fast modern site generator for React.
@@ -12,8 +14,52 @@ Gatsby is a blazing fast modern site generator for React.
 
 There are two main ways to get started with Gatsby:
 
-1. [Tutorial](/tutorial/): Step-by-step instructions on how to install Gatsby and start a project: written for people without Gatsby or web development experience, though these learning resources have helped developers of all skill levels.
-2. [Quick start](/docs/quick-start): One page summary of how to install Gatsby and start a new project.
+### The Gatsby Tutorial
+
+First time using Gatsby? Looking for a step-by-step introduction? Check out our Tutorial for a step-by-step introduction on how to install Gatsby and create your first project. Written for people without Gatsby or web development experience (though these learning resources have helped developers of all skill levels).
+
+[Try the Tutorial](/tutorial)
+
+### Quick Start
+
+Starting a new Gatsby site? Want to get up and running as fast as possible? Check out our Quick Start.
+
+[Quick Start](/docs/quick-start)
+
+## Explore the Docs
+
+<SectionWithSideLinks 
+   links={[
+      {
+         to: "/docs/how-to/",
+         label: "How To Guides"
+      },
+      {
+         to: "/docs/how-to/",
+         label: "How To Guides"
+      },
+      {
+         to: "/docs/how-to/",
+         label: "How To Guides"
+      },
+   ]}
+>
+
+
+### Tutorial
+
+Description text. This is where I explain what the Tutorial doc type is!
+
+<Link to="/tutorial/">See all &rarr;</Link>
+
+</SectionWithSideLinks>
+
+
+### How-To Guides
+
+### Conceptual Guides
+
+### Reference
 
 ## Go further
 
