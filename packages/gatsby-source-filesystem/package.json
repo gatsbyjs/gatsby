@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.12.5",
     "better-queue": "^3.8.10",
     "chokidar": "^3.4.3",
-    "file-type": "^12.4.2",
+    "file-type": "^16.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.6.0-next.0",
     "got": "^9.6.0",
@@ -18,7 +18,6 @@
     "mime": "^2.4.6",
     "pretty-bytes": "^5.4.1",
     "progress": "^2.0.3",
-    "read-chunk": "^3.2.0",
     "valid-url": "^1.0.9",
     "xstate": "^4.14.0"
   },
