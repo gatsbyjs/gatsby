@@ -5,6 +5,7 @@ import report from "gatsby-cli/lib/reporter"
 
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
+import { getPageData as getPageDataExperimental } from "../get-page-data"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -139,6 +140,9 @@ export const renderDevHTML = ({
     // We'll also get a head start on compiling the client code (this
     // call has no effect if the page component is already in the client bundle).
     createClientVisitedPage(pageObj.componentChunkName)
+
+    // Ensure the query has been run and written out.
+    await getPageDataExperimental(pageObj.path)
 
     // Wait for public/render-page.js to update w/ the page component.
     await ensurePathComponentInSSRBundle(pageObj, directory)

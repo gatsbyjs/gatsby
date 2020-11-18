@@ -283,10 +283,6 @@ const preferDefault = m => (m && m.default) || m
     .join(`,\n`)}
 }\n\n`
 
-  // webpack only seems to trigger re-renders once per virtual
-  // file so we need a seperate one for each webpack instance.
-  writeModule(`$virtual/ssr-sync-requires`, syncRequires)
-
   if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     // Create file with sync requires of visited page components files.
     let lazyClientSyncRequires = `${hotImport}
