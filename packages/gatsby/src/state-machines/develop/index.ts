@@ -31,6 +31,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       target: `reloadingData`,
       actions: `assignWebhookBody`,
     },
+    QUERY_RUN_REQUESTED: {
+      actions: `trackRequestedQueryRun`,
+    },
   },
   states: {
     // Here we handle the initial bootstrap
@@ -106,6 +109,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         ADD_NODE_MUTATION: {
           actions: [`markNodesDirty`, `callApi`],
         },
+        QUERY_RUN_REQUESTED: {
+          actions: forwardTo(`run-queries`),
+        },
       },
       invoke: {
         id: `run-queries`,
@@ -118,6 +124,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           gatsbyNodeGraphQLFunction,
           graphqlRunner,
           websocketManager,
+          pendingQueryRuns,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -126,6 +133,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             gatsbyNodeGraphQLFunction,
             graphqlRunner,
             websocketManager,
+            pendingQueryRuns,
           }
         },
         onDone: [
@@ -145,13 +153,17 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `recreatingPages`,
             cond: ({ nodesMutatedDuringQueryRun }: IBuildContext): boolean =>
               !!nodesMutatedDuringQueryRun,
-            actions: [`markNodesClean`, `incrementRecompileCount`],
+            actions: [
+              `markNodesClean`,
+              `incrementRecompileCount`,
+              `clearPendingQueryRuns`,
+            ],
           },
           {
             // If we have no compiler (i.e. it's first run), then spin up the
             // webpack and socket.io servers
             target: `startingDevServers`,
-            actions: `setQueryRunningFinished`,
+            actions: [`setQueryRunningFinished`, `clearPendingQueryRuns`],
             cond: ({ compiler }: IBuildContext): boolean => !compiler,
           },
           {
@@ -159,14 +171,16 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `recompiling`,
             cond: ({ sourceFilesDirty }: IBuildContext): boolean =>
               !!sourceFilesDirty,
+            actions: [`clearPendingQueryRuns`],
           },
           {
             // ...otherwise just wait.
             target: `waiting`,
+            actions: [`clearPendingQueryRuns`],
           },
         ],
         onError: {
-          actions: `logError`,
+          actions: [`logError`, `clearPendingQueryRuns`],
           target: `waiting`,
         },
       },
@@ -205,6 +219,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Idle, waiting for events that make us rebuild
     waiting: {
+      always: [
+        {
+          target: `runningQueries`,
+          cond: ({ pendingQueryRuns }: IBuildContext): boolean =>
+            !!pendingQueryRuns && pendingQueryRuns.size > 0,
+        },
+      ],
       entry: [`saveDbState`, `resetRecompileCount`],
       on: {
         // Forward these events to the child machine, so it can handle batching

@@ -38,6 +38,10 @@ export default [
     value: `theme-ui`,
   },
   {
+    label: `Add Chakra UI`,
+    value: `chakra-ui`,
+  },
+  {
     label: `Add Emotion`,
     value: `emotion`,
   },
@@ -88,6 +92,10 @@ export default [
   {
     label: `Add Headless WordPress integration`,
     value: `wordpress`,
+  },
+  {
+    label: `Add e-commerce powered by Snipcart`,
+    value: `snipcart.mdx`,
   },
   {
     label: `Add Storybook - JavaScript`,

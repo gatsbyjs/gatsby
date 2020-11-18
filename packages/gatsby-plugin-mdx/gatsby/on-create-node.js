@@ -4,7 +4,10 @@ const babel = require(`@babel/core`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
-const createMDXNode = require(`../utils/create-mdx-node`)
+const {
+  createMdxNodeExtraBabel,
+  createMdxNodeLessBabel,
+} = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
 const { findImports } = require(`../utils/gen-mdx`)
 
@@ -29,7 +32,26 @@ function _unstable_shouldOnCreateNode({ node }, options) {
 
 module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 
-module.exports.onCreateNode = async (
+async function onCreateNode(api, pluginOptions) {
+  const options = defaultOptions(pluginOptions)
+
+  if (!_unstable_shouldOnCreateNode({ node: api.node }, options)) {
+    return
+  }
+
+  const content = await api.loadNodeContent(api.node)
+
+  if (options.lessBabel) {
+    await onCreateNodeLessBabel(content, api, options)
+  } else {
+    await onCreateNodeExtraBabel(content, api, options)
+  }
+}
+
+module.exports.onCreateNode = onCreateNode
+
+async function onCreateNodeExtraBabel(
+  content,
   {
     node,
     loadNodeContent,
@@ -37,23 +59,17 @@ module.exports.onCreateNode = async (
     createNodeId,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
     ...helpers
   },
-  pluginOptions
-) => {
+  options
+) {
   const { createNode, createParentChildLink } = actions
-  const options = defaultOptions(pluginOptions)
 
-  if (!_unstable_shouldOnCreateNode({ node }, options)) {
-    return
-  }
-
-  const content = await loadNodeContent(node)
-
-  const mdxNode = await createMDXNode({
+  const mdxNode = await createMdxNodeExtraBabel({
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
     content,
@@ -67,6 +83,7 @@ module.exports.onCreateNode = async (
     node: mdxNode,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -76,6 +93,61 @@ module.exports.onCreateNode = async (
     createNodeId,
     ...helpers,
   })
+
+  // write scope files into .cache for later consumption
+  await cacheScope({
+    cache,
+    scopeIdentifiers,
+    scopeImports,
+    createContentDigest: contentDigest,
+    parentNode: node,
+  })
+}
+
+async function onCreateNodeLessBabel(
+  content,
+  {
+    node,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    getNode,
+    getNodes,
+    getNodesByType,
+    reporter,
+    cache,
+    pathPrefix,
+    ...helpers
+  },
+  options
+) {
+  const { createNode, createParentChildLink } = actions
+
+  const {
+    mdxNode,
+    scopeIdentifiers,
+    scopeImports,
+  } = await createMdxNodeLessBabel({
+    id: createNodeId(`${node.id} >>> Mdx`),
+    node,
+    content,
+    getNode,
+    getNodes,
+    getNodesByType,
+    reporter,
+    cache,
+    pathPrefix,
+    options,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    ...helpers,
+  })
+
+  createNode(mdxNode)
+  createParentChildLink({ parent: node, child: mdxNode })
+
+  // write scope files into .cache for later consumption
   await cacheScope({
     cache,
     scopeIdentifiers,

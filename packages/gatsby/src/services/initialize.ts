@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
+import { slash, isCI } from "gatsby-core-utils"
 import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
@@ -9,6 +9,8 @@ import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
+import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
+import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
@@ -28,6 +30,31 @@ import { IBuildContext } from "./types"
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions
+}
+
+if (
+  process.env.gatsby_executing_command === `develop` &&
+  !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
+  !isCI() &&
+  sampleSiteForExperiment(`DEV_SSR`, 1)
+) {
+  showExperimentNoticeAfterTimeout(
+    `devSSR`,
+    `
+Your dev experience is about to get better, faster, and stronger!
+
+We'll soon be shipping support for SSR in development.
+
+This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
+
+Try out develop SSR *today* by running your site with it enabled:
+
+GATSBY_EXPERIMENT_DEV_SSR=true gatsby develop
+
+Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
+      `,
+    1 // Show this immediately to the subset of sites selected.
+  )
 }
 
 // Show stack trace on unhandled promises.
@@ -161,6 +188,22 @@ export async function initialize({
   store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
+
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.gatsby_executing_command !== `develop`) {
+      // we don't want to ever have this flag enabled for anything than develop
+      // in case someone have this env var globally set
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    } else if (isCI()) {
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      reporter.warn(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
+      )
+    } else {
+      reporter.info(`Using experimental Query on Demand feature`)
+      telemetry.trackFeatureIsUsed(`QueryOnDemand`)
+    }
+  }
 
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))

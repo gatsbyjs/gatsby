@@ -58,7 +58,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
            "headers": [
              {
                "key": "cache-control",
-               "value": "cache-control: public, max-age=0, must-revalidate"
+               "value": "public, max-age=0, must-revalidate"
              }
            ]
          },
@@ -85,7 +85,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
            "headers": [
              {
                "key": "cache-control",
-               "value": "cache-control: public, max-age=0, must-revalidate"
+               "value": "public, max-age=0, must-revalidate"
              }
            ]
          },
@@ -94,7 +94,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
            "headers": [
              {
                "key": "cache-control",
-               "value": "cache-control: public, max-age=0, must-revalidate"
+               "value": "public, max-age=0, must-revalidate"
              }
            ]
          }
