@@ -14,7 +14,7 @@ import matchPaths from "$virtual/match-paths.json"
 window.___emitter = emitter
 
 let pageComponentRequires
-if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
   pageComponentRequires = require(`$virtual/lazy-client-sync-requires`)
 } else {
   pageComponentRequires = require(`$virtual/sync-requires`)
