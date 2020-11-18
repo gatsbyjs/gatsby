@@ -32,6 +32,31 @@ interface IPluginResolution {
   options: IPluginInfoOptions
 }
 
+// If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
+// all DEV experimental changes (but only during development & not on CI).
+if (
+  process.env.gatsby_executing_command === `develop` &&
+  process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
+  !isCI()
+) {
+  process.env = {
+    ...process.env,
+    GATSBY_EXPERIMENTAL_LAZY_DEVJS: `true`,
+    GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND: `true`,
+    GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
+  }
+
+  reporter.info(`
+Three fast dev experiments are enabled, Lazy Bundling, Query on Demand, and Development SSR.
+
+Please give feedback on their respective umbrella issues!
+
+- https://gatsby.dev/lazy-devjs-umbrella
+- https://gatsby.dev/query-on-demand-feedback
+- https://gatsby.dev/dev-ssr-feedback
+  `)
+}
+
 if (
   process.env.gatsby_executing_command === `develop` &&
   !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
