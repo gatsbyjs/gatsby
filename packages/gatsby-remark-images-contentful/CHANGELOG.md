@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.6.0-next.0...gatsby-remark-images-contentful@2.6.0-next.1) (2020-11-18)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-remark-images-contentful ([#27136](https://github.com/gatsbyjs/gatsby/issues/27136)) ([c90351b](https://github.com/gatsbyjs/gatsby/commit/c90351b89efdd9ed589af65d61fe899e132b2230))
+
 # [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.5.0-next.0...gatsby-remark-images-contentful@2.6.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful
