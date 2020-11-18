@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.2.0-next.0...gatsby-legacy-polyfills@0.3.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
 ## [0.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.0.5...gatsby-legacy-polyfills@0.0.6) (2020-11-02)
 
 **Note:** Version bump only for package gatsby-legacy-polyfills

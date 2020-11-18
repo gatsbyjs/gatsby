@@ -12,7 +12,7 @@ Object {
 exports[`packageJson resource e2e package resource test: PackageJson create plan 1`] = `
 Object {
   "currentState": "{
-  \\"name\\": \\"test\\",
+  \\"name\\": \\"test-npm-provider\\",
   \\"scripts\\": {}
 }",
   "describe": "Add husky to package.json",
@@ -23,13 +23,13 @@ Object {
 +   \\"husky\\": \\"{
 +   /\\"hooks/\\": {}
 + }\\",
-    \\"name\\": \\"test\\",
+    \\"name\\": \\"test-npm-provider\\",
     \\"scripts\\": Object {},
   }",
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"name\\": \\"test\\",
+  \\"name\\": \\"test-npm-provider\\",
   \\"scripts\\": {},
   \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
@@ -50,7 +50,7 @@ Object {
 exports[`packageJson resource e2e package resource test: PackageJson update plan 1`] = `
 Object {
   "currentState": "{
-  \\"name\\": \\"test\\",
+  \\"name\\": \\"test-npm-provider\\",
   \\"scripts\\": {},
   \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
@@ -66,12 +66,12 @@ Object {
 +     /\\"pre-commit/\\": /\\"lint-staged/\\"
 +   }
   }\\",
-    \\"name\\": \\"test\\",
+    \\"name\\": \\"test-npm-provider\\",
     \\"scripts\\": Object {},",
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"name\\": \\"test\\",
+  \\"name\\": \\"test-npm-provider\\",
   \\"scripts\\": {},
   \\"husky\\": \\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"
 }",

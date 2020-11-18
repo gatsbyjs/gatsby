@@ -168,17 +168,7 @@ Try early alpha (and [let us know](https://github.com/gatsbyjs/gatsby/discussion
 npm install gatsby-plugin-sharp@lazy-images
 ```
 
-Enable in your `gatsby-config.js`:
-
-```js
-// in gatsby-config.js
-{
-  resolve: 'gatsby-plugin-sharp',
-  options: {
-    experimentalDisableLazyProcessing: true,
-  }
-}
-```
+Lazy images are enabled by-default in this version.
 
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/27603).
 
