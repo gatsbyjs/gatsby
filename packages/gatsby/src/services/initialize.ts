@@ -39,12 +39,9 @@ if (
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
   !isCI()
 ) {
-  process.env = {
-    ...process.env,
-    GATSBY_EXPERIMENTAL_LAZY_DEVJS: `true`,
-    GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND: `true`,
-    GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
-  }
+  process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS = `true`
+  process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+  process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
 
   reporter.info(`
 Three fast dev experiments are enabled, Lazy Bundling, Query on Demand, and Development SSR.
@@ -225,12 +222,12 @@ export async function initialize({
         `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
       )
     } else {
-      reporter.info(`Using experimental Query on Demand feature`)
+      // We already show a notice for this flag.
+      if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
+        reporter.info(`Using experimental Query on Demand feature`)
+      }
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
-  }
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    telemetry.trackFeatureIsUsed(`ExperimentalDevSSR`)
   }
 
   // run stale jobs
