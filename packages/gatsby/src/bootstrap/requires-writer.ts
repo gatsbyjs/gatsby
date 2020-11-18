@@ -282,7 +282,7 @@ const preferDefault = m => (m && m.default) || m
     )
     .join(`,\n`)}
 }\n\n`
-  
+
   // webpack only seems to trigger re-renders once per virtual
   // file so we need a seperate one for each webpack instance.
   writeModule(`$virtual/ssr-sync-requires`, syncRequires)
@@ -369,28 +369,6 @@ const preferDefault = m => (m && m.default) || m
   return true
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-  /**
-   * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
-   * files as required
-   */
-  emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    writeAll(store.getState())
-  })
-}
-
-if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-  /**
-   * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
-   * files as required
-   */
-  emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    writeAll(store.getState())
-  })
-}
-
 const debouncedWriteAll = _.debounce(
   async (): Promise<void> => {
     const activity = reporter.activityTimer(`write out requires`, {
@@ -407,6 +385,28 @@ const debouncedWriteAll = _.debounce(
     leading: false,
   }
 )
+
+if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  /**
+   * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
+   * files as required
+   */
+  emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll(store.getState())
+  })
+}
+
+if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+  /**
+   * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
+   * files as required
+   */
+  emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll(store.getState())
+  })
+}
 
 /**
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
