@@ -205,7 +205,7 @@ export async function initialize({
     }
   }
   if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    telemetry.trackFeatureIsUsed(`GATSBY_EXPERIMENT_DEVJS_LAZY`)
+    telemetry.trackFeatureIsUsed(`ExperimentalDevSSR`)
   }
 
   // run stale jobs
