@@ -1,30 +1,19 @@
 import React from "react"
 import client from "webpack-hot-middleware/client"
-import ansiHTML from "ansi-html"
+import Anser from "anser"
 
-import Overlay from "./overlay"
-
-const styles = {
-  button: {
-    alignItems: `center`,
-    borderRadius: `4px`,
-    justifyContent: `center`,
-    lineHeight: 1,
-    cursor: `pointer`,
-    color: `#fff`,
-    border: `1px solid rgb(102, 51, 153)`,
-    background: `#9158ca`,
-    fontWeight: 600,
-    fontSize: `0.875rem`,
-    height: `2rem`,
-    minWidth: `2rem`,
-    padding: `0.25rem 0.75rem`,
-  },
-}
+import Overlay from "./components/overlay"
+import ErrorBoundary from "./components/error-boundary"
+import Portal from "./components/portal"
+import Style from "./components/style"
 
 function prettifyStack(errorInformation) {
-  console.log(errorInformation)
-  return ansiHTML(errorInformation.join(`\n`))
+  const txt = errorInformation.join(`\n`)
+  return Anser.ansiToJson(txt, {
+    remove_empty: true,
+    use_classes: true,
+    json: true,
+  })
 }
 
 export default class FastRefreshOverlay extends React.Component {
@@ -45,6 +34,17 @@ export default class FastRefreshOverlay extends React.Component {
     this.setState(prevState => {
       return { problems: [...prevState.problems, problem] }
     })
+  }
+
+  open = file => {
+    console.log(
+      `/__open-stack-frame-in-editor?fileName=` +
+        window.encodeURIComponent(file)
+    )
+    window.fetch(
+      `/__open-stack-frame-in-editor?fileName=` +
+        window.encodeURIComponent(file)
+    )
   }
 
   componentDidMount() {
@@ -93,28 +93,18 @@ export default class FastRefreshOverlay extends React.Component {
     this._isMounted = false
   }
 
-  componentDidCatch(error) {
-    this.setState(prevState => {
-      return {
-        problems: [...prevState.problems, { type: `RUNTIME_ERROR`, error }],
-      }
-    })
-  }
-
   render() {
     const { problems, currentIndex } = this.state
     const problem = problems[currentIndex]
     const hasBuildError = problem?.type === `BUILD_ERROR`
     const hasRuntimeError = problem?.type === `RUNTIME_ERROR`
 
-    console.log({ problem, currentIndex })
-
     let header
     let body
 
     if (hasRuntimeError) {
       header = (
-        <p style={{ fontSize: `22px`, marginBottom: 0 }}>
+        <p data-gatsby-overlay="header__runtime-error">
           Unhandled Runtime Error
         </p>
       )
@@ -122,49 +112,80 @@ export default class FastRefreshOverlay extends React.Component {
     }
 
     if (hasBuildError) {
-      const [file, cause, ...errorInformation] = problem.error.split(`\n`)
-
-      const open = () => {
-        window.fetch(
-          `/__open-stack-frame-in-editor?fileName=` +
-            window.encodeURIComponent(file) +
-            `&lineNumber=` +
-            window.encodeURIComponent(1) // TODO
-        )
-      }
+      const [file, cause, _a, ...rest] = problem.error.split(`\n`)
+      const [_fullPath, _detailedError] = rest
+      const detailedError = Anser.ansiToJson(_detailedError, {
+        remove_empty: true,
+        json: true,
+      })
+      console.log({ detailedError })
+      const decoded = prettifyStack(rest)
 
       header = (
         <>
-          <div style={{ flex: 1 }}>
-            <p style={{ marginBottom: 0 }}>{cause}</p>
-            <a style={{ fontSize: `22px` }}>{file}</a>
+          <div data-gatsby-overlay="header__cause-file">
+            <p>{cause}</p>
+            <span>{file}</span>
           </div>
-          <button onClick={open} style={styles.button}>
-            OPEN IN EDITOR
+          <button
+            onClick={() => this.open(file)}
+            data-gatsby-overlay="header__open-in-editor"
+          >
+            Open in editor
           </button>
         </>
       )
 
       body = (
-        <pre>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: prettifyStack(errorInformation),
-            }}
-          />
+        <pre data-gatsby-overlay="pre">
+          <code data-gatsby-overlay="pre__code">
+            {decoded.map((entry, index) => (
+              <span
+                key={`frame-${index}`}
+                data-gatsby-overlay="pre__code__span"
+                style={{
+                  color: entry.fg ? `var(--color-${entry.fg})` : undefined,
+                  ...(entry.decoration === `bold`
+                    ? { fontWeight: 800 }
+                    : entry.decoration === `italic`
+                    ? { fontStyle: `italic` }
+                    : undefined),
+                }}
+              >
+                {entry.content}
+              </span>
+            ))}
+          </code>
         </pre>
       )
     }
 
-    if (problem) {
-      return (
-        <>
-          <div style={{ filter: `blur(10px)` }}>{this.props.children}</div>
-          <Overlay header={header} body={body} dismiss={this.dismiss} />
-        </>
-      )
-    }
-
-    return this.props.children
+    return (
+      <React.Fragment>
+        <ErrorBoundary
+          style={{ filter: `blur(10px)` }}
+          onError={error => {
+            this.setState(prevState => {
+              return {
+                problems: [
+                  ...prevState.problems,
+                  { type: `RUNTIME_ERROR`, error },
+                ],
+              }
+            })
+          }}
+        >
+          {this.props.children ?? null}
+        </ErrorBoundary>
+        {this._isMounted ? (
+          <Portal>
+            <Style />
+            {problem ? (
+              <Overlay header={header} body={body} dismiss={this.dismiss} />
+            ) : undefined}
+          </Portal>
+        ) : undefined}
+      </React.Fragment>
+    )
   }
 }
