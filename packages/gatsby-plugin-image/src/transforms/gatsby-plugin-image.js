@@ -30,6 +30,7 @@ const typeMapper = {
 }
 
 export default function jsCodeShift(file, api, options) {
+  // TODO: Allow people to add their babel stuff so parsing always works?
   const transformedSource = babelRecast(file.source, file.path)
   return transformedSource
 }
@@ -47,6 +48,9 @@ export function babelRecast(code, filePath) {
             },
           ],
           filename: filePath,
+          parserOpts: {
+            tokens: true, // recast uses this
+          },
         }),
     },
   })
@@ -90,7 +94,7 @@ export function updateImport(babel) {
         const componentName = t.jsxIdentifier(`GatsbyImage`)
 
         const otherAttributes = node.attributes.filter(
-          ({ name }) => name.name !== `fluid` && name.name !== `fixed`
+          ({ name }) => name?.name !== `fluid` && name?.name !== `fixed`
         )
         const newImageExpression = template.expression
           .ast`data.file.childImageSharp.gatsbyImageData`
