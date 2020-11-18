@@ -204,6 +204,9 @@ export async function initialize({
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    telemetry.trackFeatureIsUsed(`ExperimentalDevSSR`)
+  }
 
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
