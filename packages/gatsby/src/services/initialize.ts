@@ -230,6 +230,10 @@ export async function initialize({
     }
   }
 
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    telemetry.trackFeatureIsUsed(`ExperimentalLazyDevjs`)
+  }
+
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
