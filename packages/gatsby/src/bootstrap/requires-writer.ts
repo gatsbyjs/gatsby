@@ -393,7 +393,7 @@ if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
    */
   emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll(store.getState())
+    debouncedWriteAll()
   })
 }
 
@@ -404,7 +404,7 @@ if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
    */
   emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll(store.getState())
+    debouncedWriteAll()
   })
 }
 
