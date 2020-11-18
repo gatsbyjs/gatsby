@@ -110,7 +110,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           actions: [`markNodesDirty`, `callApi`],
         },
         QUERY_RUN_REQUESTED: {
-          actions: [forwardTo(`run-queries`)],
+          actions: forwardTo(`run-queries`),
         },
       },
       invoke: {
