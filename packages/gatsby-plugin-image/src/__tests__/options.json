@@ -1,3 +1,0 @@
-{
-    "plugins": ["gatsby-plugin-image/src/codemod.js"]
-}

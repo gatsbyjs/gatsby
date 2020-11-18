@@ -1,5 +1,5 @@
 import React from "react"
-import { graphl } from "gatsby"
+import { graphql } from "gatsby"
 import Image from "gatsby-image"
 
 <Image fixed={data.file.childImageSharp.fluid} alt="headshot"/>

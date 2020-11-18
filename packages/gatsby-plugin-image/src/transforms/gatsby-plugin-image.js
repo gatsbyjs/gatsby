@@ -29,7 +29,12 @@ const typeMapper = {
   constrained: `CONSTRAINED`,
 }
 
-export function babelRecast(code, relativeFileName) {
+export default function jsCodeShift(file, api, options) {
+  const transformedSource = babelRecast(file.source, file.path)
+  return transformedSource
+}
+
+export function babelRecast(code, filePath) {
   const transformedAst = parse(code, {
     parser: {
       parse: source =>
@@ -38,12 +43,10 @@ export function babelRecast(code, relativeFileName) {
           overrides: [
             {
               test: [`**/*.ts`, `**/*.tsx`],
-              plugins: [
-                [`@babel/plugin-transform-typescript`, { isTSX: true }],
-              ],
+              plugins: [[`@babel/plugin-syntax-typescript`, { isTSX: true }]],
             },
           ],
-          filename: relativeFileName,
+          filename: filePath,
         }),
     },
   })
@@ -61,7 +64,8 @@ export function babelRecast(code, relativeFileName) {
   return result
 }
 
-export default function updateImport({ types: t, template }) {
+export function updateImport(babel) {
+  const { types: t, template } = babel
   let imageImportName = `GatsbyImage`
   return {
     visitor: {

@@ -5,4 +5,4 @@ const result = graphql(`{
     }
   }
 }
-`);
+`)
