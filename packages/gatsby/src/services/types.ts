@@ -41,4 +41,5 @@ export interface IBuildContext {
   webpackListener?: Actor<unknown, AnyEventObject>
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
+  pendingQueryRuns?: Set<string>
 }

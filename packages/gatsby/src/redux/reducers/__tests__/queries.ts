@@ -88,6 +88,7 @@ it(`has expected initial state`, () => {
       "byConnection": Map {},
       "byNode": Map {},
       "deletedQueries": Set {},
+      "dirtyQueriesListToEmitViaWebsocket": Array [],
       "queryNodes": Map {},
       "trackedComponents": Map {},
       "trackedQueries": Map {},
@@ -107,8 +108,8 @@ describe(`create page`, () => {
 
     expect(state).toMatchObject({
       trackedQueries: new Map([
-        [`/foo`, { dirty: FLAG_DIRTY_PAGE }],
-        [`/bar`, { dirty: FLAG_DIRTY_PAGE }],
+        [`/foo`, { dirty: FLAG_DIRTY_PAGE, running: 0 }],
+        [`/bar`, { dirty: FLAG_DIRTY_PAGE, running: 0 }],
       ]),
     })
   })
@@ -119,7 +120,7 @@ describe(`create page`, () => {
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
     state = createPage(state, Pages.foo)
 
-    expect(state.trackedQueries.get(`/foo`)).toEqual({
+    expect(state.trackedQueries.get(`/foo`)).toMatchObject({
       dirty: 0,
     })
   })
@@ -130,7 +131,7 @@ describe(`create page`, () => {
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
     state = createPage(state, Pages.foo, { contextModified: true })
 
-    expect(state.trackedQueries.get(`/foo`)).toEqual({
+    expect(state.trackedQueries.get(`/foo`)).toMatchObject({
       dirty: FLAG_DIRTY_PAGE,
     })
   })
@@ -259,7 +260,9 @@ describe(`replace static query`, () => {
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
 
     expect(state).toMatchObject({
-      trackedQueries: new Map([[`sq--q1`, { dirty: FLAG_DIRTY_TEXT }]]),
+      trackedQueries: new Map([
+        [`sq--q1`, { dirty: FLAG_DIRTY_TEXT, running: 0 }],
+      ]),
     })
   })
 
@@ -276,7 +279,7 @@ describe(`replace static query`, () => {
     expect(state.trackedQueries.get(`sq--q1`)?.dirty).toEqual(0) // sanity-check
 
     state = reducer(state, replaceStaticQuery(StaticQueries.q1))
-    expect(state.trackedQueries.get(`sq--q1`)).toEqual({
+    expect(state.trackedQueries.get(`sq--q1`)).toMatchObject({
       dirty: FLAG_DIRTY_TEXT,
     })
   })
@@ -457,22 +460,26 @@ describe(`query extraction`, () => {
   it(`marks all page queries associated with the component as dirty on the first run`, () => {
     state = reducer(state, queryExtracted(ComponentQueries.bar, {} as any))
 
-    expect(state.trackedQueries.get(`/bar`)).toEqual({
+    expect(state.trackedQueries.get(`/bar`)).toMatchObject({
       dirty: FLAG_DIRTY_PAGE | FLAG_DIRTY_TEXT,
     })
-    expect(state.trackedQueries.get(`/bar2`)).toEqual({
+    expect(state.trackedQueries.get(`/bar2`)).toMatchObject({
       dirty: FLAG_DIRTY_PAGE | FLAG_DIRTY_TEXT,
     })
     // Sanity check
-    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: FLAG_DIRTY_PAGE })
+    expect(state.trackedQueries.get(`/foo`)).toMatchObject({
+      dirty: FLAG_DIRTY_PAGE,
+    })
   })
 
   it(`doesn't mark page query as dirty if query text didn't change`, () => {
     state = editFooQuery(state, ComponentQueries.foo)
 
-    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: 0 })
+    expect(state.trackedQueries.get(`/foo`)).toMatchObject({ dirty: 0 })
     // sanity-check (we didn't run or extract /bar)
-    expect(state.trackedQueries.get(`/bar`)).toEqual({ dirty: FLAG_DIRTY_PAGE })
+    expect(state.trackedQueries.get(`/bar`)).toMatchObject({
+      dirty: FLAG_DIRTY_PAGE,
+    })
   })
 
   it(`doesn't mark page query as dirty if component has query extraction errors`, () => {
@@ -522,7 +529,9 @@ describe(`query extraction`, () => {
   it(`marks all page queries associated with the component as dirty when query text changes`, () => {
     state = editFooQuery(state, ComponentQueries.fooEdited)
 
-    expect(state.trackedQueries.get(`/foo`)).toEqual({ dirty: FLAG_DIRTY_TEXT })
+    expect(state.trackedQueries.get(`/foo`)).toMatchObject({
+      dirty: FLAG_DIRTY_TEXT,
+    })
   })
 
   it.skip(`marks all static queries associated with this component as dirty`, () => {
