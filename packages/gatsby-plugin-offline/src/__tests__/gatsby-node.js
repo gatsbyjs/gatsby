@@ -176,6 +176,7 @@ describe(`pluginOptionsSchema`, () => {
         },
         cacheId: `gatsby-plugin-offline`,
         dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
+        maximumFileSizeToCacheInBytes: 4800,
         runtimeCaching: [
           {
             urlPattern: /(\.js$|\.css$|static\/)/,

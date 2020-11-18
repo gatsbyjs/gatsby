@@ -1,6 +1,0 @@
-<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
-  <path d="M10.5 9H20a3 3 0 013 3v0a3 3 0 01-3 3h-8m3 6h-5a3 3 0 01-3-3v0a3 3 0 013-3h3.5" stroke="#639" stroke-width="1.5"/>
-  <path d="M13 18.172L15.83 21 13 23.828" stroke="#639" stroke-width="1.5"/>
-  <circle r="3" transform="matrix(1 0 0 -1 9 9)" fill="#00BDB6"/>
-  <circle r="3" transform="matrix(1 0 0 -1 21 21)" fill="#639"/>
-</svg>

@@ -28,7 +28,6 @@ module.exports = {
   coveragePathIgnorePatterns: ignoreDirs,
   testPathIgnorePatterns: [
     `<rootDir>/examples/`,
-    `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
     `<rootDir>/packages/gatsby-admin/.cache/`,

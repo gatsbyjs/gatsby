@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.11.0-next.0...gatsby-transformer-remark@2.12.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.10.0-next.0...gatsby-transformer-remark@2.10.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** wait for cache promises before returning ([#27871](https://github.com/gatsbyjs/gatsby/issues/27871)) ([071d50d](https://github.com/gatsbyjs/gatsby/commit/071d50d665c6f5542e29286eaef4dc54a61bb4d8))
+
 ## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.9.0...gatsby-transformer-remark@2.9.1) (2020-11-02)
 
 ### Bug Fixes

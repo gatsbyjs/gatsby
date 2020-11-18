@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.1...gatsby-recipes@0.5.0-next.0) (2020-11-18)
+
+### Features
+
+- **gatsby:** SSR pages during development ([#27432](https://github.com/gatsbyjs/gatsby/issues/27432)) ([23da2c3](https://github.com/gatsbyjs/gatsby/commit/23da2c3fb2e16b7e3fe1e15c19decd799000a212))
+- **recipes-list:** add chakra-ui ([#28013](https://github.com/gatsbyjs/gatsby/issues/28013)) ([51b9041](https://github.com/gatsbyjs/gatsby/commit/51b9041d1f5977f22ee23c7e68bcd6b12999c2c4))
+
+# [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.0...gatsby-recipes@0.4.0-next.1) (2020-11-16)
+
+### Features
+
+- **create-gatsby:** Add create-gatsby ([#27703](https://github.com/gatsbyjs/gatsby/issues/27703)) ([2371fd5](https://github.com/gatsbyjs/gatsby/commit/2371fd584d6824444d93f8667c45421c34aa5f54)), closes [#27801](https://github.com/gatsbyjs/gatsby/issues/27801) [#27995](https://github.com/gatsbyjs/gatsby/issues/27995)
+- **gatsby-recipes:** add Chakra UI recipe ([#27721](https://github.com/gatsbyjs/gatsby/issues/27721)) ([d0c94e9](https://github.com/gatsbyjs/gatsby/commit/d0c94e98f013e53d946e0e75a3e4c1df20ae4c04))
+
+# [0.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.2...gatsby-recipes@0.3.0-next.3) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.1...gatsby-recipes@0.3.0-next.2) (2020-11-09)
+
+### Bug Fixes
+
+- **recipes:** Resolve themes relative to root ([#27836](https://github.com/gatsbyjs/gatsby/issues/27836)) ([57b8023](https://github.com/gatsbyjs/gatsby/commit/57b8023890a764d562cd8f667d03084e9a8a5560))
+
 # [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.0...gatsby-recipes@0.3.0-next.1) (2020-11-05)
 
 ### Bug Fixes

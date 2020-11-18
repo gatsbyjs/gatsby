@@ -9,13 +9,14 @@ import {
   PluginOptions,
   PluginCallback,
 } from "gatsby"
-import { createPage } from "./create-page-wrapper"
-import { createPath, watchDirectory } from "gatsby-page-utils"
-import { collectionExtractQueryString } from "./collection-extract-query-string"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
 import { parse, GraphQLString } from "graphql"
+import { createPath, watchDirectory } from "gatsby-page-utils"
+import { createPage } from "./create-page-wrapper"
+import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 
 interface IOptions extends PluginOptions {
   path: string
@@ -49,18 +50,28 @@ export async function createPagesStatefully(
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
     if (!pagesPath) {
-      reporter.panic(`"path" is a required option for gatsby-plugin-page-creator
+      reporter.panic({
+        id: prefixId(CODES.RequiredPath),
+        context: {
+          sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
-See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`)
+See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`,
+        },
+      })
     }
 
     // Validate that the path exists.
     if (pathCheck && !existsSync(pagesPath)) {
-      reporter.panic(`The path passed to gatsby-plugin-page-creator does not exist on your file system:
+      reporter.panic({
+        id: prefixId(CODES.NonExistingPath),
+        context: {
+          sourceMessage: `The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
 ${pagesPath}
 
-Please pick a path to an existing directory.`)
+Please pick a path to an existing directory.`,
+        },
+      })
     }
 
     const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
@@ -91,11 +102,12 @@ Please pick a path to an existing directory.`)
             knownFiles.add(addedPath)
           }
         } catch (e) {
-          reporter.panic(
-            e.message.startsWith(`PageCreator`)
-              ? e.message
-              : `PageCreator: ${e.message}`
-          )
+          reporter.panic({
+            id: prefixId(CODES.FileSystemAdd),
+            context: {
+              sourceMessage: e.message,
+            },
+          })
         }
       },
       removedPath => {
@@ -105,27 +117,29 @@ Please pick a path to an existing directory.`)
           store.getState().pages.forEach(page => {
             if (page.component === componentPath) {
               deletePage({
-                path: createPath(removedPath),
+                path: page.path,
                 component: componentPath,
               })
             }
           })
           knownFiles.delete(removedPath)
         } catch (e) {
-          reporter.panic(
-            e.message.startsWith(`PageCreator`)
-              ? e.message
-              : `PageCreator: ${e.message}`
-          )
+          reporter.panic({
+            id: prefixId(CODES.FileSystemRemove),
+            context: {
+              sourceMessage: e.message,
+            },
+          })
         }
       }
     ).then(() => doneCb(null, null))
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.Generic),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
   }
 }
 
@@ -164,8 +178,9 @@ export function setFieldsOnGraphQLNodeType({
             }
 
             validatePathQuery(filePath, extensions)
+            const { derivedPath } = derivePath(filePath, sourceCopy, reporter)
 
-            return derivePath(filePath, sourceCopy, reporter)
+            return createPath(derivedPath)
           },
         },
       }
@@ -173,11 +188,12 @@ export function setFieldsOnGraphQLNodeType({
 
     return {}
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.GraphQLResolver),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
     return {}
   }
 }
@@ -186,18 +202,17 @@ export async function onPreInit(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+
   try {
-    const pagesGlob = `**/\\{*\\}**`
+    const pagesGlob = `**/**\\{*\\}**`
 
     const files = await glob(pagesGlob, { cwd: pagesPath })
 
     if (files.length > 0) {
       trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
-      if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-        reporter.panic(
-          `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
-        )
-      }
     }
 
     await Promise.all(
@@ -219,10 +234,11 @@ export async function onPreInit(
       })
     )
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.Generic),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
   }
 }

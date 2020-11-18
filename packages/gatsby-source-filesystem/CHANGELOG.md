@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.7.0-next.0...gatsby-source-filesystem@2.7.0-next.1) (2020-11-18)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-filesystem ([#27906](https://github.com/gatsbyjs/gatsby/issues/27906)) ([2cfbddb](https://github.com/gatsbyjs/gatsby/commit/2cfbddb2b89cbf912020ec6c67dafbb13873958e))
+- **gatsby-source-filesystem:** Use new FileType methods to read file extension ([#28156](https://github.com/gatsbyjs/gatsby/issues/28156)) ([616e9e3](https://github.com/gatsbyjs/gatsby/commit/616e9e3e264e58a750f94aaa428cc7803891ae44))
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.6.0-next.0...gatsby-source-filesystem@2.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [2.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.5.0-next.1...gatsby-source-filesystem@2.5.0-next.2) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.5.0-next.0...gatsby-source-filesystem@2.5.0-next.1) (2020-11-09)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** allow regex and functions for ignore option ([253b1af](https://github.com/gatsbyjs/gatsby/commit/253b1af728de1b007eb582d63286d0ce2476e41b)), closes [#27848](https://github.com/gatsbyjs/gatsby/issues/27848)
+
+### Features
+
+- **gatsby-source-filesystem:** env flag to placeholder remote assets ([#27663](https://github.com/gatsbyjs/gatsby/issues/27663)) ([2b4800a](https://github.com/gatsbyjs/gatsby/commit/2b4800af9339a227a8585feba254c3315e8fffd4))
+
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.3.37...gatsby-source-filesystem@2.4.0) (2020-11-02)
 
 ### Features

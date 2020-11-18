@@ -144,13 +144,13 @@ export function fixedImageSizes({
   maxWidth,
   height,
   maxHeight,
-  fit = `cover`,
+  transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
   reporter,
 }) {
-  let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
+  const { fit = `cover` } = transformOptions
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities)
 
@@ -182,7 +182,6 @@ export function fixedImageSizes({
   }
 
   const originalWidth = width // will use this for presentationWidth, don't want to lose it
-
   const isTopSizeOverriden =
     imgDimensions.width < width || imgDimensions.height < height
 
@@ -201,11 +200,16 @@ export function fixedImageSizes({
                        If possible, replace the current image with a larger one.
                        `)
 
-    width = imgDimensions.width
-    height = imgDimensions.height
+    if (fixedDimension === `width`) {
+      width = imgDimensions.width
+      height = Math.round(width / aspectRatio)
+    } else {
+      height = imgDimensions.height
+      width = height * aspectRatio
+    }
   }
 
-  sizes = densities
+  const sizes = densities
     .filter(size => size >= 1) // remove smaller densities because fixed images don't need them
     .map(density => Math.round(density * width))
     .filter(size => size <= imgDimensions.width)
@@ -215,7 +219,7 @@ export function fixedImageSizes({
     aspectRatio,
     presentationWidth: originalWidth,
     presentationHeight: Math.round(originalWidth / aspectRatio),
-    isTopSizeOverriden,
+    unscaledWidth: width,
   }
 }
 
@@ -225,12 +229,14 @@ export function fluidImageSizes({
   width,
   maxWidth,
   height,
-  fit,
+  transformOptions = {},
   maxHeight,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
   reporter,
 }) {
+  const { fit = `cover` } = transformOptions
+
   // warn if ignored parameters are passed in
   warnForIgnoredParameters(
     `fluid and constrained`,
@@ -270,8 +276,8 @@ export function fluidImageSizes({
     maxWidth = maxHeight * aspectRatio
   }
 
-  let originalMaxWidth = maxWidth
-  let isTopSizeOverriden =
+  const originalMaxWidth = maxWidth
+  const isTopSizeOverriden =
     imgDimensions.width < maxWidth || imgDimensions.height < maxHeight
   if (isTopSizeOverriden) {
     maxWidth = imgDimensions.width
@@ -306,7 +312,7 @@ export function fluidImageSizes({
     aspectRatio,
     presentationWidth: originalMaxWidth,
     presentationHeight: Math.round(originalMaxWidth / aspectRatio),
-    isTopSizeOverriden,
+    unscaledWidth: maxWidth,
   }
 }
 

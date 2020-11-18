@@ -48,6 +48,7 @@ describe(`pluginOptionsSchema`, () => {
         },
         `gatsby-remark-other-plugin`,
       ],
+      lessBabel: false,
       remarkPlugins: [
         require(`../gatsby-node.js`),
         [require(`../gatsby-node.js`), { target: false }],

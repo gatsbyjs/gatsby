@@ -154,6 +154,7 @@ export interface IStateProgram extends IProgram {
 
 export interface IQueryState {
   dirty: number
+  running: number
 }
 
 export interface IComponentState {
@@ -210,9 +211,11 @@ export interface IGatsbyState {
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
     byConnection: Map<string, Set<Identifier>>
+    queryNodes: Map<Identifier, Set<Identifier>>
     trackedQueries: Map<Identifier, IQueryState>
     trackedComponents: Map<string, IComponentState>
     deletedQueries: Set<Identifier>
+    dirtyQueriesListToEmitViaWebsocket: Array<string>
   }
   components: Map<
     SystemPath,
@@ -230,7 +233,6 @@ export interface IGatsbyState {
   staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>
   pendingPageDataWrites: {
     pagePaths: Set<string>
-    templatePaths: Set<SystemPath>
   }
   // @deprecated
   jobs: {
@@ -274,6 +276,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
+  clientVisitedPages: Set<string>
 }
 
 export interface ICachedReduxState {
@@ -306,6 +309,7 @@ export type ActionsUnion =
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
+  | IQueryClearDirtyQueriesListToEmitViaWebsocket
   | IQueryExtractedAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
@@ -341,7 +345,7 @@ export type ActionsUnion =
   | ISetStaticQueriesByTemplateAction
   | IAddPendingPageDataWriteAction
   | IAddPendingTemplateDataWriteAction
-  | IClearPendingPageDataWritesAction
+  | IClearPendingPageDataWriteAction
   | ICreateResolverContext
   | IClearSchemaCustomizationAction
   | ISetSchemaComposerAction
@@ -472,6 +476,10 @@ export interface IReplaceStaticQueryAction {
   }
 }
 
+export interface IQueryClearDirtyQueriesListToEmitViaWebsocket {
+  type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`
+}
+
 export interface IQueryExtractedAction {
   type: `QUERY_EXTRACTED`
   plugin: IGatsbyPlugin
@@ -589,6 +597,12 @@ interface ISetSchemaComposerAction {
   payload: SchemaComposer<any>
 }
 
+export interface ICreateClientVisitedPage {
+  type: `CREATE_CLIENT_VISITED_PAGE`
+  payload: IGatsbyPage
+  plugin?: IGatsbyPlugin
+}
+
 export interface ICreatePageAction {
   type: `CREATE_PAGE`
   payload: IGatsbyPage
@@ -652,11 +666,15 @@ export interface IAddPendingTemplateDataWriteAction {
   type: `ADD_PENDING_TEMPLATE_DATA_WRITE`
   payload: {
     componentPath: SystemPath
+    pages: Array<string>
   }
 }
 
-export interface IClearPendingPageDataWritesAction {
-  type: `CLEAR_PENDING_PAGE_DATA_WRITES`
+export interface IClearPendingPageDataWriteAction {
+  type: `CLEAR_PENDING_PAGE_DATA_WRITE`
+  payload: {
+    page: string
+  }
 }
 
 export interface IDeletePageAction {
@@ -737,7 +755,8 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: IGatsbyNode
+  // FIXME: figure out why payload can be undefined here
+  payload: IGatsbyNode | void
 }
 
 export interface IDeleteNodesAction {

@@ -66,6 +66,8 @@ gatsby new
    (Use a different starter)
 ```
 
+_Note: you can try out the experimental interactive experience from the `create-gatsby` package with the `GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW=true` flag, which will prompt you with questions about the kind of site you're building, and install the plugins you'll need automatically._
+
 See the [Gatsby starters docs](/docs/gatsby-starters/) for more details.
 
 ### `develop`

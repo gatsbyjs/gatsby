@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.3.0-next.0...gatsby-plugin-image@0.3.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [0.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.2.0-next.0...gatsby-plugin-image@0.3.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [0.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.1.0-next.0...gatsby-plugin-image@0.1.0-next.1) (2020-11-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** Resolver API changes ([#27783](https://github.com/gatsbyjs/gatsby/issues/27783)) ([fe0b5de](https://github.com/gatsbyjs/gatsby/commit/fe0b5de77d223f5c13a9b315b650d8514cbdb9f9)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
 ## [0.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.0.5...gatsby-plugin-image@0.0.6) (2020-11-02)
 
 ### Features

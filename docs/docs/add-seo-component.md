@@ -62,7 +62,7 @@ Now define the query and pass it to `useStaticQuery`. You can also alias query i
 
 ```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
-  const { location } = useLocation()
+  const { pathname } = useLocation()
   const { site } = useStaticQuery(query)
 
   return null

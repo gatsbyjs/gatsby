@@ -10,7 +10,14 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Add a link to each image to the original image. Sometimes people want to see a full-sized version of an image e.g. to see extra detail on a part of the image and this is a convenient and common pattern for enabling this. Set this option to false to disable this behavior.`
       ),
-    showCaptions: Joi.boolean()
+    showCaptions: Joi.alternatives()
+      .try(
+        Joi.boolean(),
+        Joi.array().items(
+          Joi.string().valid(`title`),
+          Joi.string().valid(`alt`)
+        )
+      )
       .default(false)
       .description(
         `Add a caption to each image with the contents of the title attribute, when this is not empty. If the title attribute is empty but the alt attribute is not, it will be used instead. Set this option to true to enable this behavior. You can also pass an array instead to specify which value should be used for the caption — for example, passing ['alt', 'title'] would use the alt attribute first, and then the title. When this is set to true it is the same as passing ['title', 'alt']. If you just want to use the title (and omit captions for images that have alt attributes but no title), pass ['title'].`
@@ -27,7 +34,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       ),
     wrapperStyle: Joi.alternatives().try(
       Joi.object({}).unknown(true),
-      Joi.function().maxArity(1)
+      Joi.function().maxArity(1),
+      Joi.string()
     ),
     backgroundColor: Joi.string().default(`white`)
       .description(`Set the background color of the image to match the background image of your design.
@@ -38,7 +46,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     quality: Joi.number()
       .default(50)
       .description(`The quality level of the generated files.`),
-    withWebp: Joi.boolean()
+    withWebp: Joi.alternatives()
+      .try(Joi.object({ quality: Joi.number() }), Joi.boolean())
       .default(false)
       .description(
         `Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the WebP files. For example, pass { quality: 80 } to have the WebP images be at quality level 80.`
