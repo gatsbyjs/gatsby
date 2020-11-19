@@ -89,7 +89,7 @@ All sites should see some speedups but it's especially noticible for larger site
 
 Adds a `lessBabel` option to the plugin which allows you to use a fast path for scanning exports during sourcing. The savings are significant, especially at scale, but as the new scanner does not use Babel, if your site depends on Babel then you can't use this. Please give the option a try and report any problems unrelated to not running Babel so we can improve the support.
 
-See PR [#27941](https://github.com/gatsby/gatsby/issues/27941)
+See PR [#27941](https://github.com/gatsbyjs/gatsby/issues/27941)
 
 ## Notable bugfixes
 
