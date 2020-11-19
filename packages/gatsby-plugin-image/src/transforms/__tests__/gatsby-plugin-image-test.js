@@ -2,8 +2,10 @@ const tests = [
   `baseline`,
   `call-expression`,
   `compat`,
+  `ignore`,
   `multiple`,
   `placeholders`,
+  `transform-error`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
