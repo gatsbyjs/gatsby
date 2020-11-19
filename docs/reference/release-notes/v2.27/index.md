@@ -27,7 +27,7 @@ Sneak peek to next releases:
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 [Previous release notes](../v2.26/index.md)<br>
-[Full changelog](<(https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0)>)
+[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0)>)
 
 ### Create-gatsby
 
@@ -42,6 +42,7 @@ This command will trigger a series of prompts, allowing you to select your CMS, 
 This is also the alias for the existing `gatsby new` command when no arguments are passed. However, `gatsby new <github repo>` retains its current functionality, allowing you to make use of the numerous fully functional starters.
 
 ### Making `gatsby develop` faster
+
 The Gatsby develop server can get slow to start on larger sites. We're working hard to speed it up. We're addressing different scaling problems one by one and have shipped several improvements behind flags as detailed below. If you'd like to enable all these dev speedups (along with all future ones!), we've created a single flag for you. Run your site like `GATSBY_EXPERIMENTAL_FAST_DEV=true gatsby develop` and zoom zoom!
 
 ### Experimental: Queries on Demand
