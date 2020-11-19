@@ -568,5 +568,9 @@ export const publicLoader = {
 export default publicLoader
 
 export function getStaticQueryResults() {
-  return instance.staticQueryDb
+  if (instance) {
+    return instance.staticQueryDb
+  } else {
+    return {}
+  }
 }
