@@ -226,34 +226,39 @@ export const query = graphql`
 
 ### Upgrading from the gatsby-image@2
 
-You can use the compat layer to make the transformation easier.
+We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
 
-```jsx
-import React from "react"
-import { graphql } from "gatsby"
-import { GatsbyImage } from "gatsby-plugin-image/compat"
+1. Install JSCodeshift as a global module
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <GatsbyImage fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
-
-export const query = graphql`
-  query {
-    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        # Makes it trivial to update as your page's design changes.
-        fixed(width: 125, height: 125) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-  }
-`
+```shell
+npm install -g jscodeshift
 ```
+
+2. Install this package
+
+```shell
+npm install gatsby-plugin-image
+```
+
+3. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
+
+4. Run a transform from this package on your project
+
+```shell
+jscodeshift -t node_modules/gatsby-plugin-image/transforms/gatsby-plugin-image.js my-project/src
+```
+
+**Be sure to include `src` at the end of your project path to prevent the codemod from running against `node_modules` and other directories**
+
+Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
+
+Structure of a jscodeshift call:
+
+- `jscodeshift -t <codemod-script> <path>`
+  - `codemod-script` - path to the transform file
+  - `path` - files or directory to transform, typically the path to your Gatsby project's `src` folder
+  - use the `-d` option for a dry-run and use `-p` to print the output for comparison
+  - see all available [jscodeshift options](https://github.com/facebook/jscodeshift#usage-cli)
 
 ## Three types of responsive images
 
