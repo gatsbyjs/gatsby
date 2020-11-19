@@ -14,7 +14,6 @@
     "async-retry-ng": "^2.0.1",
     "boxen": "^4.2.0",
     "configstore": "^5.0.1",
-    "envinfo": "^7.7.3",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.6.0-next.0",
     "git-up": "^4.0.2",
