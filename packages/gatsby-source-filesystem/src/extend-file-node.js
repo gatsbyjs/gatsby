@@ -30,7 +30,7 @@ module.exports = ({
         )
 
         if (!fs.existsSync(publicPath)) {
-          fs.copy(
+          fs.copySync(
             details.absolutePath,
             publicPath,
             { dereference: true },
