@@ -6,10 +6,12 @@ import Image from "gatsby-image"
 
 
 export const query = graphql`{
-  image {
-    childImageSharp {
-      fluid {
-        ...GatsbyImageSharpFluid_tracedSVG
+  file(relativePath: {eq: "landscape.jpg"}) {
+    image {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid_tracedSVG
+          }
         }
       }
     }

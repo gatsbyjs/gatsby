@@ -6,9 +6,11 @@ import { GatsbyImage } from "gatsby-plugin-image";
 
 
 export const query = graphql`{
-  image {
-    childImageSharp {
-      gatsbyImageData(placeholder: TRACED_SVG, layout: FLUID)
+  file(relativePath: {eq: "landscape.jpg"}) {
+    image {
+      childImageSharp {
+        gatsbyImageData(placeholder: TRACED_SVG, layout: FLUID)
+      }
     }
   }
 }

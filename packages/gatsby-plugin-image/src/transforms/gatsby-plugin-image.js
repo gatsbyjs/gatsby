@@ -69,7 +69,7 @@ export function babelRecast(code, filePath) {
 
 export function updateImport(babel) {
   const { types: t, template } = babel
-  let imageImportName = `GatsbyImage`
+  let imageImportName = ``
   return {
     visitor: {
       ImportDeclaration: path => {
@@ -92,9 +92,23 @@ export function updateImport(babel) {
         }
         const componentName = t.jsxIdentifier(`GatsbyImage`)
 
+        const hasFixedOrFluid =
+          node.attributes.filter(
+            ({ name }) => name?.name === `fluid` || name?.name === `fixed`
+          ).length > 0
+
         const otherAttributes = node.attributes.filter(
           ({ name }) => name?.name !== `fluid` && name?.name !== `fixed`
         )
+
+        if (!hasFixedOrFluid) {
+          path.replaceWith(
+            t.jsxOpeningElement(componentName, [...otherAttributes], true)
+          )
+          path.skip() // prevent us from revisiting these nodes
+          return
+        }
+
         const newImageExpression = template.expression
           .ast`data.file.childImageSharp.gatsbyImageData`
         newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
@@ -111,6 +125,7 @@ export function updateImport(babel) {
             true
           )
         )
+        path.skip() // prevent us from revisiting these nodes
       },
       TaggedTemplateExpression({ node }) {
         if (node.tag.name !== `graphql`) {
@@ -119,6 +134,7 @@ export function updateImport(babel) {
         const query = node.quasi.quasis[0].value.raw
 
         const transformedGraphQLQuery = processGraphQLQuery(query)
+
         node.quasi.quasis[0].value.raw = graphql.print(transformedGraphQLQuery)
       },
       CallExpression({ node }) {
