@@ -33,7 +33,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 There is now a new, interactive way to create a Gatsby site. As long as you have Node.js installed you're ready to go.
 
-```
+```shell
 npm init gatsby
 ```
 
