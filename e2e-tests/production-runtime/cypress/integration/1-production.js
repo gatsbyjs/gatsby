@@ -50,7 +50,7 @@ describe(`Production build tests`, () => {
         .getTestElement(`subdir-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-1`)
+        .should(`eq`, `/subdirectory/page-1/this-should-fail-the-test/`)
     })
 
     it(`can navigate to a sibling page`, () => {
