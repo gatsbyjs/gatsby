@@ -29,7 +29,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 [Previous release notes](../v2.26/index.md)<br>
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0)
 
-### Create-gatsby
+### create-gatsby
 
 There is now a new, interactive way to create a Gatsby site. As long as you have Node.js installed you're ready to go.
 
