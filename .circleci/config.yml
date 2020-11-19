@@ -393,6 +393,9 @@ jobs:
 
   mdx_e2e_tests:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: spbj28
+      CYPRESS_RECORD_KEY: af30ea46-121f-4fb7-97dd-f17ec224402e
     steps:
       - e2e-test:
           test_path: e2e-tests/mdx
@@ -400,6 +403,9 @@ jobs:
 
   e2e_tests_gatsby-static-image:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: zstawi
+      CYPRESS_RECORD_KEY: 389326a6-c0d2-4215-bc5e-3be29483ed13
     steps:
       - e2e-test:
           test_path: e2e-tests/gatsby-static-image
@@ -407,6 +413,9 @@ jobs:
 
   e2e_tests_visual-regression:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: nz99aw
+      CYPRESS_RECORD_KEY: ed4b1af1-bd97-47d4-bb09-3cab2435a147
     steps:
       - e2e-test:
           test_path: e2e-tests/visual-regression
