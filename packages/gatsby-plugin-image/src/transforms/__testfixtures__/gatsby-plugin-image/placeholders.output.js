@@ -6,16 +6,9 @@ import { GatsbyImage } from "gatsby-plugin-image";
 
 
 export const query = graphql`{
-  allProjectsYaml(sort: {fields: [index], order: DESC}) {
-    nodes {
-      name
-      url
-      image {
-        childImageSharp {
-          gatsbyImageData(placeholder: TRACED_SVG, layout: FLUID)
-        }
-      }
-      technologies
+  image {
+    childImageSharp {
+      gatsbyImageData(placeholder: TRACED_SVG, layout: FLUID)
     }
   }
 }

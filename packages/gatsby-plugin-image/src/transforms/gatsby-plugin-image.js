@@ -29,8 +29,7 @@ const typeMapper = {
   constrained: `CONSTRAINED`,
 }
 
-export default function jsCodeShift(file, api, options) {
-  // TODO: Allow people to add their babel stuff so parsing always works?
+export default function jsCodeShift(file) {
   const transformedSource = babelRecast(file.source, file.path)
   return transformedSource
 }
