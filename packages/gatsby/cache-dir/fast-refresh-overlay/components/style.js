@@ -13,8 +13,12 @@ const Style = () => (
     dangerouslySetInnerHTML={{
       __html: css`
         :host {
+          --gatsby: #663399;
+          --gatsbyLight: #9158ca;
+          --dimmedWhite: rgba(255, 255, 255, 0.8);
+          --white: #ffffff;
           --color-ansi-selection: rgba(95, 126, 151, 0.48);
-          --color-ansi-bg: #fefefe;
+          --color-ansi-bg: #fafafa;
           --color-ansi-fg: #545454;
           --color-ansi-white: #969896;
           --color-ansi-black: #141414;
@@ -32,6 +36,11 @@ const Style = () => (
           --color-ansi-bright-magenta: #795da3;
           --color-ansi-bright-red: #d91e18;
           --color-ansi-bright-yellow: #aa5d00;
+          --radii: 5px;
+          --z-index-normal: 5;
+          --z-index-elevated: 10;
+          --padding: 1.5em;
+          --padding-sm: 1em;
         }
 
         [data-gatsby-overlay="backdrop"] {
@@ -43,7 +52,7 @@ const Style = () => (
           bottom: 0;
           height: 100%;
           width: 100%;
-          z-index: 5;
+          z-index: var(--z-index-normal);
           backdrop-filter: blur(10px);
         }
 
@@ -51,8 +60,7 @@ const Style = () => (
           font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
-          border: 5px;
-          background: #ffffff;
+          background: var(--color-ansi-bright-white);
           position: fixed;
           max-width: 75%;
           max-height: 90%;
@@ -61,29 +69,33 @@ const Style = () => (
           transform: translateX(-50%) translateY(-50%);
           box-shadow: rgba(46, 41, 51, 0.08) 0px 7px 19px 11px,
             rgba(71, 63, 79, 0.08) 0px 2px 4px;
-          border-radius: 5px;
+          border-radius: var(--radii);
           display: inline-flex;
           flex-direction: column;
-          z-index: 10;
+          z-index: var(--z-index-elevated);
         }
 
         [data-gatsby-overlay="header"] {
           display: flex;
           align-items: center;
-          color: rgba(255, 255, 255, 0.8);
-          background: #663399;
-          padding: 1.5em;
-          border-top-left-radius: 5px;
-          border-top-right-radius: 5px;
+          color: var(--dimmedWhite);
+          background: var(--gatsby);
+          padding: var(--padding);
+          border-top-left-radius: var(--radii);
+          border-top-right-radius: var(--radii);
         }
 
         [data-gatsby-overlay="body"] {
-          padding: 1.5em;
+          padding: var(--padding);
           overflow: auto;
         }
 
         [data-gatsby-overlay="body"] pre {
           margin: 0;
+          color: var(--color-ansi-fg);
+          background: var(--color-ansi-bg);
+          padding: var(--padding-sm);
+          border-radius: var(--radii);
         }
 
         [data-gatsby-overlay="header__cause-file"] {
@@ -97,18 +109,18 @@ const Style = () => (
 
         [data-gatsby-overlay="header__cause-file"] span {
           font-size: 1.25em;
-          color: white;
+          color: var(--white);
         }
 
         [data-gatsby-overlay="header__open-in-editor"] {
           align-items: center;
-          border-radius: 4px;
+          border-radius: var(--radii);
           justify-content: center;
           line-height: 1;
           cursor: pointer;
-          color: #fff;
-          border: 1px solid rgb(102, 51, 153);
-          background: #9158ca;
+          color: var(--white);
+          border: 1px solid var(--gatsby);
+          background: var(--gatsbyLight);
           font-size: 1em;
           height: 2em;
           min-width: 2em;
@@ -119,15 +131,15 @@ const Style = () => (
           cursor: pointer;
           border: 0;
           padding: 0;
-          background-color: #9158ca;
-          color: white;
+          background-color: var(--gatsbyLight);
+          color: var(--white);
           appearance: none;
           height: 36px;
           width: 36px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          border-radius: 4px;
+          border-radius: var(--radii);
           margin-left: 1rem;
         }
       `,

@@ -3,9 +3,13 @@ import React from "react"
 class ErrorBoundary extends React.PureComponent {
   state = { error: null }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error) {
     this.props.onError(error)
     this.setState({ error })
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log({ prevState })
   }
 
   render() {
