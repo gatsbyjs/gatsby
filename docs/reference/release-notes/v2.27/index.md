@@ -67,7 +67,7 @@ Please try it and [let us know](https://github.com/gatsbyjs/gatsby/discussions/2
 
 ## Experimental: SSR in Development
 
-One of the least enjoyable bugs to encounter in Gatsby is when your build fails due to code trying to reference `window` or `document` or other browser globals that are not accessible in node.js during SSR.
+One of the least enjoyable bugs to encounter in Gatsby is when your build fails due to code trying to reference `window` or `document` or other browser globals that are not accessible in Node.js during SSR.
 
 Currently the only way to debug these is to change some code and rebuild and repeat until the problem is solved. This is a very slow way to debug. Worst, these sorts of bugs are often only encountered after a long development period. It's no fun to push code you're proud of to CI only to discover it's broken.
 
