@@ -29,7 +29,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 [Previous release notes](../v2.26/index.md)<br>
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0)
 
-### create-gatsby
+## create-gatsby
 
 There is now a new, interactive way to create a Gatsby site. As long as you have Node.js installed you're ready to go.
 
@@ -41,7 +41,7 @@ This command will ask a series of questions, allowing you to select your CMS, pr
 
 This is also the alias for the existing `gatsby new` command when no arguments are passed. However, `gatsby new <github repo>` retains its current functionality, allowing you to make use of the numerous fully functional starters.
 
-### Making `gatsby develop` faster
+## Making `gatsby develop` faster
 
 The Gatsby develop server can get slow to start on larger sites. We're working hard to speed it up. We're addressing different scaling problems one by one and have shipped several improvements behind flags as detailed below. If you'd like to enable all these dev speedups (along with all future ones!), we've created a single flag for you. Run your site like `GATSBY_EXPERIMENTAL_FAST_DEV=true gatsby develop` and zoom zoom!
 
@@ -65,7 +65,7 @@ Please try it and [let us know](https://github.com/gatsbyjs/gatsby/discussions/2
 
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/27620).
 
-## Experimental: SSR in Development
+### Experimental: SSR in Development
 
 One of the least enjoyable bugs to encounter in Gatsby is when your build fails due to code trying to reference `window` or `document` or other browser globals that are not accessible in Node.js during SSR.
 
@@ -75,7 +75,7 @@ With this coming feature, we'll SSR pages during development when do a full refr
 
 Try it out immediately by running `GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop`. Join in the discussion in its [umbrella issue](https://github.com/gatsbyjs/gatsby/issues/28138).
 
-## Experimental: Lazy page bundling in development
+### Experimental: Lazy page bundling in development
 
 An obstacle to Gatsby being a delightful experience for larger sites is JavaScript compilation can start to get annoyingly slow. For example, gatsbyjs.com takes over two minutes currently (with a cold cache) to compile and bundle the code for the many page components. Not acceptable!
 
