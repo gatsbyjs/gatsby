@@ -1,6 +1,6 @@
 import React from "react"
 import StackTrace from "stack-trace"
-import { codeFrameColumns } from "@babel/code-frame"
+// import { codeFrameColumns } from "@babel/code-frame"
 import Overlay from "./overlay"
 
 function formatFilename(filename) {
