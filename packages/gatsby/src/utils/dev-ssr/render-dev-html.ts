@@ -3,6 +3,7 @@ import _ from "lodash"
 
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
+import { getPageData as getPageDataExperimental } from "../get-page-data"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -62,6 +63,9 @@ export const renderDevHTML = ({
     if (pageObj.matchPath) {
       isClientOnlyPage = true
     }
+
+    // Ensure the query has been run and written out.
+    await getPageDataExperimental(pageObj.path)
 
     try {
       const htmlString = await worker.renderHTML({
