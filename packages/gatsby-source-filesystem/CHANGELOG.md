@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.6.0-next.0...gatsby-source-filesystem@2.6.0) (2020-11-19)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Use new FileType methods to read file extension ([#28156](https://github.com/gatsbyjs/gatsby/issues/28156)) ([#28178](https://github.com/gatsbyjs/gatsby/issues/28178)) ([00870bb](https://github.com/gatsbyjs/gatsby/commit/00870bbc96e0aaa6b68706ad434129ab0c031154))
+
 # [2.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.5.0-next.1...gatsby-source-filesystem@2.5.0-next.2) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-source-filesystem
