@@ -202,7 +202,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   let cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent> = components
   let notVisitedPageComponents: Array<IGatsbyPageComponent> = components
 
-  if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     const clientVisitedPageComponents = [
       ...(state.visitedPages.get(`client`)?.values() || []),
     ]
@@ -382,7 +382,7 @@ const debouncedWriteAll = _.debounce(
   }
 )
 
-if (process.env.GATSBY_EXPERIMENT_LAZY_DEVJS) {
+if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
   /**
    * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
    * files as required
