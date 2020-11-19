@@ -37,7 +37,7 @@ There is now a new, interactive way to create a Gatsby site. As long as you have
 npm init gatsby
 ```
 
-This command will trigger a series of prompts, allowing you to select your CMS, preferred styling tools and common Gatsby plugins. After you've made your selections let the installation complete and you'll have a working Gatsby site, all packages included and configured for use.
+This command will ask a series of questions, allowing you to select your CMS, preferred styling tools and common Gatsby plugins. After you've made your selections let the installation complete and you'll have a working Gatsby site, all packages included and configured for use.
 
 This is also the alias for the existing `gatsby new` command when no arguments are passed. However, `gatsby new <github repo>` retains its current functionality, allowing you to make use of the numerous fully functional starters.
 
