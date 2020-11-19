@@ -71,7 +71,7 @@ This will help the dev environment more closely mimic builds so you'll catch bui
 
 Try out develop SSR *today* by running your site with it enabled:
 
-GATSBY_EXPERIMENT_DEV_SSR=true gatsby develop
+GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop
 
 Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
       `,
