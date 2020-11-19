@@ -60,7 +60,7 @@ describe(`get-page-data-util`, () => {
     deletePageDataFilesFromFs()
   })
 
-  it(`Resolves immediately of query result is up to date`, async () => {
+  it(`Resolves immediately if query result is up to date`, async () => {
     // query did already run before
     createPage(Pages.foo)
     startPageQuery(Pages.foo)
