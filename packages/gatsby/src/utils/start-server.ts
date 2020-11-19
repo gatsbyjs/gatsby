@@ -263,9 +263,15 @@ export async function startServer(
     publicPath: devConfig.output.publicPath,
     watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
     stats: `errors-only`,
+    serverSideRender: true,
   }) as unknown) as PatchedWebpackDevMiddleware
 
   app.use(webpackDevMiddlewareInstance)
+
+  app.get(`/__original-stack-frame`, (req, res) => {
+    console.log({ result: res.locals.webpackStats })
+    res.end()
+  })
 
   // Expose access to app for advanced use cases
   const { developMiddleware } = store.getState().config

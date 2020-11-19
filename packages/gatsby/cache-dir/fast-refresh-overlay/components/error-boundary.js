@@ -1,22 +1,22 @@
 import React from "react"
 
-class ErrorBoundary extends React.PureComponent {
-  state = { error: null }
+class ErrorBoundary extends React.Component {
+  state = { hasError: false }
 
   componentDidCatch(error) {
     this.props.onError(error)
-    this.setState({ error })
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log({ prevState })
+  componentDidMount() {
+    this.props.clearErrors()
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true }
   }
 
   render() {
-    return this.state.error
-      ? // The component has to be unmounted or else it would continue to error
-        null
-      : this.props.children
+    return this.state.hasError ? null : this.props.children
   }
 }
 

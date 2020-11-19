@@ -21,13 +21,6 @@ export default class FastRefreshOverlay extends React.Component {
     this.setState({ errors: [], currenIndex: 0, buildError: null })
   }
 
-  addError = error => {
-    // eslint-disable-next-line no-invalid-this
-    this.setState(prevState => {
-      return { errors: [...prevState.errors, error] }
-    })
-  }
-
   addBuildError = error => {
     // eslint-disable-next-line no-invalid-this
     this.setState({ buildError: error })
@@ -51,14 +44,9 @@ export default class FastRefreshOverlay extends React.Component {
           this.addBuildError(data[0])
         }
       },
+      // We rely on Fast Refresh notifying us on updates as HMR notification is "not at the right time"
       clear: () => {
-        const { errors } = this.state
-        const hasRuntimeError = Boolean(errors.length)
-        console.log(`clear here`)
-        if (this._isMounted && !hasRuntimeError) {
-          console.log(`I get run`)
-          this.setState({ errors: [], currentIndex: 0, buildError: null })
-        }
+        this.setState({ buildError: null })
       },
     })
 
@@ -84,10 +72,6 @@ export default class FastRefreshOverlay extends React.Component {
     //   )
     // })
   }
-  //
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   console.log({ prevProps, prevState })
-  // }
 
   componentWillUnmount() {
     this._isMounted = false
@@ -99,18 +83,20 @@ export default class FastRefreshOverlay extends React.Component {
     const hasBuildError = buildError !== null
     const hasRuntimeError = Boolean(errors.length)
 
-    console.log({ errors, buildError })
-
     const hasErrors = hasBuildError || hasRuntimeError
 
     return (
       <React.Fragment>
         <ErrorBoundary
-          style={{ filter: `blur(10px)` }}
+          clearErrors={() => {
+            this.setState({ errors: [], buildError: null })
+          }}
           onError={error => {
+            console.log({ error })
             this.setState(prevState => {
+              const insertedError = { type: `RUNTIME_ERROR`, error }
               return {
-                errors: [...prevState.errors, { type: `RUNTIME_ERROR`, error }],
+                errors: [...prevState.errors, insertedError],
               }
             })
           }}
