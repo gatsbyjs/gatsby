@@ -56,8 +56,8 @@ What this means for you: faster local development experience, up to 2x faster in
 
 This feature is available under a flag.
 
-```sh
-cross-env GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=1 gatsby develop
+```shell
+GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=1 gatsby develop
 ```
 
 Please try it and [let us know](https://github.com/gatsbyjs/gatsby/discussions/27620) if you have any issues
