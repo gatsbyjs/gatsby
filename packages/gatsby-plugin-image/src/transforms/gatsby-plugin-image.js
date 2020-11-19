@@ -63,7 +63,7 @@ export function babelRecast(code, filePath) {
 
   const { ast } = transformFromAstSync(transformedAst, code, options)
 
-  const result = print(ast).code
+  const result = print(ast, { lineTerminator: `\n` }).code
   return result
 }
 
