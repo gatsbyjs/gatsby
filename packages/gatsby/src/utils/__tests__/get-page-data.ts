@@ -1,28 +1,40 @@
 import { store } from "../../redux"
-import { getPageData } from "../get-page-data"
+import { getPageData, RETRY_INTERVAL } from "../get-page-data"
+import { fixedPagePath } from "../page-data"
 import {
   IGatsbyPage,
   IGatsbyPlugin,
   IQueryStartAction,
 } from "../../redux/types"
 import { pageQueryRun, queryStart } from "../../redux/actions/internal"
+import { join as pathJoin } from "path"
 
-const MOCK_FILE_INFO = {}
+let MOCK_FILE_INFO = {}
 
 jest.mock(`fs-extra`, () => {
   return {
-    readJson: jest.fn(path => {
+    readFile: jest.fn(path => {
       if (MOCK_FILE_INFO[path]) {
         return MOCK_FILE_INFO[path]
       }
-      throw new Error(`Doesn't exist`)
+      throw new Error(`Cannot read file "${path}"`)
     }),
-    pathExists: jest.fn(path => !!MOCK_FILE_INFO[path]),
-    readFile: jest.fn(path => JSON.stringify(MOCK_FILE_INFO[path])),
   }
 })
 
 describe(`get-page-data-util`, () => {
+  const pageDataContent = {
+    result: {
+      foo: `bar`,
+    },
+  }
+
+  const pageDataStaleContent = {
+    result: {
+      foo: `I'm stale`,
+    },
+  }
+
   let Pages
   beforeAll(() => {
     Pages = {
@@ -30,16 +42,6 @@ describe(`get-page-data-util`, () => {
         path: `/foo`,
         componentPath: `/foo.js`,
         component: `/foo.js`,
-      },
-      bar: {
-        path: `/bar`,
-        componentPath: `/bar.js`,
-        component: `/bar.js`,
-      },
-      bar2: {
-        path: `/bar2`,
-        componentPath: `/bar.js`,
-        component: `/bar.js`,
       },
     }
 
@@ -51,31 +53,215 @@ describe(`get-page-data-util`, () => {
     })
   })
 
-  it(`times out gracefully`, async () => {
-    jest.useFakeTimers()
-
-    createPage(Pages.foo)
-    const resultPromise = getPageData(Pages.foo.path)
-
-    expect(setTimeout).toHaveBeenCalledTimes(1)
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 10000)
-
-    jest.runAllTimers()
-
-    expect(resultPromise).rejects.toThrowError(
-      `Error loading a result for the page query in "/foo". Query was not run and no cached result was found.`
-    )
+  beforeEach(() => {
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
+    deletePageDataFilesFromFs()
   })
 
-  it.skip(`handles page deletion in the middle of execution gracefully`, async () => {
-    // TODO
+  it(`Resolves immediately of query result is up to date`, async () => {
+    // query did already run before
+    createPage(Pages.foo)
+    startPageQuery(Pages.foo)
+    finishQuery(Pages.foo)
+    writePageDataFileToFs(Pages.foo, pageDataContent)
+
+    const resultPromise = getPageData(Pages.foo.path)
+    expect(await resultPromise).toEqual(pageDataContent)
+  })
+
+  it(`Waits for query to run and resolve properly`, async () => {
     createPage(Pages.foo)
     const resultPromise = getPageData(Pages.foo.path)
-    startPageQuery(Pages.foo)
-    deletePage(Pages.foo)
 
-    const result = await resultPromise
-    expect(result).toEqual({})
+    startPageQuery(Pages.foo)
+    finishQuery(Pages.foo)
+    writePageDataFileToFs(Pages.foo, pageDataContent)
+
+    expect(await resultPromise).toEqual(pageDataContent)
+  })
+
+  describe(`timeouts and retries`, () => {
+    it(`it times out eventually (default timeout)`, async () => {
+      jest.useFakeTimers()
+
+      createPage(Pages.foo)
+      const resultPromise = getPageData(Pages.foo.path)
+
+      jest.runAllTimers()
+
+      expect(setTimeout).toHaveBeenCalledTimes(3)
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        1,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        2,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        3,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+
+      await expect(resultPromise).rejects.toMatchInlineSnapshot(
+        `[Error: Couldn't get query results for "/foo" in 15.000s.]`
+      )
+    })
+
+    it(`it times out eventually (7 second timeout - 5s + 2s)`, async () => {
+      jest.useFakeTimers()
+
+      createPage(Pages.foo)
+      const resultPromise = getPageData(Pages.foo.path, 7000)
+
+      jest.runAllTimers()
+
+      expect(setTimeout).toHaveBeenCalledTimes(2)
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        1,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+      expect(setTimeout).toHaveBeenNthCalledWith(2, expect.any(Function), 2000)
+
+      await expect(resultPromise).rejects.toMatchInlineSnapshot(
+        `[Error: Couldn't get query results for "/foo" in 7.000s.]`
+      )
+    })
+
+    it(`Can resolve after retry`, async () => {
+      jest.useFakeTimers()
+
+      expect(clearTimeout).toHaveBeenCalledTimes(0)
+
+      createPage(Pages.foo)
+      const resultPromise = getPageData(Pages.foo.path)
+      startPageQuery(Pages.foo)
+
+      jest.runOnlyPendingTimers()
+
+      // we don't resolve in first timeout and we set timeout for second one
+      expect(setTimeout).toHaveBeenCalledTimes(2)
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        1,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        1,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+
+      finishQuery(Pages.foo)
+      writePageDataFileToFs(Pages.foo, pageDataContent)
+
+      // we cancel second timeout
+      expect(clearTimeout).toHaveBeenCalledTimes(1)
+
+      // and result are correct
+      expect(await resultPromise).toEqual(pageDataContent)
+    })
+
+    it(`Can fallback to stale page-data if it exists (better to potentially unblock user to start doing some work than fail completely)`, async () => {
+      jest.useFakeTimers()
+
+      writePageDataFileToFs(Pages.foo, pageDataStaleContent)
+
+      createPage(Pages.foo)
+      const resultPromise = getPageData(Pages.foo.path)
+
+      jest.runAllTimers()
+
+      expect(setTimeout).toHaveBeenCalledTimes(3)
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        1,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        2,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+      expect(setTimeout).toHaveBeenNthCalledWith(
+        3,
+        expect.any(Function),
+        RETRY_INTERVAL
+      )
+
+      // we didn't get fresh results, but we resolved to stale ones
+      expect(await resultPromise).toEqual(pageDataStaleContent)
+    })
+  })
+
+  describe(`handles page deletion in the middle of execution gracefully`, () => {
+    describe.each([
+      // both variants should report that page was deleted
+      [
+        `Doesn't have stale page-data file for a page`,
+        { hasPreviousResults: false },
+      ],
+      [`Has stale page-data file for a page`, { hasPreviousResults: true }],
+    ])(`%s`, (_title, { hasPreviousResults }) => {
+      beforeEach(() => {
+        if (hasPreviousResults) {
+          writePageDataFileToFs(Pages.foo, pageDataStaleContent)
+        }
+      })
+
+      it(`page is deleted before we start query running`, async () => {
+        jest.useFakeTimers()
+
+        createPage(Pages.foo)
+        const resultPromise = getPageData(Pages.foo.path)
+
+        deletePage(Pages.foo)
+
+        jest.runAllTimers()
+
+        await expect(resultPromise).rejects.toMatchInlineSnapshot(
+          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`
+        )
+      })
+
+      it(`page is deleted after we start query running`, async () => {
+        jest.useFakeTimers()
+
+        createPage(Pages.foo)
+        const resultPromise = getPageData(Pages.foo.path)
+        startPageQuery(Pages.foo)
+        deletePage(Pages.foo)
+        finishQuery(Pages.foo)
+
+        jest.runAllTimers()
+
+        await expect(resultPromise).rejects.toMatchInlineSnapshot(
+          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`
+        )
+      })
+
+      it(`page is deleted before we flush page data`, async () => {
+        jest.useFakeTimers()
+
+        createPage(Pages.foo)
+        const resultPromise = getPageData(Pages.foo.path)
+        startPageQuery(Pages.foo)
+        finishQuery(Pages.foo)
+        deletePage(Pages.foo)
+
+        jest.runAllTimers()
+
+        await expect(resultPromise).rejects.toMatchInlineSnapshot(
+          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`
+        )
+      })
+    })
   })
 })
 
@@ -97,8 +283,8 @@ function deletePage(page: Partial<IGatsbyPage>): void {
 
 function startPageQuery(page: Partial<IGatsbyPage>): void {
   const payload: IQueryStartAction["payload"] = {
-    path: page.path,
-    componentPath: page.componentPath,
+    path: page.path!,
+    componentPath: page.componentPath!,
     isPage: true,
   }
   store.dispatch(
@@ -108,13 +294,14 @@ function startPageQuery(page: Partial<IGatsbyPage>): void {
 
 function finishQuery(page: Partial<IGatsbyPage>): void {
   const payload: IQueryStartAction["payload"] = {
-    path: page.path,
-    componentPath: page.componentPath,
+    path: page.path!,
+    componentPath: page.componentPath!,
     isPage: true,
   }
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)
   )
+
   store.dispatch({
     type: `ADD_PENDING_PAGE_DATA_WRITE`,
     payload: {
@@ -123,7 +310,23 @@ function finishQuery(page: Partial<IGatsbyPage>): void {
   })
 }
 
-function clearDataWrite(page: Partial<IGatsbyPage>): void {
+function deletePageDataFilesFromFs(): void {
+  MOCK_FILE_INFO = {}
+}
+
+function writePageDataFileToFs(
+  page: Partial<IGatsbyPage>,
+  jsonObject: object
+): void {
+  MOCK_FILE_INFO[
+    pathJoin(
+      __dirname,
+      `public`,
+      `page-data`,
+      fixedPagePath(page.path!),
+      `page-data.json`
+    )
+  ] = JSON.stringify(jsonObject)
   store.dispatch({
     type: `CLEAR_PENDING_PAGE_DATA_WRITE`,
     payload: { page: page.path },
