@@ -105,7 +105,6 @@ export function updateImport(babel) {
           path.replaceWith(
             t.jsxOpeningElement(componentName, [...otherAttributes], true)
           )
-          path.skip() // prevent us from revisiting these nodes
           return
         }
 
