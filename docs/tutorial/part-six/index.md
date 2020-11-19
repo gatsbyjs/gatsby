@@ -87,7 +87,7 @@ Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with th
 ```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
