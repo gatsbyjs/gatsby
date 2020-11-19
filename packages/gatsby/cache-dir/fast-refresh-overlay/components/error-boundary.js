@@ -8,7 +8,7 @@ class ErrorBoundary extends React.PureComponent {
     this.setState({ error })
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps, prevState) {
     console.log({ prevState })
   }
 
