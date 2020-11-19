@@ -11,7 +11,7 @@ Welcome to `gatsby@2.27.0` release (November 2020 #2).
 
 Key highlights of this release:
 
-- [Create-gatsby](#create-gatsby) - new, interactive way to create a Gatsby site
+- [create-gatsby](#create-gatsby) - new, interactive way to create a Gatsby site
 - [Experimental: Queries on Demand](#experimental-queries-on-demand) - improves `gatsby develop` bootup time
 - [Experimental: Lazy page bundling](#experimental-lazy-page-bundling-in-development) - also improves `gatsby develop` bootup time
 - [Experimental: SSR in develop](#experimental-ssr-in-development) - catch SSR errors early
