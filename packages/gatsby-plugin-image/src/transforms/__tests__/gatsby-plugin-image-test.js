@@ -6,6 +6,10 @@ const tests = [
   `multiple`,
   `placeholders`,
   `transform-error`,
+  `extends-warn`,
+  `not-data`,
+  `no-query-change`,
+  `variable`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
@@ -19,11 +23,11 @@ describe(`codemods`, () => {
       `gatsby-plugin-image/${test}`
     )
   )
-  defineTest(
-    __dirname,
-    `gatsby-plugin-image`,
-    null,
-    `gatsby-plugin-image/typescript`,
-    { parser: `tsx` }
-  )
+  // defineTest(
+  //   __dirname,
+  //   `gatsby-plugin-image`,
+  //   null,
+  //   `gatsby-plugin-image/typescript`,
+  //   { parser: `tsx` }
+  // )
 })

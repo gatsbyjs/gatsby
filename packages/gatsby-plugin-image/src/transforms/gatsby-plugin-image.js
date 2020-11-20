@@ -39,7 +39,10 @@ export function babelRecast(code, filePath) {
     parser: {
       parse: source =>
         parseSync(source, {
-          plugins: [`@babel/plugin-syntax-jsx`],
+          plugins: [
+            `@babel/plugin-syntax-jsx`,
+            `@babel/plugin-proposal-class-properties`,
+          ],
           overrides: [
             {
               test: [`**/*.ts`, `**/*.tsx`],
@@ -72,7 +75,7 @@ export function updateImport(babel) {
   let imageImportName = ``
   return {
     visitor: {
-      ImportDeclaration: path => {
+      ImportDeclaration(path) {
         const { node } = path
         if (
           node.source.value !== `gatsby-image` &&
@@ -80,10 +83,22 @@ export function updateImport(babel) {
         ) {
           return
         }
-        imageImportName = node.specifiers[0].local.name
+        imageImportName = node.specifiers?.[0]?.local?.name
         const newImport = template.statement
           .ast`import { GatsbyImage } from "gatsby-plugin-image"`
         path.replaceWith(newImport)
+      },
+      MemberExpression(path) {
+        if (
+          path.node?.property?.name === `fixed` ||
+          path.node?.property?.name === `fluid`
+        ) {
+          const updatedExpression = t.memberExpression(
+            path.node.object,
+            t.identifier(`gatsbyImageData`)
+          )
+          path.replaceWith(updatedExpression)
+        }
       },
       JSXOpeningElement(path) {
         const { node } = path
@@ -92,31 +107,40 @@ export function updateImport(babel) {
         }
         const componentName = t.jsxIdentifier(`GatsbyImage`)
 
-        const hasFixedOrFluid =
-          node.attributes.filter(
-            ({ name }) => name?.name === `fluid` || name?.name === `fixed`
-          ).length > 0
+        const fixedOrFluid = node.attributes.filter(
+          ({ name }) => name?.name === `fluid` || name?.name === `fixed`
+        )
 
         const otherAttributes = node.attributes.filter(
           ({ name }) => name?.name !== `fluid` && name?.name !== `fixed`
         )
 
-        if (!hasFixedOrFluid) {
+        if (!fixedOrFluid.length > 0) {
           path.replaceWith(
             t.jsxOpeningElement(componentName, [...otherAttributes], true)
           )
           return
         }
+        const expressionValue = fixedOrFluid?.[0]?.value?.expression
 
-        const newImageExpression = template.expression
-          .ast`data.file.childImageSharp.gatsbyImageData`
-        newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
+        let newImageExpression = ``
+
+        if (t.isIdentifier(expressionValue)) {
+          // we know this isn't passing a different variable
+          newImageExpression = expressionValue
+          console.log(`WARN`)
+        } else {
+          newImageExpression = template.expression
+            .ast`${expressionValue.object.object}.childImageSharp.gatsbyImageData`
+          newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
+        }
 
         // // create new prop
         const updatedAttribute = t.jsxAttribute(
           t.jsxIdentifier(`image`),
           t.jsxExpressionContainer(newImageExpression)
         )
+
         path.replaceWith(
           t.jsxOpeningElement(
             componentName,
@@ -126,15 +150,29 @@ export function updateImport(babel) {
         )
         path.skip() // prevent us from revisiting these nodes
       },
+      ClassDeclaration({ node }) {
+        if (node.superClass.name === imageImportName) {
+          console.log(`WARN`)
+        }
+      },
+
       TaggedTemplateExpression({ node }) {
         if (node.tag.name !== `graphql`) {
           return
         }
         const query = node.quasi.quasis[0].value.raw
+        if (query) {
+          const {
+            ast: transformedGraphQLQuery,
+            hasChanged,
+          } = processGraphQLQuery(query)
 
-        const transformedGraphQLQuery = processGraphQLQuery(query)
-
-        node.quasi.quasis[0].value.raw = graphql.print(transformedGraphQLQuery)
+          if (hasChanged) {
+            node.quasi.quasis[0].value.raw = graphql.print(
+              transformedGraphQLQuery
+            )
+          }
+        }
       },
       CallExpression({ node }) {
         if (node.callee.name !== `graphql`) {
@@ -142,10 +180,18 @@ export function updateImport(babel) {
         }
         const query = node.arguments[0].quasis[0].value.raw
 
-        const transformedGraphQLQuery = processGraphQLQuery(query)
-        node.arguments[0].quasis[0].value.raw = graphql.print(
-          transformedGraphQLQuery
-        )
+        if (query) {
+          const {
+            ast: transformedGraphQLQuery,
+            hasChanged,
+          } = processGraphQLQuery(query)
+
+          if (hasChanged) {
+            node.arguments[0].quasis[0].value.raw = graphql.print(
+              transformedGraphQLQuery
+            )
+          }
+        }
       },
     },
   }
@@ -154,9 +200,9 @@ export function updateImport(babel) {
 function processArguments(queryArguments, fragment) {
   if (!legacyFragments.includes(fragment.name.value)) {
     let placeholderEnum = `BLURRED` // just in case these aren't the discrete cases we expect
-    if (legacyFragmentsNoPlaceholder.includes(fragment.name.value)) {
+    if (legacyFragmentsNoPlaceholder.includes(fragment.name?.value)) {
       placeholderEnum = `NONE`
-    } else if (legacyFragmentsSVGPlaceholder.includes(fragment.name.value)) {
+    } else if (legacyFragmentsSVGPlaceholder.includes(fragment.name?.value)) {
       placeholderEnum = `TRACED_SVG`
     }
     const placeholderArgument = {
@@ -177,19 +223,20 @@ function processArguments(queryArguments, fragment) {
 
 function processGraphQLQuery(query) {
   try {
+    let hasChanged = false // this is sort of a hack, but print changes formatting and we only want to use it when we have to
     const ast = graphql.parse(query)
 
     graphql.visit(ast, {
       SelectionSet(node) {
         const [sharpField] = node.selections.filter(
-          ({ name }) => name.value === `childImageSharp`
+          ({ name }) => name?.value === `childImageSharp`
         )
 
         if (!sharpField) {
           return
         }
         const [fixedOrFluidField] = sharpField.selectionSet.selections.filter(
-          ({ name }) => name.value === `fixed` || name.value === `fluid`
+          ({ name }) => name?.value === `fixed` || name?.value === `fluid`
         )
 
         if (!fixedOrFluidField) {
@@ -206,7 +253,7 @@ function processGraphQLQuery(query) {
           imageType = `constrained`
           delete fragments[presentationSizeFragment]
         }
-        processArguments(fixedOrFluidField.arguments, fragments[0])
+        processArguments(fixedOrFluidField.arguments, fragments?.[0])
 
         const typeArgument = {
           kind: `Argument`,
@@ -224,9 +271,10 @@ function processGraphQLQuery(query) {
 
         fixedOrFluidField.arguments.push(typeArgument)
         delete fixedOrFluidField.selectionSet
+        hasChanged = true
       },
     })
-    return ast
+    return { ast, hasChanged }
   } catch (err) {
     throw new Error(
       `GatsbyImageCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`

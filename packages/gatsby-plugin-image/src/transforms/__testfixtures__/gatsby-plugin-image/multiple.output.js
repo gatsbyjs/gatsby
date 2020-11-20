@@ -2,7 +2,11 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image";
 
-<GatsbyImage image={data.file.childImageSharp.gatsbyImageData} alt="headshot" />
+<div>
+  <GatsbyImage image={data.file.childImageSharp.gatsbyImageData} alt="headshot" />
+
+  <GatsbyImage image={data.banner.childImageSharp.gatsbyImageData} alt="headshot" />
+</div>
 
 export const query = graphql`{
   file(relativePath: {eq: "headers/headshot.jpg"}) {
