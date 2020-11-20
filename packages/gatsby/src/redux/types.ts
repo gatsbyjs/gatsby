@@ -73,6 +73,7 @@ export interface IGatsbyNode {
     mediaType?: string
     content?: string
     description?: string
+    hydrated?: boolean
   }
   __gatsby_resolved: any // TODO
   [key: string]: unknown

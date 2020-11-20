@@ -81,6 +81,34 @@ export const getNode = (id: string): IGatsbyNode | undefined =>
   store.getState().nodes.get(id)
 
 /**
+ * Get node by id from store and allow for hydration.
+ */
+export const getNodeAsync = async (id: string): IGatsbyNode | undefined => {
+  console.log({ id })
+  const node = store.getState().nodes.get(id)
+  if (node && node.internal.hydrated == false) {
+    let hydratedNode: IGatsbyNode | undefined
+
+    const apiRunnerNode = require(`../utils/api-runner-node`)
+    // call hydrate export in the plugin's gatsby-node.js
+    ;[hydratedNode] = await apiRunnerNode(`hydrate`, {
+      targetPlugin: node.internal.owner,
+      node,
+    })
+    console.log({ hydratedNode })
+    if (hydratedNode) {
+      hydratedNode.internal.hydrated = true
+    }
+
+    // createNode(hydratedNode)
+
+    return hydratedNode
+  } else {
+    return node
+  }
+}
+
+/**
  * Get all nodes of type from redux store.
  */
 export const getNodesByType = (type: string): Array<IGatsbyNode> => {

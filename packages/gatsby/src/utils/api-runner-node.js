@@ -23,6 +23,7 @@ const { emitter, store } = require(`../redux`)
 const {
   getNodes,
   getNode,
+  getNodeAsync,
   getNodesByType,
   hasNodeChanged,
   getNodeAndSavePathDependency,
@@ -414,6 +415,7 @@ const runAPI = async (plugin, api, args, activity) => {
         getCache,
         getNodes,
         getNode,
+        getNodeAsync,
         getNodesByType,
         hasNodeChanged,
         reporter: extendedLocalReporter,
@@ -475,7 +477,13 @@ let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
   new Promise(resolve => {
-    const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
+    const {
+      parentSpan,
+      traceId,
+      traceTags,
+      waitForCascadingActions,
+      targetPlugin,
+    } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
@@ -491,9 +499,17 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // call an action which will trigger the same API being called.
     // `onCreatePage` is the only example right now. In these cases, we should
     // avoid calling the originating plugin again.
-    const implementingPlugins = plugins.filter(
-      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
-    )
+    const implementingPlugins = plugins.filter(plugin => {
+      let isTargetedPlugin = true
+      if (targetPlugin) {
+        isTargetedPlugin = plugin.name === targetPlugin
+      }
+      return (
+        isTargetedPlugin &&
+        plugin.nodeAPIs.includes(api) &&
+        plugin.name !== pluginSource
+      )
+    })
 
     const apiRunInstance = {
       api,

@@ -463,3 +463,18 @@ export const onCreateDevServer = true
  * }
  */
 export const pluginOptionsSchema = true
+
+/**
+ *
+ * Hydrate a node. Implemented by plugins leveraging the new async mode.
+ * @gatsbyVersion 2.28.0
+ * @param {object} $0
+ * @param {Node} $0.node the desiccated version of a node the plugin previously created and now should hydrate.
+ * @example
+ * exports.hydrate = async ({ node }) => {
+ *   // Do expensive work for node (ideally w/ job)
+ *   const node.expensive = await doExpensiveWork(node)
+ *   return node
+ * }
+ */
+export const hydrate = true

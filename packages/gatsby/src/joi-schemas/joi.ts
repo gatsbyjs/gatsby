@@ -108,6 +108,7 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
         description: Joi.string(),
         ignoreType: Joi.boolean(),
         counter: Joi.number(),
+        hydrated: Joi.boolean(),
       })
       .unknown(false), // Don't allow non-standard fields
   })
