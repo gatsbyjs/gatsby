@@ -2,6 +2,8 @@ import graphql from "gatsby/graphql"
 import { parse, print } from "recast"
 import { transformFromAstSync, parseSync } from "@babel/core"
 
+const propNames = [`fixed`, `fluid`]
+
 const legacyFragments = [
   `GatsbyImageSharpFixed`,
   `GatsbyImageSharpFixed_withWebp`,
@@ -87,13 +89,12 @@ export function updateImport(babel) {
         imageImportPath = path.get(`specifiers.0`)
         const newImport = template.statement
           .ast`import { GatsbyImage } from "gatsby-plugin-image"`
-
         path.replaceWith(newImport)
+        path.skip()
       },
       MemberExpression(path) {
         if (
-          (path.node?.property?.name === `fixed` ||
-            path.node?.property?.name === `fluid`) &&
+          propNames.includes(path.node?.property?.name) &&
           path.node?.object?.property?.name === `childImageSharp`
         ) {
           const updatedExpression = t.memberExpression(
@@ -106,17 +107,20 @@ export function updateImport(babel) {
       JSXOpeningElement(path) {
         const { node } = path
 
-        if (node.name.name !== imageImportPath.node?.local?.name) {
+        if (
+          !node.name.name ||
+          node.name.name !== imageImportPath?.node?.local?.name
+        ) {
           return
         }
         const componentName = t.jsxIdentifier(`GatsbyImage`)
 
-        const fixedOrFluid = node.attributes.filter(
-          ({ name }) => name?.name === `fluid` || name?.name === `fixed`
+        const fixedOrFluid = node.attributes.filter(({ name }) =>
+          propNames.includes(name?.name)
         )
 
         const otherAttributes = node.attributes.filter(
-          ({ name }) => name?.name !== `fluid` && name?.name !== `fixed`
+          ({ name }) => !propNames.includes(name?.name)
         )
 
         if (!fixedOrFluid.length > 0) {
@@ -129,7 +133,10 @@ export function updateImport(babel) {
 
         let newImageExpression = expressionValue // by default, pass what they pass
 
-        if (t.isMemberExpression(expressionValue)) {
+        if (
+          t.isMemberExpression(expressionValue) &&
+          propNames.includes(expressionValue?.property.name)
+        ) {
           const expressionStart =
             expressionValue?.object?.object ?? expressionValue?.object
 
@@ -142,10 +149,7 @@ export function updateImport(babel) {
             if (t.isMemberExpression(item.value)) {
               let subObject = item.value?.object
               while (subObject) {
-                if (
-                  subObject.property?.name === `fixed` ||
-                  subObject.property?.name === `fluid`
-                ) {
+                if (propNames.includes(subObject.property?.name)) {
                   subObject.property.name = `gatsbyImageData`
                   break
                 } else {
@@ -173,7 +177,7 @@ export function updateImport(babel) {
         path.skip() // prevent us from revisiting these nodes
       },
       ClassDeclaration({ node }) {
-        if (node.superClass?.name === imageImportPath.node?.local?.name) {
+        if (node.superClass?.name === imageImportPath?.node?.local?.name) {
           console.log(`WARN`)
         }
       },
@@ -257,8 +261,10 @@ function processGraphQLQuery(query) {
         if (!sharpField) {
           return
         }
-        const [fixedOrFluidField] = sharpField.selectionSet.selections.filter(
-          ({ name }) => name?.value === `fixed` || name?.value === `fluid`
+        const [
+          fixedOrFluidField,
+        ] = sharpField.selectionSet.selections.filter(({ name }) =>
+          propNames.includes(name?.value)
         )
 
         if (!fixedOrFluidField) {

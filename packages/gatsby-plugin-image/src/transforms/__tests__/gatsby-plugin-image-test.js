@@ -11,6 +11,7 @@ const tests = [
   `no-query-change`,
   `variable`,
   `uses-src`,
+  `not-object`,
   // `mansion`,
 ]
 
@@ -25,11 +26,11 @@ describe(`codemods`, () => {
       `gatsby-plugin-image/${test}`
     )
   )
-  defineTest(
-    __dirname,
-    `gatsby-plugin-image`,
-    null,
-    `gatsby-plugin-image/typescript`,
-    { parser: `tsx` }
-  )
+  // defineTest(
+  //   __dirname,
+  //   `gatsby-plugin-image`,
+  //   null,
+  //   `gatsby-plugin-image/typescript`,
+  //   { parser: `tsx` }
+  // )
 })
