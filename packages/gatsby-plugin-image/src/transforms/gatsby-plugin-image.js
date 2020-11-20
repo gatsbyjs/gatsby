@@ -90,8 +90,9 @@ export function updateImport(babel) {
       },
       MemberExpression(path) {
         if (
-          path.node?.property?.name === `fixed` ||
-          path.node?.property?.name === `fluid`
+          (path.node?.property?.name === `fixed` ||
+            path.node?.property?.name === `fluid`) &&
+          path.node?.object?.property?.name === `childImageSharp`
         ) {
           const updatedExpression = t.memberExpression(
             path.node.object,

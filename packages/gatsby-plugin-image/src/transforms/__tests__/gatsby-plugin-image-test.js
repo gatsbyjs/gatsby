@@ -11,6 +11,7 @@ const tests = [
   `no-query-change`,
   `variable`,
   `uses-src`,
+  // `mansion`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
