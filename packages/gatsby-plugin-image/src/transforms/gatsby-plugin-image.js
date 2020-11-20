@@ -123,16 +123,34 @@ export function updateImport(babel) {
         }
         const expressionValue = fixedOrFluid?.[0]?.value?.expression
 
-        let newImageExpression = ``
+        let newImageExpression = expressionValue // by default, pass what they pass
 
-        if (t.isIdentifier(expressionValue)) {
-          // we know this isn't passing a different variable
-          newImageExpression = expressionValue
-          console.log(`WARN`)
-        } else {
+        if (t.isMemberExpression(expressionValue)) {
+          const expressionStart =
+            expressionValue?.object?.object ?? expressionValue?.object
+
           newImageExpression = template.expression
-            .ast`${expressionValue.object.object}.childImageSharp.gatsbyImageData`
+            .ast`${expressionStart}.childImageSharp.gatsbyImageData`
           newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
+        } else if (t.isObjectExpression(expressionValue)) {
+          expressionValue.properties.map(item => {
+            if (item.key.name !== `src`) return
+            if (t.isMemberExpression(item.value)) {
+              let subObject = item.value?.object
+              while (subObject) {
+                if (
+                  subObject.property?.name === `fixed` ||
+                  subObject.property?.name === `fluid`
+                ) {
+                  subObject.property.name = `gatsbyImageData`
+                  break
+                } else {
+                  console.log(`WARN`)
+                }
+                subObject = subObject?.object
+              }
+            }
+          })
         }
 
         // // create new prop
@@ -151,7 +169,7 @@ export function updateImport(babel) {
         path.skip() // prevent us from revisiting these nodes
       },
       ClassDeclaration({ node }) {
-        if (node.superClass.name === imageImportName) {
+        if (node.superClass?.name === imageImportName) {
           console.log(`WARN`)
         }
       },
@@ -160,7 +178,7 @@ export function updateImport(babel) {
         if (node.tag.name !== `graphql`) {
           return
         }
-        const query = node.quasi.quasis[0].value.raw
+        const query = node.quasi?.quasis?.[0]?.value?.raw
         if (query) {
           const {
             ast: transformedGraphQLQuery,
@@ -178,7 +196,7 @@ export function updateImport(babel) {
         if (node.callee.name !== `graphql`) {
           return
         }
-        const query = node.arguments[0].quasis[0].value.raw
+        const query = node.arguments?.[0].quasis?.[0]?.value?.raw
 
         if (query) {
           const {
