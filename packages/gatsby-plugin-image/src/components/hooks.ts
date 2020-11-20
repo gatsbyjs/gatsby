@@ -12,7 +12,8 @@ import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../utils"
-import { IGatsbyImageData } from "./gatsby-image.browser"
+import type { IGatsbyImageData } from "./gatsby-image.browser"
+import { IGatsbyImageHelperArgs, generateImageData } from "../image-utils"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -64,6 +65,14 @@ export function getWrapperProps(
     "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
+}
+
+export function useGatsbyImage({
+  pluginName = `useGatsbyImage`,
+  ...args
+}: IGatsbyImageHelperArgs): IGatsbyImageData {
+  // TODO: use context to get default plugin options and spread them in here
+  return generateImageData({ pluginName, ...args })
 }
 
 export function getMainProps(
