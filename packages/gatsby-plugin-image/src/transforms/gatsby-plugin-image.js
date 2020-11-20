@@ -72,7 +72,7 @@ export function babelRecast(code, filePath) {
 
 export function updateImport(babel) {
   const { types: t, template } = babel
-  let imageImportName = ``
+  let imageImportPath
   return {
     visitor: {
       ImportDeclaration(path) {
@@ -83,9 +83,11 @@ export function updateImport(babel) {
         ) {
           return
         }
-        imageImportName = node.specifiers?.[0]?.local?.name
+
+        imageImportPath = path.get(`specifiers.0`)
         const newImport = template.statement
           .ast`import { GatsbyImage } from "gatsby-plugin-image"`
+
         path.replaceWith(newImport)
       },
       MemberExpression(path) {
@@ -103,7 +105,8 @@ export function updateImport(babel) {
       },
       JSXOpeningElement(path) {
         const { node } = path
-        if (node.name.name !== imageImportName) {
+
+        if (node.name.name !== imageImportPath.node?.local?.name) {
           return
         }
         const componentName = t.jsxIdentifier(`GatsbyImage`)
@@ -170,7 +173,7 @@ export function updateImport(babel) {
         path.skip() // prevent us from revisiting these nodes
       },
       ClassDeclaration({ node }) {
-        if (node.superClass?.name === imageImportName) {
+        if (node.superClass?.name === imageImportPath.node?.local?.name) {
           console.log(`WARN`)
         }
       },
