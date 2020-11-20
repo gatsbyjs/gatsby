@@ -28,8 +28,7 @@ const w = (input: string): string => (process.platform === `win32` ? `` : input)
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
 const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
-// We're using a fork because it points to the canary version of gatsby
-const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
+const DEFAULT_STARTER = `https://github.com/gatsbyjs/gatsby-starter-minimal.git`
 
 const makeChoices = (
   options: Record<string, { message: string; dependencies?: Array<string> }>,

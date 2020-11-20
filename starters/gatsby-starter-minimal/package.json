@@ -2,7 +2,7 @@
   "name": "gatsby-starter-minimal",
   "version": "1.0.0",
   "private": true,
-  "description": "A Gatsby starter for running recipes and adding themes. It does not come with any pages.",
+  "description": "A Gatsby starter with no plugins and a single welcome page.",
   "author": "Laurie Barth",
   "keywords": [
     "gatsby"
