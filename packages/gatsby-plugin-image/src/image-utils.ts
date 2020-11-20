@@ -78,7 +78,7 @@ export interface IGatsbyImageHelperArgs {
     fit?: Fit,
     options?: Record<string, unknown>
   ) => IImage
-  layout?: "fixed" | "fluid" | "constrained"
+  layout?: Layout
   formats?: Array<ImageFormat>
   filename: string
   placeholderURL?:
@@ -90,7 +90,7 @@ export interface IGatsbyImageHelperArgs {
   maxHeight?: number
   sizes?: string
   reporter?: IReporter
-  sourceMetadata: { width: number; height: number; format: ImageFormat }
+  sourceMetadata?: { width: number; height: number; format: ImageFormat }
   fit?: Fit
   options?: Record<string, unknown>
 }
@@ -163,7 +163,17 @@ export function generateImageData(
   if (typeof generateImageSource !== `function`) {
     throw new Error(`generateImageSource must be a function`)
   }
-
+  if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
+    // No metadata means we let the CDN handle max size etc, aspect ratio etc
+    sourceMetadata = {
+      width: width || maxWidth,
+      height: height || maxHeight,
+      format: formatFromFilename(filename),
+    }
+  } else if (!sourceMetadata.format) {
+    sourceMetadata.format = formatFromFilename(filename)
+  }
+  //
   const formats = new Set<ImageFormat>(args.formats || [`auto`, `webp`])
 
   if (formats.size === 0 || formats.has(`auto`)) {
@@ -182,18 +192,7 @@ export function generateImageData(
     }
   }
 
-  if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
-    // No metadata means we let the CDN handle max size etc, aspect ratio etc
-    sourceMetadata = {
-      width: width || maxWidth,
-      height: height || maxHeight,
-      format: formatFromFilename(filename),
-    }
-  } else if (!sourceMetadata.format) {
-    sourceMetadata.format = formatFromFilename(filename)
-  }
-
-  const imageSizes = calculateImageSizes(args)
+  const imageSizes = calculateImageSizes({ ...args, sourceMetadata })
 
   const result: IGatsbyImageData["images"] = {
     sources: [],
@@ -401,7 +400,7 @@ export function fluidImageSizes({
   fit = `cover`,
   maxHeight,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  reporter,
+  reporter = { warn },
 }: IImageSizeArgs): IImageSizes {
   // warn if ignored parameters are passed in
   warnForIgnoredParameters(
