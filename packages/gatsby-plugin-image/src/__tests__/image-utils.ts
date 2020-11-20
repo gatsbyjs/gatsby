@@ -1,4 +1,5 @@
 import {
+  formatFromFilename,
   generateImageData,
   IGatsbyImageHelperArgs,
   IImage,
@@ -68,5 +69,38 @@ describe(`the image data helper`, () => {
     expect(data.images?.sources?.[0].srcSet).toEqual(
       `https://example.com/afile.jpg/400/300/image.webp 400w,\nhttps://example.com/afile.jpg/800/600/image.webp 800w`
     )
+  })
+})
+
+describe(`the helper utils`, () => {
+  it(`gets file format from filename`, () => {
+    const names = [
+      `filename.jpg`,
+      `filename.jpeg`,
+      `filename.png`,
+      `filename.heic`,
+      `filename.jp`,
+      `filename.jpgjpg`,
+      `file.name.jpg`,
+      `file.name.`,
+      `filenamejpg`,
+      `.jpg`,
+    ]
+    const expected = [
+      `jpg`,
+      `jpg`,
+      `png`,
+      `heic`,
+      undefined,
+      undefined,
+      `jpg`,
+      undefined,
+      undefined,
+      `jpg`,
+    ]
+    for (const idx in names) {
+      const ext = formatFromFilename(names[idx])
+      expect(ext).toBe(expected[idx])
+    }
   })
 })

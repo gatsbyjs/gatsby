@@ -122,10 +122,24 @@ export const getSizes = (width: number, layout: Layout): string | undefined => {
 export const getSrcSet = (images: Array<IImage>): string =>
   images.map(image => `${image.src} ${image.width}w`).join(`,\n`)
 
+export function formatFromFilename(filename: string): ImageFormat | undefined {
+  const dot = filename.lastIndexOf(`.`)
+  if (dot !== -1) {
+    const ext = filename.substr(dot + 1)
+    if (ext === `jpeg`) {
+      return `jpg`
+    }
+    if (ext.length === 3 || ext.length === 4) {
+      return ext as ImageFormat
+    }
+  }
+  return undefined
+}
+
 export function generateImageData(
   args: IGatsbyImageHelperArgs
 ): IGatsbyImageData {
-  const {
+  let {
     pluginName,
     sourceMetadata,
     generateImageSource,
@@ -133,7 +147,9 @@ export function generateImageData(
     fit,
     options,
     width,
+    maxWidth,
     height,
+    maxHeight,
     filename,
     reporter = { warn },
   } = args
@@ -164,6 +180,17 @@ export function generateImageData(
     } else {
       formats.delete(`jpg`)
     }
+  }
+
+  if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
+    // No metadata means we let the CDN handle max size etc, aspect ratio etc
+    sourceMetadata = {
+      width: width || maxWidth,
+      height: height || maxHeight,
+      format: formatFromFilename(filename),
+    }
+  } else if (!sourceMetadata.format) {
+    sourceMetadata.format = formatFromFilename(filename)
   }
 
   const imageSizes = calculateImageSizes(args)
