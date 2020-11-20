@@ -20,6 +20,7 @@ import {
   ISetGraphQLDefinitionsAction,
   IQueryStartAction,
   IApiFinishedAction,
+  IQueryClearDirtyQueriesListToEmitViaWebsocket,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -246,6 +247,12 @@ export const queryStart = (
     plugin,
     traceId,
     payload: { path, componentPath, isPage },
+  }
+}
+
+export const clearDirtyQueriesListToEmitViaWebsocket = (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
+  return {
+    type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
   }
 }
 

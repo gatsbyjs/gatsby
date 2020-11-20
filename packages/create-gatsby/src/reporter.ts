@@ -4,9 +4,11 @@ export const reporter = {
   info: (message: string): void => console.log(message),
   verbose: (message: string): void => console.log(message),
   log: (message: string): void => console.log(message),
-  success: (message: string): void => console.log(c.green(`✔ `) + message),
-  error: (message: string): void => console.error(c.red(`✘ `) + message),
-  panic: (message: string): void => {
+  success: (message: string): void =>
+    console.log(c.green(c.symbols.check + ` `) + message),
+  error: (message: string): void =>
+    console.error(c.red(c.symbols.cross + ` `) + message),
+  panic: (message: string): never => {
     console.error(message)
     process.exit(1)
   },

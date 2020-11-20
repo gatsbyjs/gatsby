@@ -4,12 +4,7 @@ import DevLoader from "../dev-loader"
 import emitter from "../emitter"
 
 jest.mock(`../emitter`)
-jest.mock(`../socketIo`, () => {
-  return {
-    default: jest.fn(),
-    getPageData: jest.fn().mockResolvedValue(),
-  }
-})
+jest.mock(`../socketIo`, () => jest.fn())
 
 describe(`Dev loader`, () => {
   let originalBasePath

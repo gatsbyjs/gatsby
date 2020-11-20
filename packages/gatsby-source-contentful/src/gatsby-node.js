@@ -204,6 +204,13 @@ exports.sourceNodes = async (
     previousSyncData = cachedData
   }
 
+  const fetchActivity = reporter.activityTimer(
+    `Contentful: Fetch data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+
   if (forceCache) {
     // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
     // If present, do NOT contact contentful, skip the round trips entirely
@@ -253,28 +260,38 @@ exports.sourceNodes = async (
         `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
       )
     }
-  }
 
-  const fetchActivity = reporter.activityTimer(
-    `Contentful: Fetch data (${sourceId})`,
-    {
+    fetchActivity.start()
+    ;({
+      currentSyncData,
+      contentTypeItems,
+      defaultLocale,
+      locales,
+      space,
+    } = await fetchData({
+      syncToken,
+      reporter,
+      pluginConfig,
       parentSpan,
-    }
-  )
+    }))
 
-  fetchActivity.start()
-  ;({
-    currentSyncData,
-    contentTypeItems,
-    defaultLocale,
-    locales,
-    space,
-  } = await fetchData({
-    syncToken,
-    reporter,
-    pluginConfig,
-    parentSpan,
-  }))
+    if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
+      reporter.info(
+        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+          process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      )
+      fs.writeFileSync(
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
+        v8.serialize({
+          currentSyncData,
+          contentTypeItems,
+          defaultLocale,
+          locales,
+          space,
+        })
+      )
+    }
+  }
 
   createTypes(`
   interface ContentfulEntry @nodeInterface {
@@ -316,22 +333,6 @@ exports.sourceNodes = async (
 
   createTypes(gqlTypes)
 
-  if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
-    reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
-        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
-    )
-    fs.writeFileSync(
-      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
-      v8.serialize({
-        currentSyncData,
-        contentTypeItems,
-        defaultLocale,
-        locales,
-        space,
-      })
-    )
-  }
   fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
