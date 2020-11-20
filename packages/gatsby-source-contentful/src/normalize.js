@@ -106,6 +106,7 @@ exports.buildForeignReferenceMap = ({
   locales,
   space,
   useNameForId,
+  nestedReferences,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -152,6 +153,44 @@ exports.buildForeignReferenceMap = ({
                 })
               })
             }
+            nestedReferences.fields.forEach(nestedReferenceField => {
+              // For nested reference objects
+              if (entryItemFieldKey === nestedReferenceField.key) {
+                const entryItemFieldReferenceValue =
+                  entryItemFieldValue[0][nestedReferenceField.referenceKey]
+                if (
+                  entryItemFieldReferenceValue &&
+                  entryItemFieldReferenceValue[0].sys &&
+                  entryItemFieldReferenceValue[0].sys.type &&
+                  entryItemFieldReferenceValue[0].sys.id
+                ) {
+                  entryItemFieldValue.forEach(nestedField => {
+                    nestedField[nestedReferenceField.referenceKey].forEach(
+                      v => {
+                        const key = `${v.sys.id}___${
+                          v.sys.linkType || v.sys.type
+                        }`
+                        // Don't create link to an unresolvable field.
+                        if (!resolvable.has(key)) {
+                          return
+                        }
+
+                        if (!foreignReferenceMap[key]) {
+                          foreignReferenceMap[key] = []
+                        }
+
+                        foreignReferenceMap[key].push({
+                          name: `${contentTypeItemId}___NODE`,
+                          id: entryItem.sys.id,
+                          spaceId: space.sys.id,
+                          type: entryItem.sys.type,
+                        })
+                      }
+                    )
+                  })
+                }
+              }
+            })
           } else if (
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
@@ -242,6 +281,7 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  nestedReferences,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -336,6 +376,55 @@ exports.createNodesForContentType = ({
 
               delete entryItemFields[entryItemFieldKey]
             }
+            nestedReferences.fields.forEach(nestedReferenceField => {
+              // For nested reference objects
+              if (entryItemFieldKey === nestedReferenceField.key) {
+                const entryItemFieldReferenceValue =
+                  entryItemFieldValue[0][nestedReferenceField.referenceKey]
+
+                if (
+                  entryItemFieldReferenceValue &&
+                  entryItemFieldReferenceValue[0] &&
+                  entryItemFieldReferenceValue[0].sys &&
+                  entryItemFieldReferenceValue[0].sys.type &&
+                  entryItemFieldReferenceValue[0].sys.id
+                ) {
+                  const resolvableEntryItemFieldValue = entryItemFieldValue.map(
+                    v =>
+                      v[nestedReferenceField.referenceKey]
+                        .filter(v =>
+                          resolvable.has(
+                            `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                          )
+                        )
+                        .map(v =>
+                          mId(
+                            space.sys.id,
+                            v.sys.id,
+                            v.sys.linkType || v.sys.type
+                          )
+                        )
+                  )
+                  if (resolvableEntryItemFieldValue.length !== 0) {
+                    const updatedField = entryItemFields[
+                      nestedReferenceField.key
+                    ].map((_initialNode, index) => {
+                      const updatedNode = {
+                        ..._initialNode,
+                        [`${nestedReferenceField.referenceKey}___NODE`]: resolvableEntryItemFieldValue[
+                          index
+                        ],
+                      }
+
+                      delete updatedNode[nestedReferenceField.referenceKey]
+
+                      return updatedNode
+                    })
+                    entryItemFields[`${entryItemFieldKey}`] = updatedField
+                  }
+                }
+              }
+            })
           } else if (
             entryItemFieldValue &&
             entryItemFieldValue.sys &&

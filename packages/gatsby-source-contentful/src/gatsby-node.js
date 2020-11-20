@@ -127,6 +127,19 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     If you are confident your Content Types will have natural-language IDs (e.g. \`blogPost\`), then you should set this option to \`false\`. If you are unable to ensure this, then you should leave this option set to \`true\` (the default).`
         )
         .default(true),
+      nestedReferences: Joi.object()
+        .keys({
+          fields: Joi.array().items({
+            key: Joi.string().required(),
+            referenceKey: Joi.string().required(),
+          }),
+        })
+        .description(
+          `Uses each specified field's key and reference key to resolve nested entity references for each content model`
+        )
+        .default({
+          fields: [],
+        }),
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
@@ -495,6 +508,7 @@ exports.sourceNodes = async (
     locales,
     space,
     useNameForId: pluginConfig.get(`useNameForId`),
+    nestedReferences: pluginConfig.get(`nestedReferences`),
   })
 
   reporter.verbose(`Resolving Contentful references`)
@@ -570,6 +584,7 @@ exports.sourceNodes = async (
         locales,
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
+        nestedReferences: pluginConfig.get(`nestedReferences`),
       })
     )
   }

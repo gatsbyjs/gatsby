@@ -12,6 +12,9 @@ const defaultOptions = {
   forceFullSync: false,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
+  nestedReferences: {
+    fields: [],
+  },
 }
 
 const createPluginConfig = pluginOptions => {
