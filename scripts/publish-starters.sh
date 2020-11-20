@@ -4,7 +4,7 @@ GLOB=$1
 IS_CI="${CI:-false}"
 BASE=$(pwd)
 COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-MINIMAL_STARTER=`gatsby-starter-minimal`
+MINIMAL_STARTER=gatsby-starter-minimal
 
 if [ "$IS_CI" = true ]; then
   sudo apt-get update && sudo apt-get install jq
