@@ -147,6 +147,9 @@ export const renderDevHTML = ({
     // Wait for public/render-page.js to update w/ the page component.
     await ensurePathComponentInSSRBundle(pageObj, directory)
 
+    // Ensure the query has been run and written out.
+    await getPageDataExperimental(pageObj.path)
+
     try {
       const htmlString = await worker.renderHTML({
         path,

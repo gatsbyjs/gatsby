@@ -568,7 +568,6 @@ export const publicLoader = {
 export default publicLoader
 
 export function getStaticQueryResults() {
-  // The instance isn't set in SSR
   if (instance) {
     return instance.staticQueryDb
   } else {
