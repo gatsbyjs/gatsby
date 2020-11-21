@@ -558,7 +558,12 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    Promise.mapSeries(implementingPlugins, plugin => {
+    const runPromise =
+      process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING && api === `sourceNodes`
+        ? Promise.map
+        : Promise.mapSeries
+
+    runPromise(implementingPlugins, plugin => {
       if (stopQueuedApiRuns) {
         return null
       }
