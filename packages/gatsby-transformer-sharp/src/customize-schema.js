@@ -17,6 +17,7 @@ const {
   traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
+const { getPluginOptions } = require(`gatsby-plugin-sharp/plugin-options`)
 
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
@@ -53,7 +54,33 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
+const getBase64 = async ({ aspectRatio, file, fieldArgs, cache, reporter }) => {
+  const base64Width = fieldArgs.base64Width || getPluginOptions().base64Width
+  const base64Height = Math.max(1, Math.round(base64Width / aspectRatio))
+  const base64Args = {
+    background: fieldArgs.background,
+    duotone: fieldArgs.duotone,
+    grayscale: fieldArgs.grayscale,
+    rotate: fieldArgs.rotate,
+    trim: fieldArgs.trim,
+    toFormat: fieldArgs.toFormat,
+    toFormatBase64: fieldArgs.toFormatBase64,
+    cropFocus: fieldArgs.cropFocus,
+    fit: fieldArgs.fit,
+    width: base64Width,
+    height: base64Height,
+  }
+
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
+
+  if (base64Image) {
+    return base64Image.src
+  }
+
+  return undefined
+}
+
+const getTracedSVG = async ({ file, fieldArgs, cache, reporter }) =>
   traceSVG({
     file,
     args: { ...fieldArgs.traceSVG },
@@ -73,7 +100,15 @@ const fixedNodeType = ({
     type: new GraphQLObjectType({
       name: name,
       fields: {
-        base64: { type: GraphQLString },
+        base64: {
+          type: GraphQLString,
+          resolve: parent =>
+            getBase64({
+              ...parent,
+              cache,
+              reporter,
+            }),
+        },
         tracedSVG: {
           type: GraphQLString,
           resolve: parent =>
@@ -204,7 +239,7 @@ const fixedNodeType = ({
       return Promise.resolve(
         fixed({
           file,
-          args,
+          args: { ...args, base64: false },
           reporter,
           cache,
         })
@@ -230,7 +265,15 @@ const fluidNodeType = ({
     type: new GraphQLObjectType({
       name: name,
       fields: {
-        base64: { type: GraphQLString },
+        base64: {
+          type: GraphQLString,
+          resolve: parent =>
+            getBase64({
+              ...parent,
+              cache,
+              reporter,
+            }),
+        },
         tracedSVG: {
           type: GraphQLString,
           resolve: parent =>
@@ -370,7 +413,7 @@ const fluidNodeType = ({
       return Promise.resolve(
         fluid({
           file,
-          args,
+          args: { ...args, base64: false },
           reporter,
           cache,
         })
