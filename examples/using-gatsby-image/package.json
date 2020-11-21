@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
-    "emotion": "^10.0.27",
+    "emotion": "^11.0.0",
     "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-emotion": "next",
