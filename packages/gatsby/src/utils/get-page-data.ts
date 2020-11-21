@@ -29,6 +29,60 @@ async function doGetPageData(
     )
   }
 
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    const { boundActionCreators } = require(`../redux/actions`)
+    const { createClientVisitedPage } = boundActionCreators
+    const page = pages.get(pagePath)
+    // Listen for the client marking a page as visited (meaning we need to
+    // compile its page component.
+    const chunkCalls = new Set()
+    if (page?.componentChunkName) {
+      // Ignore all but the first POST.
+      if (!chunkCalls.has(page.componentChunkName)) {
+        // Tell Gatsby there's a new page component to trigger it
+        // being added to the bundle.
+        createClientVisitedPage(page.componentChunkName)
+
+        // Tell Gatsby to rewrite the page data for the pages
+        // owned by this component to update it to say that
+        // its page component is now part of the dev bundle.
+        // The pages will be rewritten after the webpack compilation
+        // finishes.
+        //
+        // Set a timeout to ensure the webpack compile of the new page
+        // component triggered above has time to go through.
+        setTimeout(() => {
+          // Find the component page for this componentChunkName.
+          function getByChunkName(map, searchValue): void | string {
+            for (const [key, value] of map.entries()) {
+              if (value.componentChunkName === searchValue) return key
+            }
+
+            return undefined
+          }
+          const pageKey = getByChunkName(pages, page.componentChunkName)
+
+          if (pageKey) {
+            const page = pages.get(pageKey)
+            if (page) {
+              store.dispatch({
+                type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+                payload: {
+                  pages: [
+                    {
+                      componentPath: page.component,
+                    },
+                  ],
+                },
+              })
+            }
+          }
+          chunkCalls.add(page.componentChunkName)
+        }, 20)
+      }
+    }
+  }
+
   const query = queries.trackedQueries.get(pagePath)
 
   if (!query) {
