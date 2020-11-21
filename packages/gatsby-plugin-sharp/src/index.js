@@ -349,13 +349,13 @@ const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
   return result
 }
 
-async function base64(arg) {
-  if (arg.cache) {
+async function base64(args) {
+  if (args.cache) {
     // Not all transformer plugins are going to provide cache
-    return await cachifiedProcess(arg, generateCacheKey, generateBase64)
+    return await cachifiedProcess(args, generateCacheKey, generateBase64)
   }
 
-  return await memoizedBase64(arg)
+  return await memoizedBase64(args)
 }
 
 async function traceSVG(args) {
@@ -363,20 +363,45 @@ async function traceSVG(args) {
     // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
   }
+
   return await memoizedTraceSVG(args)
+}
+
+async function getBase64({ aspectRatio, file, options, cache, reporter }) {
+  if (options.base64) {
+    const base64Width = options.base64Width
+    const base64Height = Math.max(1, Math.round(base64Width / aspectRatio))
+    const base64Args = {
+      background: options.background,
+      duotone: options.duotone,
+      grayscale: options.grayscale,
+      rotate: options.rotate,
+      trim: options.trim,
+      toFormat: options.toFormat,
+      toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
+      width: base64Width,
+      height: base64Height,
+    }
+
+    return await base64({ file, args: base64Args, reporter, cache })
+  }
+
+  return undefined
 }
 
 async function getTracedSVG({ file, options, cache, reporter }) {
   if (options.generateTracedSVG && options.tracedSVG) {
-    const tracedSVG = await traceSVG({
+    return await traceSVG({
       args: options.tracedSVG,
       fileArgs: options,
       file,
       cache,
       reporter,
     })
-    return tracedSVG
   }
+
   return undefined
 }
 
@@ -529,31 +554,14 @@ async function fluid({ file, args = {}, reporter, cache }) {
     reporter,
   })
 
-  let base64Image
-  if (options.base64) {
-    const base64Width = options.base64Width
-    const base64Height = Math.max(
-      1,
-      Math.round(base64Width / images[0].aspectRatio)
-    )
-    const base64Args = {
-      background: options.background,
-      duotone: options.duotone,
-      grayscale: options.grayscale,
-      rotate: options.rotate,
-      trim: options.trim,
-      toFormat: options.toFormat,
-      toFormatBase64: options.toFormatBase64,
-      cropFocus: options.cropFocus,
-      fit: options.fit,
-      width: base64Width,
-      height: base64Height,
-    }
-    // Get base64 version
-    base64Image = await base64({ file, args: base64Args, reporter, cache })
-  }
-
-  const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
+  const base64Image = await getBase64({
+    aspectRatio: images[0].aspectRatio,
+    file,
+    options,
+    cache,
+    reporter,
+  })
+  const tracedSVG = await getTracedSVG({ file, options, cache, reporter })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -665,36 +673,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
     reporter,
   })
 
-  let base64Image
-  if (options.base64) {
-    const base64Width = options.base64Width
-    const base64Height = Math.max(
-      1,
-      Math.round(base64Width / images[0].aspectRatio)
-    )
-    const base64Args = {
-      background: options.background,
-      duotone: options.duotone,
-      grayscale: options.grayscale,
-      rotate: options.rotate,
-      trim: options.trim,
-      toFormat: options.toFormat,
-      toFormatBase64: options.toFormatBase64,
-      cropFocus: options.cropFocus,
-      fit: options.fit,
-      width: base64Width,
-      height: base64Height,
-    }
-    // Get base64 version
-    base64Image = await base64({
-      file,
-      args: base64Args,
-      reporter,
-      cache,
-    })
-  }
-
-  const tracedSVG = await getTracedSVG({ options, file, reporter, cache })
+  const base64Image = await getBase64({
+    aspectRatio: images[0].aspectRatio,
+    file,
+    options,
+    cache,
+    reporter,
+  })
+  const tracedSVG = await getTracedSVG({ file, options, cache, reporter })
 
   const fallbackSrc = images[0].src
   const srcSet = images
