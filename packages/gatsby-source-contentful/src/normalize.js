@@ -53,6 +53,42 @@ const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
   type
 ) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
+const getResolvableNestedReferences = (
+  entryItemFieldReferenceValue,
+  resolvable
+) => {
+  if (Array.isArray(entryItemFieldReferenceValue)) {
+    return entryItemFieldReferenceValue
+      .map(v => {
+        return {
+          id: v.sys.id,
+          type: v.sys.linkType || v.sys.type,
+          key: `${v.sys.id}___${v.sys.linkType || v.sys.type}`,
+        }
+      })
+      .filter(v => resolvable.has(v.key))
+  } else {
+    const key = `${entryItemFieldReferenceValue.sys.id}___${
+      entryItemFieldReferenceValue.sys.linkType ||
+      entryItemFieldReferenceValue.sys.type
+    }`
+
+    if (resolvable.has(key)) {
+      return [
+        {
+          id: entryItemFieldReferenceValue.sys.id,
+          type:
+            entryItemFieldReferenceValue.sys.linkType ||
+            entryItemFieldReferenceValue.sys.type,
+          key: key,
+        },
+      ]
+    }
+  }
+
+  return []
+}
+
 exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
@@ -165,28 +201,21 @@ exports.buildForeignReferenceMap = ({
                   entryItemFieldReferenceValue[0].sys.id
                 ) {
                   entryItemFieldValue.forEach(nestedField => {
-                    nestedField[nestedReferenceField.referenceKey].forEach(
-                      v => {
-                        const key = `${v.sys.id}___${
-                          v.sys.linkType || v.sys.type
-                        }`
-                        // Don't create link to an unresolvable field.
-                        if (!resolvable.has(key)) {
-                          return
-                        }
-
-                        if (!foreignReferenceMap[key]) {
-                          foreignReferenceMap[key] = []
-                        }
-
-                        foreignReferenceMap[key].push({
-                          name: `${contentTypeItemId}___NODE`,
-                          id: entryItem.sys.id,
-                          spaceId: space.sys.id,
-                          type: entryItem.sys.type,
-                        })
+                    getResolvableNestedReferences(
+                      nestedField[nestedReferenceField.referenceKey],
+                      resolvable
+                    ).forEach(reference => {
+                      if (!foreignReferenceMap[reference.key]) {
+                        foreignReferenceMap[reference.key] = []
                       }
-                    )
+
+                      foreignReferenceMap[reference.key].push({
+                        name: `${contentTypeItemId}___NODE`,
+                        id: entryItem.sys.id,
+                        spaceId: space.sys.id,
+                        type: entryItem.sys.type,
+                      })
+                    })
                   })
                 }
               }
@@ -195,22 +224,19 @@ exports.buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = `${entryItemFieldValue.sys.id}___${
-              entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
-            }`
-            // Don't create link to an unresolvable field.
-            if (!resolvable.has(key)) {
-              return
-            }
-
-            if (!foreignReferenceMap[key]) {
-              foreignReferenceMap[key] = []
-            }
-            foreignReferenceMap[key].push({
-              name: `${contentTypeItemId}___NODE`,
-              id: entryItem.sys.id,
-              spaceId: space.sys.id,
-              type: entryItem.sys.type,
+            getResolvableNestedReferences(
+              entryItemFieldValue,
+              resolvable
+            ).forEach(reference => {
+              if (!foreignReferenceMap[reference.key]) {
+                foreignReferenceMap[reference.key] = []
+              }
+              foreignReferenceMap[reference.key].push({
+                name: `${contentTypeItemId}___NODE`,
+                id: entryItem.sys.id,
+                spaceId: space.sys.id,
+                type: entryItem.sys.type,
+              })
             })
           }
           nestedReferences.fields.forEach(nestedReferenceField => {
@@ -424,19 +450,12 @@ exports.createNodesForContentType = ({
                 ) {
                   const resolvableEntryItemFieldValue = entryItemFieldValue.map(
                     v =>
-                      v[nestedReferenceField.referenceKey]
-                        .filter(v =>
-                          resolvable.has(
-                            `${v.sys.id}___${v.sys.linkType || v.sys.type}`
-                          )
-                        )
-                        .map(v =>
-                          mId(
-                            space.sys.id,
-                            v.sys.id,
-                            v.sys.linkType || v.sys.type
-                          )
-                        )
+                      getResolvableNestedReferences(
+                        v[nestedReferenceField.referenceKey],
+                        resolvable
+                      ).map(reference =>
+                        mId(space.sys.id, reference.id, reference.type)
+                      )
                   )
                   if (resolvableEntryItemFieldValue.length !== 0) {
                     const updatedField = entryItemFields[
@@ -492,25 +511,22 @@ exports.createNodesForContentType = ({
                 entryItemFieldReferenceValue.sys.type &&
                 entryItemFieldReferenceValue.sys.id
               ) {
-                const key = `${entryItemFieldReferenceValue.sys.id}___${
-                  entryItemFieldReferenceValue.sys.linkType ||
-                  entryItemFieldReferenceValue.sys.type
-                }`
-
-                if (resolvable.has(key)) {
+                getResolvableNestedReferences(
+                  entryItemFieldReferenceValue,
+                  resolvable
+                ).forEach(reference => {
                   const updatedNode = {
                     ...entryItemFieldValue,
                     [`${nestedReferenceField.referenceKey}___NODE`]: mId(
                       space.sys.id,
-                      entryItemFieldReferenceValue.sys.id,
-                      entryItemFieldReferenceValue.sys.linkType ||
-                        entryItemFieldReferenceValue.sys.type
+                      reference.id,
+                      reference.type
                     ),
                   }
 
                   delete updatedNode[nestedReferenceField.referenceKey]
                   entryItemFields[entryItemFieldKey] = updatedNode
-                }
+                })
               }
             }
           })
