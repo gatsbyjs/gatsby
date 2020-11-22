@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.0...gatsby@2.28.0-next.1) (2020-11-22)
+
+### Bug Fixes
+
+- **gatsby:** get-page-data should timeout gracefully ([#28131](https://github.com/gatsbyjs/gatsby/issues/28131)) ([c517b60](https://github.com/gatsbyjs/gatsby/commit/c517b605b7572171607be140175be279748de7fa))
+- **gatsby:** pull out a few bug fixes from https://github.com/gatsbyjs/gatsby/pull/28149/ ([#28186](https://github.com/gatsbyjs/gatsby/issues/28186)) ([f9fd11d](https://github.com/gatsbyjs/gatsby/commit/f9fd11d319b3ec097cce6378ccedb86a7f2f8cc8))
+
+### Features
+
+- **gatsby:** add telemetry for usage of lazy devjs bundling ([#28147](https://github.com/gatsbyjs/gatsby/issues/28147)) ([48f2b2d](https://github.com/gatsbyjs/gatsby/commit/48f2b2d76af060b7d9d83d28be5c4f6d069133d5))
+- **gatsby:** enable all dev improvements with one env var ([#28166](https://github.com/gatsbyjs/gatsby/issues/28166)) ([158ceb7](https://github.com/gatsbyjs/gatsby/commit/158ceb7d404967920613c5e8e4f57520b049167d))
+- **gatsby:** invite people with long page query running to try out query on demand feature ([#28181](https://github.com/gatsbyjs/gatsby/issues/28181)) ([413888b](https://github.com/gatsbyjs/gatsby/commit/413888b61ad3014b9cd3fc9d846b5382a1ec82f9))
+
 # [2.28.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.1...gatsby@2.28.0-next.0) (2020-11-18)
 
 ### Bug Fixes
