@@ -25,7 +25,7 @@ describe(`create-gatsby-app`, () => {
     jest.resetAllMocks()
   })
 
-  it.only(`creates a project only using the project name`, async () => {
+  it(`creates a project only using the project name`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
@@ -53,7 +53,7 @@ describe(`create-gatsby-app`, () => {
     expect(installPlugins).not.toBeCalled()
   })
 
-  it.only(`creates a project with a project name and a CSS tool`, async () => {
+  it(`creates a project with a project name and a CSS tool`, async () => {
     cli.on(`prompt`, p => {
       p.on(`run`, async () => {
         switch (p.name) {
@@ -123,7 +123,7 @@ describe(`create-gatsby-app`, () => {
     expect(
       initStarter
     ).toBeCalledWith(
-      `https://github.com/ascorbic/gatsby-starter-hello-world.git`,
+      `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
       `my-super-project-name`,
       [`gatsby-source-wordpress-experimental`]
     )
@@ -182,7 +182,7 @@ describe(`create-gatsby-app`, () => {
     expect(
       initStarter
     ).toBeCalledWith(
-      `https://github.com/ascorbic/gatsby-starter-hello-world.git`,
+      `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
       `my-super-project-name`,
       [
         `gatsby-source-wordpress-experimental`,
