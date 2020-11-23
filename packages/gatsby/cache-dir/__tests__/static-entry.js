@@ -21,7 +21,7 @@ jest.mock(
   `$virtual/ssr-sync-requires`,
   () => {
     return {
-      components: {
+      ssrComponents: {
         "page-component---src-pages-test-js": () => null,
       },
     }

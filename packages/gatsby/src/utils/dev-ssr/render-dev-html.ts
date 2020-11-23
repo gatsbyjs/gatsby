@@ -1,5 +1,7 @@
 import JestWorker from "jest-worker"
-import _ from "lodash"
+import fs from "fs-extra"
+import { joinPath } from "gatsby-core-utils"
+import report from "gatsby-cli/lib/reporter"
 
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
@@ -43,6 +45,68 @@ export const restartWorker = (htmlComponentRendererPath): void => {
   }
 }
 
+const searchFileForString = (substring, filePath): Promise<boolean> =>
+  new Promise(resolve => {
+    // See if the chunk is in the newComponents array (not the notVisited).
+    const chunkRegex = RegExp(`exports.ssrComponents.*${substring}.*}`, `gs`)
+    const stream = fs.createReadStream(filePath)
+    let found = false
+    stream.on(`data`, function (d) {
+      if (chunkRegex.test(d.toString())) {
+        found = true
+        stream.close()
+        resolve(found)
+      }
+    })
+    stream.on(`error`, function () {
+      resolve(found)
+    })
+    stream.on(`close`, function () {
+      resolve(found)
+    })
+  })
+
+const ensurePathComponentInSSRBundle = async (
+  page,
+  directory
+): Promise<any> => {
+  // This shouldn't happen.
+  if (!page) {
+    report.panic(`page not found`, page)
+  }
+
+  // Now check if it's written to public/render-page.js
+  const htmlComponentRendererPath = joinPath(directory, `public/render-page.js`)
+  // This search takes 1-10ms
+  // We do it as there can be a race conditions where two pages
+  // are requested at the same time which means that both are told render-page.js
+  // has changed when the first page is complete meaning the second
+  // page's component won't be in the render meaning its SSR will fail.
+  let found = await searchFileForString(
+    page.componentChunkName,
+    htmlComponentRendererPath
+  )
+
+  if (!found) {
+    await new Promise(resolve => {
+      let readAttempts = 0
+      const searchForStringInterval = setInterval(async () => {
+        readAttempts += 1
+        found = await searchFileForString(
+          page.componentChunkName,
+          htmlComponentRendererPath
+        )
+        if (found || readAttempts === 5) {
+          clearInterval(searchForStringInterval)
+          resolve()
+        }
+      }, 300)
+    })
+  }
+
+  return found
+}
+
 export const renderDevHTML = ({
   path,
   page,
@@ -63,6 +127,25 @@ export const renderDevHTML = ({
     if (pageObj.matchPath) {
       isClientOnlyPage = true
     }
+
+    const { boundActionCreators } = require(`../../redux/actions`)
+    const {
+      createServerVisitedPage,
+      createClientVisitedPage,
+    } = boundActionCreators
+    // Record this page was requested. This will kick off adding its page
+    // component to the ssr bundle (if that's not already happened)
+    createServerVisitedPage(pageObj.componentChunkName)
+
+    // We'll also get a head start on compiling the client code (this
+    // call has no effect if the page component is already in the client bundle).
+    createClientVisitedPage(pageObj.componentChunkName)
+
+    // Ensure the query has been run and written out.
+    await getPageDataExperimental(pageObj.path)
+
+    // Wait for public/render-page.js to update w/ the page component.
+    await ensurePathComponentInSSRBundle(pageObj, directory)
 
     // Ensure the query has been run and written out.
     await getPageDataExperimental(pageObj.path)
