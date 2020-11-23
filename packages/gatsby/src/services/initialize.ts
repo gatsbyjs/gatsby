@@ -52,6 +52,8 @@ Please give feedback on their respective umbrella issues!
 - https://gatsby.dev/query-on-demand-feedback
 - https://gatsby.dev/dev-ssr-feedback
   `)
+
+  telemetry.trackFeatureIsUsed(`FastDev`)
 }
 
 if (
