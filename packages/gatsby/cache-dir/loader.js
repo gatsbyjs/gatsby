@@ -299,20 +299,7 @@ export class BaseLoader {
         process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
         options.isPrefetch === true
       ) {
-        componentChunkPromise = () => {
-          finalResult.createdAt = new Date()
-          finalResult.status = PageResourceStatus.Success
-          if (result.notFound === true) {
-            finalResult.notFound = true
-          }
-          pageData = Object.assign(pageData, {
-            webpackCompilationHash: allData[0]
-              ? allData[0].webpackCompilationHash
-              : ``,
-          })
-          const pageResources = toPageResources(pageData)
-          return Promise.resolve(pageResources)
-        }
+        componentChunkPromise = () => Promise.resolve()
       } else {
         componentChunkPromise = createLoadComponentPromise()
       }
@@ -355,7 +342,9 @@ export class BaseLoader {
             })
           }
 
-          if (!options.isPrefetch) {
+          // Just don't save to the DB when prefetching. Loaded assets
+          // are stored in the browser cache so not wasteful/slower.
+          if (process.env.NODE_ENV !== `development` || !options.isPrefetch) {
             this.pageDb.set(pagePath, finalResult)
           }
 
@@ -445,7 +434,14 @@ export class BaseLoader {
   }
 
   hovering(rawPath) {
-    this.loadPage(rawPath, { isPrefetch: true })
+    if (
+      process.env.NODE_ENV === `development` &&
+      process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS
+    ) {
+      this.loadPage(rawPath, { isPrefetch: true })
+    } else {
+      this.loadPage(rawPath)
+    }
   }
 
   getResourceURLsForPathname(rawPath) {
