@@ -323,7 +323,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
-npm install gatsby-plugin-emotion @emotion/core @emotion/styled
+npm install gatsby-plugin-emotion @emotion/react @emotion/styled
 ```
 
 2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
@@ -340,7 +340,7 @@ Import Emotion's `css` core package. You can then use the `css` prop to add [Emo
 
 ```jsx:title=src/pages/emotion-sample.js
 import React from "react"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 
 export default function EmotionSample() {
   return (

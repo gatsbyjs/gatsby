@@ -11,8 +11,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
   "devDependencies": {
-    "@emotion/core": "^10.1.1",
-    "@emotion/styled": "^10.0.27",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "@feedback-fish/react": "^1.2.0",
     "@types/react-instantsearch-dom": "^5.2.6",
     "@types/socket.io-client": "^1.4.34",
