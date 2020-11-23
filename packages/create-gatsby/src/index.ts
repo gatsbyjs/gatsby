@@ -11,7 +11,14 @@ import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, rule, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
+import { trackCli } from "./tracking"
+import crypto from "crypto"
 
+const sha256 = (str: string): string =>
+  crypto.createHash(`sha256`).update(str).digest(`hex`)
+
+const md5 = (str: string): string =>
+  crypto.createHash(`md5`).update(str).digest(`hex`)
 /**
  * Hide string on windows (for emojis)
  */
@@ -21,8 +28,7 @@ const w = (input: string): string => (process.platform === `win32` ? `` : input)
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
 const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
-// We're using a fork because it points to the canary version of gatsby
-const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
+const DEFAULT_STARTER = `https://github.com/gatsbyjs/gatsby-starter-minimal.git`
 
 const makeChoices = (
   options: Record<string, { message: string; dependencies?: Array<string> }>,
@@ -128,6 +134,8 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
+  trackCli(`CREATE_GATSBY_START`)
+
   const { version } = require(`../package.json`)
 
   console.log(c.grey(`create-gatsby version ${version}`))
@@ -137,17 +145,10 @@ export async function run(): Promise<void> {
 
 
 ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
-   
-                
+
+
 `
   )
-  console.log(c.red(rule()))
-  console.log(
-    center(
-      c.red(`${c.symbols.warning} This is currently for testing purposes only`)
-    )
-  )
-  console.log(c.red(rule()))
 
   console.log(
     wrap(
@@ -166,6 +167,23 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   enquirer.use(plugin)
 
   const data = await enquirer.prompt(questions)
+
+  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
+    name: `project_name`,
+    valueString: sha256(data.project),
+  })
+  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
+    name: `CMS`,
+    valueString: data.cms || `none`,
+  })
+  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
+    name: `CSS_TOOLS`,
+    valueString: data.styling || `none`,
+  })
+  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
+    name: `PLUGIN`,
+    valueStringArray: data.features || [],
+  })
 
   const messages: Array<string> = [
     `${w(`🛠  `)}Create a new Gatsby site in the folder ${c.magenta(
@@ -245,9 +263,14 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
 
+    trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
+
     const enquirer = new Enquirer<Record<string, {}>>()
     enquirer.use(plugin)
+
     pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }
+
+    trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
 
   console.log(`
@@ -266,6 +289,8 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   })
 
   if (!confirm) {
+    trackCli(`CREATE_GATSBY_CANCEL`)
+
     console.log(`OK, bye!`)
     return
   }
@@ -289,7 +314,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
       data.project
-    )} has been successfully bootstrapped 
+    )} has been successfully bootstrapped
     at ${c.bold(path.resolve(data.project))}.
     `
   )
@@ -304,4 +329,15 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   console.log(`See all commands at\n
   ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
+
+  const siteHash = md5(path.resolve(data.project))
+  trackCli(`CREATE_GATSBY_SUCCESS`, { siteHash })
 }
+
+process.on(`exit`, exitCode => {
+  trackCli(`CREATE_GATSBY_END`, { exitCode })
+
+  if (exitCode === -1) {
+    trackCli(`CREATE_GATSBY_ERROR`)
+  }
+})

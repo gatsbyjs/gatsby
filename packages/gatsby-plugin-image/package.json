@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "0.2.0-next.0",
+  "version": "0.3.0-next.1",
   "scripts": {
     "build": "npm-run-all -s clean -p build:*",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/types.d.ts",
@@ -46,9 +46,9 @@
   "types": "dist/src/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#readme",
   "devDependencies": {
-    "@babel/cli": "^7.8.7",
-    "@babel/core": "^7.8.7",
-    "@testing-library/react": "^11.1.1",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@testing-library/react": "^11.1.2",
     "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.0.15",
     "@types/fs-extra": "^8.1.0",
@@ -76,13 +76,13 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@babel/parser": "^7.8.7",
-    "@babel/traverse": "^7.8.6",
+    "@babel/parser": "^7.12.5",
+    "@babel/traverse": "^7.12.5",
     "babel-jsx-utils": "^1.0.1",
-    "babel-plugin-remove-graphql-queries": "^2.11.0-next.0",
+    "babel-plugin-remove-graphql-queries": "^2.12.0-next.0",
     "chokidar": "^3.4.3",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.5.0-next.0",
+    "gatsby-core-utils": "^1.6.0-next.0",
     "prop-types": "^15.7.2"
   },
   "repository": {

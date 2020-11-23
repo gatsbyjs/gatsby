@@ -162,26 +162,60 @@ const getMatchPaths = (
 
 const createHash = (
   matchPaths: Array<IGatsbyPageMatchPath>,
-  components: Array<IGatsbyPageComponent>
+  components: Array<IGatsbyPageComponent>,
+  cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent>,
+  notVisitedPageComponents: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
-    .update(JSON.stringify({ matchPaths, components }))
+    .update(
+      JSON.stringify({
+        matchPaths,
+        components,
+        cleanedClientVisitedPageComponents,
+        notVisitedPageComponents,
+      })
+    )
     .digest(`hex`)
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
 
-  const newHash = createHash(matchPaths, components)
+  let cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent> = components
+  let notVisitedPageComponents: Array<IGatsbyPageComponent> = components
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    const clientVisitedPageComponents = [...state.clientVisitedPages.values()]
+    // Remove any page components that no longer exist.
+    cleanedClientVisitedPageComponents = components.filter(component =>
+      clientVisitedPageComponents.some(
+        pageComponentChunkName =>
+          pageComponentChunkName === component.componentChunkName
+      )
+    )
+
+    // Get list of page components that the user has _not_ visited.
+    notVisitedPageComponents = components.filter(
+      component =>
+        // Filter out page components the user has visited.
+        !cleanedClientVisitedPageComponents.some(
+          c => c.componentChunkName === component.componentChunkName
+        )
+    )
+  }
+
+  const newHash = createHash(
+    matchPaths,
+    components,
+    cleanedClientVisitedPageComponents,
+    notVisitedPageComponents
+  )
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // console.log(`on requiresWriter END1`)
     return false
   }
 
@@ -210,6 +244,39 @@ const preferDefault = m => (m && m.default) || m
     )
     .join(`,\n`)}
 }\n\n`
+
+  // webpack only seems to trigger re-renders once per virtual
+  // file so we need a seperate one for each webpack instance.
+  writeModule(`$virtual/ssr-sync-requires`, syncRequires)
+
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    // Create file with sync requires of visited page components files.
+    let lazyClientSyncRequires = `${hotImport}
+  // prefer default export if available
+  const preferDefault = m => (m && m.default) || m
+  \n\n`
+    lazyClientSyncRequires += `exports.lazyComponents = {\n${cleanedClientVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string =>
+          `  "${
+            c.componentChunkName
+          }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    // Add list of not visited components.
+    lazyClientSyncRequires += `exports.notVisitedPageComponents = {\n${notVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string => `  "${c.componentChunkName}": true`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    writeModule(`$virtual/lazy-client-sync-requires`, lazyClientSyncRequires)
+  } else {
+    writeModule(`$virtual/lazy-client-sync-requires`, ``)
+  }
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
@@ -262,6 +329,17 @@ const preferDefault = m => (m && m.default) || m
   ])
 
   return true
+}
+
+if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+  /**
+   * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
+   * files as required
+   */
+  emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    writeAll(store.getState())
+  })
 }
 
 const debouncedWriteAll = _.debounce(
