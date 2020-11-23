@@ -587,10 +587,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         const pluginName =
           plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
-        if (api === `sourceNodes`) {
-          console.log(`running sourceNodes for`, pluginName)
-        }
-
         // TODO: rethink createNode API to handle this better
         if (
           api === `onCreateNode` &&
