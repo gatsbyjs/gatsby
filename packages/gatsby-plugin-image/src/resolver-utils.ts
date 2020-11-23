@@ -122,10 +122,6 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
             container will be the full width of the screen. In these cases we will generate an appropriate value.
         `,
       },
-      quality: {
-        type: GraphQLInt,
-        description: `The default quality. This is overriden by any format-specific options`,
-      },
       ...extraArgs,
     },
     resolve,
