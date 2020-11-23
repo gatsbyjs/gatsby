@@ -87,9 +87,7 @@ export const makePluginConfigQuestions = (
       })
     })
 
-    console.log(`Choices`)
     if (choices.length) {
-      console.log(`ATTEMPT`, pluginName, choices)
       formPrompts.push({
         type: `forminput`,
         name: pluginName,
