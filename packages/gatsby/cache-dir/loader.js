@@ -127,7 +127,7 @@ export class BaseLoader {
     this.prefetchDisabled = apiRunner(`disableCorePrefetching`).some(a => a)
   }
 
-  fetchPageDataJson(loadObj) {
+  fetchPageDataJson(loadObj, options = {}) {
     const { pagePath, retries = 0 } = loadObj
     const url = createPageDataUrl(pagePath)
     return this.memoizedGet(url).then(req => {
@@ -144,7 +144,8 @@ export class BaseLoader {
           // In development, check if the page is in the bundle yet.
           if (
             process.env.NODE_ENV === `development` &&
-            process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS
+            process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
+            options.isPrefetch !== true
           ) {
             const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
               .default
@@ -217,7 +218,7 @@ export class BaseLoader {
     })
   }
 
-  loadPageDataJson(rawPath) {
+  loadPageDataJson(rawPath, options) {
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
       const pageData = this.pageDataDb.get(pagePath)
@@ -226,7 +227,7 @@ export class BaseLoader {
       }
     }
 
-    return this.fetchPageDataJson({ pagePath }).then(pageData => {
+    return this.fetchPageDataJson({ pagePath }, options).then(pageData => {
       this.pageDataDb.set(pagePath, pageData)
 
       return pageData
@@ -238,13 +239,13 @@ export class BaseLoader {
   }
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
-  loadPage(rawPath) {
+  loadPage(rawPath, options = {}) {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       if (
         !process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND ||
-        !page.payload.stale
+        !page.payload?.stale
       ) {
         return Promise.resolve(page.payload)
       }
@@ -256,7 +257,7 @@ export class BaseLoader {
 
     const inFlightPromise = Promise.all([
       this.loadAppData(),
-      this.loadPageDataJson(pagePath),
+      this.loadPageDataJson(pagePath, options),
     ]).then(allData => {
       const result = allData[1]
       if (result.status === PageResourceStatus.Error) {
@@ -270,8 +271,8 @@ export class BaseLoader {
 
       const finalResult = {}
 
-      const componentChunkPromise = this.loadComponent(componentChunkName).then(
-        component => {
+      const createLoadComponentPromise = () =>
+        this.loadComponent(componentChunkName).then(component => {
           finalResult.createdAt = new Date()
           let pageResources
           if (!component) {
@@ -290,8 +291,31 @@ export class BaseLoader {
           }
           // undefined if final result is an error
           return pageResources
+        })
+
+      let componentChunkPromise
+      if (
+        process.env.NODE_ENV === `development` &&
+        process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
+        options.isPrefetch === true
+      ) {
+        componentChunkPromise = () => {
+          finalResult.createdAt = new Date()
+          finalResult.status = PageResourceStatus.Success
+          if (result.notFound === true) {
+            finalResult.notFound = true
+          }
+          pageData = Object.assign(pageData, {
+            webpackCompilationHash: allData[0]
+              ? allData[0].webpackCompilationHash
+              : ``,
+          })
+          const pageResources = toPageResources(pageData)
+          return Promise.resolve(pageResources)
         }
-      )
+      } else {
+        componentChunkPromise = createLoadComponentPromise()
+      }
 
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
@@ -331,7 +355,9 @@ export class BaseLoader {
             })
           }
 
-          this.pageDb.set(pagePath, finalResult)
+          if (!options.isPrefetch) {
+            this.pageDb.set(pagePath, finalResult)
+          }
 
           return payload
         }
@@ -419,7 +445,7 @@ export class BaseLoader {
   }
 
   hovering(rawPath) {
-    this.loadPage(rawPath)
+    this.loadPage(rawPath, { isPrefetch: true })
   }
 
   getResourceURLsForPathname(rawPath) {
@@ -505,8 +531,8 @@ export class ProdLoader extends BaseLoader {
     })
   }
 
-  loadPageDataJson(rawPath) {
-    return super.loadPageDataJson(rawPath).then(data => {
+  loadPageDataJson(rawPath, options) {
+    return super.loadPageDataJson(rawPath, options).then(data => {
       if (data.notFound) {
         // check if html file exist using HEAD request:
         // if it does we should navigate to it instead of showing 404
@@ -557,7 +583,7 @@ export const publicLoader = {
   // Real methods
   getResourceURLsForPathname: rawPath =>
     instance.getResourceURLsForPathname(rawPath),
-  loadPage: rawPath => instance.loadPage(rawPath),
+  loadPage: (rawPath, options) => instance.loadPage(rawPath, options),
   loadPageSync: rawPath => instance.loadPageSync(rawPath),
   prefetch: rawPath => instance.prefetch(rawPath),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),

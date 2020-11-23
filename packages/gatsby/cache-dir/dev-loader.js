@@ -53,9 +53,9 @@ class DevLoader extends BaseLoader {
     }
   }
 
-  loadPage(pagePath) {
+  loadPage(pagePath, options) {
     const realPath = findPath(pagePath)
-    return super.loadPage(realPath).then(result => {
+    return super.loadPage(realPath, options).then(result => {
       if (this.isPageNotFound(realPath)) {
         this.notFoundPagePathsInCaches.add(realPath)
       }
@@ -64,8 +64,8 @@ class DevLoader extends BaseLoader {
     })
   }
 
-  loadPageDataJson(rawPath) {
-    return super.loadPageDataJson(rawPath).then(data => {
+  loadPageDataJson(rawPath, options) {
+    return super.loadPageDataJson(rawPath, options).then(data => {
       // when we can't find a proper 404.html we fallback to dev-404-page
       // we need to make sure to mark it as not found.
       if (
