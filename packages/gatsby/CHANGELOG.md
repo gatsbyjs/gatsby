@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.1...gatsby@2.28.0-next.2) (2020-11-23)
+
+### Features
+
+- **gatsby:** bump % that get invited to try dev_ssr to 5% from 1% ([#28232](https://github.com/gatsbyjs/gatsby/issues/28232)) ([2b494c3](https://github.com/gatsbyjs/gatsby/commit/2b494c34b5a8bb798fa1134a8a482165afc72fce))
+- **gatsby:** track usage of GATSBY_EXPERIMENTAL_FAST_DEV ([#28223](https://github.com/gatsbyjs/gatsby/issues/28223)) ([849b3bd](https://github.com/gatsbyjs/gatsby/commit/849b3bd4ec871ecb7596819940f8004ce9ec3793))
+
 # [2.28.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.0...gatsby@2.28.0-next.1) (2020-11-22)
 
 ### Bug Fixes
