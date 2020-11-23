@@ -66,7 +66,7 @@ export interface IImage {
   format: ImageFormat
 }
 
-export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto"
+export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto" | ""
 
 export interface IGatsbyImageHelperArgs {
   pluginName: string
@@ -176,7 +176,7 @@ export function generateImageData(
   //
   const formats = new Set<ImageFormat>(args.formats || [`auto`, `webp`])
 
-  if (formats.size === 0 || formats.has(`auto`)) {
+  if (formats.size === 0 || formats.has(`auto`) || formats.has(``)) {
     formats.delete(`auto`)
     formats.add(sourceMetadata.format)
   }
