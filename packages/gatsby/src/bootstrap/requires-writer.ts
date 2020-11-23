@@ -186,7 +186,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
-  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = components
+  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const ssrVisitedPageComponents = [
@@ -199,8 +199,8 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     )
   }
 
-  let cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent> = components
-  let notVisitedPageComponents: Array<IGatsbyPageComponent> = components
+  let cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent> = []
+  let notVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
   if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
     const clientVisitedPageComponents = [
