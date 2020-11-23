@@ -97,11 +97,12 @@ export const questions: any = [
     choices: makeChoices(features, true),
   },
 ]
-interface IAnswers {
+export interface IAnswers {
   project: string
   styling?: keyof typeof styles
   cms?: keyof typeof cmses
   features?: Array<keyof typeof features>
+  confirm?: boolean
 }
 
 /**
@@ -133,7 +134,17 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
-export async function run(): Promise<void> {
+export const createCli = (): Enquirer<IAnswers> => {
+  const cli = new Enquirer<IAnswers>()
+
+  cli.use(plugin)
+
+  return cli
+}
+
+export async function run(
+  cli: Enquirer<IAnswers> = createCli()
+): Promise<void> {
   trackCli(`CREATE_GATSBY_START`)
 
   const { version } = require(`../package.json`)
@@ -162,11 +173,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   )
   console.log(``)
 
-  const enquirer = new Enquirer<IAnswers>()
-
-  enquirer.use(plugin)
-
-  const data = await enquirer.prompt(questions)
+  const data = await cli.prompt(questions)
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `project_name`,
@@ -265,10 +272,17 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
-    const enquirer = new Enquirer<Record<string, {}>>()
-    enquirer.use(plugin)
+    const {
+      confirm,
+      project,
+      cms,
+      features,
+      styling,
+      ...result
+    } = await cli.prompt(config)
+    /* eslint-enable @typescript-eslint/no-unused-vars */
 
-    pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }
+    pluginConfig = { ...pluginConfig, ...result }
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
@@ -280,7 +294,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     ${messages.join(`\n    `)}
   `)
 
-  const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
+  const { confirm } = await cli.prompt({
     type: `confirm`,
     name: `confirm`,
     initial: `Yes`,
