@@ -1,15 +1,8 @@
 import React from "react"
 import Overlay from "./overlay"
 import Anser from "anser"
-
-function prettifyStack(errorInformation) {
-  const txt = errorInformation.join(`\n`)
-  return Anser.ansiToJson(txt, {
-    remove_empty: true,
-    use_classes: true,
-    json: true,
-  })
-}
+import CodeFrame from "./code-frame"
+import { prettifyStack } from "../utils"
 
 const BuildError = ({ error, open, dismiss }) => {
   const [file, cause, _emptyLine, ...rest] = error.split(`\n`)
@@ -43,28 +36,7 @@ const BuildError = ({ error, open, dismiss }) => {
     </>
   )
 
-  const body = (
-    <pre data-gatsby-overlay="pre">
-      <code data-gatsby-overlay="pre__code">
-        {decoded.map((entry, index) => (
-          <span
-            key={`frame-${index}`}
-            data-gatsby-overlay="pre__code__span"
-            style={{
-              color: entry.fg ? `var(--color-${entry.fg})` : undefined,
-              ...(entry.decoration === `bold`
-                ? { fontWeight: 800 }
-                : entry.decoration === `italic`
-                ? { fontStyle: `italic` }
-                : undefined),
-            }}
-          >
-            {entry.content}
-          </span>
-        ))}
-      </code>
-    </pre>
-  )
+  const body = <CodeFrame decoded={decoded} />
 
   return <Overlay header={header} body={body} dismiss={dismiss} />
 }

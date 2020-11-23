@@ -17,6 +17,7 @@ const Style = () => (
           --gatsbyLight: #9158ca;
           --dimmedWhite: rgba(255, 255, 255, 0.8);
           --white: #ffffff;
+          --black: #000000;
           --color-ansi-selection: rgba(95, 126, 151, 0.48);
           --color-ansi-bg: #fafafa;
           --color-ansi-fg: #545454;
@@ -39,8 +40,9 @@ const Style = () => (
           --radii: 5px;
           --z-index-normal: 5;
           --z-index-elevated: 10;
-          --padding: 1.5em;
-          --padding-sm: 1em;
+          --space: 1.5em;
+          --space-sm: 1em;
+          --space-lg: 2.5em;
         }
 
         [data-gatsby-overlay="backdrop"] {
@@ -63,6 +65,7 @@ const Style = () => (
           background: var(--color-ansi-bright-white);
           position: fixed;
           max-width: 75%;
+          min-width: 600px;
           max-height: 90%;
           top: 50%;
           left: 50%;
@@ -80,13 +83,13 @@ const Style = () => (
           align-items: center;
           color: var(--dimmedWhite);
           background: var(--gatsby);
-          padding: var(--padding);
+          padding: var(--space);
           border-top-left-radius: var(--radii);
           border-top-right-radius: var(--radii);
         }
 
         [data-gatsby-overlay="body"] {
-          padding: var(--padding);
+          padding: var(--space);
           overflow: auto;
         }
 
@@ -94,7 +97,7 @@ const Style = () => (
           margin: 0;
           color: var(--color-ansi-fg);
           background: var(--color-ansi-bg);
-          padding: var(--padding-sm);
+          padding: var(--space-sm);
           border-radius: var(--radii);
         }
 
@@ -125,6 +128,7 @@ const Style = () => (
           height: 2em;
           min-width: 2em;
           padding: 0.25em 0.75em;
+          margin-left: var(--space-lg);
         }
 
         [data-gatsby-overlay="header__close-button"] {
@@ -141,6 +145,22 @@ const Style = () => (
           justify-content: center;
           border-radius: var(--radii);
           margin-left: 1rem;
+        }
+
+        [data-gatsby-overlay="body__error-message-header"] {
+          margin-top: 0;
+          font-size: 1.2em;
+          color: var(--black);
+          margin-bottom: 0.25em;
+        }
+
+        [data-gatsby-overlay="body__error-message"] {
+          margin-top: 0;
+          margin-bottom: 2em;
+        }
+
+        [data-font-weight="bold"] {
+          font-weight: 600;
         }
       `,
     }}

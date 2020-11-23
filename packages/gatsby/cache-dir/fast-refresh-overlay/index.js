@@ -79,7 +79,7 @@ export default class FastRefreshOverlay extends React.Component {
 
   render() {
     const { errors, currentIndex, buildError } = this.state
-    const problem = errors[currentIndex]
+    const error = errors[currentIndex]
     const hasBuildError = buildError !== null
     const hasRuntimeError = Boolean(errors.length)
 
@@ -92,7 +92,6 @@ export default class FastRefreshOverlay extends React.Component {
             this.setState({ errors: [], buildError: null })
           }}
           onError={error => {
-            console.log({ error })
             this.setState(prevState => {
               const insertedError = { type: `RUNTIME_ERROR`, error }
               return {
@@ -113,7 +112,11 @@ export default class FastRefreshOverlay extends React.Component {
                 dismiss={this.dismiss}
               />
             ) : hasRuntimeError ? (
-              <RuntimeError problem={problem} dismiss={this.dismiss} />
+              <RuntimeError
+                error={error}
+                open={this.open}
+                dismiss={this.dismiss}
+              />
             ) : undefined}
           </Portal>
         ) : undefined}

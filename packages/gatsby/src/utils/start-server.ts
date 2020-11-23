@@ -12,6 +12,7 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
+import { codeFrameColumns } from "@babel/code-frame"
 
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
@@ -37,6 +38,7 @@ import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
+import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -268,9 +270,55 @@ export async function startServer(
 
   app.use(webpackDevMiddlewareInstance)
 
-  app.get(`/__original-stack-frame`, (req, res) => {
-    console.log({ result: res.locals.webpackStats })
-    res.end()
+  app.get(`/__original-stack-frame`, async (req, res) => {
+    const {
+      webpackStats: {
+        compilation: { modules },
+      },
+    } = res.locals
+    const moduleId = req.query.moduleId
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    const fileModule = modules.find(m => m.id === moduleId)
+    const sourceMap = fileModule._source._sourceMap
+
+    const position = { line: lineNumber, column: columnNumber }
+    const result = await findOriginalSourcePositionAndContent(
+      sourceMap,
+      position
+    )
+
+    const sourcePosition = result?.sourcePosition
+    const sourceContent = result?.sourceContent
+    let codeFrame = `No codeFrame could be generated`
+
+    if (!sourceContent || !sourcePosition) {
+      res.json({
+        codeFrame,
+        sourcePosition: null,
+        sourceContent: null,
+      })
+      return
+    }
+
+    codeFrame = codeFrameColumns(
+      sourceContent as string,
+      {
+        start: {
+          line: sourcePosition.line as number,
+          column: sourcePosition.column ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
+      sourcePosition,
+      sourceContent,
+    })
   })
 
   // Expose access to app for advanced use cases

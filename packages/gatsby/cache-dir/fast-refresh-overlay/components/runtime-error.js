@@ -1,7 +1,8 @@
 import React from "react"
 import StackTrace from "stack-trace"
-// import { codeFrameColumns } from "@babel/code-frame"
 import Overlay from "./overlay"
+import { prettifyStack } from "../utils"
+import CodeFrame from "./code-frame"
 
 function formatFilename(filename) {
   const htmlMatch = /^https?:\/\/(.*)\/(.*)/.exec(filename)
@@ -9,65 +10,100 @@ function formatFilename(filename) {
     return htmlMatch[2]
   }
 
-  const sourceMatch = /\/.*?([^./]+[/|\\].*)$/.exec(filename)
+  const sourceMatch = /^webpack-internal:\/\/\/(.*)$/.exec(filename)
   if (sourceMatch && sourceMatch[1]) {
-    return sourceMatch[1].replace(/\?$/, ``)
+    return sourceMatch[1]
   }
 
   return filename
 }
 
-async function getNonGatsbyCodeFrame(stackTrace) {
+const useFetch = url => {
+  const [response, setResponse] = React.useState({
+    decoded: null,
+    sourcePosition: {
+      line: null,
+      number: null,
+    },
+    sourceContent: null,
+  })
+  React.useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(url)
+      const json = await res.json()
+      const decoded = prettifyStack(json.codeFrame)
+      const { sourcePosition, sourceContent } = json
+      setResponse({
+        decoded,
+        sourceContent,
+        sourcePosition,
+      })
+    }
+    fetchData()
+  }, [])
+  return response
+}
+
+function getCodeFrameInformation(stackTrace) {
   const callSite = stackTrace.find(CallSite => CallSite.getFileName())
   if (!callSite) {
     return null
   }
 
-  const fileName = formatFilename(callSite.getFileName())
-  const line = callSite.getLineNumber()
-  const column = callSite.getColumnNumber()
-
-  const test = await window.fetch(
-    `/__original-stack-frame?fileName=` + window.encodeURIComponent(fileName)
-  )
-
-  console.log(test)
+  const moduleId = formatFilename(callSite.getFileName())
+  const lineNumber = callSite.getLineNumber()
+  const columnNumber = callSite.getColumnNumber()
+  const functionName = callSite.getFunctionName()
 
   return {
-    fileName,
-    line,
-    column,
-    // codeFrame: codeFrameColumns(
-    //   code,
-    //   {
-    //     start: {
-    //       line,
-    //       column,
-    //     },
-    //   },
-    //   {
-    //     highlightCode: true,
-    //   }
-    // ),
+    moduleId,
+    lineNumber,
+    columnNumber,
+    functionName,
   }
 }
 
-const RuntimeError = ({ problem, dismiss }) => {
-  const [callSite, setCallSite] = React.useState({})
+const RuntimeError = ({ error, open, dismiss }) => {
+  const stacktrace = StackTrace.parse(error.error)
+  const {
+    moduleId,
+    lineNumber,
+    columnNumber,
+    functionName,
+  } = getCodeFrameInformation(stacktrace)
+
+  const res = useFetch(
+    `/__original-stack-frame?moduleId=` +
+      window.encodeURIComponent(moduleId) +
+      `&lineNumber=` +
+      window.encodeURIComponent(lineNumber) +
+      `&columnNumber=` +
+      window.encodeURIComponent(columnNumber)
+  )
 
   const header = (
-    <p data-gatsby-overlay="header__runtime-error">Unhandled Runtime Error</p>
+    <>
+      <div data-gatsby-overlay="header__cause-file">
+        <p>Unhandled Runtime Error</p>
+        <span>{moduleId}</span>
+      </div>
+      <button
+        onClick={() => open(moduleId, res.sourcePosition.line)}
+        data-gatsby-overlay="header__open-in-editor"
+      >
+        Open in editor
+      </button>
+    </>
   )
-  const stacktrace = StackTrace.parse(problem.error)
-
-  React.useEffect(() => {
-    const result = getNonGatsbyCodeFrame(stacktrace)
-
-    setCallSite(result)
-  }, [])
-
-  console.log(callSite)
-  const body = <div>{problem.error.stack}</div>
+  const body = (
+    <>
+      <p data-gatsby-overlay="body__error-message-header">
+        Error in function <span data-font-weight="bold">{functionName}</span>
+      </p>
+      <p data-gatsby-overlay="body__error-message">{error.error.message}</p>
+      <CodeFrame decoded={res.decoded} />
+    </>
+  )
 
   return <Overlay header={header} body={body} dismiss={dismiss} />
 }
