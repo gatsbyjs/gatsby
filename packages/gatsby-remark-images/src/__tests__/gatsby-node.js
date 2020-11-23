@@ -181,11 +181,11 @@ describe(`pluginOptionsSchema`, () => {
           `TURNPOLICY_RIGHT`,
           `TURNPOLICY_MINORITY`,
           `TURNPOLICY_MAJORITY`,
-        ])(`supports "%s" by policy name`, async name => {
+        ])(`supports setting by policy name (%s)`, async name => {
           const { isValid } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
-              tracedSVG: { turnPolicy: Potrace[name] },
+              tracedSVG: { turnPolicy: name },
             }
           )
 
@@ -199,7 +199,7 @@ describe(`pluginOptionsSchema`, () => {
           Potrace.TURNPOLICY_RIGHT,
           Potrace.TURNPOLICY_MINORITY,
           Potrace.TURNPOLICY_MAJORITY,
-        ])(`supports "%s" by policy value`, async value => {
+        ])(`supports setting by policy value (%s)`, async value => {
           const { isValid } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
