@@ -89,7 +89,7 @@ export const makePluginConfigQuestions = (
 
     if (choices.length) {
       formPrompts.push({
-        type: `forminput`,
+        type: `form`,
         name: pluginName,
         multiple: true,
         message: stripIndent`
