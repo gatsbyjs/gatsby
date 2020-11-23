@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.6.0...gatsby-source-filesystem@2.6.1) (2020-11-23)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** fix race condition when using `publicURL` field ([#28176](https://github.com/gatsbyjs/gatsby/issues/28176)) ([#28209](https://github.com/gatsbyjs/gatsby/issues/28209)) ([e2d1171](https://github.com/gatsbyjs/gatsby/commit/e2d1171eab23b41f1cbfc7cb36280c3dfb705ccc))
+
 # [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.6.0-next.0...gatsby-source-filesystem@2.6.0) (2020-11-19)
 
 ### Bug Fixes
