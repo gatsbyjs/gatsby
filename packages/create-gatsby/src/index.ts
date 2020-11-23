@@ -285,15 +285,6 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     pluginConfig = { ...pluginConfig, ...result }
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
-
-    console.log(`whats happening`, {
-      confirm,
-      project,
-      cms,
-      features,
-      styling,
-      result,
-    })
   }
 
   console.log(`

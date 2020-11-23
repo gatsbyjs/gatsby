@@ -87,13 +87,15 @@ export const makePluginConfigQuestions = (
       })
     })
 
+    console.log(`Choices`)
     if (choices.length) {
+      console.log(`ATTEMPT`, pluginName, choices)
       formPrompts.push({
         type: `forminput`,
         name: pluginName,
         multiple: true,
         message: stripIndent`
-          Configure the ${getName(pluginName)} plugin. 
+          Configure the ${getName(pluginName)} plugin.
           See ${docsLink(pluginName)} for help.
           ${
             choices.length > 1
