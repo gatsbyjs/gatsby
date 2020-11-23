@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.27.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0...gatsby@2.27.1) (2020-11-23)
+
+### Features
+
+- **gatsby:** bump % that get invited to try dev_ssr to 5% from 1% ([#28232](https://github.com/gatsbyjs/gatsby/issues/28232)) ([#28246](https://github.com/gatsbyjs/gatsby/issues/28246)) ([30bc6a8](https://github.com/gatsbyjs/gatsby/commit/30bc6a8d6f9f59e802cff9eac6d9daeeebdd21f5))
+- **gatsby:** make dev ssr bundling lazy ([#28149](https://github.com/gatsbyjs/gatsby/issues/28149)) ([#28247](https://github.com/gatsbyjs/gatsby/issues/28247)) ([2dd2767](https://github.com/gatsbyjs/gatsby/commit/2dd2767e5bb99594e16446d05a6bf3deffccfbf8))
+- **gatsby:** track usage of GATSBY_EXPERIMENTAL_FAST_DEV ([#28223](https://github.com/gatsbyjs/gatsby/issues/28223)) ([#28245](https://github.com/gatsbyjs/gatsby/issues/28245)) ([f0d93d8](https://github.com/gatsbyjs/gatsby/commit/f0d93d8a2818825a451f8cbb062e14945d2aab8c))
+
 # [2.27.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.1...gatsby@2.27.0) (2020-11-19)
 
 ### Bug Fixes
