@@ -6,6 +6,7 @@ import { declare } from "@babel/helper-plugin-utils"
 import * as Joi from "@hapi/joi"
 import prettier from "prettier"
 import _ from "lodash"
+import template from "@babel/template"
 
 import lock from "../lock"
 import getDiff from "../utils/get-diff"
@@ -14,7 +15,6 @@ import resourceSchema from "../resource-schema"
 import isDefaultExport from "./utils/is-default-export"
 import getObjectFromNode from "./utils/get-object-from-node"
 import { REQUIRES_KEYS } from "./utils/constants"
-const template = require(`@babel/template`)
 
 const setExperiment = (src, experimentName) => {
   const setExperiment = new BabelPluginSetExperiment({
@@ -119,11 +119,17 @@ const read = async ({ root }, id) => {
 }
 
 const destroy = async ({ root }, { name }) => {
+  const release = await lock(`gatsby-config.js`)
   const configSrc = await readConfigFile(root)
+  const prettierConfig = await prettier.resolveConfig(root)
 
   const newSrc = removeExperiment(configSrc, name)
 
-  await fs.writeFile(getConfigPath(root), newSrc)
+  const code = prettier.format(newSrc, { ...prettierConfig, parser: `babel` })
+
+  await fs.writeFile(getConfigPath(root), code)
+
+  release()
 }
 
 class BabelPluginSetExperiment {
@@ -159,7 +165,7 @@ class BabelPluginSetExperiment {
 
             const valueType = typeof value
 
-            const newExperimentsTemplate = template.default.ast(`
+            const newExperimentsTemplate = template.ast(`
               const foo = ${JSON.stringify(experimentsArray, null, 2)}
             `)
 
@@ -234,12 +240,17 @@ export const all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const experiments = getExperiments(configSrc)
 
-  return experiments.map(name => {
-    return {
-      id: name,
-      name,
-    }
-  })
+  console.log({ experiments })
+  if (_.isArray(experiments)) {
+    return experiments.map(name => {
+      return {
+        id: name,
+        name,
+      }
+    })
+  } else {
+    return []
+  }
 }
 
 const schema = {
