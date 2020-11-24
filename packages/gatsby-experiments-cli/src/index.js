@@ -1,14 +1,16 @@
-const React = require(`react`)
-const { render } = require(`ink`)
-const MultiSelect = require(`ink-multi-select`).default
+const React = require("react")
+const { render, Box, Text, useApp } = require("ink")
+const MultiSelect = require("ink-multi-select").default
 const { GatsbyExperiments } = require(`gatsby-recipes`)
 const _ = require(`lodash`)
-const { commaListsAnd } = require(`common-tags`)
+const { commaListsAnd } = require("common-tags")
 
 const experiments = require(`../gatsby/dist/experiments`).activeExperiments
 
 const Demo = () => {
+  const { exit } = useApp()
   const [enabled, setEnabled] = React.useState()
+  const [closingMessages, setClosingMessages] = React.useState()
   const handleSubmit = async items => {
     const currentExperiments = await GatsbyExperiments.all({
       root: `/Users/kylemathews/programs/blog`,
@@ -44,14 +46,21 @@ const Demo = () => {
 
     await Promise.all(promises)
 
+    let closingMessagesArry = []
     if (!_.isEmpty(toAdd)) {
-      console.log(commaListsAnd`Enabled the experiments ${toAdd}`)
+      const expStr = toAdd.length > 1 ? `experiments` : `experiment`
+      closingMessagesArry.push(commaListsAnd`Enabled the ${expStr} ${toAdd}`)
     }
     if (!_.isEmpty(toRemove)) {
-      console.log(commaListsAnd`Removed the experiments ${toRemove}`)
+      const expStr = toRemove.length > 1 ? `experiments` : `experiment`
+      closingMessagesArry.push(commaListsAnd`Removed the ${expStr} ${toRemove}`)
     }
 
-    process.exit()
+    if (_.isEmpty(closingMessagesArry)) {
+      closingMessagesArry.push(`No changes`)
+    }
+
+    setClosingMessages(closingMessagesArry)
   }
 
   // Get list of current experiments
@@ -69,22 +78,34 @@ const Demo = () => {
     return selectItem
   })
 
-  if (enabled) {
-    const enabledMap = enabled.map(e => {
-      const item = {
-        value: e.id,
-      }
-      return item
-    })
+  if (closingMessages) {
     return (
-      <MultiSelect
-        items={newItems}
-        onSubmit={handleSubmit}
-        defaultSelected={enabledMap}
-      />
+      <Box flexDirection="column">
+        {closingMessages.map(m => (
+          <Box key={m}>
+            <Text>{m}</Text>
+          </Box>
+        ))}
+      </Box>
     )
   } else {
-    return null
+    if (enabled) {
+      const enabledMap = enabled.map(e => {
+        const item = {
+          value: e.id,
+        }
+        return item
+      })
+      return (
+        <MultiSelect
+          items={newItems}
+          onSubmit={handleSubmit}
+          defaultSelected={enabledMap}
+        />
+      )
+    } else {
+      return null
+    }
   }
 }
 

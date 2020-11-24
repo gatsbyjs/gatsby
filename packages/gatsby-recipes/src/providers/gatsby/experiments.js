@@ -240,7 +240,6 @@ export const all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const experiments = getExperiments(configSrc)
 
-  console.log({ experiments })
   if (_.isArray(experiments)) {
     return experiments.map(name => {
       return {
