@@ -283,34 +283,30 @@ const preferDefault = m => (m && m.default) || m
     .join(`,\n`)}
 }\n\n`
 
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    // Create file with sync requires of visited page components files.
-    let lazyClientSyncRequires = `${hotImport}
+  // Create file with sync requires of visited page components files.
+  let lazyClientSyncRequires = `${hotImport}
   // prefer default export if available
   const preferDefault = m => (m && m.default) || m
   \n\n`
-    lazyClientSyncRequires += `exports.lazyComponents = {\n${cleanedClientVisitedPageComponents
-      .map(
-        (c: IGatsbyPageComponent): string =>
-          `  "${
-            c.componentChunkName
-          }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
-      )
-      .join(`,\n`)}
+  lazyClientSyncRequires += `exports.lazyComponents = {\n${cleanedClientVisitedPageComponents
+    .map(
+      (c: IGatsbyPageComponent): string =>
+        `  "${
+          c.componentChunkName
+        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+    )
+    .join(`,\n`)}
   }\n\n`
 
-    // Add list of not visited components.
-    lazyClientSyncRequires += `exports.notVisitedPageComponents = {\n${notVisitedPageComponents
-      .map(
-        (c: IGatsbyPageComponent): string => `  "${c.componentChunkName}": true`
-      )
-      .join(`,\n`)}
+  // Add list of not visited components.
+  lazyClientSyncRequires += `exports.notVisitedPageComponents = {\n${notVisitedPageComponents
+    .map(
+      (c: IGatsbyPageComponent): string => `  "${c.componentChunkName}": true`
+    )
+    .join(`,\n`)}
   }\n\n`
 
-    writeModule(`$virtual/lazy-client-sync-requires`, lazyClientSyncRequires)
-  } else {
-    writeModule(`$virtual/lazy-client-sync-requires`, ``)
-  }
+  writeModule(`$virtual/lazy-client-sync-requires`, lazyClientSyncRequires)
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
