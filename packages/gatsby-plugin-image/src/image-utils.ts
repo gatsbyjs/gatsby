@@ -178,6 +178,7 @@ export function generateImageData(
 
   if (formats.size === 0 || formats.has(`auto`) || formats.has(``)) {
     formats.delete(`auto`)
+    formats.delete(``)
     formats.add(sourceMetadata.format)
   }
 
