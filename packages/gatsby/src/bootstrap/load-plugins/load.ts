@@ -260,6 +260,21 @@ export function loadPlugins(
     )
   }
 
+  // react-helmet support by default! use the user-provided one if it exists
+  // TypeScript support by default! use the user-provided one if it exists
+  const reactHelmetPlugin = (config.plugins || []).find(
+    plugin => plugin.resolve === `gatsby-plugin-react-helmet`
+  )
+
+  if (reactHelmetPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-react-helmet`),
+        options: {},
+      })
+    )
+  }
+
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),

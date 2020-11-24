@@ -82,6 +82,7 @@
     "gatsby-legacy-polyfills": "^0.3.0-next.0",
     "gatsby-link": "^2.7.0-next.0",
     "gatsby-plugin-page-creator": "^2.6.0-next.0",
+    "gatsby-plugin-react-helmet": "^3.6.0-next.0",
     "gatsby-plugin-typescript": "^2.8.0-next.0",
     "gatsby-plugin-utils": "^0.5.0-next.0",
     "gatsby-react-router-scroll": "^3.3.0-next.0",
