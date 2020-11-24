@@ -5,6 +5,7 @@ import * as t from "@babel/types"
 import { declare } from "@babel/helper-plugin-utils"
 import * as Joi from "@hapi/joi"
 import prettier from "prettier"
+import _ from "lodash"
 
 import lock from "../lock"
 import getDiff from "../utils/get-diff"
@@ -14,12 +15,10 @@ import isDefaultExport from "./utils/is-default-export"
 import getObjectFromNode from "./utils/get-object-from-node"
 import { REQUIRES_KEYS } from "./utils/constants"
 const template = require(`@babel/template`)
-console.log({ template, ast: template.default.ast })
 
-const setExperiments = (src, experiments) => {
-  console.log({ experiments, src })
+const setExperiment = (src, experimentName) => {
   const setExperiment = new BabelPluginSetExperiment({
-    experiments,
+    experimentName,
   })
 
   const { code } = transform(src, {
@@ -30,9 +29,10 @@ const setExperiments = (src, experiments) => {
   return code
 }
 
-const removeExperiment = (src, experiment) => {
+const removeExperiment = (src, experimentName) => {
   const setExperiment = new BabelPluginSetExperiment({
-    name,
+    experimentName,
+    destroy: true,
   })
 
   const { code } = transform(src, {
@@ -79,13 +79,12 @@ module.exports = {
   return src
 }
 
-const create = async ({ root }, experiments) => {
+const create = async ({ root }, { name }) => {
   const release = await lock(`gatsby-config.js`)
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
-  console.log({ experiments })
-  let code = setExperiments(configSrc, experiments)
+  let code = setExperiment(configSrc, name)
   code = prettier.format(code, { ...prettierConfig, parser: `babel` })
 
   await fs.writeFile(getConfigPath(root), code)
@@ -101,13 +100,17 @@ const read = async ({ root }, id) => {
 
     const experiments = getExperiments(configSrc)
 
-    if (!experiments) {
+    if (_.isEmpty(experiments)) {
       return undefined
     }
 
-    return {
-      id,
-      name: id,
+    if (experiments && experiments.includes(id)) {
+      return {
+        id,
+        name: id,
+      }
+    } else {
+      return undefined
     }
   } catch (e) {
     console.log(e)
@@ -115,16 +118,16 @@ const read = async ({ root }, id) => {
   }
 }
 
-const destroy = async ({ root }, resource) => {
+const destroy = async ({ root }, { name }) => {
   const configSrc = await readConfigFile(root)
 
-  const newSrc = removeExperiment(configSrc, resource)
+  const newSrc = removeExperiment(configSrc, name)
 
   await fs.writeFile(getConfigPath(root), newSrc)
 }
 
 class BabelPluginSetExperiment {
-  constructor({ experiments }) {
+  constructor({ experimentName, destroy = false }) {
     this.plugin = declare(api => {
       api.assertVersion(7)
 
@@ -148,19 +151,16 @@ class BabelPluginSetExperiment {
               experimentsExist = true
               experimentsArray = getObjectFromNode(experimentsNode?.value)
             }
-            const stringified = JSON.stringify(experiments, null, 2)
-            console.log({ experimentsExist, experimentsArray, stringified })
+            if (destroy) {
+              experimentsArray = _.without(experimentsArray, experimentName)
+            } else {
+              experimentsArray = _.uniq(experimentsArray.concat(experimentName))
+            }
 
             const valueType = typeof value
-            const shouldParse =
-              valueType !== `string` && valueType !== `undefined`
-            // const newExperimentsArray = {
-            // ...experiments,
-            // }
 
-            console.log(template.default.ast)
             const newExperimentsTemplate = template.default.ast(`
-              const foo = ${JSON.stringify(experiments, null, 2)}
+              const foo = ${JSON.stringify(experimentsArray, null, 2)}
             `)
 
             const newExperiments = newExperimentsTemplate.declarations[0].init
@@ -169,9 +169,14 @@ class BabelPluginSetExperiment {
               right.properties = right.properties.map(p => {
                 if (p.key.name !== `__experiments`) return p
 
-                return {
-                  ...p,
-                  value: newExperiments,
+                // Remove from config altogether if there's no active experiments.
+                if (experimentsArray.length > 0) {
+                  return {
+                    ...p,
+                    value: newExperiments,
+                  }
+                } else {
+                  return null
                 }
               })
             } else {
@@ -205,13 +210,13 @@ class BabelPluginGetExperiments {
               return
             }
 
-            const siteMetadata = right.properties.find(
-              p => p.key.name === `siteMetadata`
+            const experiments = right.properties.find(
+              p => p.key.name === `__experiments`
             )
 
-            if (!siteMetadata || !siteMetadata.value) return
+            if (!experiments || !experiments.value) return
 
-            this.state = getObjectFromNode(siteMetadata.value)
+            this.state = getObjectFromNode(experiments.value)
           },
         },
       }
@@ -219,7 +224,7 @@ class BabelPluginGetExperiments {
   }
 }
 
-export { setExperiments, getExperiments, removeExperiment }
+export { setExperiment, getExperiments, removeExperiment }
 
 export { create, create as update, read, destroy }
 
@@ -229,9 +234,10 @@ export const all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const experiments = getExperiments(configSrc)
 
-  return Object.keys(siteMetadata).map(key => {
+  return experiments.map(name => {
     return {
-      name: key,
+      id: name,
+      name,
     }
   })
 }
@@ -259,25 +265,23 @@ const validate = resource => {
 
 export { schema, validate }
 
-export const plan = async ({ root }, experiments) => {
+export const plan = async ({ root }, { name }) => {
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
   configSrc = prettier.format(configSrc, {
     ...prettierConfig,
     parser: `babel`,
   })
-  console.log({ experiments })
 
-  let newContents = setExperiments(configSrc, experiments)
+  let newContents = setExperiment(configSrc, name)
   newContents = prettier.format(newContents, {
     ...prettierConfig,
     parser: `babel`,
   })
   const diff = await getDiff(configSrc, newContents)
-  console.log(newContents, diff)
 
   return {
-    id: fullName,
+    id: name,
     name,
     diff,
     currentState: configSrc,

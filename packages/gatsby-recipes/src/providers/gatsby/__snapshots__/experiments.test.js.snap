@@ -1,14 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata create 1`] = `
+exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments create 1`] = `
 Object {
-  "id": "author",
-  "name": "author",
-  "value": "\\"Fred\\"",
+  "id": "HI",
+  "name": "HI",
 }
 `;
 
-exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata create plan 1`] = `
+exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments create plan 1`] = `
 Object {
   "currentState": "const redish = \`#c5484d\`;
 module.exports = {
@@ -79,31 +78,26 @@ module.exports = {
   ],
 };
 ",
-  "describe": "Add author: Fred to the siteMetadata",
-  "diff": "- Original  - 3
-+ Modified  + 3
+  "describe": "Add experiment HI to gatsby-config.js",
+  "diff": "- Original  - 0
++ Modified  + 1
 
-@@ -1,9 +1,9 @@
+@@ -1,5 +1,6 @@
   const redish = \`#c5484d\`;
   module.exports = {
++   __experiments: [\\"HI\\"],
     siteMetadata: {
--     title: \`Bricolage\`,
--     author: \`Kyle Mathews\`,
--     homeCity: \`San Francisco\`,
-+     title: \\"Bricolage\\",
-+     author: \\"Fred\\",
-+     homeCity: \\"San Francisco\\",
-    },
-    plugins: [
-      {",
-  "id": "author",
-  "name": "author",
+      title: \`Bricolage\`,
+      author: \`Kyle Mathews\`,",
+  "id": "HI",
+  "name": "HI",
   "newState": "const redish = \`#c5484d\`;
 module.exports = {
+  __experiments: [\\"HI\\"],
   siteMetadata: {
-    title: \\"Bricolage\\",
-    author: \\"Fred\\",
-    homeCity: \\"San Francisco\\",
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
   },
   plugins: [
     {
@@ -170,24 +164,24 @@ module.exports = {
 }
 `;
 
-exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata destroy 1`] = `undefined`;
+exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments destroy 1`] = `undefined`;
 
-exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata update 1`] = `
+exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments update 1`] = `
 Object {
-  "id": "author",
-  "name": "author",
-  "value": "\\"Velma\\"",
+  "id": "HI",
+  "name": "HI",
 }
 `;
 
-exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata update plan 1`] = `
+exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments update plan 1`] = `
 Object {
   "currentState": "const redish = \`#c5484d\`;
 module.exports = {
+  __experiments: [\\"HI\\"],
   siteMetadata: {
-    title: \\"Bricolage\\",
-    author: \\"Fred\\",
-    homeCity: \\"San Francisco\\",
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
   },
   plugins: [
     {
@@ -251,27 +245,17 @@ module.exports = {
   ],
 };
 ",
-  "describe": "Add author: Velma to the siteMetadata",
-  "diff": "- Original  - 1
-+ Modified  + 1
-
-@@ -2,7 +2,7 @@
-  module.exports = {
-    siteMetadata: {
-      title: \\"Bricolage\\",
--     author: \\"Fred\\",
-+     author: \\"Velma\\",
-      homeCity: \\"San Francisco\\",
-    },
-    plugins: [",
-  "id": "author",
-  "name": "author",
+  "describe": "Add experiment HI to gatsby-config.js",
+  "diff": "Compared values have no visual difference.",
+  "id": "HI",
+  "name": "HI",
   "newState": "const redish = \`#c5484d\`;
 module.exports = {
+  __experiments: [\\"HI\\"],
   siteMetadata: {
-    title: \\"Bricolage\\",
-    author: \\"Velma\\",
-    homeCity: \\"San Francisco\\",
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
   },
   plugins: [
     {
@@ -338,18 +322,16 @@ module.exports = {
 }
 `;
 
-exports[`gatsby-plugin resource handles multiple parallel create calls 1`] = `
+exports[`gatsby-experiments resource handles multiple parallel create calls 1`] = `
 Object {
-  "id": "husky",
-  "name": "husky",
-  "value": "\\"hi\\"",
+  "id": "HUSKY",
+  "name": "HUSKY",
 }
 `;
 
-exports[`gatsby-plugin resource handles multiple parallel create calls 2`] = `
+exports[`gatsby-experiments resource handles multiple parallel create calls 2`] = `
 Object {
-  "id": "husky2",
-  "name": "husky2",
-  "value": "\\"hi\\"",
+  "id": "HUSKY2",
+  "name": "HUSKY2",
 }
 `;

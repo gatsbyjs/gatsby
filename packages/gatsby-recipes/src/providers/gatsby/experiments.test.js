@@ -39,39 +39,37 @@ describe(`gatsby-experiments resource`, () => {
       resourceModule: plugin,
       resourceName: `GatsbyExperiments`,
       context: { root: starterBlogRoot },
-      initialObject: [`hi`, `SUPER_EXPERIMENT`],
-      partialUpdate: [`hi`, `SUPER_EXPERIMENT`, `WOW_EXPERIMENT`],
+      initialObject: { name: `HI` },
+      partialUpdate: { name: `HI` },
     })
   })
 
-  // test(`handles multiple parallel create calls`, async () => {
-  // const root = starterBlogRoot
-  // const resultPromise = plugin.create(
-  // {
-  // root,
-  // },
-  // {
-  // name: `husky`,
-  // value: `hi`,
-  // }
-  // )
-  // const result2Promise = plugin.create(
-  // {
-  // root,
-  // },
-  // {
-  // name: `husky2`,
-  // value: `hi`,
-  // }
-  // )
+  test(`handles multiple parallel create calls`, async () => {
+    const root = starterBlogRoot
+    const resultPromise = plugin.create(
+      {
+        root,
+      },
+      {
+        name: `HUSKY`,
+      }
+    )
+    const result2Promise = plugin.create(
+      {
+        root,
+      },
+      {
+        name: `HUSKY2`,
+      }
+    )
 
-  // const result = await resultPromise
-  // const result2 = await result2Promise
+    const result = await resultPromise
+    const result2 = await result2Promise
 
-  // expect(result).toMatchSnapshot()
-  // expect(result2).toMatchSnapshot()
+    expect(result).toMatchSnapshot()
+    expect(result2).toMatchSnapshot()
 
-  // await plugin.destroy({ root }, result)
-  // await plugin.destroy({ root }, result2)
-  // })
+    await plugin.destroy({ root }, result)
+    await plugin.destroy({ root }, result2)
+  })
 })
