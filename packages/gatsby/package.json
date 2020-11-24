@@ -127,6 +127,7 @@
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.2.3",
     "react-error-overlay": "^3.0.0",
+    "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
     "react-refresh": "^0.8.3",
     "redux": "^4.0.5",
