@@ -40,7 +40,7 @@ const getTicket = async (ticketId: string): Promise<Record<string, any>> => {
   return ticket
 }
 
-const handleOpenBrowser = url => {
+const handleOpenBrowser = (url): void => {
   // TODO: this will break if run from the CLI
   // for ideas see https://github.com/netlify/cli/blob/908f285fb80f04bf2635da73381c94387b9c8b0d/src/utils/open-browser.js
   console.log(process.env.BROWSER)
@@ -50,7 +50,7 @@ const handleOpenBrowser = url => {
 /**
  * Main function that logs in to Gatsby Cloud using Gatsby Cloud's authentication service.
  */
-export async function login() {
+export async function login(): Promise<void> {
   // TODO: try and get token from CLI store first
 
   // TODO: if we have token, print that we're already logged in
@@ -72,8 +72,8 @@ export async function login() {
   await handleOpenBrowser(authUrl)
 
   // Poll until the ticket has been verified, and should have the token attached
-  function pollForTicket() {
-    return new Promise(function (resolve) {
+  function pollForTicket(): Promise<void> {
+    return new Promise(function (resolve): void {
       const verify = async () => {
         const ticket = await getTicket(ticketId)
         console.log(ticket)
