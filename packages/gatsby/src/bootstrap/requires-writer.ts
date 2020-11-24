@@ -162,26 +162,79 @@ const getMatchPaths = (
 
 const createHash = (
   matchPaths: Array<IGatsbyPageMatchPath>,
-  components: Array<IGatsbyPageComponent>
+  components: Array<IGatsbyPageComponent>,
+  cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent>,
+  notVisitedPageComponents: Array<IGatsbyPageComponent>,
+  cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
-    .update(JSON.stringify({ matchPaths, components }))
+    .update(
+      JSON.stringify({
+        matchPaths,
+        components,
+        cleanedClientVisitedPageComponents,
+        notVisitedPageComponents,
+        cleanedSSRVisitedPageComponents,
+      })
+    )
     .digest(`hex`)
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
+  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
-  const newHash = createHash(matchPaths, components)
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const ssrVisitedPageComponents = [
+      ...(state.visitedPages.get(`server`)?.values() || []),
+    ]
+
+    // Remove any page components that no longer exist.
+    cleanedSSRVisitedPageComponents = components.filter(c =>
+      ssrVisitedPageComponents.some(s => s === c.componentChunkName)
+    )
+  }
+
+  let cleanedClientVisitedPageComponents: Array<IGatsbyPageComponent> = []
+  let notVisitedPageComponents: Array<IGatsbyPageComponent> = []
+
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    const clientVisitedPageComponents = [
+      ...(state.visitedPages.get(`client`)?.values() || []),
+    ]
+
+    // Remove any page components that no longer exist.
+    cleanedClientVisitedPageComponents = components.filter(component =>
+      clientVisitedPageComponents.some(
+        pageComponentChunkName =>
+          pageComponentChunkName === component.componentChunkName
+      )
+    )
+
+    // Get list of page components that the user has _not_ visited.
+    notVisitedPageComponents = components.filter(
+      component =>
+        // Filter out page components the user has visited.
+        !cleanedClientVisitedPageComponents.some(
+          c => c.componentChunkName === component.componentChunkName
+        )
+    )
+  }
+
+  const newHash = createHash(
+    matchPaths,
+    components,
+    cleanedClientVisitedPageComponents,
+    notVisitedPageComponents,
+    cleanedSSRVisitedPageComponents
+  )
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // console.log(`on requiresWriter END1`)
     return false
   }
 
@@ -194,6 +247,25 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
       : ``
   const hotMethod =
     process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
+
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    // Create file with sync requires of visited page components files.
+    let lazySyncRequires = `${hotImport}
+  // prefer default export if available
+  const preferDefault = m => (m && m.default) || m
+  \n\n`
+    lazySyncRequires += `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string =>
+          `  "${
+            c.componentChunkName
+          }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    writeModule(`$virtual/ssr-sync-requires`, lazySyncRequires)
+  }
 
   // Create file with sync requires of components/json files.
   let syncRequires = `${hotImport}
@@ -210,6 +282,35 @@ const preferDefault = m => (m && m.default) || m
     )
     .join(`,\n`)}
 }\n\n`
+
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    // Create file with sync requires of visited page components files.
+    let lazyClientSyncRequires = `${hotImport}
+  // prefer default export if available
+  const preferDefault = m => (m && m.default) || m
+  \n\n`
+    lazyClientSyncRequires += `exports.lazyComponents = {\n${cleanedClientVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string =>
+          `  "${
+            c.componentChunkName
+          }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    // Add list of not visited components.
+    lazyClientSyncRequires += `exports.notVisitedPageComponents = {\n${notVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string => `  "${c.componentChunkName}": true`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    writeModule(`$virtual/lazy-client-sync-requires`, lazyClientSyncRequires)
+  } else {
+    writeModule(`$virtual/lazy-client-sync-requires`, ``)
+  }
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
@@ -280,6 +381,28 @@ const debouncedWriteAll = _.debounce(
     leading: false,
   }
 )
+
+if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+  /**
+   * Start listening to CREATE_CLIENT_VISITED_PAGE events so we can rewrite
+   * files as required
+   */
+  emitter.on(`CREATE_CLIENT_VISITED_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+}
+
+if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+  /**
+   * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
+   * files as required
+   */
+  emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+}
 
 /**
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
