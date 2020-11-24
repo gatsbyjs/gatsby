@@ -240,17 +240,15 @@ export function loadPlugins(
     )
   })
 
-  // Experimental support for Gatsby Functions
-  plugins.forEach(plugin => {
-    plugins.push(
-      processPlugin({
-        resolve: require.resolve(`gatsby-plugin-functions`),
-        options: {
-          path: slash(path.join(plugin.resolve, `src/functions`)),
-        },
-      })
-    )
-  })
+  // Gatsby Functions
+  plugins.push(
+    processPlugin({
+      resolve: require.resolve(`gatsby-plugin-functions`),
+      options: {
+        path: slash(path.join(process.cwd(), `src/functions`)),
+      },
+    })
+  )
 
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(

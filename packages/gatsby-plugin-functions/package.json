@@ -15,14 +15,13 @@
     "directory": "packages/gatsby-plugin-functions"
   },
   "dependencies": {
-    "@babel/traverse": "^7.11.5",
     "@sindresorhus/slugify": "^1.1.0",
     "chokidar": "^3.4.2",
     "fs-exists-cached": "^1.0.0",
     "gatsby-page-utils": "^0.4.0-next.0",
     "globby": "^11.0.1",
-    "graphql": "^14.7.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "webpack": "^5.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
