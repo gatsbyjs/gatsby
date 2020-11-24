@@ -9,9 +9,10 @@ import path from "path"
 import fs from "fs"
 import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
-import { center, rule, wrap } from "./components/utils"
+import { center, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
 import { trackCli } from "./tracking"
+import { Form } from "./components/form"
 import crypto from "crypto"
 
 const sha256 = (str: string): string =>
@@ -273,17 +274,11 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
     for (const conf of config) {
+      const f = new Form(conf)
       /* eslint-enable @typescript-eslint/no-unused-vars */
-      const {
-        confirm,
-        project,
-        cms,
-        features,
-        styling,
-        ...result
-      } = await cli.prompt(conf)
+      const result = await f.run()
 
-      console.log(`checking by question`, result)
+      console.log(`checking by questions`, result)
       pluginConfig = { ...pluginConfig, ...result }
     }
 

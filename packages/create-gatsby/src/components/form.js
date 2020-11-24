@@ -78,3 +78,5 @@ export class FormInput extends Form {
     return line()
   }
 }
+
+exports.Form = Form
