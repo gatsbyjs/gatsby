@@ -178,6 +178,63 @@ export async function initialize({
     })
   }
 
+  // Setup experiments
+  if (config && config.__experiments) {
+    const experiments = require(`../experiments`).default
+    const configExperiments = config.__experiments
+
+    // TODO move this logic into util funciton w/ tests.
+    //  validate experiments against current ones
+    //  - any that don't exist — remove silently
+    //  - any that are graduated — remove w/ message of thanks
+    const validConfigExperiments = experiments.activeExperiments.filter(ae =>
+      configExperiments.includes(ae.name)
+    )
+
+    const addIncluded = experiment => {
+      if (experiment.includedExperiments) {
+        experiment.includedExperiments.forEach(includedName => {
+          const incExp = experiments.activeExperiments.find(
+            e => e.name == includedName
+          )
+          if (incExp) {
+            validConfigExperiments.push(incExp)
+            addIncluded(incExp)
+          }
+        })
+      }
+    }
+    // Add to validConfigExperiments any includedExperiments
+    validConfigExperiments.forEach(experiment => {
+      addIncluded(experiment)
+    })
+
+    console.log({
+      experiments,
+      configExperiments,
+      validConfigExperiments,
+    })
+    //  set process.env for remaining
+    validConfigExperiments.forEach(experiment => {
+      console.log({ experiment })
+      process.env[`GATSBY_EXPERIMENTAL_${experiment.name}`] = `true`
+      console.log(`GATSBY_EXPERIMENTAL_${experiment.name}`)
+    })
+
+    //  print message about what experiments are active
+    let message = `The following experiments are active:`
+    validConfigExperiments.forEach(experiment => {
+      message += `\n- ${experiment.name} - ${experiment.description}`
+    })
+
+    reporter.info(message)
+
+    //  track usage of feature
+    validConfigExperiments.forEach(experiment => {
+      telemetry.trackFeatureIsUsed(_.upperFirst(_.camelCase(experiment.name)))
+    })
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     reporter.warn(
@@ -230,10 +287,6 @@ export async function initialize({
       }
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
-  }
-
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    telemetry.trackFeatureIsUsed(`ExperimentalLazyDevjs`)
   }
 
   // run stale jobs
