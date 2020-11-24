@@ -123,6 +123,9 @@ export const parseQueries = async ({
   const modulesThatUseGatsby = await getGatsbyDependents()
 
   let files = [
+    require
+      .resolve(`gatsby/cache-dir/commonjs/gatsby-browser-entry.js`)
+      .replace(`/gatsby-browser-entry.js`, ``),
     path.join(base, `src`),
     path.join(base, `.cache`, `fragments`),
     ...additional.map(additional => path.join(additional, `src`)),

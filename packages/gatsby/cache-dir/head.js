@@ -1,25 +1,23 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { useLocation } from "@reach/router"
-// import { useStaticQuery } from "./static-query"
-// import { graphql } from "gatsby"
+import { useStaticQuery } from "./static-query"
+import { graphql } from "gatsby"
 
 export const Head = props => {
-  // TODO(@mxstbr): this throws "Error: The result of this StaticQuery could not be fetched."
-  // const data = useStaticQuery(graphql`
-  //   query GetSiteMetadata {
-  //     site {
-  //       siteMetadata {
-  //         title
-  //         description
-  //         image
-  //       }
-  //     }
-  //   }
-  // `)
+  const data = useStaticQuery(graphql`
+    query GetSiteMetadata {
+      site {
+        siteMetadata {
+          title
+          description
+          image
+        }
+      }
+    }
+  `)
 
-  // const defaults = data.site.siteMetadata
-  const defaults = {}
+  const defaults = data.site.siteMetadata
   const title = props.title || defaults.title
   const description = props.description || defaults.description
   const image = props.image || defaults.image
