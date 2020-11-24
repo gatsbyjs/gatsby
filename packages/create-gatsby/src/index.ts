@@ -272,8 +272,6 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
-    console.log(`checking the next question`, config)
-
     for (const conf of config) {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const {
@@ -283,12 +281,11 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
         features,
         styling,
         ...result
-      } = await cli.prompt(config)
+      } = await cli.prompt(conf)
 
+      console.log(`checking by question`, result)
       pluginConfig = { ...pluginConfig, ...result }
     }
-
-    console.log(`another attempt`, pluginConfig)
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
