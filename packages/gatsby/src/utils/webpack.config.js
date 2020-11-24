@@ -11,6 +11,7 @@ const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
+const LazyCompilePlugin = require("lazy-compile-webpack-plugin")
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
@@ -226,9 +227,19 @@ module.exports = async (
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
+            plugins.extractStats(`develop`),
+            new LazyCompilePlugin(),
           ])
           .filter(Boolean)
         break
+      case `develop-html`: {
+        configPlugins = configPlugins.concat([
+          // Write out stats object mapping named dynamic imports (aka page
+          // components) to all their async chunks.
+          plugins.extractStats(`develop-html`),
+        ])
+        break
+      }
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
           plugins.extractText(),

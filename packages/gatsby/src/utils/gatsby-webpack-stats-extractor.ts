@@ -4,8 +4,9 @@ import { Compiler } from "webpack"
 
 export class GatsbyWebpackStatsExtractor {
   private plugin: { name: string }
-  constructor() {
+  constructor(name = ``) {
     this.plugin = { name: `GatsbyWebpackStatsExtractor` }
+    this.name = name
   }
   apply(compiler: Compiler): void {
     compiler.hooks.done.tapAsync(this.plugin.name, (stats, done) => {
@@ -28,7 +29,7 @@ export class GatsbyWebpackStatsExtractor {
         }
       }
       const webpackStats = {
-        ...stats.toJson({ all: false, chunkGroups: true }),
+        ...stats.toJson({ all: true, chunkGroups: true, chunkModules: true }),
         assetsByChunkName: assets,
       }
       fs.writeFile(
@@ -36,7 +37,7 @@ export class GatsbyWebpackStatsExtractor {
         JSON.stringify(assetsMap),
         () => {
           fs.writeFile(
-            path.join(`public`, `webpack.stats.json`),
+            path.join(`public`, `${this.name}webpack.stats.json`),
             JSON.stringify(webpackStats),
             done
           )
