@@ -46,7 +46,7 @@ module.exports = {
       },
     ],
     "no-unused-vars": [
-      "error",
+      "warn",
       {
         varsIgnorePattern: "^_"
       }
