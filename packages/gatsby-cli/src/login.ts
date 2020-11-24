@@ -74,7 +74,7 @@ export async function login(): Promise<void> {
   // Poll until the ticket has been verified, and should have the token attached
   function pollForTicket(): Promise<void> {
     return new Promise(function (resolve): void {
-      const verify = async () => {
+      async function verify(): Promise<void> {
         const ticket = await getTicket(ticketId)
         console.log(ticket)
         if (ticket.verified) return resolve()
