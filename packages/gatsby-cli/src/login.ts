@@ -79,11 +79,9 @@ export async function login(): Promise<void> {
         console.log(ticket)
         if (ticket.verified) return resolve()
         setTimeout(verify, 3000)
-        return
       }
 
       verify()
-      return
     })
   }
 
