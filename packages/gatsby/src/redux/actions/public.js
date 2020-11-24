@@ -1404,4 +1404,17 @@ actions.createClientVisitedPage = (chunkName: string) => {
   }
 }
 
+/**
+ * Record that a page was visited on the server..
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the chunkName for the page component.
+ */
+actions.createServerVisitedPage = (chunkName: string) => {
+  return {
+    type: `CREATE_SERVER_VISITED_PAGE`,
+    payload: { componentChunkName: chunkName },
+  }
+}
+
 module.exports = { actions }
