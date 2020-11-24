@@ -272,6 +272,8 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
+    console.log(`checking the next question`, config)
+
     const {
       confirm,
       project,
