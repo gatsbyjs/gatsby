@@ -226,7 +226,7 @@ export const query = graphql`
 
 ### Upgrading from the gatsby-image@2
 
-We will be releasing a codemod to automatically update your queries and imports. In the meantime you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now it allows you to try the component with your existing queries.
+We will be releasing a codemod to automatically update your queries and imports. In the meantime, you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now, it allows you to try the component with your existing queries.
 
 ```jsx
 import React from "react"
@@ -334,13 +334,6 @@ These arguments can be passed to the `gatsbyImageData()` resolver:
   Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
 - **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
 - **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
-- **outputPixelDensities**:
-  A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image.
-  Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide`,
-- **sizes**:
-  The "sizes" property, passed to the img tag. This describes the display size of the image.
-  This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
-  container will be the full width of the screen. In these cases we will generate an appropriate value.
 - **quality**: The default quality. This is overriden by any format-specific options
 - **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this
   - width
