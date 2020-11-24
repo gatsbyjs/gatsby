@@ -274,17 +274,21 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     console.log(`checking the next question`, config)
 
-    const {
-      confirm,
-      project,
-      cms,
-      features,
-      styling,
-      ...result
-    } = await cli.prompt(config)
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    for (const conf of config) {
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const {
+        confirm,
+        project,
+        cms,
+        features,
+        styling,
+        ...result
+      } = await cli.prompt(config)
 
-    pluginConfig = { ...pluginConfig, ...result }
+      pluginConfig = { ...pluginConfig, ...result }
+    }
+
+    console.log(`another attempt`, pluginConfig)
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
