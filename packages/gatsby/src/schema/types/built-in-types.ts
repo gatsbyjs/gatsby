@@ -83,6 +83,7 @@ const siteSiteMetadata = `
   type SiteSiteMetadata {
     title: String
     description: String
+    image: String
   }
 `
 
