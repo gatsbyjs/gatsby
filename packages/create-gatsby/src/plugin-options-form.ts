@@ -19,7 +19,6 @@ type PluginName = keyof typeof pluginSchemas
 interface IFormPrompt {
   type: string
   name: string
-  multiple: boolean
   message: string
   choices: Array<{
     name: string
@@ -91,7 +90,6 @@ export const makePluginConfigQuestions = (
       formPrompts.push({
         type: `form`,
         name: pluginName,
-        multiple: true,
         message: stripIndent`
           Configure the ${getName(pluginName)} plugin.
           See ${docsLink(pluginName)} for help.
