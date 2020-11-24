@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.11.0...gatsby-transformer-remark@2.11.1) (2020-11-24)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** ensure `getNodesByType()` is passed through ([#28218](https://github.com/gatsbyjs/gatsby/issues/28218)) ([#28261](https://github.com/gatsbyjs/gatsby/issues/28261)) ([63e189d](https://github.com/gatsbyjs/gatsby/commit/63e189d8408d7b1a96be5f911ce06fd7e90d655b))
+
 # [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.11.0-next.0...gatsby-transformer-remark@2.11.0) (2020-11-19)
 
 **Note:** Version bump only for package gatsby-transformer-remark

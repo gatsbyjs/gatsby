@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.27.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.1...gatsby@2.27.2) (2020-11-24)
+
+### Bug Fixes
+
+- **gatsby:** do not ignore source file changes during recompilation ([#28237](https://github.com/gatsbyjs/gatsby/issues/28237)) ([#28262](https://github.com/gatsbyjs/gatsby/issues/28262)) ([5136da0](https://github.com/gatsbyjs/gatsby/commit/5136da05a4b9d6174008b8fe84f4dd94089a562a))
+- **gatsby:** fix materialization edge case ([#28244](https://github.com/gatsbyjs/gatsby/issues/28244)) ([#28263](https://github.com/gatsbyjs/gatsby/issues/28263)) ([f4b1e09](https://github.com/gatsbyjs/gatsby/commit/f4b1e09a659d0e0170ca11c29a4495789122f8db))
+
 ## [2.27.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0...gatsby@2.27.1) (2020-11-23)
 
 ### Features
