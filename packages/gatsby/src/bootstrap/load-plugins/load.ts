@@ -241,14 +241,17 @@ export function loadPlugins(
   })
 
   // Gatsby Functions
-  plugins.push(
-    processPlugin({
-      resolve: require.resolve(`gatsby-plugin-functions`),
-      options: {
-        path: slash(path.join(process.cwd(), `src/functions`)),
-      },
-    })
-  )
+
+  if (process.env.GATSBY_EXPERIMENT_FUNCTIONS) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-functions`),
+        options: {
+          path: slash(path.join(process.cwd(), `src/api`)),
+        },
+      })
+    )
+  }
 
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(
