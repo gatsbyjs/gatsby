@@ -16,6 +16,8 @@ export const FLAG_DIRTY_DATA = 0b0100
 
 export const FLAG_ERROR_EXTRACTION = 0b0001
 
+export const FLAG_RUNNING_INFLIGHT = 0b0001
+
 const initialState = (): IGatsbyState["queries"] => {
   return {
     byNode: new Map<NodeId, Set<QueryId>>(),
@@ -24,12 +26,14 @@ const initialState = (): IGatsbyState["queries"] => {
     trackedQueries: new Map<QueryId, IQueryState>(),
     trackedComponents: new Map<ComponentPath, IComponentState>(),
     deletedQueries: new Set<QueryId>(),
+    dirtyQueriesListToEmitViaWebsocket: [],
   }
 }
 
 const initialQueryState = (): IQueryState => {
   return {
     dirty: -1, // unknown, must be set right after init
+    running: 0,
   }
 }
 
@@ -66,6 +70,7 @@ export function queriesReducer(
       if (!query || action.contextModified) {
         query = registerQuery(state, path)
         query.dirty = setFlag(query.dirty, FLAG_DIRTY_PAGE)
+        state = trackDirtyQuery(state, path)
       }
       registerComponent(state, componentPath).pages.add(path)
       state.deletedQueries.delete(path)
@@ -111,6 +116,7 @@ export function queriesReducer(
           const query = state.trackedQueries.get(queryId)
           if (query) {
             query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
+            state = trackDirtyQuery(state, queryId)
           }
         }
         component.query = query
@@ -131,6 +137,9 @@ export function queriesReducer(
       // TODO: unify the behavior?
       const query = registerQuery(state, action.payload.id)
       query.dirty = setFlag(query.dirty, FLAG_DIRTY_TEXT)
+      // static queries are not on demand, so skipping tracking which
+      // queries were marked dirty recently
+      // state = trackDirtyQuery(state, action.payload.id)
       state.deletedQueries.delete(action.payload.id)
       return state
     }
@@ -153,6 +162,10 @@ export function queriesReducer(
       const { path } = action.payload
       state = clearNodeDependencies(state, path)
       state = clearConnectionDependencies(state, path)
+      const query = state.trackedQueries.get(path)
+      if (query) {
+        query.running = setFlag(query.running, FLAG_RUNNING_INFLIGHT)
+      }
       return state
     }
     case `CREATE_NODE`:
@@ -169,12 +182,14 @@ export function queriesReducer(
         const query = state.trackedQueries.get(queryId)
         if (query) {
           query.dirty = setFlag(query.dirty, FLAG_DIRTY_DATA)
+          state = trackDirtyQuery(state, queryId)
         }
       }
       for (const queryId of queriesByConnection) {
         const query = state.trackedQueries.get(queryId)
         if (query) {
           query.dirty = setFlag(query.dirty, FLAG_DIRTY_DATA)
+          state = trackDirtyQuery(state, queryId)
         }
       }
       return state
@@ -183,6 +198,22 @@ export function queriesReducer(
       const { path } = action.payload
       const query = registerQuery(state, path)
       query.dirty = 0
+      query.running = 0 // TODO: also
+      return state
+    }
+    case `SET_PROGRAM_STATUS`: {
+      if (action.payload === `BOOTSTRAP_FINISHED`) {
+        // Reset the running state (as it could've been persisted)
+        for (const [, query] of state.trackedQueries) {
+          query.running = 0
+        }
+        // Reset list of dirty queries (this is used only to notify runtime and it could've been persisted)
+        state.dirtyQueriesListToEmitViaWebsocket = []
+      }
+      return state
+    }
+    case `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`: {
+      state.dirtyQueriesListToEmitViaWebsocket = []
       return state
     }
     default:
@@ -287,4 +318,15 @@ function registerComponent(
     state.trackedComponents.set(componentPath, component)
   }
   return component
+}
+
+function trackDirtyQuery(
+  state: IGatsbyState["queries"],
+  queryId: QueryId
+): IGatsbyState["queries"] {
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
+  }
+
+  return state
 }

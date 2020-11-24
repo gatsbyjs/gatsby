@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.1.0-next.1...create-gatsby@0.1.0-next.2) (2020-11-23)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.1.0-next.0...create-gatsby@0.1.0-next.1) (2020-11-22)
+
+### Features
+
+- **create-gatsby:** Update gatsby-minimal-starter ([#28040](https://github.com/gatsbyjs/gatsby/issues/28040)) ([fe18a18](https://github.com/gatsbyjs/gatsby/commit/fe18a18812276c19c2bef654f08039f1037113f7))
+
+# [0.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.0.0-next.0...create-gatsby@0.1.0-next.0) (2020-11-18)
+
+### Features
+
+- **create-gatsby:** add telemetry tracking ([#28107](https://github.com/gatsbyjs/gatsby/issues/28107)) ([f9838f7](https://github.com/gatsbyjs/gatsby/commit/f9838f7233057841ac705427ba5b6ca95e9678ac))
+
 # 0.0.0-next.0 (2020-11-16)
 
 ### Bug Fixes

@@ -366,9 +366,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     const truncatedPath = truncatePath(page.path)
     report.warn(
       report.stripIndent(`
-        The path to the following page is longer than the supported limit on most 
+        The path to the following page is longer than the supported limit on most
         operating systems and will cause an ENAMETOOLONG error. The path has been
-        truncated to prevent this. 
+        truncated to prevent this.
 
         Original Path: ${page.path}
 
@@ -1069,7 +1069,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config.options Options to pass to the Babel plugin.
  * @example
  * setBabelPlugin({
- *   name:  `babel-plugin-emotion`,
+ *   name:  `@emotion/babel-plugin`,
  *   options: {
  *     sourceMap: true,
  *   },
@@ -1388,6 +1388,32 @@ actions.removePageData = (id: PageDataRemove) => {
   return {
     type: `REMOVE_PAGE_DATA`,
     payload: id,
+  }
+}
+
+/**
+ * Record that a page was visited in the Client..
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the chunkName for the page component.
+ */
+actions.createClientVisitedPage = (chunkName: string) => {
+  return {
+    type: `CREATE_CLIENT_VISITED_PAGE`,
+    payload: { componentChunkName: chunkName },
+  }
+}
+
+/**
+ * Record that a page was visited on the server..
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the chunkName for the page component.
+ */
+actions.createServerVisitedPage = (chunkName: string) => {
+  return {
+    type: `CREATE_SERVER_VISITED_PAGE`,
+    payload: { componentChunkName: chunkName },
   }
 }
 

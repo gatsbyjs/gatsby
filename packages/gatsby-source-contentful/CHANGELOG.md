@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.1...gatsby-source-contentful@4.2.0-next.2) (2020-11-22)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fix the process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE flag ([#28160](https://github.com/gatsbyjs/gatsby/issues/28160)) ([e014a81](https://github.com/gatsbyjs/gatsby/commit/e014a817bcdb74e3f4ced857335d504f002de57b))
+
+# [4.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.0...gatsby-source-contentful@4.2.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.1.0-next.0...gatsby-source-contentful@4.2.0-next.0) (2020-11-18)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-contentful ([#28091](https://github.com/gatsbyjs/gatsby/issues/28091)) ([af86539](https://github.com/gatsbyjs/gatsby/commit/af865397a1b79937fa09475bcc3c6abeb0388687))
+
 # [4.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.0.0-next.0...gatsby-source-contentful@4.0.0-next.1) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-source-contentful
