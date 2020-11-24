@@ -7,26 +7,27 @@ import {
   switchToPeriodDelimiters,
 } from "./path-utils"
 
-// Input queryStringParent could be a Model or a full graphql query
-// End result should be something like { allProducts { nodes { id }}}
+// Input queryStringParent is a model
+// End result should be something like { allProducts { nodes { id } } }
+// Or in case for a group query: { allProducts { group { field, fieldValue, totalCount } } }
 export function generateQueryFromString(
-  queryOrModel: string,
+  model: string,
   fileAbsolutePath: string
 ): string {
   // TODO: 'fields' possibly contains duplicate fields, e.g. field{name},field{description} that should be merged to field{name,description}
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
 
-  // In case queryOrModel is not capitalized
-  const connectionQuery = _.camelCase(`all ${queryOrModel}`)
+  // In case model is not capitalized
+  const connectionQuery = _.camelCase(`all ${model}`)
 
   return `{${connectionQuery}{nodes{${fields}}}}`
 }
 
-// Takes a query result of something like `{ fields: { value: 'foo' }}` with a filepath of `/fields__value` and
+// Takes a query result of something like `{ fields: { value: 'foo' } }` with a filepath of `/fields__value` and
 // translates the object into `{ fields__value: 'foo' }`. This is necassary to pass the value
 // into a query function for each individual page.
 export function reverseLookupParams(
-  queryResults: Record<string, object | string>,
+  queryResults: Record<string, unknown>,
   absolutePath: string
 ): Record<string, string> {
   const reversedParams = {

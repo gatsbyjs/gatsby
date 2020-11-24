@@ -12,6 +12,7 @@ export function collectionExtractQueryString(
   let queryString: string | null = null
 
   const modelType = extractModel(absolutePath)
+  console.log({ modelType })
 
   // This can happen if you have an invalid path and you are trying to query for that path
   // our path graphql resolution logic does not validate the path before calling this

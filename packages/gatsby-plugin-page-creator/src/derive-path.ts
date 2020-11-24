@@ -16,7 +16,7 @@ const doubleForwardSlashes = /\/\/+/g
 // blog/{MarkdownRemark.parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
 export function derivePath(
   path: string,
-  node: Record<string, any>,
+  node: Record<string, unknown>,
   reporter: Reporter
 ): { errors: number; derivedPath: string } {
   // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
@@ -34,9 +34,8 @@ export function derivePath(
     const cleanedField = extractFieldWithoutUnion(slugPart)[0]
     const key = switchToPeriodDelimiters(cleanedField)
 
-    // 3.b  We do node or node.nodes here because we support the special group
-    //      graphql field, which then moves nodes in another depth
-    const nodeValue = _.get(node.nodes, `[0]${key}`) || _.get(node, key)
+    // 3.b  Get the value
+    const nodeValue = _.get(node, key)
 
     // 3.c  log error if the key does not exist on node
     if (nodeValue === undefined) {
@@ -54,7 +53,7 @@ export function derivePath(
     }
 
     // 3.d  Safely slugify all values (to keep URL structures) and remove any trailing slash
-    const value = stripTrailingSlash(safeSlugify(nodeValue))
+    const value = stripTrailingSlash(safeSlugify(nodeValue as string))
 
     // 3.e  replace the part of the slug with the actual value
     modifiedPath = modifiedPath.replace(slugPart, value)

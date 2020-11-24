@@ -49,9 +49,9 @@ export async function createPagesFromCollectionBuilder(
     return
   }
 
-  const { data, errors } = await graphql<{ nodes: Record<string, unknown> }>(
-    queryString
-  )
+  const { data, errors } = await graphql<
+    { nodes: Record<string, unknown> } | { group: Record<string, unknown> }
+  >(queryString)
 
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
@@ -86,10 +86,16 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   }
 
   // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
-  //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
-  const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
-    Record<string, object>
+  //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } | { group: Array<{ field: string; fieldValue: string; totalCount: number }> } }
+  //    Meaning: Either get normal nodes back or the result of group
+
+  // 2.a Get the values from data
+  //     Result: { nodes: Array<ACTUAL_DATA> } | { group: Array< field: string; fieldValue: string; totalCount: number }> }
+  // 2.b Set nodes (normal query and group query are both arrays of objects)
+  const nodes = Object.values(Object.values(data)[0])[0] as Array<
+    Record<string, unknown>
   >
+  console.log({ nodes })
 
   if (nodes) {
     reporter.verbose(
@@ -103,7 +109,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
-  const paths = nodes.map((node: Record<string, object>) => {
+  const paths = nodes.map(node => {
     // URL path for the component and node
     const { derivedPath, errors } = derivePath(filePath, node, reporter)
     const path = createPath(derivedPath)
