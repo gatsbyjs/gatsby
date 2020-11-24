@@ -24,7 +24,9 @@ Please try again later, and if it continues to have trouble connecting file an i
   return ticketId
 }
 
-const getTicket = async (ticketId: string): Promise<Record<string, any>> => {
+const getTicket = async (
+  ticketId: string
+): Promise<Record<string, string | boolean>> => {
   let ticket
   try {
     const ticketResponse = await fetch(
