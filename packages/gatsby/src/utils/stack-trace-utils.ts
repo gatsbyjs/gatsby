@@ -1,6 +1,11 @@
 import stackTrace, { StackFrame } from "stack-trace"
 import { codeFrameColumns } from "@babel/code-frame"
-import { NullableMappedPosition, SourceMapConsumer } from "source-map"
+import {
+  NullableMappedPosition,
+  SourceMapConsumer,
+  RawSourceMap,
+  RawIndexMap,
+} from "source-map"
 
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -86,7 +91,7 @@ interface IOriginalSourcePositionAndContent {
 }
 
 export async function findOriginalSourcePositionAndContent(
-  webpackSource: any,
+  webpackSource: RawSourceMap | RawIndexMap | string,
   position: { line: number; column: number | null }
 ): Promise<IOriginalSourcePositionAndContent> {
   return await SourceMapConsumer.with(webpackSource, null, consumer => {

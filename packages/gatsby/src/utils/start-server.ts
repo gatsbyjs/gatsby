@@ -393,10 +393,12 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
     )
 
     const sourcePosition = result?.sourcePosition
+    const sourceLine = sourcePosition?.line
+    const sourceColumn = sourcePosition?.column
     const sourceContent = result?.sourceContent
     let codeFrame = `No codeFrame could be generated`
 
-    if (!sourceContent || !sourcePosition) {
+    if (!sourceContent || !sourceLine) {
       res.json({
         codeFrame,
         sourcePosition: null,
@@ -406,11 +408,11 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
     }
 
     codeFrame = codeFrameColumns(
-      sourceContent as string,
+      sourceContent,
       {
         start: {
-          line: sourcePosition.line as number,
-          column: sourcePosition.column ?? 0,
+          line: sourceLine,
+          column: sourceColumn ?? 0,
         },
       },
       {
