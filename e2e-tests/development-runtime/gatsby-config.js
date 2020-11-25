@@ -4,8 +4,9 @@
 //
 // This is only necessary if we are testing react < 16.9 or if you are forcing GATSBY_HOT_LOADER=react-hot-loader.
 // When we are using fast-refresh we do not need this hack.
+// TODO: Remove once fast-refresh is the default
 //
-// require(`isomorphic-fetch`)
+require(`isomorphic-fetch`)
 
 module.exports = {
   siteMetadata: {
