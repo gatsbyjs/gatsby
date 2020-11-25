@@ -3,7 +3,7 @@ import opn from "better-opn"
 import reporter from "./reporter"
 import { getToken, setToken } from "./util/manage-token"
 
-interface Ticket {
+interface ITicket {
   verified: boolean
   token?: string | null
   expiration?: string | null
@@ -30,8 +30,8 @@ Please try again later, and if it continues to have trouble connecting file an i
   return ticketId
 }
 
-const getTicket = async (ticketId: string): Promise<Ticket> => {
-  let ticket: Ticket = {
+const getTicket = async (ticketId: string): Promise<ITicket> => {
+  let ticket: ITicket = {
     verified: false,
   }
   try {
@@ -81,7 +81,7 @@ export async function login(): Promise<void> {
   await handleOpenBrowser(authUrl)
 
   // Poll until the ticket has been verified, and should have the token attached
-  function pollForTicket(): Promise<Ticket> {
+  function pollForTicket(): Promise<ITicket> {
     return new Promise(function (resolve): void {
       // eslint-disable-next-line consistent-return
       async function verify(): Promise<void> {
