@@ -15,17 +15,12 @@ import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
-import { isCI } from "gatsby-core-utils"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
 import report from "gatsby-cli/lib/reporter"
 import * as WorkerPool from "../utils/worker/pool"
-import {
-  showExperimentNoticeAfterTimeout,
-  CancelExperimentNoticeCallbackOrUndefined,
-} from "../utils/show-experiment-notice"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
@@ -50,7 +45,6 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
-  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: JestWorker
   webpackWatching: IWebpackWatchingPauseResume
@@ -123,30 +117,6 @@ export async function startServer(
     indexHTMLActivity.end()
   }
 
-  const TWENTY_SECONDS = 20 * 1000
-  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
-  if (
-    process.env.gatsby_executing_command === `develop` &&
-    !process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
-    !isCI()
-  ) {
-    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `LAZY_DEVJS`,
-      report.stripIndent(`
-Your local development experience is about to get better, faster, and stronger!
-
-Your friendly Gatsby maintainers detected your site takes longer than ideal to bundle your JavaScript. We're working right now to improve this.
-
-If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with LAZY_DEVJS enabled.
-
-GATSBY_EXPERIMENTAL_LAZY_DEVJS=true gatsby develop
-
-Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.dev/lazy-devjs-umbrella
-      `),
-      TWENTY_SECONDS
-    )
-  }
-
   const devConfig = await webpackConfig(
     program,
     directory,
@@ -156,66 +126,6 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
   )
 
   const compiler = webpack(devConfig)
-
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    const bodyParser = require(`body-parser`)
-    const { boundActionCreators } = require(`../redux/actions`)
-    const { createClientVisitedPage } = boundActionCreators
-    // Listen for the client marking a page as visited (meaning we need to
-    // compile its page component.
-    const chunkCalls = new Set()
-    app.post(`/___client-page-visited`, bodyParser.json(), (req, res, next) => {
-      if (req.body?.chunkName) {
-        // Ignore all but the first POST.
-        if (!chunkCalls.has(req.body.chunkName)) {
-          // Tell Gatsby there's a new page component to trigger it
-          // being added to the bundle.
-          createClientVisitedPage(req.body.chunkName)
-
-          // Tell Gatsby to rewrite the page data for the pages
-          // owned by this component to update it to say that
-          // its page component is now part of the dev bundle.
-          // The pages will be rewritten after the webpack compilation
-          // finishes.
-          //
-          // Set a timeout to ensure the webpack compile of the new page
-          // component triggered above has time to go through.
-          setTimeout(() => {
-            // Find the component page for this componentChunkName.
-            const pages = store.getState().pages
-            function getByChunkName(map, searchValue): void | string {
-              for (const [key, value] of map.entries()) {
-                if (value.componentChunkName === searchValue) return key
-              }
-
-              return undefined
-            }
-            const pageKey = getByChunkName(pages, req.body.chunkName)
-
-            if (pageKey) {
-              const page = pages.get(pageKey)
-              if (page) {
-                store.dispatch({
-                  type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-                  payload: {
-                    pages: [
-                      {
-                        componentPath: page.component,
-                      },
-                    ],
-                  },
-                })
-              }
-            }
-            chunkCalls.add(req.body.chunkName)
-          }, 20)
-        }
-        res.send(`ok`)
-      } else {
-        next()
-      }
-    })
-  }
 
   /**
    * Set up the express app.
@@ -495,7 +405,6 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
     compiler,
     listener,
     webpackActivity,
-    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,
