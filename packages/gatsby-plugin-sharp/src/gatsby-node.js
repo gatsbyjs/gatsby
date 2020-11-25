@@ -12,11 +12,13 @@ const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-exports.onPreInit = ({ reporter }, pluginOptions) => {
-  if (!pluginOptions.experimentalDisableLazyProcessing) {
-    reporter.info(
-      `[gatsby-plugin-sharp] The lazy image processing experiment is enabled, to disable it please set experimentalDisableLazyProcessing to false in pluginOptions`
-    )
+exports.onPreInit = ({ reporter }) => {
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
+    if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
+      reporter.info(
+        `[gatsby-plugin-sharp] The lazy image processing experiment is enabled`
+      )
+    }
     trackFeatureIsUsed(`LazyImageProcessing`)
   }
 }

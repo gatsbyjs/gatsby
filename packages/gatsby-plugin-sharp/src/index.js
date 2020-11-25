@@ -176,7 +176,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
             process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
           ) &&
           process.env.gatsby_executing_command === `develop` &&
-          !getPluginOptions().experimentalDisableLazyProcessing,
+          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
         operations: [
           {
             outputPath: relativePath,
@@ -250,7 +250,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
             process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
           ) &&
           process.env.gatsby_executing_command === `develop` &&
-          !getPluginOptions().experimentalDisableLazyProcessing,
+          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
         operations,
         pluginOptions: getPluginOptions(),
       },
