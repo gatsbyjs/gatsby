@@ -11,7 +11,7 @@ const getUsername = async (token: string): Promise<string> => {
   }`
   try {
     const usernameResponse = await fetch(`https://api.gatsbyjs.com/graphql`, {
-      method: "post",
+      method: `post`,
       body: JSON.stringify({ query }),
       headers: {
         Authorization: `Bearer ${token}`,
