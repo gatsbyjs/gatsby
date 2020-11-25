@@ -399,7 +399,8 @@ const processDefinitions = ({
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
-      hash: originalDefinition.hash,
+      // ensure hash should be a string and not a number
+      hash: String(originalDefinition.hash),
     }
 
     if (query.isStaticQuery) {

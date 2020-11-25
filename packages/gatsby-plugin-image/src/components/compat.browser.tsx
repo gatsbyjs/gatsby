@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ComponentType, ElementType } from "react"
-import { GatsbyImageProps } from "./gatsby-image.browser"
+import { GatsbyImageProps, ISharpGatsbyImageData } from "./gatsby-image.browser"
 import { GatsbyImage as GatsbyImageOriginal } from "./gatsby-image.browser"
 
 export interface ICompatProps {
@@ -49,9 +49,10 @@ export function _createCompatLayer(
     Tag,
     ...props
   }) {
-    let rewiredProps: Partial<GatsbyImageProps> = {
+    const rewiredProps: Partial<GatsbyImageProps> = {
       alt: ``,
       as: Tag,
+      image: undefined,
       ...props,
     }
 
@@ -71,8 +72,7 @@ export function _createCompatLayer(
         fixed = fixed[0] as Exclude<ICompatProps["fixed"], undefined>
       }
 
-      rewiredProps = {
-        ...rewiredProps,
+      const image: ISharpGatsbyImageData = {
         placeholder: undefined,
         layout: `fixed`,
         width: fixed.width,
@@ -89,32 +89,29 @@ export function _createCompatLayer(
       const placeholder = fixed.tracedSVG || fixed.base64
 
       if (placeholder) {
-        rewiredProps.placeholder = {
+        image.placeholder = {
           fallback: placeholder,
         }
       }
 
       if (fixed.srcSetWebp) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        rewiredProps.images!.sources!.push({
+        image.images.sources!.push({
           srcSet: fixed.srcSetWebp,
           type: `image/webp`,
         })
       }
-    }
-
-    if (fluid) {
+      rewiredProps.image = image
+    } else if (fluid) {
       if (Array.isArray(fluid)) {
         warnForArtDirection()
         fluid = fluid[0] as Exclude<ICompatProps["fluid"], undefined>
       }
 
-      rewiredProps = {
-        ...rewiredProps,
-        placeholder: undefined,
+      const image: ISharpGatsbyImageData = {
         width: 1,
         height: fluid.aspectRatio,
-        layout: `responsive`,
+        layout: `fluid`,
         images: {
           fallback: {
             src: fluid.src,
@@ -127,19 +124,21 @@ export function _createCompatLayer(
       const placeholder = fluid.tracedSVG || fluid.base64
 
       if (placeholder) {
-        rewiredProps.placeholder = {
+        image.placeholder = {
           fallback: placeholder,
         }
       }
 
       if (fluid.srcSetWebp) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        rewiredProps.images!.sources!.push({
+        image.images!.sources!.push({
           srcSet: fluid.srcSetWebp,
           type: `image/webp`,
           sizes: fluid.sizes,
         })
       }
+
+      rewiredProps.image = image
     }
 
     return <Component {...props} {...(rewiredProps as GatsbyImageProps)} />

@@ -716,23 +716,24 @@ export const createWebpackUtils = (
 }
 
 function reactHasJsxRuntime(): boolean {
-  try {
-    // React is shipping a new jsx runtime that is to be used with
-    // an option on @babel/preset-react called `runtime: automatic`
-    // Not every version of React has this jsx-runtime yet. Eventually,
-    // it will be backported to older versions of react and this check
-    // will become unnecessary.
-
-    // for now we also do the semver check until react 17 is more widely used
-    const react = require(`react/package.json`)
-    return (
-      !!require.resolve(`react/jsx-runtime.js`) &&
-      semver.major(react.version) >= 17
-    )
-  } catch (e) {
-    // If the require.resolve throws, that means this version of React
-    // does not support the jsx runtime.
-  }
+  // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
+  // People can use a custom babelrc file to support it
+  // try {
+  //   // React is shipping a new jsx runtime that is to be used with
+  //   // an option on @babel/preset-react called `runtime: automatic`
+  //   // Not every version of React has this jsx-runtime yet. Eventually,
+  //   // it will be backported to older versions of react and this check
+  //   // will become unnecessary.
+  //   // for now we also do the semver check until react 17 is more widely used
+  //   // const react = require(`react/package.json`)
+  //   // return (
+  //   //   !!require.resolve(`react/jsx-runtime.js`) &&
+  //   //   semver.major(react.version) >= 17
+  //   // )
+  // } catch (e) {
+  //   // If the require.resolve throws, that means this version of React
+  //   // does not support the jsx runtime.
+  // }
 
   return false
 }

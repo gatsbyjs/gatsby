@@ -28,7 +28,7 @@ Utility to validate and test plugin options schemas. An example of a plugin opti
 // This is an example using Jest (https://jestjs.io/)
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 
-it(`should partially validate one value of a schema`, () => {
+it(`should partially validate one value of a schema`, async () => {
   const pluginSchema = ({ Joi }) =>
     Joi.object({
       someOtherValue: Joi.string()
@@ -36,7 +36,7 @@ it(`should partially validate one value of a schema`, () => {
     })
 
   // Only the "toVerify" key of the schema will be verified in this test
-  const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+  const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
     toVerify: `abcd`,
   })
 

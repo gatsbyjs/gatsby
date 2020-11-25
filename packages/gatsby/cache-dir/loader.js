@@ -141,6 +141,36 @@ export class BaseLoader {
             throw new Error(`not a valid pageData response`)
           }
 
+          // In development, check if the page is in the bundle yet.
+          if (
+            process.env.NODE_ENV === `development` &&
+            process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS
+          ) {
+            const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
+              .default
+            if (process.env.NODE_ENV !== `test`) {
+              delete require.cache[
+                require.resolve(`$virtual/lazy-client-sync-requires`)
+              ]
+            }
+
+            const lazyRequires = require(`$virtual/lazy-client-sync-requires`)
+            if (
+              lazyRequires.notVisitedPageComponents[
+                jsonPayload.componentChunkName
+              ]
+            ) {
+              // Tell the server the user wants to visit this page
+              // to trigger it including the page component's code in the
+              // commons bundles.
+              ensureComponentInBundle(jsonPayload.componentChunkName)
+
+              return new Promise(resolve =>
+                setTimeout(() => resolve(this.fetchPageDataJson(loadObj)), 100)
+              )
+            }
+          }
+
           return Object.assign(loadObj, {
             status: PageResourceStatus.Success,
             payload: jsonPayload,
@@ -190,7 +220,10 @@ export class BaseLoader {
   loadPageDataJson(rawPath) {
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
-      return Promise.resolve(this.pageDataDb.get(pagePath))
+      const pageData = this.pageDataDb.get(pagePath)
+      if (!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND || !pageData.stale) {
+        return Promise.resolve(pageData)
+      }
     }
 
     return this.fetchPageDataJson({ pagePath }).then(pageData => {
@@ -209,7 +242,12 @@ export class BaseLoader {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
-      return Promise.resolve(page.payload)
+      if (
+        !process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND ||
+        !page.payload.stale
+      ) {
+        return Promise.resolve(page.payload)
+      }
     }
 
     if (this.inFlightDb.has(pagePath)) {
@@ -369,7 +407,15 @@ export class BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    throw new Error(`doPrefetch not implemented`)
+    const pageDataUrl = createPageDataUrl(pagePath)
+    return prefetchHelper(pageDataUrl, {
+      crossOrigin: `anonymous`,
+      as: `fetch`,
+    }).then(() =>
+      // This was just prefetched, so will return a response from
+      // the cache instead of making another request to the server
+      this.loadPageDataJson(pagePath)
+    )
   }
 
   hovering(rawPath) {
@@ -448,27 +494,15 @@ export class ProdLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    const pageDataUrl = createPageDataUrl(pagePath)
-    return prefetchHelper(pageDataUrl, {
-      crossOrigin: `anonymous`,
-      as: `fetch`,
+    return super.doPrefetch(pagePath).then(result => {
+      if (result.status !== PageResourceStatus.Success) {
+        return Promise.resolve()
+      }
+      const pageData = result.payload
+      const chunkName = pageData.componentChunkName
+      const componentUrls = createComponentUrls(chunkName)
+      return Promise.all(componentUrls.map(prefetchHelper)).then(() => pageData)
     })
-      .then(() =>
-        // This was just prefetched, so will return a response from
-        // the cache instead of making another request to the server
-        this.loadPageDataJson(pagePath)
-      )
-      .then(result => {
-        if (result.status !== PageResourceStatus.Success) {
-          return Promise.resolve()
-        }
-        const pageData = result.payload
-        const chunkName = pageData.componentChunkName
-        const componentUrls = createComponentUrls(chunkName)
-        return Promise.all(componentUrls.map(prefetchHelper)).then(
-          () => pageData
-        )
-      })
   }
 
   loadPageDataJson(rawPath) {
@@ -534,5 +568,9 @@ export const publicLoader = {
 export default publicLoader
 
 export function getStaticQueryResults() {
-  return instance.staticQueryDb
+  if (instance) {
+    return instance.staticQueryDb
+  } else {
+    return {}
+  }
 }

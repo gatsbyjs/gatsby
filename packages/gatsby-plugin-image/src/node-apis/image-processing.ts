@@ -5,12 +5,11 @@ import {
   ParentSpanPluginArgs,
   Actions,
 } from "gatsby"
-import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
+import * as PluginSharp from "gatsby-plugin-sharp"
 import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
 import { ImageProps, SharpProps } from "../utils"
-import { getCustomSharpFields } from "./get-custom-sharp-fields"
 import { watchImage } from "./watcher"
 
 export interface IImageMetadata {
@@ -65,8 +64,7 @@ export async function writeImages({
   createNode: Actions["createNode"]
 }): Promise<void> {
   const promises = [...images.entries()].map(
-    async ([hash, { src, layout, ...args }]) => {
-      const isFixed = layout !== `responsive`
+    async ([hash, { src, ...args }]) => {
       const fullPath = path.resolve(sourceDir, src)
 
       if (!fs.existsSync(fullPath)) {
@@ -94,30 +92,21 @@ export async function writeImages({
       // Different cache: this is the one with the image properties
       const cacheFilename = path.join(cacheDir, `${hash}.json`)
       imageRefs[hash] = {
-        isFixed,
         contentDigest: file.internal?.contentDigest,
         args,
         cacheFilename,
       }
       await cache.set(cacheKey, imageRefs)
 
-      await writeImage(
-        file,
-        pathPrefix,
-        args,
-        reporter,
-        cache,
-        isFixed,
-        cacheFilename
-      )
+      await writeImage(file, args, pathPrefix, reporter, cache, cacheFilename)
 
       if (process.env.NODE_ENV === `development`) {
         // Watch the source image for changes
         watchImage({
           createNode,
-          pathPrefix,
           createNodeId,
           fullPath,
+          pathPrefix,
           cache,
           reporter,
         })
@@ -130,37 +119,25 @@ export async function writeImages({
 
 export async function writeImage(
   file: Node,
-  pathPrefix: string,
   args: SharpProps,
+  pathPrefix: string,
   reporter: Reporter,
   cache: GatsbyCache,
-  isFixed: boolean,
   filename: string
 ): Promise<void> {
   try {
-    if (args.tracedSVG) {
-      // These are mutually-exclusive options
-      args.base64 = false
-    }
-    const options = { file, args, reporter, cache }
+    const options = { file, args, pathPrefix, reporter, cache }
 
+    if (!PluginSharp.generateImageData) {
+      reporter.warn(`Please upgrade gatsby-plugin-sharp`)
+      return
+    }
     // get standard set of fields from sharp
-    const sharpData = await (isFixed
-      ? fixedSharp(options)
-      : fluidSharp(options))
+    const sharpData = await PluginSharp.generateImageData(options)
+
     if (sharpData) {
-      // get the equivalent webP and tracedSVG fields gatsby-transformer-sharp handles normally
-      const customSharpFields = await getCustomSharpFields({
-        isFixed,
-        file,
-        pathPrefix,
-        args,
-        reporter,
-        cache,
-      })
-      const data = { ...sharpData, ...customSharpFields }
       // Write the image properties to the cache
-      await fs.writeJSON(filename, data)
+      await fs.writeJSON(filename, sharpData)
     } else {
       reporter.warn(`Could not process image`)
     }

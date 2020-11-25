@@ -32,8 +32,8 @@ plugins: [
     resolve: "gatsby-source-etsy",
     options: {
       // highlight-start
-      apiKey: "your api key here",
-      shopId: "your shop id or shop name here",
+      api_key: "your api key here",
+      shop_id: "your shop id or shop name here",
       // highlight-end
       language: "en", // optional
     },

@@ -17,9 +17,10 @@ export enum ErrorCategory {
 const errors = {
   "": {
     text: (context): string => {
-      const sourceMessage = context.sourceMessage
-        ? context.sourceMessage
-        : `There was an error`
+      const sourceMessage =
+        context && context.sourceMessage
+          ? context.sourceMessage
+          : `There was an error`
       return sourceMessage
     },
     level: Level.ERROR,
@@ -468,7 +469,9 @@ const errors = {
     text: (context): string =>
       [
         stripIndent(`
-          Invalid plugin options for "${context.pluginName}":
+          Invalid plugin options for "${context.pluginName}"${
+          context.configDir ? `, configured by ${context.configDir}` : ``
+        }:
         `),
       ]
         .concat([``])
@@ -535,6 +538,34 @@ const errors = {
       `Directory ${context.rootPath} is already an npm project`,
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11614": {
+    text: ({
+      path,
+      filePath,
+      line,
+      column,
+    }): string => `The path "${path}" errored during SSR.
+
+    Edit its component ${filePath}${
+      line ? `:${line}:${column}` : ``
+    } to resolve the error.`,
+    level: Level.WARNING,
+    docsUrl: `https://gatsby.dev/debug-html`,
+  },
+  // Watchdog
+  "11701": {
+    text: (context): string =>
+      `Terminating the process (due to GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT):\n\nGatsby is in "${
+        context.status
+      }" state without any updates for ${(
+        context.stuckStatusWatchdogTimeoutDelay / 1000
+      ).toFixed(
+        3
+      )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
+        context.stuckStatusDiagnosticMessage
+      }`,
+    level: Level.ERROR,
   },
 }
 

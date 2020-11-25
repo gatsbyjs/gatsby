@@ -7,6 +7,7 @@ import {
 } from "./telemetry"
 import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
+import time, { TimeUnit } from "@turist/time"
 
 const instance = new AnalyticsTracker()
 
@@ -22,7 +23,7 @@ const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
 const interval =
   intervalDuration && Number.isFinite(+intervalDuration)
     ? Math.max(Number(intervalDuration), 1000)
-    : 10 * 60 * 1000 // 10 min
+    : time(10, TimeUnit.Minute)
 
 function tick(): void {
   flush()
@@ -33,6 +34,7 @@ function tick(): void {
 export function trackFeatureIsUsed(name: string): void {
   instance.trackFeatureIsUsed(name)
 }
+
 export function trackCli(
   input: string | Array<string>,
   tags?: ITelemetryTagsPayload,

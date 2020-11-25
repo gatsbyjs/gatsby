@@ -133,6 +133,7 @@ export default function Layout({ children }) {
   return (
     <React.Fragment>
       <GlobalStyle theme="purple" />
+      {children}
     </React.Fragment>
   )
 }

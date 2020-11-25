@@ -14,7 +14,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 ## Pulling data in and pushing data out
 
-If you have a JSON file with content in it, you could pull it into Contentful using [contentful-import](https://github.com/contentful/contentful-import). If you are creating new content, you don't need this and just create content straight in Contentful.
+If you have a JSON file with content in it, you could pull it into Contentful using [contentful-import](https://github.com/contentful/contentful-import). If you are creating new content, you don't need this and can create content straight in Contentful.
 
 If you do create content directly in Contentful, make sure to name your fields in a way you can remember when you create GraphQL queries. If you use GraphiQL, it can suggest fields to you, but this will only help if the field names are clear and memorable.
 

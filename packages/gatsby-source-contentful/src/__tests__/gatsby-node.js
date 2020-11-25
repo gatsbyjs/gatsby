@@ -12,6 +12,7 @@ const fetch = require(`../fetch`)
 const normalize = require(`../normalize`)
 
 const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
+const richTextFixture = require(`../__fixtures__/rich-text-data`)
 
 const pluginOptions = { spaceId: `testSpaceId` }
 
@@ -668,5 +669,37 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.removeAsset().currentSyncData.deletedAssets,
       locales
     )
+  })
+
+  it(`stores rich text as raw with references attached`, async () => {
+    fetch.mockImplementationOnce(richTextFixture.initialSync)
+
+    // initial sync
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
+
+    const initNodes = getNodes()
+
+    const homeNodes = initNodes.filter(
+      ({ contentful_id }) => contentful_id === `6KpLS2NZyB3KAvDzWf4Ukh`
+    )
+    homeNodes.forEach(homeNode => {
+      expect(homeNode.content.references___NODE).toStrictEqual([
+        ...new Set(homeNode.content.references___NODE),
+      ])
+      expect(homeNode.content.references___NODE).toMatchSnapshot()
+    })
   })
 })

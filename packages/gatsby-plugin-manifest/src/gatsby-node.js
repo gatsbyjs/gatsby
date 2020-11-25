@@ -9,6 +9,8 @@ import {
   favicons,
 } from "./common"
 
+import pluginOptionsSchema from "./pluginOptionsSchema"
+
 sharp.simd(true)
 
 // Handle Sharp's concurrency based on the Gatsby CPU count
@@ -58,45 +60,7 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = ({ Joi }) => {
-    Joi.object({
-      name: Joi.string(),
-      short_name: Joi.string(),
-      description: Joi.string(),
-      lang: Joi.string(),
-      localize: Joi.array().items(
-        Joi.object({
-          start_url: Joi.string(),
-          name: Joi.string(),
-          short_name: Joi.string(),
-          description: Joi.string(),
-          lang: Joi.string(),
-        })
-      ),
-      start_url: Joi.string(),
-      background_color: Joi.string(),
-      theme_color: Joi.string(),
-      display: Joi.string(),
-      legacy: Joi.boolean(),
-      include_favicon: Joi.boolean(),
-      icon: Joi.string(),
-      theme_color_in_head: Joi.boolean(),
-      crossOrigin: Joi.string().valid(`use-credentials`, `anonymous`),
-      cache_busting_mode: Joi.string().valid(`query`, `name`, `none`),
-      icons: Joi.array().items(
-        Joi.object({
-          src: Joi.string(),
-          sizes: Joi.string(),
-          type: Joi.string(),
-        })
-      ),
-      icon_options: Joi.object({
-        purpose: Joi.string(),
-      }),
-    })
-  }
-}
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 /**
  * Setup pluginOption defaults
@@ -220,7 +184,7 @@ const makeManifest = async ({
       const exists = fs.existsSync(iconPath)
       //create destination directory if it doesn't exist
       if (!exists) {
-        fs.mkdirSync(iconPath)
+        fs.mkdirSync(iconPath, { recursive: true })
       }
       paths[iconPath] = true
     }

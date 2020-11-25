@@ -2,17 +2,17 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"maxWidth" must be a number`,
       `"linkImagesToOriginal" must be a boolean`,
-      `"showCaptions" must be a boolean`,
+      `"showCaptions" must be one of [boolean, array]`,
       `"markdownCaptions" must be a boolean`,
       `"sizeByPixelDensity" must be a boolean`,
-      `"wrapperStyle" must be one of [object]`,
+      `"wrapperStyle" must be one of [object, string]`,
       `"backgroundColor" must be a string`,
       `"quality" must be a number`,
-      `"withWebp" must be a boolean`,
+      `"withWebp" must be one of [object, boolean]`,
       `"tracedSVG" must be a boolean`,
       `"loading" must be one of [lazy, eager, auto]`,
       `"disableBgImageOnAlpha" must be a boolean`,
@@ -20,16 +20,16 @@ describe(`pluginOptionsSchema`, () => {
       `"srcSetBreakpoints" must be an array`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       maxWidth: `This should be a number`,
       linkImagesToOriginal: `This should be a boolean`,
       showCaptions: `This should be a boolean`,
       markdownCaptions: `This should be a boolean`,
       sizeByPixelDensity: `This should be a boolean`,
-      wrapperStyle: `This should be an object`,
+      wrapperStyle: true,
       backgroundColor: 123,
       quality: `This should be a number`,
-      withWebp: `This should be a boolean`,
+      withWebp: `This should be a boolean or an object`,
       tracedSVG: `This should be a boolean`,
       loading: `This should be lazy, eager or auto`,
       disableBgImageOnAlpha: `This should be a boolean`,
@@ -40,8 +40,8 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       maxWidth: 700,
       linkImagesToOriginal: false,
       showCaptions: true,
@@ -59,5 +59,47 @@ describe(`pluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(true)
+  })
+
+  it(`should validate the withWebp prop`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      withWebp: { quality: 100 },
+    })
+
+    expect(isValid).toBe(true)
+  })
+
+  describe(`allow to use array of valid strings for "showCaptions"`, () => {
+    it(`["title", "alt"]`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`title`, `alt`],
+      })
+
+      expect(isValid).toBe(true)
+    })
+
+    it(`["title"]`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`title`],
+      })
+
+      expect(isValid).toBe(true)
+    })
+
+    it(`["alt"]`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`alt`],
+      })
+
+      expect(isValid).toBe(true)
+    })
+
+    it(`["not valid"] (should fail validation)`, async () => {
+      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+        showCaptions: [`not valid`],
+      })
+
+      expect(isValid).toBe(false)
+    })
   })
 })

@@ -54,6 +54,7 @@ interface ILog {
   activity_uuid: string | undefined
   timestamp: string
   stack: IStructuredError["stack"] | undefined
+  pluginName: string | undefined
 }
 
 export interface ICreateLog {

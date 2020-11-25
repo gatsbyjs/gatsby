@@ -1,13 +1,13 @@
-const Joi = require(`@hapi/joi`)
-const { getService } = require(`gatsby-core-utils`)
-const fetch = require(`node-fetch`)
+import * as Joi from "@hapi/joi"
+import { getService } from "gatsby-core-utils"
+import fetch from "node-fetch"
 
-const { REQUIRES_KEYS } = require(`./utils/constants`)
-const resourceSchema = require(`../resource-schema`)
+import { REQUIRES_KEYS } from "./utils/constants"
+import resourceSchema from "../resource-schema"
 
-module.exports.create = () => {}
-module.exports.update = () => {}
-module.exports.read = async ({ root }, id) => {
+export const create = () => {}
+export const update = () => {}
+export const read = async ({ root }, id) => {
   const result = await queryDevelopAPI(
     { root },
     `
@@ -31,8 +31,8 @@ module.exports.read = async ({ root }, id) => {
 
   return result.data.sitePage
 }
-module.exports.destroy = () => {}
-module.exports.config = {}
+export const destroy = () => {}
+export const config = {}
 
 const queryDevelopAPI = async ({ root }, query) => {
   const { port } = await getService(root, `developproxy`)
@@ -52,7 +52,7 @@ const queryDevelopAPI = async ({ root }, query) => {
   return body
 }
 
-module.exports.all = async ({ root }) => {
+export const all = async ({ root }) => {
   const result = await queryDevelopAPI(
     { root },
     `
@@ -110,9 +110,8 @@ const validate = resource => {
   return Joi.validate(resource, schema, { abortEarly: false })
 }
 
-exports.schema = schema
-exports.validate = validate
+export { schema, validate }
 
-module.exports.plan = async () => {
+export const plan = async () => {
   return {}
 }

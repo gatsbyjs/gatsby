@@ -157,22 +157,20 @@ exports.onPreBootstrap = async (
   // normalizedOptions = setPluginOptions(pluginOptions)
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = ({ Joi }) =>
-    Joi.object({
-      base64Width: Joi.number()
-        .default(20)
-        .description(`The width of the generated base64 preview image`),
-      forceBase64Format: Joi.any()
-        .valid(`png`, `jpg`, `webp`)
-        .description(
-          `Force a different format for the generated base64 image. Defaults to the same format as the input image`
-        ),
-      useMozJpeg: Joi.boolean().description(
-        `The the mozJpeg library for encoding. Defaults to false, unless \`process.env.GATSBY_JPEG_ENCODER\` === \`MOZJPEG\``
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    base64Width: Joi.number()
+      .default(20)
+      .description(`The width of the generated base64 preview image`),
+    forceBase64Format: Joi.any()
+      .valid(`png`, `jpg`, `webp`)
+      .description(
+        `Force a different format for the generated base64 image. Defaults to the same format as the input image`
       ),
-      stripMetadata: Joi.boolean().default(true),
-      defaultQuality: Joi.number().default(50),
-      failOnError: Joi.boolean().default(true),
-    })
-}
+    useMozJpeg: Joi.boolean().description(
+      `The the mozJpeg library for encoding. Defaults to false, unless \`process.env.GATSBY_JPEG_ENCODER\` === \`MOZJPEG\``
+    ),
+    stripMetadata: Joi.boolean().default(true),
+    defaultQuality: Joi.number().default(50),
+    failOnError: Joi.boolean().default(true),
+  })

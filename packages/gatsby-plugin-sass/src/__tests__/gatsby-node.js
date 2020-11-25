@@ -58,9 +58,10 @@ describe(`gatsby-plugin-sass`, () => {
 })
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should provide meaningful errors when fields are invalid`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"implementation" must be of type object`,
+      `"cssLoaderOptions" must be of type object`,
       `"postCssPlugins" must be an array`,
       `"sassRuleTest" must be of type object`,
       `"sassRuleModulesTest" must be of type object`,
@@ -85,9 +86,10 @@ describe(`pluginOptionsSchema`, () => {
       `"sourceMapRoot" must be a string`,
     ]
 
-    const { errors } = testPluginOptionsSchema(pluginOptionsSchema, {
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       implementation: `This should be a require() thing`,
       postCssPlugins: `This should be an array of postCss plugins`,
+      cssLoaderOptions: `This should be an object of css-loader options`,
       sassRuleTest: `This should be a regexp`,
       sassRuleModulesTest: `This should be a regexp`,
       useResolveUrlLoader: `This should be a boolean`,
@@ -114,10 +116,11 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate the schema`, () => {
-    const { isValid } = testPluginOptionsSchema(pluginOptionsSchema, {
+  it(`should validate the schema`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       implementation: require(`../gatsby-node.js`),
-      postCssPlugins: [{ post: `CSS plugin` }],
+      cssLoaderOptions: { camelCase: false },
+      postCssPlugins: [require(`autoprefixer`)],
       sassRuleTest: /\.global\.s(a|c)ss$/,
       sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
       useResolveUrlLoader: false,
@@ -145,6 +148,14 @@ describe(`pluginOptionsSchema`, () => {
       sourceMapContents: true,
       sourceMapEmbed: true,
       sourceMapRoot: `some-source-map-root`,
+    })
+
+    expect(isValid).toBe(true)
+  })
+
+  it(`should allow unknown options`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      webpackImporter: `unknown option`,
     })
 
     expect(isValid).toBe(true)

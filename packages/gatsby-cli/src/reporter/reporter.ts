@@ -158,6 +158,7 @@ class Reporter {
 
     if (structuredError) {
       reporterActions.createLog(structuredError)
+      trackError(`GENERIC_ERROR`, { error: structuredError })
     }
 
     // TODO: remove this once Error component can render this info

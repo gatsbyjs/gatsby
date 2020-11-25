@@ -6,15 +6,13 @@ import { Placeholder } from "./placeholder"
 import { MainImageProps, MainImage } from "./main-image"
 import {
   getMainProps,
-  getPlaceHolderProps,
+  getPlaceholderProps,
   hasNativeLazyLoadSupport,
   hasImageLoaded,
 } from "./hooks"
 import { ReactElement } from "react"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
-  width: number
-  height: number
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
   toggleIsLoaded: Function
@@ -23,11 +21,7 @@ type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
 
 export function lazyHydrate(
   {
-    layout = `fixed`,
-    width,
-    height,
-    placeholder,
-    images,
+    image,
     loading,
     isLoading,
     isLoaded,
@@ -38,6 +32,8 @@ export function lazyHydrate(
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>
 ): (() => void) | null {
+  const { width, height, layout, images, placeholder, backgroundColor } = image
+
   if (!root.current) {
     return null
   }
@@ -53,8 +49,17 @@ export function lazyHydrate(
 
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
-      {!hasLoaded && placeholder && (
-        <Placeholder {...getPlaceHolderProps(placeholder)} />
+      {!hasLoaded && (
+        <Placeholder
+          {...getPlaceholderProps(
+            placeholder,
+            isLoaded,
+            layout,
+            width,
+            height,
+            backgroundColor
+          )}
+        />
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}

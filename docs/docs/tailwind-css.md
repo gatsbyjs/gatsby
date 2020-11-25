@@ -71,7 +71,7 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction)
 
 ```shell
-npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
+npm install -D twin.macro @emotion/react @emotion/styled gatsby-plugin-emotion
 ```
 
 2. Import the Tailwind base styles

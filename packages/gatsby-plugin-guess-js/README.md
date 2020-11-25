@@ -23,7 +23,9 @@ https://guess-gatsby-wikipedia-demo.firebaseapp.com
 
 ## Install
 
-`npm install gatsby-plugin-guess-js`
+```shell
+npm install gatsby-plugin-guess-js
+```
 
 ## How to use
 
@@ -87,7 +89,7 @@ module.exports = {
 
 > Excerpt from https://developers.google.com/identity/protocols/oauth2/service-account
 
-1.  Open the [Google developer console IAM & admin](https://console.developers.google.com/iam-admin)
+1.  Open the [Google Developer Console IAM & Admin](https://console.developers.google.com/iam-admin)
 2.  If prompted, select a project, or create a new one.
 3.  Click add **service account**.
 4.  on top click **Create service account**, type a name, ID, and description for the service account, then click **Create**.
@@ -95,7 +97,7 @@ module.exports = {
 6.  Optional: Under **Grant users access to this service account**, add the users or groups that are allowed to use and manage the service account.
 7.  Click on **three dots under actions** , then click **Create**.
 
-- Put that file into a directory node_modules that is inside one of the parent directories of the script that we’ll create later. That means that you can keep it out of the repository with analytics.js. For example, the following path is perfectly fine:
+- Put that file into a directory `node_modules` that is inside one of the parent directories of the script that we’ll create later. That means that you can keep it out of the repository with `analytics.js`. For example, the following path is perfectly fine:
   `\$HOME/node_modules/myproject-3126e4caac6a.json`
   - The credentials that you created have an `client_email` address (which is displayed in the user interface and stored inside the JSON file). Copy that email address.
 
