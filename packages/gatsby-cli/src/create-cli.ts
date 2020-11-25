@@ -414,6 +414,32 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         }),
     handler: getCommandHandler(`plugin`),
   })
+
+  if (process.env.GATSBY_EXPERIMENTAL_CLOUD_CLI) {
+    cli.command({
+      command: `login`,
+      describe: `Log in to Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await login()
+      }),
+    })
+
+    cli.command({
+      command: `logout`,
+      describe: `Sign out of Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await logout()
+      }),
+    })
+
+    cli.command({
+      command: `whoami`,
+      describe: `Gives the username of the current logged in user.`,
+      handler: handlerP(async () => {
+        await whoami()
+      }),
+    })
+  }
 }
 
 function isLocalGatsbySite(): boolean {
@@ -516,27 +542,6 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         } else {
           await initStarter(starterStr, rootPathStr)
         }
-      }),
-    })
-    .command({
-      command: `login`,
-      describe: `Log in to Gatsby Cloud.`,
-      handler: handlerP(async () => {
-        await login()
-      }),
-    })
-    .command({
-      command: `logout`,
-      describe: `Sign out of Gatsby Cloud.`,
-      handler: handlerP(async () => {
-        await logout()
-      }),
-    })
-    .command({
-      command: `whoami`,
-      describe: `Gives the username of the current logged in user.`,
-      handler: handlerP(async () => {
-        await whoami()
       }),
     })
     .command({

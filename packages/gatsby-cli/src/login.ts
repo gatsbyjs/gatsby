@@ -72,7 +72,7 @@ export async function login(): Promise<void> {
   const webUrl = `https://gatsbyjs.com`
   reporter.info(`Logging into your Gatsby Cloud account...`)
 
-  // Create ticket for auth
+  // Create "ticket" for auth (like an expiring session)
   const ticketId = await createTicket()
 
   // Open browser for authentication
