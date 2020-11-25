@@ -1,8 +1,8 @@
-const activeExperiments = [
+const activeFlags = [
   {
     name: `FAST_DEV`,
     description: `Enable all experiments aimed at improving develop server start time`,
-    includedExperiments: [`DEVJS_LAZY`, `DEV_SSR`, `QUERY_ON_DEMAND`],
+    includedFlags: [`DEVJS_LAZY`, `DEV_SSR`, `QUERY_ON_DEMAND`],
   },
   {
     name: `DEVJS_LAZY`,
@@ -18,8 +18,8 @@ const activeExperiments = [
   },
 ]
 
-const allExperiments = {
-  activeExperiments,
+const allFlags = {
+  activeFlags,
 }
 
-export default allExperiments
+export default allFlags

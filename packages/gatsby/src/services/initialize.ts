@@ -178,68 +178,65 @@ export async function initialize({
     })
   }
 
-  // Setup experiments
-  if (config && config.__experiments) {
-    const experiments = require(`../experiments`).default
-    const configExperiments = config.__experiments
+  // Setup flags
+  if (config && config.flags) {
+    const flags = require(`../flags`).default
+    const configFlags = config.flags
 
     // TODO move this logic into util function w/ tests.
-    //  validate experiments against current ones
+    //  validate flags against current ones
     //  - any that don't exist — remove silently
     //  - any that are graduated — remove w/ message of thanks
-    let validConfigExperiments = experiments.activeExperiments.filter(ae =>
-      configExperiments.includes(ae.name)
+    let validConfigFlags = flags.activeFlags.filter(ae =>
+      configFlags.includes(ae.name)
     )
 
-    const addIncluded = (experiment): void => {
-      if (experiment.includedExperiments) {
-        experiment.includedExperiments.forEach(includedName => {
-          const incExp = experiments.activeExperiments.find(
-            e => e.name == includedName
-          )
+    const addIncluded = (flag): void => {
+      if (flag.includedFlags) {
+        flag.includedFlags.forEach(includedName => {
+          const incExp = flags.activeFlags.find(e => e.name == includedName)
           if (incExp) {
-            validConfigExperiments.push(incExp)
+            validConfigFlags.push(incExp)
             addIncluded(incExp)
           }
         })
       }
     }
-    // Add to validConfigExperiments any includedExperiments
-    validConfigExperiments.forEach(experiment => {
-      addIncluded(experiment)
+    // Add to validConfigFlags any includedFlags
+    validConfigFlags.forEach(flag => {
+      addIncluded(flag)
     })
 
-    validConfigExperiments = _.uniq(validConfigExperiments)
+    validConfigFlags = _.uniq(validConfigFlags)
 
-    // TODO remove experiments that longer exist.
+    // TODO remove flags that longer exist.
 
     //  set process.env for remaining
-    validConfigExperiments.forEach(experiment => {
-      process.env[`GATSBY_EXPERIMENTAL_${experiment.name}`] = `true`
+    validConfigFlags.forEach(flag => {
+      process.env[`GATSBY_EXPERIMENTAL_${flag.name}`] = `true`
     })
 
-    //  print message about what experiments are active
-    let message = `The following experiments are active:`
-    validConfigExperiments.forEach(experiment => {
-      message += `\n- ${experiment.name} - ${experiment.description}`
+    //  print message about what flags are active
+    let message = `The following flags are active:`
+    validConfigFlags.forEach(flag => {
+      message += `\n- ${flag.name} - ${flag.description}`
     })
 
-    // Suggest enabling other experiments if they're not trying them all.
-    const otherExperimentsCount =
-      experiments.activeExperiments.length - validConfigExperiments.length
-    if (otherExperimentsCount > 0) {
+    // Suggest enabling other flags if they're not trying them all.
+    const otherFlagsCount = flags.activeFlags.length - validConfigFlags.length
+    if (otherFlagsCount > 0) {
       message += `\n\nThere ${
-        otherExperimentsCount === 1
-          ? `is one other experiment`
-          : `are ${otherExperimentsCount} other experiments`
-      } available you can test — run "gatsby experiments" to enable them`
+        otherFlagsCount === 1
+          ? `is one other flag`
+          : `are ${otherFlagsCount} other flags`
+      } available you can test — run "gatsby flags" to enable them`
     }
 
     reporter.info(message)
 
     //  track usage of feature
-    validConfigExperiments.forEach(experiment => {
-      telemetry.trackFeatureIsUsed(_.upperFirst(_.camelCase(experiment.name)))
+    validConfigFlags.forEach(flag => {
+      telemetry.trackFeatureIsUsed(_.upperFirst(_.camelCase(flag.name)))
     })
   }
 
