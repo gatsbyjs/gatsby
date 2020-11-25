@@ -3,33 +3,28 @@ import reporter from "./reporter"
 import { getToken } from "./util/manage-token"
 
 const getUsername = async (token: string): Promise<string> => {
-  let currentUser
+  let currentUsername
   const query = `query {
     currentUser {
-      id
       name
     }
   }`
   try {
-    const usernameResponse = await fetch(
-      // `https://api.gatsbyjs.com/graphql`,
-      `http://localhost:8083/graphql`,
-      {
-        method: "post",
-        body: JSON.stringify({ query }),
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "content-type": `application/json`,
-        },
-      }
-    )
+    const usernameResponse = await fetch(`https://api.gatsbyjs.com/graphql`, {
+      method: "post",
+      body: JSON.stringify({ query }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": `application/json`,
+      },
+    })
     const resJson = await usernameResponse.json()
-    currentUser = resJson.data.currentUser
+    currentUsername = resJson.data.currentUser.name
   } catch (e) {
     reporter.error(e)
   }
 
-  return currentUser.name
+  return currentUsername
 }
 
 /**

@@ -13,8 +13,7 @@ const createTicket = async (): Promise<string> => {
   let ticketId
   try {
     const ticketResponse = await fetch(
-      // "https://auth.gatsbyjs.com/auth/tickets/create",
-      "http://localhost:8083/auth/tickets/create",
+      "https://auth.gatsbyjs.com/auth/tickets/create",
       {
         method: "post",
       }
@@ -37,8 +36,7 @@ const getTicket = async (ticketId: string): Promise<Ticket> => {
   }
   try {
     const ticketResponse = await fetch(
-      // `https://auth.gatsbyjs.com/auth/tickets/${ticketId}`,
-      `http://localhost:8083/auth/tickets/${ticketId}`
+      `https://auth.gatsbyjs.com/auth/tickets/${ticketId}`
     )
     const ticketJson = await ticketResponse.json()
     ticket = ticketJson
@@ -71,8 +69,7 @@ export async function login(): Promise<void> {
     return
   }
 
-  // const webUrl = process.env.GATSBY_CLOUD_BASE_URL || `https://gatsbyjs.com`
-  const webUrl = process.env.GATSBY_CLOUD_BASE_URL || `http://localhost:8000`
+  const webUrl = `https://gatsbyjs.com`
   reporter.info(`Logging into your Gatsby Cloud account...`)
 
   // Create ticket for auth
