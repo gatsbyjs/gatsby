@@ -35,6 +35,7 @@ exports.onPostBuild = () => finishProgressBar()
 
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
+    finishProgressBar()
     return
   }
 
