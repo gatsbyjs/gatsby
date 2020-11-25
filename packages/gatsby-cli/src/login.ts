@@ -1,6 +1,13 @@
 import fetch from "node-fetch"
 import opn from "better-opn"
 import reporter from "./reporter"
+import { getToken, setToken } from "./util/manage-token"
+
+type Ticket = {
+  verified: boolean
+  token?: string | null
+  expiration?: string | null
+}
 
 const createTicket = async (): Promise<string> => {
   let ticketId
@@ -24,10 +31,10 @@ Please try again later, and if it continues to have trouble connecting file an i
   return ticketId
 }
 
-const getTicket = async (
-  ticketId: string
-): Promise<Record<string, string | boolean>> => {
-  let ticket
+const getTicket = async (ticketId: string): Promise<Ticket> => {
+  let ticket: Ticket = {
+    verified: false,
+  }
   try {
     const ticketResponse = await fetch(
       // `https://auth.gatsbyjs.com/auth/tickets/${ticketId}`,
@@ -45,7 +52,11 @@ const getTicket = async (
 const handleOpenBrowser = (url): void => {
   // TODO: this will break if run from the CLI
   // for ideas see https://github.com/netlify/cli/blob/908f285fb80f04bf2635da73381c94387b9c8b0d/src/utils/open-browser.js
-  reporter.info(`Opening Gatsby Cloud for you to login from`)
+  console.log(``)
+  reporter.info(`Opening Gatsby Cloud for you to login from, copy this`)
+  reporter.info(`url into your browser if it doesn't open automatically:`)
+  console.log(``)
+  console.log(url)
   opn(url)
 }
 
@@ -53,11 +64,12 @@ const handleOpenBrowser = (url): void => {
  * Main function that logs in to Gatsby Cloud using Gatsby Cloud's authentication service.
  */
 export async function login(): Promise<void> {
-  // TODO: try and get token from CLI store first
+  const tokenFromStore = await getToken()
 
-  // TODO: if we have token, print that we're already logged in
-
-  // TODO: add telemetry that login attempt is being made
+  if (tokenFromStore) {
+    reporter.info(`You are already logged in!`)
+    return
+  }
 
   // const webUrl = process.env.GATSBY_CLOUD_BASE_URL || `https://gatsbyjs.com`
   const webUrl = process.env.GATSBY_CLOUD_BASE_URL || `http://localhost:8000`
@@ -67,17 +79,16 @@ export async function login(): Promise<void> {
   const ticketId = await createTicket()
 
   // Open browser for authentication
-  const authUrl = `${webUrl}/dashboard/login?authType=EXTERNAL_AUTH&ticketId=${ticketId}`
+  const authUrl = `${webUrl}/dashboard/login?authType=EXTERNAL_AUTH&ticketId=${ticketId}&noredirect=1`
 
   await handleOpenBrowser(authUrl)
 
   // Poll until the ticket has been verified, and should have the token attached
-  function pollForTicket(): Promise<void> {
+  function pollForTicket(): Promise<Ticket> {
     return new Promise(function (resolve): void {
       async function verify(): Promise<void> {
         const ticket = await getTicket(ticketId)
-        console.log(ticket)
-        if (ticket.verified) return resolve()
+        if (ticket.verified) return resolve(ticket)
         setTimeout(verify, 3000)
       }
 
@@ -85,10 +96,13 @@ export async function login(): Promise<void> {
     })
   }
 
+  console.log(``)
+  reporter.info(`Waiting for login from Gatsby Cloud...`)
+
   const ticket = await pollForTicket()
-  console.log(ticket)
 
-  console.log("Congrats, you have been verified!")
-
-  // TODO: store token in CLI store (same way we do it with package manager preferences maybe)
+  if (ticket?.token && ticket?.expiration) {
+    await setToken(ticket.token, ticket.expiration)
+  }
+  reporter.info("You have been logged in!")
 }

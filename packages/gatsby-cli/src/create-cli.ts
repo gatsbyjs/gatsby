@@ -17,6 +17,8 @@ import { setStore } from "./reporter/redux"
 import { getLocalGatsbyVersion } from "./util/version"
 import { initStarter } from "./init-starter"
 import { login } from "./login"
+import { logout } from "./logout"
+import { whoami } from "./whoami"
 import { recipesHandler } from "./recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
@@ -521,6 +523,20 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
       describe: `Log in to Gatsby Cloud.`,
       handler: handlerP(async () => {
         await login()
+      }),
+    })
+    .command({
+      command: `logout`,
+      describe: `Sign out of Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await logout()
+      }),
+    })
+    .command({
+      command: `whoami`,
+      describe: `Gives the username of the current logged in user.`,
+      handler: handlerP(async () => {
+        await whoami()
       }),
     })
     .command({
