@@ -3,7 +3,7 @@ import opn from "better-opn"
 import reporter from "./reporter"
 import { getToken, setToken } from "./util/manage-token"
 
-type Ticket = {
+interface Ticket {
   verified: boolean
   token?: string | null
   expiration?: string | null
@@ -13,9 +13,9 @@ const createTicket = async (): Promise<string> => {
   let ticketId
   try {
     const ticketResponse = await fetch(
-      "https://auth.gatsbyjs.com/auth/tickets/create",
+      `https://auth.gatsbyjs.com/auth/tickets/create`,
       {
-        method: "post",
+        method: `post`,
       }
     )
     const ticketJson = await ticketResponse.json()
@@ -83,6 +83,7 @@ export async function login(): Promise<void> {
   // Poll until the ticket has been verified, and should have the token attached
   function pollForTicket(): Promise<Ticket> {
     return new Promise(function (resolve): void {
+      // eslint-disable-next-line consistent-return
       async function verify(): Promise<void> {
         const ticket = await getTicket(ticketId)
         if (ticket.verified) return resolve(ticket)
@@ -101,5 +102,5 @@ export async function login(): Promise<void> {
   if (ticket?.token && ticket?.expiration) {
     await setToken(ticket.token, ticket.expiration)
   }
-  reporter.info("You have been logged in!")
+  reporter.info(`You have been logged in!`)
 }
