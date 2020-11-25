@@ -1,8 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { useLocation } from "@reach/router"
-import { useStaticQuery } from "./static-query"
-import { graphql } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 
 export const Head = props => {
   const data = useStaticQuery(graphql`
