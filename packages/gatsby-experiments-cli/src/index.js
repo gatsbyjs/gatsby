@@ -5,7 +5,8 @@ const { GatsbyExperiment } = require(`gatsby-recipes`)
 const _ = require(`lodash`)
 const { commaListsAnd } = require(`common-tags`)
 
-const experiments = require(`gatsby/dist/experiments`).default.activeExperiments
+const experiments =
+  require(`gatsby/dist/utils/experiments`)?.default?.activeExperiments || []
 
 const Demo = ({ projectRoot }) => {
   const [enabled, setEnabled] = React.useState()
