@@ -119,7 +119,7 @@ Speedy, optimized images without the work.
 
 GatsbyImage is a React component specially designed to give your users a great image experience. It combines speed and best practices.
 
-Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. You can build your own GatsbyImage with the utilities we export from this package.
+Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. You can also build your own GatsbyImage component with the utilities we export from this package.
 
 ## Table of Contents
 
@@ -226,11 +226,12 @@ export const query = graphql`
 
 ### Upgrading from the gatsby-image@2
 
-You can use the compat layer to make the transformation easier.
+We will be releasing a codemod to automatically update your queries and imports. In the meantime, you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now, it allows you to try the component with your existing queries.
 
 ```jsx
 import React from "react"
 import { graphql } from "gatsby"
+// Note the different import
 import { GatsbyImage } from "gatsby-plugin-image/compat"
 
 export default ({ data }) => (
@@ -244,8 +245,6 @@ export const query = graphql`
   query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
-        # Specify the image processing specifications right in the query.
-        # Makes it trivial to update as your page's design changes.
         fixed(width: 125, height: 125) {
           ...GatsbyImageSharpFixed
         }
@@ -311,18 +310,48 @@ export function Plant({ data }) {
 
 The optional helper function `getImage` takes a file node and returns `file?.childImageSharp?.gatsbyImageData`
 
-Because this no longer uses fragments to specify which fields to return, it instead uses arguments passed to the resolver. These include:
+## API
 
-- `placeholder`: Format of generated placeholder image.
+These arguments can be passed to the `gatsbyImageData()` resolver:
+
+- **width**: The display width of the generated image. The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities. Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+- **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.
+- **maxWidth**:
+  Maximum display width of generated files.
+  The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+  This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"
+- **maxHeight**: If set, the generated image is a maximum of this height, cropping if necessary. If the image layout is "constrained" then the image will be limited to this height. If the aspect ratio of the image is different than the source, then the image will be cropped.`,
+- **placeholder**: Format of generated placeholder image.
   - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
   - `TRACED_SVG`: a low-resolution traced SVG of the image.
   - `NONE`: no placeholder. Set "background" to use a fixed background color.
   - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
-- `layout`: The layout for the image.
-  - `FIXED:` A static image sized, that does not resize according to the screen width
+- **layout**: The layout for the image.
+  - `FIXED`: (default) A static image size, that does not resize according to the screen width
   - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
   - `CONSTRAINED`: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
-- `outputPixelDensities`: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
+- **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
   Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
-- `sizes`: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance.
-- `formats`: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
+- **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
+- **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
+- **quality**: The default quality. This is overriden by any format-specific options
+- **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this
+  - width
+  - toFormat
+- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set placeholder to "SVG".
+- **jpgOptions**: Options to pass to sharp when generating JPG images.
+  - quality
+  - progressive
+- **pngOptions**: Options to pass to sharp when generating PNG images.
+  - quality
+  - compressionSpeed
+- **webpOptions**: Options to pass to sharp when generating WebP images.
+  - quality
+- **transformOptions**: Options to pass to sharp to control cropping and other image manipulations.
+  - grayscale
+  - duotone
+  - rotate
+  - trim
+  - cropFocus
+  - fit
+- **background**: Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.
