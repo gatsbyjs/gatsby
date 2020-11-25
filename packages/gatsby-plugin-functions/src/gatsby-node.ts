@@ -45,7 +45,7 @@ export async function onPreInit(
       const config = {
         entry: path.join(functionsDirectory, file),
         output: {
-          path: path.join(process.cwd(), `public`),
+          path: path.join(process.cwd(), `public`, `functions`),
           filename: file.replace(`.ts`, `.js`),
           libraryTarget: `commonjs2`,
         },
