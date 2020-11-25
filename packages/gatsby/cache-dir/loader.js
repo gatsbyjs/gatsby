@@ -277,6 +277,8 @@ export class BaseLoader {
         process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
         options.isPrefetch === true
       ) {
+        // We don't want to build the page component on prefetching so
+        // we'll just return.
         componentChunkPromise = Promise.resolve()
       } else {
         componentChunkPromise = this.loadComponent(componentChunkName).then(
