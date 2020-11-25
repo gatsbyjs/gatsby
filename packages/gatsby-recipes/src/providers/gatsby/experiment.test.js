@@ -2,7 +2,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const tmp = require(`tmp-promise`)
 
-const plugin = require(`./experiments`)
+const plugin = require(`./experiment`)
 
 jest.mock(`node-fetch`, () => require(`fetch-mock-jest`).sandbox())
 const { mockReadmeLoader } = require(`../../test-helper`)
@@ -14,7 +14,7 @@ const STARTER_BLOG_FIXTURE = path.join(
   `./fixtures/gatsby-starter-blog`
 )
 
-describe(`gatsby-experiments resource`, () => {
+describe(`gatsby-experiment resource`, () => {
   let tmpDir
   let starterBlogRoot
   let emptyRoot
@@ -37,7 +37,7 @@ describe(`gatsby-experiments resource`, () => {
   test(`e2e plugin resource test`, async () => {
     await resourceTestHelper({
       resourceModule: plugin,
-      resourceName: `GatsbyExperiments`,
+      resourceName: `GatsbyExperiment`,
       context: { root: starterBlogRoot },
       initialObject: { name: `HI` },
       partialUpdate: { name: `HI` },

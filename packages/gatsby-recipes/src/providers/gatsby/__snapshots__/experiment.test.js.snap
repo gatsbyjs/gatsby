@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments create 1`] = `
+exports[`gatsby-experiment resource e2e plugin resource test: GatsbyExperiment create 1`] = `
 Object {
   "id": "HI",
   "name": "HI",
 }
 `;
 
-exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments create plan 1`] = `
+exports[`gatsby-experiment resource e2e plugin resource test: GatsbyExperiment create plan 1`] = `
 Object {
   "currentState": "const redish = \`#c5484d\`;
 module.exports = {
@@ -164,16 +164,16 @@ module.exports = {
 }
 `;
 
-exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments destroy 1`] = `undefined`;
+exports[`gatsby-experiment resource e2e plugin resource test: GatsbyExperiment destroy 1`] = `undefined`;
 
-exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments update 1`] = `
+exports[`gatsby-experiment resource e2e plugin resource test: GatsbyExperiment update 1`] = `
 Object {
   "id": "HI",
   "name": "HI",
 }
 `;
 
-exports[`gatsby-experiments resource e2e plugin resource test: GatsbyExperiments update plan 1`] = `
+exports[`gatsby-experiment resource e2e plugin resource test: GatsbyExperiment update plan 1`] = `
 Object {
   "currentState": "const redish = \`#c5484d\`;
 module.exports = {
@@ -322,14 +322,14 @@ module.exports = {
 }
 `;
 
-exports[`gatsby-experiments resource handles multiple parallel create calls 1`] = `
+exports[`gatsby-experiment resource handles multiple parallel create calls 1`] = `
 Object {
   "id": "HUSKY",
   "name": "HUSKY",
 }
 `;
 
-exports[`gatsby-experiments resource handles multiple parallel create calls 2`] = `
+exports[`gatsby-experiment resource handles multiple parallel create calls 2`] = `
 Object {
   "id": "HUSKY2",
   "name": "HUSKY2",

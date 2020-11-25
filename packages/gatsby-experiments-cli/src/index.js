@@ -1,7 +1,7 @@
 const React = require("react")
 const { render, Box, Text } = require("ink")
 const MultiSelect = require("ink-multi-select").default
-const { GatsbyExperiments } = require(`gatsby-recipes`)
+const { GatsbyExperiment } = require(`gatsby-recipes`)
 const _ = require(`lodash`)
 const { commaListsAnd } = require("common-tags")
 
@@ -11,7 +11,7 @@ const Demo = ({ projectRoot }) => {
   const [enabled, setEnabled] = React.useState()
   const [closingMessages, setClosingMessages] = React.useState()
   const handleSubmit = async items => {
-    const currentExperiments = await GatsbyExperiments.all({
+    const currentExperiments = await GatsbyExperiment.all({
       root: projectRoot,
     })
 
@@ -28,12 +28,12 @@ const Demo = ({ projectRoot }) => {
 
     promises = promises.concat(
       toAdd.map(item =>
-        GatsbyExperiments.create({ root: projectRoot }, { name: item })
+        GatsbyExperiment.create({ root: projectRoot }, { name: item })
       )
     )
     promises = promises.concat(
       toRemove.map(item =>
-        GatsbyExperiments.destroy({ root: projectRoot }, { name: item })
+        GatsbyExperiment.destroy({ root: projectRoot }, { name: item })
       )
     )
 
@@ -58,7 +58,7 @@ const Demo = ({ projectRoot }) => {
 
   // Get list of current experiments
   React.useEffect(() => {
-    GatsbyExperiments.all({
+    GatsbyExperiment.all({
       root: projectRoot,
     }).then(currentExperiments => setEnabled(currentExperiments))
   }, [])
