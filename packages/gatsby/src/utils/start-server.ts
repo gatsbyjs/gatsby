@@ -379,12 +379,24 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
         compilation: { modules },
       },
     } = res.locals
-    const moduleId = req.query.moduleId
+    let codeFrame = `No codeFrame could be generated`
+    const emptyResponse = {
+      codeFrame,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const moduleId = req?.query?.moduleId
     const lineNumber = parseInt(req.query.lineNumber, 10)
     const columnNumber = parseInt(req.query.columnNumber, 10)
 
     const fileModule = modules.find(m => m.id === moduleId)
-    const sourceMap = fileModule._source._sourceMap
+    const sourceMap = fileModule?._source?._sourceMap
+
+    if (!sourceMap) {
+      res.json(emptyResponse)
+      return
+    }
 
     const position = { line: lineNumber, column: columnNumber }
     const result = await findOriginalSourcePositionAndContent(
@@ -396,14 +408,9 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
     const sourceLine = sourcePosition?.line
     const sourceColumn = sourcePosition?.column
     const sourceContent = result?.sourceContent
-    let codeFrame = `No codeFrame could be generated`
 
     if (!sourceContent || !sourceLine) {
-      res.json({
-        codeFrame,
-        sourcePosition: null,
-        sourceContent: null,
-      })
+      res.json(emptyResponse)
       return
     }
 

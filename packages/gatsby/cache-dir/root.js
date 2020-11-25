@@ -136,8 +136,16 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
+const ConditionalFastRefreshOverlay = ({ children }) => {
+  if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
+    return <FastRefreshOverlay>{children}</FastRefreshOverlay>
+  }
+
+  return <React.Fragment>{children}</React.Fragment>
+}
+
 export default () => (
-  <FastRefreshOverlay>
+  <ConditionalFastRefreshOverlay>
     <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-  </FastRefreshOverlay>
+  </ConditionalFastRefreshOverlay>
 )
