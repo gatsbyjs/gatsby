@@ -61,15 +61,13 @@ exports.checkDepsChanges = async ({
     // and save some time/work
     try {
       localPKGjson = await new Promise((resolve, reject) => {
-        got(`https://unpkg.com/${packageName}/package.json`).then(
-          (error, response) => {
+        got(`https://unpkg.com/${packageName}/package.json`)
+          .then((error, response) => {
             if (response && response.statusCode === 200) {
-              return resolve(JSON.parse(response.body))
+              resolve(JSON.parse(response.body))
             }
-
-            return reject(error)
-          }
-        )
+          })
+          .catch(e => reject(e))
       })
     } catch {
       console.log(
