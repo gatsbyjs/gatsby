@@ -1,9 +1,9 @@
-const React = require("react")
-const { render, Box, Text } = require("ink")
-const MultiSelect = require("ink-multi-select").default
+const React = require(`react`)
+const { render, Box, Text } = require(`ink`)
+const MultiSelect = require(`ink-multi-select`).default
 const { GatsbyExperiment } = require(`gatsby-recipes`)
 const _ = require(`lodash`)
-const { commaListsAnd } = require("common-tags")
+const { commaListsAnd } = require(`common-tags`)
 
 const experiments = require(`gatsby/dist/experiments`).default.activeExperiments
 
@@ -39,7 +39,7 @@ const Demo = ({ projectRoot }) => {
 
     await Promise.all(promises)
 
-    let closingMessagesArry = []
+    const closingMessagesArry = []
     if (!_.isEmpty(toAdd)) {
       const expStr = toAdd.length > 1 ? `experiments` : `experiment`
       closingMessagesArry.push(commaListsAnd`Enabled the ${expStr} ${toAdd}`)

@@ -163,8 +163,6 @@ class BabelPluginSetExperiment {
               experimentsArray = _.uniq(experimentsArray.concat(experimentName))
             }
 
-            const valueType = typeof value
-
             const newExperimentsTemplate = template.ast(`
               const foo = ${JSON.stringify(experimentsArray, null, 2)}
             `)

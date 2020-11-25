@@ -64,12 +64,10 @@ exports.checkDepsChanges = async ({
         got(`https://unpkg.com/${packageName}/package.json`)
           .then((error, response) => {
             if (response && response.statusCode === 200) {
-              return resolve(JSON.parse(response.body))
+              resolve(JSON.parse(response.body))
             }
           })
-          .catch(e => {
-            reject(e)
-          })
+          .catch(e => reject(e))
       })
     } catch {
       console.log(

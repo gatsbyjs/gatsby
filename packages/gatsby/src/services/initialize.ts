@@ -191,7 +191,7 @@ export async function initialize({
       configExperiments.includes(ae.name)
     )
 
-    const addIncluded = experiment => {
+    const addIncluded = (experiment): void => {
       if (experiment.includedExperiments) {
         experiment.includedExperiments.forEach(includedName => {
           const incExp = experiments.activeExperiments.find(
