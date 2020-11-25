@@ -211,19 +211,11 @@ export async function initialize({
 
     validConfigExperiments = _.uniq(validConfigExperiments)
 
-    console.log({
-      experiments,
-      configExperiments,
-      validConfigExperiments,
-    })
-
     // TODO remove experiments that longer exist.
 
     //  set process.env for remaining
     validConfigExperiments.forEach(experiment => {
-      console.log({ experiment })
       process.env[`GATSBY_EXPERIMENTAL_${experiment.name}`] = `true`
-      console.log(`GATSBY_EXPERIMENTAL_${experiment.name}`)
     })
 
     //  print message about what experiments are active

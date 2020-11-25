@@ -699,8 +699,8 @@ export const createWebpackUtils = (
 
   plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
 
-  plugins.extractStats = (name): GatsbyWebpackStatsExtractor =>
-    new GatsbyWebpackStatsExtractor(name)
+  plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
+    new GatsbyWebpackStatsExtractor()
 
   plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
     new GatsbyWebpackEslintGraphqlSchemaReload()
