@@ -9,6 +9,6 @@ describe(`Gatsby Preview, base functionality`, () => {
   })
 
   it(`displays correct data/id`, () => {
-    cy.get(`li`).invoke(`text`).should(`equal`, `Hello World (1)`)
+    cy.get(`li`).should(`have.text`, `Hello World (1)`)
   })
 })
