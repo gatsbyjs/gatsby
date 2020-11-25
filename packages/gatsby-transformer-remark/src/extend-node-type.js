@@ -219,6 +219,7 @@ module.exports = function remarkExtendNodeType(
               markdownAST,
               markdownNode,
               getNode,
+              getNodesByType,
               files: fileNodes,
               basePath,
               reporter,

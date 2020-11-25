@@ -14,13 +14,13 @@ const ensureComponentInBundle = chunkName =>
     // Tell the server the user wants to visit this page
     // to trigger it compiling the page component's code.
     //
-    // Try for 10 seconds and then error.
+    // Try for 30 seconds and then error.
     let checkCount = 0
     const checkForBundle = () => {
       checkCount += 1
-      if (checkCount > 99) {
+      if (checkCount > 299) {
         reject(
-          `Loading the page component ${chunkName} timed out after 5 seconds`
+          `Loading the page component ${chunkName} timed out after 30 seconds`
         )
       }
       // Check if the bundle is included and return.
