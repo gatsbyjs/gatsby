@@ -7,7 +7,6 @@ export { Placeholder } from "./components/placeholder"
 export { MainImage } from "./components/main-image"
 export { StaticImage } from "./components/static-image.server"
 export { getImage, useGatsbyImage } from "./components/hooks"
-export { getGatsbyImageFieldConfig } from "./resolver-utils"
 export {
   generateImageData,
   IGatsbyImageHelperArgs,
