@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.14.0...gatsby-cli@2.14.1) (2020-11-25)
+
+### Bug Fixes
+
+- Fix starter publish and scripts ([#28260](https://github.com/gatsbyjs/gatsby/issues/28260)) ([#28282](https://github.com/gatsbyjs/gatsby/issues/28282)) ([bd3abae](https://github.com/gatsbyjs/gatsby/commit/bd3abae8de6b68c25bd0181b98fcd7a549b2882d)), closes [/github.com/gatsbyjs/gatsby/issues/28238#issuecomment-732506607](https://github.com//github.com/gatsbyjs/gatsby/issues/28238/issues/issuecomment-732506607)
+
 # [2.14.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.14.0-next.1...gatsby-cli@2.14.0) (2020-11-19)
 
 ### Features
