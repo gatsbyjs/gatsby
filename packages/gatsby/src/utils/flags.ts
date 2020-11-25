@@ -2,11 +2,7 @@ const activeFlags = [
   {
     name: `FAST_DEV`,
     description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [`DEVJS_LAZY`, `DEV_SSR`, `QUERY_ON_DEMAND`],
-  },
-  {
-    name: `DEVJS_LAZY`,
-    description: `Lazily compile page components only when you visit their page. Speeds starting the develop server.`,
+    includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`],
   },
   {
     name: `DEV_SSR`,
