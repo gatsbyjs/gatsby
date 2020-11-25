@@ -6,9 +6,9 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
-import terminalLink from "terminal-link"
 
 import apiRunnerNode from "../utils/api-runner-node"
+import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
 import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
@@ -182,77 +182,21 @@ export async function initialize({
   // Setup flags
   if (config && config.flags) {
     const flags = require(`../utils/flags`).default
-    // Get flags and filter out any set to false.
-    const configFlags = _.toPairs(config.flags).filter(pair => pair[1])
-    console.log({ configFlags })
+    // Get flags
+    const { validConfigFlags, message } = handleFlags(flags, config.flags)
 
-    // TODO move this logic into util function w/ tests.
-    //  validate flags against current ones
-    //  - any that don't exist — remove silently
-    //  - any that are graduated — remove w/ message of thanks
-    let validConfigFlags = flags.activeFlags.filter(ae =>
-      configFlags.some(flagPair => flagPair[0] === ae.name)
-    )
-
-    // If we're in CI, filter out any flags that don't want to be enabled in CI
-    if (isCI()) {
-      validConfigFlags = validConfigFlags.filter(flag => flag.noCi === true)
-    }
-
-    const addIncluded = (flag): void => {
-      if (flag.includedFlags) {
-        flag.includedFlags.forEach(includedName => {
-          const incExp = flags.activeFlags.find(e => e.name == includedName)
-          if (incExp) {
-            validConfigFlags.push(incExp)
-            addIncluded(incExp)
-          }
-        })
-      }
-    }
-    // Add to validConfigFlags any includedFlags
-    validConfigFlags.forEach(flag => {
-      addIncluded(flag)
-    })
-
-    validConfigFlags = _.uniq(validConfigFlags)
-
-    // TODO remove flags that longer exist.
-
-    //  set process.env for remaining
+    //  set process.env for each flag
     validConfigFlags.forEach(flag => {
       process.env[flag.env] = `true`
     })
-
-    //  print message about what flags are active
-    if (validConfigFlags.length > 0) {
-      let message = `The following flags are active:`
-      validConfigFlags.forEach(flag => {
-        message += `\n- ${flag.name}`
-        if (flag.umbrellaIssue) {
-          message += ` (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
-        }
-        message += ` - ${flag.description}`
-      })
-
-      // Suggest enabling other flags if they're not trying them all.
-      const otherFlagsCount = flags.activeFlags.length - validConfigFlags.length
-      if (otherFlagsCount > 0) {
-        message += `\n\nThere ${
-          otherFlagsCount === 1
-            ? `is one other flag`
-            : `are ${otherFlagsCount} other flags`
-        } available you can test — run "gatsby flags" to enable them`
-      }
-
-      reporter.info(message)
-    }
-    process.exit()
 
     //  track usage of feature
     validConfigFlags.forEach(flag => {
       telemetry.trackFeatureIsUsed(_.upperFirst(_.camelCase(flag.name)))
     })
+
+    // Print out message.
+    reporter.info(message)
   }
 
   // theme gatsby configs can be functions or objects

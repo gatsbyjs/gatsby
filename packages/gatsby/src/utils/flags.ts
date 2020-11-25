@@ -20,8 +20,4 @@ const activeFlags = [
   },
 ]
 
-const allFlags = {
-  activeFlags,
-}
-
-export default allFlags
+export default activeFlags
