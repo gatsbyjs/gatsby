@@ -1,19 +1,18 @@
 const React = require("react")
-const { render, Box, Text, useApp } = require("ink")
+const { render, Box, Text } = require("ink")
 const MultiSelect = require("ink-multi-select").default
 const { GatsbyExperiments } = require(`gatsby-recipes`)
 const _ = require(`lodash`)
 const { commaListsAnd } = require("common-tags")
 
-const experiments = require(`../gatsby/dist/experiments`).activeExperiments
+const experiments = require(`gatsby/dist/experiments`).default.activeExperiments
 
-const Demo = () => {
-  const { exit } = useApp()
+const Demo = ({ projectRoot }) => {
   const [enabled, setEnabled] = React.useState()
   const [closingMessages, setClosingMessages] = React.useState()
   const handleSubmit = async items => {
     const currentExperiments = await GatsbyExperiments.all({
-      root: `/Users/kylemathews/programs/blog`,
+      root: projectRoot,
     })
 
     const selected = items.map(i => i.value)
@@ -29,18 +28,12 @@ const Demo = () => {
 
     promises = promises.concat(
       toAdd.map(item =>
-        GatsbyExperiments.create(
-          { root: `/Users/kylemathews/programs/blog` },
-          { name: item }
-        )
+        GatsbyExperiments.create({ root: projectRoot }, { name: item })
       )
     )
     promises = promises.concat(
       toRemove.map(item =>
-        GatsbyExperiments.destroy(
-          { root: `/Users/kylemathews/programs/blog` },
-          { name: item }
-        )
+        GatsbyExperiments.destroy({ root: projectRoot }, { name: item })
       )
     )
 
@@ -66,7 +59,7 @@ const Demo = () => {
   // Get list of current experiments
   React.useEffect(() => {
     GatsbyExperiments.all({
-      root: `/Users/kylemathews/programs/blog`,
+      root: projectRoot,
     }).then(currentExperiments => setEnabled(currentExperiments))
   }, [])
 
@@ -109,4 +102,7 @@ const Demo = () => {
   }
 }
 
-render(<Demo />)
+export default ({ projectRoot }) => {
+  const { waitUntilExit } = render(<Demo projectRoot={projectRoot} />)
+  return waitUntilExit()
+}

@@ -2,6 +2,11 @@
   "name": "gatsby-experiments-cli",
   "description": "CLI App for managing experiments",
   "version": "0.0.1",
+  "dependencies": {
+    "lodash": "^4.17.1",
+    "gatsby-recipes": "^0.5.0-next.0",
+    "gatsby-telemetry": "^1.6.0-next.1"
+  },
   "devDependencies": {
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^16.0.0",

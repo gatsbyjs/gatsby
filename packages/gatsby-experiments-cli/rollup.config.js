@@ -60,10 +60,9 @@ export default [
     ],
     external: [
       `gatsby-recipes`,
-      `gatsby-recipes/src/providers/gatsby/experiments`,
       `yoga-layout-prebuilt`,
       `gatsby-telemetry`,
-      `gatsby-core-utils`,
+      `lodash`,
     ],
   },
 ]

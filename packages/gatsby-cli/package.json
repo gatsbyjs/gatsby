@@ -27,6 +27,7 @@
     "gatsby-core-utils": "^1.6.0-next.0",
     "gatsby-recipes": "^0.5.0-next.2",
     "gatsby-telemetry": "^1.6.0-next.1",
+    "gatsby-experiments-cli": "^0.0.1",
     "hosted-git-info": "^3.0.6",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.20",
@@ -71,15 +72,9 @@
     "rollup-plugin-internal": "^1.0.0",
     "typescript": "^3.9.7"
   },
-  "files": [
-    "lib/",
-    "scripts/",
-    "cli.js"
-  ],
+  "files": ["lib/", "scripts/", "cli.js"],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {

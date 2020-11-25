@@ -183,11 +183,11 @@ export async function initialize({
     const experiments = require(`../experiments`).default
     const configExperiments = config.__experiments
 
-    // TODO move this logic into util funciton w/ tests.
+    // TODO move this logic into util function w/ tests.
     //  validate experiments against current ones
     //  - any that don't exist — remove silently
     //  - any that are graduated — remove w/ message of thanks
-    const validConfigExperiments = experiments.activeExperiments.filter(ae =>
+    let validConfigExperiments = experiments.activeExperiments.filter(ae =>
       configExperiments.includes(ae.name)
     )
 
@@ -209,11 +209,16 @@ export async function initialize({
       addIncluded(experiment)
     })
 
+    validConfigExperiments = _.uniq(validConfigExperiments)
+
     console.log({
       experiments,
       configExperiments,
       validConfigExperiments,
     })
+
+    // TODO remove experiments that longer exist.
+
     //  set process.env for remaining
     validConfigExperiments.forEach(experiment => {
       console.log({ experiment })
@@ -226,6 +231,17 @@ export async function initialize({
     validConfigExperiments.forEach(experiment => {
       message += `\n- ${experiment.name} - ${experiment.description}`
     })
+
+    // Suggest enabling other experiments if they're not trying them all.
+    const otherExperimentsCount =
+      experiments.activeExperiments.length - validConfigExperiments.length
+    if (otherExperimentsCount > 0) {
+      message += `\n\nThere ${
+        otherExperimentsCount === 1
+          ? `is one other experiment`
+          : `are ${otherExperimentsCount} other experiments`
+      } available you can test — run "gatsby experiments" to enable them`
+    }
 
     reporter.info(message)
 

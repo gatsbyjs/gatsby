@@ -17,6 +17,7 @@ import { setStore } from "./reporter/redux"
 import { getLocalGatsbyVersion } from "./util/version"
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
+import { experimentsHandler } from "./experiments"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
@@ -391,6 +392,37 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         install: boolean
       }>) => {
         await recipesHandler(siteInfo.directory, recipe, develop, install)
+      }
+    ),
+  })
+
+  cli.command({
+    command: `experiments`,
+    describe: `Manage your experiments`,
+    // builder: _ =>
+    // _.option(`D`, {
+    // alias: `develop`,
+    // type: `boolean`,
+    // default: false,
+    // describe: `Start recipe in develop mode to live-develop your recipe (defaults to false)`,
+    // }).option(`I`, {
+    // alias: `install`,
+    // type: `boolean`,
+    // default: false,
+    // describe: `Install recipe (defaults to plan mode)`,
+    // }),
+    handler: handlerP(async () =>
+      // {
+      // recipe,
+      // develop,
+      // install,
+      // }: yargs.Arguments<{
+      // recipe: string | undefined
+      // develop: boolean
+      // install: boolean
+      // }>) => {
+      {
+        await experimentsHandler(siteInfo.directory)
       }
     ),
   })
