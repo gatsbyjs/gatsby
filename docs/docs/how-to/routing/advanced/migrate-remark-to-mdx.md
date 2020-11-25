@@ -120,4 +120,4 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 ## Additional resources
 
 - Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components) to find out how you can insert React components in your MDX files.
-- Follow [Using MDX Plugins](/docs/mdx/plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
+- Follow [Using MDX Plugins](/docs/how-to/routing/advanced/mdx-plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
