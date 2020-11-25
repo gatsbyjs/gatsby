@@ -379,9 +379,8 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
         compilation: { modules },
       },
     } = res.locals
-    let codeFrame = `No codeFrame could be generated`
     const emptyResponse = {
-      codeFrame,
+      codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
@@ -414,7 +413,7 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
       return
     }
 
-    codeFrame = codeFrameColumns(
+    const codeFrame = codeFrameColumns(
       sourceContent,
       {
         start: {
