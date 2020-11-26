@@ -13,7 +13,7 @@ describe(`hot-reloading hooks`, () => {
     )
   })
 
-  it(`can update component`, () => {
+  it.skip(`can update component`, () => {
     const deferred = {}
     deferred.promise = new Promise((resolve, reject) => {
       deferred.resolve = resolve
