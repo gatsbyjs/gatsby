@@ -129,17 +129,10 @@ export const renderDevHTML = ({
     }
 
     const { boundActionCreators } = require(`../../redux/actions`)
-    const {
-      createServerVisitedPage,
-      createClientVisitedPage,
-    } = boundActionCreators
+    const { createServerVisitedPage } = boundActionCreators
     // Record this page was requested. This will kick off adding its page
     // component to the ssr bundle (if that's not already happened)
     createServerVisitedPage(pageObj.componentChunkName)
-
-    // We'll also get a head start on compiling the client code (this
-    // call has no effect if the page component is already in the client bundle).
-    createClientVisitedPage(pageObj.componentChunkName)
 
     // Ensure the query has been run and written out.
     await getPageDataExperimental(pageObj.path)
