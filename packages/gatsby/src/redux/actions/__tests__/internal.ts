@@ -21,6 +21,7 @@ describe(`setSiteConfig`, () => {
     expect(action).toMatchInlineSnapshot(`
       Object {
         "payload": Object {
+          "head": false,
           "pathPrefix": "",
           "polyfill": true,
           "siteMetadata": Object {
@@ -37,6 +38,7 @@ describe(`setSiteConfig`, () => {
     expect(action).toMatchInlineSnapshot(`
       Object {
         "payload": Object {
+          "head": false,
           "pathPrefix": "",
           "polyfill": true,
         },

@@ -83,11 +83,13 @@ type Directory implements Node @dontInfer {
 type Site implements Node @dontInfer {
   buildTime: Date @dateformat
   siteMetadata: SiteSiteMetadata
+  head: Boolean
 }
 
 type SiteSiteMetadata {
   title: String
   description: String
+  image: String
 }
 
 type SitePage implements Node @dontInfer {
@@ -225,11 +227,13 @@ type Directory implements Node @dontInfer {
 type Site implements Node @dontInfer {
   buildTime: Date @dateformat
   siteMetadata: SiteSiteMetadata
+  head: Boolean
 }
 
 type SiteSiteMetadata {
   title: String
   description: String
+  image: String
 }
 
 type SitePage implements Node @dontInfer {
@@ -369,11 +373,13 @@ type Directory implements Node @dontInfer {
 type Site implements Node @dontInfer {
   buildTime: Date @dateformat
   siteMetadata: SiteSiteMetadata
+  head: Boolean
 }
 
 type SiteSiteMetadata {
   title: String
   description: String
+  image: String
 }
 
 type SitePage implements Node @dontInfer {
