@@ -1,4 +1,4 @@
-import semver from "semver"
+// import semver from "semver"
 
 // Fast refresh is supported as of React 16.9.
 // This package will do some sniffing to see if the current version of
