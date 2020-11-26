@@ -362,7 +362,7 @@ icon.svg`,
           aria-hidden="true"
           data-placeholder-image=""
           sources=""
-          style="opacity: 1; transition: opacity 500ms linear; background-color: red; position: relative;"
+          style="opacity: 1; transition: opacity 500ms linear; background-color: red; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
         />
       `)
     })
@@ -388,7 +388,7 @@ icon.svg`,
           aria-hidden="true"
           data-placeholder-image=""
           sources=""
-          style="opacity: 1; transition: opacity 500ms linear; width: 100px; height: 100px; background-color: red; position: relative;"
+          style="opacity: 1; transition: opacity 500ms linear; background-color: red; width: 100px; height: 100px; position: relative;"
         />
       `)
     })
@@ -414,7 +414,7 @@ icon.svg`,
           aria-hidden="true"
           data-placeholder-image=""
           sources=""
-          style="opacity: 1; transition: opacity 500ms linear; display: inline-block; background-color: red; position: relative;"
+          style="opacity: 1; transition: opacity 500ms linear; background-color: red; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
         />
       `)
     })

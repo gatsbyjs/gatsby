@@ -54,9 +54,7 @@ export function getWrapperProps(
   if (layout === `fixed`) {
     wrapperStyle.width = width
     wrapperStyle.height = height
-  }
-
-  if (layout === `constrained`) {
+  } else if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
   }
 
@@ -154,17 +152,26 @@ export function getPlaceholderProps(
   const wrapperStyle: CSSProperties = {}
 
   if (backgroundColor) {
+    wrapperStyle.backgroundColor = backgroundColor
+
     if (layout === `fixed`) {
       wrapperStyle.width = width
       wrapperStyle.height = height
+      wrapperStyle.backgroundColor = backgroundColor
+      wrapperStyle.position = `relative`
+    } else if (layout === `constrained`) {
+      wrapperStyle.position = `absolute`
+      wrapperStyle.top = 0
+      wrapperStyle.left = 0
+      wrapperStyle.bottom = 0
+      wrapperStyle.right = 0
+    } else if (layout === `fluid`) {
+      wrapperStyle.position = `absolute`
+      wrapperStyle.top = 0
+      wrapperStyle.left = 0
+      wrapperStyle.bottom = 0
+      wrapperStyle.right = 0
     }
-
-    if (layout === `constrained`) {
-      wrapperStyle.display = `inline-block`
-    }
-
-    wrapperStyle.backgroundColor = backgroundColor
-    wrapperStyle.position = `relative`
   }
 
   const result: PlaceholderImageAttrs = {
