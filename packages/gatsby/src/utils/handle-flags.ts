@@ -13,7 +13,7 @@ const terminalLink = (text, url): string => {
 
 const handleFlags = (
   flags: Array<IFlag>,
-  configFlags: Array<Array<string>>,
+  configFlags: Record<string, boolean>
   executingCommand = process.env.gatsby_executing_command
 ): { validConfigFlags: Array<IFlag>; message: string } => {
   // Prepare config flags.
