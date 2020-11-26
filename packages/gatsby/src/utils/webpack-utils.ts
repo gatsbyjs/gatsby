@@ -685,9 +685,7 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: `whm`,
-      },
+      overlay: false,
     })
 
   plugins.extractText = (options: any): Plugin =>
