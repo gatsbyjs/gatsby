@@ -60,15 +60,13 @@ exports.checkDepsChanges = async ({
     // this allow us to not publish to local repository
     // and save some time/work
     try {
-      localPKGjson = await new Promise((resolve, reject) => {
-        got(`https://unpkg.com/${packageName}/package.json`)
-          .then((error, response) => {
-            if (response && response.statusCode === 200) {
-              resolve(JSON.parse(response.body))
-            }
-          })
-          .catch(e => reject(e))
-      })
+      const response = await got(
+        `https://unpkg.com/${packageName}/package.json`
+      )
+      if (response?.statusCode !== 200) {
+        throw new Error(`No response or non 200 code`)
+      }
+      localPKGjson = JSON.parse(response.body)
     } catch {
       console.log(
         `'${packageName}' doesn't seem to be installed and is not published on NPM.`
