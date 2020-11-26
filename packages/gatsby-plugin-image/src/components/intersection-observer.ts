@@ -14,6 +14,7 @@ const connection =
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 // These match the thresholds used in Chrome's native lazy loading
+// @see https://web.dev/browser-level-image-lazy-loading/#distance-from-viewport-thresholds
 const FAST_CONNECTION_THRESHOLD = `1250px`
 const SLOW_CONNECTION_THRESHOLD = `2500px`
 
