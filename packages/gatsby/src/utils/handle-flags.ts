@@ -18,13 +18,9 @@ const handleFlags = (
 ): { validConfigFlags: Array<IFlag>; message: string } => {
   // Prepare config flags.
   // Filter out any flags that are set to false.
-  const filteredConfigFlags = _.toPairs(configFlags).filter(pair => pair[1])
-
-  //  validate flags against current ones
-  //  - any that don't exist — remove silently
-  let validConfigFlags = flags.filter(ae =>
-    filteredConfigFlags.some(flagPair => flagPair[0] === ae.name)
-  )
+   const availableFlags = new Map();
+   flags.forEach(flag => availableFlags.set(flag.name, flag));
+   const enabledConfigFlags = Object.keys(configFlags).filter(name => configFlags[name] && availableFlags.has(name))
 
   // If we're in CI, filter out any flags that don't want to be enabled in CI
   if (isCI() || process.env.NODE_ENV === `test`) {
