@@ -92,13 +92,7 @@ const install = async (
       }
     }
     if (getPackageManager() === `yarn` && checkForYarn()) {
-      if (await fs.pathExists(`package-lock.json`)) {
-        if (!(await fs.pathExists(`yarn.lock`))) {
-          await execa(`yarnpkg`, [`import`])
-        }
-        await fs.remove(`package-lock.json`)
-      }
-
+      await fs.remove(`package-lock.json`)
       const args = packages.length ? [`add`, silent, ...packages] : [silent]
       await execa(`yarnpkg`, args)
     } else {

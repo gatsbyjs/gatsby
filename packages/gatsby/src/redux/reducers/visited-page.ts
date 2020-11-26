@@ -12,6 +12,7 @@ const createDefault = (): StateMap => {
   const defaults = new Set<string>()
   defaults.add(`component---cache-dev-404-page-js`)
   defaults.add(`component---src-pages-404-js`)
+  defaults.add(`component---src-pages-index-js`)
 
   const state: StateMap = new Map([
     [`client`, new Set(defaults)],

@@ -27,11 +27,60 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
+#### Usage
+
+```shell
+gatsby new
+```
+
+The CLI will run an interactive shell asking for these options before creating a Gatsby site for you:
+
+```shell
+gatsby new
+
+What would you like to name the folder where your site will be created?
+my-gatsby-site
+
+Will you be using a CMS? (single choice)
+  No (or I'll add it later)
+  –
+  WordPress
+  Contentful
+  Sanity
+  DatoCMS
+  Shopify
+
+Would you like to install a styling system? (single choice)
+  No (or I'll add it later)
+  –
+  CSS Modules/PostCSS
+  styled-components
+  Emotion
+  Sass
+  Theme UI
+
+Would you like to install additional features with other plugins? (multiple choice)
+  ◯ Add the Google Analytics tracking script
+  ◯ Add responsive images
+  ◯ Add page meta tags with React Helmet
+  ◯ Add an automatic sitemap
+  ◯ Enable offline functionality
+  ◯ Generate a manifest file
+  ◯ Add Markdown support (without MDX)
+  ◯ Add Markdown and MDX support
+```
+
+#### Creating a site from a starter
+
+To create a site from a starter instead, run the command while immediately specifying your site name and starter URL:
+
 ```shell
 gatsby new [<site-name> [<starter-url>]]
 ```
 
-#### Arguments
+Note that this will not prompt you to create a custom setup, but only clone the starter from the URL you specified.
+
+##### Arguments
 
 | Argument    | Description                                                                                                                                                                                              |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -40,7 +89,7 @@ gatsby new [<site-name> [<starter-url>]]
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
-#### Examples
+##### Examples
 
 - Create a Gatsby site named `my-awesome-site` using the default starter:
 
@@ -53,20 +102,6 @@ gatsby new my-awesome-site
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
-
-- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
-
-```shell
-gatsby new
-? What is your project called? › my-gatsby-project
-? What starter would you like to use? › - Use arrow-keys. Return to submit.
-❯  gatsby-starter-default
-   gatsby-starter-hello-world
-   gatsby-starter-blog
-   (Use a different starter)
-```
-
-_Note: you can try out the experimental interactive experience from the `create-gatsby` package with the `GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW=true` flag, which will prompt you with questions about the kind of site you're building, and install the plugins you'll need automatically._
 
 See the [Gatsby starters docs](/docs/gatsby-starters/) for more details.
 
