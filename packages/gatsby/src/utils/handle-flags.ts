@@ -1,7 +1,15 @@
 import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
-import terminalLink from "terminal-link"
+import realTerminalLink from "terminal-link"
 import { IFlag } from "./flags"
+
+const terminalLink = (text, url): string => {
+  if (process.env.NODE_ENV === `test`) {
+    return `${text} (${url})`
+  } else {
+    return realTerminalLink(text, url)
+  }
+}
 
 const handleFlags = (
   flags: Array<IFlag>,
@@ -19,8 +27,8 @@ const handleFlags = (
   )
 
   // If we're in CI, filter out any flags that don't want to be enabled in CI
-  if (isCI()) {
-    validConfigFlags = validConfigFlags.filter(flag => flag.noCi === true)
+  if (isCI() || process.env.NODE_ENV === `test`) {
+    validConfigFlags = validConfigFlags.filter(flag => flag.noCi !== true)
   }
 
   // Filter out any flags that aren't for this environment.

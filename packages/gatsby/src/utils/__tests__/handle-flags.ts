@@ -47,8 +47,12 @@ describe(`handle flags`, () => {
     ALL_COMMANDS: true,
   }
   const configFlagsWithFalse = {
-    QUERY_ON_DEMAND: true,
+    ALL_COMMANDS: true,
     DEV_SSR: false,
+  }
+  const configWithFlagsNoCi = {
+    QUERY_ON_DEMAND: true,
+    DEV_SSR: true,
   }
 
   it(`returns validConfigFlags and a message`, () => {
@@ -58,6 +62,12 @@ describe(`handle flags`, () => {
   it(`filters out flags marked false`, () => {
     expect(
       handleFlags(activeFlags, configFlagsWithFalse, `develop`).validConfigFlags
+    ).toHaveLength(1)
+  })
+
+  it(`filters out flags that are marked as not available on CI`, () => {
+    expect(
+      handleFlags(activeFlags, configWithFlagsNoCi, `develop`).validConfigFlags
     ).toHaveLength(1)
   })
 
