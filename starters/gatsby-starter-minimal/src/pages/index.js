@@ -89,7 +89,10 @@ const IndexPage = () => {
       <ul style={listStyles}>
         {links.map(link => (
           <li style={listItemStyles}>
-            <a style={linkStyles} href={link.url}>
+            <a
+              style={linkStyles}
+              href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
+            >
               {link.text}
             </a>
           </li>

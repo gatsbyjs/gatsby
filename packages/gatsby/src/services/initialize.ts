@@ -39,17 +39,15 @@ if (
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
   !isCI()
 ) {
-  process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS = `true`
   process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES = `true`
   process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
 
   reporter.info(`
-Four fast dev experiments are enabled, Lazy Bundling, Lazy Images, Query on Demand, and Development SSR.
+Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images.
 
 Please give feedback on their respective umbrella issues!
 
-- https://gatsby.dev/lazy-devjs-umbrella
 - https://gatsby.dev/query-on-demand-feedback
 - https://gatsby.dev/dev-ssr-feedback
 - https://gatsby.dev/lazy-images-feedback
@@ -232,10 +230,6 @@ export async function initialize({
       }
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
-  }
-
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    telemetry.trackFeatureIsUsed(`ExperimentalLazyDevjs`)
   }
 
   // run stale jobs
