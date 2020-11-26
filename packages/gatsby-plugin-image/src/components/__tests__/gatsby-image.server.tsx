@@ -1,13 +1,13 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import { GatsbyImage } from "../gatsby-image.server"
-import { ISharpGatsbyImageData } from "../gatsby-image.browser"
+import { IGatsbyImageData } from "../gatsby-image.browser"
 import { SourceProps } from "../picture"
 
 type GlobalOverride = NodeJS.Global &
   typeof global.globalThis & {
-    SERVER: boolean
-    GATSBY___IMAGE: boolean
+    SERVER: boolean | undefined
+    GATSBY___IMAGE: boolean | undefined
   }
 
 // Prevents terser for bailing because we're not in a babel plugin
@@ -22,8 +22,8 @@ describe(`GatsbyImage server`, () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = undefined
-    ;(global as GlobalOverride).GATSBY___IMAGE = undefined
+    ;(global as GlobalOverride).SERVER = false
+    ;(global as GlobalOverride).GATSBY___IMAGE = false
   })
 
   it(`shows nothing when the image props is not passed`, () => {
@@ -44,7 +44,7 @@ describe(`GatsbyImage server`, () => {
     it(`has a valid style attributes for fluid layout`, () => {
       const layout = `fluid`
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout,
@@ -77,7 +77,7 @@ describe(`GatsbyImage server`, () => {
     it(`has a valid style attributes for fixed layout`, () => {
       const layout = `fixed`
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout,
@@ -116,7 +116,7 @@ describe(`GatsbyImage server`, () => {
     it(`has a valid style attributes for constrained layout`, () => {
       const layout = `constrained`
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout,
@@ -155,7 +155,7 @@ describe(`GatsbyImage server`, () => {
       // no fallback provided
       const images = {}
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `constrained`,
@@ -186,7 +186,7 @@ describe(`GatsbyImage server`, () => {
     it(`has a valid src value when fallback is provided in images`, () => {
       const images = { fallback: { src: `some-src-fallback.jpg` } }
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `constrained`,
@@ -227,7 +227,7 @@ icon.svg`,
         },
       }
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `constrained`,
@@ -263,7 +263,7 @@ icon.svg`,
       // no fallback provided
       const images = {}
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `constrained`,
@@ -304,7 +304,7 @@ icon.svg`,
         },
       ]
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `constrained`,
@@ -342,7 +342,7 @@ icon.svg`,
 
   describe(`placeholder verifications`, () => {
     it(`has a placeholder in a div with valid styles for fluid layout`, () => {
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `fluid`,
@@ -368,7 +368,7 @@ icon.svg`,
     })
 
     it(`has a placeholder in a div with valid styles for fixed layout`, () => {
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `fixed`,
@@ -394,7 +394,7 @@ icon.svg`,
     })
 
     it(`has a placeholder in a div with valid styles for constrained layout`, () => {
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 100,
         height: 100,
         layout: `constrained`,

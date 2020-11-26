@@ -24,13 +24,13 @@ export type GatsbyImageProps = Omit<
   alt: string
   as?: ElementType
   className?: string
-  image: ISharpGatsbyImageData
+  image: IGatsbyImageData
   onLoad?: () => void
   onError?: () => void
   onStartLoad?: Function
 }
 
-export interface ISharpGatsbyImageData {
+export interface IGatsbyImageData {
   layout: Layout
   height?: number
   backgroundColor?: string
