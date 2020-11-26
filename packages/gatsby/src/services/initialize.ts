@@ -8,6 +8,7 @@ import path from "path"
 import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
+import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
 import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
@@ -178,6 +179,31 @@ export async function initialize({
         configName: `gatsby-config`,
         path: program.directory,
       },
+    })
+  }
+
+  // Setup flags
+  if (config && config.flags) {
+    const availableFlags = require(`../utils/flags`).default
+    // Get flags
+    const { enabledConfigFlags, message } = handleFlags(
+      availableFlags,
+      config.flags
+    )
+
+    //  set process.env for each flag
+    enabledConfigFlags.forEach(flag => {
+      process.env[flag.env] = `true`
+    })
+
+    // Print out message.
+    if (message !== ``) {
+      reporter.info(message)
+    }
+
+    //  track usage of feature
+    enabledConfigFlags.forEach(flag => {
+      telemetry.trackFeatureIsUsed(flag.telemetryId)
     })
   }
 

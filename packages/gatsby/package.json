@@ -145,6 +145,7 @@
     "style-loader": "^0.23.1",
     "source-map": "^0.7.3",
     "terser-webpack-plugin": "^2.3.8",
+    "terminal-link": "^2.1.1",
     "tmp": "^0.2.1",
     "true-case-path": "^2.2.1",
     "type-of": "^2.0.1",
