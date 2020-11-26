@@ -51,24 +51,19 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
   }
   if (layout === `constrained`) {
     sizer = (
-      <>
-        <div style={{ maxWidth: width, display: `block` }}>
-          <img
-            alt=""
-            role="presentation"
-            aria-hidden="true"
-            src={`data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E`}
-            style={{
-              maxWidth: `100%`,
-              display: `block`,
-              position: `static`,
-            }}
-          />
-        </div>
-        {/* extra div to help content fit. before that, the placeholder was playing a role in positionning the element.
-       We should prevent placeholders from having an impact on the final visual representation of the UI */}
-        <div style={{ display: `inline-block` }} />
-      </>
+      <div style={{ maxWidth: width, display: `block` }}>
+        <img
+          alt=""
+          role="presentation"
+          aria-hidden="true"
+          src={`data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E`}
+          style={{
+            maxWidth: `100%`,
+            display: `block`,
+            position: `static`,
+          }}
+        />
+      </div>
     )
   }
 
