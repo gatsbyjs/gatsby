@@ -360,6 +360,7 @@ jobs:
     <<: *e2e_tests_development_runtime_alias
     environment:
       GATSBY_HOT_LOADER: fast-refresh
+      CYPRESS_HOT_LOADER: fast-refresh
 
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
