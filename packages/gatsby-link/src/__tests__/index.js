@@ -44,7 +44,7 @@ const getWithAssetPrefix = (prefix = ``) => {
   return withAssetPrefix
 }
 
-const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
+const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
   global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
@@ -71,17 +71,23 @@ const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
 
 describe(`<Link />`, () => {
   it(`matches basic snapshot`, () => {
-    const { container } = setup()
+    const { container } = setup({
+      linkProps: { to: `/active` },
+    })
     expect(container).toMatchSnapshot()
   })
 
   it(`matches active snapshot`, () => {
-    const { container } = setup({ linkProps: { to: `/active` } })
+    const { container } = setup({
+      sourcePath: `/active`,
+      linkProps: { to: `/active` },
+    })
     expect(container).toMatchSnapshot()
   })
 
   it(`matches partially active snapshot`, () => {
     const { container } = setup({
+      sourcePath: `/active`,
       linkProps: { to: `/active/nested`, partiallyActive: true },
     })
     expect(container).toMatchSnapshot()
@@ -150,19 +156,28 @@ describe(`<Link />`, () => {
 
     it(`handles relative link with "./"`, () => {
       const location = `./courses?sort=name`
-      const { link } = setup({ linkProps: { to: location } })
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
       expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
     })
 
     it(`handles relative link with "../"`, () => {
       const location = `../courses?sort=name`
-      const { link } = setup({ linkProps: { to: location } })
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
       expect(link.getAttribute(`href`)).toEqual(`/courses?sort=name`)
     })
 
     it(`handles bare relative link`, () => {
       const location = `courses?sort=name`
-      const { link } = setup({ linkProps: { to: location } })
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
       expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
     })
 
