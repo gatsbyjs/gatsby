@@ -61,19 +61,21 @@ describe(`handle flags`, () => {
 
   it(`filters out flags marked false`, () => {
     expect(
-      handleFlags(activeFlags, configFlagsWithFalse, `develop`).validConfigFlags
+      handleFlags(activeFlags, configFlagsWithFalse, `develop`)
+        .enabledConfigFlags
     ).toHaveLength(1)
   })
 
   it(`filters out flags that are marked as not available on CI`, () => {
     expect(
-      handleFlags(activeFlags, configWithFlagsNoCi, `develop`).validConfigFlags
+      handleFlags(activeFlags, configWithFlagsNoCi, `develop`)
+        .enabledConfigFlags
     ).toHaveLength(1)
   })
 
   it(`filters out flags that aren't for the current command`, () => {
     expect(
-      handleFlags(activeFlags, configFlags, `build`).validConfigFlags
+      handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
     ).toHaveLength(1)
   })
 })

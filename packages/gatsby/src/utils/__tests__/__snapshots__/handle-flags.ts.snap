@@ -2,15 +2,7 @@
 
 exports[`handle flags returns validConfigFlags and a message 1`] = `
 Object {
-  "message": "The following flags are active:
-- FAST_DEV - Enable all experiments aimed at improving develop server start time
-- ALL_COMMANDS (Umbrella Issue (test)) - test
-- DEV_SSR (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) - SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
-- QUERY_ON_DEMAND (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) - Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-
-There is one other flag available you can test — run \\"gatsby flags\\" to enable them
-",
-  "validConfigFlags": Array [
+  "enabledConfigFlags": Array [
     Object {
       "command": "develop",
       "description": "Enable all experiments aimed at improving develop server start time",
@@ -44,5 +36,11 @@ There is one other flag available you can test — run \\"gatsby flags\\" to ena
       "umbrellaIssue": "https://github.com/gatsbyjs/gatsby/discussions/27620",
     },
   ],
+  "message": "The following flags are active:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+",
 }
 `;
