@@ -9,6 +9,9 @@ export function getReactHotLoaderStrategy(): string {
 
   // Do some package sniffing to see if we can use fast-refresh if the user didn't
   // specify a specific hot loader with the environment variable.
+
+  // TODO: Decide if we wanna do this
+  /*
   try {
     const reactVersion = require(`react/package.json`).version
 
@@ -22,6 +25,7 @@ export function getReactHotLoaderStrategy(): string {
   } catch (e) {
     return `react-hot-loader`
   }
+  */
 
   return `react-hot-loader`
 }
