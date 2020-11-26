@@ -26,7 +26,7 @@ const handleFlags = (
     .map(flagName => availableFlags.get(flagName))
 
   // If we're in CI, filter out any flags that don't want to be enabled in CI
-  if (isCI() || process.env.NODE_ENV === `test`) {
+  if (isCI()) {
     enabledConfigFlags = enabledConfigFlags.filter(flag => flag.noCi !== true)
   }
 

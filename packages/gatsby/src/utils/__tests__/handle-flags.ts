@@ -2,6 +2,12 @@ import handleFlags from "../handle-flags"
 import _ from "lodash"
 import { IFlag } from "./flags"
 
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    isCI: (): boolean => true,
+  }
+})
+
 describe(`handle flags`, () => {
   const activeFlags: Array<IFlag> = [
     {
