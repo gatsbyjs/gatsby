@@ -65,7 +65,7 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
             }}
           />
         </div>
-        {/* extra div to help content fit. before that, the placeholder was playing a role in position the element
+        {/* extra div to help content fit. before that, the placeholder was playing a role in positionning the element.
        We should prevent placeholders from having an impact on the final visual representation of the UI */}
         <div style={{ display: `inline-block` }} />
       </>
