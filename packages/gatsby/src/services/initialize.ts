@@ -44,7 +44,7 @@ if (
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images.
+Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images (only with gatsby-plugin-sharp@^2.10.0).
 
 Please give feedback on their respective umbrella issues!
 
