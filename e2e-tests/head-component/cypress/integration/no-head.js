@@ -3,7 +3,7 @@ describe(`no-head`, () => {
     cy.visit(`/no-head`)
   })
 
-  it.skip(`renders the meta tags based on the siteMetdata`, () => {
+  it(`renders the meta tags based on the siteMetdata`, () => {
     // NOTE(@mxstbr): @cypress/snapshot does not have support for snapshotting
     // multiple DOM elements, so we manually iterate through them and snapshot each one
     // @see https://github.com/cypress-io/snapshot/issues/23

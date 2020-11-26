@@ -3,6 +3,7 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
+const { Head } = require(`gatsby`)
 const {
   get,
   merge,
@@ -242,6 +243,8 @@ export default (pagePath, callback) => {
 
   const routerElement = (
     <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+      {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the server. Note that this needs to match cache-dir/root.js! */}
+      <Head />
       <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
         <RouteHandler path="/*" />
       </Router>
