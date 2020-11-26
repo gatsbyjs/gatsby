@@ -96,7 +96,7 @@ const ensurePathComponentInSSRBundle = async (
           page.componentChunkName,
           htmlComponentRendererPath
         )
-        if (found || readAttempts > 9) {
+        if (found || readAttempts > 5) {
           clearInterval(searchForStringInterval)
           resolve()
         }
