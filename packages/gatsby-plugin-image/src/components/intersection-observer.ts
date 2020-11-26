@@ -45,7 +45,7 @@ export function createIntersectionObserver(
       },
       {
         rootMargin:
-          connectionType === `4g`
+          connectionType === `4g` && !connection?.saveData
             ? FAST_CONNECTION_THRESHOLD
             : SLOW_CONNECTION_THRESHOLD,
       }
