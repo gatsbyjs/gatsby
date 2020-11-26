@@ -8,19 +8,13 @@ import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
+import syncRequires from "$virtual/sync-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
 window.___emitter = emitter
 
-let pageComponentRequires
-if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-  pageComponentRequires = require(`$virtual/lazy-client-sync-requires`)
-} else {
-  pageComponentRequires = require(`$virtual/sync-requires`)
-}
-
-const loader = new DevLoader(pageComponentRequires, matchPaths)
+const loader = new DevLoader(syncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
