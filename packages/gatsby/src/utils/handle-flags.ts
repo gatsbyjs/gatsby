@@ -69,15 +69,16 @@ const handleFlags = (
       message += ` - ${flag.description}`
     })
 
+    // TODO renable once "gatsby flags` CLI command exists.
     // Suggest enabling other flags if they're not trying them all.
-    const otherFlagsCount = flags.length - validConfigFlags.length
-    if (otherFlagsCount > 0) {
-      message += `\n\nThere ${
-        otherFlagsCount === 1
-          ? `is one other flag`
-          : `are ${otherFlagsCount} other flags`
-      } available you can test — run "gatsby flags" to enable them`
-    }
+    // const otherFlagsCount = flags.length - validConfigFlags.length
+    // if (otherFlagsCount > 0) {
+    // message += `\n\nThere ${
+    // otherFlagsCount === 1
+    // ? `is one other flag`
+    // : `are ${otherFlagsCount} other flags`
+    // } available you can test — run "gatsby flags" to enable them`
+    // }
 
     message += `\n`
   }
