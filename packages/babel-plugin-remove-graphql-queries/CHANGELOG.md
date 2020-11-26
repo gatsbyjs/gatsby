@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.12.0-next.0...babel-plugin-remove-graphql-queries@2.13.0-next.0) (2020-11-26)
+
+### Features
+
+- **gatsby:** Add preliminary fast-refresh integration ([#26664](https://github.com/gatsbyjs/gatsby/issues/26664)) ([613f5c7](https://github.com/gatsbyjs/gatsby/commit/613f5c791fd059e8a64eeaa81993d1f9f14bec53))
+
 # [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.11.0-next.0...babel-plugin-remove-graphql-queries@2.12.0-next.0) (2020-11-18)
 
 ### Features
