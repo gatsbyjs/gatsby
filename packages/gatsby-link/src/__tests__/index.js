@@ -45,6 +45,29 @@ const getWithAssetPrefix = (prefix = ``) => {
 }
 
 const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
+  let intersectionInstances = new WeakMap()
+  // mock intersectionObserver
+  global.IntersectionObserver = jest.fn(cb => {
+    let instance = {
+      observe: ref => {
+        intersectionInstances.set(ref, instance)
+      },
+      unobserve: ref => {
+        intersectionInstances.delete(ref)
+      },
+      disconnect: () => {},
+      trigger: ref => {
+        cb([
+          {
+            target: ref,
+            isIntersecting: true,
+          },
+        ])
+      },
+    }
+
+    return instance
+  })
   global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
@@ -66,6 +89,9 @@ const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
 
   return Object.assign({}, utils, {
     link: utils.getByText(`link`),
+    triggerInViewport: ref => {
+      intersectionInstances.get(ref).trigger(ref)
+    },
   })
 }
 
@@ -395,6 +421,43 @@ describe(`state`, () => {
         replace: true,
         state,
       }
+    )
+  })
+})
+
+describe(`prefetch`, () => {
+  beforeEach(() => {
+    global.___loader = {
+      enqueue: jest.fn(),
+    }
+  })
+
+  it(`it prefetches when in viewport`, () => {
+    const to = `/active`
+
+    const { link, triggerInViewport } = setup({
+      linkProps: { to },
+    })
+
+    triggerInViewport(link)
+
+    expect(global.___loader.enqueue).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`
+    )
+  })
+
+  it(`it does not prefetch if link is current page`, () => {
+    const to = `/active`
+
+    const { link, triggerInViewport } = setup({
+      sourcePath: `/active`,
+      linkProps: { to },
+    })
+
+    triggerInViewport(link)
+
+    expect(global.___loader.enqueue).not.toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`
     )
   })
 })
