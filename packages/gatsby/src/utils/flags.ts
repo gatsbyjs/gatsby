@@ -1,4 +1,13 @@
-const activeFlags = [
+export interface IFlag {
+  name: string
+  env: string
+  description: string
+  includedFlags?: Array<string>
+  umbrellaIssue?: string
+  noCi?: boolean
+}
+
+const activeFlags: Array<IFlag> = [
   {
     name: `FAST_DEV`,
     env: `GATSBY_EXPERIMENTAL_FAST_DEV`,

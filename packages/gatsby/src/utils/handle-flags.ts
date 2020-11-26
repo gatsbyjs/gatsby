@@ -1,10 +1,12 @@
 import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
 import terminalLink from "terminal-link"
-import reporter from "gatsby-cli/lib/reporter"
-import telemetry from "gatsby-telemetry"
+import { IFlag } from "./flags"
 
-const handleFlags = (flags, configFlags) => {
+const handleFlags = (
+  flags: Array<IFlag>,
+  configFlags: Array<Array<string>>
+): { validConfigFlags: Array<IFlag>; message: string } => {
   // Prepare config flags.
   // Filter out any flags that are set to false.
   const filteredConfigFlags = _.toPairs(configFlags).filter(pair => pair[1])
