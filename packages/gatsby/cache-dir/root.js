@@ -1,6 +1,7 @@
 import React from "react"
 import { Router, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import { Head } from "gatsby"
 
 import {
   shouldUpdateScroll,
@@ -121,7 +122,13 @@ class LocationHandler extends React.Component {
 
 const Root = () => (
   <Location>
-    {locationContext => <LocationHandler {...locationContext} />}
+    {locationContext => (
+      <>
+        {/* Render <Head /> so the default meta tags from the siteMetadata are always rendered */}
+        <Head />
+        <LocationHandler {...locationContext} />
+      </>
+    )}
   </Location>
 )
 
