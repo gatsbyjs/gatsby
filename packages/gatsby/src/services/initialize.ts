@@ -183,15 +183,18 @@ export async function initialize({
   if (config && config.flags) {
     const availableFlags = require(`../utils/flags`).default
     // Get flags
-    const { validConfigFlags, message } = handleFlags(availableFlags, config.flags)
+    const { enabledConfigFlags, message } = handleFlags(
+      availableFlags,
+      config.flags
+    )
 
     //  set process.env for each flag
-    validConfigFlags.forEach(flag => {
+    enabledConfigFlags.forEach(flag => {
       process.env[flag.env] = `true`
     })
 
     //  track usage of feature
-    validConfigFlags.forEach(flag => {
+    enabledConfigFlags.forEach(flag => {
       telemetry.trackFeatureIsUsed(flag.telemetryId)
     })
 

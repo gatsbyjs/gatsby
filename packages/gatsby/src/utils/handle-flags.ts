@@ -13,22 +13,24 @@ const terminalLink = (text, url): string => {
 
 const handleFlags = (
   flags: Array<IFlag>,
-  configFlags: Record<string, boolean>
+  configFlags: Record<string, boolean>,
   executingCommand = process.env.gatsby_executing_command
-): { validConfigFlags: Array<IFlag>; message: string } => {
+): { enabledConfigFlags: Array<IFlag>; message: string } => {
   // Prepare config flags.
   // Filter out any flags that are set to false.
-   const availableFlags = new Map();
-   flags.forEach(flag => availableFlags.set(flag.name, flag));
-   const enabledConfigFlags = Object.keys(configFlags).filter(name => configFlags[name] && availableFlags.has(name))
+  const availableFlags = new Map()
+  flags.forEach(flag => availableFlags.set(flag.name, flag))
+  let enabledConfigFlags = Object.keys(configFlags)
+    .filter(name => configFlags[name] && availableFlags.has(name))
+    .map(flagName => availableFlags.get(flagName))
 
   // If we're in CI, filter out any flags that don't want to be enabled in CI
   if (isCI() || process.env.NODE_ENV === `test`) {
-    validConfigFlags = validConfigFlags.filter(flag => flag.noCi !== true)
+    enabledConfigFlags = enabledConfigFlags.filter(flag => flag.noCi !== true)
   }
 
   // Filter out any flags that aren't for this environment.
-  validConfigFlags = validConfigFlags.filter(
+  enabledConfigFlags = enabledConfigFlags.filter(
     flag => flag.command === `all` || flag.command === executingCommand
   )
 
@@ -37,27 +39,27 @@ const handleFlags = (
       flag.includedFlags.forEach(includedName => {
         const incExp = flags.find(e => e.name == includedName)
         if (incExp) {
-          validConfigFlags.push(incExp)
+          enabledConfigFlags.push(incExp)
           addIncluded(incExp)
         }
       })
     }
   }
-  // Add to validConfigFlags any includedFlags
-  validConfigFlags.forEach(flag => {
+  // Add to enabledConfigFlags any includedFlags
+  enabledConfigFlags.forEach(flag => {
     addIncluded(flag)
   })
 
-  validConfigFlags = _.uniq(validConfigFlags)
+  enabledConfigFlags = _.uniq(enabledConfigFlags)
 
   // TODO remove flags that longer exist.
   //  w/ message of thanks
 
   let message = ``
   //  Create message about what flags are active.
-  if (validConfigFlags.length > 0) {
+  if (enabledConfigFlags.length > 0) {
     message = `The following flags are active:`
-    validConfigFlags.forEach(flag => {
+    enabledConfigFlags.forEach(flag => {
       message += `\n- ${flag.name}`
       if (flag.umbrellaIssue) {
         message += ` (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
@@ -67,7 +69,7 @@ const handleFlags = (
 
     // TODO renable once "gatsby flags` CLI command exists.
     // Suggest enabling other flags if they're not trying them all.
-    // const otherFlagsCount = flags.length - validConfigFlags.length
+    // const otherFlagsCount = flags.length - enabledConfigFlags.length
     // if (otherFlagsCount > 0) {
     // message += `\n\nThere ${
     // otherFlagsCount === 1
@@ -79,7 +81,7 @@ const handleFlags = (
     message += `\n`
   }
 
-  return { validConfigFlags, message }
+  return { enabledConfigFlags, message }
 }
 
 export default handleFlags
