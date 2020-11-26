@@ -194,7 +194,9 @@ export async function initialize({
     })
 
     // Print out message.
-    reporter.info(message)
+    if (message !== ``) {
+      reporter.info(message)
+    }
 
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
