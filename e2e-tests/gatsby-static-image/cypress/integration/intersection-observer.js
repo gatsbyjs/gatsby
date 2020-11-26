@@ -1,4 +1,4 @@
-describe(`GatsbyImage / Intersection Observer`, () => {
+describe(`GatsbyImage / Below viewport native lazy loading`, () => {
   it(`lazy loads an image using the fast intersection observer`, () => {
     cy.visit(`/intersection-observer`)
 
