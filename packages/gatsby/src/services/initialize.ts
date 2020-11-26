@@ -193,13 +193,13 @@ export async function initialize({
       process.env[flag.env] = `true`
     })
 
+    // Print out message.
+    reporter.info(message)
+
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
       telemetry.trackFeatureIsUsed(flag.telemetryId)
     })
-
-    // Print out message.
-    reporter.info(message)
   }
 
   // theme gatsby configs can be functions or objects

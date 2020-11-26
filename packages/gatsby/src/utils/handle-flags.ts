@@ -2,6 +2,7 @@ import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
 import realTerminalLink from "terminal-link"
 import { IFlag } from "./flags"
+import chalk from "chalk"
 
 const terminalLink = (text, url): string => {
   if (process.env.NODE_ENV === `test`) {
@@ -61,10 +62,13 @@ const handleFlags = (
     message = `The following flags are active:`
     enabledConfigFlags.forEach(flag => {
       message += `\n- ${flag.name}`
-      if (flag.umbrellaIssue) {
-        message += ` (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
+      if (flag.experimental) {
+        message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
       }
-      message += ` - ${flag.description}`
+      if (flag.umbrellaIssue) {
+        message += ` · (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
+      }
+      message += ` · ${flag.description}`
     })
 
     // TODO renable once "gatsby flags` CLI command exists.
