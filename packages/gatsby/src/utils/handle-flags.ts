@@ -5,7 +5,8 @@ import { IFlag } from "./flags"
 
 const handleFlags = (
   flags: Array<IFlag>,
-  configFlags: Array<Array<string>>
+  configFlags: Array<Array<string>>,
+  executingCommand = process.env.gatsby_executing_command
 ): { validConfigFlags: Array<IFlag>; message: string } => {
   // Prepare config flags.
   // Filter out any flags that are set to false.
@@ -21,6 +22,11 @@ const handleFlags = (
   if (isCI()) {
     validConfigFlags = validConfigFlags.filter(flag => flag.noCi === true)
   }
+
+  // Filter out any flags that aren't for this environment.
+  validConfigFlags = validConfigFlags.filter(
+    flag => flag.command === `all` || flag.command === executingCommand
+  )
 
   const addIncluded = (flag): void => {
     if (flag.includedFlags) {
