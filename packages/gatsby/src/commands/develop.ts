@@ -54,11 +54,11 @@ const doesConfigChangeRequireRestart = (
   }
 
   const oldConfigString = JSON.stringify(
-    { ...lastConfig, siteMetadata: null },
+    { ...lastConfig, siteMetadata: null, head: null },
     replacer
   )
   const newConfigString = JSON.stringify(
-    { ...newConfig, siteMetadata: null },
+    { ...newConfig, siteMetadata: null, head: null },
     replacer
   )
 

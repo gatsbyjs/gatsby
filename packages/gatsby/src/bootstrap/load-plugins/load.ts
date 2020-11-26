@@ -261,12 +261,11 @@ export function loadPlugins(
   }
 
   // react-helmet support by default! use the user-provided one if it exists
-  // TypeScript support by default! use the user-provided one if it exists
   const reactHelmetPlugin = (config.plugins || []).find(
     plugin => plugin.resolve === `gatsby-plugin-react-helmet`
   )
 
-  if (reactHelmetPlugin === undefined) {
+  if (reactHelmetPlugin === undefined && config.head === true) {
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-react-helmet`),

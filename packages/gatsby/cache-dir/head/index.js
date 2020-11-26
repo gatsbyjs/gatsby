@@ -4,9 +4,11 @@ import { useLocation } from "@reach/router"
 import { graphql, useStaticQuery } from "gatsby"
 
 export const Head = props => {
+  const location = useLocation()
   const data = useStaticQuery(graphql`
     query GetSiteMetadata {
       site {
+        head
         siteMetadata {
           title
           description
@@ -16,12 +18,12 @@ export const Head = props => {
     }
   `)
 
+  if (data.site.head !== true) return null
+
   const defaults = data.site.siteMetadata
   const title = props.title || defaults.title
   const description = props.description || defaults.description
   const image = props.image || defaults.image
-
-  const location = useLocation()
 
   // NOTE(@mxstbr): This code has many ternaries for the same things because
   // react-helmet doesn't support fragments yet

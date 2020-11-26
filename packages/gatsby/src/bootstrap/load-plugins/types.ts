@@ -1,4 +1,5 @@
 export interface IRawSiteConfig {
+  head?: boolean
   plugins?: Array<PluginRef>
 }
 

@@ -76,6 +76,7 @@ const site = `
   type Site implements Node @infer {
     buildTime: Date @dateformat
     siteMetadata: SiteSiteMetadata
+    head: Boolean
   }
 `
 
