@@ -1,3 +1,7 @@
 import React from "react"
 
-export default () => <h2 data-testid="sub-title">{`%SUB_TITLE%`}</h2>
+export default function SubTitle() {
+  return (
+    <h2 data-testid="sub-title">{`%SUB_TITLE%`}</h2>
+  )
+}

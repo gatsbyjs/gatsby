@@ -15,6 +15,7 @@ import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
+import { codeFrameColumns } from "@babel/code-frame"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -38,6 +39,7 @@ import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
+import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -276,9 +278,69 @@ export async function startServer(
     publicPath: devConfig.output.publicPath,
     watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
     stats: `errors-only`,
+    serverSideRender: true,
   }) as unknown) as PatchedWebpackDevMiddleware
 
   app.use(webpackDevMiddlewareInstance)
+
+  app.get(`/__original-stack-frame`, async (req, res) => {
+    const {
+      webpackStats: {
+        compilation: { modules },
+      },
+    } = res.locals
+    const emptyResponse = {
+      codeFrame: `No codeFrame could be generated`,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const moduleId = req?.query?.moduleId
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    const fileModule = modules.find(m => m.id === moduleId)
+    const sourceMap = fileModule?._source?._sourceMap
+
+    if (!sourceMap) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const position = { line: lineNumber, column: columnNumber }
+    const result = await findOriginalSourcePositionAndContent(
+      sourceMap,
+      position
+    )
+
+    const sourcePosition = result?.sourcePosition
+    const sourceLine = sourcePosition?.line
+    const sourceColumn = sourcePosition?.column
+    const sourceContent = result?.sourceContent
+
+    if (!sourceContent || !sourceLine) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const codeFrame = codeFrameColumns(
+      sourceContent,
+      {
+        start: {
+          line: sourceLine,
+          column: sourceColumn ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
+      sourcePosition,
+      sourceContent,
+    })
+  })
 
   // Expose access to app for advanced use cases
   const { developMiddleware } = store.getState().config
