@@ -30,7 +30,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `FastDev`,
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`],
+    includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`, `LAZY_IMAGES`],
   },
   {
     name: `DEV_SSR`,
@@ -50,6 +50,15 @@ const activeFlags: Array<IFlag> = [
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
     noCi: true,
+  },
+  {
+    name: `LAZY_IMAGES`,
+    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
+    command: `develop`,
+    telemetryId: `LazyImages`,
+    experimental: true,
+    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
 ]
 
