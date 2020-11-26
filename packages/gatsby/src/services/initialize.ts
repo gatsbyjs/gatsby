@@ -192,7 +192,7 @@ export async function initialize({
 
     //  track usage of feature
     validConfigFlags.forEach(flag => {
-      telemetry.trackFeatureIsUsed(_.upperFirst(_.camelCase(flag.name)))
+      telemetry.trackFeatureIsUsed(flag.telemetryId)
     })
 
     // Print out message.
