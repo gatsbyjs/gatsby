@@ -11,10 +11,8 @@ const handleFlags = (
   // Filter out any flags that are set to false.
   const filteredConfigFlags = _.toPairs(configFlags).filter(pair => pair[1])
 
-  // TODO move this logic into util function w/ tests.
   //  validate flags against current ones
   //  - any that don't exist — remove silently
-  //  - any that are graduated — remove w/ message of thanks
   let validConfigFlags = flags.filter(ae =>
     filteredConfigFlags.some(flagPair => flagPair[0] === ae.name)
   )
@@ -43,6 +41,7 @@ const handleFlags = (
   validConfigFlags = _.uniq(validConfigFlags)
 
   // TODO remove flags that longer exist.
+  //  w/ message of thanks
 
   let message = ``
   //  Create message about what flags are active.
