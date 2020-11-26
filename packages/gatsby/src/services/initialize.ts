@@ -181,9 +181,9 @@ export async function initialize({
 
   // Setup flags
   if (config && config.flags) {
-    const flags = require(`../utils/flags`).default
+    const availableFlags = require(`../utils/flags`).default
     // Get flags
-    const { validConfigFlags, message } = handleFlags(flags, config.flags)
+    const { validConfigFlags, message } = handleFlags(availableFlags, config.flags)
 
     //  set process.env for each flag
     validConfigFlags.forEach(flag => {
