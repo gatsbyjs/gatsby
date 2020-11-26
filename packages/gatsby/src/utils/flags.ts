@@ -25,7 +25,7 @@ const activeFlags: Array<IFlag> = [
     name: `DEV_SSR`,
     env: `GATSBY_EXPERIMENTAL_DEV_SSR`,
     command: `develop`,
-    telemetryId: `GATSBY_EXPERIMENTAL_DEV_SSR`, // Normally we do PascalCase but Kyle did this before he know what the convention was 😅
+    telemetryId: `DevSsr`,
     description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
   },
