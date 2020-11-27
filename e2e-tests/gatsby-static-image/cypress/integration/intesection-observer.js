@@ -31,7 +31,7 @@ describe(`gatsby-plugin-image / intersection observer`, () => {
     cy.get(`[data-cy=lazy-loaded]`)
       .should(`exist`)
       .then($img => {
-        expect($img[0].naturalHeight).to.equal(59)
+        expect($img[0].naturalHeight).to.be.greaterThan(0)
       })
   })
 })
