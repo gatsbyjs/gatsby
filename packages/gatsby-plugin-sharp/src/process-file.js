@@ -48,7 +48,7 @@ sharp.concurrency(cpuCoreCount())
  * @property {import('sharp').FitEnum} fit
  */
 
-/**+
+/** +
  * @typedef {Object} Transform
  * @property {string} outputPath
  * @property {TransformArgs} args
@@ -76,6 +76,13 @@ exports.processFile = (file, transforms, options = {}) => {
   return transforms.map(async transform => {
     try {
       const { outputPath, args } = transform
+
+      // If the outputPath already exists, we created the file at some
+      // point in the past so let's just return.
+      if (fs.existsSync(outputPath)) {
+        return transform
+      }
+
       debug(`Start processing ${outputPath}`)
       await fs.ensureDir(path.dirname(outputPath))
 
