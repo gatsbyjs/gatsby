@@ -58,7 +58,7 @@ export async function runPageQueries({
 
         If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with QUERY_ON_DEMAND enabled.
 
-        GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=true gatsby develop
+        You can enable it by adding "flags: { QUERY_ON_DEMAND: true }" to your gatsby-config.js
 
         Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
       `),
