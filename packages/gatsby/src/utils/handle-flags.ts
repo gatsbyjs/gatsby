@@ -3,6 +3,8 @@ import { isCI } from "gatsby-core-utils"
 import realTerminalLink from "terminal-link"
 import { IFlag } from "./flags"
 import chalk from "chalk"
+import { commaListsAnd } from "common-tags"
+import { distance } from "fastest-levenshtein"
 
 const terminalLink = (text, url): string => {
   if (process.env.NODE_ENV === `test`) {
@@ -16,11 +18,54 @@ const handleFlags = (
   flags: Array<IFlag>,
   configFlags: Record<string, boolean>,
   executingCommand = process.env.gatsby_executing_command
-): { enabledConfigFlags: Array<IFlag>; message: string } => {
+): {
+  enabledConfigFlags: Array<IFlag>
+  unknownFlagMessage: string
+  message: string
+} => {
   // Prepare config flags.
   // Filter out any flags that are set to false.
   const availableFlags = new Map()
   flags.forEach(flag => availableFlags.set(flag.name, flag))
+
+  // Find unknown flags someone has in their config to warn them about.
+  const unknownConfigFlags = Object.keys(configFlags)
+    .filter(flagName => !availableFlags.has(flagName))
+    .map(flag => {
+      const flagsWithDistance = flags.map(f => {
+        return {
+          name: f.name,
+          distance: distance(flag, f.name),
+        }
+      })
+
+      const minDistance = _.minBy(flagsWithDistance, f => f.distance)
+
+      let didYouMean
+      if (minDistance) {
+        didYouMean = minDistance.distance < 4 ? minDistance.name : undefined
+      }
+
+      return {
+        flag,
+        didYouMean,
+      }
+    })
+
+  let unknownFlagMessage = ``
+  if (unknownConfigFlags.length > 0) {
+    unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known: ${unknownConfigFlags.map(
+      f => f.flag
+    )}`
+
+    const didYouMeans = unknownConfigFlags.filter(f => f.didYouMean)
+    if (didYouMeans.length > 0) {
+      unknownFlagMessage += `\n\n${commaListsAnd`Did you mean: ${didYouMeans.map(
+        f => f.didYouMean
+      )}`}?\n`
+    }
+  }
+
   let enabledConfigFlags = Object.keys(configFlags)
     .filter(name => configFlags[name] && availableFlags.has(name))
     .map(flagName => availableFlags.get(flagName))
@@ -85,7 +130,11 @@ const handleFlags = (
     message += `\n`
   }
 
-  return { enabledConfigFlags, message }
+  return {
+    enabledConfigFlags,
+    message,
+    unknownFlagMessage,
+  }
 }
 
 export default handleFlags
