@@ -124,27 +124,26 @@ const install = async (
         setPackageManager(`npm`)
       }
     }
+    const options: Options = {
+      stderr: `inherit`,
+    }
+
+    const config = [`--loglevel`, `error`, `--color`, `always`]
+
     if (getPackageManager() === `yarn` && checkForYarn()) {
       await fs.remove(`package-lock.json`)
       const args = packages.length
         ? [`add`, `--silent`, ...packages]
         : [`--silent`]
-      await execa(`yarnpkg`, args)
+      await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
-      const options: Options = {
-        stderr: `inherit`,
-      }
 
-      await execa(`npm`, [`install`, `--loglevel`, `error`], options)
+      await execa(`npm`, [`install`, ...config], options)
       await clearLine()
       reporter.success(`Installed Gatsby`)
       reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
-      await execa(
-        `npm`,
-        [`install`, `--loglevel`, `error`, ...packages],
-        options
-      )
+      await execa(`npm`, [`install`, ...config, ...packages], options)
       await clearLine()
       reporter.success(`Installed plugins`)
     }
