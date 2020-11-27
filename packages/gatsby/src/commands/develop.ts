@@ -1,6 +1,7 @@
 // NOTE(@mxstbr): Do not use the reporter in this file, as that has side-effects on import which break structured logging
 import path from "path"
 import http from "http"
+import https from "https"
 import tmp from "tmp"
 import { ChildProcess } from "child_process"
 import execa from "execa"
@@ -184,6 +185,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   // So we want to early just force it to a number to ensure we always act on a correct type.
   program.port = parseInt(program.port + ``, 10)
   const developProcessPath = slash(require.resolve(`./develop-process`))
+  const telemetryServerPath = slash(
+    require.resolve(`../utils/telemetry-server`)
+  )
 
   try {
     program.port = await detectPortInUseAndPrompt(program.port)
@@ -206,8 +210,13 @@ module.exports = async (program: IProgram): Promise<void> => {
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [statusServerPort, developPort] = await Promise.all([
+  const [
+    statusServerPort,
+    developPort,
+    telemetryServerPort,
+  ] = await Promise.all([
     getRandomPort(process.env.INTERNAL_STATUS_PORT),
+    getRandomPort(),
     getRandomPort(),
   ])
 
@@ -273,6 +282,13 @@ module.exports = async (program: IProgram): Promise<void> => {
     debugInfo
   )
 
+  const telemetryServerProcess = new ControllableScript(
+    `require(${JSON.stringify(telemetryServerPath)}).default(${JSON.stringify(
+      telemetryServerPort
+    )})`,
+    null
+  )
+
   let unlocks: Array<UnlockFn> = []
   if (!isCI()) {
     const statusUnlock = await createServiceLock(
@@ -289,6 +305,13 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
+    const telemetryUnlock = await createServiceLock(
+      program.directory,
+      `telemetryserver`,
+      {
+        port: telemetryServerPort,
+      }
+    )
     await updateSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
@@ -301,16 +324,20 @@ module.exports = async (program: IProgram): Promise<void> => {
       const port = data?.port || 8000
       console.error(
         `Looks like develop for this site is already running, can you visit ${
-          program.ssl ? `https://` : `http://`
-        }://localhost:${port} ? If it is not, try again in five seconds!`
+          program.ssl ? `https:` : `http:`
+        }//localhost:${port} ? If it is not, try again in five seconds!`
       )
       process.exit(1)
     }
 
-    unlocks = unlocks.concat([statusUnlock, developUnlock])
+    unlocks = unlocks.concat([statusUnlock, developUnlock, telemetryUnlock])
   }
 
-  const statusServer = http.createServer().listen(statusServerPort)
+  const statusServer = program.ssl
+    ? https.createServer(program.ssl)
+    : http.createServer()
+  statusServer.listen(statusServerPort)
+
   const io = socket(statusServer)
 
   const handleChildProcessIPC = (msg): void => {
@@ -320,21 +347,23 @@ module.exports = async (program: IProgram): Promise<void> => {
       process.send(msg)
     }
 
+    io.emit(`structured-log`, msg)
+
     if (
       msg.type === `LOG_ACTION` &&
       msg.action.type === `SET_STATUS` &&
       msg.action.payload === `SUCCESS`
     ) {
       proxy.serveSite()
-      io.emit(`develop:started`)
     }
   }
 
   io.on(`connection`, socket => {
-    socket.on(`develop:restart`, async () => {
+    socket.on(`develop:restart`, async respond => {
       isRestarting = true
       proxy.serveRestartingScreen()
-      io.emit(`develop:is-starting`)
+      // respond() responds to the client, which in our case prompts it to reload the page to show the restarting screen
+      if (respond) respond(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
       developProcess.onMessage(handleChildProcessIPC)
@@ -344,6 +373,8 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   developProcess.start()
   developProcess.onMessage(handleChildProcessIPC)
+
+  telemetryServerProcess.start()
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
@@ -396,8 +427,13 @@ module.exports = async (program: IProgram): Promise<void> => {
       console.warn(
         `develop process needs to be restarted to apply the changes to ${file}`
       )
-      io.emit(`develop:needs-restart`, {
-        dirtyFile: file,
+      io.emit(`structured-log`, {
+        type: `LOG_ACTION`,
+        action: {
+          type: `DEVELOP`,
+          payload: `RESTART_REQUIRED`,
+          dirtyFile: file,
+        },
       })
     })
   }
@@ -411,6 +447,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     await shutdownServices(
       {
         developProcess,
+        telemetryServerProcess,
         unlocks,
         statusServer,
         proxy,
@@ -426,6 +463,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     await shutdownServices(
       {
         developProcess,
+        telemetryServerProcess,
         unlocks,
         statusServer,
         proxy,
@@ -441,6 +479,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     shutdownServices(
       {
         developProcess,
+        telemetryServerProcess,
         unlocks,
         statusServer,
         proxy,
@@ -451,11 +490,19 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 }
 function shutdownServices(
-  { statusServer, developProcess, proxy, unlocks, watcher },
+  {
+    statusServer,
+    developProcess,
+    proxy,
+    unlocks,
+    watcher,
+    telemetryServerProcess,
+  },
   signal: NodeJS.Signals
 ): Promise<void> {
   const services = [
     developProcess.stop(signal),
+    telemetryServerProcess.stop(),
     watcher?.close(),
     new Promise(resolve => statusServer.close(resolve)),
     new Promise(resolve => proxy.server.close(resolve)),
@@ -465,5 +512,7 @@ function shutdownServices(
     services.push(unlock())
   })
 
-  return Promise.all(services).then(() => {})
+  return Promise.all(services)
+    .catch(() => {})
+    .then(() => {})
 }

@@ -3,7 +3,7 @@ const { resolve, parse } = require(`path`)
 const Debug = require(`debug`)
 const { exists, readFile, writeFile } = require(`fs-extra`)
 const svgToMiniDataURI = require(`mini-svg-data-uri`)
-const PQueue = require(`p-queue`)
+const { default: PQueue } = require(`p-queue`)
 const sqip = require(`sqip`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 

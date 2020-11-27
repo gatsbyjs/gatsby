@@ -23,7 +23,7 @@ A decoupled Drupal architecture offers two key advantages over a tightly coupled
 To use Drupal as a content source for Gatsby, add the [`gatsby-source-drupal`](/packages/gatsby-source-drupal/) plugin to your project. As with Gatsby itself, you install the `gatsby-source-drupal` plugin using [npm](/docs/glossary/#npm).
 
 ```shell
-npm install --save gatsby-source-drupal
+npm install gatsby-source-drupal
 ```
 
 A decoupled Drupal architecture lets you use the full power of Drupal's content management tools while gaining the performance advantages of a static Gatsby site.

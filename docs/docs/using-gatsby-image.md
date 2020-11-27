@@ -18,7 +18,7 @@ Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-imag
 
 - uses the new [IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to cheaply lazy load images
 - holds an image’s position so your page doesn’t jump around as images load
-- makes it easy to add a placeholder—either a gray background or a blurry version of the image.
+- makes it possible to add a placeholder—either a gray background or a blurry version of the image.
 
 _For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image/) docs._
 
@@ -50,7 +50,7 @@ With Gatsby, you can make the experience of working with images way, way better.
 1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
 
 ```shell
-  npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+  npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 2. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`

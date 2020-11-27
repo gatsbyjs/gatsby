@@ -13,7 +13,7 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 export function watchCollectionBuilder(
   absolutePath: string,
   previousQueryString: string,
-  paths: string[],
+  paths: Array<string>,
   actions: Actions,
   reporter: Reporter,
   rerunCollectionBuilder: () => void

@@ -1,355 +1,516 @@
-const { getNormalizedRichTextField } = require(`../rich-text`)
+import React from "react"
+import { render } from "@testing-library/react"
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { BLOCKS, INLINES } from "@contentful/rich-text-types"
+import { initialSync } from "../__fixtures__/rich-text-data"
+import { cloneDeep } from "lodash"
 
-const entryFactory = () => {
-  return {
-    sys: {
-      id: `abc123`,
-      contentType: { sys: { id: `article` } },
-      type: `Entry`,
-    },
-    fields: {
-      title: { en: `Title`, de: `Titel` },
-      relatedArticle: {
-        en: {
-          sys: {
-            contentType: { sys: { id: `article` } },
-            type: `Entry`,
-          },
-          fields: {
-            title: { en: `Title two`, de: `Titel zwei` },
-          },
+const raw = JSON.stringify({
+  nodeType: `document`,
+  data: {},
+  content: [
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `This is the homepage`,
+          marks: [],
+          data: {},
         },
-      },
-    },
-  }
-}
-
-const assetFactory = () => {
-  return {
-    sys: {
-      type: `Asset`,
-    },
-    fields: {
-      file: {
-        en: {
-          url: `//images.ctfassets.net/asset.jpg`,
-        },
-      },
-    },
-  }
-}
-
-describe(`getNormalizedRichTextField()`, () => {
-  let contentTypesById
-  let currentLocale
-  let defaultLocale
-  let getField
-
-  beforeEach(() => {
-    contentTypesById = new Map()
-    contentTypesById.set(`article`, {
-      sys: { id: `article` },
-      fields: [
-        { id: `title`, localized: true },
-        { id: `relatedArticle`, localized: false },
       ],
-    })
-    currentLocale = `en`
-    defaultLocale = `en`
-    getField = field => field[currentLocale]
-  })
-
-  describe(`when the rich-text object has no entry references`, () => {
-    it(`returns the object as-is`, () => {
-      const field = {
-        nodeType: `document`,
-        data: {},
-        content: [
-          {
-            nodeType: `text`,
-            data: {},
-            content: `This is a test`,
-          },
-        ],
-      }
-      expect(
-        getNormalizedRichTextField({
-          field,
-          contentTypesById,
-          getField,
-          defaultLocale,
-        })
-      ).toEqual(field)
-    })
-  })
-
-  describe(`when a rich-text node contains an entry reference`, () => {
-    describe(`a localized field`, () => {
-      describe(`when the current locale is \`en\``, () => {
-        beforeEach(() => (currentLocale = `en`))
-
-        it(`resolves the locale for the field`, () => {
-          const field = {
-            nodeType: `document`,
-            data: {},
-            content: [
-              {
-                nodeType: `embedded-entry-inline`,
-                data: { target: entryFactory() },
-              },
-            ],
-          }
-
-          const expectedTitle = `Title`
-          const actualTitle = getNormalizedRichTextField({
-            field,
-            contentTypesById,
-            getField,
-            defaultLocale,
-          }).content[0].data.target.fields.title
-
-          expect(actualTitle).toBe(expectedTitle)
-        })
-      })
-
-      describe(`when the current locale is \`de\``, () => {
-        beforeEach(() => (currentLocale = `de`))
-
-        it(`resolves the locale for the field`, () => {
-          const field = {
-            nodeType: `document`,
-            data: {},
-            content: [
-              {
-                nodeType: `embedded-entry-inline`,
-                data: { target: entryFactory() },
-              },
-            ],
-          }
-
-          const expectedTitle = `Titel`
-          const actualTitle = getNormalizedRichTextField({
-            field,
-            contentTypesById,
-            getField,
-            defaultLocale,
-          }).content[0].data.target.fields.title
-
-          expect(actualTitle).toBe(expectedTitle)
-        })
-      })
-    })
-
-    describe(`a nested localized field`, () => {
-      beforeEach(() => {
-        currentLocale = `de`
-      })
-
-      it(`resolves the locale for the nested field`, () => {
-        const field = {
-          nodeType: `document`,
+      data: {},
+    },
+    {
+      nodeType: `heading-1`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Heading 1`,
+          marks: [],
           data: {},
-          content: [
-            {
-              nodeType: `embedded-entry-inline`,
-              data: { target: entryFactory() },
-            },
-          ],
-        }
-
-        const expectedTitle = `Titel zwei`
-        const actualTitle = getNormalizedRichTextField({
-          field,
-          contentTypesById,
-          getField,
-          defaultLocale,
-        }).content[0].data.target.fields.relatedArticle.fields.title
-
-        expect(actualTitle).toBe(expectedTitle)
-      })
-    })
-  })
-
-  describe(`when a rich-text node contains an asset reference`, () => {
-    describe(`when the current locale is \`en\``, () => {
-      beforeEach(() => (currentLocale = `en`))
-
-      it(`resolves the locale for the field`, () => {
-        const field = {
-          nodeType: `document`,
-          data: {},
-          content: [
-            {
-              nodeType: `embedded-asset-block`,
-              data: { target: assetFactory() },
-            },
-          ],
-        }
-
-        const expectedURL = `//images.ctfassets.net/asset.jpg`
-        const actualURL = getNormalizedRichTextField({
-          field,
-          contentTypesById,
-          getField,
-          defaultLocale,
-        }).content[0].data.target.fields.file.url
-
-        expect(actualURL).toBe(expectedURL)
-      })
-    })
-  })
-
-  describe(`when a referenced entry contains an asset field`, () => {
-    describe(`when the current locale is \`en\``, () => {
-      beforeEach(() => {
-        contentTypesById.get(`article`).fields.push({
-          id: `assetReference`,
-          localized: true,
-        })
-        currentLocale = `en`
-      })
-
-      it(`resolves the locale for the asset's own fields`, () => {
-        const field = {
-          nodeType: `document`,
-          data: {},
-          content: [
-            {
-              nodeType: `embedded-entry-block`,
-              data: { target: entryFactory() },
-            },
-          ],
-        }
-
-        field.content[0].data.target.fields.assetReference = {
-          en: assetFactory(),
-        }
-
-        const expectedURL = `//images.ctfassets.net/asset.jpg`
-        const actualURL = getNormalizedRichTextField({
-          field,
-          contentTypesById,
-          getField,
-          defaultLocale,
-        }).content[0].data.target.fields.assetReference.fields.file.url
-
-        expect(actualURL).toBe(expectedURL)
-      })
-    })
-  })
-
-  describe(`when an entry/asset reference field is an array`, () => {
-    beforeEach(() => {
-      contentTypesById.get(`article`).fields.push({
-        id: `relatedArticles`,
-        localized: false,
-      })
-      contentTypesById.get(`article`).fields.push({
-        id: `relatedAssets`,
-        localized: false,
-      })
-    })
-
-    it(`resolves the locales of each entry in the array`, () => {
-      const field = {
-        nodeType: `document`,
-        data: {},
-        content: [
-          {
-            nodeType: `embedded-entry-block`,
-            data: { target: entryFactory() },
-          },
-        ],
-      }
-
-      const relatedArticle = entryFactory()
-      relatedArticle.fields.title = { en: `Related article #1` }
-
-      field.content[0].data.target.fields.relatedArticles = {
-        en: [relatedArticle],
-      }
-
-      const expectedTitle = `Related article #1`
-      const actualTitle = getNormalizedRichTextField({
-        field,
-        contentTypesById,
-        getField,
-        defaultLocale,
-      }).content[0].data.target.fields.relatedArticles[0].fields.title
-
-      expect(actualTitle).toBe(expectedTitle)
-    })
-
-    it(`resolves the locales of each asset in the array`, () => {
-      const field = {
-        nodeType: `document`,
-        data: {},
-        content: [
-          {
-            nodeType: `embedded-entry-block`,
-            data: { target: entryFactory() },
-          },
-        ],
-      }
-
-      const relatedAsset = assetFactory()
-      relatedAsset.fields.file = {
-        en: {
-          url: `//images.ctfassets.net/related-asset.jpg`,
         },
-      }
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-2`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Heading 2`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-3`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Heading 3`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-4`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Heading 4`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-5`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Heading 5`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-6`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Heading 6`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `This is `,
+          marks: [],
+          data: {},
+        },
+        {
+          nodeType: `text`,
+          value: `bold `,
+          marks: [
+            {
+              type: `bold`,
+            },
+          ],
+          data: {},
+        },
+        {
+          nodeType: `text`,
+          value: `and `,
+          marks: [],
+          data: {},
+        },
+        {
+          nodeType: `text`,
+          value: `italic`,
+          marks: [
+            {
+              type: `italic`,
+            },
+          ],
+          data: {},
+        },
+        {
+          nodeType: `text`,
+          value: ` and `,
+          marks: [],
+          data: {},
+        },
+        {
+          nodeType: `text`,
+          value: `both`,
+          marks: [
+            {
+              type: `bold`,
+            },
+            {
+              type: `italic`,
+            },
+          ],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `unordered-list`,
+      content: [
+        {
+          nodeType: `list-item`,
+          content: [
+            {
+              nodeType: `paragraph`,
+              content: [
+                {
+                  nodeType: `text`,
+                  value: `Very`,
+                  marks: [],
+                  data: {},
+                },
+              ],
+              data: {},
+            },
+          ],
+          data: {},
+        },
+        {
+          nodeType: `list-item`,
+          content: [
+            {
+              nodeType: `paragraph`,
+              content: [
+                {
+                  nodeType: `text`,
+                  value: `useful`,
+                  marks: [],
+                  data: {},
+                },
+              ],
+              data: {},
+            },
+          ],
+          data: {},
+        },
+        {
+          nodeType: `list-item`,
+          content: [
+            {
+              nodeType: `paragraph`,
+              content: [
+                {
+                  nodeType: `text`,
+                  value: `list`,
+                  marks: [],
+                  data: {},
+                },
+              ],
+              data: {},
+            },
+          ],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `blockquote`,
+      content: [
+        {
+          nodeType: `paragraph`,
+          content: [
+            {
+              nodeType: `text`,
+              value: `This is a quote`,
+              marks: [],
+              data: {},
+            },
+          ],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-2`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Reference tests:`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Inline Link: `,
+          marks: [],
+          data: {},
+        },
+        {
+          nodeType: `embedded-entry-inline`,
+          content: [],
+          data: {
+            target: {
+              sys: {
+                id: `7oHxo6bs0us9wIkq27qdyK`,
+                type: `Link`,
+                linkType: `Entry`,
+              },
+            },
+          },
+        },
+        {
+          nodeType: `text`,
+          value: ``,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Link in list:`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `ordered-list`,
+      content: [
+        {
+          nodeType: `list-item`,
+          content: [
+            {
+              nodeType: `paragraph`,
+              content: [
+                {
+                  nodeType: `text`,
+                  value: ``,
+                  marks: [],
+                  data: {},
+                },
+                {
+                  nodeType: `embedded-entry-inline`,
+                  content: [],
+                  data: {
+                    target: {
+                      sys: {
+                        id: `6KpLS2NZyB3KAvDzWf4Ukh`,
+                        type: `Link`,
+                        linkType: `Entry`,
+                      },
+                    },
+                  },
+                },
+                {
+                  nodeType: `text`,
+                  value: ``,
+                  marks: [],
+                  data: {},
+                },
+              ],
+              data: {},
+            },
+          ],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Embedded Entity:`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `embedded-entry-block`,
+      content: [],
+      data: {
+        target: {
+          sys: {
+            id: `7oHxo6bs0us9wIkq27qdyK`,
+            type: `Link`,
+            linkType: `Entry`,
+          },
+        },
+      },
+    },
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: ``,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `heading-2`,
+      content: [
+        {
+          nodeType: `text`,
+          value: `Embedded Asset:`,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+    {
+      nodeType: `embedded-asset-block`,
+      content: [],
+      data: {
+        target: {
+          sys: {
+            id: `4ZQrqcrTunWiuNaavhGYNT`,
+            type: `Link`,
+            linkType: `Asset`,
+          },
+        },
+      },
+    },
+    {
+      nodeType: `paragraph`,
+      content: [
+        {
+          nodeType: `text`,
+          value: ``,
+          marks: [],
+          data: {},
+        },
+      ],
+      data: {},
+    },
+  ],
+})
 
-      field.content[0].data.target.fields.relatedAssets = {
-        en: [relatedAsset],
-      }
+const fixtures = initialSync().currentSyncData
 
-      const expectedURL = `//images.ctfassets.net/related-asset.jpg`
-      const actualURL = getNormalizedRichTextField({
-        field,
-        contentTypesById,
-        getField,
-        defaultLocale,
-      }).content[0].data.target.fields.relatedAssets[0].fields.file.url
+const references = [
+  ...fixtures.entries.map(entity => {
+    return {
+      sys: entity.sys,
+      contentful_id: entity.sys.id,
+      __typename: `ContentfulContent`,
+      ...entity.fields,
+    }
+  }),
+  ...fixtures.assets.map(entity => {
+    return {
+      sys: entity.sys,
+      contentful_id: entity.sys.id,
+      __typename: `ContentfulAsset`,
+      ...entity.fields,
+    }
+  }),
+]
 
-      expect(actualURL).toBe(expectedURL)
-    })
+describe(`rich text`, () => {
+  test(`renders with default options`, () => {
+    const { container } = render(
+      renderRichText({ raw: cloneDeep(raw), references: cloneDeep(references) })
+    )
+    expect(container).toMatchSnapshot()
   })
 
-  describe(`circular references`, () => {
-    it(`prevents infinite loops when two entries reference each other`, () => {
-      const entry1 = entryFactory()
-      entry1.sys.id = `entry1-id`
-      const entry2 = entryFactory()
-      entry2.sys.id = `entry2-id`
-
-      entry2.fields.title = {
-        en: `Related article`,
-        de: `German for "related article" ;)`,
-      }
-
-      // Link the two to each other
-      entry1.fields.relatedArticle.en = entry2
-      entry2.fields.relatedArticle.en = entry1
-
-      const field = {
-        nodeType: `document`,
-        data: {},
-        content: [
-          {
-            nodeType: `embedded-entry-inline`,
-            data: { target: entry1 },
-          },
-        ],
-      }
-
-      expect(() => {
-        getNormalizedRichTextField({
-          field,
-          contentTypesById,
-          getField,
-          defaultLocale,
-        })
-      }).not.toThrowError()
-    })
+  test(`renders with custom options`, () => {
+    const options = {
+      renderNode: {
+        [INLINES.EMBEDDED_ENTRY]: node => {
+          if (!node.data.target) {
+            return (
+              <span>
+                Unresolved INLINE ENTRY: {JSON.stringify(node, null, 2)}
+              </span>
+            )
+          }
+          return (
+            <span>
+              Resolved inline Entry ({node.data.target.contentful_id})
+            </span>
+          )
+        },
+        [INLINES.ENTRY_HYPERLINK]: node => {
+          if (!node.data.target) {
+            return (
+              <span>
+                Unresolved ENTRY HYPERLINK: {JSON.stringify(node, null, 2)}
+              </span>
+            )
+          }
+          return (
+            <span>
+              Resolved entry Hyperlink ({node.data.target.contentful_id})
+            </span>
+          )
+        },
+        [INLINES.ASSET_HYPERLINK]: node => {
+          if (!node.data.target) {
+            return (
+              <span>
+                Unresolved ASSET HYPERLINK: {JSON.stringify(node, null, 2)}
+              </span>
+            )
+          }
+          return (
+            <span>
+              Resolved asset Hyperlink ({node.data.target.contentful_id})
+            </span>
+          )
+        },
+        [BLOCKS.EMBEDDED_ENTRY]: node => {
+          if (!node.data.target) {
+            return (
+              <div>Unresolved ENTRY !!!!": {JSON.stringify(node, null, 2)}</div>
+            )
+          }
+          return (
+            <h2>
+              Resolved embedded Entry: {node.data.target.title[`en-US`]} (
+              {node.data.target.contentful_id})
+            </h2>
+          )
+        },
+        [BLOCKS.EMBEDDED_ASSET]: node => {
+          if (!node.data.target) {
+            return (
+              <div>Unresolved ASSET !!!!": {JSON.stringify(node, null, 2)}</div>
+            )
+          }
+          return (
+            <h2>
+              Resolved embedded Asset: {node.data.target.title[`en-US`]} (
+              {node.data.target.contentful_id})
+            </h2>
+          )
+        },
+      },
+    }
+    const { container } = render(
+      renderRichText(
+        { raw: cloneDeep(raw), references: cloneDeep(references) },
+        options
+      )
+    )
+    expect(container).toMatchSnapshot()
   })
 })

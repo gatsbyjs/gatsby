@@ -21,7 +21,7 @@ We recommend using this plugin together with the [manifest plugin](https://www.n
 
 ## Installing `gatsby-plugin-offline`
 
-`npm install --save gatsby-plugin-offline`
+`npm install gatsby-plugin-offline`
 
 Add this plugin to your `gatsby-config.js`
 

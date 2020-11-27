@@ -75,3 +75,7 @@ Don't output anything except for a success message when used together with
 #### `--copy-all`
 
 Copy all modules/files in the gatsby source repo in packages/
+
+#### `--force-install`
+
+Disables copying files into node_modules and forces usage of local npm repository.

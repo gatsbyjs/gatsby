@@ -16,7 +16,7 @@ describe(`Panic`, () => {
   let events = []
 
   beforeEach(async () => {
-    gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       //   stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],

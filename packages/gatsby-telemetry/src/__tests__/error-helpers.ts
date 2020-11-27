@@ -90,7 +90,7 @@ describe(`Errors Helpers`, () => {
       expect(sanitizedErrorString).toEqual(
         expect.not.stringContaining(`sidharthachatterjee`)
       )
-      const result = sanitizedErrorString.match(/\$SNIP/g) as string[]
+      const result = sanitizedErrorString.match(/\$SNIP/g) as Array<string>
       expect(result.length).toBe(4)
 
       mockCwd.mockRestore()

@@ -4,7 +4,7 @@ Easily add Google Analytics to your Gatsby site.
 
 ## Install
 
-`npm install --save gatsby-plugin-google-analytics`
+`npm install gatsby-plugin-google-analytics`
 
 ## How to use
 

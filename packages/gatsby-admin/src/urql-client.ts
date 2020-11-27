@@ -9,7 +9,7 @@ import { SubscriptionClient } from "subscriptions-transport-ws"
 
 interface ICreateUrqlClientOptions {
   port: number
-  connectionCallback: any
+  connectionCallback?: any
 }
 
 export const createUrqlClient = ({

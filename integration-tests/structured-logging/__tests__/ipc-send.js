@@ -15,7 +15,7 @@ describe(`IPC Send`, () => {
   let gatsbyProcess
 
   beforeAll(() => {
-    gatsbyProcess = spawn("node", [gatsbyBin, `develop`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       env: {
         ...process.env,

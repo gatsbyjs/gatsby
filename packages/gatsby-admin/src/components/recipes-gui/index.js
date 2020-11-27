@@ -10,7 +10,7 @@ import { createUrqlClient } from "../../urql-client"
 import { useMutation, useSubscription } from "urql"
 
 import lodash from "lodash"
-import fetch from "isomorphic-fetch"
+import fetch from "cross-fetch"
 
 import { Button, Heading } from "gatsby-interface"
 import { StepRenderer } from "gatsby-recipes/components"

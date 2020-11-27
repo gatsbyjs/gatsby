@@ -19,9 +19,9 @@ const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
 type ActionLogListener = (action: ActionsUnion) => any
-type Thunk = (...args: any[]) => ActionsUnion
+type Thunk = (...args: Array<any>) => ActionsUnion
 
-const storeSwapListeners: StoreListener[] = []
+const storeSwapListeners: Array<StoreListener> = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
 export const getStore = (): typeof store => store

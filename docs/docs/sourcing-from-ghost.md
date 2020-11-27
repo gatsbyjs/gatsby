@@ -26,7 +26,7 @@ The fastest way to get started is with the official **Gatsby Starter Ghost** rep
 If you prefer to start from scratch or integrate the Ghost Content API into an existing site, you can set up the **Gatsby Source Ghost** plugin.
 
 ```shell
-npm install --save gatsby-source-ghost
+npm install gatsby-source-ghost
 ```
 
 ### Configuration
@@ -106,7 +106,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 The code above will create pages in the root of the site at `/`, with the path being the slug of the post.
 
-Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so a simple example looks something like this:
+Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so an example looks something like this:
 
 ```jsx:title=templates/post.js
 import React from "react"

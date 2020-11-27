@@ -13,7 +13,7 @@ export class GatsbyWebpackStatsExtractor {
       const assetsMap = {}
       for (const chunkGroup of stats.compilation.chunkGroups) {
         if (chunkGroup.name) {
-          const files: string[] = []
+          const files: Array<string> = []
           for (const chunk of chunkGroup.chunks) {
             files.push(...chunk.files)
           }

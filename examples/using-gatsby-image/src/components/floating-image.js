@@ -38,7 +38,7 @@ const FloatingImage = ({
         so we need to override the gatsby-image default to make
         our own styles work.
 
-        https://www.gatsbyjs.org/packages/gatsby-image/#gatsby-image-props
+        https://www.gatsbyjs.com/plugins/gatsby-image/#gatsby-image-props
     */}
     <Image
       fixed={[

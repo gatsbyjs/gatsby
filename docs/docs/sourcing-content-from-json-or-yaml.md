@@ -133,7 +133,7 @@ For this example, you will need to add an extra dependency so that the file cont
 Open your terminal, navigate to the folder containing the Gatsby site, and issue the following command:
 
 ```shell
-npm install --save js-yaml
+npm install js-yaml
 ```
 
 This newly added package will be responsible for loading and parsing the YAML file safely.

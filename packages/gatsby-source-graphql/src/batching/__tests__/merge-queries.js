@@ -1,4 +1,4 @@
-const { print, parse } = require(`graphql`)
+const { print, parse } = require(`gatsby/graphql`)
 const { merge, resolveResult } = require(`../merge-queries`)
 
 describe(`Query merging`, () => {

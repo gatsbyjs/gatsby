@@ -21,7 +21,7 @@ If multiple plugins implement `replaceRenderer`, the build script will warn you:
 ```text
 warning replaceRenderer API found in these plugins:
 warning plugin-name-a, default-site-plugin
-warning This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/
+warning This might be an error, see: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/
 
 warning Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: plugin-name-a
 ```
@@ -51,7 +51,7 @@ You'll need to override your plugins' `replaceRenderer` code in your `gatsby-ssr
 
 ### Initial setup
 
-In this example project you're using [`redux`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) and [Gatsby's Styled Components plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components).
+In this example project you're using [Redux](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) and [Gatsby's Styled Components plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components).
 
 ```js:title=gatsby-config.js
 module.exports = {

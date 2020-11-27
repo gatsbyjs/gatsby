@@ -18,7 +18,7 @@ The WordPress REST API, on the other hand, returns JSON instead of HTML. Using a
 Gatsby [supports WordPress](/docs/sourcing-from-wordpress/) as a content source with the [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/) plugin. As with Gatsby, you can install the `gatsby-source-wordpress` plugin using [npm](/docs/glossary/#npm):
 
 ```shell
-npm install --save gatsby-source-wordpress
+npm install gatsby-source-wordpress
 ```
 
 The `gatsby-source-wordpress` plugin works with self-hosted WordPress sites, and those hosted by WordPress.com. Be aware, however, that the WordPress.com API supports a smaller set of features than that of self-hosted WordPress sites. It's also compatible with the [Advanced Custom Fields](https://www.advancedcustomfields.com/) plugin.

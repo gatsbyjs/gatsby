@@ -38,7 +38,7 @@ Once you save the file, look at `/my-files/` again—the new markdown file is in
 Add a transformer plugin that can transform markdown files:
 
 ```shell
-npm install --save gatsby-transformer-remark
+npm install gatsby-transformer-remark
 ```
 
 Then add it to the `gatsby-config.js` like normal:
@@ -87,7 +87,7 @@ Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with th
 ```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 

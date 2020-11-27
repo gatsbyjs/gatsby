@@ -14,7 +14,7 @@ export function printDeprecationWarnings(): void {
       docsLink: `https://gatsby.dev/pathContext`,
     },
   }
-  const deprecatedLocations: Record<string, string[]> = {
+  const deprecatedLocations: Record<string, Array<string>> = {
     boundActionCreators: [],
     pathContext: [],
   }

@@ -37,7 +37,7 @@ gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello
 Now move into the newly created directory and install the Gatsby plugin for Netlify CMS:
 
 ```shell
-cd netlify-cms-tutorial && npm install --save netlify-cms-app gatsby-plugin-netlify-cms
+cd netlify-cms-tutorial && npm install netlify-cms-app gatsby-plugin-netlify-cms
 ```
 
 Gatsby plugins are registered in a file called `gatsby-config.js` in the site root. Create that file
@@ -124,7 +124,7 @@ did locally.
 
 Netlify CMS will need to authenticate with GitHub to save your content changes to your repo. As
 mentioned above, this requires a server, and Netlify handles that aspect for you. First you'll need
-to add your deployed site as an OAuth application in your GitHub settings - just follow the steps in
+to add your deployed site as an OAuth application in your GitHub settings - follow the steps in
 the [Netlify
 docs](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider). This
 will allow scripts running on your deployed site, such as Netlify CMS, to access your GitHub

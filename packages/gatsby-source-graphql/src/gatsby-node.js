@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require(`uuid`)
+const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   wrapSchema,
@@ -114,13 +114,11 @@ exports.sourceNodes = async (
         defaultTransforms,
         options,
       })
-    : wrapSchema(
-        {
-          schema: introspectionSchema,
-          executor: linkToExecutor(link),
-        },
-        defaultTransforms
-      )
+    : wrapSchema({
+        schema: introspectionSchema,
+        executor: linkToExecutor(link),
+        transforms: defaultTransforms,
+      })
 
   addThirdPartySchema({ schema })
 

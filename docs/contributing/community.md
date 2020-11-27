@@ -52,15 +52,19 @@ For the latest news about Gatsby,
 ### Stack Overflow
 
 Many members of the community use Stack Overflow to ask questions. Read through
-the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
+the [existing questions](https://stackoverflow.com/questions/tagged/gatsby)
 tagged with `gatsby` or
-[ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
+[ask your own](https://stackoverflow.com/questions/ask?tags=gatsby)!
 
 ### Discord
 
 If you need an answer right away, check out the
 [Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
 useful resources.
+
+### GitHub Discussions
+
+Directly integrated into the repository, you can use [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions) to ask for help or share ideas.
 
 ### Hashnode
 

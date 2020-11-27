@@ -6,7 +6,7 @@ In contrast to recipes and reference guides, tutorials are step-by-step instruct
 
 ## Near perfect example of a tutorial
 
-[Main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/)
+[Main Gatsby tutorial](https://www.gatsbyjs.com/tutorial/)
 
 ## What should a tutorial be about?
 
@@ -17,13 +17,12 @@ We need tutorials to guide users of all skill levels through performing a series
 Topics should be chosen based on these priorities:
 
 1. Tutorials related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
-2. Tutorials listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-3. Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
-4. Tutorials that you or other community members would like to see
+2. Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
+3. Tutorials that you or other community members would like to see
 
 ## Length of a tutorial
 
-If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/).
+If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.com/tutorial/).
 
 If you have a tutorial that falls into this category, it is likely a big enough project that you’ll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
 

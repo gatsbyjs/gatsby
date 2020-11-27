@@ -9,7 +9,6 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLJSON,
   GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
@@ -25,10 +24,16 @@ const cacheImage = require(`./cache-image`)
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
-    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
+    `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
+  )
+}
+if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE) {
+  console.warn(
+    `Please be aware that the \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
   )
 }
 const REMOTE_CACHE_FOLDER =
+  process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE ??
   process.env.GATSBY_REMOTE_CACHE ??
   path.join(process.cwd(), `.cache/remote_cache`)
 const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
@@ -61,7 +66,7 @@ const getBase64Image = imageProps => {
   // TODO: Find the best place for this step. This is definitely not it.
   fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
 
-  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha)
+  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
 
   if (fs.existsSync(cacheFile)) {
     // TODO: against dogma, confirm whether readFileSync is indeed slower
@@ -547,23 +552,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store }) => {
-  if (type.name.match(/contentful.*RichTextNode/)) {
-    return {
-      nodeType: {
-        type: GraphQLString,
-        deprecationReason: `This field is deprecated, please use 'json' instead.`,
-      },
-      json: {
-        type: GraphQLJSON,
-        resolve: (source, fieldArgs) => {
-          const contentJSON = JSON.parse(source.internal.content)
-          return contentJSON
-        },
-      },
-    }
-  }
-
+exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }

@@ -9,9 +9,11 @@ There are many options out there for adding comment functionality, several of th
 - [Disqus](https://disqus.com)
 - [Commento](https://commento.io)
 - [Facebook Comments](https://www.npmjs.com/package/react-facebook)
+- [Fast Comments](https://fastcomments.com/)
 - [Staticman](https://staticman.net)
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
+- [Utterances](https://utteranc.es)
 
 You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comment-system/), as Tania Rascia wrote on the Gatsby blog.
 
@@ -44,7 +46,7 @@ Here are the steps for adding Disqus comments to your own blog:
 npm install disqus-react
 ```
 
-3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client-side code](https://www.gatsbyjs.org/docs/environment-variables/#client-side-javascript).)
+3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client-side code](https://www.gatsbyjs.com/docs/environment-variables/#client-side-javascript).)
 
 ```text:title=.env.example
 # enables Disqus comments for blog posts

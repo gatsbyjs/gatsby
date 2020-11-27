@@ -1,7 +1,7 @@
 # gatsby-plugin-page-creator
 
 Gatsby plugin that automatically creates pages from React components in specified directories. Gatsby
-includes this plugin automatically in all sites for creating pages from components in `src/pages`.
+includes this plugin automatically in all sites for creating pages from components in `src/pages`. You can also leverage the [File System Route API](#TODO) to programmatically create pages from your data.
 
 You may include another instance of this plugin if you'd like to create additional "pages" directories.
 
@@ -21,7 +21,7 @@ To exclude custom patterns, see [Ignoring Specific Files](#ignoring-specific-fil
 
 ## Install
 
-`npm install --save gatsby-plugin-page-creator`
+`npm install gatsby-plugin-page-creator`
 
 ## How to use
 
