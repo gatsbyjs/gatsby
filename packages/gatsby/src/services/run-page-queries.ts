@@ -8,7 +8,7 @@ import {
 } from "../utils/show-experiment-notice"
 import { isCI } from "gatsby-core-utils"
 
-const TWO_MINUTES = 2 * 60 * 1000
+const ONE_MINUTE = 1 * 60 * 1000
 
 export async function runPageQueries({
   parentSpan,
@@ -62,7 +62,7 @@ export async function runPageQueries({
 
         Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
       `),
-      TWO_MINUTES
+      ONE_MINUTE
     )
   }
 
