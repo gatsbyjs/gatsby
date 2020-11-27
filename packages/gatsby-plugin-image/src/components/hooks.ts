@@ -17,7 +17,7 @@ import { IGatsbyImageHelperArgs, generateImageData } from "../image-utils"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
-export const hasNativeLazyLoadSupport =
+export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
