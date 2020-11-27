@@ -9,7 +9,7 @@ describe(`gatsby-plugin-image / intersection observer`, () => {
 
   it(`lazy loads an image when scrolling`, () => {
     cy.window().then(win => {
-      expect(`loading` in win.HTMLImageElement.prototype).toBeFalsy()
+      expect(`loading` in win.HTMLImageElement.prototype).to.equal(false)
     })
 
     // We need to wait for a decent amount of time so that the image
