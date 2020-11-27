@@ -6,6 +6,7 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import { stripIndent } from "common-tags"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
@@ -367,9 +368,50 @@ export async function initialize({
 
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      const deleteGlobs = [
+        // By default delete all files & subdirectories
+        `${cacheDirectory}/**`,
+        `${cacheDirectory}/*/`,
+      ]
+
+      if (process.env.GATSBY_V3_CACHE_CLEAN) {
+        // Add webpack
+        deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        // Add gatsby-source-filesystem
+        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+      } else {
+        // If the site has more than 50 downloaded files in it, tell them
+        // how to save time.
+        try {
+          const files = await fs.readdir(
+            `.cache/caches/gatsby-source-filesystem`
+          )
+          if (files.length > 100) {
+            reporter.info(stripIndent`\n\n
+
+        Your local development experience is about to get better, faster, and stronger!
+
+        Your friendly Gatsby maintainers detected your site downloads quite a few files and that we're about to delete all ${Math.round(
+          files.length / 2
+        )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
+
+        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable V3_CACHE_CLEAN and run your develop server again.
+
+        To do so, add to your gatsby-config.js:
+
+        flags: {
+          V3_CACHE_CLEAN: true,
+        }
+
+        Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+              `)
+          }
+        } catch {
+          // Ignore errors (mostly will just be directory not found).
+        }
+      }
+
+      const deletedPaths = await del(deleteGlobs)
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }

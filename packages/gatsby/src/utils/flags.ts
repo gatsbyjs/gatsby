@@ -60,6 +60,15 @@ const activeFlags: Array<IFlag> = [
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
+  {
+    name: `V3_CACHE_CLEAN`,
+    env: `GATSBY_V3_CACHE_CLEAN`,
+    command: `all`,
+    telemetryId: `V3CacheClear`,
+    experimental: false,
+    description: `More efficient cache clearing. Don't delete expensive caches that are unlikely to be causing issues. This will become the default behavior in Gatsby v3`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+  },
 ]
 
 export default activeFlags
