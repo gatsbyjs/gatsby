@@ -6,6 +6,7 @@ const {
   locales,
   space,
 } = require(`./data.json`)
+const nestedReferencesTestData = require(`./nested-references-data.json`)
 
 const conflictFieldPrefix = `contentful_test`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
@@ -50,6 +51,9 @@ describe(`Process contentful data (by name)`, () => {
       locales,
       space,
       useNameForId: true,
+      nestedReferences: {
+        fields: [],
+      },
     })
     expect(foreignReferenceMap).toMatchSnapshot()
   })
@@ -71,6 +75,9 @@ describe(`Process contentful data (by name)`, () => {
         locales,
         space,
         useNameForId: true,
+        nestedReferences: {
+          fields: [],
+        },
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -91,6 +98,79 @@ describe(`Process contentful data (by name)`, () => {
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
+  })
+
+  describe(`with nested references`, () => {
+    let entryList
+    let resolvable
+    let foreignReferenceMap
+
+    it(`builds entry list`, () => {
+      entryList = normalize.buildEntryList({
+        mergedSyncData: nestedReferencesTestData.currentSyncData,
+        contentTypeItems: nestedReferencesTestData.contentTypeItems,
+      })
+      expect(entryList).toMatchSnapshot()
+    })
+
+    it(`builds list of resolvable data`, () => {
+      resolvable = normalize.buildResolvableSet({
+        assets: nestedReferencesTestData.currentSyncData.assets,
+        entryList,
+        defaultLocale: nestedReferencesTestData.defaultLocale,
+        locales: nestedReferencesTestData.locales,
+      })
+      expect(resolvable).toMatchSnapshot()
+    })
+
+    it(`builds foreignReferenceMap`, () => {
+      foreignReferenceMap = normalize.buildForeignReferenceMap({
+        contentTypeItems: nestedReferencesTestData.contentTypeItems,
+        entryList: entryList,
+        resolvable,
+        defaultLocale: nestedReferencesTestData.defaultLocale,
+        locales: nestedReferencesTestData.locales,
+        space: nestedReferencesTestData.space,
+        useNameForId: true,
+        nestedReferences: {
+          fields: [
+            { key: `multipleReferences`, referenceKey: `items` },
+            { key: `singleReference`, referenceKey: `item` },
+          ],
+        },
+      })
+      expect(foreignReferenceMap).toMatchSnapshot()
+    })
+
+    it(`creates nodes for each entry`, () => {
+      const createNode = jest.fn()
+      const createNodeId = jest.fn(id => id)
+      nestedReferencesTestData.contentTypeItems.forEach(
+        (contentTypeItem, i) => {
+          normalize.createNodesForContentType({
+            contentTypeItem,
+            restrictedNodeFields,
+            conflictFieldPrefix,
+            entries: entryList[i],
+            createNode,
+            createNodeId,
+            resolvable,
+            foreignReferenceMap,
+            defaultLocale: nestedReferencesTestData.defaultLocale,
+            locales: nestedReferencesTestData.locales,
+            space: nestedReferencesTestData.space,
+            useNameForId: true,
+            nestedReferences: {
+              fields: [
+                { key: `multipleReferences`, referenceKey: `items` },
+                { key: `singleReference`, referenceKey: `item` },
+              ],
+            },
+          })
+        }
+      )
+      expect(createNode.mock.calls).toMatchSnapshot()
+    })
   })
 })
 
@@ -126,6 +206,9 @@ describe(`Process contentful data (by id)`, () => {
       locales,
       space,
       useNameForId: false,
+      nestedReferences: {
+        fields: [],
+      },
     })
     expect(foreignReferenceMap).toMatchSnapshot()
   })
@@ -147,6 +230,9 @@ describe(`Process contentful data (by id)`, () => {
         locales,
         space,
         useNameForId: false,
+        nestedReferences: {
+          fields: [],
+        },
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -167,6 +253,79 @@ describe(`Process contentful data (by id)`, () => {
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
+  })
+
+  describe(`with nested references`, () => {
+    let entryList
+    let resolvable
+    let foreignReferenceMap
+
+    it(`builds entry list`, () => {
+      entryList = normalize.buildEntryList({
+        mergedSyncData: nestedReferencesTestData.currentSyncData,
+        contentTypeItems: nestedReferencesTestData.contentTypeItems,
+      })
+      expect(entryList).toMatchSnapshot()
+    })
+
+    it(`builds list of resolvable data`, () => {
+      resolvable = normalize.buildResolvableSet({
+        assets: nestedReferencesTestData.currentSyncData.assets,
+        entryList,
+        defaultLocale: nestedReferencesTestData.defaultLocale,
+        locales: nestedReferencesTestData.locales,
+      })
+      expect(resolvable).toMatchSnapshot()
+    })
+
+    it(`builds foreignReferenceMap`, () => {
+      foreignReferenceMap = normalize.buildForeignReferenceMap({
+        contentTypeItems: nestedReferencesTestData.contentTypeItems,
+        entryList: entryList,
+        resolvable,
+        defaultLocale: nestedReferencesTestData.defaultLocale,
+        locales: nestedReferencesTestData.locales,
+        space: nestedReferencesTestData.space,
+        useNameForId: false,
+        nestedReferences: {
+          fields: [
+            { key: `multipleReferences`, referenceKey: `items` },
+            { key: `singleReference`, referenceKey: `item` },
+          ],
+        },
+      })
+      expect(foreignReferenceMap).toMatchSnapshot()
+    })
+
+    it(`creates nodes for each entry`, () => {
+      const createNode = jest.fn()
+      const createNodeId = jest.fn(id => id)
+      nestedReferencesTestData.contentTypeItems.forEach(
+        (contentTypeItem, i) => {
+          normalize.createNodesForContentType({
+            contentTypeItem,
+            restrictedNodeFields,
+            conflictFieldPrefix,
+            entries: entryList[i],
+            createNode,
+            createNodeId,
+            resolvable,
+            foreignReferenceMap,
+            defaultLocale: nestedReferencesTestData.defaultLocale,
+            locales: nestedReferencesTestData.locales,
+            space: nestedReferencesTestData.space,
+            useNameForId: false,
+            nestedReferences: {
+              fields: [
+                { key: `multipleReferences`, referenceKey: `items` },
+                { key: `singleReference`, referenceKey: `item` },
+              ],
+            },
+          })
+        }
+      )
+      expect(createNode.mock.calls).toMatchSnapshot()
+    })
   })
 })
 

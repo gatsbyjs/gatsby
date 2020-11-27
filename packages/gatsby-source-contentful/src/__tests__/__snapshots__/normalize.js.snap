@@ -5067,6 +5067,859 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
 ]
 `;
 
+exports[`Process contentful data (by id) with nested references builds entry list 1`] = `
+Array [
+  Array [
+    Object {
+      "fields": Object {
+        "fakeMultipleReferences": Object {
+          "en-US": Array [
+            Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+            Object {
+              "sys": Object {
+                "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          ],
+        },
+        "fakeRegularSingleReference": Object {
+          "en-US": Object {
+            "sys": Object {
+              "id": "1rCAg2qyLJdLmk4W3SRadQ",
+              "linkType": "Entry",
+              "type": "Link",
+            },
+          },
+        },
+        "multipleReferences": Object {
+          "en-US": Array [
+            Object {
+              "columnSize": Object {
+                "desktop": Object {
+                  "isCustom": false,
+                  "value": "1/2",
+                },
+                "mobile": Object {
+                  "isCustom": true,
+                  "value": "1/4",
+                },
+                "tablet": Object {
+                  "isCustom": false,
+                  "value": "1/3",
+                },
+              },
+              "items": Array [
+                Object {
+                  "sys": Object {
+                    "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+              ],
+            },
+            Object {
+              "columnSize": Object {
+                "desktop": Object {
+                  "isCustom": false,
+                  "value": "1/2",
+                },
+                "mobile": Object {
+                  "isCustom": false,
+                  "value": "1/1",
+                },
+                "tablet": Object {
+                  "isCustom": false,
+                  "value": "1/3",
+                },
+              },
+              "items": Array [
+                Object {
+                  "sys": Object {
+                    "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+                Object {
+                  "sys": Object {
+                    "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+              ],
+            },
+            Object {
+              "columnSize": Object {
+                "desktop": Object {
+                  "isCustom": false,
+                  "value": "1/2",
+                },
+                "mobile": Object {
+                  "isCustom": false,
+                  "value": "1/1",
+                },
+                "tablet": Object {
+                  "isCustom": false,
+                  "value": "1/1",
+                },
+              },
+              "items": Array [
+                Object {
+                  "sys": Object {
+                    "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        "regularMultipleReferences": Object {
+          "en-US": Array [
+            Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+            Object {
+              "sys": Object {
+                "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          ],
+        },
+        "regularSingleReference": Object {
+          "en-US": Object {
+            "sys": Object {
+              "id": "1rCAg2qyLJdLmk4W3SRadQ",
+              "linkType": "Entry",
+              "type": "Link",
+            },
+          },
+        },
+        "singleReference": Object {
+          "en-US": Object {
+            "columnSize": Object {
+              "desktop": Object {
+                "isCustom": false,
+                "value": "1/2",
+              },
+              "mobile": Object {
+                "isCustom": true,
+                "value": "1/4",
+              },
+              "tablet": Object {
+                "isCustom": false,
+                "value": "1/3",
+              },
+            },
+            "item": Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          },
+        },
+        "title": Object {
+          "en-US": "Test Nested References",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "nestedReferences",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-21T03:05:19.093Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "aAShlwdvPo63u8nrU1J6D",
+        "revision": 12,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-23T03:49:27.128Z",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "isReal": Object {
+          "en-US": false,
+        },
+        "message": Object {
+          "en-US": "This apparently is not real 🥺",
+        },
+        "title": Object {
+          "en-US": "Test Entity 2",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-21T03:04:25.366Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "1rCAg2qyLJdLmk4W3SRadQ",
+        "revision": 1,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-21T03:04:25.366Z",
+      },
+    },
+    Object {
+      "fields": Object {
+        "isReal": Object {
+          "en-US": true,
+        },
+        "message": Object {
+          "en-US": "__Hello world__",
+        },
+        "title": Object {
+          "en-US": "Test Entity 1",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-21T03:04:05.062Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "2zsZYdF8HQAIxRMKDFzGoV",
+        "revision": 1,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-21T03:04:05.062Z",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "multipleReferences": Object {
+          "en-US": Object {
+            "columnSize": Object {
+              "desktop": Object {
+                "isCustom": false,
+                "value": "1/2",
+              },
+              "mobile": Object {
+                "isCustom": true,
+                "value": "1/4",
+              },
+              "tablet": Object {
+                "isCustom": false,
+                "value": "1/3",
+              },
+            },
+            "items": Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          },
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testCases",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-22T02:20:58.057Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "4CAaboLHsHSGfXAjqWwBF0",
+        "revision": 10,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-27T04:58:12.598Z",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process contentful data (by id) with nested references builds foreignReferenceMap 1`] = `
+Object {
+  "1rCAg2qyLJdLmk4W3SRadQ___Entry": Array [
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "4CAaboLHsHSGfXAjqWwBF0",
+      "name": "testcases___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+  ],
+  "2zsZYdF8HQAIxRMKDFzGoV___Entry": Array [
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nestedreferences___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+  ],
+}
+`;
+
+exports[`Process contentful data (by id) with nested references builds list of resolvable data 1`] = `
+Set {
+  "aAShlwdvPo63u8nrU1J6D___Entry",
+  "1rCAg2qyLJdLmk4W3SRadQ___Entry",
+  "2zsZYdF8HQAIxRMKDFzGoV___Entry",
+  "4CAaboLHsHSGfXAjqWwBF0___Entry",
+}
+`;
+
+exports[`Process contentful data (by id) with nested references creates nodes for each entry 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "nestedReferences",
+      "internal": Object {
+        "contentDigest": "50de36287126219cd319fcb1fda9c5da",
+        "type": "ContentfulContentType",
+      },
+      "name": "Nested References",
+      "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrysingleReferenceJSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences0JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences1JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences2JSONNode",
+      ],
+      "contentful_id": "aAShlwdvPo63u8nrU1J6D",
+      "createdAt": "2020-11-21T03:05:19.093Z",
+      "fakeMultipleReferences___NODE": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      ],
+      "fakeRegularSingleReference___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "internal": Object {
+        "contentDigest": "84465c863a885edda1dec084f8ac8953",
+        "type": "ContentfulNestedReferences",
+      },
+      "multipleReferences___NODE": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences0JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences1JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences2JSONNode",
+      ],
+      "node_locale": "en-US",
+      "parent": "nestedReferences",
+      "regularMultipleReferences___NODE": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      ],
+      "regularSingleReference___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "singleReference___NODE": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrysingleReferenceJSONNode",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "nestedReferences",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 12,
+        "type": "Entry",
+      },
+      "title": "Test Nested References",
+      "updatedAt": "2020-11-23T03:49:27.128Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": true,
+          "value": "1/4",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrysingleReferenceJSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/4\\",\\"isCustom\\":true},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"item___NODE\\":\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"}",
+        "contentDigest": "f3f5d55d237070dd11f30639934c2daa",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesSingleReferenceJsonNode",
+      },
+      "item___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": true,
+          "value": "1/4",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences0JSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/4\\",\\"isCustom\\":true},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":[\\"wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry\\"]}",
+        "contentDigest": "abf3d9a27188cb78dc63c08249fe7720",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesMultipleReferencesJsonNode",
+      },
+      "items___NODE": Array [
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      ],
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": false,
+          "value": "1/1",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences1JSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/1\\",\\"isCustom\\":false},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":[\\"wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry\\",\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"]}",
+        "contentDigest": "a149b09bef836514d77cd66472c5e562",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesMultipleReferencesJsonNode",
+      },
+      "items___NODE": Array [
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      ],
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": false,
+          "value": "1/1",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/1",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences2JSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/1\\",\\"isCustom\\":false},\\"tablet\\":{\\"value\\":\\"1/1\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":[\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"]}",
+        "contentDigest": "6545a857a69c6c959d9d90cc02afcc0d",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesMultipleReferencesJsonNode",
+      },
+      "items___NODE": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      ],
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "testEntity",
+      "internal": Object {
+        "contentDigest": "ad7158859f8e3e7177d6a40922b30cee",
+        "type": "ContentfulContentType",
+      },
+      "name": "Test Entity",
+      "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___EntrymessageTextNode",
+      ],
+      "contentful_id": "1rCAg2qyLJdLmk4W3SRadQ",
+      "createdAt": "2020-11-21T03:04:25.366Z",
+      "id": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "internal": Object {
+        "contentDigest": "27c354c25f5c1cbf5bbb31cdd9886541",
+        "type": "ContentfulTestEntity",
+      },
+      "isReal": false,
+      "message___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___EntrymessageTextNode",
+      "nestedreferences___NODE": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      ],
+      "node_locale": "en-US",
+      "parent": "testEntity",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 1,
+        "type": "Entry",
+      },
+      "testcases___NODE": Array [
+        "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___Entry",
+      ],
+      "title": "Test Entity 2",
+      "updatedAt": "2020-11-21T03:04:25.366Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___EntrymessageTextNode",
+      ],
+      "contentful_id": "2zsZYdF8HQAIxRMKDFzGoV",
+      "createdAt": "2020-11-21T03:04:05.062Z",
+      "id": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      "internal": Object {
+        "contentDigest": "b6493bc54af19d93c21e237a4444c2aa",
+        "type": "ContentfulTestEntity",
+      },
+      "isReal": true,
+      "message___NODE": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___EntrymessageTextNode",
+      "nestedreferences___NODE": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      ],
+      "node_locale": "en-US",
+      "parent": "testEntity",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 1,
+        "type": "Entry",
+      },
+      "title": "Test Entity 1",
+      "updatedAt": "2020-11-21T03:04:05.062Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___EntrymessageTextNode",
+      "internal": Object {
+        "content": "This apparently is not real 🥺",
+        "contentDigest": "1d5775d0f000ed0fde922decf7cf9f2f",
+        "mediaType": "text/markdown",
+        "type": "contentfulTestEntityMessageTextNode",
+      },
+      "message": "This apparently is not real 🥺",
+      "parent": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___EntrymessageTextNode",
+      "internal": Object {
+        "content": "__Hello world__",
+        "contentDigest": "dee71c5a4646c198cf7b759af903822a",
+        "mediaType": "text/markdown",
+        "type": "contentfulTestEntityMessageTextNode",
+      },
+      "message": "__Hello world__",
+      "parent": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": null,
+      "id": "testCases",
+      "internal": Object {
+        "contentDigest": "ab06af6883c0efcf41175eb509f7937c",
+        "type": "ContentfulContentType",
+      },
+      "name": "Test Cases",
+      "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___EntrymultipleReferencesJSONNode",
+      ],
+      "contentful_id": "4CAaboLHsHSGfXAjqWwBF0",
+      "createdAt": "2020-11-22T02:20:58.057Z",
+      "id": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___Entry",
+      "internal": Object {
+        "contentDigest": "76b6e1224b7b642d8fe45276aa24f79e",
+        "type": "ContentfulTestCases",
+      },
+      "multipleReferences___NODE": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___EntrymultipleReferencesJSONNode",
+      "node_locale": "en-US",
+      "parent": "testCases",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testCases",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 10,
+        "type": "Entry",
+      },
+      "updatedAt": "2020-11-27T04:58:12.598Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": true,
+          "value": "1/4",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___EntrymultipleReferencesJSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/4\\",\\"isCustom\\":true},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"}",
+        "contentDigest": "c2532ea3c2f19dfe819467306307334b",
+        "mediaType": "application/json",
+        "type": "contentfulTestCasesMultipleReferencesJsonNode",
+      },
+      "items___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "parent": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+]
+`;
+
 exports[`Process contentful data (by name) builds entry list 1`] = `
 Array [
   Array [
@@ -10126,6 +10979,859 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulRemarkTestContentTextNode",
       },
       "parent": "rocybtov1ozk___c4L2GhTsJtCseMYM8Wia64i___Entry___de",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process contentful data (by name) with nested references builds entry list 1`] = `
+Array [
+  Array [
+    Object {
+      "fields": Object {
+        "fakeMultipleReferences": Object {
+          "en-US": Array [
+            Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+            Object {
+              "sys": Object {
+                "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          ],
+        },
+        "fakeRegularSingleReference": Object {
+          "en-US": Object {
+            "sys": Object {
+              "id": "1rCAg2qyLJdLmk4W3SRadQ",
+              "linkType": "Entry",
+              "type": "Link",
+            },
+          },
+        },
+        "multipleReferences": Object {
+          "en-US": Array [
+            Object {
+              "columnSize": Object {
+                "desktop": Object {
+                  "isCustom": false,
+                  "value": "1/2",
+                },
+                "mobile": Object {
+                  "isCustom": true,
+                  "value": "1/4",
+                },
+                "tablet": Object {
+                  "isCustom": false,
+                  "value": "1/3",
+                },
+              },
+              "items": Array [
+                Object {
+                  "sys": Object {
+                    "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+              ],
+            },
+            Object {
+              "columnSize": Object {
+                "desktop": Object {
+                  "isCustom": false,
+                  "value": "1/2",
+                },
+                "mobile": Object {
+                  "isCustom": false,
+                  "value": "1/1",
+                },
+                "tablet": Object {
+                  "isCustom": false,
+                  "value": "1/3",
+                },
+              },
+              "items": Array [
+                Object {
+                  "sys": Object {
+                    "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+                Object {
+                  "sys": Object {
+                    "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+              ],
+            },
+            Object {
+              "columnSize": Object {
+                "desktop": Object {
+                  "isCustom": false,
+                  "value": "1/2",
+                },
+                "mobile": Object {
+                  "isCustom": false,
+                  "value": "1/1",
+                },
+                "tablet": Object {
+                  "isCustom": false,
+                  "value": "1/1",
+                },
+              },
+              "items": Array [
+                Object {
+                  "sys": Object {
+                    "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                    "linkType": "Entry",
+                    "type": "Link",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        "regularMultipleReferences": Object {
+          "en-US": Array [
+            Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+            Object {
+              "sys": Object {
+                "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          ],
+        },
+        "regularSingleReference": Object {
+          "en-US": Object {
+            "sys": Object {
+              "id": "1rCAg2qyLJdLmk4W3SRadQ",
+              "linkType": "Entry",
+              "type": "Link",
+            },
+          },
+        },
+        "singleReference": Object {
+          "en-US": Object {
+            "columnSize": Object {
+              "desktop": Object {
+                "isCustom": false,
+                "value": "1/2",
+              },
+              "mobile": Object {
+                "isCustom": true,
+                "value": "1/4",
+              },
+              "tablet": Object {
+                "isCustom": false,
+                "value": "1/3",
+              },
+            },
+            "item": Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          },
+        },
+        "title": Object {
+          "en-US": "Test Nested References",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "nestedReferences",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-21T03:05:19.093Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "aAShlwdvPo63u8nrU1J6D",
+        "revision": 12,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-23T03:49:27.128Z",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "isReal": Object {
+          "en-US": false,
+        },
+        "message": Object {
+          "en-US": "This apparently is not real 🥺",
+        },
+        "title": Object {
+          "en-US": "Test Entity 2",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-21T03:04:25.366Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "1rCAg2qyLJdLmk4W3SRadQ",
+        "revision": 1,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-21T03:04:25.366Z",
+      },
+    },
+    Object {
+      "fields": Object {
+        "isReal": Object {
+          "en-US": true,
+        },
+        "message": Object {
+          "en-US": "__Hello world__",
+        },
+        "title": Object {
+          "en-US": "Test Entity 1",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-21T03:04:05.062Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "2zsZYdF8HQAIxRMKDFzGoV",
+        "revision": 1,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-21T03:04:05.062Z",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "multipleReferences": Object {
+          "en-US": Object {
+            "columnSize": Object {
+              "desktop": Object {
+                "isCustom": false,
+                "value": "1/2",
+              },
+              "mobile": Object {
+                "isCustom": true,
+                "value": "1/4",
+              },
+              "tablet": Object {
+                "isCustom": false,
+                "value": "1/3",
+              },
+            },
+            "items": Object {
+              "sys": Object {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          },
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testCases",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "createdAt": "2020-11-22T02:20:58.057Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "4CAaboLHsHSGfXAjqWwBF0",
+        "revision": 10,
+        "space": Object {
+          "sys": Object {
+            "id": "wwh72amckzva",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2020-11-27T04:58:12.598Z",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process contentful data (by name) with nested references builds foreignReferenceMap 1`] = `
+Object {
+  "1rCAg2qyLJdLmk4W3SRadQ___Entry": Array [
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "4CAaboLHsHSGfXAjqWwBF0",
+      "name": "test cases___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+  ],
+  "2zsZYdF8HQAIxRMKDFzGoV___Entry": Array [
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+    Object {
+      "id": "aAShlwdvPo63u8nrU1J6D",
+      "name": "nested references___NODE",
+      "spaceId": "wwh72amckzva",
+      "type": "Entry",
+    },
+  ],
+}
+`;
+
+exports[`Process contentful data (by name) with nested references builds list of resolvable data 1`] = `
+Set {
+  "aAShlwdvPo63u8nrU1J6D___Entry",
+  "1rCAg2qyLJdLmk4W3SRadQ___Entry",
+  "2zsZYdF8HQAIxRMKDFzGoV___Entry",
+  "4CAaboLHsHSGfXAjqWwBF0___Entry",
+}
+`;
+
+exports[`Process contentful data (by name) with nested references creates nodes for each entry 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "Nested References",
+      "internal": Object {
+        "contentDigest": "a78ed36365ad25da4ddc9939233a6e32",
+        "type": "ContentfulContentType",
+      },
+      "name": "Nested References",
+      "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrysingleReferenceJSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences0JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences1JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences2JSONNode",
+      ],
+      "contentful_id": "aAShlwdvPo63u8nrU1J6D",
+      "createdAt": "2020-11-21T03:05:19.093Z",
+      "fakeMultipleReferences___NODE": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      ],
+      "fakeRegularSingleReference___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "internal": Object {
+        "contentDigest": "869609c641b2eebc5241f424b1979107",
+        "type": "ContentfulNestedReferences",
+      },
+      "multipleReferences___NODE": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences0JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences1JSONNode",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences2JSONNode",
+      ],
+      "node_locale": "en-US",
+      "parent": "Nested References",
+      "regularMultipleReferences___NODE": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      ],
+      "regularSingleReference___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "singleReference___NODE": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrysingleReferenceJSONNode",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "nestedReferences",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 12,
+        "type": "Entry",
+      },
+      "title": "Test Nested References",
+      "updatedAt": "2020-11-23T03:49:27.128Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": true,
+          "value": "1/4",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrysingleReferenceJSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/4\\",\\"isCustom\\":true},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"item___NODE\\":\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"}",
+        "contentDigest": "f3f5d55d237070dd11f30639934c2daa",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesSingleReferenceJsonNode",
+      },
+      "item___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": true,
+          "value": "1/4",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences0JSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/4\\",\\"isCustom\\":true},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":[\\"wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry\\"]}",
+        "contentDigest": "abf3d9a27188cb78dc63c08249fe7720",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesMultipleReferencesJsonNode",
+      },
+      "items___NODE": Array [
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      ],
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": false,
+          "value": "1/1",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences1JSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/1\\",\\"isCustom\\":false},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":[\\"wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry\\",\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"]}",
+        "contentDigest": "a149b09bef836514d77cd66472c5e562",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesMultipleReferencesJsonNode",
+      },
+      "items___NODE": Array [
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      ],
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": false,
+          "value": "1/1",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/1",
+        },
+      },
+      "id": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___EntrymultipleReferences2JSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/1\\",\\"isCustom\\":false},\\"tablet\\":{\\"value\\":\\"1/1\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":[\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"]}",
+        "contentDigest": "6545a857a69c6c959d9d90cc02afcc0d",
+        "mediaType": "application/json",
+        "type": "contentfulNestedReferencesMultipleReferencesJsonNode",
+      },
+      "items___NODE": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      ],
+      "parent": "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "Test Entity",
+      "internal": Object {
+        "contentDigest": "3b68a444cfbb1f2bde7913a798992808",
+        "type": "ContentfulContentType",
+      },
+      "name": "Test Entity",
+      "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___EntrymessageTextNode",
+      ],
+      "contentful_id": "1rCAg2qyLJdLmk4W3SRadQ",
+      "createdAt": "2020-11-21T03:04:25.366Z",
+      "id": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "internal": Object {
+        "contentDigest": "27c732616738fbffd93294a2cc17880d",
+        "type": "ContentfulTestEntity",
+      },
+      "isReal": false,
+      "message___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___EntrymessageTextNode",
+      "nested references___NODE": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      ],
+      "node_locale": "en-US",
+      "parent": "Test Entity",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 1,
+        "type": "Entry",
+      },
+      "test cases___NODE": Array [
+        "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___Entry",
+      ],
+      "title": "Test Entity 2",
+      "updatedAt": "2020-11-21T03:04:25.366Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___EntrymessageTextNode",
+      ],
+      "contentful_id": "2zsZYdF8HQAIxRMKDFzGoV",
+      "createdAt": "2020-11-21T03:04:05.062Z",
+      "id": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      "internal": Object {
+        "contentDigest": "38a22b49920b34791bf015235a36b24d",
+        "type": "ContentfulTestEntity",
+      },
+      "isReal": true,
+      "message___NODE": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___EntrymessageTextNode",
+      "nested references___NODE": Array [
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+        "wwh72amckzva___aAShlwdvPo63u8nrU1J6D___Entry",
+      ],
+      "node_locale": "en-US",
+      "parent": "Test Entity",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testEntity",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 1,
+        "type": "Entry",
+      },
+      "title": "Test Entity 1",
+      "updatedAt": "2020-11-21T03:04:05.062Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___EntrymessageTextNode",
+      "internal": Object {
+        "content": "This apparently is not real 🥺",
+        "contentDigest": "1d5775d0f000ed0fde922decf7cf9f2f",
+        "mediaType": "text/markdown",
+        "type": "contentfulTestEntityMessageTextNode",
+      },
+      "message": "This apparently is not real 🥺",
+      "parent": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___EntrymessageTextNode",
+      "internal": Object {
+        "content": "__Hello world__",
+        "contentDigest": "dee71c5a4646c198cf7b759af903822a",
+        "mediaType": "text/markdown",
+        "type": "contentfulTestEntityMessageTextNode",
+      },
+      "message": "__Hello world__",
+      "parent": "wwh72amckzva___2zsZYdF8HQAIxRMKDFzGoV___Entry",
+      "sys": Object {
+        "type": "Entry",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": null,
+      "id": "Test Cases",
+      "internal": Object {
+        "contentDigest": "15882722bd1d8e37497a089324178a0b",
+        "type": "ContentfulContentType",
+      },
+      "name": "Test Cases",
+      "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___EntrymultipleReferencesJSONNode",
+      ],
+      "contentful_id": "4CAaboLHsHSGfXAjqWwBF0",
+      "createdAt": "2020-11-22T02:20:58.057Z",
+      "id": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___Entry",
+      "internal": Object {
+        "contentDigest": "31f3a9f88df2ddbb6831ec74d64b05f8",
+        "type": "ContentfulTestCases",
+      },
+      "multipleReferences___NODE": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___EntrymultipleReferencesJSONNode",
+      "node_locale": "en-US",
+      "parent": "Test Cases",
+      "spaceId": "wwh72amckzva",
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "testCases",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "revision": 10,
+        "type": "Entry",
+      },
+      "updatedAt": "2020-11-27T04:58:12.598Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "columnSize": Object {
+        "desktop": Object {
+          "isCustom": false,
+          "value": "1/2",
+        },
+        "mobile": Object {
+          "isCustom": true,
+          "value": "1/4",
+        },
+        "tablet": Object {
+          "isCustom": false,
+          "value": "1/3",
+        },
+      },
+      "id": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___EntrymultipleReferencesJSONNode",
+      "internal": Object {
+        "content": "{\\"columnSize\\":{\\"mobile\\":{\\"value\\":\\"1/4\\",\\"isCustom\\":true},\\"tablet\\":{\\"value\\":\\"1/3\\",\\"isCustom\\":false},\\"desktop\\":{\\"value\\":\\"1/2\\",\\"isCustom\\":false}},\\"items___NODE\\":\\"wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry\\"}",
+        "contentDigest": "c2532ea3c2f19dfe819467306307334b",
+        "mediaType": "application/json",
+        "type": "contentfulTestCasesMultipleReferencesJsonNode",
+      },
+      "items___NODE": "wwh72amckzva___1rCAg2qyLJdLmk4W3SRadQ___Entry",
+      "parent": "wwh72amckzva___4CAaboLHsHSGfXAjqWwBF0___Entry",
       "sys": Object {
         "type": "Entry",
       },

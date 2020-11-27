@@ -1,0 +1,443 @@
+{
+  "currentSyncData": {
+    "entries": [
+      {
+        "sys": {
+          "space": {
+            "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+          },
+          "id": "4CAaboLHsHSGfXAjqWwBF0",
+          "type": "Entry",
+          "createdAt": "2020-11-22T02:20:58.057Z",
+          "updatedAt": "2020-11-27T04:58:12.598Z",
+          "environment": {
+            "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+          },
+          "revision": 10,
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "testCases"
+            }
+          }
+        },
+        "fields": {
+          "multipleReferences": {
+            "en-US": {
+              "items": {
+                "sys": {
+                  "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                  "type": "Link",
+                  "linkType": "Entry"
+                }
+              },
+              "columnSize": {
+                "mobile": { "value": "1/4", "isCustom": true },
+                "tablet": { "value": "1/3", "isCustom": false },
+                "desktop": { "value": "1/2", "isCustom": false }
+              }
+            }
+          }
+        }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+          },
+          "id": "aAShlwdvPo63u8nrU1J6D",
+          "type": "Entry",
+          "createdAt": "2020-11-21T03:05:19.093Z",
+          "updatedAt": "2020-11-23T03:49:27.128Z",
+          "environment": {
+            "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+          },
+          "revision": 12,
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "nestedReferences"
+            }
+          }
+        },
+        "fields": {
+          "title": { "en-US": "Test Nested References" },
+          "singleReference": {
+            "en-US": {
+              "item": {
+                "sys": {
+                  "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                  "type": "Link",
+                  "linkType": "Entry"
+                }
+              },
+              "columnSize": {
+                "mobile": { "value": "1/4", "isCustom": true },
+                "tablet": { "value": "1/3", "isCustom": false },
+                "desktop": { "value": "1/2", "isCustom": false }
+              }
+            }
+          },
+          "multipleReferences": {
+            "en-US": [
+              {
+                "items": [
+                  {
+                    "sys": {
+                      "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                      "type": "Link",
+                      "linkType": "Entry"
+                    }
+                  }
+                ],
+                "columnSize": {
+                  "mobile": { "value": "1/4", "isCustom": true },
+                  "tablet": { "value": "1/3", "isCustom": false },
+                  "desktop": { "value": "1/2", "isCustom": false }
+                }
+              },
+              {
+                "items": [
+                  {
+                    "sys": {
+                      "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                      "type": "Link",
+                      "linkType": "Entry"
+                    }
+                  },
+                  {
+                    "sys": {
+                      "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                      "type": "Link",
+                      "linkType": "Entry"
+                    }
+                  }
+                ],
+                "columnSize": {
+                  "mobile": { "value": "1/1", "isCustom": false },
+                  "tablet": { "value": "1/3", "isCustom": false },
+                  "desktop": { "value": "1/2", "isCustom": false }
+                }
+              },
+              {
+                "items": [
+                  {
+                    "sys": {
+                      "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                      "type": "Link",
+                      "linkType": "Entry"
+                    }
+                  }
+                ],
+                "columnSize": {
+                  "mobile": { "value": "1/1", "isCustom": false },
+                  "tablet": { "value": "1/1", "isCustom": false },
+                  "desktop": { "value": "1/2", "isCustom": false }
+                }
+              }
+            ]
+          },
+          "regularSingleReference": {
+            "en-US": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "1rCAg2qyLJdLmk4W3SRadQ"
+              }
+            }
+          },
+          "regularMultipleReferences": {
+            "en-US": [
+              {
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "1rCAg2qyLJdLmk4W3SRadQ"
+                }
+              },
+              {
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "2zsZYdF8HQAIxRMKDFzGoV"
+                }
+              }
+            ]
+          },
+          "fakeRegularSingleReference": {
+            "en-US": {
+              "sys": {
+                "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                "type": "Link",
+                "linkType": "Entry"
+              }
+            }
+          },
+          "fakeMultipleReferences": {
+            "en-US": [
+              {
+                "sys": {
+                  "id": "1rCAg2qyLJdLmk4W3SRadQ",
+                  "type": "Link",
+                  "linkType": "Entry"
+                }
+              },
+              {
+                "sys": {
+                  "id": "2zsZYdF8HQAIxRMKDFzGoV",
+                  "type": "Link",
+                  "linkType": "Entry"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+          },
+          "id": "1rCAg2qyLJdLmk4W3SRadQ",
+          "type": "Entry",
+          "createdAt": "2020-11-21T03:04:25.366Z",
+          "updatedAt": "2020-11-21T03:04:25.366Z",
+          "environment": {
+            "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+          },
+          "revision": 1,
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "testEntity"
+            }
+          }
+        },
+        "fields": {
+          "title": { "en-US": "Test Entity 2" },
+          "isReal": { "en-US": false },
+          "message": { "en-US": "This apparently is not real 🥺" }
+        }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+          },
+          "id": "2zsZYdF8HQAIxRMKDFzGoV",
+          "type": "Entry",
+          "createdAt": "2020-11-21T03:04:05.062Z",
+          "updatedAt": "2020-11-21T03:04:05.062Z",
+          "environment": {
+            "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+          },
+          "revision": 1,
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "testEntity"
+            }
+          }
+        },
+        "fields": {
+          "title": { "en-US": "Test Entity 1" },
+          "isReal": { "en-US": true },
+          "message": { "en-US": "__Hello world__" }
+        }
+      }
+    ],
+    "assets": [],
+    "deletedEntries": [],
+    "deletedAssets": [],
+    "nextSyncToken": "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CskPCvEEKwrfDmcOZwpUmw7pIQGVDw64tw6DDlRFaVMKSw6EOwqXDiMKdLsKBw7U-cTjCrXjDrMOdMsOvwqVDBnPDk0HDmcKI"
+  },
+  "contentTypeItems": [
+    {
+      "sys": {
+        "space": {
+          "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+        },
+        "id": "nestedReferences",
+        "type": "ContentType",
+        "createdAt": "2020-11-21T02:56:05.661Z",
+        "updatedAt": "2020-11-22T01:52:28.819Z",
+        "environment": {
+          "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+        },
+        "revision": 2
+      },
+      "displayField": "title",
+      "name": "Nested References",
+      "description": "",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "singleReference",
+          "name": "Single Reference",
+          "type": "Object",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "multipleReferences",
+          "name": "Multiple References",
+          "type": "Object",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "regularSingleReference",
+          "name": "Regular Single Reference",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "regularMultipleReferences",
+          "name": "Regular Multiple References",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false,
+          "items": { "type": "Link", "validations": [], "linkType": "Entry" }
+        },
+        {
+          "id": "fakeRegularSingleReference",
+          "name": "Fake Regular Single Reference",
+          "type": "Object",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "fakeMultipleReferences",
+          "name": "Fake Multiple References",
+          "type": "Object",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+        },
+        "id": "testEntity",
+        "type": "ContentType",
+        "createdAt": "2020-11-21T03:03:39.635Z",
+        "updatedAt": "2020-11-21T03:03:39.635Z",
+        "environment": {
+          "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+        },
+        "revision": 1
+      },
+      "displayField": "title",
+      "name": "Test Entity",
+      "description": "",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "isReal",
+          "name": "Is Real",
+          "type": "Boolean",
+          "localized": true,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "message",
+          "name": "Message",
+          "type": "Text",
+          "localized": true,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": { "type": "Link", "linkType": "Space", "id": "wwh72amckzva" }
+        },
+        "id": "testCases",
+        "type": "ContentType",
+        "createdAt": "2020-11-22T02:20:18.263Z",
+        "updatedAt": "2020-11-22T02:20:18.263Z",
+        "environment": {
+          "sys": { "id": "master", "type": "Link", "linkType": "Environment" }
+        },
+        "revision": 1
+      },
+      "displayField": null,
+      "name": "Test Cases",
+      "description": "",
+      "fields": [
+        {
+          "id": "multipleReferences",
+          "name": "Multiple References",
+          "type": "Object",
+          "localized": false,
+          "required": false,
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    }
+  ],
+  "defaultLocale": "en-US",
+  "locales": [
+    {
+      "code": "en-US",
+      "name": "U.S. English",
+      "default": true,
+      "fallbackCode": null,
+      "sys": { "id": "3P1hdCeAVQAKm1R6pPo6cm", "type": "Locale", "version": 2 }
+    }
+  ],
+  "space": {
+    "sys": { "type": "Space", "id": "wwh72amckzva" },
+    "name": "Nested references tests",
+    "locales": [
+      {
+        "code": "en-US",
+        "default": true,
+        "name": "U.S. English",
+        "fallbackCode": null
+      }
+    ]
+  }
+}

@@ -64,6 +64,9 @@ describe(`Formatting plugin options for CLI`, () => {
     expect(lines.find(line => line.includes(`environment`))).toContain(
       `default value`
     )
+    expect(lines.find(line => line.includes(`nestedReferences`))).toContain(
+      `default value`
+    )
 
     // annotations are added
     expect(lines.find(line => line.includes(`spaceId`))).toContain(
