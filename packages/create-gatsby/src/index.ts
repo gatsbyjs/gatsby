@@ -140,9 +140,9 @@ export async function run(): Promise<void> {
 
   const { version } = require(`../package.json`)
 
-  console.log(c.grey(`create-gatsby version ${version}`))
+  reporter.info(c.grey(`create-gatsby version ${version}`))
 
-  console.log(
+  reporter.info(
     `
 
 
@@ -152,7 +152,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 `
   )
 
-  console.log(
+  reporter.info(
     wrap(
       `This command will generate a new Gatsby site for you in ${c.bold(
         process.cwd()
@@ -162,7 +162,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       process.stdout.columns
     )
   )
-  console.log(``)
+  reporter.info(``)
 
   const enquirer = new Enquirer<IAnswers>()
 
@@ -262,7 +262,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   const config = makePluginConfigQuestions(plugins)
   if (config.length) {
-    console.log(
+    reporter.info(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
 
@@ -276,7 +276,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
 
-  console.log(`
+  reporter.info(`
 
 ${c.bold(`Thanks! Here's what we'll now do:`)}
 
@@ -294,7 +294,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   if (!confirm) {
     trackCli(`CREATE_GATSBY_CANCEL`)
 
-    console.log(`OK, bye!`)
+    reporter.info(`OK, bye!`)
     return
   }
 
@@ -303,7 +303,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   reporter.success(`Created site in ` + c.green(data.project))
 
   if (plugins.length) {
-    console.log(`${w(`🔌 `)}Setting-up plugins...`)
+    reporter.info(`${w(`🔌 `)}Setting-up plugins...`)
     await installPlugins(plugins, pluginConfig, path.resolve(data.project), [])
   }
 
@@ -312,7 +312,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   const pm = await getPackageManager()
   const runCommand = pm === `npm` ? `npm run` : `yarn`
 
-  console.log(
+  reporter.info(
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
       data.project
@@ -320,15 +320,15 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     at ${c.bold(path.resolve(data.project))}.
     `
   )
-  console.log(`Start by going to the directory with\n
+  reporter.info(`Start by going to the directory with\n
   ${c.magenta(`cd ${data.project}`)}
   `)
 
-  console.log(`Start the local development server with\n
+  reporter.info(`Start the local development server with\n
   ${c.magenta(`${runCommand} develop`)}
   `)
 
-  console.log(`See all commands at\n
+  reporter.info(`See all commands at\n
   ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
 
