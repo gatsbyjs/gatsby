@@ -158,12 +158,11 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       `This command will generate a new Gatsby site for you in ${c.bold(
         process.cwd()
       )} with the setup you select. ${c.white.bold(
-        `Let's answer some questions:\n`
+        `Let's answer some questions:\n\n`
       )}`,
       process.stdout.columns
     )
   )
-  reporter.info(``)
 
   const enquirer = new Enquirer<IAnswers>()
 
@@ -301,7 +300,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   await initStarter(DEFAULT_STARTER, data.project, packages.map(removeKey))
 
-  reporter.success(`Created site in ` + c.green(data.project))
+  reporter.success(`Created site in ${c.green(data.project)}`)
 
   const fullPath = path.resolve(data.project)
 
