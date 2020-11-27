@@ -9,13 +9,13 @@ describe(`gatsby-plugin-image / intersection observer`, () => {
 
   it(`lazy loads an image when scrolling`, () => {
     cy.window().then(win => {
-      expect(win.HTMLImageElement.prototype.loading).to.equal(undefined)
+      expect(`loading` in win.HTMLImageElement.prototype).toBeFalsy()
     })
 
     // We need to wait for a decent amount of time so that the image
     // can resolve. This is necessary because the assertion
     // is done outside the Cypress scheduler and so, Cypress is not able
-    // t o ping for the specific assertion to be truthy.
+    // to ping for the specific assertion to be truthy.
     cy.wait(500)
     cy.get(`[data-cy=already-loaded]`)
       .should(`be.visible`)

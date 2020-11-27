@@ -2,7 +2,7 @@ describe(`gatsby-plugin-image / native lazy loading`, () => {
   beforeEach(() => {
     // /!\ Make sure to run this one using a real build: not in develop
     // because we need SSR rendering in that scenario
-    cy.wrap(Cypress.config().baseUrl).should(`contain`, `:9000`)
+    cy.wrap(Cypress.config().baseUrl).should(`not.contain`, `:8000`)
     cy.visit(`/lazy-loading`)
   })
 
