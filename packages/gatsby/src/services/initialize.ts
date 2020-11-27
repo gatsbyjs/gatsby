@@ -8,6 +8,7 @@ import path from "path"
 import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
+import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
 import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
@@ -20,6 +21,7 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
+import { getReactHotLoaderStrategy } from "../utils/get-react-hot-loader-strategy"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
@@ -39,26 +41,28 @@ if (
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
   !isCI()
 ) {
-  process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS = `true`
+  process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES = `true`
   process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled, Lazy Bundling, Query on Demand, and Development SSR.
+Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images (only with gatsby-plugin-sharp@^2.10.0).
 
 Please give feedback on their respective umbrella issues!
 
-- https://gatsby.dev/lazy-devjs-umbrella
 - https://gatsby.dev/query-on-demand-feedback
 - https://gatsby.dev/dev-ssr-feedback
+- https://gatsby.dev/lazy-images-feedback
   `)
+
+  telemetry.trackFeatureIsUsed(`FastDev`)
 }
 
 if (
   process.env.gatsby_executing_command === `develop` &&
   !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
   !isCI() &&
-  sampleSiteForExperiment(`DEV_SSR`, 1)
+  sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
     `devSSR`,
@@ -100,6 +104,8 @@ export async function initialize({
   if (!args) {
     reporter.panic(`Missing program args`)
   }
+
+  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
   /* Time for a little story...
    * When running `gatsby develop`, the globally installed gatsby-cli starts
@@ -176,6 +182,31 @@ export async function initialize({
     })
   }
 
+  // Setup flags
+  if (config && config.flags) {
+    const availableFlags = require(`../utils/flags`).default
+    // Get flags
+    const { enabledConfigFlags, message } = handleFlags(
+      availableFlags,
+      config.flags
+    )
+
+    //  set process.env for each flag
+    enabledConfigFlags.forEach(flag => {
+      process.env[flag.env] = `true`
+    })
+
+    // Print out message.
+    if (message !== ``) {
+      reporter.info(message)
+    }
+
+    //  track usage of feature
+    enabledConfigFlags.forEach(flag => {
+      telemetry.trackFeatureIsUsed(flag.telemetryId)
+    })
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     reporter.warn(
@@ -228,10 +259,6 @@ export async function initialize({
       }
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
-  }
-
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    telemetry.trackFeatureIsUsed(`ExperimentalLazyDevjs`)
   }
 
   // run stale jobs

@@ -46,7 +46,7 @@ exports.onPostBuild = async (
     basePath,
     resolveSiteUrl
   )
-  const urls = serialize(filteredRecords)
+  const urls = await serialize(filteredRecords)
 
   if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
     const map = sitemap.createSitemap(rest)
