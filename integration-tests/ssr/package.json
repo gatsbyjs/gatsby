@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "2.24.82-dev-1603131999086",
+    "gatsby": "^2.27.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

@@ -96,7 +96,7 @@ const ensurePathComponentInSSRBundle = async (
           page.componentChunkName,
           htmlComponentRendererPath
         )
-        if (found || readAttempts === 5) {
+        if (found || readAttempts > 5) {
           clearInterval(searchForStringInterval)
           resolve()
         }
@@ -129,26 +129,26 @@ export const renderDevHTML = ({
     }
 
     const { boundActionCreators } = require(`../../redux/actions`)
-    const {
-      createServerVisitedPage,
-      createClientVisitedPage,
-    } = boundActionCreators
+    const { createServerVisitedPage } = boundActionCreators
     // Record this page was requested. This will kick off adding its page
     // component to the ssr bundle (if that's not already happened)
     createServerVisitedPage(pageObj.componentChunkName)
-
-    // We'll also get a head start on compiling the client code (this
-    // call has no effect if the page component is already in the client bundle).
-    createClientVisitedPage(pageObj.componentChunkName)
 
     // Ensure the query has been run and written out.
     await getPageDataExperimental(pageObj.path)
 
     // Wait for public/render-page.js to update w/ the page component.
-    await ensurePathComponentInSSRBundle(pageObj, directory)
+    const found = await ensurePathComponentInSSRBundle(pageObj, directory)
 
-    // Ensure the query has been run and written out.
-    await getPageDataExperimental(pageObj.path)
+    // If we can't find the page, just force set isClientOnlyPage
+    // which skips rendering the body (so we just serve a shell)
+    // and the page will render normally on the client.
+    //
+    // This only happens on the first time we try to render a page component
+    // and it's taking a while to bundle its page component.
+    if (!found) {
+      isClientOnlyPage = true
+    }
 
     try {
       const htmlString = await worker.renderHTML({

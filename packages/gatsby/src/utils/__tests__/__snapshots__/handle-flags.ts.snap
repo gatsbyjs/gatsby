@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handle flags returns validConfigFlags and a message 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "develop",
+      "description": "Enable all experiments aimed at improving develop server start time",
+      "env": "GATSBY_EXPERIMENTAL_FAST_DEV",
+      "includedFlags": Array [
+        "DEV_SSR",
+        "QUERY_ON_DEMAND",
+      ],
+      "name": "FAST_DEV",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_EXPERIMENTAL_SOMETHING_COOL",
+      "name": "ALL_COMMANDS",
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "develop",
+      "description": "SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.",
+      "env": "GATSBY_EXPERIMENTAL_DEV_SSR",
+      "name": "DEV_SSR",
+      "umbrellaIssue": "https://github.com/gatsbyjs/gatsby/discussions/28138",
+    },
+    Object {
+      "command": "develop",
+      "description": "Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.",
+      "env": "GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND",
+      "name": "QUERY_ON_DEMAND",
+      "noCi": true,
+      "umbrellaIssue": "https://github.com/gatsbyjs/gatsby/discussions/27620",
+    },
+  ],
+  "message": "The following flags are active:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+",
+}
+`;

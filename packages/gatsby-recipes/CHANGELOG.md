@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.2...gatsby-recipes@0.6.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-recipes:** updated chakra ui recipe after v1 release ([#28270](https://github.com/gatsbyjs/gatsby/issues/28270)) ([9c7c1a2](https://github.com/gatsbyjs/gatsby/commit/9c7c1a275b0fce75ae971eb85a48845df62d0e10))
+
 # [0.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.1...gatsby-recipes@0.5.0-next.2) (2020-11-23)
 
 **Note:** Version bump only for package gatsby-recipes

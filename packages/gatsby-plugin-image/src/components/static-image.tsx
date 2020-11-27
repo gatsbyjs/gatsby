@@ -1,12 +1,12 @@
 import {
   GatsbyImage as GatsbyImageBrowser,
-  ISharpGatsbyImageData,
+  IGatsbyImageData,
 } from "./gatsby-image.browser"
 import { _getStaticImage } from "./static-image.server"
 import { StaticImageProps } from "../utils"
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
-  __imageData?: ISharpGatsbyImageData
+  __imageData?: IGatsbyImageData
   __error?: string
 }
 

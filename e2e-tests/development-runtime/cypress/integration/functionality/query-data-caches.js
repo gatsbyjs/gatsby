@@ -87,18 +87,15 @@ function pageTitleAndDataAssertion(config) {
     cy.findByText(`Preview custom 404 page`).click()
   }
 
-  cy.getTestElement(`${config.prefix || ``}page-path`)
-    .invoke(`text`)
-    .should(`equal`, getExpectedCanonicalPath(config))
+  cy.findByTestId(`${config.prefix || ``}page-path`)
+    .should(`have.text`, getExpectedCanonicalPath(config))
 
-  cy.getTestElement(`${config.prefix || ``}query-data-caches-page-title`)
-    .invoke(`text`)
-    .should(`equal`, `This is page ${config.page}`)
+  cy.findByTestId(`${config.prefix || ``}query-data-caches-page-title`)
+    .should(`have.text`, `This is page ${config.page}`)
 
-  cy.getTestElement(`${config.prefix || ``}${config.queryType}-query-result`)
-    .invoke(`text`)
+  cy.findByTestId(`${config.prefix || ``}${config.queryType}-query-result`)
     .should(
-      `equal`,
+      `have.text`,
       `${config.slug} / ${
         config.page === config.initialPage ? `initial-page` : `second-page`
       }: ${config.data}`
@@ -119,7 +116,7 @@ function runTests(config) {
     data: `before-edit`,
   })
 
-  cy.getTestElement(`page-b-link`).click().waitForRouteChange()
+  cy.findByTestId(`page-b-link`).click().waitForRouteChange()
 
   // assert we navigated
   pageTitleAndDataAssertion({ ...config, page: `B`, data: `before-edit` })
@@ -131,10 +128,10 @@ function runTests(config) {
   pageTitleAndDataAssertion({ ...config, page: `B`, data: `after-edit` })
 
   if (config.navigateBack === `link`) {
-    cy.getTestElement(`page-a-link`).click().waitForRouteChange()
+    cy.findByTestId(`page-a-link`).click().waitForRouteChange()
   } else if (config.navigateBack === `history`) {
     // this is just making sure page components don't have link to navigate back (asserting correct setup)
-    cy.getTestElement(`page-a-link`).should(`not.exist`)
+    cy.findByTestId(`page-a-link`).should(`not.exist`)
     cy.go(`back`).waitForRouteChange()
   }
 
