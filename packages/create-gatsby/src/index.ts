@@ -310,6 +310,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   await gitSetup(data.project)
 
   const pm = await getPackageManager()
+  const runCommand = pm === `npm` ? `npm run` : `yarn`
 
   console.log(
     stripIndent`
@@ -324,7 +325,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   `)
 
   console.log(`Start the local development server with\n
-  ${c.magenta(`${pm} start`)}
+  ${c.magenta(`${runCommand} develop`)}
   `)
 
   console.log(`See all commands at\n
