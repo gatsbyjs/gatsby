@@ -145,7 +145,7 @@ function createJob(job, { reporter }) {
   }
 
   promise.catch(err => {
-    reporter.panic(err)
+    reporter.panic(`error converting image`, err)
   })
 
   return promise
