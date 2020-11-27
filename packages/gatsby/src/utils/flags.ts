@@ -61,8 +61,8 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
   {
-    name: `V3_CACHE_CLEAN`,
-    env: `GATSBY_V3_CACHE_CLEAN`,
+    name: `V3_CACHE_CLEAR`,
+    env: `GATSBY_V3_CACHE_CLEAR`,
     command: `all`,
     telemetryId: `V3CacheClear`,
     experimental: false,

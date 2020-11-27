@@ -374,7 +374,7 @@ export async function initialize({
         `${cacheDirectory}/*/`,
       ]
 
-      if (process.env.GATSBY_V3_CACHE_CLEAN) {
+      if (process.env.GATSBY_V3_CACHE_CLEAR) {
         // Add webpack
         deleteGlobs.push(`!${cacheDirectory}/webpack`)
         // Add gatsby-source-filesystem
@@ -383,24 +383,26 @@ export async function initialize({
         // If the site has more than 50 downloaded files in it, tell them
         // how to save time.
         try {
-          const files = await fs.readdir(
-            `.cache/caches/gatsby-source-filesystem`
-          )
-          if (files.length > 100) {
+          // Divide by two as the directory as both cache files + the actual downloaded files so
+          // two results / downloaded file.
+          const filesCount =
+            (await fs.readdir(`.cache/caches/gatsby-source-filesystem`))
+              .length / 2
+          if (filesCount > 50) {
             reporter.info(stripIndent`\n\n
 
         Your local development experience is about to get better, faster, and stronger!
 
         Your friendly Gatsby maintainers detected your site downloads quite a few files and that we're about to delete all ${Math.round(
-          files.length / 2
+          filesCount
         )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
 
-        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable V3_CACHE_CLEAN and run your develop server again.
+        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable V3_CACHE_CLEAR and run your develop server again.
 
         To do so, add to your gatsby-config.js:
 
         flags: {
-          V3_CACHE_CLEAN: true,
+          V3_CACHE_CLEAR: true,
         }
 
         Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
