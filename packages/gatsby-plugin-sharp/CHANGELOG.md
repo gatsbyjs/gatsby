@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.9.0...gatsby-plugin-sharp@2.9.1) (2020-11-27)
+
+### Bug Fixes
+
+- avoid joi validation error when using reporter.panic ([#28291](https://github.com/gatsbyjs/gatsby/issues/28291)) ([#28321](https://github.com/gatsbyjs/gatsby/issues/28321)) ([88837ab](https://github.com/gatsbyjs/gatsby/commit/88837ab8c5675cc014416347020d189146477336))
+
 # [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.9.0-next.0...gatsby-plugin-sharp@2.9.0) (2020-11-19)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
