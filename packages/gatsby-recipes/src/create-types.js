@@ -1,10 +1,10 @@
-const Joi2GQL = require(`./joi-to-graphql`)
-const Joi = require(`@hapi/joi`)
-const { GraphQLString, GraphQLObjectType, GraphQLList } = require(`graphql`)
-const _ = require(`lodash`)
-const { ObjectTypeComposer, schemaComposer } = require(`graphql-compose`)
+import * as Joi2GQL from "./joi-to-graphql"
+import * as Joi from "@hapi/joi"
+import { GraphQLString, GraphQLObjectType, GraphQLList } from "graphql"
+import _ from "lodash"
+import { ObjectTypeComposer, schemaComposer } from "graphql-compose"
 
-const resources = require(`./resources`)
+import * as resources from "./resources"
 
 const typeNameToHumanName = name => {
   if (name.endsWith(`Connection`)) {
@@ -14,7 +14,7 @@ const typeNameToHumanName = name => {
   }
 }
 
-module.exports = () => {
+export default function createTypes() {
   const resourceTypes = Object.entries(resources).map(
     ([resourceName, resource]) => {
       if (!resource.schema) {

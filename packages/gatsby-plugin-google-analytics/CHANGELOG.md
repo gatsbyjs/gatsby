@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.7.0-next.0...gatsby-plugin-google-analytics@2.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.6.0-next.0...gatsby-plugin-google-analytics@2.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.5.0-next.0...gatsby-plugin-google-analytics@2.5.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** add cookieFlags to options schema ([#27923](https://github.com/gatsbyjs/gatsby/issues/27923)) ([557139e](https://github.com/gatsbyjs/gatsby/commit/557139ed20fb18db08686db42284511ab8f9bdfd))
+- **gatsby-plugin-google-analytics:** add optional options to options schema ([#27914](https://github.com/gatsbyjs/gatsby/issues/27914)) ([3cdf29f](https://github.com/gatsbyjs/gatsby/commit/3cdf29f2c337a0a0960127f9670d356b34aa1a0c))
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.19...gatsby-plugin-google-analytics@2.4.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.18...gatsby-plugin-google-analytics@2.3.19) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Fix gatsby-node so we still have a warning on older gatsby versions ([#27495](https://github.com/gatsbyjs/gatsby/issues/27495)) ([9797828](https://github.com/gatsbyjs/gatsby/commit/9797828a5ec686a367937e60ff0400521be1ae68))
+
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.17...gatsby-plugin-google-analytics@2.3.18) (2020-10-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** remove required on trackingId ([#27398](https://github.com/gatsbyjs/gatsby/issues/27398)) ([3518d10](https://github.com/gatsbyjs/gatsby/commit/3518d10c3541277a3ba2da5bb099a54d02179257))
+
 ## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.16...gatsby-plugin-google-analytics@2.3.17) (2020-10-07)
 
 ### Features

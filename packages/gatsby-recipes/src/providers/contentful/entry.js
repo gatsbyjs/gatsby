@@ -1,8 +1,8 @@
-import Joi from "@hapi/joi"
+import * as Joi from "@hapi/joi"
 
 import resourceSchema from "../resource-schema"
 import client from "./client"
-const getDiff = require(`../utils/get-diff`)
+import getDiff from "../utils/get-diff"
 
 const create = async (context, { fields }) => {
   const spaceId = context.ContentfulSpace.id
@@ -70,11 +70,4 @@ const plan = async (context, { id, fields }) => {
 
 const message = resource => `Created Contentful Entry "${resource.name}"`
 
-module.exports.schema = schema
-module.exports.validate = validate
-module.exports.plan = plan
-module.exports.create = create
-module.exports.read = read
-module.exports.update = create
-module.exports.destroy = destroy
-module.exports.all = all
+export { schema, validate, plan, create, create as update, read, destroy, all }

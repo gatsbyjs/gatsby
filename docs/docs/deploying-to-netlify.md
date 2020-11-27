@@ -36,7 +36,7 @@ Click on the `Deploy site` button and Netlify will start the build and deploy pr
 
 #### Continuous deployment
 
-Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo. Continous deployment is only possible when using a Git repository.
+Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo. Continuous deployment is only possible when using a Git repository.
 
 ### Upload site folder
 

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.6.0-next.0...gatsby-transformer-csv@2.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.5.0-next.0...gatsby-transformer-csv@2.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.4.0-next.0...gatsby-transformer-csv@2.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.3.13...gatsby-transformer-csv@2.3.14) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
 ## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.3.12...gatsby-transformer-csv@2.3.13) (2020-10-06)
 
 **Note:** Version bump only for package gatsby-transformer-csv

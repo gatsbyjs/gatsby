@@ -110,6 +110,6 @@ A Gatsby theme is a Gatsby site, therefore building with accessibility in mind i
 
 Check out how some existing themes are built:
 
-- The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)
-- The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby-starter-notes-theme)
-- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)
+- The official [Gatsby Blog Theme](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog)
+- The official [Gatsby Notes Theme](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-notes)
+- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages/). (_You might also be interested in the [Apollo case study on themes](/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)

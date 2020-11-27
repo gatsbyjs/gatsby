@@ -1,10 +1,9 @@
 exports.pluginOptionsSchema = ({ Joi }) =>
+  // TODO: make sure that trackingId gets required() when releasing a major version
   Joi.object({
-    trackingId: Joi.string()
-      .required()
-      .description(
-        `The property ID; the tracking code won't be generated without it`
-      ),
+    trackingId: Joi.string().description(
+      `The property ID; the tracking code won't be generated without it`
+    ),
     head: Joi.boolean()
       .default(false)
       .description(
@@ -36,4 +35,21 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     sampleRate: Joi.number(),
     siteSpeedSampleRate: Joi.number(),
     cookieDomain: Joi.string(),
+    cookieFlags: Joi.string(),
+    name: Joi.string(),
+    clientId: Joi.string(),
+    alwaysSendReferrer: Joi.boolean(),
+    allowAnchor: Joi.boolean(),
+    cookieName: Joi.string(),
+    cookieExpires: Joi.number(),
+    storeGac: Joi.boolean(),
+    legacyCookieDomain: Joi.string(),
+    legacyHistoryImport: Joi.boolean(),
+    allowLinker: Joi.boolean(),
+    storage: Joi.string(),
+    allowAdFeatures: Joi.boolean(),
+    dataSource: Joi.string(),
+    queueTime: Joi.number(),
+    forceSSL: Joi.boolean(),
+    transport: Joi.string(),
   })

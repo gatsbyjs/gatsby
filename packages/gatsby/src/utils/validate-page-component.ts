@@ -89,7 +89,7 @@ export function validatePageComponent(
           error: {
             id: `11328`,
             context: {
-              component,
+              fileName: component,
             },
           },
           panicOnBuild: true,

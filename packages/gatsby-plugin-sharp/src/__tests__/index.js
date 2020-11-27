@@ -28,6 +28,7 @@ const {
   fixed,
   queueImageResizing,
   getImageSize,
+  getImageSizeAsync,
   stats,
   setBoundActionCreators,
 } = require(`../`)
@@ -613,6 +614,23 @@ describe(`gatsby-plugin-sharp`, () => {
       )
 
       expect(result).toMatchSnapshot()
+    })
+
+    it(`handles padding bytes correctly in async version`, async () => {
+      const result = await getImageSizeAsync(
+        getFileObject(path.join(__dirname, `images/padding-bytes.jpg`))
+      )
+
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "hUnits": "px",
+          "height": 1000,
+          "mime": "image/jpeg",
+          "type": "jpg",
+          "wUnits": "px",
+          "width": 746,
+        }
+      `)
     })
   })
 

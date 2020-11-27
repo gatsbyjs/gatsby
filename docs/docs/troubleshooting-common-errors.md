@@ -32,7 +32,7 @@ For some plugins like emotion, styled-components, or Sass, it won't be enough to
 
 Here are some examples of plugins that require you to install more than just the plugin:
 
-- [gatsby-plugin-emotion](/packages/gatsby-plugin-emotion/): `@emotion/core`, and `@emotion/styled`
+- [gatsby-plugin-emotion](/packages/gatsby-plugin-emotion/): `@emotion/react`, and `@emotion/styled`
 - [gatsby-plugin-styled-components](/packages/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
 - [gatsby-plugin-sass](/packages/gatsby-plugin-sass/): `node-sass`, or `dart-sass`
 - [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/): `@material-ui/styles`
@@ -50,18 +50,18 @@ success run queries - 0.095s - 8/8 84.63/s
 
 Generating SSR bundle failed
 
-Can't resolve '@emotion/core' in '/Users/you/tmp/gatsby-site/.cache' // highlight-line
+Can't resolve '@emotion/react' in '/Users/you/tmp/gatsby-site/.cache' // highlight-line
 
 File: .cache/develop-static-entry.js
 ```
 
-This error is a result of Gatsby having failed to find `@emotion/core` because `gatsby-plugin-emotion` has been installed and added to the `gatsby-config`, without installing the emotion library. Install it like this:
+This error is a result of Gatsby having failed to find `@emotion/react` because `gatsby-plugin-emotion` has been installed and added to the `gatsby-config`, without installing the emotion library. Install it like this:
 
 ```shell
-npm install @emotion/core
+npm install @emotion/react
 ```
 
-Or replace `@emotion/core` with the name of the library that is missing. Installing the plugin and any necessary libraries as well as adding the plugin to your `gatsby-config` should resolve this error.
+Or replace `@emotion/react` with the name of the library that is missing. Installing the plugin and any necessary libraries as well as adding the plugin to your `gatsby-config` should resolve this error.
 
 ### Issues with `fs` resolution
 

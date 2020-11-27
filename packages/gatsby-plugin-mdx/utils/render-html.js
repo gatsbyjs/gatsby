@@ -2,7 +2,7 @@ const webpack = require(`webpack`)
 const path = require(`path`)
 const evaluate = require(`eval`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:render-html`)
-const PQueue = require(`p-queue`)
+const { default: PQueue } = require(`p-queue`)
 
 //const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 const { cloneDeep } = require(`lodash`)

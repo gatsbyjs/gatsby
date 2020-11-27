@@ -1,13 +1,12 @@
-const unified = require(`unified`)
-const remarkMdx = require(`remark-mdx`)
-const remarkMdxjs = require(`remark-mdxjs`)
-const remarkParse = require(`remark-parse`)
-const remarkStringify = require(`remark-stringify`)
-const visit = require(`unist-util-visit`)
-const remove = require(`unist-util-remove`)
-const transformMdx = require(`../transform-recipe-mdx`).default
-
-const { uuid } = require(`./util`)
+import unified from "unified"
+import remarkMdx from "remark-mdx"
+import remarkMdxjs from "remark-mdxjs"
+import remarkParse from "remark-parse"
+import remarkStringify from "remark-stringify"
+import visit from "unist-util-visit"
+import remove from "unist-util-remove"
+import transformMdx from "../transform-recipe-mdx"
+import { uuid } from "./util"
 
 const IGNORED_COMPONENTS = [`RecipeIntroduction`, `RecipeStep`]
 
@@ -132,6 +131,5 @@ const parse = async src => {
   }
 }
 
-module.exports = parse
-module.exports.parse = parse
-module.exports.u = u
+export default parse
+export { parse, u }

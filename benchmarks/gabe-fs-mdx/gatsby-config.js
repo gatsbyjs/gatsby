@@ -10,6 +10,11 @@ module.exports = {
         path: `${__dirname}/generated_articles/`,
       },
     },
-    `gatsby-plugin-mdx`,
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        lessBabel: true,
+      },
+    },
   ],
 }

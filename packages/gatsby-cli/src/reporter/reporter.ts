@@ -42,9 +42,12 @@ class Reporter {
   /**
    * Set a custom error map to the reporter. This allows
    * the reporter to extend the internal error map
+   *
+   * Please note: The entered IDs ideally should be different from the ones we internally use:
+   * https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/structured-errors/error-map.ts
    */
 
-  setErrorMap = (entry: Record<ErrorId, IErrorMapEntry>): void => {
+  setErrorMap = (entry: Record<string, IErrorMapEntry>): void => {
     this.errorMap = {
       ...this.errorMap,
       ...entry,
@@ -155,6 +158,7 @@ class Reporter {
 
     if (structuredError) {
       reporterActions.createLog(structuredError)
+      trackError(`GENERIC_ERROR`, { error: structuredError })
     }
 
     // TODO: remove this once Error component can render this info

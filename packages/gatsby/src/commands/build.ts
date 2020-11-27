@@ -18,8 +18,10 @@ import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
 import { boundActionCreators } from "../redux/actions"
@@ -352,7 +354,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     report.info(`.cache/deletedPages.txt created`)
   }
 
-  if (await userPassesFeedbackRequestHeuristic()) {
+  if (await userGetsSevenDayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
 }

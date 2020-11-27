@@ -1,6 +1,7 @@
 // NOTE(@mxstbr): Do not use the reporter in this file, as that has side-effects on import which break structured logging
 import path from "path"
 import http from "http"
+import https from "https"
 import tmp from "tmp"
 import { ChildProcess } from "child_process"
 import execa from "execa"
@@ -332,7 +333,11 @@ module.exports = async (program: IProgram): Promise<void> => {
     unlocks = unlocks.concat([statusUnlock, developUnlock, telemetryUnlock])
   }
 
-  const statusServer = http.createServer().listen(statusServerPort)
+  const statusServer = program.ssl
+    ? https.createServer(program.ssl)
+    : http.createServer()
+  statusServer.listen(statusServerPort)
+
   const io = socket(statusServer)
 
   const handleChildProcessIPC = (msg): void => {

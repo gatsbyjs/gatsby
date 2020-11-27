@@ -1,14 +1,16 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { Stats } from "webpack"
 import { IMatch } from "../types"
+import { Stage as StageEnum } from "../commands/types"
 
 const stageCodeToReadableLabel = {
-  "build-javascript": `Generating JavaScript bundles`,
-  "build-html": `Generating SSR bundle`,
-  develop: `Generating development JavaScript bundle`,
+  BuildJavascript: `Generating JavaScript bundles`,
+  BuildHTML: `Generating SSR bundle`,
+  DevelopHTML: `Generating development SSR bundle`,
+  Develop: `Generating development JavaScript bundle`,
 } as const
 
-type Stage = keyof typeof stageCodeToReadableLabel
+type Stage = keyof typeof StageEnum
 type StageLabel = typeof stageCodeToReadableLabel[Stage]
 
 interface ITransformedWebpackError {
@@ -18,7 +20,7 @@ interface ITransformedWebpackError {
     start: string
   }
   context: {
-    stage: Stage
+    stage: StageEnum
     stageLabel: StageLabel
     sourceMessage?: string
     [key: string]: unknown
@@ -26,7 +28,7 @@ interface ITransformedWebpackError {
 }
 
 const transformWebpackError = (
-  stage: keyof typeof stageCodeToReadableLabel,
+  stage: StageEnum,
   webpackError: any
 ): ITransformedWebpackError => {
   const handlers = [
@@ -100,7 +102,7 @@ const transformWebpackError = (
 }
 
 export const structureWebpackErrors = (
-  stage: Stage,
+  stage: StageEnum,
   webpackError: any
 ): Array<ITransformedWebpackError> | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
