@@ -2,7 +2,7 @@ import Enquirer from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
-import { initStarter, getPackageManager } from "./init-starter"
+import { initStarter, getPackageManager, gitSetup } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
@@ -13,6 +13,7 @@ import { center, rule, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
 import { trackCli } from "./tracking"
 import crypto from "crypto"
+import { reporter } from "./reporter"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
@@ -50,6 +51,7 @@ const makeChoices = (
 export const validateProjectName = async (
   value: string
 ): Promise<string | boolean> => {
+  value = value.trim()
   if (INVALID_FILENAMES.test(value)) {
     return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
   }
@@ -167,6 +169,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   enquirer.use(plugin)
 
   const data = await enquirer.prompt(questions)
+  data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `project_name`,
@@ -297,24 +300,22 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   await initStarter(DEFAULT_STARTER, data.project, packages.map(removeKey))
 
-  console.log(
-    c.green(c.symbols.check) + ` Created site in ` + c.green(data.project)
-  )
+  reporter.success(`Created site in ` + c.green(data.project))
 
   if (plugins.length) {
-    console.log(c.bold(`${w(`🔌 `)}Installing plugins...`))
+    console.log(`${w(`🔌 `)}Setting-up plugins...`)
     await installPlugins(plugins, pluginConfig, path.resolve(data.project), [])
   }
 
-  const pm = await getPackageManager()
+  await gitSetup(data.project)
 
-  const runCommand = pm === `npm` ? `npm run` : `yarn`
+  const pm = await getPackageManager()
 
   console.log(
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
       data.project
-    )} has been successfully bootstrapped
+    )} has been successfully created
     at ${c.bold(path.resolve(data.project))}.
     `
   )
@@ -323,7 +324,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   `)
 
   console.log(`Start the local development server with\n
-  ${c.magenta(`${runCommand} develop`)}
+  ${c.magenta(`${pm} start`)}
   `)
 
   console.log(`See all commands at\n
