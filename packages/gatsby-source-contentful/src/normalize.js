@@ -74,19 +74,59 @@ const getResolvableNestedReferences = (
     }`
 
     if (resolvable.has(key)) {
-      return [
-        {
-          id: entryItemFieldReferenceValue.sys.id,
-          type:
-            entryItemFieldReferenceValue.sys.linkType ||
-            entryItemFieldReferenceValue.sys.type,
-          key: key,
-        },
-      ]
+      return {
+        id: entryItemFieldReferenceValue.sys.id,
+        type:
+          entryItemFieldReferenceValue.sys.linkType ||
+          entryItemFieldReferenceValue.sys.type,
+        key: key,
+      }
     }
   }
 
   return []
+}
+
+const processNestedReferences = (
+  entryItemFieldValue,
+  referenceKey,
+  resolvable
+) => {
+  const nestedReferenceField = entryItemFieldValue[referenceKey]
+  let resolvedReferences
+
+  if (Array.isArray(nestedReferenceField)) {
+    // Nested multiple reference
+    if (
+      nestedReferenceField &&
+      nestedReferenceField[0].sys &&
+      nestedReferenceField[0].sys.type &&
+      nestedReferenceField[0].sys.id
+    ) {
+      nestedReferenceField.forEach(nestedReference => {
+        if (!resolvedReferences) {
+          resolvedReferences = []
+        }
+        resolvedReferences.push(
+          getResolvableNestedReferences(nestedReference, resolvable)
+        )
+      })
+    }
+  } else {
+    // Nested single reference
+    if (
+      nestedReferenceField &&
+      nestedReferenceField.sys &&
+      nestedReferenceField.sys.type &&
+      nestedReferenceField.sys.id
+    ) {
+      resolvedReferences = {
+        ...getResolvableNestedReferences(nestedReferenceField, resolvable),
+      }
+    }
+  }
+
+  return resolvedReferences
 }
 
 exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
@@ -192,86 +232,95 @@ exports.buildForeignReferenceMap = ({
             nestedReferences.fields.forEach(nestedReferenceField => {
               // For nested reference objects
               if (entryItemFieldKey === nestedReferenceField.key) {
-                const entryItemFieldReferenceValue =
-                  entryItemFieldValue[0][nestedReferenceField.referenceKey]
-                if (
-                  entryItemFieldReferenceValue &&
-                  entryItemFieldReferenceValue[0].sys &&
-                  entryItemFieldReferenceValue[0].sys.type &&
-                  entryItemFieldReferenceValue[0].sys.id
-                ) {
-                  entryItemFieldValue.forEach(nestedField => {
-                    getResolvableNestedReferences(
-                      nestedField[nestedReferenceField.referenceKey],
-                      resolvable
-                    ).forEach(reference => {
-                      if (!foreignReferenceMap[reference.key]) {
-                        foreignReferenceMap[reference.key] = []
+                entryItemFieldValue.forEach(v => {
+                  const resolvedReferences = processNestedReferences(
+                    v,
+                    nestedReferenceField.referenceKey,
+                    resolvable
+                  )
+                  if (!resolvedReferences) return
+                  if (Array.isArray(resolvedReferences)) {
+                    resolvedReferences.forEach(references => {
+                      if (!foreignReferenceMap[references.key]) {
+                        foreignReferenceMap[references.key] = []
                       }
-
-                      foreignReferenceMap[reference.key].push({
+                      foreignReferenceMap[references.key].push({
                         name: `${contentTypeItemId}___NODE`,
                         id: entryItem.sys.id,
                         spaceId: space.sys.id,
                         type: entryItem.sys.type,
                       })
                     })
-                  })
-                }
+                  } else {
+                    if (!foreignReferenceMap[resolvedReferences.key]) {
+                      foreignReferenceMap[resolvedReferences.key] = []
+                    }
+                    foreignReferenceMap[resolvedReferences.key].push({
+                      name: `${contentTypeItemId}___NODE`,
+                      id: entryItem.sys.id,
+                      spaceId: space.sys.id,
+                      type: entryItem.sys.type,
+                    })
+                  }
+                })
               }
             })
           } else if (
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            getResolvableNestedReferences(
+            const resolvableReference = getResolvableNestedReferences(
               entryItemFieldValue,
               resolvable
-            ).forEach(reference => {
-              if (!foreignReferenceMap[reference.key]) {
-                foreignReferenceMap[reference.key] = []
+            )
+            if (!resolvableReference) {
+              return
+            }
+            if (!foreignReferenceMap[resolvableReference.key]) {
+              foreignReferenceMap[resolvableReference.key] = []
+            }
+            foreignReferenceMap[resolvableReference.key].push({
+              name: `${contentTypeItemId}___NODE`,
+              id: entryItem.sys.id,
+              spaceId: space.sys.id,
+              type: entryItem.sys.type,
+            })
+          } else {
+            nestedReferences.fields.forEach(nestedReferenceField => {
+              // Check for nested single entity references
+              if (entryItemFieldKey === nestedReferenceField.key) {
+                const resolvedReferences = processNestedReferences(
+                  entryItemFieldValue,
+                  nestedReferenceField.referenceKey,
+                  resolvable
+                )
+                if (!resolvedReferences) return
+                if (Array.isArray(resolvedReferences)) {
+                  resolvedReferences.forEach(references => {
+                    if (!foreignReferenceMap[references.key]) {
+                      foreignReferenceMap[references.key] = []
+                    }
+                    foreignReferenceMap[references.key].push({
+                      name: `${contentTypeItemId}___NODE`,
+                      id: entryItem.sys.id,
+                      spaceId: space.sys.id,
+                      type: entryItem.sys.type,
+                    })
+                  })
+                } else {
+                  if (!foreignReferenceMap[resolvedReferences.key]) {
+                    foreignReferenceMap[resolvedReferences.key] = []
+                  }
+                  foreignReferenceMap[resolvedReferences.key].push({
+                    name: `${contentTypeItemId}___NODE`,
+                    id: entryItem.sys.id,
+                    spaceId: space.sys.id,
+                    type: entryItem.sys.type,
+                  })
+                }
               }
-              foreignReferenceMap[reference.key].push({
-                name: `${contentTypeItemId}___NODE`,
-                id: entryItem.sys.id,
-                spaceId: space.sys.id,
-                type: entryItem.sys.type,
-              })
             })
           }
-          nestedReferences.fields.forEach(nestedReferenceField => {
-            // Check for nested single entity references
-            if (entryItemFieldKey === nestedReferenceField.key) {
-              const entryItemFieldReferenceValue =
-                entryItemFieldValue[nestedReferenceField.referenceKey]
-              if (
-                entryItemFieldReferenceValue &&
-                entryItemFieldReferenceValue.sys &&
-                entryItemFieldReferenceValue.sys.type &&
-                entryItemFieldReferenceValue.sys.id
-              ) {
-                const key = `${entryItemFieldReferenceValue.sys.id}___${
-                  entryItemFieldReferenceValue.sys.linkType ||
-                  entryItemFieldReferenceValue.sys.type
-                }`
-                // Don't create link to an unresolvable field.
-                if (!resolvable.has(key)) {
-                  return
-                }
-
-                if (!foreignReferenceMap[key]) {
-                  foreignReferenceMap[key] = []
-                }
-
-                foreignReferenceMap[key].push({
-                  name: `${contentTypeItemId}___NODE`,
-                  id: entryItem.sys.id,
-                  spaceId: space.sys.id,
-                  type: entryItem.sys.type,
-                })
-              }
-            }
-          })
         }
       })
     })
@@ -438,43 +487,44 @@ exports.createNodesForContentType = ({
             nestedReferences.fields.forEach(nestedReferenceField => {
               // For nested reference objects
               if (entryItemFieldKey === nestedReferenceField.key) {
-                const entryItemFieldReferenceValue =
-                  entryItemFieldValue[0][nestedReferenceField.referenceKey]
-
-                if (
-                  entryItemFieldReferenceValue &&
-                  entryItemFieldReferenceValue[0] &&
-                  entryItemFieldReferenceValue[0].sys &&
-                  entryItemFieldReferenceValue[0].sys.type &&
-                  entryItemFieldReferenceValue[0].sys.id
-                ) {
-                  const resolvableEntryItemFieldValue = entryItemFieldValue.map(
-                    v =>
-                      getResolvableNestedReferences(
-                        v[nestedReferenceField.referenceKey],
-                        resolvable
-                      ).map(reference =>
-                        mId(space.sys.id, reference.id, reference.type)
-                      )
+                let updatedNode
+                entryItemFieldValue.forEach((v, index) => {
+                  const resolvedReferences = processNestedReferences(
+                    v,
+                    nestedReferenceField.referenceKey,
+                    resolvable
                   )
-                  if (resolvableEntryItemFieldValue.length !== 0) {
-                    const updatedField = entryItemFields[
-                      nestedReferenceField.key
-                    ].map((_initialNode, index) => {
-                      const updatedNode = {
-                        ..._initialNode,
-                        [`${nestedReferenceField.referenceKey}___NODE`]: resolvableEntryItemFieldValue[
-                          index
-                        ],
-                      }
+                  if (!resolvedReferences) return
+                  if (Array.isArray(resolvedReferences)) {
+                    const resolvedReferenceIds = resolvedReferences.map(
+                      references =>
+                        mId(space.sys.id, references.id, references.type)
+                    )
 
-                      delete updatedNode[nestedReferenceField.referenceKey]
+                    const updatedNodeItem = {
+                      ...v,
+                      [`${nestedReferenceField.referenceKey}___NODE`]: resolvedReferenceIds,
+                    }
 
-                      return updatedNode
-                    })
-                    entryItemFields[`${entryItemFieldKey}`] = updatedField
+                    delete updatedNodeItem[nestedReferenceField.referenceKey]
+                    if (!updatedNode) {
+                      updatedNode = []
+                    }
+                    updatedNode.push(updatedNodeItem)
+                  } else {
+                    updatedNode = {
+                      ...v,
+                      [`${nestedReferenceField.referenceKey}___NODE`]: mId(
+                        space.sys.id,
+                        resolvedReferences.id,
+                        resolvedReferences.type
+                      ),
+                    }
+
+                    delete updatedNode[nestedReferenceField.referenceKey]
                   }
-                }
+                  entryItemFields[`${entryItemFieldKey}`] = updatedNode
+                })
               }
             })
           } else if (
@@ -498,38 +548,49 @@ exports.createNodesForContentType = ({
               )
             }
             delete entryItemFields[entryItemFieldKey]
-          }
-
-          nestedReferences.fields.forEach(nestedReferenceField => {
-            // Check for nested single entity references
-            if (entryItemFieldKey === nestedReferenceField.key) {
-              const entryItemFieldReferenceValue =
-                entryItemFieldValue[nestedReferenceField.referenceKey]
-              if (
-                entryItemFieldReferenceValue &&
-                entryItemFieldReferenceValue.sys &&
-                entryItemFieldReferenceValue.sys.type &&
-                entryItemFieldReferenceValue.sys.id
-              ) {
-                getResolvableNestedReferences(
-                  entryItemFieldReferenceValue,
+          } else {
+            nestedReferences.fields.forEach(nestedReferenceField => {
+              // Check for nested single entity references
+              if (entryItemFieldKey === nestedReferenceField.key) {
+                let updatedNode
+                const resolvedReferences = processNestedReferences(
+                  entryItemFieldValue,
+                  nestedReferenceField.referenceKey,
                   resolvable
-                ).forEach(reference => {
-                  const updatedNode = {
+                )
+                if (!resolvedReferences) return
+                if (Array.isArray(resolvedReferences)) {
+                  const resolvedReferenceIds = resolvedReferences.map(
+                    references =>
+                      mId(space.sys.id, references.id, references.type)
+                  )
+
+                  const updatedNodeItem = {
+                    ...entryItemFieldValue,
+                    [`${nestedReferenceField.referenceKey}___NODE`]: resolvedReferenceIds,
+                  }
+
+                  delete updatedNodeItem[nestedReferenceField.referenceKey]
+                  if (!updatedNode) {
+                    updatedNode = []
+                  }
+                  updatedNode.push(updatedNodeItem)
+                } else {
+                  updatedNode = {
                     ...entryItemFieldValue,
                     [`${nestedReferenceField.referenceKey}___NODE`]: mId(
                       space.sys.id,
-                      reference.id,
-                      reference.type
+                      resolvedReferences.id,
+                      resolvedReferences.type
                     ),
                   }
 
                   delete updatedNode[nestedReferenceField.referenceKey]
-                  entryItemFields[entryItemFieldKey] = updatedNode
-                })
+                }
+                entryItemFields[`${entryItemFieldKey}`] = updatedNode
               }
-            }
-          })
+            })
+          }
         }
       })
 
