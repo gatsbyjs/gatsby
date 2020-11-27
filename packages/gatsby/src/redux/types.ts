@@ -288,6 +288,7 @@ export interface ICachedReduxState {
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
   pageData: IGatsbyState["pageData"]
+  pages: IGatsbyState["pages"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
