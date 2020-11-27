@@ -135,7 +135,13 @@ export const renderDevHTML = ({
     createServerVisitedPage(pageObj.componentChunkName)
 
     // Ensure the query has been run and written out.
-    await getPageDataExperimental(pageObj.path)
+    try {
+      await getPageDataExperimental(pageObj.path)
+    } catch {
+      // If we can't get the page, it was probably deleted recently
+      // so let's just do a 404 page.
+      return reject(`404 page`)
+    }
 
     // Wait for public/render-page.js to update w/ the page component.
     const found = await ensurePathComponentInSSRBundle(pageObj, directory)
@@ -158,8 +164,8 @@ export const renderDevHTML = ({
         directory,
         isClientOnlyPage,
       })
-      resolve(htmlString)
+      return resolve(htmlString)
     } catch (error) {
-      reject(error)
+      return reject(error)
     }
   })
