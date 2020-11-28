@@ -413,7 +413,7 @@ export async function initialize({
         }
       }
 
-      const deletedPaths = await del(deleteGlobs)
+      await del(deleteGlobs)
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
