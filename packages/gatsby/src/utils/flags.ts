@@ -55,7 +55,7 @@ const activeFlags: Array<IFlag> = [
     name: `LAZY_IMAGES`,
     env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
     command: `develop`,
-    telemetryId: `LazyImages`,
+    telemetryId: `LazyImageProcessing`,
     experimental: true,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
