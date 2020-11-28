@@ -29,7 +29,7 @@ const handleFlags = (
   flags.forEach(flag => availableFlags.set(flag.name, flag))
 
   // Find unknown flags someone has in their config to warn them about.
-  const unknownConfigFlags = []
+  const unknownConfigFlags: Array<any> = []
   for (const flagName in configFlags) {
     if (availableFlags.has(flagName)) {
       continue
@@ -37,7 +37,7 @@ const handleFlags = (
     let flagWithMinDistance
     let minDistance
     for (const availableFlag of flags) {
-      if (availableFlag !== flagName) {
+      if (availableFlag.name !== flagName) {
         const distanceToFlag = distance(flagName, availableFlag.name)
         if (!flagWithMinDistance || distanceToFlag < minDistance) {
           flagWithMinDistance = availableFlag.name
@@ -46,13 +46,13 @@ const handleFlags = (
       }
     }
 
-    unknownConfigFlags.push({
-      flag: flagName,
-      didYouMean:
-        flagWithMinDistance && minDistance < 4
-          ? flagWithMinDistance
-          : undefined,
-    })
+    if (flagName) {
+      unknownConfigFlags.push({
+        flag: flagName,
+        didYouMean:
+          flagWithMinDistance && minDistance < 4 ? flagWithMinDistance : ``,
+      })
+    }
   }
 
   let unknownFlagMessage = ``
@@ -60,8 +60,8 @@ const handleFlags = (
     unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known:`
     unknownConfigFlags.forEach(
       flag =>
-        (unknownFlagMessage += `\n- ${flag.flag}${
-          flag.didYouMean ? ` (did you mean: ${flag.didYouMean})` : ``
+        (unknownFlagMessage += `\n- ${flag?.flag}${
+          flag?.didYouMean ? ` (did you mean: ${flag?.didYouMean})` : ``
         }`)
     )
   }
