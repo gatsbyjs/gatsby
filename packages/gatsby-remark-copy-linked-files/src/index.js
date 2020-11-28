@@ -7,6 +7,7 @@ const cheerio = require(`cheerio`)
 const imageSize = require(`probe-image-size`)
 
 const DEPLOY_DIR = `public`
+const SUPPORTED_NODES_TYPES = [`File`, `GoogleDocs`]
 
 const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
@@ -88,14 +89,12 @@ module.exports = (
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
   const visitor = link => {
+    const parentNode = getNode(markdownNode.parent)
     if (
       isRelativeUrl(link.url) &&
-      getNode(markdownNode.parent).dir
+      SUPPORTED_NODES_TYPES.includes(parentNode.internal.type)
     ) {
-      const linkPath = path.posix.join(
-        getNode(markdownNode.parent).dir,
-        link.url
-      )
+      const linkPath = path.posix.join(parentNode.dir, link.url)
       const linkNode = _.find(files, file => {
         if (file && file.absolutePath) {
           return file.absolutePath === linkPath
@@ -192,18 +191,16 @@ module.exports = (
       return
     }
 
-    // since dir will be undefined on non-files
+    // since dir will be undefined on unsupported nodes types
+    const parentNode = getNode(markdownNode.parent)
     if (
       markdownNode.parent &&
-      getNode(markdownNode.parent).dir
+      !SUPPORTED_NODES_TYPES.includes(parentNode.internal.type)
     ) {
       return
     }
 
-    const imagePath = path.posix.join(
-      getNode(markdownNode.parent).dir,
-      image.url
-    )
+    const imagePath = path.posix.join(parentNode.dir, image.url)
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
