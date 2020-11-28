@@ -76,7 +76,6 @@ exports.processFile = (file, transforms, options = {}) => {
   return transforms.map(async transform => {
     try {
       const { outputPath, args } = transform
-
       debug(`Start processing ${outputPath}`)
       await fs.ensureDir(path.dirname(outputPath))
 
