@@ -117,5 +117,5 @@ yarn workspace example develop
 
 ### Additional resources
 
-- Follow a [more detailed guide](/docs/themes/building-themes/) on using the Gatsby theme workspace starter.
-- Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](/tutorial/building-a-theme).
+- Follow a [more detailed guide](https://www.gatsbyjs.com/docs/themes/building-themes/) on using the Gatsby theme workspace starter.
+- Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](https://www.gatsbyjs.com/tutorial/building-a-theme).
