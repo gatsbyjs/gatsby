@@ -48,7 +48,7 @@ class EnsureResources extends React.Component {
     }
 
     if (
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.BUILD_STAGE === `develop` &&
       nextState.pageResources.stale
     ) {
       this.loadResources(nextProps.location.pathname)
