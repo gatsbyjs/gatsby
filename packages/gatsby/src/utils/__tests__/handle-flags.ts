@@ -84,4 +84,13 @@ describe(`handle flags`, () => {
       handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
     ).toHaveLength(1)
   })
+
+  it(`returns a message about unknown flags in the config`, () => {
+    const unknownConfigFlags = handleFlags(
+      activeFlags,
+      { ALL_COMMANDS: true, FASTLY_DEV: true, SUPER_COOL_FLAG: true },
+      `develop`
+    )
+    expect(unknownConfigFlags).toMatchSnapshot()
+  })
 })
