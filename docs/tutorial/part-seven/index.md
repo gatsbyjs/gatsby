@@ -306,7 +306,7 @@ Return to `src/pages/index.js`, query for your markdown slugs, and create links.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 import { Link, graphql } from "gatsby" // highlight-line
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"

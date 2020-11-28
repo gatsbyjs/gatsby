@@ -58,6 +58,7 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -114,6 +115,7 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -170,6 +172,7 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -226,6 +229,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -268,6 +272,7 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -338,6 +343,7 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -379,6 +385,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -454,6 +461,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -535,6 +543,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -616,6 +625,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -697,6 +707,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -756,6 +767,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -819,6 +831,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -882,6 +895,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -946,6 +960,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -988,6 +1003,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1092,6 +1108,7 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1169,6 +1186,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1211,6 +1229,7 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1274,6 +1293,7 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1344,6 +1364,7 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1401,6 +1422,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1445,6 +1467,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1489,6 +1512,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1531,6 +1555,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round he
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {

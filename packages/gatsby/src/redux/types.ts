@@ -276,7 +276,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
-  clientVisitedPages: Set<string>
+  visitedPages: Map<string, Set<string>>
 }
 
 export interface ICachedReduxState {
@@ -597,8 +597,8 @@ interface ISetSchemaComposerAction {
   payload: SchemaComposer<any>
 }
 
-export interface ICreateClientVisitedPage {
-  type: `CREATE_CLIENT_VISITED_PAGE`
+export interface ICreateServerVisitedPage {
+  type: `CREATE_SERVER_VISITED_PAGE`
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
 }

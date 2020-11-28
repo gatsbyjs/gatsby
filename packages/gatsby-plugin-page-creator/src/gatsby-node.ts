@@ -10,7 +10,7 @@ import {
   PluginCallback,
 } from "gatsby"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { parse, GraphQLString } from "graphql"
+import { parse, GraphQLString } from "gatsby/graphql"
 import { createPath, watchDirectory } from "gatsby-page-utils"
 import { createPage } from "./create-page-wrapper"
 import { collectionExtractQueryString } from "./collection-extract-query-string"

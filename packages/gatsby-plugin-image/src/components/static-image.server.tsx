@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react"
 import { StaticImageProps } from "../utils"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
-import { GatsbyImageProps, ISharpGatsbyImageData } from "./gatsby-image.browser"
+import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
-  __imageData?: ISharpGatsbyImageData
+  __imageData?: IGatsbyImageData
   __error?: string
 }
 

@@ -13,6 +13,7 @@ import { center, rule, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
 import { trackCli } from "./tracking"
 import crypto from "crypto"
+import { setSiteMetadata } from "./site-metadata"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
@@ -28,8 +29,7 @@ const w = (input: string): string => (process.platform === `win32` ? `` : input)
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
 const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
-// We're using a fork because it points to the canary version of gatsby
-const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
+const DEFAULT_STARTER = `https://github.com/gatsbyjs/gatsby-starter-minimal.git`
 
 const makeChoices = (
   options: Record<string, { message: string; dependencies?: Array<string> }>,
@@ -302,10 +302,13 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     c.green(c.symbols.check) + ` Created site in ` + c.green(data.project)
   )
 
+  const fullPath = path.resolve(data.project)
+
   if (plugins.length) {
     console.log(c.bold(`${w(`🔌 `)}Installing plugins...`))
-    await installPlugins(plugins, pluginConfig, path.resolve(data.project), [])
+    await installPlugins(plugins, pluginConfig, fullPath, [])
   }
+  await setSiteMetadata(fullPath, `title`, data.project)
 
   const pm = await getPackageManager()
 
@@ -316,7 +319,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
       data.project
     )} has been successfully bootstrapped
-    at ${c.bold(path.resolve(data.project))}.
+    at ${c.bold(fullPath)}.
     `
   )
   console.log(`Start by going to the directory with\n
@@ -331,7 +334,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
 
-  const siteHash = md5(path.resolve(data.project))
+  const siteHash = md5(fullPath)
   trackCli(`CREATE_GATSBY_SUCCESS`, { siteHash })
 }
 

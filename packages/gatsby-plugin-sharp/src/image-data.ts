@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { ISharpGatsbyImageData } from "gatsby-plugin-image"
+import { IGatsbyImageData } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
@@ -101,7 +101,7 @@ export async function generateImageData({
   pathPrefix,
   reporter,
   cache,
-}: IImageDataArgs): Promise<ISharpGatsbyImageData | undefined> {
+}: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
     layout = `fixed`,
     placeholder = `blurred`,
@@ -115,6 +115,8 @@ export async function generateImageData({
     cropFocus = sharp.strategy.attention,
   } = transformOptions
 
+  const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+
   const formats = new Set(args.formats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
 
@@ -124,8 +126,6 @@ export async function generateImageData({
     )
     useAuto = true
   }
-
-  const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
   let primaryFormat: ImageFormat | undefined
   let options: Record<string, unknown> | undefined
@@ -200,7 +200,7 @@ export async function generateImageData({
   if (!images?.length) {
     return undefined
   }
-  const imageProps: ISharpGatsbyImageData = {
+  const imageProps: IGatsbyImageData = {
     layout,
     placeholder: undefined,
     images: {
