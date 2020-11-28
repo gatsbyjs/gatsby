@@ -29,28 +29,25 @@ const handleFlags = (
   flags.forEach(flag => availableFlags.set(flag.name, flag))
 
   // Find unknown flags someone has in their config to warn them about.
-  const unknownConfigFlags = Object.keys(configFlags)
-    .filter(flagName => !availableFlags.has(flagName))
-    .map(flag => {
-      const flagsWithDistance = flags.map(f => {
-        return {
-          name: f.name,
-          distance: distance(flag, f.name),
-        }
-      })
-
-      const minDistance = _.minBy(flagsWithDistance, f => f.distance)
-
-      let didYouMean
-      if (minDistance) {
-        didYouMean = minDistance.distance < 4 ? minDistance.name : undefined
+  const unknownConfigFlags = []
+  for (let flagName in configFlags) {
+    if (!availableFlags.has(flagName)) {
+      return
+    }
+    let flagWithMinDistance, minDistance
+    for (let availableFlag of flags) {
+      const distanceToFlag = distance(flagName, availableFlag.name)
+      if (!flagWithMinDistance || distanceToFlag < minDistance) {
+        flagWithMinDistance = availableFlag.name
+        minDistance = distanceToFlag
       }
-
-      return {
-        flag,
-        didYouMean,
-      }
+    }
+    
+    unknownConfigFlags.push({
+      flag: flagName,
+      didYouMean: flagWithMinDistance && minDistance < 4 ? flagWithMinDistance : undefined
     })
+  }
 
   let unknownFlagMessage = ``
   if (unknownConfigFlags.length > 0) {
