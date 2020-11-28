@@ -221,6 +221,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       args: options,
     })
 
+    // Filter out operations if the output file already exists.
     operations = operations.filter(
       operation => !fs.existsSync(path.join(outputDir, operation.outputPath))
     )
