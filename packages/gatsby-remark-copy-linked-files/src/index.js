@@ -90,7 +90,7 @@ module.exports = (
   const visitor = link => {
     if (
       isRelativeUrl(link.url) &&
-      getNode(markdownNode.parent).internal.type === `File`
+      getNode(markdownNode.parent).dir
     ) {
       const linkPath = path.posix.join(
         getNode(markdownNode.parent).dir,
@@ -195,7 +195,7 @@ module.exports = (
     // since dir will be undefined on non-files
     if (
       markdownNode.parent &&
-      getNode(markdownNode.parent).internal.type !== `File`
+      getNode(markdownNode.parent).dir
     ) {
       return
     }
