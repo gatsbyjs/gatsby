@@ -23,7 +23,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0",
-    "react": "^16.4.2",
+    "react": "^16.4.2 || ^17.0.0",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7"
   },

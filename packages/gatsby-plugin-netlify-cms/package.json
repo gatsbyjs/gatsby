@@ -38,8 +38,8 @@
   "peerDependencies": {
     "gatsby": "^2.0.101",
     "netlify-cms-app": "^2.9.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react": "^16.8.4 || ^17.0.0",
+    "react-dom": "^16.8.4 || ^17.0.0"
   },
   "repository": {
     "type": "git",
