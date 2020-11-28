@@ -86,8 +86,10 @@ const handleFlags = (
           : `are ${otherFlagsCount} other flags`
       } available that you might be interested in:`
 
+      const enabledFlagsSet = new Set()
+      enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
       flags.forEach(flag => {
-        if (!enabledConfigFlags.some(f => f.name === flag.name)) {
+        if (!enabledFlagsSet.has(flag.name)) {
           message += generateFlagLine(flag)
         }
       })
