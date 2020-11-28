@@ -226,6 +226,11 @@ const compressJpg = (pipeline, outputPath, options) =>
   )
 
 exports.createArgsDigest = args => {
+  // Add constant to args that we can change if we need a way to forcibly clear
+  // everyone's sharp cache.
+  const CACHE_VERSION = 1
+  args.CACHE_VERSION = CACHE_VERSION
+
   const argsDigest = createContentDigest(args)
 
   return argsDigest.substr(argsDigest.length - 5)
