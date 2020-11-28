@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`handle flags returns a message about unknown flags in the config 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_EXPERIMENTAL_SOMETHING_COOL",
+      "name": "ALL_COMMANDS",
+      "umbrellaIssue": "test",
+    },
+  ],
+  "message": "The following flags are active:
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+",
+  "unknownFlagMessage": "The following flag(s) found in your gatsby-config.js are not known:
+- FASTLY_DEV (did you mean: FAST_DEV)
+- SUPER_COOL_FLAG",
+}
+`;
+
 exports[`handle flags returns validConfigFlags and a message 1`] = `
 Object {
   "enabledConfigFlags": Array [
@@ -42,5 +62,6 @@ Object {
 - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
 ",
+  "unknownFlagMessage": "",
 }
 `;
