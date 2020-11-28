@@ -77,12 +77,6 @@ exports.processFile = (file, transforms, options = {}) => {
     try {
       const { outputPath, args } = transform
 
-      // If the outputPath already exists, we created the file at some
-      // point in the past so let's just return.
-      if (fs.existsSync(outputPath)) {
-        return transform
-      }
-
       debug(`Start processing ${outputPath}`)
       await fs.ensureDir(path.dirname(outputPath))
 

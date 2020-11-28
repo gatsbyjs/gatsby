@@ -201,7 +201,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 function batchQueueImageResizing({ file, transforms = [], reporter }) {
-  const operations = []
+  let operations = []
   const images = []
 
   // loop through all transforms to set correct variables
@@ -220,6 +220,10 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       outputPath: relativePath,
       args: options,
     })
+
+    operations = operations.filter(
+      operation => !fs.existsSync(path.join(outputDir, operation.outputPath))
+    )
 
     // create output results
     images.push({
