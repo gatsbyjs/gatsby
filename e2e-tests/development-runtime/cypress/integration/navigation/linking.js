@@ -173,7 +173,7 @@ describe(`navigation`, () => {
       it(`should trigger an effect after the state has changed`, () => {
         cy.findByTestId(`effect-message`).should(`have.text`, ``)
         cy.findByTestId(`send-state-message`).click().waitForRouteChange()
-        cy.findByTestId(`effect-message`).should(`have.text`, `state message`)
+        cy.findByTestId(`effect-message`).should(`have.text`, `this is a message using the state`)
       })
     })
   }
@@ -203,7 +203,7 @@ describe(`navigation`, () => {
       it(`should trigger an effect after the state has changed`, () => {
         cy.findByTestId(`effect-message`).should(`have.text`, ``)
         cy.findByTestId(`send-state-message`).click().waitForRouteChange()
-        cy.findByTestId(`effect-message`).should(`have.text`, `state message`)
+        cy.findByTestId(`effect-message`).should(`have.text`, `this is a message using the state`)
       })
     })
   }

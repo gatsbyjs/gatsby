@@ -46,7 +46,7 @@ export default function NavigationEffects({ location }) {
         data-testid="send-state-message"
         onClick={() =>
           handleClick("/navigation-effects", {
-            state: { message: "state message" },
+            state: { message: "this is a message using the state" },
           })
         }
       >
