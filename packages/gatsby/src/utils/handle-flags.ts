@@ -30,37 +30,40 @@ const handleFlags = (
 
   // Find unknown flags someone has in their config to warn them about.
   const unknownConfigFlags = []
-  for (let flagName in configFlags) {
-    if (!availableFlags.has(flagName)) {
-      return
+  for (const flagName in configFlags) {
+    if (availableFlags.has(flagName)) {
+      continue
     }
-    let flagWithMinDistance, minDistance
-    for (let availableFlag of flags) {
-      const distanceToFlag = distance(flagName, availableFlag.name)
-      if (!flagWithMinDistance || distanceToFlag < minDistance) {
-        flagWithMinDistance = availableFlag.name
-        minDistance = distanceToFlag
+    let flagWithMinDistance
+    let minDistance
+    for (const availableFlag of flags) {
+      if (availableFlag !== flagName) {
+        const distanceToFlag = distance(flagName, availableFlag.name)
+        if (!flagWithMinDistance || distanceToFlag < minDistance) {
+          flagWithMinDistance = availableFlag.name
+          minDistance = distanceToFlag
+        }
       }
     }
-    
+
     unknownConfigFlags.push({
       flag: flagName,
-      didYouMean: flagWithMinDistance && minDistance < 4 ? flagWithMinDistance : undefined
+      didYouMean:
+        flagWithMinDistance && minDistance < 4
+          ? flagWithMinDistance
+          : undefined,
     })
   }
 
   let unknownFlagMessage = ``
   if (unknownConfigFlags.length > 0) {
-    unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known: ${unknownConfigFlags.map(
-      f => f.flag
-    )}`
-
-    const didYouMeans = unknownConfigFlags.filter(f => f.didYouMean)
-    if (didYouMeans.length > 0) {
-      unknownFlagMessage += `\n\n${commaListsAnd`Did you mean: ${didYouMeans.map(
-        f => f.didYouMean
-      )}`}?\n`
-    }
+    unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known:`
+    unknownConfigFlags.forEach(
+      flag =>
+        (unknownFlagMessage += `\n- ${flag.flag}${
+          flag.didYouMean ? ` (did you mean: ${flag.didYouMean})` : ``
+        }`)
+    )
   }
 
   let enabledConfigFlags = Object.keys(configFlags)

@@ -88,7 +88,7 @@ describe(`handle flags`, () => {
   it(`returns a message about unknown flags in the config`, () => {
     const unknownConfigFlags = handleFlags(
       activeFlags,
-      { ...configFlags, FASTLY_DEV: true, SUPER_COOL_FLAG: true },
+      { ALL_COMMANDS: true, FASTLY_DEV: true, SUPER_COOL_FLAG: true },
       `develop`
     )
     expect(unknownConfigFlags).toMatchSnapshot()
