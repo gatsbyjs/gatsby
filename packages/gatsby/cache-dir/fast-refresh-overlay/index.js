@@ -1,5 +1,5 @@
 import React from "react"
-import client from "webpack-hot-middleware/client"
+import client from "../hot-middleware/client"
 
 import ErrorBoundary from "./components/error-boundary"
 import Portal from "./components/portal"

@@ -1,4 +1,4 @@
-import webpackHotMiddleware from "webpack-hot-middleware"
+import hotMiddleware from "./webpack/hot-middleware/middleware"
 import webpackDevMiddleware, {
   WebpackDevMiddleware,
 } from "webpack-dev-middleware"
@@ -167,7 +167,7 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
   app.use(compression())
   app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
-    webpackHotMiddleware(compiler, {
+    hotMiddleware(compiler, {
       log: false,
       path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
