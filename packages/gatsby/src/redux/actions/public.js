@@ -23,6 +23,7 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+import { createContentDigest } from "gatsby-core-utils"
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -378,6 +379,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.path = truncatedPath
   }
 
+  if (!page.context) {
+    page.context = {}
+  }
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
@@ -387,7 +392,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
-    context: page.context || {},
+    context: page.context,
     updatedAt: Date.now(),
   }
 
@@ -396,9 +401,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const oldPageContextHash = store
+    .getState()
+    .pageContextHashes.get(internalPage.path)
+  const pageContextHash = createContentDigest(page.context)
   const contextModified =
-    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+    !!oldPageContextHash && oldPageContextHash !== pageContextHash
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -418,6 +426,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     ...actionOptions,
     type: `CREATE_PAGE`,
     contextModified,
+    pageContextHash,
     plugin,
     payload: internalPage,
   }

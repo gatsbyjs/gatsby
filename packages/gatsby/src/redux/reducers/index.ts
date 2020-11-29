@@ -28,6 +28,7 @@ import { inferenceMetadataReducer } from "./inference-metadata"
 import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
 import { queriesReducer } from "./queries"
 import { visitedPagesReducer } from "./visited-page"
+import { pageContextHashesReducer } from "./page-context-hashes"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -63,4 +64,5 @@ export {
   pendingPageDataWritesReducer as pendingPageDataWrites,
   staticQueriesByTemplateReducer as staticQueriesByTemplate,
   queriesReducer as queries,
+  pageContextHashesReducer as pageContextHashes,
 }

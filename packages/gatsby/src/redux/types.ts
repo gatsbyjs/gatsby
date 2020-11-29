@@ -277,6 +277,7 @@ export interface IGatsbyState {
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
   visitedPages: Map<string, Set<string>>
+  pageContextHashes: Map<string, string>
 }
 
 export interface ICachedReduxState {
@@ -291,6 +292,7 @@ export interface ICachedReduxState {
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
+  pageContextHashes: IGatsbyState["pageContextHashes"]
 }
 
 export type ActionsUnion =
@@ -608,6 +610,7 @@ export interface ICreatePageAction {
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
   contextModified?: boolean
+  pageContextHash: string
 }
 
 export interface ICreateRedirectAction {

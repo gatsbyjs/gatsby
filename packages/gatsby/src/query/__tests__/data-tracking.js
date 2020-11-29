@@ -186,8 +186,9 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   if (restart) {
     await require(`../../schema`).build({})
-    await apiRunner(`createPages`)
   }
+
+  await apiRunner(`createPages`)
 
   Object.entries(pageQueries).forEach(([componentPath, query]) => {
     store.dispatch({
@@ -806,7 +807,7 @@ describe(`query caching between builds`, () => {
     }, 99999)
   })
 
-  describe.skip(`Changing page context invalidates page queries`, () => {
+  describe(`Changing page context invalidates page queries`, () => {
     beforeAll(() => {
       let pageChangeCounter = 1
       let nodeChangeCounter = 1

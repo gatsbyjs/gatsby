@@ -77,6 +77,7 @@ Map {
 exports[`Add pages allows you to add pages 1`] = `
 Object {
   "contextModified": false,
+  "pageContextHash": "99914b932bd37a50b983c5e7c90ae93b",
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
@@ -117,6 +118,7 @@ Map {
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
   "contextModified": false,
+  "pageContextHash": "426ef2719c86cbc77ce9d399793dd8d4",
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
@@ -161,6 +163,7 @@ Map {
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
   "contextModified": false,
+  "pageContextHash": "99914b932bd37a50b983c5e7c90ae93b",
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",

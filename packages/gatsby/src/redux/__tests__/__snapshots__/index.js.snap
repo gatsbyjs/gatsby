@@ -48,6 +48,9 @@ Object {
       },
     },
   },
+  "pageContextHashes": Map {
+    "/my-sweet-new-page/" => "4cf9cfa61c013b4697445e9bb48dd436",
+  },
   "pageData": Map {},
   "pageDataStats": Map {},
   "pendingPageDataWrites": Object {
