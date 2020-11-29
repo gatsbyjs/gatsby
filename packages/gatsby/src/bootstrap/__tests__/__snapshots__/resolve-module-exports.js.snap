@@ -3,7 +3,7 @@
 exports[`Resolve module exports Show meaningful error message for invalid JavaScript 1`] = `
 Array [
   "Syntax error in \\"/bad/file\\":
-Unexpected token (1:13)
+Const declarations require an initialization value (1:13)
 > 1 | const exports.blah = () = }}}
     |             ^",
 ]

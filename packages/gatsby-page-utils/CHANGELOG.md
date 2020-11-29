@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.5.0-next.0...gatsby-page-utils@0.6.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.4.0-next.0...gatsby-page-utils@0.5.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+# [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.3.0-next.0...gatsby-page-utils@0.3.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.28...gatsby-page-utils@0.2.29) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-page-utils ([#27538](https://github.com/gatsbyjs/gatsby/issues/27538)) ([1241029](https://github.com/gatsbyjs/gatsby/commit/124102958bf04170275a8eef4249ad2e78955997))
+
+## [0.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.27...gatsby-page-utils@0.2.28) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.26...gatsby-page-utils@0.2.27) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.25...gatsby-page-utils@0.2.26) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.24...gatsby-page-utils@0.2.25) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.23...gatsby-page-utils@0.2.24) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.22...gatsby-page-utils@0.2.23) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.21...gatsby-page-utils@0.2.22) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-page-utils
+
 ## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.20...gatsby-page-utils@0.2.21) (2020-08-24)
 
 **Note:** Version bump only for package gatsby-page-utils

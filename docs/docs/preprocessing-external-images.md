@@ -72,7 +72,7 @@ exports.onCreateNode = async ({
       createNode, // helper function in gatsby-node to generate the node
       createNodeId, // helper function in gatsby-node to generate the node id
       cache, // Gatsby's cache
-      store, // Gatsby's redux store
+      store, // Gatsby's Redux store
     })
 
     // if the file was created, attach the new node to the parent node
@@ -112,7 +112,7 @@ query {
 }
 ```
 
-![Screenshot of GraphiQL with above query inserted](./images/remote-file-node-graphiql-preview.png)
+![GraphiQL with above query inserted](./images/remote-file-node-graphiql-preview.png)
 
 You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/gatsby-image/).
 
@@ -178,4 +178,4 @@ export const query = graphql`
 
 And if you run `gatsby develop`, you'll see the remote file locally now:
 
-![Screenshot of rendered blog post with featured image](./images/remote-file-node-blogpost.png)
+![Rendered blog post with featured image](./images/remote-file-node-blogpost.png)

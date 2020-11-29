@@ -6,7 +6,7 @@ The logic for creating slugs from file names can get tricky, the `gatsby-source-
 
 ## Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ## Create slugs in gatsby-node.js
 

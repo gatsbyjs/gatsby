@@ -58,7 +58,10 @@ const howToMerge = {
   siteMetadata: (objA: Metadata, objB: Metadata): Metadata =>
     _.merge({}, objA, objB),
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
-  plugins: (a: PluginEntry[] = [], b: PluginEntry[] = []): PluginEntry[] =>
+  plugins: (
+    a: Array<PluginEntry> = [],
+    b: Array<PluginEntry> = []
+  ): Array<PluginEntry> =>
     _.uniqWith(a.concat(b), (a, b) =>
       _.isEqual(
         _.pick(normalizePluginEntry(a), [`resolve`, `options`]),
@@ -78,7 +81,7 @@ export const mergeGatsbyConfig = (
   // a and b are gatsby configs, If they have keys, that means there are values to merge
   const allGatsbyConfigKeysWithAValue = _.uniq(
     Object.keys(a).concat(Object.keys(b))
-  ) as ConfigKey[]
+  ) as Array<ConfigKey>
 
   // reduce the array of mergable keys into a single gatsby config object
   const mergedConfig = allGatsbyConfigKeysWithAValue.reduce(

@@ -10,8 +10,7 @@ with various JavaScript tooling (e.g.
 [Prettier](https://github.com/prettier/prettier)) simpler.
 
 Everything related to webpack, loaders, Babel, React should work nearly
-identically under v1 of Gatsby compared to v0 so this part of the migration is
-super easy.
+identically under v1 of Gatsby compared to v0.
 
 ```shell
 mkdir src
@@ -27,7 +26,7 @@ git mv utils src
 automatically prefixes urls and handles prefetching. Add `gatsby-link` to your
 project by running:
 
-`npm install --save gatsby-link`
+`npm install gatsby-link`
 
 `gatsby-link` auto-detects whether to use a plain `<Link>` or `<NavLink>` based
 on what props you pass it. There's no need to wrap `<IndexLink>` because it was
@@ -123,7 +122,7 @@ Here's an example of migrating a markdown wrapper to Gatsby v1.
 
 Install Gatsby plugins for handling markdown files.
 
-`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
+`npm install gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
 
 Next add them to your `gatsby-config.js` file. Make your config file look
 something like the following:

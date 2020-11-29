@@ -4,6 +4,15 @@ import { Actions, ActivityTypes, ActivityStatuses } from "../constants"
 import { ActionsUnion, IActivity } from "./types"
 import signalExit from "signal-exit"
 
+export function isActivityInProgress(
+  activityStatus: ActivityStatuses
+): boolean {
+  return (
+    activityStatus === ActivityStatuses.InProgress ||
+    activityStatus === ActivityStatuses.NotStarted
+  )
+}
+
 export const getGlobalStatus = (
   id: string,
   status: ActivityStatuses
@@ -20,10 +29,7 @@ export const getGlobalStatus = (
       const activityStatus =
         activityId === id ? status : logs.activities[activityId].status
 
-      if (
-        activityStatus === ActivityStatuses.InProgress ||
-        activityStatus === ActivityStatuses.NotStarted
-      ) {
+      if (isActivityInProgress(activityStatus)) {
         return ActivityStatuses.InProgress
       } else if (
         activityStatus === ActivityStatuses.Failed &&

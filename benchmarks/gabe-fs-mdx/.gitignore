@@ -1,0 +1,7 @@
+node_modules/
+.cache/
+public/
+.env
+generated_articles
+.DS_Store
+yarn.lock

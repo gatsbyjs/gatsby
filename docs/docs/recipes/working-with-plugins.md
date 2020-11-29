@@ -46,7 +46,7 @@ module.exports = {
 }
 ```
 
-_The instructions found in the README of the plugin you're using can you help you determine specifics about what configurations (if any) it requires. For this example to have an effect in your own site, you would need to create the `src/images` folder and place files inside of it._
+_The instructions found in the README of the plugin you're using can help you determine specifics about what configurations (if any) it requires. For this example to have an effect in your own site, you would need to create the `src/images` folder and place files inside of it._
 
 3. Run `gatsby develop`, your plugin should run as your site builds.
 

@@ -4,7 +4,7 @@ title: Building an E-commerce site with Shopify
 
 In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
 
-If you are already comfortable with Gatsby and Shopify, you might want to check out the [Gatsby Shopify starter](https://www.gatsbyjs.org/starters/AlexanderProd/gatsby-shopify-starter/), which provides many of the same features as this example.
+If you are already comfortable with Gatsby and Shopify, you might want to check out the [Gatsby Shopify starter](https://www.gatsbyjs.com/starters/AlexanderProd/gatsby-shopify-starter/), which provides many of the same features as this example.
 
 ## Setting up your Shopify account
 
@@ -15,12 +15,12 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 
 ## Set up the Gatsby Shopify plugin
 
-1. If you do not already have one ready, [create a Gatsby site](https://www.gatsbyjs.org/docs/quick-start).
+1. If you do not already have one ready, [create a Gatsby site](https://www.gatsbyjs.com/docs/quick-start).
 
 2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
 
 ```shell
-npm install --save gatsby-source-shopify shopify-buy
+npm install gatsby-source-shopify shopify-buy
 ```
 
 3. Enable and configure the plugin in your `gatsby-config.js` file, replacing [some-shop] with your shop name and [token] with your Storefront access token.

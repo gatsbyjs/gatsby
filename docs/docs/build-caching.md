@@ -40,15 +40,16 @@ The [Node API helpers](/docs/node-api-helpers/#cache) documentation offers more 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
 ```js:title=gatsby-node.js
-exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
+exports.onPostBuild = async function ({ cache, graphql }, { query }) {
   const cacheKey = "some-key-name"
+  const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
   let obj = await cache.get(cacheKey)
 
   if (!obj) {
     obj = { created: Date.now() }
     const data = await graphql(query)
     obj.data = data
-  } else if (Date.now() > obj.lastChecked + 3600000) {
+  } else if (Date.now() > obj.lastChecked + twentyFourHoursInMilliseconds) {
     /* Reload after a day */
     const data = await graphql(query)
     obj.data = data
@@ -64,7 +65,7 @@ exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
 
 ## Clearing cache
 
-Since cache files are stored within the `.cache` directory, simply deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
+Since cache files are stored within the `.cache` directory, deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
 The cache is also invalidated by Gatsby in a few cases, specifically:
 
 - If `package.json` changes, for example a dependency is updated or added

@@ -27,7 +27,7 @@ const readJSON = async (file: string): Promise<PackageJson> => {
 const getTreeFromNodeModules = async (
   dir: string,
   results: Map<string, IDependency> = new Map()
-): Promise<IDependency[]> => {
+): Promise<Array<IDependency>> => {
   const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
   let packageJSON: PackageJson
   try {
@@ -65,7 +65,7 @@ const getTreeFromNodeModules = async (
 }
 
 export const getGatsbyDependents = memoize(
-  async (): Promise<IDependency[]> => {
+  async (): Promise<Array<IDependency>> => {
     const { program } = store.getState()
     return getTreeFromNodeModules(program.directory)
   }

@@ -33,9 +33,7 @@ The Gatsby core team uses a triaging process outlined in [Managing Pull Requests
 
 For any kind of change to files in the Gatsby repo, you can follow the below steps. Be sure to check out additional tips for contributing to various parts of the repo later in this doc, such as docs changes, blog posts, starters, or code improvements and tests.
 
-Some PRs can be done completely from the [GitHub UI](https://help.github.com/en/articles/creating-a-pull-request), such as edits to README files or docs.
-
-To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), you can fork the repo and install parts of it to run on your local machine.
+To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), fork the repo and install parts of it to run on your local machine.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 

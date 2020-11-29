@@ -5,5 +5,5 @@ import { callRealApi } from "../utils/call-deferred-api"
 export const runMutationBatch = async ({
   runningBatch = [],
   store,
-}: Partial<IWaitingContext>): Promise<void[]> =>
+}: Partial<IWaitingContext>): Promise<Array<void>> =>
   Promise.all(runningBatch.map(payload => callRealApi(payload, store)))

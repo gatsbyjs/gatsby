@@ -4,6 +4,12 @@ const unified = require("unified")
 const dictionary = fs.readFileSync("./dictionary.txt")
 
 module.exports = {
+  options: {
+    silentlyIgnore: true,
+    quiet: true,
+    frail: true,
+    extensions: ["md"]
+  },
   plugins: [
     ["remark-frontmatter", "yaml"],
     [

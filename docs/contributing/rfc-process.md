@@ -106,7 +106,7 @@ to the document.
 
 ## Implementing an RFC
 
-The author of an RFC is not obligated to implement it. Of course, the RFC
+The author of an RFC is not obligated to implement it. The RFC
 author (like any other developer) is welcome to post an implementation for
 review after the RFC has been accepted.
 

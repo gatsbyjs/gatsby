@@ -4,7 +4,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ## Install
 
-`npm install --save gatsby-transformer-remark`
+`npm install gatsby-transformer-remark`
 
 ## How to use
 
@@ -269,7 +269,7 @@ date: "2017-09-18T23:19:51.246Z"
 <p>Is he in the stable or down by the stream?</p>
 ```
 
-Then specify `MARKDOWN` as the format in your graphql query:
+Then specify `MARKDOWN` as the format in your GraphQL query:
 
 ```graphql
 {

@@ -8,7 +8,7 @@ import babelPluginMoveExportKeywords from "./renderer/babel-plugin-move-export-k
 const mdxCache = new Map()
 const jsxCache = new Map()
 
-const transformJsx = (jsx, isRenderer) => {
+const transformJsx = jsx => {
   delete require.cache[require.resolve(`@babel/standalone`)]
   const { transform } = require(`@babel/standalone`)
   const options = {
@@ -20,14 +20,11 @@ const transformJsx = (jsx, isRenderer) => {
     plugins: [
       babelPluginCopyKeyProp,
       babelPluginMoveExportKeywords,
+      babelPluginRemoveShortcodes,
       // TODO figure out how to use preset-env
       babelChainingPlugin,
       [babelPluginTransformReactJsx, { useBuiltIns: true }],
     ],
-  }
-
-  if (isRenderer) {
-    options.plugins.push(babelPluginRemoveShortcodes)
   }
 
   const { code } = transform(jsx, options)
@@ -35,7 +32,7 @@ const transformJsx = (jsx, isRenderer) => {
   return code
 }
 
-export default (mdxSrc, isRenderer = false) => {
+export default mdxSrc => {
   let jsxFromMdx
   if (mdxCache.has(mdxSrc)) {
     jsxFromMdx = mdxCache.get(mdxSrc)
@@ -51,7 +48,7 @@ export default (mdxSrc, isRenderer = false) => {
   if (jsxCache.has(jsxFromMdx)) {
     srcCode = jsxCache.get(jsxFromMdx)
   } else {
-    srcCode = transformJsx(jsxFromMdx, isRenderer)
+    srcCode = transformJsx(jsxFromMdx)
     jsxCache.set(jsxFromMdx, srcCode)
   }
 

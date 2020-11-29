@@ -79,23 +79,29 @@ exports.replaceRenderer = true
  * is merged with other body props and passed to `html.js` as `bodyProps`.
  * @param {pluginOptions} pluginOptions
  * @example
- * const { Helmet } = require("react-helmet")
+ * // Import React so that you can use JSX in HeadComponents
+ * const React = require("react")
  *
- * exports.onRenderBody = (
- *   { setHeadComponents, setHtmlAttributes, setBodyAttributes },
- *   pluginOptions
- * ) => {
- *   const helmet = Helmet.renderStatic()
- *   setHtmlAttributes(helmet.htmlAttributes.toComponent())
- *   setBodyAttributes(helmet.bodyAttributes.toComponent())
- *   setHeadComponents([
- *     helmet.title.toComponent(),
- *     helmet.link.toComponent(),
- *     helmet.meta.toComponent(),
- *     helmet.noscript.toComponent(),
- *     helmet.script.toComponent(),
- *     helmet.style.toComponent(),
- *   ])
+ * const HtmlAttributes = {
+ *   lang: "en"
+ * }
+ *
+ * const HeadComponents = [
+ *   <script key="my-script" src="https://gatsby.dev/my-script" />
+ * ]
+ *
+ * const BodyAttributes = {
+ *   "data-theme": "dark"
+ * }
+ *
+ * exports.onRenderBody = ({
+ *   setHeadComponents,
+ *   setHtmlAttributes,
+ *   setBodyAttributes
+ * }, pluginOptions) => {
+ *   setHtmlAttributes(HtmlAttributes)
+ *   setHeadComponents(HeadComponents)
+ *   setBodyAttributes(BodyAttributes)
  * }
  */
 exports.onRenderBody = true

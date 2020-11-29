@@ -26,7 +26,7 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
 
   findEslintOptions(compiler: Compiler): RuleSetQuery | undefined {
     const [rule] = compiler.options.module?.rules.find(isEslintRule)
-      ?.use as RuleSetLoader[]
+      ?.use as Array<RuleSetLoader>
     return rule.options
   }
 

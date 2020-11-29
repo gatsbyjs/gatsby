@@ -14,9 +14,9 @@ const checkFolderIsEmpty = (path: string): boolean =>
 export const getChangedPageDataKeys = (
   state: IGatsbyState,
   cachedPageData: Map<string, string>
-): string[] => {
+): Array<string> => {
   if (cachedPageData && state.pageData) {
-    const pageKeys: string[] = []
+    const pageKeys: Array<string> = []
     state.pageData.forEach((newPageDataHash: string, key: string) => {
       if (!cachedPageData.has(key)) {
         pageKeys.push(key)
@@ -36,9 +36,9 @@ export const getChangedPageDataKeys = (
 export const collectRemovedPageData = (
   state: IGatsbyState,
   cachedPageData: Map<string, string>
-): string[] => {
+): Array<string> => {
   if (cachedPageData && state.pageData) {
-    const deletedPageKeys: string[] = []
+    const deletedPageKeys: Array<string> = []
     cachedPageData.forEach((_value: string, key: string) => {
       if (!state.pageData.has(key)) {
         deletedPageKeys.push(key)
@@ -67,7 +67,7 @@ const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
   }
 }
 
-const sortedPageKeysByNestedLevel = (pageKeys: string[]): string[] =>
+const sortedPageKeysByNestedLevel = (pageKeys: Array<string>): Array<string> =>
   pageKeys.sort((a, b) => {
     const currentPagePathValue = a.split(`/`).length
     const previousPagePathValue = b.split(`/`).length
@@ -76,7 +76,7 @@ const sortedPageKeysByNestedLevel = (pageKeys: string[]): string[] =>
 
 export const removePageFiles = async (
   publicDir: string,
-  pageKeys: string[]
+  pageKeys: Array<string>
 ): Promise<void> => {
   const removePages = pageKeys.map(pagePath =>
     removePageHtmlFile({ publicDir }, pagePath)

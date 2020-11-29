@@ -4,11 +4,9 @@ title: Triaging GitHub Issues
 
 ## What is the aim of this document?
 
-On the Gatsby core team, we've found patterns that help us effectively triage incoming GitHub issues, provide answers to the community's questions, identify bugs, and provide contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
+On the Gatsby core team, we've found patterns that help us effectively triage incoming GitHub issues, provide answers to the community's questions, identify bugs, and provide contribution opportunities.
 
-We want to share these patterns with the broader community, so that if you're interested in helping us triage, you're able to do so more effectively!
-
-In this document we’ll answer common questions, list guidelines and illustrate a decision tree.
+In this document we’ll answer common questions, explain guidelines and illustrate a decision tree.
 
 ## First touch maintenance
 
@@ -49,9 +47,9 @@ Gatsby is unique among most open source projects because:
 
 ### General guidelines
 
-- **Be empathetic.** The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
+- **Be empathetic.** The author of an issue might be asking something that’s obvious to us but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how we make them feel, not what we told them.
 - **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
-- **Encourage community contributions.** Getting people involved makes a huge impact. It’s often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
+- **Encourage community contributions.** Getting people involved makes a huge impact. We often spend the time to write up a task as a `good first issue` instead of fixing the issue ourselves. This can provide a low friction way for someone to get more involved in open source!
 - **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
 
 ### Labeling
@@ -124,34 +122,34 @@ We have a bot that helps us automate some aspects:
 
 ## Frequently asked questions
 
-> When do I do a demo for an issue?
+> When do you do a demo for an issue?
 
 When a feature or pattern is not documented, it may be nice to make a demo to add clarity for the author and help future readers as well.
 
-> How do I reproduce a bug?
+> How do you reproduce a bug?
 
-Every bug report should provide details on how to reproduce the bug. This is so important that there's [dedicated documentation on how to create good bug reproductions](/contributing/how-to-make-a-reproducible-test-case/). Encourage issue authors to describe exactly how to reproduce a bug.
+Every bug report should provide details on how to reproduce the bug. This is so important that there's [dedicated documentation on how to create good bug reproductions](/contributing/how-to-make-a-reproducible-test-case/). We encourage issue authors to describe exactly how to reproduce a bug.
 
-> How much time do I spend on an issue?
+> How much time do you spend on an issue?
 
-Some issues might need more time than others and there isn’t any hard and fast rule. However, it's best to spend time on an issue after the relevant info and reproduction is available.
+Some issues might need more time than others and there isn’t any hard and fast rule. However, we find it's best to spend time on an issue after the relevant info and reproduction is available.
 
-> Do I have to look at Discord?
+> Do you look at Discord?
 
-You don’t have to. Some of us are active on Discord and you can be too if you like.
+Some of us are active on Discord and you can be too if you like.
 
-> Do I use the same issue to track documentation additions or open a new one?
+> Do you use the same issue to track documentation additions or open a new one?
 
-If the issue describes the context well enough, then it is okay to update its title and use the same issue to track the addition of relevant documentation.
+If the issue describes the context well enough, then we'll sometimes update its title and use the same issue to track the addition of relevant documentation.
 
-> When do I follow up on an issue?
+> When do you follow up on an issue?
 
-If an author hasn’t responded to a comment for a week or two, it might be nice to follow up and ask if there’s anything else we can do to help. If the issue goes stale after that, our bot should be able to clean it up.
+If an author hasn’t responded to a comment for a week or two, we think it's nice to follow up and ask if there’s anything else we can do to help. If the issue goes stale after that, our bot should be able to clean it up.
 
-> What do I do if an issue relates to something upstream?
+> What do you do if an issue relates to something upstream?
 
 It’s a good practice to open an issue in the upstream repository in cases like this but isn’t strictly necessary. "Upstream" in this case refers to repositories that house dependencies for Gatsby.
 
-> How long should I leave an issue open when awaiting more information from the issue filer?
+> How long should you leave an issue open when awaiting more information from the issue filer?
 
-If a request is made of the issue filer for a reproduction or more information, and eight or more business days passes without a response, the issue should be closed. Leave a polite message that indicates the issue is being closed until there is an actionable response, and that it could be re-opened if said information is supplied.
+If a request is made of the issue filer for a reproduction or more information, and eight or more business days passes without a response, the issue should be closed. We typically leave a polite message that indicates the issue is being closed until there is an actionable response, and that it will be re-opened if said information is supplied.

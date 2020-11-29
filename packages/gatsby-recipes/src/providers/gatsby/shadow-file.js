@@ -1,30 +1,27 @@
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const Joi = require(`@hapi/joi`)
+import path from "path"
+import fs from "fs-extra"
+import * as Joi from "@hapi/joi"
 
-const { slash } = require(`gatsby-core-utils`)
+import { slash } from "gatsby-core-utils"
 
-const resourceSchema = require(`../resource-schema`)
-const getDiff = require(`../utils/get-diff`)
+import resourceSchema from "../resource-schema"
+import getDiff from "../utils/get-diff"
 const fileExists = filePath => fs.existsSync(filePath)
 
-const relativePathForShadowedFile = ({ theme, filePath }) => {
+export const relativePathForShadowedFile = ({ theme, filePath }) => {
   // eslint-disable-next-line
   const [_src, ...filePathParts] = filePath.split(`/`)
   const relativePath = path.join(`src`, theme, path.join(...filePathParts))
   return slash(relativePath)
 }
 
-exports.relativePathForShadowedFile = relativePathForShadowedFile
-
-const createPathToThemeFile = ({ root, theme, filePath }) => {
+export const createPathToThemeFile = ({ root, theme, filePath }) => {
   // eslint-disable-next-line
   const fullPath = path.join(root, `node_modules`, theme, filePath)
   return slash(fullPath)
 }
-exports.createPathToThemeFile = createPathToThemeFile
 
-const splitId = id => {
+export const splitId = id => {
   // Remove src
   // eslint-disable-next-line
   const [_src, ...filePathParts] = id.split(`/`)
@@ -43,7 +40,6 @@ const splitId = id => {
     filePath: slash(filePath),
   }
 }
-exports.splitId = splitId
 
 const create = async ({ root }, { theme, path: filePath }) => {
   const id = relativePathForShadowedFile({ filePath, theme })
@@ -97,20 +93,18 @@ const schema = {
   contents: Joi.string(),
   ...resourceSchema,
 }
-module.exports.schema = schema
-module.exports.validate = resource =>
+
+export const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-module.exports.create = create
-module.exports.update = create
-module.exports.read = read
-module.exports.destroy = destroy
+export { schema, create, create as update, read, destroy }
 
 const message = resource =>
   `Shadowed ${resource.id || resource.path} from ${resource.theme}`
 
-module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
+export const plan = async ({ root }, { theme, path: filePath, id }) => {
   let currentResource = ``
+  let newContents = ``
   if (!id) {
     // eslint-disable-next-line
     id = relativePathForShadowedFile({ theme, filePath })
@@ -121,7 +115,13 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
   // eslint-disable-next-line
   const fullFilePathToShadow = path.join(root, `node_modules`, theme, filePath)
 
-  const newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
+  try {
+    newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
+  } catch (e) {
+    // We couldn't read the specified ShadowFile while planning. Probably just doesn't
+    // exist yet because the theme's NPMPackage isn't yet installed
+  }
+
   const newResource = {
     id,
     theme,
@@ -129,7 +129,7 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
     contents: newContents,
   }
 
-  const diff = await getDiff(currentResource.contents || ``, newContents)
+  const diff = await getDiff(currentResource?.contents || ``, newContents)
 
   return {
     id,
@@ -137,6 +137,7 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
     path: filePath,
     diff,
     currentState: currentResource,
+    dependsOn: [{ resourceName: `NPMPackage`, name: theme }],
     newState: newResource,
     describe: `Shadow ${filePath} from the theme ${theme}`,
   }

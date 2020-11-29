@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.10.0-next.0...gatsby-source-graphql@2.11.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.9.0-next.0...gatsby-source-graphql@2.10.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.8.0-next.0...gatsby-source-graphql@2.8.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.7.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.7.5...gatsby-source-graphql@2.7.6) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.7.4...gatsby-source-graphql@2.7.5) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.7.3...gatsby-source-graphql@2.7.4) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.7.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.7.2...gatsby-source-graphql@2.7.3) (2020-09-08)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.7.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.7.1...gatsby-source-graphql@2.7.2) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
 ## [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.7.0...gatsby-source-graphql@2.7.1) (2020-08-12)
 
 ### Bug Fixes

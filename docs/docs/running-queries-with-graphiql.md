@@ -41,6 +41,10 @@ The GraphiQL Explorer enables you to interactively construct full queries by cli
 
 Read more [about the GraphiQL Explorer](/blog/2019-06-03-integrating-graphiql-explorer/) on the Gatsby blog.
 
+## Enable Refresh Content Button
+
+The environment variable `ENABLE_GATSBY_REFRESH_ENDPOINT` enables a "Refresh Data" button which allows you to refresh the sourced content. See [Refreshing Content](/docs/refreshing-content/).
+
 ## Other resources
 
 - See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL

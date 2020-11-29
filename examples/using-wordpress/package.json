@@ -5,15 +5,15 @@
   "version": "0.1.0",
   "author": "Vishwa Mehta <vishwa.mehta30@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.50",
-    "gatsby-core-utils": "^1.3.16",
-    "gatsby-source-wordpress": "^3.3.29",
+    "gatsby": "next",
+    "gatsby-core-utils": "next",
+    "gatsby-source-wordpress": "next",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "2.1.0"
+    "prettier": "2.1.1"
   },
   "keywords": [
     "gatsby"

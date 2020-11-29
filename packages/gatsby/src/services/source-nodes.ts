@@ -11,8 +11,8 @@ export async function sourceNodes({
   store,
   deferNodeMutation = false,
 }: Partial<IDataLayerContext>): Promise<{
-  deletedPages: string[]
-  changedPages: string[]
+  deletedPages: Array<string>
+  changedPages: Array<string>
 }> {
   assertStore(store)
 
@@ -26,14 +26,6 @@ export async function sourceNodes({
     deferNodeMutation,
     webhookBody,
   })
-
-  reporter.verbose(
-    `Now have ${store.getState().nodes.size} nodes with ${
-      store.getState().nodesByType.size
-    } types: [${[...store.getState().nodesByType.entries()]
-      .map(([type, nodes]) => type + `:` + nodes.size)
-      .join(`, `)}]`
-  )
 
   reporter.verbose(`Checking for deleted pages`)
 

@@ -4,7 +4,7 @@ Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
-`npm install --save node-sass gatsby-plugin-sass`
+`npm install node-sass gatsby-plugin-sass`
 
 ## How to use
 
@@ -87,7 +87,7 @@ Sass defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297
 
 #### Bootstrap 4
 
-See [Bootstrap's documentation on theming](https://github.com/twbs/bootstrap/blob/master/site/content/docs/4.3/getting-started/theming.md#sass) for reference.
+See [Bootstrap's documentation on theming](https://getbootstrap.com/docs/4.3/getting-started/theming/#sass) for reference.
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -213,6 +213,6 @@ plugins: [
 ### v2.0.0
 
 - `node-sass` is moved to a peer dependency. Installing the package
-  alongside `gatsby-plugin-sass` is now required. Use `npm install --save node-sass`
+  alongside `gatsby-plugin-sass` is now required. Use `npm install node-sass`
 
 - support Gatsby v2 only
