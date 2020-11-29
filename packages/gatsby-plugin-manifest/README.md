@@ -52,7 +52,7 @@ For more information on configuring your web app [see here](https://developers.g
 
 ### Configure icons and their generations - **Required**
 
-There are three modes in which icon generation can function: automatic, hybrid, and manual(disabled). These modes can affect other configurations defaults.
+There are three modes in which icon generation can function: automatic, hybrid, and manual(disabled). These modes can affect other configurations defaults.`icons` is referring to the final URL and thus images need to be added to the static folder.
 
 - Automatic - Generate a pre-configured set of icons from a single source icon.
 
