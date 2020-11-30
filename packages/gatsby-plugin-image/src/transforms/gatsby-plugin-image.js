@@ -100,8 +100,9 @@ export function updateImport(babel) {
       ImportDeclaration(path, state) {
         const { node } = path
         if (
-          !node.source.value.includes(`gatsby-image`) &&
-          node.source.value !== `gatsby-plugin-image/compat`
+          node.source.value !== `gatsby-image` &&
+          node.source.value !== `gatsby-plugin-image/compat` &&
+          node.source.value !== `gatsby-image/withIEPolyfill`
         ) {
           return
         }
