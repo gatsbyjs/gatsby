@@ -124,7 +124,7 @@ const Root = () => (
   <Location>
     {locationContext => (
       <>
-        {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the client. Note that this needs to match cache-dir/static-entry.js! */}
+        {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the client. Note that this needs to match static-entry.js, ssr-develop-static-entry.js and production-app.js! */}
         <Head />
         <LocationHandler {...locationContext} />
       </>

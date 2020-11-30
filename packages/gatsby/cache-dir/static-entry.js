@@ -243,7 +243,7 @@ export default (pagePath, callback) => {
 
   const routerElement = (
     <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-      {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the server. Note that this needs to match cache-dir/root.js! */}
+      {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the client. Note that this needs to match ssr-develop-static-entry, root.js and production-app.js! */}
       <Head />
       <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
         <RouteHandler path="/*" />

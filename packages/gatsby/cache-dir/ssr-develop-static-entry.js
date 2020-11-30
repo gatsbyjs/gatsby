@@ -9,6 +9,7 @@ import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
+import { Head } from "./head"
 
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -150,6 +151,8 @@ export default (pagePath, isClientOnlyPage, callback) => {
 
     const routerElement = (
       <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+        {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the client. Note that this needs to match static-entry.js, root.js and production-app.js! */}
+        <Head />
         <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
           <RouteHandler path="/*" />
         </Router>

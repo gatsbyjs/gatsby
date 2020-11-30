@@ -22,6 +22,7 @@ import {
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
+import { Head } from "./head"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
@@ -58,6 +59,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         basepath: `/`,
       }}
     >
+      {/* Render <Head /> so the default meta tags from the siteMetadata are applied on the client. Note that this needs to match static-entry.js, root.js and ssr-develop-static-entry.js! */}
+      <Head />
       <PageRenderer {...props} />
     </BaseContext.Provider>
   )
