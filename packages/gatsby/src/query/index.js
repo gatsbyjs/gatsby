@@ -92,18 +92,16 @@ const processPageQueries = async (
   // /dev-404-page/, whose SitePage node is created via
   // `internal-data-bridge`, but the actual page object is only
   // created during `gatsby develop`.
-  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
-  await processQueries(
-    pages.map(page => createPageQueryJob(state, page)),
-    {
-      activity,
-      graphqlRunner,
-      graphqlTracing,
-    }
-  )
+  const jobs = queryIds.map(id => createPageQueryJob(state, id))
+  await processQueries(jobs, {
+    activity,
+    graphqlRunner,
+    graphqlTracing,
+  })
 }
 
-const createPageQueryJob = (state, page) => {
+const createPageQueryJob = (state, pageId) => {
+  const page = state.pages.get(pageId)
   const component = state.components.get(page.componentPath)
   const { path, componentPath, context } = page
   const { query } = component
