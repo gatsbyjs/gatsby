@@ -15,7 +15,9 @@ export const getToken = async (): Promise<string> => {
 }
 
 export const setToken = (token: string | null, expiration: string): void => {
-  getConfigStore().set(tokenKey, token)
+  const store = getConfigStore()
+
+  store.set(tokenKey, token)
   // we would be able to decode an expiration off the JWT, but the auth service isn't set up to attach it to the token
-  getConfigStore().set(tokenExpirationKey, expiration)
+  store.set(tokenExpirationKey, expiration)
 }

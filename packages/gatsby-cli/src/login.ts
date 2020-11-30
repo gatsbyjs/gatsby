@@ -86,8 +86,11 @@ export async function login(): Promise<void> {
       // eslint-disable-next-line consistent-return
       async function verify(): Promise<void> {
         const ticket = await getTicket(ticketId)
-        if (ticket.verified) return resolve(ticket)
-        setTimeout(verify, 3000)
+        const timeoutId = setTimeout(verify, 3000)
+        if (ticket.verified) {
+          clearTimeout(timeoutId)
+          return resolve(ticket)
+        }
       }
 
       verify()
