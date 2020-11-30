@@ -205,16 +205,12 @@ function processImportUsage(path, t, template, state) {
           if (propNames.includes(subObject.property?.name)) {
             subObject.property.name = `gatsbyImageData`
             break
-          } else {
-            console.log(
-              `We've found a usage of your image component but the 'src' value does not appear to be based on 'childImageSharp'. Please check ${state.opts.filename} manually.`
-            )
           }
           subObject = subObject?.object
         }
       }
     })
-  } else {
+  } else if (expressionValue) {
     console.log(
       `It appears you're passing a variable to your image component. We haven't changed it, but we have updated it to use the new GatsbyImage component. Please check ${state.opts.filename} manually.`
     )
