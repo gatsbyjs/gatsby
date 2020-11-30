@@ -402,7 +402,7 @@ export async function initialize({
           filesCount
         )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
 
-        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable PRESERVE_FILE_DOWNLOAD_CACHE and run your develop server again.
+        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable the PRESERVE_FILE_DOWNLOAD_CACHE flag and run your develop server again.
 
         To do so, add to your gatsby-config.js:
 
