@@ -449,7 +449,7 @@ For more information, see the [W3C specification](https://www.w3.org/TR/appmanif
 
 ### Plugin options validation
 
-This plugin validates plugin options set in the `gatsby-config.js`. It validates the options used by the plugin and the entire WebAppManifest spec. To see the exact implementation of the validator see [src/pluginOptionsSchema.js](src/pluginOptionsSchema.js).
+This plugin validates plugin options set in the `gatsby-config.js`. It validates the options used by the plugin and the entire WebAppManifest spec. To see the exact implementation of the validator see [src/pluginOptionsSchema.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/src/pluginOptionsSchema.js).
 
 The WebAppManifest spec is not stable at the time of writing. This version of the validator adheres the [most recent](https://www.w3.org/TR/2020/WD-appmanifest-20201019/) version of the specification available.
 
