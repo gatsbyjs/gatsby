@@ -79,16 +79,12 @@
     "@babel/parser": "^7.12.5",
     "@babel/traverse": "^7.12.5",
     "babel-jsx-utils": "^1.0.1",
-<<<<<<< HEAD
-    "babel-plugin-remove-graphql-queries": "^2.12.0-next.0",
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/plugin-syntax-typescript": "^7.12.1",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "jscodeshift": "^0.11.0",
     "recast": "^0.20.4",
-=======
     "babel-plugin-remove-graphql-queries": "^2.13.0-next.0",
->>>>>>> master
     "chokidar": "^3.4.3",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.7.0-next.0",
