@@ -499,17 +499,17 @@ exports.sourceNodes = async (
 
   reporter.verbose(`Resolving Contentful references`)
 
-  const newOrUpdatedEntries = []
+  const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.push(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => _.includes(newOrUpdatedEntries, `${n.id}___${n.sys.type}`))
+    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
       if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
         foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
