@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.27.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.4...gatsby@2.27.5) (2020-11-30)
+
+### Bug Fixes
+
+- **gatsby:** handle in dev-ssr when a page is deleted ([#28325](https://github.com/gatsbyjs/gatsby/issues/28325)) ([#28370](https://github.com/gatsbyjs/gatsby/issues/28370)) ([e293ebc](https://github.com/gatsbyjs/gatsby/commit/e293ebcdb8cb0f4c2930ea9d659391e07194c8da))
+
 ## [2.27.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.3...gatsby@2.27.4) (2020-11-26)
 
 **Note:** Version bump only for package gatsby
