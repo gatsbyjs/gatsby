@@ -13124,14 +13124,13 @@ init-package-json@^1.10.3:
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^3.0.0"
 
-ink-select-input@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ink-select-input/-/ink-select-input-4.0.0.tgz#ff642302b4ffea53227e96fa9152709de8a3de54"
-  integrity sha512-LwvsWqJh64ARY/4WxhC9B0+Dcb+BiTm9lzwTW5XH8OT5ng7drs7J7C23ZQdt25ZETCPvzg5BSZf2w6fhdg/SXw==
+ink-select-input@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/ink-select-input/-/ink-select-input-4.2.0.tgz#a03dc1cae81f09c29cdd4612ae0be610c65c269f"
+  integrity sha512-pNpVNNlvbERKKj7yFZcNCecnz6RA7Lc6UZVfwYe1a3e56LPQmTYL0mbtfENQ9PBeMagny1tCtg0pQwr9y7NtVw==
   dependencies:
     arr-rotate "^1.0.0"
     figures "^3.2.0"
-    lodash "^4.17.19"
     lodash.isequal "^4.5.0"
 
 ink-spinner@^4.0.1:
@@ -13141,10 +13140,10 @@ ink-spinner@^4.0.1:
   dependencies:
     cli-spinners "^2.3.0"
 
-ink@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/ink/-/ink-3.0.4.tgz#e8f40f260c34d27431be6b7db9b963c0104058b0"
-  integrity sha512-WURr4mZoIZNaIqrgRHS1QKJsZdhs4UEeZ7IFvQgGCE7xCgtC+Svu7f7MoEuVz2hexCsmOdBKrkhMCRwFncSe1A==
+ink@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/ink/-/ink-3.0.8.tgz#c527957c8fa4efcc139b67a4cbba7bb8a62b18b0"
+  integrity sha512-ubMFylXYaG4IkXQVhPautbhV/p6Lo0GlvAMI/jh8cGJQ39yeznJbaTTJP2CqZXezA4GOHzalpwCWqux/NEY38w==
   dependencies:
     ansi-escapes "^4.2.1"
     auto-bind "4.0.0"
@@ -13155,7 +13154,7 @@ ink@^3.0.4:
     code-excerpt "^3.0.0"
     indent-string "^4.0.0"
     is-ci "^2.0.0"
-    lodash.throttle "^4.1.1"
+    lodash "^4.17.20"
     patch-console "^1.0.0"
     react-devtools-core "^4.6.0"
     react-reconciler "^0.24.0"
