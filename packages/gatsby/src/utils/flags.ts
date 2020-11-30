@@ -5,25 +5,26 @@ import semver from "semver"
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
-export const satisfiesSemvers = (semverConstraints): boolean => {
+export const satisfiesSemvers = (
+  semverConstraints: Record<string, string>
+): boolean =>
   // Check each semver check for the flag.
   // If any are false, then the flag doesn't pass
-  return !_.toPairs(semverConstraints).some(
-    ([packageName, semverConstraint]) => {
-      let packageVersion
-      try {
-        packageVersion = require(`${packageName}/package.json`).version
-      } catch {
-        return true
-      }
-      // const passes = semver.satisfies(packageVersion, semverConstraint)
-      // console.log({ packageName, packageVersion, semverConstraint, passes })
-
-      // We care if the semver check doesn't pass.
-      return !semver.satisfies(packageVersion, semverConstraint)
+  !_.toPairs(semverConstraints).some(([packageName, semverConstraint]) => {
+    let packageVersion
+    try {
+      packageVersion = require(`${packageName}/package.json`).version
+    } catch {
+      return true
     }
-  )
-}
+    // const passes = semver.satisfies(packageVersion, semverConstraint)
+    // console.log({ packageName, packageVersion, semverConstraint, passes })
+
+    // We care if the semver check doesn't pass.
+    return !semver.satisfies(packageVersion, semverConstraint)
+  })
+
+export type fitnessEnum = true | false | "OPT_IN"
 
 export interface IFlag {
   name: string
@@ -49,7 +50,7 @@ export interface IFlag {
   //
   // OPT_IN means the gatsby will enable the flag (unless the user explicitly
   // disablees it.
-  testFitness: (flag: IFlag) => true | false | "OPT_IN"
+  testFitness: (flag: IFlag) => fitnessEnum
   includedFlags?: Array<string>
   umbrellaIssue?: string
   noCI?: boolean
@@ -65,7 +66,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time`,
     includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`, `LAZY_IMAGES`],
-    testFitness: (): boolean => true,
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `DEV_SSR`,
@@ -75,7 +76,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
-    testFitness: myself => {
+    testFitness: (myself): fitnessEnum => {
       if (sampleSiteForExperiment(myself.name, 5)) {
         return `OPT_IN`
       } else {
@@ -92,7 +93,7 @@ const activeFlags: Array<IFlag> = [
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
     noCI: true,
-    testFitness: () => true,
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `LAZY_IMAGES`,
@@ -102,7 +103,7 @@ const activeFlags: Array<IFlag> = [
     experimental: true,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
-    testFitness: () => true,
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `FAST_REFRESH`,
@@ -112,7 +113,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enables FastRefresh — the new React hot reloading technology for faster and more reliable hot reloading.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
-    testFitness: () => true,
+    testFitness: (): fitnessEnum => true,
   },
 ]
 

@@ -2,7 +2,7 @@ import _ from "lodash"
 
 import sampleSiteForExperiment from "../sample-site-for-experiment"
 import handleFlags from "../handle-flags"
-import { IFlag, satisfiesSemvers } from "../flags"
+import { IFlag, satisfiesSemvers, fitnessEnum } from "../flags"
 
 jest.mock(`gatsby-core-utils`, () => {
   return {
@@ -20,7 +20,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `Enable all experiments aimed at improving develop server start time`,
       includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`],
-      testFitness: (): boolean => true,
+      testFitness: (): fitnessEnum => true,
     },
     {
       name: `DEV_SSR`,
@@ -30,7 +30,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
       umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
-      testFitness: (): boolean => true,
+      testFitness: (): fitnessEnum => true,
     },
     {
       name: `QUERY_ON_DEMAND`,
@@ -41,7 +41,7 @@ describe(`handle flags`, () => {
       description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
       umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
       noCI: true,
-      testFitness: (): boolean => true,
+      testFitness: (): fitnessEnum => true,
     },
     {
       name: `ONLY_BUILDS`,
@@ -51,7 +51,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      testFitness: (): boolean => true,
+      testFitness: (): fitnessEnum => true,
     },
     {
       name: `ALL_COMMANDS`,
@@ -61,7 +61,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      testFitness: (): boolean => true,
+      testFitness: (): fitnessEnum => true,
     },
     {
       name: `YET_ANOTHER`,
@@ -71,7 +71,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      testFitness: (): boolean => true,
+      testFitness: (): fitnessEnum => true,
     },
     {
       name: `PARTIAL_RELEASE`,
@@ -81,7 +81,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      testFitness: (flag): boolean => {
+      testFitness: (flag): fitnessEnum => {
         if (sampleSiteForExperiment(flag.name, 100)) {
           return `OPT_IN`
         } else {
@@ -97,7 +97,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      testFitness: (flag): boolean => {
+      testFitness: (flag): fitnessEnum => {
         const semver = {
           // Because of this, this flag will never show up
           lodash: `<=3.9`,
@@ -120,7 +120,7 @@ describe(`handle flags`, () => {
       umbrellaIssue: `test`,
       telemetryId: `test`,
       experimental: false,
-      testFitness: (flag): boolean => {
+      testFitness: (flag): fitnessEnum => {
         const semver = {
           // Because of this, this flag will never show up
           lodash: `>=4.9`,
