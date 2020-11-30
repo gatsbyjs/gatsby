@@ -1,6 +1,8 @@
-import handleFlags from "../handle-flags"
 import _ from "lodash"
-import { IFlag } from "./flags"
+
+import sampleSiteForExperiment from "../sample-site-for-experiment"
+import handleFlags from "../handle-flags"
+import { IFlag, satisfiesSemvers } from "../flags"
 
 jest.mock(`gatsby-core-utils`, () => {
   return {
@@ -14,54 +16,123 @@ describe(`handle flags`, () => {
       name: `FAST_DEV`,
       env: `GATSBY_EXPERIMENTAL_FAST_DEV`,
       command: `develop`,
+      telemetryId: `test`,
+      experimental: false,
       description: `Enable all experiments aimed at improving develop server start time`,
       includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`],
+      testFitness: (): boolean => true,
     },
     {
       name: `DEV_SSR`,
       env: `GATSBY_EXPERIMENTAL_DEV_SSR`,
       command: `develop`,
+      telemetryId: `test`,
+      experimental: false,
       description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
       umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
+      testFitness: (): boolean => true,
     },
     {
       name: `QUERY_ON_DEMAND`,
       env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
       command: `develop`,
+      telemetryId: `test`,
+      experimental: false,
       description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
       umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
       noCI: true,
+      testFitness: (): boolean => true,
     },
     {
       name: `ONLY_BUILDS`,
       env: `GATSBY_EXPERIMENTAL_BUILD_ME_FASTER`,
       command: `build`,
+      telemetryId: `test`,
+      experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
+      testFitness: (): boolean => true,
     },
     {
       name: `ALL_COMMANDS`,
       env: `GATSBY_EXPERIMENTAL_SOMETHING_COOL`,
       command: `all`,
+      telemetryId: `test`,
+      experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
+      testFitness: (): boolean => true,
     },
     {
       name: `YET_ANOTHER`,
       env: `GATSBY_EXPERIMENTAL_SOMETHING_COOL2`,
       command: `all`,
+      telemetryId: `test`,
+      experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
+      testFitness: (): boolean => true,
     },
     {
       name: `PARTIAL_RELEASE`,
       env: `GATSBY_READY_TO_GO`,
       command: `all`,
+      telemetryId: `test`,
+      experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      partialRelease: {
-        percentage: 100,
-        releaseNotes: `https://example.com`,
+      testFitness: (flag): boolean => {
+        if (sampleSiteForExperiment(flag.name, 100)) {
+          return `OPT_IN`
+        } else {
+          return false
+        }
+      },
+    },
+    {
+      name: `PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH`,
+      env: `GATSBY_READY_TO_GO_LODASH`,
+      command: `all`,
+      telemetryId: `test`,
+      experimental: false,
+      description: `test`,
+      umbrellaIssue: `test`,
+      testFitness: (flag): boolean => {
+        const semver = {
+          // Because of this, this flag will never show up
+          lodash: `<=3.9`,
+        }
+        if (
+          satisfiesSemvers(semver) &&
+          sampleSiteForExperiment(flag.name, 100)
+        ) {
+          return `OPT_IN`
+        } else {
+          return false
+        }
+      },
+    },
+    {
+      name: `PARTIAL_RELEASE_ONLY_NEW_LODASH`,
+      env: `GATSBY_READY_TO_GO_NEW_LODASH`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+      telemetryId: `test`,
+      experimental: false,
+      testFitness: (flag): boolean => {
+        const semver = {
+          // Because of this, this flag will never show up
+          lodash: `>=4.9`,
+        }
+        if (
+          satisfiesSemvers(semver) &&
+          sampleSiteForExperiment(flag.name, 100)
+        ) {
+          return `OPT_IN`
+        } else {
+          return false
+        }
       },
     },
   ]
@@ -79,28 +150,27 @@ describe(`handle flags`, () => {
     DEV_SSR: true,
   }
 
-  it(`returns validConfigFlags and a message`, () => {
+  it(`returns enabledConfigFlags and a message`, () => {
     expect(handleFlags(activeFlags, configFlags, `develop`)).toMatchSnapshot()
   })
 
   it(`filters out flags marked false`, () => {
-    expect(
-      handleFlags(activeFlags, configFlagsWithFalse, `develop`)
-        .enabledConfigFlags
-    ).toHaveLength(2)
+    const result = handleFlags(activeFlags, configFlagsWithFalse, `develop`)
+    expect(result.enabledConfigFlags).toHaveLength(3)
+    expect(result).toMatchSnapshot()
   })
 
   it(`filters out flags that are marked as not available on CI`, () => {
     expect(
       handleFlags(activeFlags, configWithFlagsNoCi, `develop`)
         .enabledConfigFlags
-    ).toHaveLength(2)
+    ).toHaveLength(3)
   })
 
   it(`filters out flags that aren't for the current command`, () => {
     expect(
       handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
-    ).toHaveLength(2)
+    ).toHaveLength(3)
   })
 
   it(`returns a message about unknown flags in the config`, () => {
@@ -118,10 +188,10 @@ describe(`handle flags`, () => {
     expect(response).toMatchSnapshot()
   })
 
-  it(`removes flags people explicitly opt out of`, () => {
+  it(`removes flags people explicitly opt out of and ignores flags that don't pass semver`, () => {
     const response = handleFlags(
       activeFlags,
-      { PARTIAL_RELEASE: false },
+      { PARTIAL_RELEASE: false, PARTIAL_RELEASE_ONLY_NEW_LODASH: false },
       `develop`
     )
     expect(response.enabledConfigFlags).toHaveLength(0)
