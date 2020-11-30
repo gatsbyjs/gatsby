@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.29.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.2...gatsby@2.29.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby:** Actually handle timeout while waiting for page component to be bundled ([#28302](https://github.com/gatsbyjs/gatsby/issues/28302)) ([7846fd4](https://github.com/gatsbyjs/gatsby/commit/7846fd4a591094d57bd24a7f0927b97725caf3ed))
+- **gatsby:** do not ignore source file changes during recompilation ([#28237](https://github.com/gatsbyjs/gatsby/issues/28237)) ([4148877](https://github.com/gatsbyjs/gatsby/commit/41488778ddcb102a5147b7acfb9631565ede958e))
+- **gatsby:** fix materialization edge case ([#28244](https://github.com/gatsbyjs/gatsby/issues/28244)) ([807589b](https://github.com/gatsbyjs/gatsby/commit/807589bf759b01fe5a5235282bbcdc5a9a969265))
+
+### Features
+
+- **gatsby:** Add preliminary fast-refresh integration ([#26664](https://github.com/gatsbyjs/gatsby/issues/26664)) ([613f5c7](https://github.com/gatsbyjs/gatsby/commit/613f5c791fd059e8a64eeaa81993d1f9f14bec53))
+- **gatsby:** make dev ssr bundling lazy ([#28149](https://github.com/gatsbyjs/gatsby/issues/28149)) ([70b81a6](https://github.com/gatsbyjs/gatsby/commit/70b81a6e825c583387728c02d83a70e0d4e16072))
+- **gatsby-plugin-sharp:** add experimental opt-in lazy image processing mode for `gatsby develop` ([#28288](https://github.com/gatsbyjs/gatsby/issues/28288)) ([cc68a1f](https://github.com/gatsbyjs/gatsby/commit/cc68a1f435e6fc923908d7a2b84f52dc2a999f4d))
+
 # [2.28.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.1...gatsby@2.28.0-next.2) (2020-11-23)
 
 ### Features

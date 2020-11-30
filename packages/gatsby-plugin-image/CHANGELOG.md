@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.3.0-next.1...gatsby-plugin-image@0.4.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correct IntersectionObserver handling ([#28309](https://github.com/gatsbyjs/gatsby/issues/28309)) ([e1e9e0c](https://github.com/gatsbyjs/gatsby/commit/e1e9e0c644c6c2191c66657588cede138cc10209))
+- **gatsby-plugin-image:** Fix placeholder bg color ([#28305](https://github.com/gatsbyjs/gatsby/issues/28305)) ([b89b068](https://github.com/gatsbyjs/gatsby/commit/b89b068da4c95188fd734d43fb1536f305804c41))
+
+### Features
+
+- **gatsby-plugin-image:** Add image plugin helpers ([#28110](https://github.com/gatsbyjs/gatsby/issues/28110)) ([6ed397f](https://github.com/gatsbyjs/gatsby/commit/6ed397f22c5cae21563de095f1f1a6d6e26ba100))
+
 # [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.3.0-next.0...gatsby-plugin-image@0.3.0-next.1) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-image
