@@ -892,8 +892,8 @@ describe(`Build schema`, () => {
       expect(Object.keys(fields)).toEqual([
         `title`,
         `description`,
-        `bar`,
         `image`,
+        `bar`,
         `foo`,
       ])
       expect(report.warn).toHaveBeenCalledWith(

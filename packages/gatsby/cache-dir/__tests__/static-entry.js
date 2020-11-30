@@ -2,8 +2,13 @@ import React from "react"
 import fs from "fs"
 const { join } = require(`path`)
 
-import ssrDevelopStaticEntry from "../ssr-develop-static-entry"
-import developStaticEntry from "../develop-static-entry"
+// NOTE(@mxstbr): Importing the src directly ("../static-entry") breaks the tests as static-entry
+// imports the <Head /> component from cache-dir/head/index.js. That component has a useStaticQuery
+// and graphql`` call, which aren't compiled away in the src, so all these tests fail with the
+// "query was left in the compiled code" error from gatsby-browser-entry.js graphql.
+// Importing from the built commonjs folder works, as the graphql() call is compiled away.
+import ssrDevelopStaticEntry from "../commonjs/ssr-develop-static-entry"
+import developStaticEntry from "../commonjs/develop-static-entry"
 
 jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
