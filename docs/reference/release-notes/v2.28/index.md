@@ -44,7 +44,7 @@ GATSBY_HOT_LOADER=fast-refresh gatsby develop
 
 ## Feature flags in `gatsby-config`
 
-Gatsby traditionally used environment variables to use various modes or enable experimental features. This worked, but it was from pleasant and had many issues, notably:
+Gatsby traditionally used environment variables to use various modes or enable experimental features. This worked, but it was from far from pleasant and had many issues, notably:
 
 - Setting environment variables has idiosyncrasies across platforms (it's different for Windows and different for Linux or MacOS)
 - Forced using NPM scripts (and correlating environment variables in continuous deployment solutions like Gatsby Cloud)
