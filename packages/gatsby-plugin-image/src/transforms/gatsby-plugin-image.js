@@ -100,7 +100,7 @@ export function updateImport(babel) {
       ImportDeclaration(path, state) {
         const { node } = path
         if (
-          node.source.value !== `gatsby-image` &&
+          !node.source.value.includes(`gatsby-image`) &&
           node.source.value !== `gatsby-plugin-image/compat`
         ) {
           return
@@ -206,11 +206,14 @@ function processImportUsage(path, t, template, state) {
     t.isMemberExpression(expressionValue) &&
     propNames.includes(expressionValue?.property.name)
   ) {
-    const expressionStart =
-      expressionValue?.object?.object ?? expressionValue?.object
+    if (expressionValue?.object?.object) {
+      newImageExpression = template.expression
+        .ast`${expressionValue?.object?.object}.childImageSharp.gatsbyImageData`
+    } else if (expressionValue?.object) {
+      newImageExpression = template.expression
+        .ast`${expressionValue?.object}.gatsbyImageData`
+    }
 
-    newImageExpression = template.expression
-      .ast`${expressionStart}.childImageSharp.gatsbyImageData`
     newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
   } else if (t.isObjectExpression(expressionValue)) {
     expressionValue.properties.map(item => {

@@ -247,7 +247,7 @@ npm install gatsby-plugin-image
 5. Run a transform from this package on your project. Note that the paths are relative to the root of your project.
 
 ```shell
-jscodeshift -t node_modules/gatsby-plugin-image/transforms/gatsby-plugin-image.js ./src -s
+jscodeshift -t node_modules/gatsby-plugin-image/src/transforms/gatsby-plugin-image.js ./src -s
 ```
 
 **If you have a custom babel config for your site, run relative to the root directory, e.g. `./`.**

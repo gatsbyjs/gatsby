@@ -1,4 +1,4 @@
-import Img from "gatsby-image"
+import Img from "gatsby-image/withIEPolyfill"
 
 const AssetBlock = ({ asset, maxWidth = 1280 }) => (
     <Fragment>

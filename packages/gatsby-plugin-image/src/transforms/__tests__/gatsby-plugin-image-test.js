@@ -14,6 +14,7 @@ const tests = [
   `not-object`,
   `mansion`,
   `non-component`,
+  `stunted-ref`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
