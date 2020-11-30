@@ -209,6 +209,11 @@ export async function initialize({
     enabledConfigFlags.forEach(flag => {
       telemetry.trackFeatureIsUsed(flag.telemetryId)
     })
+
+    // Track the usage of config.flags
+    if (enabledConfigFlags.length > 0) {
+      telemetry.trackFeatureIsUsed(`ConfigFlags`)
+    }
   }
 
   // theme gatsby configs can be functions or objects
