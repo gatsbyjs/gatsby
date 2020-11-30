@@ -9,11 +9,19 @@ type PackageManager = "yarn" | "npm"
 
 const packageMangerConfigKey = `cli.packageManager`
 
-export const getPackageManager = (): PackageManager =>
-  getConfigStore().get(packageMangerConfigKey)
+export const packageManager = (npmConfigUserAgent?: string): PackageManager => {
+  const configStore = getConfigStore()
+  const actualPackageManager = configStore.get(packageMangerConfigKey)
 
-export const setPackageManager = (packageManager: PackageManager): void => {
-  getConfigStore().set(packageMangerConfigKey, packageManager)
+  if (actualPackageManager) return actualPackageManager
+
+  if (npmConfigUserAgent?.includes(`yarn`)) {
+    configStore.set(packageMangerConfigKey, `yarn`)
+    return `yarn`
+  }
+
+  configStore.set(packageMangerConfigKey, `npm`)
+  return `npm`
 }
 
 // Checks the existence of yarn package
@@ -24,6 +32,9 @@ const checkForYarn = (): boolean => {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
     return true
   } catch (e) {
+    reporter.info(
+      `Woops! Yarn doesn't seem be installed on your machine. You can install it on https://yarnpkg.com/getting-started/install. As a fallback, we will run the next steps with npm.`
+    )
     return false
   }
 }
@@ -74,42 +85,39 @@ const install = async (
   packages: Array<string>
 ): Promise<void> => {
   const prevDir = process.cwd()
+  const npmConfigUserAgent = process.env.npm_config_user_agent
+  const silent = `--silent`
 
   let stop = spin(`Installing packages...`)
 
   process.chdir(rootPath)
 
-  const npmConfigUserAgent = process.env.npm_config_user_agent
-
-  const silent = `--silent`
-
   try {
-    if (!getPackageManager()) {
-      if (npmConfigUserAgent?.includes(`yarn`)) {
-        setPackageManager(`yarn`)
-      } else {
-        setPackageManager(`npm`)
-      }
-    }
-    if (getPackageManager() === `yarn` && checkForYarn()) {
+    const pm = packageManager(npmConfigUserAgent)
+
+    if (pm === `yarn` && checkForYarn()) {
       await fs.remove(`package-lock.json`)
+
       const args = packages.length ? [`add`, silent, ...packages] : [silent]
+
       await execa(`yarnpkg`, args)
     } else {
       await fs.remove(`yarn.lock`)
-
       await execa(`npm`, [`install`, silent])
+
       stop()
       stop = spin(`Installing plugins...`)
+
       await execa(`npm`, [`install`, silent, ...packages])
-      stop()
     }
+
+    stop()
+    reporter.success(`Installed packages`)
   } catch (e) {
+    stop()
     reporter.panic(e.message)
   } finally {
     process.chdir(prevDir)
-    stop()
-    reporter.success(`Installed packages`)
   }
 }
 
@@ -120,9 +128,7 @@ const clone = async (
   branch?: string
 ): Promise<void> => {
   const branchProps = branch ? [`-b`, branch] : []
-
   const stop = spin(`Cloning site template`)
-
   const args = [
     `clone`,
     ...branchProps,
@@ -131,15 +137,17 @@ const clone = async (
     `--recursive`,
     `--depth=1`,
     `--quiet`,
-  ].filter(arg => Boolean(arg))
+  ].filter(Boolean)
 
   try {
     await execa(`git`, args)
+
+    reporter.success(`Created site from template`)
   } catch (err) {
     reporter.panic(err.message)
   }
+
   stop()
-  reporter.success(`Created site from template`)
   await fs.remove(path.join(rootPath, `.git`))
 }
 
@@ -160,9 +168,7 @@ export async function initStarter(
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
-
   await install(rootPath, packages)
-
   await gitSetup(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }
