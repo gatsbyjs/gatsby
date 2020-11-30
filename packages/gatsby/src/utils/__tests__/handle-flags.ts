@@ -71,6 +71,7 @@ describe(`handle flags`, () => {
       description: `test`,
       umbrellaIssue: `test`,
       semver: {
+        // Because of this, this flag will never show up
         lodash: `<=3.9`,
       },
       partialRelease: {
