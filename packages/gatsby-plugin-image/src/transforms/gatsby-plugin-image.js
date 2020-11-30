@@ -97,7 +97,7 @@ export function updateImport(babel) {
       },
       MemberExpression(path) {
         if (
-          propNames.includes(path.node?.property?.name) &&
+          propNames.includes(path.node.property.name) &&
           path.node?.object?.property?.name === `childImageSharp`
         ) {
           const updatedExpression = t.memberExpression(
@@ -107,13 +107,6 @@ export function updateImport(babel) {
           path.replaceWith(updatedExpression)
         }
       },
-      // JSXOpeningElement(path) {},
-      // ClassDeclaration({ node }) {
-      //   if (node.superClass?.name === imageImportPath?.node?.local?.name) {
-      //     console.log(`WARN`)
-      //   }
-      // },
-
       TaggedTemplateExpression({ node }) {
         if (node.tag.name !== `graphql`) {
           return
