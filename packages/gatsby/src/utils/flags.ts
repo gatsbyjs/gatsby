@@ -114,6 +114,16 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `FAST_REFRESH`,
+    env: `GATSBY_FAST_REFRESH`,
+    command: `develop`,
+    telemetryId: `FastRefresh`,
+    experimental: false,
+    description: `Enables FastRefresh — the new React hot reloading technology for faster and more reliable hot reloading.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags
