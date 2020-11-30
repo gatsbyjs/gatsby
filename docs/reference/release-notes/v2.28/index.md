@@ -84,7 +84,17 @@ As more and more images are added to a Gatsby site, the slower the local develop
 You spend time waiting for images to process, instead of you know, developing! No longer!
 This experimental version of `gatsby-plugin-sharp` only does image processing when the page gets requested.
 
-To use it, make sure you have `gatsby-plugin-sharp@^2.10.0` and add
+To use it, make sure you have `gatsby-plugin-sharp@^2.10.0` and add `LAZY_IMAGES` to flags in `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  // your existing config
+  flags: {
+    LAZY_IMAGES: true,
+  },
+}
+```
 
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/27603).
 
