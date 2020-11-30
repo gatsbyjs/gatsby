@@ -8,12 +8,16 @@ import {
   SetStateAction,
   Dispatch,
 } from "react"
+import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
+import { Layout } from "../utils"
+import type { IGatsbyImageData } from "./gatsby-image.browser"
+import { IGatsbyImageHelperArgs, generateImageData } from "../image-utils"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
-export const hasNativeLazyLoadSupport =
+export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
@@ -27,11 +31,22 @@ export function hasImageLoaded(cacheKey: string): boolean {
   return imageCache.has(cacheKey)
 }
 
+export type FileNode = Node & {
+  childImageSharp?: Node & {
+    gatsbyImageData?: IGatsbyImageData
+  }
+}
+
+export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
+  file?.childImageSharp?.gatsbyImageData
+
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: "intrinsic" | "responsive" | "fixed"
-): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> {
+  layout: Layout
+): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
+  "data-gatsby-image-wrapper": string
+} {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
   }
@@ -39,16 +54,23 @@ export function getWrapperProps(
   if (layout === `fixed`) {
     wrapperStyle.width = width
     wrapperStyle.height = height
-  }
-
-  if (layout === `intrinsic`) {
+  } else if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
   }
 
   return {
     className: `gatsby-image-wrapper`,
+    "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
+}
+
+export function useGatsbyImage({
+  pluginName = `useGatsbyImage`,
+  ...args
+}: IGatsbyImageHelperArgs): IGatsbyImageData {
+  // TODO: use context to get default plugin options and spread them in here
+  return generateImageData({ pluginName, ...args })
 }
 
 export function getMainProps(
@@ -105,23 +127,62 @@ export function getMainProps(
     result.style.position = `absolute`
     result.style.top = 0
     result.style.transform = `translateZ(0)`
-    result.style.transition = `opacity 500ms linear`
+    result.style.transition = `opacity 250ms linear`
     result.style.width = `100%`
     result.style.willChange = `opacity`
+    result.style.objectFit = `cover`
   }
 
   return result
 }
 
 export type PlaceholderImageAttrs = ImgHTMLAttributes<HTMLImageElement> &
-  Pick<PlaceholderProps, "sources" | "fallback">
+  Pick<PlaceholderProps, "sources" | "fallback"> & {
+    "data-placeholder-image"?: string
+  }
 
-export function getPlaceHolderProps(
-  placeholder: PlaceholderImageAttrs
+export function getPlaceholderProps(
+  placeholder: PlaceholderImageAttrs | undefined,
+  isLoaded: boolean,
+  layout: Layout,
+  width?: number,
+  height?: number,
+  backgroundColor?: string
 ): PlaceholderImageAttrs {
+  const wrapperStyle: CSSProperties = {}
+
+  if (backgroundColor) {
+    wrapperStyle.backgroundColor = backgroundColor
+
+    if (layout === `fixed`) {
+      wrapperStyle.width = width
+      wrapperStyle.height = height
+      wrapperStyle.backgroundColor = backgroundColor
+      wrapperStyle.position = `relative`
+    } else if (layout === `constrained`) {
+      wrapperStyle.position = `absolute`
+      wrapperStyle.top = 0
+      wrapperStyle.left = 0
+      wrapperStyle.bottom = 0
+      wrapperStyle.right = 0
+    } else if (layout === `fluid`) {
+      wrapperStyle.position = `absolute`
+      wrapperStyle.top = 0
+      wrapperStyle.left = 0
+      wrapperStyle.bottom = 0
+      wrapperStyle.right = 0
+    }
+  }
+
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,
+    "data-placeholder-image": ``,
+    style: {
+      opacity: isLoaded ? 0 : 1,
+      transition: `opacity 500ms linear`,
+      ...wrapperStyle,
+    },
   }
 
   // fallback when it's not configured in gatsby-config.

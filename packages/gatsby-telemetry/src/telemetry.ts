@@ -1,6 +1,11 @@
 import uuidv4 from "uuid/v4"
 import os from "os"
-import { isCI, getCIName, createContentDigest } from "gatsby-core-utils"
+import {
+  isCI,
+  getCIName,
+  createContentDigest,
+  getTermProgram,
+} from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
@@ -9,6 +14,7 @@ import { createFlush } from "./create-flush"
 import { EventStorage } from "./event-storage"
 import { showAnalyticsNotification } from "./show-analytics-notification"
 import { cleanPaths } from "./error-helpers"
+import { getDependencies } from "./get-dependencies"
 
 import { join, sep } from "path"
 import isDocker from "is-docker"
@@ -25,11 +31,13 @@ interface IOSInfo {
   nodeVersion: SemVer
   platform: string
   release: string
-  cpus: string | undefined
+  cpus?: string
   arch: string
-  ci: boolean | undefined
+  ci?: boolean
   ciName: string | null
-  docker: boolean | undefined
+  docker?: boolean
+  termProgram?: string
+  isTTY: boolean
 }
 
 export interface IAggregateStats {
@@ -46,6 +54,7 @@ export interface IAggregateStats {
 interface IAnalyticsTrackerConstructorParameters {
   componentId?: SemVer
   gatsbyCliVersion?: SemVer
+  trackingEnabled?: boolean
 }
 
 export interface IStructuredError {
@@ -85,6 +94,8 @@ export interface ITelemetryTagsPayload {
   error?: IStructuredError | Array<IStructuredError>
   cacheStatus?: string
   pluginCachePurged?: string
+  dependencies?: Array<string>
+  devDependencies?: Array<string>
   siteMeasurements?: {
     pagesCount?: number
     clientsCount?: number
@@ -94,6 +105,9 @@ export interface ITelemetryTagsPayload {
     queryStats?: unknown
   }
   errorV2?: IStructuredErrorV2
+  valueString?: string
+  valueStringArray?: Array<string>
+  valueInteger?: number
 }
 
 export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {
@@ -125,11 +139,15 @@ export class AnalyticsTracker {
   constructor({
     componentId,
     gatsbyCliVersion,
+    trackingEnabled,
   }: IAnalyticsTrackerConstructorParameters = {}) {
     this.componentId = componentId || `gatsby-cli`
     try {
       if (this.store.isTrackingDisabled()) {
         this.trackingEnabled = false
+      }
+      if (trackingEnabled !== undefined) {
+        this.trackingEnabled = trackingEnabled
       }
 
       this.defaultTags = this.getTagsFromEnv()
@@ -142,6 +160,7 @@ export class AnalyticsTracker {
       // ignore
     }
     this.machineId = this.getMachineId()
+    this.captureMetadataEvent()
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
@@ -336,6 +355,10 @@ export class AnalyticsTracker {
     }
   }
 
+  getIsTTY(): boolean {
+    return Boolean(process.stdout?.isTTY)
+  }
+
   getMachineId(): string {
     // Cache the result
     if (this.machineId) {
@@ -381,6 +404,8 @@ export class AnalyticsTracker {
       ci: isCI(),
       ciName: getCIName(),
       docker: isDocker(),
+      termProgram: getTermProgram(),
+      isTTY: this.getIsTTY(),
     }
     this.osInfo = osInfo
     return osInfo
@@ -448,6 +473,19 @@ export class AnalyticsTracker {
       stdDev: stdDev,
       skewness: !Number.isNaN(skewness) ? skewness : 0,
     }
+  }
+
+  captureMetadataEvent(): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    const deps = getDependencies()
+    const evt = {
+      dependencies: deps?.dependencies,
+      devDependencies: deps?.devDependencies,
+    }
+
+    this.captureEvent(`METADATA`, evt)
   }
 
   async sendEvents(): Promise<boolean> {

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.6.0-next.0...gatsby-plugin-offline@3.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.5.0-next.0...gatsby-plugin-offline@3.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.4.0-next.0...gatsby-plugin-offline@3.4.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** add workboxConfig.maximumFileSizeToCacheInBytes to options schema ([#27913](https://github.com/gatsbyjs/gatsby/issues/27913)) ([e4fd0ad](https://github.com/gatsbyjs/gatsby/commit/e4fd0ad8cda56996f42e0a2b9fd6b580823289c9))
+
+## [3.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.3.0...gatsby-plugin-offline@3.3.1) (2020-11-03)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.38...gatsby-plugin-offline@3.3.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [3.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.37...gatsby-plugin-offline@3.2.38) (2020-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [3.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.36...gatsby-plugin-offline@3.2.37) (2020-10-22)
 
 **Note:** Version bump only for package gatsby-plugin-offline

@@ -104,6 +104,7 @@ const message = resource =>
 
 export const plan = async ({ root }, { theme, path: filePath, id }) => {
   let currentResource = ``
+  let newContents = ``
   if (!id) {
     // eslint-disable-next-line
     id = relativePathForShadowedFile({ theme, filePath })
@@ -114,7 +115,13 @@ export const plan = async ({ root }, { theme, path: filePath, id }) => {
   // eslint-disable-next-line
   const fullFilePathToShadow = path.join(root, `node_modules`, theme, filePath)
 
-  const newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
+  try {
+    newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
+  } catch (e) {
+    // We couldn't read the specified ShadowFile while planning. Probably just doesn't
+    // exist yet because the theme's NPMPackage isn't yet installed
+  }
+
   const newResource = {
     id,
     theme,
@@ -122,7 +129,7 @@ export const plan = async ({ root }, { theme, path: filePath, id }) => {
     contents: newContents,
   }
 
-  const diff = await getDiff(currentResource.contents || ``, newContents)
+  const diff = await getDiff(currentResource?.contents || ``, newContents)
 
   return {
     id,
@@ -130,6 +137,7 @@ export const plan = async ({ root }, { theme, path: filePath, id }) => {
     path: filePath,
     diff,
     currentState: currentResource,
+    dependsOn: [{ resourceName: `NPMPackage`, name: theme }],
     newState: newResource,
     describe: `Shadow ${filePath} from the theme ${theme}`,
   }

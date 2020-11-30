@@ -2,7 +2,7 @@ import resolve from "@rollup/plugin-node-resolve"
 import babel from "@rollup/plugin-babel"
 import commonjs from "@rollup/plugin-commonjs"
 import json from "@rollup/plugin-json"
-import replace from "@rollup/plugin-replace";
+import replace from "@rollup/plugin-replace"
 import autoExternal from "rollup-plugin-auto-external"
 import internal from "rollup-plugin-internal"
 import path from "path"
@@ -28,7 +28,7 @@ export default [
   {
     input: {
       index: `src/index.js`,
-      "graphql-server/server": `src/graphql-server/server.js`
+      "graphql-server/server": `src/graphql-server/server.js`,
     },
     output: {
       dir: `dist`,
@@ -39,8 +39,8 @@ export default [
     plugins: [
       replace({
         values: {
-          "process.env.NODE_ENV": JSON.stringify(`production`)
-        }
+          "process.env.NODE_ENV": JSON.stringify(`production`),
+        },
       }),
       excludeDevTools(),
       json(),
@@ -50,7 +50,7 @@ export default [
         exclude: `node_modules/**`,
       }),
       commonjs({
-        transformMixedEsModules: true
+        transformMixedEsModules: true,
       }),
       resolve({
         dedupe: [
@@ -63,10 +63,10 @@ export default [
           `@mdx-js/mdx`,
           `@mdx-js/react`,
           `@mdx-js/runtime`,
-          `urql`, 
+          `urql`,
           `@urql/core`,
           `subscriptions-transport-ws`,
-        ]
+        ],
       }),
       autoExternal(),
       internal([
@@ -108,20 +108,14 @@ export default [
         exclude: `node_modules/**`,
       }),
       commonjs({
-        transformMixedEsModules: true
+        transformMixedEsModules: true,
       }),
       resolve({
-        dedupe: [
-          `@mdx-js/react`,
-        ]
+        dedupe: [`@mdx-js/react`],
       }),
       autoExternal(),
-      internal([
-        `@mdx-js/react`
-      ])
+      internal([`@mdx-js/react`]),
     ],
-    external: [
-      `react`
-    ]
-  }
+    external: [`react`],
+  },
 ]

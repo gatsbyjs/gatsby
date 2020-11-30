@@ -30,8 +30,9 @@ async function queryResult(
     {
       type: { name: `MarkdownRemark` },
       cache: {
-        get: () => null,
-        set: () => null,
+        // GatsbyCache
+        get: async () => null,
+        set: async () => null,
       },
       getNodesByType: type => [],
       ...additionalParameters,
@@ -104,23 +105,24 @@ const bootstrapTest = (
 
   it(label, async done => {
     node.content = content
-    const createNode = markdownNode => {
-      queryResult([markdownNode], query, {
+    async function createNode(markdownNode) {
+      const result = await queryResult([markdownNode], query, {
         additionalParameters,
         pluginOptions,
-      }).then(result => {
-        if (result.errors) {
-          done.fail(result.errors)
-        }
-
-        try {
-          test(result.data.listNode[0])
-          done()
-        } catch (err) {
-          done.fail(err)
-        }
       })
+
+      if (result.errors) {
+        done.fail(result.errors)
+      }
+
+      try {
+        test(result.data.listNode[0])
+        done()
+      } catch (err) {
+        done.fail(err)
+      }
     }
+
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()

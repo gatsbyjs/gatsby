@@ -1,33 +1,14 @@
-import * as fileResource from "./providers/fs/file"
-import * as directoryResource from "./providers/fs/directory"
-import * as gatsbyPageResource from "./providers/gatsby/page"
-import * as gatsbyPluginResource from "./providers/gatsby/plugin"
-import * as gatsbyShadowFileResource from "./providers/gatsby/shadow-file"
-import * as gatsbySiteMetadataResource from "./providers/gatsby/site-metadata"
-import * as npmPackageResource from "./providers/npm/package"
-import * as npmPackageScriptResource from "./providers/npm/script"
-import * as npmPackageJsonResource from "./providers/npm/package-json"
-import * as gitIgnoreResource from "./providers/git/ignore"
-import * as contentfulSpace from "./providers/contentful/space"
-import * as contentfulEnvironment from "./providers/contentful/environment"
-import * as contentfulType from "./providers/contentful/type"
-import * as contentfulEntry from "./providers/contentful/entry"
-
-const componentResourceMapping = {
-  File: fileResource,
-  Directory: directoryResource,
-  GatsbyPage: gatsbyPageResource,
-  GatsbyPlugin: gatsbyPluginResource,
-  GatsbyShadowFile: gatsbyShadowFileResource,
-  GatsbySiteMetadata: gatsbySiteMetadataResource,
-  NPMPackage: npmPackageResource,
-  NPMScript: npmPackageScriptResource,
-  NPMPackageJson: npmPackageJsonResource,
-  GitIgnore: gitIgnoreResource,
-  ContentfulSpace: contentfulSpace,
-  ContentfulEnvironment: contentfulEnvironment,
-  ContentfulType: contentfulType,
-  ContentfulEntry: contentfulEntry,
-}
-
-export default componentResourceMapping
+export * as File from "./providers/fs/file"
+export * as Directory from "./providers/fs/directory"
+export * as GatsbyPage from "./providers/gatsby/page"
+export * as GatsbyPlugin from "./providers/gatsby/plugin"
+export * as GatsbyShadowFile from "./providers/gatsby/shadow-file"
+export * as GatsbySiteMetadata from "./providers/gatsby/site-metadata"
+export * as NPMPackage from "./providers/npm/package"
+export * as NPMScript from "./providers/npm/script"
+export * as NPMPackageJson from "./providers/npm/package-json"
+export * as GitIgnore from "./providers/git/ignore"
+export * as ContentfulSpace from "./providers/contentful/space"
+export * as ContentfulEnvironment from "./providers/contentful/environment"
+export * as ContentfulType from "./providers/contentful/type"
+export * as ContentfulEntry from "./providers/contentful/entry"

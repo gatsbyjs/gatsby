@@ -17,6 +17,7 @@ import {
   ISiteConfig,
 } from "./types"
 import { PackageJson } from "../../.."
+import reporter from "gatsby-cli/lib/reporter"
 
 function createFileContentHash(root: string, globPattern: string): string {
   const hash = crypto.createHash(`md5`)
@@ -118,9 +119,17 @@ export function resolvePlugin(
       version: packageJSON.version,
     }
   } catch (err) {
-    throw new Error(
-      `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`
-    )
+    if (process.env.gatsby_log_level === `verbose`) {
+      reporter.panicOnBuild(
+        `plugin "${pluginName} threw the following error:\n`,
+        err
+      )
+    } else {
+      reporter.panicOnBuild(
+        `There was a problem loading plugin "${pluginName}". Perhaps you need to install its package?\nUse --verbose to see actual error.`
+      )
+    }
+    throw new Error(`unreachable`)
   }
 }
 
@@ -233,15 +242,20 @@ export function loadPlugins(
 
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(
-    plugin =>
-      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
-      plugin === `gatsby-plugin-typescript`
+    plugin => plugin.resolve === `gatsby-plugin-typescript`
   )
 
   if (typescriptPlugin === undefined) {
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-typescript`),
+        options: {
+          // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
+          // pluginOptionsSchema of gatsby-plugin-typescript
+          allExtensions: false,
+          isTSX: false,
+          jsxPragma: `React`,
+        },
       })
     )
   }

@@ -435,7 +435,11 @@ export default async ({
             </Text>
             <RecipesList
               setRecipe={async recipeItem => {
-                setRecipe(recipeItem.value.slice(0, -4))
+                if (recipeItem.value.endsWith(`.mdx`)) {
+                  setRecipe(recipeItem.value.slice(0, -4))
+                } else {
+                  setRecipe(recipeItem.value)
+                }
                 trackCli(`RECIPE_RUN`, { name: recipeItem.value })
                 showRecipesList = false
                 try {

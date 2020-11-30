@@ -85,6 +85,4 @@ const pluginOptionsSchema = function ({ Joi }) {
   })
 }
 
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  exports.pluginOptionsSchema = pluginOptionsSchema
-}
+exports.pluginOptionsSchema = pluginOptionsSchema

@@ -7,10 +7,10 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "bench": "rm -rf generated_articles; gatsby clean; N=${N:-512} node gen.js; CI=1 GATSBY_EXPERIMENTAL_ROUTING_APIS=1 node --max_old_space_size=${M:-2}000 node_modules/.bin/gatsby build",
-    "build": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build",
+    "bench": "rm -rf generated_articles; gatsby clean; N=${N:-512} node gen.js; CI=1 node --max_old_space_size=${M:-2}000 node_modules/.bin/gatsby build",
+    "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby develop",
+    "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "devDependencies": {

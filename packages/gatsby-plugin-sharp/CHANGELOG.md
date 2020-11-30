@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.10.0-next.1...gatsby-plugin-sharp@2.11.0-next.0) (2020-11-26)
+
+### Features
+
+- **gatsby-plugin-image:** Add image plugin helpers ([#28110](https://github.com/gatsbyjs/gatsby/issues/28110)) ([6ed397f](https://github.com/gatsbyjs/gatsby/commit/6ed397f22c5cae21563de095f1f1a6d6e26ba100))
+- **gatsby-plugin-sharp:** add experimental opt-in lazy image processing mode for `gatsby develop` ([#28288](https://github.com/gatsbyjs/gatsby/issues/28288)) ([cc68a1f](https://github.com/gatsbyjs/gatsby/commit/cc68a1f435e6fc923908d7a2b84f52dc2a999f4d))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.10.0-next.0...gatsby-plugin-sharp@2.10.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.9.0-next.0...gatsby-plugin-sharp@2.10.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.8.0-next.0...gatsby-plugin-sharp@2.8.0-next.1) (2020-11-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** Resolver API changes ([#27783](https://github.com/gatsbyjs/gatsby/issues/27783)) ([fe0b5de](https://github.com/gatsbyjs/gatsby/commit/fe0b5de77d223f5c13a9b315b650d8514cbdb9f9)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
+# [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.44...gatsby-plugin-sharp@2.7.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.6.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.43...gatsby-plugin-sharp@2.6.44) (2020-11-02)
+
+### Features
+
+- Add new image resolvers ([#27443](https://github.com/gatsbyjs/gatsby/issues/27443)) ([e2022c2](https://github.com/gatsbyjs/gatsby/commit/e2022c23203c9d0bf43d7de74d8999a7c738391f)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
 ## [2.6.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.42...gatsby-plugin-sharp@2.6.43) (2020-10-19)
 
 ### Performance Improvements

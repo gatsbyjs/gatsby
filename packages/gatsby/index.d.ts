@@ -176,15 +176,6 @@ export class StaticQuery<T = any> extends React.Component<
 export const graphql: (query: TemplateStringsArray) => void
 
 /**
- * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
- *
- * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
- *
- * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
- */
-export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
-
-/**
  * Gatsby configuration API.
  *
  * @see https://www.gatsbyjs.org/docs/gatsby-config/
@@ -1293,6 +1284,15 @@ export interface Actions {
     plugin?: ActionPlugin,
     traceId?: string
   ): void
+
+  printTypeDefinitions (
+    path?: string,
+    include?: { types?: Array<string>; plugins?: Array<string> },
+    exclude?: { types?: Array<string>; plugins?: Array<string> },
+    withFieldTypes?: boolean,
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {
@@ -1527,7 +1527,7 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
 
 export interface NodeInput {
   id: string
-  parent?: string
+  parent?: string | null
   children?: string[]
   internal: {
     type: string
@@ -1540,7 +1540,7 @@ export interface NodeInput {
 }
 
 export interface Node extends NodeInput {
-  parent: string
+  parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
     owner: string

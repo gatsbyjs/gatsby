@@ -3,7 +3,7 @@ import Queue from "better-queue"
 import lodash from "lodash"
 import mitt from "mitt"
 
-import resources from "../resources"
+import * as resources from "../resources"
 
 import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"

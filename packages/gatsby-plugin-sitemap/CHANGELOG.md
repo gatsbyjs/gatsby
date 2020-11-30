@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.8.0-next.1...gatsby-plugin-sitemap@2.9.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.8.0-next.0...gatsby-plugin-sitemap@2.8.0-next.1) (2020-11-22)
+
+### Features
+
+- **gatsby-plugin-sitemap:** allow `serialize` plugin option to be async function # ([#28207](https://github.com/gatsbyjs/gatsby/issues/28207)) ([7cf09fb](https://github.com/gatsbyjs/gatsby/commit/7cf09fb006e6f42ed0d7dd9f677f02143f8c02ff))
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.7.0-next.0...gatsby-plugin-sitemap@2.8.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [2.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.6.0-next.1...gatsby-plugin-sitemap@2.6.0-next.2) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.6.0-next.0...gatsby-plugin-sitemap@2.6.0-next.1) (2020-11-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** fixed missing sitemapSize config entry ([#27866](https://github.com/gatsbyjs/gatsby/issues/27866)) ([f0689ff](https://github.com/gatsbyjs/gatsby/commit/f0689ffce82e8b59a02df5c338470bd31a5154f2))
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.4.17...gatsby-plugin-sitemap@2.5.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
 ## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.4.16...gatsby-plugin-sitemap@2.4.17) (2020-10-15)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

@@ -45,6 +45,12 @@ module.exports = {
         allowTaggedTemplates: true,
       },
     ],
+    "no-unused-vars": [
+      "warn",
+      {
+        varsIgnorePattern: "^_"
+      }
+    ],
     "consistent-return": ["error"],
     "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
     "no-console": "off",
@@ -77,15 +83,6 @@ module.exports = {
       globals: {
         cy: false,
         Cypress: false,
-      },
-    },
-    {
-      files: ["www/**/*"],
-      rules: {
-        // We need to import React to use the Fragment shorthand (`<>`).
-        // When we use theme-ui's JSX pragma, it lists React as an unused var
-        // even though it's still needed.
-        "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
       },
     },
     {

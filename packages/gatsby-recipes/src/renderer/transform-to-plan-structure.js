@@ -1,4 +1,4 @@
-import providedResources from "../resources"
+import * as providedResources from "../resources"
 const isResource = type => type && (type === `Input` || providedResources[type])
 
 const extractPlan = (node, type) => {

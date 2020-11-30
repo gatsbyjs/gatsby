@@ -6,8 +6,12 @@
  * See gatsbyjs/gatsby#27578 and ping @laurieontech or @mxstbr if you have any questions
  */
 
-export interface ISiteConfig {
+export interface IRawSiteConfig {
   plugins?: Array<PluginRef>
+}
+
+export interface ISiteConfig extends IRawSiteConfig {
+  plugins?: Array<IPluginRefObject>
 }
 
 // There are two top-level "Plugin" concepts:

@@ -236,6 +236,6 @@ For additional examples of how to query and use GraphCMS data in the context of 
 
 ## Summary
 
-Its extremely easy to start working with GraphCMS and Gatsby. With projects of all sizes transitioning to an API-first approach, creating, enriching, and delivering your content via API to your Gatsby projects is a breeze. Adding a content API in the backend with GraphCMS provides a scalable CMS that you can start using within minutes, and have your project up and running quickly.
+With projects of all sizes transitioning to an API-first approach, creating, enriching, and delivering your content via API to your Gatsby projects is a breeze. Adding a content API in the backend with GraphCMS provides a scalable CMS that you can start using within minutes, and have your project up and running quickly.
 
 Try GraphCMS by [getting started with the free-forever community plan](https://graphcms.com?referrer=gatsby-headless-docs-bottom&utm_source=gatsby&utm_medium=referral)

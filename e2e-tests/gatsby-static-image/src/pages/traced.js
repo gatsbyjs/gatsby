@@ -8,21 +8,21 @@ const FluidPage = () => (
     <div data-testid="image-traced">
       <StaticImage
         src="../images/citrus-fruits.jpg"
-        tracedSVG
+        placeholder="tracedSVG"
         alt="Citrus fruits"
       />
     </div>
     <div data-testid="image-traced-png">
       <StaticImage
         src="../images/gatsby-icon.png"
-        tracedSVG
+        placeholder="tracedSVG"
         alt="Gatsby icon"
       />
     </div>
     <div data-testid="image-traced-relative">
       <StaticImage
         src="../../content/relative.jpg"
-        tracedSVG
+        placeholder="tracedSVG"
         alt="Citrus fruits"
       />
     </div>

@@ -4,7 +4,7 @@ import { GraphQLString, GraphQLObjectType, GraphQLList } from "graphql"
 import _ from "lodash"
 import { ObjectTypeComposer, schemaComposer } from "graphql-compose"
 
-import resources from "./resources"
+import * as resources from "./resources"
 
 const typeNameToHumanName = name => {
   if (name.endsWith(`Connection`)) {

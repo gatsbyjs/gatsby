@@ -31,12 +31,4 @@ describe(`Production gatsby-image`, () => {
     })
   })
 
-  describe(`fallback image`, () => {
-    it(`renders base-64 src`, () => {
-      cy.getTestElement(fluidTestId)
-        .find(`.gatsby-image-wrapper > img`)
-        .should(`have.attr`, `src`)
-        .and(`contains`, `base64`)
-    })
-  })
 })

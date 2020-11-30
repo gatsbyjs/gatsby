@@ -37,8 +37,8 @@ exports.onPostBuild = async (
     filterPages,
     serialize,
   } = usedSchemaValidationApi
-    ? pluginOptions
-    : await validateOptions(pluginOptions).catch(err => {
+      ? pluginOptions
+      : await validateOptions(pluginOptions).catch(err => {
         reporter.panic(err)
       })
 
