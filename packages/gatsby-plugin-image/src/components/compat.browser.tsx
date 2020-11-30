@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ComponentType, ElementType } from "react"
-import { GatsbyImageProps, ISharpGatsbyImageData } from "./gatsby-image.browser"
+import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 import { GatsbyImage as GatsbyImageOriginal } from "./gatsby-image.browser"
 
 export interface ICompatProps {
@@ -72,7 +72,7 @@ export function _createCompatLayer(
         fixed = fixed[0] as Exclude<ICompatProps["fixed"], undefined>
       }
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         placeholder: undefined,
         layout: `fixed`,
         width: fixed.width,
@@ -108,7 +108,7 @@ export function _createCompatLayer(
         fluid = fluid[0] as Exclude<ICompatProps["fluid"], undefined>
       }
 
-      const image: ISharpGatsbyImageData = {
+      const image: IGatsbyImageData = {
         width: 1,
         height: fluid.aspectRatio,
         layout: `fluid`,
