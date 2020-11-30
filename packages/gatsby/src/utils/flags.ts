@@ -45,8 +45,7 @@ export interface IFlag {
   // Generally just return true.
   //
   // False means it'll be disabled despite the user setting it true e.g.
-  // it just won't work e.g. odn't have new enough version for something.
-  // We warn in this case.
+  // it just won't work e.g. it doesn't have new enough version for something.
   //
   // OPT_IN means the gatsby will enable the flag (unless the user explicitly
   // disablees it.
