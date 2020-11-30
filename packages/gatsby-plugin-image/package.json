@@ -82,6 +82,7 @@
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/plugin-syntax-typescript": "^7.12.1",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "jscodeshift": "^0.11.0",
     "recast": "^0.20.4",
     "babel-plugin-remove-graphql-queries": "^2.13.0-next.0",

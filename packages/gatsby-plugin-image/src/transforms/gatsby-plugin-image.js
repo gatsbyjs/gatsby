@@ -44,6 +44,7 @@ export function babelRecast(code, filePath) {
           plugins: [
             `@babel/plugin-syntax-jsx`,
             `@babel/plugin-proposal-class-properties`,
+            `@babel/plugin-syntax-dynamic-import`,
           ],
           overrides: [
             {
@@ -59,24 +60,28 @@ export function babelRecast(code, filePath) {
     },
   })
 
+  const changedTracker = { hasChanged: false, filename: filePath } // recast adds extra semicolons that mess with diffs and we want to avoid them
+
   const options = {
     cloneInputAst: false,
     code: false,
     ast: true,
-    plugins: [updateImport],
+    plugins: [[updateImport, changedTracker]],
   }
 
   const { ast } = transformFromAstSync(transformedAst, code, options)
 
-  const result = print(ast, { lineTerminator: `\n` }).code
-  return result
+  if (changedTracker.hasChanged) {
+    return print(ast, { lineTerminator: `\n` }).code
+  }
+  return code
 }
 
 export function updateImport(babel) {
   const { types: t, template } = babel
   return {
     visitor: {
-      ImportDeclaration(path) {
+      ImportDeclaration(path, state) {
         const { node } = path
         if (
           node.source.value !== `gatsby-image` &&
@@ -87,15 +92,16 @@ export function updateImport(babel) {
         const localName = path.node.specifiers?.[0]?.local?.name
         const usages = path.scope.getBinding(localName)?.referencePaths
         usages.forEach(item => {
-          processImportUsage(item, t, template)
+          processImportUsage(item, t, template, state)
         })
 
         const newImport = template.statement
           .ast`import { GatsbyImage } from "gatsby-plugin-image"`
         path.replaceWith(newImport)
+        state.opts.hasChanged = true
         path.skip()
       },
-      MemberExpression(path) {
+      MemberExpression(path, state) {
         if (
           propNames.includes(path.node.property.name) &&
           path.node?.object?.property?.name === `childImageSharp`
@@ -105,9 +111,10 @@ export function updateImport(babel) {
             t.identifier(`gatsbyImageData`)
           )
           path.replaceWith(updatedExpression)
+          state.opts.hasChanged = true
         }
       },
-      TaggedTemplateExpression({ node }) {
+      TaggedTemplateExpression({ node }, state) {
         if (node.tag.name !== `graphql`) {
           return
         }
@@ -122,10 +129,11 @@ export function updateImport(babel) {
             node.quasi.quasis[0].value.raw = graphql.print(
               transformedGraphQLQuery
             )
+            state.opts.hasChanged = true
           }
         }
       },
-      CallExpression({ node }) {
+      CallExpression({ node }, state) {
         if (node.callee.name !== `graphql`) {
           return
         }
@@ -141,6 +149,7 @@ export function updateImport(babel) {
             node.arguments[0].quasis[0].value.raw = graphql.print(
               transformedGraphQLQuery
             )
+            state.opts.hasChanged = true
           }
         }
       },
@@ -148,12 +157,12 @@ export function updateImport(babel) {
   }
 }
 
-function processImportUsage(path, t, template) {
+function processImportUsage(path, t, template, state) {
   const node = path.parent
 
   if (!t.isJSXOpeningElement(node)) {
     console.log(
-      `It appears you're using the image component for something this codemod does not currently support. You will need to change this reference manually.`
+      `It appears you're using the image component for something this codemod does not currently support. You will need to change the reference in ${state.opts.filename} manually.`
     )
     return
   }
@@ -177,7 +186,6 @@ function processImportUsage(path, t, template) {
   const expressionValue = fixedOrFluid?.[0]?.value?.expression
 
   let newImageExpression = expressionValue // by default, pass what they pass
-
   if (
     t.isMemberExpression(expressionValue) &&
     propNames.includes(expressionValue?.property.name)
@@ -198,12 +206,18 @@ function processImportUsage(path, t, template) {
             subObject.property.name = `gatsbyImageData`
             break
           } else {
-            console.log(`WARN`)
+            console.log(
+              `We've found a usage of your image component but the 'src' value does not appear to be based on 'childImageSharp'. Please check ${state.opts.filename} manually.`
+            )
           }
           subObject = subObject?.object
         }
       }
     })
+  } else {
+    console.log(
+      `It appears you're passing a variable to your image component. We haven't changed it, but we have updated it to use the new GatsbyImage component. Please check ${state.opts.filename} manually.`
+    )
   }
 
   // // create new prop
