@@ -74,7 +74,6 @@ export function babelRecast(code, filePath) {
 
 export function updateImport(babel) {
   const { types: t, template } = babel
-  let imageImportPath
   return {
     visitor: {
       ImportDeclaration(path) {
@@ -85,8 +84,12 @@ export function updateImport(babel) {
         ) {
           return
         }
+        const localName = path.node.specifiers?.[0]?.local?.name
+        const usages = path.scope.getBinding(localName)?.referencePaths
+        usages.forEach(item => {
+          processImportUsage(item, t, template)
+        })
 
-        imageImportPath = path.get(`specifiers.0`)
         const newImport = template.statement
           .ast`import { GatsbyImage } from "gatsby-plugin-image"`
         path.replaceWith(newImport)
@@ -104,83 +107,12 @@ export function updateImport(babel) {
           path.replaceWith(updatedExpression)
         }
       },
-      JSXOpeningElement(path) {
-        const { node } = path
-
-        if (
-          !node.name.name ||
-          node.name.name !== imageImportPath?.node?.local?.name
-        ) {
-          return
-        }
-        const componentName = t.jsxIdentifier(`GatsbyImage`)
-
-        const fixedOrFluid = node.attributes.filter(({ name }) =>
-          propNames.includes(name?.name)
-        )
-
-        const otherAttributes = node.attributes.filter(
-          ({ name }) => !propNames.includes(name?.name)
-        )
-
-        if (!fixedOrFluid.length > 0) {
-          path.replaceWith(
-            t.jsxOpeningElement(componentName, [...otherAttributes], true)
-          )
-          return
-        }
-        const expressionValue = fixedOrFluid?.[0]?.value?.expression
-
-        let newImageExpression = expressionValue // by default, pass what they pass
-
-        if (
-          t.isMemberExpression(expressionValue) &&
-          propNames.includes(expressionValue?.property.name)
-        ) {
-          const expressionStart =
-            expressionValue?.object?.object ?? expressionValue?.object
-
-          newImageExpression = template.expression
-            .ast`${expressionStart}.childImageSharp.gatsbyImageData`
-          newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
-        } else if (t.isObjectExpression(expressionValue)) {
-          expressionValue.properties.map(item => {
-            if (item.key.name !== `src`) return
-            if (t.isMemberExpression(item.value)) {
-              let subObject = item.value?.object
-              while (subObject) {
-                if (propNames.includes(subObject.property?.name)) {
-                  subObject.property.name = `gatsbyImageData`
-                  break
-                } else {
-                  console.log(`WARN`)
-                }
-                subObject = subObject?.object
-              }
-            }
-          })
-        }
-
-        // // create new prop
-        const updatedAttribute = t.jsxAttribute(
-          t.jsxIdentifier(`image`),
-          t.jsxExpressionContainer(newImageExpression)
-        )
-
-        path.replaceWith(
-          t.jsxOpeningElement(
-            componentName,
-            [updatedAttribute, ...otherAttributes],
-            true
-          )
-        )
-        path.skip() // prevent us from revisiting these nodes
-      },
-      ClassDeclaration({ node }) {
-        if (node.superClass?.name === imageImportPath?.node?.local?.name) {
-          console.log(`WARN`)
-        }
-      },
+      // JSXOpeningElement(path) {},
+      // ClassDeclaration({ node }) {
+      //   if (node.superClass?.name === imageImportPath?.node?.local?.name) {
+      //     console.log(`WARN`)
+      //   }
+      // },
 
       TaggedTemplateExpression({ node }) {
         if (node.tag.name !== `graphql`) {
@@ -221,6 +153,80 @@ export function updateImport(babel) {
       },
     },
   }
+}
+
+function processImportUsage(path, t, template) {
+  const node = path.parent
+
+  if (!t.isJSXOpeningElement(node)) {
+    console.log(
+      `It appears you're using the image component for something this codemod does not currently support. You will need to change this reference manually.`
+    )
+    return
+  }
+
+  const componentName = t.jsxIdentifier(`GatsbyImage`)
+
+  const fixedOrFluid = node.attributes.filter(({ name }) =>
+    propNames.includes(name?.name)
+  )
+
+  const otherAttributes = node.attributes.filter(
+    ({ name }) => !propNames.includes(name?.name)
+  )
+
+  if (!fixedOrFluid.length > 0) {
+    path.parentPath.replaceWith(
+      t.jsxOpeningElement(componentName, [...otherAttributes], true)
+    )
+    return
+  }
+  const expressionValue = fixedOrFluid?.[0]?.value?.expression
+
+  let newImageExpression = expressionValue // by default, pass what they pass
+
+  if (
+    t.isMemberExpression(expressionValue) &&
+    propNames.includes(expressionValue?.property.name)
+  ) {
+    const expressionStart =
+      expressionValue?.object?.object ?? expressionValue?.object
+
+    newImageExpression = template.expression
+      .ast`${expressionStart}.childImageSharp.gatsbyImageData`
+    newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
+  } else if (t.isObjectExpression(expressionValue)) {
+    expressionValue.properties.map(item => {
+      if (item.key.name !== `src`) return
+      if (t.isMemberExpression(item.value)) {
+        let subObject = item.value?.object
+        while (subObject) {
+          if (propNames.includes(subObject.property?.name)) {
+            subObject.property.name = `gatsbyImageData`
+            break
+          } else {
+            console.log(`WARN`)
+          }
+          subObject = subObject?.object
+        }
+      }
+    })
+  }
+
+  // // create new prop
+  const updatedAttribute = t.jsxAttribute(
+    t.jsxIdentifier(`image`),
+    t.jsxExpressionContainer(newImageExpression)
+  )
+
+  path.parentPath.replaceWith(
+    t.jsxOpeningElement(
+      componentName,
+      [updatedAttribute, ...otherAttributes],
+      true
+    )
+  )
+  path.skip() // prevent us from revisiting these nodes
 }
 
 function processArguments(queryArguments, fragment) {
