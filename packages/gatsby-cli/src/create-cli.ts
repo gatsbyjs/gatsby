@@ -16,6 +16,9 @@ import report from "./reporter"
 import { setStore } from "./reporter/redux"
 import { getLocalGatsbyVersion } from "./util/version"
 import { initStarter } from "./init-starter"
+import { login } from "./login"
+import { logout } from "./logout"
+import { whoami } from "./whoami"
 import { recipesHandler } from "./recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
@@ -411,6 +414,32 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         }),
     handler: getCommandHandler(`plugin`),
   })
+
+  if (process.env.GATSBY_EXPERIMENTAL_CLOUD_CLI) {
+    cli.command({
+      command: `login`,
+      describe: `Log in to Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await login()
+      }),
+    })
+
+    cli.command({
+      command: `logout`,
+      describe: `Sign out of Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await logout()
+      }),
+    })
+
+    cli.command({
+      command: `whoami`,
+      describe: `Gives the username of the current logged in user.`,
+      handler: handlerP(async () => {
+        await whoami()
+      }),
+    })
+  }
 }
 
 function isLocalGatsbySite(): boolean {
