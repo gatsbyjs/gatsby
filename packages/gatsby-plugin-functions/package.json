@@ -21,6 +21,7 @@
     "babel-loader": "^8.2.1",
     "chokidar": "^3.4.2",
     "fs-exists-cached": "^1.0.0",
+    "gatsby-core-utils": "^1.5.0",
     "gatsby-page-utils": "^0.4.0-next.0",
     "globby": "^11.0.1",
     "lodash": "^4.17.20",
