@@ -375,8 +375,21 @@ export async function initialize({
         `${cacheDirectory}/*/`,
       ]
 
-      const sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
-        ?.version
+      let sourceFileSystemVersion = flattenedPlugins.find(
+        plugin => plugin.name === `gatsby-source-filesystem`
+      )?.version
+
+      // The site might be using a plugin which uses "createRemoteFileNode" but
+      // doesn't have gatsby-source-filesystem in their gatsby-config.js. So lets
+      // also try requiring it.
+      if (!sourceFileSystemVersion) {
+        try {
+          sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
+            ?.version
+        } catch {
+          // ignore require errors
+        }
+      }
 
       if (process.env.PRESERVE_FILE_DOWNLOAD_CACHE) {
         // Add gatsby-source-filesystem
