@@ -242,13 +242,13 @@ npm install gatsby-plugin-image
 
 3. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
 
-4. Run a transform from this package on your project
+4. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
+
+5. Run a transform from this package on your project
 
 ```shell
 jscodeshift -t node_modules/gatsby-plugin-image/transforms/gatsby-plugin-image.js my-project/src
 ```
-
-**Be sure to include `src` at the end of your project path to prevent the codemod from running against `node_modules` and other directories**
 
 Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
 

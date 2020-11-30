@@ -32,6 +32,13 @@ const typeMapper = {
 }
 
 export default function jsCodeShift(file) {
+  if (
+    file.path.includes(`node_modules`) ||
+    file.path.includes(`.cache`) ||
+    file.path.includes(`public`)
+  ) {
+    return file.source
+  }
   const transformedSource = babelRecast(file.source, file.path)
   return transformedSource
 }
@@ -39,24 +46,7 @@ export default function jsCodeShift(file) {
 export function babelRecast(code, filePath) {
   const transformedAst = parse(code, {
     parser: {
-      parse: source =>
-        parseSync(source, {
-          plugins: [
-            `@babel/plugin-syntax-jsx`,
-            `@babel/plugin-proposal-class-properties`,
-            `@babel/plugin-syntax-dynamic-import`,
-          ],
-          overrides: [
-            {
-              test: [`**/*.ts`, `**/*.tsx`],
-              plugins: [[`@babel/plugin-syntax-typescript`, { isTSX: true }]],
-            },
-          ],
-          filename: filePath,
-          parserOpts: {
-            tokens: true, // recast uses this
-          },
-        }),
+      parse: source => runParseSync(source, filePath),
     },
   })
 
@@ -75,6 +65,32 @@ export function babelRecast(code, filePath) {
     return print(ast, { lineTerminator: `\n` }).code
   }
   return code
+}
+
+function runParseSync(source, filePath) {
+  const ast = parseSync(source, {
+    plugins: [
+      `@babel/plugin-syntax-jsx`,
+      `@babel/plugin-proposal-class-properties`,
+      `@babel/plugin-syntax-dynamic-import`,
+    ],
+    overrides: [
+      {
+        test: [`**/*.ts`, `**/*.tsx`],
+        plugins: [[`@babel/plugin-syntax-typescript`, { isTSX: true }]],
+      },
+    ],
+    filename: filePath,
+    parserOpts: {
+      tokens: true, // recast uses this
+    },
+  })
+  if (!ast) {
+    console.log(
+      `The codemod was unable to parse ${filePath}. If you're running against the '/src' directory and your project has a custom babel config, try running from the root of the project so the codemod can pick it up.`
+    )
+  }
+  return ast
 }
 
 export function updateImport(babel) {
