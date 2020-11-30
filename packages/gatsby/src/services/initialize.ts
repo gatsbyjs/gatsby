@@ -374,9 +374,7 @@ export async function initialize({
         `${cacheDirectory}/*/`,
       ]
 
-      if (process.env.GATSBY_V3_CACHE_CLEAR) {
-        // Add webpack
-        deleteGlobs.push(`!${cacheDirectory}/webpack`)
+      if (process.env.PRESERVE_FILE_DOWNLOAD_CACHE) {
         // Add gatsby-source-filesystem
         deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
       } else {
@@ -411,6 +409,11 @@ export async function initialize({
         } catch {
           // Ignore errors (mostly will just be directory not found).
         }
+      }
+
+      if (process.env.PRESERVE_WEBPACK_CACHE) {
+        // Add webpack
+        deleteGlobs.push(`!${cacheDirectory}/webpack`)
       }
 
       await del(deleteGlobs)
