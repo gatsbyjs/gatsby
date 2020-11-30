@@ -65,7 +65,12 @@ const MOCK_FILE_INFO = {
 let staticEntry
 beforeEach(() => {
   fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
-  staticEntry = require(`../static-entry`).default
+  // NOTE(@mxstbr): Importing the src directly ("../static-entry") breaks the tests as static-entry
+  // imports the <Head /> component from cache-dir/head/index.js. That component has a useStaticQuery
+  // and graphql`` call, which aren't compiled away in the src, so all these tests fail with the
+  // "query was left in the compiled code" error from gatsby-browser-entry.js graphql.
+  // Importing from the built commonjs folder works, as the graphql() call is compiled away.
+  staticEntry = require(`../commonjs/static-entry`).default
 })
 
 const reverseHeadersPlugin = {
