@@ -10,7 +10,6 @@ import {
   PluginOptions,
   CreateDevServerArgs,
 } from "gatsby"
-import { func } from "joi"
 
 export async function onPreInit(
   { reporter }: ParentSpanPluginArgs,
@@ -108,9 +107,10 @@ export async function onCreateDevServer(
   // console.log({ files })
 
   const knownFunctions = new Map(
-    files.map(file => {
-      return [urlResolve(path.parse(file).dir, path.parse(file).name), file]
-    })
+    files.map(file => [
+      urlResolve(path.parse(file).dir, path.parse(file).name),
+      file,
+    ])
   )
   // console.log(app, functionsDirectoryPath)
 
@@ -123,7 +123,7 @@ export async function onCreateDevServer(
         knownFunctions.get(functionName)
       ))
 
-      return fn(req, res)
+      fn(req, res)
     } else {
       next()
     }
