@@ -846,7 +846,12 @@ describe(`Build schema`, () => {
       })
       const schema = await buildSchema()
       const fields = schema.getType(`SiteSiteMetadata`).getFields()
-      expect(Object.keys(fields)).toEqual([`title`, `description`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `title`,
+        `description`,
+        `image`,
+        `bar`,
+      ])
       expect(report.warn).not.toHaveBeenCalled()
     })
 
@@ -866,7 +871,12 @@ describe(`Build schema`, () => {
       )
       const schema = await buildSchema()
       const fields = schema.getType(`SiteSiteMetadata`).getFields()
-      expect(Object.keys(fields)).toEqual([`title`, `description`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `title`,
+        `description`,
+        `image`,
+        `bar`,
+      ])
       expect(report.warn).not.toHaveBeenCalled()
     })
 
@@ -883,6 +893,7 @@ describe(`Build schema`, () => {
         `title`,
         `description`,
         `bar`,
+        `image`,
         `foo`,
       ])
       expect(report.warn).toHaveBeenCalledWith(
