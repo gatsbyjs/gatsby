@@ -39,8 +39,6 @@ npm init gatsby
 
 This command will ask a series of questions, allowing you to select your CMS, preferred styling tools and common Gatsby plugins. After you've made your selections let the installation complete and you'll have a working Gatsby site, all packages included and configured for use.
 
-This is also the alias for the existing `gatsby new` command when no arguments are passed. However, `gatsby new <github repo>` retains its current functionality, allowing you to make use of the numerous fully functional starters.
-
 ## Making `gatsby develop` faster
 
 The Gatsby develop server can get slow to start on larger sites. We're working hard to speed it up. We're addressing different scaling problems one by one and have shipped several improvements behind flags as detailed below. If you'd like to enable all these dev speedups (along with all future ones!), we've created a single flag for you. Run your site like `GATSBY_EXPERIMENTAL_FAST_DEV=true gatsby develop` and zoom zoom!
