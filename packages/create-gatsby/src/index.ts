@@ -2,7 +2,7 @@ import Enquirer from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
-import { initStarter, getPackageManager, gitSetup } from "./init-starter"
+import { initStarter, packageManager, gitSetup } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
@@ -312,7 +312,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
 
   await gitSetup(data.project)
 
-  const pm = await getPackageManager()
+  const pm = await packageManager()
   const runCommand = pm === `npm` ? `npm run` : `yarn`
 
   reporter.info(
