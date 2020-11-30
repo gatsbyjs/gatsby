@@ -7,6 +7,7 @@ import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 import { stripIndent } from "common-tags"
+import semver from "semver"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
@@ -374,10 +375,16 @@ export async function initialize({
         `${cacheDirectory}/*/`,
       ]
 
+      const sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
+        ?.version
+
       if (process.env.PRESERVE_FILE_DOWNLOAD_CACHE) {
         // Add gatsby-source-filesystem
         deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
-      } else {
+      } else if (
+        sourceFileSystemVersion &&
+        semver.lt(sourceFileSystemVersion, `2.9.0`)
+      ) {
         // If the site has more than 50 downloaded files in it, tell them
         // how to save time.
         try {
@@ -395,12 +402,12 @@ export async function initialize({
           filesCount
         )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
 
-        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable V3_CACHE_CLEAR and run your develop server again.
+        If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable PRESERVE_FILE_DOWNLOAD_CACHE and run your develop server again.
 
         To do so, add to your gatsby-config.js:
 
         flags: {
-          V3_CACHE_CLEAR: true,
+          PRESERVE_FILE_DOWNLOAD_CACHE: true,
         }
 
         Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
