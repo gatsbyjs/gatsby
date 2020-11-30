@@ -64,6 +64,34 @@ describe(`handle flags`, () => {
         releaseNotes: `https://example.com`,
       },
     },
+    {
+      name: `PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH`,
+      env: `GATSBY_READY_TO_GO_LODASH`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+      semver: {
+        lodash: `<=3.9`,
+      },
+      partialRelease: {
+        percentage: 100,
+        releaseNotes: `https://example.com`,
+      },
+    },
+    {
+      name: `PARTIAL_RELEASE_ONLY_NEW_LODASH`,
+      env: `GATSBY_READY_TO_GO_NEW_LODASH`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+      semver: {
+        lodash: `>=4.9`,
+      },
+      partialRelease: {
+        percentage: 100,
+        releaseNotes: `https://example.com`,
+      },
+    },
   ]
 
   const configFlags = {
@@ -79,7 +107,7 @@ describe(`handle flags`, () => {
     DEV_SSR: true,
   }
 
-  it(`returns validConfigFlags and a message`, () => {
+  it(`returns enabledConfigFlags and a message`, () => {
     expect(handleFlags(activeFlags, configFlags, `develop`)).toMatchSnapshot()
   })
 
@@ -87,20 +115,20 @@ describe(`handle flags`, () => {
     expect(
       handleFlags(activeFlags, configFlagsWithFalse, `develop`)
         .enabledConfigFlags
-    ).toHaveLength(2)
+    ).toHaveLength(3)
   })
 
   it(`filters out flags that are marked as not available on CI`, () => {
     expect(
       handleFlags(activeFlags, configWithFlagsNoCi, `develop`)
         .enabledConfigFlags
-    ).toHaveLength(2)
+    ).toHaveLength(3)
   })
 
   it(`filters out flags that aren't for the current command`, () => {
     expect(
       handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
-    ).toHaveLength(2)
+    ).toHaveLength(3)
   })
 
   it(`returns a message about unknown flags in the config`, () => {
@@ -118,10 +146,10 @@ describe(`handle flags`, () => {
     expect(response).toMatchSnapshot()
   })
 
-  it(`removes flags people explicitly opt out of`, () => {
+  it(`removes flags people explicitly opt out of and ignores flags that don't pass semver`, () => {
     const response = handleFlags(
       activeFlags,
-      { PARTIAL_RELEASE: false },
+      { PARTIAL_RELEASE: false, PARTIAL_RELEASE_ONLY_NEW_LODASH: false },
       `develop`
     )
     expect(response.enabledConfigFlags).toHaveLength(0)

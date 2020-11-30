@@ -6,12 +6,35 @@ import chalk from "chalk"
 import { commaListsAnd } from "common-tags"
 import { distance } from "fastest-levenshtein"
 import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
+import semver from "semver"
 
 const terminalLink = (text, url): string => {
   if (process.env.NODE_ENV === `test`) {
     return `${text} (${url})`
   } else {
     return realTerminalLink(text, url)
+  }
+}
+
+const satisfiesSemvers = (flag): boolean => {
+  if (flag.semver) {
+    // Check each semver check for the flag.
+    // If any are false, then the flag doesn't pass
+    return !_.toPairs(flag.semver).some(([packageName, semverConstraint]) => {
+      let packageVersion
+      try {
+        packageVersion = require(`${packageName}/package.json`).version
+      } catch {
+        return true
+      }
+      // const passes = semver.satisfies(packageVersion, semverConstraint)
+      // console.log({ packageName, packageVersion, semverConstraint, passes })
+
+      // We care if the semver check doesn't pass.
+      return !semver.satisfies(packageVersion, semverConstraint)
+    })
+  } else {
+    return true
   }
 }
 
@@ -27,7 +50,11 @@ const handleFlags = (
   // Prepare config flags.
   // Filter out any flags that are set to false.
   const availableFlags = new Map()
-  flags.forEach(flag => availableFlags.set(flag.name, flag))
+  flags.forEach(flag => {
+    if (satisfiesSemvers(flag)) {
+      availableFlags.set(flag.name, flag)
+    }
+  })
 
   // Find unknown flags someone has in their config to warn them about.
   const unknownConfigFlags: Array<any> = []
@@ -78,7 +105,8 @@ const handleFlags = (
     if (flag.partialRelease) {
       if (
         sampleSiteForExperiment(flag.name, flag.partialRelease.percentage) &&
-        configFlags[flag.name] !== false
+        configFlags[flag.name] !== false &&
+        satisfiesSemvers(flag)
       ) {
         enabledConfigFlags.push(flag)
         optedInFlags.set(flag.name, flag)
@@ -94,7 +122,9 @@ const handleFlags = (
     // If we're in CI, filter out any flags that don't want to be enabled in CI
     const isForCi = isCI() ? flag.noCI !== true : true
 
-    return isForCommand && isForCi
+    const passesSemverChecks = satisfiesSemvers(flag)
+
+    return isForCommand && isForCi && passesSemverChecks
   })
 
   const addIncluded = (flag): void => {
@@ -159,7 +189,7 @@ The following were automatically enabled on your site:`
       })
     }
 
-    const otherFlagsCount = flags.length - enabledConfigFlags.length
+    const otherFlagsCount = availableFlags.size - enabledConfigFlags.length
     // Check if there is other flags and if the user actually set any flags themselves.
     // Don't count flags they were automatically opted into.
     if (otherFlagsCount > 0 && Object.keys(configFlags).length > 0) {
@@ -171,7 +201,7 @@ The following were automatically enabled on your site:`
 
       const enabledFlagsSet = new Set()
       enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
-      flags.forEach(flag => {
+      availableFlags.forEach(flag => {
         if (!enabledFlagsSet.has(flag.name)) {
           message += generateFlagLine(flag)
         }

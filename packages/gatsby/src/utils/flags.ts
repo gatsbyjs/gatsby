@@ -23,6 +23,8 @@ export interface IFlag {
   partialRelease?: {
     percentage: number
   }
+  noCi?: boolean
+  semver?: object
 }
 
 const activeFlags: Array<IFlag> = [
@@ -65,6 +67,18 @@ const activeFlags: Array<IFlag> = [
     experimental: true,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
+  },
+  {
+    name: `FAST_REFRESH`,
+    env: `GATSBY_FAST_REFRESH`,
+    command: `develop`,
+    telemetryId: `FastRefresh`,
+    experimental: false,
+    description: `Enables FastRefresh — the new React hot reloading technology for faster and more reliable hot reloading.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
+    semver: {
+      react: `>=17.0.0`,
+    },
   },
 ]
 

@@ -14,6 +14,20 @@ Object {
       },
       "umbrellaIssue": "test",
     },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "partialRelease": Object {
+        "percentage": 100,
+        "releaseNotes": "https://example.com",
+      },
+      "semver": Object {
+        "lodash": ">=4.9",
+      },
+      "umbrellaIssue": "test",
+    },
   ],
   "message": "The following flags are active:
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
@@ -25,16 +39,9 @@ flags: {
   THE_FLAG: false
 }
 
-The following flags are enabled on your site:
+The following were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
-
-There are 6 other flags available that you might be interested in:
-- FAST_DEV · Enable all experiments aimed at improving develop server start time
-- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
-- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-- ONLY_BUILDS · (Umbrella Issue (test)) · test
-- ALL_COMMANDS · (Umbrella Issue (test)) · test
-- YET_ANOTHER · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
 ",
   "unknownFlagMessage": "",
 }
@@ -61,6 +68,20 @@ Object {
       },
       "umbrellaIssue": "test",
     },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "partialRelease": Object {
+        "percentage": 100,
+        "releaseNotes": "https://example.com",
+      },
+      "semver": Object {
+        "lodash": ">=4.9",
+      },
+      "umbrellaIssue": "test",
+    },
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
@@ -73,8 +94,9 @@ flags: {
   THE_FLAG: false
 }
 
-The following flags are enabled on your site:
+The following were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
 
 There are 5 other flags available that you might be interested in:
 - FAST_DEV · Enable all experiments aimed at improving develop server start time
@@ -89,7 +111,7 @@ There are 5 other flags available that you might be interested in:
 }
 `;
 
-exports[`handle flags returns validConfigFlags and a message 1`] = `
+exports[`handle flags returns enabledConfigFlags and a message 1`] = `
 Object {
   "enabledConfigFlags": Array [
     Object {
@@ -117,6 +139,20 @@ Object {
       "partialRelease": Object {
         "percentage": 100,
         "releaseNotes": "https://example.com",
+      },
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "partialRelease": Object {
+        "percentage": 100,
+        "releaseNotes": "https://example.com",
+      },
+      "semver": Object {
+        "lodash": ">=4.9",
       },
       "umbrellaIssue": "test",
     },
@@ -150,8 +186,9 @@ flags: {
   THE_FLAG: false
 }
 
-The following flags are enabled on your site:
+The following were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
 
 There are 2 other flags available that you might be interested in:
 - ONLY_BUILDS · (Umbrella Issue (test)) · test
