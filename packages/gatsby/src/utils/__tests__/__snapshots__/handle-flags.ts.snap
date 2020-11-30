@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`handle flags opts in sites to a flag if their site is selected for partial release 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "name": "PARTIAL_RELEASE",
+      "partialRelease": Object {
+        "percentage": 100,
+        "releaseNotes": "https://example.com",
+      },
+      "umbrellaIssue": "test",
+    },
+  ],
+  "message": "The following flags are active:
+We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags are enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+
+There are 6 other flags available that you might be interested in:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+- ONLY_BUILDS · (Umbrella Issue (test)) · test
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
+",
+  "unknownFlagMessage": "",
+}
+`;
+
 exports[`handle flags returns a message about unknown flags in the config 1`] = `
 Object {
   "enabledConfigFlags": Array [
@@ -10,9 +50,38 @@ Object {
       "name": "ALL_COMMANDS",
       "umbrellaIssue": "test",
     },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "name": "PARTIAL_RELEASE",
+      "partialRelease": Object {
+        "percentage": 100,
+        "releaseNotes": "https://example.com",
+      },
+      "umbrellaIssue": "test",
+    },
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
+We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags are enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+
+There are 5 other flags available that you might be interested in:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+- ONLY_BUILDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
   "unknownFlagMessage": "The following flag(s) found in your gatsby-config.js are not known:
 - FASTLY_DEV (did you mean: FAST_DEV)
@@ -41,6 +110,17 @@ Object {
       "umbrellaIssue": "test",
     },
     Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "name": "PARTIAL_RELEASE",
+      "partialRelease": Object {
+        "percentage": 100,
+        "releaseNotes": "https://example.com",
+      },
+      "umbrellaIssue": "test",
+    },
+    Object {
       "command": "develop",
       "description": "SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.",
       "env": "GATSBY_EXPERIMENTAL_DEV_SSR",
@@ -52,7 +132,7 @@ Object {
       "description": "Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.",
       "env": "GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND",
       "name": "QUERY_ON_DEMAND",
-      "noCi": true,
+      "noCI": true,
       "umbrellaIssue": "https://github.com/gatsbyjs/gatsby/discussions/27620",
     },
   ],
@@ -61,6 +141,17 @@ Object {
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
 - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags are enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 
 There are 2 other flags available that you might be interested in:
 - ONLY_BUILDS · (Umbrella Issue (test)) · test

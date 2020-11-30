@@ -19,7 +19,10 @@ export interface IFlag {
   experimental: boolean
   includedFlags?: Array<string>
   umbrellaIssue?: string
-  noCi?: boolean
+  noCI?: boolean
+  partialRelease?: {
+    percentage: number
+  }
 }
 
 const activeFlags: Array<IFlag> = [
@@ -40,6 +43,9 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
+    partialRelease: {
+      percentage: 5,
+    },
   },
   {
     name: `QUERY_ON_DEMAND`,
@@ -49,7 +55,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
-    noCi: true,
+    noCI: true,
   },
   {
     name: `LAZY_IMAGES`,

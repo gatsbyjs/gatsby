@@ -30,7 +30,7 @@ describe(`handle flags`, () => {
       command: `develop`,
       description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
       umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
-      noCi: true,
+      noCI: true,
     },
     {
       name: `ONLY_BUILDS`,
@@ -52,6 +52,17 @@ describe(`handle flags`, () => {
       command: `all`,
       description: `test`,
       umbrellaIssue: `test`,
+    },
+    {
+      name: `PARTIAL_RELEASE`,
+      env: `GATSBY_READY_TO_GO`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+      partialRelease: {
+        percentage: 100,
+        releaseNotes: `https://example.com`,
+      },
     },
   ]
 
@@ -76,20 +87,20 @@ describe(`handle flags`, () => {
     expect(
       handleFlags(activeFlags, configFlagsWithFalse, `develop`)
         .enabledConfigFlags
-    ).toHaveLength(1)
+    ).toHaveLength(2)
   })
 
   it(`filters out flags that are marked as not available on CI`, () => {
     expect(
       handleFlags(activeFlags, configWithFlagsNoCi, `develop`)
         .enabledConfigFlags
-    ).toHaveLength(1)
+    ).toHaveLength(2)
   })
 
   it(`filters out flags that aren't for the current command`, () => {
     expect(
       handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
-    ).toHaveLength(1)
+    ).toHaveLength(2)
   })
 
   it(`returns a message about unknown flags in the config`, () => {
@@ -99,5 +110,20 @@ describe(`handle flags`, () => {
       `develop`
     )
     expect(unknownConfigFlags).toMatchSnapshot()
+  })
+
+  it(`opts in sites to a flag if their site is selected for partial release`, () => {
+    // Nothing is enabled in their config.
+    const response = handleFlags(activeFlags, {}, `develop`)
+    expect(response).toMatchSnapshot()
+  })
+
+  it(`removes flags people explicitly opt out of`, () => {
+    const response = handleFlags(
+      activeFlags,
+      { PARTIAL_RELEASE: false },
+      `develop`
+    )
+    expect(response.enabledConfigFlags).toHaveLength(0)
   })
 })

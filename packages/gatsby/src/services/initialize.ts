@@ -183,7 +183,7 @@ export async function initialize({
   }
 
   // Setup flags
-  if (config && config.flags) {
+  if (config) {
     const availableFlags = require(`../utils/flags`).default
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
@@ -211,7 +211,7 @@ export async function initialize({
     })
 
     // Track the usage of config.flags
-    if (enabledConfigFlags.length > 0) {
+    if (config.flags) {
       telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
