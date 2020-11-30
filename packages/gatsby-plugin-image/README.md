@@ -233,6 +233,7 @@ We've included a codemod to help you migrate to the new `gatsby-plugin-image` AP
 ```shell
 npm install -g jscodeshift
 ```
+
 2. Install this package
 
 ```shell
