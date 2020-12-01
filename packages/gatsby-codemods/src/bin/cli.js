@@ -33,10 +33,8 @@ export function runTransform(transform, targetDir) {
 }
   
 export function run() {
-  let userInput = process.argv
-
-  const transform = userInput[2]
-  let targetDir = userInput[3]
+  const transform = process.argv[2]
+  let targetDir = process.argv[3]
 
 
   if (!transform) {
