@@ -561,8 +561,8 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     let apiRunPromiseOptions = {}
     let runPromise
     if (
-      process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING &&
-      api === `sourceNodes`
+      api === `sourceNodes` &&
+      process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING
     ) {
       runPromise = Promise.map
       apiRunPromiseOptions.concurrency = 20
