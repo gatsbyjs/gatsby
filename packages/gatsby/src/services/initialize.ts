@@ -105,8 +105,6 @@ export async function initialize({
     reporter.panic(`Missing program args`)
   }
 
-  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
-
   /* Time for a little story...
    * When running `gatsby develop`, the globally installed gatsby-cli starts
    * and sets up a Redux store (which is where logs are now stored). When gatsby
@@ -215,6 +213,8 @@ export async function initialize({
       telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
+
+  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {

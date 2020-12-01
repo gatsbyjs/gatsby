@@ -60,6 +60,15 @@ const activeFlags: Array<IFlag> = [
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
+  {
+    name: `FAST_REFRESH`,
+    env: `GATSBY_FAST_REFRESH`,
+    command: `develop`,
+    telemetryId: `FastRefresh`,
+    experimental: false,
+    description: `Replaces the default HMR loader (react-hot-loader) with React Fast Refresh. Recommended for versions of React >= 17.0.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
+  },
 ]
 
 export default activeFlags
