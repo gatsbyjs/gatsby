@@ -112,6 +112,7 @@ const ensurePathComponentInSSRBundle = async (
 export const renderDevHTML = ({
   path,
   page,
+  skipSsr = false,
   store,
   htmlComponentRendererPath,
   directory,
@@ -185,6 +186,11 @@ export const renderDevHTML = ({
     // This only happens on the first time we try to render a page component
     // and it's taking a while to bundle its page component.
     if (!found) {
+      isClientOnlyPage = true
+    }
+
+    // If the user added the query string `skip-ssr`, we always just render an empty shell.
+    if (skipSsr) {
       isClientOnlyPage = true
     }
 

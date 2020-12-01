@@ -511,11 +511,13 @@ export { create, create as update, read, destroy }
 
 export const config = {}
 
-export const all = async ({ root }) => {
+export const all = async ({ root }, processPlugins = true) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
+  return Promise.all(
+    plugins.map(({ name }) => (processPlugins ? read({ root }, name) : name))
+  )
 }
 
 const schema = {
