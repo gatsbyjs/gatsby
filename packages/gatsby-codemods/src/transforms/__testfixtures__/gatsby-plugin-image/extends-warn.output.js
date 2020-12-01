@@ -8,7 +8,7 @@ const svgAssetsContext = require.context(
   /^\.\/.*\.svg$/
 )
 
-class SVGGatsbyImage extends Image {
+class SVGGatsbyImage extends GatsbyImage {
   render() {
     const { fluid, alt, ...rest } = this.props
 

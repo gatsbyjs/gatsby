@@ -193,8 +193,9 @@ function processImportUsage(path, t, template, state) {
   const node = path.parent
 
   if (!t.isJSXOpeningElement(node)) {
+    path.node.name = `GatsbyImage`
     console.log(
-      `It appears you're using the image component for something this codemod does not currently support. You will need to change the reference in ${state.opts.filename} manually.`
+      `It appears you're extending or referencing the image component in some way. We've updated the reference, but you will want to verify ${state.opts.filename} manually.`
     )
     return
   }
