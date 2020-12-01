@@ -151,14 +151,11 @@ export const renderDevHTML = ({
     //
     // We pause and resume so there's no excess webpack activity during normal development.
     const { devssrWebpackCompilier, devssrWebpackWatcher } = getDevSSRWebpack()
-    const ssrWebpackActivity = report.activityTimer(`Building SSR bundle`)
-    ssrWebpackActivity.start()
     if (devssrWebpackWatcher && devssrWebpackCompilier) {
       let isResolved = false
       await new Promise(resolve => {
         function finish(stats: Stats): void {
           emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
-          ssrWebpackActivity.end()
           if (!isResolved) {
             resolve(stats)
           }
