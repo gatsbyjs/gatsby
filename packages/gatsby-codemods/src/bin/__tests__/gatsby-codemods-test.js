@@ -48,7 +48,7 @@ describe('runTransform', () => {
   it('warns when on missing target', () => {
     execaReturnValue = { error: null };
     console.log = jest.fn();
-    process.argv.push(`gatsby-plugin-image`)
+    process.argv = [`node`, `dir`, `gatsby-plugin-image`]
     run()
     
     expect(console.log).toBeCalledWith(
@@ -59,8 +59,7 @@ describe('runTransform', () => {
   it('warns when invalid transform', () => {
     execaReturnValue = { error: null };
     console.log = jest.fn();
-    process.argv.pop()
-    process.argv.push(`does-not-exist`)
+    process.argv = [`node`, `dir`, `does-not-exist`]
     run()
     
     expect(console.log).toBeCalledWith(

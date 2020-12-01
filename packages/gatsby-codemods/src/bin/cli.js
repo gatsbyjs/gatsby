@@ -33,9 +33,7 @@ export function runTransform(transform, targetDir) {
 }
   
 export function run() {
-  const transform = process.argv[2]
-  let targetDir = process.argv[3]
-
+  let [transform, targetDir] = process.argv.slice(2)
 
   if (!transform) {
     console.log(`Be sure to pass in the name of the codemod you're attempting to run.`)
