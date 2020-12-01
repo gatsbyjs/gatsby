@@ -7,14 +7,9 @@ import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 import c from "ansi-colors"
+import { kebabify } from "."
 
 const packageManagerConfigKey = `cli.packageManager`
-
-const kebabify = (str: string): string =>
-  str
-    .replace(/([a-z])([A-Z])/g, `$1-$2`)
-    .replace(/[^a-zA-Z]+/g, `-`)
-    .toLowerCase()
 
 export const getPackageManager = (): PackageManager =>
   getConfigStore().get(packageManagerConfigKey)
@@ -88,7 +83,7 @@ const setNameInPackage = async (
   const packageJsonPath = path.join(sitePath, `package.json`)
   const packageJson = await fs.readJSON(packageJsonPath)
   packageJson.name = kebabify(name)
-  packageJson.description = `My Gatsby site`
+  packageJson.description = name
   try {
     const result = await execa(`git`, [`config`, `user.name`])
     if (result.failed) {
@@ -196,13 +191,14 @@ export async function gitSetup(rootPath: string): Promise<void> {
 export async function initStarter(
   starter: string,
   rootPath: string,
-  packages: Array<string>
+  packages: Array<string>,
+  siteName: string
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
 
-  await setNameInPackage(sitePath, rootPath)
+  await setNameInPackage(sitePath, siteName)
 
   await install(rootPath, packages)
 
