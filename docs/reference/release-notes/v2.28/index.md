@@ -15,6 +15,7 @@ Key highlights of this release:
 - [Feature flags in gatsby-config](#feature-flags-in-gatsby-config) - set your feature toggles without environment variables
 - [Improved Fast Refresh integration](#improved-fast-refresh-integration)
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) - run image transformations only when they are needed by browser
+- [Experimental: Parallel data sourcing](#experimental-parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
 - [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
 - [Notable bugfixes](#notable-bugfixes)
 
@@ -82,6 +83,23 @@ Visit the [umbrella issue about Fast Refresh](https://github.com/gatsbyjs/gatsby
 ## Removed experimental lazy page bundling
 
 In gatsby@2.27.0 we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
+
+## Experimental: Parallel data sourcing
+Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
+
+This is a very YMMV situation — not all sites will notice any difference and also not all source plugins are network bound (gatsby-source-filesystem reads from the local machine). We're looking at finding better heurstics so that all sites are as fast as possible at data sourcing but in the meantime, if you have sites with multiple source plugins, this could be a big help.
+
+To enable, add a flag to your `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  // your existing config
+  flags: {
+    PARALLEL_SOURCING: true,
+  },
+}
+```
 
 ## Making `gatsby develop` faster
 
