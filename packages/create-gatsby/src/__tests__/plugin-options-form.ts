@@ -7,12 +7,12 @@ describe(`plugin-options-form`, () => {
     expect(makePluginConfigQuestions(plugins)).toEqual([])
   })
 
-  it(`returns an empty array when the plugin is not available for configu`, () => {
+  it(`returns an empty array when the plugin is not available for config`, () => {
     const plugins = [`not-valid-plugin`]
     expect(makePluginConfigQuestions(plugins)).toEqual([])
   })
 
-  it(`returns an arry containing only the wordpress options (choices are included)`, () => {
+  it(`returns an array containing only the wordpress options (choices are included)`, () => {
     const plugins = [`gatsby-source-wordpress-experimental`]
     expect(makePluginConfigQuestions(plugins)).toEqual([
       {
