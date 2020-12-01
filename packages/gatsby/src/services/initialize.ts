@@ -186,10 +186,14 @@ export async function initialize({
   if (config && config.flags) {
     const availableFlags = require(`../utils/flags`).default
     // Get flags
-    const { enabledConfigFlags, message } = handleFlags(
+    const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
       availableFlags,
       config.flags
     )
+
+    if (unknownFlagMessage !== ``) {
+      reporter.warn(unknownFlagMessage)
+    }
 
     //  set process.env for each flag
     enabledConfigFlags.forEach(flag => {
