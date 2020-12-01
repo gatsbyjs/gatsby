@@ -52,6 +52,7 @@ export function getWrapperProps(
 } {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
+    overflow: `hidden`,
   }
 
   if (layout === `fixed`) {
