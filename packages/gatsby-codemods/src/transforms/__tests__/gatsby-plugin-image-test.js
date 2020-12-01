@@ -15,6 +15,7 @@ const tests = [
   `mansion`,
   `non-component`,
   `stunted-ref`,
+  `optional-chaining`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest

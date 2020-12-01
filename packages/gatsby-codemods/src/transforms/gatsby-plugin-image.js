@@ -131,6 +131,21 @@ export function updateImport(babel) {
           state.opts.hasChanged = true
         }
       },
+      OptionalMemberExpression(path, state) {
+        if (
+          propNames.includes(path.node.property.name) &&
+          path.node?.object?.property?.name === `childImageSharp`
+        ) {
+          const updatedExpression = t.optionalMemberExpression(
+            path.node.object,
+            t.identifier(`gatsbyImageData`),
+            false,
+            true
+          )
+          path.replaceWith(updatedExpression)
+          state.opts.hasChanged = true
+        }
+      },
       TaggedTemplateExpression({ node }, state) {
         if (node.tag.name !== `graphql`) {
           return
@@ -213,6 +228,19 @@ function processImportUsage(path, t, template, state) {
     } else if (expressionValue?.object) {
       newImageExpression = template.expression
         .ast`${expressionValue?.object}.gatsbyImageData`
+    }
+
+    newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
+  } else if (
+    t.isOptionalMemberExpression(expressionValue) &&
+    propNames.includes(expressionValue?.property.name)
+  ) {
+    if (expressionValue?.object?.object) {
+      newImageExpression = template.expression
+        .ast`${expressionValue?.object?.object}?.childImageSharp?.gatsbyImageData`
+    } else if (expressionValue?.object) {
+      newImageExpression = template.expression
+        .ast`${expressionValue?.object}?.gatsbyImageData`
     }
 
     newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
