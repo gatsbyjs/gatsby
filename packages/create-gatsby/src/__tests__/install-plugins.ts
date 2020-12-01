@@ -32,7 +32,7 @@ describe(`install-plugins`, () => {
 
   it(`reports an error when the gatsby cli is not installed`, async () => {
     ;(requireResolve as any).mockImplementation(path => {
-      if (path === `gatsby-cli/lib/plugin-add`) {
+      if (path === `gatsby-cli/lib/handlers/plugin-add`) {
         throw new Error()
       }
       return `somewhere-i-belong`
@@ -48,7 +48,7 @@ describe(`install-plugins`, () => {
 
   it(`reports an error when the add plugin function fails somehow`, async () => {
     ;(requireResolve as any).mockImplementation(path => {
-      if (path === `gatsby-cli/lib/plugin-add`) {
+      if (path === `gatsby-cli/lib/handlers/plugin-add`) {
         throw new Error()
       }
       return `somewhere-i-belong`
