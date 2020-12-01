@@ -243,22 +243,14 @@ npm install gatsby-codemods
 3. Run a transform from this package on your project. Note that the paths are relative to the root of your project.
 
 ```shell
-jscodeshift -t node_modules/gatsby-plugin-image/src/transforms/gatsby-plugin-image.js ./src -s
+npx gatsby-codemods gatsby-plugin-image <path>
 ```
 
-**If you have a custom babel config for your site, run relative to the root directory, e.g. `./`.**
-
-This command using the `-s` flag so that you can see the specific warnings we're giving you and nothing else.
+**If you have a custom babel config for your site, run relative to the root directory, e.g. `./`, otherwise `./src` is sufficient.**
 
 Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
 
-Structure of a jscodeshift call:
-
-- `jscodeshift -t <codemod-script> <path>`
-  - `codemod-script` - path to the transform file
-  - `path` - files or directory to transform, typically the path to your Gatsby project's `src` folder
-  - use the `-d` option for a dry-run and use `-p` to print the output for comparison
-  - see all available [jscodeshift options](https://github.com/facebook/jscodeshift#usage-cli)
+If you need to run with custom flags, you run with [jscodeshift](https://github.com/facebook/jscodeshift) directly and reference `node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js` as your transform path.
 
 4. Install this package
 
