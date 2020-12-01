@@ -34,7 +34,7 @@
     "chalk": "^4.1.0",
     "chokidar": "^3.4.3",
     "cross-env": "^7.0.2",
-    "danger": "^10.5.1",
+    "danger": "^10.5.4",
     "date-fns": "^1.30.1",
     "dictionary-en": "^3.0.1",
     "eslint": "^5.16.0",
@@ -59,7 +59,7 @@
     "joi": "^14.3.1",
     "js-yaml": "^3.14.0",
     "lerna": "^3.22.1",
-    "lint-staged": "^10.5.1",
+    "lint-staged": "^10.5.2",
     "markdown-magic": "^0.2.1",
     "npm-packlist": "^2.1.4",
     "npm-run-all": "4.1.5",
@@ -93,7 +93,7 @@
     "yargs": "^10.1.2"
   },
   "resolutions": {
-    "theme-ui": "0.4.0-rc.8",
+    "theme-ui": "0.4.0-rc.14",
     "csstype": "2.6.14"
   },
   "engines": {

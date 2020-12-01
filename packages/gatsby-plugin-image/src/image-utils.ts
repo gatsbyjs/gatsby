@@ -9,6 +9,7 @@ const DEFAULT_FIXED_WIDTH = 400
 export type Fit = "cover" | "fill" | "inside" | "outside" | "contain"
 
 export type Layout = "fixed" | "fluid" | "constrained"
+export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto" | ""
 
 /**
  * The minimal required reporter, as we don't want to import it from gatsby-cli
@@ -65,8 +66,6 @@ export interface IImage {
   height: number
   format: ImageFormat
 }
-
-export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto" | ""
 
 export interface IGatsbyImageHelperArgs {
   pluginName: string

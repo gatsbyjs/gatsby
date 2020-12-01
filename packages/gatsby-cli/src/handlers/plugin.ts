@@ -1,7 +1,7 @@
-import { IProgram } from "./types"
+import { GatsbyPlugin } from "gatsby-recipes"
+import reporter from "../reporter"
 
-module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
-  const { report, cmd } = args
+export default async (root: string, cmd: string | undefined): Promise<void> => {
   switch (cmd) {
     case `docs`:
       console.log(`
@@ -25,9 +25,20 @@ module.exports = async (args: IProgram & { cmd: string }): Promise<void> => {
         - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
                    `)
       return
+    case `ls`: {
+      try {
+        const plugins = await GatsbyPlugin.all({ root }, false)
+        console.log(plugins)
+      } catch {
+        reporter.error(
+          `There was a problem parsing your \`gatsby-config.js\` file.\nIt may be malformed. Or, the syntax you're using is not currently supported by this command.`
+        )
+      }
 
+      return
+    }
     default:
-      report.error(`Unknown command ${cmd}`)
+      reporter.error(`Unknown command ${cmd}`)
   }
   return
 }
