@@ -62,14 +62,16 @@ describe(`GatsbyImage server`, () => {
       expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
         CSSStyleDeclaration {
           "0": "position",
+          "1": "overflow",
           "_importants": Object {
+            "overflow": undefined,
             "position": undefined,
           },
-          "_length": 1,
+          "_length": 2,
           "_onChange": [Function],
           "_values": Object {
-            "position": "relative",
             "overflow": "hidden",
+            "position": "relative",
           },
         }
       `)
@@ -96,19 +98,21 @@ describe(`GatsbyImage server`, () => {
       expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
         CSSStyleDeclaration {
           "0": "position",
-          "1": "width",
-          "2": "height",
+          "1": "overflow",
+          "2": "width",
+          "3": "height",
           "_importants": Object {
             "height": undefined,
+            "overflow": undefined,
             "position": undefined,
             "width": undefined,
           },
-          "_length": 3,
+          "_length": 4,
           "_onChange": [Function],
           "_values": Object {
             "height": "100px",
-            "position": "relative",
             "overflow": "hidden",
+            "position": "relative",
             "width": "100px",
           },
         }
@@ -136,17 +140,19 @@ describe(`GatsbyImage server`, () => {
       expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
         CSSStyleDeclaration {
           "0": "position",
-          "1": "display",
+          "1": "overflow",
+          "12: "display",
           "_importants": Object {
             "display": undefined,
+            "overflow": undefined,
             "position": undefined,
           },
-          "_length": 2,
+          "_length": 3,
           "_onChange": [Function],
           "_values": Object {
             "display": "inline-block",
-            "position": "relative",
             "overflow": "hidden",
+            "position": "relative",
           },
         }
       `)
