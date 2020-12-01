@@ -20,12 +20,12 @@ Other notable changes:
 
 - [Image plugin helpers](#image-plugin-helpers) - make it easier for plugin authors to support the new gatsby image plugin
 - [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
+- [Experimental: New cache clearing behaviors](#experimental-new-cache-clearing-behaviors) - we're experimenting with ways to be smarter about clearing caches
 - [gatsby-plugin-emotion v5.0](#gatsby-plugin-emotion500) - now uses emotion v11
 - [Notable bugfixes](#notable-bugfixes)
 
 Sneak peek to next releases:
 
-- [Less aggressive cache invalidation](#less-aggressive-cache-invalidation)
 - [Parallel data sourcing](#parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
@@ -117,6 +117,30 @@ This release adds new utility functions to help plugin authors add support for t
 
 In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
 
+## Experimental: New cache clearing behaviors
+
+Gatsby aggressively clears its cache, sometimes too aggressively. Here's a few examples:
+
+- You `npm install` a plugin, or update an existing
+- You change your `gatsby-node.js` and add a few log statements
+- You change your `siteMetadata` in `gatsby-config.js` to update your site's title
+
+In all of these caches, your cache is entirely cleared, which means that the next time you run `gatsby develop` the experience is slower than it needs to be. We'll be working on this to ensure that your first run, and every run thereafter, is as quick and speedy as you expect!
+
+We added two new flags for the webpack and downloaded files caches that when enabled, will preserve these caches across changes. We'll be evaluated their impact and safety and if we can make them the defaults. Please test and give feedback!
+
+To enable, modify your `gatsby-config.js` as follows:
+
+```js
+module.exports = {
+  // your existing config
+  flags: {
+    PRESERVE_WEBPACK_CACHE: true,
+    PRESERVE_FILE_DOWNLOAD_CACHE: true,
+  },
+}
+```
+
 ## gatsby-plugin-emotion@5.0.0
 
 The plugin is updated to the new major version of emotion: v11. Check out [this post](https://emotion.sh/docs/emotion-11) in emotion docs for updates.
@@ -127,16 +151,6 @@ The plugin is updated to the new major version of emotion: v11. Check out [this 
 - fix: invalidate page data when static query is added [#28349](https://github.com/gatsbyjs/gatsby/pull/28349)
 
 ## Work in progress
-
-### Less aggressive cache invalidation
-
-Gatsby aggressively clears its cache, sometimes too aggressively. Here's a few examples:
-
-- You `npm install` a plugin, or update an existing
-- You change your `gatsby-node.js` and add a few log statements
-- You change your `siteMetadata` in `gatsby-config.js` to update your site's title
-
-In all of these caches, your cache is entirely cleared, which means that the next time you run `gatsby develop` the experience is slower than it needs to be. We'll be working on this to ensure that your first run, and every run thereafter, is as quick and speedy as you expect!
 
 ## Experimental: Parallel data sourcing
 
