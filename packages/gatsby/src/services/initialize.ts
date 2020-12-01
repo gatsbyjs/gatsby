@@ -182,6 +182,23 @@ export async function initialize({
 
   // Setup flags
   if (config && config.flags) {
+    // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
+    if (
+      config.flags.FAST_REFRESH &&
+      process.env.GATSBY_HOT_LOADER &&
+      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+    ) {
+      delete config.flags.FAST_REFRESH
+      reporter.warn(
+        reporter.stripIndent(`
+          Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
+          
+          Will use react-hot-loader.
+          
+          To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
+        `)
+      )
+    }
     const availableFlags = require(`../utils/flags`).default
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
