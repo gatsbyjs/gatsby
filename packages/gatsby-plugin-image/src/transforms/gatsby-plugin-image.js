@@ -218,7 +218,7 @@ function processImportUsage(path, t, template, state) {
     newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
   } else if (t.isObjectExpression(expressionValue)) {
     expressionValue.properties.map(item => {
-      if (item.key.name !== `src`) return
+      if (item.key?.name !== `src`) return
       if (t.isMemberExpression(item.value)) {
         let subObject = item.value?.object
         while (subObject) {
