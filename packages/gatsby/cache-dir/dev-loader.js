@@ -23,14 +23,8 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
-    let loadComponent
-    if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-      const ensureComponentInBundle = require(`./ensure-page-component-in-bundle`)
-      loadComponent = chunkName => ensureComponentInBundle.default(chunkName)
-    } else {
-      loadComponent = chunkName =>
-        Promise.resolve(syncRequires.components[chunkName])
-    }
+    const loadComponent = chunkName =>
+      Promise.resolve(syncRequires.components[chunkName])
 
     super(loadComponent, matchPaths)
 
@@ -44,8 +38,8 @@ class DevLoader extends BaseLoader {
           this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
           this.handlePageQueryResultHotUpdate(msg)
-        } else if (msg.type === `dirtyQueries`) {
-          this.handleDirtyPageQueryMessage(msg)
+        } else if (msg.type === `stalePageData`) {
+          this.handleStalePageDataMessage(msg)
         }
       })
     } else if (process.env.NODE_ENV !== `test`) {
@@ -109,6 +103,8 @@ class DevLoader extends BaseLoader {
     const cachedPageData = this.pageDataDb.get(pageDataDbCacheKey)?.payload
 
     if (!isEqual(newPageData, cachedPageData)) {
+      // TODO: if this is update for current page and there are any new static queries added
+      // that are not yet cached, there is currently no trigger to fetch them (yikes)
       // always update canonical key for pageDataDb
       this.pageDataDb.set(pageDataDbCacheKey, {
         pagePath: pageDataDbCacheKey,
@@ -152,8 +148,8 @@ class DevLoader extends BaseLoader {
     }
   }
 
-  handleDirtyPageQueryMessage(msg) {
-    msg.payload.dirtyQueries.forEach(dirtyQueryId => {
+  handleStalePageDataMessage(msg) {
+    msg.payload.stalePageDataPaths.forEach(dirtyQueryId => {
       if (dirtyQueryId === `/dev-404-page/` || dirtyQueryId === `/404.html`) {
         // those pages are not on demand so skipping
         return

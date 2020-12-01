@@ -22,12 +22,21 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   },
   states: {
     idle: {
-      always: {
-        // If we already have queued node mutations, move
-        // immediately to batching
-        cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
-        target: `batchingNodeMutations`,
-      },
+      always: [
+        {
+          // If we already have queued node mutations, move
+          // immediately to batching
+          cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+          target: `batchingNodeMutations`,
+        },
+        {
+          // If source files are dirty upon entering this state,
+          // move immediately to aggregatingFileChanges to force re-compilation
+          // See https://github.com/gatsbyjs/gatsby/issues/27609
+          target: `aggregatingFileChanges`,
+          cond: ({ sourceFilesDirty }): boolean => Boolean(sourceFilesDirty),
+        },
+      ],
       on: {
         ADD_NODE_MUTATION: {
           actions: `addNodeMutation`,

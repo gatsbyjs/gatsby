@@ -515,6 +515,16 @@ export default function ({ types: t }): PluginObj {
 
             const queryHash = hash.toString()
 
+            // In order to properly support FastRefresh, we need to remove the page query export
+            // from the built page. With FastRefresh, it looks up the parents of the imports from modules
+            // and since page queries are never used, FastRefresh doesn't know if it's safe to apply the
+            // update or not.
+            // By removing the page query export, FastRefresh works properly with page components
+            const potentialExportPath = path2.parentPath?.parentPath?.parentPath
+            if (potentialExportPath?.isExportNamedDeclaration()) {
+              potentialExportPath.replaceWith(path2.parentPath.parentPath)
+            }
+
             const tag = path2.get(`tag`)
             if (!isGlobal) {
               // Enqueue import removal. If we would remove it here, subsequent named exports

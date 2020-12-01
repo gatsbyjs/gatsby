@@ -11,12 +11,16 @@ import {
 import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
-import { Layout } from "../utils"
-import { ISharpGatsbyImageData } from "./gatsby-image.browser"
+import type { IGatsbyImageData } from "./gatsby-image.browser"
+import {
+  IGatsbyImageHelperArgs,
+  generateImageData,
+  Layout,
+} from "../image-utils"
 const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
-export const hasNativeLazyLoadSupport =
+export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
@@ -32,11 +36,11 @@ export function hasImageLoaded(cacheKey: string): boolean {
 
 export type FileNode = Node & {
   childImageSharp?: Node & {
-    gatsbyImageData?: ISharpGatsbyImageData
+    gatsbyImageData?: IGatsbyImageData
   }
 }
 
-export const getImage = (file: FileNode): ISharpGatsbyImageData | undefined =>
+export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
   file?.childImageSharp?.gatsbyImageData
 
 export function getWrapperProps(
@@ -48,14 +52,13 @@ export function getWrapperProps(
 } {
   const wrapperStyle: CSSProperties = {
     position: `relative`,
+    overflow: `hidden`,
   }
 
   if (layout === `fixed`) {
     wrapperStyle.width = width
     wrapperStyle.height = height
-  }
-
-  if (layout === `constrained`) {
+  } else if (layout === `constrained`) {
     wrapperStyle.display = `inline-block`
   }
 
@@ -64,6 +67,14 @@ export function getWrapperProps(
     "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
+}
+
+export function useGatsbyImage({
+  pluginName = `useGatsbyImage`,
+  ...args
+}: IGatsbyImageHelperArgs): IGatsbyImageData {
+  // TODO: use context to get default plugin options and spread them in here
+  return generateImageData({ pluginName, ...args })
 }
 
 export function getMainProps(
@@ -145,17 +156,26 @@ export function getPlaceholderProps(
   const wrapperStyle: CSSProperties = {}
 
   if (backgroundColor) {
+    wrapperStyle.backgroundColor = backgroundColor
+
     if (layout === `fixed`) {
       wrapperStyle.width = width
       wrapperStyle.height = height
+      wrapperStyle.backgroundColor = backgroundColor
+      wrapperStyle.position = `relative`
+    } else if (layout === `constrained`) {
+      wrapperStyle.position = `absolute`
+      wrapperStyle.top = 0
+      wrapperStyle.left = 0
+      wrapperStyle.bottom = 0
+      wrapperStyle.right = 0
+    } else if (layout === `fluid`) {
+      wrapperStyle.position = `absolute`
+      wrapperStyle.top = 0
+      wrapperStyle.left = 0
+      wrapperStyle.bottom = 0
+      wrapperStyle.right = 0
     }
-
-    if (layout === `constrained`) {
-      wrapperStyle.display = `inline-block`
-    }
-
-    wrapperStyle.backgroundColor = backgroundColor
-    wrapperStyle.position = `relative`
   }
 
   const result: PlaceholderImageAttrs = {

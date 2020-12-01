@@ -12,11 +12,12 @@ Options available to set within `gatsby-config.js` include:
 
 1. [siteMetadata](#sitemetadata) (object)
 2. [plugins](#plugins) (array)
-3. [pathPrefix](#pathprefix) (string)
-4. [polyfill](#polyfill) (boolean)
-5. [mapping](#mapping-node-types) (object)
-6. [proxy](#proxy) (object)
-7. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+3. [flags](#flags) (object)
+4. [pathPrefix](#pathprefix) (string)
+5. [polyfill](#polyfill) (boolean)
+6. [mapping](#mapping-node-types) (object)
+7. [proxy](#proxy) (object)
+8. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
 ## siteMetadata
 
@@ -56,6 +57,20 @@ module.exports = {
 ```
 
 See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
+
+## Flags
+
+Flags let sites enable experimental or upcoming changes that are still in testing or waiting for the next major release.
+
+[Go here to see a list of the current flags](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/flags.ts).
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  flags: {
+    QUERY_ON_DEMAND: true,
+  },
+}
+```
 
 ## pathPrefix
 
