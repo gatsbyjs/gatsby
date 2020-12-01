@@ -558,90 +558,109 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    Promise.mapSeries(implementingPlugins, plugin => {
-      if (stopQueuedApiRuns) {
-        return null
-      }
+    let apiRunPromiseOptions = {}
+    let runPromise
+    if (
+      api === `sourceNodes` &&
+      process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING
+    ) {
+      runPromise = Promise.map
+      apiRunPromiseOptions.concurrency = 20
+    } else {
+      runPromise = Promise.mapSeries
+      apiRunPromiseOptions = undefined
+    }
 
-      let gatsbyNode = pluginNodeCache.get(plugin.name)
-      if (!gatsbyNode) {
-        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-        pluginNodeCache.set(plugin.name, gatsbyNode)
-      }
+    runPromise(
+      implementingPlugins,
+      plugin => {
+        if (stopQueuedApiRuns) {
+          return null
+        }
 
-      const pluginName =
-        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
+        let gatsbyNode = pluginNodeCache.get(plugin.name)
+        if (!gatsbyNode) {
+          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+          pluginNodeCache.set(plugin.name, gatsbyNode)
+        }
 
-      // TODO: rethink createNode API to handle this better
-      if (
-        api === `onCreateNode` &&
-        gatsbyNode?.unstable_shouldOnCreateNode && // Don't bail if this api is not exported
-        !gatsbyNode.unstable_shouldOnCreateNode(
-          { node: args.node },
-          plugin.pluginOptions
-        )
-      ) {
-        // Do not try to schedule an async event for this node for this plugin
-        return null
-      }
+        const pluginName =
+          plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
-      return new Promise(resolve => {
-        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
-      }).catch(err => {
-        decorateEvent(`BUILD_PANIC`, {
-          pluginName: `${plugin.name}@${plugin.version}`,
-        })
+        // TODO: rethink createNode API to handle this better
+        if (
+          api === `onCreateNode` &&
+          gatsbyNode?.unstable_shouldOnCreateNode && // Don't bail if this api is not exported
+          !gatsbyNode.unstable_shouldOnCreateNode(
+            { node: args.node },
+            plugin.pluginOptions
+          )
+        ) {
+          // Do not try to schedule an async event for this node for this plugin
+          return null
+        }
 
-        const localReporter = getLocalReporter({ activity, reporter })
+        return new Promise(resolve => {
+          resolve(
+            runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity)
+          )
+        }).catch(err => {
+          decorateEvent(`BUILD_PANIC`, {
+            pluginName: `${plugin.name}@${plugin.version}`,
+          })
 
-        const file = stackTrace
-          .parse(err)
-          .find(file => /gatsby-node/.test(file.fileName))
+          const localReporter = getLocalReporter({ activity, reporter })
 
-        let codeFrame = ``
-        const structuredError = errorParser({ err })
+          const file = stackTrace
+            .parse(err)
+            .find(file => /gatsby-node/.test(file.fileName))
 
-        if (file) {
-          const { fileName, lineNumber: line, columnNumber: column } = file
+          let codeFrame = ``
+          const structuredError = errorParser({ err })
 
-          try {
-            const code = fs.readFileSync(fileName, { encoding: `utf-8` })
-            codeFrame = codeFrameColumns(
-              code,
-              {
-                start: {
-                  line,
-                  column,
+          if (file) {
+            const { fileName, lineNumber: line, columnNumber: column } = file
+
+            try {
+              const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+              codeFrame = codeFrameColumns(
+                code,
+                {
+                  start: {
+                    line,
+                    column,
+                  },
                 },
-              },
-              {
-                highlightCode: true,
-              }
-            )
-          } catch (_e) {
-            // sometimes stack trace point to not existing file
-            // particularly when file is transpiled and path actually changes
-            // (like pointing to not existing `src` dir or original typescript file)
+                {
+                  highlightCode: true,
+                }
+              )
+            } catch (_e) {
+              // sometimes stack trace point to not existing file
+              // particularly when file is transpiled and path actually changes
+              // (like pointing to not existing `src` dir or original typescript file)
+            }
+
+            structuredError.location = {
+              start: { line: line, column: column },
+            }
+            structuredError.filePath = fileName
           }
 
-          structuredError.location = {
-            start: { line: line, column: column },
+          structuredError.context = {
+            ...structuredError.context,
+            pluginName,
+            api,
+            codeFrame,
           }
-          structuredError.filePath = fileName
-        }
 
-        structuredError.context = {
-          ...structuredError.context,
-          pluginName,
-          api,
-          codeFrame,
-        }
+          localReporter.panicOnBuild(structuredError)
 
-        localReporter.panicOnBuild(structuredError)
-
-        return null
-      })
-    }).then(results => {
+          return null
+        })
+      },
+      apiRunPromiseOptions
+    ).then(results => {
       if (onAPIRunComplete) {
         onAPIRunComplete()
       }
