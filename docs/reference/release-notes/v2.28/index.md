@@ -147,8 +147,8 @@ In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md
 
 ## Notable bugfixes
 
-- fix: do not ignore source file changes during recompilation [#28237](https://github.com/gatsbyjs/gatsby/pull/28237)
-- fix: invalidate page data when static query is added [#28349](https://github.com/gatsbyjs/gatsby/pull/28349)
+- fix: hot reloading hangs on multiple fast saves in develop [#28237](https://github.com/gatsbyjs/gatsby/pull/28237)
+- fix error: `The result of this StaticQuery could not be fetched` when static query is added [#28349](https://github.com/gatsbyjs/gatsby/pull/28349)
 
 ## Work in progress
 
