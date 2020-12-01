@@ -7,7 +7,7 @@ describe(`manual <Head /> render`, () => {
     // NOTE(@mxstbr): @cypress/snapshot does not have support for snapshotting
     // multiple DOM elements, so we manually iterate through them and snapshot each one
     // @see https://github.com/cypress-io/snapshot/issues/23
-    cy.get(`[data-react-helmet="true"]`).then($elems => {
+    cy.get(`[data-rh="true"]`).then($elems => {
       Array.from($elems).forEach($elem => {
         cy.wrap($elem).snapshot()
       })
@@ -24,7 +24,7 @@ describe(`no manual <Head /> render`, () => {
     // NOTE(@mxstbr): @cypress/snapshot does not have support for snapshotting
     // multiple DOM elements, so we manually iterate through them and snapshot each one
     // @see https://github.com/cypress-io/snapshot/issues/23
-    cy.get(`[data-react-helmet="true"]`).then($elems => {
+    cy.get(`[data-rh="true"]`).then($elems => {
       Array.from($elems).forEach($elem => {
         cy.wrap($elem).snapshot()
       })
@@ -41,7 +41,7 @@ describe(`manual <Head /> render with minimal overrides`, () => {
     // NOTE(@mxstbr): @cypress/snapshot does not have support for snapshotting
     // multiple DOM elements, so we manually iterate through them and snapshot each one
     // @see https://github.com/cypress-io/snapshot/issues/23
-    cy.get(`[data-react-helmet="true"]`).then($elems => {
+    cy.get(`[data-rh="true"]`).then($elems => {
       Array.from($elems).forEach($elem => {
         cy.wrap($elem).snapshot()
       })

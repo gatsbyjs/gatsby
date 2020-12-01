@@ -1,5 +1,5 @@
 import React from "react"
-import { Helmet } from "react-helmet"
+import { Helmet } from "react-helmet-async"
 import { useLocation } from "@reach/router"
 import { graphql, useStaticQuery } from "gatsby"
 

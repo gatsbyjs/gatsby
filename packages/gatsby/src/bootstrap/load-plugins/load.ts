@@ -260,15 +260,15 @@ export function loadPlugins(
     )
   }
 
-  // react-helmet support by default! use the user-provided one if it exists
-  const reactHelmetPlugin = (config.plugins || []).find(
-    plugin => plugin.resolve === `gatsby-plugin-react-helmet`
+  // react-helmet-async support by default! use the user-provided one if it exists
+  const reactHelmetAsyncPlugin = (config.plugins || []).find(
+    plugin => plugin.resolve === `gatsby-plugin-react-helmet-async`
   )
 
-  if (reactHelmetPlugin === undefined && config.head === true) {
+  if (reactHelmetAsyncPlugin === undefined && config.head === true) {
     plugins.push(
       processPlugin({
-        resolve: require.resolve(`gatsby-plugin-react-helmet`),
+        resolve: require.resolve(`gatsby-plugin-react-helmet-async`),
         options: {},
       })
     )
