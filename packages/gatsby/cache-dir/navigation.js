@@ -195,6 +195,18 @@ class RouteAnnouncer extends React.Component {
   }
 }
 
+const compareLocationProps = (prevLocation, nextLocation) => {
+  if (prevLocation.href !== nextLocation.href) {
+    return true
+  }
+
+  if (prevLocation?.state?.key !== nextLocation?.state?.key) {
+    return true
+  }
+
+  return false
+}
+
 // Fire on(Pre)RouteUpdate APIs
 class RouteUpdates extends React.Component {
   constructor(props) {
@@ -207,16 +219,15 @@ class RouteUpdates extends React.Component {
   }
 
   shouldComponentUpdate(prevProps) {
-    if (this.props.location.href !== prevProps.location.href) {
+    if (compareLocationProps(prevProps.location, this.props.location)) {
       onPreRouteUpdate(this.props.location, prevProps.location)
       return true
     }
-
     return false
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.href !== prevProps.location.href) {
+    if (compareLocationProps(prevProps.location, this.props.location)) {
       onRouteUpdate(this.props.location, prevProps.location)
     }
   }
