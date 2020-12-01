@@ -15,7 +15,7 @@ const {
   jscodeshiftExecutable
 } = require('../cli');
 
-describe('runTransform', () => {
+describe('transform', () => {
 
   it('finds transformer directory', () => {
     fs.lstatSync(transformerDirectory)
@@ -38,6 +38,7 @@ describe('runTransform', () => {
   it('warns when on missing transform', () => {
     execaReturnValue = { error: null };
     console.log = jest.fn();
+    process.argv = [`node`, `dir`]
     run()
     
     expect(console.log).toBeCalledWith(
