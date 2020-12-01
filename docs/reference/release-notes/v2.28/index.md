@@ -152,7 +152,7 @@ In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md
 
 ## Work in progress
 
-## Experimental: Parallel data sourcing
+### Experimental: Parallel data sourcing
 
 Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
 
