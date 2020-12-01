@@ -13,10 +13,14 @@ Key highlights of this release:
 
 - [New `gatsby new`](#new-gatsby-new) - new, interactive way to create a Gatsby site
 - [Feature flags in gatsby-config](#feature-flags-in-gatsby-config) - set your feature toggles without environment variables
-- [Improved Fast Refresh integration](#improved-fast-refresh-integration)
+- [Improved Fast Refresh integration](#improved-fast-refresh-integration) - better hot reloading
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) - run image transformations only when they are needed by browser
-- [Image plugin helpers](#image-plugin-helpers)
+
+Other notable changes:
+
+- [Image plugin helpers](#image-plugin-helpers) - make it easier for plugin authors to support the new gatsby image plugin
 - [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
+- [gatsby-plugin-emotion v5.0](#gatsby-plugin-emotion500) - now uses emotion v11
 - [Notable bugfixes](#notable-bugfixes)
 
 Sneak peek to next releases:
@@ -111,7 +115,11 @@ This release adds new utility functions to help plugin authors add support for t
 
 ## Removed experimental lazy page bundling
 
-In gatsby@2.27.0 we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
+In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
+
+## gatsby-plugin-emotion@5.0.0
+
+The plugin is updated to the new major version of emotion: v11. Check out [this post](https://emotion.sh/docs/emotion-11) in emotion docs for updates.
 
 ## Notable bugfixes
 
