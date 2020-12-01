@@ -200,18 +200,7 @@ const compareLocationProps = (prevLocation, nextLocation) => {
     return true
   }
 
-  if (
-    (prevLocation.state === null && nextLocation.state !== null) ||
-    (prevLocation.state !== null && nextLocation.state === null)
-  ) {
-    return true
-  }
-
-  if (
-    prevLocation.state !== null &&
-    nextLocation.state !== null &&
-    prevLocation.state.key !== nextLocation.state.key
-  ) {
+  if (prevLocation?.state?.key !== nextLocation?.state?.key) {
     return true
   }
 
