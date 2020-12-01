@@ -36,7 +36,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## New `gatsby new`
 
-In previous release we added [interactive way of scaffolding new gatsby project](../v2.27/index.md#create-gatsby) (with `npm init gatsby`). Now we adjusted `gatsby new` command when no arguments are passed to also use the same flow.
+In previous release we added [interactive way of scaffolding new gatsby project](../v2.27/index.md#create-gatsby) (with `npm init gatsby`). As of this release, `gatsby new` (without any addition arguments) will use the same flow.
 
 ## Feature flags in `gatsby-config`
 
