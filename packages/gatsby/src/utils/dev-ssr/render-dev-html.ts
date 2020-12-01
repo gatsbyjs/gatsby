@@ -150,11 +150,17 @@ export const renderDevHTML = ({
     //
     // We pause and resume so there's no excess webpack activity during normal development.
     const { devssrWebpackCompilier, devssrWebpackWatcher } = getDevSSRWebpack()
+    const ssrWebpackActivity = report.activityTimer(`Building SSR bundle`)
+    ssrWebpackActivity.start()
     if (devssrWebpackWatcher && devssrWebpackCompilier) {
+      let isResolved = false
       await new Promise(resolve => {
         function finish(stats: Stats): void {
           emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
-          resolve(stats)
+          ssrWebpackActivity.end()
+          if (!isResolved) {
+            resolve(stats)
+          }
         }
         emitter.on(`DEV_SSR_COMPILATION_DONE`, finish)
         devssrWebpackWatcher.resume()
@@ -162,7 +168,10 @@ export const renderDevHTML = ({
         devssrWebpackWatcher.suspend()
 
         // Timeout after 1.5s.
-        setTimeout(() => resolve(), 1500)
+        setTimeout(() => {
+          isResolved = true
+          resolve()
+        }, 1500)
       })
     }
 
