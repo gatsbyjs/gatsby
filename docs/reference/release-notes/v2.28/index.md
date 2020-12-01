@@ -15,6 +15,7 @@ Key highlights of this release:
 - [Feature flags in gatsby-config](#feature-flags-in-gatsby-config) - set your feature toggles without environment variables
 - [Improved Fast Refresh integration](#improved-fast-refresh-integration)
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) - run image transformations only when they are needed by browser
+- [Image plugin helpers](#image-plugin-helpers)
 - [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
 - [Notable bugfixes](#notable-bugfixes)
 
@@ -107,6 +108,10 @@ module.exports = {
 
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/27603).
 
+## Image plugin helpers
+
+This release adds new utility functions to help plugin authors add support for the [new Gatsby image component](https://github.com/gatsbyjs/gatsby/discussions/27950). If you maintain a source plugin, or if you want to help with one, take a look at [the RFC](https://github.com/gatsbyjs/gatsby/discussions/28241).
+
 ## Notable bugfixes
 
 ...
@@ -122,8 +127,6 @@ Gatsby aggressively clears its cache, sometimes too aggressively. Here's a few e
 - You change your `siteMetadata` in `gatsby-config.js` to update your site's title
 
 In all of these caches, your cache is entirely cleared, which means that the next time you run `gatsby develop` the experience is slower than it needs to be. We'll be working on this to ensure that your first run, and every run thereafter, is as quick and speedy as you expect!
-
-
 
 ## Contributors
 
