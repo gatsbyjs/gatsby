@@ -11,7 +11,6 @@ import {
   handleMultipleReplaceRenderers,
   ExportType,
   ICurrentAPIs,
-  validateConfigPluginsOptions,
 } from "./validate"
 import {
   IPluginInfo,
@@ -19,6 +18,7 @@ import {
   ISiteConfig,
   IRawSiteConfig,
 } from "./types"
+import { validateConfigPluginsOptions } from "gatsby-plugin-utils"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
 const getAPI = (
