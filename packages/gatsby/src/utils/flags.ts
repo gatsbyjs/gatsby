@@ -66,7 +66,7 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastRefresh`,
     experimental: false,
-    description: `Replaces the default HMR loader (react-hot-loader) with React Fast Refresh. Recommended for versions of React >= 17.0.`,
+    description: `Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
   },
 ]
