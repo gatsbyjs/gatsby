@@ -81,7 +81,7 @@ const parseError = function ({ err, directory, componentPath }) {
     const line = position.line
     const row = position.row
     ansiHTML.setColors({
-      reset: [colors.text, colors.background], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      reset: [colors.text, `ffffff`], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
       black: `aaa`, // String
       red: colors.keyword,
       green: colors.green,
