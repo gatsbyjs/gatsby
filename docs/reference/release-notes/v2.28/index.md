@@ -12,8 +12,8 @@ Welcome to `gatsby@2.28.0` release (December 2020 #1).
 Key highlights of this release:
 
 - [New `gatsby new`](#new-gatsby-new) - new, interactive way to create a Gatsby site
-- [Improved `react-refresh` integration](#improved-react-refresh-integration)
 - [Feature flags in gatsby-config](#feature-flags-in-gatsby-config) - set your feature toggles without environment variables
+- [Improved Fast Refresh integration](#improved-fast-refresh-integration)
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) - run image transformations only when they are needed by browser
 - [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
 - [Notable bugfixes](#notable-bugfixes)
@@ -28,19 +28,9 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 [Previous release notes](../v2.27/index.md)<br>
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.0...gatsby@2.28.0)
 
-## new `gatsby new`
+## New `gatsby new`
 
 In previous release we added [interactive way of scaffolding new gatsby project](../v2.27/index.md#create-gatsby) (with `npm init gatsby`). Now we adjusted `gatsby new` command when no arguments are passed to also use the same flow.
-
-## Improved `react-refresh` integration
-
-Gatsby had some support for `react-refresh` (or Fast Refresh as it can be referred to) already. This release improves it and adds better error overlays to be able to fix runtime and compilation errors faster! Time = money, and we're giving you time back by helping you solve your errors more quickly!
-
-To use it:
-
-```shell
-GATSBY_HOT_LOADER=fast-refresh gatsby develop
-```
 
 ## Feature flags in `gatsby-config`
 
@@ -69,6 +59,25 @@ Currently supported flags:
 - `QUERY_ON_DEMAND` - Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
 - `LAZY_IMAGES` - Don't process images during development until they're requested from the browser. Speeds starting the develop server. See [Experimental: Lazy images in develo](#experimental-lazy-images-in-develop) section for additional details.
 - `FAST_DEV` - Umbrella flag that enables `DEV_SSR`, `QUERY_ON_DEMAND` and `LAZY_IMAGES` features.
+- `FAST_REFRESH` - Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.
+
+## Improved Fast Refresh integration
+
+Gatsby had some support for `react-refresh` (or Fast Refresh as it can be referred to) already. The PR for a [preliminary Fast Refresh integration](https://github.com/gatsbyjs/gatsby/pull/26664) added a custom overlay, better error recovery and in general a better communication between Gatsby's dev server and React Fast Refresh. This will give you quicker feedback and an overall improved development experience.
+
+To use it, add a flag to your `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  // your existing config
+  flags: {
+    FAST_REFRESH: true,
+  },
+}
+```
+
+Visit the [umbrella issue about Fast Refresh](https://github.com/gatsbyjs/gatsby/discussions/28390) to see preview images and give feedback.
 
 ## Removed experimental lazy page bundling
 
