@@ -16,5 +16,23 @@ exports[`SSR it generates an error page correctly 1`] = `
 <span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\">   | </span>            <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
 <span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 5 | </span></span>
 <span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 6 | </span>  <span style=\\"color:#006500;\\">return</span> <span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span>hi<span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">/</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 7 | </span>}</span></pre>"
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 7 | </span>}</span></pre>
+      <p>For help debugging SSR errors, see this docs page: <a
+      href=\\"https://www.gatsbyjs.com/docs/debugging-html-builds/\\">https://www.gatsbyjs.com/docs/debugging-html-builds/</a></p>
+        <h3>Skip SSR</h3>
+        <p>If you don't wish to fix the SSR error at the moment, press the
+        button below to reload the page without attempting SSR</p>
+        <p><strong>Note</strong>: this error will show up in when you build your site so must be fixed before then.</p>
+        <p><strong>Caveat</strong>: SSR errors in module scope i.e. outside of your components can't be skipped so will need fixed before you can continue</p>
+        <button onclick='refreshWithQueryString()'>Skip SSR</button>
+        <script>
+          function refreshWithQueryString() {
+            if ('URLSearchParams' in window) {
+              var searchParams = new URLSearchParams(window.location.search);
+              searchParams.set(\\"skip-ssr\\", \\"true\\");
+              window.location.search = searchParams.toString();
+            }
+          }
+          </script>
+        "
 `;

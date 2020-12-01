@@ -3,11 +3,6 @@
 IS_CI="${CI:-false}"
 GREP_PATTERN=$1
 
-if [ "$CIRCLE_BRANCH" = "master" ]; then
-  echo "On master branch; continuing."
-  exit 0
-fi
-
 if [ "$IS_CI" = true ]; then
   git config --local url."https://github.com/".insteadOf git@github.com:
   git config --local user.name "GatsbyJS Bot"
