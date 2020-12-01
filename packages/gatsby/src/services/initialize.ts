@@ -447,26 +447,25 @@ export async function initialize({
       // }
       // }
 
-      const deleteGlobs = [
-        // By default delete all files & subdirectories
-        `${cacheDirectory}/**`,
-        `${cacheDirectory}/*/`,
-      ]
-
-      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-        // Add gatsby-source-filesystem
-        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
-      }
-
-      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-        // Add webpack
-        deleteGlobs.push(`!${cacheDirectory}/webpack`)
-      }
-
       if (
         process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
         process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
       ) {
+        const deleteGlobs = [
+          // By default delete all files & subdirectories
+          `${cacheDirectory}/**`,
+          `${cacheDirectory}/*/`,
+        ]
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+          // Add gatsby-source-filesystem
+          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+        }
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          // Add webpack
+          deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        }
         await del(deleteGlobs)
       } else {
         // Attempt to empty dir if remove fails,
