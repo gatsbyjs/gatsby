@@ -80,10 +80,6 @@ module.exports = {
 
 Visit the [umbrella issue about Fast Refresh](https://github.com/gatsbyjs/gatsby/discussions/28390) to see preview images and give feedback.
 
-## Removed experimental lazy page bundling
-
-In gatsby@2.27.0 we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
-
 ## Making `gatsby develop` faster
 
 We continue working on speeding up development server startup:
@@ -111,6 +107,10 @@ module.exports = {
 ## Image plugin helpers
 
 This release adds new utility functions to help plugin authors add support for the [new Gatsby image component](https://github.com/gatsbyjs/gatsby/discussions/27950). If you maintain a source plugin, or if you want to help with one, take a look at [the RFC](https://github.com/gatsbyjs/gatsby/discussions/28241).
+
+## Removed experimental lazy page bundling
+
+In gatsby@2.27.0 we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
 
 ## Notable bugfixes
 
