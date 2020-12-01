@@ -60,6 +60,15 @@ const activeFlags: Array<IFlag> = [
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
+  {
+    name: `PARALLEL_SOURCING`,
+    env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
+    command: `all`,
+    telemetryId: `ParallelSourcing`,
+    experimental: true,
+    description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28336`,
+  },
 ]
 
 export default activeFlags

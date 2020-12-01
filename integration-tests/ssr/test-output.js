@@ -51,9 +51,15 @@
       setTimeout(() => resolve(), 6000)
     })
 
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res =>
-      res.text()
-    )
+    let devStatus = 200
+    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res => {
+      devStatus = res.status
+      return res.text()
+    })
+
+    if (devStatus !== 200) {
+      return false
+    }
 
     const devHtml = format(filterHtml(rawDevHtml))
     const diffResult = diff(devHtml, builtHtml, {

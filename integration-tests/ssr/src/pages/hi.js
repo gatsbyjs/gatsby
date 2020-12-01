@@ -1,15 +1,25 @@
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 export default function Inline() {
-  const { site } = useStaticQuery(graphql`
-    {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-  return <div>hi1 {site.siteMetadata.title}</div>
+  return (
+    <div>
+      <StaticQuery
+        query={graphql`
+          query {
+            site {
+              siteMetadata {
+                title
+              }
+            }
+          }
+        `}
+        render={data => (
+          <header>
+            <h1>{data.site.siteMetadata.title}</h1>
+          </header>
+        )}
+      />
+    </div>
+  )
 }
