@@ -141,7 +141,7 @@ describe(`GatsbyImage server`, () => {
         CSSStyleDeclaration {
           "0": "position",
           "1": "overflow",
-          "12: "display",
+          "2: "display",
           "_importants": Object {
             "display": undefined,
             "overflow": undefined,
