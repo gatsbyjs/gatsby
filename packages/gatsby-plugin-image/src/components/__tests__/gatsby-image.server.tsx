@@ -69,6 +69,7 @@ describe(`GatsbyImage server`, () => {
           "_onChange": [Function],
           "_values": Object {
             "position": "relative",
+            "overflow": "hidden",
           },
         }
       `)
@@ -107,6 +108,7 @@ describe(`GatsbyImage server`, () => {
           "_values": Object {
             "height": "100px",
             "position": "relative",
+            "overflow": "hidden",
             "width": "100px",
           },
         }
@@ -144,6 +146,7 @@ describe(`GatsbyImage server`, () => {
           "_values": Object {
             "display": "inline-block",
             "position": "relative",
+            "overflow": "hidden",
           },
         }
       `)
