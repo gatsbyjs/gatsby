@@ -91,8 +91,8 @@ See PR [#27941](https://github.com/gatsbyjs/gatsby/issues/27941)
 
 ## Notable bugfixes
 
-- fix: hot reloading hangs on multiple fast saves in develop [#28034](https://github.com/gatsbyjs/gatsby/pull/28034)
-- partial fix: `The result of this StaticQuery could not be fetched` when static query is added [#28032](https://github.com/gatsbyjs/gatsby/pull/28032)
+- fix: endless page refresh in develop [#28034](https://github.com/gatsbyjs/gatsby/pull/28034)
+- fix: performance regression when running queries [#28032](https://github.com/gatsbyjs/gatsby/pull/28032)
 
 ## Work in progress
 
