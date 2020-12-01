@@ -121,7 +121,7 @@ Gatsby aggressively clears its cache, sometimes too aggressively. Here's a few e
 - You change your `gatsby-node.js` and add a few log statements
 - You change your `siteMetadata` in `gatsby-config.js` to update your site's title
 
-In all of these caches, your cache is entirely cleared, which means that the next time you run `gatsby develop` the experience is slower than it needs to be. We'll be working on this to ensure that your first run, and every run thereafter, is as quick and speedy as you expect!
+In all of these cases, your cache is entirely cleared, which means that the next time you run `gatsby develop` the experience is slower than it needs to be. We'll be working on this to ensure that your first run, and every run thereafter, is as quick and speedy as you expect!
 
 We added two new flags for the webpack and downloaded files caches that when enabled, will preserve these caches across changes. We'll be evaluated their impact and safety and if we can make them the defaults. Please test and give feedback!
 
