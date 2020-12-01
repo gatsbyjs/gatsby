@@ -87,7 +87,7 @@ Visit the [umbrella issue about Fast Refresh](https://github.com/gatsbyjs/gatsby
 
 ## Making `gatsby develop` faster
 
-We continue working on speeding up development server startup:
+We continue working on speeding up your local development server. We need _your_ help to test out these experiments and provide feedback, so please check 'em out! 👇 
 
 ### Experimental: Lazy images in develop
 
