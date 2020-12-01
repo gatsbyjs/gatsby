@@ -22,6 +22,7 @@ Key highlights of this release:
 Sneak peek to next releases:
 
 - [Less aggressive cache invalidation](#less-aggressive-cache-invalidation)
+- [Parallel data sourcing](#parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
@@ -127,6 +128,24 @@ Gatsby aggressively clears its cache, sometimes too aggressively. Here's a few e
 - You change your `siteMetadata` in `gatsby-config.js` to update your site's title
 
 In all of these caches, your cache is entirely cleared, which means that the next time you run `gatsby develop` the experience is slower than it needs to be. We'll be working on this to ensure that your first run, and every run thereafter, is as quick and speedy as you expect!
+
+## Experimental: Parallel data sourcing
+
+Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
+
+This is a very "Your mileage may vary" situation — not all sites will notice any difference and also not all source plugins are network bound (gatsby-source-filesystem reads from the local machine). We're looking at finding better heuristics so that all sites are as fast as possible at data sourcing but in the meantime, if you have sites with multiple source plugins, this could be a big help.
+
+You can try it today using `gatsby@next` version and adding a flag to your `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  // your existing config
+  flags: {
+    PARALLEL_SOURCING: true,
+  },
+}
+```
 
 ## Contributors
 
