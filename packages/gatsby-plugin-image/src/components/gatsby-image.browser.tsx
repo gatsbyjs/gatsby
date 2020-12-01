@@ -15,12 +15,14 @@ import {
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
-import { Layout } from "../utils"
+import { Layout } from "../image-utils"
 
-export type GatsbyImageProps = Omit<
-  ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
-> & {
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+export interface GatsbyImageProps
+  extends Omit<
+    ImgHTMLAttributes<HTMLImageElement>,
+    "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
+  > {
   alt: string
   as?: ElementType
   className?: string
