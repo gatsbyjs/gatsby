@@ -12,7 +12,10 @@ export function runTransform(transform, targetDir) {
 
   let args = []
 
-  args.push('--ignore-pattern=**/node_modules/**') //TODO ignore cache and public
+  args.push('--ignore-pattern=\'**/node_modules/**\'') 
+  args.push('--ignore-pattern=\'**/.cache/**\'') 
+  args.push('--ignore-pattern=\'**/public/**\'') 
+
   args.push('--extensions=jsx,js,ts,tsx')
   
   args = args.concat(['--transform', transformerPath, targetDir])
