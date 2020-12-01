@@ -393,9 +393,85 @@ export async function initialize({
 
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      // Comment out inviet until we can test perf impact
+      //
+      // let sourceFileSystemVersion = flattenedPlugins.find(
+      // plugin => plugin.name === `gatsby-source-filesystem`
+      // )?.version
+
+      // // The site might be using a plugin which uses "createRemoteFileNode" but
+      // // doesn't have gatsby-source-filesystem in their gatsby-config.js. So lets
+      // // also try requiring it.
+      // if (!sourceFileSystemVersion) {
+      // try {
+      // sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
+      // ?.version
+      // } catch {
+      // // ignore require errors
+      // }
+      // }
+      // } else if (
+      // sourceFileSystemVersion &&
+      // semver.lt(sourceFileSystemVersion, `2.9.0`)
+      // ) {
+      // // If the site has more than 50 downloaded files in it, tell them
+      // // how to save time.
+      // try {
+      // // Divide by two as the directory as both cache files + the actual downloaded files so
+      // // two results / downloaded file.
+      // const filesCount =
+      // (await fs.readdir(`.cache/caches/gatsby-source-filesystem`))
+      // .length / 2
+      // if (filesCount > 50) {
+      // reporter.info(stripIndent`\n\n
+
+      // Your local development experience is about to get better, faster, and stronger!
+
+      // Your friendly Gatsby maintainers detected your site downloads quite a few files and that we're about to delete all ${Math.round(
+      // filesCount
+      // )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
+
+      // If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable the PRESERVE_FILE_DOWNLOAD_CACHE flag and run your develop server again.
+
+      // To do so, add to your gatsby-config.js:
+
+      // flags: {
+      // preserve_file_download_cache: true,
+      // }
+
+      // visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+      // `)
+      // }
+      // } catch {
+      // // ignore errors (mostly will just be directory not found).
+      // }
+      // }
+
+      if (
+        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
+        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
+      ) {
+        const deleteGlobs = [
+          // By default delete all files & subdirectories
+          `${cacheDirectory}/**`,
+          `${cacheDirectory}/*/`,
+        ]
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+          // Add gatsby-source-filesystem
+          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+        }
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          // Add webpack
+          deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        }
+        await del(deleteGlobs)
+      } else {
+        // Attempt to empty dir if remove fails,
+        // like when directory is mount point
+        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      }
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }

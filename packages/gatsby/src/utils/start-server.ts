@@ -10,6 +10,7 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
+import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
 import cors from "cors"
@@ -26,6 +27,10 @@ import * as WorkerPool from "../utils/worker/pool"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
+import {
+  showExperimentNoticeAfterTimeout,
+  CancelExperimentNoticeCallbackOrUndefined,
+} from "../utils/show-experiment-notice"
 import {
   reverseFixedPagePath,
   readPageData,
@@ -47,6 +52,7 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
+  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: JestWorker
   webpackWatching: IWebpackWatchingPauseResume
@@ -77,6 +83,32 @@ export async function startServer(
     id: `webpack-develop`,
   })
   webpackActivity.start()
+
+  const THIRTY_SECONDS = 1 * 1000
+  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
+  if (
+    process.env.gatsby_executing_command === `develop` &&
+    !process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
+    !isCI()
+  ) {
+    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
+      `PRESERVE_WEBPACK_CACHE`,
+      report.stripIndent(`
+Your friendly Gatsby maintainers detected your site has more JavaScript than most sites! We're working to make your site's JS compile as quickly as possible by avoiding clearing your webpack cache as often.
+
+If you're interested in trialing this coming change *today* — which should make your local development experience faster — go ahead and enable the PRESERVE_WEBPACK_CACHE flag and run your develop server again.
+
+To do so, add to your gatsby-config.js:
+
+flags: {
+  PRESERVE_WEBPACK_CACHE: true,
+}
+
+Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+      `),
+      THIRTY_SECONDS
+    )
+  }
 
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
@@ -467,6 +499,7 @@ export async function startServer(
     compiler,
     listener,
     webpackActivity,
+    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,
