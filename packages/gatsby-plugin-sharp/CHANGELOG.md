@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.0...gatsby-plugin-sharp@2.11.0-next.1) (2020-12-01)
+
+### Bug Fixes
+
+- avoid joi validation error when using reporter.panic ([#28291](https://github.com/gatsbyjs/gatsby/issues/28291)) ([231cf9f](https://github.com/gatsbyjs/gatsby/commit/231cf9f8c0ad077c8c1324a5c89c791a2da775a1))
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.10.0-next.1...gatsby-plugin-sharp@2.11.0-next.0) (2020-11-26)
 
 ### Features

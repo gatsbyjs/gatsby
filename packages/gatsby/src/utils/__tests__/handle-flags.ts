@@ -46,6 +46,13 @@ describe(`handle flags`, () => {
       description: `test`,
       umbrellaIssue: `test`,
     },
+    {
+      name: `YET_ANOTHER`,
+      env: `GATSBY_EXPERIMENTAL_SOMETHING_COOL2`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+    },
   ]
 
   const configFlags = {
@@ -83,5 +90,14 @@ describe(`handle flags`, () => {
     expect(
       handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
     ).toHaveLength(1)
+  })
+
+  it(`returns a message about unknown flags in the config`, () => {
+    const unknownConfigFlags = handleFlags(
+      activeFlags,
+      { ALL_COMMANDS: true, FASTLY_DEV: true, SUPER_COOL_FLAG: true },
+      `develop`
+    )
+    expect(unknownConfigFlags).toMatchSnapshot()
   })
 })

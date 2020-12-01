@@ -191,7 +191,7 @@ export class BaseLoader {
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
       const pageData = this.pageDataDb.get(pagePath)
-      if (!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND || !pageData.stale) {
+      if (process.env.BUILD_STAGE !== `develop` || !pageData.stale) {
         return Promise.resolve(pageData)
       }
     }
@@ -212,10 +212,7 @@ export class BaseLoader {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
-      if (
-        !process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND ||
-        !page.payload.stale
-      ) {
+      if (process.env.BUILD_STAGE !== `develop` || !page.payload.stale) {
         return Promise.resolve(page.payload)
       }
     }

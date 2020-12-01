@@ -321,22 +321,29 @@ const debouncedWriteAll = _.debounce(
   }
 )
 
-if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-  /**
-   * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
-   * files as required
-   */
-  emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
-}
-
 /**
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
  * files as required
  */
+let listenerStarted = false
 export const startListener = (): void => {
+  // Only start the listener once.
+  if (listenerStarted) {
+    return
+  }
+  listenerStarted = true
+
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    /**
+     * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
+     * files as required
+     */
+    emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
+      reporter.pendingActivity({ id: `requires-writer` })
+      debouncedWriteAll()
+    })
+  }
+
   emitter.on(`CREATE_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()

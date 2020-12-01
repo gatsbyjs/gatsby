@@ -68,8 +68,15 @@ const parseError = function ({ err, directory, componentPath }) {
   const message = splitMessage[splitMessage.length - 1]
   const type = err.type ? err.type : err.name
 
+  // We prefer the file path from the stack trace as the error might not be in the
+  // component — but if source-maps fail and we just get public/render-page.js as
+  // the file, we fall back on the component filepath as at least the user
+  // will have that.
+  const trueFileName = filename.includes(`render-page`)
+    ? componentPath
+    : filename
   const data = {
-    filename: sysPath.relative(directory, componentPath),
+    filename: sysPath.relative(directory, trueFileName),
     message: message,
     type: type,
     stack: stack,
@@ -81,7 +88,7 @@ const parseError = function ({ err, directory, componentPath }) {
     const line = position.line
     const row = position.row
     ansiHTML.setColors({
-      reset: [colors.text, colors.background], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      reset: [colors.text, `ffffff`], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
       black: `aaa`, // String
       red: colors.keyword,
       green: colors.green,
