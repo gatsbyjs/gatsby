@@ -14,7 +14,7 @@ npm init gatsby
 
 Follow the prompts to choose your preferred CMS, styling tools and additional features.
 
-2. Change directories into site folder
+2. Change directories into the site folder you created in step 1. 
 
 ```shell
 cd gatsby-site
