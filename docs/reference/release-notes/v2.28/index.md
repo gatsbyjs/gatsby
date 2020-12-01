@@ -19,14 +19,14 @@ Key highlights of this release:
 Other notable changes:
 
 - [Image plugin helpers](#image-plugin-helpers) - make it easier for plugin authors to support the new gatsby image plugin
-- [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
 - [Experimental: New cache clearing behaviors](#experimental-new-cache-clearing-behaviors) - we're experimenting with ways to be smarter about clearing caches
 - [gatsby-plugin-emotion v5.0](#gatsby-plugin-emotion500) - now uses emotion v11
+- [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
 - [Notable bugfixes](#notable-bugfixes)
 
 Sneak peek to next releases:
 
-- [Parallel data sourcing](#parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
+- [Experimental: Parallel data sourcing](#experimental-parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
@@ -113,10 +113,6 @@ module.exports = {
 
 This release adds new utility functions to help plugin authors add support for the [new Gatsby image component](https://github.com/gatsbyjs/gatsby/discussions/27950). If you maintain a source plugin, or if you want to help with one, take a look at [the RFC](https://github.com/gatsbyjs/gatsby/discussions/28241).
 
-## Removed experimental lazy page bundling
-
-In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [Less aggressive cache invalidation](#less-aggressive-cache-invalidation).
-
 ## Experimental: New cache clearing behaviors
 
 Gatsby aggressively clears its cache, sometimes too aggressively. Here's a few examples:
@@ -144,6 +140,10 @@ module.exports = {
 ## gatsby-plugin-emotion@5.0.0
 
 The plugin is updated to the new major version of emotion: v11. Check out [this post](https://emotion.sh/docs/emotion-11) in emotion docs for updates.
+
+## Removed experimental lazy page bundling
+
+In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [(experimental) new cache clearing behaviors](#experimental-new-cache-clearing-behaviors).
 
 ## Notable bugfixes
 
