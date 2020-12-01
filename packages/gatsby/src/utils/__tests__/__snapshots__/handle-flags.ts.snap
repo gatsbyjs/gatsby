@@ -13,6 +13,13 @@ Object {
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
+
+There are 5 other flags available that you might be interested in:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+- ONLY_BUILDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
   "unknownFlagMessage": "The following flag(s) found in your gatsby-config.js are not known:
 - FASTLY_DEV (did you mean: FAST_DEV)
