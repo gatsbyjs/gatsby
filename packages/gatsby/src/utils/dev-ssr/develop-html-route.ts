@@ -22,6 +22,7 @@ export const route = ({ app, program, store }): any =>
       const renderResponse = await renderDevHTML({
         path: pathObj.path,
         page: pathObj,
+        skipSsr: req.query[`skip-ssr`] || false,
         store,
         htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
         directory: program.directory,
@@ -62,6 +63,30 @@ export const route = ({ app, program, store }): any =>
       if (error.codeFrame) {
         errorHtml += `<pre style="background:#fdfaf6;padding:8px;">${error.codeFrame}</pre>`
       }
+
+      // Add link to help page
+      errorHtml += `
+      <p>For help debugging SSR errors, see this docs page: <a
+      href="https://www.gatsbyjs.com/docs/debugging-html-builds/">https://www.gatsbyjs.com/docs/debugging-html-builds/</a></p>`
+
+      // Add skip ssr button
+      errorHtml += `
+        <h3>Skip SSR</h3>
+        <p>If you don't wish to fix the SSR error at the moment, press the
+        button below to reload the page without attempting SSR</p>
+        <p><strong>Note</strong>: this error will show up in when you build your site so must be fixed before then.</p>
+        <p><strong>Caveat</strong>: SSR errors in module scope i.e. outside of your components can't be skipped so will need fixed before you can continue</p>
+        <button onclick='refreshWithQueryString()'>Skip SSR</button>
+        <script>
+          function refreshWithQueryString() {
+            if ('URLSearchParams' in window) {
+              var searchParams = new URLSearchParams(window.location.search);
+              searchParams.set("skip-ssr", "true");
+              window.location.search = searchParams.toString();
+            }
+          }
+          </script>
+        `
       res.status(500).send(errorHtml)
     }
 

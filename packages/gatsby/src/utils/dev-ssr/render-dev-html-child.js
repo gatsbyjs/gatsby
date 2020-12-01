@@ -69,7 +69,7 @@ const parseError = function ({ err, directory, componentPath }) {
   const type = err.type ? err.type : err.name
 
   const data = {
-    filename: sysPath.relative(directory, componentPath),
+    filename: sysPath.relative(directory, filename),
     message: message,
     type: type,
     stack: stack,
