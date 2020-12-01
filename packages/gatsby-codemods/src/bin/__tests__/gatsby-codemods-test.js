@@ -4,16 +4,19 @@ jest.setMock('execa', {
   sync: () => execaReturnValue
 });
 
+import process from 'process'
 import path from 'path'
 import fs from 'fs'
 
 const {
   runTransform,
+  run,
   transformerDirectory,
   jscodeshiftExecutable
 } = require('../cli');
 
 describe('runTransform', () => {
+
   it('finds transformer directory', () => {
     fs.lstatSync(transformerDirectory)
   })
@@ -29,6 +32,39 @@ describe('runTransform', () => {
     
     expect(console.log).toBeCalledWith(
       `Executing command: jscodeshift --ignore-pattern=**/node_modules/** --extensions=jsx,js,ts,tsx --transform ${path.join(transformerDirectory, 'gatsby-plugin-image.js')} src`
+    )
+  })
+
+  it('warns when on missing transform', () => {
+    execaReturnValue = { error: null };
+    console.log = jest.fn();
+    run()
+    
+    expect(console.log).toBeCalledWith(
+      `Be sure to pass in the name of the codemod you're attempting to run.`
+    )
+  })
+
+  it('warns when on missing target', () => {
+    execaReturnValue = { error: null };
+    console.log = jest.fn();
+    process.argv.push(`gatsby-plugin-image`)
+    run()
+    
+    expect(console.log).toBeCalledWith(
+      `You have not provided a target directory to run the codemod against, will default to root.`
+    )
+  })
+
+  it('warns when invalid transform', () => {
+    execaReturnValue = { error: null };
+    console.log = jest.fn();
+    process.argv.pop()
+    process.argv.push(`does-not-exist`)
+    run()
+    
+    expect(console.log).toBeCalledWith(
+      `You have passed in invalid codemod name: does-not-exist. Please pass a valid one.`
     )
   })
 })
