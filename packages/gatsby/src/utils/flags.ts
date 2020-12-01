@@ -61,6 +61,15 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
   {
+    name: `FAST_REFRESH`,
+    env: `GATSBY_FAST_REFRESH`,
+    command: `develop`,
+    telemetryId: `FastRefresh`,
+    experimental: false,
+    description: `Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
+  },
+  {
     name: `PARALLEL_SOURCING`,
     env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
     command: `all`,
