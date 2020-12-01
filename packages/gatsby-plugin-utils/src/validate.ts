@@ -3,7 +3,6 @@ import { ValidationOptions } from "joi"
 import { Joi, ObjectSchema } from "./joi"
 import { IPluginInfoOptions, IPluginRefObject, ISiteConfig } from "./types"
 import path from "path"
-import reporter from "gatsby-cli/lib/reporter"
 import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
 
@@ -63,7 +62,7 @@ async function validatePluginsOptions(
 
       // Validate correct usage of pluginOptionsSchema
       if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
-        reporter.warn(
+        console.warn(
           `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`
         )
         return plugin
@@ -113,7 +112,7 @@ async function validatePluginsOptions(
               path.relative(rootDir, plugin.parentDir)) ||
             null
           if (validationErrors.length > 0) {
-            reporter.error({
+            console.error({
               id: `11331`,
               context: {
                 configDir,
@@ -125,7 +124,7 @@ async function validatePluginsOptions(
           }
 
           if (validationWarnings.length > 0) {
-            reporter.warn(
+            console.warn(
               stripIndent(`
                 Warning: there are unknown plugin options for "${
                   plugin.resolve
