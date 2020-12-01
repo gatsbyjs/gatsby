@@ -1,21 +1,40 @@
 import { execSync } from "child_process"
-import execa from "execa"
+import execa, { Options } from "execa"
 import fs from "fs-extra"
 import path from "path"
 import { reporter } from "./reporter"
 import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
+import c from "ansi-colors"
 
-const packageMangerConfigKey = `cli.packageManager`
+const packageManagerConfigKey = `cli.packageManager`
+
+const kebabify = (str: string): string =>
+  str
+    .replace(/([a-z])([A-Z])/g, `$1-$2`)
+    .replace(/[^a-zA-Z]+/g, `-`)
+    .toLowerCase()
 
 export const getPackageManager = (): PackageManager =>
-  getConfigStore().get(packageMangerConfigKey)
+  getConfigStore().get(packageManagerConfigKey)
 
 export const setPackageManager = (packageManager: PackageManager): void => {
-  getConfigStore().set(packageMangerConfigKey, packageManager)
+  getConfigStore().set(packageManagerConfigKey, packageManager)
 }
 
+const ESC = `\u001b`
+
+export const clearLine = (count = 1): Promise<boolean> =>
+  new Promise(resolve => {
+    // First move the cursor up one line...
+    process.stderr.moveCursor(0, -count, () => {
+      // ... then clear that line. This is the ANSI escape sequence for "clear whole line"
+      // List of escape sequences: http://ascii-table.com/ansi-escape-sequences.php
+      process.stderr.write(`${ESC}[2K`)
+      resolve()
+    })
+  })
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
@@ -31,11 +50,8 @@ const checkForYarn = (): boolean => {
 // Initialize newly cloned directory as a git repo
 const gitInit = async (
   rootPath: string
-): Promise<execa.ExecaReturnBase<string>> => {
-  reporter.info(`Initialising git in ${rootPath}`)
-
-  return await execa(`git`, [`init`], { cwd: rootPath })
-}
+): Promise<execa.ExecaReturnBase<string>> =>
+  await execa(`git`, [`init`], { cwd: rootPath })
 
 // Create a .gitignore file if it is missing in the new directory
 const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
@@ -43,7 +59,6 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
     return
   }
 
-  reporter.info(`Creating minimal .gitignore in ${rootPath}`)
   await fs.writeFile(
     path.join(rootPath, `.gitignore`),
     `.cache\nnode_modules\npublic\n`
@@ -52,8 +67,6 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
 
 // Create an initial git commit in the new directory
 const createInitialGitCommit = async (rootPath: string): Promise<void> => {
-  reporter.info(`Create initial git commit in ${rootPath}`)
-
   await execa(`git`, [`add`, `-A`], { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
   // pgp signatures (with password)
@@ -68,6 +81,28 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
   }
 }
 
+const setNameInPackage = async (
+  sitePath: string,
+  name: string
+): Promise<void> => {
+  const packageJsonPath = path.join(sitePath, `package.json`)
+  const packageJson = await fs.readJSON(packageJsonPath)
+  packageJson.name = kebabify(name)
+  packageJson.description = `My Gatsby site`
+  try {
+    const result = await execa(`git`, [`config`, `user.name`])
+    if (result.failed) {
+      delete packageJson.author
+    } else {
+      packageJson.author = result.stdout
+    }
+  } catch (e) {
+    delete packageJson.author
+  }
+
+  await fs.writeJSON(packageJsonPath, packageJson)
+}
+
 // Executes `npm install` or `yarn install` in rootPath.
 const install = async (
   rootPath: string,
@@ -75,13 +110,11 @@ const install = async (
 ): Promise<void> => {
   const prevDir = process.cwd()
 
-  let stop = spin(`Installing packages...`)
+  reporter.info(`${c.blueBright(c.symbols.pointer)} Installing Gatsby...`)
 
   process.chdir(rootPath)
 
   const npmConfigUserAgent = process.env.npm_config_user_agent
-
-  const silent = `--silent`
 
   try {
     if (!getPackageManager()) {
@@ -91,25 +124,33 @@ const install = async (
         setPackageManager(`npm`)
       }
     }
+    const options: Options = {
+      stderr: `inherit`,
+    }
+
+    const config = [`--loglevel`, `error`, `--color`, `always`]
+
     if (getPackageManager() === `yarn` && checkForYarn()) {
       await fs.remove(`package-lock.json`)
-      const args = packages.length ? [`add`, silent, ...packages] : [silent]
-      await execa(`yarnpkg`, args)
+      const args = packages.length
+        ? [`add`, `--silent`, ...packages]
+        : [`--silent`]
+      await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
 
-      await execa(`npm`, [`install`, silent])
-      stop()
-      stop = spin(`Installing plugins...`)
-      await execa(`npm`, [`install`, silent, ...packages])
-      stop()
+      await execa(`npm`, [`install`, ...config], options)
+      await clearLine()
+      reporter.success(`Installed Gatsby`)
+      reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
+      await execa(`npm`, [`install`, ...config, ...packages], options)
+      await clearLine()
+      reporter.success(`Installed plugins`)
     }
   } catch (e) {
     reporter.panic(e.message)
   } finally {
     process.chdir(prevDir)
-    stop()
-    reporter.success(`Installed packages`)
   }
 }
 
@@ -143,7 +184,7 @@ const clone = async (
   await fs.remove(path.join(rootPath, `.git`))
 }
 
-async function gitSetup(rootPath: string): Promise<void> {
+export async function gitSetup(rootPath: string): Promise<void> {
   await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
   await createInitialGitCommit(rootPath)
@@ -161,8 +202,9 @@ export async function initStarter(
 
   await clone(starter, sitePath)
 
+  await setNameInPackage(sitePath, rootPath)
+
   await install(rootPath, packages)
 
-  await gitSetup(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }
