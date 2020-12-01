@@ -15,6 +15,7 @@ import { trackCli } from "./tracking"
 import crypto from "crypto"
 import { reporter } from "./reporter"
 import { setSiteMetadata } from "./site-metadata"
+import { kebabify } from "./utils"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
@@ -22,11 +23,6 @@ const sha256 = (str: string): string =>
 const md5 = (str: string): string =>
   crypto.createHash(`md5`).update(str).digest(`hex`)
 
-export const kebabify = (str: string): string =>
-  str
-    .replace(/([a-z])([A-Z])/g, `$1-$2`)
-    .replace(/[^a-zA-Z]+/g, `-`)
-    .toLowerCase()
 /**
  * Hide string on windows (for emojis)
  */

@@ -7,22 +7,15 @@ import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 import c from "ansi-colors"
-import { kebabify } from "."
+import { clearLine, kebabify } from "./utils"
 
 const packageManagerConfigKey = `cli.packageManager`
-
-
-import { clearLine } from "./utils"
-
-const packageManagerConfigKey = `cli.packageManager`
-
 
 export const getPackageManager = (
   npmConfigUserAgent?: string
 ): PackageManager => {
   const configStore = getConfigStore()
   const actualPackageManager = configStore.get(packageManagerConfigKey)
-
 
   if (actualPackageManager) {
     return actualPackageManager
