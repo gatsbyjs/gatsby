@@ -57,7 +57,7 @@ Currently supported flags:
 
 - `DEV_SSR` - Server-side render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 - `QUERY_ON_DEMAND` - Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-- `LAZY_IMAGES` - Don't process images during development until they're requested from the browser. Speeds starting the develop server. See [Experimental: Lazy images in develo](#experimental-lazy-images-in-develop) section for additional details.
+- `LAZY_IMAGES` - Don't process images during development until they're requested from the browser. Speeds starting the develop server (requires `gatsby-plugin-sharp@^2.10.0`). See [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) section for additional details.
 - `FAST_DEV` - Umbrella flag that enables `DEV_SSR`, `QUERY_ON_DEMAND` and `LAZY_IMAGES` features.
 - `FAST_REFRESH` - Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.
 
