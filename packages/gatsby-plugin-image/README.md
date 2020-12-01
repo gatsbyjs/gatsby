@@ -234,17 +234,13 @@ We've included a codemod to help you migrate to the new `gatsby-plugin-image` AP
 npm install -g jscodeshift
 ```
 
-2. Install this package
+2. Install the gatsby-codemods package
 
 ```shell
-npm install gatsby-plugin-image
+npm install gatsby-codemods
 ```
 
-3. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
-
-4. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
-
-5. Run a transform from this package on your project. Note that the paths are relative to the root of your project.
+3. Run a transform from this package on your project. Note that the paths are relative to the root of your project.
 
 ```shell
 jscodeshift -t node_modules/gatsby-plugin-image/src/transforms/gatsby-plugin-image.js ./src -s
@@ -263,6 +259,16 @@ Structure of a jscodeshift call:
   - `path` - files or directory to transform, typically the path to your Gatsby project's `src` folder
   - use the `-d` option for a dry-run and use `-p` to print the output for comparison
   - see all available [jscodeshift options](https://github.com/facebook/jscodeshift#usage-cli)
+
+4. Install this package
+
+```shell
+npm install gatsby-plugin-image
+```
+
+5. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
+
+6. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
 
 ## Three types of responsive images
 
