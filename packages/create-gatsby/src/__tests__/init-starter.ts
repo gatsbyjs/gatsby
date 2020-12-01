@@ -5,6 +5,11 @@ import path from "path"
 import { initStarter } from "../init-starter"
 import { reporter } from "../reporter"
 
+jest.mock(`tiny-spin`, () => {
+  return {
+    spin: (): (() => void) => jest.fn(),
+  }
+})
 jest.mock(`../utils`)
 jest.mock(`execa`)
 jest.mock(`child_process`)
