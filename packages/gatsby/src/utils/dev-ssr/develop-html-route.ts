@@ -66,7 +66,7 @@ export const route = ({ app, program, store }): any =>
 
       // Add link to help page
       errorHtml += `
-      <p>For help debugging SSR errors, see this help page: <a
+      <p>For help debugging SSR errors, see this docs page: <a
       href="https://www.gatsbyjs.com/docs/debugging-html-builds/">https://www.gatsbyjs.com/docs/debugging-html-builds/</a></p>`
 
       // Add skip ssr button
