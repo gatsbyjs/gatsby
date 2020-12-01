@@ -150,7 +150,7 @@ describe(`init-starter`, () => {
       ])
 
       expect(reporter.info).toBeCalledWith(
-        `Woops! Yarn doesn't seem be installed on your machine. You can install it on https://yarnpkg.com/getting-started/install. As a fallback, we will run the next steps with npm.`
+        `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
       )
     })
   })

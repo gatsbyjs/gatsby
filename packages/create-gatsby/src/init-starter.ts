@@ -17,11 +17,15 @@ const kebabify = (str: string): string =>
     .replace(/[^a-zA-Z]+/g, `-`)
     .toLowerCase()
 
-export const packageManager = (npmConfigUserAgent?: string): PackageManager => {
+export const getPackageManager = (
+  npmConfigUserAgent?: string
+): PackageManager => {
   const configStore = getConfigStore()
   const actualPackageManager = configStore.get(packageManagerConfigKey)
 
-  if (actualPackageManager) return actualPackageManager
+  if (actualPackageManager) {
+    return actualPackageManager
+  }
 
   if (npmConfigUserAgent?.includes(`yarn`)) {
     configStore.set(packageManagerConfigKey, `yarn`)
@@ -117,7 +121,7 @@ const install = async (
   const npmConfigUserAgent = process.env.npm_config_user_agent
 
   try {
-    const pm = packageManager(npmConfigUserAgent)
+    const pm = getPackageManager(npmConfigUserAgent)
 
     const options: Options = {
       stderr: `inherit`,
