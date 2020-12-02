@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.2...gatsby@2.28.0) (2020-12-02)
+
+### Bug Fixes
+
+- PRESERVE_WEBPACK_CACHE notice should actually show after 30 seconds ([#28427](https://github.com/gatsbyjs/gatsby/issues/28427)) ([#28428](https://github.com/gatsbyjs/gatsby/issues/28428)) ([2a1b4c4](https://github.com/gatsbyjs/gatsby/commit/2a1b4c456204b28fa2e077b89086d7d583348092))
+- **develop:** emit stale page data messages when staticQueryHashes change ([#28349](https://github.com/gatsbyjs/gatsby/issues/28349)) ([#28391](https://github.com/gatsbyjs/gatsby/issues/28391)) ([11d9c39](https://github.com/gatsbyjs/gatsby/commit/11d9c39f78b20f255fb9fabc1bce9a151051448f))
+- **gatsby:** Actually handle timeout while waiting for page component to be bundled ([#28302](https://github.com/gatsbyjs/gatsby/issues/28302)) ([7846fd4](https://github.com/gatsbyjs/gatsby/commit/7846fd4a591094d57bd24a7f0927b97725caf3ed))
+- **gatsby:** Add `FAST_REFRESH` config flag ([#28409](https://github.com/gatsbyjs/gatsby/issues/28409)) ([#28419](https://github.com/gatsbyjs/gatsby/issues/28419)) ([ef1019a](https://github.com/gatsbyjs/gatsby/commit/ef1019a8e015261314cecac405f47a3ce130d69a))
+- **gatsby:** do not ignore source file changes during recompilation ([#28237](https://github.com/gatsbyjs/gatsby/issues/28237)) ([4148877](https://github.com/gatsbyjs/gatsby/commit/41488778ddcb102a5147b7acfb9631565ede958e))
+- **gatsby:** fix materialization edge case ([#28244](https://github.com/gatsbyjs/gatsby/issues/28244)) ([807589b](https://github.com/gatsbyjs/gatsby/commit/807589bf759b01fe5a5235282bbcdc5a9a969265))
+- **gatsby:** fix telemetryId for LAZY_IMAGES ([#28340](https://github.com/gatsbyjs/gatsby/issues/28340)) ([#28403](https://github.com/gatsbyjs/gatsby/issues/28403)) ([d6129b1](https://github.com/gatsbyjs/gatsby/commit/d6129b153b5ba28d5252f7bf403636011bb5ec3c))
+- **gatsby:** handle in dev-ssr when a page is deleted ([#28325](https://github.com/gatsbyjs/gatsby/issues/28325)) ([#28381](https://github.com/gatsbyjs/gatsby/issues/28381)) ([e0dd082](https://github.com/gatsbyjs/gatsby/commit/e0dd082dd85c5d0030732c538b0f94a1aa50bd8e))
+- **gatsby:** move starting dev-ssr listener inside function & only init listeners once ([#28395](https://github.com/gatsbyjs/gatsby/issues/28395)) ([#28418](https://github.com/gatsbyjs/gatsby/issues/28418)) ([b249ba5](https://github.com/gatsbyjs/gatsby/commit/b249ba5b0fd2bb05fe8fd04e2a6708230291974a))
+
+### Features
+
+- **gatsby:** Add new caching clearing behavior for webpack/file downloads behind flags ([#28334](https://github.com/gatsbyjs/gatsby/issues/28334)) ([#28425](https://github.com/gatsbyjs/gatsby/issues/28425)) ([bbd97c2](https://github.com/gatsbyjs/gatsby/commit/bbd97c2d533269c59255792a2d5b2f59185e4db7))
+- **gatsby:** Add preliminary fast-refresh integration ([#26664](https://github.com/gatsbyjs/gatsby/issues/26664)) ([613f5c7](https://github.com/gatsbyjs/gatsby/commit/613f5c791fd059e8a64eeaa81993d1f9f14bec53))
+- **gatsby:** make dev ssr bundling lazy ([#28149](https://github.com/gatsbyjs/gatsby/issues/28149)) ([70b81a6](https://github.com/gatsbyjs/gatsby/commit/70b81a6e825c583387728c02d83a70e0d4e16072))
+- **gatsby:** people who are using a flag, invite them to try out other flags ([#28338](https://github.com/gatsbyjs/gatsby/issues/28338)) ([#28392](https://github.com/gatsbyjs/gatsby/issues/28392)) ([c1e8590](https://github.com/gatsbyjs/gatsby/commit/c1e85904877215165910d897430068d674e6dace))
+- **gatsby:** Track the use of flags in gatsby-config.js ([#28337](https://github.com/gatsbyjs/gatsby/issues/28337)) ([#28388](https://github.com/gatsbyjs/gatsby/issues/28388)) ([5f21ff3](https://github.com/gatsbyjs/gatsby/commit/5f21ff3ae3b90b4b0ae46ce0570d1c8d63b17418))
+- **gatsby-plugin-sharp:** add experimental opt-in lazy image processing mode for `gatsby develop` ([#28288](https://github.com/gatsbyjs/gatsby/issues/28288)) ([cc68a1f](https://github.com/gatsbyjs/gatsby/commit/cc68a1f435e6fc923908d7a2b84f52dc2a999f4d))
+
 # [2.28.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.1...gatsby@2.28.0-next.2) (2020-11-23)
 
 ### Features

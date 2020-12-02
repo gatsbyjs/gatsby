@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.2...gatsby-source-contentful@4.2.0) (2020-12-02)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** fix unguided search in loop over large lists ([#28375](https://github.com/gatsbyjs/gatsby/issues/28375)) ([#28404](https://github.com/gatsbyjs/gatsby/issues/28404)) ([474dd36](https://github.com/gatsbyjs/gatsby/commit/474dd36dffd8a7b3c06c25aa958517bc9b62fedb))
+
 # [4.2.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.1...gatsby-source-contentful@4.2.0-next.2) (2020-11-22)
 
 ### Bug Fixes

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.10.0-next.1...gatsby-plugin-sharp@2.10.0) (2020-12-02)
+
+### Bug Fixes
+
+- avoid joi validation error when using reporter.panic ([#28291](https://github.com/gatsbyjs/gatsby/issues/28291)) ([#28322](https://github.com/gatsbyjs/gatsby/issues/28322)) ([e444a55](https://github.com/gatsbyjs/gatsby/commit/e444a55452555e05a1f0cf4a0a4bc7f01dbe3f3c))
+
+### Features
+
+- **gatsby-plugin-image:** Add image plugin helpers ([#28110](https://github.com/gatsbyjs/gatsby/issues/28110)) ([6ed397f](https://github.com/gatsbyjs/gatsby/commit/6ed397f22c5cae21563de095f1f1a6d6e26ba100))
+- **gatsby-plugin-sharp:** add experimental opt-in lazy image processing mode for `gatsby develop` ([#28288](https://github.com/gatsbyjs/gatsby/issues/28288)) ([cc68a1f](https://github.com/gatsbyjs/gatsby/commit/cc68a1f435e6fc923908d7a2b84f52dc2a999f4d))
+
 # [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.10.0-next.0...gatsby-plugin-sharp@2.10.0-next.1) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
