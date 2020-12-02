@@ -13,7 +13,6 @@ const {
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
-const _ = require(`lodash`)
 
 const cacheImage = require(`./cache-image`)
 
@@ -48,9 +47,8 @@ const {
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
 const isImage = image =>
-  _.includes(
-    [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
-    _.get(image, `file.contentType`)
+  [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
+    image?.file?.contentType
   )
 
 const getBase64Image = imageProps => {
@@ -178,11 +176,8 @@ const resolveFixed = (image, options) => {
     )
   })
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
-
   // Create the srcSet.
-  const srcSet = sortedSizes
+  const srcSet = filteredSizes
     .map((size, i) => {
       let resolution
       switch (i) {
@@ -286,19 +281,17 @@ const resolveFluid = (image, options) => {
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
+  const pwidth = parseInt(width, 10)
   if (
-    !filteredSizes.includes(parseInt(width)) &&
-    parseInt(width) < CONTENTFUL_IMAGE_MAX_SIZE &&
-    Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
+    !filteredSizes.includes(pwidth) &&
+    pwidth < CONTENTFUL_IMAGE_MAX_SIZE &&
+    Math.round(pwidth / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
   ) {
-    filteredSizes.push(width)
+    filteredSizes.push(pwidth)
   }
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
-
   // Create the srcSet.
-  const srcSet = sortedSizes
+  const srcSet = filteredSizes
     .map(width => {
       const h = Math.round(width / desiredAspectRatio)
       return `${createUrl(image.file.url, {
