@@ -388,7 +388,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -398,14 +398,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fixed, `src`)
+            return fixed?.src
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -415,7 +415,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fixed, `srcSet`)
+            return fixed?.srcSet
           },
         },
       },
@@ -447,17 +447,17 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         defaultValue: null,
       },
     },
-    resolve: (image, options, context) =>
-      Promise.resolve(resolveFixed(image, options)).then(node => {
-        if (!node) return null
+    resolve(image, options, context) {
+      const node = resolveFixed(image, options)
+      if (!node) return null
 
-        return {
-          ...node,
-          image,
-          options,
-          context,
-        }
-      }),
+      return {
+        ...node,
+        image,
+        options,
+        context,
+      }
+    },
   }
 }
 
@@ -483,7 +483,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -493,14 +493,14 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fluid, `src`)
+            return fluid?.src
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -510,7 +510,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fluid, `srcSet`)
+            return fluid?.srcSet
           },
         },
         sizes: { type: new GraphQLNonNull(GraphQLString) },
@@ -546,17 +546,17 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         type: GraphQLString,
       },
     },
-    resolve: (image, options, context) =>
-      Promise.resolve(resolveFluid(image, options)).then(node => {
-        if (!node) return null
+    resolve(image, options, context) {
+      const node = resolveFluid(image, options)
+      if (!node) return null
 
-        return {
-          ...node,
-          image,
-          options,
-          context,
-        }
-      }),
+      return {
+        ...node,
+        image,
+        options,
+        context,
+      }
+    },
   }
 }
 
