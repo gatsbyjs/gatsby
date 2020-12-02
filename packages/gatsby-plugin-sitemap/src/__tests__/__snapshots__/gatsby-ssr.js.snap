@@ -28,7 +28,7 @@ exports[`gatsby-plugin-sitemap SSR API should create a Link if createLinkInHead 
     Array [
       Array [
         <link
-          href="/sitemap/sitemap-index.xml"
+          href="/test-folder/sitemap-index.xml"
           rel="sitemap"
           type="application/xml"
         />,

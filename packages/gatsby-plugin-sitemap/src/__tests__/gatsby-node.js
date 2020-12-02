@@ -7,6 +7,10 @@ jest.mock(`sitemap`, () => {
 const path = require(`path`)
 const sitemap = require(`sitemap`)
 const { onPostBuild } = require(`../gatsby-node`)
+import { pluginOptionsSchema } from "../options-validation"
+import Joi from "joi"
+
+const schema = pluginOptionsSchema({ Joi })
 
 const pathPrefix = ``
 
@@ -43,7 +47,10 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
         },
       },
     })
-    await onPostBuild({ graphql, pathPrefix, reporter }, {})
+    await onPostBuild(
+      { graphql, pathPrefix, reporter },
+      await schema.validateAsync({})
+    )
     const {
       destinationDir,
       sourceData,
@@ -98,7 +105,10 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       query: customQuery,
     }
 
-    await onPostBuild({ graphql, pathPrefix, reporter }, options)
+    await onPostBuild(
+      { graphql, pathPrefix, reporter },
+      await schema.validateAsync(options)
+    )
 
     const {
       destinationDir,
@@ -136,7 +146,10 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       entryLimit: 1,
     }
     const prefix = `/test`
-    await onPostBuild({ graphql, pathPrefix: prefix, reporter }, options)
+    await onPostBuild(
+      { graphql, pathPrefix: prefix, reporter },
+      await schema.validateAsync(options)
+    )
     const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
     sourceData.forEach(page => {
       expect(page.url).toEqual(expect.stringContaining(prefix))

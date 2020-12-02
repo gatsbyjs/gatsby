@@ -1,6 +1,5 @@
 import { parse as parseGraphql } from "gatsby/graphql"
 import { stripIndent, oneLine } from "common-tags"
-import JoiLocal from "joi"
 
 import {
   resolveSiteUrl,
@@ -103,23 +102,3 @@ export const pluginOptionsSchema = ({ Joi }) =>
         `Takes the output of \`filterPages\` and lets you return a sitemap entry.`
       ),
   })
-
-//TODO: all things below here can be eliminated once the `pluginOptionsSchema` is on by default and logic removed from Plugin.
-const defaultPluginOptions = pluginOptionsSchema({ Joi: JoiLocal })
-
-const ssrPluginOptions = JoiLocal.object({
-  output: defaultPluginOptions.extract([`output`]),
-  createLinkInHead: defaultPluginOptions.extract([`createLinkInHead`]),
-})
-
-export async function validateOptions(pluginOptions) {
-  return defaultPluginOptions.validateAsync(pluginOptions)
-}
-
-export function validateOptionsSsr(pluginOptions) {
-  const { value } = ssrPluginOptions.validate(pluginOptions, {
-    stripUnknown: true,
-    allowUnknown: true,
-  })
-  return value
-}

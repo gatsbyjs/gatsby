@@ -1,32 +1,13 @@
 import path from "path"
 import { simpleSitemapAndIndex } from "sitemap"
-import { pluginOptionsSchema, validateOptions } from "./options-validation"
+import { pluginOptionsSchema } from "./options-validation"
 import { prefixPath, pageFilter, reporterPrefix } from "./internals"
 
-let usedSchemaValidationApi = false
-
-if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-  usedSchemaValidationApi = true
-  exports.pluginOptionsSchema = pluginOptionsSchema
-}
-
-if (!usedSchemaValidationApi) {
-  exports.onPreInit = async ({ reporter }, pluginOptions) => {
-    try {
-      await validateOptions(pluginOptions)
-      reporter.verbose(`${reporterPrefix} Plugin options passed validation.`)
-    } catch (err) {
-      reporter.panic(err)
-    }
-  }
-}
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 exports.onPostBuild = async (
   { graphql, reporter, pathPrefix },
-  pluginOptions
-) => {
-  //TODO: This handles if the `pluginOptionsSchema` API was used, can be removed once the API is on by default.
-  const {
+  {
     output,
     entryLimit,
     query,
@@ -36,19 +17,15 @@ exports.onPostBuild = async (
     resolvePages,
     filterPages,
     serialize,
-  } = usedSchemaValidationApi
-      ? pluginOptions
-      : await validateOptions(pluginOptions).catch(err => {
-        reporter.panic(err)
-      })
-
+  }
+) => {
   const { data: queryRecords } = await graphql(query)
 
   reporter.verbose(
     `${reporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
   )
 
-  // resolvePages and resolveSuteUrl are allowed to be sync or async. The IIFE handles each possibility
+  // resolvePages and resolveSuteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
   const allPages = await Promise.resolve(
     resolvePages(queryRecords)
   ).catch(err => reporter.panic(`${reporterPrefix} Error resolving Pages`, err))

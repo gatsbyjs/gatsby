@@ -16,10 +16,3 @@ Object {
 `;
 
 exports[`gatsby-plugin-sitemap: options-validation tests validateOptions errors on invalid options 1`] = `[ValidationError: "wrong" is not allowed]`;
-
-exports[`gatsby-plugin-sitemap: options-validation tests validateOptionsSsr creates correct defaults 1`] = `
-Object {
-  "createLinkInHead": true,
-  "output": "/sitemap",
-}
-`;

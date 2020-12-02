@@ -14,6 +14,7 @@ describe(`gatsby-plugin-sitemap SSR API`, () => {
   it(`should create a Link if createLinkInHead is true`, async () => {
     const pluginOptions = {
       createLinkInHead: true,
+      output: `test-folder`,
     }
     const setHeadComponents = jest.fn()
 

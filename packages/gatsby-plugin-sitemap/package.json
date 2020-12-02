@@ -9,7 +9,6 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "common-tags": "^1.8.0",
-    "joi": "^17.2.1",
     "minimatch": "^3.0.4",
     "sitemap": "^6.3.0"
   },
@@ -17,7 +16,8 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^0.9.0-next.0",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "joi": "^17.3.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
   "keywords": [
@@ -27,7 +27,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.24.84"
+    "gatsby": "^2.25.0"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,6 @@
     "test:watch": "jest --watch"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=10.18.0"
   }
 }
