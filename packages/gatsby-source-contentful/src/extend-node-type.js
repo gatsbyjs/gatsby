@@ -109,20 +109,19 @@ const getBasicImageProps = (image, args) => {
 
 const createUrl = (imgUrl, options = {}) => {
   // Convert to Contentful names and filter out undefined/null values.
-  const args = _.pickBy(
-    {
-      w: options.width,
-      h: options.height,
-      fl: options.jpegProgressive ? `progressive` : null,
-      q: options.quality,
-      fm: options.toFormat || ``,
-      fit: options.resizingBehavior || ``,
-      f: options.cropFocus || ``,
-      bg: options.background || ``,
-    },
-    _.identity
-  )
-  return `${imgUrl}?${qs.stringify(args)}`
+  const urlArgs = {
+    w: options.width || undefined,
+    h: options.height || undefined,
+    fl: options.jpegProgressive ? `progressive` : undefined,
+    q: options.quality || undefined,
+    fm: options.toFormat || undefined,
+    fit: options.resizingBehavior || undefined,
+    f: options.cropFocus || undefined,
+    bg: options.background || undefined,
+  }
+
+  // Note: qs will ignore keys that are `undefined`. `qs.stringify({a: undefined, b: null, c: 1})` => `b=&c=1`
+  return `${imgUrl}?${qs.stringify(urlArgs)}`
 }
 exports.createUrl = createUrl
 
