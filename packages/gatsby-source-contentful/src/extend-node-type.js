@@ -100,10 +100,18 @@ const getBase64Image = imageProps => {
     })
   }
 
-  const promise = new Promise(resolve => {
+  const promise = new Promise((resolve, reject) => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
+      fs.promises
+        .writeFile(cacheFile, body)
+        .then(() => resolve(body))
+        .catch(e => {
+          console.error(
+            `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
+          )
+          reject(e)
+        })
     })
   })
 
@@ -415,7 +423,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -425,14 +433,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fixed, `src`)
+            return fixed?.src
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -442,7 +450,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fixed, `srcSet`)
+            return fixed?.srcSet
           },
         },
       },
@@ -474,17 +482,17 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         defaultValue: null,
       },
     },
-    resolve: (image, options, context) =>
-      Promise.resolve(resolveFixed(image, options)).then(node => {
-        if (!node) return null
+    resolve(image, options, context) {
+      const node = resolveFixed(image, options)
+      if (!node) return null
 
-        return {
-          ...node,
-          image,
-          options,
-          context,
-        }
-      }),
+      return {
+        ...node,
+        image,
+        options,
+        context,
+      }
+    },
   }
 }
 
@@ -510,7 +518,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -520,14 +528,14 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fluid, `src`)
+            return fluid?.src
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -537,7 +545,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fluid, `srcSet`)
+            return fluid?.srcSet
           },
         },
         sizes: { type: new GraphQLNonNull(GraphQLString) },
@@ -573,17 +581,17 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         type: GraphQLString,
       },
     },
-    resolve: (image, options, context) =>
-      Promise.resolve(resolveFluid(image, options)).then(node => {
-        if (!node) return null
+    resolve(image, options, context) {
+      const node = resolveFluid(image, options)
+      if (!node) return null
 
-        return {
-          ...node,
-          image,
-          options,
-          context,
-        }
-      }),
+      return {
+        ...node,
+        image,
+        options,
+        context,
+      }
+    },
   }
 }
 
