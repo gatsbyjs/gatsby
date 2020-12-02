@@ -25,7 +25,7 @@
     "gatsby-image": "^2.2.40",
     "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-sharp": "^2.4.5",
-    "gatsby-source-contentful": "^4.1.1",
+    "gatsby-source-contentful": "^4.2.0",
     "gatsby-source-drupal": "^3.3.18",
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-transformer-sharp": "^2.3.14",
