@@ -2,6 +2,7 @@ import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
 import chalk from "chalk"
+import telemetry from "gatsby-telemetry"
 
 type CancelExperimentNoticeCallback = () => void
 
@@ -53,6 +54,7 @@ emitter.on(`COMPILATION_DONE`, () => {
   emitter.off(`COMPILATION_DONE`, () => {})
 
   if (noticesToShow.length > 0) {
+    telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
     let message = `\n\nHello! Your friendly Gatsby maintainers detected ways to improve your site. We're working on new improvements and invite you to try them out *today* and help ready them for general release.`
 
     noticesToShow.forEach(
