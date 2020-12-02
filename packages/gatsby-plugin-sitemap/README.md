@@ -59,11 +59,11 @@ The options are as follows:
 - `entryLimit` (number = 45000) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
 - `exclude` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
 - `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definately need to customize the [`resolvePages`](#resolvePages) function.
-- [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL.
+- [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL. Sync or async functions allowed.
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
-- [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned.
+- [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned. Sync or async functions allowed.
 - [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
-- [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry.
+- [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry. Sync or async functions allowed.
 
 The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 
@@ -133,6 +133,8 @@ module.exports = {
 
 ## resolveSiteUrl ⇒ <code>string</code>
 
+Sync or async functions allowed.
+
 **Returns**: <code>string</code> - - site URL, this can come from the graphql query or another scope.
 
 | Param | Type                | Description                  |
@@ -158,7 +160,7 @@ is needed.
 
 This allows custom resolution of the array of pages.
 This also where users could merge multiple sources into
-a single array if needed.
+a single array if needed. Sync or async functions allowed.
 
 **Returns**: <code>object[]</code> - - Array of objects representing each page
 
@@ -200,7 +202,7 @@ This function is executed by:
 allPages.map(page => thisFunc(page, tools))
 ```
 
-`allpages` is the result of the [`filterPages`](#filterPages) function.
+`allpages` is the result of the [`filterPages`](#filterPages) function. Sync or async functions allowed.
 
 **Kind**: global variable
 

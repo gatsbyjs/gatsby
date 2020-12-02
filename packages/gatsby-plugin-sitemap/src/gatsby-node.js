@@ -63,9 +63,11 @@ exports.onPostBuild = async (
 
   const serializedPages = []
 
-  filteredPages.forEach(page => {
+  for (const page of filteredPages) {
     try {
-      const { url, ...rest } = serialize(page, { resolvePagePath })
+      const { url, ...rest } = await Promise.resolve(
+        serialize(page, { resolvePagePath })
+      )
       serializedPages.push({
         url: prefixPath({ url, siteUrl, pathPrefix }),
         ...rest,
@@ -73,7 +75,7 @@ exports.onPostBuild = async (
     } catch (err) {
       reporter.panic(`${reporterPrefix} Error serializing pages`, err)
     }
-  })
+  }
 
   const sitemapPath = path.join(`public`, output)
 
