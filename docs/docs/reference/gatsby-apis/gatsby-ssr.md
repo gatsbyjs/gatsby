@@ -1,5 +1,9 @@
 ---
-title: The gatsby-ssr.js API file
+title: Gatsby Server Rendering APIs
+description: Documentation on APIs related to server side rendering during Gatsby's build process
+jsdoc: ["cache-dir/api-ssr-docs.js"]
+apiCalls: SSRAPI
+showTopLevelSignatures: true
 ---
 
 The file `gatsby-ssr.js` lets you alter the content of static HTML files as they are being Server-Side Rendered (SSR) by Gatsby and Node.js. To use the [Gatsby SSR APIs](/docs/ssr-apis/), create a file called `gatsby-ssr.js` in the root of your site. Export any of the APIs you wish to use in this file.
@@ -22,3 +26,7 @@ exports.wrapPageElement = ({ element, props }) => {
   return <Layout {...props}>{element}</Layout>
 }
 ```
+
+## Usage
+
+Implement any of these APIs by exporting them from a file named `gatsby-ssr.js` in the root of your project.
