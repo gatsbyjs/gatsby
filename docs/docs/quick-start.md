@@ -16,6 +16,8 @@ Follow the prompts to choose your preferred CMS, styling tools and additional fe
 
 2. Once everything is downloaded you will see a message with instructions for navigating to your site and running it locally.
 
+It will look like this, but use your project's directory.
+
 ```shell
 Start by going to the directory with
 
