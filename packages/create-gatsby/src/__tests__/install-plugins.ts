@@ -46,22 +46,6 @@ describe(`install-plugins`, () => {
     )
   })
 
-  it(`reports an error when the add plugin function fails somehow`, async () => {
-    ;(requireResolve as any).mockImplementation(path => {
-      if (path === `gatsby-cli/lib/handlers/plugin-add`) {
-        throw new Error()
-      }
-      return `somewhere-i-belong`
-    })
-
-    await installPlugins([], {}, `not-existing-path`, [])
-
-    // Test function behaviour but improves the DX, it probably worth it
-    expect(reporter.error).toBeCalledWith(
-      `gatsby-cli not installed, or is too old`
-    )
-  })
-
   it(`reports an error when add plugins fails somehow`, async () => {
     ;(requireResolve as any).mockImplementation(
       () => `somewhere-virtually-existing`
