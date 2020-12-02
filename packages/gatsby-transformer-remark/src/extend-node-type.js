@@ -364,7 +364,8 @@ module.exports = function remarkExtendNodeType(
     }
 
     async function getHTMLAst(markdownNode) {
-      const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
+      const key = htmlAstCacheKey(markdownNode)
+      const cachedAst = await cache.get(key)
       if (cachedAst) {
         return cachedAst
       } else {
@@ -372,7 +373,7 @@ module.exports = function remarkExtendNodeType(
         const htmlAst = markdownASTToHTMLAst(ast)
 
         // Save new HTML AST to cache and return
-        await cache.set(htmlAstCacheKey(markdownNode), htmlAst)
+        await cache.set(key, htmlAst)
         return htmlAst
       }
     }
