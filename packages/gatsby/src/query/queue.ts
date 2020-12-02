@@ -67,7 +67,7 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
     },
     async process({ job: queryJob, activity }, callback): Promise<void> {
       try {
-        const result = queryRunner(getRunner(), queryJob, activity?.span)
+        const result = await queryRunner(getRunner(), queryJob, activity?.span)
         if (!queryJob.isPage) {
           websocketManager.emitStaticQueryData({
             result,
