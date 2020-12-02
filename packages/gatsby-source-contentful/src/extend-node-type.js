@@ -439,7 +439,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         defaultValue: null,
       },
     },
-    resolve: (image, options, context) => {
+    resolve(image, options, context) {
       const node = resolveFixed(image, options)
       if (!node) return null
 
@@ -538,7 +538,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         type: GraphQLString,
       },
     },
-    resolve: (image, options, context) => {
+    resolve(image, options, context) {
       const node = resolveFluid(image, options)
       if (!node) return null
 
