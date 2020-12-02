@@ -37,6 +37,12 @@ const REMOTE_CACHE_FOLDER =
   path.join(process.cwd(), `.cache/remote_cache`)
 const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
+// Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
+const inFlightBase64Cache = new Map()
+// This cache contains the resolved base64 fetches. This prevents async calls for promises that have resolved.
+// The images are based on urls with w=20 and should be relatively small (<2kb) but it does stick around in memory
+const resolvedBase64Cache = new Map()
+
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -51,10 +57,25 @@ const isImage = image =>
     image?.file?.contentType
   )
 
+// Note: this may return a Promise<body>, body (sync), or null
 const getBase64Image = imageProps => {
-  if (!imageProps) return null
+  if (!imageProps) {
+    return null
+  }
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
+
+  // Prefer to return data sync if we already have it
+  const alreadyFetched = resolvedBase64Cache.get(requestUrl)
+  if (alreadyFetched) {
+    return alreadyFetched
+  }
+
+  // If already in flight for this url return the same promise as the first call
+  const inFlight = inFlightBase64Cache.get(requestUrl)
+  if (inFlight) {
+    return inFlight
+  }
 
   // Note: sha1 is unsafe for crypto but okay for this particular case
   const shasum = crypto.createHash(`sha1`)
@@ -68,10 +89,16 @@ const getBase64Image = imageProps => {
 
   if (fs.existsSync(cacheFile)) {
     // TODO: against dogma, confirm whether readFileSync is indeed slower
-    return fs.promises.readFile(cacheFile, `utf8`)
+    const promise = fs.promises.readFile(cacheFile, `utf8`)
+    inFlightBase64Cache.set(requestUrl, promise)
+    return promise.then(body => {
+      inFlightBase64Cache.delete(requestUrl)
+      resolvedBase64Cache.set(requestUrl, body)
+      return body
+    })
   }
 
-  return new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
       fs.promises
@@ -84,6 +111,14 @@ const getBase64Image = imageProps => {
           reject(e)
         })
     })
+  })
+
+  inFlightBase64Cache.set(requestUrl, promise)
+
+  return promise.then(body => {
+    inFlightBase64Cache.delete(requestUrl)
+    resolvedBase64Cache.set(requestUrl, body)
+    return body
   })
 }
 
