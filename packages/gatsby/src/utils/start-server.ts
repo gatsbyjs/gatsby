@@ -84,7 +84,7 @@ export async function startServer(
   })
   webpackActivity.start()
 
-  const THIRTY_SECONDS = 1 * 1000
+  const THIRTY_SECONDS = 30 * 1000
   let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
     process.env.gatsby_executing_command === `develop` &&
