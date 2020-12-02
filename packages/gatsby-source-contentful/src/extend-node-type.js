@@ -38,6 +38,8 @@ const REMOTE_CACHE_FOLDER =
   path.join(process.cwd(), `.cache/remote_cache`)
 const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
+const inFlightBase64Cache = new Map()
+
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -53,10 +55,19 @@ const isImage = image =>
     _.get(image, `file.contentType`)
   )
 
+// Note: this may return a Promise<body> or null
 const getBase64Image = imageProps => {
-  if (!imageProps) return null
+  if (!imageProps) {
+    return null
+  }
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
+
+  // If already called for this url return the same promise as the first call
+  const inFlight = inFlightBase64Cache.get(requestUrl)
+  if (inFlight) {
+    return inFlight
+  }
 
   // Note: sha1 is unsafe for crypto but okay for this particular case
   const shasum = crypto.createHash(`sha1`)
@@ -70,15 +81,23 @@ const getBase64Image = imageProps => {
 
   if (fs.existsSync(cacheFile)) {
     // TODO: against dogma, confirm whether readFileSync is indeed slower
-    return fs.promises.readFile(cacheFile, `utf8`)
+    const promise = fs.promises.readFile(cacheFile, `utf8`)
+
+    inFlightBase64Cache.set(requestUrl, promise)
+
+    return promise
   }
 
-  return new Promise(resolve => {
+  const promise = new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
       fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
     })
   })
+
+  inFlightBase64Cache.set(requestUrl, promise)
+
+  return promise
 }
 
 const getBasicImageProps = (image, args) => {
