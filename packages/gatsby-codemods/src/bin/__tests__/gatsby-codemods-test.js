@@ -31,7 +31,7 @@ describe('transform', () => {
     runTransform(`gatsby-plugin-image`, `src`)
     
     expect(console.log).toBeCalledWith(
-      `Executing command: jscodeshift --ignore-pattern='**/node_modules/**' --ignore-pattern='**/.cache/**' --ignore-pattern='**/public/**' --extensions=jsx,js,ts,tsx --transform ${path.join(transformerDirectory, 'gatsby-plugin-image.js')} src`
+      `Executing command: jscodeshift --ignore-pattern=**/node_modules/** --ignore-pattern=**/.cache/** --ignore-pattern=**/public/** --extensions=jsx,js,ts,tsx --transform ${path.join(transformerDirectory, 'gatsby-plugin-image.js')} src`
     )
   })
 
