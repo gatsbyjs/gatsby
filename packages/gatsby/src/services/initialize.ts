@@ -65,20 +65,20 @@ if (
   sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
-    `devSSR`,
-    `
-Your dev experience is about to get better, faster, and stronger!
+    `DEV_SSR`,
+    {
+      reason: `We'll soon be shipping support for SSR in development.`,
+      solution: `This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
 
-We'll soon be shipping support for SSR in development.
+Try out develop SSR *today* by enabling it in your gatsby-config.js:
 
-This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
-
-Try out develop SSR *today* by running your site with it enabled:
-
-GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop
+flags: {
+  DEV_SSR: true
+}
 
 Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
       `,
+    },
     1 // Show this immediately to the subset of sites selected.
   )
 }

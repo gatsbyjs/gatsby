@@ -50,18 +50,16 @@ export async function runPageQueries({
     !isCI()
   ) {
     cancelNotice = showExperimentNoticeAfterTimeout(
-      `queryOnDemand`,
-      reporter.stripIndent(`
-        Your local development experience is about to get better, faster, and stronger!
+      `QUERY_ON_DEMAND`,
+      {
+        reason: `We noticed your site takes longer than ideal to run page queries.`,
+        solution: `We're changing how we run queries in development so queries only run when you need them when you visit a page. This will help make starting your development server a lot faster.
 
-        Your friendly Gatsby maintainers detected your site takes longer than ideal to run page queries. We're working right now to improve this.
+You can enable it by adding "flags: { QUERY_ON_DEMAND: true }" to your gatsby-config.js
 
-        If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with QUERY_ON_DEMAND enabled.
-
-        You can enable it by adding "flags: { QUERY_ON_DEMAND: true }" to your gatsby-config.js
-
-        Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
-      `),
+Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
+      `,
+      },
       ONE_MINUTE
     )
   }

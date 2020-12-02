@@ -1,5 +1,7 @@
 import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
+import { emitter } from "../redux"
+import chalk from "chalk"
 
 type CancelExperimentNoticeCallback = () => void
 
@@ -9,9 +11,20 @@ export type CancelExperimentNoticeCallbackOrUndefined =
 
 const ONE_DAY = 24 * 60 * 60 * 1000
 
+interface INoticeObject {
+  reason: string
+  solution: string
+}
+
+type NoticesToShow = INoticeObject & {
+  experimentIdentifier: string
+}
+
+const noticesToShow: Array<NoticesToShow> = []
+
 export function showExperimentNoticeAfterTimeout(
   experimentIdentifier: string,
-  noticeText: string,
+  noticeObject: INoticeObject,
   showNoticeAfterMs: number,
   minimumIntervalBetweenNoticesMs: number = ONE_DAY
 ): CancelExperimentNoticeCallbackOrUndefined {
@@ -26,7 +39,7 @@ export function showExperimentNoticeAfterTimeout(
   }
 
   const noticeTimeout = setTimeout(() => {
-    reporter.info(`\n\n${noticeText}\n\n`)
+    noticesToShow.push({ ...noticeObject, experimentIdentifier })
 
     getConfigStore().set(configStoreKey, Date.now())
   }, showNoticeAfterMs)
@@ -35,3 +48,20 @@ export function showExperimentNoticeAfterTimeout(
     clearTimeout(noticeTimeout)
   }
 }
+
+emitter.on(`COMPILATION_DONE`, () => {
+  emitter.off(`COMPILATION_DONE`, () => {})
+
+  if (noticesToShow.length > 0) {
+    let message = `\n\nHello! Your friendly Gatsby maintainers detected ways to improve your site. We're working on new improvements and invite you to try them out *today* and help ready them for general release.`
+
+    noticesToShow.forEach(
+      notice =>
+        (message += `\n\n${chalk.bgBlue.bold(
+          notice.experimentIdentifier
+        )}\n-${notice.reason.trim()}\n-${notice.solution.trim()}\n`)
+    )
+
+    reporter.info(message)
+  }
+})
