@@ -14,21 +14,21 @@ npm init gatsby
 
 Follow the prompts to choose your preferred CMS, styling tools and additional features.
 
-2. Change directories into the site folder you created in step 1. 
+2. Once everything is downloaded you will see a message with instructions for navigating to your site and running it locally.
 
 ```shell
+Start by going to the directory with
+
 cd gatsby-site
-```
 
-3. Start development server
+Start the local development server with
 
-```shell
-gatsby develop
+npm run develop
 ```
 
 Gatsby will start a hot-reloading development environment accessible by default at `http://localhost:8000`.
 
-4. Now you're ready to make changes to your site!
+3. Now you're ready to make changes to your site!
 
 Try editing the home page in `src/pages/index.js`. Saved changes will live reload in the browser.
 
