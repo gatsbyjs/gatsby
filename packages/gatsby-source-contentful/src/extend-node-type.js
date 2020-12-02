@@ -283,7 +283,7 @@ const resolveFluid = (image, options) => {
   // is available for small images.
   const pwidth = parseInt(width, 10)
   if (
-    !filteredSizes.includes(parseInt(pwidth, 10)) &&
+    !filteredSizes.includes(pwidth) &&
     pwidth < CONTENTFUL_IMAGE_MAX_SIZE &&
     Math.round(pwidth / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
   ) {
