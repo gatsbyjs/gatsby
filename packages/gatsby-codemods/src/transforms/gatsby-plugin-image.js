@@ -194,8 +194,14 @@ function processImportUsage(path, t, template, state) {
 
   if (!t.isJSXOpeningElement(node)) {
     path.node.name = `GatsbyImage`
+    if (node.superClass?.name === path.node.name) {
+      console.log(
+        `It appears you are extending the image component in some way. This is not supported in \`gatsby-plugin-image\`, please use composition in ${state.opts.filename} instead.`
+      )
+      return
+    }
     console.log(
-      `It appears you're extending or referencing the image component in some way. We've updated the reference, but you will want to verify ${state.opts.filename} manually.`
+      `It appears you are referencing the image component in some way. We've updated the reference, but you will want to verify ${state.opts.filename} manually.`
     )
     return
   }
