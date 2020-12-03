@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.1...gatsby-plugin-sharp@2.11.0-next.2) (2020-12-03)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** decode URL so it matches the cache key ([#28449](https://github.com/gatsbyjs/gatsby/issues/28449)) ([946eed0](https://github.com/gatsbyjs/gatsby/commit/946eed0fb8cff37471d85a2b0d09f493e7e0442d))
+
 # [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.0...gatsby-plugin-sharp@2.11.0-next.1) (2020-12-01)
 
 ### Bug Fixes

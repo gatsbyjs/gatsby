@@ -15,12 +15,14 @@ import { trackCli } from "./tracking"
 import crypto from "crypto"
 import { reporter } from "./reporter"
 import { setSiteMetadata } from "./site-metadata"
+import { kebabify } from "./utils"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
 
 const md5 = (str: string): string =>
   crypto.createHash(`md5`).update(str).digest(`hex`)
+
 /**
  * Hide string on windows (for emojis)
  */
@@ -67,14 +69,14 @@ export const validateProjectName = async (
 
 // The enquirer types are not accurate
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const questions: any = [
+export const questions = (initialFolderName: string): any => [
   {
     type: `textinput`,
     name: `project`,
     message: `What would you like to name the folder where your site will be created?`,
     hint: path.basename(process.cwd()),
     separator: `/`,
-    initial: `my-gatsby-site`,
+    initial: initialFolderName,
     format: (value: string): string => c.cyan(value),
     validate: validateProjectName,
   },
@@ -101,6 +103,7 @@ export const questions: any = [
   },
 ]
 interface IAnswers {
+  name: string
   project: string
   styling?: keyof typeof styles
   cms?: keyof typeof cmses
@@ -168,7 +171,15 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   enquirer.use(plugin)
 
-  const data = await enquirer.prompt(questions)
+  const { name: siteName } = await enquirer.prompt({
+    type: `textinput`,
+    name: `name`,
+    message: `What would you like to call your site?`,
+    initial: `My Gatsby Site`,
+    format: (value: string): string => c.cyan(value),
+  } as any)
+
+  const data = await enquirer.prompt(questions(kebabify(siteName)))
   data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
@@ -298,7 +309,12 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     return
   }
 
-  await initStarter(DEFAULT_STARTER, data.project, packages.map(removeKey))
+  await initStarter(
+    DEFAULT_STARTER,
+    data.project,
+    packages.map(removeKey),
+    siteName
+  )
 
   reporter.success(`Created site in ${c.green(data.project)}`)
 
@@ -308,7 +324,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     reporter.info(`${w(`🔌 `)}Setting-up plugins...`)
     await installPlugins(plugins, pluginConfig, fullPath, [])
   }
-  await setSiteMetadata(fullPath, `title`, data.project)
+  await setSiteMetadata(fullPath, `title`, siteName)
 
   await gitSetup(data.project)
 
@@ -318,7 +334,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
   reporter.info(
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
-      data.project
+      siteName
     )} has been successfully created
     at ${c.bold(fullPath)}.
     `
