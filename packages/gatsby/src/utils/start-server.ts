@@ -92,21 +92,12 @@ export async function startServer(
     !isCI()
   ) {
     cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `Don't clear webpack's cache as often`,
-      `We noticed your site has more JavaScript than most sites. We're working to make
-compiling your code faster by not clearing webpack's cache unless really
-necessary. This will make your local development server load faster.
+      `Preserve webpack's Cache`,
+      `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+      `which changes Gatsby's cache clearing behavior to not clear webpack's cache unless really
+necessary. Here's how to try it:
 
-To enable this behavior, add this flag to your gatsby-config.js:
-
-  module.exports = {
-    flags: {
-      PRESERVE_WEBPACK_CACHE: true,
-    },
-  }
-
-Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
-      `,
+flags: { PRESERVE_WEBPACK_CACHE: true }`,
       THIRTY_SECONDS
     )
   }

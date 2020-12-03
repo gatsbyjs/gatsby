@@ -67,23 +67,10 @@ if (
 ) {
   showExperimentNoticeAfterTimeout(
     `SSR in Development`,
-    `We'll soon be shipping support for ${chalk.bold(
-      `server-side rendering (SSR)`
-    )} in development.
-This will help you as it'll more closely match the behavior of \`gatsby build\`
-which will enable you to catch errors more quickly and ultimately, fix them more
-quickly.
+    `gatsby.dev/dev-ssr-feedback`,
+    `which helps surface issues with build errors more quickly. Here's how to try it:
 
-Try out develop SSR *today* by enabling it in your gatsby-config.js:
-
-  module.exports = {
-    flags: {
-      DEV_SSR: true
-    }
-  }
-
-Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
-      `,
+flags : { DEV_SSR: true, }`,
     1 // Show this immediately to the subset of sites selected.
   )
 }

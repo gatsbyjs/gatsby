@@ -3,6 +3,15 @@ import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
+import realTerminalLink from "terminal-link"
+
+const terminalLink = (text, url): string => {
+  if (process.env.NODE_ENV === `test`) {
+    return `${text} (${url})`
+  } else {
+    return realTerminalLink(text, url)
+  }
+}
 
 type CancelExperimentNoticeCallback = () => void
 
@@ -21,6 +30,7 @@ const noticesToShow: Array<INoticeObject> = []
 
 export function showExperimentNoticeAfterTimeout(
   experimentIdentifier: string,
+  umbrellaLink: string,
   noticeText: string,
   showNoticeAfterMs: number,
   minimumIntervalBetweenNoticesMs: number = ONE_DAY
@@ -36,7 +46,7 @@ export function showExperimentNoticeAfterTimeout(
   }
 
   const noticeTimeout = setTimeout(() => {
-    noticesToShow.push({ noticeText, experimentIdentifier })
+    noticesToShow.push({ noticeText, umbrellaLink, experimentIdentifier })
 
     getConfigStore().set(configStoreKey, Date.now())
   }, showNoticeAfterMs)
@@ -48,15 +58,15 @@ export function showExperimentNoticeAfterTimeout(
 
 export const createNoticeMessage = (notices): string => {
   let message = `\n
-Hello! Your friendly Gatsby maintainers detected ways to improve your site. We're
-working on new improvements and invite you to try them out *today* and help ready
-them for general release.`
+Hi from the Gatsby maintainers! Based on what we see in your site, these coming
+features may help you. All of these can be enabled within gatsby-config.js via
+flags (samples below)`
 
   notices.forEach(
     notice =>
       (message += `\n\n${chalk.bgBlue.bold(
-        notice.experimentIdentifier
-      )}\n${notice.noticeText.trim()}\n`)
+        terminalLink(notice.experimentIdentifier, notice.umbrellaLink)
+      )}, ${notice.noticeText.trim()}\n`)
   )
 
   return message

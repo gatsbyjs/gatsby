@@ -6,6 +6,7 @@ describe(`show-experiment-notice`, () => {
       createNoticeMessage([
         {
           noticeText: `hi`,
+          umbrellaLink: `http://example.com`,
           experimentIdentifier: `The Flag`,
         },
       ])
