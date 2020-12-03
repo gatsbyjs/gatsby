@@ -305,6 +305,7 @@ In the root directory of your project add a `.env.development` file:
 
 ```text:title=.env.development
 # Stripe secret API key
+STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 STRIPE_SECRET_KEY=sk_test_xxx
 ```
 

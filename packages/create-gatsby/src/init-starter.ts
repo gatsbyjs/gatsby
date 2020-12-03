@@ -7,34 +7,29 @@ import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 import c from "ansi-colors"
+import { clearLine, kebabify } from "./utils"
 
 const packageManagerConfigKey = `cli.packageManager`
 
-const kebabify = (str: string): string =>
-  str
-    .replace(/([a-z])([A-Z])/g, `$1-$2`)
-    .replace(/[^a-zA-Z]+/g, `-`)
-    .toLowerCase()
+export const getPackageManager = (
+  npmConfigUserAgent?: string
+): PackageManager => {
+  const configStore = getConfigStore()
+  const actualPackageManager = configStore.get(packageManagerConfigKey)
 
-export const getPackageManager = (): PackageManager =>
-  getConfigStore().get(packageManagerConfigKey)
+  if (actualPackageManager) {
+    return actualPackageManager
+  }
 
-export const setPackageManager = (packageManager: PackageManager): void => {
-  getConfigStore().set(packageManagerConfigKey, packageManager)
+  if (npmConfigUserAgent?.includes(`yarn`)) {
+    configStore.set(packageManagerConfigKey, `yarn`)
+    return `yarn`
+  }
+
+  configStore.set(packageManagerConfigKey, `npm`)
+  return `npm`
 }
 
-const ESC = `\u001b`
-
-export const clearLine = (count = 1): Promise<boolean> =>
-  new Promise(resolve => {
-    // First move the cursor up one line...
-    process.stderr.moveCursor(0, -count, () => {
-      // ... then clear that line. This is the ANSI escape sequence for "clear whole line"
-      // List of escape sequences: http://ascii-table.com/ansi-escape-sequences.php
-      process.stderr.write(`${ESC}[2K`)
-      resolve()
-    })
-  })
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
@@ -43,6 +38,9 @@ const checkForYarn = (): boolean => {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
     return true
   } catch (e) {
+    reporter.info(
+      `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
+    )
     return false
   }
 }
@@ -88,7 +86,7 @@ const setNameInPackage = async (
   const packageJsonPath = path.join(sitePath, `package.json`)
   const packageJson = await fs.readJSON(packageJsonPath)
   packageJson.name = kebabify(name)
-  packageJson.description = `My Gatsby site`
+  packageJson.description = name
   try {
     const result = await execa(`git`, [`config`, `user.name`])
     if (result.failed) {
@@ -117,36 +115,34 @@ const install = async (
   const npmConfigUserAgent = process.env.npm_config_user_agent
 
   try {
-    if (!getPackageManager()) {
-      if (npmConfigUserAgent?.includes(`yarn`)) {
-        setPackageManager(`yarn`)
-      } else {
-        setPackageManager(`npm`)
-      }
-    }
+    const pm = getPackageManager(npmConfigUserAgent)
+
     const options: Options = {
       stderr: `inherit`,
     }
 
     const config = [`--loglevel`, `error`, `--color`, `always`]
 
-    if (getPackageManager() === `yarn` && checkForYarn()) {
-      await fs.remove(`package-lock.json`)
+    if (pm === `yarn` && checkForYarn()) {
       const args = packages.length
         ? [`add`, `--silent`, ...packages]
         : [`--silent`]
+
+      await fs.remove(`package-lock.json`)
       await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
-
       await execa(`npm`, [`install`, ...config], options)
       await clearLine()
+
       reporter.success(`Installed Gatsby`)
       reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
+
       await execa(`npm`, [`install`, ...config, ...packages], options)
       await clearLine()
-      reporter.success(`Installed plugins`)
     }
+
+    reporter.success(`Installed plugins`)
   } catch (e) {
     reporter.panic(e.message)
   } finally {
@@ -161,9 +157,7 @@ const clone = async (
   branch?: string
 ): Promise<void> => {
   const branchProps = branch ? [`-b`, branch] : []
-
   const stop = spin(`Cloning site template`)
-
   const args = [
     `clone`,
     ...branchProps,
@@ -176,11 +170,13 @@ const clone = async (
 
   try {
     await execa(`git`, args)
+
+    reporter.success(`Created site from template`)
   } catch (err) {
     reporter.panic(err.message)
   }
+
   stop()
-  reporter.success(`Created site from template`)
   await fs.remove(path.join(rootPath, `.git`))
 }
 
@@ -196,13 +192,14 @@ export async function gitSetup(rootPath: string): Promise<void> {
 export async function initStarter(
   starter: string,
   rootPath: string,
-  packages: Array<string>
+  packages: Array<string>,
+  siteName: string
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
 
-  await setNameInPackage(sitePath, rootPath)
+  await setNameInPackage(sitePath, siteName)
 
   await install(rootPath, packages)
 

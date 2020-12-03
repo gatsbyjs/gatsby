@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "3.7.0-next.0",
+  "version": "3.7.0-next.1",
   "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

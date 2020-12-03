@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.0...gatsby-plugin-image@0.4.0-next.1) (2020-12-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Add overflow hidden back to wrapper CSS ([#28410](https://github.com/gatsbyjs/gatsby/issues/28410)) ([2b62f38](https://github.com/gatsbyjs/gatsby/commit/2b62f389457f515daf843ab22f95c015aa643ffe))
+- **gatsby-plugin-image:** Correct img CSS ([#28317](https://github.com/gatsbyjs/gatsby/issues/28317)) ([bfd86df](https://github.com/gatsbyjs/gatsby/commit/bfd86dfc5bdad881e9b4363fc00c4186e0124833))
+- **gatsby-plugin-image:** Fix StaticImage props interface and add propTypes ([#28372](https://github.com/gatsbyjs/gatsby/issues/28372)) ([93a1447](https://github.com/gatsbyjs/gatsby/commit/93a144744c20fc57f563cb5af2683725abc3c941))
+
 # [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.3.0-next.1...gatsby-plugin-image@0.4.0-next.0) (2020-11-26)
 
 ### Bug Fixes

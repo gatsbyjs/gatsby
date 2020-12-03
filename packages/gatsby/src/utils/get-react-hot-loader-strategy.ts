@@ -7,10 +7,13 @@ export function getReactHotLoaderStrategy(): string {
   // If the user has defined this, we don't want to do any package sniffing
   if (process.env.GATSBY_HOT_LOADER) return process.env.GATSBY_HOT_LOADER
 
+  // If the config flag is true, return fast-refresh
+  if (process.env.GATSBY_FAST_REFRESH) return `fast-refresh`
+
   // Do some package sniffing to see if we can use fast-refresh if the user didn't
   // specify a specific hot loader with the environment variable.
 
-  // TODO: Decide if we wanna do this
+  // TODO: Probably use the flags for this
   /*
   try {
     const reactVersion = require(`react/package.json`).version

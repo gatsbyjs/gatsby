@@ -101,31 +101,44 @@ const handleFlags = (
   // TODO remove flags that longer exist.
   //  w/ message of thanks
 
+  const generateFlagLine = (flag): string => {
+    let message = ``
+    message += `\n- ${flag.name}`
+    if (flag.experimental) {
+      message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
+    }
+    if (flag.umbrellaIssue) {
+      message += ` · (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
+    }
+    message += ` · ${flag.description}`
+
+    return message
+  }
+
   let message = ``
   //  Create message about what flags are active.
   if (enabledConfigFlags.length > 0) {
     message = `The following flags are active:`
     enabledConfigFlags.forEach(flag => {
-      message += `\n- ${flag.name}`
-      if (flag.experimental) {
-        message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
-      }
-      if (flag.umbrellaIssue) {
-        message += ` · (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
-      }
-      message += ` · ${flag.description}`
+      message += generateFlagLine(flag)
     })
 
-    // TODO renable once "gatsby flags` CLI command exists.
-    // Suggest enabling other flags if they're not trying them all.
-    // const otherFlagsCount = flags.length - enabledConfigFlags.length
-    // if (otherFlagsCount > 0) {
-    // message += `\n\nThere ${
-    // otherFlagsCount === 1
-    // ? `is one other flag`
-    // : `are ${otherFlagsCount} other flags`
-    // } available you can test — run "gatsby flags" to enable them`
-    // }
+    const otherFlagsCount = flags.length - enabledConfigFlags.length
+    if (otherFlagsCount > 0) {
+      message += `\n\nThere ${
+        otherFlagsCount === 1
+          ? `is one other flag`
+          : `are ${otherFlagsCount} other flags`
+      } available that you might be interested in:`
+
+      const enabledFlagsSet = new Set()
+      enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
+      flags.forEach(flag => {
+        if (!enabledFlagsSet.has(flag.name)) {
+          message += generateFlagLine(flag)
+        }
+      })
+    }
 
     message += `\n`
   }

@@ -46,6 +46,13 @@ describe(`handle flags`, () => {
       description: `test`,
       umbrellaIssue: `test`,
     },
+    {
+      name: `YET_ANOTHER`,
+      env: `GATSBY_EXPERIMENTAL_SOMETHING_COOL2`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+    },
   ]
 
   const configFlags = {

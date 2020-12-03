@@ -182,7 +182,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
-  await attachTracingResolver({ schemaComposer, parentSpan: activity.span })
+  attachTracingResolver({ schemaComposer, parentSpan: activity.span })
   activity.end()
 }
 
@@ -1081,9 +1081,9 @@ const createChildField = typeName => {
   return {
     [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
-      async resolve(source, args, context) {
+      resolve(source, args, context) {
         const { path } = context
-        const result = await context.nodeModel.getNodesByIds(
+        const result = context.nodeModel.getNodesByIds(
           { ids: source.children, type: typeName },
           { path }
         )

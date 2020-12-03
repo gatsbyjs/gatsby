@@ -75,13 +75,15 @@ Try it out immediately by running `GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby devel
 
 ### Experimental: Lazy page bundling in development
 
+UPDATE: After a number of community members tested the change on their website, we decided it wasn't going to work out—https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998
+
 An obstacle to Gatsby being a delightful experience for larger sites is JavaScript compilation can start to get annoyingly slow. For example, gatsbyjs.com takes over two minutes currently (with a cold cache) to compile and bundle the code for the many page components. Not acceptable!
 
 We knew we needed to make this lazy and have shipped experimental support for this.
 
 Now when you run `GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop`, webpack won't look at any of your page components until you visit them. You'll notice a slight (generally under 0.5s) delay when you first visit a page while webpack compiles it but thereafter, it'll be instantaneous.
 
-All sites should see some speedups but it's especially noticible for larger sites like gatsbyjs.com which now starts webpack 81% faster than before! Please test it out and tell us how fast your dev server boots up over at the [umbrella issue](https://github.com/gatsbyjs/gatsby/issues/28138) along with any bugs you might run across.
+All sites should see some speedups but it's especially noticible for larger sites like gatsbyjs.com which now starts webpack 81% faster than before! Please test it out and tell us how fast your dev server boots up over at the [umbrella issue](https://github.com/gatsbyjs/gatsby/discussions/28137) along with any bugs you might run across.
 
 ## gatsby-plugin-mdx@1.5.0
 
