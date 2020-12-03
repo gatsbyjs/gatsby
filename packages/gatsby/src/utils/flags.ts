@@ -30,7 +30,13 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `FastDev`,
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`, `LAZY_IMAGES`],
+    includedFlags: [
+      `DEV_SSR`,
+      `QUERY_ON_DEMAND`,
+      `LAZY_IMAGES`,
+      `PRESERVE_FILE_DOWNLOAD_CACHE`,
+      `PRESERVE_WEBPACK_CACHE`,
+    ],
   },
   {
     name: `DEV_SSR`,
