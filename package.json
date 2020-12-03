@@ -94,8 +94,7 @@
   },
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.14",
-    "extract-files": "^8.1.0"
+    "csstype": "2.6.14"
   },
   "engines": {
     "yarn": "^1.17.3",
