@@ -32,6 +32,7 @@ import {
   CancelExperimentNoticeCallbackOrUndefined,
 } from "../utils/show-experiment-notice"
 import {
+  fixedPagePath,
   reverseFixedPagePath,
   readPageData,
   IPageDataWithQueryResult,
@@ -460,6 +461,56 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
           res.send(e).status(500)
         }
       } else {
+        // add common.js and socket.io.js preload headers
+        // TODO: make socket.io part not blocking - we don't need it anymore to render the page
+        res.append(`Link`, `</commons.js>; rel=preload; as=script`)
+        res.append(`Link`, `</socket.io/socket.io.js>; rel=preload; as=script`)
+
+        const page = findPageByPath(store.getState(), req.path, true)
+        // we fallback to 404 pages - so there should always be a page (at worst dev-404)
+        // this is just sanity check to not crash server in case it doesn't find anything
+        if (page) {
+          // add app-data.json preload
+          res.append(
+            `Link`,
+            `</page-data/app-data.json>; rel=preload; as=fetch ; crossorigin`
+          )
+          // add page-data.json preload
+          // our runtime also demands 404 and dev-404 page-data to be fetched to even render (see cache-dir/app.js)
+          ;[page.path, `/404.html`, `/dev-404-page/`].forEach(pagePath => {
+            res.append(
+              `Link`,
+              `</${path.join(
+                `page-data`,
+                fixedPagePath(pagePath),
+                `page-data.json`
+              )}>; rel=preload; as=fetch ; crossorigin`
+            )
+          })
+
+          try {
+            const pageData = await readPageData(
+              directoryPath(`public`),
+              page.path
+            )
+            // iterate over needed static queries and add preload for each of them
+            pageData.staticQueryHashes.forEach(staticQueryHash => {
+              res.append(
+                `Link`,
+                `</page-data/sq/d/${staticQueryHash}.json>; rel=preload; as=fetch ; crossorigin`
+              )
+            })
+          } catch (e) {
+            console.error(e)
+            // there might be timing reasons why this fails - page-data file is not created yet
+            // as page was just recently added (so page exists already but page-data doesn't yet)
+            // in those cases we just do nothing
+          }
+        } else {
+          // should we track cases when there is actually nothing returned to find cases
+          // where we don't add preload headers if above assumption turns out to be wrong?
+        }
+
         res.sendFile(directoryPath(`public/index.html`), err => {
           if (err) {
             res.status(500).end()
