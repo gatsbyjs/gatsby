@@ -224,7 +224,7 @@ export const query = graphql`
 `
 ```
 
-If you need the image `src` directly you can use the `getSrc` helper function, which is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`.
+If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`.
 
 ### Upgrading from the gatsby-image@2
 
