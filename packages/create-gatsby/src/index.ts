@@ -69,7 +69,7 @@ export const validateProjectName = async (
 
 // The enquirer types are not accurate
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const questions = (initialFolderName: string): any => [
+export const questions = (initialFolderName: string, skip: boolean): any => [
   {
     type: `textinput`,
     name: `project`,
@@ -79,27 +79,31 @@ export const questions = (initialFolderName: string): any => [
     initial: initialFolderName,
     format: (value: string): string => c.cyan(value),
     validate: validateProjectName,
+    skip,
   },
-  {
-    type: `selectinput`,
-    name: `cms`,
-    message: `Will you be using a CMS?`,
-    hint: `(Single choice) Arrow keys to move, enter to confirm`,
-    choices: makeChoices(cmses),
-  },
-  {
-    type: `selectinput`,
-    name: `styling`,
-    message: `Would you like to install a styling system?`,
-    hint: `(Single choice) Arrow keys to move, enter to confirm`,
-    choices: makeChoices(styles),
-  },
+  // {
+  //   type: `selectinput`,
+  //   name: `cms`,
+  //   message: `Will you be using a CMS?`,
+  //   hint: `(Single choice) Arrow keys to move, enter to confirm`,
+  //   choices: makeChoices(cmses),
+  //   skip,
+  // },
+  // {
+  //   type: `selectinput`,
+  //   name: `styling`,
+  //   message: `Would you like to install a styling system?`,
+  //   hint: `(Single choice) Arrow keys to move, enter to confirm`,
+  //   choices: makeChoices(styles),
+  //   skip,
+  // },
   {
     type: `multiselectinput`,
     name: `features`,
     message: `Would you like to install additional features with other plugins?`,
     hint: `(Multiple choice) Use arrow keys to move, enter to select, and choose "Done" to confirm your choices`,
     choices: makeChoices(features, true),
+    skip,
   },
 ]
 interface IAnswers {
@@ -140,6 +144,12 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
+  const [flag] = process.argv.slice(2)
+  let yesFlag = false
+  if (flag === `-y`) {
+    yesFlag = true
+  }
+
   trackCli(`CREATE_GATSBY_START`)
 
   const { version } = require(`../package.json`)
@@ -179,7 +189,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     format: (value: string): string => c.cyan(value),
   } as any)
 
-  const data = await enquirer.prompt(questions(kebabify(siteName)))
+  const data = await enquirer.prompt(questions(kebabify(siteName), yesFlag))
   data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
