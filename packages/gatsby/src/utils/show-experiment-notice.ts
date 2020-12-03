@@ -13,19 +13,15 @@ export type CancelExperimentNoticeCallbackOrUndefined =
 const ONE_DAY = 24 * 60 * 60 * 1000
 
 interface INoticeObject {
-  reason: string
-  solution: string
-}
-
-type NoticesToShow = INoticeObject & {
+  noticeText: string
   experimentIdentifier: string
 }
 
-const noticesToShow: Array<NoticesToShow> = []
+const noticesToShow: Array<INoticeObject> = []
 
 export function showExperimentNoticeAfterTimeout(
   experimentIdentifier: string,
-  noticeObject: INoticeObject,
+  noticeText: string,
   showNoticeAfterMs: number,
   minimumIntervalBetweenNoticesMs: number = ONE_DAY
 ): CancelExperimentNoticeCallbackOrUndefined {
@@ -40,7 +36,7 @@ export function showExperimentNoticeAfterTimeout(
   }
 
   const noticeTimeout = setTimeout(() => {
-    noticesToShow.push({ ...noticeObject, experimentIdentifier })
+    noticesToShow.push({ noticeText, experimentIdentifier })
 
     getConfigStore().set(configStoreKey, Date.now())
   }, showNoticeAfterMs)
@@ -55,13 +51,16 @@ emitter.on(`COMPILATION_DONE`, () => {
 
   if (noticesToShow.length > 0) {
     telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
-    let message = `\n\nHello! Your friendly Gatsby maintainers detected ways to improve your site. We're working on new improvements and invite you to try them out *today* and help ready them for general release.`
+    let message = `\n
+Hello! Your friendly Gatsby maintainers detected ways to improve your site. We're
+working on new improvements and invite you to try them out *today* and help ready
+them for general release.`
 
     noticesToShow.forEach(
       notice =>
         (message += `\n\n${chalk.bgBlue.bold(
           notice.experimentIdentifier
-        )}\n-${notice.reason.trim()}\n-${notice.solution.trim()}\n`)
+        )}\n${notice.noticeText.trim()}\n`)
     )
 
     reporter.info(message)

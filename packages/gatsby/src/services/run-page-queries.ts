@@ -1,3 +1,4 @@
+import chalk from "chalk"
 import { processPageQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
@@ -50,16 +51,22 @@ export async function runPageQueries({
     !isCI()
   ) {
     cancelNotice = showExperimentNoticeAfterTimeout(
-      `QUERY_ON_DEMAND`,
-      {
-        reason: `We noticed your site takes longer than ideal to run page queries.`,
-        solution: `We're changing how we run queries in development so queries only run when you need them when you visit a page. This will help make starting your development server a lot faster.
+      `Query On Demand`,
+      `We noticed your site takes longer than ideal to run page queries. We're changing
+soon how we run queries in development so queries only run for pages as you
+visit them. This avoids a lot of upfront work which helps make starting your
+development server ${chalk.bold(`a whole lot faster`)}.
 
-You can enable it by adding "flags: { QUERY_ON_DEMAND: true }" to your gatsby-config.js
+You can try out Query on Demand *today* by enabling it in your gatsby-config.js:
 
-Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
-      `,
-      },
+  module.exports = {
+    flags: {
+      QUERY_ON_DEMAND: true
+    }
+  }
+
+Please do let us know how it goes (good, bad, or otherwise) and learn more about it
+at https://gatsby.dev/query-on-demand-feedback`,
       ONE_MINUTE
     )
   }

@@ -6,6 +6,7 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import chalk from "chalk"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
@@ -65,20 +66,24 @@ if (
   sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
-    `DEV_SSR`,
-    {
-      reason: `We'll soon be shipping support for SSR in development.`,
-      solution: `This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
+    `SSR in Development`,
+    `We'll soon be shipping support for ${chalk.bold(
+      `server-side rendering (SSR)`
+    )} in development.
+This will help you as it'll more closely match the behavior of \`gatsby build\`
+which will enable you to catch errors more quickly and ultimately, fix them more
+quickly.
 
 Try out develop SSR *today* by enabling it in your gatsby-config.js:
 
-flags: {
-  DEV_SSR: true
-}
+  module.exports = {
+    flags: {
+      DEV_SSR: true
+    }
+  }
 
 Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
       `,
-    },
     1 // Show this immediately to the subset of sites selected.
   )
 }
