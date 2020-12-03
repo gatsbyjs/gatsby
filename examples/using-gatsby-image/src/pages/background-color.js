@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
@@ -8,14 +8,18 @@ import Layout from "../components/layout"
 const BackgroundColor = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.fluid}
+    image={data.coverImage.localFile.childImageSharp.gatsbyImageData}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
     imageBackgroundColor="#F0C450"
   >
     <PageTitle>Background Color</PageTitle>
     <FloatingImage
-      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      imageMobile={
+        data.floatingImageMobile.localFile.childImageSharp.gatsbyImageData
+      }
+      imageDesktop={
+        data.floatingImage.localFile.childImageSharp.gatsbyImageData
+      }
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
       backgroundColor="#DB3225"
     />
@@ -32,8 +36,8 @@ const BackgroundColor = ({ data, location }) => (
       valid CSS background color format.
     </p>
 
-    <Img
-      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+    <GatsbyImage
+      image={data.fullWidthImage.localFile.childImageSharp.gatsbyImageData}
       backgroundColor="#F9D6CE"
       title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
@@ -43,24 +47,20 @@ const BackgroundColor = ({ data, location }) => (
 export default BackgroundColor
 
 export const query = graphql`
-  query {
+  {
     coverImage: unsplashImagesYaml(title: { eq: "Cactus" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 720) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+          gatsbyImageData(maxWidth: 720, placeholder: NONE, layout: FLUID)
         }
       }
     }
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
       localFile {
         childImageSharp {
-          fixed(width: 120) {
-            ...GatsbyImageSharpFixed_noBase64
-          }
+          gatsbyImageData(width: 120, placeholder: NONE, layout: FIXED)
         }
       }
     }
@@ -69,9 +69,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fixed(width: 200) {
-            ...GatsbyImageSharpFixed_noBase64
-          }
+          gatsbyImageData(width: 200, placeholder: NONE, layout: FIXED)
         }
       }
     }
@@ -80,9 +78,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+          gatsbyImageData(maxWidth: 600, placeholder: NONE, layout: FLUID)
         }
       }
     }

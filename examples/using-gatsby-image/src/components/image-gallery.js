@@ -1,5 +1,5 @@
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import styled from "@emotion/styled"
 import numeral from "numeral"
 
@@ -56,7 +56,7 @@ const GridItem = styled(`div`)`
   }
 `
 
-const GridItemImage = styled(Img)`
+const GridItemImage = styled(GatsbyImage)`
   &:hover {
     div + img {
       opacity: 1 !important;
@@ -94,7 +94,7 @@ const ImageGallery = edges => (
       {edges.images.map((image, index) => (
         <GridItem key={index}>
           <GridItemImage
-            fluid={image.node.localFile.childImageSharp.fluid}
+            image={image.node.localFile.childImageSharp.gatsbyImageData}
             title={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
           />
           <Badge>
@@ -102,7 +102,7 @@ const ImageGallery = edges => (
             {` `}
             {numeral(
               Buffer.byteLength(
-                image.node.localFile.childImageSharp.fluid.tracedSVG,
+                image.node.localFile.childImageSharp.gatsbyImageData.tracedSVG,
                 `utf8`
               )
             ).format()}

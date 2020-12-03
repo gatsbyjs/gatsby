@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
@@ -11,13 +11,17 @@ import Layout from "../components/layout"
 const TracedSVG = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.fluid}
+    image={data.coverImage.localFile.childImageSharp.gatsbyImageData}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Traced SVG Placeholders</PageTitle>
     <FloatingImage
-      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      imageMobile={
+        data.floatingImageMobile.localFile.childImageSharp.gatsbyImageData
+      }
+      imageDesktop={
+        data.floatingImage.localFile.childImageSharp.gatsbyImageData
+      }
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
@@ -38,8 +42,8 @@ const TracedSVG = ({ data, location }) => (
     </p>
     <h2>Unsplash SVG Image Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
-    <Img
-      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+    <GatsbyImage
+      image={data.fullWidthImage.localFile.childImageSharp.gatsbyImageData}
       title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
@@ -48,18 +52,18 @@ const TracedSVG = ({ data, location }) => (
 export default TracedSVG
 
 export const query = graphql`
-  query {
+  {
     coverImage: unsplashImagesYaml(title: { eq: "Polaroid Pronto 600" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fluid(
+          gatsbyImageData(
             maxWidth: 720
-            traceSVG: { background: "#fff", color: "#663399" }
-          ) {
-            ...GatsbyImageSharpFluid_tracedSVG
-          }
+            tracedSVGOptions: { background: "#fff", color: "#663399" }
+            placeholder: TRACED_SVG
+            layout: FLUID
+          )
         }
       }
     }
@@ -68,9 +72,7 @@ export const query = graphql`
     ) {
       localFile {
         childImageSharp {
-          fixed(width: 120) {
-            ...GatsbyImageSharpFixed_tracedSVG
-          }
+          gatsbyImageData(width: 120, placeholder: TRACED_SVG, layout: FIXED)
         }
       }
     }
@@ -79,9 +81,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fixed(width: 200) {
-            ...GatsbyImageSharpFixed_tracedSVG
-          }
+          gatsbyImageData(width: 200, placeholder: TRACED_SVG, layout: FIXED)
         }
       }
     }
@@ -90,9 +90,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 480) {
-            ...GatsbyImageSharpFluid_tracedSVG
-          }
+          gatsbyImageData(maxWidth: 480, placeholder: TRACED_SVG, layout: FLUID)
         }
       }
     }
@@ -106,13 +104,13 @@ export const query = graphql`
           title
           localFile {
             childImageSharp {
-              fluid(
+              gatsbyImageData(
                 maxWidth: 380
                 quality: 70
-                traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
-              ) {
-                ...GatsbyImageSharpFluid_tracedSVG
-              }
+                tracedSVGOptions: { background: "#fbfafc", color: "#dbd4e2" }
+                placeholder: TRACED_SVG
+                layout: FLUID
+              )
             }
           }
         }
@@ -128,14 +126,14 @@ export const query = graphql`
           title
           localFile {
             childImageSharp {
-              fluid(
+              gatsbyImageData(
                 maxWidth: 380
                 maxHeight: 380
                 quality: 70
-                traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
-              ) {
-                ...GatsbyImageSharpFluid_tracedSVG
-              }
+                tracedSVGOptions: { background: "#fbfafc", color: "#dbd4e2" }
+                placeholder: TRACED_SVG
+                layout: FLUID
+              )
             }
           }
         }

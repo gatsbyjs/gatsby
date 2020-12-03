@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
@@ -9,13 +9,17 @@ import Layout from "../components/layout"
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.fluid}
+    image={data.coverImage.localFile.childImageSharp.gatsbyImageData}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
     <FloatingImage
-      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      imageMobile={
+        data.floatingImageMobile.localFile.childImageSharp.gatsbyImageData
+      }
+      imageDesktop={
+        data.floatingImage.localFile.childImageSharp.gatsbyImageData
+      }
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
 
@@ -40,8 +44,8 @@ const BlurUp = ({ data, location }) => (
       If you don’t want to use the blur-up effect, choose a fragment with{` `}
       <code>noBase64</code> at the end.
     </p>
-    <Img
-      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+    <GatsbyImage
+      image={data.fullWidthImage.localFile.childImageSharp.gatsbyImageData}
       title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
@@ -50,24 +54,20 @@ const BlurUp = ({ data, location }) => (
 export default BlurUp
 
 export const query = graphql`
-  query {
+  {
     coverImage: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 720) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(maxWidth: 720, layout: FLUID)
         }
       }
     }
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
       localFile {
         childImageSharp {
-          fixed(width: 120) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(width: 120, layout: FIXED)
         }
       }
     }
@@ -76,9 +76,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fixed(width: 200) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(width: 200, layout: FIXED)
         }
       }
     }
@@ -87,9 +85,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(maxWidth: 600, layout: FLUID)
         }
       }
     }

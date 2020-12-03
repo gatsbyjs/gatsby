@@ -1,11 +1,11 @@
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import styled from "@emotion/styled"
 
 import { rhythm, options } from "../utils/typography"
 import { mq, gutter } from "../utils/presets"
 
-const Image = styled(Img)`
+const Image = styled(GatsbyImage)`
   display: block;
   float: right;
   margin-bottom: ${rhythm(options.blockMarginBottom * 2)};

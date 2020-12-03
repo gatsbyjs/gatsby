@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css as cssClass } from "emotion"
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
 import { MdLink } from "react-icons/md"
@@ -40,7 +39,7 @@ const linkStyle = css`
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
   isPartiallyCurrent
     ? {
-        className: cssClass`
+        className: css`
           ${linkStyle};
 
           && {
@@ -65,7 +64,7 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
         `,
       }
     : {
-        className: cssClass`
+        className: css`
           ${linkStyle};
         `,
       }

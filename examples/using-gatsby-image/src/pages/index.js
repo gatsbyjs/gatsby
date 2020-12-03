@@ -24,7 +24,7 @@ const FeatureListItem = styled.li({
 const Index = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.childImageSharp.fluid}
+    image={data.coverImage.childImageSharp.gatsbyImageData}
     imageTitle={`“Black and silver vintage camera” by Alexander Andrews (via unsplash.com)`}
     imageBackgroundColor={colors.ui.whisper}
   >
@@ -104,18 +104,19 @@ const Index = ({ data, location }) => (
 export default Index
 
 export const query = graphql`
-  query {
+  {
     coverImage: file(
       relativePath: { regex: "/alexander-andrews-260988-unsplash-edited/" }
     ) {
       childImageSharp {
-        fluid(
+        gatsbyImageData(
           maxWidth: 800
           quality: 80
-          duotone: { highlight: "#ffffff", shadow: "#663399" }
-        ) {
-          ...GatsbyImageSharpFluid
-        }
+          transformOptions: {
+            duotone: { highlight: "#ffffff", shadow: "#663399" }
+          }
+          layout: FLUID
+        )
       }
     }
   }

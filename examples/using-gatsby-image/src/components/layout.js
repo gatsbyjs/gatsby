@@ -1,5 +1,5 @@
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import styled from "@emotion/styled"
 
 import Navigation from "./navigation"
@@ -32,7 +32,7 @@ const Container = styled(`div`)`
   }
 `
 
-const Image = styled(Img)`
+const Image = styled(GatsbyImage)`
   bottom: 33vh;
   left: ${gutter.default};
   right: ${gutter.default};
@@ -90,7 +90,7 @@ const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
   <Container>
     {image && (
       <Image
-        fluid={image}
+        image={image}
         style={{ position: `fixed` }}
         backgroundColor={imageBackgroundColor ? imageBackgroundColor : false}
         title={imageTitle}

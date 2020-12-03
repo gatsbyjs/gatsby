@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
@@ -9,13 +9,17 @@ import Layout from "../components/layout"
 const PreferWebp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.fluid}
+    image={data.coverImage.localFile.childImageSharp.gatsbyImageData}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Prefer WebP</PageTitle>
     <FloatingImage
-      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      imageMobile={
+        data.floatingImageMobile.localFile.childImageSharp.gatsbyImageData
+      }
+      imageDesktop={
+        data.floatingImage.localFile.childImageSharp.gatsbyImageData
+      }
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
@@ -31,8 +35,8 @@ const PreferWebp = ({ data, location }) => (
       specify that an image should be loaded in the WebP format in supporting
       browsers, use a fragment with <code>withWebp</code> at the end.
     </p>
-    <Img
-      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+    <GatsbyImage
+      image={data.fullWidthImage.localFile.childImageSharp.gatsbyImageData}
       title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
     <p />
@@ -42,24 +46,20 @@ const PreferWebp = ({ data, location }) => (
 export default PreferWebp
 
 export const query = graphql`
-  query {
+  {
     coverImage: unsplashImagesYaml(title: { eq: "Pug with yellow raincoat" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 720) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(maxWidth: 720, layout: FLUID)
         }
       }
     }
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Cacti" }) {
       localFile {
         childImageSharp {
-          fixed(width: 120) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 120, layout: FIXED)
         }
       }
     }
@@ -68,9 +68,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fixed(width: 200) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 200, layout: FIXED)
         }
       }
     }
@@ -79,9 +77,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
+          gatsbyImageData(maxWidth: 600, layout: FLUID)
         }
       }
     }

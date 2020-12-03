@@ -9,6 +9,7 @@
     "emotion": "^11.0.0",
     "gatsby": "next",
     "gatsby-image": "next",
+    "gatsby-plugin-image": "next",
     "gatsby-plugin-emotion": "next",
     "gatsby-plugin-netlify": "next",
     "gatsby-plugin-sharp": "next",
