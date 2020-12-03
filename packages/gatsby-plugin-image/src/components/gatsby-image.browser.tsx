@@ -143,7 +143,13 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
       // On first server hydration do nothing
       if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
+        hydrated.current = true
         return
+      }
+
+      // When no ssrHtml is found (develop) we should force render instead of hydrate
+      if (!hasSSRHtml) {
+        hydrated.current = true
       }
 
       import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
