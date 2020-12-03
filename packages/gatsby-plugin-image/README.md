@@ -224,6 +224,8 @@ export const query = graphql`
 `
 ```
 
+If you need the image `src` directly you can use the `getSrc` helper function, which is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`.
+
 ### Upgrading from the gatsby-image@2
 
 We will be releasing a codemod to automatically update your queries and imports. In the meantime, you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now, it allows you to try the component with your existing queries.
