@@ -234,7 +234,6 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.extractText(),
 
-          // new MiniCssExtractPlugin({ filename: `dev-ssr.css` }),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           plugins.extractStats(),
