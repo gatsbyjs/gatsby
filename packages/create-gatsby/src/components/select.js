@@ -86,11 +86,7 @@ export class MultiSelectInput extends SelectInput {
   }
 
   toggle(choice, enabled) {
-    if (choice.name === `___done`) {
-      super.submit()
-    } else {
-      super.toggle(choice, enabled)
-    }
+    super.toggle(choice, enabled)
   }
 
   async toChoices(value, parent) {
@@ -114,9 +110,11 @@ export class MultiSelectInput extends SelectInput {
     return super.toChoices([...value, ...footer], parent)
   }
 
-  async submit() {
+  submit() {
     if (this.options.skip) {
       this.state._choices = []
+    }
+    if (this.options.skip || this.focused.name === `___done`) {
       return super.submit()
     }
     return this.space()
