@@ -20,11 +20,19 @@ function mergePageEntry(cachedPage, newPageData) {
     },
   }
 }
+function preferDefault(m) {
+  return (m && m.default) || m
+}
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
     const loadComponent = chunkName =>
-      Promise.resolve(syncRequires.components[chunkName])
+      syncRequires.components[chunkName]
+        ? syncRequires.components[chunkName]()
+            .then(preferDefault)
+            // loader will handle the case when component is null
+            .catch(() => null)
+        : Promise.resolve()
 
     super(loadComponent, matchPaths)
 
