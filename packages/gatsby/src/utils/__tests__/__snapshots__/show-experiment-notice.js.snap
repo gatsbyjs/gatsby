@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`show-experiment-notice generates a message 1`] = `
+"
+
+Hello! Your friendly Gatsby maintainers detected ways to improve your site. We're
+working on new improvements and invite you to try them out *today* and help ready
+them for general release.
+
+[44m[1mThe Flag[22m[49m
+hi
+"
+`;

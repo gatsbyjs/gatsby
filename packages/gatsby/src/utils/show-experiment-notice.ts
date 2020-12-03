@@ -46,22 +46,27 @@ export function showExperimentNoticeAfterTimeout(
   }
 }
 
-const showNotices = (): void => {
-  emitter.off(`COMPILATION_DONE`, showNotices)
-  if (noticesToShow.length > 0) {
-    telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
-    let message = `\n
+export const createNoticeMessage = (notices): string => {
+  let message = `\n
 Hello! Your friendly Gatsby maintainers detected ways to improve your site. We're
 working on new improvements and invite you to try them out *today* and help ready
 them for general release.`
 
-    noticesToShow.forEach(
-      notice =>
-        (message += `\n\n${chalk.bgBlue.bold(
-          notice.experimentIdentifier
-        )}\n${notice.noticeText.trim()}\n`)
-    )
+  notices.forEach(
+    notice =>
+      (message += `\n\n${chalk.bgBlue.bold(
+        notice.experimentIdentifier
+      )}\n${notice.noticeText.trim()}\n`)
+  )
 
+  return message
+}
+
+const showNotices = (): void => {
+  emitter.off(`COMPILATION_DONE`, showNotices)
+  if (noticesToShow.length > 0) {
+    telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
+    const message = createNoticeMessage(noticesToShow)
     reporter.info(message)
   }
 }
