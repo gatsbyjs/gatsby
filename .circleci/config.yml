@@ -337,6 +337,11 @@ jobs:
       CYPRESS_PROJECT_ID: 917bea
       CYPRESS_RECORD_KEY: 4750fb36-4576-4638-a617-d243a381acef
 
+  e2e_tests_development_runtime_lazy_images:
+    <<: *e2e_tests_development_runtime_alias
+    environment:
+      GATSBY_EXPERIMENTAL_LAZY_IMAGES: true
+
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
 
