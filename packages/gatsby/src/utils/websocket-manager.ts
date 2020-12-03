@@ -1,6 +1,7 @@
 /* eslint-disable no-invalid-this */
 
 import { store, emitter } from "../redux"
+import { IAddPendingTemplateDataWriteAction } from "../redux/types"
 import { clearDirtyQueriesListToEmitViaWebsocket } from "../redux/actions/internal"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
@@ -119,11 +120,33 @@ export class WebsocketManager {
     })
 
     if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-      emitter.on(`CREATE_PAGE`, this.emitDirtyQueriesIds)
-      emitter.on(`CREATE_NODE`, this.emitDirtyQueriesIds)
-      emitter.on(`DELETE_NODE`, this.emitDirtyQueriesIds)
-      emitter.on(`QUERY_EXTRACTED`, this.emitDirtyQueriesIds)
+      // page-data marked stale due to dirty query tracking
+      const boundEmitStalePageDataPathsFromDirtyQueryTracking = this.emitStalePageDataPathsFromDirtyQueryTracking.bind(
+        this
+      )
+      emitter.on(
+        `CREATE_PAGE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `CREATE_NODE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `DELETE_NODE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `QUERY_EXTRACTED`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
     }
+
+    // page-data marked stale due to static query hashes change
+    emitter.on(
+      `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+      this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this)
+    )
 
     return this.websocket
   }
@@ -187,20 +210,35 @@ export class WebsocketManager {
     }
   }
 
-  emitDirtyQueriesIds = (): void => {
+  emitStalePageDataPathsFromDirtyQueryTracking(): void {
     const dirtyQueries = store.getState().queries
       .dirtyQueriesListToEmitViaWebsocket
 
-    if (dirtyQueries.length > 0) {
+    if (this.emitStalePageDataPaths(dirtyQueries)) {
+      store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+    }
+  }
+
+  emitStalePageDataPathsFromStaticQueriesAssignment(
+    pendingTemplateDataWrite: IAddPendingTemplateDataWriteAction
+  ): void {
+    this.emitStalePageDataPaths(
+      Array.from(pendingTemplateDataWrite.payload.pages)
+    )
+  }
+
+  emitStalePageDataPaths(stalePageDataPaths: Array<string>): boolean {
+    if (stalePageDataPaths.length > 0) {
       if (this.websocket) {
         this.websocket.send({
-          type: `dirtyQueries`,
-          payload: { dirtyQueries },
+          type: `stalePageData`,
+          payload: { stalePageDataPaths },
         })
 
-        store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+        return true
       }
     }
+    return false
   }
 }
 

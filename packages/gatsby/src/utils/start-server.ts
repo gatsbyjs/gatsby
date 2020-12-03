@@ -10,26 +10,27 @@ import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
+import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
-import { isCI } from "gatsby-core-utils"
+import { codeFrameColumns } from "@babel/code-frame"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
 import { store, emitter } from "../redux"
 import report from "gatsby-cli/lib/reporter"
 import * as WorkerPool from "../utils/worker/pool"
-import {
-  showExperimentNoticeAfterTimeout,
-  CancelExperimentNoticeCallbackOrUndefined,
-} from "../utils/show-experiment-notice"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
+import {
+  showExperimentNoticeAfterTimeout,
+  CancelExperimentNoticeCallbackOrUndefined,
+} from "../utils/show-experiment-notice"
 import {
   reverseFixedPagePath,
   readPageData,
@@ -43,6 +44,7 @@ import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
+import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -81,6 +83,32 @@ export async function startServer(
     id: `webpack-develop`,
   })
   webpackActivity.start()
+
+  const THIRTY_SECONDS = 30 * 1000
+  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
+  if (
+    process.env.gatsby_executing_command === `develop` &&
+    !process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
+    !isCI()
+  ) {
+    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
+      `PRESERVE_WEBPACK_CACHE`,
+      report.stripIndent(`
+Your friendly Gatsby maintainers detected your site has more JavaScript than most sites! We're working to make your site's JS compile as quickly as possible by avoiding clearing your webpack cache as often.
+
+If you're interested in trialing this coming change *today* — which should make your local development experience faster — go ahead and enable the PRESERVE_WEBPACK_CACHE flag and run your develop server again.
+
+To do so, add to your gatsby-config.js:
+
+flags: {
+  PRESERVE_WEBPACK_CACHE: true,
+}
+
+Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+      `),
+      THIRTY_SECONDS
+    )
+  }
 
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
@@ -123,30 +151,6 @@ export async function startServer(
     indexHTMLActivity.end()
   }
 
-  const TWENTY_SECONDS = 20 * 1000
-  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
-  if (
-    process.env.gatsby_executing_command === `develop` &&
-    !process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS &&
-    !isCI()
-  ) {
-    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `LAZY_DEVJS`,
-      report.stripIndent(`
-Your local development experience is about to get better, faster, and stronger!
-
-Your friendly Gatsby maintainers detected your site takes longer than ideal to bundle your JavaScript. We're working right now to improve this.
-
-If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with LAZY_DEVJS enabled.
-
-GATSBY_EXPERIMENTAL_LAZY_DEVJS=true gatsby develop
-
-Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.dev/lazy-devjs-umbrella
-      `),
-      TWENTY_SECONDS
-    )
-  }
-
   const devConfig = await webpackConfig(
     program,
     directory,
@@ -156,66 +160,6 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
   )
 
   const compiler = webpack(devConfig)
-
-  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    const bodyParser = require(`body-parser`)
-    const { boundActionCreators } = require(`../redux/actions`)
-    const { createClientVisitedPage } = boundActionCreators
-    // Listen for the client marking a page as visited (meaning we need to
-    // compile its page component.
-    const chunkCalls = new Set()
-    app.post(`/___client-page-visited`, bodyParser.json(), (req, res, next) => {
-      if (req.body?.chunkName) {
-        // Ignore all but the first POST.
-        if (!chunkCalls.has(req.body.chunkName)) {
-          // Tell Gatsby there's a new page component to trigger it
-          // being added to the bundle.
-          createClientVisitedPage(req.body.chunkName)
-
-          // Tell Gatsby to rewrite the page data for the pages
-          // owned by this component to update it to say that
-          // its page component is now part of the dev bundle.
-          // The pages will be rewritten after the webpack compilation
-          // finishes.
-          //
-          // Set a timeout to ensure the webpack compile of the new page
-          // component triggered above has time to go through.
-          setTimeout(() => {
-            // Find the component page for this componentChunkName.
-            const pages = store.getState().pages
-            function getByChunkName(map, searchValue): void | string {
-              for (const [key, value] of map.entries()) {
-                if (value.componentChunkName === searchValue) return key
-              }
-
-              return undefined
-            }
-            const pageKey = getByChunkName(pages, req.body.chunkName)
-
-            if (pageKey) {
-              const page = pages.get(pageKey)
-              if (page) {
-                store.dispatch({
-                  type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-                  payload: {
-                    pages: [
-                      {
-                        componentPath: page.component,
-                      },
-                    ],
-                  },
-                })
-              }
-            }
-            chunkCalls.add(req.body.chunkName)
-          }, 20)
-        }
-        res.send(`ok`)
-      } else {
-        next()
-      }
-    })
-  }
 
   /**
    * Set up the express app.
@@ -366,9 +310,69 @@ Please do let us know how it goes (good, bad, or otherwise) at https://gatsby.de
     publicPath: devConfig.output.publicPath,
     watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
     stats: `errors-only`,
+    serverSideRender: true,
   }) as unknown) as PatchedWebpackDevMiddleware
 
   app.use(webpackDevMiddlewareInstance)
+
+  app.get(`/__original-stack-frame`, async (req, res) => {
+    const {
+      webpackStats: {
+        compilation: { modules },
+      },
+    } = res.locals
+    const emptyResponse = {
+      codeFrame: `No codeFrame could be generated`,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const moduleId = req?.query?.moduleId
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    const fileModule = modules.find(m => m.id === moduleId)
+    const sourceMap = fileModule?._source?._sourceMap
+
+    if (!sourceMap) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const position = { line: lineNumber, column: columnNumber }
+    const result = await findOriginalSourcePositionAndContent(
+      sourceMap,
+      position
+    )
+
+    const sourcePosition = result?.sourcePosition
+    const sourceLine = sourcePosition?.line
+    const sourceColumn = sourcePosition?.column
+    const sourceContent = result?.sourceContent
+
+    if (!sourceContent || !sourceLine) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const codeFrame = codeFrameColumns(
+      sourceContent,
+      {
+        start: {
+          line: sourceLine,
+          column: sourceColumn ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
+      sourcePosition,
+      sourceContent,
+    })
+  })
 
   // Expose access to app for advanced use cases
   const { developMiddleware } = store.getState().config

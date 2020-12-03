@@ -13,6 +13,7 @@ const addLeadingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
 export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
   .keys({
     __experimentalThemes: Joi.array(),
+    flags: Joi.object(),
     polyfill: Joi.boolean().default(true),
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({

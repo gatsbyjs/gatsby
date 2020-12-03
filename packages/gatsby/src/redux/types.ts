@@ -597,12 +597,6 @@ interface ISetSchemaComposerAction {
   payload: SchemaComposer<any>
 }
 
-export interface ICreateClientVisitedPage {
-  type: `CREATE_CLIENT_VISITED_PAGE`
-  payload: IGatsbyPage
-  plugin?: IGatsbyPlugin
-}
-
 export interface ICreateServerVisitedPage {
   type: `CREATE_SERVER_VISITED_PAGE`
   payload: IGatsbyPage

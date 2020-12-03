@@ -41,8 +41,8 @@ export async function startWebpackServer({
   let {
     compiler,
     webpackActivity,
-    cancelDevJSNotice,
     websocketManager,
+    cancelDevJSNotice,
     webpackWatching,
   } = await startServer(program, app, workerPool)
   webpackWatching.suspend()

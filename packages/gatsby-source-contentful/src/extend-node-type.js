@@ -13,7 +13,6 @@ const {
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
-const _ = require(`lodash`)
 
 const cacheImage = require(`./cache-image`)
 
@@ -38,6 +37,12 @@ const REMOTE_CACHE_FOLDER =
   path.join(process.cwd(), `.cache/remote_cache`)
 const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
+// Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
+const inFlightBase64Cache = new Map()
+// This cache contains the resolved base64 fetches. This prevents async calls for promises that have resolved.
+// The images are based on urls with w=20 and should be relatively small (<2kb) but it does stick around in memory
+const resolvedBase64Cache = new Map()
+
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -48,15 +53,29 @@ const {
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
 const isImage = image =>
-  _.includes(
-    [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
-    _.get(image, `file.contentType`)
+  [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
+    image?.file?.contentType
   )
 
+// Note: this may return a Promise<body>, body (sync), or null
 const getBase64Image = imageProps => {
-  if (!imageProps) return null
+  if (!imageProps) {
+    return null
+  }
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
+
+  // Prefer to return data sync if we already have it
+  const alreadyFetched = resolvedBase64Cache.get(requestUrl)
+  if (alreadyFetched) {
+    return alreadyFetched
+  }
+
+  // If already in flight for this url return the same promise as the first call
+  const inFlight = inFlightBase64Cache.get(requestUrl)
+  if (inFlight) {
+    return inFlight
+  }
 
   // Note: sha1 is unsafe for crypto but okay for this particular case
   const shasum = crypto.createHash(`sha1`)
@@ -70,14 +89,36 @@ const getBase64Image = imageProps => {
 
   if (fs.existsSync(cacheFile)) {
     // TODO: against dogma, confirm whether readFileSync is indeed slower
-    return fs.promises.readFile(cacheFile, `utf8`)
+    const promise = fs.promises.readFile(cacheFile, `utf8`)
+    inFlightBase64Cache.set(requestUrl, promise)
+    return promise.then(body => {
+      inFlightBase64Cache.delete(requestUrl)
+      resolvedBase64Cache.set(requestUrl, body)
+      return body
+    })
   }
 
-  return new Promise(resolve => {
+  const promise = new Promise((resolve, reject) => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
+      fs.promises
+        .writeFile(cacheFile, body)
+        .then(() => resolve(body))
+        .catch(e => {
+          console.error(
+            `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
+          )
+          reject(e)
+        })
     })
+  })
+
+  inFlightBase64Cache.set(requestUrl, promise)
+
+  return promise.then(body => {
+    inFlightBase64Cache.delete(requestUrl)
+    resolvedBase64Cache.set(requestUrl, body)
+    return body
   })
 }
 
@@ -101,20 +142,19 @@ const getBasicImageProps = (image, args) => {
 
 const createUrl = (imgUrl, options = {}) => {
   // Convert to Contentful names and filter out undefined/null values.
-  const args = _.pickBy(
-    {
-      w: options.width,
-      h: options.height,
-      fl: options.jpegProgressive ? `progressive` : null,
-      q: options.quality,
-      fm: options.toFormat || ``,
-      fit: options.resizingBehavior || ``,
-      f: options.cropFocus || ``,
-      bg: options.background || ``,
-    },
-    _.identity
-  )
-  return `${imgUrl}?${qs.stringify(args)}`
+  const urlArgs = {
+    w: options.width || undefined,
+    h: options.height || undefined,
+    fl: options.jpegProgressive ? `progressive` : undefined,
+    q: options.quality || undefined,
+    fm: options.toFormat || undefined,
+    fit: options.resizingBehavior || undefined,
+    f: options.cropFocus || undefined,
+    bg: options.background || undefined,
+  }
+
+  // Note: qs will ignore keys that are `undefined`. `qs.stringify({a: undefined, b: null, c: 1})` => `b=&c=1`
+  return `${imgUrl}?${qs.stringify(urlArgs)}`
 }
 exports.createUrl = createUrl
 
@@ -171,11 +211,8 @@ const resolveFixed = (image, options) => {
     )
   })
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
-
   // Create the srcSet.
-  const srcSet = sortedSizes
+  const srcSet = filteredSizes
     .map((size, i) => {
       let resolution
       switch (i) {
@@ -279,19 +316,17 @@ const resolveFluid = (image, options) => {
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
+  const pwidth = parseInt(width, 10)
   if (
-    !filteredSizes.includes(parseInt(width)) &&
-    parseInt(width) < CONTENTFUL_IMAGE_MAX_SIZE &&
-    Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
+    !filteredSizes.includes(pwidth) &&
+    pwidth < CONTENTFUL_IMAGE_MAX_SIZE &&
+    Math.round(pwidth / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
   ) {
-    filteredSizes.push(width)
+    filteredSizes.push(pwidth)
   }
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
-
   // Create the srcSet.
-  const srcSet = sortedSizes
+  const srcSet = filteredSizes
     .map(width => {
       const h = Math.round(width / desiredAspectRatio)
       return `${createUrl(image.file.url, {
@@ -380,7 +415,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -390,14 +425,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fixed, `src`)
+            return fixed?.src
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -407,7 +442,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fixed, `srcSet`)
+            return fixed?.srcSet
           },
         },
       },
@@ -439,17 +474,17 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         defaultValue: null,
       },
     },
-    resolve: (image, options, context) =>
-      Promise.resolve(resolveFixed(image, options)).then(node => {
-        if (!node) return null
+    resolve(image, options, context) {
+      const node = resolveFixed(image, options)
+      if (!node) return null
 
-        return {
-          ...node,
-          image,
-          options,
-          context,
-        }
-      }),
+      return {
+        ...node,
+        image,
+        options,
+        context,
+      }
+    },
   }
 }
 
@@ -475,7 +510,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -485,14 +520,14 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fluid, `src`)
+            return fluid?.src
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
             if (
-              _.get(image, `file.contentType`) === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -502,7 +537,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
               ...options,
               toFormat: `webp`,
             })
-            return _.get(fluid, `srcSet`)
+            return fluid?.srcSet
           },
         },
         sizes: { type: new GraphQLNonNull(GraphQLString) },
@@ -538,17 +573,17 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         type: GraphQLString,
       },
     },
-    resolve: (image, options, context) =>
-      Promise.resolve(resolveFluid(image, options)).then(node => {
-        if (!node) return null
+    resolve(image, options, context) {
+      const node = resolveFluid(image, options)
+      if (!node) return null
 
-        return {
-          ...node,
-          image,
-          options,
-          context,
-        }
-      }),
+      return {
+        ...node,
+        image,
+        options,
+        context,
+      }
+    },
   }
 }
 

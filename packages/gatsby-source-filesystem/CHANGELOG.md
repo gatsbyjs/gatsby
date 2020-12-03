@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.7.0-next.2...gatsby-source-filesystem@2.8.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Improve the description ([#28252](https://github.com/gatsbyjs/gatsby/issues/28252)) ([597d1dd](https://github.com/gatsbyjs/gatsby/commit/597d1dd00e14311f333884186256134a444dede0))
+
 # [2.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.7.0-next.1...gatsby-source-filesystem@2.7.0-next.2) (2020-11-22)
 
 ### Bug Fixes

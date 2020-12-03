@@ -2,14 +2,14 @@
 
 exports[`error parsing returns an object w/ the parsed error & codeframe 1`] = `
 Object {
-  "codeFrame": "<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 14 | </span>    <span style=\\"color:#527713;\\">//console.log(post)</span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 15 | </span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 16 | </span>    let pizza <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width2</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\">    | </span>                <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 17 | </span>    let tags</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 18 | </span>    let tagsSection</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#fdfaf6;\\"> <span style=\\"color:#527713;\\"> 19 | </span>    <span style=\\"color:#006500;\\">if</span> (<span style=\\"color:#006500;\\">this</span><span style=\\"color:#DB3A00;\\">.</span>props<span style=\\"color:#DB3A00;\\">.</span>data<span style=\\"color:#DB3A00;\\">.</span>markdownRemark<span style=\\"color:#DB3A00;\\">.</span>fields<span style=\\"color:#DB3A00;\\">.</span>tagSlugs) {</span>",
-  "filename": "develop-html-route.ts",
+  "codeFrame": "<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 14 | </span>    <span style=\\"color:#527713;\\">//console.log(post)</span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 15 | </span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 16 | </span>    let pizza <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width2</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\">    | </span>                <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 17 | </span>    let tags</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 18 | </span>    let tagsSection</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 19 | </span>    <span style=\\"color:#006500;\\">if</span> (<span style=\\"color:#006500;\\">this</span><span style=\\"color:#DB3A00;\\">.</span>props<span style=\\"color:#DB3A00;\\">.</span>data<span style=\\"color:#DB3A00;\\">.</span>markdownRemark<span style=\\"color:#DB3A00;\\">.</span>fields<span style=\\"color:#DB3A00;\\">.</span>tagSlugs) {</span>",
+  "filename": "fixtures/blog-post.js",
   "line": 16,
   "message": "window is not defined",
   "row": 17,

@@ -15,12 +15,14 @@ import {
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
-import { Layout } from "../utils"
+import { Layout } from "../image-utils"
 
-export type GatsbyImageProps = Omit<
-  ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
-> & {
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+export interface GatsbyImageProps
+  extends Omit<
+    ImgHTMLAttributes<HTMLImageElement>,
+    "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
+  > {
   alt: string
   as?: ElementType
   className?: string
@@ -68,7 +70,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   >(null)
   const lazyHydrator = useRef<(() => void) | null>(null)
   const ref = useRef<HTMLImageElement | undefined>()
-  const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport)
+  const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport())
   const [isLoaded, toggleIsLoaded] = useState(false)
 
   if (!global.GATSBY___IMAGE && !hasShownWarning) {
@@ -91,7 +93,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       ) as HTMLImageElement
 
       // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport && hasSSRHtml && global.GATSBY___IMAGE) {
+      if (hasNativeLazyLoadSupport() && hasSSRHtml && global.GATSBY___IMAGE) {
         onStartLoad?.({ wasCached: false })
 
         if (hasSSRHtml.complete) {
@@ -140,7 +142,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     if (root.current) {
       const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
       // On first server hydration do nothing
-      if (hasNativeLazyLoadSupport && hasSSRHtml && !hydrated.current) {
+      if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
         hydrated.current = true
         return
       }

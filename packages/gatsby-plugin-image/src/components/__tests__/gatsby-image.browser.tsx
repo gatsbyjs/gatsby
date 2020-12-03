@@ -107,7 +107,7 @@ describe(`GatsbyImage browser`, () => {
   })
 
   it(`cleans up the DOM when unmounting`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = false
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
 
     const { container, unmount } = render(
       <GatsbyImage image={image} alt="Alt content" />
@@ -124,7 +124,7 @@ describe(`GatsbyImage browser`, () => {
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
     // hydrated.current is false and not resolved yet
-    ;(hooks as any).hasNativeLazyLoadSupport = true
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />,
@@ -146,7 +146,7 @@ describe(`GatsbyImage browser`, () => {
 
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
-    ;(hooks as any).hasNativeLazyLoadSupport = true
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
     ;(hooks as any).storeImageloaded = jest.fn()
 
     const { container } = render(
@@ -173,7 +173,7 @@ describe(`GatsbyImage browser`, () => {
   })
 
   it(`relies on intersection observer when the SSR element is not resolved`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = true
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
     const onStartLoadSpy = jest.fn()
 
     const { container } = render(
@@ -190,7 +190,7 @@ describe(`GatsbyImage browser`, () => {
   })
 
   it(`relies on intersection observer when browser does not support lazy loading`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = false
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
     const onStartLoadSpy = jest.fn()
 
     const { container } = render(
