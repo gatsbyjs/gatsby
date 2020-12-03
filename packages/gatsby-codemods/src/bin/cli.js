@@ -1,6 +1,5 @@
 import path from 'path'
 import execa from 'execa'
-import process from 'process'
 
 const codemods = [`gatsby-plugin-image`, `global-graphql-calls`, `import-link`, `navigate-calls`, `rename-bound-action-creators`]
 
@@ -41,7 +40,7 @@ export function run() {
   }
 
   if (!codemods.includes(transform)) {
-    console.log(`You have passed in invalid codemod name: ${transform}. Please pass a valid one.`)
+    console.log(`You have passed in invalid codemod name: ${transform}. Please pass in one of the following: ${codemods.join(", ")}.`)
     return
   }
 
