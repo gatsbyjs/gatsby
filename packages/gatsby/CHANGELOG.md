@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.29.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.1...gatsby@2.29.0-next.2) (2020-12-03)
+
+### Bug Fixes
+
+- PRESERVE_WEBPACK_CACHE notice should actually show after 30 seconds ([#28427](https://github.com/gatsbyjs/gatsby/issues/28427)) ([95b4fdd](https://github.com/gatsbyjs/gatsby/commit/95b4fdd7a7ce2032a658a9cc14e6bcb219fb2bc2))
+
+### Features
+
+- **gatsby:** Add new caching clearing behavior for webpack/file downloads behind flags ([#28334](https://github.com/gatsbyjs/gatsby/issues/28334)) ([f57d590](https://github.com/gatsbyjs/gatsby/commit/f57d590142a67bd8c79c7805d3298f316198fde9))
+
 # [2.29.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0-next.1) (2020-12-01)
 
 ### Bug Fixes
