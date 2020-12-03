@@ -62,13 +62,14 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   finishProgressBar()
 
   app.use(async (req, res, next) => {
-    const pathOnDisk = path.resolve(path.join(`./public/`, req.url))
+    const decodedURI = decodeURI(req.url)
+    const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
 
     if (await pathExists(pathOnDisk)) {
       return res.sendFile(pathOnDisk)
     }
 
-    const jobContentDigest = await cache.get(req.url)
+    const jobContentDigest = await cache.get(decodedURI)
     const cacheResult = jobContentDigest
       ? await cache.get(jobContentDigest)
       : null
@@ -80,7 +81,7 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     await _unstable_createJob(cacheResult, { reporter })
     // we should implement cache.del inside our abstraction
     await cache.cache.del(jobContentDigest)
-    await cache.cache.del(req.url)
+    await cache.cache.del(decodedURI)
 
     return res.sendFile(pathOnDisk)
   })
