@@ -46,7 +46,7 @@ export function showExperimentNoticeAfterTimeout(
   }
 }
 
-const showNotices = () => {
+const showNotices = (): void => {
   emitter.off(`COMPILATION_DONE`, showNotices)
   if (noticesToShow.length > 0) {
     telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
