@@ -6,7 +6,6 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
-import chalk from "chalk"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"

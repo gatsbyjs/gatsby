@@ -23,6 +23,7 @@ const ONE_DAY = 24 * 60 * 60 * 1000
 
 interface INoticeObject {
   noticeText: string
+  umbrellaLink: string
   experimentIdentifier: string
 }
 

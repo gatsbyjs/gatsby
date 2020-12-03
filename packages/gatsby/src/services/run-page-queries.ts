@@ -1,4 +1,3 @@
-import chalk from "chalk"
 import { processPageQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
