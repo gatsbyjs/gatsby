@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.1...create-gatsby@0.2.0-next.2) (2020-12-03)
+
+### Features
+
+- **create-gatsby:** Prompt for site name ([#28401](https://github.com/gatsbyjs/gatsby/issues/28401)) ([5ffb6dd](https://github.com/gatsbyjs/gatsby/commit/5ffb6ddc5d3fdcf1658b66d186269dc4eb412b4b))
+
 # [0.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.0...create-gatsby@0.2.0-next.1) (2020-12-01)
 
 ### Bug Fixes

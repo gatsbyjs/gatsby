@@ -30,7 +30,13 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `FastDev`,
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`, `LAZY_IMAGES`],
+    includedFlags: [
+      `DEV_SSR`,
+      `QUERY_ON_DEMAND`,
+      `LAZY_IMAGES`,
+      `PRESERVE_FILE_DOWNLOAD_CACHE`,
+      `PRESERVE_WEBPACK_CACHE`,
+    ],
   },
   {
     name: `DEV_SSR`,
@@ -57,7 +63,7 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `LazyImageProcessing`,
     experimental: true,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
+    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
   {
