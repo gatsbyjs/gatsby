@@ -197,18 +197,19 @@ export const createWebpackUtils = (
     miniCssExtract: (options = {}) => {
       return {
         options,
-        // use MiniCssExtractPlugin only on production builds
-        loader: PRODUCTION
-          ? MiniCssExtractPlugin.loader
-          : require.resolve(`style-loader`),
+        loader:
+          stage === `develop`
+            ? require.resolve(`style-loader`)
+            : MiniCssExtractPlugin.loader,
       }
     },
 
     css: (options = {}) => {
       return {
-        loader: isSSR
-          ? require.resolve(`css-loader/locals`)
-          : require.resolve(`css-loader`),
+        loader:
+          stage === `build-html`
+            ? require.resolve(`css-loader/locals`)
+            : require.resolve(`css-loader`),
         options: {
           sourceMap: !PRODUCTION,
           camelCase: `dashesOnly`,
@@ -538,6 +539,12 @@ export const createWebpackUtils = (
         use.unshift(
           loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
         )
+
+      if (stage === `develop-html`) {
+        use.unshift(
+          loaders.miniCssExtract({ hmr: false && !restOptions.modules })
+        )
+      }
 
       return {
         use,

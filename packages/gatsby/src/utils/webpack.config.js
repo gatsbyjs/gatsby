@@ -230,6 +230,17 @@ module.exports = async (
           ])
           .filter(Boolean)
         break
+      case `develop-html`:
+        configPlugins = configPlugins.concat([
+          plugins.extractText(),
+
+          // new MiniCssExtractPlugin({ filename: `dev-ssr.css` }),
+          // Write out stats object mapping named dynamic imports (aka page
+          // components) to all their async chunks.
+          plugins.extractStats(),
+        ])
+
+        break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
           plugins.extractText(),
@@ -364,10 +375,7 @@ module.exports = async (
           {
             oneOf: [
               rules.cssModules(),
-              {
-                ...rules.css(),
-                use: [loaders.null()],
-              },
+              rules.css()
             ],
           },
         ])
