@@ -46,9 +46,8 @@ export function showExperimentNoticeAfterTimeout(
   }
 }
 
-emitter.on(`COMPILATION_DONE`, () => {
-  emitter.off(`COMPILATION_DONE`, () => {})
-
+const showNotices = () => {
+  emitter.off(`COMPILATION_DONE`, showNotices)
   if (noticesToShow.length > 0) {
     telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
     let message = `\n
@@ -65,4 +64,6 @@ them for general release.`
 
     reporter.info(message)
   }
-})
+}
+
+emitter.on(`COMPILATION_DONE`, showNotices)
